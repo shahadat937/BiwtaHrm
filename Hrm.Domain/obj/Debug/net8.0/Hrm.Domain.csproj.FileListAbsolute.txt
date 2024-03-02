@@ -24,3 +24,4 @@ D:\Shahadat\BiwtaHrm\Hrm.Domain\bin\Debug\net8.0\Microsoft.Extensions.Options.dl
 D:\Shahadat\BiwtaHrm\Hrm.Domain\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
 D:\Shahadat\BiwtaHrm\Hrm.Domain\obj\Debug\net8.0\Hrm.Domain.csproj.AssemblyReference.cache
 D:\Shahadat\BiwtaHrm\Hrm.Domain\obj\Debug\net8.0\Hrm.Domain.csproj.Up2Date
+D:\Shahadat\BiwtaHrm\Hrm.Domain\obj\Debug\net8.0\Hrm.Domain.sourcelink.json

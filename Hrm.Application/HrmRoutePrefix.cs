@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Hrm.Shared.Constant.Constants;
 
 namespace Hrm.Application
 {
-    public class HrmRoutePrefix
+    public static class HrmRoutePrefix
     {
+        private const string HRMRoutePrefixBase = ApiRoutePrefix.RoutePrefixBase + "hrm/";
+
+
+        public const string BloodGroup = HRMRoutePrefixBase + "blood-group";
     }
 }

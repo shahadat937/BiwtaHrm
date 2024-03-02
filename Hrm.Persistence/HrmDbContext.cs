@@ -15,6 +15,16 @@ namespace Hrm.Persistence
         {
 
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<BloodGroup>(entity => {
+
+                entity.HasKey(e => e.BloodGroupId)
+                    .HasName("PK_BloodGroupId");
+
+            });
+        }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
+        public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
     }
 }

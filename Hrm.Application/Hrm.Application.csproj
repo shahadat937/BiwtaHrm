@@ -7,11 +7,22 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	
+		
+ <ItemGroup>
+    <Compile Remove="DTOs\User\Validators\**" />
+    <Compile Remove="Features\Users\**" />
+    <EmbeddedResource Remove="DTOs\User\Validators\**" />
+    <EmbeddedResource Remove="Features\Users\**" />
+    <None Remove="DTOs\User\Validators\**" />
+    <None Remove="Features\Users\**" />
+  </ItemGroup>
+		
   <ItemGroup>
     <Folder Include="Enum\" />
-    <Folder Include="Features\" />
+    <Folder Include="Features\BloodGroup\Handlers\Queries\" />
+    <Folder Include="Features\BloodGroup\Requests\Queries\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Profiles\" />
   </ItemGroup>
 
   <ItemGroup>

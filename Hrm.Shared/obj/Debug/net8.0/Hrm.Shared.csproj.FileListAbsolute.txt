@@ -12,3 +12,4 @@ D:\Shahadat\BiwtaHrm\Hrm.Shared\obj\Debug\net8.0\refint\Hrm.Shared.dll
 D:\Shahadat\BiwtaHrm\Hrm.Shared\obj\Debug\net8.0\Hrm.Shared.pdb
 D:\Shahadat\BiwtaHrm\Hrm.Shared\obj\Debug\net8.0\Hrm.Shared.genruntimeconfig.cache
 D:\Shahadat\BiwtaHrm\Hrm.Shared\obj\Debug\net8.0\ref\Hrm.Shared.dll
+D:\Shahadat\BiwtaHrm\Hrm.Shared\obj\Debug\net8.0\Hrm.Shared.sourcelink.json

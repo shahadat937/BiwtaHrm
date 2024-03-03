@@ -23,3 +23,4 @@ D:\Shahadat\BiwtaHrm\Hrm.Infrastructure\bin\Debug\net8.0\SendGrid.dll
 D:\Shahadat\BiwtaHrm\Hrm.Infrastructure\bin\Debug\net8.0\StarkbankEcdsa.dll
 D:\Shahadat\BiwtaHrm\Hrm.Infrastructure\obj\Debug\net8.0\Hrm.Infrastructure.csproj.AssemblyReference.cache
 D:\Shahadat\BiwtaHrm\Hrm.Infrastructure\obj\Debug\net8.0\Hrm.Infr.9A67D8D8.Up2Date
+D:\Shahadat\BiwtaHrm\Hrm.Infrastructure\obj\Debug\net8.0\Hrm.Infrastructure.sourcelink.json

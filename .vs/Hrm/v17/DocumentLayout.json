@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "D:\\Shahadat\\BiwtaHrm\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|d:\\shahadat\\biwtahrm\\hrm.persistence\\persistenceservicesregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|solutionrelative:hrm.persistence\\persistenceservicesregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|d:\\shahadat\\biwtahrm\\hrm.persistence\\hrmdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|solutionrelative:hrm.persistence\\hrmdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|d:\\shahadat\\biwtahrm\\hrm.persistence\\auditabledbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -15,6 +15,18 @@
       "RelativeMoniker": "D:0:0:{882B8900-1230-44A9-A08B-C5718B31245D}|Hrm.Identity\\Hrm.Identity.csproj|solutionrelative:hrm.identity\\hrmidentitydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\middleware\\exceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|solutionrelative:hrm.api\\middleware\\exceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|d:\\shahadat\\biwtahrm\\hrm.persistence\\repositories\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|solutionrelative:hrm.persistence\\repositories\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\features\\bloodgroup\\handlers\\commands\\createbloodgroupcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\features\\bloodgroup\\handlers\\commands\\createbloodgroupcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|d:\\shahadat\\biwtahrm\\hrm.persistence\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|solutionrelative:hrm.persistence\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -23,20 +35,76 @@
       "RelativeMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|solutionrelative:hrm.persistence\\repositories\\hrmrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|d:\\shahadat\\biwtahrm\\hrm.persistence\\repositories\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|solutionrelative:hrm.persistence\\repositories\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|d:\\shahadat\\biwtahrm\\hrm.domain\\common\\basedomainentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|solutionrelative:hrm.domain\\common\\basedomainentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|d:\\shahadat\\biwtahrm\\hrm.persistence\\hrmdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|solutionrelative:hrm.persistence\\hrmdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\dtos\\bloodgroup\\validators\\createbloodgroupdtovalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\dtos\\bloodgroup\\validators\\createbloodgroupdtovalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\responses\\basecommandresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\responses\\basecommandresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|d:\\shahadat\\biwtahrm\\hrm.persistence\\persistenceservicesregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|solutionrelative:hrm.persistence\\persistenceservicesregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\controllers\\bloodgroupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|solutionrelative:hrm.api\\controllers\\bloodgroupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|d:\\shahadat\\biwtahrm\\hrm.domain\\accounttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|solutionrelative:hrm.domain\\accounttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\dtos\\bloodgroup\\bloodgroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\dtos\\bloodgroup\\bloodgroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\dtos\\bloodgroup\\createbloodgroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\dtos\\bloodgroup\\createbloodgroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|solutionrelative:hrm.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\profiles\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\profiles\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|solutionrelative:hrm.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\hrm.api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|solutionrelative:hrm.api\\hrm.api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|solutionrelative:hrm.api\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|d:\\shahadat\\biwtahrm\\hrm.domain\\bloodgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|solutionrelative:hrm.domain\\bloodgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\dtos\\bloodgroup\\ibloodgroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\dtos\\bloodgroup\\ibloodgroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\features\\bloodgroup\\requests\\commands\\createbloodcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\features\\bloodgroup\\requests\\commands\\createbloodcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|d:\\shahadat\\biwtahrm\\hrm.domain\\hrm.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|solutionrelative:hrm.domain\\hrm.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{882B8900-1230-44A9-A08B-C5718B31245D}|Hrm.Identity\\Hrm.Identity.csproj|d:\\shahadat\\biwtahrm\\hrm.identity\\hrm.identity.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -67,48 +135,16 @@
       "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\hrmrouteprefix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\applicationservicesregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\applicationservicesregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\middleware\\exceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|solutionrelative:hrm.api\\middleware\\exceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\models\\identity\\jwtsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\models\\identity\\jwtsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\features\\bloodgroup\\requests\\commands\\createbloodcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\features\\bloodgroup\\requests\\commands\\createbloodcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\dtos\\common\\basedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\dtos\\common\\basedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\features\\bloodgroup\\handlers\\commands\\createbloodgroupcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\features\\bloodgroup\\handlers\\commands\\createbloodgroupcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|d:\\shahadat\\biwtahrm\\hrm.domain\\hrm.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|solutionrelative:hrm.domain\\hrm.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|d:\\shahadat\\biwtahrm\\hrm.domain\\bloodgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|solutionrelative:hrm.domain\\bloodgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\profiles\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\profiles\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|solutionrelative:hrm.api\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\hrm.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -119,32 +155,8 @@
       "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\dtos\\common\\validators\\queryparamsvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|solutionrelative:hrm.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\dtos\\bloodgroup\\createbloodgroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\dtos\\bloodgroup\\createbloodgroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\dtos\\bloodgroup\\bloodgroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\dtos\\bloodgroup\\bloodgroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\dtos\\bloodgroup\\ibloodgroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\dtos\\bloodgroup\\ibloodgroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{DCE3A551-2CAF-4960-BE66-A7F294D233B7}|Hrm.Shared\\Hrm.Shared.csproj|d:\\shahadat\\biwtahrm\\hrm.shared\\constant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DCE3A551-2CAF-4960-BE66-A7F294D233B7}|Hrm.Shared\\Hrm.Shared.csproj|solutionrelative:hrm.shared\\constant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\dtos\\bloodgroup\\validators\\createbloodgroupdtovalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\dtos\\bloodgroup\\validators\\createbloodgroupdtovalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|d:\\shahadat\\biwtahrm\\hrm.application\\responses\\basecommandresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6B909AB-CACB-44BC-9A6B-FFA1752BDDF4}|Hrm.Application\\Hrm.Application.csproj|solutionrelative:hrm.application\\responses\\basecommandresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DCE3A551-2CAF-4960-BE66-A7F294D233B7}|Hrm.Shared\\Hrm.Shared.csproj|d:\\shahadat\\biwtahrm\\hrm.shared\\hrm.shared.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -157,10 +169,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|d:\\shahadat\\biwtahrm\\hrm.persistence\\hrm.persistence.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{CF929043-A440-4CE9-A1AE-4E8DA37B8D0F}|Hrm.Persistence\\Hrm.Persistence.csproj|solutionrelative:hrm.persistence\\hrm.persistence.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|d:\\shahadat\\biwtahrm\\hrm.domain\\accounttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3BC8B0AD-8A3E-4DC7-82AE-CF9EE12A7CBD}|Hrm.Domain\\Hrm.Domain.csproj|solutionrelative:hrm.domain\\accounttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{882B8900-1230-44A9-A08B-C5718B31245D}|Hrm.Identity\\Hrm.Identity.csproj|d:\\shahadat\\biwtahrm\\hrm.identity\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -177,10 +185,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|solutionrelative:hrm.api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|solutionrelative:hrm.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{02A975E6-8DF1-4FC2-9AE6-477D011AEA92}|Hrm.Api\\Hrm.Api.csproj|d:\\shahadat\\biwtahrm\\hrm.api\\extensions\\swaggerserviceextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -351,14 +355,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "GenericRepository.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Repositories\\GenericRepository.cs",
-              "RelativeDocumentMoniker": "Hrm.Persistence\\Repositories\\GenericRepository.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Repositories\\GenericRepository.cs",
-              "RelativeToolTip": "Hrm.Persistence\\Repositories\\GenericRepository.cs",
-              "ViewState": "AQIAABkAAAAAAAAAAAAQwB0AAAAJAAAA",
+              "Title": "ExceptionMiddleware.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Middleware\\ExceptionMiddleware.cs",
+              "RelativeDocumentMoniker": "Hrm.Api\\Middleware\\ExceptionMiddleware.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Middleware\\ExceptionMiddleware.cs",
+              "RelativeToolTip": "Hrm.Api\\Middleware\\ExceptionMiddleware.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAYwBgAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:55:48.174Z",
+              "WhenOpened": "2024-02-28T10:53:46.566Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuditableDbContext.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\AuditableDbContext.cs",
+              "RelativeDocumentMoniker": "Hrm.Persistence\\AuditableDbContext.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\AuditableDbContext.cs",
+              "RelativeToolTip": "Hrm.Persistence\\AuditableDbContext.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAQwA0AAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-27T10:57:02.161Z",
               "EditorCaption": ""
             },
             {
@@ -376,475 +393,137 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AuditableDbContext.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\AuditableDbContext.cs",
-              "RelativeDocumentMoniker": "Hrm.Persistence\\AuditableDbContext.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\AuditableDbContext.cs",
-              "RelativeToolTip": "Hrm.Persistence\\AuditableDbContext.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAAAIwBMAAAA9AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:57:02.161Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PersistenceServicesRegistration.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\PersistenceServicesRegistration.cs",
-              "RelativeDocumentMoniker": "Hrm.Persistence\\PersistenceServicesRegistration.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\PersistenceServicesRegistration.cs",
-              "RelativeToolTip": "Hrm.Persistence\\PersistenceServicesRegistration.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAtwBYAAABNAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:57:16.267Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "HrmRepository.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Repositories\\HrmRepository.cs",
-              "RelativeDocumentMoniker": "Hrm.Persistence\\Repositories\\HrmRepository.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Repositories\\HrmRepository.cs",
-              "RelativeToolTip": "Hrm.Persistence\\Repositories\\HrmRepository.cs",
-              "ViewState": "AQIAADkAAAAAAAAAAAAlwAsAAAAeAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:56:07.831Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "UnitOfWork.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Repositories\\UnitOfWork.cs",
-              "RelativeDocumentMoniker": "Hrm.Persistence\\Repositories\\UnitOfWork.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Repositories\\UnitOfWork.cs",
-              "RelativeToolTip": "Hrm.Persistence\\Repositories\\UnitOfWork.cs",
-              "ViewState": "AQIAACMAAAAAAAAAAAAgwBoAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:56:36.4Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BaseDomainEntity.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Common\\BaseDomainEntity.cs",
-              "RelativeDocumentMoniker": "Hrm.Domain\\Common\\BaseDomainEntity.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Common\\BaseDomainEntity.cs",
-              "RelativeToolTip": "Hrm.Domain\\Common\\BaseDomainEntity.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAYAAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T11:34:14.33Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "HrmDbContext.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\HrmDbContext.cs",
               "RelativeDocumentMoniker": "Hrm.Persistence\\HrmDbContext.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\HrmDbContext.cs",
-              "RelativeToolTip": "Hrm.Persistence\\HrmDbContext.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAA0AAAAOAAAA",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\HrmDbContext.cs*",
+              "RelativeToolTip": "Hrm.Persistence\\HrmDbContext.cs*",
+              "ViewState": "AQIAABAAAAAAAAAAAAAQwBMAAAALAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-27T10:57:37.738Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "BloodGroupController.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Controllers\\BloodGroupController.cs",
-              "RelativeDocumentMoniker": "Hrm.Api\\Controllers\\BloodGroupController.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Controllers\\BloodGroupController.cs",
-              "RelativeToolTip": "Hrm.Api\\Controllers\\BloodGroupController.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAxwBgAAAAMAAAA",
+              "DocumentIndex": 6,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "Hrm.Persistence\\Repositories\\GenericRepository.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "Hrm.Persistence\\Repositories\\GenericRepository.cs",
+              "ViewState": "AQIAAJYAAAAAAAAAAAAAwKEAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-02T09:19:04.748Z",
+              "WhenOpened": "2024-02-27T10:55:48.174Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "CustomClaimTypes.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Constants\\CustomClaimTypes.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\Constants\\CustomClaimTypes.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Constants\\CustomClaimTypes.cs",
-              "RelativeToolTip": "Hrm.Application\\Constants\\CustomClaimTypes.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAkAAAAoAAAA",
+              "DocumentIndex": 4,
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Repositories\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "Hrm.Persistence\\Repositories\\UnitOfWork.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Repositories\\UnitOfWork.cs",
+              "RelativeToolTip": "Hrm.Persistence\\Repositories\\UnitOfWork.cs",
+              "ViewState": "AQIAADIAAAAAAAAAAAAAAD8AAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T08:52:30.666Z",
+              "WhenOpened": "2024-02-27T10:56:36.4Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "IUnitOfWork.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Persistence\\IUnitOfWork.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\Contracts\\Persistence\\IUnitOfWork.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Persistence\\IUnitOfWork.cs",
-              "RelativeToolTip": "Hrm.Application\\Contracts\\Persistence\\IUnitOfWork.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAwAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T08:04:29.045Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "IHrmRepository.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Persistence\\IHrmRepository.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\Contracts\\Persistence\\IHrmRepository.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Persistence\\IHrmRepository.cs",
-              "RelativeToolTip": "Hrm.Application\\Contracts\\Persistence\\IHrmRepository.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAuwAwAAAAxAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T07:40:41.935Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "IGenericRepository.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Persistence\\IGenericRepository.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\Contracts\\Persistence\\IGenericRepository.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Persistence\\IGenericRepository.cs",
-              "RelativeToolTip": "Hrm.Application\\Contracts\\Persistence\\IGenericRepository.cs",
-              "ViewState": "AQIAACYAAAAAAAAAAAAAwAkAAAAnAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T07:42:02.968Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Hrm.Identity.csproj",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj",
-              "RelativeDocumentMoniker": "Hrm.Identity\\Hrm.Identity.csproj",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj",
-              "RelativeToolTip": "Hrm.Identity\\Hrm.Identity.csproj",
-              "ViewState": "AQIAABUAAAAAAAAAAAAAAB4AAAAzAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-02-27T10:51:08.497Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Hrm.Application.csproj",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj",
-              "RelativeDocumentMoniker": "Hrm.Application\\Hrm.Application.csproj",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj",
-              "RelativeToolTip": "Hrm.Application\\Hrm.Application.csproj",
-              "ViewState": "AQIAABEAAAAAAAAAAAAAABoAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-02-27T10:37:14.206Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "HrmRoutePrefix.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\HrmRoutePrefix.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\HrmRoutePrefix.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\HrmRoutePrefix.cs",
-              "RelativeToolTip": "Hrm.Application\\HrmRoutePrefix.cs",
-              "ViewState": "AQIAAAEAAAAAAAAAAAAEwAgAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:47:02.636Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Program.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\Program.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Program.cs",
-              "RelativeToolTip": "Hrm.Application\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:26:51.534Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "ApplicationServicesRegistration.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\ApplicationServicesRegistration.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\ApplicationServicesRegistration.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\ApplicationServicesRegistration.cs",
-              "RelativeToolTip": "Hrm.Application\\ApplicationServicesRegistration.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAADgvxAAAAALAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:43:22.42Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "ExceptionMiddleware.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Middleware\\ExceptionMiddleware.cs",
-              "RelativeDocumentMoniker": "Hrm.Api\\Middleware\\ExceptionMiddleware.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Middleware\\ExceptionMiddleware.cs",
-              "RelativeToolTip": "Hrm.Api\\Middleware\\ExceptionMiddleware.cs",
-              "ViewState": "AQIAABUAAAAAAAAAAAAQwBgAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T10:53:46.566Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "JwtSettings.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Models\\Identity\\JwtSettings.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\Models\\Identity\\JwtSettings.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Models\\Identity\\JwtSettings.cs",
-              "RelativeToolTip": "Hrm.Application\\Models\\Identity\\JwtSettings.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAsAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:07:19.069Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "BloodGroup.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\BloodGroup.cs",
-              "RelativeDocumentMoniker": "Hrm.Domain\\BloodGroup.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\BloodGroup.cs",
-              "RelativeToolTip": "Hrm.Domain\\BloodGroup.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAEwA4AAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-02T07:14:52.021Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "CreateBloodCommand.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Features\\BloodGroup\\Requests\\Commands\\CreateBloodCommand.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\Features\\BloodGroup\\Requests\\Commands\\CreateBloodCommand.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Features\\BloodGroup\\Requests\\Commands\\CreateBloodCommand.cs",
-              "RelativeToolTip": "Hrm.Application\\Features\\BloodGroup\\Requests\\Commands\\CreateBloodCommand.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAADgvw0AAAAwAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-02T09:31:31.911Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 5,
               "Title": "CreateBloodGroupCommandHandler.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Features\\BloodGroup\\Handlers\\Commands\\CreateBloodGroupCommandHandler.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Features\\BloodGroup\\Handlers\\Commands\\CreateBloodGroupCommandHandler.cs",
               "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Features\\BloodGroup\\Handlers\\Commands\\CreateBloodGroupCommandHandler.cs",
               "RelativeToolTip": "Hrm.Application\\Features\\BloodGroup\\Handlers\\Commands\\CreateBloodGroupCommandHandler.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAYwCMAAABFAAAA",
+              "ViewState": "AQIAABcAAAAAAAAAAAAQwCQAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-02T09:26:12.802Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "BaseDto.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Common\\BaseDto.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\Common\\BaseDto.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Common\\BaseDto.cs",
-              "RelativeToolTip": "Hrm.Application\\DTOs\\Common\\BaseDto.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAASwAwAAAAWAAAA",
+              "DocumentIndex": 7,
+              "Title": "HrmRepository.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Repositories\\HrmRepository.cs",
+              "RelativeDocumentMoniker": "Hrm.Persistence\\Repositories\\HrmRepository.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Repositories\\HrmRepository.cs",
+              "RelativeToolTip": "Hrm.Persistence\\Repositories\\HrmRepository.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAQwBIAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-02T12:41:39.079Z",
+              "WhenOpened": "2024-02-27T10:56:07.831Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "Hrm.Domain.csproj",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj",
-              "RelativeDocumentMoniker": "Hrm.Domain\\Hrm.Domain.csproj",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj",
-              "RelativeToolTip": "Hrm.Domain\\Hrm.Domain.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAoAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-02-27T10:48:57.781Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "MappingProfile.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Profiles\\MappingProfile.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\Profiles\\MappingProfile.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Profiles\\MappingProfile.cs",
-              "RelativeToolTip": "Hrm.Application\\Profiles\\MappingProfile.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAAAAsAAAAfAAAA",
+              "DocumentIndex": 8,
+              "Title": "BaseDomainEntity.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Common\\BaseDomainEntity.cs",
+              "RelativeDocumentMoniker": "Hrm.Domain\\Common\\BaseDomainEntity.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Common\\BaseDomainEntity.cs",
+              "RelativeToolTip": "Hrm.Domain\\Common\\BaseDomainEntity.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAgAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-02T11:01:56.462Z",
+              "WhenOpened": "2024-02-28T11:34:14.33Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "Hrm.Api.csproj",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Hrm.Api.csproj",
-              "RelativeDocumentMoniker": "Hrm.Api\\Hrm.Api.csproj",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Hrm.Api.csproj",
-              "RelativeToolTip": "Hrm.Api\\Hrm.Api.csproj",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAmwBIAAAATAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-02-27T11:22:54.734Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "GlobalUsings.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\GlobalUsings.cs",
-              "RelativeDocumentMoniker": "Hrm.Api\\GlobalUsings.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\GlobalUsings.cs",
-              "RelativeToolTip": "Hrm.Api\\GlobalUsings.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T11:23:01.738Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "QueryParamsValidator.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Common\\Validators\\QueryParamsValidator.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\Common\\Validators\\QueryParamsValidator.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Common\\Validators\\QueryParamsValidator.cs",
-              "RelativeToolTip": "Hrm.Application\\DTOs\\Common\\Validators\\QueryParamsValidator.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-02T12:03:13.462Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\appsettings.json",
-              "RelativeDocumentMoniker": "Hrm.Api\\appsettings.json",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\appsettings.json",
-              "RelativeToolTip": "Hrm.Api\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAA5AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-02-27T11:20:32.636Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "CreateBloodGroupDto.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\CreateBloodGroupDto.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\BloodGroup\\CreateBloodGroupDto.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\CreateBloodGroupDto.cs",
-              "RelativeToolTip": "Hrm.Application\\DTOs\\BloodGroup\\CreateBloodGroupDto.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAuwA0AAAAcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-02T09:16:22.447Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "BloodGroupDto.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\BloodGroupDto.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\BloodGroup\\BloodGroupDto.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\BloodGroupDto.cs",
-              "RelativeToolTip": "Hrm.Application\\DTOs\\BloodGroup\\BloodGroupDto.cs",
-              "ViewState": "AQIAAAQAAAAAAAAAAAAEwAsAAAAzAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-02T11:25:02.723Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "IBloodGroupDto.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\IBloodGroupDto.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\BloodGroup\\IBloodGroupDto.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\IBloodGroupDto.cs",
-              "RelativeToolTip": "Hrm.Application\\DTOs\\BloodGroup\\IBloodGroupDto.cs",
-              "ViewState": "AQIAAAQAAAAAAAAAAAAEwAgAAAAjAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-02T09:14:09.003Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "Constant.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Constant.cs",
-              "RelativeDocumentMoniker": "Hrm.Shared\\Constant.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Constant.cs",
-              "RelativeToolTip": "Hrm.Shared\\Constant.cs",
-              "ViewState": "AQIAAAQAAAAAAAAAAAAcwBIAAAApAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-02T10:18:33.54Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 9,
               "Title": "CreateBloodGroupDtoValidator.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\Validators\\CreateBloodGroupDtoValidator.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\BloodGroup\\Validators\\CreateBloodGroupDtoValidator.cs",
               "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\Validators\\CreateBloodGroupDtoValidator.cs",
               "RelativeToolTip": "Hrm.Application\\DTOs\\BloodGroup\\Validators\\CreateBloodGroupDtoValidator.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAADgvwsAAAArAAAA",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAQwA4AAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-02T09:52:27.632Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 10,
               "Title": "BaseCommandResponse.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Responses\\BaseCommandResponse.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Responses\\BaseCommandResponse.cs",
               "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Responses\\BaseCommandResponse.cs",
               "RelativeToolTip": "Hrm.Application\\Responses\\BaseCommandResponse.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAkAAAAsAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-28T09:39:45.076Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
-              "Title": "Hrm.Shared.csproj",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj",
-              "RelativeDocumentMoniker": "Hrm.Shared\\Hrm.Shared.csproj",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj",
-              "RelativeToolTip": "Hrm.Shared\\Hrm.Shared.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-02-28T09:50:15.565Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 37,
-              "Title": "IBloodGroupDtoValidator.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\Validators\\IBloodGroupDtoValidator.cs",
-              "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\BloodGroup\\Validators\\IBloodGroupDtoValidator.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\Validators\\IBloodGroupDtoValidator.cs",
-              "RelativeToolTip": "Hrm.Application\\DTOs\\BloodGroup\\Validators\\IBloodGroupDtoValidator.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAASwAkAAAAsAAAA",
+              "DocumentIndex": 11,
+              "Title": "PersistenceServicesRegistration.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\PersistenceServicesRegistration.cs",
+              "RelativeDocumentMoniker": "Hrm.Persistence\\PersistenceServicesRegistration.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\PersistenceServicesRegistration.cs",
+              "RelativeToolTip": "Hrm.Persistence\\PersistenceServicesRegistration.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAtwBIAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-02T09:50:38.327Z",
+              "WhenOpened": "2024-02-27T10:57:16.267Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 12,
+              "Title": "BloodGroupController.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Controllers\\BloodGroupController.cs",
+              "RelativeDocumentMoniker": "Hrm.Api\\Controllers\\BloodGroupController.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Controllers\\BloodGroupController.cs",
+              "RelativeToolTip": "Hrm.Api\\Controllers\\BloodGroupController.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAzwBgAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-02T09:19:04.748Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "AccountType.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\AccountType.cs",
               "RelativeDocumentMoniker": "Hrm.Domain\\AccountType.cs",
@@ -857,7 +536,343 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "BloodGroupDto.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\BloodGroupDto.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\BloodGroup\\BloodGroupDto.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\BloodGroupDto.cs",
+              "RelativeToolTip": "Hrm.Application\\DTOs\\BloodGroup\\BloodGroupDto.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAEwAgAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-02T11:25:02.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "CreateBloodGroupDto.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\CreateBloodGroupDto.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\BloodGroup\\CreateBloodGroupDto.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\CreateBloodGroupDto.cs",
+              "RelativeToolTip": "Hrm.Application\\DTOs\\BloodGroup\\CreateBloodGroupDto.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAuwAgAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-02T09:16:22.447Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "Hrm.Api\\appsettings.json",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\appsettings.json",
+              "RelativeToolTip": "Hrm.Api\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAACNAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-02-27T11:20:32.636Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Profiles\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\Profiles\\MappingProfile.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Profiles\\MappingProfile.cs",
+              "RelativeToolTip": "Hrm.Application\\Profiles\\MappingProfile.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAAABIAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-02T11:01:56.462Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Hrm.Api\\Program.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Program.cs",
+              "RelativeToolTip": "Hrm.Api\\Program.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAAAAADEAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-28T06:59:12.124Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Hrm.Api.http",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Hrm.Api.http",
+              "RelativeDocumentMoniker": "Hrm.Api\\Hrm.Api.http",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Hrm.Api.http",
+              "RelativeToolTip": "Hrm.Api\\Hrm.Api.http",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2024-03-03T05:38:01.164Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Program.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\Program.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Program.cs",
+              "RelativeToolTip": "Hrm.Application\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-27T10:26:51.534Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "BloodGroup.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\BloodGroup.cs",
+              "RelativeDocumentMoniker": "Hrm.Domain\\BloodGroup.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\BloodGroup.cs",
+              "RelativeToolTip": "Hrm.Domain\\BloodGroup.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAEwAwAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-02T07:14:52.021Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "GlobalUsings.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\GlobalUsings.cs",
+              "RelativeDocumentMoniker": "Hrm.Api\\GlobalUsings.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\GlobalUsings.cs",
+              "RelativeToolTip": "Hrm.Api\\GlobalUsings.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-27T11:23:01.738Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "IBloodGroupDto.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\IBloodGroupDto.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\BloodGroup\\IBloodGroupDto.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\IBloodGroupDto.cs",
+              "RelativeToolTip": "Hrm.Application\\DTOs\\BloodGroup\\IBloodGroupDto.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAEwAgAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-02T09:14:09.003Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "CreateBloodCommand.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Features\\BloodGroup\\Requests\\Commands\\CreateBloodCommand.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\Features\\BloodGroup\\Requests\\Commands\\CreateBloodCommand.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Features\\BloodGroup\\Requests\\Commands\\CreateBloodCommand.cs",
+              "RelativeToolTip": "Hrm.Application\\Features\\BloodGroup\\Requests\\Commands\\CreateBloodCommand.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAwAkAAAA8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-02T09:31:31.911Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Hrm.Domain.csproj",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj",
+              "RelativeDocumentMoniker": "Hrm.Domain\\Hrm.Domain.csproj",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj",
+              "RelativeToolTip": "Hrm.Domain\\Hrm.Domain.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-02-27T10:48:57.781Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "CustomClaimTypes.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Constants\\CustomClaimTypes.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\Constants\\CustomClaimTypes.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Constants\\CustomClaimTypes.cs",
+              "RelativeToolTip": "Hrm.Application\\Constants\\CustomClaimTypes.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAkAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-28T08:52:30.666Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "IUnitOfWork.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Persistence\\IUnitOfWork.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\Contracts\\Persistence\\IUnitOfWork.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Persistence\\IUnitOfWork.cs",
+              "RelativeToolTip": "Hrm.Application\\Contracts\\Persistence\\IUnitOfWork.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAwAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-28T08:04:29.045Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "IHrmRepository.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Persistence\\IHrmRepository.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\Contracts\\Persistence\\IHrmRepository.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Persistence\\IHrmRepository.cs",
+              "RelativeToolTip": "Hrm.Application\\Contracts\\Persistence\\IHrmRepository.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAuwAwAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-28T07:40:41.935Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Persistence\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\Contracts\\Persistence\\IGenericRepository.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Persistence\\IGenericRepository.cs",
+              "RelativeToolTip": "Hrm.Application\\Contracts\\Persistence\\IGenericRepository.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAAAAwAkAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-28T07:42:02.968Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Hrm.Identity.csproj",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj",
+              "RelativeDocumentMoniker": "Hrm.Identity\\Hrm.Identity.csproj",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj",
+              "RelativeToolTip": "Hrm.Identity\\Hrm.Identity.csproj",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAAB4AAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-02-27T10:51:08.497Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "Hrm.Application.csproj",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj",
+              "RelativeDocumentMoniker": "Hrm.Application\\Hrm.Application.csproj",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj",
+              "RelativeToolTip": "Hrm.Application\\Hrm.Application.csproj",
+              "ViewState": "AQIAABEAAAAAAAAAAAAAABoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-02-27T10:37:14.206Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "HrmRoutePrefix.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\HrmRoutePrefix.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\HrmRoutePrefix.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\HrmRoutePrefix.cs",
+              "RelativeToolTip": "Hrm.Application\\HrmRoutePrefix.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAEwAgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-27T10:47:02.636Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "ApplicationServicesRegistration.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\ApplicationServicesRegistration.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\ApplicationServicesRegistration.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\ApplicationServicesRegistration.cs",
+              "RelativeToolTip": "Hrm.Application\\ApplicationServicesRegistration.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAADgvxAAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-27T10:43:22.42Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "JwtSettings.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Models\\Identity\\JwtSettings.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\Models\\Identity\\JwtSettings.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Models\\Identity\\JwtSettings.cs",
+              "RelativeToolTip": "Hrm.Application\\Models\\Identity\\JwtSettings.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-28T09:07:19.069Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "BaseDto.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Common\\BaseDto.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\Common\\BaseDto.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Common\\BaseDto.cs",
+              "RelativeToolTip": "Hrm.Application\\DTOs\\Common\\BaseDto.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAASwAwAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-02T12:41:39.079Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "Hrm.Api.csproj",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Hrm.Api.csproj",
+              "RelativeDocumentMoniker": "Hrm.Api\\Hrm.Api.csproj",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Hrm.Api.csproj",
+              "RelativeToolTip": "Hrm.Api\\Hrm.Api.csproj",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAmwBIAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-02-27T11:22:54.734Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "QueryParamsValidator.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Common\\Validators\\QueryParamsValidator.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\Common\\Validators\\QueryParamsValidator.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Common\\Validators\\QueryParamsValidator.cs",
+              "RelativeToolTip": "Hrm.Application\\DTOs\\Common\\Validators\\QueryParamsValidator.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-02T12:03:13.462Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 38,
+              "Title": "Constant.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Constant.cs",
+              "RelativeDocumentMoniker": "Hrm.Shared\\Constant.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Constant.cs",
+              "RelativeToolTip": "Hrm.Shared\\Constant.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAcwBIAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-02T10:18:33.54Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "Hrm.Shared.csproj",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj",
+              "RelativeDocumentMoniker": "Hrm.Shared\\Hrm.Shared.csproj",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj",
+              "RelativeToolTip": "Hrm.Shared\\Hrm.Shared.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-02-28T09:50:15.565Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "IBloodGroupDtoValidator.cs",
+              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\Validators\\IBloodGroupDtoValidator.cs",
+              "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\BloodGroup\\Validators\\IBloodGroupDtoValidator.cs",
+              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\BloodGroup\\Validators\\IBloodGroupDtoValidator.cs",
+              "RelativeToolTip": "Hrm.Application\\DTOs\\BloodGroup\\Validators\\IBloodGroupDtoValidator.cs",
+              "ViewState": "AQIAAAoAAAAAAAAAAAASwAkAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-02T09:50:38.327Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
               "Title": "Hrm.Persistence.csproj",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Hrm.Persistence.csproj",
               "RelativeDocumentMoniker": "Hrm.Persistence\\Hrm.Persistence.csproj",
@@ -865,12 +880,11 @@
               "RelativeToolTip": "Hrm.Persistence\\Hrm.Persistence.csproj",
               "ViewState": "AQIAAAQAAAAAAAAAAABBwBMAAAAzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-02-27T10:54:54.984Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-27T10:54:54.984Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 45,
               "Title": "AccountController.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "Hrm.Api\\Controllers\\AccountController.cs",
@@ -883,7 +897,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 42,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Models\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "Hrm.Identity\\Models\\ApplicationUser.cs",
@@ -891,12 +905,11 @@
               "RelativeToolTip": "Hrm.Identity\\Models\\ApplicationUser.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAIBJwA0AAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:14:52.219Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:14:52.219Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 43,
               "Title": "ApplicationRole.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Models\\ApplicationRole.cs",
               "RelativeDocumentMoniker": "Hrm.Identity\\Models\\ApplicationRole.cs",
@@ -904,12 +917,11 @@
               "RelativeToolTip": "Hrm.Identity\\Models\\ApplicationRole.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:14:50.612Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:14:50.612Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 44,
               "Title": "RegistrationRequest.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Models\\Identity\\RegistrationRequest.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Models\\Identity\\RegistrationRequest.cs",
@@ -917,25 +929,11 @@
               "RelativeToolTip": "Hrm.Application\\Models\\Identity\\RegistrationRequest.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAuwAQAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:07:25.406Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:07:25.406Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Program.cs",
-              "RelativeDocumentMoniker": "Hrm.Api\\Program.cs",
-              "ToolTip": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Program.cs",
-              "RelativeToolTip": "Hrm.Api\\Program.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAQwDMAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T06:59:12.124Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 46,
               "Title": "SwaggerServiceExtensions.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Extensions\\SwaggerServiceExtensions.cs",
               "RelativeDocumentMoniker": "Hrm.Api\\Extensions\\SwaggerServiceExtensions.cs",
@@ -943,12 +941,11 @@
               "RelativeToolTip": "Hrm.Api\\Extensions\\SwaggerServiceExtensions.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAAAtwAkAAABAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T10:31:37.602Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T10:31:37.602Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 47,
               "Title": "IdentityServicesRegistration.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\IdentityServicesRegistration.cs",
               "RelativeDocumentMoniker": "Hrm.Identity\\IdentityServicesRegistration.cs",
@@ -956,12 +953,11 @@
               "RelativeToolTip": "Hrm.Identity\\IdentityServicesRegistration.cs",
               "ViewState": "AQIAABkAAAAAAAAAAAD4vxQAAABCAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:52:56.843Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-27T10:52:56.843Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 48,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Identity\\IAuthService.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Contracts\\Identity\\IAuthService.cs",
@@ -969,12 +965,11 @@
               "RelativeToolTip": "Hrm.Application\\Contracts\\Identity\\IAuthService.cs",
               "ViewState": "AQIAAAQAAAAAAAAAAIAwwAgAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:36:40.307Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:36:40.307Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 49,
               "Title": "AuthService.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Hrm.Identity\\Services\\AuthService.cs",
@@ -982,12 +977,11 @@
               "RelativeToolTip": "Hrm.Identity\\Services\\AuthService.cs",
               "ViewState": "AQIAADYAAAAAAAAAAAAYwBIAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:30:52.947Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:30:52.947Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 50,
               "Title": "UserService.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Services\\UserService.cs",
               "RelativeDocumentMoniker": "Hrm.Identity\\Services\\UserService.cs",
@@ -995,12 +989,11 @@
               "RelativeToolTip": "Hrm.Identity\\Services\\UserService.cs",
               "ViewState": "AQIAAAwAAAAAAAAAAIBZwBIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:31:24.088Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:31:24.088Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 51,
               "Title": "RoleService.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Services\\RoleService.cs",
               "RelativeDocumentMoniker": "Hrm.Identity\\Services\\RoleService.cs",
@@ -1008,12 +1001,11 @@
               "RelativeToolTip": "Hrm.Identity\\Services\\RoleService.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAIBZwBUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:31:16.791Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:31:16.791Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 52,
               "Title": "CreateUserDto.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\User\\CreateUserDto.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\User\\CreateUserDto.cs",
@@ -1021,12 +1013,11 @@
               "RelativeToolTip": "Hrm.Application\\DTOs\\User\\CreateUserDto.cs",
               "ViewState": "AQIAAAsAAAAAAAAAAAAAwBMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:42:12.792Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:42:12.792Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 53,
               "Title": "RoleDto.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Role\\RoleDto.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\Role\\RoleDto.cs",
@@ -1034,12 +1025,11 @@
               "RelativeToolTip": "Hrm.Application\\DTOs\\Role\\RoleDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:45:49.909Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:45:49.909Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 54,
               "Title": "IUserService.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Identity\\IUserService.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Contracts\\Identity\\IUserService.cs",
@@ -1047,12 +1037,11 @@
               "RelativeToolTip": "Hrm.Application\\Contracts\\Identity\\IUserService.cs",
               "ViewState": "AQIAAAUAAAAAAAAAAIBZwAQAAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:36:58.075Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:36:58.075Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 55,
               "Title": "PagedResult.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Models\\PagedResult.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Models\\PagedResult.cs",
@@ -1060,12 +1049,11 @@
               "RelativeToolTip": "Hrm.Application\\Models\\PagedResult.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T10:01:51.511Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T10:01:51.511Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 56,
               "Title": "IRoleService.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Contracts\\Identity\\IRoleService.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Contracts\\Identity\\IRoleService.cs",
@@ -1073,12 +1061,11 @@
               "RelativeToolTip": "Hrm.Application\\Contracts\\Identity\\IRoleService.cs",
               "ViewState": "AQIAAAUAAAAAAAAAAEBdwAIAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:36:49.785Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:36:49.785Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 57,
               "Title": "SelectedModel.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Models\\SelectedModel.cs",
               "RelativeDocumentMoniker": "Hrm.Shared\\Models\\SelectedModel.cs",
@@ -1086,12 +1073,11 @@
               "RelativeToolTip": "Hrm.Shared\\Models\\SelectedModel.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:50:36.967Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:50:36.967Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 58,
               "Title": "SelectedModelChecked.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Models\\SelectedModelChecked.cs",
               "RelativeDocumentMoniker": "Hrm.Shared\\Models\\SelectedModelChecked.cs",
@@ -1099,12 +1085,11 @@
               "RelativeToolTip": "Hrm.Shared\\Models\\SelectedModelChecked.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAIBZwAQAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:50:45.606Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:50:45.606Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 59,
               "Title": "UpdateRoleDtoValidator.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Role\\Validators\\UpdateRoleDtoValidator.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\Role\\Validators\\UpdateRoleDtoValidator.cs",
@@ -1112,12 +1097,11 @@
               "RelativeToolTip": "Hrm.Application\\DTOs\\Role\\Validators\\UpdateRoleDtoValidator.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:47:20.414Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:47:20.414Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 60,
               "Title": "IRoleDtoValidator.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Role\\Validators\\IRoleDtoValidator.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\Role\\Validators\\IRoleDtoValidator.cs",
@@ -1125,12 +1109,11 @@
               "RelativeToolTip": "Hrm.Application\\DTOs\\Role\\Validators\\IRoleDtoValidator.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAABAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:47:07.793Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:47:07.793Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 61,
               "Title": "CreateRoleDtoValidator.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Role\\Validators\\CreateRoleDtoValidator.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\Role\\Validators\\CreateRoleDtoValidator.cs",
@@ -1138,12 +1121,11 @@
               "RelativeToolTip": "Hrm.Application\\DTOs\\Role\\Validators\\CreateRoleDtoValidator.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAIBJwAsAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:46:53.413Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:46:53.413Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 63,
               "Title": "CreateRoleDto.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Role\\CreateRoleDto.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\Role\\CreateRoleDto.cs",
@@ -1151,12 +1133,11 @@
               "RelativeToolTip": "Hrm.Application\\DTOs\\Role\\CreateRoleDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAIBJwAUAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:45:30.087Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:45:30.087Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 62,
               "Title": "IRoleDto.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\Role\\IRoleDto.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\Role\\IRoleDto.cs",
@@ -1164,12 +1145,11 @@
               "RelativeToolTip": "Hrm.Application\\DTOs\\Role\\IRoleDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:45:19.119Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:45:19.119Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 64,
               "Title": "UserDto.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\User\\UserDto.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\User\\UserDto.cs",
@@ -1177,12 +1157,11 @@
               "RelativeToolTip": "Hrm.Application\\DTOs\\User\\UserDto.cs",
               "ViewState": "AQIAACQAAAAAAAAAAAAiwAUAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:43:00.01Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:43:00.01Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 65,
               "Title": "UpdateEmailPhoneDto.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\User\\UpdateEmailPhoneDto.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\User\\UpdateEmailPhoneDto.cs",
@@ -1190,12 +1169,11 @@
               "RelativeToolTip": "Hrm.Application\\DTOs\\User\\UpdateEmailPhoneDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:42:54.569Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:42:54.569Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 66,
               "Title": "PasswordChangeDto.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\DTOs\\User\\PasswordChangeDto.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\DTOs\\User\\PasswordChangeDto.cs",
@@ -1203,12 +1181,11 @@
               "RelativeToolTip": "Hrm.Application\\DTOs\\User\\PasswordChangeDto.cs",
               "ViewState": "AQIAAA0AAAAAAAAAAAAQwAcAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:42:46.646Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:42:46.646Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 68,
               "Title": "ValidationException.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Exceptions\\ValidationException.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Exceptions\\ValidationException.cs",
@@ -1216,12 +1193,11 @@
               "RelativeToolTip": "Hrm.Application\\Exceptions\\ValidationException.cs",
               "ViewState": "AQIAAAgAAAAAAAAAAAAAwAUAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:35:09.733Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:35:09.733Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 67,
               "Title": "Employee.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Models\\Identity\\Employee.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Models\\Identity\\Employee.cs",
@@ -1229,12 +1205,11 @@
               "RelativeToolTip": "Hrm.Application\\Models\\Identity\\Employee.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:07:11.999Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:07:11.999Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 69,
               "Title": "NotFoundException.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Exceptions\\NotFoundException.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Exceptions\\NotFoundException.cs",
@@ -1242,12 +1217,11 @@
               "RelativeToolTip": "Hrm.Application\\Exceptions\\NotFoundException.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:35:05.058Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:35:05.058Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 70,
               "Title": "BadRequestException.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Exceptions\\BadRequestException.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Exceptions\\BadRequestException.cs",
@@ -1255,12 +1229,11 @@
               "RelativeToolTip": "Hrm.Application\\Exceptions\\BadRequestException.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:34:55.491Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:34:55.491Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 71,
               "Title": "UserConfiguration.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Configurations\\UserConfiguration.cs",
               "RelativeDocumentMoniker": "Hrm.Identity\\Configurations\\UserConfiguration.cs",
@@ -1268,12 +1241,11 @@
               "RelativeToolTip": "Hrm.Identity\\Configurations\\UserConfiguration.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAIBZwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:13:40.348Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:13:40.348Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 72,
               "Title": "UserRoleConfiguration.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Configurations\\UserRoleConfiguration.cs",
               "RelativeDocumentMoniker": "Hrm.Identity\\Configurations\\UserRoleConfiguration.cs",
@@ -1281,12 +1253,11 @@
               "RelativeToolTip": "Hrm.Identity\\Configurations\\UserRoleConfiguration.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAIBJwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:13:42.432Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:13:42.432Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 73,
               "Title": "RoleConfiguration.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Configurations\\RoleConfiguration.cs",
               "RelativeDocumentMoniker": "Hrm.Identity\\Configurations\\RoleConfiguration.cs",
@@ -1294,12 +1265,11 @@
               "RelativeToolTip": "Hrm.Identity\\Configurations\\RoleConfiguration.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAIBJwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:13:36.312Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:13:36.312Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 74,
               "Title": "RegistrationResponse.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Models\\Identity\\RegistrationResponse.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Models\\Identity\\RegistrationResponse.cs",
@@ -1307,12 +1277,11 @@
               "RelativeToolTip": "Hrm.Application\\Models\\Identity\\RegistrationResponse.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:07:34.781Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:07:34.781Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 75,
               "Title": "AuthResponse.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Models\\Identity\\AuthResponse.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Models\\Identity\\AuthResponse.cs",
@@ -1320,12 +1289,11 @@
               "RelativeToolTip": "Hrm.Application\\Models\\Identity\\AuthResponse.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:07:06.434Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:07:06.434Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 76,
               "Title": "AuthRequest.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Models\\Identity\\AuthRequest.cs",
               "RelativeDocumentMoniker": "Hrm.Application\\Models\\Identity\\AuthRequest.cs",
@@ -1333,12 +1301,11 @@
               "RelativeToolTip": "Hrm.Application\\Models\\Identity\\AuthRequest.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T09:06:53.973Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T09:06:53.973Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 77,
               "Title": "Hrm.Infrastructure.csproj",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Infrastructure\\Hrm.Infrastructure.csproj",
               "RelativeDocumentMoniker": "Hrm.Infrastructure\\Hrm.Infrastructure.csproj",
@@ -1346,12 +1313,11 @@
               "RelativeToolTip": "Hrm.Infrastructure\\Hrm.Infrastructure.csproj",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-02-27T10:53:52.525Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-27T10:53:52.525Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
+              "DocumentIndex": 78,
               "Title": "InfrastructureServicesRegistration.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Infrastructure\\InfrastructureServicesRegistration.cs",
               "RelativeDocumentMoniker": "Hrm.Infrastructure\\InfrastructureServicesRegistration.cs",
@@ -1359,12 +1325,11 @@
               "RelativeToolTip": "Hrm.Infrastructure\\InfrastructureServicesRegistration.cs",
               "ViewState": "AQIAAAcAAAAAAAAAAAAQwA0AAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:54:12.703Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-27T10:54:12.703Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 78,
+              "DocumentIndex": 79,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\appsettings.Development.json",
               "RelativeDocumentMoniker": "Hrm.Api\\appsettings.Development.json",
@@ -1372,12 +1337,11 @@
               "RelativeToolTip": "Hrm.Api\\appsettings.Development.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-02-27T11:20:57.91Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-27T11:20:57.91Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 79,
+              "DocumentIndex": 80,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Program.cs",
               "RelativeDocumentMoniker": "Hrm.Persistence\\Program.cs",
@@ -1385,12 +1349,11 @@
               "RelativeToolTip": "Hrm.Persistence\\Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:30:50.826Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-27T10:30:50.826Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 80,
+              "DocumentIndex": 81,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Program.cs",
               "RelativeDocumentMoniker": "Hrm.Domain\\Program.cs",
@@ -1398,12 +1361,11 @@
               "RelativeToolTip": "Hrm.Domain\\Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:27:51.215Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-27T10:27:51.215Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 82,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Infrastructure\\Program.cs",
               "RelativeDocumentMoniker": "Hrm.Infrastructure\\Program.cs",
@@ -1411,12 +1373,11 @@
               "RelativeToolTip": "Hrm.Infrastructure\\Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:30:03.025Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-27T10:30:03.025Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
+              "DocumentIndex": 83,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Program.cs",
               "RelativeDocumentMoniker": "Hrm.Identity\\Program.cs",
@@ -1424,12 +1385,11 @@
               "RelativeToolTip": "Hrm.Identity\\Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:29:31.454Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-27T10:29:31.454Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 83,
+              "DocumentIndex": 84,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Program.cs",
               "RelativeDocumentMoniker": "Hrm.Shared\\Program.cs",
@@ -1437,8 +1397,7 @@
               "RelativeToolTip": "Hrm.Shared\\Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T10:28:23.614Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-27T10:28:23.614Z"
             }
           ]
         }

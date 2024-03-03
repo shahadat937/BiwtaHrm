@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Hrm.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9f5af713fb2754b62e58dac08b63d572d6c49eb4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Hrm.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Hrm.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

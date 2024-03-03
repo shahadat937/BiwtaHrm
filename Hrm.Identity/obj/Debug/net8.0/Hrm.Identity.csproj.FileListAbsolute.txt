@@ -146,3 +146,4 @@ D:\Shahadat\BiwtaHrm\Hrm.Identity\bin\Debug\net8.0\Hrm.Shared.dll
 D:\Shahadat\BiwtaHrm\Hrm.Identity\bin\Debug\net8.0\Hrm.Application.pdb
 D:\Shahadat\BiwtaHrm\Hrm.Identity\bin\Debug\net8.0\Hrm.Domain.pdb
 D:\Shahadat\BiwtaHrm\Hrm.Identity\bin\Debug\net8.0\Hrm.Shared.pdb
+D:\Shahadat\BiwtaHrm\Hrm.Identity\obj\Debug\net8.0\Hrm.Identity.sourcelink.json

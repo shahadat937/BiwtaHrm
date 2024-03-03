@@ -47,3 +47,4 @@ D:\Shahadat\BiwtaHrm\Hrm.Application\bin\Debug\net8.0\Hrm.Domain.dll
 D:\Shahadat\BiwtaHrm\Hrm.Application\bin\Debug\net8.0\Hrm.Shared.dll
 D:\Shahadat\BiwtaHrm\Hrm.Application\bin\Debug\net8.0\Hrm.Domain.pdb
 D:\Shahadat\BiwtaHrm\Hrm.Application\bin\Debug\net8.0\Hrm.Shared.pdb
+D:\Shahadat\BiwtaHrm\Hrm.Application\obj\Debug\net8.0\Hrm.Application.sourcelink.json

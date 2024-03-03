@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Hrm.Api.csproj": {}
+    "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Api\\Hrm.Api.csproj": {}
   },
   "projects": {
-    "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Hrm.Api.csproj": {
+    "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Api\\Hrm.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Hrm.Api.csproj",
+        "projectUniqueName": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Api\\Hrm.Api.csproj",
         "projectName": "Hrm.Api",
-        "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\Hrm.Api.csproj",
-        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-        "outputPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Api\\obj\\",
+        "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Api\\Hrm.Api.csproj",
+        "packagesPath": "C:\\Users\\INFINITY\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\INFINITY\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,23 +26,24 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj": {
-                "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj"
+              "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj": {
+                "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj"
               },
-              "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj": {
-                "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj"
+              "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj": {
+                "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj"
               },
-              "D:\\Shahadat\\BiwtaHrm\\Hrm.Infrastructure\\Hrm.Infrastructure.csproj": {
-                "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Infrastructure\\Hrm.Infrastructure.csproj"
+              "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Infrastructure\\Hrm.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Infrastructure\\Hrm.Infrastructure.csproj"
               },
-              "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Hrm.Persistence.csproj": {
-                "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Hrm.Persistence.csproj"
+              "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Persistence\\Hrm.Persistence.csproj": {
+                "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Persistence\\Hrm.Persistence.csproj"
               }
             }
           }
@@ -100,24 +101,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200-preview.23624.5/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj": {
+    "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj",
+        "projectUniqueName": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj",
         "projectName": "Hrm.Application",
-        "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj",
-        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-        "outputPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\obj\\",
+        "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj",
+        "packagesPath": "C:\\Users\\INFINITY\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\INFINITY\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -126,17 +127,18 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj": {
-                "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj"
+              "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj": {
+                "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj"
               },
-              "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj": {
-                "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj"
+              "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj": {
+                "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj"
               }
             }
           }
@@ -193,24 +195,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200-preview.23624.5/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj": {
+    "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj",
         "projectName": "Hrm.Domain",
-        "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj",
-        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-        "outputPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Domain\\obj\\",
+        "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Domain\\Hrm.Domain.csproj",
+        "packagesPath": "C:\\Users\\INFINITY\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\INFINITY\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -219,6 +221,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -263,24 +266,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200-preview.23624.5/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj": {
+    "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj",
+        "projectUniqueName": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj",
         "projectName": "Hrm.Identity",
-        "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj",
-        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-        "outputPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Identity\\obj\\",
+        "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Identity\\Hrm.Identity.csproj",
+        "packagesPath": "C:\\Users\\INFINITY\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Identity\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\INFINITY\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -289,14 +292,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj": {
-                "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj"
+              "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj": {
+                "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj"
               }
             }
           }
@@ -369,24 +373,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200-preview.23624.5/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Shahadat\\BiwtaHrm\\Hrm.Infrastructure\\Hrm.Infrastructure.csproj": {
+    "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Infrastructure\\Hrm.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Shahadat\\BiwtaHrm\\Hrm.Infrastructure\\Hrm.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Infrastructure\\Hrm.Infrastructure.csproj",
         "projectName": "Hrm.Infrastructure",
-        "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Infrastructure\\Hrm.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-        "outputPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Infrastructure\\Hrm.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\INFINITY\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\INFINITY\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -395,6 +399,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -443,24 +448,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200-preview.23624.5/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Hrm.Persistence.csproj": {
+    "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Persistence\\Hrm.Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Hrm.Persistence.csproj",
+        "projectUniqueName": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Persistence\\Hrm.Persistence.csproj",
         "projectName": "Hrm.Persistence",
-        "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\Hrm.Persistence.csproj",
-        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-        "outputPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Persistence\\obj\\",
+        "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Persistence\\Hrm.Persistence.csproj",
+        "packagesPath": "C:\\Users\\INFINITY\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Persistence\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\INFINITY\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -469,14 +474,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj": {
-                "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj"
+              "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj": {
+                "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Application\\Hrm.Application.csproj"
               }
             }
           }
@@ -525,24 +531,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200-preview.23624.5/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj": {
+    "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj",
+        "projectUniqueName": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj",
         "projectName": "Hrm.Shared",
-        "projectPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj",
-        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-        "outputPath": "D:\\Shahadat\\BiwtaHrm\\Hrm.Shared\\obj\\",
+        "projectPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Shared\\Hrm.Shared.csproj",
+        "packagesPath": "C:\\Users\\INFINITY\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\INFINITY\\Desktop\\BIWTA\\BiwtaHrm\\Hrm.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\INFINITY\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -551,6 +557,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -589,7 +596,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200-preview.23624.5/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

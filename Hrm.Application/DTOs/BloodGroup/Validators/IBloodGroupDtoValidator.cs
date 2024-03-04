@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.DTOs.BloodGroup.Validators
 {
-    public interface IBloodGroupDtoValidator
-    {
+
+    
         public class IBloodGroupDtoValidator : AbstractValidator<IBloodGroupDto>
         {
             public IBloodGroupDtoValidator()
@@ -17,5 +17,5 @@ namespace Hrm.Application.DTOs.BloodGroup.Validators
                     .NotEmpty().WithMessage("{PropertyName} is required.").MaximumLength(150).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
             }
         }
-    }
+    
 }

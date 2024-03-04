@@ -11,7 +11,7 @@ namespace Hrm.Application.DTOs.BloodGroup.Validators
     {
         public CreateBloodGroupDtoValidator()
         {
-           
+            Include(new IBloodGroupDtoValidator());
         }
     }
 }

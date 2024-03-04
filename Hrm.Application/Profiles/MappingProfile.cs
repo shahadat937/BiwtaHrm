@@ -14,6 +14,10 @@ namespace Hrm.Application.Profiles
         public MappingProfile()
         {
             CreateMap<BloodGroup, BloodGroupDto>().ReverseMap();
+            CreateMap<BloodGroup, CreateBloodGroupDto> ().ReverseMap();
+
+            CreateMap<EmployeeType, EmployeeTypeDto>().ReverseMap();
+            CreateMap<EmployeeType, CreateEmployeeTypeDto>().ReverseMap();
 
         }
     }

@@ -1,4 +1,5 @@
 /bin/
+/Hrm.Api/appsettings.json
 /Hrm.Api/obj
 /Hrm.Api/bin
 /Hrm.Api/wwwroot

@@ -19,10 +19,8 @@
   </ItemGroup>
 		
   <ItemGroup>
-    <Folder Include="Enum\" />
     <Folder Include="Features\BloodGroup\Handlers\Queries\" />
     <Folder Include="Features\BloodGroup\Requests\Queries\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
 
   <ItemGroup>

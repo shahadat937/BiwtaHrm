@@ -23,7 +23,7 @@ namespace Hrm.Identity
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
 
             services.AddDbContext<HrmIdentityDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("SchoolManagementIdentityConnectionString"),
+                options.UseSqlServer(configuration.GetConnectionString("HrmIdentityConnectionString"),
                 b => b.MigrationsAssembly(typeof(HrmIdentityDbContext).Assembly.FullName)));
 
             //int year = DateTime.Now.Year;
@@ -33,8 +33,8 @@ namespace Hrm.Identity
                 .AddEntityFrameworkStores<HrmIdentityDbContext>().AddDefaultTokenProviders();
 
             services.AddTransient<IAuthService, AuthService>();
-            //services.AddTransient<IRoleService, RoleService>();
-            //services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IUserService, UserService>();
 
             //if (DateTime.Now.Date > day.Date) return services;
             services.AddAuthentication(options =>

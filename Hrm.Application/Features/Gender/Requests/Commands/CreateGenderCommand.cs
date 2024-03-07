@@ -1,4 +1,5 @@
-﻿using Hrm.Application.DTOs.Gender;
+﻿using Hrm.Application.DTOs.BloodGroup;
+using Hrm.Application.DTOs.Gender;
 using Hrm.Application.Responses;
 using MediatR;
 using System;

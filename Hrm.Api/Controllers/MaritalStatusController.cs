@@ -38,5 +38,17 @@ namespace Hrm.Api.Controllers
             var MaritalStatus = await _mediator.Send(new GetMaritalStatusRequest { });
             return Ok(MaritalStatus);
         }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        [Route("update-maritalStatus/{id}")]
+        public async Task<ActionResult> Put([FromBody] MaritalStatusDto MaritalStatus)
+        {
+            var command = new UpdateMaritalStatusCommand { MaritalStatusDto = MaritalStatus };
+            await _mediator.Send(command);
+            return NoContent();
+        }
     }
 }

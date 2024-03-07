@@ -14,5 +14,6 @@ namespace Hrm.Application
 
         public const string BloodGroup = HRMRoutePrefixBase + "blood-group";
         public const string MaritalStatus = HRMRoutePrefixBase + "marital-status";
+
     }
 }

@@ -20,7 +20,7 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200)] 
         [ProducesResponseType(400)]
         [Route("save-maritalStatus")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateMaritalStatusDto maritalStatus)

@@ -33,20 +33,32 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-maritalStatus")]
-        public async Task<ActionResult> GetMaritalStatus()
+        public async Task<ActionResult> Get()
         {
             var MaritalStatus = await _mediator.Send(new GetMaritalStatusRequest { });
             return Ok(MaritalStatus);
         }
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
         [Route("update-maritalStatus/{id}")]
         public async Task<ActionResult> Put([FromBody] MaritalStatusDto MaritalStatus)
         {
             var command = new UpdateMaritalStatusCommand { MaritalStatusDto = MaritalStatus };
+            await _mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesDefaultResponseType]
+        [Route("delete-maritalStatus/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var command = new DeleteMaritalStatusCommand { MaritalStatusId = id };
             await _mediator.Send(command);
             return NoContent();
         }

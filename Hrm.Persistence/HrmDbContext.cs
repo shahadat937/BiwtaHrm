@@ -28,5 +28,6 @@ namespace Hrm.Persistence
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
+        public virtual DbSet<MaritalStatus> MaritalStatus { get; set; } = null!;
     }
 }

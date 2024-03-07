@@ -21,6 +21,8 @@
   <ItemGroup>
     <Folder Include="Features\BloodGroup\Handlers\Queries\" />
     <Folder Include="Features\BloodGroup\Requests\Queries\" />
+    <Folder Include="Features\MaritalStatus\Handlers\Queries\" />
+    <Folder Include="Features\MaritalStatus\Requests\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

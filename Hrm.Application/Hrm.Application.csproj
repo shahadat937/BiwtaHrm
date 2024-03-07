@@ -19,6 +19,9 @@
   </ItemGroup>
 		
   <ItemGroup>
+    <Folder Include="Features\Gender\Handlers\Queries\" />
+    <Folder Include="Features\EmployeeType\Handlers\Queries\" />
+    <Folder Include="Features\EmployeeType\Requests\Queries\" />
     <Folder Include="Features\BloodGroup\Handlers\Queries\" />
     <Folder Include="Features\BloodGroup\Requests\Queries\" />
   </ItemGroup>

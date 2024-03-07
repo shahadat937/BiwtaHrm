@@ -25,8 +25,23 @@ namespace Hrm.Persistence
                     .HasName("PK_BloodGroupId");
                 
             });
+            modelBuilder.Entity<EmployeeType>(entity => {
+
+                entity.HasKey(e => e.EmployeeTypeId)
+                    .HasName("PK_EmployeeTypeId");
+
+            });
+            modelBuilder.Entity<Gender>(entity => {
+
+                entity.HasKey(e => e.GenderId)
+                    .HasName("PK_GenderId");
+
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
+        public virtual DbSet<EmployeeType> EmployeeType { get; set; } = null!;
+        public virtual DbSet<Gender> Gender { get; set; } = null!;
+
     }
 }

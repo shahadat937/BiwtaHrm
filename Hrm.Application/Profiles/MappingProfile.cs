@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Hrm.Application.DTOs.BloodGroup;
+using Hrm.Application.DTOs.EmployeeType;
+using Hrm.Application.DTOs.Gender;
 using Hrm.Domain;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,11 @@ namespace Hrm.Application.Profiles
             CreateMap<BloodGroup, BloodGroupDto>().ReverseMap();
             CreateMap<BloodGroup, CreateBloodGroupDto> ().ReverseMap();
 
+            CreateMap<EmployeeType, EmployeeTypeDto>().ReverseMap();
+            CreateMap<EmployeeType, CreateEmployeeTypeDto>().ReverseMap();
+
+            CreateMap<Gender, GenderDto>().ReverseMap();
+            CreateMap<Gender, CreateGenderDto>().ReverseMap();
         }
     }
 }

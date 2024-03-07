@@ -2,7 +2,9 @@
 using Hrm.Application.DTOs.Gender;
 using Hrm.Application.Features.Gender.Requests.Commands;
 using Hrm.Application.Features.Gender.Requests.Queries;
+using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Responses;
+using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
 using SchoolManagement.Application.DTOs.Common;
 namespace Hrm.Api.Controllers
@@ -19,14 +21,12 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-courses")]
-        public async Task<ActionResult<List<GenderDto>>> Get([FromQuery] QueryParams queryParams)
+        [Route("get-gender")]
+        public async Task<ActionResult> GetGender()
         {
-            var Courses = await _mediator.Send(new GetGenderListRequest { QueryParams = queryParams });
-            return Ok(Courses);
+            var Gender = await _mediator.Send(new GetGenderRequest { });
+            return Ok(Gender);
         }
-
-
 
 
         [HttpPost]

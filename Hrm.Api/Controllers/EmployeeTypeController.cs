@@ -1,7 +1,10 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.EmployeeType;
+using Hrm.Application.Features.EmployeeType.Handlers.Queries;
 using Hrm.Application.Features.EmployeeType.Requests.Commands;
+using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Responses;
+using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
@@ -15,6 +18,14 @@ namespace Hrm.Api.Controllers
         {
             _mediator = mediator;
         }
+        [HttpGet]
+        [Route("get-employeeType")]
+        public async Task<ActionResult> GetEmployeeType()
+        {
+            var EmployeeType = await _mediator.Send(new GetEmployeeTypeRequest { });
+            return Ok(EmployeeType);
+        }
+
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

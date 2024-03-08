@@ -6,7 +6,6 @@ using Hrm.Application.Exceptions;
 using Hrm.Application.Features.Gender.Requests.Queries;
 using Hrm.Application.Models;
 using MediatR;
-using SchoolManagement.Application.DTOs.Common.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +29,7 @@ namespace Hrm.Application.Features.Gender.Handlers.Queries
         {
             IQueryable<Hrm.Domain.Gender> Gender = _GenderRepository.Where(x => true);
 
-            var GenderDtos = _mapper.Map<List<GenderDto>>(Gender);
+            var GenderDtos = await Task.Run(() => _mapper.Map<List<GenderDto>>(Gender));
 
             return GenderDtos;
         }

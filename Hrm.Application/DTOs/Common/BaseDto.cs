@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SchoolManagement.Application.DTOs.Common
+namespace Hrm.Application.DTOs.Common
 {
     public abstract class BaseDto
     {

@@ -15,6 +15,7 @@ builder.Services.ConfigurePersistenceServices(builder.Configuration);
 builder.Services.ConfigureIdentityServices(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddSwaggerDocumentation();
+
 builder.Services.AddControllers().AddNewtonsoftJson(jsonOptions =>
 {
     jsonOptions.SerializerSettings.Converters.Add(new StringEnumConverter());
@@ -35,7 +36,8 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
-
+app.UseDefaultFiles();
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseSwaggerDocumention();
 // Configure the HTTP request pipeline.
@@ -49,4 +51,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+//app.Run();
+await app.RunAsync();

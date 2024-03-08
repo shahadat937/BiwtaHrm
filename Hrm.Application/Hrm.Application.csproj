@@ -17,6 +17,12 @@
     <None Remove="DTOs\User\Validators\**" />
     <None Remove="Features\Users\**" />
   </ItemGroup>
+
+	
+		
+ <ItemGroup>
+   <None Remove="Features\MaritalStatus\Requests\Commands\CreateMaritalStatusCommand.cs~RF519ff0b7.TMP" />
+ </ItemGroup>
 		
   <ItemGroup>
     <Folder Include="Features\BloodGroup\Handlers\Queries\" />

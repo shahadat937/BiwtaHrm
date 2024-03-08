@@ -17,6 +17,7 @@
   </ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Hrm.Application\Hrm.Application.csproj" />
+		<ProjectReference Include="..\Hrm.Domain\Hrm.Domain.csproj" />
 		<ProjectReference Include="..\Hrm.Identity\Hrm.Identity.csproj" />
 		<ProjectReference Include="..\Hrm.Infrastructure\Hrm.Infrastructure.csproj" />
 		<ProjectReference Include="..\Hrm.Persistence\Hrm.Persistence.csproj" />

@@ -3,10 +3,9 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Gender.Validators;
 using Hrm.Application.Features.Gender.Requests.Commands;
 using Hrm.Application.Responses;
-using MediatR;
 using Hrm.Domain;
-using Hrm.Application.DTOs.Gender.Validators;
-using Hrm.Application.Features.Gender.Requests.Commands;
+using MediatR;
+
 
 namespace Hrm.Application.Features.Gender.Handlers.Commands
 {

@@ -9,7 +9,7 @@ namespace Hrm.Application.DTOs.MaritalStatus
     public class CreateMaritalStatusDto : IMaritalStatusDto
     {
         public int MaritalStatusId { get; set; }
-        public string MaritalStatusName { get; set; }
+        public required string MaritalStatusName { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

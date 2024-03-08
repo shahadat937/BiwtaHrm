@@ -22,7 +22,8 @@ using Hrm.Application.Contracts.Identity;
 using Hrm.Shared.Models;
 using Hrm.Application.DTOs.Role;
 using Hrm.Application.Models.Identity;
-using SchoolManagement.Application.DTOs.Common;
+using Hrm.Application.DTOs.Common;
+
 
 namespace Hrm.Identity.Services
 {

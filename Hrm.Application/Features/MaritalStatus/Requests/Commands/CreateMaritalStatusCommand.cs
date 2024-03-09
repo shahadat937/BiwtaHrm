@@ -11,6 +11,6 @@ namespace Hrm.Application.Features.MaritalStatus.Requests.Commands
 {
     public class CreateMaritalStatusCommand : IRequest<BaseCommandResponse>
     {
-        public required CreateMaritalStatusDto MaritalStatusDto { get; set; }
+        public CreateMaritalStatusDto MaritalStatusDto { get; set; }
     }
 }

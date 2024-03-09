@@ -46,8 +46,8 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Put([FromBody] BloodGroupDto bloodGroup)
         {
             var command = new UpdateBloodGroupCommand { BloodGroupDto = bloodGroup };
-            await _mediator.Send(command);
-            return Ok(command);
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
 
@@ -59,8 +59,8 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteBloodGroupCommand { BloodGroupId = id };
-            await _mediator.Send(command);
-            return Ok(command);
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

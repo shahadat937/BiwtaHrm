@@ -6,7 +6,6 @@ using Hrm.Application.Exceptions;
 using Hrm.Application.Features.Religion.Requests.Queries;
 using Hrm.Application.Models;
 using MediatR;
-using SchoolManagement.Application.DTOs.Common.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;

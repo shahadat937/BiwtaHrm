@@ -9,7 +9,6 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
-using SchoolManagement.Application.DTOs.Common;
 namespace Hrm.Api.Controllers
 {
 

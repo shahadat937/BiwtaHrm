@@ -50,6 +50,7 @@ namespace Hrm.Persistence
         public virtual DbSet<EmployeeType> EmployeeType { get; set; } = null!;
         public virtual DbSet<Gender> Gender { get; set; } = null!;
         public virtual DbSet<Religion> Religion { get; set; } = null!;
+        public virtual DbSet<TrainingType> TrainingType { get; set; } = null!;
 
 
     }

@@ -13,6 +13,7 @@ namespace Hrm.Application
         public const string EmployeeType = HRMRoutePrefixBase + "employee-type";
         public const string Gender = HRMRoutePrefixBase + "gender";
         public const string Religion = HRMRoutePrefixBase + "religion";
+        public const string TrainingType = HRMRoutePrefixBase + "training-type";
 
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.Features.BloodGroup.Requests.Commands;
+using Hrm.Application.Features.BloodGroup.Requests.Queries;
+using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
@@ -24,6 +26,14 @@ namespace Hrm.Api.Controllers
             var command = new CreateBloodCommand { BloodGroupDto = bloodGroup };
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-bloodGroup")]
+        public async Task<ActionResult> Get()
+        {
+            var BloodGroup = await _mediator.Send(new GetBloodGroupRequest { });
+            return Ok(BloodGroup);
         }
     }
 }

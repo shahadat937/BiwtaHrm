@@ -17,11 +17,6 @@
     <None Remove="DTOs\User\Validators\**" />
     <None Remove="Features\Users\**" />
   </ItemGroup>
-		
-  <ItemGroup>
-    <Folder Include="Features\BloodGroup\Handlers\Queries\" />
-    <Folder Include="Features\BloodGroup\Requests\Queries\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />

@@ -47,8 +47,8 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Put([FromBody] MaritalStatusDto MaritalStatus)
         {
             var command = new UpdateMaritalStatusCommand { MaritalStatusDto = MaritalStatus };
-            await _mediator.Send(command);
-            return Ok(command);
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HttpDelete]
@@ -59,8 +59,8 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteMaritalStatusCommand { MaritalStatusId = id };
-            await _mediator.Send(command);
-            return Ok(command);
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

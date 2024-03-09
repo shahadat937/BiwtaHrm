@@ -25,9 +25,18 @@ namespace Hrm.Application.Features.MaritalStatus.Handlers.Queries
 
         public async Task<object> Handle(GetMaritalStatusRequest request, CancellationToken cancellationToken)
         {
+            //IQueryable<Hrm.Domain.MaritalStatus> maritalStatus = _maritalStatusRepository.Where(x => true);
+
+            //var MaritalStatusDtos = _mapper.Map<List<MaritalStatusDto>>(maritalStatus);
+
+            //return MaritalStatusDtos;
+
+
+
             IQueryable<Hrm.Domain.MaritalStatus> maritalStatus = _maritalStatusRepository.Where(x => true);
 
-            var MaritalStatusDtos = _mapper.Map<List<MaritalStatusDto>>(maritalStatus);
+            // Use Task.Run to offload the synchronous operation to a background thread
+            var MaritalStatusDtos = await Task.Run(() => _mapper.Map<List<MaritalStatusDto>>(maritalStatus));
 
             return MaritalStatusDtos;
         }

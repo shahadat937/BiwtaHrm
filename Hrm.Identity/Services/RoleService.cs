@@ -7,9 +7,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
-using SchoolManagement.Application.DTOs.Common;
-using SchoolManagement.Application.DTOs.Common.Validators;
 using System.ComponentModel.DataAnnotations;
 using Hrm.Application.Contracts.Identity;
 using Hrm.Shared.Models;

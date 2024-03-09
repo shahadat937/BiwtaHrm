@@ -1,13 +1,15 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Gender;
+using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.Gender.Requests.Commands;
 using Hrm.Application.Features.Gender.Requests.Queries;
+using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
-using SchoolManagement.Application.DTOs.Common;
+
 namespace Hrm.Api.Controllers
 {
 
@@ -38,6 +40,19 @@ namespace Hrm.Api.Controllers
             var command = new CreateGenderCommand { GenderDto = Gender };
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        [Route("update-gender/{id}")]
+        public async Task<ActionResult> Put([FromBody] GenderDto Gender)
+        {
+            var command = new UpdateGenderCommand { GenderDto = Gender };
+            await _mediator.Send(command);
+            return NoContent();
         }
 
         [HttpDelete]

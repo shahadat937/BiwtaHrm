@@ -1,8 +1,8 @@
-﻿using Hrm.Application.DTOs.User;
+﻿using Hrm.Application.DTOs.Common;
+using Hrm.Application.DTOs.User;
 using Hrm.Application.Models;
 using Hrm.Application.Models.Identity;
 using Hrm.Application.Responses;
-using SchoolManagement.Application.DTOs.Common;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;

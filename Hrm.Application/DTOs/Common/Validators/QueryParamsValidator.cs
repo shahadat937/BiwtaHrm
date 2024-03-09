@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SchoolManagement.Application.DTOs.Common.Validators
+namespace Hrm.Application.DTOs.Common.Validators
 {
     public class QueryParamsValidator : AbstractValidator<QueryParams>
     {

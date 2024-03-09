@@ -48,7 +48,7 @@ namespace Hrm.Api.Controllers
         {
             var command = new UpdateMaritalStatusCommand { MaritalStatusDto = MaritalStatus };
             await _mediator.Send(command);
-            return NoContent();
+            return Ok(command);
         }
 
         [HttpDelete]
@@ -60,7 +60,7 @@ namespace Hrm.Api.Controllers
         {
             var command = new DeleteMaritalStatusCommand { MaritalStatusId = id };
             await _mediator.Send(command);
-            return NoContent();
+            return Ok(command);
         }
     }
 }

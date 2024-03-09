@@ -30,15 +30,15 @@ namespace Hrm.Application.Features.MaritalStatus.Handlers.Commands
 
         public async Task<Unit> Handle(UpdateMaritalStatusCommand request, CancellationToken cancellationToken)
         {
-            var respose = new BaseCommandResponse();
+            var response = new BaseCommandResponse();
             var validator = new UpdateMaritalStatusDtoValidator();
             var validationResult = await validator.ValidateAsync(request.MaritalStatusDto);
 
             if (validationResult.IsValid == false)
             {
-                respose.Success = false;
-                respose.Message = "Creation Failed";
-                respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                response.Success = false;
+                response.Message = "Creation Failed";
+                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
             var MaritalStatus = await _unitOfWork.Repository<Hrm.Domain.MaritalStatus>().Get(request.MaritalStatusDto.MaritalStatusId);

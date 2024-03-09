@@ -1,6 +1,10 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.BloodGroup;
+using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.BloodGroup.Requests.Commands;
+using Hrm.Application.Features.BloodGroup.Requests.Queries;
+using Hrm.Application.Features.MaritalStatus.Requests.Commands;
+using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
@@ -24,6 +28,39 @@ namespace Hrm.Api.Controllers
             var command = new CreateBloodCommand { BloodGroupDto = bloodGroup };
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-bloodGroup")]
+        public async Task<ActionResult> Get()
+        {
+            var BloodGroup = await _mediator.Send(new GetBloodGroupRequest { });
+            return Ok(BloodGroup);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesDefaultResponseType]
+        [Route("update-bloodGroup/{id}")]
+        public async Task<ActionResult> Put([FromBody] BloodGroupDto bloodGroup)
+        {
+            var command = new UpdateBloodGroupCommand { BloodGroupDto = bloodGroup };
+            await _mediator.Send(command);
+            return Ok(command);
+        }
+
+
+        [HttpDelete]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesDefaultResponseType]
+        [Route("delete-bloodGroup/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var command = new DeleteBloodGroupCommand { BloodGroupId = id };
+            await _mediator.Send(command);
+            return Ok(command);
         }
     }
 }

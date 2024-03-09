@@ -37,12 +37,20 @@ namespace Hrm.Persistence
                     .HasName("PK_GenderId");
 
             });
+            modelBuilder.Entity<Religion>(entity => {
+
+                entity.HasKey(e => e.ReligionId)
+                    .HasName("PK_ReligionId");
+
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
         public virtual DbSet<MaritalStatus> MaritalStatus { get; set; } = null!;
         public virtual DbSet<EmployeeType> EmployeeType { get; set; } = null!;
         public virtual DbSet<Gender> Gender { get; set; } = null!;
+        public virtual DbSet<Religion> Religion { get; set; } = null!;
+
 
     }
 }

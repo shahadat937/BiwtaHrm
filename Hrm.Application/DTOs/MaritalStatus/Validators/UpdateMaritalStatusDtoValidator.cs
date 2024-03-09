@@ -14,6 +14,6 @@ namespace Hrm.Application.DTOs.MaritalStatus.Validators
             Include(new IMaritalStatusDtoValidators());
 
             RuleFor(x => x.MaritalStatusId).NotNull().WithMessage("{PropertyName} must be present");
-        }
+        }   
     }
 }

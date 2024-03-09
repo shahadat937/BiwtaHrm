@@ -3,6 +3,7 @@ using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.DTOs.EmployeeType;
 using Hrm.Application.DTOs.Gender;
 using Hrm.Application.DTOs.MaritalStatus;
+using Hrm.Application.DTOs.Religion;
 using Hrm.Domain;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,8 @@ namespace Hrm.Application.Profiles
             CreateMap<Gender, CreateGenderDto>().ReverseMap();
             CreateMap<MaritalStatus, MaritalStatusDto>().ReverseMap();
             CreateMap<MaritalStatus, CreateMaritalStatusDto>().ReverseMap();
+            CreateMap<Religion, ReligionDto>().ReverseMap();
+            CreateMap<Religion, CreateReligionDto>().ReverseMap();
 
         }
     }

@@ -17,20 +17,6 @@
     <None Remove="DTOs\User\Validators\**" />
     <None Remove="Features\Users\**" />
   </ItemGroup>
-<<<<<<< HEAD
-=======
-
-	
-		
- <ItemGroup>
-   <None Remove="Features\MaritalStatus\Requests\Commands\CreateMaritalStatusCommand.cs~RF519ff0b7.TMP" />
- </ItemGroup>
-		
-  <ItemGroup>
-    <Folder Include="Features\BloodGroup\Handlers\Queries\" />
-    <Folder Include="Features\BloodGroup\Requests\Queries\" />
-  </ItemGroup>
->>>>>>> 1404a31d82d1449ea9aab3fbffd6109d7df8ad13
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />

@@ -49,5 +49,18 @@ namespace Hrm.Api.Controllers
             await _mediator.Send(command);
             return Ok(command);
         }
+
+
+        [HttpDelete]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesDefaultResponseType]
+        [Route("delete-bloodGroup/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var command = new DeleteBloodGroupCommand { BloodGroupId = id };
+            await _mediator.Send(command);
+            return Ok(command);
+        }
     }
 }

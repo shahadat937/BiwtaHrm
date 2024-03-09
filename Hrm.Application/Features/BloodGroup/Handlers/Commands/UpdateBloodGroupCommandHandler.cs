@@ -14,19 +14,20 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.BloodGroup.Handlers.Commands
 {
-    public class UpdateBloodGroupCommandHandler : IRequestHandler<UpdateBloodGroupCommand, Unit>
+    public class UpdateBloodGroupCommandHandler : IRequestHandler<UpdateBloodGroupCommand, BaseCommandResponse>
     {
 
+        private readonly IHrmRepository<Hrm.Domain.BloodGroup> _bloodGroupRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public UpdateBloodGroupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateBloodGroupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.BloodGroup> bloodGroupRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _bloodGroupRepository = bloodGroupRepository;
         }
 
-        public async Task<Unit> Handle(UpdateBloodGroupCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateBloodGroupCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
             var validator = new UpdateBloodGroupDtoValidators();
@@ -46,12 +47,32 @@ namespace Hrm.Application.Features.BloodGroup.Handlers.Commands
                 throw new NotFoundException(nameof(BloodGroup), request.BloodGroupDto.BloodGroupId);
             }
 
-            _mapper.Map(request.BloodGroupDto, BloodGroup);
+            var bloodGroupName = request.BloodGroupDto.BloodGroupName.ToLower();
 
-            await _unitOfWork.Repository<Hrm.Domain.BloodGroup>().Update(BloodGroup);
-            await _unitOfWork.Save();
+            IQueryable<Hrm.Domain.BloodGroup> bloodGroups = _bloodGroupRepository.Where(x => x.BloodGroupName.ToLower() == bloodGroupName);
 
-            return Unit.Value;
+
+            if (bloodGroups.Any())
+            {
+                response.Success = false;
+                response.Message = "Creation Failed Name already exists.";
+                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+
+            }
+            else
+            {
+
+                _mapper.Map(request.BloodGroupDto, BloodGroup);
+
+                await _unitOfWork.Repository<Hrm.Domain.BloodGroup>().Update(BloodGroup);
+                await _unitOfWork.Save();
+
+                response.Success = true;
+                response.Message = "Update Successful";
+                response.Id = BloodGroup.BloodGroupId;
+
+            }
+            return response;
         }
     }
 }

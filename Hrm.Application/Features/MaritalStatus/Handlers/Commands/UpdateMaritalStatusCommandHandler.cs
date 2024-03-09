@@ -16,19 +16,21 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.MaritalStatus.Handlers.Commands
 {
-    public class UpdateMaritalStatusCommandHandler : IRequestHandler<UpdateMaritalStatusCommand, Unit>
+    public class UpdateMaritalStatusCommandHandler : IRequestHandler<UpdateMaritalStatusCommand, BaseCommandResponse>
     {
 
+        private readonly IHrmRepository<Hrm.Domain.MaritalStatus> _maritalStatusRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateMaritalStatusCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateMaritalStatusCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.MaritalStatus> maritalStatusRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _maritalStatusRepository = maritalStatusRepository;
         }
 
-        public async Task<Unit> Handle(UpdateMaritalStatusCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateMaritalStatusCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
             var validator = new UpdateMaritalStatusDtoValidator();
@@ -41,19 +43,42 @@ namespace Hrm.Application.Features.MaritalStatus.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var MaritalStatus = await _unitOfWork.Repository<Hrm.Domain.MaritalStatus>().Get(request.MaritalStatusDto.MaritalStatusId);
+            var maritalStatusName = request.MaritalStatusDto.MaritalStatusName.ToLower();
 
-            if (MaritalStatus is null)
+            IQueryable<Hrm.Domain.MaritalStatus> maritalStatuses = _maritalStatusRepository.Where(x => x.MaritalStatusName.ToLower() == maritalStatusName);
+
+
+
+            if (maritalStatuses.Any())
             {
-                throw new NotFoundException(nameof(MaritalStatus), request.MaritalStatusDto.MaritalStatusId);
+                response.Success = false;
+                response.Message = "Creation Failed Name already exists.";
+                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+
             }
 
-            _mapper.Map(request.MaritalStatusDto, MaritalStatus);
+            else
+            {
 
-            await _unitOfWork.Repository<Hrm.Domain.MaritalStatus>().Update(MaritalStatus);
-            await _unitOfWork.Save();
+                var MaritalStatus = await _unitOfWork.Repository<Hrm.Domain.MaritalStatus>().Get(request.MaritalStatusDto.MaritalStatusId);
 
-            return Unit.Value;
+                if (MaritalStatus is null)
+                {
+                    throw new NotFoundException(nameof(MaritalStatus), request.MaritalStatusDto.MaritalStatusId);
+                }
+
+                _mapper.Map(request.MaritalStatusDto, MaritalStatus);
+
+                await _unitOfWork.Repository<Hrm.Domain.MaritalStatus>().Update(MaritalStatus);
+                await _unitOfWork.Save();
+
+                response.Success = true;
+                response.Message = "Update Successfull";
+                response.Id = MaritalStatus.MaritalStatusId;
+
+            }
+
+            return response;
         }
     }
 }

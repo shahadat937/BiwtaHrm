@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
+using Hrm.Application.DTOs.MaritalStatus.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.BloodGroup.Requests.Commands;
+using Hrm.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.BloodGroup.Handlers.Commands
 {
-    public class DeleteBloodGroupCommandHandler : IRequestHandler<DeleteBloodGroupCommand>
+    public class DeleteBloodGroupCommandHandler : IRequestHandler<DeleteBloodGroupCommand, BaseCommandResponse>
     {
 
         private readonly IUnitOfWork _unitOfWork;
@@ -23,8 +25,11 @@ namespace Hrm.Application.Features.BloodGroup.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(DeleteBloodGroupCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(DeleteBloodGroupCommand request, CancellationToken cancellationToken)
         {
+            var response = new BaseCommandResponse();
+
+
             var BloodGroup = await _unitOfWork.Repository<Hrm.Domain.BloodGroup>().Get(request.BloodGroupId);
 
             if (BloodGroup == null)
@@ -35,7 +40,11 @@ namespace Hrm.Application.Features.BloodGroup.Handlers.Commands
             await _unitOfWork.Repository<Hrm.Domain.BloodGroup>().Delete(BloodGroup);
             await _unitOfWork.Save();
 
-            return Unit.Value;
+            response.Success = true;
+            response.Message = "Delete Successfull";
+            response.Id = BloodGroup.BloodGroupId;
+
+            return response;
         }
     }
 }

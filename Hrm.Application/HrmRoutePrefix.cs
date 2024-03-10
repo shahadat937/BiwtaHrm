@@ -15,6 +15,7 @@ namespace Hrm.Application
         public const string Religion = HRMRoutePrefixBase + "religion";
         public const string TrainingType = HRMRoutePrefixBase + "training-type";
         public const string ChildStatus = HRMRoutePrefixBase + "religion";
+        public const string Division = HRMRoutePrefixBase + "division";
 
     }
 }

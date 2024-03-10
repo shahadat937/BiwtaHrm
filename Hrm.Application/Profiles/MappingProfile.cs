@@ -33,6 +33,7 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Religion, ReligionDto>().ReverseMap();
             CreateMap<Religion, CreateReligionDto>().ReverseMap();
+
             CreateMap<ChildStatus, ChildStatusDto>().ReverseMap();
             CreateMap<ChildStatus, CreateChildStatusDto>().ReverseMap();
 

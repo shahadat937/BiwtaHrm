@@ -40,9 +40,6 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesDefaultResponseType]
         [Route("update-maritalStatus/{id}")]
         public async Task<ActionResult> Put([FromBody] MaritalStatusDto MaritalStatus)
         {

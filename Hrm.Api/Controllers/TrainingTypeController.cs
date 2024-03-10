@@ -36,5 +36,15 @@ namespace Hrm.Api.Controllers
             return Ok(TrainingType);
         }
 
+
+        [HttpPut]
+        [Route("update-trainingType/{id}")]
+        public async Task<ActionResult> Put([FromBody] TrainingTypeDto trainingTypeDto)
+        {
+            var command = new UpdateTrainingTypeCommand { TrainingTypeDto = trainingTypeDto };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
     }
 }

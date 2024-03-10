@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.DTOs.ChildStatus;
+using Hrm.Application.DTOs.Division;
 using Hrm.Application.DTOs.EmployeeType;
 using Hrm.Application.DTOs.Gender;
 using Hrm.Application.DTOs.MaritalStatus;
@@ -38,6 +39,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<TrainingType, TrainingTypeDto>().ReverseMap();
             CreateMap<TrainingType, CreateTrainingTypeDto>().ReverseMap();
+
+            CreateMap<Division, DivisionDto>().ReverseMap();
+            CreateMap<Division, CreateDivisionDto>().ReverseMap();
         }
     }
 }

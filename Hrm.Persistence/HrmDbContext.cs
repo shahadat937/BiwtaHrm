@@ -55,6 +55,12 @@ namespace Hrm.Persistence
                     .HasName("PK_DivisionId");
 
             });
+            modelBuilder.Entity<Thana_Upazila>(entity => {
+
+                entity.HasKey(e => e.Thana_UpazilaId)
+                    .HasName("PK__Thana_Up__438130B40AC9D830");
+
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -65,6 +71,7 @@ namespace Hrm.Persistence
         public virtual DbSet<TrainingType> TrainingType { get; set; } = null!;
         public virtual DbSet<ChildStatus> ChildStatus { get; set; } = null!;
         public virtual DbSet<Division> Division { get; set; } = null!;
+        public virtual DbSet<Thana_Upazila> Thana_Upazila { get; set; } = null!;
 
     }
 }

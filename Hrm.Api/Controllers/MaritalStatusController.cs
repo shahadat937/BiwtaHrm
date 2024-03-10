@@ -1,19 +1,20 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.BloodGroup;
-using Hrm.Application.DTOs.Thana_Upazila;
+using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.BloodGroup.Requests.Commands;
-using Hrm.Application.Features.Thana_Upazila.Requests.Commands;
+using Hrm.Application.Features.MaritalStatus.Requests.Commands;
+using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hrm.Api.Controllers
 {
-    [Route(HrmRoutePrefix.Thana_Upazila)]
+    [Route(HrmRoutePrefix.MaritalStatus)]
     [ApiController]
-    public class Thana_UpazilaController : ControllerBase
+    public class MaritalStatusController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public Thana_UpazilaController(IMediator mediator)
+        public MaritalStatusController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -21,14 +22,45 @@ namespace Hrm.Api.Controllers
         [HttpPost]
         [ProducesResponseType(200)] 
         [ProducesResponseType(400)]
-        [Route("save-Thana_Upazila")]
-        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateThana_UpazilaDto Thana_Upazila)
+        [Route("save-maritalStatus")]
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateMaritalStatusDto maritalStatus)
         {
-            var command = new CreateThana_UpazilaCommand { Thana_UpazilaDto = Thana_Upazila };
+            var command = new CreateMaritalStatusCommand { MaritalStatusDto = maritalStatus };
             var response = await _mediator.Send(command);
             return Ok(response);
         }
 
 
+        [HttpGet]
+        [Route("get-maritalStatus")]
+        public async Task<ActionResult> Get()
+        {
+            var MaritalStatus = await _mediator.Send(new GetMaritalStatusRequest { });
+            return Ok(MaritalStatus);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesDefaultResponseType]
+        [Route("update-maritalStatus/{id}")]
+        public async Task<ActionResult> Put([FromBody] MaritalStatusDto MaritalStatus)
+        {
+            var command = new UpdateMaritalStatusCommand { MaritalStatusDto = MaritalStatus };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesDefaultResponseType]
+        [Route("delete-maritalStatus/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var command = new DeleteMaritalStatusCommand { MaritalStatusId = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
     }
 }

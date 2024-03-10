@@ -49,9 +49,6 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpDelete]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesDefaultResponseType]
         [Route("delete-maritalStatus/{id}")]
         public async Task<ActionResult> Delete(int id)
         {

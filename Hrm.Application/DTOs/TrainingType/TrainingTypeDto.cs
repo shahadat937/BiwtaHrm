@@ -9,7 +9,7 @@ namespace Hrm.Application.DTOs.TrainingType
     public class TrainingTypeDto : ITrainingTypeDto
     {
         public int TrainingTypeId { get; set; }
-        public string TrainingTypeName { get; set; }
+        public required string TrainingTypeName { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

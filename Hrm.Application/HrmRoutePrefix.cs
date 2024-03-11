@@ -18,6 +18,8 @@ namespace Hrm.Application
         public const string Division = HRMRoutePrefixBase + "division";
         public const string Thana = HRMRoutePrefixBase + "thana";
         public const string Upazila = HRMRoutePrefixBase + "upazila";
+        public const string Union = HRMRoutePrefixBase + "union";
+
 
     }
 }

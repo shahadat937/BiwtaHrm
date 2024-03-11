@@ -67,6 +67,11 @@ namespace Hrm.Persistence
                     .HasName("PK__Upazila__FE787458879EB561");
 
             });
+            modelBuilder.Entity<Union>(entity =>
+            {
+                entity.HasKey(e => e.UnionId)
+                .HasName("PK__Union__E3A71494908469B4");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -79,6 +84,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Division> Division { get; set; } = null!;
         public virtual DbSet<Thana> Thana { get; set; } = null!;
         public virtual DbSet<Upazila> Upazila { get; set; } = null!;
+        public virtual DbSet<Union> Union { get; set; }= null!;
 
     }
 }

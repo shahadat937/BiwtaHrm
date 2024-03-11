@@ -6,7 +6,7 @@ using Hrm.Application.DTOs.EmployeeType;
 using Hrm.Application.DTOs.Gender;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.DTOs.Religion;
-using Hrm.Application.DTOs.Thana_Upazila;
+using Hrm.Application.DTOs.Thana;
 using Hrm.Application.DTOs.TrainingType;
 using Hrm.Domain;
 using System;
@@ -45,8 +45,8 @@ namespace Hrm.Application.Profiles
             CreateMap<Division, DivisionDto>().ReverseMap();
             CreateMap<Division, CreateDivisionDto>().ReverseMap();
 
-            CreateMap<Thana_Upazila, Thana_UpazilaDto>().ReverseMap();
-            CreateMap<Thana_Upazila, CreateThana_UpazilaDto>().ReverseMap();
+            CreateMap<Thana, ThanaDto>().ReverseMap();
+            CreateMap<Thana, CreateThanaDto>().ReverseMap();
         }
     }
 }

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.DTOs.Thana_Upazila
+namespace Hrm.Application.DTOs.Thana
 {
-    public class CreateThana_UpazilaDto : IThana_UpazilaDto
+    public class CreateThanaDto : IThanaDto
     {
-        public int Thana_UpazilaId { get; set; }
-        public string? Thana_UpazilaName { get; set; }
+        public int ThanaId { get; set; }
+        public string? ThanaName { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

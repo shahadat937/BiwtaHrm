@@ -16,7 +16,8 @@ namespace Hrm.Application
         public const string TrainingType = HRMRoutePrefixBase + "training-type";
         public const string ChildStatus = HRMRoutePrefixBase + "religion";
         public const string Division = HRMRoutePrefixBase + "division";
-        public const string Thana = HRMRoutePrefixBase + "thana_upazila";
+        public const string Thana = HRMRoutePrefixBase + "thana";
+        public const string Upazila = HRMRoutePrefixBase + "upazila";
 
     }
 }

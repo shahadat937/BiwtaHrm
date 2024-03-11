@@ -8,6 +8,7 @@ using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.DTOs.Religion;
 using Hrm.Application.DTOs.Thana;
 using Hrm.Application.DTOs.TrainingType;
+using Hrm.Application.DTOs.Upazila;
 using Hrm.Domain;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Thana, ThanaDto>().ReverseMap();
             CreateMap<Thana, CreateThanaDto>().ReverseMap();
+
+            CreateMap<Upazila, UpazilaDto>().ReverseMap();
+            CreateMap<Upazila, CreateUpazilaDto>().ReverseMap();
         }
     }
 }

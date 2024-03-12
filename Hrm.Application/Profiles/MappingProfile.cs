@@ -6,6 +6,7 @@ using Hrm.Application.DTOs.Division;
 using Hrm.Application.DTOs.EmployeeType;
 using Hrm.Application.DTOs.Gender;
 using Hrm.Application.DTOs.MaritalStatus;
+using Hrm.Application.DTOs.PromotionType;
 using Hrm.Application.DTOs.Religion;
 using Hrm.Application.DTOs.Result;
 using Hrm.Application.DTOs.Thana;
@@ -48,6 +49,10 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Division, DivisionDto>().ReverseMap();
             CreateMap<Division, CreateDivisionDto>().ReverseMap();
+
+
+            CreateMap<PromotionType, PromotionTypeDto>().ReverseMap();
+            CreateMap<PromotionType, CreatePromotionTypeDto>().ReverseMap();
 
             CreateMap<Thana, ThanaDto>().ReverseMap();
             CreateMap<Thana, CreateThanaDto>().ReverseMap();

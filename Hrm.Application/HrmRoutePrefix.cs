@@ -23,6 +23,7 @@ namespace Hrm.Application
         public const string Upazila = HRMRoutePrefixBase + "upazila";
         public const string Union = HRMRoutePrefixBase + "union";
         public const string District = HRMRoutePrefixBase + "district";
+        public const string Result = HRMRoutePrefixBase + "Result";
 
 
     }

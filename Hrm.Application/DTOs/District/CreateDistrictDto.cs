@@ -10,7 +10,7 @@ namespace Hrm.Application.DTOs.District
     {
         public int DistrictId { get; set; }
         public string? DistrictName { get; set; }
-        public int MenuPosition { get; set; }
+        public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }
 }

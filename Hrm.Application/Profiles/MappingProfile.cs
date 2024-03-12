@@ -59,8 +59,8 @@ namespace Hrm.Application.Profiles
             CreateMap<Union, CreateUnionDto>().ReverseMap();
             CreateMap<District, DistrictDto>().ReverseMap();
             CreateMap<District, CreateDistrictDto>().ReverseMap();
-            CreateMap<Thana_Upazila, Thana_UpazilaDto>().ReverseMap();
-            CreateMap<Thana_Upazila, CreateThana_UpazilaDto>().ReverseMap();
+         
+
 
             CreateMap<PromotionType, PromotionTypeDto>().ReverseMap();
             CreateMap<PromotionType, CreatePromotionTypeDto>().ReverseMap();

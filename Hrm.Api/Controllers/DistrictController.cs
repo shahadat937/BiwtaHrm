@@ -1,7 +1,7 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.District;
 using Hrm.Application.Features.District.Requests.Commands;
-
+using Hrm.Application.Features.District.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +26,13 @@ namespace Hrm.Api.Controllers
             var command = new CreateDistrictCommand { DistrictDto = District };
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+        [HttpGet]
+        [Route("get-district")]
+        public async Task<ActionResult> Get()
+        {
+            var District = await _mediator.Send(new GetDistrictRequest { });
+            return Ok(District);
         }
 
         [HttpDelete]

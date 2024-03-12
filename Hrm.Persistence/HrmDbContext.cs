@@ -87,6 +87,8 @@ namespace Hrm.Persistence
         public virtual DbSet<TrainingType> TrainingType { get; set; } = null!;
         public virtual DbSet<ChildStatus> ChildStatus { get; set; } = null!;
         public virtual DbSet<Division> Division { get; set; } = null!;
+        public virtual DbSet<Thana_Upazila> Thana_Upazila { get; set; } = null!;
+        public virtual DbSet<PromotionType> PromotionType { get; set; } = null!;
         public virtual DbSet<Thana> Thana { get; set; } = null!;
         public virtual DbSet<Upazila> Upazila { get; set; } = null!;
         public virtual DbSet<Union> Union { get; set; }= null!;

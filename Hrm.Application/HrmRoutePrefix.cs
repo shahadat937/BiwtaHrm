@@ -21,6 +21,8 @@ namespace Hrm.Application
         public const string Union = HRMRoutePrefixBase + "union";
         public const string District = HRMRoutePrefixBase + "district";
 
+        public const string Thana_Upazila = HRMRoutePrefixBase + "thana_upazila";
+        public const string Promotion_Type = HRMRoutePrefixBase + "promotion_type";
 
     }
 }

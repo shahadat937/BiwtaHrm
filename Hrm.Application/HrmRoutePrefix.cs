@@ -19,6 +19,7 @@ namespace Hrm.Application
         public const string Thana = HRMRoutePrefixBase + "thana";
         public const string Upazila = HRMRoutePrefixBase + "upazila";
         public const string Union = HRMRoutePrefixBase + "union";
+        public const string District = HRMRoutePrefixBase + "district";
 
 
     }

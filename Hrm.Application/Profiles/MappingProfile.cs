@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.DTOs.ChildStatus;
+using Hrm.Application.DTOs.District;
 using Hrm.Application.DTOs.Division;
 using Hrm.Application.DTOs.EmployeeType;
 using Hrm.Application.DTOs.Gender;
@@ -8,6 +9,7 @@ using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.DTOs.Religion;
 using Hrm.Application.DTOs.Thana;
 using Hrm.Application.DTOs.TrainingType;
+using Hrm.Application.DTOs.Union;
 using Hrm.Application.DTOs.Upazila;
 using Hrm.Domain;
 using System;
@@ -51,6 +53,11 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Upazila, UpazilaDto>().ReverseMap();
             CreateMap<Upazila, CreateUpazilaDto>().ReverseMap();
+
+            CreateMap<Union, UnionDto>().ReverseMap();
+            CreateMap<Union, CreateUnionDto>().ReverseMap();
+            CreateMap<District, DistrictDto>().ReverseMap();
+            CreateMap<District, CreateDistrictDto>().ReverseMap();
         }
     }
 }

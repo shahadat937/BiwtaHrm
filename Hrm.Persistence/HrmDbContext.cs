@@ -71,11 +71,17 @@ namespace Hrm.Persistence
             {
                 entity.HasKey(e => e.UnionId)
                 .HasName("PK__Union__E3A71494908469B4");
+
             });
             modelBuilder.Entity<District>(entity =>
             {
                 entity.HasKey(e => e.DistrictId)
                 .HasName("PK_DivisionId");
+            });
+            modelBuilder.Entity<Result>(entity =>
+            {
+                entity.HasKey(e => e.ResultId)
+                .HasName("PK__Result__97690208E73A8F36");
             });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
@@ -91,6 +97,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Upazila> Upazila { get; set; } = null!;
         public virtual DbSet<Union> Union { get; set; }= null!;
         public virtual DbSet<District> District { get; set; }=null!;
+        public virtual DbSet<Result> Result { get; set; } = null!;
 
     }
 }

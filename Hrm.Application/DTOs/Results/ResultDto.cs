@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.DTOs.District
+namespace Hrm.Application.DTOs.Result
 {
-    public interface IDistrictDto
+    public class ResultDto: IResultDto
     {
-        public int DistrictId { get; set; }
-        public string? DistrictName { get; set; }
+        public int ResultId { get; set; }
+        public string? ResultName { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

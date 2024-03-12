@@ -7,6 +7,7 @@ using Hrm.Application.DTOs.EmployeeType;
 using Hrm.Application.DTOs.Gender;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.DTOs.Religion;
+using Hrm.Application.DTOs.Result;
 using Hrm.Application.DTOs.Thana;
 using Hrm.Application.DTOs.TrainingType;
 using Hrm.Application.DTOs.Union;
@@ -56,8 +57,12 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Union, UnionDto>().ReverseMap();
             CreateMap<Union, CreateUnionDto>().ReverseMap();
+
             CreateMap<District, DistrictDto>().ReverseMap();
             CreateMap<District, CreateDistrictDto>().ReverseMap();
+            CreateMap<Result, ResultDto>().ReverseMap();
+            CreateMap<Result, CreateResultDto>().ReverseMap();
+
         }
     }
 }

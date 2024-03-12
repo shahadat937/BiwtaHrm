@@ -38,5 +38,24 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+
+
+        [HttpPut]
+        [Route("update-promotionType/{id}")]
+        public async Task<ActionResult> Put([FromBody] PromotionTypeDto promotionTypeDto)
+        {
+            var command = new UpdatePromotionTypeCommand { PromotionTypeDto = promotionTypeDto };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        [Route("delete-promotionType/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var command = new DeletePromotionTypeCommand { PromotionTypeId = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
     }
 }

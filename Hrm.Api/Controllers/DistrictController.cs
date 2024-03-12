@@ -1,7 +1,9 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.District;
+using Hrm.Application.DTOs.District;
 using Hrm.Application.Features.District.Requests.Commands;
 using Hrm.Application.Features.District.Requests.Queries;
+using Hrm.Application.Features.District.Requests.Commands;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +35,17 @@ namespace Hrm.Api.Controllers
         {
             var District = await _mediator.Send(new GetDistrictRequest { });
             return Ok(District);
+        }
+        [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesDefaultResponseType]
+        [Route("update-district/{id}")]
+        public async Task<ActionResult> Put([FromBody] DistrictDto District)
+        {
+            var command = new UpdateDistrictCommand { DistrictDto = District };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HttpDelete]

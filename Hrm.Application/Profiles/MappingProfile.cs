@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.DTOs.ChildStatus;
+using Hrm.Application.DTOs.District;
 using Hrm.Application.DTOs.Division;
 using Hrm.Application.DTOs.EmployeeType;
 using Hrm.Application.DTOs.Gender;
@@ -55,6 +56,8 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Union, UnionDto>().ReverseMap();
             CreateMap<Union, CreateUnionDto>().ReverseMap();
+            CreateMap<District, DistrictDto>().ReverseMap();
+            CreateMap<District, CreateDistrictDto>().ReverseMap();
         }
     }
 }

@@ -55,11 +55,27 @@ namespace Hrm.Persistence
                     .HasName("PK_DivisionId");
 
             });
-            modelBuilder.Entity<Thana_Upazila>(entity => {
+            modelBuilder.Entity<Thana>(entity => {
 
-                entity.HasKey(e => e.Thana_UpazilaId)
-                    .HasName("PK__Thana_Up__438130B40AC9D830");
+                entity.HasKey(e => e.ThanaId)
+                    .HasName("PK__Thana__438130B46C389C43");
 
+            });
+            modelBuilder.Entity<Upazila>(entity => {
+
+                entity.HasKey(e => e.UpazilaId)
+                    .HasName("PK__Upazila__FE787458879EB561");
+
+            });
+            modelBuilder.Entity<Union>(entity =>
+            {
+                entity.HasKey(e => e.UnionId)
+                .HasName("PK__Union__E3A71494908469B4");
+            });
+            modelBuilder.Entity<District>(entity =>
+            {
+                entity.HasKey(e => e.DistrictId)
+                .HasName("PK_DivisionId");
             });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
@@ -71,8 +87,15 @@ namespace Hrm.Persistence
         public virtual DbSet<TrainingType> TrainingType { get; set; } = null!;
         public virtual DbSet<ChildStatus> ChildStatus { get; set; } = null!;
         public virtual DbSet<Division> Division { get; set; } = null!;
+<<<<<<< HEAD
         public virtual DbSet<Thana_Upazila> Thana_Upazila { get; set; } = null!;
         public virtual DbSet<PromotionType> PromotionType { get; set; } = null!;
+=======
+        public virtual DbSet<Thana> Thana { get; set; } = null!;
+        public virtual DbSet<Upazila> Upazila { get; set; } = null!;
+        public virtual DbSet<Union> Union { get; set; }= null!;
+        public virtual DbSet<District> District { get; set; }=null!;
+>>>>>>> 699be4d3562b46ca5f0e3b4fd68181d1c742a1a1
 
     }
 }

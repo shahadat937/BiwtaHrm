@@ -1,0 +1,69 @@
+﻿using Hrm.Application;
+using Hrm.Application.DTOs.BloodGroup;
+using Hrm.Application.DTOs.MaritalStatus;
+using Hrm.Application.DTOs.Thana;
+using Hrm.Application.Features.BloodGroup.Requests.Commands;
+using Hrm.Application.Features.MaritalStatus.Requests.Commands;
+using Hrm.Application.Features.MaritalStatus.Requests.Queries;
+using Hrm.Application.Features.Thana.Requests.Commands;
+using Hrm.Application.Features.Thana.Requests.Queries;
+using Hrm.Domain;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Hrm.Api.Controllers
+{
+    [Route(HrmRoutePrefix.Thana)]
+    [ApiController]
+    public class ThanaController : ControllerBase
+    {
+        private readonly IMediator _mediator;
+        public ThanaController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+        [HttpGet]
+        [Route("get-Thana")]
+        public async Task<ActionResult> Get()
+        {
+            var Thana = await _mediator.Send(new GetThanaRequest { });
+            return Ok(Thana);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(200)] 
+        [ProducesResponseType(400)]
+        [Route("save-Thana")]
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateThanaDto Thana)
+        {
+            var command = new CreateThanaCommand { ThanaDto = Thana };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesDefaultResponseType]
+        [Route("delete-thana-upazila")]
+        public async Task<ActionResult>Delete (int id)
+        {
+            var command = new DeleteThanaCommand { ThanaId = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+        [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesDefaultResponseType]
+        [Route("update-thana-upazila/{id}")]
+        public async Task<ActionResult> Put([FromBody] ThanaDto Thana)
+        {
+            var command = new UpdateThanaCommand { ThanaDto = Thana };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+
+    }
+}

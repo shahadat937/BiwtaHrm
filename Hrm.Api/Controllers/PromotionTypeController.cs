@@ -2,7 +2,9 @@
 using Hrm.Application.DTOs.PromotionType;
 using Hrm.Application.DTOs.TrainingType;
 using Hrm.Application.Features.PromotionType.Request.Commands;
+using Hrm.Application.Features.PromotionType.Request.Queries;
 using Hrm.Application.Features.TrainingType.Requests.Commands;
+using Hrm.Application.Features.TrainingType.Requests.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +18,15 @@ namespace Hrm.Api.Controllers
         public PromotionTypeController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+
+        [HttpGet]
+        [Route("get-promotionType")]
+        public async Task<ActionResult> Get()
+        {
+            var PromotionType = await _mediator.Send(new GetPromotionTypeRequest { });
+            return Ok(PromotionType);
         }
 
         [HttpPost]

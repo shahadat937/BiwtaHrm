@@ -88,6 +88,11 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.BranchId)
                 .HasName("[PK__Branch__A1682FC588459E1D]");
             });
+            modelBuilder.Entity<appraisalFormType>(entity =>
+            {
+                entity.HasKey(e => e.appraisalFormTypeId)
+                .HasName("[PK__appraisa__E4B7DFBFF619F2E8]");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -105,7 +110,7 @@ namespace Hrm.Persistence
         public virtual DbSet<District> District { get; set; }=null!;
         public virtual DbSet<Result> Result { get; set; } = null!;
         public virtual DbSet<Branch> Branch { get; set; } = null!;
-
+        public virtual DbSet<appraisalFormType> appraisalFormType { get; set; } = null !;
 
     }
 }

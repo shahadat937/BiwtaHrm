@@ -3,6 +3,7 @@ using Hrm.Application.DTOs.appraisalFormType;
 using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.DTOs.Branch;
 using Hrm.Application.DTOs.ChildStatus;
+using Hrm.Application.DTOs.Department;
 using Hrm.Application.DTOs.Country;
 using Hrm.Application.DTOs.District;
 using Hrm.Application.DTOs.Division;
@@ -81,6 +82,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<appraisalFormType, appraisalFormTypeDto>().ReverseMap();
             CreateMap<appraisalFormType,CreateappraisalFormTypeDto>().ReverseMap();
+
+            CreateMap<Department, DepartmentDto>().ReverseMap();
+            CreateMap<Department, CreateDepartmentDto>().ReverseMap();
 
             CreateMap<Country, CountryDto>().ReverseMap();
             CreateMap<Country, CreateCountryDto>().ReverseMap();

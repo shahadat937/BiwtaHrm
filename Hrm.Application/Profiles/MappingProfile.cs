@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.DTOs.Branch;
 using Hrm.Application.DTOs.ChildStatus;
 using Hrm.Application.DTOs.Department;
+using Hrm.Application.DTOs.Country;
 using Hrm.Application.DTOs.District;
 using Hrm.Application.DTOs.Division;
 using Hrm.Application.DTOs.EmployeeType;
@@ -84,6 +85,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Department, DepartmentDto>().ReverseMap();
             CreateMap<Department, CreateDepartmentDto>().ReverseMap();
+
+            CreateMap<Country, CountryDto>().ReverseMap();
+            CreateMap<Country, CreateCountryDto>().ReverseMap();
 
         }
     }

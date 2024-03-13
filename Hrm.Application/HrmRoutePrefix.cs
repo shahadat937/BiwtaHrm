@@ -29,6 +29,7 @@ namespace Hrm.Application
         public const string Ward = HRMRoutePrefixBase + "ward";
         public const string appraisalFormType = HRMRoutePrefixBase + "appraisalFormType";
         public const string Department = HRMRoutePrefixBase + "department";
+        public const string Country = HRMRoutePrefixBase + "country";
 
     }
 }

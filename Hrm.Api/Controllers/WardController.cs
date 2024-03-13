@@ -1,8 +1,10 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.MaritalStatus;
+using Hrm.Application.DTOs.Union;
 using Hrm.Application.DTOs.Ward;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
+using Hrm.Application.Features.Union.Requests.Commands;
 using Hrm.Application.Features.Ward.Request.Commands;
 using Hrm.Application.Features.Ward.Request.Queries;
 using Microsoft.AspNetCore.Http;
@@ -37,6 +39,19 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateWardDto ward)
         {
             var command = new CreateWardCommand { WardDto = ward };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesDefaultResponseType]
+        [Route("update-ward/{id}")]
+        public async Task<ActionResult> Put([FromBody] WardDto ward)
+        {
+            var command = new UpdateWardCommand { WardDto = ward };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

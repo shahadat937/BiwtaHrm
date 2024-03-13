@@ -11,6 +11,7 @@ namespace Hrm.Domain
     {
         public int ThanaId { get; set; } 
         public string? ThanaName { get; set;}
+        public int? UpazilaId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
 

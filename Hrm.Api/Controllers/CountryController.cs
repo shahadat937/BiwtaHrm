@@ -50,5 +50,15 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+
+        [HttpDelete]
+        [Route("delete-country/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var command = new DeleteCountryCommand { CountryId = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
     }
 }

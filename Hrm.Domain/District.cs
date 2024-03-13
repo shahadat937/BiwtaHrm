@@ -11,6 +11,7 @@ namespace Hrm.Domain
     {
         public int DistrictId { get; set; }
         public string? DistrictName { get; set; }
+        public int? DivisionId { get; set; }
         public int MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

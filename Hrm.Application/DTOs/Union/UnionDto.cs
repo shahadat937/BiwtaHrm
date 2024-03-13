@@ -10,6 +10,7 @@ namespace Hrm.Application.DTOs.Union
     {
         public int UnionId { get; set; }
         public required string UnionName { get; set; }
+        public int? ThanaId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

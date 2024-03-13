@@ -88,6 +88,11 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.BranchId)
                 .HasName("[PK__Branch__A1682FC588459E1D]");
             });
+            modelBuilder.Entity<Department>(entity =>
+            {
+                entity.HasKey(e => e.DepartmentId)
+                .HasName("[[PK__Departme__B2079BED028213CD]]");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -106,6 +111,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Result> Result { get; set; } = null!;
         public virtual DbSet<Ward> Ward { get; set; } = null!;
         public virtual DbSet<Branch> Branch { get; set; } = null!;
+        public virtual DbSet<Department> Department { get; set; } = null!;
 
 
     }

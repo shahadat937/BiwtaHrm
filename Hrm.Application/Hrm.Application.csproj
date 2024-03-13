@@ -36,7 +36,5 @@
 	<ItemGroup>
 	  <Folder Include="Features\TrainingType\Handlers\Queries\" />
 	  <Folder Include="Features\TrainingType\Requests\Queries\" />
-	  <Folder Include="Features\Ward\Handler\Queries\" />
-	  <Folder Include="Features\Ward\Request\Queries\" />
 	</ItemGroup>
 </Project>

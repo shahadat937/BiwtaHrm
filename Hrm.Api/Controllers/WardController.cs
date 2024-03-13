@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.Union;
 using Hrm.Application.DTOs.Ward;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
+using Hrm.Application.Features.Result.Requests.Commands;
 using Hrm.Application.Features.Union.Requests.Commands;
 using Hrm.Application.Features.Ward.Request.Commands;
 using Hrm.Application.Features.Ward.Request.Queries;
@@ -33,8 +34,6 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
         [Route("save-ward")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateWardDto ward)
         {
@@ -45,13 +44,20 @@ namespace Hrm.Api.Controllers
 
 
         [HttpPut]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesDefaultResponseType]
         [Route("update-ward/{id}")]
         public async Task<ActionResult> Put([FromBody] WardDto ward)
         {
             var command = new UpdateWardCommand { WardDto = ward };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+
+        [HttpDelete]
+        [Route("delete-result/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var command = new DeleteWardCommand { WardId = id };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

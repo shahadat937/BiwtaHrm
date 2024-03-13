@@ -40,5 +40,15 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+
+        [HttpPut]
+        [Route("update-country/{id}")]
+        public async Task<ActionResult> Put([FromBody] CountryDto country)
+        {
+            var command = new UpdateCountryCommand { CountryDto = country };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
     }
 }

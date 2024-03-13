@@ -13,6 +13,7 @@ using Hrm.Application.DTOs.Thana;
 using Hrm.Application.DTOs.TrainingType;
 using Hrm.Application.DTOs.Union;
 using Hrm.Application.DTOs.Upazila;
+using Hrm.Application.DTOs.Ward;
 using Hrm.Domain;
 using System;
 using System.Collections.Generic;
@@ -65,9 +66,12 @@ namespace Hrm.Application.Profiles
 
             CreateMap<District, DistrictDto>().ReverseMap();
             CreateMap<District, CreateDistrictDto>().ReverseMap();
+
             CreateMap<Result, ResultDto>().ReverseMap();
             CreateMap<Result, CreateResultDto>().ReverseMap();
 
+            CreateMap<Ward, WardDto>().ReverseMap();
+            CreateMap<Ward, CreateWardDto>().ReverseMap();
         }
     }
 }

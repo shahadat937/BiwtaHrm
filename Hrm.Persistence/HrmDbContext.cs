@@ -99,6 +99,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Union> Union { get; set; }= null!;
         public virtual DbSet<District> District { get; set; }=null!;
         public virtual DbSet<Result> Result { get; set; } = null!;
+        public virtual DbSet<Ward> Ward { get; set; } = null!;
 
     }
 }

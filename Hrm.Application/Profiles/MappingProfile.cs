@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hrm.Application.DTOs.appraisalFormType;
 using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.DTOs.Branch;
 using Hrm.Application.DTOs.ChildStatus;
@@ -76,6 +77,9 @@ namespace Hrm.Application.Profiles
             
             CreateMap<Branch, BranchDto>().ReverseMap();
             CreateMap<Branch, CreateBranchDto>().ReverseMap();
+
+            CreateMap<appraisalFormType, appraisalFormTypeDto>().ReverseMap();
+            CreateMap<appraisalFormType,CreateappraisalFormTypeDto>().ReverseMap();
 
         }
     }

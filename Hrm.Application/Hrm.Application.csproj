@@ -34,8 +34,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features\Country\Handlers\Queries\" />
-	  <Folder Include="Features\Country\Requests\Queries\" />
 	  <Folder Include="Features\TrainingType\Handlers\Queries\" />
 	  <Folder Include="Features\TrainingType\Requests\Queries\" />
 	</ItemGroup>

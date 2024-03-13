@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Hrm.Application.DTOs.BloodGroup;
+using Hrm.Application.DTOs.Branch;
 using Hrm.Application.DTOs.ChildStatus;
 using Hrm.Application.DTOs.District;
 using Hrm.Application.DTOs.Division;
@@ -72,6 +73,10 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Ward, WardDto>().ReverseMap();
             CreateMap<Ward, CreateWardDto>().ReverseMap();
+            
+            CreateMap<Branch, BranchDto>().ReverseMap();
+            CreateMap<Branch, CreateBranchDto>().ReverseMap();
+
         }
     }
 }

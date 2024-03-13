@@ -106,6 +106,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Result> Result { get; set; } = null!;
         public virtual DbSet<Ward> Ward { get; set; } = null!;
         public virtual DbSet<Branch> Branch { get; set; } = null!;
+        public virtual DbSet<Country> Country { get; set; } = null!;
 
 
     }

@@ -10,6 +10,7 @@ namespace Hrm.Application.DTOs.Division
     {
         public int DivisionId { get; set; }
         public string? DivisionName { get; set; }
+        public int? CountryId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

@@ -10,7 +10,8 @@ namespace Hrm.Domain
     public class Union : BaseDomainEntity
     {
         public int UnionId { get; set; } 
-        public string? UnionName { get; set;}
+        public string? UnionName { get; set; }
+        public int? ThanaId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
 

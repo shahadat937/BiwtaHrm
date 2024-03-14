@@ -32,6 +32,7 @@ namespace Hrm.Application
         public const string Country = HRMRoutePrefixBase + "country";
         public const string Designation = HRMRoutePrefixBase + "designation";
         public const string Shift = HRMRoutePrefixBase + "Shift";
+        public const string Leave = HRMRoutePrefixBase + "Leave";
 
     }
 }

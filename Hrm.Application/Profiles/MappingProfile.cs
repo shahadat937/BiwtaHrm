@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.DTOs.Designation;
 using Hrm.Application.DTOs.Shift;
+using Hrm.Application.DTOs.Leave;
 
 namespace Hrm.Application.Profiles
 {
@@ -88,14 +89,28 @@ namespace Hrm.Application.Profiles
             CreateMap<Department, DepartmentDto>().ReverseMap();
             CreateMap<Department, CreateDepartmentDto>().ReverseMap();
 
-            CreateMap<Country, CountryDto>().ReverseMap();
+            //CreateMap<Country, CountryDto>().ReverseMap();
+            //CreateMap<Country, CreateCountryDto>().ReverseMap();
+
+            //        CreateMap<Country, CountryDto>()
+            //.ForMember(dest => dest.CountrytId, opt => opt.MapFrom(src => src.CountryId))
+            //.ReverseMap();
+            //        CreateMap<Country, CreateCountryDto>().ReverseMap();
+
+
+            CreateMap<Country, CountryDto>().ForMember(dest => dest.CountrytId, opt => opt.MapFrom(src => src.CountryId)).ReverseMap();
             CreateMap<Country, CreateCountryDto>().ReverseMap();
+
+
 
             CreateMap<Designation, DesignationDto>().ReverseMap();
             CreateMap<Designation, CreateDesignationDto>().ReverseMap();
 
             CreateMap<Shift, ShiftDto>().ReverseMap();
             CreateMap<Shift, CreateShiftDto>().ReverseMap();
+
+            CreateMap<Leave, LeaveDto>().ReverseMap();
+            CreateMap<Leave, CreateLeaveDto>().ReverseMap();
 
         }
     }

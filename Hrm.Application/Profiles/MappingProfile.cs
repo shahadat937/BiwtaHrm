@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.DTOs.Designation;
+using Hrm.Application.DTOs.Shift;
 
 namespace Hrm.Application.Profiles
 {
@@ -92,6 +93,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Designation, DesignationDto>().ReverseMap();
             CreateMap<Designation, CreateDesignationDto>().ReverseMap();
+
+            CreateMap<Shift, ShiftDto>().ReverseMap();
+            CreateMap<Shift, CreateShiftDto>().ReverseMap();
 
         }
     }

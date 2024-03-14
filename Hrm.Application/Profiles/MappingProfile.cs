@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hrm.Application.DTOs.Designation;
 
 namespace Hrm.Application.Profiles
 {
@@ -88,6 +89,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Country, CountryDto>().ReverseMap();
             CreateMap<Country, CreateCountryDto>().ReverseMap();
+
+            CreateMap<Designation, DesignationDto>().ReverseMap();
+            CreateMap<Designation, CreateDesignationDto>().ReverseMap();
 
         }
     }

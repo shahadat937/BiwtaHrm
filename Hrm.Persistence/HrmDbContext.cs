@@ -108,6 +108,11 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.LeaveId)
                 .HasName("[[PK_LeaveId]]");
             });
+            modelBuilder.Entity<Subject>(entity =>
+            {
+                entity.HasKey(e => e.SubjectId)
+                .HasName("[[PK__Subject__AC1BA3A81467B256]]");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -131,7 +136,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Designation> Designation { get; set; } = null!;
         public virtual DbSet<Shift> Shift { get; set; } = null!;
         public virtual DbSet<Leave> Leave { get; set; } = null!;
-
+        public virtual DbSet<Subject> Subject { get; set; } = null!;
 
     }
 }

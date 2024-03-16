@@ -137,6 +137,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Shift> Shift { get; set; } = null!;
         public virtual DbSet<Leave> Leave { get; set; } = null!;
         public virtual DbSet<Subject> Subject { get; set; } = null!;
+        public virtual DbSet<GradeType> GradeType { get; set; } = null!;
 
     }
 }

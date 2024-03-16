@@ -3,6 +3,7 @@ using Hrm.Application.DTOs.Country;
 using Hrm.Application.DTOs.Ward;
 using Hrm.Application.Features.Country.Requests.Commands;
 using Hrm.Application.Features.Country.Requests.Queries;
+using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Features.Ward.Request.Commands;
 using Hrm.Application.Features.Ward.Request.Queries;
 using Microsoft.AspNetCore.Http;
@@ -28,8 +29,8 @@ namespace Hrm.Api.Controllers
         [Route("get-country")]
         public async Task<ActionResult> Get()
         {
-            var Ward = await _mediator.Send(new GetCountryRequest { });
-            return Ok(Ward);
+            var country = await _mediator.Send(new GetCountryRequest { });
+            return Ok(country);
         }
 
         [HttpPost]

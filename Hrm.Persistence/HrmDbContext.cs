@@ -93,6 +93,26 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.DepartmentId)
                 .HasName("[[PK__Departme__B2079BED028213CD]]");
             });
+            modelBuilder.Entity<Designation>(entity =>
+            {
+                entity.HasKey(e => e.DesignationId)
+                .HasName("[[PK__Designat__BABD60DE3D706100]]");
+            });
+            modelBuilder.Entity<Shift>(entity =>
+            {
+                entity.HasKey(e => e.ShiftId)
+                .HasName("[[PK_ShiftId]]");
+            });
+            modelBuilder.Entity<Leave>(entity =>
+            {
+                entity.HasKey(e => e.LeaveId)
+                .HasName("[[PK_LeaveId]]");
+            });
+            modelBuilder.Entity<Subject>(entity =>
+            {
+                entity.HasKey(e => e.SubjectId)
+                .HasName("[[PK__Subject__AC1BA3A81467B256]]");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -113,7 +133,10 @@ namespace Hrm.Persistence
         public virtual DbSet<Branch> Branch { get; set; } = null!;
         public virtual DbSet<Department> Department { get; set; } = null!;
         public virtual DbSet<Country> Country { get; set; } = null!;
-
+        public virtual DbSet<Designation> Designation { get; set; } = null!;
+        public virtual DbSet<Shift> Shift { get; set; } = null!;
+        public virtual DbSet<Leave> Leave { get; set; } = null!;
+        public virtual DbSet<Subject> Subject { get; set; } = null!;
 
     }
 }

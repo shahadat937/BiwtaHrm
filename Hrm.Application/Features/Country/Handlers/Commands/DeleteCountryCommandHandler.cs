@@ -1,14 +1,19 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Exceptions;
+using Hrm.Application.Features.Country.Requests.Commands;
+using Hrm.Application.Features.TrainingType.Requests.Commands;
+using Hrm.Application.Responses;
 using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-using Hrm.Application.Features.Stores.Requests.Commands;
-using Hrm.Domain;
-
-namespace SchoolManagement.Application.Features.Countrys.Handlers.Commands
+namespace Hrm.Application.Features.Country.Handlers.Commands
 {
-    public class DeleteCountryCommandHandler : IRequestHandler<DeleteCountryCommand>
+    public class DeleteCountryCommandHandler : IRequestHandler<DeleteCountryCommand, BaseCommandResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -19,26 +24,26 @@ namespace SchoolManagement.Application.Features.Countrys.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(DeleteCountryCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(DeleteCountryCommand request, CancellationToken cancellationToken)
         {
-            var Country = await _unitOfWork.Repository<Country>().Get(request.CountryId);
+            var response = new BaseCommandResponse();
+
+
+            var Country = await _unitOfWork.Repository<Hrm.Domain.Country>().Get(request.CountryId);
 
             if (Country == null)
+            {
                 throw new NotFoundException(nameof(Country), request.CountryId);
-
-            await _unitOfWork.Repository<Country>().Delete(Country);
-            try
-            {
-                await _unitOfWork.Save();
             }
-            catch (Exception ex)
-            {
 
-                Console.WriteLine(ex);
-            }
-            //await _unitOfWork.Save();
+            await _unitOfWork.Repository<Hrm.Domain.Country>().Delete(Country);
+            await _unitOfWork.Save();
 
-            return Unit.Value;
+            response.Success = true;
+            response.Message = "Delete Successfull";
+            response.Id = Country.CountryId;
+
+            return response;
         }
     }
 }

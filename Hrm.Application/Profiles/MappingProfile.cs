@@ -28,6 +28,7 @@ using Hrm.Application.DTOs.Designation;
 using Hrm.Application.DTOs.Shift;
 using Hrm.Application.DTOs.Leave;
 using Hrm.Application.DTOs.Subject;
+using Hrm.Application.DTOs.GradeType;
 
 namespace Hrm.Application.Profiles
 {
@@ -106,6 +107,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Subject, SubjectDto>().ReverseMap();
             CreateMap<Subject, CreateSubjectDto>().ReverseMap();
+
+            CreateMap<GradeType, GradeTypeDto>().ReverseMap();
+            CreateMap<GradeType, CreateGradeTypeDto>().ReverseMap();
         }
     }
 }

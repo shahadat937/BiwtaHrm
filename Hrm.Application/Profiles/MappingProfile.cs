@@ -33,6 +33,7 @@ using Hrm.Application.DTOs.GradeClass;
 using Hrm.Application.DTOs.Grade;
 using Hrm.Application.DTOs.Group;
 using Hrm.Application.DTOs.Punishment;
+using Hrm.Application.DTOs.Reward;
 
 namespace Hrm.Application.Profiles
 {
@@ -123,6 +124,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Punishment, PunishmentDto>().ReverseMap();
             CreateMap<Punishment, CreatePunishmentDto>().ReverseMap();
+
+            CreateMap<Reward, RewardDto>().ReverseMap();
+            CreateMap<Reward, CreateRewardDto>().ReverseMap();
         }
     }
 }

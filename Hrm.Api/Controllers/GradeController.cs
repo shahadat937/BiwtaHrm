@@ -2,7 +2,9 @@
 using Hrm.Application.DTOs.Grade;
 using Hrm.Application.DTOs.GradeType;
 using Hrm.Application.Features.Grade.Requests.Commands;
+using Hrm.Application.Features.Grade.Requests.Queries;
 using Hrm.Application.Features.GradeType.Requests.Commands;
+using Hrm.Application.Features.GradeType.Requests.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +20,14 @@ namespace Hrm.Api.Controllers
             _mediator = mediator;
         }
 
+
+        [HttpGet]
+        [Route("get-grade")]
+        public async Task<ActionResult> Get()
+        {
+            var country = await _mediator.Send(new GetGradeRequest { });
+            return Ok(country);
+        }
 
         [HttpPost]
         [Route("save-grade")]

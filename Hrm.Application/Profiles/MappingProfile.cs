@@ -32,6 +32,8 @@ using Hrm.Application.DTOs.GradeType;
 using Hrm.Application.DTOs.GradeClass;
 using Hrm.Application.DTOs.Grade;
 using Hrm.Application.DTOs.Group;
+using Hrm.Application.DTOs.Punishment;
+using Hrm.Application.DTOs.Reward;
 
 namespace Hrm.Application.Profiles
 {
@@ -97,8 +99,6 @@ namespace Hrm.Application.Profiles
             CreateMap<Country, CountryDto>().ForMember(dest => dest.CountrytId, opt => opt.MapFrom(src => src.CountryId)).ReverseMap();
             CreateMap<Country, CreateCountryDto>().ReverseMap();
 
-
-
             CreateMap<Designation, DesignationDto>().ReverseMap();
             CreateMap<Designation, CreateDesignationDto>().ReverseMap();
 
@@ -121,6 +121,12 @@ namespace Hrm.Application.Profiles
             CreateMap<Grade, CreateGradeDto>().ReverseMap();
             CreateMap<Group, GroupDto>().ReverseMap();
             CreateMap<Group, CreateGroupDto>().ReverseMap();
+
+            CreateMap<Punishment, PunishmentDto>().ReverseMap();
+            CreateMap<Punishment, CreatePunishmentDto>().ReverseMap();
+
+            CreateMap<Reward, RewardDto>().ReverseMap();
+            CreateMap<Reward, CreateRewardDto>().ReverseMap();
         }
     }
 }

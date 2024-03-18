@@ -118,6 +118,11 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.GroupId)
                 .HasName("[[PK__Group__149AF36A7B245A3B]]");
             });
+            modelBuilder.Entity<Punishment>(entity =>
+            {
+                entity.HasKey(e => e.PunishmentId)
+                .HasName("[PK_PunishmentId]");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -145,6 +150,7 @@ namespace Hrm.Persistence
         public virtual DbSet<GradeType> GradeType { get; set; } = null!;
         public virtual DbSet<GradeClass> GradeClass { get; set; } = null!;
         public virtual DbSet<Group> Group { get; set; } = null!;
+        public virtual DbSet<Punishment> Punishment { get; set; } = null!;
 
     }
 }

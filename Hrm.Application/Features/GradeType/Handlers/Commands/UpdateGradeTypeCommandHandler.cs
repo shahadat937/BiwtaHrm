@@ -32,7 +32,7 @@ namespace Hrm.Application.Features.GradeType.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(UpdateGradeTypeCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
-            var validator = new UpdateGradeDtoValidator();
+            var validator = new UpdateGradeTypeDtoValidator();
             var validationResult = await validator.ValidateAsync(request.GradeTypeDto);
 
             if (validationResult.IsValid == false)

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.DTOs.GradeType.Validators
 {
-    public class UpdateGradeDtoValidator : AbstractValidator<GradeTypeDto>
+    public class UpdateGradeTypeDtoValidator : AbstractValidator<GradeTypeDto>
     {
-        public UpdateGradeDtoValidator()
+        public UpdateGradeTypeDtoValidator()
         {
             Include(new IGradeTypeDtoValidator());
             RuleFor(x => x.GradeTypeId).NotNull().WithMessage("{propertyName } must be present");

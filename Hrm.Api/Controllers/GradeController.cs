@@ -2,7 +2,9 @@
 using Hrm.Application.DTOs.Grade;
 using Hrm.Application.DTOs.GradeType;
 using Hrm.Application.Features.Grade.Requests.Commands;
+using Hrm.Application.Features.Grade.Requests.Queries;
 using Hrm.Application.Features.GradeType.Requests.Commands;
+using Hrm.Application.Features.GradeType.Requests.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +21,14 @@ namespace Hrm.Api.Controllers
         }
 
 
+        [HttpGet]
+        [Route("get-grade")]
+        public async Task<ActionResult> Get()
+        {
+            var country = await _mediator.Send(new GetGradeRequest { });
+            return Ok(country);
+        }
+
         [HttpPost]
         [Route("save-grade")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateGradeDto grade)
@@ -28,5 +38,24 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+
+        [HttpPut]
+        [Route("update-grade/{id}")]
+        public async Task<ActionResult> Put([FromBody] GradeDto grade)
+        {
+            var command = new UpdateGradeCommand { GradeDto = grade };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+
+        [HttpDelete]
+        [Route("delete-grade/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var command = new DeleteGradeCommand { GradeId = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
     }
 }

@@ -149,6 +149,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Subject> Subject { get; set; } = null!;
         public virtual DbSet<GradeType> GradeType { get; set; } = null!;
         public virtual DbSet<GradeClass> GradeClass { get; set; } = null!;
+        public virtual DbSet<Grade> Grade { get; set; } = null!;
         public virtual DbSet<Group> Group { get; set; } = null!;
         public virtual DbSet<Punishment> Punishment { get; set; } = null!;
 

@@ -36,6 +36,7 @@ namespace Hrm.Application
         public const string Subject = HRMRoutePrefixBase + "Subject";
         public const string GradeType = HRMRoutePrefixBase + "grade-type";
         public const string GradeClass = HRMRoutePrefixBase + "grade-class";
+        public const string Grade = HRMRoutePrefixBase + "grade";
 
     }
 }

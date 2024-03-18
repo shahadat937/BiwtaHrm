@@ -38,5 +38,14 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+
+        [HttpPut]
+        [Route("update-grade/{id}")]
+        public async Task<ActionResult> Put([FromBody] GradeDto grade)
+        {
+            var command = new UpdateGradeCommand { GradeDto = grade };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
     }
 }

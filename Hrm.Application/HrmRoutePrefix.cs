@@ -41,7 +41,7 @@ namespace Hrm.Application
         public const string Punishment = HRMRoutePrefixBase + "punishment";
         public const string Reward = HRMRoutePrefixBase + "reward";
         public const string HolidayType = HRMRoutePrefixBase + "holidayType";
-
+        public const string Weekend = HRMRoutePrefixBase + "weekend";
 
     }
 }

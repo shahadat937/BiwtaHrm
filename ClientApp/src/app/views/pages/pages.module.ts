@@ -28,4 +28,5 @@ import { IconModule } from '@coreui/icons-angular';
   ]
 })
 export class PagesModule {
+  
 }

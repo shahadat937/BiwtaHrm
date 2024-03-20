@@ -40,6 +40,7 @@ namespace Hrm.Application
         public const string Group = HRMRoutePrefixBase + "group";
         public const string Punishment = HRMRoutePrefixBase + "punishment";
         public const string Reward = HRMRoutePrefixBase + "reward";
+        public const string HolidayType = HRMRoutePrefixBase + "holidayType";
 
 
     }

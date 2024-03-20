@@ -34,6 +34,7 @@ using Hrm.Application.DTOs.Grade;
 using Hrm.Application.DTOs.Group;
 using Hrm.Application.DTOs.Punishment;
 using Hrm.Application.DTOs.Reward;
+using Hrm.Application.DTOs.HolidayType;
 
 namespace Hrm.Application.Profiles
 {
@@ -127,6 +128,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Reward, RewardDto>().ReverseMap();
             CreateMap<Reward, CreateRewardDto>().ReverseMap();
+
+            CreateMap<HolidayType, HolidayTypeDto>().ReverseMap();
+            CreateMap<HolidayType, CreateHolidayTypeDto>().ReverseMap();
         }
     }
 }

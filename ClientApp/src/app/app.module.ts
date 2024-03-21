@@ -38,6 +38,9 @@ import {
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { SharedCustomModule } from './shared/shared.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor } from './core/interceptor/error.interceptor';
+import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
@@ -81,6 +84,8 @@ const APP_CONTAINERS = [
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     IconSetService,
     Title
   ],

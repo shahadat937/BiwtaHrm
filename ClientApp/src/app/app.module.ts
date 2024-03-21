@@ -8,7 +8,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 
 // Import routing module
 import { AppRoutingModule } from './app-routing.module';
-
+import { CoreModule } from './core/core.module';
 // Import app component
 import { AppComponent } from './app.component';
 
@@ -72,7 +72,8 @@ const APP_CONTAINERS = [
     BadgeModule,
     ListGroupModule,
     CardModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    CoreModule
   ],
   providers: [
     {

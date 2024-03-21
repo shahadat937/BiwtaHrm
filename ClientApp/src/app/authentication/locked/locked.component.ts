@@ -9,10 +9,10 @@ import { Role } from 'src/app/core/models/role';
   styleUrls: ['./locked.component.scss'],
 })
 export class LockedComponent implements OnInit {
-  authForm: FormGroup;
+  authForm!: FormGroup;
   submitted = false;
-  userImg: string;
-  userFullName: string;
+  userImg!: string;
+  userFullName!: string;
   hide = true;
   constructor(
     private formBuilder: FormBuilder,
@@ -44,9 +44,7 @@ export class LockedComponent implements OnInit {
         this.router.navigate(['/admin/dashboard/main']);
       } else if (role === Role.SuperAdmin) {
         this.router.navigate(['/teacher/dashboard']);
-      } else if (role === Role.Student) {
-        this.router.navigate(['/student/dashboard']);
-      } else {
+      }  else {
         this.router.navigate(['/authentication/signin']);
       }
     }

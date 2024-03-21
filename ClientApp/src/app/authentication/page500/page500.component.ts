@@ -10,7 +10,7 @@ export class Page500Component implements OnInit {
 
   constructor(private router: Router) {
     const navigation = this.router.getCurrentNavigation();
-    this.error = navigation?.extras?.state?.error;
+    this.error = (navigation?.extras?.state as any)?.error;
    }
 
   ngOnInit(): void {

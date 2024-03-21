@@ -37,7 +37,7 @@ import {
 } from '@coreui/angular';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-
+import { SharedCustomModule } from './shared/shared.module';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
@@ -73,7 +73,8 @@ const APP_CONTAINERS = [
     ListGroupModule,
     CardModule,
     NgScrollbarModule,
-    CoreModule
+    CoreModule,
+    SharedCustomModule
   ],
   providers: [
     {

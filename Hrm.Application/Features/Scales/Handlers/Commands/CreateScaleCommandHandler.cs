@@ -2,8 +2,8 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Scale.Validators;
 using Hrm.Application.Features.Scales.Requests.Commands;
-using Hrm.Application.Features.Scales.Requests.Commands;
 using Hrm.Application.Responses;
+using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,15 +13,16 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Scales.Handlers.Commands
 {
-
     public class CreateScaleCommandHandler : IRequestHandler<CreateScaleCommand, BaseCommandResponse>
     {
+        private readonly IHrmRepository<Hrm.Domain.Scale> _scaleRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CreateScaleCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public CreateScaleCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Scale> scaleRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _scaleRepository = scaleRepository;
         }
         public async Task<BaseCommandResponse> Handle(CreateScaleCommand request, CancellationToken cancellationToken)
         {
@@ -37,14 +38,30 @@ namespace Hrm.Application.Features.Scales.Handlers.Commands
             }
             else
             {
-                var Scale = _mapper.Map<Hrm.Domain.Scale>(request.ScaleDto);
+                var scaleName = request.ScaleDto.ScaleName.ToLower();
 
-                Scale = await _unitOfWork.Repository<Hrm.Domain.Scale>().Add(Scale);
-                await _unitOfWork.Save();
+                IQueryable<Hrm.Domain.Scale> Scale = _scaleRepository.Where(x => x.ScaleName.ToLower() == scaleName);
 
-                response.Success = true;
-                response.Message = "Creation Successful";
-                response.Id = Scale.ScaleId;
+
+                if (Scale.Any())
+                {
+                    response.Success = false;
+                    response.Message = "Creation Failed Name already exists.";
+                    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+
+                }
+                else
+                {
+                    var ScaleName = _mapper.Map<Hrm.Domain.Scale>(request.ScaleDto);
+
+                    ScaleName = await _unitOfWork.Repository<Hrm.Domain.Scale>().Add(ScaleName);
+                    await _unitOfWork.Save();
+
+
+                    response.Success = true;
+                    response.Message = "Creation Successful";
+                    response.Id = ScaleName.ScaleId;
+                }
             }
 
             return response;

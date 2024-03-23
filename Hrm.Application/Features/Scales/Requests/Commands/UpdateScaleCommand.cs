@@ -1,4 +1,5 @@
 ﻿using Hrm.Application.DTOs.Scale;
+using Hrm.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Scales.Requests.Commands
 {
-    public class UpdateScaleCommand : IRequest<Unit>
+ 
+    public class UpdateScaleCommand : IRequest<BaseCommandResponse>
     {
         public ScaleDto ScaleDto { get; set; }
     }

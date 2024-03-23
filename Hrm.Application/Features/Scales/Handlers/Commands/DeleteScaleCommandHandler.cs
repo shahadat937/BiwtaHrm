@@ -3,6 +3,7 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.Scales.Requests.Commands;
 using Hrm.Application.Features.Stores.Requests.Commands;
+using Hrm.Application.Responses;
 using Hrm.Domain;
 using MediatR;
 using System;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Scales.Handlers.Commands
 {
-    public class DeleteScaleCommandHandler : IRequestHandler<DeleteScaleCommand>
+    public class DeleteScaleCommandHandler : IRequestHandler<DeleteScaleCommand, BaseCommandResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -24,26 +25,26 @@ namespace Hrm.Application.Features.Scales.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(DeleteScaleCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(DeleteScaleCommand request, CancellationToken cancellationToken)
         {
-            var Scale = await _unitOfWork.Repository<Scale>().Get(request.ScaleId);
+            var response = new BaseCommandResponse();
+
+
+            var Scale = await _unitOfWork.Repository<Hrm.Domain.Scale>().Get(request.ScaleId);
 
             if (Scale == null)
+            {
                 throw new NotFoundException(nameof(Scale), request.ScaleId);
-
-            await _unitOfWork.Repository<Scale>().Delete(Scale);
-            try
-            {
-                await _unitOfWork.Save();
             }
-            catch (Exception ex)
-            {
 
-                Console.WriteLine(ex);
-            }
-            //await _unitOfWork.Save();
+            await _unitOfWork.Repository<Hrm.Domain.Scale>().Delete(Scale);
+            await _unitOfWork.Save();
 
-            return Unit.Value;
+            response.Success = true;
+            response.Message = "Delete Successfull";
+            response.Id = Scale.ScaleId;
+
+            return response;
         }
     }
 }

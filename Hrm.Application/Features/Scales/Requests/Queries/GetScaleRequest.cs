@@ -11,4 +11,5 @@ namespace Hrm.Application.Features.Scales.Requests.Queries
     public class GetScaleRequest : IRequest<object>
     {
     }
+
 }

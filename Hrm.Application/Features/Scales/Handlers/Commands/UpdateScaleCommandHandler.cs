@@ -13,30 +13,29 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Scales.Handlers.Commands
 {
-
-    public class UpdateScaleCommandHandler : IRequestHandler<UpdateScaleCommand, Unit>
+    public class UpdateScaleCommandHandler : IRequestHandler<UpdateScaleCommand, BaseCommandResponse>
     {
-
+        private readonly IHrmRepository<Hrm.Domain.Scale> _scaleRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public UpdateScaleCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateScaleCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Scale> scaleRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _scaleRepository = scaleRepository;
         }
 
-        public async Task<Unit> Handle(UpdateScaleCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateScaleCommand request, CancellationToken cancellationToken)
         {
-            var respose = new BaseCommandResponse();
+            var response = new BaseCommandResponse();
             var validator = new UpdateScaleDtoValidator();
             var validationResult = await validator.ValidateAsync(request.ScaleDto);
 
             if (validationResult.IsValid == false)
             {
-                respose.Success = false;
-                respose.Message = "Creation Failed";
-                respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                response.Success = false;
+                response.Message = "Creation Failed";
+                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
             var Scale = await _unitOfWork.Repository<Hrm.Domain.Scale>().Get(request.ScaleDto.ScaleId);
@@ -46,12 +45,32 @@ namespace Hrm.Application.Features.Scales.Handlers.Commands
                 throw new NotFoundException(nameof(Scale), request.ScaleDto.ScaleId);
             }
 
-            _mapper.Map(request.ScaleDto, Scale);
+            var scaleName = request.ScaleDto.ScaleName.ToLower();
 
-            await _unitOfWork.Repository<Hrm.Domain.Scale>().Update(Scale);
-            await _unitOfWork.Save();
+            IQueryable<Hrm.Domain.Scale> scales = _scaleRepository.Where(x => x.ScaleName.ToLower() == scaleName);
 
-            return Unit.Value;
+
+            if (scales.Any())
+            {
+                response.Success = false;
+                response.Message = "Creation Failed Name already exists.";
+                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+
+            }
+            else
+            {
+
+                _mapper.Map(request.ScaleDto, Scale);
+
+                await _unitOfWork.Repository<Hrm.Domain.Scale>().Update(Scale);
+                await _unitOfWork.Save();
+
+                response.Success = true;
+                response.Message = "Update Successful";
+                response.Id = Scale.ScaleId;
+
+            }
+            return response;
         }
     }
 }

@@ -14,4 +14,5 @@ namespace Hrm.Application.Features.Scales.Requests.Commands
     {
         public CreateScaleDto ScaleDto { get; set; }
     }
+
 }

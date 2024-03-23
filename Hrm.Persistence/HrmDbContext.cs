@@ -170,6 +170,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Reward> Reward { get; set; }= null!;
         public virtual DbSet<HolidayType> HolidayType { get; set; } = null!;
         public virtual DbSet<Weekend> Weekend { get; set; } = null!;
+        public virtual DbSet<TaskName> TaskName { get; set; } = null!;
         public virtual DbSet<Scale> Scale { get; set; } = null!;
 
     }

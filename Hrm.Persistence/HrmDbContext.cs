@@ -138,6 +138,8 @@ namespace Hrm.Persistence
         public virtual DbSet<Leave> Leave { get; set; } = null!;
         public virtual DbSet<Subject> Subject { get; set; } = null!;
         public virtual DbSet<GradeType> GradeType { get; set; } = null!;
+        public virtual DbSet<TaskName> TaskName { get; set; } = null!;
+        public virtual DbSet<Scale> Scale { get; set; } = null!;
 
     }
 }

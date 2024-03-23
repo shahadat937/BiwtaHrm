@@ -178,5 +178,8 @@ namespace Hrm.Persistence
         public virtual DbSet<Weekend> Weekend { get; set; } = null!;
         public virtual DbSet<Relation> Relation { get; set; } = null!;
         
+        public virtual DbSet<TaskName> TaskName { get; set; } = null!;
+        public virtual DbSet<Scale> Scale { get; set; } = null!;
+
     }
 }

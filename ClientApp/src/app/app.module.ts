@@ -38,9 +38,10 @@ import {
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { SharedCustomModule } from './shared/shared.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorInterceptor } from './core/interceptor/error.interceptor';
 import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
+import { AuthService } from './core/service/auth.service';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
@@ -77,7 +78,8 @@ const APP_CONTAINERS = [
     CardModule,
     NgScrollbarModule,
     CoreModule,
-    SharedCustomModule
+    SharedCustomModule,
+    HttpClientModule
   ],
   providers: [
     {
@@ -87,7 +89,8 @@ const APP_CONTAINERS = [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     IconSetService,
-    Title
+    Title,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

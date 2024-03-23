@@ -35,7 +35,13 @@ namespace Hrm.Application
         public const string Leave = HRMRoutePrefixBase + "Leave";
         public const string Subject = HRMRoutePrefixBase + "Subject";
         public const string GradeType = HRMRoutePrefixBase + "grade-type";
-        public const string TaskName = HRMRoutePrefixBase + "task-name";
+        public const string GradeClass = HRMRoutePrefixBase + "grade-class";
+        public const string Grade = HRMRoutePrefixBase + "grade";
+        public const string Group = HRMRoutePrefixBase + "group";
+        public const string Punishment = HRMRoutePrefixBase + "punishment";
+        public const string Reward = HRMRoutePrefixBase + "reward";
+        public const string HolidayType = HRMRoutePrefixBase + "holidayType";
+        public const string Weekend = HRMRoutePrefixBase + "weekend";
         public const string Scale = HRMRoutePrefixBase + "scale";
 
     }

@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:25971/api/hrm',
-  securityUrl: 'https://localhost:25971/api',
-  fileUrl: 'https://localhost:25971/Content/'
+  apiUrl: 'http://localhost:25971/api/hrm',
+  securityUrl: 'http://localhost:25971/api',
+  fileUrl: 'http://localhost:25971/Content/'
 };
 
 /*

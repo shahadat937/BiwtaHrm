@@ -24,10 +24,12 @@ builder.Services.AddControllers().AddNewtonsoftJson(jsonOptions =>
 
 builder.Services.AddCors(o =>
 {
-    o.AddPolicy("CorsPolicy",
-        builder => builder.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
+    o.AddPolicy("AllowOrigin", options => options
+                 .WithOrigins("http://localhost:4200")
+                 .AllowAnyMethod()
+                 .SetIsOriginAllowed((host) => true)
+              .AllowAnyOrigin()
+              .AllowAnyHeader());
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -46,7 +48,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("AllowOrigin");
 app.UseAuthorization();
 
 app.MapControllers();

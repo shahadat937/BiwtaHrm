@@ -432,13 +432,18 @@ export const navItems: INavData[] = [
   },
   {
     name:'Personal Info. Setup',
-    url: '/base',
+    url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Employee Type',
-        url: '/base/accordion'
+        url: '/bascisetup/add-accounttype'
       },
+      {
+        name: 'Blood Group',
+        url: '/bascisetup/bloodgroup-list'
+      },
+      
       {
         name: 'User Role',
         url: '/base/breadcrumbs'

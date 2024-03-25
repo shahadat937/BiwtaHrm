@@ -1,3 +1,4 @@
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RightSidebarService } from './service/rightsidebar.service';
@@ -12,7 +13,7 @@ import { DynamicScriptLoaderService } from './service/dynamic-script-loader.serv
     RightSidebarService,
     AuthGuard,
     AuthService,
-    DynamicScriptLoaderService,
+    DynamicScriptLoaderService
   ],
 })
 export class CoreModule {

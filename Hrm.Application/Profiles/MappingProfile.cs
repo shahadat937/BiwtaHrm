@@ -37,6 +37,8 @@ using Hrm.Application.DTOs.Reward;
 using Hrm.Application.DTOs.HolidayType;
 using Hrm.Application.DTOs.Weekend;
 using Hrm.Application.DTOs.Overall_EV_Promotion;
+using hrm.Application.DTOs.Modules;
+using Hrm.Application.DTOs.Modules;
 
 namespace Hrm.Application.Profiles
 {
@@ -139,6 +141,12 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Overall_EV_Promotion, Overall_EV_PromotionDto>().ReverseMap();
             CreateMap<Overall_EV_Promotion, CreateOverall_EV_PromotionDto>().ReverseMap();
+
+            #region Modules Mapping    
+            CreateMap<Module, ModuleDto>().ReverseMap();
+            CreateMap<Module, ModuleFeatureDto>().ReverseMap();
+            CreateMap<Module, CreateModuleDto>().ReverseMap();
+            #endregion
         }
     }
 }

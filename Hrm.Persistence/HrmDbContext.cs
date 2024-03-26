@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -171,6 +172,8 @@ namespace Hrm.Persistence
         public virtual DbSet<HolidayType> HolidayType { get; set; } = null!;
         public virtual DbSet<Weekend> Weekend { get; set; } = null!;
         public virtual DbSet<Overall_EV_Promotion> Overall_EV_Promotion { get; set; } = null!;
+        public virtual DbSet<Domain.Module> Module { get; set; } = null!;
+        public virtual DbSet<Feature> Feature { get; set; } = null!;
 
     }
 }

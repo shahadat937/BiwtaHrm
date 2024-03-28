@@ -441,7 +441,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Blood Group',
-        url: '/bascisetup/bloodGroup'
+        url: '/bascisetup/blood-group'
       },
       {
         name: 'User Role',

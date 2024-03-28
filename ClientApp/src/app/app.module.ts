@@ -3,7 +3,7 @@ import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@a
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { MatTableModule } from '@angular/material/table';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 
 // Import routing module
@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent } from './containers';
 
 import {
+  
   AvatarModule,
   BadgeModule,
   BreadcrumbModule,
@@ -33,7 +34,7 @@ import {
   SharedModule,
   SidebarModule,
   TabsModule,
-  UtilitiesModule
+  UtilitiesModule,
 } from '@coreui/angular';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
@@ -51,6 +52,7 @@ const APP_CONTAINERS = [
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS],
   imports: [
+    MatTableModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,

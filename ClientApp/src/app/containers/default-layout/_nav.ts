@@ -543,7 +543,7 @@ export const navItems: INavData[] = [
   },
   {
     name:'Education Setup',
-    url: '/base',
+    url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
@@ -560,7 +560,11 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Result',
-        url: '/base/carousel'
+        url: '/bascisetup/result-list'
+      },
+      {
+        name: 'Result2',
+        url: '/bascisetup/result-list2'
       },
       {
         name: 'Thana',
@@ -573,6 +577,10 @@ export const navItems: INavData[] = [
       {
         name: 'Ward',
         url: '/base/navs'
+      },
+      {
+        name: 'Gender',
+        url: '/bascisetup/gender-list'
       }
      
     ]

@@ -6,6 +6,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { MaterialModule } from './material.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { IconModule } from '@coreui/icons-angular';
 @NgModule({
   declarations: [],
   imports: [
@@ -25,6 +29,10 @@ import { MaterialModule } from './material.module';
     NgbModule,
     NgxSpinnerModule,
     MaterialModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatIconModule,
+    IconModule
   ],
 })
 export class SharedCustomModule {}

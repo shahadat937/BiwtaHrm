@@ -1,8 +1,8 @@
-export interface BloodGroup {
+export class BloodGroup {
 
-        bloodGroupId: number,
-        bloodGroupName: string,
-        //"menuPosition": 0,
-        isActive: true
+        bloodGroupId: number=0;
+        bloodGroupName: string="";
+        menuPosition: number=0;
+        isActive: boolean=true
    
 }

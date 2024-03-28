@@ -8,10 +8,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardModule, FormModule, GridModule, ButtonModule, ButtonGroupModule, DropdownModule, SharedModule, ListGroupModule } from '@coreui/angular';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
+import { DistrictComponent } from './district/district.component';
 
 
 @NgModule({
-  declarations: [NewAccountTypeComponent, BloodGroupComponent],
+  declarations: [NewAccountTypeComponent, BloodGroupComponent, DistrictComponent],
   imports: [
     CommonModule,
     BasicSetupRoutingModule,

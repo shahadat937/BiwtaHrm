@@ -30,7 +30,7 @@
                 <button [disabled]="
                 DistrictForm.invalid 
               " cButton class="me-1" color="primary" type="submit">
-                  Submit
+              {{btnText}}
                 </button>
                 <button  cButton color="secondary" (click)="resetForm()" >
                   Reset
@@ -76,9 +76,9 @@
                       
                       <th mat-header-cell *matHeaderCellDef> Action </th>
                       <td mat-cell *matCellDef="let element">
-                        <button class="custom-button" ><svg [cIcon]="icons.cilPencil" size="xl" title="List Icon"></svg></button>   
+                        <button class="custom-button"       [routerLink]="['/bascisetup/update-district', element.districtId]"><svg [cIcon]="icons.cilPencil" size="xl" title="List Icon"></svg></button>   
                         <button  class="custom-button" (click)="delete(element)"> <svg  [cIcon]="icons.cilTrash" size="xl" title="List Icon"></svg></button>
-                       
+             
                         </td>
                     
                     </ng-container>

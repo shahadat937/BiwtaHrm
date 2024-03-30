@@ -1,77 +1,47 @@
-<svg [cIcon]="icons.cilList" size="xl" title="List Icon"></svg>
+<!-- <svg [cIcon]="icons.cilList" size="xl" title="List Icon"></svg>
 <svg [cIcon]="icons.cilShieldAlt" size="xl" title="List Icon"></svg>
 <svg [cIcon]="icons.cil3d" size="xl" title="List Icon"></svg>
 <svg [cIcon]="icons.cilAccountLogout" size="xl" title="List Icon"></svg>
 <svg [cIcon]="icons.cilActionRedo" size="xl" title="List Icon"></svg>
 <svg [cIcon]="icons.cilActionRedo" size="xl" title="List Icon"></svg>
-<svg [cIcon]="icons.cilAirplaneMode" size="xl" title="List Icon"></svg>
+<svg [cIcon]="icons.cilAirplaneMode" size="xl" title="List Icon"></svg> -->
 
 <c-card>
     <c-card-header>Blood Group </c-card-header>
     <c-card-body>
    
-      <form #customStylesForm="ngForm"
-        
+      <form #BloodGroupForm="ngForm"
+        (submit)="onSubmit(BloodGroupForm)"
         [gutter]="3"
-        [validated]="customStylesValidated"
         novalidate
         cForm cRow
         class="needs-validation"
   >
     <c-col [md]="6">
 
-      <label cLabel for="validationCustom01">Blood Name </label>
-      <input cFormControl id="validationCustom01" required type="text" value="Mark" />
-      <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
+      <label cLabel for="validationCustom01">Blood Name<span class="text-danger">*</span></label>
+      <input [(ngModel)]="bloodGroupService.bloodGroups.bloodGroupName" name="bloodGroupName"
+      #BloodGroupName="ngModel" placeholder="Enter Blood Group Name"
+       cFormControl id="validationCustom01" required type="text" value="Mark" />
+       <div class="text-left text-danger"
+       *ngIf="!BloodGroupName.valid&&BloodGroupName.touched">
+       Blood Name  is required
+     </div>
     </c-col>
     <c-col [md]="6">
       <label cLabel for="validationCustom02">Is Active </label>
-      <input cFormControl id="validationCustom02" required type="text" value="Otto" />
+      <input [(ngModel)]="bloodGroupService.bloodGroups.isActive" name="isActive"
+       cFormControl id="validationCustom02"  type="text" value="Otto" />
       <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
-    </c-col>
-    <!-- <c-col [md]="4">
-      <label cLabel for="validationCustomUsername">Username</label>
-      <c-input-group class="has-validation">
-        <span cInputGroupText id="inputGroupPrepend">&#64;</span>
-        <input aria-describedby="inputGroupPrepend"
-               cFormControl
-               id="validationCustomUsername"
-               required
-               type="text"
-        />
-        <c-form-feedback [valid]="false">Please choose a username.</c-form-feedback>
-      </c-input-group>
-    </c-col>
-    <c-col [md]="6">
-      <label cLabel for="validationCustom03">City</label>
-      <input cFormControl id="validationCustom03" required type="text" />
-      <c-form-feedback [valid]="false">Please provide a valid city.</c-form-feedback>
-    </c-col> -->
-    <!-- <c-col [md]="3">
-      <label cLabel for="validationCustom04">State</label>
-      <select cSelect id="validationCustom04" required>
-        <option value="">Choose...</option>
-        <option>...</option>
-      </select>
-      <c-form-feedback [valid]="false">Please provide a valid State.</c-form-feedback>
-    </c-col>
-    <c-col [md]="3">
-      <label cLabel for="validationCustom05">Zip code</label>
-      <input cFormControl id="validationCustom05" required type="text" />
-      <c-form-feedback [valid]="false">Please provide a valid zip.</c-form-feedback>
+    
     </c-col>
     <c-col [xs]="12">
-      <c-form-check>
-        <input cFormCheckInput id="invalidCheck" name="invalidCheck" required type="checkbox" />
-        <label cFormCheckLabel for="invalidCheck">Agree to terms and conditions</label>
-      </c-form-check>
-      <c-form-feedback [valid]="false">You must agree before submitting.</c-form-feedback>
-    </c-col> -->
-    <c-col [xs]="12">
-      <button cButton class="me-1" color="primary" type="submit">
-        Submit form
+      <button [disabled]="
+      BloodGroupForm.invalid 
+    " cButton class="me-1" color="primary" type="submit">
+        Submit
       </button>
-      <button  cButton color="secondary" type="reset">
+      <button  cButton color="secondary" (click)="resetForm()" >
         Reset
       </button>
     </c-col> 
@@ -85,38 +55,41 @@
         <div class="example-header">
            
           
-            <mat-form-field>
-              <input matInput #filter  placeholder="Search Here..">
-              <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value" (click)="filter.value=''; applyFilter('');">
-                <mat-icon class="mat-icon-rtl-mirror" svgIcon="thumb-up"></mat-icon>
-              </button>
-            </mat-form-field>
+          <mat-form-field>
+            <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here..">
+            <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value" (click)="filter.value=''; applyFilter('');">
+            
+            </button>
+          </mat-form-field>
           </div>
         <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource">
       
           <!-- Position Column -->
-          <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          <ng-container matColumnDef="slNo">
+            <th mat-header-cell *matHeaderCellDef> Serial No</th>
+            <td mat-cell *matCellDef="let element;let i =index"> {{ i + 1 }}</td>
+          </ng-container>
+          <ng-container matColumnDef="bloodGroupName">
+            <th mat-header-cell *matHeaderCellDef> Blood Group Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.bloodGroupName}} </td>
           </ng-container>
       
           <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <ng-container matColumnDef="isActive">
+            <th mat-header-cell *matHeaderCellDef> Is Active </th>
+            <td mat-cell *matCellDef="let element"> {{element.isActive}} </td>
           </ng-container>
       
-          <!-- Weight Column -->
-          <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef> Weight </th>
-            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-          </ng-container>
-      
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef> Symbol </th>
-            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          <ng-container matColumnDef="Action">
+            
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element">
+              <button class="custom-button" ><svg [cIcon]="icons.cilPencil" size="xl" title="List Icon"></svg></button>   
+              <button  class="custom-button" (click)="delete(element)"> <svg  [cIcon]="icons.cilTrash" size="xl" title="List Icon"></svg></button>
+             
+              </td>
+          
           </ng-container>
       
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -135,3 +108,20 @@
     <c-card>
 
   
+      <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast
+          (timer)="onTimerChange($event)"
+          (visibleChange)="onVisibleChange($event)"
+          [visible]="visible">
+          <c-toast-header>
+    
+            CoreUI for Angular
+          </c-toast-header>
+          <c-toast-body>
+            <p>This is static toast message in a toaster</p>
+            <c-progress thin>
+              <c-progress-bar [value]="percentage"></c-progress-bar>
+            </c-progress>
+          </c-toast-body>
+        </c-toast>
+      </c-toaster>

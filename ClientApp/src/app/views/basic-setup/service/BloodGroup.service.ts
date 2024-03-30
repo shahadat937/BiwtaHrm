@@ -2,18 +2,21 @@ import { environment } from '../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BloodGroup } from '../model/BloodGroup';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class BloodGroupService {
   baseUrl = environment.apiUrl;
-  BloodGroups: BloodGroup[] = [];
-  constructor(private http: HttpClient) { }
+  bloodGroups: BloodGroup;
+  constructor(private http: HttpClient) {
+    this.bloodGroups = new BloodGroup();
+   }
   find(id: number) {
     return this.http.get<BloodGroup>(this.baseUrl + '/blood-group/get-bloodGroupDetail/' + id);
   }
-  getAll(id: number) {
-    return this.http.get<BloodGroup>(this.baseUrl + '/blood-group/get-bloodGroup');
+  getAll():Observable<BloodGroup[]> {
+    return this.http.get<BloodGroup[]>(this.baseUrl + '/blood-group/get-bloodGroup');
   }
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/blood-group/update-bloodGroup/'+id, model);

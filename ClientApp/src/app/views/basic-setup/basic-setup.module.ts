@@ -4,15 +4,21 @@ import { CommonModule } from '@angular/common';
 import { BasicSetupRoutingModule } from './basic-setup-routing.module';
 import { NewAccountTypeComponent } from './accounttype/new-accounttype/new-accounttype.component';
 import { BloodGroupComponent } from './blood-group/blood-group.component';
+import {DistrictComponent} from './district/district.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CardModule, FormModule, GridModule, ButtonModule, ButtonGroupModule, DropdownModule, SharedModule, ListGroupModule } from '@coreui/angular';
+import { CardModule, FormModule, GridModule, ButtonModule, ButtonGroupModule, DropdownModule, SharedModule, ListGroupModule, ToastModule, ProgressModule } from '@coreui/angular';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
-import { DistrictComponent } from './district/district.component';
+import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.component';
 
 
 @NgModule({
-  declarations: [NewAccountTypeComponent, BloodGroupComponent, DistrictComponent],
+  declarations: 
+  [
+    NewAccountTypeComponent, 
+    BloodGroupComponent,
+    DistrictComponent,
+  ],
   imports: [
     CommonModule,
     BasicSetupRoutingModule,
@@ -29,7 +35,9 @@ import { DistrictComponent } from './district/district.component';
     DropdownModule,
     SharedModule,
     ListGroupModule,
-    SharedCustomModule
+    SharedCustomModule,
+    ToastModule,
+    ProgressModule
   ]
 })
 export class BasicSetupModule { }

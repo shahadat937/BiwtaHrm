@@ -3,9 +3,11 @@ using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.BloodGroup.Requests.Commands;
 using Hrm.Application.Features.BloodGroup.Requests.Queries;
+using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Responses;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
@@ -36,6 +38,20 @@ namespace Hrm.Api.Controllers
         {
             var BloodGroup = await _mediator.Send(new GetBloodGroupRequest { });
             return Ok(BloodGroup);
+        }
+        [HttpGet]
+        [Route("get-bloodGroupDetail/{id}")]
+        public async Task<ActionResult<BloodGroupDto>> Get(int id)
+        {
+            var BloodGroups = await _mediator.Send(new GetBloodGroupDetailRequest { BloodGroupId = id });
+            return Ok(BloodGroups);
+        }
+        [HttpGet]
+        [Route("get-selectedBloodGroups")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedBloodGroup()
+        {
+            var bloodgroup = await _mediator.Send(new GetSelectedBloodGroupRequest { });
+            return Ok(bloodgroup);
         }
 
         [HttpPut]

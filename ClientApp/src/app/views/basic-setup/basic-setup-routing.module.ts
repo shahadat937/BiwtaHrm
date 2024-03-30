@@ -13,6 +13,9 @@ const routes: Routes = [
     path: 'blood-group',
     component: BloodGroupComponent,
   },
+  { path: 'update-bloodgroup/:bloodGroupId', 
+  component: BloodGroupComponent, 
+  }
 
 ];
 

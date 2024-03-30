@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { brandSet, cil3d, cil4k, cilAccountLogout, cilActionRedo, cilAirplaneMode, cilList, cilPaperPlane, cilPencil, cilShieldAlt, cilTrash } from '@coreui/icons';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-blood-group',
@@ -17,6 +18,7 @@ export class BloodGroupComponent implements OnInit,OnDestroy,AfterViewInit{
   position = 'top-end';
   visible = false;
   percentage = 0;
+  btnText:string | undefined;
   @ViewChild("BloodGroupForm", { static: true }) BloodGroupForm!: NgForm;
   subscription: Subscription = new Subscription;
   displayedColumns: string[] = ['slNo','bloodGroupName', 'isActive','Action'];
@@ -40,13 +42,41 @@ export class BloodGroupComponent implements OnInit,OnDestroy,AfterViewInit{
   matSort!: MatSort;
 constructor( 
   public bloodGroupService:BloodGroupService,
-  private snackBar: MatSnackBar
+  private snackBar: MatSnackBar,
+  private route: ActivatedRoute
   )
   {
+  //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('bloodGroupId');
+      if (id) {
+        this.btnText = 'Update';
+        this.bloodGroupService.find(+id).subscribe(
+          res => {
+            console.log(res);
+            this.BloodGroupForm?.form.patchValue(res);
+          }
+        );
+      }
+      else {
 
+        this.btnText = 'Submit';
+      }
+    });
+    // if (id) {
+    //   this.btnText = 'Update';
+    //   this.bloodGroupService.find(+id).subscribe(
+    //     res => {
+    //     console.log(res)   
+    //     this.BloodGroupForm?.form.patchValue(res)      
+    //     }
+    //   );
+    // }
+  
  }
   ngOnInit(): void {
     this.getALlBloodGroup();
+  
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -88,6 +118,7 @@ constructor(
    }
    resetForm() {
     console.log(this.BloodGroupForm?.form.value )
+    this.btnText = 'Submit';
     if (this.BloodGroupForm?.form != null) {
       console.log(this.BloodGroupForm?.form )
       this.BloodGroupForm.form.reset();
@@ -101,6 +132,7 @@ constructor(
     }
     
   }
+
   getALlBloodGroup(){ 
    this.subscription=this.bloodGroupService.getAll().subscribe(item=>{
      this.dataSource=new MatTableDataSource(item);
@@ -111,7 +143,16 @@ constructor(
    
   }
    onSubmit(form:NgForm){
-    this.subscription=this.bloodGroupService.submit(form?.value).subscribe(res=>{ 
+    const id = this.BloodGroupForm.form.get('bloodGroupId')?.value;
+    if (id) {
+      this.bloodGroupService.update(+id,this.BloodGroupForm.value).subscribe(response => {
+        this.getALlBloodGroup()
+        this.resetForm();
+      }, err => {
+        console.log(err)
+      })
+    }else{
+   this.subscription=this.bloodGroupService.submit(form?.value).subscribe(res=>{ 
       // this.snackBar.open('Information Inserted Successfully ', '', {
       //   duration: 2000,
       //   verticalPosition: 'top',
@@ -125,6 +166,7 @@ constructor(
    },err=>{
      console.log(err);
    })
+    }
  
   }
   delete(element:any){
@@ -132,7 +174,7 @@ constructor(
     this.bloodGroupService.delete(element.bloodGroupId).subscribe(res=>{
       this.getALlBloodGroup()
     },(err) => { 
-
+   console.log(err)
     });
     
   }

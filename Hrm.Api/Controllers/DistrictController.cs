@@ -36,6 +36,16 @@ namespace Hrm.Api.Controllers
             var District = await _mediator.Send(new GetDistrictRequest { });
             return Ok(District);
         }
+
+        [HttpGet]
+        [Route("get-districtbyid/{id}")]
+        public async Task<ActionResult<DistrictDto>> Get(int id)
+        {
+            var District = await _mediator.Send(new GetDistrictByIdRequest { DistrictId = id });
+            return Ok(District);
+
+        }
+
         [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

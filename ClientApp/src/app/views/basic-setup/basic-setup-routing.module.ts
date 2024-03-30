@@ -21,6 +21,9 @@ const routes: Routes = [
     path: 'district',
     component: DistrictComponent,
   },
+  { path: 'update-district/:districtId', 
+  component: DistrictComponent, 
+  },
 
 ];
 

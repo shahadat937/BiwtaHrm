@@ -507,7 +507,7 @@ export const navItems: INavData[] = [
   },
   {
     name:'Address Setup',
-    url: '/base',
+    url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
@@ -520,7 +520,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'District',
-        url: '/base/cards'
+        url: '/bascisetup/district'
       },
       {
         name: 'Upazila',

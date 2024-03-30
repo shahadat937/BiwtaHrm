@@ -32,7 +32,8 @@ import { IconModule } from '@coreui/icons-angular';
     MatTableModule,
     MatPaginatorModule,
     MatIconModule,
-    IconModule
+    IconModule,
+   
   ],
 })
 export class SharedCustomModule {}

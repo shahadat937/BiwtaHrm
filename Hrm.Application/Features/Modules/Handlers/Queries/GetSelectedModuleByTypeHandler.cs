@@ -25,8 +25,8 @@ namespace Hrm.Application.Features.Modules.Handlers.Queries
             ICollection<Module> Modules = await _ModuleRepository.FilterAsync(x => x.IsActive);
             List<SelectedModel> selectModels = Modules.Select(x => new SelectedModel
             {
-                Text = x.Title,
-                Value = x.ModuleId
+                Name = x.Title,
+                Id = x.ModuleId
             }).ToList();
             return selectModels;
         }

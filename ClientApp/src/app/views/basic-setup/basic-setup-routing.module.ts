@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NewAccountTypeComponent } from './accounttype/new-accounttype/new-accounttype.component';
 import { BloodGroupComponent } from './blood-group/blood-group.component';
 import { ScaleComponent } from './scale/scale.component';
+import {DistrictComponent} from './district/district.component';
 
 const routes: Routes = [
 
@@ -17,6 +18,13 @@ const routes: Routes = [
   {
     path: 'scale',
     component: ScaleComponent
+  },
+  { path: 'update-bloodgroup/:bloodGroupId',
+    component: BloodGroupComponent,
+  },
+  {
+    path: 'district',
+    component: DistrictComponent,
   },
 
 ];

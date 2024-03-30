@@ -22,7 +22,7 @@ export class BloodGroupComponent implements OnInit,OnDestroy,AfterViewInit{
   displayedColumns: string[] = ['slNo','bloodGroupName', 'isActive','Action'];
 
   dataSource = new MatTableDataSource<any>();
-  icons = { 
+  icons = {
     'cilList': cilList,
   'cilShieldAlt': cilShieldAlt,
   'cilPaperPlane': cilPaperPlane,
@@ -38,7 +38,7 @@ export class BloodGroupComponent implements OnInit,OnDestroy,AfterViewInit{
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-constructor( 
+constructor(
   public bloodGroupService:BloodGroupService,
   private snackBar: MatSnackBar
   )
@@ -58,8 +58,8 @@ constructor(
     }
   }
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); 
-    filterValue = filterValue.toLowerCase(); 
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
   toggleToast() {
@@ -82,9 +82,9 @@ constructor(
       bloodGroupName:"",
       menuPosition: 0,
       isActive:true
-      
+
     }
-    
+
    }
    resetForm() {
     console.log(this.BloodGroupForm?.form.value )
@@ -96,45 +96,45 @@ constructor(
         bloodGroupName:"",
         menuPosition:0,
         isActive:true
-       
+
       });
     }
-    
+
   }
-  getALlBloodGroup(){ 
+  getALlBloodGroup(){
    this.subscription=this.bloodGroupService.getAll().subscribe(item=>{
      this.dataSource=new MatTableDataSource(item);
      this.dataSource.paginator = this.paginator;
      this.dataSource.sort = this.matSort;
-   
+
     });
-   
+
   }
    onSubmit(form:NgForm){
-    this.subscription=this.bloodGroupService.submit(form?.value).subscribe(res=>{ 
+    this.subscription=this.bloodGroupService.submit(form?.value).subscribe(res=>{
       // this.snackBar.open('Information Inserted Successfully ', '', {
       //   duration: 2000,
       //   verticalPosition: 'top',
       //   horizontalPosition: 'right',
       //   panelClass: 'snackbar-success'
-      // });  
+      // });
       this.toggleToast();
     this.getALlBloodGroup()
     this.resetForm();
-  
+
    },err=>{
      console.log(err);
    })
- 
+
   }
   delete(element:any){
     console.log(element)
     this.bloodGroupService.delete(element.bloodGroupId).subscribe(res=>{
       this.getALlBloodGroup()
-    },(err) => { 
+    },(err) => {
 
     });
-    
+
   }
 }
 

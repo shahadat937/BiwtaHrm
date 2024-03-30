@@ -8,6 +8,7 @@ import { brandSet, cil3d, cil4k, cilAccountLogout, cilActionRedo, cilAirplaneMod
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
   selector: 'app-blood-group',
@@ -43,10 +44,13 @@ export class BloodGroupComponent implements OnInit,OnDestroy,AfterViewInit{
 constructor( 
   public bloodGroupService:BloodGroupService,
   private snackBar: MatSnackBar,
-  private route: ActivatedRoute
+  private route: ActivatedRoute,
+  private router: Router,
+  private confirmService: ConfirmService
   )
   {
   //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
+  
     this.route.paramMap.subscribe(params => {
       const id = params.get('bloodGroupId');
       if (id) {
@@ -63,18 +67,11 @@ constructor(
         this.btnText = 'Submit';
       }
     });
-    // if (id) {
-    //   this.btnText = 'Update';
-    //   this.bloodGroupService.find(+id).subscribe(
-    //     res => {
-    //     console.log(res)   
-    //     this.BloodGroupForm?.form.patchValue(res)      
-    //     }
-    //   );
-    // }
+
   
  }
   ngOnInit(): void {
+   
     this.getALlBloodGroup();
   
   }
@@ -148,6 +145,7 @@ constructor(
       this.bloodGroupService.update(+id,this.BloodGroupForm.value).subscribe(response => {
         this.getALlBloodGroup()
         this.resetForm();
+        this.router.navigate(["/bascisetup/blood-group"]);  
       }, err => {
         console.log(err)
       })
@@ -170,12 +168,16 @@ constructor(
  
   }
   delete(element:any){
-    console.log(element)
-    this.bloodGroupService.delete(element.bloodGroupId).subscribe(res=>{
-      this.getALlBloodGroup()
-    },(err) => { 
-   console.log(err)
-    });
+    this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{
+      if (result) {
+        this.bloodGroupService.delete(element.bloodGroupId).subscribe(res=>{
+          this.getALlBloodGroup()
+        },(err) => { 
+       console.log(err)
+        });
+      }
+    })
+   
     
   }
 }

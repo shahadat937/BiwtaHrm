@@ -2,19 +2,23 @@ import { environment } from '../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {District}  from  './../model/district'
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DistrictService  {
   baseUrl = environment.apiUrl;
-  Districts: District[] = [];
-  constructor(private http: HttpClient) { }
-  find(id: number) {
+  districts: District;
+  constructor(private http: HttpClient) {
+    this.districts=new District();
+   }
+
+  getById(id: number) {
     return this.http.get<District>(this.baseUrl + '/district/get-districtbyid/' + id);
   }
-  getAll(id: number) {
-    return this.http.get<District>(this.baseUrl + '/district/get-district');
+  getAll():Observable<District[]> {
+    return this.http.get<District[]>(this.baseUrl + '/district/get-district');
   }
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/district/update-district/'+id, model);

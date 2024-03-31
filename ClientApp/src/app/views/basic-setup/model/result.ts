@@ -1,7 +1,8 @@
-export interface Result {
-    genderId: number;
-    genderName: string;
-    //menuPosition: string;
-    isActive: boolean;
-   
-  }
+export class Result {
+
+  resultId: number=0;
+    resultName: string="";
+    menuPosition: number=0;
+    isActive:boolean= true
+
+}

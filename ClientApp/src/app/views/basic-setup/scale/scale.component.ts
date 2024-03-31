@@ -1,3 +1,4 @@
+import { ScaleService } from './../service/Scale.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { AfterViewInit, Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
@@ -6,23 +7,23 @@ import { Subscription } from 'rxjs';
 import { brandSet, cil3d, cil4k, cilAccountLogout, cilActionRedo, cilAirplaneMode, cilList, cilPaperPlane, cilPencil, cilShieldAlt, cilTrash } from '@coreui/icons';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {DistrictService} from './../service/district.service'
 
 @Component({
-  selector: 'app-district',
-  templateUrl: './district.component.html',
-  styleUrl: './district.component.scss'
+  selector: 'app-scale',
+  templateUrl: './scale.component.html',
+  styleUrl: './scale.component.scss'
 })
-export class DistrictComponent implements OnInit,OnDestroy,AfterViewInit{
+export class ScaleComponent implements OnInit,OnDestroy,AfterViewInit{
+
   position = 'top-end';
   visible = false;
   percentage = 0;
-  @ViewChild("DistrictForm", { static: true }) DistrictForm!: NgForm;
+  @ViewChild("ScaleForm", { static: true }) ScaleForm!: NgForm;
   subscription: Subscription = new Subscription;
-  displayedColumns: string[] = ['slNo','districtName', 'isActive','Action'];
+  displayedColumns: string[] = ['slNo','scaleName','basicPay','gradeId','isActive','Action'];
 
   dataSource = new MatTableDataSource<any>();
-  icons = { 
+  icons = {
     'cilList': cilList,
   'cilShieldAlt': cilShieldAlt,
   'cilPaperPlane': cilPaperPlane,
@@ -34,19 +35,26 @@ export class DistrictComponent implements OnInit,OnDestroy,AfterViewInit{
   'cilPencil': cilPencil,
   'cilTrash': cilTrash,
   };
+  // ScaleService: ScaleService; // Define ScaleService
+
+  gradeOptions: any[] = [
+    { id: 1, name: 'Grade 1' },
+    { id: 2, name: 'Grade 2' },
+    { id: 3, name: 'Grade 3' },
+  ]
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-constructor( 
-  public districtService:DistrictService,
+constructor(
+  public ScaleService:ScaleService,
   private snackBar: MatSnackBar
   )
   {
 
  }
   ngOnInit(): void {
-    this.getALlDistrict();
+    this.getALlScale();
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -58,8 +66,8 @@ constructor(
     }
   }
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); 
-    filterValue = filterValue.toLowerCase(); 
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
   toggleToast() {
@@ -74,67 +82,68 @@ constructor(
   onTimerChange($event: number) {
     this.percentage = $event * 25;
   }
-  initaialDistrict(form?:NgForm){
+  initaialScale(form?:NgForm){
     if(form!=null)
     form.resetForm();
-    this.districtService.districts={
-      districtId:0,
-      districtName:"",
+    this.ScaleService.scales = {
+      scaleId:0,
+      scaleName:"",
+      basicPay:0,
+      gradeId:0,
       menuPosition: 0,
       isActive:true
-      
     }
-    
+
    }
    resetForm() {
-    console.log(this.DistrictForm?.form.value )
-    if (this.DistrictForm?.form != null) {
-      console.log(this.DistrictForm?.form )
-      this.DistrictForm.form.reset();
-      this.DistrictForm.form.patchValue({
-        districtId:0,
-        districtName:"",
-        menuPosition:0,
+    console.log(this.ScaleForm?.form.value )
+    if (this.ScaleForm?.form != null) {
+      console.log(this.ScaleForm?.form )
+      this.ScaleForm.form.reset();
+      this.ScaleForm.form.patchValue({
+        scaleId:0,
+        scaleName:"",
+        basicPay:0,
+        gradeId:0,
+        menuPosition: 0,
         isActive:true
-       
       });
     }
-    
+
   }
-  getALlDistrict(){ 
-   this.subscription=this.districtService.getAll().subscribe(item=>{
+  getALlScale(){
+   this.subscription=this.ScaleService.getAll().subscribe(item=>{
      this.dataSource=new MatTableDataSource(item);
      this.dataSource.paginator = this.paginator;
      this.dataSource.sort = this.matSort;
-   
+
     });
-   
+
   }
    onSubmit(form:NgForm){
-    this.subscription=this.districtService.submit(form?.value).subscribe(res=>{ 
+    this.subscription=this.ScaleService.submit(form?.value).subscribe(res=>{
       // this.snackBar.open('Information Inserted Successfully ', '', {
       //   duration: 2000,
       //   verticalPosition: 'top',
       //   horizontalPosition: 'right',
       //   panelClass: 'snackbar-success'
-      // });  
+      // });
       this.toggleToast();
-    this.getALlDistrict()
+    this.getALlScale()
     this.resetForm();
-  
+
    },err=>{
      console.log(err);
    })
- 
+
   }
   delete(element:any){
     console.log(element)
-    this.districtService.delete(element.bloodGroupId).subscribe(res=>{
-      this.getALlDistrict()
-    },(err) => { 
+    this.ScaleService.delete(element.scaleId).subscribe(res=>{
+      this.getALlScale()
+    },(err) => {
 
     });
-    
+
   }
 }
-

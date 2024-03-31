@@ -23,7 +23,7 @@ export class BloodGroupService {
   }
   submit(model: any) {
     return this.http.post(this.baseUrl + '/blood-group/save-bloodGroup', model);
-  } 
+  }
   delete(id:number){
     return this.http.delete(this.baseUrl + '/blood-group/delete-bloodGroup/'+id);
   }

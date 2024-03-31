@@ -1,7 +1,7 @@
-export interface District { 
+export class District { 
 
-        districtId: number,
-        districtName: string,
-        //"menuPosition": 0,
-        isActive: true
+        districtId: number=0;
+        districtName: string="";
+        menuPosition: number=0;
+        isActive: boolean=true
 }

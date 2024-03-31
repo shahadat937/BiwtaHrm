@@ -267,13 +267,13 @@ export const navItems: INavData[] = [
     name:'Add Employee',
     url: '/base',
     iconComponent: { name: 'cil-puzzle' },
-   
+
   },
   {
     name:'Manage Employee',
     url: '/base',
     iconComponent: { name: 'cil-puzzle' },
-   
+
   },
   {
     title: true,
@@ -308,7 +308,7 @@ export const navItems: INavData[] = [
         name: 'Attendance Report',
         url: '/base/list-group'
       }
-     
+
     ]
   },
   {
@@ -328,8 +328,8 @@ export const navItems: INavData[] = [
         name: 'Manage leave',
         url: '/base/breadcrumbs'
       }
-   
-     
+
+
     ]
   },
   {
@@ -354,8 +354,8 @@ export const navItems: INavData[] = [
         name: 'Transfer posting History',
         url: '/base/breadcrumbs'
       }
-   
-     
+
+
     ]
   },
   {
@@ -380,8 +380,8 @@ export const navItems: INavData[] = [
         name: 'Incr.& Promo. History',
         url: '/base/breadcrumbs'
       }
-   
-     
+
+
     ]
   },
   {
@@ -406,8 +406,8 @@ export const navItems: INavData[] = [
         name: 'Officer Form',
         url: '/base/breadcrumbs'
       }
-   
-     
+
+
     ]
   },
   {
@@ -418,13 +418,13 @@ export const navItems: INavData[] = [
     name:'Role',
     url: '/base',
     iconComponent: { name: 'cil-puzzle' },
-   
+
   },
   {
     name:'User',
     url: '/base',
     iconComponent: { name: 'cil-puzzle' },
-   
+
   },
   {
     title: true,
@@ -481,7 +481,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Scale',
-        url: '/base/progress'
+        url: '/bascisetup/scale'
       },
       {
         name: 'Religion',
@@ -538,7 +538,7 @@ export const navItems: INavData[] = [
         name: 'Ward',
         url: '/base/navs'
       }
-     
+
     ]
   },
   {
@@ -582,7 +582,7 @@ export const navItems: INavData[] = [
         name: 'Gender',
         url: '/bascisetup/gender-list'
       }
-     
+
     ]
   },
   {
@@ -602,7 +602,7 @@ export const navItems: INavData[] = [
         name: 'Institute Name',
         url: '/base/cards'
       }
-     
+
     ]
   },
   {
@@ -622,7 +622,7 @@ export const navItems: INavData[] = [
         name: 'Account Type',
         url: '/base/cards'
       }
-     
+
     ]
   },
   {
@@ -638,7 +638,7 @@ export const navItems: INavData[] = [
         name: 'Competence',
         url: '/base/breadcrumbs'
       }
-     
+
     ]
   },
   {
@@ -654,7 +654,7 @@ export const navItems: INavData[] = [
         name: 'Address',
         url: '/base/breadcrumbs'
       }
-     
+
     ]
   },
 ];

@@ -1,0 +1,29 @@
+table {
+  width: 100%;
+}
+.custom-button {
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+.mat-snack-bar-container {
+  background-color: #4CAF50; /* Change background color to green */
+  color: white; /* Change text color to white */
+  border-radius: 4px; /* Add border radius for rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow */
+}
+
+/* Custom styles for MatSnackBar action button */
+.mat-snack-bar-action {
+  color: white; /* Change action button text color to white */
+  font-weight: bold; /* Make action button text bold */
+}
+
+/* Custom panel class */
+.snackbar-success {
+  background-color: #4CAF50 !important; /* Change background color to green */
+  color: white !important; /* Change text color to white */
+}

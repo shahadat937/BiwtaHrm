@@ -1,0 +1,164 @@
+
+<c-card>
+  <c-card-header>Scale </c-card-header>
+  <c-card-body>
+
+    <form #ScaleForm="ngForm" (submit)="onSubmit(ScaleForm)" [gutter]="3" novalidate cForm cRow
+      class="needs-validation">
+
+      <c-col [md]="6">
+        <label cLabel for="validationCustom01">Scale Name<span class="text-danger">*</span></label>
+        <input [(ngModel)]="ScaleService.scales.scaleName" name="scaleName"
+          #ScaleName="ngModel" placeholder="Enter Scale Name" cFormControl id="validationCustom01" required
+          type="text" value="Mark" />
+        <div class="text-left text-danger" *ngIf="!ScaleName.valid&&ScaleName.touched">
+          Scale Name is required
+        </div>
+      </c-col>
+
+      <c-col [md]="6">
+        <label cLabel for="validationCustom01">Basic Pay<span class="text-danger">*</span></label>
+        <input [(ngModel)]="ScaleService.scales.basicPay" name="basicPay"
+          #BasicPay="ngModel" placeholder="Enter Basic Pay" cFormControl id="validationCustom01" required
+          type="text" value="Mark" />
+        <div class="text-left text-danger" *ngIf="!BasicPay.valid&&BasicPay.touched">
+          BasicPay is required
+        </div>
+      </c-col>
+
+      <c-col [md]="6">
+
+        <label cLabel for="validationCustom01">Grade Id<span class="text-danger">*</span></label>
+        <input [(ngModel)]="ScaleService.scales.gradeId" name="gradeId"
+          #GradeId="ngModel" placeholder="Enter Grade Id" cFormControl id="validationCustom01" required
+          type="text" value="Mark" />
+        <div class="text-left text-danger" *ngIf="!GradeId.valid&&GradeId.touched">
+          GradeId is required
+        </div>
+        <!-- <c-col [md]="6">
+          <label cLabel for="gradeId">Grade Id<span class="text-danger">*</span></label>
+          <select [(ngModel)]="ScaleService.scales.gradeId" name="gradeId" #GradeId="ngModel" cFormControl id="gradeId" required>
+            <option *ngFor="let grade of gradeOptions" [ngValue]="grade.id">{{ grade.name }}</option>
+          </select>
+          <div class="text-left text-danger" *ngIf="!GradeId.valid && GradeId.touched">
+            GradeId is required
+          </div>
+        </c-col> -->
+        <!-- <mat-form-field>
+          <mat-label>Grade</mat-label>
+          <mat-select>
+            @for (grade of grades; track grade) {
+              <mat-option [value]="grade.value">{{food.viewValue}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <h4>Basic native select</h4>
+        <mat-form-field>
+          <mat-label>Cars</mat-label>
+          <select matNativeControl required>
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+
+          </select>
+        </mat-form-field> -->
+      </c-col>
+
+      <c-col [md]="6">
+        <label cLabel for="validationCustom02">Is Active </label>
+        <input [(ngModel)]="ScaleService.scales.isActive" name="isActive" cFormControl id="validationCustom02"
+          type="text" value="Otto" />
+        <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
+      </c-col>
+
+      <c-col [xs]="12">
+        <button [disabled]="
+    ScaleForm.invalid
+  " cButton class="me-1" color="primary" type="submit">
+          Submit
+        </button>
+        <button cButton color="secondary" (click)="resetForm()">
+          Reset
+        </button>
+      </c-col>
+    </form>
+  </c-card-body>
+</c-card>
+
+<c-card class="mt-3">
+  <c-card-header>Scale List</c-card-header>
+  <c-card-body>
+    <div class="example-header">
+      <mat-form-field>
+        <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here..">
+        <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
+          (click)="filter.value=''; applyFilter('');">
+        </button>
+      </mat-form-field>
+    </div>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+        <!-- Position Column -->
+        <ng-container matColumnDef="slNo">
+          <th mat-header-cell *matHeaderCellDef> Serial No</th>
+          <td mat-cell *matCellDef="let element;let i =index"> {{ i + 1 }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="scaleName">
+          <th mat-header-cell *matHeaderCellDef> Scale Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.scaleName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="basicPay">
+          <th mat-header-cell *matHeaderCellDef> Basic Pay </th>
+          <td mat-cell *matCellDef="let element"> {{element.basicPay}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="gradeId">
+          <th mat-header-cell *matHeaderCellDef> Grade Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.gradeId}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="isActive">
+          <th mat-header-cell *matHeaderCellDef> Is Active </th>
+          <td mat-cell *matCellDef="let element"> {{element.isActive}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element">
+            <button class="custom-button"><svg [cIcon]="icons.cilPencil" size="xl" title="List Icon"></svg></button>
+            <button class="custom-button" (click)="delete(element)"> <svg [cIcon]="icons.cilTrash" size="xl"
+                title="List Icon"></svg></button>
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </c-card-body>
+
+  <c-card-footer class="text-medium-emphasis">
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
+  </c-card-footer>
+  <c-card>
+
+
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+      <c-toast (timer)="onTimerChange($event)" (visibleChange)="onVisibleChange($event)" [visible]="visible">
+        <c-toast-header>
+
+          CoreUI for Angular
+        </c-toast-header>
+        <c-toast-body>
+          <p>This is static toast message in a toaster</p>
+          <c-progress thin>
+            <c-progress-bar [value]="percentage"></c-progress-bar>
+          </c-progress>
+        </c-toast-body>
+      </c-toast>
+    </c-toaster>

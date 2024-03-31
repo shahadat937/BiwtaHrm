@@ -18,6 +18,9 @@ export class ScaleService {
   getAll():Observable<Scale[]> {
     return this.http.get<Scale[]>(this.baseUrl + '/scale/get-scale');
   }
+  getSelectGrade():Observable<Scale[]> {
+    return this.http.get<Scale[]>(this.baseUrl + '/grade/get-selectedGrade');
+  }
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/scale/update-scale/'+id, model);
   }

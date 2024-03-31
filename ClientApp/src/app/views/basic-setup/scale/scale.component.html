@@ -27,6 +27,7 @@
       </c-col>
 
       <c-col [md]="6">
+
         <label cLabel for="validationCustom01">Grade Id<span class="text-danger">*</span></label>
         <input [(ngModel)]="ScaleService.scales.gradeId" name="gradeId"
           #GradeId="ngModel" placeholder="Enter Grade Id" cFormControl id="validationCustom01" required
@@ -34,6 +35,32 @@
         <div class="text-left text-danger" *ngIf="!GradeId.valid&&GradeId.touched">
           GradeId is required
         </div>
+        <!-- <c-col [md]="6">
+          <label cLabel for="gradeId">Grade Id<span class="text-danger">*</span></label>
+          <select [(ngModel)]="ScaleService.scales.gradeId" name="gradeId" #GradeId="ngModel" cFormControl id="gradeId" required>
+            <option *ngFor="let grade of gradeOptions" [ngValue]="grade.id">{{ grade.name }}</option>
+          </select>
+          <div class="text-left text-danger" *ngIf="!GradeId.valid && GradeId.touched">
+            GradeId is required
+          </div>
+        </c-col> -->
+        <!-- <mat-form-field>
+          <mat-label>Grade</mat-label>
+          <mat-select>
+            @for (grade of grades; track grade) {
+              <mat-option [value]="grade.value">{{food.viewValue}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <h4>Basic native select</h4>
+        <mat-form-field>
+          <mat-label>Cars</mat-label>
+          <select matNativeControl required>
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+
+          </select>
+        </mat-form-field> -->
       </c-col>
 
       <c-col [md]="6">

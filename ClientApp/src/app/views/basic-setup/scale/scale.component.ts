@@ -14,6 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './scale.component.scss'
 })
 export class ScaleComponent implements OnInit,OnDestroy,AfterViewInit{
+
   position = 'top-end';
   visible = false;
   percentage = 0;
@@ -34,6 +35,13 @@ export class ScaleComponent implements OnInit,OnDestroy,AfterViewInit{
   'cilPencil': cilPencil,
   'cilTrash': cilTrash,
   };
+  // ScaleService: ScaleService; // Define ScaleService
+
+  gradeOptions: any[] = [
+    { id: 1, name: 'Grade 1' },
+    { id: 2, name: 'Grade 2' },
+    { id: 3, name: 'Grade 3' },
+  ]
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)

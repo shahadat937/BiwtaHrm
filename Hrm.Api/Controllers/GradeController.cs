@@ -1,10 +1,12 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Grade;
 using Hrm.Application.DTOs.GradeType;
+using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Application.Features.Grade.Requests.Commands;
 using Hrm.Application.Features.Grade.Requests.Queries;
 using Hrm.Application.Features.GradeType.Requests.Commands;
 using Hrm.Application.Features.GradeType.Requests.Queries;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +29,14 @@ namespace Hrm.Api.Controllers
         {
             var country = await _mediator.Send(new GetGradeRequest { });
             return Ok(country);
+        }
+
+        [HttpGet]
+        [Route("get-selectedGrade")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedGrade()
+        {
+            var grades = await _mediator.Send(new GetSelectGradeRequest { });
+            return Ok(grades);
         }
 
         [HttpPost]

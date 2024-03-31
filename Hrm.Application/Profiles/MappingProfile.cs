@@ -39,6 +39,7 @@ using Hrm.Application.DTOs.Weekend;
 using Hrm.Application.DTOs.Overall_EV_Promotion;
 using hrm.Application.DTOs.Modules;
 using Hrm.Application.DTOs.Modules;
+using Hrm.Application.DTOs.Scale;
 
 namespace Hrm.Application.Profiles
 {
@@ -141,6 +142,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Overall_EV_Promotion, Overall_EV_PromotionDto>().ReverseMap();
             CreateMap<Overall_EV_Promotion, CreateOverall_EV_PromotionDto>().ReverseMap();
+
+            CreateMap<Scale, ScaleDto>().ReverseMap();
+            CreateMap<Scale, CreateScaleDto>().ReverseMap();
 
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();

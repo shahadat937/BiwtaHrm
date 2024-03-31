@@ -1,22 +1,34 @@
+import { Result } from './../model/result';
 import { Injectable, inject } from '@angular/core';
-import { Result } from '../model/result';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { idText } from 'typescript';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResultService {
-  //baseUrl = environment.apiUrl;
-  apiUrl = 'http://localhost:25971';
+  baseUrl = environment.apiUrl;
+  result : Result;
 
-  constructor(private http: HttpClient) {}
-
-  getAllResult() {
-    //console.log('getAllEmployee', localStorage.getItem('token'));
-    return this.http.get<Result[]>(this.apiUrl + '/api/hrm/Result/get-result');
-    //return this.http.get<Result[]>(this.baseUrl + '/Result/get-result');
+  constructor(private http: HttpClient) {
+   this.result= new Result();
   }
+getById(id:number){
+  return this.http.get<Result>(this.baseUrl + '/Result/getall-result/' +id)
+}
+  getAll():Observable<Result[]> {
+    return this.http.get<Result[]>(this.baseUrl + '/Result/get-result');
+  }
+  submit(model:any){
+    return this.http.post(this.baseUrl + '/Result/save-result',model);
+  }
+  put(model:any,id:number){
+    return this.http.put(this.baseUrl + '/Result/update-result/',+id,model);
+  }
+delete(id:number){
+  return this.http.delete(this.baseUrl + '/Result/delete-result/'+ id)
+}
 }

@@ -9,13 +9,14 @@ import { CardModule, FormModule, GridModule, ButtonModule, ButtonGroupModule, Dr
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.component';
+import { ResultComponent } from './results/result/result.component';
 
 
 @NgModule({
   declarations: 
   [
     NewAccountTypeComponent, 
-    BloodGroupComponent
+    BloodGroupComponent, ResultComponent
   ],
   imports: [
     CommonModule,

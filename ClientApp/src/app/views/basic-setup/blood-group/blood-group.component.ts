@@ -111,7 +111,7 @@ constructor(
    
   }
    onSubmit(form:NgForm){
-    this.subscription=this.bloodGroupService.submit(form?.value).subscribe(res=>{ 
+    this.subscription=this.bloodGroupService.submit(form?.value).subscribe ( res=>{ 
       // this.snackBar.open('Information Inserted Successfully ', '', {
       //   duration: 2000,
       //   verticalPosition: 'top',
@@ -121,7 +121,6 @@ constructor(
       this.toggleToast();
     this.getALlBloodGroup()
     this.resetForm();
-  
    },err=>{
      console.log(err);
    })
@@ -132,10 +131,10 @@ constructor(
     this.bloodGroupService.delete(element.bloodGroupId).subscribe(res=>{
       this.getALlBloodGroup()
     },(err) => { 
-
     });
     
   }
+  
 }
 
 

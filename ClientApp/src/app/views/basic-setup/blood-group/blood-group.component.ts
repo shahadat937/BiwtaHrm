@@ -23,20 +23,7 @@ export class BloodGroupComponent implements OnInit,OnDestroy,AfterViewInit{
   @ViewChild("BloodGroupForm", { static: true }) BloodGroupForm!: NgForm;
   subscription: Subscription = new Subscription;
   displayedColumns: string[] = ['slNo','bloodGroupName', 'isActive','Action'];
-
   dataSource = new MatTableDataSource<any>();
-  icons = {
-    'cilList': cilList,
-  'cilShieldAlt': cilShieldAlt,
-  'cilPaperPlane': cilPaperPlane,
-  'cil3d': cil3d,
-  'cil4k': cil4k,
-  'cilAccountLogout': cilAccountLogout,
-  'cilActionRedo': cilActionRedo,
-  'cilAirplaneMode': cilAirplaneMode,
-  'cilPencil': cilPencil,
-  'cilTrash': cilTrash,
-  };
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)

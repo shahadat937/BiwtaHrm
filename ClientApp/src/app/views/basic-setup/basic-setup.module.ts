@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BasicSetupRoutingModule } from './basic-setup-routing.module';
 import { NewAccountTypeComponent } from './accounttype/new-accounttype/new-accounttype.component';
 import { BloodGroupComponent } from './blood-group/blood-group.component';
+import { ScaleComponent } from './scale/scale.component';
 import {DistrictComponent} from './district/district.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardModule, FormModule, GridModule, ButtonModule, ButtonGroupModule, DropdownModule, SharedModule, ListGroupModule, ToastModule, ProgressModule } from '@coreui/angular';
@@ -14,10 +15,11 @@ import { ResultComponent } from './result/result.component';
 
 
 @NgModule({
-  declarations: 
+  declarations:
   [
-    NewAccountTypeComponent, 
+    NewAccountTypeComponent,
     BloodGroupComponent,
+    ScaleComponent,
     DistrictComponent,
     ResultComponent,
   ],

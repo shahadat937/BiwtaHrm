@@ -7,6 +7,9 @@ using Hrm.Application.Features.District.Requests.Commands;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.Features.BloodGroups.Requests.Queries;
+using Hrm.Shared.Models;
+using Hrm.Domain;
 
 namespace Hrm.Api.Controllers
 {
@@ -44,6 +47,14 @@ namespace Hrm.Api.Controllers
             var District = await _mediator.Send(new GetDistrictByIdRequest { DistrictId = id });
             return Ok(District);
 
+        }
+
+        [HttpGet]
+        [Route("get-selecteddistrict")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedDistrict()
+        {
+            var district = await _mediator.Send(new GetSelectedDistrictRequest { });
+            return Ok(district);
         }
 
         [HttpPut]

@@ -4,6 +4,8 @@ import { NewAccountTypeComponent } from './accounttype/new-accounttype/new-accou
 import { BloodGroupComponent } from './blood-group/blood-group.component';
 import { ScaleComponent } from './scale/scale.component';
 import {DistrictComponent} from './district/district.component';
+import { UpazilaComponent } from './upazila/upazila.component';
+import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
 
 const routes: Routes = [
@@ -29,6 +31,21 @@ const routes: Routes = [
   },
   { path: 'update-district/:districtId', 
   component: DistrictComponent, 
+  },
+  {
+    path: 'upazila',
+    component: UpazilaComponent,
+  },
+  { path: 'update-upazila/:upazilaid', 
+  component: UpazilaComponent, 
+  },
+  {
+    path: 'thana',
+    component: ThanaComponent,
+  },
+  { 
+    path: 'update-thana/:thanaid', 
+    component: ThanaComponent, 
   },
   {
     path: 'result',

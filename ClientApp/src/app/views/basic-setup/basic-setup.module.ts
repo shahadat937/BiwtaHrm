@@ -13,6 +13,8 @@ import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { BloodGroupService } from './service/BloodGroup.service';
 import { ToastrService } from 'ngx-toastr';
 import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.component';
+import { UpazilaComponent } from './upazila/upazila.component';
+import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
 
 
@@ -23,6 +25,8 @@ import { ResultComponent } from './result/result.component';
     BloodGroupComponent,
     ScaleComponent,
     DistrictComponent,
+    UpazilaComponent,
+    ThanaComponent,
     ResultComponent,
   ],
   imports: [

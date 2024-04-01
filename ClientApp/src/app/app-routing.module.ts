@@ -75,7 +75,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/basic-setup/basic-setup.module').then((m) => m.BasicSetupModule)
       },
-      
+
     ]
   },
   {
@@ -106,7 +106,7 @@ const routes: Routes = [
       title: 'Register Page'
     }
   },
- 
+
   {path: '**', redirectTo: 'dashboard'}
 
 

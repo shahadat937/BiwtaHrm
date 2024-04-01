@@ -12,6 +12,7 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { IconModule } from '@coreui/icons-angular';
 import { MatSelectModule } from '@angular/material/select';
 
+import { ToastModule } from '@coreui/angular';
 @NgModule({
   declarations: [],
   imports: [
@@ -37,6 +38,7 @@ import { MatSelectModule } from '@angular/material/select';
     IconModule,
     MatSelectModule,
    
+    ToastModule
   ],
 })
 export class SharedCustomModule {}

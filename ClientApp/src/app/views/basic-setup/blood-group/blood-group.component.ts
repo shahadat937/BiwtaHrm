@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-blood-group',
@@ -23,34 +24,22 @@ export class BloodGroupComponent implements OnInit,OnDestroy,AfterViewInit{
   @ViewChild("BloodGroupForm", { static: true }) BloodGroupForm!: NgForm;
   subscription: Subscription = new Subscription;
   displayedColumns: string[] = ['slNo','bloodGroupName', 'isActive','Action'];
-
   dataSource = new MatTableDataSource<any>();
-  icons = { 
-    'cilList': cilList,
-  'cilShieldAlt': cilShieldAlt,
-  'cilPaperPlane': cilPaperPlane,
-  'cil3d': cil3d,
-  'cil4k': cil4k,
-  'cilAccountLogout': cilAccountLogout,
-  'cilActionRedo': cilActionRedo,
-  'cilAirplaneMode': cilAirplaneMode,
-  'cilPencil': cilPencil,
-  'cilTrash': cilTrash,
-  };
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-constructor( 
+constructor(
   public bloodGroupService:BloodGroupService,
   private snackBar: MatSnackBar,
   private route: ActivatedRoute,
   private router: Router,
-  private confirmService: ConfirmService
+  private confirmService: ConfirmService,
+  private toastr: ToastrService
   )
   {
   //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
-  
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('bloodGroupId');
       if (id) {
@@ -73,7 +62,7 @@ constructor(
   ngOnInit(): void {
    
     this.getALlBloodGroup();
-  
+
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -85,8 +74,8 @@ constructor(
     }
   }
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); 
-    filterValue = filterValue.toLowerCase(); 
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
   toggleToast() {
@@ -109,9 +98,9 @@ constructor(
       bloodGroupName:"",
       menuPosition: 0,
       isActive:true
-      
+
     }
-    
+
    }
    resetForm() {
     console.log(this.BloodGroupForm?.form.value )
@@ -124,25 +113,26 @@ constructor(
         bloodGroupName:"",
         menuPosition:0,
         isActive:true
-       
+
       });
     }
-    
+
   }
 
-  getALlBloodGroup(){ 
+  getALlBloodGroup(){
    this.subscription=this.bloodGroupService.getAll().subscribe(item=>{
      this.dataSource=new MatTableDataSource(item);
      this.dataSource.paginator = this.paginator;
      this.dataSource.sort = this.matSort;
-   
+
     });
-   
+
   }
    onSubmit(form:NgForm){
     const id = this.BloodGroupForm.form.get('bloodGroupId')?.value;
     if (id) {
       this.bloodGroupService.update(+id,this.BloodGroupForm.value).subscribe(response => {
+        this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
         this.getALlBloodGroup()
         this.resetForm();
         this.router.navigate(["/bascisetup/blood-group"]);  
@@ -150,22 +140,16 @@ constructor(
         console.log(err)
       })
     }else{
-   this.subscription=this.bloodGroupService.submit(form?.value).subscribe(res=>{ 
-      // this.snackBar.open('Information Inserted Successfully ', '', {
-      //   duration: 2000,
-      //   verticalPosition: 'top',
-      //   horizontalPosition: 'right',
-      //   panelClass: 'snackbar-success'
-      // });  
-      this.toggleToast();
+   this.subscription=this.bloodGroupService.submit(form?.value).subscribe(res=>{
+    this.toastr.success('Successfully', 'Information Inserted',{ positionClass: 'toast-top-right' });
     this.getALlBloodGroup()
     this.resetForm();
-  
+
    },err=>{
      console.log(err);
    })
     }
- 
+
   }
   delete(element:any){
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{

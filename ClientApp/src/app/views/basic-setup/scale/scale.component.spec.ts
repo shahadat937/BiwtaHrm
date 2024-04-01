@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewResultComponent } from './new-result.component';
+import { ScaleComponent } from './scale.component';
 
-describe('NewResultComponent', () => {
-  let component: NewResultComponent;
-  let fixture: ComponentFixture<NewResultComponent>;
+describe('ScaleComponent', () => {
+  let component: ScaleComponent;
+  let fixture: ComponentFixture<ScaleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NewResultComponent]
+      declarations: [ScaleComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(NewResultComponent);
+
+    fixture = TestBed.createComponent(ScaleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

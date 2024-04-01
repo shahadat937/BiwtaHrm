@@ -1,13 +1,6 @@
-<!-- <svg [cIcon]="icons.cilList" size="xl" title="List Icon"></svg>
-<svg [cIcon]="icons.cilShieldAlt" size="xl" title="List Icon"></svg>
-<svg [cIcon]="icons.cil3d" size="xl" title="List Icon"></svg>
-<svg [cIcon]="icons.cilAccountLogout" size="xl" title="List Icon"></svg>
-<svg [cIcon]="icons.cilActionRedo" size="xl" title="List Icon"></svg>
-<svg [cIcon]="icons.cilActionRedo" size="xl" title="List Icon"></svg>
-<svg [cIcon]="icons.cilAirplaneMode" size="xl" title="List Icon"></svg> -->
 
 <c-card>
-    <c-card-header>Blood Group </c-card-header>
+    <c-card-header>Blood Group  </c-card-header>
     <c-card-body>
    
       <form #BloodGroupForm="ngForm"
@@ -86,9 +79,14 @@
             
             <th mat-header-cell *matHeaderCellDef> Action </th>
             <td mat-cell *matCellDef="let element">
-              <button class="custom-button"       [routerLink]="['/bascisetup/update-bloodgroup', element.bloodGroupId]"><svg [cIcon]="icons.cilPencil" size="xl" title="List Icon"></svg></button>   
-              <button  class="custom-button" (click)="delete(element)"> <svg  [cIcon]="icons.cilTrash" size="xl" title="List Icon"></svg></button>
-             
+              <button class="custom-button"       [routerLink]="['/bascisetup/update-bloodgroup', element.bloodGroupId]">
+                <svg cIcon name="cilPencil"></svg>
+              
+              </button>   
+              <button  class="custom-button" (click)="delete(element)"> 
+                <svg cIcon name="cilTrash"></svg>
+                </button>
+                
               </td>
           
           </ng-container>
@@ -97,32 +95,37 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
            
-       
+        
+      
       </div>
       </c-card-body>
       <c-card-footer class="text-medium-emphasis">
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-        showFirstLastButtons
-        >
-</mat-paginator>
+        <mat-paginator
+        appBubblePagination
+    
+        [length]="dataSource.data.length"
+        [pageSize]="10"
+        aria-label="Select page"
+      >
+      </mat-paginator>
       </c-card-footer>
     </c-card>
 
-  
-      <c-toaster [placement]="position" class="p-3" position="fixed">
+     <!-- <c-toaster [placement]="position" class="p-3" position="fixed">
         <c-toast
           (timer)="onTimerChange($event)"
           (visibleChange)="onVisibleChange($event)"
           [visible]="visible">
           <c-toast-header>
     
-            CoreUI for Angular
+           
           </c-toast-header>
           <c-toast-body>
-            <p>This is static toast message in a toaster</p>
+            <p>Information Inserted Successfully</p>
             <c-progress thin>
               <c-progress-bar [value]="percentage"></c-progress-bar>
             </c-progress>
           </c-toast-body>
         </c-toast>
-      </c-toaster>
+      </c-toaster>  -->
+ 

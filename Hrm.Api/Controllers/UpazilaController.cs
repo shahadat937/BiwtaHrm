@@ -1,13 +1,16 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.BloodGroup;
+using Hrm.Application.DTOs.Upazila;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.DTOs.Upazila;
 using Hrm.Application.Features.BloodGroup.Requests.Commands;
+using Hrm.Application.Features.Upazila.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Upazila.Requests.Commands;
 using Hrm.Application.Features.Upazila.Requests.Queries;
 using Hrm.Domain;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -63,6 +66,26 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+
+
+        [HttpGet]
+        [Route("get-upazilabyid/{id}")]
+        public async Task<ActionResult<UpazilaDto>> Get(int id)
+        {
+            var Upazila = await _mediator.Send(new GetUpazilaByIdRequest { UpazilaId = id });
+            return Ok(Upazila);
+
+        }
+
+        [HttpGet]
+        [Route("get-selectedUpazila")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedUpazila()
+        {
+            var Upazila = await _mediator.Send(new GetSelectedUpazilaRequest { });
+            return Ok(Upazila);
+        }
+
 
 
     }

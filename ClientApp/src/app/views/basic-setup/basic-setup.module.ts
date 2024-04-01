@@ -10,6 +10,8 @@ import { CardModule, FormModule, GridModule, ButtonModule, ButtonGroupModule, Dr
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.component';
+import { UpazilaComponent } from './upazila/upazila.component';
+import { ThanaComponent } from './thana/thana.component';
 
 
 @NgModule({
@@ -18,6 +20,8 @@ import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.
     NewAccountTypeComponent, 
     BloodGroupComponent,
     DistrictComponent,
+    UpazilaComponent,
+    ThanaComponent,
   ],
   imports: [
     CommonModule,

@@ -42,7 +42,7 @@ namespace Hrm.Application.Features.BloodGroup.Handlers.Commands
                 if (BloodGroupNameExists(request))
                 {
                     response.Success = false;
-                    response.Message = "Creation Failed BloodGroup Name already exists.";
+                    response.Message = $"Creation Failed '{request.BloodGroupDto.BloodGroupName}' already exists.";
                     response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
                     
                 }

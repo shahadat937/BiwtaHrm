@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { brandSet, cil3d, cil4k, cilAccountLogout, cilActionRedo, cilAirplaneMode, cilList, cilPaperPlane, cilPencil, cilShieldAlt, cilTrash } from '@coreui/icons';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Scale } from 'chart.js';
 
 @Component({
   selector: 'app-scale',
@@ -14,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './scale.component.scss'
 })
 export class ScaleComponent implements OnInit,OnDestroy,AfterViewInit{
-
+  
   position = 'top-end';
   visible = false;
   percentage = 0;
@@ -35,20 +36,12 @@ export class ScaleComponent implements OnInit,OnDestroy,AfterViewInit{
   'cilPencil': cilPencil,
   'cilTrash': cilTrash,
   };
-  // ScaleService: ScaleService; // Define ScaleService
-
-  gradeOptions: any[] = [
-    { id: 1, name: 'Grade 1' },
-    { id: 2, name: 'Grade 2' },
-    { id: 3, name: 'Grade 3' },
-  ]
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
 constructor(
   public ScaleService:ScaleService,
-  private snackBar: MatSnackBar
   )
   {
 
@@ -91,7 +84,8 @@ constructor(
       basicPay:0,
       gradeId:0,
       menuPosition: 0,
-      isActive:true
+      isActive:true,
+      gradeName:"",
     }
 
    }
@@ -106,7 +100,8 @@ constructor(
         basicPay:0,
         gradeId:0,
         menuPosition: 0,
-        isActive:true
+        isActive:true,
+        gradeName:"",
       });
     }
 

@@ -131,19 +131,29 @@ constructor(
    onSubmit(form:NgForm){
     const id = this.BloodGroupForm.form.get('bloodGroupId')?.value;
     if (id) {
-      this.bloodGroupService.update(+id,this.BloodGroupForm.value).subscribe(response => {
-        this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
-        this.getALlBloodGroup()
-        this.resetForm();
-        this.router.navigate(["/bascisetup/blood-group"]);  
+      this.bloodGroupService.update(+id,this.BloodGroupForm.value).subscribe((response:any) => {
+        console.log(response)
+        if(response.success){
+          this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
+          this.getALlBloodGroup()
+          this.resetForm();
+          this.router.navigate(["/bascisetup/blood-group"]);  
+        }else{
+          this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
+        }
+        
       }, err => {
         console.log(err)
       })
     }else{
-   this.subscription=this.bloodGroupService.submit(form?.value).subscribe(res=>{
-    this.toastr.success('Successfully', 'Information Inserted',{ positionClass: 'toast-top-right' });
-    this.getALlBloodGroup()
-    this.resetForm();
+   this.subscription=this.bloodGroupService.submit(form?.value).subscribe((response:any)=>{
+    if(response.success){
+      this.toastr.success('Successfully', `${response.message}`,{ positionClass: 'toast-top-right' });
+      this.getALlBloodGroup()
+      this.resetForm();
+    }else{
+      this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
+    }
 
    },err=>{
      console.log(err);

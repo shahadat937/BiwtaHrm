@@ -55,7 +55,7 @@ namespace Hrm.Application.Features.BloodGroup.Handlers.Commands
             if (bloodGroups.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.BloodGroupDto.BloodGroupName}' already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

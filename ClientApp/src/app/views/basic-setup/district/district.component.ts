@@ -8,7 +8,7 @@ import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {DistrictService} from './../service/district.service'
 import { ActivatedRoute } from '@angular/router';
-
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 @Component({
   selector: 'app-district',
   templateUrl: './district.component.html',
@@ -43,7 +43,8 @@ export class DistrictComponent implements OnInit,OnDestroy,AfterViewInit{
 constructor( 
   public districtService:DistrictService,
   private snackBar: MatSnackBar,
-  private route :ActivatedRoute
+  private route :ActivatedRoute,
+  private confirmService:ConfirmService,
   )
   {
     this.route.paramMap.subscribe(params=>{
@@ -157,13 +158,17 @@ constructor(
   }
   }
   delete(element:any){
-    console.log(element)
+    this.confirmService.confirm('Confirm delete message','Are You Sure Delete This Item').subscribe(result=>{
+      if(result) 
+      console.log(element)
     this.districtService.delete(element.districtId).subscribe(res=>{
       this.getALlDistrict()
     },(err) => { 
 
-    });
+    }); 
+    })
+  }
     
   }
-}
+ 
 

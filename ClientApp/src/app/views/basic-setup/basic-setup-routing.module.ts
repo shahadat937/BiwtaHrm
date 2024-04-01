@@ -4,6 +4,7 @@ import { NewAccountTypeComponent } from './accounttype/new-accounttype/new-accou
 import { BloodGroupComponent } from './blood-group/blood-group.component';
 import { ScaleComponent } from './scale/scale.component';
 import {DistrictComponent} from './district/district.component';
+import { ResultComponent } from './result/result.component';
 
 const routes: Routes = [
 
@@ -25,6 +26,17 @@ const routes: Routes = [
   {
     path: 'district',
     component: DistrictComponent,
+  },
+  { path: 'update-district/:districtId', 
+  component: DistrictComponent, 
+  },
+  {
+    path: 'result',
+    component: ResultComponent,
+  },
+  {
+    path: 'update-result/:resultId',
+    component: ResultComponent,
   },
 
 ];

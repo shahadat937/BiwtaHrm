@@ -12,6 +12,8 @@ import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { BloodGroupService } from './service/BloodGroup.service';
 import { ToastrService } from 'ngx-toastr';
+import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.component';
+import { ResultComponent } from './result/result.component';
 
 
 @NgModule({
@@ -20,7 +22,8 @@ import { ToastrService } from 'ngx-toastr';
     NewAccountTypeComponent,
     BloodGroupComponent,
     ScaleComponent,
-    DistrictComponent
+    DistrictComponent,
+    ResultComponent,
   ],
   imports: [
     CommonModule,

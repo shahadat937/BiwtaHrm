@@ -560,11 +560,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Result',
-        url: '/bascisetup/result-list'
-      },
-      {
-        name: 'Result2',
-        url: '/bascisetup/result-list2'
+        url: '/bascisetup/result'
       },
       {
         name: 'Thana',

@@ -7,6 +7,7 @@ import { brandSet, cil3d, cil4k, cilAccountLogout, cilActionRedo, cilAirplaneMod
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {DistrictService} from './../service/district.service'
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-district',
@@ -17,6 +18,7 @@ export class DistrictComponent implements OnInit,OnDestroy,AfterViewInit{
   position = 'top-end';
   visible = false;
   percentage = 0;
+  btnText:string|undefined;
   @ViewChild("DistrictForm", { static: true }) DistrictForm!: NgForm;
   subscription: Subscription = new Subscription;
   displayedColumns: string[] = ['slNo','districtName', 'isActive','Action'];
@@ -40,9 +42,25 @@ export class DistrictComponent implements OnInit,OnDestroy,AfterViewInit{
   matSort!: MatSort;
 constructor( 
   public districtService:DistrictService,
-  private snackBar: MatSnackBar
+  private snackBar: MatSnackBar,
+  private route :ActivatedRoute
   )
   {
+    this.route.paramMap.subscribe(params=>{
+      const id = params.get('districtId');
+      if(id){
+        this.btnText='Update';
+        this.districtService.getById(+id).subscribe(
+          res=>{
+            console.log(res);
+            this.DistrictForm?.form.patchValue(res);
+          }
+        );
+      }
+      else{
+        this.btnText='Submit'
+      }
+    });
 
  }
   ngOnInit(): void {
@@ -88,6 +106,7 @@ constructor(
    }
    resetForm() {
     console.log(this.DistrictForm?.form.value )
+    this.btnText='Submit';
     if (this.DistrictForm?.form != null) {
       console.log(this.DistrictForm?.form )
       this.DistrictForm.form.reset();
@@ -111,6 +130,16 @@ constructor(
    
   }
    onSubmit(form:NgForm){
+    const id=this.DistrictForm.form.get('districtId')?.value;
+    if(id){
+      this.districtService.update(+id,this.DistrictForm.value).subscribe(response=>{
+        this.getALlDistrict()
+        this.resetForm();
+      },err=>{
+        console.log(err)
+      })
+    }
+    else{
     this.subscription=this.districtService.submit(form?.value).subscribe(res=>{ 
       // this.snackBar.open('Information Inserted Successfully ', '', {
       //   duration: 2000,
@@ -121,15 +150,15 @@ constructor(
       this.toggleToast();
     this.getALlDistrict()
     this.resetForm();
-  
+   
    },err=>{
      console.log(err);
    })
- 
+  }
   }
   delete(element:any){
     console.log(element)
-    this.districtService.delete(element.bloodGroupId).subscribe(res=>{
+    this.districtService.delete(element.districtId).subscribe(res=>{
       this.getALlDistrict()
     },(err) => { 
 

@@ -35,6 +35,7 @@ import {
   SharedModule,
   SidebarModule,
   TabsModule,
+  ToastModule,
   UtilitiesModule,
 } from '@coreui/angular';
 
@@ -44,6 +45,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorInterceptor } from './core/interceptor/error.interceptor';
 import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
 import { AuthService } from './core/service/auth.service';
+import { ToastrModule } from 'ngx-toastr';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
@@ -83,7 +85,8 @@ const APP_CONTAINERS = [
     NgScrollbarModule,
     CoreModule,
     SharedCustomModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {

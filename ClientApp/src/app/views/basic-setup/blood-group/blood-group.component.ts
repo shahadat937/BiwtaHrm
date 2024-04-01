@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-blood-group',
@@ -23,20 +24,7 @@ export class BloodGroupComponent implements OnInit,OnDestroy,AfterViewInit{
   @ViewChild("BloodGroupForm", { static: true }) BloodGroupForm!: NgForm;
   subscription: Subscription = new Subscription;
   displayedColumns: string[] = ['slNo','bloodGroupName', 'isActive','Action'];
-
   dataSource = new MatTableDataSource<any>();
-  icons = {
-    'cilList': cilList,
-  'cilShieldAlt': cilShieldAlt,
-  'cilPaperPlane': cilPaperPlane,
-  'cil3d': cil3d,
-  'cil4k': cil4k,
-  'cilAccountLogout': cilAccountLogout,
-  'cilActionRedo': cilActionRedo,
-  'cilAirplaneMode': cilAirplaneMode,
-  'cilPencil': cilPencil,
-  'cilTrash': cilTrash,
-  };
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
@@ -46,11 +34,12 @@ constructor(
   private snackBar: MatSnackBar,
   private route: ActivatedRoute,
   private router: Router,
-  private confirmService: ConfirmService
+  private confirmService: ConfirmService,
+  private toastr: ToastrService
   )
   {
   //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
-  
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('bloodGroupId');
       if (id) {
@@ -143,6 +132,7 @@ constructor(
     const id = this.BloodGroupForm.form.get('bloodGroupId')?.value;
     if (id) {
       this.bloodGroupService.update(+id,this.BloodGroupForm.value).subscribe(response => {
+        this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
         this.getALlBloodGroup()
         this.resetForm();
         this.router.navigate(["/bascisetup/blood-group"]);  
@@ -151,13 +141,7 @@ constructor(
       })
     }else{
    this.subscription=this.bloodGroupService.submit(form?.value).subscribe(res=>{
-      // this.snackBar.open('Information Inserted Successfully ', '', {
-      //   duration: 2000,
-      //   verticalPosition: 'top',
-      //   horizontalPosition: 'right',
-      //   panelClass: 'snackbar-success'
-      // });
-      this.toggleToast();
+    this.toastr.success('Successfully', 'Information Inserted',{ positionClass: 'toast-top-right' });
     this.getALlBloodGroup()
     this.resetForm();
 

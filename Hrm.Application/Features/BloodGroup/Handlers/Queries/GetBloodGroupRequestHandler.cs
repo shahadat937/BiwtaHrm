@@ -26,9 +26,14 @@ namespace Hrm.Application.Features.BloodGroup.Handlers.Queries
 
         public async Task<object> Handle(GetBloodGroupRequest request, CancellationToken cancellationToken)
         {
+            // Fetch blood groups from repository
             IQueryable<Hrm.Domain.BloodGroup> bloodGroups = _bloodGroupRepository.Where(x => true);
 
-            var BloodGroupDtos = _mapper.Map<List<BloodGroupDto>>(bloodGroups);
+            // Order blood groups by descending order
+            bloodGroups = bloodGroups.OrderByDescending(x => x.BloodGroupId);
+
+            // Map the ordered blood groups to BloodGroupDto
+            var BloodGroupDtos = _mapper.Map<List<BloodGroupDto>>(bloodGroups.ToList());
 
             return BloodGroupDtos;
         }

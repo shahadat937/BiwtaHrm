@@ -10,6 +10,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { IconModule } from '@coreui/icons-angular';
+import { ToastModule } from '@coreui/angular';
 @NgModule({
   declarations: [],
   imports: [
@@ -33,7 +34,7 @@ import { IconModule } from '@coreui/icons-angular';
     MatPaginatorModule,
     MatIconModule,
     IconModule,
-   
+    ToastModule
   ],
 })
 export class SharedCustomModule {}

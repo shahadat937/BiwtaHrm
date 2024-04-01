@@ -1,6 +1,6 @@
 
 <c-card>
-    <c-card-header>Blood Group </c-card-header>
+    <c-card-header>Blood Group  </c-card-header>
     <c-card-body>
    
       <form #BloodGroupForm="ngForm"
@@ -95,32 +95,37 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
            
-       
+        
+      
       </div>
       </c-card-body>
       <c-card-footer class="text-medium-emphasis">
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-        showFirstLastButtons
-        >
-</mat-paginator>
+        <mat-paginator
+        appBubblePagination
+    
+        [length]="dataSource.data.length"
+        [pageSize]="10"
+        aria-label="Select page"
+      >
+      </mat-paginator>
       </c-card-footer>
     </c-card>
 
-  
-      <c-toaster [placement]="position" class="p-3" position="fixed">
+     <!-- <c-toaster [placement]="position" class="p-3" position="fixed">
         <c-toast
           (timer)="onTimerChange($event)"
           (visibleChange)="onVisibleChange($event)"
           [visible]="visible">
           <c-toast-header>
     
-            CoreUI for Angular
+           
           </c-toast-header>
           <c-toast-body>
-            <p>This is static toast message in a toaster</p>
+            <p>Information Inserted Successfully</p>
             <c-progress thin>
               <c-progress-bar [value]="percentage"></c-progress-bar>
             </c-progress>
           </c-toast-body>
         </c-toast>
-      </c-toaster>
+      </c-toaster>  -->
+ 

@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-blood-group',
@@ -33,11 +34,12 @@ constructor(
   private snackBar: MatSnackBar,
   private route: ActivatedRoute,
   private router: Router,
-  private confirmService: ConfirmService
+  private confirmService: ConfirmService,
+  private toastr: ToastrService
   )
   {
   //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
-  
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('bloodGroupId');
       if (id) {
@@ -130,6 +132,7 @@ constructor(
     const id = this.BloodGroupForm.form.get('bloodGroupId')?.value;
     if (id) {
       this.bloodGroupService.update(+id,this.BloodGroupForm.value).subscribe(response => {
+        this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
         this.getALlBloodGroup()
         this.resetForm();
         this.router.navigate(["/bascisetup/blood-group"]);  
@@ -138,13 +141,7 @@ constructor(
       })
     }else{
    this.subscription=this.bloodGroupService.submit(form?.value).subscribe(res=>{
-      // this.snackBar.open('Information Inserted Successfully ', '', {
-      //   duration: 2000,
-      //   verticalPosition: 'top',
-      //   horizontalPosition: 'right',
-      //   panelClass: 'snackbar-success'
-      // });
-      this.toggleToast();
+    this.toastr.success('Successfully', 'Information Inserted',{ positionClass: 'toast-top-right' });
     this.getALlBloodGroup()
     this.resetForm();
 

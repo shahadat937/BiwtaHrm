@@ -2,7 +2,9 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Punishment;
 using Hrm.Application.DTOs.Punishment;
+using Hrm.Application.DTOs.Punishment;
 using Hrm.Application.Exceptions;
+using Hrm.Application.Features.Punishment.Requests.Queries;
 using Hrm.Application.Features.Punishment.Requests.Queries;
 using Hrm.Application.Models;
 using MediatR;
@@ -27,9 +29,14 @@ namespace Hrm.Application.Features.Punishment.Handlers.Queries
 
         public async Task<object> Handle(GetPunishmentRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Hrm.Domain.Punishment> Punishment = _PunishmentRepository.Where(x => true);
+            // Fetch blood groups from repository
+            IQueryable<Hrm.Domain.Punishment> Punishments = _PunishmentRepository.Where(x => true);
 
-            var PunishmentDtos = await Task.Run(() => _mapper.Map<List<PunishmentDto>>(Punishment));
+            // Order blood groups by descending order
+            Punishments = Punishments.OrderByDescending(x => x.PunishmentId);
+
+            // Map the ordered blood groups to PunishmentDto
+            var PunishmentDtos = _mapper.Map<List<PunishmentDto>>(Punishments.ToList());
 
             return PunishmentDtos;
         }

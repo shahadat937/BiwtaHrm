@@ -9,6 +9,11 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.DTOs.Punishment;
+using Hrm.Application.Features.Punishment.Requests.Commands;
+using Hrm.Application.Features.Punishment.Requests.Queries;
+using Hrm.Application.Features.Punishments.Requests.Queries;
+using Hrm.Shared.Models;
 
 namespace Hrm.Api.Controllers
 {
@@ -22,15 +27,6 @@ namespace Hrm.Api.Controllers
         {
             _mediator = mediator;
         }
-
-        [HttpGet]
-        [Route("get-punishment")]
-        public async Task<ActionResult> GetPunishment()
-        {
-            var Punishment = await _mediator.Send(new GetPunishmentRequest { });
-            return Ok(Punishment);
-        }
-
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -42,18 +38,40 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("get-punishment")]
+        public async Task<ActionResult> Get()
+        {
+            var Punishment = await _mediator.Send(new GetPunishmentRequest { });
+            return Ok(Punishment);
+        }
+        [HttpGet]
+        [Route("get-punishmentDetail/{id}")]
+        public async Task<ActionResult<PunishmentDto>> Get(int id)
+        {
+            var Punishments = await _mediator.Send(new GetPunishmentDetailRequest { PunishmentId = id });
+            return Ok(Punishments);
+        }
+        [HttpGet]
+        [Route("get-selectedPunishments")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedPunishment()
+        {
+            var Punishment = await _mediator.Send(new GetSelectedPunishmentRequest { });
+            return Ok(Punishment);
+        }
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
         [Route("update-punishment/{id}")]
         public async Task<ActionResult> Put([FromBody] PunishmentDto Punishment)
         {
             var command = new UpdatePunishmentCommand { PunishmentDto = Punishment };
-           var response= await _mediator.Send(command);
+            var response = await _mediator.Send(command);
             return Ok(response);
         }
+
 
         [HttpDelete]
         [ProducesResponseType(200)]
@@ -68,3 +86,4 @@ namespace Hrm.Api.Controllers
         }
     }
 }
+

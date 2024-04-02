@@ -18,6 +18,7 @@ import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
 import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
+import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { PunishmentComponent } from './punishment/punishment.component';
     ResultComponent,
     DesignationComponent,
     PunishmentComponent,
+    PromotionTypeComponent,
   ],
   imports: [
     CommonModule,

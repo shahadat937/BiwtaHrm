@@ -25,7 +25,6 @@ import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
 import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
 
-
 @NgModule({
   declarations:
   [

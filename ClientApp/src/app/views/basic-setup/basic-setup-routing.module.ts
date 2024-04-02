@@ -16,7 +16,6 @@ import { Designation } from './model/Designation';
 import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
 import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
-
 const routes: Routes = [
 
   {
@@ -89,6 +88,7 @@ const routes: Routes = [
     component: DesignationComponent,
   },
   {
+
     path: 'promotionType',
     component: PromotionTypeComponent,
   },
@@ -97,6 +97,7 @@ const routes: Routes = [
     component: PromotionTypeComponent,
   },
   {
+
     path: 'punishment',
     component: PunishmentComponent,
   },

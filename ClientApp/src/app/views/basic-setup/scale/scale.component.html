@@ -27,7 +27,6 @@
       </c-col>
 
       <c-col [md]="6">
-
         <label cLabel for="validationCustom01">Grade Id<span class="text-danger">*</span></label>
         <input [(ngModel)]="ScaleService.scales.gradeId" name="gradeId"
           #GradeId="ngModel" placeholder="Enter Grade Id" cFormControl id="validationCustom01" required
@@ -35,34 +34,20 @@
         <div class="text-left text-danger" *ngIf="!GradeId.valid&&GradeId.touched">
           GradeId is required
         </div>
-        <!-- <c-col [md]="6">
-          <label cLabel for="gradeId">Grade Id<span class="text-danger">*</span></label>
-          <select [(ngModel)]="ScaleService.scales.gradeId" name="gradeId" #GradeId="ngModel" cFormControl id="gradeId" required>
-            <option *ngFor="let grade of gradeOptions" [ngValue]="grade.id">{{ grade.name }}</option>
-          </select>
-          <div class="text-left text-danger" *ngIf="!GradeId.valid && GradeId.touched">
-            GradeId is required
-          </div>
-        </c-col> -->
-        <!-- <mat-form-field>
-          <mat-label>Grade</mat-label>
-          <mat-select>
-            @for (grade of grades; track grade) {
-              <mat-option [value]="grade.value">{{food.viewValue}}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-        <h4>Basic native select</h4>
-        <mat-form-field>
-          <mat-label>Cars</mat-label>
-          <select matNativeControl required>
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
 
-          </select>
-        </mat-form-field> -->
+        <!-- <th mat-header-cell *matHeaderCellDef> Grade </th>
+  <td mat-cell *matCellDef="let element">
+    <select [(ngModel)]="element.gradeId" name="gradeId" #GradeId="ngModel" cFormControl id="validationCustom01" required>
+      <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.name }}</option>
+    </select>
+    <div class="text-left text-danger" *ngIf="!GradeId.valid && GradeId.touched">
+      Grade is required
+    </div>
+  </td> -->
+
+
       </c-col>
-
+      
       <c-col [md]="6">
         <label cLabel for="validationCustom02">Is Active </label>
         <input [(ngModel)]="ScaleService.scales.isActive" name="isActive" cFormControl id="validationCustom02"
@@ -114,11 +99,21 @@
           <td mat-cell *matCellDef="let element"> {{element.basicPay}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="gradeId">
+        <!-- <ng-container matColumnDef="gradeId">
           <th mat-header-cell *matHeaderCellDef> Grade Id </th>
           <td mat-cell *matCellDef="let element"> {{element.gradeId}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="gradeName">
+          <th mat-header-cell *matHeaderCellDef> Grade Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.gradeName}} </td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="gradeId">
+          <th mat-header-cell *matHeaderCellDef> Grade </th>
+          <td mat-cell *matCellDef="let element"> {{element.gradeName}} </td>
+        </ng-container>
+        
         <!-- Name Column -->
         <ng-container matColumnDef="isActive">
           <th mat-header-cell *matHeaderCellDef> Is Active </th>

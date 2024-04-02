@@ -4,12 +4,17 @@ import { NewAccountTypeComponent } from './accounttype/new-accounttype/new-accou
 import { BloodGroupComponent } from './blood-group/blood-group.component';
 import { ScaleComponent } from './scale/scale.component';
 import {DistrictComponent} from './district/district.component';
+import { UpazilaComponent } from './upazila/upazila.component';
+import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
 import { MaritalStatusComponent } from './marital-status/marital-status.component';
 import { EmployeeTypeComponent } from './employee-type/employee-type.component';
 import { GenderComponent } from './gender/gender.component';
 import { ReligionComponent } from './religion/religion.component';
 import { ChildStatusComponent } from './child-status/child-status.component';
+import { Designation } from './model/Designation';
+import { DesignationComponent } from './designation/designation.component';
+import { PunishmentComponent } from './punishment/punishment.component';
 
 const routes: Routes = [
 
@@ -52,12 +57,43 @@ const routes: Routes = [
   component: DistrictComponent, 
   },
   {
+    path: 'upazila',
+    component: UpazilaComponent,
+  },
+  { path: 'update-upazila/:upazilaid', 
+  component: UpazilaComponent, 
+  },
+  {
+    path: 'thana',
+    component: ThanaComponent,
+  },
+  { 
+    path: 'update-thana/:thanaid', 
+    component: ThanaComponent, 
+  },
+  {
     path: 'result',
     component: ResultComponent,
   },
   {
     path: 'update-result/:resultId',
     component: ResultComponent,
+  },
+  {
+    path: 'designation',
+    component: DesignationComponent,
+  },
+  {
+    path: 'update-designation/:designationId',
+    component: DesignationComponent,
+  },
+  {
+    path: 'punishment',
+    component: PunishmentComponent,
+  },
+  {
+    path: 'update-punishment/:punishmentId',
+    component: PunishmentComponent,
   },
 
 ];

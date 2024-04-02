@@ -16,7 +16,7 @@ export class ResultService {
     this.result = new Result();
    }
   find(id: number) {
-    return this.http.get<Result>(this.baseUrl + '/Result/get-bloodGroupDetail/' + id);
+    return this.http.get<Result>(this.baseUrl + '/Result/get-resultDetail/' + id);
   }
   getAll():Observable<Result[]> {
     return this.http.get<Result[]>(this.baseUrl + '/Result/get-result');

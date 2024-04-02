@@ -461,19 +461,19 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Department',
-        url: '/base/carousel'
+        url: '/bascisetup/department'
       },
       {
         name: 'Sub Department',
-        url: '/base/collapse'
+        url: '/bascisetup/subdepartment'
       },
       {
         name: 'Branch',
-        url: '/base/list-group'
+        url: '/bascisetup/branch'
       },
       {
         name: 'Sub Branch',
-        url: '/base/navs'
+        url: '/bascisetup/subbranch'
       },
       {
         name: 'Section',
@@ -481,7 +481,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Designation',
-        url: '/base/placeholder'
+        url: '/bascisetup/designation'
       },
       {
         name: 'Grade',
@@ -510,6 +510,10 @@ export const navItems: INavData[] = [
       {
         name: 'Occupation',
         url: '/base/tooltips'
+      },
+      {
+        name: 'Punishment/reward',
+        url: '/bascisetup/punishment'
       }
     ]
   },
@@ -532,19 +536,19 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Upazila',
-        url: '/base/carousel'
+        url: '/bascisetup/upazila'
       },
       {
         name: 'Thana',
-        url: '/base/collapse'
+        url: '/bascisetup/thana'
       },
       {
         name: 'Union',
-        url: '/base/list-group'
+        url: '/bascisetup/union'
       },
       {
         name: 'Ward',
-        url: '/base/navs'
+        url: '/bascisetup/ward'
       }
 
     ]
@@ -591,12 +595,12 @@ export const navItems: INavData[] = [
   },
   {
     name:'Training Setup',
-    url: '/base',
+    url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Training Type',
-        url: '/base/accordion'
+        url: '/bascisetup/trainingtype'
       },
       {
         name: 'Training Name',

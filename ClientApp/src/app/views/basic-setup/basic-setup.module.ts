@@ -13,12 +13,16 @@ import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { BloodGroupService } from './service/BloodGroup.service';
 import { ToastrService } from 'ngx-toastr';
 import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.component';
+import { UpazilaComponent } from './upazila/upazila.component';
+import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
 import { MaritalStatusComponent } from './marital-status/marital-status.component';
 import { EmployeeTypeComponent } from './employee-type/employee-type.component';
 import { GenderComponent } from './gender/gender.component';
 import { ReligionComponent } from './religion/religion.component';
 import { ChildStatusComponent } from './child-status/child-status.component';
+import { DesignationComponent } from './designation/designation.component';
+import { PunishmentComponent } from './punishment/punishment.component';
 
 
 @NgModule({
@@ -28,12 +32,16 @@ import { ChildStatusComponent } from './child-status/child-status.component';
     BloodGroupComponent,
     ScaleComponent,
     DistrictComponent,
+    UpazilaComponent,
+    ThanaComponent,
     ResultComponent,
     MaritalStatusComponent,
     EmployeeTypeComponent,
     GenderComponent,
     ReligionComponent,
     ChildStatusComponent,
+    DesignationComponent,
+    PunishmentComponent,
   ],
   imports: [
     CommonModule,

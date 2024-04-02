@@ -16,5 +16,9 @@ namespace Hrm.Application.DTOs.Scale
         public int GradeId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+       // Add properties from Scale table as neede
+       public string? GradeName { get; set; }
+       // Add properties from Grade table as neede
+
     }
 }

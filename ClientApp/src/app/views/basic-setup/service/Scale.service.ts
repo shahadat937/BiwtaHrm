@@ -15,9 +15,14 @@ export class ScaleService {
   // find(id: number) {
   //   return this.http.get<Scale>(this.baseUrl + '/scale/get-bloodGroupDetail/' + id);
   // }
+
   getAll():Observable<Scale[]> {
-    return this.http.get<Scale[]>(this.baseUrl + '/scale/get-scale');
+    return this.http.get<Scale[]>(this.baseUrl + '/scaleGradeView/get-scaleGradeView');
   }
+
+  // getAll():Observable<Scale[]> {
+  //   return this.http.get<Scale[]>(this.baseUrl + '/scale/get-scale');
+  // }
   getSelectGrade():Observable<Scale[]> {
     return this.http.get<Scale[]>(this.baseUrl + '/grade/get-selectedGrade');
   }

@@ -15,5 +15,6 @@ namespace Hrm.Domain
         public int GradeId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+
     }
 }

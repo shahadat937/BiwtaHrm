@@ -1,0 +1,33 @@
+import { environment } from '../../../../environments/environment';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {Thana}  from  './../model/thana'
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ThanaService {
+  baseUrl = environment.apiUrl;
+  thana: Thana;
+  constructor(private http: HttpClient) {
+    this.thana=new Thana();
+   }
+
+  getById(id: number) {
+    return this.http.get<Thana>(this.baseUrl + '/thana/get-thanabyid/' + id);
+  }
+  getAll():Observable<Thana[]> {
+    return this.http.get<Thana[]>(this.baseUrl + '/thana/get-thana');
+  }
+  update(id: number,model: any) {
+    return this.http.put(this.baseUrl + '/thana/update-thana/'+id, model);
+  }
+  submit(model: any) {
+    return this.http.post(this.baseUrl + '/thana/save-thana', model);
+  } 
+  delete(id:number){
+    return this.http.delete(this.baseUrl + '/thana/delete-thana/'+id);
+  }
+
+}

@@ -22,7 +22,7 @@ const routes: Routes = [
     component: BloodGroupComponent,
   },
   {
-    path: 'marital-status',
+    path: ' ',
     component: MaritalStatusComponent,
   },
   {

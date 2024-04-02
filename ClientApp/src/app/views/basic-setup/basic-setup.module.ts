@@ -14,6 +14,11 @@ import { BloodGroupService } from './service/BloodGroup.service';
 import { ToastrService } from 'ngx-toastr';
 import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.component';
 import { ResultComponent } from './result/result.component';
+import { MaritalStatusComponent } from './marital-status/marital-status.component';
+import { EmployeeTypeComponent } from './employee-type/employee-type.component';
+import { GenderComponent } from './gender/gender.component';
+import { ReligionComponent } from './religion/religion.component';
+import { ChildStatusComponent } from './child-status/child-status.component';
 
 
 @NgModule({
@@ -24,6 +29,11 @@ import { ResultComponent } from './result/result.component';
     ScaleComponent,
     DistrictComponent,
     ResultComponent,
+    MaritalStatusComponent,
+    EmployeeTypeComponent,
+    GenderComponent,
+    ReligionComponent,
+    ChildStatusComponent,
   ],
   imports: [
     CommonModule,

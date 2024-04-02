@@ -1,4 +1,6 @@
 ﻿using Hrm.Application.DTOs.Designation;
+using Hrm.Application.DTOs.Designation;
+using Hrm.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Designation.Requests.Commands
 {
-    public class UpdateDesignationCommand : IRequest<Unit>
+    public class UpdateDesignationCommand : IRequest<BaseCommandResponse>
     {
         public DesignationDto DesignationDto { get; set; }
     }

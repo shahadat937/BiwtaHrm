@@ -16,6 +16,11 @@ import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.
 import { UpazilaComponent } from './upazila/upazila.component';
 import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
+import { MaritalStatusComponent } from './marital-status/marital-status.component';
+import { EmployeeTypeComponent } from './employee-type/employee-type.component';
+import { GenderComponent } from './gender/gender.component';
+import { ReligionComponent } from './religion/religion.component';
+import { ChildStatusComponent } from './child-status/child-status.component';
 import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
 import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
@@ -31,6 +36,11 @@ import { PromotionTypeComponent } from './promotion-type/promotion-type.componen
     UpazilaComponent,
     ThanaComponent,
     ResultComponent,
+    MaritalStatusComponent,
+    EmployeeTypeComponent,
+    GenderComponent,
+    ReligionComponent,
+    ChildStatusComponent,
     DesignationComponent,
     PunishmentComponent,
     PromotionTypeComponent,

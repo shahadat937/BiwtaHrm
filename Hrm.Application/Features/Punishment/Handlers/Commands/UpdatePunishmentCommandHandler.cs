@@ -2,7 +2,9 @@
 using FluentValidation.Results;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Punishment.Validators;
+using Hrm.Application.DTOs.Punishment.Validators;
 using Hrm.Application.Exceptions;
+using Hrm.Application.Features.Punishment.Requests.Commands;
 using Hrm.Application.Features.Punishment.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
@@ -16,29 +18,30 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Punishment.Handlers.Commands
 {
-    public class UpdatePunishmentCommandHandler : IRequestHandler<UpdatePunishmentCommand, Unit>
+    public class UpdatePunishmentCommandHandler : IRequestHandler<UpdatePunishmentCommand, BaseCommandResponse>
     {
 
+        private readonly IHrmRepository<Hrm.Domain.Punishment> _PunishmentRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public UpdatePunishmentCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdatePunishmentCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Punishment> PunishmentRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _PunishmentRepository = PunishmentRepository;
         }
 
-        public async Task<Unit> Handle(UpdatePunishmentCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdatePunishmentCommand request, CancellationToken cancellationToken)
         {
-            var respose = new BaseCommandResponse();
-            var validator = new UpdatePunishmentDtoValidator();
+            var response = new BaseCommandResponse();
+            var validator = new IPunishmentDtoValidator();
             var validationResult = await validator.ValidateAsync(request.PunishmentDto);
 
             if (validationResult.IsValid == false)
             {
-                respose.Success = false;
-                respose.Message = "Creation Failed";
-                respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                response.Success = false;
+                response.Message = "Creation Failed";
+                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
             var Punishment = await _unitOfWork.Repository<Hrm.Domain.Punishment>().Get(request.PunishmentDto.PunishmentId);
@@ -48,12 +51,32 @@ namespace Hrm.Application.Features.Punishment.Handlers.Commands
                 throw new NotFoundException(nameof(Punishment), request.PunishmentDto.PunishmentId);
             }
 
-            _mapper.Map(request.PunishmentDto, Punishment);
+            var PunishmentName = request.PunishmentDto.PunishmentName.ToLower();
 
-            await _unitOfWork.Repository<Hrm.Domain.Punishment>().Update(Punishment);
-            await _unitOfWork.Save();
+            IQueryable<Hrm.Domain.Punishment> Punishments = _PunishmentRepository.Where(x => x.PunishmentName.ToLower() == PunishmentName);
 
-            return Unit.Value;
+
+            if (Punishments.Any())
+            {
+                response.Success = false;
+                response.Message = $"Update Failed '{request.PunishmentDto.PunishmentName}' already exists.";
+                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+
+            }
+            else
+            {
+
+                _mapper.Map(request.PunishmentDto, Punishment);
+
+                await _unitOfWork.Repository<Hrm.Domain.Punishment>().Update(Punishment);
+                await _unitOfWork.Save();
+
+                response.Success = true;
+                response.Message = "Update Successful";
+                response.Id = Punishment.PunishmentId;
+
+            }
+            return response;
         }
     }
 }

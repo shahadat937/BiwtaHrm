@@ -17,6 +17,7 @@ import { UpazilaComponent } from './upazila/upazila.component';
 import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
 import { DesignationComponent } from './designation/designation.component';
+import { PunishmentComponent } from './punishment/punishment.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { DesignationComponent } from './designation/designation.component';
     ThanaComponent,
     ResultComponent,
     DesignationComponent,
+    PunishmentComponent,
   ],
   imports: [
     CommonModule,

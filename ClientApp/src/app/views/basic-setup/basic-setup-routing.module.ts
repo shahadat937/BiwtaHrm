@@ -9,6 +9,7 @@ import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
 import { Designation } from './model/Designation';
 import { DesignationComponent } from './designation/designation.component';
+import { PunishmentComponent } from './punishment/punishment.component';
 
 const routes: Routes = [
 
@@ -64,6 +65,14 @@ const routes: Routes = [
   {
     path: 'update-designation/:designationId',
     component: DesignationComponent,
+  },
+  {
+    path: 'punishment',
+    component: PunishmentComponent,
+  },
+  {
+    path: 'update-punishment/:punishmentId',
+    component: PunishmentComponent,
   },
 
 ];

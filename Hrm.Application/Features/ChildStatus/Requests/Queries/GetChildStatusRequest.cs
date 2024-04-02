@@ -10,5 +10,6 @@ namespace Hrm.Application.Features.ChildStatus.Requests.Queries
 {
     public class GetChildStatusRequest : IRequest<object>
     {
+
     }
 }

@@ -8,6 +8,7 @@ namespace Hrm.Application.Features.BloodGroups.Requests.Queries
 {
     public class GetSelectedBloodGroupRequest : IRequest<List<SelectedModel>>
     {
+
     }
 } 
       

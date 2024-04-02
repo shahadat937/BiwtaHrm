@@ -1,6 +1,8 @@
 ﻿using Hrm.Application;
+using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.DTOs.ChildStatus;
 using Hrm.Application.DTOs.MaritalStatus;
+using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Application.Features.ChildStatus.Requests.Commands;
 using Hrm.Application.Features.ChildStatus.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
@@ -30,7 +32,13 @@ namespace Hrm.Api.Controllers
             var ChildStatus = await _mediator.Send(new GetChildStatusRequest { });
             return Ok(ChildStatus);
         }
-
+        [HttpGet]
+        [Route("get-ChildStatusById/{id}")]
+        public async Task<ActionResult<ChildStatusDto>> Get(int id)
+        {
+            var BloodGroups = await _mediator.Send(new GetChildStatusGetByIdRequest { ChildStatusId = id });
+            return Ok(BloodGroups);
+        }
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

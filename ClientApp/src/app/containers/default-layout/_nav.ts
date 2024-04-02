@@ -448,11 +448,19 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Employee Type',
-        url: '/base/accordion'
+        url: '/bascisetup/employee-type'
       },
       {
         name: 'Blood Group',
         url: '/bascisetup/blood-group'
+      },
+      {
+        name: 'Marital Status',
+        url: '/bascisetup/marital-status'
+      },
+      {
+        name: 'Child Status',
+        url: '/bascisetup/child-status'
       },
       {
         name: 'User Role',
@@ -496,7 +504,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Religion',
-        url: '/base/spinners'
+        url: '/bascisetup/religion'
       },
       {
         name: 'Hair Color',
@@ -591,7 +599,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Gender',
-        url: '/bascisetup/gender-list'
+        url: '/bascisetup/gender'
       }
 
     ]

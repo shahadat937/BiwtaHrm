@@ -7,11 +7,15 @@ import {DistrictComponent} from './district/district.component';
 import { UpazilaComponent } from './upazila/upazila.component';
 import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
+import { MaritalStatusComponent } from './marital-status/marital-status.component';
+import { EmployeeTypeComponent } from './employee-type/employee-type.component';
+import { GenderComponent } from './gender/gender.component';
+import { ReligionComponent } from './religion/religion.component';
+import { ChildStatusComponent } from './child-status/child-status.component';
 import { Designation } from './model/Designation';
 import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
 import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
-
 const routes: Routes = [
 
   {
@@ -23,8 +27,24 @@ const routes: Routes = [
     component: BloodGroupComponent,
   },
   {
-    path: 'scale',
-    component: ScaleComponent
+    path:'marital-status',
+    component: MaritalStatusComponent,
+  },
+  {
+    path: 'employee-type',
+    component: EmployeeTypeComponent,
+  },
+  {
+    path: 'gender',
+    component: GenderComponent,
+  },
+  {
+    path: 'religion',
+    component: ReligionComponent,
+  },
+  {
+    path: 'child-status',
+    component: ChildStatusComponent
   },
   { path: 'update-bloodgroup/:bloodGroupId',
     component: BloodGroupComponent,
@@ -68,6 +88,7 @@ const routes: Routes = [
     component: DesignationComponent,
   },
   {
+
     path: 'promotionType',
     component: PromotionTypeComponent,
   },
@@ -76,6 +97,7 @@ const routes: Routes = [
     component: PromotionTypeComponent,
   },
   {
+
     path: 'punishment',
     component: PunishmentComponent,
   },

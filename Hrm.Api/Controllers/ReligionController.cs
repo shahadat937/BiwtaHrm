@@ -9,6 +9,8 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.DTOs.ChildStatus;
+using Hrm.Application.Features.ChildStatus.Requests.Queries;
 namespace Hrm.Api.Controllers
 {
 
@@ -29,7 +31,13 @@ namespace Hrm.Api.Controllers
             var Religion = await _mediator.Send(new GetReligionRequest { });
             return Ok(Religion);
         }
-
+        [HttpGet]
+        [Route("get-ReligionById/{id}")]
+        public async Task<ActionResult<ReligionDto>> Get(int id)
+        {
+            var Religion = await _mediator.Send(new GetReligionByIdRequest { ReligionId = id });
+            return Ok(Religion);
+        }
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

@@ -385,6 +385,17 @@ export const navItems: INavData[] = [
     ]
   },
   {
+    name:'PromotionType',
+    url: '/bascisetup',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'PromotionType',
+        url: '/bascisetup/promotionType'
+      },
+    ]
+  },
+  {
     title: true,
     name: 'Appraisal Management'
   },

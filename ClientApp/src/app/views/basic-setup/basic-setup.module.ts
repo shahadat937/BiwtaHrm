@@ -23,7 +23,7 @@ import { ReligionComponent } from './religion/religion.component';
 import { ChildStatusComponent } from './child-status/child-status.component';
 import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
-
+import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
 
 @NgModule({
   declarations:
@@ -42,6 +42,7 @@ import { PunishmentComponent } from './punishment/punishment.component';
     ChildStatusComponent,
     DesignationComponent,
     PunishmentComponent,
+    PromotionTypeComponent,
   ],
   imports: [
     CommonModule,

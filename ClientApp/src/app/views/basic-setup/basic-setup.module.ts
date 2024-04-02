@@ -16,6 +16,7 @@ import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.
 import { UpazilaComponent } from './upazila/upazila.component';
 import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
+import { DesignationComponent } from './designation/designation.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { ResultComponent } from './result/result.component';
     UpazilaComponent,
     ThanaComponent,
     ResultComponent,
+    DesignationComponent,
   ],
   imports: [
     CommonModule,

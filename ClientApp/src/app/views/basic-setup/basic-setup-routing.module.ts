@@ -7,6 +7,8 @@ import {DistrictComponent} from './district/district.component';
 import { UpazilaComponent } from './upazila/upazila.component';
 import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
+import { Designation } from './model/Designation';
+import { DesignationComponent } from './designation/designation.component';
 
 const routes: Routes = [
 
@@ -54,6 +56,14 @@ const routes: Routes = [
   {
     path: 'update-result/:resultId',
     component: ResultComponent,
+  },
+  {
+    path: 'designation',
+    component: DesignationComponent,
+  },
+  {
+    path: 'update-designation/:designationId',
+    component: DesignationComponent,
   },
 
 ];

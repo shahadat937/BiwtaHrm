@@ -1,10 +1,15 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Scale;
+using Hrm.Application.Features.Reward.Requests.Queries;
 using Hrm.Application.Features.Scales.Requests.Commands;
 using Hrm.Application.Features.Scales.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
+using Hrm.Domain;
+using Hrm.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
 
 namespace Hrm.Api.Controllers
 {
@@ -13,6 +18,7 @@ namespace Hrm.Api.Controllers
     public class ScaleController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly HrmDbContext _contex;
         public ScaleController(IMediator mediator)
         {
             _mediator = mediator;
@@ -22,8 +28,8 @@ namespace Hrm.Api.Controllers
         [Route("get-scale")]
         public async Task<ActionResult> GetScale()
         {
-            var Scale = await _mediator.Send(new GetScaleRequest { });
-            return Ok(Scale);
+            var Reward = await _mediator.Send(new GetScaleRequest { });
+            return Ok(Reward);
         }
 
         [HttpPost]

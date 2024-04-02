@@ -139,6 +139,16 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.WeekendId)
                 .HasName("[[PK_WeekendId]]");
             });
+            modelBuilder.Entity<Scale>(entity =>
+            {
+                entity.HasKey(e => e.ScaleId)
+                .HasName("[[PK_ScaleId]]");
+            });
+            modelBuilder.Entity<ScaleGradeView>(entity =>
+            {
+                entity.HasKey(e => e.ScaleId)
+                .HasName("[[PK_ScaleId]]");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -175,7 +185,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Domain.Module> Module { get; set; } = null!;
         public virtual DbSet<Feature> Feature { get; set; } = null!;
         public virtual DbSet<Scale> Scale { get; set; } = null!;
-
+        public virtual DbSet<ScaleGradeView> ScaleGradeView { get; set; } = null!;
 
     }
 }

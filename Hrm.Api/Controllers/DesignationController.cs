@@ -1,6 +1,9 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Designation;
+using Hrm.Application.DTOs.Designation;
 using Hrm.Application.DTOs.MaritalStatus;
+using Hrm.Application.Features.Designation.Requests.Queries;
+using Hrm.Application.Features.Designations.Requests.Queries;
 using Hrm.Application.Features.Designation.Requests.Commands;
 using Hrm.Application.Features.Designation.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
@@ -8,6 +11,7 @@ using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
@@ -21,9 +25,24 @@ namespace Hrm.Api.Controllers
         {
             _mediator = mediator;
         }
+        [HttpGet]
+        [Route("get-designationDetail/{id}")]
+        public async Task<ActionResult<DesignationDto>> Get(int id)
+        {
+            var Designations = await _mediator.Send(new GetDesignationDetailRequest { DesignationId = id });
+            return Ok(Designations);
+        }
+        [HttpGet]
+        [Route("get-selectedDesignations")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedDesignation()
+        {
+            var Designation = await _mediator.Send(new GetSelectedDesignationRequest { });
+            return Ok(Designation);
+        }
+
 
         [HttpGet]
-        [Route("get-Designation")]
+        [Route("get-designation")]
         public async Task<ActionResult> GetDesignation()
         {
             var Designation = await _mediator.Send(new GetDesignationRequest { });
@@ -33,7 +52,7 @@ namespace Hrm.Api.Controllers
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        [Route("save-Designation")]
+        [Route("save-designation")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateDesignationDto Designation)
         {
             var command = new CreateDesignationCommand { DesignationDto = Designation };
@@ -50,8 +69,8 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Put([FromBody] DesignationDto Designation)
         {
             var command = new UpdateDesignationCommand { DesignationDto = Designation };
-            await _mediator.Send(command);
-            return NoContent();
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HttpDelete]
@@ -62,8 +81,8 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteDesignationCommand { DesignationId = id };
-            await _mediator.Send(command);
-            return NoContent();
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

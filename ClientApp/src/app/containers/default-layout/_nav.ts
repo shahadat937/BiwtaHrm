@@ -473,7 +473,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Designation',
-        url: '/base/placeholder'
+        url: '/bascisetup/designation'
       },
       {
         name: 'Grade',

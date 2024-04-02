@@ -40,6 +40,7 @@ using Hrm.Application.DTOs.Overall_EV_Promotion;
 using hrm.Application.DTOs.Modules;
 using Hrm.Application.DTOs.Modules;
 using Hrm.Application.DTOs.Scale;
+using Hrm.Application.DTOs.ScaleGradeView;
 
 namespace Hrm.Application.Profiles
 {
@@ -145,6 +146,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Scale, ScaleDto>().ReverseMap();
             CreateMap<Scale, CreateScaleDto>().ReverseMap();
+
+            CreateMap<ScaleGradeView, ScaleGradeViewDto>().ReverseMap();
+            CreateMap<ScaleGradeView, CreateScaleGradeViewDto>().ReverseMap();
 
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();

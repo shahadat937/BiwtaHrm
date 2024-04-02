@@ -186,6 +186,8 @@ namespace Hrm.Persistence
         public virtual DbSet<Feature> Feature { get; set; } = null!;
         public virtual DbSet<Scale> Scale { get; set; } = null!;
         public virtual DbSet<ScaleGradeView> ScaleGradeView { get; set; } = null!;
+       
+
 
     }
 }

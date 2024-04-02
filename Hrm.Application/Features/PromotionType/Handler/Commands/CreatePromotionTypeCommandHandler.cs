@@ -14,41 +14,40 @@ namespace Hrm.Application.Features.PromotionType.Handler.Commands
 {
     public class CreatePromotionTypeCommandHandler : IRequestHandler<CreatePromotionTypeCommand, BaseCommandResponse>
     {
-
-        private readonly IHrmRepository<Hrm.Domain.PromotionType> _promotionTypeRepository;
+        private readonly IHrmRepository<Hrm.Domain.PromotionType> _PromotionTypeRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public CreatePromotionTypeCommandHandler(IHrmRepository<Hrm.Domain.PromotionType> promotionTypeRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CreatePromotionTypeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.PromotionType> PromotionTypeRepository)
         {
-            _promotionTypeRepository = promotionTypeRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _PromotionTypeRepository = PromotionTypeRepository;
         }
-
         public async Task<BaseCommandResponse> Handle(CreatePromotionTypeCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
             var validator = new CreatePromotionTypeDtoValidator();
-            var validatorResult = await validator.ValidateAsync(request.PromotionTypeDto);
+            var validationPromotionType = await validator.ValidateAsync(request.PromotionTypeDto);
 
-            if (validatorResult.IsValid == false)
+            if (validationPromotionType.IsValid == false)
             {
                 response.Success = false;
                 response.Message = "Creation Failed";
-                response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
+                response.Errors = validationPromotionType.Errors.Select(q => q.ErrorMessage).ToList();
             }
             else
             {
-                var promotionTypeName = request.PromotionTypeDto.PromotionTypeName.ToLower();
+                var PromotionTypeName = request.PromotionTypeDto.PromotionTypeName.ToLower();
 
-                IQueryable<Hrm.Domain.PromotionType> promotionTypes = _promotionTypeRepository.Where(x => x.PromotionTypeName.ToLower() == promotionTypeName);
+                IQueryable<Hrm.Domain.PromotionType> PromotionTypes = _PromotionTypeRepository.Where(x => x.PromotionTypeName.ToLower() == PromotionTypeName);
 
-                if (promotionTypes.Any())
+
+                if (PromotionTypes.Any())
                 {
                     response.Success = false;
                     response.Message = "Creation Failed Name already exists.";
-                    response.Errors = validatorResult.Errors.Select(q => q.ErrorMessage).ToList();
+                    response.Errors = validationPromotionType.Errors.Select(q => q.ErrorMessage).ToList();
+
                 }
                 else
                 {
@@ -57,12 +56,15 @@ namespace Hrm.Application.Features.PromotionType.Handler.Commands
                     PromotionType = await _unitOfWork.Repository<Hrm.Domain.PromotionType>().Add(PromotionType);
                     await _unitOfWork.Save();
 
+
                     response.Success = true;
-                    response.Message = "Creation Successfull";
+                    response.Message = "Creation Successful";
                     response.Id = PromotionType.PromotionTypeId;
                 }
             }
+
             return response;
         }
+
     }
 }

@@ -15,6 +15,7 @@ import { ChildStatusComponent } from './child-status/child-status.component';
 import { Designation } from './model/Designation';
 import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
+import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
 
 const routes: Routes = [
 
@@ -86,6 +87,14 @@ const routes: Routes = [
   {
     path: 'update-designation/:designationId',
     component: DesignationComponent,
+  },
+  {
+    path: 'promotionType',
+    component: PromotionTypeComponent,
+  },
+  {
+    path: 'update-promotionType/:promotionTypeId',
+    component: PromotionTypeComponent,
   },
   {
     path: 'punishment',

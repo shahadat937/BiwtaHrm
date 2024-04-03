@@ -4,9 +4,7 @@ import { MaritalStatus } from '../model/marital-status';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class MaritalStatusService {
 
   baseUrl = environment.apiUrl;

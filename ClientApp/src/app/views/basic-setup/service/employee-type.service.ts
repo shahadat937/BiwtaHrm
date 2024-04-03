@@ -4,9 +4,7 @@ import { EmployeeType } from '../model/employee-type';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class EmployeeTypeService {
 
   baseUrl = environment.apiUrl;

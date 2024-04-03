@@ -4,9 +4,7 @@ import { Religion } from '../model/religion';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ReligionService {
 
   baseUrl = environment.apiUrl;

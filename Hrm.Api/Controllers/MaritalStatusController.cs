@@ -41,7 +41,7 @@ namespace Hrm.Api.Controllers
             return Ok(MaritalStatus);
         }
         [HttpGet]
-        [Route("get-MaritalStatusById/{id}")]
+        [Route("get-maritalStatusById/{id}")]
         public async Task<ActionResult<MaritalStatusDto>> Get(int id)
         {
             var MaritalStatus = await _mediator.Send(new GetMaritalStatusByIdRequest { MaritalStatusId = id });

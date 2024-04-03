@@ -16,29 +16,30 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.ChildStatus.Handlers.Commands
 {
-    public class UpdateChildStatusCommandHandler : IRequestHandler<UpdateChildStatusCommand, Unit>
+    public class UpdateChildStatusCommandHandler : IRequestHandler<UpdateChildStatusCommand, BaseCommandResponse>
     {
-
+        private readonly IHrmRepository<Hrm.Domain.ChildStatus> _ChildStatusRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateChildStatusCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateChildStatusCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.ChildStatus> ChildStatusRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _ChildStatusRepository =ChildStatusRepository;
         }
 
-        public async Task<Unit> Handle(UpdateChildStatusCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateChildStatusCommand request, CancellationToken cancellationToken)
         {
-            var respose = new BaseCommandResponse();
+            var response = new BaseCommandResponse();
             var validator = new UpdateChildStatusDtoValidator();
             var validationResult = await validator.ValidateAsync(request.ChildStatusDto);
 
             if (validationResult.IsValid == false)
             {
-                respose.Success = false;
-                respose.Message = "Creation Failed";
-                respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                response.Success = false;
+                response.Message = "Creation Failed";
+                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
             var ChildStatus = await _unitOfWork.Repository<Hrm.Domain.ChildStatus>().Get(request.ChildStatusDto.ChildStatusId);
@@ -48,12 +49,35 @@ namespace Hrm.Application.Features.ChildStatus.Handlers.Commands
                 throw new NotFoundException(nameof(ChildStatus), request.ChildStatusDto.ChildStatusId);
             }
 
-            _mapper.Map(request.ChildStatusDto, ChildStatus);
 
-            await _unitOfWork.Repository<Hrm.Domain.ChildStatus>().Update(ChildStatus);
-            await _unitOfWork.Save();
+            var ChildStatusName = request.ChildStatusDto.ChildStatusName.ToLower();
 
-            return Unit.Value;
+            IQueryable<Hrm.Domain.ChildStatus> isCheckChildStatusName = _ChildStatusRepository.Where(x => x.ChildStatusName.ToLower() == ChildStatusName);
+
+
+            if (isCheckChildStatusName.Any())
+            {
+                response.Success = false;
+                response.Message = $"Update Failed '{request.ChildStatusDto.ChildStatusName}' already exists.";
+                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+
+            }
+            else
+            {
+
+                _mapper.Map(request.ChildStatusDto, ChildStatus);
+
+                await _unitOfWork.Repository<Hrm.Domain.ChildStatus>().Update(ChildStatus);
+                await _unitOfWork.Save();
+
+                response.Success = true;
+                response.Message = "Update Successful";
+                response.Id = ChildStatus.ChildStatusId;
+
+
+
+            }
+            return response;
         }
     }
 }

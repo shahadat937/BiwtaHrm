@@ -63,9 +63,9 @@ import { PromotionTypeComponent } from './promotion-type/promotion-type.componen
     SharedCustomModule,
     ProgressModule
   ],
-  // providers:[
-  //   BloodGroupService,
-  //   ToastrService
-  // ]
+  providers:[
+    BloodGroupService,
+    ToastrService
+  ]
 })
 export class BasicSetupModule { }

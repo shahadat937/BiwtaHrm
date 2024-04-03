@@ -27,6 +27,6 @@ export class MaritalStatusService {
     return this.http.post(this.baseUrl + '/marital-status/save-maritalStatus', model);
   }
   delete(id:number){
-    return this.http.delete(this.baseUrl + '/gender/delete-maritalStatus/'+id);
+    return this.http.delete(this.baseUrl + '/marital-status/delete-maritalStatus/'+id);
   }
 }

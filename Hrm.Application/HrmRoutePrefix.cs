@@ -14,7 +14,7 @@ namespace Hrm.Application
         public const string Gender = HRMRoutePrefixBase + "gender";
         public const string Religion = HRMRoutePrefixBase + "religion";
         public const string TrainingType = HRMRoutePrefixBase + "training-type";
-        public const string ChildStatus = HRMRoutePrefixBase + "religion";
+        public const string ChildStatus = HRMRoutePrefixBase + "childStatus";
         public const string Division = HRMRoutePrefixBase + "division";
 
         public const string Promotion_Type = HRMRoutePrefixBase + "promotion_type";

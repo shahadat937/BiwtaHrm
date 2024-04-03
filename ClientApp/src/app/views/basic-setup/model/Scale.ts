@@ -9,6 +9,3 @@ export class Scale {
   gradeName: string="";
 
 }
-export interface scaleGradeView {
-  
-}

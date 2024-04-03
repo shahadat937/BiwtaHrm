@@ -1,11 +1,14 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Scale;
+using Hrm.Application.DTOs.Scale;
+using Hrm.Application.Features.Scales.Requests.Queries;
 using Hrm.Application.Features.Reward.Requests.Queries;
 using Hrm.Application.Features.Scales.Requests.Commands;
 using Hrm.Application.Features.Scales.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 using Hrm.Persistence;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,25 +16,16 @@ using SendGrid.Helpers.Mail;
 
 namespace Hrm.Api.Controllers
 {
+
     [Route(HrmRoutePrefix.Scale)]
     [ApiController]
     public class ScaleController : Controller
     {
         private readonly IMediator _mediator;
-        private readonly HrmDbContext _contex;
         public ScaleController(IMediator mediator)
         {
             _mediator = mediator;
         }
-
-        [HttpGet]
-        [Route("get-scale")]
-        public async Task<ActionResult> GetScale()
-        {
-            var Reward = await _mediator.Send(new GetScaleRequest { });
-            return Ok(Reward);
-        }
-
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -43,9 +37,31 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("get-scale")]
+        public async Task<ActionResult> Get()
+        {
+            var Scale = await _mediator.Send(new GetScaleRequest { });
+            return Ok(Scale);
+        }
+        [HttpGet]
+        [Route("get-scaleDetail/{id}")]
+        public async Task<ActionResult<ScaleDto>> Get(int id)
+        {
+            var Scales = await _mediator.Send(new GetScaleDetailRequest { ScaleId = id });
+            return Ok(Scales);
+        }
+        //[HttpGet]
+        //[Route("get-selectedScales")]
+        //public async Task<ActionResult<List<SelectedModel>>> GetSelectedScale()
+        //{
+        //    var Scale = await _mediator.Send(new GetSelectedScGaleRequest { });
+        //    return Ok(Scale);
+        //}
+
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
         [Route("update-scale/{id}")]
         public async Task<ActionResult> Put([FromBody] ScaleDto Scale)
@@ -54,6 +70,7 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
 
         [HttpDelete]
         [ProducesResponseType(200)]
@@ -66,6 +83,5 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
-
     }
 }

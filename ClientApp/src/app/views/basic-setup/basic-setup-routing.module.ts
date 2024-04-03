@@ -26,6 +26,9 @@ const routes: Routes = [
     path: 'blood-group',
     component: BloodGroupComponent,
   },
+  { path: 'update-bloodgroup/:bloodGroupId',
+    component: BloodGroupComponent,
+  },
   {
     path:'marital-status',
     component: MaritalStatusComponent,
@@ -46,8 +49,8 @@ const routes: Routes = [
     path: 'child-status',
     component: ChildStatusComponent
   },
-  { path: 'update-bloodgroup/:bloodGroupId',
-    component: BloodGroupComponent,
+  { path: 'update-child-status/:childStatusId',
+  component: ChildStatusComponent,
   },
   {
     path: 'district',
@@ -104,7 +107,7 @@ const routes: Routes = [
   {
     path: 'update-punishment/:punishmentId',
     component: PunishmentComponent,
-  },
+  }
 
 ];
 

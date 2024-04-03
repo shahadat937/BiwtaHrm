@@ -1,3 +1,8 @@
+import { GenderService } from './service/gender.service';
+import { ReligionService } from './service/religion.service';
+import { MaritalStatusService } from './service/marital-status.service';
+import { EmployeeTypeService } from './service/employee-type.service';
+import { ChildStatusService } from './service/child-status.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -63,9 +68,14 @@ import { PromotionTypeComponent } from './promotion-type/promotion-type.componen
     SharedCustomModule,
     ProgressModule
   ],
-  // providers:[
-  //   BloodGroupService,
-  //   ToastrService
-  // ]
+  providers:[
+    BloodGroupService,
+    ToastrService,
+    ChildStatusService,
+    EmployeeTypeService,
+    MaritalStatusService,
+    ReligionService,
+    GenderService
+  ]
 })
 export class BasicSetupModule { }

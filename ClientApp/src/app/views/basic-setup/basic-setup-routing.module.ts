@@ -16,7 +16,6 @@ import { Designation } from './model/Designation';
 import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
 import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
-
 const routes: Routes = [
 
   {
@@ -25,6 +24,9 @@ const routes: Routes = [
   },
   {
     path: 'blood-group',
+    component: BloodGroupComponent,
+  },
+  { path: 'update-bloodgroup/:bloodGroupId',
     component: BloodGroupComponent,
   },
   {
@@ -47,8 +49,8 @@ const routes: Routes = [
     path: 'child-status',
     component: ChildStatusComponent
   },
-  { path: 'update-bloodgroup/:bloodGroupId',
-    component: BloodGroupComponent,
+  { path: 'update-child-status/:childStatusId',
+  component: ChildStatusComponent,
   },
   {
     path: 'district',
@@ -89,6 +91,7 @@ const routes: Routes = [
     component: DesignationComponent,
   },
   {
+
     path: 'promotionType',
     component: PromotionTypeComponent,
   },
@@ -97,12 +100,14 @@ const routes: Routes = [
     component: PromotionTypeComponent,
   },
   {
+
     path: 'punishment',
     component: PunishmentComponent,
   },
   {
     path: 'update-punishment/:punishmentId',
     component: PunishmentComponent,
+<<<<<<< HEAD
   },
   {
     path: 'scale',
@@ -112,6 +117,9 @@ const routes: Routes = [
     path: 'update-scale/:scaleId',
     component: ScaleComponent,
   },
+=======
+  }
+>>>>>>> a0a187c158e4e128c5a43858c1a9a96ef55d1510
 
 ];
 

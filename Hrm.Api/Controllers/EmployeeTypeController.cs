@@ -32,7 +32,7 @@ namespace Hrm.Api.Controllers
             return Ok(EmployeeType);
         }
         [HttpGet]
-        [Route("get-EmployeeTypeById/{id}")]
+        [Route("get-employeeTypeById/{id}")]
         public async Task<ActionResult<EmployeeTypeDto>> Get(int id)
         {
             var EmployeeType = await _mediator.Send(new GetEmployeeTypeByIdRequest { EmployeeTypeId = id });

@@ -59,8 +59,8 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Put([FromBody] ChildStatusDto ChildStatus)
         {
             var command = new UpdateChildStatusCommand { ChildStatusDto = ChildStatus };
-            await _mediator.Send(command);
-            return NoContent();
+            var response =await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HttpDelete]

@@ -25,14 +25,14 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-Religion")]
+        [Route("get-religion")]
         public async Task<ActionResult> GetReligion()
         {
             var Religion = await _mediator.Send(new GetReligionRequest { });
             return Ok(Religion);
         }
         [HttpGet]
-        [Route("get-ReligionById/{id}")]
+        [Route("get-religionById/{id}")]
         public async Task<ActionResult<ReligionDto>> Get(int id)
         {
             var Religion = await _mediator.Send(new GetReligionByIdRequest { ReligionId = id });
@@ -41,7 +41,7 @@ namespace Hrm.Api.Controllers
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        [Route("save-Religion")]
+        [Route("save-religion")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateReligionDto Religion)
         {
             var command = new CreateReligionCommand { ReligionDto = Religion };
@@ -54,7 +54,7 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        [Route("update-Religion/{id}")]
+        [Route("update-religion/{id}")]
         public async Task<ActionResult> Put([FromBody] ReligionDto Religion)
         {
             var command = new UpdateReligionCommand { ReligionDto = Religion };
@@ -66,7 +66,7 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
-        [Route("delete-Religion/{id}")]
+        [Route("delete-religion/{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteReligionCommand { ReligionId = id };

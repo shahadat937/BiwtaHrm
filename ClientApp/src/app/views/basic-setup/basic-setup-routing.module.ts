@@ -104,6 +104,14 @@ const routes: Routes = [
     path: 'update-punishment/:punishmentId',
     component: PunishmentComponent,
   },
+  {
+    path: 'scale',
+    component: ScaleComponent,
+  },
+  {
+    path: 'update-scale/:scaleId',
+    component: ScaleComponent,
+  },
 
 ];
 

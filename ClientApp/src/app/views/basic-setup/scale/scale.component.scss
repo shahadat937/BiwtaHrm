@@ -9,6 +9,13 @@ table {
   padding: 0;
   font: inherit;
 }
+.input-wrapper select {
+  width: 430px; /* Adjust the width as needed */
+  height: 35px;
+  border-radius: 5px;
+  color: none;
+}
+
 .mat-snack-bar-container {
   background-color: #4CAF50; /* Change background color to green */
   color: white; /* Change text color to white */

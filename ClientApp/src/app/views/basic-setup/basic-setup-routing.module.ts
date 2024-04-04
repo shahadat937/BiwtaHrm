@@ -16,6 +16,7 @@ import { Designation } from './model/Designation';
 import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
 import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
+import { GradeComponent } from './grade/grade.component';
 const routes: Routes = [
 
   {
@@ -124,7 +125,14 @@ const routes: Routes = [
     path: 'update-scale/:scaleId',
     component: ScaleComponent,
   },
-
+  {
+    path: 'grade',
+    component: GradeComponent,
+  },
+  {
+    path: 'update-grade/:gradeId',
+    component: GradeComponent,
+  }
 ];
 
 @NgModule({

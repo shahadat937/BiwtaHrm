@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SendGrid.Helpers.Mail;
+using Hrm.Application.DTOs.Scale;
+using Hrm.Application.Features.Scale.Requests.Queries;
+using Hrm.Application.Features.Scales.Requests.Queries;
 
 namespace Hrm.Api.Controllers
 {
@@ -45,19 +48,20 @@ namespace Hrm.Api.Controllers
             return Ok(Scale);
         }
         [HttpGet]
-        [Route("get-scaleDetail/{id}")]
+        [Route("get-ScaleDetail/{id}")]
         public async Task<ActionResult<ScaleDto>> Get(int id)
         {
             var Scales = await _mediator.Send(new GetScaleDetailRequest { ScaleId = id });
             return Ok(Scales);
         }
-        //[HttpGet]
-        //[Route("get-selectedScales")]
-        //public async Task<ActionResult<List<SelectedModel>>> GetSelectedScale()
-        //{
-        //    var Scale = await _mediator.Send(new GetSelectedScGaleRequest { });
-        //    return Ok(Scale);
-        //}
+
+        [HttpGet]
+        [Route("get-selectedScale")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedScale()
+        {
+            var Scales = await _mediator.Send(new GetSelectScaleRequest { });
+            return Ok(Scales);
+        }
 
         [HttpPut]
         [ProducesResponseType(200)]

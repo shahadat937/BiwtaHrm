@@ -43,7 +43,7 @@ namespace Hrm.Application.Features.MaritalStatus.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var maritalStatusName = request.MaritalStatusDto.MaritalStatusName.ToLower();
+            var maritalStatusName = request.MaritalStatusDto.MaritalStatusName.Trim().ToLower().Replace(" ", string.Empty);
 
             IQueryable<Hrm.Domain.MaritalStatus> maritalStatuses = _maritalStatusRepository.Where(x => x.MaritalStatusName.ToLower() == maritalStatusName);
 
@@ -52,7 +52,8 @@ namespace Hrm.Application.Features.MaritalStatus.Handlers.Commands
             if (maritalStatuses.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+              
+                response.Message = $"Update Failed '{request.MaritalStatusDto.MaritalStatusName}' already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

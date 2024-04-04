@@ -34,7 +34,15 @@ const routes: Routes = [
     component: MaritalStatusComponent,
   },
   {
+    path:'update-marital-status/:maritalStatusId',
+    component: MaritalStatusComponent,
+  },
+  {
     path: 'employee-type',
+    component: EmployeeTypeComponent,
+  },
+  {
+    path: 'update-employee-type/:employeeTypeId',
     component: EmployeeTypeComponent,
   },
   {
@@ -107,7 +115,6 @@ const routes: Routes = [
   {
     path: 'update-punishment/:punishmentId',
     component: PunishmentComponent,
-<<<<<<< HEAD
   },
   {
     path: 'scale',
@@ -117,9 +124,6 @@ const routes: Routes = [
     path: 'update-scale/:scaleId',
     component: ScaleComponent,
   },
-=======
-  }
->>>>>>> a0a187c158e4e128c5a43858c1a9a96ef55d1510
 
 ];
 

@@ -150,7 +150,7 @@ constructor(
   delete(element:any){
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{
       if (result) {
-        this.childStatusService.delete(element.bloodGroupId).subscribe(res=>{
+        this.childStatusService.delete(element.childStatusId).subscribe(res=>{
           this.getALlChildStatus()
         },(err) => { 
        console.log(err)

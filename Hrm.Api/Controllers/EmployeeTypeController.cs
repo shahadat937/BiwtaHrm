@@ -58,8 +58,8 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Put([FromBody] EmployeeTypeDto EmployeeType)
         {
             var command = new UpdateEmployeeTypeCommand { EmployeeTypeDto = EmployeeType };
-            await _mediator.Send(command);
-            return NoContent();
+          var response=  await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HttpDelete]

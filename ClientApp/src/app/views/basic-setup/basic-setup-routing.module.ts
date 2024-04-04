@@ -35,7 +35,15 @@ const routes: Routes = [
     component: MaritalStatusComponent,
   },
   {
+    path:'update-marital-status/:maritalStatusId',
+    component: MaritalStatusComponent,
+  },
+  {
     path: 'employee-type',
+    component: EmployeeTypeComponent,
+  },
+  {
+    path: 'update-employee-type/:employeeTypeId',
     component: EmployeeTypeComponent,
   },
   {
@@ -124,8 +132,7 @@ const routes: Routes = [
   {
     path: 'update-grade/:gradeId',
     component: GradeComponent,
-  },
-
+  }
 ];
 
 @NgModule({

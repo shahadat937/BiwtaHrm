@@ -6,6 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { CommonModule } from '@angular/common'; 
+
 
 // Import routing module
 import { AppRoutingModule } from './app-routing.module';
@@ -86,7 +89,10 @@ const APP_CONTAINERS = [
     CoreModule,
     SharedCustomModule,
     HttpClientModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
+    CommonModule,
+
   ],
   providers: [
     {

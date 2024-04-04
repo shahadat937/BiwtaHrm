@@ -9,6 +9,9 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.DTOs.Shift;
+using Hrm.Application.Features.Shift.Requests.Queries;
+using Hrm.Shared.Models;
 namespace Hrm.Api.Controllers
 {
 
@@ -64,6 +67,23 @@ namespace Hrm.Api.Controllers
             var command = new DeleteShiftCommand { ShiftId = id };
             await _mediator.Send(command);
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("get-shiftbyid/{id}")]
+        public async Task<ActionResult<ShiftDto>> Get(int id)
+        {
+            var Shift = await _mediator.Send(new GetShiftByIdRequest { ShiftId = id });
+            return Ok(Shift);
+
+        }
+
+        [HttpGet]
+        [Route("get-selectedshift")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedShift()
+        {
+            var shift = await _mediator.Send(new GetSelectedShiftRequest { });
+            return Ok(shift);
         }
     }
 }

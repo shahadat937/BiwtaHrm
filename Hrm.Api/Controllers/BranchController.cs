@@ -1,13 +1,16 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Branch;
+using Hrm.Application.DTOs.Branch;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.Branch.Requests.Commands;
+using Hrm.Application.Features.Branch.Requests.Queries;
 using Hrm.Application.Features.Branch.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
@@ -65,5 +68,25 @@ namespace Hrm.Api.Controllers
             await _mediator.Send(command);
             return NoContent();
         }
+
+
+
+        [HttpGet]
+        [Route("get-branchbyid/{id}")]
+        public async Task<ActionResult<BranchDto>> Get(int id)
+        {
+            var Branch = await _mediator.Send(new GetBranchByIdRequest { BranchId = id });
+            return Ok(Branch);
+
+        }
+
+        [HttpGet]
+        [Route("get-selectedbranch")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedBranch()
+        {
+            var branch = await _mediator.Send(new GetSelectedBranchRequest { });
+            return Ok(branch);
+        }
+
     }
 }

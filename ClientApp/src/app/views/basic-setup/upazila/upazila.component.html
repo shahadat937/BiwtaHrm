@@ -9,9 +9,9 @@
         cForm cRow
         class="needs-validation"
         >
-
+        
         <c-col [md]="3">
-            <mat-form-field>
+            <!-- <mat-form-field>
                 <label cLabel for="validationCustom01">District Name<span class="text-danger">*</span></label>  
                 <mat-select formControlName="districtId" required>
                     <mat-option  value="0">--Select--</mat-option >
@@ -20,6 +20,34 @@
                     </mat-option>                          
                 </mat-select>
             </mat-form-field>
+
+            <mat-form-field class="example-full-width mb-3" appearance="outline">
+              <label cLabel for="validationCustom01">District Name<span class="text-danger">*</span></label>  
+              <mat-select required multiple formControlName="districtId"  >
+                <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">All</mat-option>
+                <mat-option *ngFor="let school of selectedDistricts" [value]="school.value">
+                  {{school.text}} 
+                </mat-option>                          
+              </mat-select>                   
+            </mat-form-field>
+            <ng-multiselect-dropdown
+            [placeholder]="'custom placeholder'"
+            [settings]="dropdownSettings"
+            [data]="dropdownList"
+            [(ngModel)]="selectedItems"
+            (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)"
+          >
+          </ng-multiselect-dropdown> -->
+
+          <label cLabel for="validationCustom01">Upazila Name<span class="text-danger">*</span></label>               
+                 <input [(ngModel)]="upazilaService.upazilas.districtId " name="districtId" 
+                #DistrictId="ngModel" placeholder="Enter district Name"
+                cFormControl id="validationCustom01" required type="text" value="Mark"/>
+                <div class="text-left text-danger"
+                  *ngIf="!DistrictId.valid&&DistrictId.touched">
+                    Upazila Name is required
+                </div>
         </c-col>
       
 

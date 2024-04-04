@@ -1,9 +1,12 @@
 ﻿using Hrm.Application;
+using Hrm.Application.DTOs.TrainingType;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.DTOs.TrainingType;
+using Hrm.Application.Features.TrainingType.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.TrainingType.Requests.Commands;
 using Hrm.Application.Features.TrainingType.Requests.Queries;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,6 +56,24 @@ namespace Hrm.Api.Controllers
             var command = new DeleteTrainingTypeCommand { TrainingTypeId = id };
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("get-trainingtypebyid/{id}")]
+        public async Task<ActionResult<TrainingTypeDto>> Get(int id)
+        {
+            var TrainingType = await _mediator.Send(new GetTrainingTypeByIdRequest { TrainingTypeId = id });
+            return Ok(TrainingType);
+
+        }
+
+        [HttpGet]
+        [Route("get-selectedtrainingtype")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedTrainingType()
+        {
+            var TrainingType = await _mediator.Send(new GetSelectedTrainingTypeRequest { });
+            return Ok(TrainingType);
         }
     }
 }

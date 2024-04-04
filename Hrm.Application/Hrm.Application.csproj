@@ -32,9 +32,4 @@
 
 		<ProjectReference Include="..\Hrm.Shared\Hrm.Shared.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Features\TrainingType\Handlers\Queries\" />
-	  <Folder Include="Features\TrainingType\Requests\Queries\" />
-	</ItemGroup>
 </Project>

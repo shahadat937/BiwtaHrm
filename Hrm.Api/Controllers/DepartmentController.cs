@@ -1,11 +1,14 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Department;
+using Hrm.Application.DTOs.Department;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.Department.Requests.Commands;
+using Hrm.Application.Features.Department.Requests.Queries;
 using Hrm.Application.Features.Department.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Responses;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
@@ -62,5 +65,24 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+
+        [HttpGet]
+        [Route("get-departmentbyid/{id}")]
+        public async Task<ActionResult<DepartmentDto>> Get(int id)
+        {
+            var Department = await _mediator.Send(new GetDepartmentByIdRequest { DepartmentId = id });
+            return Ok(Department);
+
+        }
+
+        [HttpGet]
+        [Route("get-selecteddepartment")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedDepartment()
+        {
+            var department = await _mediator.Send(new GetSelectedDepartmentRequest { });
+            return Ok(department);
+        }
+
     }
 }

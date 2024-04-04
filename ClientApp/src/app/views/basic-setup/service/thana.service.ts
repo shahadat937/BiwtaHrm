@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import {Thana}  from  './../model/thana'
 import { Observable } from 'rxjs';
 
+import { SelectedModel } from 'src/app/core/models/selectedModel';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +15,10 @@ export class ThanaService {
   constructor(private http: HttpClient) {
     this.thana=new Thana();
    }
+
+   getupazila(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/upazila/get-selectedUpazila')
+  }
 
   getById(id: number) {
     return this.http.get<Thana>(this.baseUrl + '/thana/get-thanabyid/' + id);

@@ -1,6 +1,8 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Group;
+using Hrm.Application.DTOs.Group;
 using Hrm.Application.DTOs.MaritalStatus;
+using Hrm.Application.Features.Group.Requests.Queries;
 using Hrm.Application.Features.Group.Requests.Commands;
 using Hrm.Application.Features.Group.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
@@ -8,6 +10,7 @@ using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hrm.Api.Controllers
@@ -65,6 +68,23 @@ namespace Hrm.Api.Controllers
             var command = new DeleteGroupCommand { GroupId = id };
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-groupbyid/{id}")]
+        public async Task<ActionResult<GroupDto>> Get(int id)
+        {
+            var Group = await _mediator.Send(new GetGroupByIdRequest { GroupId = id });
+            return Ok(Group);
+
+        }
+
+        [HttpGet]
+        [Route("get-selectedgroup")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedGroup()
+        {
+            var group = await _mediator.Send(new GetSelectedGroupRequest { });
+            return Ok(group);
         }
     }
 }

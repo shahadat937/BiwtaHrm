@@ -16,6 +16,14 @@ import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.
 import { UpazilaComponent } from './upazila/upazila.component';
 import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
+import { SubjectComponent } from './subject/subject.component';
+import { GroupComponent } from './group/group.component';
+import { BranchComponent } from './branch/branch.component';
+import { UnionComponent } from './union/union.component';
+import { WardComponent } from './ward/ward.component';
+import { ShiftComponent } from './shift/shift.component';
+import { TrainingComponent } from './training/training.component';
+import { DepartmentComponent } from './department/department.component';
 
 
 @NgModule({
@@ -28,6 +36,14 @@ import { ResultComponent } from './result/result.component';
     UpazilaComponent,
     ThanaComponent,
     ResultComponent,
+    SubjectComponent,
+    GroupComponent,
+    BranchComponent,
+    UnionComponent,
+    WardComponent,
+    ShiftComponent,
+    TrainingComponent,
+    DepartmentComponent,
   ],
   imports: [
     CommonModule,

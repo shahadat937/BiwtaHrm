@@ -22,10 +22,11 @@ export class UapzilaService {
     return this.http.get<Upazila[]>(this.baseUrl + '/upazila/get-upazila');
   }
 
-  getdistrict(){
-    return this.http.get<SelectedModel[]>(this.baseUrl + '/district/get-selectedUpazila')
-  }
+ 
 
+  getdistrict(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/district/get-selecteddistrict')
+  }
 
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/upazila/update-upazila/'+id, model);

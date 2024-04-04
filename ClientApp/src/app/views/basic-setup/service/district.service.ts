@@ -8,13 +8,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DistrictService  {
-  baseUrl = environment.apiUrl;
-  districts: District;
-  constructor(private http: HttpClient) {
-    this.districts=new District();
-   }
+   
 
-  getById(id: number) {
+
+
+baseUrl = environment.apiUrl;
+districts: District;
+  constructor(private http: HttpClient) {
+    this.districts = new District();
+   }
+  find(id: number) {
     return this.http.get<District>(this.baseUrl + '/district/get-districtbyid/' + id);
   }
   getAll():Observable<District[]> {
@@ -25,7 +28,7 @@ export class DistrictService  {
   }
   submit(model: any) {
     return this.http.post(this.baseUrl + '/district/save-district', model);
-  } 
+  }
   delete(id:number){
     return this.http.delete(this.baseUrl + '/district/delete-district/'+id);
   }

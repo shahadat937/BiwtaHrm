@@ -16,39 +16,30 @@ export class GradeService {
   selection = new SelectionModel<Grade>(true, []);
   constructor(private http: HttpClient) {
     this.grades = new Grade();
-   }
+  }
 
   find(id: number) {
     return this.http.get<Grade>(this.baseUrl + '/grade/get-GradeDetail/' + id);
   }
-  getGrateScale(id: Number):Observable<Grade[]>{
-    return this.http.get<Grade[]>(`${this.baseUrl}/scaleGradeView/get-scaleGradeView/${id}`);
+  // getGrateScale(id: Number): Observable<Grade[]> {
+  //   return this.http.get<Grade[]>(`${this.baseUrl}/scaleGradeView/get-scaleGradeView/${id}`);
+  // }
+  //custom:
+  selectModelGrade(){
+    return this.http.get<Grade[]>(this.baseUrl + '/grade/get-grade');
   }
-  getAll():Observable<Grade[]> {
-    return this.http.get<Grade[]>(this.baseUrl + '/scaleGradeView/get-scaleGradeView');
+  //Normal
+  getAll(): Observable<Grade[]> {
+    return this.http.get<Grade[]>(this.baseUrl + '/grade_cls_type_Vw/get-Grade_cls_type_Vw');
   }
-
-
-
-
-
-
-  getGrades() {
-    return this.http.get<any[]>(this.baseUrl + '/grade/get-grade');
-  }
-
-
-
-
-
-  update(id: number,model: any) {
-    return this.http.put(this.baseUrl + '/grade/update-grade/'+id, model);
+  update(id: number, model: any) {
+    return this.http.put(this.baseUrl + '/grade/update-grade/' + id, model);
   }
   submit(model: any) {
     return this.http.post(this.baseUrl + '/grade/save-grade', model);
   }
-  delete(id:number){
-    return this.http.delete(this.baseUrl + '/grade/delete-grade/'+id);
+  delete(id: number) {
+    return this.http.delete(this.baseUrl + '/grade/delete-grade/' + id);
   }
 
 }

@@ -16,6 +16,7 @@ import { Designation } from './model/Designation';
 import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
 import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
+import { GradeComponent } from './grade/grade.component';
 const routes: Routes = [
 
   {
@@ -107,7 +108,6 @@ const routes: Routes = [
   {
     path: 'update-punishment/:punishmentId',
     component: PunishmentComponent,
-<<<<<<< HEAD
   },
   {
     path: 'scale',
@@ -117,9 +117,14 @@ const routes: Routes = [
     path: 'update-scale/:scaleId',
     component: ScaleComponent,
   },
-=======
-  }
->>>>>>> a0a187c158e4e128c5a43858c1a9a96ef55d1510
+  {
+    path: 'grade',
+    component: GradeComponent,
+  },
+  {
+    path: 'update-grade/:gradeId',
+    component: GradeComponent,
+  },
 
 ];
 

@@ -14,22 +14,13 @@ export class ScaleService {
     this.scales = new Scale();
     
    }
+   //custom
   find(id: number) {
     return this.http.get<Scale>(this.baseUrl + '/scale/get-scaleDetail/' + id);
   }
-
-  // getGrateScale(id: Number):Observable<Scale[]>{
-  //   return this.http.get<Scale[]>(`${this.baseUrl}/scaleGradeView/get-scaleGradeView/${id}`);
-  // }
-
-
   getGrades() {
     return this.http.get<any[]>(this.baseUrl + '/scaleGradeView/get-scaleGradeView');
   }
-  // getGradeScale():Observable<Scale[]> {
-  //   return this.http.get<Scale[]>(this.baseUrl + '/scaleGradeView/get-scaleGradeView');
-  // }
-
 
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/scale/update-scale/'+id, model);

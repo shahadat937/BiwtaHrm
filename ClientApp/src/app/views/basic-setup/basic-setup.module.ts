@@ -29,6 +29,7 @@ import { ChildStatusComponent } from './child-status/child-status.component';
 import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
 import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
+import { GradeComponent } from './grade/grade.component';
 
 @NgModule({
   declarations:
@@ -48,6 +49,7 @@ import { PromotionTypeComponent } from './promotion-type/promotion-type.componen
     DesignationComponent,
     PunishmentComponent,
     PromotionTypeComponent,
+    GradeComponent,
   ],
   imports: [
     CommonModule,
@@ -76,6 +78,7 @@ import { PromotionTypeComponent } from './promotion-type/promotion-type.componen
     MaritalStatusService,
     ReligionService,
     GenderService
+    
   ]
 })
 export class BasicSetupModule { }

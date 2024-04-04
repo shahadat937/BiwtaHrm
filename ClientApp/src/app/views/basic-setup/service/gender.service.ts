@@ -11,6 +11,8 @@ export class GenderService {
   constructor(private http: HttpClient) {
     this.gender = new Gender();
    }
+
+   
   find(id: number) {
     return this.http.get<Gender>(this.baseUrl + '/gender/get-genderById/' + id);
   }

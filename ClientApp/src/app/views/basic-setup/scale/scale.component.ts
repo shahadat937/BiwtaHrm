@@ -67,10 +67,10 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnInit(): void {
     this.getALlScale();
-    this.loadGrades();
+    this.SelectModelGrade();
   }
-  loadGrades() {
-    this.gradeService.getGrades().subscribe(data => {
+  SelectModelGrade() {
+    this.gradeService.selectModelGrade().subscribe(data => {
       this.grades = data;
     });
   }

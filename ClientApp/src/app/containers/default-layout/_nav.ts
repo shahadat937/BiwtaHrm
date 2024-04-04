@@ -496,7 +496,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Grade',
-        url: '/base/popovers'
+        url: '/bascisetup/grade'
       },
       {
         name: 'Scale',

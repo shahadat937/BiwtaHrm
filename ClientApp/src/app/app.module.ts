@@ -1,11 +1,11 @@
-import { ConfirmDialogComponent } from 'src/app/modals/confirm-dialog/confirm-dialog.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { BrowserModule, Title } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
+import { BrowserModule, Title } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { ConfirmDialogComponent } from 'src/app/modals/confirm-dialog/confirm-dialog.component';
 
 // Import routing module
 import { AppRoutingModule } from './app-routing.module';
@@ -14,10 +14,13 @@ import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
 
 // Import containers
-import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent } from './containers';
+import {
+  DefaultFooterComponent,
+  DefaultHeaderComponent,
+  DefaultLayoutComponent,
+} from './containers';
 
 import {
-  
   AvatarModule,
   BadgeModule,
   BreadcrumbModule,
@@ -35,22 +38,21 @@ import {
   SharedModule,
   SidebarModule,
   TabsModule,
-  ToastModule,
   UtilitiesModule,
 } from '@coreui/angular';
 
-import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { SharedCustomModule } from './shared/shared.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { IconModule, IconSetService } from '@coreui/icons-angular';
+import { ToastrModule } from 'ngx-toastr';
 import { ErrorInterceptor } from './core/interceptor/error.interceptor';
 import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
 import { AuthService } from './core/service/auth.service';
-import { ToastrModule } from 'ngx-toastr';
+import { SharedCustomModule } from './shared/shared.module';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
   DefaultLayoutComponent,
-  ConfirmDialogComponent
+  ConfirmDialogComponent,
 ];
 
 @NgModule({
@@ -86,20 +88,19 @@ const APP_CONTAINERS = [
     CoreModule,
     SharedCustomModule,
     HttpClientModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   providers: [
     {
       provide: LocationStrategy,
-      useClass: HashLocationStrategy
+      useClass: HashLocationStrategy,
     },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     IconSetService,
     Title,
-    AuthService
+    AuthService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

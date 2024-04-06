@@ -51,7 +51,15 @@ const routes: Routes = [
     component: GenderComponent,
   },
   {
+    path: 'update-gender/:genderId',
+    component: GenderComponent,
+  },
+  {
     path: 'religion',
+    component: ReligionComponent,
+  },
+  {
+    path: 'update-religion/:religionId',
     component: ReligionComponent,
   },
   {

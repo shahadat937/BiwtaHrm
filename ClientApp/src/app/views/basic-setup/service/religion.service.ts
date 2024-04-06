@@ -12,7 +12,7 @@ export class ReligionService {
   constructor(private http: HttpClient) {
     this.religion = new Religion();
    }
-  find(id: number) {
+  getById(id: number) {
     return this.http.get<Religion>(this.baseUrl + '/religion/get-religionById/' + id);
   }
   getAll():Observable<Religion[]> {

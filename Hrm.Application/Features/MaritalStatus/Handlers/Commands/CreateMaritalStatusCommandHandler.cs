@@ -54,6 +54,7 @@ namespace Hrm.Application.Features.MaritalStatus.Handlers.Commands
                 {
                     response.Success = false;
                     response.Message = "Creation Failed Name already exists.";
+
                     response.Errors = validatorResult.Errors.Select(q => q.ErrorMessage).ToList();
 
                 }

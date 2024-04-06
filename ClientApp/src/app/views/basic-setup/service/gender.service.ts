@@ -13,19 +13,19 @@ export class GenderService {
    }
 
    
-  find(id: number) {
+   getById(id: number):Observable<Gender> {
     return this.http.get<Gender>(this.baseUrl + '/gender/get-genderById/' + id);
   }
   getAll():Observable<Gender[]> {
     return this.http.get<Gender[]>(this.baseUrl + '/gender/get-gender');
   }
-  update(id: number,model: any) {
-    return this.http.put(this.baseUrl + '/gender/update-gender/'+id, model);
+  update(id: number,model: Gender): Observable<Gender> {
+    return this.http.put<Gender>(this.baseUrl + '/gender/update-gender/'+id, model);
   }
-  submit(model: any) {
-    return this.http.post(this.baseUrl + '/gender/save-gender', model);
+  submit(model: Gender): Observable<Gender> {
+    return this.http.post<Gender>(this.baseUrl + '/gender/save-gender', model);
   }
-  delete(id:number){
-    return this.http.delete(this.baseUrl + '/gender/delete-gender/'+id);
+  delete(id:number): Observable<Gender>{
+    return this.http.delete<Gender>(this.baseUrl + '/gender/delete-gender/'+id);
   }
 }

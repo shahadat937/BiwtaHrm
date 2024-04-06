@@ -24,8 +24,7 @@ import { PunishmentService } from './../service/Punishment.service';
 export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
   private actionSubscription: Subscription | undefined;
   position = 'top-end';
-  visible = false;
-  percentage = 0;
+
   btnText: string | undefined;
   @ViewChild('PunishmentForm', { static: true }) PunishmentForm!: NgForm;
   subscription: Subscription = new Subscription();
@@ -75,18 +74,7 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  toggleToast() {
-    this.visible = !this.visible;
-  }
-
-  onVisibleChange($event: boolean) {
-    this.visible = $event;
-    this.percentage = !this.visible ? 0 : this.percentage;
-  }
-
-  onTimerChange($event: number) {
-    this.percentage = $event * 25;
-  }
+  
   initaialPunishment(form?: NgForm) {
     if (form != null) form.resetForm();
     this.punishmentService.punishments = {
@@ -197,7 +185,7 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   delete(element: any) {
-    const confirmationDialogSubscription = this.confirmService
+    this.actionSubscription =this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((confirm) => {
         if (confirm) {

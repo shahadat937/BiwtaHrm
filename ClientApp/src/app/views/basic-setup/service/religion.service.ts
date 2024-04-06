@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Religion } from '../model/religion';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class ReligionService {
+  private _religions: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  religions$: Observable<any[]> = this._religions.asObservable();
 
   baseUrl = environment.apiUrl;
   religion: Religion;
@@ -26,5 +28,12 @@ export class ReligionService {
   }
   delete(id:number){
     return this.http.delete(this.baseUrl + '/religion/delete-religion/'+id);
+  }
+  setReligions(religions: any[]): void {
+    this._religions.next(religions);
+  }
+
+  getReligions(): Observable<any[]> {
+    return this.religions$;
   }
 }

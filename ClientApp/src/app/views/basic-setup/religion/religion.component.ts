@@ -37,6 +37,9 @@ export class ReligionComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.getALlReligion();
     this.handleRouteParams();
+    this.religionService.getReligions().subscribe(res=>{
+      console.log(res)
+    })
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
@@ -44,6 +47,7 @@ export class ReligionComponent implements OnInit, OnDestroy{
       if (id) {
         this.btnText = 'Update';
         this.religionService.getById(+id).subscribe((res) => {
+          this.religionService.setReligions([res]);
           this.religionForm?.form.patchValue(res);
         });
       } else {
@@ -87,9 +91,11 @@ export class ReligionComponent implements OnInit, OnDestroy{
   }
 
   getALlReligion() {
-    this.actionSubscription = this.religionService.getAll().subscribe(
+  
+ this.actionSubscription = this.religionService.getAll().subscribe(
       (item) => {
         this.dataSource = new MatTableDataSource(item);
+        this.religionService.setReligions(item);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.matSort;
       },
@@ -113,7 +119,7 @@ export class ReligionComponent implements OnInit, OnDestroy{
           this.getALlReligion();
           this.resetForm();
           if (!id) {
-            this.router.navigate(['/bascisetup/punishment']);
+            this.router.navigate(['/bascisetup/religion']);
           }
         } else {
           this.toastr.warning('', `${response.message}`, {
@@ -137,7 +143,11 @@ export class ReligionComponent implements OnInit, OnDestroy{
             .delete(element.religionId)
             .subscribe(
               (res) => {
-                this.getALlReligion();
+                const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
+              }
               },
               (err) => {
                 console.log(err);

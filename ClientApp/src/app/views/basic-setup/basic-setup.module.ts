@@ -1,39 +1,47 @@
-import { GenderService } from './service/gender.service';
-import { ReligionService } from './service/religion.service';
-import { MaritalStatusService } from './service/marital-status.service';
-import { EmployeeTypeService } from './service/employee-type.service';
-import { ChildStatusService } from './service/child-status.service';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { ChildStatusService } from './service/child-status.service';
+import { EmployeeTypeService } from './service/employee-type.service';
+import { GenderService } from './service/gender.service';
+import { MaritalStatusService } from './service/marital-status.service';
+import { ReligionService } from './service/religion.service';
 
-import { BasicSetupRoutingModule } from './basic-setup-routing.module';
-import { NewAccountTypeComponent } from './accounttype/new-accounttype/new-accounttype.component';
-import { BloodGroupComponent } from './blood-group/blood-group.component';
-import { ScaleComponent } from './scale/scale.component';
-import {DistrictComponent} from './district/district.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CardModule, FormModule, GridModule, ButtonModule, ButtonGroupModule, DropdownModule, SharedModule, ListGroupModule, ToastModule, ProgressModule } from '@coreui/angular';
+import {
+  ButtonGroupModule,
+  ButtonModule,
+  CardModule,
+  DropdownModule,
+  FormModule,
+  GridModule,
+  ListGroupModule,
+  ProgressModule,
+  SharedModule,
+} from '@coreui/angular';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
-import { SharedCustomModule } from 'src/app/shared/shared.module';
-import { BloodGroupService } from './service/BloodGroup.service';
 import { ToastrService } from 'ngx-toastr';
-import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.component';
-import { UpazilaComponent } from './upazila/upazila.component';
-import { ThanaComponent } from './thana/thana.component';
-import { ResultComponent } from './result/result.component';
-import { MaritalStatusComponent } from './marital-status/marital-status.component';
-import { EmployeeTypeComponent } from './employee-type/employee-type.component';
-import { GenderComponent } from './gender/gender.component';
-import { ReligionComponent } from './religion/religion.component';
+import { SharedCustomModule } from 'src/app/shared/shared.module';
+import { NewAccountTypeComponent } from './accounttype/new-accounttype/new-accounttype.component';
+import { BasicSetupRoutingModule } from './basic-setup-routing.module';
+import { BloodGroupComponent } from './blood-group/blood-group.component';
 import { ChildStatusComponent } from './child-status/child-status.component';
 import { DesignationComponent } from './designation/designation.component';
-import { PunishmentComponent } from './punishment/punishment.component';
-import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
+import { DistrictComponent } from './district/district.component';
+import { EmployeeTypeComponent } from './employee-type/employee-type.component';
+import { GenderComponent } from './gender/gender.component';
 import { GradeComponent } from './grade/grade.component';
+import { MaritalStatusComponent } from './marital-status/marital-status.component';
+import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
+import { PunishmentComponent } from './punishment/punishment.component';
+import { ReligionComponent } from './religion/religion.component';
+import { ResultComponent } from './result/result.component';
+import { ScaleComponent } from './scale/scale.component';
+import { BloodGroupService } from './service/BloodGroup.service';
+import { ThanaComponent } from './thana/thana.component';
+import { UpazilaComponent } from './upazila/upazila.component';
 
 @NgModule({
-  declarations:
-  [
+  declarations: [
     NewAccountTypeComponent,
     BloodGroupComponent,
     ScaleComponent,
@@ -68,17 +76,16 @@ import { GradeComponent } from './grade/grade.component';
     SharedModule,
     ListGroupModule,
     SharedCustomModule,
-    ProgressModule
+    ProgressModule,
   ],
-  providers:[
+  providers: [
     BloodGroupService,
     ToastrService,
     ChildStatusService,
     EmployeeTypeService,
     MaritalStatusService,
     ReligionService,
-    GenderService
-    
-  ]
+    GenderService,
+  ],
 })
-export class BasicSetupModule { }
+export class BasicSetupModule {}

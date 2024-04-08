@@ -34,15 +34,11 @@ export class ReligionComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
-    private toastr: ToastrService,
-    private changeDetectorRef: ChangeDetectorRef
+    private toastr: ToastrService
   ) {}
   ngOnInit(): void {
     this.getALlReligion();
     this.handleRouteParams();
-    this.religionService.getReligions().subscribe((res) => {
-      console.log(res);
-    });
   }
   handleRouteParams() {
     this.actionSubscription = this.route.paramMap.subscribe((params) => {
@@ -52,7 +48,6 @@ export class ReligionComponent implements OnInit, OnDestroy {
         this.actionSubscription = this.religionService
           .getById(+id)
           .subscribe((res) => {
-            this.religionService.setReligions([res]);
             this.religionForm?.form.patchValue(res);
           });
       } else {
@@ -99,9 +94,6 @@ export class ReligionComponent implements OnInit, OnDestroy {
     this.actionSubscription = this.religionService.getAll().subscribe(
       (item) => {
         this.dataSource.data = item;
-        //  this.religionService.religionCache = [item]; // Update cache with new data
-        // this.dataSource.data = item;
-        //  this.religionService.setReligions(item);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.matSort;
       },
@@ -122,7 +114,6 @@ export class ReligionComponent implements OnInit, OnDestroy {
         this.toastr.success(successMessage, `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        console.log(response);
         this.getALlReligion();
         this.resetForm();
         if (!id) {

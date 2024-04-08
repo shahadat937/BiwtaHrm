@@ -8,7 +8,6 @@ export class ReligionService {
   cachedData: any[] = [];
   private _religions: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   religions$: Observable<any[]> = this._religions.asObservable();
-  private readonly RELIGION_KEY = 'religions';
   baseUrl = environment.apiUrl;
   religion: Religion;
   constructor(private http: HttpClient) {
@@ -50,12 +49,5 @@ export class ReligionService {
   }
   delete(id: number) {
     return this.http.delete(this.baseUrl + '/religion/delete-religion/' + id);
-  }
-  setReligions(religions: any[]): void {
-    this._religions.next(religions);
-  }
-
-  getReligions(): Observable<any[]> {
-    return this.religions$;
   }
 }

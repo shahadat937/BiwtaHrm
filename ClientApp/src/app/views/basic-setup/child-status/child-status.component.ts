@@ -15,9 +15,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './child-status.component.scss'
 })
 export class ChildStatusComponent implements OnInit,OnDestroy,AfterViewInit{
-  position = 'top-end';
-  visible = false;
-  percentage = 0;
   btnText:string | undefined;
   @ViewChild("ChildStatusForm", { static: true }) ChildStatusForm!: NgForm;
   subscription: Subscription = new Subscription;
@@ -36,14 +33,20 @@ constructor(
   )
   {
   //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
+ }
+  ngOnInit(): void {
+   
+    this.getALlChildStatus();
+    this.handleRouteParams();
 
+  }
+  handleRouteParams(){
     this.route.paramMap.subscribe(params => {
       const id = params.get('childStatusId');
       if (id) {
         this.btnText = 'Update';
         this.childStatusService.find(+id).subscribe(
           res => {
-            console.log(res);
             this.ChildStatusForm?.form.patchValue(res);
           }
         );
@@ -53,12 +56,6 @@ constructor(
         this.btnText = 'Submit';
       }
     });
-
-  
- }
-  ngOnInit(): void {
-   
-    this.getALlChildStatus();
 
   }
   ngAfterViewInit() {
@@ -89,10 +86,9 @@ constructor(
 
    }
    resetForm() {
-    console.log(this.ChildStatusForm?.form.value )
     this.btnText = 'Submit';
     if (this.ChildStatusForm?.form != null) {
-      console.log(this.ChildStatusForm?.form )
+     
       this.ChildStatusForm.form.reset();
       this.ChildStatusForm.form.patchValue({
         childStatusId:0,
@@ -115,10 +111,11 @@ constructor(
 
   }
    onSubmit(form:NgForm){
+    this.childStatusService.cachedData = [];
     const id = this.ChildStatusForm.form.get('childStatusId')?.value;
     if (id) {
       this.childStatusService.update(+id,this.ChildStatusForm.value).subscribe((response:any) => {
-        console.log(response)
+     
         if(response.success){
           this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
           this.getALlChildStatus()
@@ -151,7 +148,13 @@ constructor(
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{
       if (result) {
         this.childStatusService.delete(element.childStatusId).subscribe(res=>{
-          this.getALlChildStatus()
+          const index = this.dataSource.data.indexOf(element);
+          if (index !== -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource = new MatTableDataSource(
+              this.dataSource.data
+            );
+          }
         },(err) => { 
        console.log(err)
         });

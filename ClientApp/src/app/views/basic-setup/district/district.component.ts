@@ -15,27 +15,11 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
   styleUrl: './district.component.scss'
 })
 export class DistrictComponent implements OnInit,OnDestroy,AfterViewInit{
-  position = 'top-end';
-  visible = false;
-  percentage = 0;
   btnText:string|undefined;
   @ViewChild("DistrictForm", { static: true }) DistrictForm!: NgForm;
   subscription: Subscription = new Subscription;
   displayedColumns: string[] = ['slNo','districtName', 'isActive','Action'];
-
   dataSource = new MatTableDataSource<any>();
-  icons = { 
-    'cilList': cilList,
-  'cilShieldAlt': cilShieldAlt,
-  'cilPaperPlane': cilPaperPlane,
-  'cil3d': cil3d,
-  'cil4k': cil4k,
-  'cilAccountLogout': cilAccountLogout,
-  'cilActionRedo': cilActionRedo,
-  'cilAirplaneMode': cilAirplaneMode,
-  'cilPencil': cilPencil,
-  'cilTrash': cilTrash,
-  };
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
@@ -47,6 +31,27 @@ constructor(
   private confirmService:ConfirmService,
   )
   {
+   
+ }
+  ngOnInit(): void {
+    this.getALlDistrict();
+    this.handleRouteParams();
+  }
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.matSort;
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); 
+    filterValue = filterValue.toLowerCase(); 
+    this.dataSource.filter = filterValue;
+  }
+  handleRouteParams(){
     this.route.paramMap.subscribe(params=>{
       const id = params.get('districtId');
       if(id){
@@ -63,35 +68,6 @@ constructor(
       }
     });
 
- }
-  ngOnInit(): void {
-    this.getALlDistrict();
-  }
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.matSort;
-  }
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); 
-    filterValue = filterValue.toLowerCase(); 
-    this.dataSource.filter = filterValue;
-  }
-  toggleToast() {
-    this.visible = !this.visible;
-  }
-
-  onVisibleChange($event: boolean) {
-    this.visible = $event;
-    this.percentage = !this.visible ? 0 : this.percentage;
-  }
-
-  onTimerChange($event: number) {
-    this.percentage = $event * 25;
   }
   initaialDistrict(form?:NgForm){
     if(form!=null)
@@ -131,6 +107,7 @@ constructor(
    
   }
    onSubmit(form:NgForm){
+    this.districtService.cachedData = [];
     const id=this.DistrictForm.form.get('districtId')?.value;
     if(id){
       this.districtService.update(+id,this.DistrictForm.value).subscribe(response=>{
@@ -142,13 +119,8 @@ constructor(
     }
     else{
     this.subscription=this.districtService.submit(form?.value).subscribe(res=>{ 
-      // this.snackBar.open('Information Inserted Successfully ', '', {
-      //   duration: 2000,
-      //   verticalPosition: 'top',
-      //   horizontalPosition: 'right',
-      //   panelClass: 'snackbar-success'
-      // });  
-      this.toggleToast();
+ 
+  
     this.getALlDistrict()
     this.resetForm();
    
@@ -160,9 +132,15 @@ constructor(
   delete(element:any){
     this.confirmService.confirm('Confirm delete message','Are You Sure Delete This Item').subscribe(result=>{
       if(result) 
-      console.log(element)
+   
     this.districtService.delete(element.districtId).subscribe(res=>{
-      this.getALlDistrict()
+      const index = this.dataSource.data.indexOf(element);
+      if (index !== -1) {
+        this.dataSource.data.splice(index, 1);
+        this.dataSource = new MatTableDataSource(
+          this.dataSource.data
+        );
+      }
     },(err) => { 
 
     }); 

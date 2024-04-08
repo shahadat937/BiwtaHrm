@@ -44,6 +44,13 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
 
+ 
+  }
+  ngOnInit(): void {
+    this.getALlPunishment();
+    this.handleRouteParams();
+  }
+  handleRouteParams(){
     this.route.paramMap.subscribe((params) => {
       const id = params.get('punishmentId');
       if (id) {
@@ -56,9 +63,6 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
         this.btnText = 'Submit';
       }
     });
-  }
-  ngOnInit(): void {
-    this.getALlPunishment();
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -155,6 +159,7 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   onSubmit(form: NgForm): void {
+    this.punishmentService.cachedData = [];
     const id = form.value.punishmentId;
     const action$ = id
       ? this.punishmentService.update(id, form.value)
@@ -193,7 +198,13 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
             .delete(element.punishmentId)
             .subscribe(
               (res) => {
-                this.getALlPunishment();
+                const index = this.dataSource.data.indexOf(element);
+                if (index !== -1) {
+                  this.dataSource.data.splice(index, 1);
+                  this.dataSource = new MatTableDataSource(
+                    this.dataSource.data
+                  );
+                }
               },
               (err) => {
                 console.log(err);

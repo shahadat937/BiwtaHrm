@@ -2,12 +2,13 @@ import { environment } from '../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 //import { BloodGroup } from '../model/BloodGroup';
-import { Observable } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { Designation } from '../model/Designation';
 @Injectable({
   providedIn: 'root'
 })
 export class DesignationService {
+  cachedData: any[] = [];
   baseUrl = environment.apiUrl;
   designation: Designation;
   constructor(private http: HttpClient) {
@@ -16,8 +17,24 @@ export class DesignationService {
   find(id: number) {
     return this.http.get<Designation>(this.baseUrl + '/designation/get-DesignationDetail/' + id);
   }
-  getAll():Observable<Designation[]> {
-    return this.http.get<Designation[]>(this.baseUrl + '/designation/get-Designation');
+  // getAll():Observable<Designation[]> {
+  //   return this.http.get<Designation[]>(this.baseUrl + '/designation/get-Designation');
+  // }
+  getAll(): Observable<Designation[]> {
+    if (this.cachedData.length > 0) {
+      // If data is already cached, return it without making a server call
+      return of(this.cachedData);
+    } else {
+      // If data is not cached, make a server call to fetch it
+      return this.http
+        .get<Designation[]>(this.baseUrl + '/designation/get-Designation')
+        .pipe(
+          map((data) => {
+            this.cachedData = data; // Cache the data
+            return data;
+          })
+        );
+    }
   }
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/designation/update-Designation/'+id, model);

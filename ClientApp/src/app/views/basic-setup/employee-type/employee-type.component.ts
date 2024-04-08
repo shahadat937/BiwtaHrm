@@ -33,7 +33,12 @@ constructor(
   )
   {
   //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
-
+ }
+  ngOnInit(): void {
+    this.employeeType();
+    this.handleRouteParams();
+  }
+  handleRouteParams(){
     this.route.paramMap.subscribe(params => {
       const id = params.get('employeeTypeId');
       if (id) {
@@ -49,12 +54,6 @@ constructor(
         this.btnText = 'Submit';
       }
     });
-
-  
- }
-  ngOnInit(): void {
-   
-    this.employeeType();
 
   }
   ngAfterViewInit() {
@@ -87,7 +86,6 @@ constructor(
    resetForm() {
     this.btnText = 'Submit';
     if (this.employeeTypeForm?.form != null) {
-      console.log(this.employeeTypeForm?.form )
       this.employeeTypeForm.form.reset();
       this.employeeTypeForm.form.patchValue({
         employeeTypeId:0,
@@ -110,6 +108,7 @@ constructor(
 
   }
    onSubmit(form:NgForm){
+    this.employeeTypeService.cachedData = [];
     const id = this.employeeTypeForm.form.get('employeeTypeId')?.value;
     if (id) {
       this.employeeTypeService.update(+id,this.employeeTypeForm.value).subscribe((response:any) => {
@@ -146,7 +145,13 @@ constructor(
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{
       if (result) {
         this.employeeTypeService.delete(element.employeeTypeId).subscribe(res=>{
-          this.employeeType()
+          const index = this.dataSource.data.indexOf(element);
+          if (index !== -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource = new MatTableDataSource(
+              this.dataSource.data
+            );
+          }
         },(err) => { 
        console.log(err)
         });

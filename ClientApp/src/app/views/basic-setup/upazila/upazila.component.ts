@@ -120,7 +120,6 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
   resetForm() {
-    console.log(this.UpazilaForm?.form.value)
     this.btnText = 'Submit';
     if (this.UpazilaForm?.form != null) {
       console.log(this.UpazilaForm?.form)
@@ -149,14 +148,13 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   getselecteddistricts() {
-    console.log("distict List rewe");
     this.upazilaService.getdistrict().subscribe(res => {
-      console.log("distict List" + res);
       this.selectedDistricts = res
     });
   }
 
   onSubmit(form: NgForm) {
+    this.upazilaService.cachedData = [];
     const id = this.UpazilaForm.form.get('upazilaId')?.value;
     if (id) {
       this.upazilaService.update(+id, this.UpazilaForm.value).subscribe(response => {

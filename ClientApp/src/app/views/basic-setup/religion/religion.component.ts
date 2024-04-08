@@ -1,7 +1,12 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,13 +14,12 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ReligionService } from '../service/religion.service';
-
 @Component({
   selector: 'app-religion',
   templateUrl: './religion.component.html',
-  styleUrl: './religion.component.scss'
+  styleUrl: './religion.component.scss',
 })
-export class ReligionComponent implements OnInit, OnDestroy{
+export class ReligionComponent implements OnInit, OnDestroy {
   private actionSubscription: Subscription | undefined;
   btnText: string | undefined;
   @ViewChild('religionForm', { static: true }) religionForm!: NgForm;
@@ -30,32 +34,33 @@ export class ReligionComponent implements OnInit, OnDestroy{
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
-    private toastr: ToastrService
-  ) {
-   
-  }
+    private toastr: ToastrService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
   ngOnInit(): void {
     this.getALlReligion();
     this.handleRouteParams();
-    this.religionService.getReligions().subscribe(res=>{
-      console.log(res)
-    })
+    this.religionService.getReligions().subscribe((res) => {
+      console.log(res);
+    });
   }
   handleRouteParams() {
-    this.route.paramMap.subscribe((params) => {
+    this.actionSubscription = this.route.paramMap.subscribe((params) => {
       const id = params.get('religionId');
       if (id) {
         this.btnText = 'Update';
-        this.religionService.getById(+id).subscribe((res) => {
-          this.religionService.setReligions([res]);
-          this.religionForm?.form.patchValue(res);
-        });
+        this.actionSubscription = this.religionService
+          .getById(+id)
+          .subscribe((res) => {
+            this.religionService.setReligions([res]);
+            this.religionForm?.form.patchValue(res);
+          });
       } else {
         this.btnText = 'Submit';
       }
     });
   }
- 
+
   ngOnDestroy() {
     if (this.actionSubscription) {
       this.actionSubscription.unsubscribe();
@@ -66,7 +71,7 @@ export class ReligionComponent implements OnInit, OnDestroy{
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  
+
   initaialPunishment(form?: NgForm) {
     if (form != null) form.resetForm();
     this.religionService.religion = {
@@ -91,11 +96,12 @@ export class ReligionComponent implements OnInit, OnDestroy{
   }
 
   getALlReligion() {
-  
- this.actionSubscription = this.religionService.getAll().subscribe(
+    this.actionSubscription = this.religionService.getAll().subscribe(
       (item) => {
-        this.dataSource = new MatTableDataSource(item);
-        this.religionService.setReligions(item);
+        this.dataSource.data = item;
+        //  this.religionService.religionCache = [item]; // Update cache with new data
+        // this.dataSource.data = item;
+        //  this.religionService.setReligions(item);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.matSort;
       },
@@ -104,38 +110,34 @@ export class ReligionComponent implements OnInit, OnDestroy{
   }
 
   onSubmit(form: NgForm): void {
+    this.religionService.cachedData = [];
     const id = form.value.religionId;
     const action$ = id
       ? this.religionService.update(id, form.value)
       : this.religionService.submit(form.value);
 
-    this.actionSubscription = action$.subscribe(
-      (response: any) => {
-        if (response.success) {
-          const successMessage = id ? 'Update' : 'Successfully';
-          this.toastr.success(successMessage, `${response.message}`, {
-            positionClass: 'toast-top-right',
-          });
-          this.getALlReligion();
-          this.resetForm();
-          if (!id) {
-            this.router.navigate(['/bascisetup/religion']);
-          }
-        } else {
-          this.toastr.warning('', `${response.message}`, {
-            positionClass: 'toast-top-right',
-          });
+    this.actionSubscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        const successMessage = id ? 'Update' : 'Successfully';
+        this.toastr.success(successMessage, `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        console.log(response);
+        this.getALlReligion();
+        this.resetForm();
+        if (!id) {
+          this.router.navigate(['/bascisetup/religion']);
         }
-      },
-      (err) => {
-        this.toastr.warning('', 'Error submitting punishment:', {
+      } else {
+        this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
-    );
+    });
   }
+
   delete(element: any) {
-    this.actionSubscription =this.confirmService
+    this.actionSubscription = this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((confirm) => {
         if (confirm) {
@@ -144,10 +146,12 @@ export class ReligionComponent implements OnInit, OnDestroy{
             .subscribe(
               (res) => {
                 const index = this.dataSource.data.indexOf(element);
-              if (index !== -1) {
-                this.dataSource.data.splice(index, 1);
-                this.dataSource = new MatTableDataSource(this.dataSource.data);
-              }
+                if (index !== -1) {
+                  this.dataSource.data.splice(index, 1);
+                  this.dataSource = new MatTableDataSource(
+                    this.dataSource.data
+                  );
+                }
               },
               (err) => {
                 console.log(err);

@@ -2,12 +2,13 @@ import { environment } from '../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Scale } from '../model/Scale';
-import { Observable } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { GradeService } from './Grade.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ScaleService {
+  cachedData: any[] = [];
   baseUrl = environment.apiUrl;
   scales: Scale;
   constructor(private http: HttpClient) {
@@ -18,10 +19,25 @@ export class ScaleService {
   find(id: number) {
     return this.http.get<Scale>(this.baseUrl + '/scale/get-scaleDetail/' + id);
   }
-  getGrades() {
-    return this.http.get<any[]>(this.baseUrl + '/scaleGradeView/get-scaleGradeView');
+  // getGrades() {
+  //   return this.http.get<any[]>(this.baseUrl + '/scaleGradeView/get-scaleGradeView');
+  // }
+  getAll(): Observable<Scale[]> {
+    if (this.cachedData.length > 0) {
+      // If data is already cached, return it without making a server call
+      return of(this.cachedData);
+    } else {
+      // If data is not cached, make a server call to fetch it
+      return this.http
+        .get<Scale[]>(this.baseUrl + '/scaleGradeView/get-scaleGradeView')
+        .pipe(
+          map((data) => {
+            this.cachedData = data; // Cache the data
+            return data;
+          })
+        );
+    }
   }
-
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/scale/update-scale/'+id, model);
   }

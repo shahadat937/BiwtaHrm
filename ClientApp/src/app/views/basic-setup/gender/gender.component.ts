@@ -97,6 +97,7 @@ export class GenderComponent implements OnInit, OnDestroy{
   }
 
   onSubmit(form: NgForm): void {
+    this.genderService.cachedData = [];
     const id = form.value.genderId;
     const action$ = id
       ? this.genderService.update(id, form.value)
@@ -136,7 +137,13 @@ export class GenderComponent implements OnInit, OnDestroy{
             .delete(element.genderId)
             .subscribe(
               (res) => {
-                this.getALlGender();
+                const index = this.dataSource.data.indexOf(element);
+                if (index !== -1) {
+                  this.dataSource.data.splice(index, 1);
+                  this.dataSource = new MatTableDataSource(
+                    this.dataSource.data
+                  );
+                }
               },
               (err) => {
                 console.log(err);

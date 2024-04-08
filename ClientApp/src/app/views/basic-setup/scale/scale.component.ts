@@ -21,11 +21,6 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
   grades: any[] = [];
   editMode: boolean = false;
   scale: any = []
-
-
-  position = 'top-end';
-  visible = false;
-  percentage = 0;
   btnText: string | undefined;
   @ViewChild("ScaleForm", { static: true }) ScaleForm!: NgForm;
   subscription: Subscription = new Subscription;
@@ -46,6 +41,16 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
 
+   
+
+
+  }
+  ngOnInit(): void {
+    this.getALlScale();
+    this.SelectModelGrade();
+    this.handleRouteParams();
+  }
+  handleRouteParams(){
     this.route.paramMap.subscribe(params => {
       const id = params.get('scaleId');
       if (id) {
@@ -62,12 +67,6 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.btnText = 'Submit';
       }
     });
-
-
-  }
-  ngOnInit(): void {
-    this.getALlScale();
-    this.SelectModelGrade();
   }
   SelectModelGrade() {
     this.gradeService.selectModelGrade().subscribe(data => {
@@ -88,18 +87,7 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  toggleToast() {
-    this.visible = !this.visible;
-  }
 
-  onVisibleChange($event: boolean) {
-    this.visible = $event;
-    this.percentage = !this.visible ? 0 : this.percentage;
-  }
-
-  onTimerChange($event: number) {
-    this.percentage = $event * 25;
-  }
   initaialScale(form?: NgForm) {
     if (form != null)
       form.resetForm();
@@ -117,7 +105,6 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
   resetForm() {
     console.log(this.ScaleForm?.form.value)
     if (this.ScaleForm?.form != null) {
-      console.log(this.ScaleForm?.form)
       this.ScaleForm.form.reset();
       this.ScaleForm.form.patchValue({
         scaleId: 0,
@@ -132,7 +119,7 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
   getALlScale() {
-    this.subscription = this.ScaleService.getGrades().subscribe(item => {
+    this.subscription = this.ScaleService.getAll().subscribe(item => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -141,10 +128,10 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
   onSubmit(form: NgForm) {
+    this.ScaleService.cachedData = [];
     const id = this.ScaleForm.form.get('scaleId')?.value;
     if (id) {
       this.ScaleService.update(+id, this.ScaleForm.value).subscribe((response: any) => {
-        console.log(response)
         if (response.success) {
           this.toastr.success('Successfully', 'Update', { positionClass: 'toast-top-right' });
           this.getALlScale()
@@ -177,7 +164,13 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result => {
       if (result) {
         this.ScaleService.delete(element.scaleId).subscribe(res => {
-          this.getALlScale()
+          const index = this.dataSource.data.indexOf(element);
+          if (index !== -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource = new MatTableDataSource(
+              this.dataSource.data
+            );
+          }
         }, (err) => {
           console.log(err)
         });

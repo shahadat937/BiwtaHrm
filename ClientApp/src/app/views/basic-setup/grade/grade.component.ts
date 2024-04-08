@@ -26,11 +26,6 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit{
   gradeClass: any[] = [];
   editMode: boolean = false;
   grades: any = []
-
-
-  position = 'top-end';
-  visible = false;
-  percentage = 0;
   btnText:string | undefined;
   @ViewChild("GradeForm", { static: true }) GradeForm!: NgForm;
   subscription: Subscription = new Subscription;
@@ -53,28 +48,14 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit{
   ){
 
 
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('gradeId');
-      if (id) {
-        this.btnText = 'Update';
-        this.gradeService.find(+id).subscribe(
-          res => {
-            console.log(res);
-            this.GradeForm?.form.patchValue(res);
-          }
-        );
-      }
-      else {
-
-        this.btnText = 'Submit';
-      }
-    });
+  
   }
 
 ngOnInit(): void {
   this.getALlGrade();
   this.SelectedModelGradeClass();
   this.SelectedModelGradeType();
+  this.handleRouteParams();
 }
 // loadGrades() {
 //   this.gradeService.getGrade_cls_type_Vw().subscribe(data => {
@@ -82,7 +63,24 @@ ngOnInit(): void {
 //     this.gradeTypes;
 //   });
 // }
+handleRouteParams(){
+  this.route.paramMap.subscribe(params => {
+    const id = params.get('gradeId');
+    if (id) {
+      this.btnText = 'Update';
+      this.gradeService.find(+id).subscribe(
+        res => {
+          console.log(res);
+          this.GradeForm?.form.patchValue(res);
+        }
+      );
+    }
+    else {
 
+      this.btnText = 'Submit';
+    }
+  });
+}
 SelectedModelGradeClass(){
   this.gradeServiceClass.getSelectedGradeClass().subscribe(res=>{
    //console.log(res)
@@ -109,18 +107,7 @@ applyFilter(filterValue: string) {
   filterValue = filterValue.toLowerCase();
   this.dataSource.filter = filterValue;
 }
-toggleToast() {
-  this.visible = !this.visible;
-}
 
-onVisibleChange($event: boolean) {
-  this.visible = $event;
-  this.percentage = !this.visible ? 0 : this.percentage;
-}
-
-onTimerChange($event: number) {
-  this.percentage = $event * 25;
-}
 initaialGrade(form?: NgForm) {
   if (form != null)
     form.resetForm();
@@ -161,6 +148,7 @@ getALlGrade() {
 
 }
 onSubmit(form: NgForm) {
+  this.gradeService.cachedData = [];
   const id = this.GradeForm.form.get('gradeId')?.value;
   if (id) {
     this.gradeService.update(+id, this.GradeForm.value).subscribe((response: any) => {
@@ -197,7 +185,13 @@ delete(element: any) {
   this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result => {
     if (result) {
       this.gradeService.delete(element.gradeId).subscribe(res => {
-        this.getALlGrade()
+        const index = this.dataSource.data.indexOf(element);
+        if (index !== -1) {
+          this.dataSource.data.splice(index, 1);
+          this.dataSource = new MatTableDataSource(
+            this.dataSource.data
+          );
+        }
       }, (err) => {
         console.log(err)
       });

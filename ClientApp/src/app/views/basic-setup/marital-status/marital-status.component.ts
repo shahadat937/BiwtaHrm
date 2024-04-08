@@ -15,7 +15,6 @@ import { MaritalStatusService } from '../service/marital-status.service';
   styleUrl: './marital-status.component.scss'
 })
 export class MaritalStatusComponent  implements OnInit,OnDestroy,AfterViewInit{
-  percentage = 0;
   btnText:string | undefined;
   @ViewChild("maritalStatusForm", { static: true }) maritalStatusForm!: NgForm;
   subscription: Subscription = new Subscription;
@@ -35,30 +34,35 @@ constructor(
   {
   //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
 
+    
+
+  
+ }
+
+  ngOnInit(): void {
+   
+    this.getMaritalStatus();
+    this.handleRouteParams();
+
+  }
+  handleRouteParams(){
     this.route.paramMap.subscribe(params => {
       const id = params.get('maritalStatusId');
       if (id) {
         this.btnText = 'Update';
         this.maritalStatusService.find(+id).subscribe(
           res => {
-            console.log(res);
+         
             this.maritalStatusForm?.form.patchValue(res);
           }
         );
       }
       else {
-
+  
         this.btnText = 'Submit';
       }
     });
-
-  
- }
-  ngOnInit(): void {
-   
-    this.getMaritalStatus();
-
-  }
+   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.matSort;
@@ -90,7 +94,6 @@ constructor(
     console.log(this.maritalStatusForm?.form.value )
     this.btnText = 'Submit';
     if (this.maritalStatusForm?.form != null) {
-      console.log(this.maritalStatusForm?.form )
       this.maritalStatusForm.form.reset();
       this.maritalStatusForm.form.patchValue({
       maritalStatusId:0,
@@ -113,6 +116,7 @@ constructor(
 
   }
    onSubmit(form:NgForm){
+    this.maritalStatusService.cachedData = [];
     const id = this.maritalStatusForm.form.get('maritalStatusId')?.value;
     if (id) {
       this.maritalStatusService.update(+id,this.maritalStatusForm.value).subscribe((response:any) => {
@@ -149,7 +153,13 @@ constructor(
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{
       if (result) {
         this.maritalStatusService.delete(element.maritalStatusId).subscribe(res=>{
-          this.getMaritalStatus()
+          const index = this.dataSource.data.indexOf(element);
+          if (index !== -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource = new MatTableDataSource(
+              this.dataSource.data
+            );
+          }
         },(err) => { 
        console.log(err)
         });

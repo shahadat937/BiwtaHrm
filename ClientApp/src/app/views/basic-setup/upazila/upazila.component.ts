@@ -132,6 +132,7 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSubmit(form: NgForm) {
+    this.upazilaService.cachedData = [];
     const id = this.UpazilaForm.form.get('upazilaId')?.value;
     if (id) {
       this.upazilaService.update(+id, this.UpazilaForm.value).subscribe(

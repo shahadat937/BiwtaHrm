@@ -149,6 +149,11 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.ScaleId)
                 .HasName("[[PK_ScaleId]]");
             });
+            modelBuilder.Entity<Grade_cls_type_Vw>(entity =>
+            {
+                entity.HasKey(e => e.GradeId)
+                .HasName("[[PK_GradeId]]");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -186,7 +191,8 @@ namespace Hrm.Persistence
         public virtual DbSet<Feature> Feature { get; set; } = null!;
         public virtual DbSet<Scale> Scale { get; set; } = null!;
         public virtual DbSet<ScaleGradeView> ScaleGradeView { get; set; } = null!;
-       
+        public virtual DbSet<Grade_cls_type_Vw> Grade_cls_type_Vw { get; set; } = null!;
+
 
 
     }

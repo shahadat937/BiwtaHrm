@@ -16,9 +16,6 @@ import{DesignationService} from '../service/designation.service'
   styleUrl: './designation.component.scss'
 })
 export class DesignationComponent implements OnInit,OnDestroy,AfterViewInit{
-  position = 'top-end';
-  visible = false;
-  percentage = 0;
   btnText:string | undefined;
   @ViewChild("DesignationForm", { static: true }) DesignationForm!: NgForm;
   subscription: Subscription = new Subscription;
@@ -39,13 +36,21 @@ constructor(
   {
   //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
 
+ }
+  ngOnInit(): void {
+   
+    this.getALlDesignation();
+    this.handleRouteParams();
+
+  }
+  handleRouteParams(){
     this.route.paramMap.subscribe(params => {
       const id = params.get('designationId');
       if (id) {
         this.btnText = 'Update';
         this.designationService.find(+id).subscribe(
           res => {
-            console.log(res);
+  
             this.DesignationForm?.form.patchValue(res);
           }
         );
@@ -55,13 +60,6 @@ constructor(
         this.btnText = 'Submit';
       }
     });
-
-  
- }
-  ngOnInit(): void {
-   
-    this.getALlDesignation();
-
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -77,18 +75,7 @@ constructor(
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  toggleToast() {
-    this.visible = !this.visible;
-  }
-
-  onVisibleChange($event: boolean) {
-    this.visible = $event;
-    this.percentage = !this.visible ? 0 : this.percentage;
-  }
-
-  onTimerChange($event: number) {
-    this.percentage = $event * 25;
-  }
+ 
   initaialDesignation(form?:NgForm){
     if(form!=null)
     form.resetForm();
@@ -102,10 +89,8 @@ constructor(
 
    }
    resetForm() {
-    console.log(this.DesignationForm?.form.value )
     this.btnText = 'Submit';
     if (this.DesignationForm?.form != null) {
-      console.log(this.DesignationForm?.form )
       this.DesignationForm.form.reset();
       this.DesignationForm.form.patchValue({
         designationId:0,
@@ -128,10 +113,10 @@ constructor(
 
   }
    onSubmit(form:NgForm){
+    this.designationService.cachedData = [];
     const id = this.DesignationForm.form.get('designationId')?.value;
     if (id) {
       this.designationService.update(+id,this.DesignationForm.value).subscribe((response:any) => {
-        console.log(response)
         if(response.success){
           this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
           this.getALlDesignation()
@@ -164,7 +149,13 @@ constructor(
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{
       if (result) {
         this.designationService.delete(element.designationId).subscribe(res=>{
-          this.getALlDesignation()
+          const index = this.dataSource.data.indexOf(element);
+          if (index !== -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource = new MatTableDataSource(
+              this.dataSource.data
+            );
+          }
         },(err) => { 
        console.log(err)
         });

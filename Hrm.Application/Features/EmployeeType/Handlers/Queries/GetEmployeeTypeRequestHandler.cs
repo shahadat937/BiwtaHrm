@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
+using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.DTOs.EmployeeType;
 using Hrm.Domain;
 using MediatR;
@@ -25,6 +26,8 @@ namespace Hrm.Application.Features.EmployeeType.Handlers.Queries
         public async Task<object> Handle(GetEmployeeTypeRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.EmployeeType> EmployeeType = _EmployeeTypeRepository.Where(x => true);
+
+            EmployeeType = EmployeeType.OrderByDescending(x => x.EmployeeTypeId);
 
             var EmployeeTypeDtos = _mapper.Map<List<EmployeeTypeDto>>(EmployeeType);
 

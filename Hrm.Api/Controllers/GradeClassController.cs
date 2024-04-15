@@ -1,10 +1,13 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.GradeClass;
+using Hrm.Application.DTOs.GradeClass;
 using Hrm.Application.DTOs.GradeType;
+using Hrm.Application.Features.GradeClasss.Requests.Queries;
 using Hrm.Application.Features.GradeClass.Requests.Commands;
 using Hrm.Application.Features.GradeClass.Requests.Queries;
 using Hrm.Application.Features.GradeType.Requests.Commands;
 using Hrm.Application.Features.GradeType.Requests.Queries;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +32,20 @@ namespace Hrm.Api.Controllers
             var country = await _mediator.Send(new GetGradeClassRequest { });
             return Ok(country);
         }
-
+        [HttpGet]
+        [Route("get-gradeClassDetail/{id}")]
+        public async Task<ActionResult<GradeClassDto>> Get(int id)
+        {
+            var GradeClasss = await _mediator.Send(new GetGradeClassDetailRequest { GradeClassId = id });
+            return Ok(GradeClasss);
+        }
+        [HttpGet]
+        [Route("get-selectedGradeClasss")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedGradeClass()
+        {
+            var GradeClass = await _mediator.Send(new GetSelectGradeClassRequest { });
+            return Ok(GradeClass);
+        }
         [HttpPost]
         [Route("save-gradeClass")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateGradeClassDto gradeClass)

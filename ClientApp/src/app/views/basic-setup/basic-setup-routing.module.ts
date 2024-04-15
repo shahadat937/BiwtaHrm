@@ -25,6 +25,7 @@ import { Designation } from './model/Designation';
 import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
 import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
+import { GradeComponent } from './grade/grade.component';
 const routes: Routes = [
 
   {
@@ -43,7 +44,15 @@ const routes: Routes = [
     component: MaritalStatusComponent,
   },
   {
+    path:'update-marital-status/:maritalStatusId',
+    component: MaritalStatusComponent,
+  },
+  {
     path: 'employee-type',
+    component: EmployeeTypeComponent,
+  },
+  {
+    path: 'update-employee-type/:employeeTypeId',
     component: EmployeeTypeComponent,
   },
   {
@@ -51,7 +60,15 @@ const routes: Routes = [
     component: GenderComponent,
   },
   {
+    path: 'update-gender/:genderId',
+    component: GenderComponent,
+  },
+  {
     path: 'religion',
+    component: ReligionComponent,
+  },
+  {
+    path: 'update-religion/:religionId',
     component: ReligionComponent,
   },
   {
@@ -188,6 +205,14 @@ const routes: Routes = [
     component: ScaleComponent,
   },
 
+  {
+    path: 'grade',
+    component: GradeComponent,
+  },
+  {
+    path: 'update-grade/:gradeId',
+    component: GradeComponent,
+  }
 ];
 
 @NgModule({

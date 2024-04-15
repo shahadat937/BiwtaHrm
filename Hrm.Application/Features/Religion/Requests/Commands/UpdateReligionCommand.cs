@@ -1,4 +1,5 @@
 ﻿using Hrm.Application.DTOs.Religion;
+using Hrm.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Religion.Requests.Commands
 {
-    public class UpdateReligionCommand : IRequest<Unit>
+    public class UpdateReligionCommand : IRequest<BaseCommandResponse>
     {
         public ReligionDto ReligionDto { get; set; }
     }

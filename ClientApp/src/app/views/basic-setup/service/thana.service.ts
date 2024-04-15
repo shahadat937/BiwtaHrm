@@ -2,7 +2,7 @@ import { environment } from '../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Thana}  from  './../model/thana'
-import { Observable } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 
@@ -10,6 +10,7 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
   providedIn: 'root'
 })
 export class ThanaService {
+  cachedData: any[] = [];
   baseUrl = environment.apiUrl;
   thanas: Thana;
   constructor(private http: HttpClient) {
@@ -23,8 +24,24 @@ export class ThanaService {
   getById(id: number) {
     return this.http.get<Thana>(this.baseUrl + '/thana/get-thanabyid/' + id);
   }
-  getAll():Observable<Thana[]> {
-    return this.http.get<Thana[]>(this.baseUrl + '/thana/get-thana');
+  // getAll():Observable<Thana[]> {
+  //   return this.http.get<Thana[]>(this.baseUrl + '/thana/get-thana');
+  // }
+  getAll(): Observable<Thana[]> {
+    if (this.cachedData.length > 0) {
+      // If data is already cached, return it without making a server call
+      return of(this.cachedData);
+    } else {
+      // If data is not cached, make a server call to fetch it
+      return this.http
+        .get<Thana[]>(this.baseUrl + '/thana/get-thana')
+        .pipe(
+          map((data) => {
+            this.cachedData = data; // Cache the data
+            return data;
+          })
+        );
+    }
   }
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/thana/update-thana/'+id, model);

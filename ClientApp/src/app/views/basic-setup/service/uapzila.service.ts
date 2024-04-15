@@ -15,7 +15,10 @@ export class UapzilaService {
     this.upazilas=new Upazila();
    }
 
-  getById(id: number) {
+
+   
+
+  find(id: number) {
     return this.http.get<Upazila>(this.baseUrl + '/upazila/get-upazilabyid/' + id);
   }
   getAll():Observable<Upazila[]> {

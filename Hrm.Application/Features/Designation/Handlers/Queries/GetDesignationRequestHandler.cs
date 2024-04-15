@@ -2,7 +2,9 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Designation;
 using Hrm.Application.DTOs.Designation;
+using Hrm.Application.DTOs.Designation;
 using Hrm.Application.Exceptions;
+using Hrm.Application.Features.Designation.Requests.Queries;
 using Hrm.Application.Features.Designation.Requests.Queries;
 using Hrm.Application.Models;
 using MediatR;
@@ -27,9 +29,14 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
 
         public async Task<object> Handle(GetDesignationRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Hrm.Domain.Designation> Designation = _DesignationRepository.Where(x => true);
+            // Fetch blood groups from repository
+            IQueryable<Hrm.Domain.Designation> Designations = _DesignationRepository.Where(x => true);
 
-            var DesignationDtos = _mapper.Map<List<DesignationDto>>(Designation);
+            // Order blood groups by descending order
+            Designations = Designations.OrderByDescending(x => x.DesignationId);
+
+            // Map the ordered blood groups to DesignationDto
+            var DesignationDtos = _mapper.Map<List<DesignationDto>>(Designations.ToList());
 
             return DesignationDtos;
         }

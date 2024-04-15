@@ -78,7 +78,7 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-selecteddivisiontype")]
+        [Route("get-selecteddivision")]
         public async Task<ActionResult<List<SelectedModel>>> GetSelectedDivision()
         {
             var Division = await _mediator.Send(new GetSelectedDivisionRequest { });

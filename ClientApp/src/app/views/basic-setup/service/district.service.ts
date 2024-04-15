@@ -3,20 +3,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {District}  from  './../model/district'
 import { Observable } from 'rxjs';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DistrictService  {
-   
-
-
-
 baseUrl = environment.apiUrl;
 districts: District;
   constructor(private http: HttpClient) {
     this.districts = new District();
    }
+
+getDivision(){
+  return this.http.get<SelectedModel[]>(this.baseUrl + '/division/get-selecteddivision');
+}
+
+
   find(id: number) {
     return this.http.get<District>(this.baseUrl + '/district/get-districtbyid/' + id);
   }

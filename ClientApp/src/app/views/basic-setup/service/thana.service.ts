@@ -11,9 +11,9 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 })
 export class ThanaService {
   baseUrl = environment.apiUrl;
-  thana: Thana;
+  thanas: Thana;
   constructor(private http: HttpClient) {
-    this.thana=new Thana();
+    this.thanas=new Thana();
    }
 
    getupazila(){

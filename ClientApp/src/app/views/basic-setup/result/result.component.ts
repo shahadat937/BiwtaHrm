@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { cil3d, cil4k, cilAccountLogout, cilActionRedo, cilAirplaneMode, cilList, cilPaperPlane, cilPencil, cilShieldAlt, cilTrash } from '@coreui/icons';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 
@@ -15,7 +15,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
   templateUrl: './result.component.html',
   styleUrl: './result.component.scss'
 })
-export class ResultComponent implements OnInit,OnDestroy,AfterViewInit{
+export class ResultComponent  implements OnInit,OnDestroy,AfterViewInit{
   position = 'top-end';
   visible = false;
   percentage = 0;
@@ -23,34 +23,22 @@ export class ResultComponent implements OnInit,OnDestroy,AfterViewInit{
   @ViewChild("ResultForm", { static: true }) ResultForm!: NgForm;
   subscription: Subscription = new Subscription;
   displayedColumns: string[] = ['slNo','resultName', 'isActive','Action'];
-
   dataSource = new MatTableDataSource<any>();
-  icons = { 
-    'cilList': cilList,
-  'cilShieldAlt': cilShieldAlt,
-  'cilPaperPlane': cilPaperPlane,
-  'cil3d': cil3d,
-  'cil4k': cil4k,
-  'cilAccountLogout': cilAccountLogout,
-  'cilActionRedo': cilActionRedo,
-  'cilAirplaneMode': cilAirplaneMode,
-  'cilPencil': cilPencil,
-  'cilTrash': cilTrash,
-  };
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-constructor( 
+constructor(
   public resultService:ResultService,
   private snackBar: MatSnackBar,
   private route: ActivatedRoute,
   private router: Router,
-  private confirmService: ConfirmService
+  private confirmService: ConfirmService,
+  private toastr: ToastrService
   )
   {
   //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
-  
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('resultId');
       if (id) {
@@ -73,7 +61,7 @@ constructor(
   ngOnInit(): void {
    
     this.getALlResult();
-  
+
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -85,8 +73,8 @@ constructor(
     }
   }
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); 
-    filterValue = filterValue.toLowerCase(); 
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
   toggleToast() {
@@ -109,9 +97,9 @@ constructor(
       resultName:"",
       menuPosition: 0,
       isActive:true
-      
+
     }
-    
+
    }
    resetForm() {
     console.log(this.ResultForm?.form.value )
@@ -121,51 +109,56 @@ constructor(
       this.ResultForm.form.reset();
       this.ResultForm.form.patchValue({
         resultId:0,
-      resultName:"",
-      menuPosition: 0,
-      isActive:true
-       
+        resultName:"",
+        menuPosition:0,
+        isActive:true
+
       });
     }
-    
+
   }
 
-  getALlResult(){ 
+  getALlResult(){
    this.subscription=this.resultService.getAll().subscribe(item=>{
      this.dataSource=new MatTableDataSource(item);
      this.dataSource.paginator = this.paginator;
      this.dataSource.sort = this.matSort;
-   
+
     });
-   
+
   }
    onSubmit(form:NgForm){
     const id = this.ResultForm.form.get('resultId')?.value;
     if (id) {
-      this.resultService.update(+id,this.ResultForm.value).subscribe(response => {
-        this.getALlResult()
-        this.resetForm();
-        this.router.navigate(["/bascisetup/result"]);  
+      this.resultService.update(+id,this.ResultForm.value).subscribe((response:any) => {
+        console.log(response)
+        if(response.success){
+          this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
+          this.getALlResult()
+          this.resetForm();
+          this.router.navigate(["/bascisetup/result"]);  
+        }else{
+          this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
+        }
+        
       }, err => {
         console.log(err)
       })
     }else{
-   this.subscription=this.resultService.submit(form?.value).subscribe(res=>{ 
-      // this.snackBar.open('Information Inserted Successfully ', '', {
-      //   duration: 2000,
-      //   verticalPosition: 'top',
-      //   horizontalPosition: 'right',
-      //   panelClass: 'snackbar-success'
-      // });  
-      this.toggleToast();
-    this.getALlResult()
-    this.resetForm();
-  
+   this.subscription=this.resultService.submit(form?.value).subscribe((response:any)=>{
+    if(response.success){
+      this.toastr.success('Successfully', `${response.message}`,{ positionClass: 'toast-top-right' });
+      this.getALlResult()
+      this.resetForm();
+    }else{
+      this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
+    }
+
    },err=>{
      console.log(err);
    })
     }
- 
+
   }
   delete(element:any){
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{

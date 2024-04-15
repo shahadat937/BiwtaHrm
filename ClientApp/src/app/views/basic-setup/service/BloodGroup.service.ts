@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BloodGroup } from '../model/BloodGroup';
 import { Observable } from 'rxjs';
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BloodGroupService {
   baseUrl = environment.apiUrl;
   bloodGroups: BloodGroup;

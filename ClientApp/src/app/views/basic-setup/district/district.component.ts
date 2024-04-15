@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
 
 @Component({
   selector: 'app-district',
@@ -35,6 +36,7 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+  divisions: SelectedModel[] = [];
   constructor(
     public districtService: DistrictService,
     private snackBar: MatSnackBar,
@@ -60,6 +62,7 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnInit(): void {
     this.getALlDistrict();
+    this.loaddivisions();
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -92,7 +95,8 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
     this.districtService.districts = {
       districtId: 0,
       districtName: '',
-    //  divisionId:0,
+      divisionId :0,
+      //divisionName:"",
       menuPosition: 0,
       isActive: true,
     };
@@ -106,11 +110,20 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
       this.DistrictForm.form.patchValue({
         districtId: 0,
         districtName: '',
-       // divisionId:0,
+        divisionId :0,
+      //  divisionName:"",
         menuPosition: 0,
         isActive: true,
       });
     }
+  }
+
+  loaddivisions() {
+    console.log('division')
+    this.districtService.getDivision().subscribe(data => {
+      console.log('division'+ data)
+      this.divisions = data;
+    });
   }
 
   getALlDistrict() {

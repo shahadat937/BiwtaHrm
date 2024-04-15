@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Scale } from '../model/Scale';
 import { Observable } from 'rxjs';
+import { GradeService } from './Grade.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,16 +12,25 @@ export class ScaleService {
   scales: Scale;
   constructor(private http: HttpClient) {
     this.scales = new Scale();
+    
    }
-  // find(id: number) {
-  //   return this.http.get<Scale>(this.baseUrl + '/scale/get-bloodGroupDetail/' + id);
+  find(id: number) {
+    return this.http.get<Scale>(this.baseUrl + '/scale/get-scaleDetail/' + id);
+  }
+
+  // getGrateScale(id: Number):Observable<Scale[]>{
+  //   return this.http.get<Scale[]>(`${this.baseUrl}/scaleGradeView/get-scaleGradeView/${id}`);
   // }
-  getAll():Observable<Scale[]> {
-    return this.http.get<Scale[]>(this.baseUrl + '/scale/get-scale');
+
+
+  getGrades() {
+    return this.http.get<any[]>(this.baseUrl + '/scaleGradeView/get-scaleGradeView');
   }
-  getSelectGrade():Observable<Scale[]> {
-    return this.http.get<Scale[]>(this.baseUrl + '/grade/get-selectedGrade');
-  }
+  // getGradeScale():Observable<Scale[]> {
+  //   return this.http.get<Scale[]>(this.baseUrl + '/scaleGradeView/get-scaleGradeView');
+  // }
+
+
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/scale/update-scale/'+id, model);
   }

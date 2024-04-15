@@ -16,6 +16,15 @@ import { ShiftComponent } from './shift/shift.component';
 import { TrainingComponent } from './training/training.component';
 import { DepartmentComponent } from './department/department.component';
 
+import { MaritalStatusComponent } from './marital-status/marital-status.component';
+import { EmployeeTypeComponent } from './employee-type/employee-type.component';
+import { GenderComponent } from './gender/gender.component';
+import { ReligionComponent } from './religion/religion.component';
+import { ChildStatusComponent } from './child-status/child-status.component';
+import { Designation } from './model/Designation';
+import { DesignationComponent } from './designation/designation.component';
+import { PunishmentComponent } from './punishment/punishment.component';
+import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
 const routes: Routes = [
 
   {
@@ -26,12 +35,31 @@ const routes: Routes = [
     path: 'blood-group',
     component: BloodGroupComponent,
   },
-  {
-    path: 'scale',
-    component: ScaleComponent
-  },
   { path: 'update-bloodgroup/:bloodGroupId',
     component: BloodGroupComponent,
+  },
+  {
+    path:'marital-status',
+    component: MaritalStatusComponent,
+  },
+  {
+    path: 'employee-type',
+    component: EmployeeTypeComponent,
+  },
+  {
+    path: 'gender',
+    component: GenderComponent,
+  },
+  {
+    path: 'religion',
+    component: ReligionComponent,
+  },
+  {
+    path: 'child-status',
+    component: ChildStatusComponent
+  },
+  { path: 'update-child-status/:childStatusId',
+  component: ChildStatusComponent,
   },
   {
     path: 'district',
@@ -44,7 +72,7 @@ const routes: Routes = [
     path: 'upazila',
     component: UpazilaComponent,
   },
-  { path: 'update-upazila/:upazilaid', 
+  { path: 'update-upazila/:upazilaId', 
   component: UpazilaComponent, 
   },
   {
@@ -52,7 +80,7 @@ const routes: Routes = [
     component: ThanaComponent,
   },
   { 
-    path: 'update-thana/:thanaid', 
+    path: 'update-thana/:thanaId', 
     component: ThanaComponent, 
   },
   {
@@ -63,7 +91,7 @@ const routes: Routes = [
     path: 'update-result/:resultId',
     component: ResultComponent,
   },
-  {
+  { 
     path: 'subject',
     component: SubjectComponent,
   },
@@ -74,7 +102,7 @@ const routes: Routes = [
     path: 'group',
     component: GroupComponent,
   },
-  { path: 'update-group/:groupid', 
+  { path: 'update-group/:groupId', 
   component: GroupComponent, 
   },
   {
@@ -82,7 +110,7 @@ const routes: Routes = [
     component: BranchComponent,
   },
   { 
-    path: 'update-branch/:branchid', 
+    path: 'update-branch/:branchId', 
     component: BranchComponent, 
   },
   {
@@ -90,7 +118,7 @@ const routes: Routes = [
     component: UnionComponent,
   },
   {
-    path: 'update-union/:unionid',
+    path: 'update-union/:unionId',
     component: UnionComponent,
   },
   {
@@ -98,7 +126,7 @@ const routes: Routes = [
     component: WardComponent,
   },
   { 
-    path: 'update-ward/:wardid', 
+    path: 'update-ward/:wardId', 
     component: WardComponent, 
   },
   {
@@ -106,7 +134,7 @@ const routes: Routes = [
     component: ShiftComponent,
   },
   {
-    path: 'update-shift/:shiftid',
+    path: 'update-shift/:shiftId',
     component: ShiftComponent,
   },
   {
@@ -114,7 +142,7 @@ const routes: Routes = [
     component: TrainingComponent,
   },
   { 
-    path: 'update-training/:trainingid', 
+    path: 'update-trainingType/:trainingTypeId', 
     component: TrainingComponent, 
   },
   {
@@ -122,8 +150,42 @@ const routes: Routes = [
     component: DepartmentComponent,
   },
   {
-    path: 'update-department/:departmentid',
+    path: 'update-department/:departmentId',
     component: DepartmentComponent,
+  },
+  {
+    path: 'designation',
+    component: DesignationComponent,
+  },
+  {
+    path: 'update-designation/:designationId',
+    component: DesignationComponent,
+  },
+  {
+
+    path: 'promotionType',
+    component: PromotionTypeComponent,
+  },
+  {
+    path: 'update-promotionType/:promotionTypeId',
+    component: PromotionTypeComponent,
+  },
+  {
+
+    path: 'punishment',
+    component: PunishmentComponent,
+  },
+  {
+    path: 'update-punishment/:punishmentId',
+    component: PunishmentComponent,
+  },
+  {
+    path: 'scale',
+    component: ScaleComponent,
+  },
+  {
+    path: 'update-scale/:scaleId',
+    component: ScaleComponent,
   },
 
 ];

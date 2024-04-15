@@ -9,8 +9,14 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.DTOs.Result;
+using Hrm.Application.Features.Result.Requests.Commands;
+using Hrm.Application.Features.Result.Requests.Queries;
+using Hrm.Application.Features.Results.Requests.Queries;
+using Hrm.Shared.Models;
 namespace Hrm.Api.Controllers
 {
+
 
     [Route(HrmRoutePrefix.Result)]
     [ApiController]
@@ -21,15 +27,6 @@ namespace Hrm.Api.Controllers
         {
             _mediator = mediator;
         }
-
-        [HttpGet]
-        [Route("get-result")]
-        public async Task<ActionResult> GetResult()
-        {
-            var Result = await _mediator.Send(new GetResultRequest { });
-            return Ok(Result);
-        }
-
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -41,18 +38,40 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("get-result")]
+        public async Task<ActionResult> Get()
+        {
+            var Result = await _mediator.Send(new GetResultRequest { });
+            return Ok(Result);
+        }
+        [HttpGet]
+        [Route("get-resultDetail/{id}")]
+        public async Task<ActionResult<ResultDto>> Get(int id)
+        {
+            var Results = await _mediator.Send(new GetResultDetailRequest { ResultId = id });
+            return Ok(Results);
+        }
+        [HttpGet]
+        [Route("get-selectedResults")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedResult()
+        {
+            var Result = await _mediator.Send(new GetSelectedResultRequest { });
+            return Ok(Result);
+        }
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
         [Route("update-result/{id}")]
         public async Task<ActionResult> Put([FromBody] ResultDto Result)
         {
             var command = new UpdateResultCommand { ResultDto = Result };
-            await _mediator.Send(command);
-            return NoContent();
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
+
 
         [HttpDelete]
         [ProducesResponseType(200)]
@@ -62,8 +81,8 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteResultCommand { ResultId = id };
-            await _mediator.Send(command);
-            return NoContent();
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

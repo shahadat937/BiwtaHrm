@@ -1,6 +1,9 @@
 ﻿using Hrm.Application;
+using Hrm.Application.DTOs.ChildStatus;
 using Hrm.Application.DTOs.Gender;
 using Hrm.Application.DTOs.MaritalStatus;
+using Hrm.Application.Features.ChildStatus.Requests.Queries;
+using Hrm.Application.Features.EmployeeType.Requests.Queries;
 using Hrm.Application.Features.Gender.Requests.Commands;
 using Hrm.Application.Features.Gender.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
@@ -30,7 +33,13 @@ namespace Hrm.Api.Controllers
             var Gender = await _mediator.Send(new GetGenderRequest { });
             return Ok(Gender);
         }
-
+        [HttpGet]
+        [Route("get-genderById/{id}")]
+        public async Task<ActionResult<GenderDto>> Get(int id)
+        {
+            var Gender = await _mediator.Send(new GetGenderByIdRequest { GenderId = id });
+            return Ok(Gender);
+        }
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

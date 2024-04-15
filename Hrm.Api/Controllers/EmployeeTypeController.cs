@@ -1,8 +1,11 @@
 ﻿using Hrm.Application;
+using Hrm.Application.DTOs.ChildStatus;
 using Hrm.Application.DTOs.EmployeeType;
 using Hrm.Application.DTOs.Gender;
+using Hrm.Application.Features.ChildStatus.Requests.Queries;
 using Hrm.Application.Features.EmployeeType.Handlers.Queries;
 using Hrm.Application.Features.EmployeeType.Requests.Commands;
+using Hrm.Application.Features.EmployeeType.Requests.Queries;
 using Hrm.Application.Features.Gender.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
@@ -28,7 +31,13 @@ namespace Hrm.Api.Controllers
             var EmployeeType = await _mediator.Send(new GetEmployeeTypeRequest { });
             return Ok(EmployeeType);
         }
-
+        [HttpGet]
+        [Route("get-employeeTypeById/{id}")]
+        public async Task<ActionResult<EmployeeTypeDto>> Get(int id)
+        {
+            var EmployeeType = await _mediator.Send(new GetEmployeeTypeByIdRequest { EmployeeTypeId = id });
+            return Ok(EmployeeType);
+        }
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

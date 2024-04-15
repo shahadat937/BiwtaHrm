@@ -10,6 +10,20 @@
       cForm cRow
       class="needs-validation"
 >
+
+<c-col [md]="6">
+  <label cLabel for="validationCustom01">Division<span class="text-danger">*</span></label>
+  <div class="input-wrapper">
+    <select  [(ngModel)]="districtService.districts.divisionId" name="divisionId" #divisionId="ngModel" cFormControl id="validationCustom01" required  aria-label="Default select example" cSelect>
+
+      <option *ngFor="let division of divisions " [value]="division.id">{{ division.name }}</option>
+    </select>
+    <div class="text-left text-danger" *ngIf="!divisionId.valid && divisionId.touched">
+      Grade is required
+    </div>
+  </div>
+</c-col>
+
   <c-col [md]="6">
      <input type="hidden" [(ngModel)]="districtService.districts.districtId" name="districtId"/>
     <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> --> 

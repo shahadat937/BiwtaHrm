@@ -1,7 +1,9 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.BloodGroup;
+using Hrm.Application.DTOs.ChildStatus;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.BloodGroup.Requests.Commands;
+using Hrm.Application.Features.ChildStatus.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Microsoft.AspNetCore.Http;
@@ -38,7 +40,13 @@ namespace Hrm.Api.Controllers
             var MaritalStatus = await _mediator.Send(new GetMaritalStatusRequest { });
             return Ok(MaritalStatus);
         }
-
+        [HttpGet]
+        [Route("get-maritalStatusById/{id}")]
+        public async Task<ActionResult<MaritalStatusDto>> Get(int id)
+        {
+            var MaritalStatus = await _mediator.Send(new GetMaritalStatusByIdRequest { MaritalStatusId = id });
+            return Ok(MaritalStatus);
+        }
         [HttpPut]
         [Route("update-maritalStatus/{id}")]
         public async Task<ActionResult> Put([FromBody] MaritalStatusDto MaritalStatus)

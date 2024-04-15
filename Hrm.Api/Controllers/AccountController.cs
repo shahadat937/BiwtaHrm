@@ -2,7 +2,7 @@
 using Hrm.Application.Contracts.Identity;
 using Hrm.Application.Models.Identity;
 
-namespace SchoolManagement.Api.Controllers;
+namespace Hrm.Api.Controllers;
 //[Route(SMSRoutePrefix.Account)]
 [Route("api/[controller]")]
 [ApiController]

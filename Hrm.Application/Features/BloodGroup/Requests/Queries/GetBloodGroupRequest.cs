@@ -9,5 +9,6 @@ namespace Hrm.Application.Features.BloodGroup.Requests.Queries
 {
     public class GetBloodGroupRequest : IRequest<object>
     {
+
     }
 }

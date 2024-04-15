@@ -385,6 +385,17 @@ export const navItems: INavData[] = [
     ]
   },
   {
+    name:'PromotionType',
+    url: '/bascisetup',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'PromotionType',
+        url: '/bascisetup/promotionType'
+      },
+    ]
+  },
+  {
     title: true,
     name: 'Appraisal Management'
   },
@@ -437,11 +448,19 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Employee Type',
-        url: '/base/accordion'
+        url: '/bascisetup/employee-type'
       },
       {
         name: 'Blood Group',
         url: '/bascisetup/blood-group'
+      },
+      {
+        name: 'Marital Status',
+        url: '/bascisetup/marital-status'
+      },
+      {
+        name: 'Child Status',
+        url: '/bascisetup/child-status'
       },
       {
         name: 'User Role',
@@ -473,7 +492,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Designation',
-        url: '/base/placeholder'
+        url: '/bascisetup/designation'
       },
       {
         name: 'Grade',
@@ -485,7 +504,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Religion',
-        url: '/base/spinners'
+        url: '/bascisetup/religion'
       },
       {
         name: 'Hair Color',
@@ -502,6 +521,10 @@ export const navItems: INavData[] = [
       {
         name: 'Occupation',
         url: '/base/tooltips'
+      },
+      {
+        name: 'Punishment/reward',
+        url: '/bascisetup/punishment'
       }
     ]
   },
@@ -576,7 +599,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Gender',
-        url: '/bascisetup/gender-list'
+        url: '/bascisetup/gender'
       }
 
     ]

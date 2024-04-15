@@ -5,6 +5,7 @@ export class Scale {
   basicPay: number = 0;
   gradeId: number = 0;
   menuPosition: number = 0;
-  isActive: boolean=true
+  isActive: boolean=true;
+  gradeName: string="";
 
 }

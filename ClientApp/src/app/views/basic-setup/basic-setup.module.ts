@@ -1,3 +1,8 @@
+import { GenderService } from './service/gender.service';
+import { ReligionService } from './service/religion.service';
+import { MaritalStatusService } from './service/marital-status.service';
+import { EmployeeTypeService } from './service/employee-type.service';
+import { ChildStatusService } from './service/child-status.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BasicSetupRoutingModule } from './basic-setup-routing.module';
@@ -21,9 +26,17 @@ import { BranchComponent } from './branch/branch.component';
 import { UnionComponent } from './union/union.component';
 import { WardComponent } from './ward/ward.component';
 import { ShiftComponent } from './shift/shift.component';
-import { TrainingComponent } from './training/training.component';
+import { TrainingComponent } from './training/training.component'
 import { DepartmentComponent } from './department/department.component';
 
+import { MaritalStatusComponent } from './marital-status/marital-status.component';
+import { EmployeeTypeComponent } from './employee-type/employee-type.component';
+import { GenderComponent } from './gender/gender.component';
+import { ReligionComponent } from './religion/religion.component';
+import { ChildStatusComponent } from './child-status/child-status.component';
+import { DesignationComponent } from './designation/designation.component';
+import { PunishmentComponent } from './punishment/punishment.component';
+import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
 
 @NgModule({
   declarations:
@@ -43,6 +56,14 @@ import { DepartmentComponent } from './department/department.component';
     ShiftComponent,
     TrainingComponent,
     DepartmentComponent,
+    MaritalStatusComponent,
+    EmployeeTypeComponent,
+    GenderComponent,
+    ReligionComponent,
+    ChildStatusComponent,
+    DesignationComponent,
+    PunishmentComponent,
+    PromotionTypeComponent,
   ],
   imports: [
     CommonModule,
@@ -63,9 +84,14 @@ import { DepartmentComponent } from './department/department.component';
     SharedCustomModule,
     ProgressModule
   ],
-  // providers:[
-  //   BloodGroupService,
-  //   ToastrService
-  // ]
+  providers:[
+    BloodGroupService,
+    ToastrService,
+    ChildStatusService,
+    EmployeeTypeService,
+    MaritalStatusService,
+    ReligionService,
+    GenderService
+  ]
 })
 export class BasicSetupModule { }

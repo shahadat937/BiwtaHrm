@@ -25,6 +25,7 @@ namespace Hrm.Application
         public const string District = HRMRoutePrefixBase + "district";
         public const string Result = HRMRoutePrefixBase + "Result";
         public const string Branch = HRMRoutePrefixBase + "Branch";
+        public const string SubBranch = HRMRoutePrefixBase + "SubBranch";
 
         public const string Ward = HRMRoutePrefixBase + "ward";
         public const string appraisalFormType = HRMRoutePrefixBase + "appraisalFormType";

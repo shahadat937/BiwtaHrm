@@ -42,6 +42,7 @@ using Hrm.Application.DTOs.Modules;
 using Hrm.Application.DTOs.Scale;
 using Hrm.Application.DTOs.ScaleGradeView;
 using Hrm.Application.DTOs.Grade_cls_type_Vw;
+using Hrm.Application.DTOs.SubBranch;
 
 namespace Hrm.Application.Profiles
 {
@@ -155,6 +156,9 @@ namespace Hrm.Application.Profiles
             CreateMap<Grade_cls_type_Vw, Grade_cls_type_VwDto>().ReverseMap();
             CreateMap<Grade_cls_type_Vw, CreateGrade_cls_type_VwDto>().ReverseMap();
 
+
+            CreateMap<SubBranch, SubBranchDto>().ReverseMap();
+            CreateMap<SubBranch, CreateSubBranchDto>().ReverseMap();
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();
             CreateMap<Module, ModuleFeatureDto>().ReverseMap();

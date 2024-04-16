@@ -5,7 +5,6 @@ import { MatTableModule } from '@angular/material/table';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CommonModule } from '@angular/common'; 
 
 import { ConfirmDialogComponent } from 'src/app/modals/confirm-dialog/confirm-dialog.component';
@@ -92,7 +91,6 @@ const APP_CONTAINERS = [
     SharedCustomModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    NgMultiSelectDropDownModule.forRoot(),
     CommonModule,
 
   ],

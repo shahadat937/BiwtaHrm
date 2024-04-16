@@ -16,19 +16,20 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Gender.Handlers.Commands
 {
-    public class UpdateGenderCommandHandler : IRequestHandler<UpdateGenderCommand, Unit>
+    public class UpdateGenderCommandHandler : IRequestHandler<UpdateGenderCommand, BaseCommandResponse>
     {
-
+        private readonly IHrmRepository<Hrm.Domain.Gender> _genderRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateGenderCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateGenderCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Domain.Gender> genderRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _genderRepository = genderRepository;
         }
 
-        public async Task<Unit> Handle(UpdateGenderCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateGenderCommand request, CancellationToken cancellationToken)
         {
             var respose = new BaseCommandResponse();
             var validator = new UpdateGenderDtoValidator();
@@ -40,20 +41,35 @@ namespace Hrm.Application.Features.Gender.Handlers.Commands
                 respose.Message = "Creation Failed";
                 respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
-
+            
             var Gender = await _unitOfWork.Repository<Hrm.Domain.Gender>().Get(request.GenderDto.GenderId);
-
             if (Gender is null)
             {
                 throw new NotFoundException(nameof(Gender), request.GenderDto.GenderId);
             }
+            var normalizedGenderName = request.GenderDto.GenderName.Trim().ToLower().Replace(" ", string.Empty);
 
-            _mapper.Map(request.GenderDto, Gender);
+            IQueryable<Hrm.Domain.Gender> matchingGender = _genderRepository.Where(x => x.GenderName.ToLower() == normalizedGenderName);
+            if (matchingGender.Any())
+            {
+                respose.Success = false;
+                respose.Message = $"Update Failed '{request.GenderDto.GenderName}' already exists.";
+                respose.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
-            await _unitOfWork.Repository<Hrm.Domain.Gender>().Update(Gender);
-            await _unitOfWork.Save();
+            }
+            else
+            {
+                _mapper.Map(request.GenderDto, Gender);
 
-            return Unit.Value;
+                await _unitOfWork.Repository<Hrm.Domain.Gender>().Update(Gender);
+                await _unitOfWork.Save();
+                respose.Success = true;
+                respose.Message = "Update Successful";
+                respose.Id = Gender.GenderId;
+            }
+                
+
+            return respose;
         }
     }
 }

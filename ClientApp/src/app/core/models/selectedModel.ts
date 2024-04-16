@@ -1,5 +1,5 @@
-export interface SelectedModel {
-    value: any;
-    text: any;
+export class SelectedModel {
+    id: any;
+    name: any;
     
 }

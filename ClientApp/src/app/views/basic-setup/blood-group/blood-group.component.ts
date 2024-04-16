@@ -17,9 +17,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './blood-group.component.scss'
 })
 export class BloodGroupComponent implements OnInit,OnDestroy,AfterViewInit{
-  position = 'top-end';
-  visible = false;
-  percentage = 0;
   btnText:string | undefined;
   @ViewChild("BloodGroupForm", { static: true }) BloodGroupForm!: NgForm;
   subscription: Subscription = new Subscription;
@@ -31,7 +28,6 @@ export class BloodGroupComponent implements OnInit,OnDestroy,AfterViewInit{
   matSort!: MatSort;
 constructor(
   public bloodGroupService:BloodGroupService,
-  private snackBar: MatSnackBar,
   private route: ActivatedRoute,
   private router: Router,
   private confirmService: ConfirmService,
@@ -39,14 +35,20 @@ constructor(
   )
   {
   //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
-
+ }
+  ngOnInit(): void {
+   
+    this.getALlBloodGroup();
+    this.handleRouteParams()
+  }
+  handleRouteParams() {
     this.route.paramMap.subscribe(params => {
       const id = params.get('bloodGroupId');
       if (id) {
         this.btnText = 'Update';
         this.bloodGroupService.find(+id).subscribe(
           res => {
-            console.log(res);
+      
             this.BloodGroupForm?.form.patchValue(res);
           }
         );
@@ -56,13 +58,6 @@ constructor(
         this.btnText = 'Submit';
       }
     });
-
-  
- }
-  ngOnInit(): void {
-   
-    this.getALlBloodGroup();
-
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -78,18 +73,7 @@ constructor(
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  toggleToast() {
-    this.visible = !this.visible;
-  }
-
-  onVisibleChange($event: boolean) {
-    this.visible = $event;
-    this.percentage = !this.visible ? 0 : this.percentage;
-  }
-
-  onTimerChange($event: number) {
-    this.percentage = $event * 25;
-  }
+ 
   initaialBloodGroup(form?:NgForm){
     if(form!=null)
     form.resetForm();
@@ -106,7 +90,6 @@ constructor(
     console.log(this.BloodGroupForm?.form.value )
     this.btnText = 'Submit';
     if (this.BloodGroupForm?.form != null) {
-      console.log(this.BloodGroupForm?.form )
       this.BloodGroupForm.form.reset();
       this.BloodGroupForm.form.patchValue({
         bloodGroupId:0,
@@ -129,10 +112,10 @@ constructor(
 
   }
    onSubmit(form:NgForm){
+    this.bloodGroupService.cachedData = [];
     const id = this.BloodGroupForm.form.get('bloodGroupId')?.value;
     if (id) {
       this.bloodGroupService.update(+id,this.BloodGroupForm.value).subscribe((response:any) => {
-        console.log(response)
         if(response.success){
           this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
           this.getALlBloodGroup()
@@ -165,7 +148,13 @@ constructor(
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{
       if (result) {
         this.bloodGroupService.delete(element.bloodGroupId).subscribe(res=>{
-          this.getALlBloodGroup()
+          const index = this.dataSource.data.indexOf(element);
+          if (index !== -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource = new MatTableDataSource(
+              this.dataSource.data
+            );
+          }
         },(err) => { 
        console.log(err)
         });

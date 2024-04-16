@@ -39,13 +39,24 @@ constructor(
   {
   //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
 
+  
+
+  
+ }
+  ngOnInit(): void {
+   
+    this.getALlPromotionType();
+    this.handleRouteParams();
+
+  }
+  handleRouteParams(){
     this.route.paramMap.subscribe(params => {
       const id = params.get('promotionTypeId');
       if (id) {
         this.btnText = 'Update';
         this.promotionTypeService.find(+id).subscribe(
           res => {
-            console.log(res);
+            
             this.PromotionTypeForm?.form.patchValue(res);
           }
         );
@@ -55,13 +66,6 @@ constructor(
         this.btnText = 'Submit';
       }
     });
-
-  
- }
-  ngOnInit(): void {
-   
-    this.getALlPromotionType();
-
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -102,7 +106,7 @@ constructor(
 
    }
    resetForm() {
-    console.log(this.PromotionTypeForm?.form.value )
+   
     this.btnText = 'Submit';
     if (this.PromotionTypeForm?.form != null) {
       console.log(this.PromotionTypeForm?.form )
@@ -128,10 +132,11 @@ constructor(
 
   }
    onSubmit(form:NgForm){
+    this.promotionTypeService.cachedData = [];
     const id = this.PromotionTypeForm.form.get('promotionTypeId')?.value;
     if (id) {
       this.promotionTypeService.update(+id,this.PromotionTypeForm.value).subscribe((response:any) => {
-        console.log(response)
+      
         if(response.success){
           this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
           this.getALlPromotionType()
@@ -164,7 +169,13 @@ constructor(
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{
       if (result) {
         this.promotionTypeService.delete(element.promotionTypeId).subscribe(res=>{
-          this.getALlPromotionType()
+          const index = this.dataSource.data.indexOf(element);
+          if (index !== -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource = new MatTableDataSource(
+              this.dataSource.data
+            );
+          }
         },(err) => { 
        console.log(err)
         });

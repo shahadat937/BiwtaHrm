@@ -1,13 +1,16 @@
 ﻿using Hrm.Application;
+using Hrm.Application.DTOs.Ward;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.DTOs.Union;
 using Hrm.Application.DTOs.Ward;
+using Hrm.Application.Features.Ward.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Result.Requests.Commands;
 using Hrm.Application.Features.Union.Requests.Commands;
 using Hrm.Application.Features.Ward.Request.Commands;
 using Hrm.Application.Features.Ward.Request.Queries;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -61,5 +64,24 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+
+        [HttpGet]
+        [Route("get-wardbyid/{id}")]
+        public async Task<ActionResult<WardDto>> Get(int id)
+        {
+            var Ward = await _mediator.Send(new GetWardByIdRequest { WardId = id });
+            return Ok(Ward);
+
+        }
+
+        [HttpGet]
+        [Route("get-selectedward")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedWard()
+        {
+            var ward = await _mediator.Send(new GetSelectedWardRequest { });
+            return Ok(ward);
+        }
+
     }
 }

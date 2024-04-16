@@ -4,11 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Hrm.Application.Features.Groups.Requests.Queries
+namespace Hrm.Application.Features.Group.Requests.Queries
 {
     public class GetSelectedGroupRequest : IRequest<List<SelectedModel>>
     {
-
     }
 } 
       

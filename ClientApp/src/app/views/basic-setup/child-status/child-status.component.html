@@ -14,7 +14,7 @@
       <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> --> 
       <label cLabel for="validationCustom01">Child Status <span class="text-danger">*</span></label>
       <input [(ngModel)]="childStatusService.childStatus.childStatusName" name="childStatusName"
-      #ChildStatusName="ngModel" placeholder="Enter Blood Group Name"
+      #ChildStatusName="ngModel" placeholder="Child Status Group Name"
        cFormControl id="validationCustom01" required type="text" value="Mark" />
        <div class="text-left text-danger"
        *ngIf="!ChildStatusName.valid&&ChildStatusName.touched">

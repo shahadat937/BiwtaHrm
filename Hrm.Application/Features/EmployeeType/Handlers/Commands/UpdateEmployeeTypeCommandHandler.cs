@@ -16,19 +16,20 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmployeeType.Handlers.Commands
 {
-    public class UpdateEmployeeTypeCommandHandler : IRequestHandler<UpdateEmployeeTypeCommand, Unit>
+    public class UpdateEmployeeTypeCommandHandler : IRequestHandler<UpdateEmployeeTypeCommand, BaseCommandResponse>
     {
-
+        private readonly IHrmRepository<Hrm.Domain.EmployeeType> _employeeTypeRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateEmployeeTypeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateEmployeeTypeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.EmployeeType> employeeTypeRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _employeeTypeRepository = employeeTypeRepository;
         }
 
-        public async Task<Unit> Handle(UpdateEmployeeTypeCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateEmployeeTypeCommand request, CancellationToken cancellationToken)
         {
             var respose = new BaseCommandResponse();
             var validator = new UpdateEmployeeTypeDtoValidator();
@@ -38,6 +39,7 @@ namespace Hrm.Application.Features.EmployeeType.Handlers.Commands
             {
                 respose.Success = false;
                 respose.Message = "Creation Failed";
+             
                 respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
@@ -47,13 +49,35 @@ namespace Hrm.Application.Features.EmployeeType.Handlers.Commands
             {
                 throw new NotFoundException(nameof(EmployeeType), request.EmployeeTypeDto.EmployeeTypeId);
             }
+            var EmployeeTypeName = request.EmployeeTypeDto.EmployeeTypeName.ToLower();
 
-            _mapper.Map(request.EmployeeTypeDto, EmployeeType);
+            IQueryable<Hrm.Domain.EmployeeType> isEmployeeTypeName = _employeeTypeRepository.Where(x => x.EmployeeTypeName.ToLower() == EmployeeTypeName);
 
-            await _unitOfWork.Repository<Hrm.Domain.EmployeeType>().Update(EmployeeType);
-            await _unitOfWork.Save();
 
-            return Unit.Value;
+            if (isEmployeeTypeName.Any())
+            {
+                respose.Success = false;
+                respose.Message = $"Update Failed '{request.EmployeeTypeDto.EmployeeTypeName}' already exists.";
+                respose.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+
+            }
+            else
+            {
+
+                _mapper.Map(request.EmployeeTypeDto, EmployeeType);
+
+                await _unitOfWork.Repository<Hrm.Domain.EmployeeType>().Update(EmployeeType);
+                await _unitOfWork.Save();
+
+
+                respose.Success = true;
+                respose.Message = "Update Successful";
+                respose.Id = EmployeeType.EmployeeTypeId;
+
+            }
+
+         
+            return respose;
         }
     }
 }

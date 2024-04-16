@@ -16,9 +16,6 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
   styleUrl: './result.component.scss'
 })
 export class ResultComponent  implements OnInit,OnDestroy,AfterViewInit{
-  position = 'top-end';
-  visible = false;
-  percentage = 0;
   btnText:string | undefined;
   @ViewChild("ResultForm", { static: true }) ResultForm!: NgForm;
   subscription: Subscription = new Subscription;
@@ -39,6 +36,16 @@ constructor(
   {
   //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
 
+    
+  
+ }
+  ngOnInit(): void {
+   
+    this.getALlResult();
+    this.handleRouteParams();
+
+  }
+  handleRouteParams(){
     this.route.paramMap.subscribe(params => {
       const id = params.get('resultId');
       if (id) {
@@ -56,12 +63,6 @@ constructor(
       }
     });
 
-  
- }
-  ngOnInit(): void {
-   
-    this.getALlResult();
-
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -77,18 +78,6 @@ constructor(
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  toggleToast() {
-    this.visible = !this.visible;
-  }
-
-  onVisibleChange($event: boolean) {
-    this.visible = $event;
-    this.percentage = !this.visible ? 0 : this.percentage;
-  }
-
-  onTimerChange($event: number) {
-    this.percentage = $event * 25;
-  }
   initaialResult(form?:NgForm){
     if(form!=null)
     form.resetForm();
@@ -102,7 +91,6 @@ constructor(
 
    }
    resetForm() {
-    console.log(this.ResultForm?.form.value )
     this.btnText = 'Submit';
     if (this.ResultForm?.form != null) {
       console.log(this.ResultForm?.form )
@@ -128,6 +116,7 @@ constructor(
 
   }
    onSubmit(form:NgForm){
+    this.resultService.cachedData = [];
     const id = this.ResultForm.form.get('resultId')?.value;
     if (id) {
       this.resultService.update(+id,this.ResultForm.value).subscribe((response:any) => {
@@ -164,7 +153,13 @@ constructor(
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{
       if (result) {
         this.resultService.delete(element.resultId).subscribe(res=>{
-          this.getALlResult()
+          const index = this.dataSource.data.indexOf(element);
+          if (index !== -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource = new MatTableDataSource(
+              this.dataSource.data
+            );
+          }
         },(err) => { 
        console.log(err)
         });

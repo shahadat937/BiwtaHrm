@@ -39,6 +39,7 @@
     "@ng-bootstrap/ng-bootstrap": "^16.0.0",
     "chart.js": "^3.9.1",
     "lodash-es": "^4.17.21",
+    "ng-multiselect-dropdown": "^1.0.0",
     "ngx-bootstrap": "^12.0.0",
     "ngx-scrollbar": "^13.0.3",
     "ngx-spinner": "^16.0.2",

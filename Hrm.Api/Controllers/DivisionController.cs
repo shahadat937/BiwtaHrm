@@ -1,11 +1,14 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Division;
 using Hrm.Application.DTOs.MaritalStatus;
+using Hrm.Application.DTOs.Division;
 using Hrm.Application.Features.Division.Requests.Commands;
 using Hrm.Application.Features.Division.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
+using Hrm.Application.Features.Division.Requests.Queries;
 using Hrm.Application.Responses;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
@@ -61,6 +64,25 @@ namespace Hrm.Api.Controllers
             var command = new DeleteDivisionCommand { DivisionId = id };
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+
+
+        [HttpGet]
+        [Route("get-divisionbyid/{id}")]
+        public async Task<ActionResult<DivisionDto>> Get(int id)
+        {
+            var Division = await _mediator.Send(new GetDivisionByIdRequest { DivisionId = id });
+            return Ok(Division);
+
+        }
+
+        [HttpGet]
+        [Route("get-selecteddivision")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedDivision()
+        {
+            var Division = await _mediator.Send(new GetSelectedDivisionRequest { });
+            return Ok(Division);
         }
     }
 }

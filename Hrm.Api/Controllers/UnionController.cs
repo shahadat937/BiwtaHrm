@@ -1,13 +1,16 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.BloodGroup;
+using Hrm.Application.DTOs.District;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.DTOs.Union;
 using Hrm.Application.Features.BloodGroup.Requests.Commands;
+using Hrm.Application.Features.District.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Union.Requests.Commands;
 using Hrm.Application.Features.Union.Requests.Queries;
 using Hrm.Domain;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -62,6 +65,23 @@ namespace Hrm.Api.Controllers
             var command = new UpdateUnionCommand { UnionDto = Union };
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-unionbyid/{id}")]
+        public async Task<ActionResult<UnionDto>> Get(int id)
+        {
+            var Union = await _mediator.Send(new GetUnionByIdRequest { UnionId = id });
+            return Ok(Union);
+
+        }
+
+        [HttpGet]
+        [Route("get-selectedUnion")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedUnion()
+        {
+            var Union = await _mediator.Send(new GetSelectedUnionRequest { });
+            return Ok(Union);
         }
 
 

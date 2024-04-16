@@ -48,7 +48,7 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
-        [Route("delete-thana-upazila")]
+        [Route("delete-thana")]
         public async Task<ActionResult>Delete (int id)
         {
             var command = new DeleteThanaCommand { ThanaId = id };
@@ -59,7 +59,7 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
-        [Route("update-thana-upazila/{id}")]
+        [Route("update-thana/{id}")]
         public async Task<ActionResult> Put([FromBody] ThanaDto Thana)
         {
             var command = new UpdateThanaCommand { ThanaDto = Thana };

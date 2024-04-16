@@ -7,6 +7,15 @@ import {DistrictComponent} from './district/district.component';
 import { UpazilaComponent } from './upazila/upazila.component';
 import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
+import { SubjectComponent } from './subject/subject.component';
+import { GroupComponent } from './group/group.component';
+import { BranchComponent } from './branch/branch.component';
+import { UnionComponent } from './union/union.component';
+import { WardComponent } from './ward/ward.component';
+import { ShiftComponent } from './shift/shift.component';
+import { TrainingComponent } from './training/training.component';
+import { DepartmentComponent } from './department/department.component';
+
 import { MaritalStatusComponent } from './marital-status/marital-status.component';
 import { EmployeeTypeComponent } from './employee-type/employee-type.component';
 import { GenderComponent } from './gender/gender.component';
@@ -80,7 +89,7 @@ const routes: Routes = [
     path: 'upazila',
     component: UpazilaComponent,
   },
-  { path: 'update-upazila/:upazilaid', 
+  { path: 'update-upazila/:upazilaId', 
   component: UpazilaComponent, 
   },
   {
@@ -88,7 +97,7 @@ const routes: Routes = [
     component: ThanaComponent,
   },
   { 
-    path: 'update-thana/:thanaid', 
+    path: 'update-thana/:thanaId', 
     component: ThanaComponent, 
   },
   {
@@ -98,6 +107,68 @@ const routes: Routes = [
   {
     path: 'update-result/:resultId',
     component: ResultComponent,
+  },
+  { 
+    path: 'subject',
+    component: SubjectComponent,
+  },
+  { path: 'update-subject/:subjectId', 
+  component: SubjectComponent, 
+  },
+  {
+    path: 'group',
+    component: GroupComponent,
+  },
+  { path: 'update-group/:groupId', 
+  component: GroupComponent, 
+  },
+  {
+    path: 'branch',
+    component: BranchComponent,
+  },
+  { 
+    path: 'update-branch/:branchId', 
+    component: BranchComponent, 
+  },
+  {
+    path: 'union',
+    component: UnionComponent,
+  },
+  {
+    path: 'update-union/:unionId',
+    component: UnionComponent,
+  },
+  {
+    path: 'ward',
+    component: WardComponent,
+  },
+  { 
+    path: 'update-ward/:wardId', 
+    component: WardComponent, 
+  },
+  {
+    path: 'shift',
+    component: ShiftComponent,
+  },
+  {
+    path: 'update-shift/:shiftId',
+    component: ShiftComponent,
+  },
+  {
+    path: 'training',
+    component: TrainingComponent,
+  },
+  { 
+    path: 'update-trainingType/:trainingTypeId', 
+    component: TrainingComponent, 
+  },
+  {
+    path: 'department',
+    component: DepartmentComponent,
+  },
+  {
+    path: 'update-department/:departmentId',
+    component: DepartmentComponent,
   },
   {
     path: 'designation',
@@ -133,6 +204,7 @@ const routes: Routes = [
     path: 'update-scale/:scaleId',
     component: ScaleComponent,
   },
+
   {
     path: 'grade',
     component: GradeComponent,

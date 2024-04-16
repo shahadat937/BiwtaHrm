@@ -9,6 +9,9 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.DTOs.Subject;
+using Hrm.Application.Features.Subject.Requests.Queries;
+using Hrm.Shared.Models;
 namespace Hrm.Api.Controllers
 {
 
@@ -64,6 +67,23 @@ namespace Hrm.Api.Controllers
             var command = new DeleteSubjectCommand { SubjectId = id };
             await _mediator.Send(command);
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("get-subjectbyid/{id}")]
+        public async Task<ActionResult<SubjectDto>> Get(int id)
+        {
+            var Subject = await _mediator.Send(new GetSubjectByIdRequest { SubjectId = id });
+            return Ok(Subject);
+
+        }
+
+        [HttpGet]
+        [Route("get-selectedsubject")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedSubject()
+        {
+            var subject = await _mediator.Send(new GetSelectedSubjectRequest { });
+            return Ok(subject);
         }
     }
 }

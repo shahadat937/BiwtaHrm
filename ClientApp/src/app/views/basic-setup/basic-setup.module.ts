@@ -20,6 +20,17 @@ import {
 } from '@coreui/angular';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { ToastrService } from 'ngx-toastr';
+import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.component';
+
+import { SubjectComponent } from './subject/subject.component';
+import { GroupComponent } from './group/group.component';
+import { BranchComponent } from './branch/branch.component';
+import { UnionComponent } from './union/union.component';
+import { WardComponent } from './ward/ward.component';
+import { ShiftComponent } from './shift/shift.component';
+import { TrainingComponent } from './training/training.component'
+import { DepartmentComponent } from './department/department.component';
+ 
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { NewAccountTypeComponent } from './accounttype/new-accounttype/new-accounttype.component';
 import { BasicSetupRoutingModule } from './basic-setup-routing.module';
@@ -49,6 +60,14 @@ import { UpazilaComponent } from './upazila/upazila.component';
     UpazilaComponent,
     ThanaComponent,
     ResultComponent,
+    SubjectComponent,
+    GroupComponent,
+    BranchComponent,
+    UnionComponent,
+    WardComponent,
+    ShiftComponent,
+    TrainingComponent,
+    DepartmentComponent,
     MaritalStatusComponent,
     EmployeeTypeComponent,
     GenderComponent,

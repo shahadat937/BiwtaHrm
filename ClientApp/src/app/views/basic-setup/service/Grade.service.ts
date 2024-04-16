@@ -7,6 +7,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Grade } from '../model/Grade';
+import { GradeViewModel } from '../model/GradeViewModel';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,7 +28,7 @@ export class GradeService {
   // }
   //custom:
   selectModelGrade(){
-    return this.http.get<Grade[]>(this.baseUrl + '/grade/get-grade');
+    return this.http.get<GradeViewModel[]>(this.baseUrl + '/grade/get-selectedGrade');
   }
   //Normal
   getAll(): Observable<Grade[]> {

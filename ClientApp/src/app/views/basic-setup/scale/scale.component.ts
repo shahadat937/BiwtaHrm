@@ -71,6 +71,7 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   SelectModelGrade() {
     this.gradeService.selectModelGrade().subscribe(data => {
+      console.log(data);
       this.grades = data;
     });
   }

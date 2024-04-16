@@ -12,8 +12,6 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
 import{GradeClassService} from '../service/GradeClass.service'
 import{GradeTypeService} from '../service/GradeType.service'
-import { GradeType } from '../model/GradeType';
-import { Grade } from '../model/Grade';
 
 @Component({
   selector: 'app-grade',
@@ -40,8 +38,8 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit{
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-  constructor(
 
+  constructor(
     public gradeService: GradeService,
     private snackBar: MatSnackBar,
     private gradeServiceClass:GradeClassService,

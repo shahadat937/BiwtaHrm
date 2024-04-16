@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -133,6 +134,32 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.HolidayTypeId)
                 .HasName("[[PK_HolidayTypeId]]");
             });
+            modelBuilder.Entity<Weekend>(entity =>
+            {
+                entity.HasKey(e => e.WeekendId)
+                .HasName("[[PK_WeekendId]]");
+            });
+            modelBuilder.Entity<Scale>(entity =>
+            {
+                entity.HasKey(e => e.ScaleId)
+                .HasName("[[PK_ScaleId]]");
+            });
+            modelBuilder.Entity<ScaleGradeView>(entity =>
+            {
+                entity.HasKey(e => e.ScaleId)
+                .HasName("[[PK_ScaleId]]");
+            });
+            modelBuilder.Entity<Grade_cls_type_Vw>(entity =>
+            {
+                entity.HasKey(e => e.GradeId)
+                .HasName("[[PK_GradeId]]");
+            });
+
+            modelBuilder.Entity<SubBranch>(entity =>
+            {
+                entity.HasKey(e => e.SubBranchId)
+                .HasName("[[PK_SubBranchId]]");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -152,6 +179,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Ward> Ward { get; set; } = null!;
         public virtual DbSet<Branch> Branch { get; set; } = null!;
         public virtual DbSet<Department> Department { get; set; } = null!;
+        public virtual DbSet<SubBranch> SubBranch { get; set; } = null!;
         public virtual DbSet<Country> Country { get; set; } = null!;
         public virtual DbSet<Designation> Designation { get; set; } = null!;
         public virtual DbSet<Shift> Shift { get; set; } = null!;
@@ -164,5 +192,15 @@ namespace Hrm.Persistence
         public virtual DbSet<Punishment> Punishment { get; set; } = null!;
         public virtual DbSet<Reward> Reward { get; set; }= null!;
         public virtual DbSet<HolidayType> HolidayType { get; set; } = null!;
+        public virtual DbSet<Weekend> Weekend { get; set; } = null!;
+        public virtual DbSet<Overall_EV_Promotion> Overall_EV_Promotion { get; set; } = null!;
+        public virtual DbSet<Domain.Module> Module { get; set; } = null!;
+        public virtual DbSet<Feature> Feature { get; set; } = null!;
+        public virtual DbSet<Scale> Scale { get; set; } = null!;
+        public virtual DbSet<ScaleGradeView> ScaleGradeView { get; set; } = null!;
+        public virtual DbSet<Grade_cls_type_Vw> Grade_cls_type_Vw { get; set; } = null!;
+
+
+
     }
 }

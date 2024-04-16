@@ -35,6 +35,14 @@ using Hrm.Application.DTOs.Group;
 using Hrm.Application.DTOs.Punishment;
 using Hrm.Application.DTOs.Reward;
 using Hrm.Application.DTOs.HolidayType;
+using Hrm.Application.DTOs.Weekend;
+using Hrm.Application.DTOs.Overall_EV_Promotion;
+using hrm.Application.DTOs.Modules;
+using Hrm.Application.DTOs.Modules;
+using Hrm.Application.DTOs.Scale;
+using Hrm.Application.DTOs.ScaleGradeView;
+using Hrm.Application.DTOs.Grade_cls_type_Vw;
+using Hrm.Application.DTOs.SubBranch;
 
 namespace Hrm.Application.Profiles
 {
@@ -118,7 +126,8 @@ namespace Hrm.Application.Profiles
             CreateMap<GradeClass, GradeClassDto>().ReverseMap();
             CreateMap<GradeClass, CreateGradeClassDto>().ReverseMap();
 
-            CreateMap<Grade, GradeDto>().ReverseMap();
+            CreateMap<GradeDto, Grade>().ReverseMap();
+              
             CreateMap<Grade, CreateGradeDto>().ReverseMap();
             CreateMap<Group, GroupDto>().ReverseMap();
             CreateMap<Group, CreateGroupDto>().ReverseMap();
@@ -131,6 +140,30 @@ namespace Hrm.Application.Profiles
 
             CreateMap<HolidayType, HolidayTypeDto>().ReverseMap();
             CreateMap<HolidayType, CreateHolidayTypeDto>().ReverseMap();
+
+            CreateMap<Weekend, WeekendDto>().ReverseMap();
+            CreateMap<Weekend, CreateWeekendDto>().ReverseMap();
+
+            CreateMap<Overall_EV_Promotion, Overall_EV_PromotionDto>().ReverseMap();
+            CreateMap<Overall_EV_Promotion, CreateOverall_EV_PromotionDto>().ReverseMap();
+
+            CreateMap<Scale, ScaleDto>().ReverseMap();
+            CreateMap<Scale, CreateScaleDto>().ReverseMap();
+
+            CreateMap<ScaleGradeView, ScaleGradeViewDto>().ReverseMap();
+            CreateMap<ScaleGradeView, CreateScaleGradeViewDto>().ReverseMap();
+           
+            CreateMap<Grade_cls_type_Vw, Grade_cls_type_VwDto>().ReverseMap();
+            CreateMap<Grade_cls_type_Vw, CreateGrade_cls_type_VwDto>().ReverseMap();
+
+
+            CreateMap<SubBranch, SubBranchDto>().ReverseMap();
+            CreateMap<SubBranch, CreateSubBranchDto>().ReverseMap();
+            #region Modules Mapping    
+            CreateMap<Module, ModuleDto>().ReverseMap();
+            CreateMap<Module, ModuleFeatureDto>().ReverseMap();
+            CreateMap<Module, CreateModuleDto>().ReverseMap();
+            #endregion
         }
     }
 }

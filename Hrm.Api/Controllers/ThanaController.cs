@@ -1,13 +1,16 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.BloodGroup;
+using Hrm.Application.DTOs.Thana;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.DTOs.Thana;
 using Hrm.Application.Features.BloodGroup.Requests.Commands;
+using Hrm.Application.Features.Thana.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Thana.Requests.Commands;
 using Hrm.Application.Features.Thana.Requests.Queries;
 using Hrm.Domain;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,7 +48,7 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
-        [Route("delete-thana-upazila")]
+        [Route("delete-thana")]
         public async Task<ActionResult>Delete (int id)
         {
             var command = new DeleteThanaCommand { ThanaId = id };
@@ -56,12 +59,31 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
-        [Route("update-thana-upazila/{id}")]
+        [Route("update-thana/{id}")]
         public async Task<ActionResult> Put([FromBody] ThanaDto Thana)
         {
             var command = new UpdateThanaCommand { ThanaDto = Thana };
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+
+
+        [HttpGet]
+        [Route("get-thanabyid/{id}")]
+        public async Task<ActionResult<ThanaDto>> Get(int id)
+        {
+            var Thana = await _mediator.Send(new GetThanaByIdRequest { ThanaId = id });
+            return Ok(Thana);
+
+        }
+
+        [HttpGet]
+        [Route("get-selectedThana")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedThana()
+        {
+            var Thana = await _mediator.Send(new GetSelectedThanaRequest { });
+            return Ok(Thana);
         }
 
 

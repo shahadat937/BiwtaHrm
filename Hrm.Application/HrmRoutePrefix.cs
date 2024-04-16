@@ -14,7 +14,7 @@ namespace Hrm.Application
         public const string Gender = HRMRoutePrefixBase + "gender";
         public const string Religion = HRMRoutePrefixBase + "religion";
         public const string TrainingType = HRMRoutePrefixBase + "training-type";
-        public const string ChildStatus = HRMRoutePrefixBase + "religion";
+        public const string ChildStatus = HRMRoutePrefixBase + "childStatus";
         public const string Division = HRMRoutePrefixBase + "division";
 
         public const string Promotion_Type = HRMRoutePrefixBase + "promotion_type";
@@ -25,6 +25,7 @@ namespace Hrm.Application
         public const string District = HRMRoutePrefixBase + "district";
         public const string Result = HRMRoutePrefixBase + "Result";
         public const string Branch = HRMRoutePrefixBase + "Branch";
+        public const string SubBranch = HRMRoutePrefixBase + "SubBranch";
 
         public const string Ward = HRMRoutePrefixBase + "ward";
         public const string appraisalFormType = HRMRoutePrefixBase + "appraisalFormType";
@@ -41,6 +42,15 @@ namespace Hrm.Application
         public const string Punishment = HRMRoutePrefixBase + "punishment";
         public const string Reward = HRMRoutePrefixBase + "reward";
         public const string HolidayType = HRMRoutePrefixBase + "holidayType";
+        public const string Weekend = HRMRoutePrefixBase + "weekend";
+        public const string Overall_EV_Promotion = HRMRoutePrefixBase + "Overall_EV_Promotion";
+        public const string Relation = HRMRoutePrefixBase + "Relation";
+        public const string Scale = HRMRoutePrefixBase + "scale"; 
+        public const string TaskName = HRMRoutePrefixBase + "task-name"; 
+        public const string Module = HRMRoutePrefixBase + "Module";
+        public const string ScaleGradeView = HRMRoutePrefixBase + "scaleGradeView";
+        public const string PromotionType = HRMRoutePrefixBase + "promotionType";
+        public const string Grade_cls_type_Vw = HRMRoutePrefixBase + "grade_cls_type_Vw";
 
 
     }

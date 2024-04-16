@@ -5,6 +5,7 @@ using Hrm.Application.Features.BloodGroup.Requests.Commands;
 using Hrm.Application.Responses;
 using MediatR;
 using Hrm.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.BloodGroup.Handlers.Commands
 {
@@ -33,15 +34,15 @@ namespace Hrm.Application.Features.BloodGroup.Handlers.Commands
             }
             else
             {
-                var bloodGroupName = request.BloodGroupDto.BloodGroupName.ToLower();
+             //   var bloodGroupName = request.BloodGroupDto.BloodGroupName.Trim().ToLower().Replace(" ", string.Empty);
 
-                IQueryable<Hrm.Domain.BloodGroup> bloodGroups = _bloodGroupRepository.Where(x => x.BloodGroupName.ToLower() == bloodGroupName);
+              //  IQueryable<Hrm.Domain.BloodGroup> bloodGroups = _bloodGroupRepository.Where(x => x.BloodGroupName.ToLower().Replace(" ", string.Empty) == bloodGroupName);
 
 
-                if (bloodGroups.Any())
+                if (BloodGroupNameExists(request))
                 {
                     response.Success = false;
-                    response.Message = "Creation Failed Name already exists.";
+                    response.Message = $"Creation Failed '{request.BloodGroupDto.BloodGroupName}' already exists.";
                     response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
                     
                 }
@@ -61,6 +62,13 @@ namespace Hrm.Application.Features.BloodGroup.Handlers.Commands
 
             return response;
         }
+        private bool BloodGroupNameExists(CreateBloodCommand request)
+        {
+            var bloodGroupName = request.BloodGroupDto.BloodGroupName.Trim().ToLower().Replace(" ", string.Empty);
 
+            IQueryable <Hrm.Domain.BloodGroup > bloodGroups = _bloodGroupRepository.Where(x => x.BloodGroupName.Trim().ToLower().Replace(" ", string.Empty) == bloodGroupName);
+
+             return bloodGroups.Any();
+        }
     }
 }

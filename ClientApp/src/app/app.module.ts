@@ -1,19 +1,26 @@
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
-
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { CommonModule } from '@angular/common'; 
+
+import { ConfirmDialogComponent } from 'src/app/modals/confirm-dialog/confirm-dialog.component';
 
 // Import routing module
 import { AppRoutingModule } from './app-routing.module';
-
+import { CoreModule } from './core/core.module';
 // Import app component
 import { AppComponent } from './app.component';
 
 // Import containers
-import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent } from './containers';
+import {
+  DefaultFooterComponent,
+  DefaultHeaderComponent,
+  DefaultLayoutComponent,
+} from './containers';
 
 import {
   AvatarModule,
@@ -33,20 +40,27 @@ import {
   SharedModule,
   SidebarModule,
   TabsModule,
-  UtilitiesModule
+  UtilitiesModule,
 } from '@coreui/angular';
 
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-
+import { ToastrModule } from 'ngx-toastr';
+import { ErrorInterceptor } from './core/interceptor/error.interceptor';
+import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
+import { AuthService } from './core/service/auth.service';
+import { SharedCustomModule } from './shared/shared.module';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
-  DefaultLayoutComponent
+  DefaultLayoutComponent,
+  ConfirmDialogComponent,
 ];
 
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS],
   imports: [
+    MatTableModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -72,17 +86,25 @@ const APP_CONTAINERS = [
     BadgeModule,
     ListGroupModule,
     CardModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    CoreModule,
+    SharedCustomModule,
+    HttpClientModule,
+    ToastrModule.forRoot(),
+    CommonModule,
+
   ],
   providers: [
     {
       provide: LocationStrategy,
-      useClass: HashLocationStrategy
+      useClass: HashLocationStrategy,
     },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     IconSetService,
-    Title
+    Title,
+    AuthService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

@@ -7,5 +7,5 @@ global using System.Collections.Generic;
 global using System.Linq;
 global using System.Threading.Tasks;
 global using Hrm.Application.DTOs.Common;
-global using Microsoft.AspNetCore.Authorization;
+
 

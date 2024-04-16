@@ -1,4 +1,5 @@
-﻿using Hrm.Application.DTOs.HolidayType;
+﻿using Hrm.Application.DTOs.EmployeeType;
+using Hrm.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -6,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.Features.HolidayType.Requests.Commands
+namespace Hrm.Application.Features.EmployeeType.Requests.Commands
 {
-    public class UpdateHolidayTypeCommand : IRequest<Unit>
+    public class UpdateEmployeeTypeCommand : IRequest<BaseCommandResponse>
     {
-        public HolidayTypeDto HolidayTypeDto { get; set; }
+        public EmployeeTypeDto EmployeeTypeDto { get; set; }
     }
 }

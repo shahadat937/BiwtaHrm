@@ -258,5 +258,422 @@ export const navItems: INavData[] = [
     url: 'https://coreui.io/product/angular-dashboard-template/',
     iconComponent: { name: 'cil-layers' },
     attributes: { target: '_blank' }
-  }
+  },
+  {
+    title: true,
+    name: 'Employee Management'
+  },
+  {
+    name:'Add Employee',
+    url: '/base',
+    iconComponent: { name: 'cil-puzzle' },
+
+  },
+  {
+    name:'Manage Employee',
+    url: '/base',
+    iconComponent: { name: 'cil-puzzle' },
+
+  },
+  {
+    title: true,
+    name: 'Attendance Setup'
+  },
+  {
+    name:'Attendance',
+    url: '/base',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Manage Shift',
+        url: '/base/accordion'
+      },
+      {
+        name: 'Workday Setting',
+        url: '/base/breadcrumbs'
+      },
+      {
+        name: 'Attendance Record',
+        url: '/base/cards'
+      },
+      {
+        name: 'Manual Attendance',
+        url: '/base/carousel'
+      },
+      {
+        name: 'Site Visit',
+        url: '/base/collapse'
+      },
+      {
+        name: 'Attendance Report',
+        url: '/base/list-group'
+      }
+
+    ]
+  },
+  {
+    title: true,
+    name: 'Leave Management'
+  },
+  {
+    name:'Leave',
+    url: '/base',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Add leave',
+        url: '/base/accordion'
+      },
+      {
+        name: 'Manage leave',
+        url: '/base/breadcrumbs'
+      }
+
+
+    ]
+  },
+  {
+    title: true,
+    name: 'Transfer Management'
+  },
+  {
+    name:'Transfer',
+    url: '/base',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Transfer posting Form',
+        url: '/base/accordion'
+      },
+      {
+        name: 'Department Release',
+        url: '/base/breadcrumbs'
+      }
+      ,
+      {
+        name: 'Transfer posting History',
+        url: '/base/breadcrumbs'
+      }
+
+
+    ]
+  },
+  {
+    title: true,
+    name: 'Promotion Management'
+  },
+  {
+    name:'Promotion',
+    url: '/base',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Increment & Promotion',
+        url: '/base/accordion'
+      },
+      {
+        name: 'Incre.& Promo. Approval',
+        url: '/base/breadcrumbs'
+      }
+      ,
+      {
+        name: 'Incr.& Promo. History',
+        url: '/base/breadcrumbs'
+      }
+
+
+    ]
+  },
+  {
+    name:'PromotionType',
+    url: '/bascisetup',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'PromotionType',
+        url: '/bascisetup/promotionType'
+      },
+    ]
+  },
+  {
+    title: true,
+    name: 'Appraisal Management'
+  },
+  {
+    name:'Appraisal',
+    url: '/base',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Staff Form',
+        url: '/base/accordion'
+      },
+      {
+        name: 'Manage Form',
+        url: '/base/breadcrumbs'
+      }
+      ,
+      {
+        name: 'Officer Form',
+        url: '/base/breadcrumbs'
+      }
+
+
+    ]
+  },
+  {
+    title: true,
+    name: 'User Management'
+  },
+  {
+    name:'Role',
+    url: '/base',
+    iconComponent: { name: 'cil-puzzle' },
+
+  },
+  {
+    name:'User',
+    url: '/base',
+    iconComponent: { name: 'cil-puzzle' },
+
+  },
+  {
+    title: true,
+    name: 'Basic Setup'
+  },
+  {
+    name:'Personal Info. Setup',
+    url: '/bascisetup',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Employee Type',
+        url: '/bascisetup/employee-type'
+      },
+      {
+        name: 'Blood Group',
+        url: '/bascisetup/blood-group'
+      },
+      {
+        name: 'Marital Status',
+        url: '/bascisetup/marital-status'
+      },
+      {
+        name: 'Child Status',
+        url: '/bascisetup/child-status'
+      },
+      {
+        name: 'User Role',
+        url: '/base/breadcrumbs'
+      },
+      {
+        name: 'Pool',
+        url: '/base/cards'
+      },
+      {
+        name: 'Department',
+        url: '/bascisetup/department'
+      },
+      {
+        name: 'Sub Department',
+        url: '/bascisetup/subdepartment'
+      },
+      {
+        name: 'Branch',
+        url: '/bascisetup/branch'
+      },
+      {
+        name: 'Sub Branch',
+        url: '/bascisetup/subbranch'
+      },
+      {
+        name: 'Section',
+        url: '/base/pagination'
+      },
+      {
+        name: 'Designation',
+        url: '/bascisetup/designation'
+      },
+      {
+        name: 'Grade',
+        url: '/bascisetup/grade'
+      },
+      {
+        name: 'Scale',
+        url: '/bascisetup/scale'
+      },
+      {
+        name: 'Religion',
+        url: '/bascisetup/religion'
+      },
+      {
+        name: 'Hair Color',
+        url: '/base/tables'
+      },
+      {
+        name: 'Eyes Color',
+        url: '/base/tabs'
+      },
+      {
+        name: 'Relation',
+        url: '/base/tooltips'
+      },
+      {
+        name: 'Occupation',
+        url: '/base/tooltips'
+      },
+      {
+        name: 'Punishment/reward',
+        url: '/bascisetup/punishment'
+      }
+    ]
+  },
+  {
+    name:'Address Setup',
+    url: '/bascisetup',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Country',
+        url: '/base/accordion'
+      },
+      {
+        name: 'Division',
+        url: '/base/breadcrumbs'
+      },
+      {
+        name: 'District',
+        url: '/bascisetup/district'
+      },
+      {
+        name: 'Upazila',
+        url: '/bascisetup/upazila'
+      },
+      {
+        name: 'Thana',
+        url: '/bascisetup/thana'
+      },
+      {
+        name: 'Union',
+        url: '/bascisetup/union'
+      },
+      {
+        name: 'Ward',
+        url: '/bascisetup/ward'
+      }
+
+    ]
+  },
+  {
+    name:'Education Setup',
+    url: '/bascisetup',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Exam Type',
+        url: '/base/accordion'
+      },
+      {
+        name: 'Board',
+        url: '/base/breadcrumbs'
+      },
+      {
+        name: 'Group',
+        url: '/base/cards'
+      },
+      {
+        name: 'Result',
+        url: '/bascisetup/result'
+      },
+      {
+        name: 'Thana',
+        url: '/base/collapse'
+      },
+      {
+        name: 'Union',
+        url: '/base/list-group'
+      },
+      {
+        name: 'Ward',
+        url: '/base/navs'
+      },
+      {
+        name: 'Gender',
+        url: '/bascisetup/gender'
+      }
+
+    ]
+  },
+  {
+    name:'Training Setup',
+    url: '/bascisetup',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Training Type',
+        url: '/bascisetup/trainingtype'
+      },
+      {
+        name: 'Training Name',
+        url: '/base/breadcrumbs'
+      },
+      {
+        name: 'Institute Name',
+        url: '/base/cards'
+      }
+
+    ]
+  },
+  {
+    name:'Bank Info. Setup',
+    url: '/base',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Bank Name',
+        url: '/base/accordion'
+      },
+      {
+        name: 'Branch Name',
+        url: '/base/breadcrumbs'
+      },
+      {
+        name: 'Account Type',
+        url: '/base/cards'
+      }
+
+    ]
+  },
+  {
+    name:'Language Name Setup',
+    url: '/base',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Language Name',
+        url: '/base/accordion'
+      },
+      {
+        name: 'Competence',
+        url: '/base/breadcrumbs'
+      }
+
+    ]
+  },
+  {
+    name:'Office Info. Setup',
+    url: '/base',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Office Name',
+        url: '/base/accordion'
+      },
+      {
+        name: 'Address',
+        url: '/base/breadcrumbs'
+      }
+
+    ]
+  },
 ];

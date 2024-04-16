@@ -11,6 +11,7 @@ export class ScaleService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
   scales: Scale;
+
   constructor(private http: HttpClient) {
     this.scales = new Scale();
     
@@ -19,9 +20,7 @@ export class ScaleService {
   find(id: number) {
     return this.http.get<Scale>(this.baseUrl + '/scale/get-scaleDetail/' + id);
   }
-  // getGrades() {
-  //   return this.http.get<any[]>(this.baseUrl + '/scaleGradeView/get-scaleGradeView');
-  // }
+
   getAll(): Observable<Scale[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call

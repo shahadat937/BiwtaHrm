@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.Punishment.Validators;
 using Hrm.Application.DTOs.Punishment.Validators;
 using Hrm.Application.Features.Punishment.Requests.Commands;
 using Hrm.Application.Features.Punishment.Requests.Commands;
+using Hrm.Application.Features.Punishment.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using MediatR;
@@ -44,7 +45,9 @@ namespace Hrm.Application.Features.Punishment.Handlers.Commands
                 if (Punishments.Any())
                 {
                     response.Success = false;
-                    response.Message = "Creation Failed Name already exists.";
+                    //response.Message = "Creation Failed Name already exists.";
+                    response.Message = $"Creation Failed '{request.PunishmentDto.PunishmentName}' already exists.";
+
                     response.Errors = validationPunishment.Errors.Select(q => q.ErrorMessage).ToList();
 
                 }
@@ -63,6 +66,14 @@ namespace Hrm.Application.Features.Punishment.Handlers.Commands
             }
 
             return response;
+        }
+        private bool PunishmentNameExists(CreatePunishmentCommand request)
+        {
+            var PunishmentName = request.PunishmentDto.PunishmentName.Trim().ToLower().Replace(" ", string.Empty);
+
+            IQueryable<Hrm.Domain.Punishment> Punishments = _PunishmentRepository.Where(x => x.PunishmentName.Trim().ToLower().Replace(" ", string.Empty) == PunishmentName);
+
+            return Punishments.Any();
         }
 
     }

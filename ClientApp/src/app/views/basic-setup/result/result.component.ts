@@ -91,6 +91,7 @@ constructor(
 
    }
    resetForm() {
+    console.log(this.ResultForm?.form.value);
     this.btnText = 'Submit';
     if (this.ResultForm?.form != null) {
       console.log(this.ResultForm?.form )
@@ -103,6 +104,7 @@ constructor(
 
       });
     }
+    this.router.navigate(['/bascisetup/result']);
 
   }
 

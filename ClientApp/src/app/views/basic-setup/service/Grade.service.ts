@@ -16,7 +16,7 @@ export class GradeService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
   grades: Grade;
-  selection = new SelectionModel<Grade>(true, []);
+
   constructor(private http: HttpClient) {
     this.grades = new Grade();
   }
@@ -24,17 +24,11 @@ export class GradeService {
   find(id: number) {
     return this.http.get<Grade>(this.baseUrl + '/grade/get-GradeDetail/' + id);
   }
-  // getGrateScale(id: Number): Observable<Grade[]> {
-  //   return this.http.get<Grade[]>(`${this.baseUrl}/scaleGradeView/get-scaleGradeView/${id}`);
-  // }
   //custom:
   selectModelGrade(){
     return this.http.get<GradeViewModel[]>(this.baseUrl + '/grade/get-selectedGrade');
   }
-  //Normal
-  // getAll(): Observable<Grade[]> {
-  //   return this.http.get<Grade[]>(this.baseUrl + '/grade_cls_type_Vw/get-Grade_cls_type_Vw');
-  // }
+
   getAll(): Observable<Grade[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call
@@ -57,8 +51,10 @@ export class GradeService {
   submit(model: any) {
     return this.http.post(this.baseUrl + '/grade/save-grade', model);
   }
-  delete(id: number) {
-    return this.http.delete(this.baseUrl + '/grade/delete-grade/' + id);
+  // delete(id: number) {
+  //   return this.http.delete(this.baseUrl + '/grade/delete-grade/' + id);
+  // }
+  delete(id:number){
+    return this.http.delete(this.baseUrl + '/grade/delete-grade/'+id);
   }
-
 }

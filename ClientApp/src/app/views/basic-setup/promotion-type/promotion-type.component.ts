@@ -37,11 +37,7 @@ constructor(
   private toastr: ToastrService
   )
   {
-  //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
 
-  
-
-  
  }
   ngOnInit(): void {
    
@@ -119,6 +115,7 @@ constructor(
 
       });
     }
+    this.router.navigate(['/bascisetup/promotion']);
 
   }
 

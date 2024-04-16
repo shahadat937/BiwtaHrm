@@ -51,7 +51,9 @@ namespace Hrm.Application.Features.Grade.Handlers.Commands
             if (grades.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.GradeDto.GradeName}' already exists.";
+
+                // response.Message = "Creation Failed Name already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }
@@ -78,6 +80,14 @@ namespace Hrm.Application.Features.Grade.Handlers.Commands
             }
 
             return response;
+        }
+        private bool GradeNameExists(CreateGradeCommand request)
+        {
+            var GradeName = request.GradeDto.GradeName.Trim().ToLower().Replace(" ", string.Empty);
+
+            IQueryable<Hrm.Domain.Grade> Grades = _gradeRepository.Where(x => x.GradeName.Trim().ToLower().Replace(" ", string.Empty) == GradeName);
+
+            return Grades.Any();
         }
     }
 }

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Grade.Handlers.Commands
 {
+
     public class DeleteGradeCommandHandler : IRequestHandler<DeleteGradeCommand, BaseCommandResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -29,19 +30,21 @@ namespace Hrm.Application.Features.Grade.Handlers.Commands
             var response = new BaseCommandResponse();
 
 
-            var Grades = await _unitOfWork.Repository<Hrm.Domain.Grade>().Get(request.GradeId);
+            var Grade = await _unitOfWork.Repository<Hrm.Domain.Grade>().Get(request.GradeId);
 
-            if (Grades == null)
+            if (Grade == null)
             {
-                throw new NotFoundException(nameof(Grades), request.GradeId);
+                throw new NotFoundException(nameof(Grade), request.GradeId);
             }
 
-            await _unitOfWork.Repository<Hrm.Domain.Grade>().Delete(Grades);
+            await _unitOfWork.Repository<Hrm.Domain.Grade>().Delete(Grade);
             await _unitOfWork.Save();
 
             response.Success = true;
             response.Message = "Delete Successfull";
-            response.Id = Grades.GradeId;
+           // response.Message = $"Update Failed '{request.BloodGroupDto.BloodGroupName}' already exists.";
+
+            response.Id = Grade.GradeId;
 
             return response;
         }

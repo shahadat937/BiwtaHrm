@@ -45,7 +45,9 @@ namespace Hrm.Application.Features.PromotionType.Handler.Commands
                 if (PromotionTypes.Any())
                 {
                     response.Success = false;
-                    response.Message = "Creation Failed Name already exists.";
+                   //response.Message = "Creation Failed Name already exists.";
+                    response.Message = $"Creation Failed '{request.PromotionTypeDto.PromotionTypeName}' already exists.";
+
                     response.Errors = validationPromotionType.Errors.Select(q => q.ErrorMessage).ToList();
 
                 }
@@ -65,6 +67,13 @@ namespace Hrm.Application.Features.PromotionType.Handler.Commands
 
             return response;
         }
+        private bool PromotionTypeNameExists(CreatePromotionTypeCommand request)
+        {
+            var PromotionTypeName = request.PromotionTypeDto.PromotionTypeName.Trim().ToLower().Replace(" ", string.Empty);
 
+            IQueryable<Hrm.Domain.PromotionType> PromotionTypes = _PromotionTypeRepository.Where(x => x.PromotionTypeName.Trim().ToLower().Replace(" ", string.Empty) == PromotionTypeName);
+
+            return PromotionTypes.Any();
+        }
     }
 }

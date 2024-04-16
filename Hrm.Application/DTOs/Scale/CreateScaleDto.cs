@@ -16,6 +16,6 @@ namespace Hrm.Application.DTOs.Scale
         public int GradeId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
-        public string? GradeName { get; set; }
+
     }
 }

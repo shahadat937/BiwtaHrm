@@ -12,10 +12,10 @@
   >
   
   <c-col [md]="6">
-    <label cLabel for="validationCustom01">Union Name<span class="text-danger">*</span></label>
+    <label cLabel for="validationCustom01">Thana Name<span class="text-danger">*</span></label>
     <div class="input-wrapper">
       <select  [(ngModel)]="unionService.unions.thanaId" name="thanaId" #thanaId="ngModel" cFormControl id="validationCustom01" required  aria-label="Default select example" cSelect>
-  
+        <option [ngValue]="0">Select Thana</option>
         <option *ngFor="let thana of thanas " [value]="thana.id">{{ thana.name }}</option>
       </select>
       <div class="text-left text-danger" *ngIf="!thanaId.valid && thanaId.touched">

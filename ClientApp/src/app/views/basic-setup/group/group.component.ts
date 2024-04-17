@@ -191,9 +191,7 @@ export class GroupComponent   implements OnInit, OnDestroy, AfterViewInit {
                   positionClass: 'toast-top-right',})
                 console.log(err);
               }
-            );
-          }
-        });
-    }
-  }
-  
+            });
+        }
+      }
+      

@@ -15,7 +15,7 @@
     <c-col [md]="6">
        <input type="hidden" [(ngModel)]="trainingTypeService.trainingTypes.trainingTypeId" name="trainingTypeId"/>
       <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> --> 
-      <label cLabel for="validationCustom01">Training Name<span class="text-danger">*</span></label>
+      <label cLabel for="validationCustom01">Training Type Name<span class="text-danger">*</span></label>
       <input [(ngModel)]="trainingTypeService.trainingTypes.trainingTypeName" name="trainingTypeName"
       #TrainingpName="ngModel" placeholder="Enter Training Name"
        cFormControl id="validationCustom01" required type="text" value="Mark" />

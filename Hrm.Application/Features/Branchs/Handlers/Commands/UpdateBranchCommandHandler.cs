@@ -16,44 +16,69 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Branch.Handlers.Commands
 {
-    public class UpdateBranchCommandHandler : IRequestHandler<UpdateBranchCommand, Unit>
+    public class UpdateBranchCommandHandler : IRequestHandler<UpdateBranchCommand, BaseCommandResponse>
     {
 
+        private readonly IHrmRepository<Hrm.Domain.Branch> _BranchRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateBranchCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateBranchCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Branch> BranchRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _BranchRepository = BranchRepository;
         }
 
-        public async Task<Unit> Handle(UpdateBranchCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateBranchCommand request, CancellationToken cancellationToken)
         {
-            var respose = new BaseCommandResponse();
+            var response = new BaseCommandResponse();
             var validator = new UpdateBranchDtoValidator();
             var validationResult = await validator.ValidateAsync(request.BranchDto);
 
             if (validationResult.IsValid == false)
             {
-                respose.Success = false;
-                respose.Message = "Creation Failed";
-                respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                response.Success = false;
+                response.Message = "Creation Failed";
+                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var Branch = await _unitOfWork.Repository<Hrm.Domain.Branch>().Get(request.BranchDto.BranchId);
+            var BranchName = request.BranchDto.BranchName.ToLower();
 
-            if (Branch is null)
+            IQueryable<Hrm.Domain.Branch> Branches = _BranchRepository.Where(x => x.BranchName.ToLower() == BranchName);
+
+
+
+            if (Branches.Any())
             {
-                throw new NotFoundException(nameof(Branch), request.BranchDto.BranchId);
+                response.Success = false;
+                response.Message = "Creation Failed Name already exists.";
+                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+
             }
 
-            _mapper.Map(request.BranchDto, Branch);
+            else
+            {
 
-            await _unitOfWork.Repository<Hrm.Domain.Branch>().Update(Branch);
-            await _unitOfWork.Save();
+                var Branch = await _unitOfWork.Repository<Hrm.Domain.Branch>().Get(request.BranchDto.BranchId);
 
-            return Unit.Value;
+                if (Branch is null)
+                {
+                    throw new NotFoundException(nameof(Branch), request.BranchDto.BranchId);
+                }
+
+                _mapper.Map(request.BranchDto, Branch);
+
+                await _unitOfWork.Repository<Hrm.Domain.Branch>().Update(Branch);
+                await _unitOfWork.Save();
+
+                response.Success = true;
+                response.Message = "Update Successfull";
+                response.Id = Branch.BranchId;
+
+            }
+
+            return response;
         }
     }
 }

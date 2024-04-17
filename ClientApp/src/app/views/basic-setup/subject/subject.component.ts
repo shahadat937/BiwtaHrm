@@ -173,14 +173,23 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
         if (result) {
           console.log('subject id ' +element.subjectId);
           this.subjectService.delete(element.subjectId).subscribe(
-            (res) => {
-              this.getALlSubject();
-            },
-            (err) => {
-              console.log(err);
+            (res) => {  const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(
+                  this.dataSource.data
+                );
+              }
+                },
+                (err) => {
+                 // console.log(err);
+    
+                  this.toastr.error('Somethig Wrong ! ', ` `, {
+                    positionClass: 'toast-top-right',})
+                }
+              );
             }
-          );
-        }
-      });
-  }
-}
+          });
+      }
+    }
+    

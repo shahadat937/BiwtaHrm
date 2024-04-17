@@ -586,20 +586,12 @@ export const navItems: INavData[] = [
         url: '/bascisetup/result'
       },
       {
-        name: 'Thana',
-        url: '/base/collapse'
+        name: 'Subject',
+        url: '/bascisetup/subject'
       },
       {
-        name: 'Union',
-        url: '/base/list-group'
-      },
-      {
-        name: 'Ward',
-        url: '/base/navs'
-      },
-      {
-        name: 'Gender',
-        url: '/bascisetup/gender'
+        name: 'Subject Group',
+        url: '/bascisetup/group'
       }
 
     ]
@@ -611,7 +603,7 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Training Type',
-        url: '/bascisetup/trainingtype'
+        url: '/bascisetup/training'
       },
       {
         name: 'Training Name',

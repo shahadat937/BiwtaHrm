@@ -92,7 +92,10 @@ export class GenderComponent implements OnInit, OnDestroy{
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.matSort;
       },
-      (err) => {}
+      (err) => {
+        this.toastr.error('Somethig Wrong ! ', ` `, {
+          positionClass: 'toast-top-right',})
+      }
     );
   }
 

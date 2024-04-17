@@ -151,6 +151,8 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         },
         (err) => {
+          this.toastr.error('Somethig Wrong ! ', ` `, {
+            positionClass: 'toast-top-right',})
           console.log(err);
         }
       );

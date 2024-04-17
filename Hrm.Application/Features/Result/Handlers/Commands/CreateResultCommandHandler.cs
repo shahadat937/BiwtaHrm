@@ -5,6 +5,7 @@ using Hrm.Application.Features.Result.Requests.Commands;
 using Hrm.Application.Responses;
 using MediatR;
 using Hrm.Domain;
+using Hrm.Application.Features.Result.Requests.Commands;
 
 namespace Hrm.Application.Features.Result.Handlers.Commands
 {
@@ -38,10 +39,12 @@ namespace Hrm.Application.Features.Result.Handlers.Commands
                 IQueryable<Hrm.Domain.Result> Results = _ResultRepository.Where(x => x.ResultName.ToLower() == ResultName);
 
 
-                if (Results.Any())
+                if (ResultNameExists(request))
                 {
                     response.Success = false;
-                    response.Message = "Creation Failed Name already exists.";
+                    response.Message = $"Creation Failed '{request.ResultDto.ResultName}' already exists.";
+
+                   // response.Message = "Creation Failed Name already exists.";
                     response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
                     
                 }
@@ -61,6 +64,13 @@ namespace Hrm.Application.Features.Result.Handlers.Commands
 
             return response;
         }
+        private bool ResultNameExists(CreateResultCommand request)
+        {
+            var ResultName = request.ResultDto.ResultName.Trim().ToLower().Replace(" ", string.Empty);
 
+            IQueryable<Hrm.Domain.Result> Results = _ResultRepository.Where(x => x.ResultName.Trim().ToLower().Replace(" ", string.Empty) == ResultName);
+
+            return Results.Any();
+        }
     }
 }

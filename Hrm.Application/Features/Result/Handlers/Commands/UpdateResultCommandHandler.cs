@@ -55,7 +55,9 @@ namespace Hrm.Application.Features.Result.Handlers.Commands
             if (Results.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.ResultDto.ResultName}' already exists.";
+
+                //response.Message = "Creation Failed Name already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }
@@ -73,6 +75,14 @@ namespace Hrm.Application.Features.Result.Handlers.Commands
 
             }
             return response;
+        }
+        private bool ResultNameExists(CreateResultCommand request)
+        {
+            var ResultName = request.ResultDto.ResultName.Trim().ToLower().Replace(" ", string.Empty);
+
+            IQueryable<Hrm.Domain.Result> Results = _ResultRepository.Where(x => x.ResultName.Trim().ToLower().Replace(" ", string.Empty) == ResultName);
+
+            return Results.Any();
         }
     }
 }

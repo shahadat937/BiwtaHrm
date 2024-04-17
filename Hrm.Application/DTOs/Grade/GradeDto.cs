@@ -15,6 +15,5 @@ namespace Hrm.Application.DTOs.Grade
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
 
-        public string? GradeTypeName { get; set; }
     }
 }

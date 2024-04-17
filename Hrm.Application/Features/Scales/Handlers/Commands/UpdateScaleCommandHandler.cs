@@ -53,7 +53,9 @@ namespace Hrm.Application.Features.Scales.Handlers.Commands
             if (scales.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                // response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.ScaleDto.ScaleName}' already exists.";
+
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }
@@ -71,6 +73,14 @@ namespace Hrm.Application.Features.Scales.Handlers.Commands
 
             }
             return response;
+        }
+        private bool ScaleNameExists(CreateScaleCommand request)
+        {
+            var ScaleName = request.ScaleDto.ScaleName.Trim().ToLower().Replace(" ", string.Empty);
+
+            IQueryable<Hrm.Domain.Scale> Scales = _scaleRepository.Where(x => x.ScaleName.Trim().ToLower().Replace(" ", string.Empty) == ScaleName);
+
+            return Scales.Any();
         }
     }
 }

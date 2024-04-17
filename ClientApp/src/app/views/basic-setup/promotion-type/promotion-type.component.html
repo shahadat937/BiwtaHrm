@@ -1,5 +1,5 @@
 <c-card>
-    <c-card-header>PromotionType   </c-card-header>
+    <c-card-header>Promotion Type   </c-card-header>
     <c-card-body>
    
       <form #PromotionTypeForm="ngForm"
@@ -12,7 +12,7 @@
     <c-col [md]="6">
        <input type="hidden" [(ngModel)]="promotionTypeService.promotionTypes.promotionTypeId" name="promotionTypeId"/>
       <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> --> 
-      <label cLabel for="validationCustom01">PromotionType Name<span class="text-danger">*</span></label>
+      <label cLabel for="validationCustom01">Promotion Type Name<span class="text-danger">*</span></label>
       <input [(ngModel)]="promotionTypeService.promotionTypes.promotionTypeName" name="promotionTypeName"
       #PromotionTypeName="ngModel" placeholder="Enter PromotionType Name"
        cFormControl id="validationCustom01" required type="text" value="Mark" />
@@ -109,22 +109,3 @@
       </mat-paginator>
       </c-card-footer>
     </c-card>
-
-     <!-- <c-toaster [placement]="position" class="p-3" position="fixed">
-        <c-toast
-          (timer)="onTimerChange($event)"
-          (visibleChange)="onVisibleChange($event)"
-          [visible]="visible">
-          <c-toast-header>
-    
-           
-          </c-toast-header>
-          <c-toast-body>
-            <p>Information Inserted Successfully</p>
-            <c-progress thin>
-              <c-progress-bar [value]="percentage"></c-progress-bar>
-            </c-progress>
-          </c-toast-body>
-        </c-toast>
-      </c-toaster>  -->
- 

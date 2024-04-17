@@ -184,15 +184,23 @@ export class WardComponent   implements OnInit, OnDestroy, AfterViewInit {
         .subscribe((result) => {
           if (result) {
             this.wardService.delete(element.wardId).subscribe(
-              (res) => {
-                this.getALlWard();
-              },
-              (err) => {
-                console.log(err);
+              (res) => {  const index = this.dataSource.data.indexOf(element);
+                if (index !== -1) {
+                  this.dataSource.data.splice(index, 1);
+                  this.dataSource = new MatTableDataSource(
+                    this.dataSource.data
+                  );
+                }
+                  },
+                  (err) => {
+                   // console.log(err);
+      
+                    this.toastr.error('Somethig Wrong ! ', ` `, {
+                      positionClass: 'toast-top-right',})
+                  }
+                );
               }
-            );
-          }
-        });
-    }
-  }
-  
+            });
+        }
+      }
+      

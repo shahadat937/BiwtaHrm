@@ -177,6 +177,8 @@ delete(element: any) {
           );
         }
       }, (err) => {
+        this.toastr.error('Somethig Wrong ! ', ` `, {
+          positionClass: 'toast-top-right',})
         console.log(err)
       });
     }

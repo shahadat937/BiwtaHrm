@@ -126,6 +126,7 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+
   getALlDistrict() {
     this.subscription = this.districtService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
@@ -133,6 +134,7 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     });
   }
+
   onSubmit(form: NgForm) {
     const id = this.DistrictForm.form.get('districtId')?.value;
     if (id) {
@@ -153,7 +155,9 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         },
         (err) => {
-          console.log(err);
+          //console.log(err);
+          this.toastr.error('Somethig Wrong ! ', ` `, {
+            positionClass: 'toast-top-right',})
         }
       );
     } else {
@@ -172,7 +176,9 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         },
         (err) => {
-          console.log(err);
+         // console.log(err);
+         this.toastr.error('Somethig Wrong ! ', ` `, {
+          positionClass: 'toast-top-right',})
         }
       );
     }
@@ -182,12 +188,24 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          
           this.districtService.delete(element.districtId).subscribe(
             (res) => {
-              this.getALlDistrict();
+              const index = this.dataSource.data.indexOf(element);
+          if (index !== -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource = new MatTableDataSource(
+              this.dataSource.data
+            );
+          }
+          this.toastr.success('Delete sucessfully ! ', ` `, {
+            positionClass: 'toast-top-right',})
             },
             (err) => {
-              console.log(err);
+             // console.log(err);
+
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',})
             }
           );
         }

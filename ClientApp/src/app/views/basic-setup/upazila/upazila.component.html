@@ -15,7 +15,7 @@
   <label cLabel for="validationCustom01">District<span class="text-danger">*</span></label>
   <div class="input-wrapper">
     <select  [(ngModel)]="upazilaService.upazilas.districtId" name="districtId" #districtId="ngModel" cFormControl id="validationCustom01" required  aria-label="Default select example" cSelect>
-
+      <option [ngValue]="0">Select District</option>
       <option *ngFor="let district of districts " [value]="district.id">{{ district.name }}</option>
     </select>
     <div class="text-left text-danger" *ngIf="!districtId.valid && districtId.touched">

@@ -37,7 +37,7 @@ namespace Hrm.Application.Features.District.Handlers.Commands
                 var District = _mapper.Map<Hrm.Domain.District>(request.DistrictDto);
                 District = await _unitOfWork.Repository<Hrm.Domain.District>().Add(District);
                 await _unitOfWork.Save();
-                response.Success = false;
+                response.Success = true;
                 response.Message = "Creation Successful";
                 response.Id = District.DistrictId;
             }

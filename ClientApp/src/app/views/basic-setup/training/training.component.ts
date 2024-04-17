@@ -172,14 +172,23 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
         if (result) {
           console.log('trainingType id ' +element.trainingTypeId);
           this.trainingTypeService.delete(element.trainingTypeId).subscribe(
-            (res) => {
-              this.getALlTrainingType();
-            },
-            (err) => {
-              console.log(err);
+            (res) => {  const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(
+                  this.dataSource.data
+                );
+              }
+                },
+                (err) => {
+                 // console.log(err);
+    
+                  this.toastr.error('Somethig Wrong ! ', ` `, {
+                    positionClass: 'toast-top-right',})
+                }
+              );
             }
-          );
-        }
-      });
-  }
-}
+          });
+      }
+    }
+    

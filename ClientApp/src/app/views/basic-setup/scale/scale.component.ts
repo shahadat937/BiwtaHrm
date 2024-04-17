@@ -58,7 +58,6 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.btnText = 'Update';
         this.ScaleService.find(+id).subscribe(
           res => {
-            console.log(res);
             this.ScaleForm?.form.patchValue(res);
           }
         );
@@ -71,7 +70,6 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   SelectModelGrade() {
     this.gradeService.selectModelGrade().subscribe(data => {
-     //console.log(data);
       this.grades = data;
     });
   }
@@ -104,7 +102,6 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
   resetForm() {
-    console.log(this.ScaleForm?.form.value)
     if (this.ScaleForm?.form != null) {
       this.ScaleForm.form.reset();
       this.ScaleForm.form.patchValue({

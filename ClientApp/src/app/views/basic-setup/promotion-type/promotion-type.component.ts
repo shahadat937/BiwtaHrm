@@ -31,7 +31,6 @@ constructor(
   private toastr: ToastrService
   )
   {
-  //  const id = this.route.snapshot.paramMap.get('PromotionTypeId'); 
  }
   ngOnInit(): void {
    
@@ -79,12 +78,10 @@ constructor(
       promotionTypeName:"",
       menuPosition: 0,
       isActive:true
-
     }
 
    }
    resetForm() {
-    console.log(this.PromotionTypeForm?.form.value )
     this.btnText = 'Submit';
     if (this.PromotionTypeForm?.form != null) {
       this.PromotionTypeForm.form.reset();
@@ -106,7 +103,6 @@ constructor(
      this.dataSource.sort = this.matSort;
 
     });
-
   }
    onSubmit(form:NgForm){
     this.promotionTypeService.cachedData = [];
@@ -121,7 +117,6 @@ constructor(
         }else{
           this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
         }
-        
       }, err => {
         console.log(err)
       })
@@ -134,12 +129,10 @@ constructor(
     }else{
       this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
     }
-
    },err=>{
      console.log(err);
    })
     }
-
   }
   delete(element:any){
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{

@@ -20,11 +20,9 @@ import{GradeTypeService} from '../service/GradeType.service'
 })
 export class GradeComponent implements OnInit, OnDestroy, AfterViewInit{
   
-  gradeTypes: any[] = [];
-  gradeClass:any[]=[];
   editMode: boolean = false;
-  grade1: any = [];
-  grade2:any=[];
+  gradeType: any= [];
+  gradeClass:any=[];
 
   btnText:string | undefined;
   @ViewChild("GradeForm", { static: true }) GradeForm!: NgForm;
@@ -61,7 +59,6 @@ handleRouteParams(){
       this.btnText = 'Update';
       this.gradeService.find(+id).subscribe(
         res => {
-          console.log(res);
           this.GradeForm?.form.patchValue(res);
         }
       );
@@ -74,14 +71,12 @@ handleRouteParams(){
 }
 GetModelGradeClass(){
   this.gradeServiceClass.getSelectedGradeClass().subscribe(res=>{
-   //console.log(res)
-   this.grade2 = res;
+   this.gradeClass = res;
   })
 }
 GetModelGradeType(){
   this.gradeTypeService.getSelectGradeType().subscribe(res=>{
-   //console.log(res)
-   this.grade1 = res;
+   this.gradeType = res;
   })
 }
 ngAfterViewInit() {
@@ -114,9 +109,7 @@ initaialGrade(form?: NgForm) {
 
 }
 resetForm() {
-  console.log(this.GradeForm?.form.value)
   if (this.GradeForm?.form != null) {
-    console.log(this.GradeForm?.form)
     this.GradeForm.form.reset();
     this.GradeForm.form.patchValue({
       gradeId: 0,
@@ -144,7 +137,6 @@ onSubmit(form: NgForm) {
   const id = this.GradeForm.form.get('gradeId')?.value;
   if (id) {
     this.gradeService.update(+id, this.GradeForm.value).subscribe((response: any) => {
-      console.log(response)
       if (response.success) {
         this.toastr.success('Successfully', 'Update', { positionClass: 'toast-top-right' });
         this.getALlGrade()

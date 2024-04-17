@@ -17,33 +17,30 @@
           Grade Name  is required
         </div>
        </c-col>
-       
-       <c-col [md]="6">
+       <c-col [md]="6"> 
         <label cLabel for="validationCustom01">Grade Type<span class="text-danger">*</span></label>
-        <div class="input-wrapper">
-          <select [(ngModel)]="gradeType.gradeTypeId" name="gradeTypeId" #gradeTypeId="ngModel" cFormControl id="validationCustom01" required >
-            <option value="" disabled selected>Select a Grade Type</option>
-            <option *ngFor="let gradetype of gradeType" [value]="gradetype.id">{{ gradetype.name }}</option>
-          </select>
-          <div class="text-left text-danger" *ngIf="!gradeTypeId.valid && gradeTypeId.touched">
-            Grade Type is required
-          </div>
-        </div>
-      </c-col>
-
-      <c-col [md]="6">
-        <label cLabel for="validationCustom01">Grade Type Class<span class="text-danger">*</span></label>
-        <div class="input-wrapper">
-          <select [(ngModel)]="gradeClass.gradeClassId"name="gradeClassId" #gradeClassId="ngModel" cFormControl id="validationCustom01" required >
-            <option value="" disabled selected>Select a Grade Type</option>
-            <option *ngFor="let gradeClass of gradeClass" [value]="gradeClass.id">{{ gradeClass.name }}</option>
-          </select>
-          <div class="text-left text-danger" *ngIf="!gradeClassId.valid && gradeClassId.touched">
-            GradeClass is required
-          </div>
-        </div>
-      </c-col>
-  
+        <select required [(ngModel)]="gradeService.grades.gradeTypeId" name="gradeTypeId"
+         #gradeTypeId="ngModel" aria-label="Default select example" cSelect>
+        <option [ngValue]="0">Select Grade Type</option>
+        <option *ngFor="let gradetype of gradeType" [value]="gradetype.id">{{ gradetype.name }}</option>
+      </select>
+      <div class="text-left text-danger" *ngIf="!gradeTypeId.valid && gradeTypeId.touched">
+        Grade Type is required
+      </div>
+    </c-col>
+      
+    
+      <c-col [md]="6"> 
+        <label cLabel for="validationCustom01">Grade Type  Class<span class="text-danger">*</span></label>
+        <select required [(ngModel)]="gradeService.grades.gradeClassId"name="gradeClassId" #gradeClassId="ngModel" 
+        aria-label="Default select example" cSelect>
+        <option [ngValue]="0">Select Grade Type Class</option>
+        <option *ngFor="let gradeClass of gradeClass" [value]="gradeClass.id">{{ gradeClass.name }}</option>
+      </select>
+      <div class="text-left text-danger" *ngIf="!gradeClassId.valid && gradeClassId.touched">
+        Grade Type Class is required
+      </div>
+    </c-col>
         <c-col [md]="6">
           <label cLabel for="validationCustom02">Is Active </label>
           <input [(ngModel)]="gradeService.grades.isActive" name="isActive" cFormControl id="validationCustom02"
@@ -95,12 +92,12 @@
                
   
           <ng-container matColumnDef="gradeTypeId">
-            <th mat-header-cell *matHeaderCellDef> GradeType </th>
+            <th mat-header-cell *matHeaderCellDef> Grade Type </th>
             <td mat-cell *matCellDef="let element"> {{element.gradeTypeName}} </td>
           </ng-container>
 
           <ng-container matColumnDef="gradeClassId">
-            <th mat-header-cell *matHeaderCellDef> GradeClass</th>
+            <th mat-header-cell *matHeaderCellDef> Grade Class</th>
             <td mat-cell *matCellDef="let element"> {{element.gradeClassName}} </td>
           </ng-container>
   

@@ -6,7 +6,7 @@ import { PromotionType } from '../model/PromotionType';
 @Injectable({
   providedIn: 'root'
 })
-export class promotionTypeService {
+export class PromotionTypeService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
   promotionTypes: PromotionType;

@@ -43,7 +43,7 @@ namespace Hrm.Application.Features.Scales.Handlers.Commands
                 IQueryable<Hrm.Domain.Scale> Scale = _scaleRepository.Where(x => x.ScaleName.ToLower() == scaleName);
 
 
-                if (Scale.Any())
+                if (ScaleNameExists(request))
                 {
                     response.Success = false;
                     //response.Message = "Creation Failed Name already exists.";

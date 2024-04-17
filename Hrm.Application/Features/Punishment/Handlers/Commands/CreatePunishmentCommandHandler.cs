@@ -42,7 +42,7 @@ namespace Hrm.Application.Features.Punishment.Handlers.Commands
                 IQueryable<Hrm.Domain.Punishment> Punishments = _PunishmentRepository.Where(x => x.PunishmentName.ToLower() == PunishmentName);
 
 
-                if (Punishments.Any())
+                if (PunishmentNameExists(request))
                 {
                     response.Success = false;
                     //response.Message = "Creation Failed Name already exists.";

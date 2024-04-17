@@ -42,7 +42,7 @@ namespace Hrm.Application.Features.PromotionType.Handler.Commands
                 IQueryable<Hrm.Domain.PromotionType> PromotionTypes = _PromotionTypeRepository.Where(x => x.PromotionTypeName.ToLower() == PromotionTypeName);
 
 
-                if (PromotionTypes.Any())
+                if (PromotionTypeNameExists(request))
                 {
                     response.Success = false;
                    //response.Message = "Creation Failed Name already exists.";

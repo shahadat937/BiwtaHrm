@@ -39,7 +39,7 @@ namespace Hrm.Application.Features.Result.Handlers.Commands
                 IQueryable<Hrm.Domain.Result> Results = _ResultRepository.Where(x => x.ResultName.ToLower() == ResultName);
 
 
-                if (Results.Any())
+                if (ResultNameExists(request))
                 {
                     response.Success = false;
                     response.Message = $"Creation Failed '{request.ResultDto.ResultName}' already exists.";

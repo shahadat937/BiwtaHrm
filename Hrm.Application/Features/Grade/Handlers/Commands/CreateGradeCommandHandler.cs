@@ -47,7 +47,7 @@ namespace Hrm.Application.Features.Grade.Handlers.Commands
 
                 IQueryable<Hrm.Domain.Grade> grades = _gradeRepository.Where(x => x.GradeName.ToLower() == gradeName);
 
-                if (grades.Any())
+                if (GradeNameExists(request))
                 {
                     response.Success = false;
                     response.Message = $"Creation Failed '{request.GradeDto.GradeName}' already exists.";

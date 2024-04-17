@@ -535,7 +535,7 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Country',
-        url: '/base/accordion'
+        url: '/bascisetup/country'
       },
       {
         name: 'Division',

@@ -187,6 +187,8 @@ export class GroupComponent   implements OnInit, OnDestroy, AfterViewInit {
                 this.getALlGroup();
               },
               (err) => {
+                this.toastr.error('Somethig Wrong ! ', ` `, {
+                  positionClass: 'toast-top-right',})
                 console.log(err);
               }
             );

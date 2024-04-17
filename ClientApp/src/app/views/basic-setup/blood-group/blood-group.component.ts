@@ -87,7 +87,6 @@ constructor(
 
    }
    resetForm() {
-    console.log(this.BloodGroupForm?.form.value )
     this.btnText = 'Submit';
     if (this.BloodGroupForm?.form != null) {
       this.BloodGroupForm.form.reset();
@@ -155,7 +154,11 @@ constructor(
               this.dataSource.data
             );
           }
+          this.toastr.success('Delete sucessfully ! ', ` `, {
+            positionClass: 'toast-top-right',})
         },(err) => { 
+          this.toastr.error('Somethig Wrong ! ', ` `, {
+            positionClass: 'toast-top-right',})
        console.log(err)
         });
       }

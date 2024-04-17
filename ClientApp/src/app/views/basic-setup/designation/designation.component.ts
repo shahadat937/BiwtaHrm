@@ -157,7 +157,11 @@ constructor(
               this.dataSource.data
             );
           }
+          this.toastr.success('Delete sucessfully ! ', ` `, {
+            positionClass: 'toast-top-right',})
         },(err) => { 
+          this.toastr.error('Somethig Wrong ! ', ` `, {
+            positionClass: 'toast-top-right',})
        console.log(err)
         });
       }

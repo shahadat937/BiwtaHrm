@@ -145,6 +145,8 @@ export class ReligionComponent implements OnInit, OnDestroy {
                 }
               },
               (err) => {
+                this.toastr.error('Somethig Wrong ! ', ` `, {
+                  positionClass: 'toast-top-right',})
                 console.log(err);
               }
             );

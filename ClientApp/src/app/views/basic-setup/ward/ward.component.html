@@ -15,7 +15,7 @@
     <label cLabel for="validationCustom01">Union<span class="text-danger">*</span></label>
     <div class="input-wrapper">
       <select  [(ngModel)]="wardService.wards.unionId" name="unionId" #unionId="ngModel" cFormControl id="validationCustom01" required  aria-label="Default select example" cSelect>
-  
+        <option [ngValue]="0">Select Union</option>
         <option *ngFor="let union of unions " [value]="union.id">{{ union.name }}</option>
       </select>
       <div class="text-left text-danger" *ngIf="!unionId.valid && unionId.touched">

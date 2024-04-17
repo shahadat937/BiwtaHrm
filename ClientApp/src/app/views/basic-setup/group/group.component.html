@@ -15,7 +15,7 @@
     <label cLabel for="validationCustom01">Subject<span class="text-danger">*</span></label>
     <div class="input-wrapper">
       <select  [(ngModel)]="groupService.groups.subjectId" name="subjectId" #subjectId="ngModel" cFormControl id="validationCustom01" required  aria-label="Default select example" cSelect>
-  
+        <option [ngValue]="0">Select Subject</option>
         <option *ngFor="let subject of subjects " [value]="subject.id">{{ subject.name }}</option>
       </select>
       <div class="text-left text-danger" *ngIf="!subjectId.valid && subjectId.touched">

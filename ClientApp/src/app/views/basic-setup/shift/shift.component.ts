@@ -173,14 +173,23 @@ export class ShiftComponent implements OnInit, OnDestroy, AfterViewInit {
         if (result) {
           console.log('shift id ' +element.shiftId);
           this.shiftService.delete(element.shiftId).subscribe(
-            (res) => {
-              this.getALlShift();
-            },
-            (err) => {
-              console.log(err);
+            (res) => {  const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(
+                  this.dataSource.data
+                );
+              }
+                },
+                (err) => {
+                 // console.log(err);
+    
+                  this.toastr.error('Somethig Wrong ! ', ` `, {
+                    positionClass: 'toast-top-right',})
+                }
+              );
             }
-          );
-        }
-      });
-  }
-}
+          });
+      }
+    }
+    

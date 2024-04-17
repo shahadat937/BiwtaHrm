@@ -183,13 +183,23 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log('thana id ' +element.thanaId);
           this.thanaService.delete(element.thanaId).subscribe(
             (res) => {
-              this.getALlThana();
-            },
-            (err) => {
-              console.log(err);
+              const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(
+                  this.dataSource.data
+                );
+              }
+                },
+                (err) => {
+                 // console.log(err);
+    
+                  this.toastr.error('Somethig Wrong ! ', ` `, {
+                    positionClass: 'toast-top-right',})
+                }
+              );
             }
-          );
-        }
-      });
-  }
-}
+          });
+      }
+    }
+    

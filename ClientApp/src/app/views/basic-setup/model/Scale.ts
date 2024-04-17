@@ -6,6 +6,5 @@ export class Scale {
   gradeId: number = 0;
   menuPosition: number = 0;
   isActive: boolean=true;
-  gradeName: string="";
 
 }

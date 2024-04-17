@@ -33,11 +33,7 @@ constructor(
   private confirmService: ConfirmService,
   private toastr: ToastrService
   )
-  {
-  //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
-
-    
-  
+  {  
  }
   ngOnInit(): void {
    
@@ -52,7 +48,6 @@ constructor(
         this.btnText = 'Update';
         this.resultService.find(+id).subscribe(
           res => {
-            console.log(res);
             this.ResultForm?.form.patchValue(res);
           }
         );
@@ -93,7 +88,6 @@ constructor(
    resetForm() {
     this.btnText = 'Submit';
     if (this.ResultForm?.form != null) {
-      console.log(this.ResultForm?.form )
       this.ResultForm.form.reset();
       this.ResultForm.form.patchValue({
         resultId:0,
@@ -103,6 +97,7 @@ constructor(
 
       });
     }
+    this.router.navigate(['/bascisetup/result']);
 
   }
 
@@ -120,7 +115,6 @@ constructor(
     const id = this.ResultForm.form.get('resultId')?.value;
     if (id) {
       this.resultService.update(+id,this.ResultForm.value).subscribe((response:any) => {
-        console.log(response)
         if(response.success){
           this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
           this.getALlResult()

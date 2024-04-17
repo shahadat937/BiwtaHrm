@@ -3,6 +3,8 @@ import { environment } from '../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GradeClass } from '../model/GradeClass';
+import { GradeClassViewModel } from '../model/GradeClassViewModel';
+
 import { Observable, map, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -11,18 +13,15 @@ export class GradeClassService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
   gradeClass: GradeClass;
-  //selection = new SelectionModel<Grade>(true, []);
+  
   constructor(private http: HttpClient) {
     this.gradeClass = new GradeClass();
    }
 
-  getSelectedGradeClass():Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl + '/grade-class/get-selectedGradeClasss');
+  getSelectedGradeClass(){
+    return this.http.get<GradeClassViewModel[]>(this.baseUrl + '/grade-class/get-selectedGradeClasss');
   }
 
-  // getGradeClass() {
-  //   return this.http.get<any[]>(this.baseUrl + '/grade-class/get-gradeClass');
-  // }
   getAll(): Observable<GradeClass[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call

@@ -100,6 +100,7 @@ constructor(
 
       });
     }
+    this.router.navigate(['/bascisetup/designation']);
 
   }
 

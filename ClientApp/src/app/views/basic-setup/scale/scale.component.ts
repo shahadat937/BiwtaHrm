@@ -21,6 +21,7 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
   grades: any[] = [];
   editMode: boolean = false;
   scale: any = []
+  
   btnText: string | undefined;
   @ViewChild("ScaleForm", { static: true }) ScaleForm!: NgForm;
   subscription: Subscription = new Subscription;
@@ -57,7 +58,6 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.btnText = 'Update';
         this.ScaleService.find(+id).subscribe(
           res => {
-            console.log(res);
             this.ScaleForm?.form.patchValue(res);
           }
         );
@@ -98,12 +98,10 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
       gradeId: 0,
       menuPosition: 0,
       isActive: true,
-      gradeName: "",
     }
 
   }
   resetForm() {
-    console.log(this.ScaleForm?.form.value)
     if (this.ScaleForm?.form != null) {
       this.ScaleForm.form.reset();
       this.ScaleForm.form.patchValue({
@@ -113,9 +111,10 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
         gradeId: 0,
         menuPosition: 0,
         isActive: true,
-        gradeName: "",
+
       });
     }
+    this.router.navigate(['/bascisetup/scale']);
 
   }
   getALlScale() {

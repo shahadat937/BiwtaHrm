@@ -12,8 +12,6 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
 import{GradeClassService} from '../service/GradeClass.service'
 import{GradeTypeService} from '../service/GradeType.service'
-import { GradeType } from '../model/GradeType';
-import { Grade } from '../model/Grade';
 
 @Component({
   selector: 'app-grade',
@@ -22,10 +20,10 @@ import { Grade } from '../model/Grade';
 })
 export class GradeComponent implements OnInit, OnDestroy, AfterViewInit{
   
-  gradeType: any[] = [];
-  gradeClass: any[] = [];
   editMode: boolean = false;
-  grades: any = []
+  gradeType: any= [];
+  gradeClass:any=[];
+
   btnText:string | undefined;
   @ViewChild("GradeForm", { static: true }) GradeForm!: NgForm;
   subscription: Subscription = new Subscription;
@@ -35,8 +33,8 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit{
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-  constructor(
 
+  constructor(
     public gradeService: GradeService,
     private snackBar: MatSnackBar,
     private gradeServiceClass:GradeClassService,
@@ -46,23 +44,14 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit{
     private confirmService: ConfirmService,
     private toastr: ToastrService
   ){
-
-
-  
   }
 
 ngOnInit(): void {
   this.getALlGrade();
-  this.SelectedModelGradeClass();
-  this.SelectedModelGradeType();
+  this.GetModelGradeType();
+  this.GetModelGradeClass();
   this.handleRouteParams();
 }
-// loadGrades() {
-//   this.gradeService.getGrade_cls_type_Vw().subscribe(data => {
-//     this.gradeClass;
-//     this.gradeTypes;
-//   });
-// }
 handleRouteParams(){
   this.route.paramMap.subscribe(params => {
     const id = params.get('gradeId');
@@ -70,7 +59,6 @@ handleRouteParams(){
       this.btnText = 'Update';
       this.gradeService.find(+id).subscribe(
         res => {
-          console.log(res);
           this.GradeForm?.form.patchValue(res);
         }
       );
@@ -81,16 +69,14 @@ handleRouteParams(){
     }
   });
 }
-SelectedModelGradeClass(){
+GetModelGradeClass(){
   this.gradeServiceClass.getSelectedGradeClass().subscribe(res=>{
-   //console.log(res)
-   this.grades = res;
+   this.gradeClass = res;
   })
 }
-SelectedModelGradeType(){
+GetModelGradeType(){
   this.gradeTypeService.getSelectGradeType().subscribe(res=>{
-   //console.log(res)
-   this.grades = res;
+   this.gradeType = res;
   })
 }
 ngAfterViewInit() {
@@ -118,13 +104,12 @@ initaialGrade(form?: NgForm) {
     gradeClassId: 0,
     menuPosition: 0,
     isActive: true,
+
   }
 
 }
 resetForm() {
-  console.log(this.GradeForm?.form.value)
   if (this.GradeForm?.form != null) {
-    console.log(this.GradeForm?.form)
     this.GradeForm.form.reset();
     this.GradeForm.form.patchValue({
       gradeId: 0,
@@ -133,10 +118,10 @@ resetForm() {
       gradeClassId: 0,
       menuPosition: 0,
       isActive: true,
-      
+
     });
   }
-
+  this.router.navigate(['/bascisetup/grade']);
 }
 getALlGrade() {
   this.subscription = this.gradeService.getAll().subscribe(item => {
@@ -152,7 +137,6 @@ onSubmit(form: NgForm) {
   const id = this.GradeForm.form.get('gradeId')?.value;
   if (id) {
     this.gradeService.update(+id, this.GradeForm.value).subscribe((response: any) => {
-      console.log(response)
       if (response.success) {
         this.toastr.success('Successfully', 'Update', { positionClass: 'toast-top-right' });
         this.getALlGrade()
@@ -197,7 +181,5 @@ delete(element: any) {
       });
     }
   })
-
-
 }
 }

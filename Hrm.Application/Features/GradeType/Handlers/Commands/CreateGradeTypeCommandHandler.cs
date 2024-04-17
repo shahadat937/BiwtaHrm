@@ -2,6 +2,7 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.GradeType.Validators;
 using Hrm.Application.Features.GradeType.Requests.Commands;
+using Hrm.Application.Features.GradeType.Requests.Commands;
 using Hrm.Application.Responses;
 using MediatR;
 using System;
@@ -47,7 +48,9 @@ namespace Hrm.Application.Features.GradeType.Handlers.Commands
                 if (gradeTypes.Any())
                 {
                     response.Success = false;
-                    response.Message = "Creation Failed, Name already exists";
+                    response.Message = $"Creation Failed '{request.GradeTypeDto.GradeTypeName}' already exists.";
+
+                    //response.Message = "Creation Failed, Name already exists";
                     response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
                 }
                 else
@@ -63,6 +66,14 @@ namespace Hrm.Application.Features.GradeType.Handlers.Commands
                 }
             }
             return response;
+        }
+        private bool GradeTypeNameExists(CreateGradeTypeCommand request)
+        {
+            var GradeTypeName = request.GradeTypeDto.GradeTypeName.Trim().ToLower().Replace(" ", string.Empty);
+
+            IQueryable<Hrm.Domain.GradeType> GradeTypes = _gradeTypeRepository.Where(x => x.GradeTypeName.Trim().ToLower().Replace(" ", string.Empty) == GradeTypeName);
+
+            return GradeTypes.Any();
         }
     }
 }

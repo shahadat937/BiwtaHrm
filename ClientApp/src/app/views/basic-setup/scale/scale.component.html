@@ -29,9 +29,9 @@
       <c-col [md]="6">
         <label cLabel for="validationCustom01">Grade<span class="text-danger">*</span></label>
         <div class="input-wrapper">
-          <select [(ngModel)]="scale.gradeId" name="gradeId" #GradeId="ngModel" cFormControl id="validationCustom01" required>
+          <select [(ngModel)]="scale.gradeId" name="gradeId" #GradeId="ngModel" cFormControl id="validationCustom01" required >
             <option value="" disabled selected>Select a Grade</option>
-            <option *ngFor="let grade of grades" [value]="grade.gradeId">{{ grade.gradeName }}</option>
+            <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.name }}</option>
           </select>
           <div class="text-left text-danger" *ngIf="!GradeId.valid && GradeId.touched">
             Grade is required
@@ -128,8 +128,14 @@
   </c-card-body>
 
   <c-card-footer class="text-medium-emphasis">
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
-    </mat-paginator>
+    <mat-paginator
+    appBubblePagination
+
+    [length]="dataSource.data.length"
+    [pageSize]="10"
+    aria-label="Select page"
+  >
+  </mat-paginator>
   </c-card-footer>
   <c-card>
 

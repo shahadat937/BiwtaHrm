@@ -18,18 +18,31 @@
         </div>
        </c-col>
        
-       <!-- <c-col [md]="6">
-        <label cLabel for="validationCustom01">Grade<span class="text-danger">*</span></label>
+       <c-col [md]="6">
+        <label cLabel for="validationCustom01">Grade Type<span class="text-danger">*</span></label>
         <div class="input-wrapper">
-          <select [(ngModel)]="grades.gradeTypeId" name="gradeId" #GradeId="ngModel" cFormControl id="validationCustom01" required>
-            <option value="" disabled selected>Select a Grade</option>
-            <option *ngFor="let scale of gradeType" [value]="gradeType.gradeTypeId">{{ gradeType.gradeTypeName }}</option>
+          <select [(ngModel)]="gradeType.gradeTypeId" name="gradeTypeId" #gradeTypeId="ngModel" cFormControl id="validationCustom01" required >
+            <option value="" disabled selected>Select a Grade Type</option>
+            <option *ngFor="let gradetype of gradeType" [value]="gradetype.id">{{ gradetype.name }}</option>
           </select>
-          <div class="text-left text-danger" *ngIf="!GradeId.valid && GradeId.touched">
-            Grade is required
+          <div class="text-left text-danger" *ngIf="!gradeTypeId.valid && gradeTypeId.touched">
+            Grade Type is required
           </div>
         </div>
-      </c-col> -->
+      </c-col>
+
+      <c-col [md]="6">
+        <label cLabel for="validationCustom01">Grade Type Class<span class="text-danger">*</span></label>
+        <div class="input-wrapper">
+          <select [(ngModel)]="gradeClass.gradeClassId"name="gradeClassId" #gradeClassId="ngModel" cFormControl id="validationCustom01" required >
+            <option value="" disabled selected>Select a Grade Type</option>
+            <option *ngFor="let gradeClass of gradeClass" [value]="gradeClass.id">{{ gradeClass.name }}</option>
+          </select>
+          <div class="text-left text-danger" *ngIf="!gradeClassId.valid && gradeClassId.touched">
+            GradeClass is required
+          </div>
+        </div>
+      </c-col>
   
         <c-col [md]="6">
           <label cLabel for="validationCustom02">Is Active </label>
@@ -119,8 +132,14 @@
     </c-card-body>
   
     <c-card-footer class="text-medium-emphasis">
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
-      </mat-paginator>
+      <mat-paginator
+      appBubblePagination
+  
+      [length]="dataSource.data.length"
+      [pageSize]="10"
+      aria-label="Select page"
+    >
+    </mat-paginator>
     </c-card-footer>
     <c-card>
   

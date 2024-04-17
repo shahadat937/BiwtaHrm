@@ -49,7 +49,9 @@ namespace Hrm.Application.Features.GradeClass.Handlers.Commands
             if (gradeClasses.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed, Name already exists";
+                response.Message = $"Update Failed '{request.GradeClassDto.GradeClassName}' already exists.";
+
+                //response.Message = "Creation Failed, Name already exists";
                 response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 

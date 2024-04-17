@@ -1,24 +1,19 @@
-import { promotionTypeService } from './../service/PromotionType.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
-
+import{PromotionTypeService} from '../service/PromotionType.service'
 @Component({
   selector: 'app-promotion-type',
   templateUrl: './promotion-type.component.html',
   styleUrl: './promotion-type.component.scss'
 })
 export class PromotionTypeComponent implements OnInit,OnDestroy,AfterViewInit{
-  position = 'top-end';
-  visible = false;
-  percentage = 0;
   btnText:string | undefined;
   @ViewChild("PromotionTypeForm", { static: true }) PromotionTypeForm!: NgForm;
   subscription: Subscription = new Subscription;
@@ -29,34 +24,27 @@ export class PromotionTypeComponent implements OnInit,OnDestroy,AfterViewInit{
   @ViewChild(MatSort)
   matSort!: MatSort;
 constructor(
-  public promotionTypeService:promotionTypeService,
-  private snackBar: MatSnackBar,
+  public promotionTypeService:PromotionTypeService,
   private route: ActivatedRoute,
   private router: Router,
   private confirmService: ConfirmService,
   private toastr: ToastrService
   )
   {
-  //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
-
-  
-
-  
  }
   ngOnInit(): void {
    
     this.getALlPromotionType();
-    this.handleRouteParams();
-
+    this.handleRouteParams()
   }
-  handleRouteParams(){
+  handleRouteParams() {
     this.route.paramMap.subscribe(params => {
       const id = params.get('promotionTypeId');
       if (id) {
         this.btnText = 'Update';
         this.promotionTypeService.find(+id).subscribe(
           res => {
-            
+      
             this.PromotionTypeForm?.form.patchValue(res);
           }
         );
@@ -81,18 +69,7 @@ constructor(
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  toggleToast() {
-    this.visible = !this.visible;
-  }
-
-  onVisibleChange($event: boolean) {
-    this.visible = $event;
-    this.percentage = !this.visible ? 0 : this.percentage;
-  }
-
-  onTimerChange($event: number) {
-    this.percentage = $event * 25;
-  }
+ 
   initaialPromotionType(form?:NgForm){
     if(form!=null)
     form.resetForm();
@@ -101,15 +78,12 @@ constructor(
       promotionTypeName:"",
       menuPosition: 0,
       isActive:true
-
     }
 
    }
    resetForm() {
-   
     this.btnText = 'Submit';
     if (this.PromotionTypeForm?.form != null) {
-      console.log(this.PromotionTypeForm?.form )
       this.PromotionTypeForm.form.reset();
       this.PromotionTypeForm.form.patchValue({
         promotionTypeId:0,
@@ -119,7 +93,7 @@ constructor(
 
       });
     }
-
+    this.router.navigate(['/bascisetup/promotionType']);
   }
 
   getALlPromotionType(){
@@ -129,14 +103,12 @@ constructor(
      this.dataSource.sort = this.matSort;
 
     });
-
   }
    onSubmit(form:NgForm){
     this.promotionTypeService.cachedData = [];
     const id = this.PromotionTypeForm.form.get('promotionTypeId')?.value;
     if (id) {
       this.promotionTypeService.update(+id,this.PromotionTypeForm.value).subscribe((response:any) => {
-      
         if(response.success){
           this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
           this.getALlPromotionType()
@@ -145,7 +117,6 @@ constructor(
         }else{
           this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
         }
-        
       }, err => {
         console.log(err)
       })
@@ -158,12 +129,10 @@ constructor(
     }else{
       this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
     }
-
    },err=>{
      console.log(err);
    })
     }
-
   }
   delete(element:any){
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{
@@ -185,3 +154,4 @@ constructor(
     
   }
 }
+

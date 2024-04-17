@@ -3,6 +3,7 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Grade.Validators;
 using Hrm.Application.DTOs.GradeType.Validators;
 using Hrm.Application.Features.Grade.Requests.Commands;
+using Hrm.Application.Features.Grade.Requests.Commands;
 using Hrm.Application.Features.GradeType.Requests.Commands;
 using Hrm.Application.Responses;
 using MediatR;
@@ -46,10 +47,12 @@ namespace Hrm.Application.Features.Grade.Handlers.Commands
 
                 IQueryable<Hrm.Domain.Grade> grades = _gradeRepository.Where(x => x.GradeName.ToLower() == gradeName);
 
-                if (grades.Any())
+                if (GradeNameExists(request))
                 {
                     response.Success = false;
-                    response.Message = "Creation Failed, Name already exists";
+                    response.Message = $"Creation Failed '{request.GradeDto.GradeName}' already exists.";
+
+                    //response.Message = "Creation Failed, Name already exists";
                     response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
                 }
                 else
@@ -65,6 +68,14 @@ namespace Hrm.Application.Features.Grade.Handlers.Commands
                 }
             }
             return response;
+        }
+        private bool GradeNameExists(CreateGradeCommand request)
+        {
+            var GradeName = request.GradeDto.GradeName.Trim().ToLower().Replace(" ", string.Empty);
+
+            IQueryable<Hrm.Domain.Grade> Grades = _gradeRepository.Where(x => x.GradeName.Trim().ToLower().Replace(" ", string.Empty) == GradeName);
+
+            return Grades.Any();
         }
     }
 }

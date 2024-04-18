@@ -5,6 +5,7 @@ using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.Branch.Requests.Commands;
 using Hrm.Application.Features.Branch.Requests.Queries;
 using Hrm.Application.Features.Branch.Requests.Queries;
+using Hrm.Application.Features.District.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
@@ -53,8 +54,11 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Put([FromBody] BranchDto Branch)
         {
             var command = new UpdateBranchCommand { BranchDto = Branch };
-            await _mediator.Send(command);
-            return NoContent();
+            var response = await _mediator.Send(command);
+            return Ok(response);
+
+             
+           
         }
 
         [HttpDelete]

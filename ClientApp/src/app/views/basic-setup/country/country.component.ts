@@ -91,7 +91,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
     this.btnText = 'Submit';
     if (this.CountryForm?.form != null) {
       this.CountryForm.form.reset();
-      this.CountryForm.form.patchValue(
+      this.CountryForm.form.patchValue({
         countrytId: 0,
         countryName: '',
         menuPosition: 0,

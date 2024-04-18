@@ -45,7 +45,7 @@ namespace Hrm.Application.Features.GradeType.Handlers.Commands
 
                 IQueryable<Hrm.Domain.GradeType> gradeTypes = _gradeTypeRepository.Where(x=>x.GradeTypeName.ToLower() == gradeTypeName);
 
-                if (gradeTypes.Any())
+                if (GradeTypeNameExists(request))
                 {
                     response.Success = false;
                     response.Message = $"Creation Failed '{request.GradeTypeDto.GradeTypeName}' already exists.";

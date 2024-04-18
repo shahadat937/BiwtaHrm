@@ -143,6 +143,8 @@ export class ReligionComponent implements OnInit, OnDestroy {
                     this.dataSource.data
                   );
                 }
+                this.toastr.success('Delete sucessfully ! ', ` `, {
+                  positionClass: 'toast-top-right',})
               },
               (err) => {
                 this.toastr.error('Somethig Wrong ! ', ` `, {

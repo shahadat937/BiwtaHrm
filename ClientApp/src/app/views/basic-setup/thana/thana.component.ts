@@ -192,6 +192,8 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
                   this.dataSource.data
                 );
               }
+              this.toastr.success('Delete sucessfully ! ', ` `, {
+                positionClass: 'toast-top-right',})
                 },
                 (err) => {
                  // console.log(err);

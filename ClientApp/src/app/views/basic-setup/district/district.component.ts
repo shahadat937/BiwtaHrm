@@ -136,6 +136,7 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSubmit(form: NgForm) {
+    this.districtService.cachedData = [];
     const id = this.DistrictForm.form.get('districtId')?.value;
     if (id) {
       this.districtService.update(+id, this.DistrictForm.value).subscribe(

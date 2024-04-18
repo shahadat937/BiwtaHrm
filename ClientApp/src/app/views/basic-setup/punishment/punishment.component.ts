@@ -155,6 +155,8 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.dataSource.data
                   );
                 }
+                this.toastr.success('Delete sucessfully ! ', ` `, {
+                  positionClass: 'toast-top-right',})
               },
               (err) => {
                 this.toastr.error('Somethig Wrong ! ', ` `, {

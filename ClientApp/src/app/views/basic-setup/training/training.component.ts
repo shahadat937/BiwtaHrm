@@ -133,7 +133,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
             });
             this.getALlTrainingType();
             this.resetForm();
-            this.router.navigate(['/bascisetup/trainingType']);
+            this.router.navigate(['/bascisetup/training']);
           } else {
             this.toastr.warning('', `${response.message}`, {
               positionClass: 'toast-top-right',
@@ -170,7 +170,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          console.log('trainingType id ' +element.trainingTypeId);
+         
           this.trainingTypeService.delete(element.trainingTypeId).subscribe(
             (res) => {  const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {
@@ -179,6 +179,8 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
                   this.dataSource.data
                 );
               }
+              this.toastr.success('Delete sucessfully ! ', ` `, {
+                positionClass: 'toast-top-right',})
                 },
                 (err) => {
                  // console.log(err);

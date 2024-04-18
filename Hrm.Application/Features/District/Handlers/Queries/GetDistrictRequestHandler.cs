@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
+using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.DTOs.District;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.District.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
+using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -26,11 +28,17 @@ namespace Hrm.Application.Features.District.Handlers.Queries
 
         public async Task<object> Handle(GetDistrictRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Hrm.Domain.District> Districts = _DistrictRepository.Where(x => true);
+           
+                // Fetch District groups from repository
+                IQueryable<Hrm.Domain.District> Districts = _DistrictRepository.Where(x => true);
 
-            var DistrictDtos = _mapper.Map<List<DistrictDto>>(Districts);
+               // Order District groups by descending order
+               Districts = Districts.OrderByDescending(x => x.DistrictId);
 
-            return DistrictDtos;
+                // Map the District blood groups to BloodGroupDto
+                var DistrictDtos = _mapper.Map<List<DistrictDto>>(Districts);
+
+                return DistrictDtos;
         }
     }
 }

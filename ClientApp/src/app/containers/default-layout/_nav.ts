@@ -499,6 +499,10 @@ export const navItems: INavData[] = [
         url: '/bascisetup/grade-type'
       },
       {
+        name: 'GradeClass',
+        url: '/bascisetup/grade-class'
+      },
+      {
         name: 'Grade',
         url: '/bascisetup/grade'
       },

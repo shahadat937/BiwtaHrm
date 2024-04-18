@@ -28,6 +28,7 @@ import { PromotionTypeComponent } from './promotion-type/promotion-type.componen
 import { GradeComponent } from './grade/grade.component';
 import { CountryComponent } from './country/country.component';
 import { GradeTypeComponent } from './grade-type/grade-type.component';
+import { GradeClassComponent } from './grade-class/grade-class.component';
 const routes: Routes = [
 
   {
@@ -227,7 +228,14 @@ const routes: Routes = [
     component: GradeTypeComponent,
   },
   { path: 'update-grade-type/:gradeTypeId',
-    component: GradeTypeComponent,
+    component: GradeClassComponent,
+  },
+  {
+    path: 'grade-class',
+    component: GradeClassComponent,
+  },
+  { path: 'update-grade-class/:gradeClassId',
+    component: GradeClassComponent,
   },
 ];
 

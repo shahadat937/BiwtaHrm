@@ -547,7 +547,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Division',
-        url: '/base/breadcrumbs'
+        url: '/bascisetup/division'
       },
       {
         name: 'District',

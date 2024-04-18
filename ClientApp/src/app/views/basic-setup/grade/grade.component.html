@@ -4,19 +4,6 @@
   
       <form #GradeForm="ngForm" (submit)="onSubmit(GradeForm)" [gutter]="3" novalidate cForm cRow
         class="needs-validation">
-  
-        <c-col [md]="6">
-          <input type="hidden" [(ngModel)]="gradeService.grades.gradeId" name="gradeId"/>
-         <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> --> 
-         <label cLabel for="validationCustom01">Grade Name<span class="text-danger">*</span></label>
-         <input [(ngModel)]="gradeService.grades.gradeName" name="gradeName"
-         #GradeName="ngModel" placeholder="Enter Grade Name"
-          cFormControl id="validationCustom01" required type="text" value="Mark" />
-          <div class="text-left text-danger"
-          *ngIf="!GradeName.valid&&GradeName.touched">
-          Grade Name  is required
-        </div>
-       </c-col>
        <c-col [md]="6"> 
         <label cLabel for="validationCustom01">Grade Type<span class="text-danger">*</span></label>
         <select required [(ngModel)]="gradeService.grades.gradeTypeId" name="gradeTypeId"
@@ -31,7 +18,7 @@
       
     
       <c-col [md]="6"> 
-        <label cLabel for="validationCustom01">Grade Type  Class<span class="text-danger">*</span></label>
+        <label cLabel for="validationCustom01">Grade Class Type<span class="text-danger">*</span></label>
         <select required [(ngModel)]="gradeService.grades.gradeClassId"name="gradeClassId" #gradeClassId="ngModel" 
         aria-label="Default select example" cSelect>
         <option [ngValue]="0">Select Grade Type Class</option>
@@ -41,6 +28,18 @@
         Grade Type Class is required
       </div>
     </c-col>
+    <c-col [md]="6">
+      <input type="hidden" [(ngModel)]="gradeService.grades.gradeId" name="gradeId"/>
+     <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> --> 
+     <label cLabel for="validationCustom01">Grade Name<span class="text-danger">*</span></label>
+     <input [(ngModel)]="gradeService.grades.gradeName" name="gradeName"
+     #GradeName="ngModel" placeholder="Enter Grade Name"
+      cFormControl id="validationCustom01" required type="text" value="Mark" />
+      <div class="text-left text-danger"
+      *ngIf="!GradeName.valid&&GradeName.touched">
+      Grade Name  is required
+    </div>
+   </c-col>
         <c-col [md]="6">
           <label cLabel for="validationCustom02">Is Active </label>
           <input [(ngModel)]="gradeService.grades.isActive" name="isActive" cFormControl id="validationCustom02"

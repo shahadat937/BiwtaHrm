@@ -26,7 +26,7 @@
           BasicPay is required
         </div>
       </c-col>
-      <c-col [md]="6">
+      <!-- <c-col [md]="6">
         <label cLabel for="validationCustom01">Grade<span class="text-danger">*</span></label>
         <div class="input-wrapper">
           <select [(ngModel)]="scale.gradeId" name="gradeId" #GradeId="ngModel" cFormControl id="validationCustom01" required >
@@ -37,8 +37,18 @@
             Grade is required
           </div>
         </div>
-      </c-col>
-      
+      </c-col> -->
+      <c-col [md]="6"> 
+        <label cLabel for="validationCustom01">Grade Type<span class="text-danger">*</span></label>
+        <select required [(ngModel)]="ScaleService.scales.gradeId" name="gradeId"
+         #gradeId="ngModel" aria-label="Default select example" cSelect>
+        <option [ngValue]="0">Select Grade </option>
+        <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.name }}</option>
+      </select>
+      <div class="text-left text-danger" *ngIf="!gradeId.valid && gradeId.touched">
+        Grade Type is required
+      </div>
+    </c-col>
 
       <c-col [md]="6">
         <label cLabel for="validationCustom02">Is Active </label>
@@ -53,7 +63,7 @@
         <button [disabled]="
     ScaleForm.invalid
   " cButton class="me-1" color="primary" type="submit">
-          Submit
+          {{btnText}}
         </button>
         <button cButton color="secondary" (click)="resetForm()">
           Reset

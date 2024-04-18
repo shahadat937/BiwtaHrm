@@ -52,6 +52,8 @@ import { ThanaComponent } from './thana/thana.component';
 import { UpazilaComponent } from './upazila/upazila.component';
 import { CountryComponent } from './country/country.component';
 import { CountryService } from './service/country.service';
+import { GradeTypeComponent } from './grade-type/grade-type.component';
+import { GradeClassComponent } from './grade-class/grade-class.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,8 @@ import { CountryService } from './service/country.service';
     PromotionTypeComponent,
     GradeComponent,
     CountryComponent,
+    GradeTypeComponent,
+    GradeClassComponent,
   ],
   imports: [
     CommonModule,

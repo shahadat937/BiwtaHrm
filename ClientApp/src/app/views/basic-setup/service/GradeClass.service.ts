@@ -17,7 +17,10 @@ export class GradeClassService {
   constructor(private http: HttpClient) {
     this.gradeClass = new GradeClass();
    }
-
+   find(id: number) {
+    return this.http.get<GradeClass>(this.baseUrl + '/grade-class/get-gradeClassDetail/' + id);
+  }
+   //Coustom
   getSelectedGradeClass(){
     return this.http.get<GradeClassViewModel[]>(this.baseUrl + '/grade-class/get-selectedGradeClasss');
   }

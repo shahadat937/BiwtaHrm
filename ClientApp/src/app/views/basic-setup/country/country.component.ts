@@ -1,3 +1,4 @@
+import { TosterService } from './../../../core/service/toster.service';
 import {
   AfterViewInit,
   Component,
@@ -15,6 +16,7 @@ import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { CountryService } from '../service/country.service';
 
+
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
@@ -30,6 +32,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+
   constructor(
     public countryServices: CountryService,
     private route: ActivatedRoute,
@@ -71,6 +74,8 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
+
+
   initaialBloodGroup(form?: NgForm) {
     if (form != null) form.resetForm();
     this.countryServices.countrys = {
@@ -82,10 +87,11 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   resetForm() {
     console.log(this.CountryForm?.form.value);
+
     this.btnText = 'Submit';
     if (this.CountryForm?.form != null) {
       this.CountryForm.form.reset();
-      this.CountryForm.form.patchValue({
+      this.CountryForm.form.patchValue(
         countrytId: 0,
         countryName: '',
         menuPosition: 0,
@@ -94,6 +100,8 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.router.navigate(['/bascisetup/country']);
   }
+
+
 
   getALlCountry() {
     this.subscription = this.countryServices.getAll().subscribe((item) => {
@@ -165,5 +173,6 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
           );
         }
       });
+
   }
 }

@@ -18,9 +18,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   styleUrl: './scale.component.scss'
 })
 export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
-  grades: any[] = [];
+  //grades: any[] = [];
   editMode: boolean = false;
-  scale: any = []
+  grades: any = []
   
   btnText: string | undefined;
   @ViewChild("ScaleForm", { static: true }) ScaleForm!: NgForm;
@@ -40,11 +40,6 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
     private confirmService: ConfirmService,
     private toastr: ToastrService
   ) {
-    //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
-
-   
-
-
   }
   ngOnInit(): void {
     this.getALlScale();

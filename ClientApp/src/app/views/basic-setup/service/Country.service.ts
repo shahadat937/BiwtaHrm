@@ -1,8 +1,10 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Country } from '../model/Country';
+
 @Injectable()
 export class CountryService {
   cachedData: any[] = [];
@@ -10,6 +12,7 @@ export class CountryService {
   countrys: Country;
   constructor(private http: HttpClient) {
     this.countrys = new Country();
+
   }
   find(id: number) {
     return this.http.get<Country>(
@@ -38,11 +41,14 @@ export class CountryService {
 
   update(id: number, model: any) {
     return this.http.put(this.baseUrl + '/country/update-country/' + id, model);
+
   }
   submit(model: any) {
     return this.http.post(this.baseUrl + '/country/save-country', model);
   }
+
   delete(id: number) {
     return this.http.delete(this.baseUrl + '/country/delete-country/' + id);
   }
+
 }

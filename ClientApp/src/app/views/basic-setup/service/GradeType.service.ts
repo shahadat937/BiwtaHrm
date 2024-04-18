@@ -20,6 +20,10 @@ export class GradeTypeService {
   constructor(private http: HttpClient) {
     this.gradeTypes = new GradeType();
    }
+   find(id: number) {
+    return this.http.get<GradeType>(this.baseUrl + '/grade-type/get-GradeTypeDetail/' + id);
+  }
+
 //Custom
   getSelectGradeType(){
     return this.http.get<GradeTypeViewModel[]>(this.baseUrl + '/grade-type/get-selectedGradeTypes');
@@ -32,7 +36,7 @@ export class GradeTypeService {
     } else {
       // If data is not cached, make a server call to fetch it
       return this.http
-        .get<GradeType[]>(this.baseUrl + '/grade-type/get-selectedGradeTypes')
+        .get<GradeType[]>(this.baseUrl + '/grade-type/get-gradeType')
         .pipe(
           map((data) => {
             this.cachedData = data; // Cache the data

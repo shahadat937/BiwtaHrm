@@ -29,6 +29,7 @@ import { GradeComponent } from './grade/grade.component';
 import { CountryComponent } from './country/country.component';
 import { GradeTypeComponent } from './grade-type/grade-type.component';
 import { GradeClassComponent } from './grade-class/grade-class.component';
+import { DivisionComponent } from './division/division.component';
 const routes: Routes = [
 
   {
@@ -87,6 +88,13 @@ const routes: Routes = [
   },
   { path: 'update-country/:countrytId', 
   component: CountryComponent, 
+  },
+  {
+    path: 'division',
+    component: DivisionComponent,
+  },
+  { path: 'update-division/:divisionId', 
+  component: DivisionComponent, 
   },
   {
     path: 'district',

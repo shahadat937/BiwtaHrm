@@ -28,6 +28,7 @@ namespace Hrm.Application.Features.GradeType.Handlers.Queries
         public async Task<object> Handle(GetGradeTypeReuqest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.GradeType> gradeTypes = _gradeTypeRepository.Where(x => true);
+            gradeTypes = gradeTypes.OrderByDescending(x => x.GradeTypeId);
             var gradeTypeDto = await Task.Run(() => _mapper.Map<List<GradeTypeDto>>(gradeTypes));
 
             return gradeTypeDto;

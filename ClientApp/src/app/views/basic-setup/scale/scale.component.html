@@ -4,40 +4,7 @@
 
     <form #ScaleForm="ngForm" (submit)="onSubmit(ScaleForm)" [gutter]="3" novalidate cForm cRow
       class="needs-validation">
-
-      <c-col [md]="6">
-        <input type="hidden" [(ngModel)]="ScaleService.scales.scaleId" name="scaleId"/>
-       <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> --> 
-       <label cLabel for="validationCustom01">Result Name<span class="text-danger">*</span></label>
-       <input [(ngModel)]="ScaleService.scales.scaleName" name="scaleName"
-       #ScaleName="ngModel" placeholder="Enter Scale Name"
-        cFormControl id="validationCustom01" required type="text" value="Mark" />
-        <div class="text-left text-danger"
-        *ngIf="!ScaleName.valid&&ScaleName.touched">
-        Scale Name  is required
-      </div>
-     </c-col>
-
-      <c-col [md]="6">
-        <label cLabel for="validationCustom01">Basic Pay<span class="text-danger">*</span></label>
-        <input [(ngModel)]="ScaleService.scales.basicPay" name="basicPay" #BasicPay="ngModel"
-          placeholder="Enter Basic Pay" cFormControl id="validationCustom01" required type="text" value="Mark" />
-        <div class="text-left text-danger" *ngIf="!BasicPay.valid&&BasicPay.touched">
-          BasicPay is required
-        </div>
-      </c-col>
-      <!-- <c-col [md]="6">
-        <label cLabel for="validationCustom01">Grade<span class="text-danger">*</span></label>
-        <div class="input-wrapper">
-          <select [(ngModel)]="scale.gradeId" name="gradeId" #GradeId="ngModel" cFormControl id="validationCustom01" required >
-            <option value="" disabled selected>Select a Grade</option>
-            <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.name }}</option>
-          </select>
-          <div class="text-left text-danger" *ngIf="!GradeId.valid && GradeId.touched">
-            Grade is required
-          </div>
-        </div>
-      </c-col> -->
+      
       <c-col [md]="6"> 
         <label cLabel for="validationCustom01">Grade Type<span class="text-danger">*</span></label>
         <select required [(ngModel)]="ScaleService.scales.gradeId" name="gradeId"
@@ -49,6 +16,27 @@
         Grade Type is required
       </div>
     </c-col>
+    <c-col [md]="6">
+      <input type="hidden" [(ngModel)]="ScaleService.scales.scaleId" name="scaleId"/>
+     <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> --> 
+     <label cLabel for="validationCustom01">Scale Name<span class="text-danger">*</span></label>
+     <input [(ngModel)]="ScaleService.scales.scaleName" name="scaleName"
+     #ScaleName="ngModel" placeholder="Enter Scale Name"
+      cFormControl id="validationCustom01" required type="text" value="Mark" />
+      <div class="text-left text-danger"
+      *ngIf="!ScaleName.valid&&ScaleName.touched">
+      Scale Name  is required
+    </div>
+   </c-col>
+
+   <c-col [md]="6">
+    <label cLabel for="validationCustom01">Basic Pay<span class="text-danger">*</span></label>
+    <input [(ngModel)]="ScaleService.scales.basicPay" name="basicPay" #BasicPay="ngModel"
+      placeholder="Enter Basic Pay" cFormControl id="validationCustom01" required type="text" value="Mark" />
+    <div class="text-left text-danger" *ngIf="!BasicPay.valid&&BasicPay.touched">
+      BasicPay is required
+    </div>
+  </c-col>
 
       <c-col [md]="6">
         <label cLabel for="validationCustom02">Is Active </label>

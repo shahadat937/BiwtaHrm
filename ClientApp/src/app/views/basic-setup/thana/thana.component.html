@@ -1,131 +1,170 @@
-
 <c-card>
-    <c-card-header>Thana  </c-card-header>
-    <c-card-body>
-   
-      <form #ThanaForm="ngForm"
-        (submit)="onSubmit(ThanaForm)"
-        [gutter]="3"
-        novalidate
-        cForm cRow
-        class="needs-validation"
-  >
-  
-  <c-col [md]="6">
-    <label cLabel for="validationCustom01">Upazila<span class="text-danger">*</span></label>
-    <div class="input-wrapper">
-      <select  [(ngModel)]="thanaService.thanas.upazilaId" name="upazilaId" #upazilaId="ngModel" cFormControl id="validationCustom01" required  aria-label="Default select example" cSelect>
-        <option [ngValue]="0">Select Upazila</option>
-        <option *ngFor="let upazila of upazilas " [value]="upazila.id">{{ upazila.name }}</option>
-      </select>
-      <div class="text-left text-danger" *ngIf="!upazilaId.valid && upazilaId.touched">
-        Thana is required
-      </div>
+  <c-card-header>Thana </c-card-header>
+  <c-card-body>
+    <form
+      #ThanaForm="ngForm"
+      (submit)="onSubmit(ThanaForm)"
+      [gutter]="3"
+      novalidate
+      cForm
+      cRow
+      class="needs-validation"
+    >
+      <c-col [md]="6">
+        <label cLabel for="validationCustom01"
+          >Upazila<span class="text-danger">*</span></label
+        >
+        <div class="input-wrapper">
+          <select
+            [(ngModel)]="thanaService.thanas.upazilaId"
+            name="upazilaId"
+            #upazilaId="ngModel"
+            cFormControl
+            id="validationCustom01"
+            required
+            aria-label="Default select example"
+            cSelect
+          >
+            <option [ngValue]="0">Select Upazila</option>
+            @for(upazila of upazilas; track upazila.id;let index=$index) {
+            <option [value]="upazila.id">
+              {{ upazila.name }}
+            </option>
+            }
+          </select>
+
+          @if(!upazilaId.valid && upazilaId.touched){
+          <div class="text-left text-danger">Thana is required</div>
+          }
+        </div>
+      </c-col>
+
+      <c-col [md]="6">
+        <input
+          type="hidden"
+          [(ngModel)]="thanaService.thanas.thanaId"
+          name="thanaId"
+        />
+        <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
+        <label cLabel for="validationCustom01"
+          >Thana Name<span class="text-danger">*</span></label
+        >
+        <input
+          [(ngModel)]="thanaService.thanas.thanaName"
+          name="thanaName"
+          #ThanapName="ngModel"
+          placeholder="Enter Thana Name"
+          cFormControl
+          id="validationCustom01"
+          required
+          type="text"
+          value="Mark"
+        />
+        <div
+          class="text-left text-danger"
+          *ngIf="!ThanapName.valid && ThanapName.touched"
+        >
+          Thana Name is required
+        </div>
+      </c-col>
+      <c-col [md]="6">
+        <label cLabel for="validationCustom02">Is Active </label>
+        <input
+          [(ngModel)]="thanaService.thanas.isActive"
+          name="isActive"
+          cFormControl
+          id="validationCustom02"
+          type="text"
+          value="Otto"
+        />
+        <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
+      </c-col>
+      <c-col [xs]="12">
+        <button
+          [disabled]="ThanaForm.invalid"
+          cButton
+          class="me-1"
+          color="primary"
+          type="submit"
+        >
+          {{ btnText }}
+        </button>
+        <button cButton color="secondary" (click)="resetForm()">Reset</button>
+      </c-col>
+    </form>
+  </c-card-body>
+</c-card>
+
+<c-card class="mt-3">
+  <c-card-header>Thana List</c-card-header>
+  <c-card-body>
+    <div class="example-header">
+      <mat-form-field>
+        <input
+          matInput
+          #filter
+          (keyup)="applyFilter(filter.value)"
+          placeholder="Search Here.."
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          aria-label="clear"
+          *ngIf="filter.value"
+          (click)="filter.value = ''; applyFilter('')"
+        ></button>
+      </mat-form-field>
     </div>
-  </c-col>
-  
-    <c-col [md]="6">
-       <input type="hidden" [(ngModel)]="thanaService.thanas.thanaId" name="thanaId"/>
-      <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> --> 
-      <label cLabel for="validationCustom01">Thana Name<span class="text-danger">*</span></label>
-      <input [(ngModel)]="thanaService.thanas.thanaName" name="thanaName"
-      #ThanapName="ngModel" placeholder="Enter Thana Name"
-       cFormControl id="validationCustom01" required type="text" value="Mark" />
-       <div class="text-left text-danger"
-       *ngIf="!ThanapName.valid&&ThanapName.touched">
-       Thana Name  is required
-     </div>
-    </c-col>
-    <c-col [md]="6">
-      <label cLabel for="validationCustom02">Is Active </label>
-      <input [(ngModel)]="thanaService.thanas.isActive" name="isActive"
-       cFormControl id="validationCustom02"  type="text" value="Otto" />
-      <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
-    
-    </c-col>
-    <c-col [xs]="12">
-      <button [disabled]="
-      ThanaForm.invalid 
-    " cButton class="me-1" color="primary" type="submit">
-        {{btnText}}
-      </button>
-      <button  cButton color="secondary" (click)="resetForm()" >
-        Reset
-      </button>
-    </c-col> 
-  </form>
-    </c-card-body>
-  </c-card>
-  
-  <c-card class="mt-3">
-    <c-card-header>Thana List</c-card-header>
-    <c-card-body>
-        <div class="example-header">
-           
-          
-          <mat-form-field>
-            <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here..">
-            <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value" (click)="filter.value=''; applyFilter('');">
-            
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+        <!-- Position Column -->
+        <ng-container matColumnDef="slNo">
+          <th mat-header-cell *matHeaderCellDef>Serial No</th>
+          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+        </ng-container>
+        <ng-container matColumnDef="thanaName">
+          <th mat-header-cell *matHeaderCellDef>Thana Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.thanaName }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="isActive">
+          <th mat-header-cell *matHeaderCellDef>Is Active</th>
+          <td mat-cell *matCellDef="let element">{{ element.isActive }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              class="custom-button"
+              [routerLink]="['/bascisetup/update-thana', element.thanaId]"
+            >
+              <svg cIcon name="cilPencil"></svg>
             </button>
-          </mat-form-field>
-          </div>
-        <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource">
-      
-          <!-- Position Column -->
-          <ng-container matColumnDef="slNo">
-            <th mat-header-cell *matHeaderCellDef> Serial No</th>
-            <td mat-cell *matCellDef="let element;let i =index"> {{ i + 1 }}</td>
-          </ng-container>
-          <ng-container matColumnDef="thanaName">
-            <th mat-header-cell *matHeaderCellDef> Thana Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.thanaName}} </td>
-          </ng-container>
-      
-          <!-- Name Column -->
-          <ng-container matColumnDef="isActive">
-            <th mat-header-cell *matHeaderCellDef> Is Active </th>
-            <td mat-cell *matCellDef="let element"> {{element.isActive}} </td>
-          </ng-container>
-      
-          <ng-container matColumnDef="Action">
-            
-            <th mat-header-cell *matHeaderCellDef> Action </th>
-            <td mat-cell *matCellDef="let element">
-              <button class="custom-button"       [routerLink]="['/bascisetup/update-thana', element.thanaId]">
-                <svg cIcon name="cilPencil"></svg>
-              
-              </button>   
-              <button  class="custom-button" (click)="delete(element)"> 
-                <svg cIcon name="cilTrash"></svg>
-                </button>
-                
-              </td>
-          
-          </ng-container>
-      
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-           
-        
-      
-      </div>
-      </c-card-body>
-      <c-card-footer class="text-medium-emphasis">
-        <mat-paginator
-        appBubblePagination
-    
-        [length]="dataSource.data.length"
-        [pageSize]="10"
-        aria-label="Select page"
-      >
-      </mat-paginator>
-      </c-card-footer>
-    </c-card>
-  
-     <!-- <c-toaster [placement]="position" class="p-3" position="fixed">
+            <button class="custom-button" (click)="delete(element)">
+              <svg cIcon name="cilTrash"></svg>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </c-card-body>
+  <c-card-footer class="text-medium-emphasis">
+    <mat-paginator
+      appBubblePagination
+      [length]="dataSource.data.length"
+      [pageSize]="10"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </c-card-footer>
+</c-card>
+
+<!-- <c-toaster [placement]="position" class="p-3" position="fixed">
         <c-toast
           (timer)="onTimerChange($event)"
           (visibleChange)="onVisibleChange($event)"
@@ -142,4 +181,3 @@
           </c-toast-body>
         </c-toast>
       </c-toaster>  -->
-  

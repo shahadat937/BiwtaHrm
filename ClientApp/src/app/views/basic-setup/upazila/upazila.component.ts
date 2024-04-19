@@ -1,22 +1,22 @@
-import { UapzilaService } from './../service/uapzila.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
-  OnDestroy,
 } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { UapzilaService } from './../service/uapzila.service';
 
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
   selector: 'app-upazila',
@@ -58,7 +58,7 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   ngOnInit(): void {
-    this.getALlUpazila();
+    this.getALlUpazilas();
     this.loaddistrict();
   }
   ngAfterViewInit() {
@@ -123,7 +123,7 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  getALlUpazila() {
+  getALlUpazilas() {
     this.subscription = this.upazilaService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
@@ -131,50 +131,75 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  onSubmit(form: NgForm) {
+  // onSubmit(form: NgForm) {
+  //   this.upazilaService.cachedData = [];
+  //   const id = this.UpazilaForm.form.get('upazilaId')?.value;
+  //   if (id) {
+  //     this.upazilaService.update(+id, this.UpazilaForm.value).subscribe(
+  //       (response: any) => {
+  //         //console.log(response);
+  //         if (response.success) {
+  //           this.toastr.success('Successfully', 'Update', {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //           this.getALlUpazilas();
+  //           this.resetForm();
+  //           this.router.navigate(['/bascisetup/upazila']);
+  //         } else {
+  //           this.toastr.warning('', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //         }
+  //       },
+  //       (err) => {
+  //         console.log(err);
+  //       }
+  //     );
+  //   } else {
+  //     this.subscription = this.upazilaService.submit(form?.value).subscribe(
+  //       (response: any) => {
+  //         if (response.success) {
+  //           this.toastr.success('Successfully', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //           this.getALlUpazilas();
+  //           this.resetForm();
+  //         } else {
+  //           this.toastr.warning('', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //         }
+  //       },
+  //       (err) => {
+  //         console.log(err);
+  //       }
+  //     );
+  //   }
+  // }
+  onSubmit(form: NgForm): void {
     this.upazilaService.cachedData = [];
-    const id = this.UpazilaForm.form.get('upazilaId')?.value;
-    if (id) {
-      this.upazilaService.update(+id, this.UpazilaForm.value).subscribe(
-        (response: any) => {
-          //console.log(response);
-          if (response.success) {
-            this.toastr.success('Successfully', 'Update', {
-              positionClass: 'toast-top-right',
-            });
-            this.getALlUpazila();
-            this.resetForm();
-            this.router.navigate(['/bascisetup/upazila']);
-          } else {
-            this.toastr.warning('', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-          }
-        },
-        (err) => {
-          console.log(err);
+    const id = form.value.upazilaId;
+    const action$ = id
+      ? this.upazilaService.update(id, form.value)
+      : this.upazilaService.submit(form.value);
+
+    this.subscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        //  const successMessage = id ? 'Update' : 'Successfully';
+        this.toastr.success('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.getALlUpazilas();
+        this.resetForm();
+        if (!id) {
+          this.router.navigate(['/bascisetup/upazila']);
         }
-      );
-    } else {
-      this.subscription = this.upazilaService.submit(form?.value).subscribe(
-        (response: any) => {
-          if (response.success) {
-            this.toastr.success('Successfully', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-            this.getALlUpazila();
-            this.resetForm();
-          } else {
-            this.toastr.warning('', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-          }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    }
+      } else {
+        this.toastr.warning('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+      }
+    });
   }
   delete(element: any) {
     this.confirmService
@@ -184,18 +209,17 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
           this.upazilaService.delete(element.upazilaId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
-          if (index !== -1) {
-            this.dataSource.data.splice(index, 1);
-            this.dataSource = new MatTableDataSource(
-              this.dataSource.data
-            );
-          }
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
+              }
             },
             (err) => {
-             // console.log(err);
+              // console.log(err);
 
               this.toastr.error('Somethig Wrong ! ', ` `, {
-                positionClass: 'toast-top-right',})
+                positionClass: 'toast-top-right',
+              });
             }
           );
         }

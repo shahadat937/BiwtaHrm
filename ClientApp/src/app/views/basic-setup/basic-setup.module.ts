@@ -55,6 +55,8 @@ import { CountryService } from './service/country.service';
 import { GradeTypeComponent } from './grade-type/grade-type.component';
 import { GradeClassComponent } from './grade-class/grade-class.component';
 import { DivisionComponent } from './division/division.component';
+import { OccupationComponent } from './occupation/occupation.component';
+import { OccupationService } from './service/Occupation.service';
 
 @NgModule({
   declarations: [
@@ -86,6 +88,7 @@ import { DivisionComponent } from './division/division.component';
     GradeTypeComponent,
     GradeClassComponent,
     DivisionComponent,
+    OccupationComponent,
   ],
   imports: [
     CommonModule,
@@ -108,6 +111,7 @@ import { DivisionComponent } from './division/division.component';
   ],
   providers: [
     CountryService,
+    OccupationService,
     BloodGroupService,
     ToastrService,
     ChildStatusService,

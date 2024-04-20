@@ -528,7 +528,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Occupation',
-        url: '/base/tooltips'
+        url: '/bascisetup/occupation'
       },
       {
         name: 'Punishment/reward',

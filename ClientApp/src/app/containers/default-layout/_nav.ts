@@ -327,9 +327,15 @@ export const navItems: INavData[] = [
       {
         name: 'Manage leave',
         url: '/base/breadcrumbs'
+      },
+      {
+        name: 'leave',
+        url: '/bascisetup/leave'
+      },
+      {
+        name: 'Overall_EV_Promotion',
+        url: '/bascisetup/overall_EV_Promotion'
       }
-
-
     ]
   },
   {

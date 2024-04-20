@@ -57,6 +57,10 @@ import { GradeClassComponent } from './grade-class/grade-class.component';
 import { DivisionComponent } from './division/division.component';
 import { OccupationComponent } from './occupation/occupation.component';
 import { OccupationService } from './service/Occupation.service';
+import { LeaveComponent } from './leave/leave.component';
+import { LeaveService } from './service/Leave.service';
+import { OverallEVPromotionComponent } from './overall-ev-promotion/overall-ev-promotion.component';
+import { Overall_EV_PromotionService } from './service/Overall_EV_Promotion.service';
 
 @NgModule({
   declarations: [
@@ -89,6 +93,8 @@ import { OccupationService } from './service/Occupation.service';
     GradeClassComponent,
     DivisionComponent,
     OccupationComponent,
+    LeaveComponent,
+    OverallEVPromotionComponent,
   ],
   imports: [
     CommonModule,
@@ -110,6 +116,8 @@ import { OccupationService } from './service/Occupation.service';
     ProgressModule,
   ],
   providers: [
+    Overall_EV_PromotionService,
+    LeaveService,
     CountryService,
     OccupationService,
     BloodGroupService,

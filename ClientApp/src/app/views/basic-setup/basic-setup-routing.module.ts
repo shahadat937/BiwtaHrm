@@ -32,6 +32,8 @@ import { GradeTypeComponent } from './grade-type/grade-type.component';
 import { GradeClassComponent } from './grade-class/grade-class.component';
 import { DivisionComponent } from './division/division.component';
 import { OccupationComponent } from './occupation/occupation.component';
+import { LeaveComponent } from './leave/leave.component';
+import { OverallEVPromotionComponent } from './overall-ev-promotion/overall-ev-promotion.component';
 
 const routes: Routes = [
 
@@ -255,7 +257,20 @@ const routes: Routes = [
   { path: 'update-grade-class/:gradeClassId',
     component: GradeClassComponent,
   },
-
+  {
+    path: 'leave',
+    component: LeaveComponent,
+  },
+  { path: 'update-leave/:leaveId',
+    component: LeaveComponent,
+  },
+  {
+    path: 'overall_EV_Promotion',
+    component: OverallEVPromotionComponent,
+  },
+  { path: 'update-overall_EV_Promotion/:overall_EV_PromotionId',
+    component: OverallEVPromotionComponent,
+  },
 ];
 
 @NgModule({

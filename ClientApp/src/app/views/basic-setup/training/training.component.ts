@@ -122,81 +122,56 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  // onSubmit(form: NgForm) {
-  //   const id = this.TrainingTypeForm.form.get('trainingTypeId')?.value;
-  //   if (id) {
-  //     this.trainingTypeService.update(+id, this.TrainingTypeForm.value).subscribe(
-  //       (response: any) => {
-  //         //console.log(response);
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', 'Update', {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlTrainingTypes();
-  //           this.resetForm();
-  //           this.router.navigate(['/bascisetup/trainingType']);
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   } else {
-  //     this.subscription = this.trainingTypeService.submit(form?.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlTrainingTypes();
-  //           this.resetForm();
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   }
-  // }
-  onSubmit(form: NgForm): void {
-    this.trainingTypeService.cachedData = [];
-    const id = form.value.trainingTypeId;
-    const action$ = id
-      ? this.trainingTypeService.update(id, form.value)
-      : this.trainingTypeService.submit(form.value);
-
-    this.subscription = action$.subscribe((response: any) => {
-      if (response.success) {
-        //  const successMessage = id ? 'Update' : 'Successfully';
-        this.toastr.success('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-        this.getALlTrainingTypes();
-        this.resetForm();
-        if (!id) {
-          this.router.navigate(['/bascisetup/trainingType']);
+  onSubmit(form: NgForm) {
+    const id = this.TrainingTypeForm.form.get('trainingTypeId')?.value;
+    if (id) {
+      this.trainingTypeService.update(+id, this.TrainingTypeForm.value).subscribe(
+        (response: any) => {
+          //console.log(response);
+          if (response.success) {
+            this.toastr.success('Successfully', 'Update', {
+              positionClass: 'toast-top-right',
+            });
+            this.getALlTrainingTypes();
+            this.resetForm();
+            this.router.navigate(['/bascisetup/trainingType']);
+          } else {
+            this.toastr.warning('', `${response.message}`, {
+              positionClass: 'toast-top-right',
+            });
+          }
+        },
+        (err) => {
+          console.log(err);
         }
-      } else {
-        this.toastr.warning('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-      }
-    });
+      );
+    } else {
+      this.subscription = this.trainingTypeService.submit(form?.value).subscribe(
+        (response: any) => {
+          if (response.success) {
+            this.toastr.success('Successfully', `${response.message}`, {
+              positionClass: 'toast-top-right',
+            });
+            this.getALlTrainingTypes();
+            this.resetForm();
+          } else {
+            this.toastr.warning('', `${response.message}`, {
+              positionClass: 'toast-top-right',
+            });
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   }
   delete(element: any) {
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          console.log('trainingType id ' + element.trainingTypeId);
+          console.log('trainingType id ' +element.trainingTypeId);
           this.trainingTypeService.delete(element.trainingTypeId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -204,16 +179,16 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.dataSource.data.splice(index, 1);
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
-            },
-            (err) => {
-              // console.log(err);
-
-              this.toastr.error('Somethig Wrong ! ', ` `, {
-                positionClass: 'toast-top-right',
-              });
+                },
+                (err) => {
+                 // console.log(err);
+    
+                  this.toastr.error('Somethig Wrong ! ', ` `, {
+                    positionClass: 'toast-top-right',})
+                }
+              );
             }
-          );
-        }
-      });
-  }
-}
+          });
+      }
+    }
+    

@@ -12,9 +12,9 @@ import { GenderService } from '../service/gender.service';
 @Component({
   selector: 'app-gender',
   templateUrl: './gender.component.html',
-  styleUrl: './gender.component.scss'
+  styleUrl: './gender.component.scss',
 })
-export class GenderComponent implements OnInit, OnDestroy{
+export class GenderComponent implements OnInit, OnDestroy {
   private actionSubscription: Subscription | undefined;
   btnText: string | undefined;
   @ViewChild('genderForm', { static: true }) genderForm!: NgForm;
@@ -30,9 +30,7 @@ export class GenderComponent implements OnInit, OnDestroy{
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService
-  ) {
-   
-  }
+  ) {}
   ngOnInit(): void {
     this.getALlGender();
     this.handleRouteParams();
@@ -50,7 +48,7 @@ export class GenderComponent implements OnInit, OnDestroy{
       }
     });
   }
- 
+
   ngOnDestroy() {
     if (this.actionSubscription) {
       this.actionSubscription.unsubscribe();
@@ -61,7 +59,7 @@ export class GenderComponent implements OnInit, OnDestroy{
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  
+
   initaialPunishment(form?: NgForm) {
     if (form != null) form.resetForm();
     this.genderService.gender = {
@@ -94,11 +92,44 @@ export class GenderComponent implements OnInit, OnDestroy{
       },
       (err) => {
         this.toastr.error('Somethig Wrong ! ', ` `, {
-          positionClass: 'toast-top-right',})
+          positionClass: 'toast-top-right',
+        });
       }
     );
   }
 
+  // onSubmit(form: NgForm): void {
+  //   this.genderService.cachedData = [];
+  //   const id = form.value.genderId;
+  //   const action$ = id
+  //     ? this.genderService.update(id, form.value)
+  //     : this.genderService.submit(form.value);
+
+  //   this.actionSubscription = action$.subscribe(
+  //     (response: any) => {
+  //       if (response.success) {
+  //         const successMessage = id ? 'Update' : 'Successfully';
+  //         this.toastr.success(successMessage, `${response.message}`, {
+  //           positionClass: 'toast-top-right',
+  //         });
+  //         this.getALlGender();
+  //         this.resetForm();
+  //         if (!id) {
+  //           this.router.navigate(['/bascisetup/gender']);
+  //         }
+  //       } else {
+  //         this.toastr.warning('', `${response.message}`, {
+  //           positionClass: 'toast-top-right',
+  //         });
+  //       }
+  //     },
+  //     (err) => {
+  //       this.toastr.warning('', 'Error submitting punishment:', {
+  //         positionClass: 'toast-top-right',
+  //       });
+  //     }
+  //   );
+  // }
   onSubmit(form: NgForm): void {
     this.genderService.cachedData = [];
     const id = form.value.genderId;
@@ -106,33 +137,26 @@ export class GenderComponent implements OnInit, OnDestroy{
       ? this.genderService.update(id, form.value)
       : this.genderService.submit(form.value);
 
-    this.actionSubscription = action$.subscribe(
-      (response: any) => {
-        if (response.success) {
-          const successMessage = id ? 'Update' : 'Successfully';
-          this.toastr.success(successMessage, `${response.message}`, {
-            positionClass: 'toast-top-right',
-          });
-          this.getALlGender();
-          this.resetForm();
-          if (!id) {
-            this.router.navigate(['/bascisetup/gender']);
-          }
-        } else {
-          this.toastr.warning('', `${response.message}`, {
-            positionClass: 'toast-top-right',
-          });
+    this.actionSubscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        //  const successMessage = id ? '' : '';
+        this.toastr.success('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.getALlGender();
+        this.resetForm();
+        if (!id) {
+          this.router.navigate(['/bascisetup/gender']);
         }
-      },
-      (err) => {
-        this.toastr.warning('', 'Error submitting punishment:', {
+      } else {
+        this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
-    );
+    });
   }
   delete(element: any) {
-    this.actionSubscription =this.confirmService
+    this.actionSubscription = this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((confirm) => {
         if (confirm) {
@@ -147,6 +171,8 @@ export class GenderComponent implements OnInit, OnDestroy{
                     this.dataSource.data
                   );
                 }
+                this.toastr.success('Delete sucessfully ! ', ` `, {
+                  positionClass: 'toast-top-right',})
               },
               (err) => {
                 console.log(err);

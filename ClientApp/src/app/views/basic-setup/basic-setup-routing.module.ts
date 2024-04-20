@@ -26,6 +26,12 @@ import { DesignationComponent } from './designation/designation.component';
 import { PunishmentComponent } from './punishment/punishment.component';
 import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
 import { GradeComponent } from './grade/grade.component';
+import { CountryComponent } from './country/country.component';
+
+import { GradeTypeComponent } from './grade-type/grade-type.component';
+import { GradeClassComponent } from './grade-class/grade-class.component';
+import { DivisionComponent } from './division/division.component';
+
 const routes: Routes = [
 
   {
@@ -39,6 +45,13 @@ const routes: Routes = [
   { path: 'update-bloodgroup/:bloodGroupId',
     component: BloodGroupComponent,
   },
+  // {
+  //   path: 'country',
+  //   component: CountryComponent,
+  // },
+  // { path: 'update-country/:countrytId',
+  //   component: CountryComponent,
+  // },
   {
     path:'marital-status',
     component: MaritalStatusComponent,
@@ -77,6 +90,20 @@ const routes: Routes = [
   },
   { path: 'update-child-status/:childStatusId',
   component: ChildStatusComponent,
+  },
+  {
+    path: 'country',
+    component: CountryComponent,
+  },
+  { path: 'update-country/:countrytId', 
+  component: CountryComponent, 
+  },
+  {
+    path: 'division',
+    component: DivisionComponent,
+  },
+  { path: 'update-division/:divisionId', 
+  component: DivisionComponent, 
   },
   {
     path: 'district',
@@ -212,7 +239,22 @@ const routes: Routes = [
   {
     path: 'update-grade/:gradeId',
     component: GradeComponent,
-  }
+  },
+    {
+    path: 'grade-type',
+    component: GradeTypeComponent,
+  },
+  { path: 'update-grade-type/:gradeTypeId',
+    component: GradeClassComponent,
+  },
+  {
+    path: 'grade-class',
+    component: GradeClassComponent,
+  },
+  { path: 'update-grade-class/:gradeClassId',
+    component: GradeClassComponent,
+  },
+
 ];
 
 @NgModule({

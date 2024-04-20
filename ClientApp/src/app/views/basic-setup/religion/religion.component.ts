@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -37,7 +31,7 @@ export class ReligionComponent implements OnInit, OnDestroy {
     private toastr: ToastrService
   ) {}
   ngOnInit(): void {
-    this.getALlReligion();
+    this.getALlReligions();
     this.handleRouteParams();
   }
   handleRouteParams() {
@@ -90,7 +84,7 @@ export class ReligionComponent implements OnInit, OnDestroy {
     this.router.navigate(['/bascisetup/religion']);
   }
 
-  getALlReligion() {
+  getALlReligions() {
     this.actionSubscription = this.religionService.getAll().subscribe(
       (item) => {
         this.dataSource.data = item;
@@ -110,11 +104,11 @@ export class ReligionComponent implements OnInit, OnDestroy {
 
     this.actionSubscription = action$.subscribe((response: any) => {
       if (response.success) {
-        const successMessage = id ? 'Update' : 'Successfully';
-        this.toastr.success(successMessage, `${response.message}`, {
+        // const successMessage = id ? 'Update' : 'Successfully';
+        this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getALlReligion();
+        this.getALlReligions();
         this.resetForm();
         if (!id) {
           this.router.navigate(['/bascisetup/religion']);
@@ -143,10 +137,13 @@ export class ReligionComponent implements OnInit, OnDestroy {
                     this.dataSource.data
                   );
                 }
+                this.toastr.success('Delete sucessfully ! ', ` `, {
+                  positionClass: 'toast-top-right',})
               },
               (err) => {
                 this.toastr.error('Somethig Wrong ! ', ` `, {
-                  positionClass: 'toast-top-right',})
+                  positionClass: 'toast-top-right',
+                });
                 console.log(err);
               }
             );

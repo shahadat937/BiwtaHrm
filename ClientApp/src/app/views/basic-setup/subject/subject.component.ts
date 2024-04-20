@@ -1,27 +1,26 @@
-import { SubjectService } from './../service/subject.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
-  OnDestroy,
 } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { SubjectService } from './../service/subject.service';
 
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
-import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
   selector: 'app-subject',
   templateUrl: './subject.component.html',
-  styleUrl: './subject.component.scss'
+  styleUrl: './subject.component.scss',
 })
 export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
   position = 'top-end';
@@ -35,7 +34,7 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
-  matSort!: MatSort; 
+  matSort!: MatSort;
   constructor(
     public subjectService: SubjectService,
     private snackBar: MatSnackBar,
@@ -57,8 +56,7 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   ngOnInit(): void {
-    this.getALlSubject();
-    
+    this.getALlSubjects();
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -90,7 +88,7 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
     if (form != null) form.resetForm();
     this.subjectService.subjects = {
       subjectId: 0,
-      subjectName: '', 
+      subjectName: '',
       //districtName:"",
       menuPosition: 0,
       isActive: true,
@@ -104,7 +102,7 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
       this.SubjectForm.form.reset();
       this.SubjectForm.form.patchValue({
         subjectId: 0,
-        subjectName: '', 
+        subjectName: '',
         //  districtName:"",
         menuPosition: 0,
         isActive: true,
@@ -112,9 +110,7 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  
-
-  getALlSubject() {
+  getALlSubjects() {
     this.subscription = this.subjectService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
@@ -122,78 +118,100 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  onSubmit(form: NgForm) {
-    const id = this.SubjectForm.form.get('subjectId')?.value;
-    if (id) {
-      this.subjectService.update(+id, this.SubjectForm.value).subscribe(
-        (response: any) => {
-          //console.log(response);
-          if (response.success) {
-            this.toastr.success('Successfully', 'Update', {
-              positionClass: 'toast-top-right',
-            });
-            this.getALlSubject();
-            this.resetForm();
-            this.router.navigate(['/bascisetup/subject']);
-          } else {
-            this.toastr.warning('', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-          }
-        },
-        (err) => {
-          console.log(err);
+  // onSubmit(form: NgForm) {
+  //   const id = this.SubjectForm.form.get('subjectId')?.value;
+  //   if (id) {
+  //     this.subjectService.update(+id, this.SubjectForm.value).subscribe(
+  //       (response: any) => {
+  //         //console.log(response);
+  //         if (response.success) {
+  //           this.toastr.success('Successfully', 'Update', {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //           this.getALlSubjects();
+  //           this.resetForm();
+  //           this.router.navigate(['/bascisetup/subject']);
+  //         } else {
+  //           this.toastr.warning('', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //         }
+  //       },
+  //       (err) => {
+  //         console.log(err);
+  //       }
+  //     );
+  //   } else {
+  //     this.subscription = this.subjectService.submit(form?.value).subscribe(
+  //       (response: any) => {
+  //         if (response.success) {
+  //           this.toastr.success('Successfully', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //           this.getALlSubjects();
+  //           this.resetForm();
+  //         } else {
+  //           this.toastr.warning('', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //         }
+  //       },
+  //       (err) => {
+  //         this.toastr.error('Somethig Wrong ! ', ` `, {
+  //           positionClass: 'toast-top-right',})
+  //         console.log(err);
+  //       }
+  //     );
+  //   }
+  // }
+  onSubmit(form: NgForm): void {
+    this.subjectService.cachedData = [];
+    const id = form.value.subjectId;
+    const action$ = id
+      ? this.subjectService.update(id, form.value)
+      : this.subjectService.submit(form.value);
+
+    this.subscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        //  const successMessage = id ? 'Update' : 'Successfully';
+        this.toastr.success('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.getALlSubjects();
+        this.resetForm();
+        if (!id) {
+          this.router.navigate(['/bascisetup/subject']);
         }
-      );
-    } else {
-      this.subscription = this.subjectService.submit(form?.value).subscribe(
-        (response: any) => {
-          if (response.success) {
-            this.toastr.success('Successfully', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-            this.getALlSubject();
-            this.resetForm();
-          } else {
-            this.toastr.warning('', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-          }
-        },
-        (err) => {
-          this.toastr.error('Somethig Wrong ! ', ` `, {
-            positionClass: 'toast-top-right',})
-          console.log(err);
-        }
-      );
-    }
+      } else {
+        this.toastr.warning('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+      }
+    });
   }
   delete(element: any) {
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          console.log('subject id ' +element.subjectId);
+          console.log('subject id ' + element.subjectId);
           this.subjectService.delete(element.subjectId).subscribe(
-            (res) => {  const index = this.dataSource.data.indexOf(element);
+            (res) => {
+              const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {
                 this.dataSource.data.splice(index, 1);
-                this.dataSource = new MatTableDataSource(
-                  this.dataSource.data
-                );
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
-              this.toastr.success('Delete sucessfully ! ', ` `, {
-                positionClass: 'toast-top-right',})
-                },
-                (err) => {
-                 // console.log(err);
-    
-                  this.toastr.error('Somethig Wrong ! ', ` `, {
-                    positionClass: 'toast-top-right',})
-                }
-              );
+            },
+            (err) => {
+              // console.log(err);
+
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
             }
-          });
-      }
-    }
-    
+          );
+        }
+      });
+  }
+}

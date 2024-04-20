@@ -43,6 +43,15 @@ using Hrm.Application.DTOs.Scale;
 using Hrm.Application.DTOs.ScaleGradeView;
 using Hrm.Application.DTOs.Grade_cls_type_Vw;
 using Hrm.Application.DTOs.SubBranch;
+using Hrm.Application.DTOs.TrainingName;
+using Hrm.Application.DTOs.Common;
+using Hrm.Application.DTOs.Office;
+using Hrm.Application.DTOs.Competence;
+using Hrm.Application.DTOs.Language;
+using Hrm.Application.DTOs.BankAccountType;
+using Hrm.Application.DTOs.BankBranch;
+using Hrm.Application.DTOs.Bank;
+using Hrm.Application.DTOs.Institute;
 
 namespace Hrm.Application.Profiles
 {
@@ -159,6 +168,30 @@ namespace Hrm.Application.Profiles
 
             CreateMap<SubBranch, SubBranchDto>().ReverseMap();
             CreateMap<SubBranch, CreateSubBranchDto>().ReverseMap();
+            
+            CreateMap<TrainingName, TrainingNameDto>().ReverseMap();
+            CreateMap<TrainingName, CreateTrainingNameDto>().ReverseMap();
+             
+            CreateMap<Office, OfficeDto>().ReverseMap();
+            CreateMap<Office, CreateOfficeDto>().ReverseMap();
+            
+            CreateMap<Competence, CompetenceDto>().ReverseMap();
+            CreateMap<Competence, CreateCompetenceDto>().ReverseMap();
+            
+            CreateMap<Language, LanguageDto>().ReverseMap();
+            CreateMap<Language, CreateLanguageDto>().ReverseMap();
+
+            CreateMap<BankAccountType, BankAccountTypeDto>().ReverseMap();
+            CreateMap<BankAccountType, CreateBankAccountTypeDto>().ReverseMap();
+
+            CreateMap<BankBranch, BankBranchDto>().ReverseMap();
+            CreateMap<BankBranch, CreateBankBranchDto>().ReverseMap();
+
+            CreateMap<Bank, BankDto>().ReverseMap();
+            CreateMap<Bank, CreateBankDto>().ReverseMap();
+
+            CreateMap<Institute, InstituteDto>().ReverseMap();
+            CreateMap<Institute, CreateInstituteDto>().ReverseMap();
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();
             CreateMap<Module, ModuleFeatureDto>().ReverseMap();

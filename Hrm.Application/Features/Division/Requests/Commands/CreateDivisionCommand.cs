@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Division.Requests.Commands
 {
-    public class CreateBloodCommand : IRequest<BaseCommandResponse>
+    public class CreateDivisionCommand : IRequest<BaseCommandResponse>
     {
         public CreateDivisionDto DivisionDto { get; set; }
     }

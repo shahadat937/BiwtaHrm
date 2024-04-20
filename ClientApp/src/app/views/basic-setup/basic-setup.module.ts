@@ -54,6 +54,8 @@ import { CountryComponent } from './country/country.component';
 import { CountryService } from './service/country.service';
 import { GradeTypeComponent } from './grade-type/grade-type.component';
 import { GradeClassComponent } from './grade-class/grade-class.component';
+import { DivisionComponent } from './division/division.component';
+
 @NgModule({
   declarations: [
     NewAccountTypeComponent,
@@ -83,6 +85,7 @@ import { GradeClassComponent } from './grade-class/grade-class.component';
     CountryComponent,
     GradeTypeComponent,
     GradeClassComponent,
+    DivisionComponent,
   ],
   imports: [
     CommonModule,

@@ -170,7 +170,9 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
                 positionClass: 'toast-top-right',})
             },
             (err) => {
-              console.log(err);
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',})
+              console.log(err)
             }
           );
         }

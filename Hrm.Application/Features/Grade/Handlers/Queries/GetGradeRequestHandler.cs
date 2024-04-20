@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.Grade;
 using Hrm.Application.DTOs.GradeType;
 using Hrm.Application.Features.Grade.Requests.Queries;
 using Hrm.Application.Features.GradeType.Requests.Queries;
+using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace Hrm.Application.Features.Grade.Handlers.Queries
         public async Task<object> Handle(GetGradeRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.Grade> grades = _gradeRepository.Where(x => true);
+            grades = grades.OrderByDescending(x => x.GradeId);
             var gradeDto = await Task.Run(() => _mapper.Map<List<GradeDto>>(grades));
 
             return gradeDto;

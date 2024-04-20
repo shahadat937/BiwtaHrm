@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Country } from '../model/Country';
+import { SelectedModel } from './../../../core/models/selectedModel';
 
 @Injectable()
 export class CountryService {
@@ -19,9 +20,9 @@ export class CountryService {
       this.baseUrl + '/country/get-countryDetail/' + id
     );
   }
-  // getAll():Observable<BloodGroup[]> {
-  //   return this.http.get<BloodGroup[]>(this.baseUrl + '/blood-group/get-bloodGroup');
-  // }
+  selectGetCountry(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/country/get-selectedCountrys');
+  }
   getAll(): Observable<Country[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call

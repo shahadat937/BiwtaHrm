@@ -5,10 +5,11 @@ using Hrm.Application.Features.Division.Requests.Commands;
 using Hrm.Application.Responses;
 using MediatR;
 using Hrm.Domain;
+using Hrm.Application.Features.Division.Requests.Commands;
 
 namespace Hrm.Application.Features.Division.Handlers.Commands
 {
-    public class CreateDivisionCommandHandler : IRequestHandler<CreateBloodCommand, BaseCommandResponse>
+    public class CreateDivisionCommandHandler : IRequestHandler<CreateDivisionCommand, BaseCommandResponse>
     {
         private readonly IHrmRepository<Hrm.Domain.Division> _DivisionRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -19,7 +20,7 @@ namespace Hrm.Application.Features.Division.Handlers.Commands
             _mapper = mapper;
             _DivisionRepository = DivisionRepository;
         }
-        public async Task<BaseCommandResponse> Handle(CreateBloodCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(CreateDivisionCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
             var validator = new CreateDivisionDtoValidator();
@@ -38,7 +39,7 @@ namespace Hrm.Application.Features.Division.Handlers.Commands
                 IQueryable<Hrm.Domain.Division> Divisions = _DivisionRepository.Where(x => x.DivisionName.ToLower() == DivisionName);
 
 
-                if (Divisions.Any())
+                if (DivisionNameExists(request))
                 {
                     response.Success = false;
                     response.Message = "Creation Failed Name already exists.";
@@ -60,6 +61,14 @@ namespace Hrm.Application.Features.Division.Handlers.Commands
             }
 
             return response;
+        }
+        private bool DivisionNameExists(CreateDivisionCommand request)
+        {
+            var DivisionName = request.DivisionDto.DivisionName.Trim().ToLower().Replace(" ", string.Empty);
+
+            IQueryable<Hrm.Domain.Division> Divisions = _DivisionRepository.Where(x => x.DivisionName.Trim().ToLower().Replace(" ", string.Empty) == DivisionName);
+
+            return Divisions.Any();
         }
 
     }

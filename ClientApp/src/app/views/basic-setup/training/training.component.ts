@@ -132,7 +132,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
             this.toastr.success('Successfully', 'Update', {
               positionClass: 'toast-top-right',
             });
-            this.getALlTrainingType();
+            this.getALlTrainingTypes();
             this.resetForm();
             this.router.navigate(['/bascisetup/trainingType']);
           } else {
@@ -152,7 +152,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
             this.toastr.success('Successfully', `${response.message}`, {
               positionClass: 'toast-top-right',
             });
-            this.getALlTrainingType();
+            this.getALlTrainingTypes();
             this.resetForm();
           } else {
             this.toastr.warning('', `${response.message}`, {

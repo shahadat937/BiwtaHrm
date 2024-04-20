@@ -1,63 +1,114 @@
 <c-card>
   <c-card-header>Scale </c-card-header>
   <c-card-body>
-
-    <form #ScaleForm="ngForm" (submit)="onSubmit(ScaleForm)" [gutter]="3" novalidate cForm cRow
-      class="needs-validation">
-
+    <form
+      #ScaleForm="ngForm"
+      (submit)="onSubmit(ScaleForm)"
+      [gutter]="3"
+      novalidate
+      cForm
+      cRow
+      class="needs-validation"
+    >
       <c-col [md]="6">
-        <input type="hidden" [(ngModel)]="ScaleService.scales.scaleId" name="scaleId"/>
-       <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> --> 
-       <label cLabel for="validationCustom01">Result Name<span class="text-danger">*</span></label>
-       <input [(ngModel)]="ScaleService.scales.scaleName" name="scaleName"
-       #ScaleName="ngModel" placeholder="Enter Scale Name"
-        cFormControl id="validationCustom01" required type="text" value="Mark" />
-        <div class="text-left text-danger"
-        *ngIf="!ScaleName.valid&&ScaleName.touched">
-        Scale Name  is required
-      </div>
-     </c-col>
+        <label cLabel for="validationCustom01"
+          >Grade Type<span class="text-danger">*</span></label
+        >
+        <select
+          required
+          [(ngModel)]="ScaleService.scales.gradeId"
+          name="gradeId"
+          #gradeId="ngModel"
+          aria-label="Default select example"
+          cSelect
+        >
+          <option [ngValue]="0">Select Grade</option>
+          @for(grade of grades; track grade.id;let index=$index) {
+          <option [value]="grade.id">
+            {{ grade.name }}
+          </option>
+          }
+        </select>
 
-      <c-col [md]="6">
-        <label cLabel for="validationCustom01">Basic Pay<span class="text-danger">*</span></label>
-        <input [(ngModel)]="ScaleService.scales.basicPay" name="basicPay" #BasicPay="ngModel"
-          placeholder="Enter Basic Pay" cFormControl id="validationCustom01" required type="text" value="Mark" />
-        <div class="text-left text-danger" *ngIf="!BasicPay.valid&&BasicPay.touched">
-          BasicPay is required
-        </div>
+        @if(!gradeId.valid && gradeId.touched){
+        <div class="text-left text-danger">Grade Type is required</div>
+        }
       </c-col>
       <c-col [md]="6">
-        <label cLabel for="validationCustom01">Grade<span class="text-danger">*</span></label>
-        <div class="input-wrapper">
-          <select [(ngModel)]="scale.gradeId" name="gradeId" #GradeId="ngModel" cFormControl id="validationCustom01" required>
-            <option value="" disabled selected>Select a Grade</option>
-            <option *ngFor="let grade of grades" [value]="grade.gradeId">{{ grade.gradeName }}</option>
-          </select>
-          <div class="text-left text-danger" *ngIf="!GradeId.valid && GradeId.touched">
-            Grade is required
-          </div>
-        </div>
+        <input
+          type="hidden"
+          [(ngModel)]="ScaleService.scales.scaleId"
+          name="scaleId"
+        />
+        <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
+        <label cLabel for="validationCustom01"
+          >Scale Name<span class="text-danger">*</span></label
+        >
+        <input
+          [(ngModel)]="ScaleService.scales.scaleName"
+          name="scaleName"
+          #ScaleName="ngModel"
+          placeholder="Enter Scale Name"
+          cFormControl
+          id="validationCustom01"
+          required
+          type="text"
+          value="Mark"
+        />
+
+        @if(!ScaleName.valid&&ScaleName.touched){
+        <div class="text-left text-danger">Scale Name is required</div>
+        }
       </c-col>
-      
+
+
+
+      <c-col [md]="6">
+        <label cLabel for="validationCustom01"
+          >Basic Pay<span class="text-danger">*</span></label
+        >
+        <input
+          [(ngModel)]="ScaleService.scales.basicPay"
+          name="basicPay"
+          #BasicPay="ngModel"
+          placeholder="Enter Basic Pay"
+          cFormControl
+          id="validationCustom01"
+          required
+          type="text"
+          value="Mark"
+        />
+
+        @if(!BasicPay.valid&&BasicPay.touched){
+        <div class="text-left text-danger">Basic Pay is required</div>
+        }
+      </c-col>
+
 
       <c-col [md]="6">
         <label cLabel for="validationCustom02">Is Active </label>
-        <input [(ngModel)]="ScaleService.scales.isActive" name="isActive" cFormControl id="validationCustom02"
-          type="text" value="Otto" />
+        <input
+          [(ngModel)]="ScaleService.scales.isActive"
+          name="isActive"
+          cFormControl
+          id="validationCustom02"
+          type="text"
+          value="Otto"
+        />
         <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
       </c-col>
 
-
-
       <c-col [xs]="12">
-        <button [disabled]="
-    ScaleForm.invalid
-  " cButton class="me-1" color="primary" type="submit">
-          Submit
+        <button
+          [disabled]="ScaleForm.invalid"
+          cButton
+          class="me-1"
+          color="primary"
+          type="submit"
+        >
+          {{ btnText }}
         </button>
-        <button cButton color="secondary" (click)="resetForm()">
-          Reset
-        </button>
+        <button cButton color="secondary" (click)="resetForm()">Reset</button>
       </c-col>
     </form>
   </c-card-body>
@@ -68,10 +119,19 @@
   <c-card-body>
     <div class="example-header">
       <mat-form-field>
-        <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here..">
-        <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
-          (click)="filter.value=''; applyFilter('');">
-        </button>
+        <input
+          matInput
+          #filter
+          (keyup)="applyFilter(filter.value)"
+          placeholder="Search Here.."
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          aria-label="clear"
+          *ngIf="filter.value"
+          (click)="filter.value = ''; applyFilter('')"
+        ></button>
       </mat-form-field>
     </div>
 
@@ -79,59 +139,59 @@
       <table mat-table [dataSource]="dataSource">
         <!-- Position Column -->
         <ng-container matColumnDef="slNo">
-          <th mat-header-cell *matHeaderCellDef> Serial No</th>
-          <td mat-cell *matCellDef="let element;let i =index"> {{ i + 1 }}</td>
+          <th mat-header-cell *matHeaderCellDef>Serial No</th>
+          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
         </ng-container>
 
         <ng-container matColumnDef="scaleName">
-          <th mat-header-cell *matHeaderCellDef> Scale Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.scaleName}} </td>
+          <th mat-header-cell *matHeaderCellDef>Scale Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.scaleName }}</td>
         </ng-container>
 
         <ng-container matColumnDef="basicPay">
-          <th mat-header-cell *matHeaderCellDef> Basic Pay </th>
-          <td mat-cell *matCellDef="let element"> {{element.basicPay}} </td>
+          <th mat-header-cell *matHeaderCellDef>Basic Pay</th>
+          <td mat-cell *matCellDef="let element">{{ element.basicPay }}</td>
         </ng-container>
 
-        
-
         <ng-container matColumnDef="gradeId">
-          <th mat-header-cell *matHeaderCellDef> Grade </th>
-          <td mat-cell *matCellDef="let element"> {{element.gradeName}} </td>
+          <th mat-header-cell *matHeaderCellDef>Grade</th>
+          <td mat-cell *matCellDef="let element">{{ element.gradeName }}</td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="isActive">
-          <th mat-header-cell *matHeaderCellDef> Is Active </th>
-          <td mat-cell *matCellDef="let element"> {{element.isActive}} </td>
+          <th mat-header-cell *matHeaderCellDef>Is Active</th>
+          <td mat-cell *matCellDef="let element">{{ element.isActive }}</td>
         </ng-container>
         <ng-container matColumnDef="Action">
-
-          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <th mat-header-cell *matHeaderCellDef>Action</th>
           <td mat-cell *matCellDef="let element">
-            <button class="custom-button" [routerLink]="['/bascisetup/update-scale', element.scaleId]">
+            <button
+              class="custom-button"
+              [routerLink]="['/bascisetup/update-scale', element.scaleId]"
+            >
               <svg cIcon name="cilPencil"></svg>
-
             </button>
             <button class="custom-button" (click)="delete(element)">
               <svg cIcon name="cilTrash"></svg>
             </button>
-
           </td>
-
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
   </c-card-body>
 
   <c-card-footer class="text-medium-emphasis">
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    <mat-paginator
+      appBubblePagination
+      [length]="dataSource.data.length"
+      [pageSize]="10"
+      aria-label="Select page"
+    >
     </mat-paginator>
   </c-card-footer>
-  <c-card>
-
-
-   
+  <c-card> </c-card
+></c-card>

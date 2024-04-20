@@ -41,22 +41,17 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService
-  ) {
-    //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
-
- 
-  }
+  ) {}
   ngOnInit(): void {
-    this.getALlPunishment();
+    this.getALlPunishments();
     this.handleRouteParams();
   }
-  handleRouteParams(){
+  handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('punishmentId');
       if (id) {
         this.btnText = 'Update';
         this.punishmentService.find(+id).subscribe((res) => {
-          console.log(res);
           this.PunishmentForm?.form.patchValue(res);
         });
       } else {
@@ -78,7 +73,7 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  
+
   initaialPunishment(form?: NgForm) {
     if (form != null) form.resetForm();
     this.punishmentService.punishments = {
@@ -89,10 +84,8 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
   resetForm() {
-    console.log(this.PunishmentForm?.form.value);
     this.btnText = 'Submit';
     if (this.PunishmentForm?.form != null) {
-      console.log(this.PunishmentForm?.form);
       this.PunishmentForm.form.reset();
       this.PunishmentForm.form.patchValue({
         punishmentId: 0,
@@ -104,7 +97,7 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/bascisetup/punishment']);
   }
 
-  getALlPunishment() {
+  getALlPunishments() {
     this.actionSubscription = this.punishmentService.getAll().subscribe(
       (item) => {
         this.dataSource = new MatTableDataSource(item);
@@ -114,49 +107,36 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
       (err) => {}
     );
   }
-  // onSubmit(form: NgForm) {
-  //   const id = this.PunishmentForm.form.get('punishmentId')?.value;
-  //   if (id) {
-  //     this.punishmentService.update(+id, this.PunishmentForm.value).subscribe(
-  //       (response: any) => {
-  //         console.log(response);
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', 'Update', {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlPunishment();
-  //           this.resetForm();
+  // onSubmit(form: NgForm): void {
+  //   this.punishmentService.cachedData = [];
+  //   const id = form.value.punishmentId;
+  //   const action$ = id
+  //     ? this.punishmentService.update(id, form.value)
+  //     : this.punishmentService.submit(form.value);
+
+  //   this.actionSubscription = action$.subscribe(
+  //     (response: any) => {
+  //       if (response.success) {
+  //         const successMessage = id ? 'Update' : 'Successfully';
+  //         this.toastr.success(successMessage, `${response.message}`, {
+  //           positionClass: 'toast-top-right',
+  //         });
+  //         this.getALlPunishments();
+  //         this.resetForm();
+  //         if (!id) {
   //           this.router.navigate(['/bascisetup/punishment']);
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
   //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
+  //       } else {
+  //         this.toastr.warning('', `${response.message}`, {
+  //           positionClass: 'toast-top-right',
+  //         });
   //       }
-  //     );
-  //   } else {
-  //     this.subscription = this.punishmentService.submit(form?.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlPunishment();
-  //           this.resetForm();
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   }
+  //     },
+  //     (err) => {
+  //       console.error('Error submitting punishment:', err);
+  //       // Handle error (e.g., show error message to user)
+  //     }
+  //   );
   // }
   onSubmit(form: NgForm): void {
     this.punishmentService.cachedData = [];
@@ -165,32 +145,26 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.punishmentService.update(id, form.value)
       : this.punishmentService.submit(form.value);
 
-    this.actionSubscription = action$.subscribe(
-      (response: any) => {
-        if (response.success) {
-          const successMessage = id ? 'Update' : 'Successfully';
-          this.toastr.success(successMessage, `${response.message}`, {
-            positionClass: 'toast-top-right',
-          });
-          this.getALlPunishment();
-          this.resetForm();
-          if (!id) {
-            this.router.navigate(['/bascisetup/punishment']);
-          }
-        } else {
-          this.toastr.warning('', `${response.message}`, {
-            positionClass: 'toast-top-right',
-          });
+    this.subscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        //  const successMessage = id ? '' : '';
+        this.toastr.success('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.getALlPunishments();
+        this.resetForm();
+        if (!id) {
+          this.router.navigate(['/bascisetup/punishment']);
         }
-      },
-      (err) => {
-        console.error('Error submitting punishment:', err);
-        // Handle error (e.g., show error message to user)
+      } else {
+        this.toastr.warning('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
       }
-    );
+    });
   }
   delete(element: any) {
-    this.actionSubscription =this.confirmService
+    this.actionSubscription = this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((confirm) => {
         if (confirm) {
@@ -205,8 +179,13 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.dataSource.data
                   );
                 }
+                this.toastr.success('Delete sucessfully ! ', ` `, {
+                  positionClass: 'toast-top-right',})
               },
               (err) => {
+                this.toastr.error('Somethig Wrong ! ', ` `, {
+                  positionClass: 'toast-top-right',
+                });
                 console.log(err);
               }
             );

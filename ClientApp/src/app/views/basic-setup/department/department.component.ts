@@ -1,27 +1,26 @@
-import { DepartmentService } from './../service/department.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
-  OnDestroy,
 } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { DepartmentService } from './../service/department.service';
 
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
-import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
-  styleUrl: './department.component.scss'
+  styleUrl: './department.component.scss',
 })
 export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   position = 'top-end';
@@ -35,7 +34,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
-  matSort!: MatSort; 
+  matSort!: MatSort;
   constructor(
     public departmentService: DepartmentService,
     private snackBar: MatSnackBar,
@@ -57,8 +56,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   ngOnInit(): void {
-    this.getALlDepartment();
-    
+    this.getALlDepartments();
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -90,7 +88,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
     if (form != null) form.resetForm();
     this.departmentService.departments = {
       departmentId: 0,
-      departmentName: '', 
+      departmentName: '',
       //districtName:"",
       menuPosition: 0,
       isActive: true,
@@ -104,7 +102,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
       this.DepartmentForm.form.reset();
       this.DepartmentForm.form.patchValue({
         departmentId: 0,
-        departmentName: '', 
+        departmentName: '',
         //  districtName:"",
         menuPosition: 0,
         isActive: true,
@@ -112,9 +110,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  
-
-  getALlDepartment() {
+  getALlDepartments() {
     this.subscription = this.departmentService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
@@ -122,62 +118,98 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  onSubmit(form: NgForm) {
-    const id = this.DepartmentForm.form.get('departmentId')?.value;
-    if (id) {
-      this.departmentService.update(+id, this.DepartmentForm.value).subscribe(
-        (response: any) => {
-          //console.log(response);
-          if (response.success) {
-            this.toastr.success('Successfully', 'Update', {
-              positionClass: 'toast-top-right',
-            });
-            this.getALlDepartment();
-            this.resetForm();
-            this.router.navigate(['/bascisetup/department']);
-          } else {
-            this.toastr.warning('', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-          }
-        },
-        (err) => {
-          console.log(err);
+  // onSubmit(form: NgForm) {
+  //   const id = this.DepartmentForm.form.get('departmentId')?.value;
+  //   if (id) {
+  //     this.departmentService.update(+id, this.DepartmentForm.value).subscribe(
+  //       (response: any) => {
+  //         //console.log(response);
+  //         if (response.success) {
+  //           this.toastr.success('Successfully', 'Update', {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //           this.getALlDepartments();
+  //           this.resetForm();
+  //           this.router.navigate(['/bascisetup/department']);
+  //         } else {
+  //           this.toastr.warning('', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //         }
+  //       },
+  //       (err) => {
+  //         console.log(err);
+  //       }
+  //     );
+  //   } else {
+  //     this.subscription = this.departmentService.submit(form?.value).subscribe(
+  //       (response: any) => {
+  //         if (response.success) {
+  //           this.toastr.success('Successfully', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //           this.getALlDepartments();
+  //           this.resetForm();
+  //         } else {
+  //           this.toastr.warning('', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //         }
+  //       },
+  //       (err) => {
+  //         console.log(err);
+  //       }
+  //     );
+  //   }
+  // }
+  onSubmit(form: NgForm): void {
+    this.departmentService.cachedData = [];
+    const id = form.value.departmentId;
+    const action$ = id
+      ? this.departmentService.update(id, form.value)
+      : this.departmentService.submit(form.value);
+
+    this.subscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        //  const successMessage = id ? '' : '';
+        this.toastr.success('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.getALlDepartments();
+        this.resetForm();
+        if (!id) {
+          this.router.navigate(['/bascisetup/department']);
         }
-      );
-    } else {
-      this.subscription = this.departmentService.submit(form?.value).subscribe(
-        (response: any) => {
-          if (response.success) {
-            this.toastr.success('Successfully', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-            this.getALlDepartment();
-            this.resetForm();
-          } else {
-            this.toastr.warning('', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-          }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    }
+      } else {
+        this.toastr.warning('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+      }
+    });
   }
   delete(element: any) {
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          console.log('department id ' +element.departmentId);
+          console.log('department id ' + element.departmentId);
           this.departmentService.delete(element.departmentId).subscribe(
             (res) => {
-              this.getALlDepartment();
+              const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
+              }
+              this.toastr.success('Delete sucessfully ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
             },
             (err) => {
-              console.log(err);
+              // console.log(err);
+
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
             }
           );
         }

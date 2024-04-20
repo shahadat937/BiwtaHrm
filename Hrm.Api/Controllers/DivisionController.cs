@@ -28,7 +28,7 @@ namespace Hrm.Api.Controllers
         [Route("save-division")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateDivisionDto Division)
         {
-            var command = new CreateBloodCommand { DivisionDto = Division };
+            var command = new CreateDivisionCommand { DivisionDto = Division };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

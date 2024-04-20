@@ -1,203 +1,216 @@
-import { GradeClass } from './../model/GradeClass';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
-import { GradeService } from '../service/Grade.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
-import{GradeClassService} from '../service/GradeClass.service'
-import{GradeTypeService} from '../service/GradeType.service'
-import { GradeType } from '../model/GradeType';
-import { Grade } from '../model/Grade';
+import { Subscription } from 'rxjs';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { GradeService } from '../service/Grade.service';
+import { GradeClassService } from '../service/GradeClass.service';
+import { GradeTypeService } from '../service/GradeType.service';
 
 @Component({
   selector: 'app-grade',
   templateUrl: './grade.component.html',
-  styleUrl: './grade.component.scss'
+  styleUrl: './grade.component.scss',
 })
-export class GradeComponent implements OnInit, OnDestroy, AfterViewInit{
-  
-  gradeType: any[] = [];
-  gradeClass: any[] = [];
+export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
   editMode: boolean = false;
-  grades: any = []
-  btnText:string | undefined;
-  @ViewChild("GradeForm", { static: true }) GradeForm!: NgForm;
-  subscription: Subscription = new Subscription;
-  displayedColumns: string[] = ['slNo', 'gradeName', 'gradeTypeId', 'gradeClassId', 'isActive', 'Action'];
+  gradeType: any = [];
+  gradeClass: any = [];
+
+  btnText: string | undefined;
+  @ViewChild('GradeForm', { static: true }) GradeForm!: NgForm;
+  subscription: Subscription = new Subscription();
+  displayedColumns: string[] = [
+    'slNo',
+    'gradeName',
+    'gradeTypeId',
+    'gradeClassId',
+    'isActive',
+    'Action',
+  ];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-  constructor(
 
+  constructor(
     public gradeService: GradeService,
     private snackBar: MatSnackBar,
-    private gradeServiceClass:GradeClassService,
-    private gradeTypeService:GradeTypeService,
+    private gradeServiceClass: GradeClassService,
+    private gradeTypeService: GradeTypeService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService
-  ){
+  ) {}
 
-
-  
+  ngOnInit(): void {
+    this.getALlGrades();
+    this.GetModelGradeType();
+    this.GetModelGradeClass();
+    this.handleRouteParams();
   }
-
-ngOnInit(): void {
-  this.getALlGrade();
-  this.SelectedModelGradeClass();
-  this.SelectedModelGradeType();
-  this.handleRouteParams();
-}
-// loadGrades() {
-//   this.gradeService.getGrade_cls_type_Vw().subscribe(data => {
-//     this.gradeClass;
-//     this.gradeTypes;
-//   });
-// }
-handleRouteParams(){
-  this.route.paramMap.subscribe(params => {
-    const id = params.get('gradeId');
-    if (id) {
-      this.btnText = 'Update';
-      this.gradeService.find(+id).subscribe(
-        res => {
-          console.log(res);
+  handleRouteParams() {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('gradeId');
+      if (id) {
+        this.btnText = 'Update';
+        this.gradeService.find(+id).subscribe((res) => {
           this.GradeForm?.form.patchValue(res);
-        }
-      );
-    }
-    else {
-
-      this.btnText = 'Submit';
-    }
-  });
-}
-SelectedModelGradeClass(){
-  this.gradeServiceClass.getSelectedGradeClass().subscribe(res=>{
-   //console.log(res)
-   this.grades = res;
-  })
-}
-SelectedModelGradeType(){
-  this.gradeTypeService.getSelectGradeType().subscribe(res=>{
-   //console.log(res)
-   this.grades = res;
-  })
-}
-ngAfterViewInit() {
-  this.dataSource.paginator = this.paginator;
-  this.dataSource.sort = this.matSort;
-}
-ngOnDestroy() {
-  if (this.subscription) {
-    this.subscription.unsubscribe();
+        });
+      } else {
+        this.btnText = 'Submit';
+      }
+    });
   }
-}
-applyFilter(filterValue: string) {
-  filterValue = filterValue.trim();
-  filterValue = filterValue.toLowerCase();
-  this.dataSource.filter = filterValue;
-}
-
-initaialGrade(form?: NgForm) {
-  if (form != null)
-    form.resetForm();
-  this.gradeService.grades = {
-    gradeId: 0,
-    gradeName: "",
-    gradeTypeId: 0,
-    gradeClassId: 0,
-    menuPosition: 0,
-    isActive: true,
+  GetModelGradeClass() {
+    this.gradeServiceClass.getSelectedGradeClass().subscribe((res) => {
+      this.gradeClass = res;
+    });
+  }
+  GetModelGradeType() {
+    this.gradeTypeService.getSelectGradeType().subscribe((res) => {
+      this.gradeType = res;
+    });
+  }
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.matSort;
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
-}
-resetForm() {
-  console.log(this.GradeForm?.form.value)
-  if (this.GradeForm?.form != null) {
-    console.log(this.GradeForm?.form)
-    this.GradeForm.form.reset();
-    this.GradeForm.form.patchValue({
+  initaialGrade(form?: NgForm) {
+    if (form != null) form.resetForm();
+    this.gradeService.grades = {
       gradeId: 0,
-      gradeName: "",
+      gradeName: '',
       gradeTypeId: 0,
       gradeClassId: 0,
       menuPosition: 0,
       isActive: true,
-      
-    });
+    };
   }
-
-}
-getALlGrade() {
-  this.subscription = this.gradeService.getAll().subscribe(item => {
-    this.dataSource = new MatTableDataSource(item);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.matSort;
-
-  });
-
-}
-onSubmit(form: NgForm) {
-  this.gradeService.cachedData = [];
-  const id = this.GradeForm.form.get('gradeId')?.value;
-  if (id) {
-    this.gradeService.update(+id, this.GradeForm.value).subscribe((response: any) => {
-      console.log(response)
-      if (response.success) {
-        this.toastr.success('Successfully', 'Update', { positionClass: 'toast-top-right' });
-        this.getALlGrade()
-        this.resetForm();
-        this.router.navigate(["/bascisetup/grade"]);
-      } else {
-        this.toastr.warning('', `${response.message}`, { positionClass: 'toast-top-right' });
-      }
-
-    }, err => {
-      console.log(err)
-    })
-  } else {
-    this.subscription = this.gradeService.submit(form?.value).subscribe((response: any) => {
-      if (response.success) {
-        this.toastr.success('Successfully', `${response.message}`, { positionClass: 'toast-top-right' });
-        this.getALlGrade()
-        this.resetForm();
-      } else {
-        this.toastr.warning('', `${response.message}`, { positionClass: 'toast-top-right' });
-      }
-
-    }, err => {
-      console.log(err);
-    })
-  }
-
-}
-delete(element: any) {
-  this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result => {
-    if (result) {
-      this.gradeService.delete(element.gradeId).subscribe(res => {
-        const index = this.dataSource.data.indexOf(element);
-        if (index !== -1) {
-          this.dataSource.data.splice(index, 1);
-          this.dataSource = new MatTableDataSource(
-            this.dataSource.data
-          );
-        }
-      }, (err) => {
-        console.log(err)
+  resetForm() {
+    if (this.GradeForm?.form != null) {
+      this.GradeForm.form.reset();
+      this.GradeForm.form.patchValue({
+        gradeId: 0,
+        gradeName: '',
+        gradeTypeId: 0,
+        gradeClassId: 0,
+        menuPosition: 0,
+        isActive: true,
       });
     }
-  })
+    this.router.navigate(['/bascisetup/grade']);
+  }
+  getALlGrades() {
+    this.subscription = this.gradeService.getAll().subscribe((item) => {
+      this.dataSource = new MatTableDataSource(item);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.matSort;
+    });
+  }
+  // onSubmit(form: NgForm) {
+  //   this.gradeService.cachedData = [];
+  //   const id = this.GradeForm.form.get('gradeId')?.value;
+  //   if (id) {
+  //     this.gradeService.update(+id, this.GradeForm.value).subscribe((response: any) => {
+  //       if (response.success) {
+  //         this.toastr.success('Successfully', 'Update', { positionClass: 'toast-top-right' });
+  //         this.getALlGrades()
+  //         this.resetForm();
+  //         this.router.navigate(["/bascisetup/grade"]);
+  //       } else {
+  //         this.toastr.warning('', `${response.message}`, { positionClass: 'toast-top-right' });
+  //       }
 
+  //     }, err => {
+  //       console.log(err)
+  //     })
+  //   } else {
+  //     this.subscription = this.gradeService.submit(form?.value).subscribe((response: any) => {
+  //       if (response.success) {
+  //         this.toastr.success('Successfully', `${response.message}`, { positionClass: 'toast-top-right' });
+  //         this.getALlGrades()
+  //         this.resetForm();
+  //       } else {
+  //         this.toastr.warning('', `${response.message}`, { positionClass: 'toast-top-right' });
+  //       }
 
-}
+  //     }, err => {
+  //       console.log(err);
+  //     })
+  //   }
+
+  // }
+  onSubmit(form: NgForm): void {
+    this.gradeService.cachedData = [];
+    const id = form.value.gradeId;
+    const action$ = id
+      ? this.gradeService.update(id, form.value)
+      : this.gradeService.submit(form.value);
+
+    this.subscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        //  const successMessage = id ? '' : '';
+        this.toastr.success('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.getALlGrades();
+        this.resetForm();
+        if (!id) {
+          this.router.navigate(['/bascisetup/grade']);
+        }
+      } else {
+        this.toastr.warning('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+      }
+    });
+  }
+  delete(element: any) {
+    this.confirmService
+      .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+      .subscribe((result) => {
+        if (result) {
+          this.gradeService.delete(element.gradeId).subscribe(
+            (res) => {
+              const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
+              }
+            },
+            (err) => {
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+              console.log(err);
+            }
+          );
+        }
+      });
+  }
 }

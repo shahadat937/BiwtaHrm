@@ -5,6 +5,6 @@ export class Grade {
         gradeTypeId:number=0;
         gradeClassId:number=0;
         menuPosition: number=0;
-        isActive: boolean=true
+        isActive: boolean=true;
    
 }

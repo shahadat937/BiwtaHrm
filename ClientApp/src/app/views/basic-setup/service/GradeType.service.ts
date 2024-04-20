@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GradeClass } from '../model/GradeClass';
 import { GradeType } from '../model/GradeType';
+import { GradeTypeViewModel } from '../model/GradeTypeViewModel';
 import { Observable, map, of } from 'rxjs';
 
 @Injectable({
@@ -13,24 +14,21 @@ import { Observable, map, of } from 'rxjs';
 })
 export class GradeTypeService {
   cachedData: any[] = [];
-  getSelectedGradeClass() {
-    throw new Error('Method not implemented.');
-  }
   baseUrl = environment.apiUrl;
-  gradeType: GradeType;
-  selection = new SelectionModel<GradeType>(true, []);
-  constructor(private http: HttpClient) {
-    this.gradeType = new GradeType();
-   }
+  gradeTypes: GradeType;
 
-  getSelectGradeType():Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl + '/grade/get-selectedGrade');
+  constructor(private http: HttpClient) {
+    this.gradeTypes = new GradeType();
+   }
+   find(id: number) {
+    return this.http.get<GradeType>(this.baseUrl + '/grade-type/get-GradeTypeDetail/' + id);
   }
 
-   //Custome route:
-  // getGradeType() {
-  //   return this.http.get<any[]>(this.baseUrl + '/grade-type/get-selectedGradeTypes');
-  // }
+//Custom
+  getSelectGradeType(){
+    return this.http.get<GradeTypeViewModel[]>(this.baseUrl + '/grade-type/get-selectedGradeTypes');
+  }
+
   getAll(): Observable<GradeType[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call
@@ -38,7 +36,7 @@ export class GradeTypeService {
     } else {
       // If data is not cached, make a server call to fetch it
       return this.http
-        .get<GradeType[]>(this.baseUrl + '/grade-type/get-selectedGradeTypes')
+        .get<GradeType[]>(this.baseUrl + '/grade-type/get-gradeType')
         .pipe(
           map((data) => {
             this.cachedData = data; // Cache the data

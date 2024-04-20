@@ -12,49 +12,48 @@ import { EmployeeTypeService } from '../service/employee-type.service';
 @Component({
   selector: 'app-employee-type',
   templateUrl: './employee-type.component.html',
-  styleUrl: './employee-type.component.scss'
+  styleUrl: './employee-type.component.scss',
 })
 export class EmployeeTypeComponent {
-  btnText:string | undefined;
-  @ViewChild("employeeTypeForm", { static: true }) employeeTypeForm!: NgForm;
-  subscription: Subscription = new Subscription;
-  displayedColumns: string[] = ['slNo','employeeTypeName', 'isActive','Action'];
+  btnText: string | undefined;
+  @ViewChild('employeeTypeForm', { static: true }) employeeTypeForm!: NgForm;
+  subscription: Subscription = new Subscription();
+  displayedColumns: string[] = [
+    'slNo',
+    'employeeTypeName',
+    'isActive',
+    'Action',
+  ];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-constructor(
-  public employeeTypeService:EmployeeTypeService,
-  private route: ActivatedRoute,
-  private router: Router,
-  private confirmService: ConfirmService,
-  private toastr: ToastrService
-  )
-  {
-  //  const id = this.route.snapshot.paramMap.get('bloodGroupId'); 
- }
+  constructor(
+    public employeeTypeService: EmployeeTypeService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private confirmService: ConfirmService,
+    private toastr: ToastrService
+  ) {
+    //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
+  }
   ngOnInit(): void {
-    this.employeeType();
+    this.getEmployeeTypes();
     this.handleRouteParams();
   }
-  handleRouteParams(){
-    this.route.paramMap.subscribe(params => {
+  handleRouteParams() {
+    this.route.paramMap.subscribe((params) => {
       const id = params.get('employeeTypeId');
       if (id) {
         this.btnText = 'Update';
-        this.employeeTypeService.find(+id).subscribe(
-          res => {
-            this.employeeTypeForm?.form.patchValue(res);
-          }
-        );
-      }
-      else {
-
+        this.employeeTypeService.find(+id).subscribe((res) => {
+          this.employeeTypeForm?.form.patchValue(res);
+        });
+      } else {
         this.btnText = 'Submit';
       }
     });
-
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -70,94 +69,116 @@ constructor(
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
- 
-  initaialBloodGroup(form?:NgForm){
-    if(form!=null)
-    form.resetForm();
+
+  initaialBloodGroup(form?: NgForm) {
+    if (form != null) form.resetForm();
     this.employeeTypeService.employeeType = {
-      employeeTypeId:0,
-      employeeTypeName:"",
-      menuPosition:0,
-      isActive:true 
-
-    }
-
-   }
-   resetForm() {
+      employeeTypeId: 0,
+      employeeTypeName: '',
+      menuPosition: 0,
+      isActive: true,
+    };
+  }
+  resetForm() {
     this.btnText = 'Submit';
     if (this.employeeTypeForm?.form != null) {
       this.employeeTypeForm.form.reset();
       this.employeeTypeForm.form.patchValue({
-        employeeTypeId:0,
-        employeeTypeName:"",
-      menuPosition:0,
-      isActive:true 
-
+        employeeTypeId: 0,
+        employeeTypeName: '',
+        menuPosition: 0,
+        isActive: true,
       });
     }
-
   }
 
-  employeeType(){
-   this.subscription=this.employeeTypeService.getAll().subscribe(item=>{
-     this.dataSource=new MatTableDataSource(item);
-     this.dataSource.paginator = this.paginator;
-     this.dataSource.sort = this.matSort;
-
+  getEmployeeTypes() {
+    this.subscription = this.employeeTypeService.getAll().subscribe((item) => {
+      this.dataSource = new MatTableDataSource(item);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.matSort;
     });
-
   }
-   onSubmit(form:NgForm){
+  //  onSubmit(form:NgForm){
+  //   this.employeeTypeService.cachedData = [];
+  //   const id = this.employeeTypeForm.form.get('employeeTypeId')?.value;
+  //   if (id) {
+  //     this.employeeTypeService.update(+id,this.employeeTypeForm.value).subscribe((response:any) => {
+
+  //       if(response.success){
+  //         this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
+  //         this.employeeType()
+  //         this.resetForm();
+  //         this.router.navigate(["/bascisetup/employee-type"]);
+  //       }else{
+  //         this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
+  //       }
+
+  //     }, err => {
+  //       console.log(err)
+  //     })
+  //   }else{
+  //  this.subscription=this.employeeTypeService.submit(form?.value).subscribe((response:any)=>{
+  //   if(response.success){
+  //     this.toastr.success('Successfully', `${response.message}`,{ positionClass: 'toast-top-right' });
+  //     this.employeeType()
+  //     this.resetForm();
+  //   }else{
+  //     this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
+  //   }
+
+  //  },err=>{
+  //    console.log(err);
+  //  })
+  //   }
+
+  // }
+  onSubmit(form: NgForm): void {
     this.employeeTypeService.cachedData = [];
-    const id = this.employeeTypeForm.form.get('employeeTypeId')?.value;
-    if (id) {
-      this.employeeTypeService.update(+id,this.employeeTypeForm.value).subscribe((response:any) => {
- 
-        if(response.success){
-          this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
-          this.employeeType()
-          this.resetForm();
-          this.router.navigate(["/bascisetup/employee-type"]);  
-        }else{
-          this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
+    const id = form.value.employeeTypeId;
+    const action$ = id
+      ? this.employeeTypeService.update(id, form.value)
+      : this.employeeTypeService.submit(form.value);
+
+    this.subscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        //  const successMessage = id ? '' : '';
+        this.toastr.success('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.getEmployeeTypes();
+        this.resetForm();
+        if (!id) {
+          this.router.navigate(['/bascisetup/employee-type']);
         }
-        
-      }, err => {
-        console.log(err)
-      })
-    }else{
-   this.subscription=this.employeeTypeService.submit(form?.value).subscribe((response:any)=>{
-    if(response.success){
-      this.toastr.success('Successfully', `${response.message}`,{ positionClass: 'toast-top-right' });
-      this.employeeType()
-      this.resetForm();
-    }else{
-      this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
-    }
-
-   },err=>{
-     console.log(err);
-   })
-    }
-
-  }
-  delete(element:any){
-    this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result=>{
-      if (result) {
-        this.employeeTypeService.delete(element.employeeTypeId).subscribe(res=>{
-          const index = this.dataSource.data.indexOf(element);
-          if (index !== -1) {
-            this.dataSource.data.splice(index, 1);
-            this.dataSource = new MatTableDataSource(
-              this.dataSource.data
-            );
-          }
-        },(err) => { 
-       console.log(err)
+      } else {
+        this.toastr.warning('', `${response.message}`, {
+          positionClass: 'toast-top-right',
         });
       }
-    })
-   
-    
+    });
+  }
+  delete(element: any) {
+    this.confirmService
+      .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+      .subscribe((result) => {
+        if (result) {
+          this.employeeTypeService.delete(element.employeeTypeId).subscribe(
+            (res) => {
+              const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
+              }
+            },
+            (err) => {
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+              console.log(err);
+            }
+          );
+        }
+      });
   }
 }

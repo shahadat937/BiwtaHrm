@@ -6,6 +6,7 @@ using Hrm.Application.DTOs.Punishment.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.Punishment.Requests.Commands;
 using Hrm.Application.Features.Punishment.Requests.Commands;
+using Hrm.Application.Features.Scales.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using MediatR;
@@ -77,6 +78,14 @@ namespace Hrm.Application.Features.Punishment.Handlers.Commands
 
             }
             return response;
+        }
+        private bool PunishmentNameExists(CreatePunishmentCommand request)
+        {
+            var PunishmentName = request.PunishmentDto.PunishmentName.Trim().ToLower().Replace(" ", string.Empty);
+
+            IQueryable<Hrm.Domain.Punishment> Punishments = _PunishmentRepository.Where(x => x.PunishmentName.Trim().ToLower().Replace(" ", string.Empty) == PunishmentName);
+
+            return Punishments.Any();
         }
     }
 }

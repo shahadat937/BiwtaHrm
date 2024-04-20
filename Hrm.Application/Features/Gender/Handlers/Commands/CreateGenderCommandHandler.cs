@@ -27,7 +27,9 @@ namespace Hrm.Application.Features.Gender.Handlers.Commands
             if (validationResult.IsValid == false)
             {
                 response.Success = false;
-                response.Message = "Creation Failed";
+                response.Message = $"Creation Failed '{request.GenderDto.GenderName}' already exists.";
+
+                //response.Message = "Creation Failed";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
             }
             else

@@ -9,9 +9,15 @@ namespace Hrm.Domain
 {
     public class Country : BaseDomainEntity
     {
+        public Country()
+        {
+            Divisions = new HashSet<Division>();
+        }
         public int CountryId { get; set; }
         public string? CountryName { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual ICollection<Division> Divisions { get; set; }
     }
 }

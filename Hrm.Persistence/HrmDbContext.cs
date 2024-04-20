@@ -52,6 +52,10 @@ namespace Hrm.Persistence
             });
             modelBuilder.Entity<Division>(entity => {
 
+                entity.HasOne(d => d.Country)
+                  .WithMany(p => p.Divisions)
+                  .HasForeignKey(d => d.CountryId)
+                  .HasConstraintName("FK__Division__Countr__0D7A0286");
                 entity.HasKey(e => e.DivisionId)
                     .HasName("PK_DivisionId");
 

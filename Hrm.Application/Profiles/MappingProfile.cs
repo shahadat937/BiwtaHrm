@@ -71,7 +71,8 @@ namespace Hrm.Application.Profiles
             CreateMap<TrainingType, TrainingTypeDto>().ReverseMap();
             CreateMap<TrainingType, CreateTrainingTypeDto>().ReverseMap();
 
-            CreateMap<Division, DivisionDto>().ReverseMap();
+            CreateMap<DivisionDto, Division>().ReverseMap()
+                 .ForMember(d => d.countryName, o => o.MapFrom(s => s.Country.CountryName));
             CreateMap<Division, CreateDivisionDto>().ReverseMap();
 
 

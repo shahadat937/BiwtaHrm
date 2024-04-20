@@ -209,10 +209,12 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
           this.upazilaService.delete(element.upazilaId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
-              if (index !== -1) {
-                this.dataSource.data.splice(index, 1);
-                this.dataSource = new MatTableDataSource(this.dataSource.data);
-              }
+          if (index !== -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource = new MatTableDataSource(
+              this.dataSource.data
+            );
+          }
             },
             (err) => {
               // console.log(err);

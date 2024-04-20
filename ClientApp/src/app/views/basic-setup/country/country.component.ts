@@ -186,8 +186,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
               this.toastr.success('Delete sucessfully ! ', ` `, {
-                positionClass: 'toast-top-right',
-              });
+                positionClass: 'toast-top-right',})
             },
             (err) => {
               this.toastr.error('Somethig Wrong ! ', ` `, {

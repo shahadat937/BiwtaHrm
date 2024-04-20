@@ -23,6 +23,7 @@ import { BloodGroupService } from './../service/BloodGroup.service';
 export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('BloodGroupForm', { static: true }) BloodGroupForm!: NgForm;
+  loading = false;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'bloodGroupName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
@@ -145,12 +146,13 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.bloodGroupService.cachedData = [];
     const id = form.value.bloodGroupId;
     const action$ = id
       ? this.bloodGroupService.update(id, form.value)
       : this.bloodGroupService.submit(form.value);
-
+    
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
@@ -162,11 +164,14 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/blood-group']);
         }
+    this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      
+    this.loading = false;
     });
   }
   delete(element: any) {

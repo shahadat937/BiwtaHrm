@@ -49,12 +49,14 @@
       </c-col>
       <c-col [xs]="12">
         <button
+          [disabled]="loading"
           [disabled]="BloodGroupForm.invalid"
           cButton
           class="me-1"
           color="primary"
           type="submit"
         >
+          <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
           {{ btnText }}
         </button>
         <button cButton color="secondary" (click)="resetForm()">Reset</button>

@@ -7,6 +7,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   styleUrls: ['./confirm-dialog.component.sass']
 })
 export class ConfirmDialogComponent implements OnInit {
+  loading = false;
   title!: string;
   message!: string;
   btnOkText!: string;
@@ -21,6 +22,7 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
   confirm() {
+    this.loading = true;
     this.result = true;
     this.bsModalRef.hide();
   }

@@ -1,32 +1,37 @@
-import { Country } from './../model/Country';
-import { DivisionService } from './../service/division.service';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
-import { CountryService } from '../service/country.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { CountryService } from '../service/country.service';
+import { DivisionService } from './../service/division.service';
 
 @Component({
   selector: 'app-division',
   templateUrl: './division.component.html',
-  styleUrl: './division.component.scss'
+  styleUrl: './division.component.scss',
 })
 export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
   //grades: any[] = [];
   editMode: boolean = false;
   countrys: SelectedModel[] = [];
-  
+
   btnText: string | undefined;
-  @ViewChild("DivisionForm", { static: true }) DivisionForm!: NgForm;
-  subscription: Subscription = new Subscription;
-  displayedColumns: string[] = ['slNo', 'divisionName','isActive', 'Action'];
+  @ViewChild('DivisionForm', { static: true }) DivisionForm!: NgForm;
+  subscription: Subscription = new Subscription();
+  displayedColumns: string[] = ['slNo', 'divisionName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -40,27 +45,22 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService
-  ) {
-  }
+  ) {}
   ngOnInit(): void {
-    this.getALlDivision();
+    this.getALlDivisions();
     this.SelectModelCountry();
     //this.loaddivisions();
     this.handleRouteParams();
   }
-  handleRouteParams(){
-    this.route.paramMap.subscribe(params => {
+  handleRouteParams() {
+    this.route.paramMap.subscribe((params) => {
       const id = params.get('divisionId');
       if (id) {
         this.btnText = 'Update';
-        this.devisionService.find(+id).subscribe(
-          res => {
-            this.DivisionForm?.form.patchValue(res);
-          }
-        );
-      }
-      else {
-
+        this.devisionService.find(+id).subscribe((res) => {
+          this.DivisionForm?.form.patchValue(res);
+        });
+      } else {
         this.btnText = 'Submit';
       }
     });
@@ -73,7 +73,7 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
   //   });
   // }
   SelectModelCountry() {
-    this.countryService.selectGetCountry().subscribe(data => {
+    this.countryService.selectGetCountry().subscribe((data) => {
       //console.log(data);
       this.countrys = data;
     });
@@ -94,93 +94,114 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   initaialDivision(form?: NgForm) {
-    if (form != null)
-      form.resetForm();
+    if (form != null) form.resetForm();
     this.devisionService.divisions = {
       divisionId: 0,
-      divisionName: "",
+      divisionName: '',
       countryId: 0,
       menuPosition: 0,
       isActive: true,
-    }
-
+    };
   }
   resetForm() {
     if (this.DivisionForm?.form != null) {
       this.DivisionForm.form.reset();
       this.DivisionForm.form.patchValue({
         divisionId: 0,
-        divisionName: "",
+        divisionName: '',
         countryId: 0,
         menuPosition: 0,
         isActive: true,
-
       });
     }
     this.router.navigate(['/bascisetup/division']);
-
   }
-  getALlDivision() {
-    this.subscription = this.devisionService.getAll().subscribe(item => {
+  getALlDivisions() {
+    this.subscription = this.devisionService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-
     });
-
   }
-  onSubmit(form: NgForm) {
+  // onSubmit(form: NgForm) {
+  //   this.devisionService.cachedData = [];
+  //   const id = this.DivisionForm.form.get('divisionId')?.value;
+  //   if (id) {
+  //     this.devisionService.update(+id, this.DivisionForm.value).subscribe((response: any) => {
+  //       if (response.success) {
+  //         this.toastr.success('Successfully', 'Update', { positionClass: 'toast-top-right' });
+  //         this.getALlDivisions()
+  //         this.resetForm();
+  //         this.router.navigate(["/bascisetup/division"]);
+  //       } else {
+  //         this.toastr.warning('', `${response.message}`, { positionClass: 'toast-top-right' });
+  //       }
+
+  //     }, err => {
+  //       console.log(err)
+  //     })
+  //   } else {
+  //     this.subscription = this.devisionService.submit(form?.value).subscribe((response: any) => {
+  //       if (response.success) {
+  //         this.toastr.success('Successfully', `${response.message}`, { positionClass: 'toast-top-right' });
+  //         this.getALlDivisions()
+  //         this.resetForm();
+  //       } else {
+  //         this.toastr.warning('', `${response.message}`, { positionClass: 'toast-top-right' });
+  //       }
+
+  //     }, err => {
+  //       console.log(err);
+  //     })
+  //   }
+
+  // }
+  onSubmit(form: NgForm): void {
     this.devisionService.cachedData = [];
-    const id = this.DivisionForm.form.get('divisionId')?.value;
-    if (id) {
-      this.devisionService.update(+id, this.DivisionForm.value).subscribe((response: any) => {
-        if (response.success) {
-          this.toastr.success('Successfully', 'Update', { positionClass: 'toast-top-right' });
-          this.getALlDivision()
-          this.resetForm();
-          this.router.navigate(["/bascisetup/division"]);
-        } else {
-          this.toastr.warning('', `${response.message}`, { positionClass: 'toast-top-right' });
+    const id = form.value.divisionId;
+    const action$ = id
+      ? this.devisionService.update(id, form.value)
+      : this.devisionService.submit(form.value);
+
+    this.subscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        //  const successMessage = id ? '' : '';
+        this.toastr.success('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.getALlDivisions();
+        this.resetForm();
+        if (!id) {
+          this.router.navigate(['/bascisetup/division']);
         }
-
-      }, err => {
-        console.log(err)
-      })
-    } else {
-      this.subscription = this.devisionService.submit(form?.value).subscribe((response: any) => {
-        if (response.success) {
-          this.toastr.success('Successfully', `${response.message}`, { positionClass: 'toast-top-right' });
-          this.getALlDivision()
-          this.resetForm();
-        } else {
-          this.toastr.warning('', `${response.message}`, { positionClass: 'toast-top-right' });
-        }
-
-      }, err => {
-        console.log(err);
-      })
-    }
-
-  }
-  delete(element: any) {
-    this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe(result => {
-      if (result) {
-        this.devisionService.delete(element.divisionId).subscribe(res => {
-          const index = this.dataSource.data.indexOf(element);
-          if (index !== -1) {
-            this.dataSource.data.splice(index, 1);
-            this.dataSource = new MatTableDataSource(
-              this.dataSource.data
-            );
-          }
-        }, (err) => {
-          this.toastr.error('Somethig Wrong ! ', ` `, {
-            positionClass: 'toast-top-right',})
-          console.log(err)
+      } else {
+        this.toastr.warning('', `${response.message}`, {
+          positionClass: 'toast-top-right',
         });
       }
-    })
-
-
+    });
+  }
+  delete(element: any) {
+    this.confirmService
+      .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+      .subscribe((result) => {
+        if (result) {
+          this.devisionService.delete(element.divisionId).subscribe(
+            (res) => {
+              const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
+              }
+            },
+            (err) => {
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+              console.log(err);
+            }
+          );
+        }
+      });
   }
 }

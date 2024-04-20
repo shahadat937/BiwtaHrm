@@ -1,26 +1,25 @@
-import { TrainingTypeService } from './../service/trainingType.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
-  OnDestroy,
 } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { TrainingTypeService } from './../service/trainingType.service';
 
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
-import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 @Component({
   selector: 'app-training',
   templateUrl: './training.component.html',
-  styleUrl: './training.component.scss'
+  styleUrl: './training.component.scss',
 })
 export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
   position = 'top-end';
@@ -29,12 +28,17 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('TrainingTypeForm', { static: true }) TrainingTypeForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'trainingTypeName', 'isActive', 'Action'];
+  displayedColumns: string[] = [
+    'slNo',
+    'trainingTypeName',
+    'isActive',
+    'Action',
+  ];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
-  matSort!: MatSort; 
+  matSort!: MatSort;
   constructor(
     public trainingTypeService: TrainingTypeService,
     private snackBar: MatSnackBar,
@@ -56,8 +60,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   ngOnInit(): void {
-    this.getALlTrainingType();
-    
+    this.getALlTrainingTypes();
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -89,7 +92,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
     if (form != null) form.resetForm();
     this.trainingTypeService.trainingTypes = {
       trainingTypeId: 0,
-      trainingTypeName: '', 
+      trainingTypeName: '',
       //districtName:"",
       menuPosition: 0,
       isActive: true,
@@ -103,7 +106,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
       this.TrainingTypeForm.form.reset();
       this.TrainingTypeForm.form.patchValue({
         trainingTypeId: 0,
-        trainingTypeName: '', 
+        trainingTypeName: '',
         //  districtName:"",
         menuPosition: 0,
         isActive: true,
@@ -111,9 +114,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  
-
-  getALlTrainingType() {
+  getALlTrainingTypes() {
     this.subscription = this.trainingTypeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
@@ -121,74 +122,98 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  onSubmit(form: NgForm) {
-    const id = this.TrainingTypeForm.form.get('trainingTypeId')?.value;
-    if (id) {
-      this.trainingTypeService.update(+id, this.TrainingTypeForm.value).subscribe(
-        (response: any) => {
-          //console.log(response);
-          if (response.success) {
-            this.toastr.success('Successfully', 'Update', {
-              positionClass: 'toast-top-right',
-            });
-            this.getALlTrainingType();
-            this.resetForm();
-            this.router.navigate(['/bascisetup/trainingType']);
-          } else {
-            this.toastr.warning('', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-          }
-        },
-        (err) => {
-          console.log(err);
+  // onSubmit(form: NgForm) {
+  //   const id = this.TrainingTypeForm.form.get('trainingTypeId')?.value;
+  //   if (id) {
+  //     this.trainingTypeService.update(+id, this.TrainingTypeForm.value).subscribe(
+  //       (response: any) => {
+  //         //console.log(response);
+  //         if (response.success) {
+  //           this.toastr.success('Successfully', 'Update', {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //           this.getALlTrainingTypes();
+  //           this.resetForm();
+  //           this.router.navigate(['/bascisetup/trainingType']);
+  //         } else {
+  //           this.toastr.warning('', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //         }
+  //       },
+  //       (err) => {
+  //         console.log(err);
+  //       }
+  //     );
+  //   } else {
+  //     this.subscription = this.trainingTypeService.submit(form?.value).subscribe(
+  //       (response: any) => {
+  //         if (response.success) {
+  //           this.toastr.success('Successfully', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //           this.getALlTrainingTypes();
+  //           this.resetForm();
+  //         } else {
+  //           this.toastr.warning('', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //         }
+  //       },
+  //       (err) => {
+  //         console.log(err);
+  //       }
+  //     );
+  //   }
+  // }
+  onSubmit(form: NgForm): void {
+    this.trainingTypeService.cachedData = [];
+    const id = form.value.trainingTypeId;
+    const action$ = id
+      ? this.trainingTypeService.update(id, form.value)
+      : this.trainingTypeService.submit(form.value);
+
+    this.subscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        //  const successMessage = id ? 'Update' : 'Successfully';
+        this.toastr.success('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.getALlTrainingTypes();
+        this.resetForm();
+        if (!id) {
+          this.router.navigate(['/bascisetup/trainingType']);
         }
-      );
-    } else {
-      this.subscription = this.trainingTypeService.submit(form?.value).subscribe(
-        (response: any) => {
-          if (response.success) {
-            this.toastr.success('Successfully', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-            this.getALlTrainingType();
-            this.resetForm();
-          } else {
-            this.toastr.warning('', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-          }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    }
+      } else {
+        this.toastr.warning('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+      }
+    });
   }
   delete(element: any) {
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          console.log('trainingType id ' +element.trainingTypeId);
+          console.log('trainingType id ' + element.trainingTypeId);
           this.trainingTypeService.delete(element.trainingTypeId).subscribe(
-            (res) => {  const index = this.dataSource.data.indexOf(element);
+            (res) => {
+              const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {
                 this.dataSource.data.splice(index, 1);
-                this.dataSource = new MatTableDataSource(
-                  this.dataSource.data
-                );
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
-                },
-                (err) => {
-                 // console.log(err);
-    
-                  this.toastr.error('Somethig Wrong ! ', ` `, {
-                    positionClass: 'toast-top-right',})
-                }
-              );
+            },
+            (err) => {
+              // console.log(err);
+
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
             }
-          });
-      }
-    }
-    
+          );
+        }
+      });
+  }
+}

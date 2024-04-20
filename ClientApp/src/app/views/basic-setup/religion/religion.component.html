@@ -31,12 +31,10 @@
           type="text"
           value="Mark"
         />
-        <div
-          class="text-left text-danger"
-          *ngIf="!ReligionName.valid && ReligionName.touched"
-        >
-          Religion Name is required
-        </div>
+
+        @if(!ReligionName.valid && ReligionName.touched){
+        <div class="text-left text-danger">Religion Name is required</div>
+        }
       </c-col>
       <c-col [md]="6">
         <label cLabel for="validationCustom02">Is Active </label>

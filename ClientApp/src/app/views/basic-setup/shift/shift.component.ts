@@ -1,27 +1,26 @@
-import { ShiftService } from './../service/shift.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
-  OnDestroy,
 } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { ShiftService } from './../service/shift.service';
 
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
-import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
   selector: 'app-shift',
   templateUrl: './shift.component.html',
-  styleUrl: './shift.component.scss'
+  styleUrl: './shift.component.scss',
 })
 export class ShiftComponent implements OnInit, OnDestroy, AfterViewInit {
   position = 'top-end';
@@ -35,7 +34,7 @@ export class ShiftComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
-  matSort!: MatSort; 
+  matSort!: MatSort;
   constructor(
     public shiftService: ShiftService,
     private snackBar: MatSnackBar,
@@ -57,8 +56,7 @@ export class ShiftComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   ngOnInit(): void {
-    this.getALlShift();
-    
+    this.getALlShifts();
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -90,7 +88,7 @@ export class ShiftComponent implements OnInit, OnDestroy, AfterViewInit {
     if (form != null) form.resetForm();
     this.shiftService.shifts = {
       shiftId: 0,
-      shiftName: '', 
+      shiftName: '',
       //districtName:"",
       menuPosition: 0,
       isActive: true,
@@ -104,7 +102,7 @@ export class ShiftComponent implements OnInit, OnDestroy, AfterViewInit {
       this.ShiftForm.form.reset();
       this.ShiftForm.form.patchValue({
         shiftId: 0,
-        shiftName: '', 
+        shiftName: '',
         //  districtName:"",
         menuPosition: 0,
         isActive: true,
@@ -112,9 +110,7 @@ export class ShiftComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  
-
-  getALlShift() {
+  getALlShifts() {
     this.subscription = this.shiftService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
@@ -122,74 +118,98 @@ export class ShiftComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  onSubmit(form: NgForm) {
-    const id = this.ShiftForm.form.get('shiftId')?.value;
-    if (id) {
-      this.shiftService.update(+id, this.ShiftForm.value).subscribe(
-        (response: any) => {
-          //console.log(response);
-          if (response.success) {
-            this.toastr.success('Successfully', 'Update', {
-              positionClass: 'toast-top-right',
-            });
-            this.getALlShift();
-            this.resetForm();
-            this.router.navigate(['/bascisetup/shift']);
-          } else {
-            this.toastr.warning('', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-          }
-        },
-        (err) => {
-          console.log(err);
+  // onSubmit(form: NgForm) {
+  //   const id = this.ShiftForm.form.get('shiftId')?.value;
+  //   if (id) {
+  //     this.shiftService.update(+id, this.ShiftForm.value).subscribe(
+  //       (response: any) => {
+  //         //console.log(response);
+  //         if (response.success) {
+  //           this.toastr.success('Successfully', 'Update', {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //           this.getALlShifts();
+  //           this.resetForm();
+  //           this.router.navigate(['/bascisetup/shift']);
+  //         } else {
+  //           this.toastr.warning('', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //         }
+  //       },
+  //       (err) => {
+  //         console.log(err);
+  //       }
+  //     );
+  //   } else {
+  //     this.subscription = this.shiftService.submit(form?.value).subscribe(
+  //       (response: any) => {
+  //         if (response.success) {
+  //           this.toastr.success('Successfully', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //           this.getALlShifts();
+  //           this.resetForm();
+  //         } else {
+  //           this.toastr.warning('', `${response.message}`, {
+  //             positionClass: 'toast-top-right',
+  //           });
+  //         }
+  //       },
+  //       (err) => {
+  //         console.log(err);
+  //       }
+  //     );
+  //   }
+  // }
+  onSubmit(form: NgForm): void {
+    this.shiftService.cachedData = [];
+    const id = form.value.shiftId;
+    const action$ = id
+      ? this.shiftService.update(id, form.value)
+      : this.shiftService.submit(form.value);
+
+    this.subscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        //  const successMessage = id ? 'Update' : 'Successfully';
+        this.toastr.success('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.getALlShifts();
+        this.resetForm();
+        if (!id) {
+          this.router.navigate(['/bascisetup/shift']);
         }
-      );
-    } else {
-      this.subscription = this.shiftService.submit(form?.value).subscribe(
-        (response: any) => {
-          if (response.success) {
-            this.toastr.success('Successfully', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-            this.getALlShift();
-            this.resetForm();
-          } else {
-            this.toastr.warning('', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-          }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    }
+      } else {
+        this.toastr.warning('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+      }
+    });
   }
   delete(element: any) {
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          console.log('shift id ' +element.shiftId);
+          console.log('shift id ' + element.shiftId);
           this.shiftService.delete(element.shiftId).subscribe(
-            (res) => {  const index = this.dataSource.data.indexOf(element);
+            (res) => {
+              const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {
                 this.dataSource.data.splice(index, 1);
-                this.dataSource = new MatTableDataSource(
-                  this.dataSource.data
-                );
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
-                },
-                (err) => {
-                 // console.log(err);
-    
-                  this.toastr.error('Somethig Wrong ! ', ` `, {
-                    positionClass: 'toast-top-right',})
-                }
-              );
+            },
+            (err) => {
+              // console.log(err);
+
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
             }
-          });
-      }
-    }
-    
+          );
+        }
+      });
+  }
+}

@@ -43,6 +43,8 @@ using Hrm.Application.DTOs.Scale;
 using Hrm.Application.DTOs.ScaleGradeView;
 using Hrm.Application.DTOs.Grade_cls_type_Vw;
 using Hrm.Application.DTOs.SubBranch;
+using Hrm.Application.DTOs.Relation;
+using Hrm.Application.DTOs.Occupation;
 
 namespace Hrm.Application.Profiles
 {
@@ -159,6 +161,12 @@ namespace Hrm.Application.Profiles
 
             CreateMap<SubBranch, SubBranchDto>().ReverseMap();
             CreateMap<SubBranch, CreateSubBranchDto>().ReverseMap();
+
+            CreateMap<Relation, RelationDto>().ReverseMap();
+            CreateMap<Relation, CreateRelationDto>().ReverseMap();
+
+            CreateMap<Occupation, OccupationDto>().ReverseMap();
+            CreateMap<Occupation, CreateOccupationDto>().ReverseMap();
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();
             CreateMap<Module, ModuleFeatureDto>().ReverseMap();

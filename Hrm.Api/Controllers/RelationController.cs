@@ -1,8 +1,11 @@
 ﻿using Hrm.Application;
+using Hrm.Application.DTOs.Relation;
 using Hrm.Application.DTOs.Relation; 
 using Hrm.Application.Features.Relation.Requests.Commands;
 using Hrm.Application.Features.Relation.Requests.Queries;
+using Hrm.Application.Features.Relations.Requests.Queries;
 using Hrm.Application.Responses;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
@@ -16,23 +19,27 @@ namespace Hrm.Api.Controllers
         {
             _mediator = mediator;
         }
-        [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [Route("save-Relation")]
-        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateRelationDto relationDto)
+        [HttpGet]
+        [Route("get-relation")]
+        public async Task<ActionResult> Get()
         {
-            var command = new CreateRelationCommand { RelationDto = relationDto };
-            var response = await _mediator.Send(command);
-            return Ok(response);
+            var country = await _mediator.Send(new GetRelationRequest { });
+            return Ok(country);
+        }
+        [HttpGet]
+        [Route("get-relationDetail/{id}")]
+        public async Task<ActionResult<RelationDto>> Get(int id)
+        {
+            var Relations = await _mediator.Send(new GetRelationDetailRequest { RelationId = id });
+            return Ok(Relations);
         }
 
         [HttpGet]
-        [Route("get-Relation")]
-        public async Task<ActionResult> Get()
+        [Route("get-selectedRelation")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedRelation()
         {
-            var Relation = await _mediator.Send(new GetRelationRequest { });
-            return Ok(Relation);
+            var Relations = await _mediator.Send(new GetSelectRelationRequest { });
+            return Ok(Relations);
         }
 
         [HttpPut]

@@ -51,6 +51,7 @@ namespace Hrm.Application
         public const string ScaleGradeView = HRMRoutePrefixBase + "scaleGradeView";
         public const string PromotionType = HRMRoutePrefixBase + "promotionType";
         public const string Grade_cls_type_Vw = HRMRoutePrefixBase + "grade_cls_type_Vw";
+        public const string Occupation = HRMRoutePrefixBase + "Occupation";
 
 
     }

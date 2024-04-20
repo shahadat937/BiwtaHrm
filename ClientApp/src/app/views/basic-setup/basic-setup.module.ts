@@ -55,6 +55,7 @@ import { CountryService } from './service/country.service';
 import { GradeTypeComponent } from './grade-type/grade-type.component';
 import { GradeClassComponent } from './grade-class/grade-class.component';
 import { DivisionComponent } from './division/division.component';
+import { SpinnerModule } from '@coreui/angular';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import { DivisionComponent } from './division/division.component';
     ListGroupModule,
     SharedCustomModule,
     ProgressModule,
+    SpinnerModule,
   ],
   providers: [
     CountryService,

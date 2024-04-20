@@ -4,18 +4,31 @@
 
     <form #ScaleForm="ngForm" (submit)="onSubmit(ScaleForm)" [gutter]="3" novalidate cForm cRow
       class="needs-validation">
-      
-      <c-col [md]="6"> 
+
+      <!-- <c-col [md]="6"> 
         <label cLabel for="validationCustom01">Grade Type<span class="text-danger">*</span></label>
         <select required [(ngModel)]="ScaleService.scales.gradeId" name="gradeId"
-         #gradeId="ngModel" aria-label="Default select example" cSelect>
+         #GradeId="ngModel" aria-label="Default select example" cSelect>
         <option [ngValue]="0">Select Grade </option>
         <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.name }}</option>
       </select>
-      <div class="text-left text-danger" *ngIf="!gradeId.valid && gradeId.touched">
+      <div class="text-left text-danger" *ngIf="!GradeId.valid && GradeId.touched">
         Grade Type is required
       </div>
-    </c-col>
+    </c-col> -->
+
+    <c-col [md]="6"> 
+      <label cLabel for="validationCustom01">Grade Type<span class="text-danger">*</span></label>
+      <select required [(ngModel)]="ScaleService.scales.gradeId" name="gradeId"
+              #GradeId="ngModel" aria-label="Default select example" cSelect>
+          <option [ngValue]="0">Select Grade</option>
+          <option *ngFor="let grade of grades" [value]="grade.id">{{ grade.name }}</option>
+      </select>
+      <div class="text-left text-danger" *ngIf="!GradeId.valid && GradeId.touched">
+          Grade Type is required
+      </div>
+  </c-col>
+  
     <c-col [md]="6">
       <input type="hidden" [(ngModel)]="ScaleService.scales.scaleId" name="scaleId"/>
      <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> --> 

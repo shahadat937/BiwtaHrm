@@ -1,63 +1,51 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using Hrm.Application.Contracts.Persistence;
-using Hrm.Application.DTOs.BloodGroup.Validators;
 using Hrm.Application.DTOs.Institute.Validators;
 using Hrm.Application.Features.Institute.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Hrm.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.Institute.Handlers.Commands
 {
     public class CreateInstituteCommandHandler : IRequestHandler<CreateInstituteCommand, BaseCommandResponse>
     {
-        private readonly IHrmRepository<Hrm.Domain.Institute> _InstituteRepository; 
+        private readonly IHrmRepository<Hrm.Domain.Institute> _instituteRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public CreateInstituteCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Institute> InstituteRepository)
+        public CreateInstituteCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Institute> instituteRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _InstituteRepository = InstituteRepository;
+            _instituteRepository = instituteRepository;
         }
-
-
         public async Task<BaseCommandResponse> Handle(CreateInstituteCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
             var validator = new CreateInstituteDtoValidator();
-            var validatorResult = await validator.ValidateAsync(request.InstituteDto);
+            var validationResult = await validator.ValidateAsync(request.InstituteDto);
 
-            if (validatorResult.IsValid == false)
+            if (validationResult.IsValid == false)
             {
                 response.Success = false;
                 response.Message = "Creation Failed";
-                response.Errors = validatorResult.Errors.Select(x=> x.ErrorMessage).ToList();
+                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
             }
             else
             {
+                //   var instituteName = request.InstituteDto.InstituteName.Trim().ToLower().Replace(" ", string.Empty);
 
-                var InstituteName = request.InstituteDto.InstituteName.ToLower();
+                //  IQueryable<Hrm.Domain.Institute> institutes = _instituteRepository.Where(x => x.InstituteName.ToLower().Replace(" ", string.Empty) == instituteName);
 
-                IQueryable<Hrm.Domain.Institute> Institutees = _InstituteRepository.Where(x => x.InstituteName.ToLower() == InstituteName);
 
-                
-
-                if (Institutees.Any())
+                if (InstituteNameExists(request))
                 {
                     response.Success = false;
-                    response.Message = "Creation Failed Name already exists.";
-                    response.Errors = validatorResult.Errors.Select(q => q.ErrorMessage).ToList();
+                    response.Message = $"Creation Failed '{request.InstituteDto.InstituteName}' already exists.";
+                    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
                 }
-
                 else
                 {
                     var Institute = _mapper.Map<Hrm.Domain.Institute>(request.InstituteDto);
@@ -65,13 +53,22 @@ namespace Hrm.Application.Features.Institute.Handlers.Commands
                     Institute = await _unitOfWork.Repository<Hrm.Domain.Institute>().Add(Institute);
                     await _unitOfWork.Save();
 
+
                     response.Success = true;
-                    response.Message = "Creation Successfull";
+                    response.Message = "Creation Successful";
                     response.Id = Institute.InstituteId;
                 }
             }
 
             return response;
+        }
+        private bool InstituteNameExists(CreateInstituteCommand request)
+        {
+            var instituteName = request.InstituteDto.InstituteName.Trim().ToLower().Replace(" ", string.Empty);
+
+            IQueryable<Hrm.Domain.Institute> institutes = _instituteRepository.Where(x => x.InstituteName.Trim().ToLower().Replace(" ", string.Empty) == instituteName);
+
+            return institutes.Any();
         }
     }
 }

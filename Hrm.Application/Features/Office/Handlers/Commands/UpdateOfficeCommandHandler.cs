@@ -18,14 +18,14 @@ namespace Hrm.Application.Features.Office.Handlers.Commands
     public class UpdateOfficeCommandHandler : IRequestHandler<UpdateOfficeCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.Office> _OfficeRepository;
+        private readonly IHrmRepository<Hrm.Domain.Office> _officeRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public UpdateOfficeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Office> OfficeRepository)
+        public UpdateOfficeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Office> officeRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _OfficeRepository = OfficeRepository;
+            _officeRepository = officeRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateOfficeCommand request, CancellationToken cancellationToken)
@@ -48,15 +48,15 @@ namespace Hrm.Application.Features.Office.Handlers.Commands
                 throw new NotFoundException(nameof(Office), request.OfficeDto.OfficeId);
             }
 
-            var OfficeName = request.OfficeDto.OfficeName.ToLower();
+            var officeName = request.OfficeDto.OfficeName.ToLower();
 
-            IQueryable<Hrm.Domain.Office> Offices = _OfficeRepository.Where(x => x.OfficeName.ToLower() == OfficeName);
+            IQueryable<Hrm.Domain.Office> offices = _officeRepository.Where(x => x.OfficeName.ToLower() == officeName);
 
 
-            if (Offices.Any())
+            if (offices.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.OfficeDto.OfficeName}' already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

@@ -495,6 +495,14 @@ export const navItems: INavData[] = [
         url: '/bascisetup/designation'
       },
       {
+        name: 'GradeType',
+        url: '/bascisetup/grade-type'
+      },
+      {
+        name: 'GradeClass',
+        url: '/bascisetup/grade-class'
+      },
+      {
         name: 'Grade',
         url: '/bascisetup/grade'
       },
@@ -535,11 +543,11 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Country',
-        url: '/base/accordion'
+        url: '/bascisetup/country'
       },
       {
         name: 'Division',
-        url: '/base/breadcrumbs'
+        url: '/bascisetup/division'
       },
       {
         name: 'District',

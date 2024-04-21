@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.Division;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.Division.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
+using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace Hrm.Application.Features.Division.Handlers.Queries
         public async Task<object> Handle(GetDivisionRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.Division> Divisions = _DivisionRepository.Where(x => true);
-
+            Divisions = Divisions.OrderByDescending(x => x.DivisionId);
             var DivisionDtos = _mapper.Map<List<DivisionDto>>(Divisions);
 
             return DivisionDtos;

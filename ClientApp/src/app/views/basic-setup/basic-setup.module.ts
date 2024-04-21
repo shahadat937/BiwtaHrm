@@ -50,6 +50,12 @@ import { ScaleComponent } from './scale/scale.component';
 import { BloodGroupService } from './service/BloodGroup.service';
 import { ThanaComponent } from './thana/thana.component';
 import { UpazilaComponent } from './upazila/upazila.component';
+import { CountryComponent } from './country/country.component';
+import { CountryService } from './service/country.service';
+import { GradeTypeComponent } from './grade-type/grade-type.component';
+import { GradeClassComponent } from './grade-class/grade-class.component';
+import { DivisionComponent } from './division/division.component';
+import { TrainingNameComponent } from './training-name/training-name.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +83,11 @@ import { UpazilaComponent } from './upazila/upazila.component';
     PunishmentComponent,
     PromotionTypeComponent,
     GradeComponent,
+    CountryComponent,
+    GradeTypeComponent,
+    GradeClassComponent,
+    DivisionComponent,
+    TrainingNameComponent,
   ],
   imports: [
     CommonModule,
@@ -98,6 +109,7 @@ import { UpazilaComponent } from './upazila/upazila.component';
     ProgressModule,
   ],
   providers: [
+    CountryService,
     BloodGroupService,
     ToastrService,
     ChildStatusService,

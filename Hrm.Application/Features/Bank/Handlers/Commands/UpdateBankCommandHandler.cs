@@ -18,14 +18,14 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
     public class UpdateBankCommandHandler : IRequestHandler<UpdateBankCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.Bank> _BankRepository;
+        private readonly IHrmRepository<Hrm.Domain.Bank> _bankRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public UpdateBankCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Bank> BankRepository)
+        public UpdateBankCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Bank> bankRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _BankRepository = BankRepository;
+            _bankRepository = bankRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateBankCommand request, CancellationToken cancellationToken)
@@ -48,15 +48,15 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
                 throw new NotFoundException(nameof(Bank), request.BankDto.BankId);
             }
 
-            var BankName = request.BankDto.BankName.ToLower();
+            var bankName = request.BankDto.BankName.ToLower();
 
-            IQueryable<Hrm.Domain.Bank> Banks = _BankRepository.Where(x => x.BankName.ToLower() == BankName);
+            IQueryable<Hrm.Domain.Bank> banks = _bankRepository.Where(x => x.BankName.ToLower() == bankName);
 
 
-            if (Banks.Any())
+            if (banks.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.BankDto.BankName}' already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

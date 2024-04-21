@@ -204,6 +204,22 @@ namespace Hrm.Persistence
                 .HasName("[[PK_Institute]]");
             });
 
+            modelBuilder.Entity<Relation>(entity =>
+            {
+                entity.HasKey(e => e.RelationId)
+                .HasName("[[PK_RelationId]]");
+            });
+            modelBuilder.Entity<Occupation>(entity =>
+            {
+                entity.HasKey(e => e.OccupationId)
+                .HasName("[[PK_OccupationId]]");
+            });
+
+            modelBuilder.Entity<OfficeAddress>(entity =>
+            {
+                entity.HasKey(e => e.OfficeAddressId)
+                .HasName("[[PK_OfficeAddressId]]");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -243,6 +259,8 @@ namespace Hrm.Persistence
         public virtual DbSet<Scale> Scale { get; set; } = null!;
         public virtual DbSet<ScaleGradeView> ScaleGradeView { get; set; } = null!;
         public virtual DbSet<Grade_cls_type_Vw> Grade_cls_type_Vw { get; set; } = null!;
+        public virtual DbSet<Relation> Relation { get; set; } = null!;
+        public virtual DbSet<Occupation> Occupation { get; set; } = null!;
 
         public virtual DbSet<TrainingName> TrainingName { get; set; } = null!;
 
@@ -253,8 +271,9 @@ namespace Hrm.Persistence
         public virtual DbSet<BankBranch> BankBranch { get; set; } = null!;
         public virtual DbSet<Bank> Bank { get; set; } = null!;
         public virtual DbSet<Institute> Institute { get; set; } = null!;
+        public virtual DbSet<OfficeAddress> OfficeAddress { get; set; } = null!;
 
-       
+
 
     }
 }

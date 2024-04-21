@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.Country;
 using Hrm.Application.DTOs.TrainingType;
 using Hrm.Application.Features.Country.Requests.Queries;
 using Hrm.Application.Features.TrainingType.Requests.Queries;
+using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace Hrm.Application.Features.Country.Handlers.Queries
         public async Task<object> Handle(GetCountryRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.Country> countries = _countryRepository.Where(x => true);
+            countries = countries.OrderByDescending(x => x.CountryId);
             var CountryDtos = await Task.Run(() => _mapper.Map<List<CountryDto>>(countries));
 
             return CountryDtos;

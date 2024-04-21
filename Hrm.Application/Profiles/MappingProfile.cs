@@ -52,6 +52,9 @@ using Hrm.Application.DTOs.BankAccountType;
 using Hrm.Application.DTOs.BankBranch;
 using Hrm.Application.DTOs.Bank;
 using Hrm.Application.DTOs.Institute;
+using Hrm.Application.DTOs.Relation;
+using Hrm.Application.DTOs.Occupation;
+using Hrm.Application.DTOs.OfficeAddress;
 
 namespace Hrm.Application.Profiles
 {
@@ -192,6 +195,17 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Institute, InstituteDto>().ReverseMap();
             CreateMap<Institute, CreateInstituteDto>().ReverseMap();
+
+            CreateMap<Relation, RelationDto>().ReverseMap();
+            CreateMap<Relation, CreateRelationDto>().ReverseMap();
+
+            CreateMap<Occupation, OccupationDto>().ReverseMap();
+            CreateMap<Occupation, CreateOccupationDto>().ReverseMap();
+
+
+            CreateMap<OfficeAddress, OfficeAddressDto>().ReverseMap();
+            CreateMap<OfficeAddress, CreateOfficeAddressDto>().ReverseMap();
+
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();
             CreateMap<Module, ModuleFeatureDto>().ReverseMap();

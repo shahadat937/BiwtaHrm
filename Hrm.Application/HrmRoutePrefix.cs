@@ -59,7 +59,9 @@ namespace Hrm.Application
         public const string Bank = HRMRoutePrefixBase + "Bank";
         public const string Institute = HRMRoutePrefixBase + "Institute";
         public const string BankBranch = HRMRoutePrefixBase + "BankBranch";
+        public const string Occupation = HRMRoutePrefixBase + "Occupation";
+        public const string OfficeAddress = HRMRoutePrefixBase + "OfficeAddress";
 
-        
+
     }
 }

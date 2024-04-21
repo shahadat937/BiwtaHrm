@@ -527,7 +527,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Eyes Color',
-        url: '/base/tabs'
+        url: '/bascisetup/eyesColor'
       },
       {
         name: 'Relation',

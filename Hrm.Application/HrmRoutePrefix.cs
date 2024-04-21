@@ -61,6 +61,7 @@ namespace Hrm.Application
         public const string BankBranch = HRMRoutePrefixBase + "BankBranch";
         public const string Occupation = HRMRoutePrefixBase + "Occupation";
         public const string HairColor = HRMRoutePrefixBase + "hairColor";
+        public const string EyesColor = HRMRoutePrefixBase + "eyesColor";
 
 
         

@@ -55,6 +55,7 @@ using Hrm.Application.DTOs.Institute;
 using Hrm.Application.DTOs.Relation;
 using Hrm.Application.DTOs.Occupation;
 using Hrm.Application.DTOs.HairColor;
+using Hrm.Application.DTOs.EyesColor;
 
 
 namespace Hrm.Application.Profiles
@@ -208,6 +209,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<HairColor, HairColorDto>().ReverseMap();
             CreateMap<HairColor, CreateHairColorDto>().ReverseMap();
+
+            CreateMap<EyesColor, EyesColorDto>().ReverseMap();
+            CreateMap<EyesColor, CreateEyesColorDto>().ReverseMap();
 
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();

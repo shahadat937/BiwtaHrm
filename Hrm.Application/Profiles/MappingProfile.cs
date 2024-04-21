@@ -52,9 +52,7 @@ using Hrm.Application.DTOs.BankAccountType;
 using Hrm.Application.DTOs.BankBranch;
 using Hrm.Application.DTOs.Bank;
 using Hrm.Application.DTOs.Institute;
-using Hrm.Application.DTOs.Relation;
-using Hrm.Application.DTOs.Occupation;
-using Hrm.Application.DTOs.OfficeAddress;
+>>>>>>>>> Temporary merge branch 2
 
 namespace Hrm.Application.Profiles
 {
@@ -83,7 +81,8 @@ namespace Hrm.Application.Profiles
             CreateMap<TrainingType, TrainingTypeDto>().ReverseMap();
             CreateMap<TrainingType, CreateTrainingTypeDto>().ReverseMap();
 
-            CreateMap<Division, DivisionDto>().ReverseMap();
+            CreateMap<DivisionDto, Division>().ReverseMap()
+                 .ForMember(d => d.countryName, o => o.MapFrom(s => s.Country.CountryName));
             CreateMap<Division, CreateDivisionDto>().ReverseMap();
 
 
@@ -171,6 +170,14 @@ namespace Hrm.Application.Profiles
 
             CreateMap<SubBranch, SubBranchDto>().ReverseMap();
             CreateMap<SubBranch, CreateSubBranchDto>().ReverseMap();
+<<<<<<<<< Temporary merge branch 1
+
+            CreateMap<Relation, RelationDto>().ReverseMap();
+            CreateMap<Relation, CreateRelationDto>().ReverseMap();
+
+            CreateMap<Occupation, OccupationDto>().ReverseMap();
+            CreateMap<Occupation, CreateOccupationDto>().ReverseMap();
+=========
             
             CreateMap<TrainingName, TrainingNameDto>().ReverseMap();
             CreateMap<TrainingName, CreateTrainingNameDto>().ReverseMap();
@@ -195,17 +202,7 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Institute, InstituteDto>().ReverseMap();
             CreateMap<Institute, CreateInstituteDto>().ReverseMap();
-
-            CreateMap<Relation, RelationDto>().ReverseMap();
-            CreateMap<Relation, CreateRelationDto>().ReverseMap();
-
-            CreateMap<Occupation, OccupationDto>().ReverseMap();
-            CreateMap<Occupation, CreateOccupationDto>().ReverseMap();
-
-
-            CreateMap<OfficeAddress, OfficeAddressDto>().ReverseMap();
-            CreateMap<OfficeAddress, CreateOfficeAddressDto>().ReverseMap();
-
+>>>>>>>>> Temporary merge branch 2
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();
             CreateMap<Module, ModuleFeatureDto>().ReverseMap();

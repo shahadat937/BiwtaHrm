@@ -1,10 +1,5 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { LeaveService } from './../service/Leave.service';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,26 +8,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { BloodGroupService } from './../service/BloodGroup.service';
 
 @Component({
-  selector: 'app-blood-group',
-  templateUrl: './blood-group.component.html',
-  styleUrl: './blood-group.component.scss',
+  selector: 'app-leave',
+  templateUrl: './leave.component.html',
+  styleUrl: './leave.component.scss'
 })
-export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
+export class LeaveComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
-  @ViewChild('BloodGroupForm', { static: true }) BloodGroupForm!: NgForm;
-  loading = false;
+  @ViewChild('LeaveForm', { static: true }) LeaveForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'bloodGroupName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'leaveName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
   constructor(
-    public bloodGroupService: BloodGroupService,
+    public leaveService: LeaveService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -41,16 +34,16 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
     //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
   }
   ngOnInit(): void {
-    this.getALlBloodGroups();
+    this.getAllLeaves();
     this.handleRouteParams();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('bloodGroupId');
+      const id = params.get('leaveId');
       if (id) {
         this.btnText = 'Update';
-        this.bloodGroupService.find(+id).subscribe((res) => {
-          this.BloodGroupForm?.form.patchValue(res);
+        this.leaveService.find(+id).subscribe((res) => {
+          this.LeaveForm?.form.patchValue(res);
         });
       } else {
         this.btnText = 'Submit';
@@ -72,106 +65,60 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  initaialBloodGroup(form?: NgForm) {
+  initaialLeave(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.bloodGroupService.bloodGroups = {
-      bloodGroupId: 0,
-      bloodGroupName: '',
+    this.leaveService.leaves = {
+      leaveId: 0,
+      leaveName: '',
       menuPosition: 0,
       isActive: true,
     };
   }
   resetForm() {
     this.btnText = 'Submit';
-    if (this.BloodGroupForm?.form != null) {
-      this.BloodGroupForm.form.reset();
-      this.BloodGroupForm.form.patchValue({
-        bloodGroupId: 0,
-        bloodGroupName: '',
+    if (this.LeaveForm?.form != null) {
+      this.LeaveForm.form.reset();
+      this.LeaveForm.form.patchValue({
+        leaveId: 0,
+        leaveName: '',
         menuPosition: 0,
         isActive: true,
       });
     }
+    this.router.navigate(['/bascisetup/leave']);
+
   }
 
-  getALlBloodGroups() {
-    this.subscription = this.bloodGroupService.getAll().subscribe((item) => {
+  getAllLeaves() {
+    this.subscription = this.leaveService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
   }
-  // onSubmit(form: NgForm) {
-  //   this.bloodGroupService.cachedData = [];
-  //   const id = this.BloodGroupForm.form.get('bloodGroupId')?.value;
-  //   if (id) {
-  //     this.bloodGroupService.update(+id, this.BloodGroupForm.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', 'Update', {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlBloodGroups();
-  //           this.resetForm();
-  //           this.router.navigate(['/bascisetup/blood-group']);
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   } else {
-  //     this.subscription = this.bloodGroupService.submit(form?.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlBloodGroup();
-  //           this.resetForm();
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   }
-  // }
   onSubmit(form: NgForm): void {
-    this.loading = true;
-    this.bloodGroupService.cachedData = [];
-    const id = form.value.bloodGroupId;
+    this.leaveService.cachedData = [];
+    const id = form.value.leaveId;
     const action$ = id
-      ? this.bloodGroupService.update(id, form.value)
-      : this.bloodGroupService.submit(form.value);
-    
+      ? this.leaveService.update(id, form.value)
+      : this.leaveService.submit(form.value);
+
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getALlBloodGroups();
+        this.getAllLeaves();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/blood-group']);
+          this.router.navigate(['/bascisetup/leave']);
         }
-    this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
-      
-    this.loading = false;
     });
   }
   delete(element: any) {
@@ -179,7 +126,7 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.bloodGroupService.delete(element.bloodGroupId).subscribe(
+          this.leaveService.delete(element.leaveId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {

@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 // Import app component
 import { AppComponent } from './app.component';
+import { SpinnerModule } from '@coreui/angular';
 
 // Import containers
 import {
@@ -92,7 +93,7 @@ const APP_CONTAINERS = [
     HttpClientModule,
     ToastrModule.forRoot(),
     CommonModule,
-
+    SpinnerModule,
   ],
   providers: [
     {

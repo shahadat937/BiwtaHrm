@@ -1,10 +1,6 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Occupation } from './../model/Occupation';
+import { OccupationService } from './../service/Occupation.service';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,26 +9,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { BloodGroupService } from './../service/BloodGroup.service';
 
 @Component({
-  selector: 'app-blood-group',
-  templateUrl: './blood-group.component.html',
-  styleUrl: './blood-group.component.scss',
+  selector: 'app-occupation',
+  templateUrl: './occupation.component.html',
+  styleUrl: './occupation.component.scss'
 })
-export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
+export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
-  @ViewChild('BloodGroupForm', { static: true }) BloodGroupForm!: NgForm;
-  loading = false;
+  @ViewChild('OccupationForm', { static: true }) OccupationForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'bloodGroupName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'occupationName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
   constructor(
-    public bloodGroupService: BloodGroupService,
+    public occupationService: OccupationService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -41,16 +35,16 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
     //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
   }
   ngOnInit(): void {
-    this.getALlBloodGroups();
+    this.getAllOccupations();
     this.handleRouteParams();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('bloodGroupId');
+      const id = params.get('occupationId');
       if (id) {
         this.btnText = 'Update';
-        this.bloodGroupService.find(+id).subscribe((res) => {
-          this.BloodGroupForm?.form.patchValue(res);
+        this.occupationService.find(+id).subscribe((res) => {
+          this.OccupationForm?.form.patchValue(res);
         });
       } else {
         this.btnText = 'Submit';
@@ -72,30 +66,32 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  initaialBloodGroup(form?: NgForm) {
+  initaialOccupation(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.bloodGroupService.bloodGroups = {
-      bloodGroupId: 0,
-      bloodGroupName: '',
+    this.occupationService.occupations = {
+      occupationId: 0,
+      occupationName: '',
       menuPosition: 0,
       isActive: true,
     };
   }
   resetForm() {
     this.btnText = 'Submit';
-    if (this.BloodGroupForm?.form != null) {
-      this.BloodGroupForm.form.reset();
-      this.BloodGroupForm.form.patchValue({
-        bloodGroupId: 0,
-        bloodGroupName: '',
+    if (this.OccupationForm?.form != null) {
+      this.OccupationForm.form.reset();
+      this.OccupationForm.form.patchValue({
+        occupationId: 0,
+        occupationName: '',
         menuPosition: 0,
         isActive: true,
       });
     }
+    this.router.navigate(['/bascisetup/occupation']);
+
   }
 
-  getALlBloodGroups() {
-    this.subscription = this.bloodGroupService.getAll().subscribe((item) => {
+  getAllOccupations() {
+    this.subscription = this.occupationService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -146,32 +142,28 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   onSubmit(form: NgForm): void {
-    this.loading = true;
-    this.bloodGroupService.cachedData = [];
-    const id = form.value.bloodGroupId;
+    this.occupationService.cachedData = [];
+    const id = form.value.occupationId;
     const action$ = id
-      ? this.bloodGroupService.update(id, form.value)
-      : this.bloodGroupService.submit(form.value);
-    
+      ? this.occupationService.update(id, form.value)
+      : this.occupationService.submit(form.value);
+
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getALlBloodGroups();
+        this.getAllOccupations();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/blood-group']);
+          this.router.navigate(['/bascisetup/occupation']);
         }
-    this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
-      
-    this.loading = false;
     });
   }
   delete(element: any) {
@@ -179,7 +171,7 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.bloodGroupService.delete(element.bloodGroupId).subscribe(
+          this.occupationService.delete(element.occupationId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {

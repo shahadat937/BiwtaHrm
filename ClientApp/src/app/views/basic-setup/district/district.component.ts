@@ -117,8 +117,7 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   loaddivisions() {
-    console.log('division');
-    this.districtService.getDivision().subscribe((data) => {
+    this.districtService.getDivision().subscribe(data => {
       console.log('division' + data);
       this.divisions = data;
     });

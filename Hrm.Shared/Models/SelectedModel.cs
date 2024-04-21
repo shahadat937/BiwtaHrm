@@ -6,7 +6,7 @@ namespace Hrm.Shared.Models
 {
    public class SelectedModel
     {
-        public object Id { set; get; }
-        public object Name { set; get; }
+        public int Id { set; get; }
+        public string? Name { set; get; }
     }
 }

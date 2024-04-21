@@ -52,6 +52,10 @@ namespace Hrm.Persistence
             });
             modelBuilder.Entity<Division>(entity => {
 
+                entity.HasOne(d => d.Country)
+                  .WithMany(p => p.Divisions)
+                  .HasForeignKey(d => d.CountryId)
+                  .HasConstraintName("FK__Division__Countr__0D7A0286");
                 entity.HasKey(e => e.DivisionId)
                     .HasName("PK_DivisionId");
 
@@ -161,6 +165,7 @@ namespace Hrm.Persistence
                 .HasName("[[PK_SubBranchId]]");
             });
 
+
             modelBuilder.Entity<TrainingName>(entity =>
             {
                 entity.HasKey(e => e.TrainingNameId)
@@ -203,6 +208,7 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.InstituteId)
                 .HasName("[[PK_Institute]]");
             });
+
 
             modelBuilder.Entity<Relation>(entity =>
             {

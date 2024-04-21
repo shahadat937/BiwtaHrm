@@ -61,6 +61,7 @@ import { LeaveComponent } from './leave/leave.component';
 import { LeaveService } from './service/Leave.service';
 import { OverallEVPromotionComponent } from './overall-ev-promotion/overall-ev-promotion.component';
 import { Overall_EV_PromotionService } from './service/Overall_EV_Promotion.service';
+import { HairColorComponent } from './hair-color/hair-color.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +96,7 @@ import { Overall_EV_PromotionService } from './service/Overall_EV_Promotion.serv
     OccupationComponent,
     LeaveComponent,
     OverallEVPromotionComponent,
+    HairColorComponent,
   ],
   imports: [
     CommonModule,

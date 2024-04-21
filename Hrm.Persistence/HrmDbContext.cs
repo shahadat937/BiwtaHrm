@@ -170,6 +170,11 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.OccupationId)
                 .HasName("[[PK_OccupationId]]");
             });
+            modelBuilder.Entity<HairColor>(entity =>
+            {
+                entity.HasKey(e => e.HairColorId)
+                .HasName("[[PK_HairColorId]]");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -211,6 +216,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Grade_cls_type_Vw> Grade_cls_type_Vw { get; set; } = null!;
         public virtual DbSet<Relation> Relation { get; set; } = null!;
         public virtual DbSet<Occupation> Occupation { get; set; } = null!;
+        public virtual DbSet<HairColor> HairColor { get; set; } = null!;
 
 
 

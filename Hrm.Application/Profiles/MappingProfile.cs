@@ -45,6 +45,7 @@ using Hrm.Application.DTOs.Grade_cls_type_Vw;
 using Hrm.Application.DTOs.SubBranch;
 using Hrm.Application.DTOs.Relation;
 using Hrm.Application.DTOs.Occupation;
+using Hrm.Application.DTOs.HairColor;
 
 namespace Hrm.Application.Profiles
 {
@@ -167,6 +168,10 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Occupation, OccupationDto>().ReverseMap();
             CreateMap<Occupation, CreateOccupationDto>().ReverseMap();
+
+            CreateMap<HairColor, HairColorDto>().ReverseMap();
+            CreateMap<HairColor, CreateHairColorDto>().ReverseMap();
+
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();
             CreateMap<Module, ModuleFeatureDto>().ReverseMap();

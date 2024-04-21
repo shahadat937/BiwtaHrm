@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation.Results;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Overall_EV_Promotion.Validators;
 using Hrm.Application.Exceptions;
@@ -9,36 +8,36 @@ using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Overall_EV_Promotion.Handlers.Commands
 {
-    public class UpdateOverall_EV_PromotionCommandHandler : IRequestHandler<UpdateOverall_EV_PromotionCommand, Unit>
+    public class UpdateOverall_EV_PromotionCommandHandler : IRequestHandler<UpdateOverall_EV_PromotionCommand, BaseCommandResponse>
     {
 
+        private readonly IHrmRepository<Hrm.Domain.Overall_EV_Promotion> _Overall_EV_PromotionRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public UpdateOverall_EV_PromotionCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateOverall_EV_PromotionCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Overall_EV_Promotion> Overall_EV_PromotionRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _Overall_EV_PromotionRepository = Overall_EV_PromotionRepository;
         }
 
-        public async Task<Unit> Handle(UpdateOverall_EV_PromotionCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateOverall_EV_PromotionCommand request, CancellationToken cancellationToken)
         {
-            var respose = new BaseCommandResponse();
+            var response = new BaseCommandResponse();
             var validator = new UpdateOverall_EV_PromotionDtoValidator();
             var validationResult = await validator.ValidateAsync(request.Overall_EV_PromotionDto);
 
             if (validationResult.IsValid == false)
             {
-                respose.Success = false;
-                respose.Message = "Creation Failed";
-                respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                response.Success = false;
+                response.Message = "Creation Failed";
+                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
             var Overall_EV_Promotion = await _unitOfWork.Repository<Hrm.Domain.Overall_EV_Promotion>().Get(request.Overall_EV_PromotionDto.Overall_EV_PromotionId);
@@ -48,12 +47,32 @@ namespace Hrm.Application.Features.Overall_EV_Promotion.Handlers.Commands
                 throw new NotFoundException(nameof(Overall_EV_Promotion), request.Overall_EV_PromotionDto.Overall_EV_PromotionId);
             }
 
-            _mapper.Map(request.Overall_EV_PromotionDto, Overall_EV_Promotion);
+            var Overall_EV_PromotionName = request.Overall_EV_PromotionDto.Overall_EV_PromotionName.ToLower();
 
-            await _unitOfWork.Repository<Hrm.Domain.Overall_EV_Promotion>().Update(Overall_EV_Promotion);
-            await _unitOfWork.Save();
+            IQueryable<Hrm.Domain.Overall_EV_Promotion> Overall_EV_Promotions = _Overall_EV_PromotionRepository.Where(x => x.Overall_EV_PromotionName.ToLower() == Overall_EV_PromotionName);
 
-            return Unit.Value;
+
+            if (Overall_EV_Promotions.Any())
+            {
+                response.Success = false;
+                response.Message = $"Update Failed '{request.Overall_EV_PromotionDto.Overall_EV_PromotionName}' already exists.";
+                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+
+            }
+            else
+            {
+
+                _mapper.Map(request.Overall_EV_PromotionDto, Overall_EV_Promotion);
+
+                await _unitOfWork.Repository<Hrm.Domain.Overall_EV_Promotion>().Update(Overall_EV_Promotion);
+                await _unitOfWork.Save();
+
+                response.Success = true;
+                response.Message = "Update Successful";
+                response.Id = Overall_EV_Promotion.Overall_EV_PromotionId;
+
+            }
+            return response;
         }
     }
 }

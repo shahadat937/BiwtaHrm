@@ -3,13 +3,12 @@ using Hrm.Application.DTOs.Overall_EV_Promotion;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.Overall_EV_Promotion.Requests.Commands;
 using Hrm.Application.Features.Overall_EV_Promotion.Requests.Queries;
+using Hrm.Application.Features.Overall_EV_Promotions.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
-using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
-
 namespace Hrm.Api.Controllers
 {
 
@@ -22,49 +21,62 @@ namespace Hrm.Api.Controllers
         {
             _mediator = mediator;
         }
+        [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [Route("save-overall_EV_Promotion")]
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateOverall_EV_PromotionDto Overall_EV_Promotion)
+        {
+            var command = new CreateOverall_EV_Promotion { Overall_EV_PromotionDto = Overall_EV_Promotion };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
 
         [HttpGet]
-        [Route("get-Overall_EV_Promotion")]
-        public async Task<ActionResult> GetOverall_EV_Promotion()
+        [Route("get-overall_EV_Promotion")]
+        public async Task<ActionResult> Get()
         {
             var Overall_EV_Promotion = await _mediator.Send(new GetOverall_EV_PromotionRequest { });
             return Ok(Overall_EV_Promotion);
         }
+        [HttpGet]
+        [Route("get-overall_EV_PromotionDetail/{id}")]
+        public async Task<ActionResult<Overall_EV_PromotionDto>> Get(int id)
+        {
+            var Overall_EV_Promotions = await _mediator.Send(new GetOverall_EV_PromotionDetailRequest { Overall_EV_PromotionId = id });
+            return Ok(Overall_EV_Promotions);
+        }
+        [HttpGet]
+        [Route("get-selectedOverall_EV_Promotions")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedOverall_EV_Promotion()
+        {
+            var Overall_EV_Promotion = await _mediator.Send(new GetSelectedOverall_EV_PromotionRequest { });
+            return Ok(Overall_EV_Promotion);
+        }
 
-        [HttpPost]
+        [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        [Route("save-Overall_EV_Promotion")]
-        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateOverall_EV_PromotionDto Overall_EV_Promotion)
+        [ProducesDefaultResponseType]
+        [Route("update-overall_EV_Promotion/{id}")]
+        public async Task<ActionResult> Put([FromBody] Overall_EV_PromotionDto Overall_EV_Promotion)
         {
-            var command = new CreateOverall_EV_PromotionCommand { Overall_EV_PromotionDto = Overall_EV_Promotion };
+            var command = new UpdateOverall_EV_PromotionCommand { Overall_EV_PromotionDto = Overall_EV_Promotion };
             var response = await _mediator.Send(command);
             return Ok(response);
         }
 
 
-        [HttpPut]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
-        [Route("update-Overall_EV_Promotion/{id}")]
-        public async Task<ActionResult> Put([FromBody] Overall_EV_PromotionDto Overall_EV_Promotion)
-        {
-            var command = new UpdateOverall_EV_PromotionCommand { Overall_EV_PromotionDto = Overall_EV_Promotion };
-            await _mediator.Send(command);
-            return NoContent();
-        }
-
         [HttpDelete]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
-        [Route("delete-Overall_EV_Promotion/{id}")]
+        [Route("delete-overall_EV_Promotion/{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteOverall_EV_PromotionCommand { Overall_EV_PromotionId = id };
-            await _mediator.Send(command);
-            return NoContent();
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

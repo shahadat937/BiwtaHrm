@@ -332,6 +332,7 @@ export const navItems: INavData[] = [
         name: 'leave',
         url: '/bascisetup/leave'
       },
+
       {
         name: 'Overall_EV_Promotion',
         url: '/bascisetup/overall_EV_Promotion'
@@ -521,8 +522,8 @@ export const navItems: INavData[] = [
         url: '/bascisetup/religion'
       },
       {
-        name: 'Hair Color',
-        url: '/base/tables'
+        name: 'HairColor',
+        url: '/bascisetup/hairColor'
       },
       {
         name: 'Eyes Color',

@@ -34,6 +34,7 @@ import { DivisionComponent } from './division/division.component';
 import { OccupationComponent } from './occupation/occupation.component';
 import { LeaveComponent } from './leave/leave.component';
 import { OverallEVPromotionComponent } from './overall-ev-promotion/overall-ev-promotion.component';
+import { HairColorComponent } from './hair-color/hair-color.component';
 
 const routes: Routes = [
 
@@ -270,6 +271,13 @@ const routes: Routes = [
   },
   { path: 'update-overall_EV_Promotion/:overall_EV_PromotionId',
     component: OverallEVPromotionComponent,
+  },
+  {
+    path: 'hairColor',
+    component: HairColorComponent,
+  },
+  { path: 'update-hairColor/:hairColorId',
+    component: HairColorComponent,
   },
 ];
 

@@ -1,5 +1,4 @@
-﻿using Hrm.Shared.Models;
-using MediatR;
+﻿using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +9,6 @@ namespace Hrm.Application.Features.Overall_EV_Promotion.Requests.Queries
 {
     public class GetOverall_EV_PromotionRequest : IRequest<object>
     {
+
     }
 }

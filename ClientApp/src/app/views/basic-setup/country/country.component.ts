@@ -25,6 +25,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('CountryForm', { static: true }) CountryForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'countryName', 'isActive', 'Action'];
+  loading = false;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -149,6 +150,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   onSubmit(form: NgForm): void {
+    this.loading = false;
     this.countryServices.cachedData = [];
     const id = form.value.countrytId;
     const action$ = id
@@ -166,11 +168,14 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/country']);
         }
-      } else {
+        this.loading = false;
+      } 
+      else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

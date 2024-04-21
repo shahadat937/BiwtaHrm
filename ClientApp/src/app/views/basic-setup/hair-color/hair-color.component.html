@@ -54,6 +54,8 @@
             color="primary"
             type="submit"
           >
+          <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+
             {{ btnText }}
           </button>
           <button cButton color="secondary" (click)="resetForm()">Reset</button>

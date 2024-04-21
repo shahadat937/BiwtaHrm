@@ -65,6 +65,8 @@ import { Overall_EV_PromotionService } from './service/Overall_EV_Promotion.serv
 import { HairColorComponent } from './hair-color/hair-color.component';
 import { EyesColorComponent } from './eyes-color/eyes-color.component';
 import { EyesColorService } from './service/eyes-color.service';
+import { RelationComponent } from './relation/relation.component';
+import { RelationService } from './service/relation.service';
 
 
 @NgModule({
@@ -102,6 +104,7 @@ import { EyesColorService } from './service/eyes-color.service';
     OverallEVPromotionComponent,
     HairColorComponent,
     EyesColorComponent,
+    RelationComponent,
   ],
   imports: [
     CommonModule,
@@ -123,7 +126,8 @@ import { EyesColorService } from './service/eyes-color.service';
     ProgressModule,
     SpinnerModule,
   ],
-  providers: [
+  providers: [ 
+    RelationService,
     EyesColorService,
     Overall_EV_PromotionService,
     LeaveService,

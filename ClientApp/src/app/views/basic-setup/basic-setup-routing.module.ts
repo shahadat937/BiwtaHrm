@@ -36,6 +36,7 @@ import { LeaveComponent } from './leave/leave.component';
 import { OverallEVPromotionComponent } from './overall-ev-promotion/overall-ev-promotion.component';
 import { HairColorComponent } from './hair-color/hair-color.component';
 import { EyesColorComponent } from './eyes-color/eyes-color.component';
+import { RelationComponent } from './relation/relation.component';
 
 const routes: Routes = [
 
@@ -286,6 +287,13 @@ const routes: Routes = [
   },
   { path: 'update-eyesColor/:eyesColorId',
     component: EyesColorComponent,
+  },
+  {
+    path: 'relation',
+    component: RelationComponent,
+  },
+  { path: 'update-relation/:relationId',
+    component: RelationComponent,
   },
 ];
 

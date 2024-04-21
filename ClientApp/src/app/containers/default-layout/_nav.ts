@@ -531,7 +531,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Relation',
-        url: '/base/tooltips'
+        url: '/bascisetup/relation'
       },
       {
         name: 'Occupation',

@@ -1,9 +1,9 @@
 <c-card>
-    <c-card-header>EyesColor </c-card-header>
+    <c-card-header>Relation </c-card-header>
     <c-card-body>
       <form
-        #EyesColorForm="ngForm"
-        (submit)="onSubmit(EyesColorForm)"
+        #RelationForm="ngForm"
+        (submit)="onSubmit(RelationForm)"
         [gutter]="3"
         novalidate
         cForm
@@ -13,31 +13,31 @@
         <c-col [md]="6">
           <input
             type="hidden"
-            [(ngModel)]="eyesColorService.eyesColors.eyesColorId"
-            name="eyesColorId"
+            [(ngModel)]="relationsService.relations.relationId"
+            name="relationId"
           />
           <label cLabel for="validationCustom01"
-            >EyesColor Name<span class="text-danger">*</span></label
+            >Relation Name<span class="text-danger">*</span></label
           >
           <input
-            [(ngModel)]="eyesColorService.eyesColors.eyesColorName"
-            name="eyesColorName"
-            #EyesColorName="ngModel"
-            placeholder="Enter EyesColor Name "
+            [(ngModel)]="relationsService.relations.relationName"
+            name="relationName"
+            #RelationName="ngModel"
+            placeholder="Enter RelationName Name"
             cFormControl
             id="validationCustom01"
             required
             type="text"
             value="Mark"
           />
-          @if(!EyesColorName.valid&&EyesColorName.touched){
-          <div class="text-left text-danger">EyesColor Name is required</div>
+          @if(!RelationName.valid&&RelationName.touched){
+          <div class="text-left text-danger">Relation Name is required</div>
           }
         </c-col>
         <c-col [md]="6">
           <label cLabel for="validationCustom02">Is Active </label>
           <input
-            [(ngModel)]="eyesColorService.eyesColors.isActive"
+            [(ngModel)]="relationsService.relations.isActive"
             name="isActive"
             cFormControl
             id="validationCustom02"
@@ -48,12 +48,14 @@
         </c-col>
         <c-col [xs]="12">
           <button
-            [disabled]="EyesColorForm.invalid"
+            [disabled]="loading"
+            [disabled]="RelationForm.invalid"
             cButton
             class="me-1"
             color="primary"
             type="submit"
           >
+            <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
             {{ btnText }}
           </button>
           <button cButton color="secondary" (click)="resetForm()">Reset</button>
@@ -63,7 +65,7 @@
   </c-card>
   
   <c-card class="mt-3">
-    <c-card-header>EyesColor List</c-card-header>
+    <c-card-header>Relation List</c-card-header>
     <c-card-body>
       <div class="example-header">
         <mat-form-field>
@@ -89,10 +91,10 @@
             <th mat-header-cell *matHeaderCellDef>Serial No</th>
             <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
           </ng-container>
-          <ng-container matColumnDef="eyesColorName">
-            <th mat-header-cell *matHeaderCellDef>EyesColor Name</th>
+          <ng-container matColumnDef="relationName">
+            <th mat-header-cell *matHeaderCellDef>Relation Name</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.eyesColorName }}
+              {{ element.relationName }}
             </td>
           </ng-container>
   
@@ -108,8 +110,8 @@
               <button
                 class="custom-button"
                 [routerLink]="[
-                  '/bascisetup/update-eyesColor',
-                  element.eyesColorId
+                  '/bascisetup/update-relation',
+                  element.relationId
                 ]"
               >
                 <svg cIcon name="cilPencil"></svg>

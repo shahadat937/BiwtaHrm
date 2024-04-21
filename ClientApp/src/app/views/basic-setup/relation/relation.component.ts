@@ -1,4 +1,4 @@
-import { HairColorService } from './../service/hair-color.service';
+import { RelationService } from './../service/relation.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -10,23 +10,23 @@ import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
-  selector: 'app-hair-color',
-  templateUrl: './hair-color.component.html',
-  styleUrl: './hair-color.component.scss'
+  selector: 'app-relation',
+  templateUrl: './relation.component.html',
+  styleUrl: './relation.component.scss'
 })
-export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
+export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  @ViewChild('RelationForm', { static: true }) RelationForm!: NgForm;
   loading = false;
-  @ViewChild('HairColorForm', { static: true }) HairColorForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'hairColorName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'relationName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
   constructor(
-    public hairColorService: HairColorService,
+    public relationsService: RelationService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -35,16 +35,16 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
     //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
   }
   ngOnInit(): void {
-    this.getAllHairColors();
+    this.getAllRelations();
     this.handleRouteParams();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('hairColorId');
+      const id = params.get('relationId');
       if (id) {
         this.btnText = 'Update';
-        this.hairColorService.find(+id).subscribe((res) => {
-          this.HairColorForm?.form.patchValue(res);
+        this.relationsService.find(+id).subscribe((res) => {
+          this.RelationForm?.form.patchValue(res);
         });
       } else {
         this.btnText = 'Submit';
@@ -66,64 +66,65 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  initaialHairColor(form?: NgForm) {
+  initaialRelation(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.hairColorService.hairColors = {
-      hairColorId: 0,
-      hairColorName: '',
+    this.relationsService.relations = {
+      relationId: 0,
+      relationName: '',
       menuPosition: 0,
       isActive: true,
     };
   }
   resetForm() {
     this.btnText = 'Submit';
-    if (this.HairColorForm?.form != null) {
-      this.HairColorForm.form.reset();
-      this.HairColorForm.form.patchValue({
-        hairColorId: 0,
-        hairColorName: '',
+    if (this.RelationForm?.form != null) {
+      this.RelationForm.form.reset();
+      this.RelationForm.form.patchValue({
+        relationId: 0,
+        relationName: '',
         menuPosition: 0,
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/hairColor']);
+    this.router.navigate(['/bascisetup/relation']);
+
   }
 
-  getAllHairColors() {
-    this.subscription = this.hairColorService.getAll().subscribe((item) => {
-      //console.log(item);
+  getAllRelations() {
+    this.subscription = this.relationsService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
   }
-  
-  onSubmit(form: NgForm): void {
-    this.hairColorService.cachedData = [];
-    const id = form.value.hairColorId;
-    const action$ = id
-      ? this.hairColorService.update(id, form.value)
-      : this.hairColorService.submit(form.value);
 
+  onSubmit(form: NgForm): void {
+    this.loading = true;
+    this.relationsService.cachedData = [];
+    const id = form.value.relationId;
+    const action$ = id
+      ? this.relationsService.update(id, form.value)
+      : this.relationsService.submit(form.value);
+    
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getAllHairColors();
+        this.getAllRelations();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/hairColor']);
+          this.router.navigate(['/bascisetup/relation']);
         }
-        this.loading = false;
+    this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
-      this.loading = false;
-
+      
+    this.loading = false;
     });
   }
   delete(element: any) {
@@ -131,7 +132,7 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.hairColorService.delete(element.hairColorId).subscribe(
+          this.relationsService.delete(element.relationId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {

@@ -26,6 +26,7 @@ namespace Hrm.Application.Features.Relation.Handlers.Queries
         public async Task<object> Handle(GetRelationRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.Relation> Relation = _RelationRepository.Where(x => true);
+            Relation = Relation.OrderByDescending(x => x.RelationId);
 
             var RelationDtos = _mapper.Map<List<RelationDto>>(Relation);
 

@@ -52,8 +52,13 @@ using Hrm.Application.DTOs.BankAccountType;
 using Hrm.Application.DTOs.BankBranch;
 using Hrm.Application.DTOs.Bank;
 using Hrm.Application.DTOs.Institute;
->>>>>>>>> Temporary merge branch 2
 
+using Hrm.Application.DTOs.Relation;
+using Hrm.Application.DTOs.Occupation;
+using Hrm.Application.DTOs.HairColor;
+using Hrm.Application.DTOs.EyesColor;
+
+ 
 namespace Hrm.Application.Profiles
 {
     public class MappingProfile : Profile
@@ -170,14 +175,14 @@ namespace Hrm.Application.Profiles
 
             CreateMap<SubBranch, SubBranchDto>().ReverseMap();
             CreateMap<SubBranch, CreateSubBranchDto>().ReverseMap();
-<<<<<<<<< Temporary merge branch 1
+ 
 
             CreateMap<Relation, RelationDto>().ReverseMap();
             CreateMap<Relation, CreateRelationDto>().ReverseMap();
 
             CreateMap<Occupation, OccupationDto>().ReverseMap();
             CreateMap<Occupation, CreateOccupationDto>().ReverseMap();
-=========
+ 
             
             CreateMap<TrainingName, TrainingNameDto>().ReverseMap();
             CreateMap<TrainingName, CreateTrainingNameDto>().ReverseMap();
@@ -202,7 +207,21 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Institute, InstituteDto>().ReverseMap();
             CreateMap<Institute, CreateInstituteDto>().ReverseMap();
->>>>>>>>> Temporary merge branch 2
+ 
+
+            CreateMap<Relation, RelationDto>().ReverseMap();
+            CreateMap<Relation, CreateRelationDto>().ReverseMap();
+
+            CreateMap<Occupation, OccupationDto>().ReverseMap();
+            CreateMap<Occupation, CreateOccupationDto>().ReverseMap();
+
+            CreateMap<HairColor, HairColorDto>().ReverseMap();
+            CreateMap<HairColor, CreateHairColorDto>().ReverseMap();
+
+            CreateMap<EyesColor, EyesColorDto>().ReverseMap();
+            CreateMap<EyesColor, CreateEyesColorDto>().ReverseMap();
+
+ 
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();
             CreateMap<Module, ModuleFeatureDto>().ReverseMap();

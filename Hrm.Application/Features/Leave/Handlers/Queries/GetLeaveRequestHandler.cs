@@ -5,6 +5,7 @@ using Hrm.Application.DTOs.Leave;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.Leave.Requests.Queries;
 using Hrm.Application.Models;
+using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace Hrm.Application.Features.Leave.Handlers.Queries
         public async Task<object> Handle(GetLeaveRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.Leave> Leave = _LeaveRepository.Where(x => true);
+            Leave = Leave.OrderByDescending(x => x.LeaveId);
 
             var LeaveDtos = _mapper.Map<List<LeaveDto>>(Leave);
 

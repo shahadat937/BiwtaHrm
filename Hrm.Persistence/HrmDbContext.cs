@@ -230,6 +230,11 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.EyesColorId)
                 .HasName("[[PK_EyesColorId]]");
             });
+            modelBuilder.Entity<Pool>(entity =>
+            {
+                entity.HasKey(e => e.PoolId)
+                .HasName("[PK_PoolId]");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -284,6 +289,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Institute> Institute { get; set; } = null!;
         public virtual DbSet<EyesColor> EyesColor { get; set; } = null!;
 
+        public virtual DbSet<Pool> Pool { get; set; } = null!;
 
 
     }

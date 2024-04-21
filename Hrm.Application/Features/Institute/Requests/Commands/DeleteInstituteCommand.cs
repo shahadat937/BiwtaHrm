@@ -1,0 +1,15 @@
+﻿using Hrm.Application.Responses;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Hrm.Application.Features.Institute.Requests.Commands
+{
+    public class DeleteInstituteCommand : IRequest<BaseCommandResponse>
+    {
+        public int InstituteId { get; set; }
+    }
+}

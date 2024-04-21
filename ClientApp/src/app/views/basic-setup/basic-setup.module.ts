@@ -55,6 +55,7 @@ import { CountryService } from './service/country.service';
 import { GradeTypeComponent } from './grade-type/grade-type.component';
 import { GradeClassComponent } from './grade-class/grade-class.component';
 import { DivisionComponent } from './division/division.component';
+import { SpinnerModule } from '@coreui/angular';
 import { OccupationComponent } from './occupation/occupation.component';
 import { OccupationService } from './service/Occupation.service';
 import { LeaveComponent } from './leave/leave.component';
@@ -62,6 +63,7 @@ import { LeaveService } from './service/Leave.service';
 import { OverallEVPromotionComponent } from './overall-ev-promotion/overall-ev-promotion.component';
 import { Overall_EV_PromotionService } from './service/Overall_EV_Promotion.service';
 import { HairColorComponent } from './hair-color/hair-color.component';
+
 
 @NgModule({
   declarations: [
@@ -116,6 +118,7 @@ import { HairColorComponent } from './hair-color/hair-color.component';
     ListGroupModule,
     SharedCustomModule,
     ProgressModule,
+    SpinnerModule,
   ],
   providers: [
     Overall_EV_PromotionService,

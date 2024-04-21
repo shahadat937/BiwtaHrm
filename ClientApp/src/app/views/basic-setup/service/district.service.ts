@@ -16,8 +16,12 @@ districts: District;
     this.districts = new District();
    }
 
-getDivision(){
-  return this.http.get<SelectedModel[]>(this.baseUrl + '/division/get-selecteddivision');
+getDivision(): Observable<SelectedModel[]>{
+  return this.http.get<SelectedModel[]>(this.baseUrl + '/division/get-selecteddivision') .pipe(
+    map((data) => {
+      return data;
+    })
+  );;
 }
 
 

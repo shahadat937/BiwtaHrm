@@ -1,6 +1,10 @@
-
-import { PoolService } from './../service/pool.service';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,13 +13,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { Component } from '@angular/core';
+import { PoolService } from './../service/pool.service';
 @Component({
   selector: 'app-pool',
   templateUrl: './pool.component.html',
-  styleUrl: './pool.component.scss'
+  styleUrl: './pool.component.scss',
 })
-
 export class PoolComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('PoolForm', { static: true }) PoolForm!: NgForm;
@@ -149,7 +152,7 @@ export class PoolComponent implements OnInit, OnDestroy, AfterViewInit {
     const action$ = id
       ? this.poolService.update(id, form.value)
       : this.poolService.submit(form.value);
-    
+
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
@@ -161,14 +164,14 @@ export class PoolComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/pool']);
         }
-    this.loading = false;
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
-      
-    this.loading = false;
+
+      this.loading = false;
     });
   }
   delete(element: any) {
@@ -197,4 +200,4 @@ export class PoolComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
   }
-
+}

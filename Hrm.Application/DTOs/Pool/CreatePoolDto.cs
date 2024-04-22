@@ -1,13 +1,12 @@
-﻿using Hrm.Domain.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Domain
+namespace Hrm.Application.DTOs.Pool
 {
-    public class Pool : BaseDomainEntity
+    public  class CreatePoolDto:IPoolDto
     {
         public int PoolId { get; set; }
         public string? PoolName { get; set; }

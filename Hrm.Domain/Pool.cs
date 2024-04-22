@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Hrm.Domain
 {
-    public class Pool : BaseDomainEntity
+    public class EyesColor : BaseDomainEntity
     {
-        public int PoolId { get; set; }
-        public string? PoolName { get; set; }
+        public int EyesColorId { get; set; }
+        public string? EyesColorName { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

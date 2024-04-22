@@ -67,6 +67,7 @@ import { EyesColorComponent } from './eyes-color/eyes-color.component';
 import { EyesColorService } from './service/eyes-color.service';
 import { RelationComponent } from './relation/relation.component';
 import { RelationService } from './service/relation.service';
+import { PoolComponent } from './pool/pool.component';
 
 
 @NgModule({
@@ -105,6 +106,7 @@ import { RelationService } from './service/relation.service';
     HairColorComponent,
     EyesColorComponent,
     RelationComponent,
+    PoolComponent,
   ],
   imports: [
     CommonModule,

@@ -43,11 +43,11 @@ namespace Hrm.Application.Features.Country.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var Country = await _unitOfWork.Repository<Hrm.Domain.Country>().Get(request.CountryDto.CountrytId);
+            var Country = await _unitOfWork.Repository<Hrm.Domain.Country>().Get(request.CountryDto.CountryId);
 
             if (Country is null)
             {
-                throw new NotFoundException(nameof(Country), request.CountryDto.CountrytId);
+                throw new NotFoundException(nameof(Country), request.CountryDto.CountryId);
             }
 
             var CountryName = request.CountryDto.CountryName.ToLower();

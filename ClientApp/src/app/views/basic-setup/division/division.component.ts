@@ -31,7 +31,7 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('DivisionForm', { static: true }) DivisionForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'divisionName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo','countryName','divisionName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;

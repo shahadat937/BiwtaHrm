@@ -73,6 +73,7 @@ import { SubDepartmentService } from './service/sub-department.service';
 import { PoolService } from './service/pool.service';
 
 
+
 @NgModule({
   declarations: [
     NewAccountTypeComponent,
@@ -111,6 +112,7 @@ import { PoolService } from './service/pool.service';
     RelationComponent,
     PoolComponent,
     SubDepartmentComponent,
+
   ],
   imports: [
     CommonModule,

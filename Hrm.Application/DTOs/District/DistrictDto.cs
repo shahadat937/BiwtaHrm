@@ -13,5 +13,6 @@ namespace Hrm.Application.DTOs.District
         public int? DivisionId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+        public string? DivisionName { get; set; }
     }
 }

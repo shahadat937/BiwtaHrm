@@ -3,11 +3,14 @@ import { Pool } from './../model/pool';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable, map, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PoolService {
+
 
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
@@ -51,5 +54,6 @@ export class PoolService {
   delete(id:number){
     return this.http.delete(this.baseUrl + '/pool/delete-pool/'+id);
   }
+
 
 }

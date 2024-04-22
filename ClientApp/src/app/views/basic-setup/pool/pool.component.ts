@@ -1,3 +1,4 @@
+
 import { PoolService } from './../service/pool.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -8,12 +9,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-
+import { Component } from '@angular/core';
 @Component({
   selector: 'app-pool',
   templateUrl: './pool.component.html',
   styleUrl: './pool.component.scss'
 })
+
 export class PoolComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('PoolForm', { static: true }) PoolForm!: NgForm;
@@ -195,4 +197,4 @@ export class PoolComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
   }
-}
+

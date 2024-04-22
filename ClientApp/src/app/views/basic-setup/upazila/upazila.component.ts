@@ -30,7 +30,7 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('UpazilaForm', { static: true }) UpazilaForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'upazilaName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo','districtName', 'upazilaName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;

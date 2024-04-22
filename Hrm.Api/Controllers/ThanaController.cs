@@ -27,7 +27,7 @@ namespace Hrm.Api.Controllers
         }
         [HttpGet]
         [Route("get-Thana")]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult<List<ThanaDto>>> Get()
         {
             var Thana = await _mediator.Send(new GetThanaRequest { });
             return Ok(Thana);

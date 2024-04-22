@@ -101,7 +101,7 @@ const routes: Routes = [
     path: 'country',
     component: CountryComponent,
   },
-  { path: 'update-country/:countrytId', 
+  { path: 'update-country/:countryId', 
   component: CountryComponent, 
   },
   {

@@ -1,5 +1,6 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Relation;
+using Hrm.Application.DTOs.Relation;
 using Hrm.Application.DTOs.Relation; 
 using Hrm.Application.Features.Relation.Requests.Commands;
 using Hrm.Application.Features.Relation.Requests.Queries;
@@ -18,6 +19,16 @@ namespace Hrm.Api.Controllers
         public RelationController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+        [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [Route("save-Relation")]
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateRelationDto Relation)
+        {
+            var command = new CreateRelationCommand { RelationDto = Relation };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
         [HttpGet]
         [Route("get-relation")]

@@ -3,11 +3,12 @@ using Hrm.Application.DTOs.Leave;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.Leave.Requests.Commands;
 using Hrm.Application.Features.Leave.Requests.Queries;
+using Hrm.Application.Features.Leaves.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
@@ -21,15 +22,6 @@ namespace Hrm.Api.Controllers
         {
             _mediator = mediator;
         }
-
-        [HttpGet]
-        [Route("get-Leave")]
-        public async Task<ActionResult> GetLeave()
-        {
-            var Leave = await _mediator.Send(new GetLeaveRequest { });
-            return Ok(Leave);
-        }
-
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -41,18 +33,40 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("get-Leave")]
+        public async Task<ActionResult> Get()
+        {
+            var Leave = await _mediator.Send(new GetLeaveRequest { });
+            return Ok(Leave);
+        }
+        [HttpGet]
+        [Route("get-LeaveDetail/{id}")]
+        public async Task<ActionResult<LeaveDto>> Get(int id)
+        {
+            var Leaves = await _mediator.Send(new GetLeaveDetailRequest { LeaveId = id });
+            return Ok(Leaves);
+        }
+        [HttpGet]
+        [Route("get-selectedLeaves")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedLeave()
+        {
+            var Leave = await _mediator.Send(new GetSelectedLeaveRequest { });
+            return Ok(Leave);
+        }
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
         [Route("update-Leave/{id}")]
         public async Task<ActionResult> Put([FromBody] LeaveDto Leave)
         {
             var command = new UpdateLeaveCommand { LeaveDto = Leave };
-            await _mediator.Send(command);
-            return NoContent();
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
+
 
         [HttpDelete]
         [ProducesResponseType(200)]
@@ -62,8 +76,8 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteLeaveCommand { LeaveId = id };
-            await _mediator.Send(command);
-            return NoContent();
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

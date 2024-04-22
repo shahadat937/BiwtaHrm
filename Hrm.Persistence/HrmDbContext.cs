@@ -241,6 +241,21 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.PoolId)
                 .HasName("[PK_PoolId]");
             });
+
+            //modelBuilder.Entity<SubDepartment>(entity =>
+            //{
+            //    entity.HasKey(e => e.SubDepartmentId)
+            //    .HasName("[SubDepartmentId]");
+            //});
+            modelBuilder.Entity<SubDepartment>(entity =>
+            {
+                entity.HasOne(d => d.Department)
+                    .WithMany(p => p.SubDepartment)
+                    .HasForeignKey(d => d.DepartmentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DepartmentId");
+            });
+
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -283,9 +298,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Relation> Relation { get; set; } = null!;
         public virtual DbSet<Occupation> Occupation { get; set; } = null!;
         public virtual DbSet<HairColor> HairColor { get; set; } = null!;
-
         public virtual DbSet<TrainingName> TrainingName { get; set; } = null!;
-
         public virtual DbSet<Office> Office { get; set; } = null!;
         public virtual DbSet<Competence> Competence { get; set; } = null!;
         public virtual DbSet<Language> Language { get; set; } = null!;
@@ -294,8 +307,9 @@ namespace Hrm.Persistence
         public virtual DbSet<Bank> Bank { get; set; } = null!;
         public virtual DbSet<Institute> Institute { get; set; } = null!;
         public virtual DbSet<EyesColor> EyesColor { get; set; } = null!;
-
         public virtual DbSet<Pool> Pool { get; set; } = null!;
+        public virtual DbSet<SubDepartment> SubDepartment { get; set; } = null!;
+
 
 
     }

@@ -334,7 +334,7 @@ export const navItems: INavData[] = [
       },
 
       {
-        name: 'Overall_EV_Promotion',
+        name: 'Overall Evelation and Promotion',
         url: '/bascisetup/overall_EV_Promotion'
       }
     ]
@@ -355,6 +355,11 @@ export const navItems: INavData[] = [
       {
         name: 'Department Release',
         url: '/base/breadcrumbs'
+      }
+      ,
+      {
+        name: 'SubDepartment',
+        url: '/bascisetup/subDepartment'
       }
       ,
       {
@@ -475,7 +480,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Pool',
-        url: '/base/cards'
+        url: '/bascisetup/pool'
       },
       {
         name: 'Department',

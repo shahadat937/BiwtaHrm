@@ -68,6 +68,10 @@ import { EyesColorService } from './service/eyes-color.service';
 import { RelationComponent } from './relation/relation.component';
 import { RelationService } from './service/relation.service';
 import { PoolComponent } from './pool/pool.component';
+import { SubDepartmentComponent } from './sub-department/sub-department.component';
+import { SubDepartmentService } from './service/sub-department.service';
+import { PoolService } from './service/pool.service';
+
 
 
 @NgModule({
@@ -107,6 +111,8 @@ import { PoolComponent } from './pool/pool.component';
     EyesColorComponent,
     RelationComponent,
     PoolComponent,
+    SubDepartmentComponent,
+
   ],
   imports: [
     CommonModule,
@@ -129,6 +135,8 @@ import { PoolComponent } from './pool/pool.component';
     SpinnerModule,
   ],
   providers: [ 
+    PoolService,
+    SubDepartmentService,
     RelationService,
     EyesColorService,
     Overall_EV_PromotionService,

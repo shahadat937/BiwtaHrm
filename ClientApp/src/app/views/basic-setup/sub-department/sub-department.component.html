@@ -1,10 +1,9 @@
-
 <c-card>
-    <c-card-header>Pool </c-card-header>
+    <c-card-header>SubDepartment </c-card-header>
     <c-card-body>
       <form
-        #PoolForm="ngForm"
-        (submit)="onSubmit(PoolForm)"
+        #SubDepartmentForm="ngForm"
+        (submit)="onSubmit(SubDepartmentForm)"
         [gutter]="3"
         novalidate
         cForm
@@ -12,34 +11,60 @@
         class="needs-validation"
       >
         <c-col [md]="6">
+          <label cLabel for="validationCustom01"
+            >Department<span class="text-danger">*</span></label
+          >
+          <select
+            required
+            [(ngModel)]="subDepartmentService.subDepartments.departmentId"
+            name="departmentId"
+            #departmentId="ngModel"
+            aria-label="Default select example"
+            cSelect
+          >
+            <option [ngValue]="0">Select Department</option>
+            @for(department of departments; track department.id;let index=$index) {
+            <option [value]="department.id">
+              {{ department.name }}
+            </option>
+            }
+          </select>
+  
+          @if(!departmentId.valid && departmentId.touched){
+          <div class="text-left text-danger">Department Type is required</div>
+          }
+        </c-col>
+        <c-col [md]="6">
           <input
             type="hidden"
-            [(ngModel)]="poolService.pools.poolId"
-            name="poolId"
+            [(ngModel)]="subDepartmentService.subDepartments.subDepartmentId"
+            name="subDepartmentId"
           />
           <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
           <label cLabel for="validationCustom01"
-            >Pool Name<span class="text-danger">*</span></label
+            >SubDepartment Name<span class="text-danger">*</span></label
           >
           <input
-            [(ngModel)]="poolService.pools.poolName"
-            name="poolName"
-            #Pool="ngModel"
-            placeholder="Enter Pool Name"
+            [(ngModel)]="subDepartmentService.subDepartments.subDepartmentName"
+            name="subDepartmentName"
+            #subDepartmentName="ngModel"
+            placeholder="Enter SubDepartment Name"
             cFormControl
             id="validationCustom01"
             required
             type="text"
             value="Mark"
           />
-          @if(!Pool.valid&&Pool.touched){
-          <div class="text-left text-danger">Pool Name is required</div>
+  
+          @if(!subDepartmentName.valid&&subDepartmentName.touched){
+          <div class="text-left text-danger">SubDepartment Name is required</div>
           }
         </c-col>
+  
         <c-col [md]="6">
           <label cLabel for="validationCustom02">Is Active </label>
           <input
-            [(ngModel)]="poolService.pools.isActive"
+            [(ngModel)]="subDepartmentService.subDepartments.isActive"
             name="isActive"
             cFormControl
             id="validationCustom02"
@@ -48,16 +73,15 @@
           />
           <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
         </c-col>
+  
         <c-col [xs]="12">
           <button
-            [disabled]="loading"
-            [disabled]="PoolForm.invalid"
+            [disabled]="SubDepartmentForm.invalid"
             cButton
             class="me-1"
             color="primary"
             type="submit"
           >
-            <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
             {{ btnText }}
           </button>
           <button cButton color="secondary" (click)="resetForm()">Reset</button>
@@ -67,7 +91,7 @@
   </c-card>
   
   <c-card class="mt-3">
-    <c-card-header>Pool List</c-card-header>
+    <c-card-header>SubDepartment List</c-card-header>
     <c-card-body>
       <div class="example-header">
         <mat-form-field>
@@ -86,6 +110,7 @@
           ></button>
         </mat-form-field>
       </div>
+  
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource">
           <!-- Position Column -->
@@ -93,28 +118,28 @@
             <th mat-header-cell *matHeaderCellDef>Serial No</th>
             <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
           </ng-container>
-          <ng-container matColumnDef="poolName">
-            <th mat-header-cell *matHeaderCellDef>Pool Name</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.poolName }}
-            </td>
+  
+          <ng-container matColumnDef="subDepartmentName">
+            <th mat-header-cell *matHeaderCellDef>SubDepartment Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.subDepartmentName }}</td>
           </ng-container>
   
+          <!-- <ng-container matColumnDef="gradeId">
+            <th mat-header-cell *matHeaderCellDef>Grade</th>
+            <td mat-cell *matCellDef="let element">{{ element.gradeName }}</td>
+          </ng-container>
+   -->
           <!-- Name Column -->
           <ng-container matColumnDef="isActive">
             <th mat-header-cell *matHeaderCellDef>Is Active</th>
             <td mat-cell *matCellDef="let element">{{ element.isActive }}</td>
           </ng-container>
-  
           <ng-container matColumnDef="Action">
             <th mat-header-cell *matHeaderCellDef>Action</th>
             <td mat-cell *matCellDef="let element">
               <button
                 class="custom-button"
-                [routerLink]="[
-                  '/bascisetup/update-pool',
-                  element.poolId
-                ]"
+                [routerLink]="['/bascisetup/update-subDepartment', element.subDepartmentId]"
               >
                 <svg cIcon name="cilPencil"></svg>
               </button>
@@ -129,6 +154,7 @@
         </table>
       </div>
     </c-card-body>
+  
     <c-card-footer class="text-medium-emphasis">
       <mat-paginator
         appBubblePagination
@@ -138,6 +164,6 @@
       >
       </mat-paginator>
     </c-card-footer>
-  </c-card>
+    <c-card> </c-card
+  ></c-card>
   
-

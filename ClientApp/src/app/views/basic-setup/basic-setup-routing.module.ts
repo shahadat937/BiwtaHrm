@@ -37,6 +37,8 @@ import { OverallEVPromotionComponent } from './overall-ev-promotion/overall-ev-p
 import { HairColorComponent } from './hair-color/hair-color.component';
 import { EyesColorComponent } from './eyes-color/eyes-color.component';
 import { RelationComponent } from './relation/relation.component';
+import { SubDepartmentComponent } from './sub-department/sub-department.component';
+import { PoolComponent } from './pool/pool.component';
 
 const routes: Routes = [
 
@@ -50,6 +52,13 @@ const routes: Routes = [
   },
   { path: 'update-bloodgroup/:bloodGroupId',
     component: BloodGroupComponent,
+  },
+  {
+    path: 'pool',
+    component: PoolComponent,
+  },
+  { path: 'update-pool/:poolId',
+    component: PoolComponent,
   },
   {
     path: 'occupation',
@@ -294,6 +303,20 @@ const routes: Routes = [
   },
   { path: 'update-relation/:relationId',
     component: RelationComponent,
+  },
+  {
+    path: 'subDepartment',
+    component: SubDepartmentComponent,
+  },
+  { path: 'update-subDepartment/:subDepartmentId',
+    component: SubDepartmentComponent,
+  },
+  {
+    path: 'subDepartment',
+    component: SubDepartmentComponent,
+  },
+  { path: 'update-subDepartment/:subDepartmentId',
+    component: SubDepartmentComponent,
   },
 ];
 

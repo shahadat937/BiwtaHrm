@@ -235,6 +235,19 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.PoolId)
                 .HasName("[PK_PoolId]");
             });
+            //modelBuilder.Entity<SubDepartment>(entity =>
+            //{
+            //    entity.HasKey(e => e.SubDepartmentId)
+            //    .HasName("[SubDepartmentId]");
+            //});
+            modelBuilder.Entity<SubDepartment>(entity =>
+            {
+                entity.HasOne(d => d.Department)
+                    .WithMany(p => p.SubDepartment)
+                    .HasForeignKey(d => d.DepartmentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DepartmentId");
+            });
         }
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
@@ -290,6 +303,7 @@ namespace Hrm.Persistence
         public virtual DbSet<EyesColor> EyesColor { get; set; } = null!;
 
         public virtual DbSet<Pool> Pool { get; set; } = null!;
+        public virtual DbSet<SubDepartment> SubDepartment { get; set; } = null!;
 
 
     }

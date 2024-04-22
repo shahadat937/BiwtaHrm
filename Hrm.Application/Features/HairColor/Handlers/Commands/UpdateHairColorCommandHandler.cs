@@ -37,7 +37,7 @@ namespace Hrm.Application.Features.HairColor.Handlers.Commands
             if (validationResult.IsValid == false)
             {
                 respose.Success = false;
-                respose.Message = "Creation Failed";
+                respose.Message = $"Update Failed '{request.HairColorDto.HairColorName}' already exists.";
                 respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 

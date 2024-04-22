@@ -8,7 +8,7 @@ namespace Hrm.Application.DTOs.Country
 {
     public class CountryDto : ICountryDto
     {
-        public int CountrytId { get; set; }
+        public int CountryId { get; set; }
         public string? CountryName { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }

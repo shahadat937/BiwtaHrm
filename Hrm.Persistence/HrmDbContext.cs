@@ -51,16 +51,22 @@ namespace Hrm.Persistence
 
             });
             modelBuilder.Entity<Division>(entity => {
-
-                entity.HasOne(d => d.Country)
-                  .WithMany(p => p.Divisions)
-                  .HasForeignKey(d => d.CountryId)
-                  .HasConstraintName("FK__Division__Countr__0D7A0286");
                 entity.HasKey(e => e.DivisionId)
-                    .HasName("PK_DivisionId");
+                    .HasName("PK__Division__20EFC6A8D5104B78");
 
             });
+
+            modelBuilder.Entity<Country>(entity =>
+            {
+                entity.HasKey(e => e.CountryId)
+                .HasName("PK__Country__10D1609FC64BEAA1");
+            });
+
             modelBuilder.Entity<Thana>(entity => {
+                entity.HasOne(d => d.Upazila)
+                .WithMany(p => p.Thanas)
+                .HasForeignKey(d => d.UpazilaId)
+                .HasConstraintName("FK__Thana__UpazilaId__160F4887");
 
                 entity.HasKey(e => e.ThanaId)
                     .HasName("PK__Thana__438130B46C389C43");

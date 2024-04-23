@@ -39,6 +39,7 @@ import { EyesColorComponent } from './eyes-color/eyes-color.component';
 import { RelationComponent } from './relation/relation.component';
 import { SubDepartmentComponent } from './sub-department/sub-department.component';
 import { PoolComponent } from './pool/pool.component';
+import { UserRoleComponent } from './user-role/user-role.component';
 
 const routes: Routes = [
 
@@ -260,7 +261,7 @@ const routes: Routes = [
     component: GradeTypeComponent,
   },
   { path: 'update-grade-type/:gradeTypeId',
-    component: GradeClassComponent,
+    component: GradeTypeComponent,
   },
   {
     path: 'grade-class',
@@ -317,6 +318,13 @@ const routes: Routes = [
   },
   { path: 'update-subDepartment/:subDepartmentId',
     component: SubDepartmentComponent,
+  },
+  {
+    path: 'userRole',
+    component: UserRoleComponent,
+  },
+  { path: 'update-userRole/:userRoleId',
+    component: UserRoleComponent,
   },
 ];
 

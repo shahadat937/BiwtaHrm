@@ -150,7 +150,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   onSubmit(form: NgForm): void {
-    this.loading = false;
+    this.loading = true;
     this.countryServices.cachedData = [];
     const id = form.value.countryId;
     const action$ = id
@@ -169,8 +169,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
           this.router.navigate(['/bascisetup/country']);
         }
         this.loading = false;
-      } 
-      else {
+      } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });

@@ -21,6 +21,7 @@ export class SubDepartmentComponent {
   departments: any = [];
 
   btnText: string | undefined;
+  loading = false;
   @ViewChild('SubDepartmentForm', { static: true }) SubDepartmentForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
@@ -115,6 +116,7 @@ export class SubDepartmentComponent {
  
  
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.subDepartmentService.cachedData = [];
     const id = form.value.subDepartmentId;
     const action$ = id
@@ -132,11 +134,13 @@ export class SubDepartmentComponent {
         if (!id) {
           this.router.navigate(['/bascisetup/subDepartment']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

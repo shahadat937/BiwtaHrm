@@ -17,6 +17,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 })
 export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  loading = false;
   @ViewChild('OccupationForm', { static: true }) OccupationForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'occupationName', 'isActive', 'Action'];
@@ -97,51 +98,9 @@ export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     });
   }
-  // onSubmit(form: NgForm) {
-  //   this.bloodGroupService.cachedData = [];
-  //   const id = this.BloodGroupForm.form.get('bloodGroupId')?.value;
-  //   if (id) {
-  //     this.bloodGroupService.update(+id, this.BloodGroupForm.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', 'Update', {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlBloodGroups();
-  //           this.resetForm();
-  //           this.router.navigate(['/bascisetup/blood-group']);
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   } else {
-  //     this.subscription = this.bloodGroupService.submit(form?.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlBloodGroup();
-  //           this.resetForm();
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   }
-  // }
+
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.occupationService.cachedData = [];
     const id = form.value.occupationId;
     const action$ = id
@@ -159,11 +118,13 @@ export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/occupation']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

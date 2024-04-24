@@ -98,6 +98,12 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/Leave/leave.module').then((m) => m.LeaveModule)
       }
+      ,
+      {
+        path: 'transfer',
+        loadChildren: () =>
+          import('./views/transfer/transfer.module').then((m) => m.TransferModule)
+      }
     
 
     ]

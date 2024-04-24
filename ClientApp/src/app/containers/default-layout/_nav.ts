@@ -332,28 +332,21 @@ export const navItems: INavData[] = [
   },
   {
     title: true,
-    name: 'Transfer Management'
+    name: 'Transfer'
   },
   {
     name:'Transfer',
-    url: '/base',
+    url: '/transfer',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
-        name: 'Transfer posting Form',
-        url: '/base/accordion'
+        name: 'Transfer&Posting Management',
+        url: '/transfer/posting'
       },
       {
-        name: 'Department Release',
-        url: '/base/breadcrumbs'
+        name: 'Deparment Release',
+        url: '/transfer/release'
       }
-      ,
-      {
-        name: 'Transfer posting History',
-        url: '/base/breadcrumbs'
-      }
-
-
     ]
   },
   {

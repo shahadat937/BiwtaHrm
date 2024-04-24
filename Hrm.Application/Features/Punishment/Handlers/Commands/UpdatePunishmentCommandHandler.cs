@@ -52,7 +52,8 @@ namespace Hrm.Application.Features.Punishment.Handlers.Commands
                 throw new NotFoundException(nameof(Punishment), request.PunishmentDto.PunishmentId);
             }
 
-            var PunishmentName = request.PunishmentDto.PunishmentName.ToLower();
+            //var PunishmentName = request.PunishmentDto.PunishmentName.ToLower();
+            var PunishmentName = request.PunishmentDto.PunishmentName.Trim().ToLower().Replace(" ", string.Empty);
 
             IQueryable<Hrm.Domain.Punishment> Punishments = _PunishmentRepository.Where(x => x.PunishmentName.ToLower() == PunishmentName);
 

@@ -242,21 +242,24 @@ namespace Hrm.Persistence
                 .HasName("[PK_PoolId]");
             });
 
-            //modelBuilder.Entity<SubDepartment>(entity =>
-            //{
-            //    entity.HasKey(e => e.SubDepartmentId)
-            //    .HasName("[SubDepartmentId]");
-            //});
             modelBuilder.Entity<SubDepartment>(entity =>
             {
-                entity.HasOne(d => d.Department)
-                    .WithMany(p => p.SubDepartment)
-                    .HasForeignKey(d => d.DepartmentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_DepartmentId");
+                entity.HasKey(e => e.SubDepartmentId)
+                .HasName("[SubDepartmentId]");
             });
 
+            //modelBuilder.Entity<SubDepartment>(entity =>
+            //{
+            //    entity.HasOne(d => d.Department)
+            //        .WithMany(p => p.SubDepartment)
+            //        .HasForeignKey(d => d.DepartmentId)
+            //        .OnDelete(DeleteBehavior.ClientSetNull)
+            //        .HasConstraintName("FK_DepartmentId");
+            //});
+
         }
+        public virtual DbSet<UserRole> UserRole { get; set; } = null!;
+
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
         public virtual DbSet<MaritalStatus> MaritalStatus { get; set; } = null!;

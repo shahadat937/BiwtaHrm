@@ -58,6 +58,7 @@ using Hrm.Application.DTOs.HairColor;
 using Hrm.Application.DTOs.EyesColor;
 using Hrm.Application.DTOs.Pool;
 using Hrm.Application.DTOs.SubDepartment;
+using Hrm.Application.DTOs.UserRole;
 
 
 
@@ -221,6 +222,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<SubDepartment, SubDepartmentDto>().ReverseMap();
             CreateMap<SubDepartment, CreateSubDepartmentDto>().ReverseMap();
+            
+            CreateMap<UserRole, UserRoleDto>().ReverseMap();
+            CreateMap<UserRole, CreateUserRoleDto>().ReverseMap();
 
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();

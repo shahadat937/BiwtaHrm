@@ -45,7 +45,8 @@ namespace Hrm.Application.Features.Scales.Handlers.Commands
                 throw new NotFoundException(nameof(Scale), request.ScaleDto.ScaleId);
             }
 
-            var scaleName = request.ScaleDto.ScaleName.ToLower();
+            //var scaleName = request.ScaleDto.ScaleName.ToLower();
+            var scaleName = request.ScaleDto.ScaleName.Trim().ToLower().Replace(" ", string.Empty);
 
             IQueryable<Hrm.Domain.Scale> scales = _scaleRepository.Where(x => x.ScaleName.ToLower() == scaleName);
 

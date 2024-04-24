@@ -1,4 +1,5 @@
 ﻿using Hrm.Application.DTOs.EyesColor;
+using Hrm.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EyesColor.Requests.Commands
 {
-    public class UpdateEyesColorCommand : IRequest<Unit>
+    public class UpdateEyesColorCommand : IRequest<BaseCommandResponse>
     {
-        public EyesColorDto EyesColorDto { get; set; }
+        public required EyesColorDto EyesColorDto { get; set; }
     }
 }

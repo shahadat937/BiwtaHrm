@@ -47,7 +47,8 @@ namespace Hrm.Application.Features.Relation.Handlers.Commands
                 throw new NotFoundException(nameof(Relation), request.RelationDto.RelationId);
             }
 
-            var RelationName = request.RelationDto.RelationName.ToLower();
+            //var RelationName = request.RelationDto.RelationName.ToLower();
+            var RelationName = request.RelationDto.RelationName.Trim().ToLower().Replace(" ", string.Empty);
 
             IQueryable<Hrm.Domain.Relation> Relations = _RelationRepository.Where(x => x.RelationName.ToLower() == RelationName);
 

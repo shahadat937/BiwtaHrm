@@ -42,8 +42,8 @@ namespace Hrm.Application.Features.GradeType.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var gradeTypeName = request.GradeTypeDto.GradeTypeName.ToLower();
-
+            //var gradeTypeName = request.GradeTypeDto.GradeTypeName.ToLower();
+            var gradeTypeName = request.GradeTypeDto.GradeTypeName.Trim().ToLower().Replace(" ", string.Empty);
             IQueryable<Hrm.Domain.GradeType> gradeTypes = _gradeTypeRepository.Where(x => x.GradeTypeName.ToLower() == gradeTypeName);
 
 

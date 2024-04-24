@@ -28,6 +28,7 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
   grades: any = [];
 
   btnText: string | undefined;
+  loading = false;
   @ViewChild('ScaleForm', { static: true }) ScaleForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
@@ -156,6 +157,7 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // }
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.ScaleService.cachedData = [];
     const id = form.value.scaleId;
     const action$ = id
@@ -173,11 +175,13 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/scale']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

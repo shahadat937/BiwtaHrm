@@ -16,6 +16,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 })
 export class LeaveComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  loading = false;
   @ViewChild('LeaveForm', { static: true }) LeaveForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'leaveName', 'isActive', 'Action'];
@@ -97,6 +98,7 @@ export class LeaveComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.leaveService.cachedData = [];
     const id = form.value.leaveId;
     const action$ = id
@@ -114,11 +116,13 @@ export class LeaveComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/leave']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

@@ -1,4 +1,4 @@
-import { RelationService } from './../service/relation.service';
+import { UserRoleService } from './../service/user-role.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -10,23 +10,23 @@ import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
-  selector: 'app-relation',
-  templateUrl: './relation.component.html',
-  styleUrl: './relation.component.scss'
+  selector: 'app-user-role',
+  templateUrl: './user-role.component.html',
+  styleUrl: './user-role.component.scss'
 })
-export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
+export class UserRoleComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  @ViewChild('UserRoleForm', { static: true }) UserRoleForm!: NgForm;
   loading = false;
-  @ViewChild('RelationForm', { static: true }) RelationForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'relationName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'userRoleName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
   constructor(
-    public relationsService: RelationService,
+    public userRoleService: UserRoleService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -35,16 +35,16 @@ export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
     //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
   }
   ngOnInit(): void {
-    this.getAllRelations();
+    this.getAllUserRoles();
     this.handleRouteParams();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('relationId');
+      const id = params.get('userRoleId');
       if (id) {
         this.btnText = 'Update';
-        this.relationsService.find(+id).subscribe((res) => {
-          this.RelationForm?.form.patchValue(res);
+        this.userRoleService.find(+id).subscribe((res) => {
+          this.UserRoleForm?.form.patchValue(res);
         });
       } else {
         this.btnText = 'Submit';
@@ -66,45 +66,44 @@ export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  initaialRelation(form?: NgForm) {
+  initaialUserRole(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.relationsService.relations = {
-      relationId: 0,
-      relationName: '',
+    this.userRoleService.userRoles = {
+      userRoleId: 0,
+      userRoleName: '',
       menuPosition: 0,
       isActive: true,
     };
   }
   resetForm() {
     this.btnText = 'Submit';
-    if (this.RelationForm?.form != null) {
-      this.RelationForm.form.reset();
-      this.RelationForm.form.patchValue({
-        relationId: 0,
-        relationName: '',
+    if (this.UserRoleForm?.form != null) {
+      this.UserRoleForm.form.reset();
+      this.UserRoleForm.form.patchValue({
+        userRoleId: 0,
+        userRoleName: '',
         menuPosition: 0,
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/relation']);
-
+    this.router.navigate(['/bascisetup/userRole']);
   }
 
-  getAllRelations() {
-    this.subscription = this.relationsService.getAll().subscribe((item) => {
+  getAllUserRoles() {
+    this.subscription = this.userRoleService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
   }
-
+  
   onSubmit(form: NgForm): void {
     this.loading = true;
-    this.relationsService.cachedData = [];
-    const id = form.value.relationId;
+    this.userRoleService.cachedData = [];
+    const id = form.value.userRoleId;
     const action$ = id
-      ? this.relationsService.update(id, form.value)
-      : this.relationsService.submit(form.value);
+      ? this.userRoleService.update(id, form.value)
+      : this.userRoleService.submit(form.value);
     
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
@@ -112,10 +111,10 @@ export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getAllRelations();
+        this.getAllUserRoles();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/relation']);
+          this.router.navigate(['/bascisetup/userRole']);
         }
     this.loading = false;
       } else {
@@ -132,7 +131,7 @@ export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.relationsService.delete(element.relationId).subscribe(
+          this.userRoleService.delete(element.userRoleId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {

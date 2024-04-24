@@ -22,6 +22,7 @@ import { GradeClassService } from '../service/GradeClass.service';
 })
 export class GradeClassComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  loading = false;
   @ViewChild('GradeClassForm', { static: true }) GradeClassForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'gradeClassName', 'isActive', 'Action'];
@@ -144,6 +145,7 @@ export class GradeClassComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.gradeclassService.cachedData = [];
     const id = form.value.gradeClassId;
     const action$ = id
@@ -161,11 +163,13 @@ export class GradeClassComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/grade-class']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

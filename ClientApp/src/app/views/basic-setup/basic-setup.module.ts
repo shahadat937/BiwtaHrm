@@ -71,6 +71,7 @@ import { PoolComponent } from './pool/pool.component';
 import { SubDepartmentComponent } from './sub-department/sub-department.component';
 import { SubDepartmentService } from './service/sub-department.service';
 import { PoolService } from './service/pool.service';
+import { UserRoleComponent } from './user-role/user-role.component';
 
 
 
@@ -112,6 +113,7 @@ import { PoolService } from './service/pool.service';
     RelationComponent,
     PoolComponent,
     SubDepartmentComponent,
+    UserRoleComponent,
 
   ],
   imports: [

@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  loading = false;
   @ViewChild('Overall_EV_PromotionForm', { static: true }) Overall_EV_PromotionForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'overall_EV_PromotionName', 'isActive', 'Action'];
@@ -97,6 +98,7 @@ export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterView
     });
   }
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.overall_EV_PromotionService.cachedData = [];
     const id = form.value.overall_EV_PromotionId;
     const action$ = id
@@ -114,11 +116,13 @@ export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterView
         if (!id) {
           this.router.navigate(['/bascisetup/overall_EV_Promotion']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

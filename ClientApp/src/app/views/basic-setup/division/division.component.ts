@@ -29,6 +29,7 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
   countrys: SelectedModel[] = [];
 
   btnText: string | undefined;
+  loading = false;
   @ViewChild('DivisionForm', { static: true }) DivisionForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo','countryName','divisionName', 'isActive', 'Action'];
@@ -157,6 +158,7 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // }
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.devisionService.cachedData = [];
     const id = form.value.divisionId;
     const action$ = id
@@ -174,11 +176,13 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/division']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

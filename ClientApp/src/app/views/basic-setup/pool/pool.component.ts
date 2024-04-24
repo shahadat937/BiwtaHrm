@@ -21,6 +21,7 @@ import { PoolService } from './../service/pool.service';
 })
 export class PoolComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  
   @ViewChild('PoolForm', { static: true }) PoolForm!: NgForm;
   loading = false;
   subscription: Subscription = new Subscription();
@@ -85,7 +86,7 @@ export class PoolComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.PoolForm?.form != null) {
       this.PoolForm.form.reset();
       this.PoolForm.form.patchValue({
-        poolIdpoolId: 0,
+        poolId: 0,
         poolName: '',
         menuPosition: 0,
         isActive: true,

@@ -1,5 +1,5 @@
 <c-card>
-  <c-card-header>GradeClass </c-card-header>
+  <c-card-header>Grade Class </c-card-header>
   <c-card-body>
     <form
       #GradeClassForm="ngForm"
@@ -18,13 +18,13 @@
         />
         <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
         <label cLabel for="validationCustom01"
-          >GradeClass Name<span class="text-danger">*</span></label
+          >Grade Class Name<span class="text-danger">*</span></label
         >
         <input
           [(ngModel)]="gradeclassService.gradeClass.gradeClassName"
           name="gradeClassName"
           #GradeClass="ngModel"
-          placeholder="Enter GradeType Name"
+          placeholder="Enter Grade Type Name"
           cFormControl
           id="validationCustom01"
           required
@@ -32,7 +32,7 @@
           value="Mark"
         />
         @if(!GradeClass.valid&&GradeClass.touched){
-        <div class="text-left text-danger">GradeClass Name is required</div>
+        <div class="text-left text-danger">Grade Class Name is required</div>
         }
       </c-col>
       <c-col [md]="6">
@@ -49,14 +49,16 @@
       </c-col>
       <c-col [xs]="12">
         <button
+        [disabled]="loading"
           [disabled]="GradeClassForm.invalid"
           cButton
           class="me-1"
           color="primary"
           type="submit"
         >
-          {{ btnText }}
-        </button>
+        <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+        {{ btnText }}
+      </button>
         <button cButton color="secondary" (click)="resetForm()">Reset</button>
       </c-col>
     </form>

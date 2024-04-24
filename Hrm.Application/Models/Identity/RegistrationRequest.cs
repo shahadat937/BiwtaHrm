@@ -17,6 +17,17 @@ namespace Hrm.Application.Models.Identity
         [Required]
         [MinLength(6)]
         public string UserName { get; set; }
+        
+        [Required]
+        [MinLength(11)]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        public string PNo { get; set; }
+
+
+        [Required]
+        public bool IsActive { get; set; } = true;
 
         [Required]
         [MinLength(6)]

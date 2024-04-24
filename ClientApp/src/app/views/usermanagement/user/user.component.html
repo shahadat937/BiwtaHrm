@@ -1,0 +1,202 @@
+<c-card>
+    <c-card-header class="d-flex justify-content-between">
+      <div>User</div>
+      <div><button cButton color="primary" shape="rounded-pill" (click)="UserFormView()"><svg cIcon name={{buttonIcon}}></svg> {{userBtnText}}</button></div>
+    </c-card-header>
+    <c-card-body [hidden]="showUserForm == true">
+      <form
+        #UserForm="ngForm"
+        (submit)="onSubmit(UserForm)"
+        [gutter]="3"
+        novalidate
+        cForm
+        cRow
+        class="needs-validation"
+      >
+        <c-col [md]="4">
+          <input
+            type="hidden"
+            [(ngModel)]="userService.users.userId"
+            name="userId"
+          />
+          <label cLabel for="validationCustom01"
+            >User Name<span class="text-danger">*</span></label
+          >
+          <input
+            [(ngModel)]="userService.users.userName"
+            name="userName"
+            #UserName="ngModel"
+            placeholder="Enter User Name"
+            cFormControl
+            id="validationCustom01"
+            required
+            type="text"
+          />
+          @if(!UserName.valid&&UserName.touched){
+          <div class="text-left text-danger">User Name is required</div>
+          }
+        </c-col>
+        <c-col [md]="4">
+            <label cLabel for="validationCustom02"
+            >First Name<span class="text-danger">*</span></label
+          >
+          <input
+            [(ngModel)]="userService.users.firstName"
+            name="firstName"
+            #FirstName="ngModel"
+            placeholder="Enter First Name"
+            cFormControl
+            id="validationCustom02"
+            required
+            type="text"
+          />
+          @if(!FirstName.valid&&FirstName.touched){
+          <div class="text-left text-danger">First Name is required</div>
+          }
+        </c-col>
+        
+        <c-col [md]="4">
+            <label cLabel for="validationCustom03"
+            >Last Name<span class="text-danger">*</span></label>
+          <input
+            [(ngModel)]="userService.users.lastName"
+            name="lastName"
+            #LastName="ngModel"
+            placeholder="Enter Last Name"
+            cFormControl
+            id="validationCustom03"
+            required
+            type="text"
+          />
+          @if(!LastName.valid&&LastName.touched){
+          <div class="text-left text-danger">Last Name is required</div>
+          }
+        </c-col>
+        <c-col [md]="4">
+            <label cLabel for="validationCustom04"
+            >Email<span class="text-danger">*</span></label>
+          <input
+            [(ngModel)]="userService.users.email"
+            name="email"
+            #Email="ngModel"
+            placeholder="Enter Email Address"
+            cFormControl
+            id="validationCustom04"
+            required
+            type="email"
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          />
+          @if(!Email.value&&Email.touched){
+          <div class="text-left text-danger">Email is required</div>
+          }
+          @if(!Email.valid&&Email.touched&&Email.value){
+            <div class="text-left text-danger">Email is not valid</div>
+            }
+        </c-col>
+        <c-col [md]="4">
+            <label cLabel for="validationCustom05"
+            >Phone Number<span class="text-danger">*</span></label
+          >
+          <input
+            [(ngModel)]="userService.users.phoneNumber"
+            name="phoneNumber"
+            #PhoneNumber="ngModel"
+            placeholder="Enter Phone Number"
+            cFormControl
+            id="validationCustom05"
+            required
+            type="number"
+          />
+          @if(!PhoneNumber.valid&&PhoneNumber.touched){
+          <div class="text-left text-danger">Phone Number is required</div>
+          }
+        </c-col>
+        <c-col [md]="4">
+            <label cLabel for="validationCustom06"
+            >PNo<span class="text-danger">*</span></label
+          >
+          <input
+            [(ngModel)]="userService.users.pNo"
+            name="pNo"
+            #PNo="ngModel"
+            placeholder="Enter PNo"
+            cFormControl
+            id="validationCustom06"
+            required
+            type="text"
+          />
+          @if(!PNo.valid&&PNo.touched){
+          <div class="text-left text-danger">PNo is required</div>
+          }
+        </c-col>
+        <c-col [md]="4">
+            <label cLabel for="validationCustom07"
+            >Enter Password<span class="text-danger">*</span></label
+          >
+          <input
+            [(ngModel)]="userService.users.password"
+            name="password"
+            #Password="ngModel"
+            placeholder="Enter Your Password"
+            cFormControl
+            id="validationCustom07"
+            required
+            type="password"
+            minlength="8"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+          />
+          @if(!Password.value&&Password.touched){
+          <div class="text-left text-danger">Password is required</div>
+          }
+          @if(!Password.valid&&Password.touched&&Password.value){
+            <div class="text-left text-danger">Please is not valid</div>
+            <div class="text-left text-success">Password must contain (8 character, 1 uppercase, 1 lowercase, 1 number, 1 symbol)</div>
+            }
+        </c-col>
+        <c-col [md]="4">
+            <label cLabel for="validationCustom08"
+            >Re-Type Password<span class="text-danger">*</span></label
+          >
+          <input
+            [(ngModel)]="userService.users.rePassword"
+            name="rePassword"
+            #RePassword="ngModel"
+            placeholder="Re-Type Your Password"
+            cFormControl
+            id="validationCustom08"
+            required
+            type="password"
+          />
+          @if(RePassword.touched && Password.value !== RePassword.value){
+          <div class="text-left text-danger">Password Doesn't Match</div>
+          }
+        </c-col>
+
+        <c-col [md]="4">
+          <label cLabel for="validationCustom09">Active Status</label>
+          <select [(ngModel)]="userService.users.isActive"
+          name="isActive"
+          cSelect
+          id="validationCustom09">
+            <option value="true">Active</option>
+            <option value="false">De-Active</option>
+          </select>
+        </c-col>
+
+        <c-col [xs]="12">
+          <button
+            [disabled]="loading"
+            [disabled]="UserForm.invalid"
+            cButton
+            class="me-1"
+            color="primary"
+            type="submit"
+          >
+            <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+            {{ btnText }}
+          </button>
+          <button cButton color="secondary" (click)="resetForm()">Reset</button>
+        </c-col>
+      </form>
+    </c-card-body>
+  </c-card>

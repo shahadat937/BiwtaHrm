@@ -265,13 +265,13 @@ export const navItems: INavData[] = [
   },
   {
     name:'Add Employee',
-    url: '/base',
+    url: '/employee/addEmployee',
     iconComponent: { name: 'cil-puzzle' },
 
   },
   {
     name:'Manage Employee',
-    url: '/base',
+    url: '/employee/manageEmployee',
     iconComponent: { name: 'cil-puzzle' },
 
   },
@@ -281,32 +281,32 @@ export const navItems: INavData[] = [
   },
   {
     name:'Attendance',
-    url: '/base',
+    url: '/attendance',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Manage Shift',
-        url: '/base/accordion'
+        url: '/attendance/manageShift'
       },
       {
         name: 'Workday Setting',
-        url: '/base/breadcrumbs'
+        url: '/attendance/workdaySetting'
       },
       {
         name: 'Attendance Record',
-        url: '/base/cards'
+        url: '/attendance/attendanceRecord'
       },
       {
         name: 'Manual Attendance',
-        url: '/base/carousel'
+        url: '/attendance/manualAttendance'
       },
       {
         name: 'Site Visit',
-        url: '/base/collapse'
+        url: '/attendance/siteVisit'
       },
       {
         name: 'Attendance Report',
-        url: '/base/list-group'
+        url: '/attendance/attendanceReport'
       }
 
     ]
@@ -317,43 +317,40 @@ export const navItems: INavData[] = [
   },
   {
     name:'Leave',
-    url: '/base',
+    url: '/leave',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Add leave',
-        url: '/base/accordion'
+        url: '/leave/addleave'
       },
       {
         name: 'Manage leave',
-        url: '/base/breadcrumbs'
+        url: '/leave/manageleave'
       },
     ]
   },
   {
     title: true,
-    name: 'Transfer Management'
+    name: 'Transfer'
   },
   {
     name:'Transfer',
-    url: '/base',
+    url: '/transfer',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
-        name: 'Transfer posting Form',
-        url: '/base/accordion'
+        name: 'Transfer&Posting Management',
+        url: '/transfer/posting'
       },
       {
-        name: 'Department Release',
-        url: '/base/breadcrumbs'
-      }
-      ,
+        name: 'Deparment Release',
+        url: '/transfer/release'
+      },
       {
-        name: 'Transfer posting History',
-        url: '/base/breadcrumbs'
+        name: 'Deparment Release',
+        url: '/transfer/release'
       }
-
-
     ]
   },
   {
@@ -362,21 +359,21 @@ export const navItems: INavData[] = [
   },
   {
     name:'Promotion',
-    url: '/base',
+    url: '/promotion',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Increment & Promotion',
-        url: '/base/accordion'
+        url: '/promotion/incrementAndPromotion'
       },
       {
         name: 'Incre.& Promo. Approval',
-        url: '/base/breadcrumbs'
+        url: '/promotion/incrementAndPromotionApproval'
       }
       ,
       {
         name: 'Incr.& Promo. History',
-        url: '/base/breadcrumbs'
+        url: '/promotion/incrementAndPromotionHistory'
       }
 
 
@@ -396,21 +393,21 @@ export const navItems: INavData[] = [
   },
   {
     name:'Appraisal',
-    url: '/base',
+    url: '/appraisal',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Staff Form',
-        url: '/base/accordion'
+        url: '/appraisal/staffForm'
       },
       {
         name: 'Manage Form',
-        url: '/base/breadcrumbs'
+        url: '/appraisal/manageForm'
       }
       ,
       {
         name: 'Officer Form',
-        url: '/base/breadcrumbs'
+        url: '/appraisal/officerForm'
       }
 
 
@@ -428,7 +425,7 @@ export const navItems: INavData[] = [
   },
   {
     name:'User',
-    url: '/base',
+    url: '/usermanagement/user',
     iconComponent: { name: 'cil-puzzle' },
 
   },

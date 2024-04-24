@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Hrm.Application.Contracts.Persistence;
 
 namespace Hrm.Identity.Services
 {
@@ -83,6 +84,9 @@ namespace Hrm.Identity.Services
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 UserName = request.UserName,
+                PhoneNumber = request.PhoneNumber,
+                PNo = request.PNo,
+                IsActive = request.IsActive,
                 EmailConfirmed = true
             };
 

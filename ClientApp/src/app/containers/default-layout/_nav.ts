@@ -286,27 +286,27 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Manage Shift',
-        url: '/base/accordion'
+        url: '/attendance/manageShift'
       },
       {
         name: 'Workday Setting',
-        url: '/base/breadcrumbs'
+        url: '/attendance/workdaySetting'
       },
       {
         name: 'Attendance Record',
-        url: '/base/cards'
+        url: '/attendance/attendanceRecord'
       },
       {
         name: 'Manual Attendance',
-        url: '/base/carousel'
+        url: '/attendance/manualAttendance'
       },
       {
         name: 'Site Visit',
-        url: '/base/collapse'
+        url: '/attendance/siteVisit'
       },
       {
         name: 'Attendance Report',
-        url: '/base/list-group'
+        url: '/attendance/attendanceReport'
       }
 
     ]

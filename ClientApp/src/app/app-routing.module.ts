@@ -85,6 +85,11 @@ const routes: Routes = [
         path: 'employee',
         loadChildren: () =>
           import('./views/employee/employee.module').then((m) => m.EmployeeModule)
+      },
+      {
+        path: 'attendance',
+        loadChildren: () =>
+          import('./views/attendance/attendance.module').then((m) => m.AttendanceModule)
       }
     
 

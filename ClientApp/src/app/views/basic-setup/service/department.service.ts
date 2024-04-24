@@ -15,6 +15,8 @@ export class DepartmentService {
     this.departments = new Department();
   }
 
+
+  
   getSelectSubDepartment(){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/department/get-selecteddepartment');
   }

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.BankBranch.Validators;
-using Hrm.Application.DTOs.BankBranch.ValidatorsBankBranch;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.BankBranch.Requests.Commands;
 using Hrm.Application.Responses;
@@ -31,7 +30,7 @@ namespace Hrm.Application.Features.BankBranch.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(UpdateBankBranchCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
-            var validator = new UpdateBankBranchDtoValidator();
+            var validator = new UpdateBankBranchDtoValidators();
             var validationResult = await validator.ValidateAsync(request.BankBranchDto);
 
             if (validationResult.IsValid == false)
@@ -48,7 +47,8 @@ namespace Hrm.Application.Features.BankBranch.Handlers.Commands
                 throw new NotFoundException(nameof(BankBranch), request.BankBranchDto.BankBranchId);
             }
 
-            var BankBranchName = request.BankBranchDto.BankBranchName.ToLower();
+            //var BankBranchName = request.BankBranchDto.BankBranchName.ToLower();
+            var BankBranchName = request.BankBranchDto.BankBranchName.Trim().ToLower().Replace(" ", string.Empty);
 
             IQueryable<Hrm.Domain.BankBranch> BankBranchs = _BankBranchRepository.Where(x => x.BankBranchName.ToLower() == BankBranchName);
 
@@ -56,7 +56,9 @@ namespace Hrm.Application.Features.BankBranch.Handlers.Commands
             if (BankBranchs.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                // response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Creation Failed '{request.BankBranchDto.BankBranchName}' already exists.";
+
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.BankBranch.Requests.Commands
 {
-    public class CreateBankBranchCommand :IRequest<BaseCommandResponse>
+    public class CreateBankBranchCommand : IRequest<BaseCommandResponse>
     {
         public CreateBankBranchDto BankBranchDto { get; set; }
     }

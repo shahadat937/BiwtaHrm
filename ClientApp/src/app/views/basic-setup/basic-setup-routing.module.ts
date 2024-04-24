@@ -40,6 +40,8 @@ import { RelationComponent } from './relation/relation.component';
 import { SubDepartmentComponent } from './sub-department/sub-department.component';
 import { PoolComponent } from './pool/pool.component';
 import { UserRoleComponent } from './user-role/user-role.component';
+import { BankComponent } from './bank/bank.component';
+import { BankBranchComponent } from './bank-branch/bank-branch.component';
 
 const routes: Routes = [
 
@@ -325,6 +327,21 @@ const routes: Routes = [
   },
   { path: 'update-userRole/:userRoleId',
     component: UserRoleComponent,
+  },
+  
+  {
+    path: 'bank',
+    component: BankComponent,
+  },
+  { path: 'update-bank/:bankId',
+    component: BankComponent,
+  },
+  {
+    path: 'bankBranch',
+    component: BankBranchComponent,
+  },
+  { path: 'update-bankBranch/:bankBranchId',
+    component: BankBranchComponent,
   },
 ];
 

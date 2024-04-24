@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.Bank;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.Bank.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
+using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace Hrm.Application.Features.Bank.Handlers.Queries
         public async Task<object> Handle(GetBankRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.Bank> Banks = _BankRepository.Where(x => true);
+            Banks = Banks.OrderByDescending(x => x.BankId);
 
             var BankDtos = _mapper.Map<List<BankDto>>(Banks);
 

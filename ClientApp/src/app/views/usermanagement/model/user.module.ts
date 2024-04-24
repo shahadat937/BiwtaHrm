@@ -1,0 +1,39 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { EmailValidator } from '@angular/forms';
+
+
+
+@NgModule({
+  declarations: [],
+  imports: [
+    CommonModule
+  ]
+})
+export class UserModule {
+  userId: number;
+  userName: string;
+  password: string;
+  rePassword: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber : number;
+  pNo : string;
+  menuPosition: number;
+  isActive : boolean;
+  
+  constructor() {
+    this.userId = 0;
+    this.userName = '';
+    this.password = '';
+    this.rePassword = '';
+    this.firstName = '';
+    this.lastName = '';
+    this.email = '';
+    this.phoneNumber = 0;
+    this.pNo = '';
+    this.menuPosition = 0;
+    this.isActive = true;
+  }
+}

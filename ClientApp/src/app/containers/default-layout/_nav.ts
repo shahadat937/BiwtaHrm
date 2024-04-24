@@ -281,7 +281,7 @@ export const navItems: INavData[] = [
   },
   {
     name:'Attendance',
-    url: '/base',
+    url: '/attendance',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
@@ -317,16 +317,16 @@ export const navItems: INavData[] = [
   },
   {
     name:'Leave',
-    url: '/base',
+    url: '/leave',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Add leave',
-        url: '/base/accordion'
+        url: '/leave/addleave'
       },
       {
         name: 'Manage leave',
-        url: '/base/breadcrumbs'
+        url: '/leave/manageleave'
       },
     ]
   },

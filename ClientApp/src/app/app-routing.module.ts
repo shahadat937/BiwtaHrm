@@ -1,3 +1,4 @@
+import { Leave } from './views/basic-setup/model/Leave';
 import { EmployeeModule } from './views/employee/employee.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -90,6 +91,12 @@ const routes: Routes = [
         path: 'attendance',
         loadChildren: () =>
           import('./views/attendance/attendance.module').then((m) => m.AttendanceModule)
+      }
+      ,
+      {
+        path: 'leave',
+        loadChildren: () =>
+          import('./views/Leave/leave.module').then((m) => m.LeaveModule)
       }
     
 

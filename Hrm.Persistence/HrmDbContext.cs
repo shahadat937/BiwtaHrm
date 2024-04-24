@@ -202,8 +202,13 @@ namespace Hrm.Persistence
             modelBuilder.Entity<BankBranch>(entity =>
             {
                 entity.HasKey(e => e.BankBranchId)
-                .HasName("[[PK_BankBranch]]");
+                .HasName("[PK_BankBranch]");
             });
+            //modelBuilder.Entity<Division>(entity => {
+            //    entity.HasKey(e => e.DivisionId)
+            //        .HasName("PK__Division__20EFC6A8D5104B78");
+
+            //});
             modelBuilder.Entity<Bank>(entity =>
             {
                 entity.HasKey(e => e.BankId)

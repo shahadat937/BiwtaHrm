@@ -72,6 +72,9 @@ import { SubDepartmentComponent } from './sub-department/sub-department.componen
 import { SubDepartmentService } from './service/sub-department.service';
 import { PoolService } from './service/pool.service';
 import { UserRoleComponent } from './user-role/user-role.component';
+import { BankComponent } from './bank/bank.component';
+import { BankBranchComponent } from './bank-branch/bank-branch.component';
+import { BankBranchService } from './service/bank-branch.service';
 
 
 
@@ -114,6 +117,8 @@ import { UserRoleComponent } from './user-role/user-role.component';
     PoolComponent,
     SubDepartmentComponent,
     UserRoleComponent,
+    BankComponent,
+    BankBranchComponent,
 
   ],
   imports: [
@@ -137,6 +142,7 @@ import { UserRoleComponent } from './user-role/user-role.component';
     SpinnerModule,
   ],
   providers: [ 
+    BankBranchService,
     PoolService,
     SubDepartmentService,
     RelationService,

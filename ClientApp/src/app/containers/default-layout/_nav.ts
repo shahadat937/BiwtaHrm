@@ -640,16 +640,17 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Bank Name',
-        url: '/base/accordion'
+        url: '/bascisetup/bank'
       },
       {
         name: 'Branch Name',
-        url: '/base/breadcrumbs'
+        url: '/bascisetup/bankBranch'
       },
       {
         name: 'Account Type',
         url: '/base/cards'
-      }
+      },
+
 
     ]
   },

@@ -2,10 +2,11 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Bank.Validators;
 using Hrm.Application.DTOs.Bank.ValidatorsBank;
+using Hrm.Application.DTOs.MaritalStatus.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.Bank.Requests.Commands;
+using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
         private readonly IHrmRepository<Hrm.Domain.Bank> _BankRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+
         public UpdateBankCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Bank> BankRepository)
         {
             _unitOfWork = unitOfWork;
@@ -41,27 +43,31 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var Bank = await _unitOfWork.Repository<Hrm.Domain.Bank>().Get(request.BankDto.BankId);
-
-            if (Bank is null)
-            {
-                throw new NotFoundException(nameof(Bank), request.BankDto.BankId);
-            }
-
-            var BankName = request.BankDto.BankName.ToLower();
-
+            //var BankName = request.BankDto.BankName.ToLower();
+            var BankName = request.BankDto.BankName.Trim().ToLower().Replace(" ", string.Empty);
             IQueryable<Hrm.Domain.Bank> Banks = _BankRepository.Where(x => x.BankName.ToLower() == BankName);
+
 
 
             if (Banks.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.BankDto.BankName}' already exists.";
+
+                //response.Message = "Creation Failed Name already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }
+
             else
             {
+
+                var Bank = await _unitOfWork.Repository<Hrm.Domain.Bank>().Get(request.BankDto.BankId);
+
+                if (Bank is null)
+                {
+                    throw new NotFoundException(nameof(Bank), request.BankDto.BankId);
+                }
 
                 _mapper.Map(request.BankDto, Bank);
 
@@ -69,10 +75,11 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
                 await _unitOfWork.Save();
 
                 response.Success = true;
-                response.Message = "Update Successful";
+                response.Message = "Update Successfull";
                 response.Id = Bank.BankId;
 
             }
+
             return response;
         }
     }

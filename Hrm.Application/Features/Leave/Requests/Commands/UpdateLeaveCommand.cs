@@ -1,4 +1,6 @@
 ﻿using Hrm.Application.DTOs.Leave;
+using Hrm.Application.DTOs.Leave;
+using Hrm.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Leave.Requests.Commands
 {
-    public class UpdateLeaveCommand : IRequest<Unit>
+    public class UpdateLeaveCommand : IRequest<BaseCommandResponse>
     {
-        public LeaveDto LeaveDto { get; set; }
+        public required LeaveDto LeaveDto { get; set; }
     }
 }

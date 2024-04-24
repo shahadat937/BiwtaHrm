@@ -47,7 +47,8 @@ namespace Hrm.Application.Features.SubDepartment.Handlers.Commands
                 throw new NotFoundException(nameof(SubDepartment), request.SubDepartmentDto.SubDepartmentId);
             }
 
-            var SubDepartmentName = request.SubDepartmentDto.SubDepartmentName.ToLower();
+            //var SubDepartmentName = request.SubDepartmentDto.SubDepartmentName.ToLower();
+            var SubDepartmentName = request.SubDepartmentDto.SubDepartmentName.Trim().ToLower().Replace(" ", string.Empty);
 
             IQueryable<Hrm.Domain.SubDepartment> SubDepartments = _SubDepartmentRepository.Where(x => x.SubDepartmentName.ToLower() == SubDepartmentName);
 
@@ -55,7 +56,7 @@ namespace Hrm.Application.Features.SubDepartment.Handlers.Commands
             if (SubDepartments.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.SubDepartmentDto.SubDepartmentName}' already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

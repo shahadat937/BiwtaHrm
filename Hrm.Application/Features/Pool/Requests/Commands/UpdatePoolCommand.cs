@@ -1,15 +1,15 @@
 ﻿using Hrm.Application.DTOs.Pool;
+using Hrm.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Pool.Requests.Commands
 {
-    public class UpdatePoolCommand : IRequest<Unit>
+    public class UpdatePoolCommand : IRequest<BaseCommandResponse>
     {
-        public PoolDto PoolDto { get; set; }
+        public required PoolDto PoolDto { get; set; }
     }
 }

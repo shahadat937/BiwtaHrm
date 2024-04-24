@@ -47,7 +47,8 @@ namespace Hrm.Application.Features.Division.Handlers.Commands
                 throw new NotFoundException(nameof(Division), request.DivisionDto.DivisionId);
             }
 
-            var DivisionName = request.DivisionDto.DivisionName.ToLower();
+            //var DivisionName = request.DivisionDto.DivisionName.ToLower();
+            var DivisionName = request.DivisionDto.DivisionName.Trim().ToLower().Replace(" ", string.Empty);
 
             IQueryable<Hrm.Domain.Division> Divisions = _DivisionRepository.Where(x => x.DivisionName.ToLower() == DivisionName);
 
@@ -55,7 +56,9 @@ namespace Hrm.Application.Features.Division.Handlers.Commands
             if (Divisions.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                // response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Creation Failed '{request.DivisionDto.DivisionName}' already exists.";
+
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

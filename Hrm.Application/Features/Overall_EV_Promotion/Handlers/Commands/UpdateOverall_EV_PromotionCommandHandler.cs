@@ -47,8 +47,8 @@ namespace Hrm.Application.Features.Overall_EV_Promotion.Handlers.Commands
                 throw new NotFoundException(nameof(Overall_EV_Promotion), request.Overall_EV_PromotionDto.Overall_EV_PromotionId);
             }
 
-            var Overall_EV_PromotionName = request.Overall_EV_PromotionDto.Overall_EV_PromotionName.ToLower();
-
+            //var Overall_EV_PromotionName = request.Overall_EV_PromotionDto.Overall_EV_PromotionName.ToLower();
+            var Overall_EV_PromotionName = request.Overall_EV_PromotionDto.Overall_EV_PromotionName.Trim().ToLower().Replace(" ", string.Empty);
             IQueryable<Hrm.Domain.Overall_EV_Promotion> Overall_EV_Promotions = _Overall_EV_PromotionRepository.Where(x => x.Overall_EV_PromotionName.ToLower() == Overall_EV_PromotionName);
 
 

@@ -47,8 +47,8 @@ namespace Hrm.Application.Features.Result.Handlers.Commands
                 throw new NotFoundException(nameof(Result), request.ResultDto.ResultId);
             }
 
-            var ResultName = request.ResultDto.ResultName.ToLower();
-
+            //var ResultName = request.ResultDto.ResultName.ToLower();
+            var ResultName = request.ResultDto.ResultName.Trim().ToLower().Replace(" ", string.Empty);
             IQueryable<Hrm.Domain.Result> Results = _ResultRepository.Where(x => x.ResultName.ToLower() == ResultName);
 
 

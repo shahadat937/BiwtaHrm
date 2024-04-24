@@ -271,7 +271,7 @@ export const navItems: INavData[] = [
   },
   {
     name:'Manage Employee',
-    url: '/employee/addEmployee',
+    url: '/employee/manageEmployee',
     iconComponent: { name: 'cil-puzzle' },
 
   },

@@ -359,21 +359,21 @@ export const navItems: INavData[] = [
   },
   {
     name:'Promotion',
-    url: '/base',
+    url: '/promotion',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Increment & Promotion',
-        url: '/base/accordion'
+        url: '/promotion/incrementAndPromotion'
       },
       {
         name: 'Incre.& Promo. Approval',
-        url: '/base/breadcrumbs'
+        url: '/promotion/incrementAndPromotionApproval'
       }
       ,
       {
         name: 'Incr.& Promo. History',
-        url: '/base/breadcrumbs'
+        url: '/promotion/incrementAndPromotionHistory'
       }
 
 
@@ -393,21 +393,21 @@ export const navItems: INavData[] = [
   },
   {
     name:'Appraisal',
-    url: '/base',
+    url: '/appraisal',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Staff Form',
-        url: '/base/accordion'
+        url: '/appraisal/staffForm'
       },
       {
         name: 'Manage Form',
-        url: '/base/breadcrumbs'
+        url: '/appraisal/manageForm'
       }
       ,
       {
         name: 'Officer Form',
-        url: '/base/breadcrumbs'
+        url: '/appraisal/officerForm'
       }
 
 

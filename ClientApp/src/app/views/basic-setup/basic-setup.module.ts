@@ -67,7 +67,7 @@ import { HairColorComponent } from './hair-color/hair-color.component';
 import { EyesColorComponent } from './eyes-color/eyes-color.component';
 import { EyesColorService } from './service/eyes-color.service';
 import { RelationComponent } from './relation/relation.component';
-import { RelationService } from './service/relation.service';
+import { RelationService } from './service/relation.service'; 
 
 
 @NgModule({
@@ -142,6 +142,7 @@ import { RelationService } from './service/relation.service';
     MaritalStatusService,
     ReligionService,
     GenderService,
+     
   ],
 })
 export class BasicSetupModule {}

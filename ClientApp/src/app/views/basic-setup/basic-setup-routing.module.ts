@@ -38,6 +38,8 @@ import { HairColorComponent } from './hair-color/hair-color.component';
 import { EyesColorComponent } from './eyes-color/eyes-color.component';
 import { RelationComponent } from './relation/relation.component';
 
+import { TrainingNameComponent } from './training-name/training-name.component';
+
 const routes: Routes = [
 
   {
@@ -294,6 +296,14 @@ const routes: Routes = [
   },
   { path: 'update-relation/:relationId',
     component: RelationComponent,
+  },
+
+  {
+    path: 'trainingName',
+    component: TrainingNameComponent,
+  },
+  { path: 'update-trainingName/:trainingNameId',
+    component: TrainingNameComponent,
   },
 ];
 

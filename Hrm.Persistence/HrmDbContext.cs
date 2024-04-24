@@ -18,39 +18,45 @@ namespace Hrm.Persistence
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
-        
-        modelBuilder.Entity<BloodGroup>(entity => {
+
+
+            modelBuilder.Entity<BloodGroup>(entity =>
+            {
 
                 entity.HasKey(e => e.BloodGroupId)
                     .HasName("PK_BloodGroupId");
-                
+
             });
-            modelBuilder.Entity<EmployeeType>(entity => {
+            modelBuilder.Entity<EmployeeType>(entity =>
+            {
 
                 entity.HasKey(e => e.EmployeeTypeId)
                     .HasName("PK_EmployeeTypeId");
 
             });
-            modelBuilder.Entity<Gender>(entity => {
+            modelBuilder.Entity<Gender>(entity =>
+            {
 
                 entity.HasKey(e => e.GenderId)
                     .HasName("PK_GenderId");
 
             });
-            modelBuilder.Entity<Religion>(entity => {
+            modelBuilder.Entity<Religion>(entity =>
+            {
 
                 entity.HasKey(e => e.ReligionId)
                     .HasName("PK_ReligionId");
 
             });
-            modelBuilder.Entity<ChildStatus>(entity => {
+            modelBuilder.Entity<ChildStatus>(entity =>
+            {
 
                 entity.HasKey(e => e.ChildStatusId)
                     .HasName("PK_ChildStatusId");
 
             });
-            modelBuilder.Entity<Division>(entity => {
+            modelBuilder.Entity<Division>(entity =>
+            {
 
                 entity.HasOne(d => d.Country)
                   .WithMany(p => p.Divisions)
@@ -60,13 +66,15 @@ namespace Hrm.Persistence
                     .HasName("PK_DivisionId");
 
             });
-            modelBuilder.Entity<Thana>(entity => {
+            modelBuilder.Entity<Thana>(entity =>
+            {
 
                 entity.HasKey(e => e.ThanaId)
                     .HasName("PK__Thana__438130B46C389C43");
 
             });
-            modelBuilder.Entity<Upazila>(entity => {
+            modelBuilder.Entity<Upazila>(entity =>
+            {
 
                 entity.HasKey(e => e.UpazilaId)
                     .HasName("PK__Upazila__FE787458879EB561");
@@ -225,17 +233,22 @@ namespace Hrm.Persistence
             {
                 entity.HasKey(e => e.OfficeAddressId)
                 .HasName("[[PK_OfficeAddressId]]");
+            });
             modelBuilder.Entity<HairColor>(entity =>
-            {
-                entity.HasKey(e => e.HairColorId)
-                .HasName("[[PK_HairColorId]]");
-            });
+                {
+                    entity.HasKey(e => e.HairColorId)
+                    .HasName("[[PK_HairColorId]]");
+                });
             modelBuilder.Entity<EyesColor>(entity =>
-            {
-                entity.HasKey(e => e.EyesColorId)
-                .HasName("[[PK_EyesColorId]]");
-            });
+                {
+                    entity.HasKey(e => e.EyesColorId)
+                    .HasName("[[PK_EyesColorId]]");
+                });
+
         }
+            
+            
+           
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
         public virtual DbSet<MaritalStatus> MaritalStatus { get; set; } = null!;
@@ -293,5 +306,4 @@ namespace Hrm.Persistence
 
 
     }
-}
 }

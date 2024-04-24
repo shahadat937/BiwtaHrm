@@ -622,7 +622,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Training Name',
-        url: '/base/breadcrumbs'
+        url: '/bascisetup/trainingName'
       },
       {
         name: 'Institute Name',

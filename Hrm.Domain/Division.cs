@@ -9,10 +9,13 @@ namespace Hrm.Domain
 {
     public class Division : BaseDomainEntity
     {
+       
         public int DivisionId { get; set; }
         public string? DivisionName { get; set; }
         public int? CountryId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+
+        //public virtual Country? Country { get; set; }
     }
 }

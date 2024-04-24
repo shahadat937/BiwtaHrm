@@ -51,7 +51,23 @@ namespace Hrm.Application
         public const string ScaleGradeView = HRMRoutePrefixBase + "scaleGradeView";
         public const string PromotionType = HRMRoutePrefixBase + "promotionType";
         public const string Grade_cls_type_Vw = HRMRoutePrefixBase + "grade_cls_type_Vw";
+        public const string TrainingName = HRMRoutePrefixBase + "TrainingName";
+        public const string Office = HRMRoutePrefixBase + "Office";
+        public const string Competence = HRMRoutePrefixBase + "Competence";
+        public const string Language = HRMRoutePrefixBase + "Language";
+        public const string BankAccountType = HRMRoutePrefixBase + "BankAccountType";
+        public const string Bank = HRMRoutePrefixBase + "Bank";
+        public const string Institute = HRMRoutePrefixBase + "Institute";
+        public const string BankBranch = HRMRoutePrefixBase + "BankBranch";
         public const string Occupation = HRMRoutePrefixBase + "Occupation";
+        public const string HairColor = HRMRoutePrefixBase + "hairColor";
+        public const string EyesColor = HRMRoutePrefixBase + "eyesColor";
+        public const string Pool = HRMRoutePrefixBase + "pool";
+        public const string SubDepartment = HRMRoutePrefixBase + "subDepartment";
+        public const string UserRole = HRMRoutePrefixBase + "userRole";
+
+
+
 
 
     }

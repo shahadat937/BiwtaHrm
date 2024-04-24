@@ -75,6 +75,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/basic-setup/basic-setup.module').then((m) => m.BasicSetupModule)
       },
+      {
+        path: 'usermanagement',
+        loadChildren: () =>
+          import('./views/usermanagement/usermanagement.module').then((m) => m.UsermanagementModule)
+      },
 
     ]
   },

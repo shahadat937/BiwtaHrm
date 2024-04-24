@@ -31,6 +31,15 @@ import { CountryComponent } from './country/country.component';
 import { GradeTypeComponent } from './grade-type/grade-type.component';
 import { GradeClassComponent } from './grade-class/grade-class.component';
 import { DivisionComponent } from './division/division.component';
+import { OccupationComponent } from './occupation/occupation.component';
+import { LeaveComponent } from './leave/leave.component';
+import { OverallEVPromotionComponent } from './overall-ev-promotion/overall-ev-promotion.component';
+import { HairColorComponent } from './hair-color/hair-color.component';
+import { EyesColorComponent } from './eyes-color/eyes-color.component';
+import { RelationComponent } from './relation/relation.component';
+import { SubDepartmentComponent } from './sub-department/sub-department.component';
+import { PoolComponent } from './pool/pool.component';
+import { UserRoleComponent } from './user-role/user-role.component';
 
 const routes: Routes = [
 
@@ -45,13 +54,20 @@ const routes: Routes = [
   { path: 'update-bloodgroup/:bloodGroupId',
     component: BloodGroupComponent,
   },
-  // {
-  //   path: 'country',
-  //   component: CountryComponent,
-  // },
-  // { path: 'update-country/:countrytId',
-  //   component: CountryComponent,
-  // },
+  {
+    path: 'pool',
+    component: PoolComponent,
+  },
+  { path: 'update-pool/:poolId',
+    component: PoolComponent,
+  },
+  {
+    path: 'occupation',
+    component: OccupationComponent,
+  },
+  { path: 'update-occupation/:occupationId',
+    component: OccupationComponent,
+  },
   {
     path:'marital-status',
     component: MaritalStatusComponent,
@@ -95,7 +111,7 @@ const routes: Routes = [
     path: 'country',
     component: CountryComponent,
   },
-  { path: 'update-country/:countrytId', 
+  { path: 'update-country/:countryId', 
   component: CountryComponent, 
   },
   {
@@ -245,7 +261,7 @@ const routes: Routes = [
     component: GradeTypeComponent,
   },
   { path: 'update-grade-type/:gradeTypeId',
-    component: GradeClassComponent,
+    component: GradeTypeComponent,
   },
   {
     path: 'grade-class',
@@ -254,7 +270,62 @@ const routes: Routes = [
   { path: 'update-grade-class/:gradeClassId',
     component: GradeClassComponent,
   },
-
+  {
+    path: 'leave',
+    component: LeaveComponent,
+  },
+  { path: 'update-leave/:leaveId',
+    component: LeaveComponent,
+  },
+  {
+    path: 'overall_EV_Promotion',
+    component: OverallEVPromotionComponent,
+  },
+  { path: 'update-overall_EV_Promotion/:overall_EV_PromotionId',
+    component: OverallEVPromotionComponent,
+  },
+  {
+    path: 'hairColor',
+    component: HairColorComponent,
+  },
+  { path: 'update-hairColor/:hairColorId',
+    component: HairColorComponent,
+  },
+  {
+    path: 'eyesColor',
+    component: EyesColorComponent,
+  },
+  { path: 'update-eyesColor/:eyesColorId',
+    component: EyesColorComponent,
+  },
+  {
+    path: 'relation',
+    component: RelationComponent,
+  },
+  { path: 'update-relation/:relationId',
+    component: RelationComponent,
+  },
+  {
+    path: 'subDepartment',
+    component: SubDepartmentComponent,
+  },
+  { path: 'update-subDepartment/:subDepartmentId',
+    component: SubDepartmentComponent,
+  },
+  {
+    path: 'subDepartment',
+    component: SubDepartmentComponent,
+  },
+  { path: 'update-subDepartment/:subDepartmentId',
+    component: SubDepartmentComponent,
+  },
+  {
+    path: 'userRole',
+    component: UserRoleComponent,
+  },
+  { path: 'update-userRole/:userRoleId',
+    component: UserRoleComponent,
+  },
 ];
 
 @NgModule({

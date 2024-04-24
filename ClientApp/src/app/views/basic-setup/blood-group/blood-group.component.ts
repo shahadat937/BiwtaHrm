@@ -92,6 +92,7 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    this.router.navigate(['/bascisetup/blood-group']);
   }
 
   getALlBloodGroups() {

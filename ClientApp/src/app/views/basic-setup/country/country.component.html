@@ -13,7 +13,7 @@
       <c-col [md]="6">
         <input
           type="hidden"
-          [(ngModel)]="countryServices.countrys.countrytId"
+          [(ngModel)]="countryServices.countrys.countryId"
           name="countrytId"
         />
         <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
@@ -49,12 +49,14 @@
       </c-col>
       <c-col [xs]="12">
         <button
+        [disabled]="loading"
           [disabled]="CountryForm.invalid"
           cButton
           class="me-1"
           color="primary"
           type="submit"
         >
+        <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
           {{ btnText }}
         </button>
         <button cButton color="secondary" (click)="resetForm()">Reset</button>
@@ -106,7 +108,7 @@
           <td mat-cell *matCellDef="let element">
             <button
               class="custom-button"
-              [routerLink]="['/bascisetup/update-country', element.countrytId]"
+              [routerLink]="['/bascisetup/update-country', element.countryId]"
             >
               <svg cIcon name="cilPencil"></svg>
             </button>

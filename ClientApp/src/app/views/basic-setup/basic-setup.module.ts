@@ -56,6 +56,24 @@ import { GradeTypeComponent } from './grade-type/grade-type.component';
 import { GradeClassComponent } from './grade-class/grade-class.component';
 import { DivisionComponent } from './division/division.component';
 import { SpinnerModule } from '@coreui/angular';
+import { OccupationComponent } from './occupation/occupation.component';
+import { OccupationService } from './service/Occupation.service';
+import { LeaveComponent } from './leave/leave.component';
+import { LeaveService } from './service/Leave.service';
+import { OverallEVPromotionComponent } from './overall-ev-promotion/overall-ev-promotion.component';
+import { Overall_EV_PromotionService } from './service/Overall_EV_Promotion.service';
+import { HairColorComponent } from './hair-color/hair-color.component';
+import { EyesColorComponent } from './eyes-color/eyes-color.component';
+import { EyesColorService } from './service/eyes-color.service';
+import { RelationComponent } from './relation/relation.component';
+import { RelationService } from './service/relation.service';
+import { PoolComponent } from './pool/pool.component';
+import { SubDepartmentComponent } from './sub-department/sub-department.component';
+import { SubDepartmentService } from './service/sub-department.service';
+import { PoolService } from './service/pool.service';
+import { UserRoleComponent } from './user-role/user-role.component';
+
+
 
 @NgModule({
   declarations: [
@@ -87,6 +105,16 @@ import { SpinnerModule } from '@coreui/angular';
     GradeTypeComponent,
     GradeClassComponent,
     DivisionComponent,
+    OccupationComponent,
+    LeaveComponent,
+    OverallEVPromotionComponent,
+    HairColorComponent,
+    EyesColorComponent,
+    RelationComponent,
+    PoolComponent,
+    SubDepartmentComponent,
+    UserRoleComponent,
+
   ],
   imports: [
     CommonModule,
@@ -108,8 +136,15 @@ import { SpinnerModule } from '@coreui/angular';
     ProgressModule,
     SpinnerModule,
   ],
-  providers: [
+  providers: [ 
+    PoolService,
+    SubDepartmentService,
+    RelationService,
+    EyesColorService,
+    Overall_EV_PromotionService,
+    LeaveService,
     CountryService,
+    OccupationService,
     BloodGroupService,
     ToastrService,
     ChildStatusService,

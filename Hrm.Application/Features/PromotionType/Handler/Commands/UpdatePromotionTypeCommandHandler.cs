@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.PromotionType.Validators;
+using Hrm.Application.DTOs.PromotionType.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.PromotionType.Request.Commands;
 using Hrm.Application.Responses;
@@ -16,13 +17,13 @@ namespace Hrm.Application.Features.PromotionType.Handler.Commands
     public class UpdatePromotionTypeCommandHandler : IRequestHandler<UpdatePromotionTypeCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.PromotionType> _promotionTypeRepository;
+        private readonly IHrmRepository<Hrm.Domain.PromotionType> _PromotionTypeRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdatePromotionTypeCommandHandler(IHrmRepository<Hrm.Domain.PromotionType> promotionTypeRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdatePromotionTypeCommandHandler(IHrmRepository<Hrm.Domain.PromotionType> PromotionTypeRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _promotionTypeRepository = promotionTypeRepository;
+            _PromotionTypeRepository = PromotionTypeRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -39,47 +40,43 @@ namespace Hrm.Application.Features.PromotionType.Handler.Commands
                 response.Message = "Creation Failed";
                 response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
-            else
-            {
-                var promotionTypeName = request.PromotionTypeDto.PromotionTypeName.ToLower();
 
-                IQueryable<Hrm.Domain.PromotionType> promotionTypes = _promotionTypeRepository.Where(x => x.PromotionTypeName.ToLower() == promotionTypeName);
-
-                if (promotionTypes.Any())
-                {
-                    response.Success = false;
-                    //response.Message = "Creation Failed, Name already exists.";
-                    response.Message = $"Update Failed '{request.PromotionTypeDto.PromotionTypeName}' already exists.";
-
-                    response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
-                }
-                else
-                {
-                    var PromotionType = await _unitOfWork.Repository<Hrm.Domain.PromotionType>().Get(request.PromotionTypeDto.PromotionTypeId);
-                    if (PromotionType is null)
-                    {
-                        throw new NotFoundException(nameof(PromotionType), request.PromotionTypeDto.PromotionTypeId);
-                    }
-
-                    _mapper.Map(request.PromotionTypeDto, PromotionType);
-
-                    await _unitOfWork.Repository<Hrm.Domain.PromotionType>().Update(PromotionType);
-                    await _unitOfWork.Save();
-
-                    response.Success = true;
-                    response.Message = "Update Successfull";
-                    response.Id = PromotionType.PromotionTypeId;
-                }
-            }
-            return response;
-        }
-        private bool PromotionTypeNameExists(CreatePromotionTypeCommand request)
-        {
+            //var PromotionTypeName = request.PromotionTypeDto.PromotionTypeName.ToLower();
             var PromotionTypeName = request.PromotionTypeDto.PromotionTypeName.Trim().ToLower().Replace(" ", string.Empty);
 
-            IQueryable<Hrm.Domain.PromotionType> PromotionTypes = _promotionTypeRepository.Where(x => x.PromotionTypeName.Trim().ToLower().Replace(" ", string.Empty) == PromotionTypeName);
+            IQueryable<Hrm.Domain.PromotionType> PromotionTypees = _PromotionTypeRepository.Where(x => x.PromotionTypeName.ToLower() == PromotionTypeName);
 
-            return PromotionTypes.Any();
+            if (PromotionTypees.Any())
+            {
+                response.Success = false;
+                response.Message = $"Update Failed '{request.PromotionTypeDto.PromotionTypeName}' already exists.";
+
+                //response.Message = "Creation Failed, Name already exists";
+                response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
+            }
+
+            else
+            {
+
+                var PromotionType = await _unitOfWork.Repository<Hrm.Domain.PromotionType>().Get(request.PromotionTypeDto.PromotionTypeId);
+
+                if (PromotionType is null)
+                {
+                    throw new NotFoundException(nameof(PromotionType), request.PromotionTypeDto.PromotionTypeId);
+                }
+
+                _mapper.Map(request.PromotionTypeDto, PromotionType);
+
+                await _unitOfWork.Repository<Hrm.Domain.PromotionType>().Update(PromotionType);
+                await _unitOfWork.Save();
+
+                response.Success = true;
+                response.Message = "Update Successfull";
+                response.Id = PromotionType.PromotionTypeId;
+
+            }
+
+            return response;
         }
     }
 }

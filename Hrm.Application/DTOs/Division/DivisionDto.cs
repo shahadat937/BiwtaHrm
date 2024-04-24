@@ -13,5 +13,7 @@ namespace Hrm.Application.DTOs.Division
         public int? CountryId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+
+        public string? CountryName { get; set; }
     }
 }

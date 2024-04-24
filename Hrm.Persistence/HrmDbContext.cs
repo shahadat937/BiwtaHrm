@@ -51,12 +51,22 @@ namespace Hrm.Persistence
 
             });
             modelBuilder.Entity<Division>(entity => {
-
                 entity.HasKey(e => e.DivisionId)
-                    .HasName("PK_DivisionId");
+                    .HasName("PK__Division__20EFC6A8D5104B78");
 
             });
+
+            modelBuilder.Entity<Country>(entity =>
+            {
+                entity.HasKey(e => e.CountryId)
+                .HasName("PK__Country__10D1609FC64BEAA1");
+            });
+
             modelBuilder.Entity<Thana>(entity => {
+                entity.HasOne(d => d.Upazila)
+                .WithMany(p => p.Thanas)
+                .HasForeignKey(d => d.UpazilaId)
+                .HasConstraintName("FK__Thana__UpazilaId__160F4887");
 
                 entity.HasKey(e => e.ThanaId)
                     .HasName("PK__Thana__438130B46C389C43");
@@ -160,6 +170,52 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.SubBranchId)
                 .HasName("[[PK_SubBranchId]]");
             });
+
+
+            modelBuilder.Entity<TrainingName>(entity =>
+            {
+                entity.HasKey(e => e.TrainingNameId)
+                .HasName("[[PK_TrainingNameId]]");
+            });
+
+            modelBuilder.Entity<Office>(entity =>
+            {
+                entity.HasKey(e => e.OfficeId)
+                .HasName("[[PK_Office]]");
+            });
+
+            modelBuilder.Entity<Competence>(entity =>
+            {
+                entity.HasKey(e => e.CompetenceId)
+                .HasName("[[PK_Competence]]");
+            });
+            modelBuilder.Entity<Language>(entity =>
+            {
+                entity.HasKey(e => e.LanguageId)
+                .HasName("[[PK_Language]]");
+            });
+            modelBuilder.Entity<BankAccountType>(entity =>
+            {
+                entity.HasKey(e => e.BankAccountTypeId)
+                .HasName("[[PK_BankAccountType]]");
+            });
+            modelBuilder.Entity<BankBranch>(entity =>
+            {
+                entity.HasKey(e => e.BankBranchId)
+                .HasName("[[PK_BankBranch]]");
+            });
+            modelBuilder.Entity<Bank>(entity =>
+            {
+                entity.HasKey(e => e.BankId)
+                .HasName("[[PK_Bank]]");
+            });
+            modelBuilder.Entity<Institute>(entity =>
+            {
+                entity.HasKey(e => e.InstituteId)
+                .HasName("[[PK_Institute]]");
+            });
+
+
             modelBuilder.Entity<Relation>(entity =>
             {
                 entity.HasKey(e => e.RelationId)
@@ -170,7 +226,40 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.OccupationId)
                 .HasName("[[PK_OccupationId]]");
             });
+            modelBuilder.Entity<HairColor>(entity =>
+            {
+                entity.HasKey(e => e.HairColorId)
+                .HasName("[[PK_HairColorId]]");
+            });
+            modelBuilder.Entity<EyesColor>(entity =>
+            {
+                entity.HasKey(e => e.EyesColorId)
+                .HasName("[[PK_EyesColorId]]");
+            });
+            modelBuilder.Entity<Pool>(entity =>
+            {
+                entity.HasKey(e => e.PoolId)
+                .HasName("[PK_PoolId]");
+            });
+
+            modelBuilder.Entity<SubDepartment>(entity =>
+            {
+                entity.HasKey(e => e.SubDepartmentId)
+                .HasName("[SubDepartmentId]");
+            });
+
+            //modelBuilder.Entity<SubDepartment>(entity =>
+            //{
+            //    entity.HasOne(d => d.Department)
+            //        .WithMany(p => p.SubDepartment)
+            //        .HasForeignKey(d => d.DepartmentId)
+            //        .OnDelete(DeleteBehavior.ClientSetNull)
+            //        .HasConstraintName("FK_DepartmentId");
+            //});
+
         }
+        public virtual DbSet<UserRole> UserRole { get; set; } = null!;
+
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
         public virtual DbSet<MaritalStatus> MaritalStatus { get; set; } = null!;
@@ -211,6 +300,18 @@ namespace Hrm.Persistence
         public virtual DbSet<Grade_cls_type_Vw> Grade_cls_type_Vw { get; set; } = null!;
         public virtual DbSet<Relation> Relation { get; set; } = null!;
         public virtual DbSet<Occupation> Occupation { get; set; } = null!;
+        public virtual DbSet<HairColor> HairColor { get; set; } = null!;
+        public virtual DbSet<TrainingName> TrainingName { get; set; } = null!;
+        public virtual DbSet<Office> Office { get; set; } = null!;
+        public virtual DbSet<Competence> Competence { get; set; } = null!;
+        public virtual DbSet<Language> Language { get; set; } = null!;
+        public virtual DbSet<BankAccountType> BankAccountType { get; set; } = null!;
+        public virtual DbSet<BankBranch> BankBranch { get; set; } = null!;
+        public virtual DbSet<Bank> Bank { get; set; } = null!;
+        public virtual DbSet<Institute> Institute { get; set; } = null!;
+        public virtual DbSet<EyesColor> EyesColor { get; set; } = null!;
+        public virtual DbSet<Pool> Pool { get; set; } = null!;
+        public virtual DbSet<SubDepartment> SubDepartment { get; set; } = null!;
 
 
 

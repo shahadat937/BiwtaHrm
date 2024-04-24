@@ -23,6 +23,7 @@ import { DesignationService } from '../service/designation.service';
 })
 export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  loading = false;
   @ViewChild('DesignationForm', { static: true }) DesignationForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
@@ -142,6 +143,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // }
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.designationService.cachedData = [];
     const id = form.value.designationId;
     const action$ = id
@@ -159,12 +161,15 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/designation']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
+    
   }
   delete(element: any) {
     this.confirmService

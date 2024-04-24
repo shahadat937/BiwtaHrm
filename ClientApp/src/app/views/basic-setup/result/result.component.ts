@@ -23,6 +23,7 @@ import { ResultService } from './../service/result.service';
 })
 export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  loading = false;
   @ViewChild('ResultForm', { static: true }) ResultForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'resultName', 'isActive', 'Action'];
@@ -145,6 +146,7 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.resultService.cachedData = [];
     const id = form.value.resultId;
     const action$ = id
@@ -162,11 +164,13 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/result']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

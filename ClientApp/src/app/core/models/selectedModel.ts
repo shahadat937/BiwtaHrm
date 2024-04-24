@@ -1,5 +1,5 @@
 export class SelectedModel {
-    id: any;
-    name: any;
+    id: number | undefined;
+    name: string | undefined;
     
 }

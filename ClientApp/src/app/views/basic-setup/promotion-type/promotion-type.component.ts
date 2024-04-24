@@ -23,6 +23,7 @@ export class PromotionTypeComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
   btnText: string | undefined;
+  loading = false;
   @ViewChild('PromotionTypeForm', { static: true }) PromotionTypeForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
@@ -154,6 +155,7 @@ export class PromotionTypeComponent
   //   }
   // }
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.promotionTypeService.cachedData = [];
     const id = form.value.promotionTypeId;
     const action$ = id
@@ -169,13 +171,15 @@ export class PromotionTypeComponent
         this.getALlPromotionTypes();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/marital-status']);
+          this.router.navigate(['/bascisetup/promotionType']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

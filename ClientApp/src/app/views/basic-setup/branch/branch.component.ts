@@ -30,6 +30,8 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('BranchForm', { static: true }) BranchForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'branchName', 'isActive', 'Action'];
+  loading = false;
+
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -165,6 +167,7 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   onSubmit(form: NgForm): void {
+    this.loading = false;
     this.branchService.cachedData = [];
     const id = form.value.branchId;
     const action$ = id
@@ -182,11 +185,15 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/branch']);
         }
+        this.loading = false;
+
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
+
     });
   }
   delete(element: any) {

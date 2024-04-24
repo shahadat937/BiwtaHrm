@@ -26,6 +26,7 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
   position = 'top-end';
 
   btnText: string | undefined;
+  loading = false;
   @ViewChild('PunishmentForm', { static: true }) PunishmentForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'punishmentName', 'isActive', 'Action'];
@@ -139,6 +140,7 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
   //   );
   // }
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.punishmentService.cachedData = [];
     const id = form.value.punishmentId;
     const action$ = id
@@ -156,11 +158,13 @@ export class PunishmentComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/punishment']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

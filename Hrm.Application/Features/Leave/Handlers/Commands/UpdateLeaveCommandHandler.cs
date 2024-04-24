@@ -1,59 +1,84 @@
 ﻿using AutoMapper;
-using FluentValidation.Results;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Leave.Validators;
+using Hrm.Application.DTOs.GradeType.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.Leave.Requests.Commands;
+using Hrm.Application.Features.GradeType.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Leave.Handlers.Commands
 {
-    public class UpdateLeaveCommandHandler : IRequestHandler<UpdateLeaveCommand, Unit>
+    public class UpdateLeaveCommandHandler : IRequestHandler<UpdateLeaveCommand, BaseCommandResponse>
     {
 
+        private readonly IHrmRepository<Hrm.Domain.Leave> _LeaveRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateLeaveCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateLeaveCommandHandler(IHrmRepository<Hrm.Domain.Leave> LeaveRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
+            _LeaveRepository = LeaveRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdateLeaveCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateLeaveCommand request, CancellationToken cancellationToken)
         {
-            var respose = new BaseCommandResponse();
+            var response = new BaseCommandResponse();
             var validator = new UpdateLeaveDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.LeaveDto);
+            var validatorResult = await validator.ValidateAsync(request.LeaveDto);
 
-            if (validationResult.IsValid == false)
+            if (validatorResult.IsValid == false)
             {
-                respose.Success = false;
-                respose.Message = "Creation Failed";
-                respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                response.Success = false;
+                response.Message = "Creation Failed";
+                response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var Leave = await _unitOfWork.Repository<Hrm.Domain.Leave>().Get(request.LeaveDto.LeaveId);
+            //var LeaveName = request.LeaveDto.LeaveName.ToLower();
+            var LeaveName = request.LeaveDto.LeaveName.Trim().ToLower().Replace(" ", string.Empty);
 
-            if (Leave is null)
+            IQueryable<Hrm.Domain.Leave> Leavees = _LeaveRepository.Where(x => x.LeaveName.ToLower() == LeaveName);
+
+            if (Leavees.Any())
             {
-                throw new NotFoundException(nameof(Leave), request.LeaveDto.LeaveId);
+                response.Success = false;
+                response.Message = $"Update Failed '{request.LeaveDto.LeaveName}' already exists.";
+
+                //response.Message = "Creation Failed, Name already exists";
+                response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            _mapper.Map(request.LeaveDto, Leave);
+            else
+            {
 
-            await _unitOfWork.Repository<Hrm.Domain.Leave>().Update(Leave);
-            await _unitOfWork.Save();
+                var Leave = await _unitOfWork.Repository<Hrm.Domain.Leave>().Get(request.LeaveDto.LeaveId);
 
-            return Unit.Value;
+                if (Leave is null)
+                {
+                    throw new NotFoundException(nameof(Leave), request.LeaveDto.LeaveId);
+                }
+
+                _mapper.Map(request.LeaveDto, Leave);
+
+                await _unitOfWork.Repository<Hrm.Domain.Leave>().Update(Leave);
+                await _unitOfWork.Save();
+
+                response.Success = true;
+                response.Message = "Update Successfull";
+                response.Id = Leave.LeaveId;
+
+            }
+
+            return response;
         }
     }
 }
+

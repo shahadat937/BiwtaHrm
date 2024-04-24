@@ -30,7 +30,7 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('DistrictForm', { static: true }) DistrictForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'districtName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'divisionName','districtName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -117,8 +117,7 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   loaddivisions() {
-    console.log('division');
-    this.districtService.getDivision().subscribe((data) => {
+    this.districtService.getDivision().subscribe(data => {
       console.log('division' + data);
       this.divisions = data;
     });

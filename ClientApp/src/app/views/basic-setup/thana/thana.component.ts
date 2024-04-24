@@ -30,7 +30,7 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('ThanaForm', { static: true }) ThanaForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'thanaName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo','upazilaName' ,'thanaName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;

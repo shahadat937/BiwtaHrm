@@ -23,16 +23,16 @@
           cSelect
         >
           <option [ngValue]="0">Select Grade Type</option>
-          <option *ngFor="let gradetype of gradeType" [value]="gradetype.id">
-            {{ gradetype.name }}
-          </option>
+          
+          @for(gradetype of gradeType; track gradeClass.id;let index=$index) {
+            <option [value]="gradetype.id">
+              {{ gradetype.name }}
+            </option>
+            }
         </select>
-        <div
-          class="text-left text-danger"
-          *ngIf="!gradeTypeId.valid && gradeTypeId.touched"
-        >
-          Grade Type is required
-        </div>
+        @if(!gradeTypeId.valid && gradeTypeId.touched){
+          <div class="text-left text-danger"> Grade Type is required</div>
+          }
       </c-col>
 
       <c-col [md]="6">
@@ -101,14 +101,16 @@
 
       <c-col [xs]="12">
         <button
+        [disabled]="loading"
           [disabled]="GradeForm.invalid"
           cButton
           class="me-1"
           color="primary"
           type="submit"
         >
-          {{ btnText }}
-        </button>
+        <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+        {{ btnText }}
+      </button>
         <button cButton color="secondary" (click)="resetForm()">Reset</button>
       </c-col>
     </form>

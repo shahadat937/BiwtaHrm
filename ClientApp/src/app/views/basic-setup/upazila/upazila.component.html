@@ -121,6 +121,10 @@
           <th mat-header-cell *matHeaderCellDef>Serial No</th>
           <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
         </ng-container>
+        <ng-container matColumnDef="districtName">
+          <th mat-header-cell *matHeaderCellDef>District Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.districtName}}</td>
+        </ng-container>
         <ng-container matColumnDef="upazilaName">
           <th mat-header-cell *matHeaderCellDef>Upazila Name</th>
           <td mat-cell *matCellDef="let element">{{ element.upazilaName }}</td>

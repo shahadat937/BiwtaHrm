@@ -14,7 +14,7 @@ namespace Hrm.Application.DTOs.Country.Validators
         public UpdateCountryDtoValidator()
         {
             Include(new ICountryDtoValidator());
-            RuleFor(x => x.CountrytId).NotNull().WithMessage("{propertyName } must be present");
+            RuleFor(x => x.CountryId).NotNull().WithMessage("{propertyName } must be present");
         }
     }
 }

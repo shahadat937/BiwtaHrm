@@ -57,6 +57,10 @@ using Hrm.Application.DTOs.Relation;
 using Hrm.Application.DTOs.Occupation;
 using Hrm.Application.DTOs.HairColor;
 using Hrm.Application.DTOs.EyesColor;
+using Hrm.Application.DTOs.Pool;
+using Hrm.Application.DTOs.SubDepartment;
+using Hrm.Application.DTOs.UserRole;
+
 
  
 namespace Hrm.Application.Profiles
@@ -86,15 +90,15 @@ namespace Hrm.Application.Profiles
             CreateMap<TrainingType, TrainingTypeDto>().ReverseMap();
             CreateMap<TrainingType, CreateTrainingTypeDto>().ReverseMap();
 
-            CreateMap<DivisionDto, Division>().ReverseMap()
-                 .ForMember(d => d.countryName, o => o.MapFrom(s => s.Country.CountryName));
+            CreateMap<DivisionDto, Division>().ReverseMap();
             CreateMap<Division, CreateDivisionDto>().ReverseMap();
 
 
             CreateMap<PromotionType, PromotionTypeDto>().ReverseMap();
             CreateMap<PromotionType, CreatePromotionTypeDto>().ReverseMap();
 
-            CreateMap<Thana, ThanaDto>().ReverseMap();
+            CreateMap<ThanaDto, Thana>().ReverseMap();
+                
             CreateMap<Thana, CreateThanaDto>().ReverseMap();
 
             CreateMap<Upazila, UpazilaDto>().ReverseMap();
@@ -121,7 +125,7 @@ namespace Hrm.Application.Profiles
             CreateMap<Department, DepartmentDto>().ReverseMap();
             CreateMap<Department, CreateDepartmentDto>().ReverseMap();
 
-            CreateMap<Country, CountryDto>().ForMember(dest => dest.CountrytId, opt => opt.MapFrom(src => src.CountryId)).ReverseMap();
+            CreateMap<Country, CountryDto>().ReverseMap();
             CreateMap<Country, CreateCountryDto>().ReverseMap();
 
             CreateMap<Designation, DesignationDto>().ReverseMap();
@@ -222,6 +226,15 @@ namespace Hrm.Application.Profiles
             CreateMap<EyesColor, CreateEyesColorDto>().ReverseMap();
 
  
+            CreateMap<Pool, PoolDto>().ReverseMap();
+            CreateMap<Pool, CreatePoolDto>().ReverseMap();
+
+            CreateMap<SubDepartment, SubDepartmentDto>().ReverseMap();
+            CreateMap<SubDepartment, CreateSubDepartmentDto>().ReverseMap();
+            
+            CreateMap<UserRole, UserRoleDto>().ReverseMap();
+            CreateMap<UserRole, CreateUserRoleDto>().ReverseMap();
+
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();
             CreateMap<Module, ModuleFeatureDto>().ReverseMap();

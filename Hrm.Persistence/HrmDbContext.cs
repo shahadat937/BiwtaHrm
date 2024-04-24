@@ -62,12 +62,25 @@ namespace Hrm.Persistence
                   .WithMany(p => p.Divisions)
                   .HasForeignKey(d => d.CountryId)
                   .HasConstraintName("FK__Division__Countr__0D7A0286");
+            modelBuilder.Entity<Division>(entity => {
                 entity.HasKey(e => e.DivisionId)
-                    .HasName("PK_DivisionId");
+                    .HasName("PK__Division__20EFC6A8D5104B78");
 
             });
             modelBuilder.Entity<Thana>(entity =>
             {
+
+            modelBuilder.Entity<Country>(entity =>
+            {
+                entity.HasKey(e => e.CountryId)
+                .HasName("PK__Country__10D1609FC64BEAA1");
+            });
+
+            modelBuilder.Entity<Thana>(entity => {
+                entity.HasOne(d => d.Upazila)
+                .WithMany(p => p.Thanas)
+                .HasForeignKey(d => d.UpazilaId)
+                .HasConstraintName("FK__Thana__UpazilaId__160F4887");
 
                 entity.HasKey(e => e.ThanaId)
                     .HasName("PK__Thana__438130B46C389C43");
@@ -249,6 +262,34 @@ namespace Hrm.Persistence
             
             
            
+            {
+                entity.HasKey(e => e.EyesColorId)
+                .HasName("[[PK_EyesColorId]]");
+            });
+            modelBuilder.Entity<Pool>(entity =>
+            {
+                entity.HasKey(e => e.PoolId)
+                .HasName("[PK_PoolId]");
+            });
+
+            modelBuilder.Entity<SubDepartment>(entity =>
+            {
+                entity.HasKey(e => e.SubDepartmentId)
+                .HasName("[SubDepartmentId]");
+            });
+
+            //modelBuilder.Entity<SubDepartment>(entity =>
+            //{
+            //    entity.HasOne(d => d.Department)
+            //        .WithMany(p => p.SubDepartment)
+            //        .HasForeignKey(d => d.DepartmentId)
+            //        .OnDelete(DeleteBehavior.ClientSetNull)
+            //        .HasConstraintName("FK_DepartmentId");
+            //});
+
+        }
+        public virtual DbSet<UserRole> UserRole { get; set; } = null!;
+
         public virtual DbSet<AccountType> AccountType { get; set; } = null!;
         public virtual DbSet<BloodGroup> BloodGroup { get; set; } = null!;
         public virtual DbSet<MaritalStatus> MaritalStatus { get; set; } = null!;
@@ -290,9 +331,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Relation> Relation { get; set; } = null!;
         public virtual DbSet<Occupation> Occupation { get; set; } = null!;
         public virtual DbSet<HairColor> HairColor { get; set; } = null!;
-
         public virtual DbSet<TrainingName> TrainingName { get; set; } = null!;
-
         public virtual DbSet<Office> Office { get; set; } = null!;
         public virtual DbSet<Competence> Competence { get; set; } = null!;
         public virtual DbSet<Language> Language { get; set; } = null!;
@@ -302,6 +341,8 @@ namespace Hrm.Persistence
         public virtual DbSet<Institute> Institute { get; set; } = null!;
         public virtual DbSet<OfficeAddress> OfficeAddress { get; set; } = null!;
         public virtual DbSet<EyesColor> EyesColor { get; set; } = null!;
+        public virtual DbSet<Pool> Pool { get; set; } = null!;
+        public virtual DbSet<SubDepartment> SubDepartment { get; set; } = null!;
 
 
 

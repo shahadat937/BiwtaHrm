@@ -1,4 +1,6 @@
 ﻿using Hrm.Application.DTOs.HairColor;
+using Hrm.Application.DTOs.HairColor;
+using Hrm.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.HairColor.Requests.Commands
 {
-    public class UpdateHairColorCommand : IRequest<Unit>
+    public class UpdateHairColorCommand : IRequest<BaseCommandResponse>
     {
-        public HairColorDto HairColorDto { get; set; }
+        public required HairColorDto HairColorDto { get; set; }
     }
 }

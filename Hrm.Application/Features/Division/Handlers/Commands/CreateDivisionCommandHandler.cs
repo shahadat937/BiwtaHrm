@@ -42,7 +42,9 @@ namespace Hrm.Application.Features.Division.Handlers.Commands
                 if (DivisionNameExists(request))
                 {
                     response.Success = false;
-                    response.Message = "Creation Failed Name already exists.";
+                   // response.Message = "Creation Failed Name already exists.";
+                    response.Message = $"Creation Failed '{request.DivisionDto.DivisionName}' already exists.";
+
                     response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
                     
                 }

@@ -16,6 +16,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 })
 export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  loading = false;
   @ViewChild('EyesColorForm', { static: true }) EyesColorForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'eyesColorName', 'isActive', 'Action'];
@@ -98,6 +99,7 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.eyesColorService.cachedData = [];
     const id = form.value.eyesColorId;
     const action$ = id
@@ -115,11 +117,13 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/eyesColor']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

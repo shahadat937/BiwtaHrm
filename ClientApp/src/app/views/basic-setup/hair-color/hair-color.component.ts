@@ -99,6 +99,7 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.hairColorService.cachedData = [];
     const id = form.value.hairColorId;
     const action$ = id

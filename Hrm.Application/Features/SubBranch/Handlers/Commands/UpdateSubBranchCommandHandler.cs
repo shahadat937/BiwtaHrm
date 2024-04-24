@@ -44,8 +44,8 @@ namespace Hrm.Application.Features.SubBranch.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var SubBranchName = request.SubBranchDto.SubBranchName.ToLower();
-
+            //var SubBranchName = request.SubBranchDto.SubBranchName.ToLower();
+            var SubBranchName = request.SubBranchDto.SubBranchName.Trim().ToLower().Replace(" ", string.Empty);
             IQueryable<Hrm.Domain.SubBranch> SubBranches = _SubBranchRepository.Where(x => x.SubBranchName.ToLower() == SubBranchName);
 
 

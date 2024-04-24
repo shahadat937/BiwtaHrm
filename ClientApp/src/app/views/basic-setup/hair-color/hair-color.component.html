@@ -1,5 +1,5 @@
 <c-card>
-    <c-card-header>HairColor </c-card-header>
+    <c-card-header>Hair Color </c-card-header>
     <c-card-body>
       <form
         #HairColorForm="ngForm"
@@ -17,13 +17,13 @@
             name="hairColorId"
           />
           <label cLabel for="validationCustom01"
-            >HairColor Name<span class="text-danger">*</span></label
+            >Hair Color Name<span class="text-danger">*</span></label
           >
           <input
             [(ngModel)]="hairColorService.hairColors.hairColorName"
             name="hairColorName"
             #HairColorName="ngModel"
-            placeholder="Enter HairColor Name "
+            placeholder="Enter Hair Color Name "
             cFormControl
             id="validationCustom01"
             required
@@ -31,7 +31,7 @@
             value="Mark"
           />
           @if(!HairColorName.valid&&HairColorName.touched){
-          <div class="text-left text-danger">HairColor Name is required</div>
+          <div class="text-left text-danger">Hair Color Name is required</div>
           }
         </c-col>
         <c-col [md]="6">
@@ -48,6 +48,7 @@
         </c-col>
         <c-col [xs]="12">
           <button
+          [disabled]="loading"
             [disabled]="HairColorForm.invalid"
             cButton
             class="me-1"
@@ -55,9 +56,8 @@
             type="submit"
           >
           <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-
-            {{ btnText }}
-          </button>
+          {{ btnText }}
+        </button>
           <button cButton color="secondary" (click)="resetForm()">Reset</button>
         </c-col>
       </form>
@@ -65,7 +65,7 @@
   </c-card>
   
   <c-card class="mt-3">
-    <c-card-header>HairColor List</c-card-header>
+    <c-card-header>Hair Color List</c-card-header>
     <c-card-body>
       <div class="example-header">
         <mat-form-field>
@@ -92,7 +92,7 @@
             <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
           </ng-container>
           <ng-container matColumnDef="hairColorName">
-            <th mat-header-cell *matHeaderCellDef>HairColor Name</th>
+            <th mat-header-cell *matHeaderCellDef>Hair Color Name</th>
             <td mat-cell *matCellDef="let element">
               {{ element.hairColorName }}
             </td>

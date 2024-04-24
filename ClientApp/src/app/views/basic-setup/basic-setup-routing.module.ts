@@ -37,6 +37,9 @@ import { OverallEVPromotionComponent } from './overall-ev-promotion/overall-ev-p
 import { HairColorComponent } from './hair-color/hair-color.component';
 import { EyesColorComponent } from './eyes-color/eyes-color.component';
 import { RelationComponent } from './relation/relation.component';
+import { SubDepartmentComponent } from './sub-department/sub-department.component';
+import { PoolComponent } from './pool/pool.component';
+import { UserRoleComponent } from './user-role/user-role.component';
 
 import { TrainingNameComponent } from './training-name/training-name.component';
 
@@ -52,6 +55,13 @@ const routes: Routes = [
   },
   { path: 'update-bloodgroup/:bloodGroupId',
     component: BloodGroupComponent,
+  },
+  {
+    path: 'pool',
+    component: PoolComponent,
+  },
+  { path: 'update-pool/:poolId',
+    component: PoolComponent,
   },
   {
     path: 'occupation',
@@ -103,7 +113,7 @@ const routes: Routes = [
     path: 'country',
     component: CountryComponent,
   },
-  { path: 'update-country/:countrytId', 
+  { path: 'update-country/:countryId', 
   component: CountryComponent, 
   },
   {
@@ -253,7 +263,7 @@ const routes: Routes = [
     component: GradeTypeComponent,
   },
   { path: 'update-grade-type/:gradeTypeId',
-    component: GradeClassComponent,
+    component: GradeTypeComponent,
   },
   {
     path: 'grade-class',
@@ -304,6 +314,26 @@ const routes: Routes = [
   },
   { path: 'update-trainingName/:trainingNameId',
     component: TrainingNameComponent,
+  {
+    path: 'subDepartment',
+    component: SubDepartmentComponent,
+  },
+  { path: 'update-subDepartment/:subDepartmentId',
+    component: SubDepartmentComponent,
+  },
+  {
+    path: 'subDepartment',
+    component: SubDepartmentComponent,
+  },
+  { path: 'update-subDepartment/:subDepartmentId',
+    component: SubDepartmentComponent,
+  },
+  {
+    path: 'userRole',
+    component: UserRoleComponent,
+  },
+  { path: 'update-userRole/:userRoleId',
+    component: UserRoleComponent,
   },
 ];
 

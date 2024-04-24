@@ -47,7 +47,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('countrytId');
+      const id = params.get('countryId');
       if (id) {
         this.btnText = 'Update';
         this.countryServices.find(+id).subscribe((res) => {
@@ -76,7 +76,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   initaialBloodGroup(form?: NgForm) {
     if (form != null) form.resetForm();
     this.countryServices.countrys = {
-      countrytId: 0,
+      countryId: 0,
       countryName: '',
       menuPosition: 0,
       isActive: true,
@@ -89,7 +89,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.CountryForm?.form != null) {
       this.CountryForm.form.reset();
       this.CountryForm.form.patchValue({
-        countrytId: 0,
+        countryId: 0,
         countryName: '',
         menuPosition: 0,
         isActive: true,
@@ -107,7 +107,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   // onSubmit(form: NgForm) {
   //   this.countryServices.cachedData = [];
-  //   const id = this.CountryForm.form.get('countrytId')?.value;
+  //   const id = this.CountryForm.form.get('countryId')?.value;
   //   if (id) {
   //     this.countryServices.update(+id, this.CountryForm.value).subscribe(
   //       (response: any) => {
@@ -150,9 +150,9 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   onSubmit(form: NgForm): void {
-    this.loading = false;
+    this.loading = true;
     this.countryServices.cachedData = [];
-    const id = form.value.countrytId;
+    const id = form.value.countryId;
     const action$ = id
       ? this.countryServices.update(id, form.value)
       : this.countryServices.submit(form.value);
@@ -169,8 +169,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
           this.router.navigate(['/bascisetup/country']);
         }
         this.loading = false;
-      } 
-      else {
+      } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
@@ -183,7 +182,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.countryServices.delete(element.countrytId).subscribe(
+          this.countryServices.delete(element.countryId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {

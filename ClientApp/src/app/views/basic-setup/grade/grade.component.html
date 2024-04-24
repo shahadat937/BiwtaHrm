@@ -101,14 +101,16 @@
 
       <c-col [xs]="12">
         <button
+        [disabled]="loading"
           [disabled]="GradeForm.invalid"
           cButton
           class="me-1"
           color="primary"
           type="submit"
         >
-          {{ btnText }}
-        </button>
+        <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+        {{ btnText }}
+      </button>
         <button cButton color="secondary" (click)="resetForm()">Reset</button>
       </c-col>
     </form>

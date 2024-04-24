@@ -11,6 +11,8 @@ namespace Hrm.Application.DTOs.Thana
         public int ThanaId { get; set; }
         public required string ThanaName { get; set; }
         public int? UpazilaId { get; set; }
+        public string? UpazilaName { get; set; }
+  
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

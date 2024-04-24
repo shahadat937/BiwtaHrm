@@ -47,8 +47,8 @@ namespace Hrm.Application.Features.Occupation.Handlers.Commands
                 throw new NotFoundException(nameof(Occupation), request.OccupationDto.OccupationId);
             }
 
-            var OccupationName = request.OccupationDto.OccupationName.ToLower();
-
+            //var OccupationName = request.OccupationDto.OccupationName.ToLower();
+            var OccupationName = request.OccupationDto.OccupationName.Trim().ToLower().Replace(" ", string.Empty);
             IQueryable<Hrm.Domain.Occupation> Occupations = _OccupationRepository.Where(x => x.OccupationName.ToLower() == OccupationName);
 
 

@@ -328,15 +328,6 @@ export const navItems: INavData[] = [
         name: 'Manage leave',
         url: '/base/breadcrumbs'
       },
-      {
-        name: 'leave',
-        url: '/bascisetup/leave'
-      },
-
-      {
-        name: 'Overall_EV_Promotion',
-        url: '/bascisetup/overall_EV_Promotion'
-      }
     ]
   },
   {
@@ -396,10 +387,7 @@ export const navItems: INavData[] = [
     url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [
-      {
-        name: 'PromotionType',
-        url: '/bascisetup/promotionType'
-      },
+
     ]
   },
   {
@@ -440,7 +428,7 @@ export const navItems: INavData[] = [
   },
   {
     name:'User',
-    url: '/base',
+    url: '/usermanagement/user',
     iconComponent: { name: 'cil-puzzle' },
 
   },
@@ -453,6 +441,10 @@ export const navItems: INavData[] = [
     url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [
+      {
+        name: 'User Role',
+        url: '/bascisetup/userRole'
+      },
       {
         name: 'Employee Type',
         url: '/bascisetup/employee-type'
@@ -475,7 +467,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Pool',
-        url: '/base/cards'
+        url: '/bascisetup/pool'
       },
       {
         name: 'Department',
@@ -483,7 +475,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Sub Department',
-        url: '/bascisetup/subdepartment'
+        url: '/bascisetup/subDepartment'
       },
       {
         name: 'Branch',
@@ -502,11 +494,11 @@ export const navItems: INavData[] = [
         url: '/bascisetup/designation'
       },
       {
-        name: 'GradeType',
+        name: 'Grade Type',
         url: '/bascisetup/grade-type'
       },
       {
-        name: 'GradeClass',
+        name: 'Grade Class',
         url: '/bascisetup/grade-class'
       },
       {
@@ -522,7 +514,7 @@ export const navItems: INavData[] = [
         url: '/bascisetup/religion'
       },
       {
-        name: 'HairColor',
+        name: 'Hair Color',
         url: '/bascisetup/hairColor'
       },
       {
@@ -538,9 +530,22 @@ export const navItems: INavData[] = [
         url: '/bascisetup/occupation'
       },
       {
-        name: 'Punishment/reward',
+        name: 'Punishment or Reward',
         url: '/bascisetup/punishment'
-      }
+      },
+      {
+        name: 'leave',
+        url: '/bascisetup/leave'
+      },
+      
+      {
+        name: 'Overall Evelation and Promotion',
+        url: '/bascisetup/overall_EV_Promotion'
+      },
+      {
+        name: 'Promotion Type',
+        url: '/bascisetup/promotionType'
+      },
     ]
   },
   {

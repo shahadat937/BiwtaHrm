@@ -1,59 +1,83 @@
 ﻿using AutoMapper;
-using FluentValidation.Results;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.HairColor.Validators;
+using Hrm.Application.DTOs.GradeType.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.HairColor.Requests.Commands;
+using Hrm.Application.Features.GradeType.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.HairColor.Handlers.Commands
 {
-    public class UpdateHairColorCommandHandler : IRequestHandler<UpdateHairColorCommand, Unit>
+    public class UpdateHairColorCommandHandler : IRequestHandler<UpdateHairColorCommand, BaseCommandResponse>
     {
 
+        private readonly IHrmRepository<Hrm.Domain.HairColor> _HairColorRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateHairColorCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateHairColorCommandHandler(IHrmRepository<Hrm.Domain.HairColor> HairColorRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
+            _HairColorRepository = HairColorRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdateHairColorCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateHairColorCommand request, CancellationToken cancellationToken)
         {
-            var respose = new BaseCommandResponse();
+            var response = new BaseCommandResponse();
             var validator = new UpdateHairColorDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.HairColorDto);
+            var validatorResult = await validator.ValidateAsync(request.HairColorDto);
 
-            if (validationResult.IsValid == false)
+            if (validatorResult.IsValid == false)
             {
-                respose.Success = false;
-                respose.Message = "Creation Failed";
-                respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                response.Success = false;
+                response.Message = "Creation Failed";
+                response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var HairColor = await _unitOfWork.Repository<Hrm.Domain.HairColor>().Get(request.HairColorDto.HairColorId);
+            // var HairColorName = request.HairColorDto.HairColorName.ToLower();
+            var HairColorName = request.HairColorDto.HairColorName.Trim().ToLower().Replace(" ", string.Empty);
+            IQueryable<Hrm.Domain.HairColor> HairColores = _HairColorRepository.Where(x => x.HairColorName.ToLower() == HairColorName);
 
-            if (HairColor is null)
+            if (HairColores.Any())
             {
-                throw new NotFoundException(nameof(HairColor), request.HairColorDto.HairColorId);
+                response.Success = false;
+                response.Message = $"Update Failed '{request.HairColorDto.HairColorName}' already exists.";
+
+                //response.Message = "Creation Failed, Name already exists";
+                response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            _mapper.Map(request.HairColorDto, HairColor);
+            else
+            {
 
-            await _unitOfWork.Repository<Hrm.Domain.HairColor>().Update(HairColor);
-            await _unitOfWork.Save();
+                var HairColor = await _unitOfWork.Repository<Hrm.Domain.HairColor>().Get(request.HairColorDto.HairColorId);
 
-            return Unit.Value;
+                if (HairColor is null)
+                {
+                    throw new NotFoundException(nameof(HairColor), request.HairColorDto.HairColorId);
+                }
+
+                _mapper.Map(request.HairColorDto, HairColor);
+
+                await _unitOfWork.Repository<Hrm.Domain.HairColor>().Update(HairColor);
+                await _unitOfWork.Save();
+
+                response.Success = true;
+                response.Message = "Update Successfull";
+                response.Id = HairColor.HairColorId;
+
+            }
+
+            return response;
         }
     }
 }
+

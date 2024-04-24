@@ -16,8 +16,8 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 })
 export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
-  @ViewChild('RelationForm', { static: true }) RelationForm!: NgForm;
   loading = false;
+  @ViewChild('RelationForm', { static: true }) RelationForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'relationName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();

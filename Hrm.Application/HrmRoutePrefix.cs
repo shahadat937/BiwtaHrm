@@ -63,6 +63,12 @@ namespace Hrm.Application
         public const string OfficeAddress = HRMRoutePrefixBase + "OfficeAddress";
         public const string HairColor = HRMRoutePrefixBase + "hairColor";
         public const string EyesColor = HRMRoutePrefixBase + "eyesColor";
+        public const string Pool = HRMRoutePrefixBase + "pool";
+        public const string SubDepartment = HRMRoutePrefixBase + "subDepartment";
+        public const string UserRole = HRMRoutePrefixBase + "userRole";
+
+
+
 
 
     }

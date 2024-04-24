@@ -1,4 +1,5 @@
 ﻿using Hrm.Application.DTOs.PromotionType;
+using Hrm.Application.DTOs.PromotionType;
 using Hrm.Application.Responses;
 using MediatR;
 using System;

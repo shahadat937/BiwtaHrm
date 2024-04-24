@@ -22,6 +22,7 @@ import { GradeTypeService } from '../service/GradeType.service';
 })
 export class GradeTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  loading = false;
   @ViewChild('GradeTypeForm', { static: true }) GradeTypeForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'gradeTypeName', 'isActive', 'Action'];
@@ -101,52 +102,9 @@ export class GradeTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     });
   }
-  // onSubmit(form: NgForm) {
-  //   this.gradeTypeService.cachedData = [];
-  //   const id = this.GradeTypeForm.form.get('gradeTypeId')?.value;
-  //   if (id) {
-  //     this.gradeTypeService.update(+id, this.GradeTypeForm.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', 'Update', {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlGradeTypes();
-  //           this.resetForm();
-  //           this.router.navigate(['/bascisetup/grade-type']);
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   } else {
-  //     this.subscription = this.gradeTypeService.submit(form?.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlGradeTypes();
-  //           this.resetForm();
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   }
-  // }
-
+ 
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.gradeTypeService.cachedData = [];
     const id = form.value.gradeTypeId;
     const action$ = id
@@ -164,11 +122,13 @@ export class GradeTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!id) {
           this.router.navigate(['/bascisetup/grade-type']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {

@@ -27,6 +27,9 @@ namespace Hrm.Application.Features.Thana.Handlers.Queries
         public async Task<ThanaDto> Handle(GetThanaByIdRequest request, CancellationToken cancellationToken)
         {
             var Thana = await _ThanaRepository.Get(request.ThanaId);
+          //  return _mapper.Map<ThanaDto>(Thana);
+
+          //  var Thana = _ThanaRepository.FinedOneInclude(x => x.ThanaId == request.ThanaId);
             return _mapper.Map<ThanaDto>(Thana);
         }
     }

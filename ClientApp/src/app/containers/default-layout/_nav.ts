@@ -428,7 +428,7 @@ export const navItems: INavData[] = [
   },
   {
     name:'User',
-    url: '/base',
+    url: '/usermanagement/user',
     iconComponent: { name: 'cil-puzzle' },
 
   },

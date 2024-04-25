@@ -13,4 +13,11 @@ export class UserService {
   constructor(private http: HttpClient) {
     this.users = new UserModule();
    }
+   
+  submit(model: any) {
+    return this.http.post(this.baseUrl + '/Account/register', model);
+  }
+  update(id: number,model: any){
+    return this.http.put(this.baseUrl + '/Account/register', model);
+  }
 }

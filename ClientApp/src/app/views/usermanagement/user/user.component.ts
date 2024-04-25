@@ -1,13 +1,19 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { NgForm } from '@angular/forms';
-import { UserService } from '../service/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { UserService } from '../service/user.service';
 
 @Component({
   selector: 'app-user',
@@ -126,10 +132,33 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   onSubmit(form: NgForm): void{
+    this.loading = true;
     this.userService.cachedData = [];
     const id = form.value.userId;
 
-    console.log("Form Values : ", form.value);
+    const action$ = id
+      ? this.userService.update(id, form.value)
+      : this.userService.submit(form.value);
+
+      this.subscription =action$.subscribe((response: any)  => {
+        if (response.success) {
+          this.toastr.success('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          // this.getALlBloodGroups();
+          this.resetForm();
+          if (!id) {
+            this.router.navigate(['/usermanagement/user']);
+          }
+      this.loading = false;
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+        }
+        
+      this.loading = false;
+      });
   }
 
 }

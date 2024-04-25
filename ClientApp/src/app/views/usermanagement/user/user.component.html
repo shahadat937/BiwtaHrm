@@ -3,7 +3,7 @@
       <div>User</div>
       <div><button cButton color="primary" shape="rounded-pill" (click)="UserFormView()"><svg cIcon name={{buttonIcon}}></svg> {{userBtnText}}</button></div>
     </c-card-header>
-    <c-card-body [hidden]="showUserForm == true">
+    <c-card-body [hidden]="showUserForm == false">
       <form
         #UserForm="ngForm"
         (submit)="onSubmit(UserForm)"
@@ -31,9 +31,13 @@
             id="validationCustom01"
             required
             type="text"
+            minlength="6"
           />
-          @if(!UserName.valid&&UserName.touched){
+          @if(!UserName.value&&UserName.touched){
           <div class="text-left text-danger">User Name is required</div>
+          }
+          @if(!UserName.valid&&UserName.touched&&UserName.value){
+          <div class="text-left text-danger">Invalid User Name (Min 6 Character)</div>
           }
         </c-col>
         <c-col [md]="4">
@@ -50,8 +54,11 @@
             required
             type="text"
           />
-          @if(!FirstName.valid&&FirstName.touched){
+          @if(!FirstName.value&&FirstName.touched){
           <div class="text-left text-danger">First Name is required</div>
+          }
+          @if(FirstName.touched && FirstName.value == LastName.value && FirstName.value){
+          <div class="text-left text-danger">First Name & Last Name can't be same</div>
           }
         </c-col>
         
@@ -68,8 +75,11 @@
             required
             type="text"
           />
-          @if(!LastName.valid&&LastName.touched){
+          @if(!LastName.value&&LastName.touched){
           <div class="text-left text-danger">Last Name is required</div>
+          }
+          @if(LastName.touched && FirstName.value == LastName.value && LastName.value){
+          <div class="text-left text-danger">First Name & Last Name can't be same</div>
           }
         </c-col>
         <c-col [md]="4">

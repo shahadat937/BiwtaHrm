@@ -47,6 +47,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   ngOnInit(): void {
     this.buttonIcon = "cilPencil";
     this.handleRouteParams();
+    this.getAllUsers();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
@@ -129,6 +130,15 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
       });
     }
     this.router.navigate(['/usermanagement/user']);
+  }
+
+  getAllUsers(){
+    this.subscription = this.userService.getAll().subscribe((item) => {
+      console.log("All Users : ", item);
+      // this.dataSource = new MatTableDataSource(item);
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.matSort;
+    });
   }
 
   onSubmit(form: NgForm): void{

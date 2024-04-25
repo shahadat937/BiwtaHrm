@@ -15,9 +15,9 @@ export class UserService {
    }
    
   submit(model: any) {
-    return this.http.post(this.baseUrl + '/Account/register', model);
+    return this.http.post(this.baseUrl + '/account/register', model);
   }
   update(id: number,model: any){
-    return this.http.put(this.baseUrl + '/Account/register', model);
+    return this.http.put(this.baseUrl + '/account/register', model);
   }
 }

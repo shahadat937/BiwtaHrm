@@ -115,10 +115,14 @@
             cFormControl
             id="validationCustom05"
             required
-            type="number"
+            type="text"
+            pattern="[0-9]*"
           />
-          @if(!PhoneNumber.valid&&PhoneNumber.touched){
+          @if(!PhoneNumber.value&&PhoneNumber.touched){
           <div class="text-left text-danger">Phone Number is required</div>
+          }
+          @if(!PhoneNumber.valid&&PhoneNumber.touched&&PhoneNumber.value){
+          <div class="text-left text-danger">Invalid Phone Number</div>
           }
         </c-col>
         <c-col [md]="4">

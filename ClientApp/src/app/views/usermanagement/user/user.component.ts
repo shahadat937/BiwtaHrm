@@ -103,7 +103,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
       firstName: '',
       lastName: '',
       email: '',
-      phoneNumber : 0,
+      phoneNumber : '',
       pNo : '',
       menuPosition: 0,
       isActive : true,
@@ -135,6 +135,8 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.loading = true;
     this.userService.cachedData = [];
     const id = form.value.userId;
+
+    console.log("Form : ", form.value)
 
     const action$ = id
       ? this.userService.update(id, form.value)

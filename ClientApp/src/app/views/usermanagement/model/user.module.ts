@@ -18,7 +18,7 @@ export class UserModule {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber : number;
+  phoneNumber : string;
   pNo : string;
   menuPosition: number;
   isActive : boolean;
@@ -31,7 +31,7 @@ export class UserModule {
     this.firstName = '';
     this.lastName = '';
     this.email = '';
-    this.phoneNumber = 0;
+    this.phoneNumber = '';
     this.pNo = '';
     this.menuPosition = 0;
     this.isActive = true;

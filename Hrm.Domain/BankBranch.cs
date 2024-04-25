@@ -10,14 +10,18 @@ namespace Hrm.Domain
     public class BankBranch : BaseDomainEntity
     {
         public int BankBranchId { get; set; }
-        public string BankBranchName { get; set; }
-        public string BankBranchcode { get; set; }
-        public string BankBranchAddress { get; set; }
-        public string BankBranchContractNo { get; set; }
-        public string BankBranchPerson { get; set; }
-        public string Email { get; set; }
+        public string? BankBranchName { get; set; }
+        public string? BankBranchcode { get; set; }
+        public string? BankBranchAddress { get; set; }
+        public string? BankBranchContractNo { get; set; }
+        public string? BankBranchPerson { get; set; }
+        public string? Email { get; set; }
         public int NoOfEmployee { get; set; }
+        public int BankId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual Bank? Bank { get; set; }
+
     }
 }

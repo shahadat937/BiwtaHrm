@@ -2,10 +2,11 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Bank.Validators;
 using Hrm.Application.DTOs.Bank.ValidatorsBank;
+using Hrm.Application.DTOs.MaritalStatus.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.Bank.Requests.Commands;
+using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -60,8 +61,16 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }
+
             else
             {
+
+                var Bank = await _unitOfWork.Repository<Hrm.Domain.Bank>().Get(request.BankDto.BankId);
+
+                if (Bank is null)
+                {
+                    throw new NotFoundException(nameof(Bank), request.BankDto.BankId);
+                }
 
                 _mapper.Map(request.BankDto, Bank);
 
@@ -69,10 +78,11 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
                 await _unitOfWork.Save();
 
                 response.Success = true;
-                response.Message = "Update Successful";
+                response.Message = "Update Successfull";
                 response.Id = Bank.BankId;
 
             }
+
             return response;
         }
     }

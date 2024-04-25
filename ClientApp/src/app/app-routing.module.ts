@@ -1,3 +1,7 @@
+import { AppraisalModule } from './views/appraisal/appraisal.module';
+import { PromotionModule } from './views/promotion/promotion.module';
+import { Leave } from './views/basic-setup/model/Leave';
+import { EmployeeModule } from './views/employee/employee.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -80,6 +84,46 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/usermanagement/usermanagement.module').then((m) => m.UsermanagementModule)
       },
+      {
+        path: 'employee',
+        loadChildren: () =>
+          import('./views/employee/employee.module').then((m) => m.EmployeeModule)
+      },
+      {
+        path: 'attendance',
+        loadChildren: () =>
+          import('./views/attendance/attendance.module').then((m) => m.AttendanceModule)
+      }
+      ,
+      {
+        path: 'leave',
+        loadChildren: () =>
+          import('./views/Leave/leave.module').then((m) => m.LeaveModule)
+      }
+      ,
+      {
+        path: 'transfer',
+        loadChildren: () =>
+          import('./views/transfer/transfer.module').then((m) => m.TransferModule)
+      }
+      ,
+      {
+        path: 'promotion',
+        loadChildren: () =>
+          import('./views/promotion/promotion.module').then((m) => m.PromotionModule)
+      }
+      ,
+      {
+        path: 'promotion',
+        loadChildren: () =>
+          import('./views/promotion/promotion.module').then((m) => m.PromotionModule)
+      }
+      ,
+      {
+        path: 'appraisal',
+        loadChildren: () =>
+          import('./views/appraisal/appraisal.module').then((m) => m.AppraisalModule)
+      }
 
     ]
   },

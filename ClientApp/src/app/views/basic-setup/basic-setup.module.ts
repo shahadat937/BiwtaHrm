@@ -77,6 +77,9 @@ import { InstituteComponent } from './institute/institute.component';
 import { OfficeComponent } from './office/office.component';
 import { OfficeAddressComponent } from './office-address/office-address.component';
 import { CompetenceComponent } from './competence/competence.component';
+import { BankComponent } from './bank/bank.component';
+import { BankBranchComponent } from './bank-branch/bank-branch.component';
+import { BankBranchService } from './service/bank-branch.service';
 
 
 
@@ -124,6 +127,8 @@ import { CompetenceComponent } from './competence/competence.component';
     OfficeComponent,
     OfficeAddressComponent,
     CompetenceComponent,
+    BankComponent,
+    BankBranchComponent,
 
   ],
   imports: [
@@ -147,6 +152,7 @@ import { CompetenceComponent } from './competence/competence.component';
     SpinnerModule,
   ],
   providers: [ 
+    BankBranchService,
     PoolService,
     SubDepartmentService,
     RelationService,

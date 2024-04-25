@@ -17,10 +17,12 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
         private readonly IMapper _mapper;
         public CreateBankCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Bank> bankRepository)
         {
+            _BankRepository = BankRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _bankRepository = bankRepository;
         }
+
         public async Task<BaseCommandResponse> Handle(CreateBankCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();

@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.DTOs.BankBranch.Validators
 {
-    public class IBankBranchDtoValidator : AbstractValidator<IBankBranchDto>
-    {
-        public IBankBranchDtoValidator()
+
+    
+        public class IBankBranchDtoValidator : AbstractValidator<IBankBranchDto>
         {
-            RuleFor(b=>b.BankBranchName)
-                .NotEmpty().WithMessage("{PropertyName} is required.").MaximumLength(150).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
+            public IBankBranchDtoValidator()
+            {
+                RuleFor(b => b.BankBranchName)
+                    .NotEmpty().WithMessage("{PropertyName} is required.").MaximumLength(150).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
+            }
         }
-    }
+    
 }

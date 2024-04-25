@@ -19,7 +19,6 @@ namespace Hrm.Application.Models.Identity
         public string UserName { get; set; }
         
         [Required]
-        [MinLength(11)]
         public string PhoneNumber { get; set; }
 
         [Required]

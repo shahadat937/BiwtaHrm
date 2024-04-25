@@ -55,6 +55,7 @@ import { CountryService } from './service/country.service';
 import { GradeTypeComponent } from './grade-type/grade-type.component';
 import { GradeClassComponent } from './grade-class/grade-class.component';
 import { DivisionComponent } from './division/division.component';
+import { TrainingNameComponent } from './training-name/training-name.component';
 import { SpinnerModule } from '@coreui/angular';
 import { OccupationComponent } from './occupation/occupation.component';
 import { OccupationService } from './service/Occupation.service';
@@ -66,12 +67,13 @@ import { HairColorComponent } from './hair-color/hair-color.component';
 import { EyesColorComponent } from './eyes-color/eyes-color.component';
 import { EyesColorService } from './service/eyes-color.service';
 import { RelationComponent } from './relation/relation.component';
-import { RelationService } from './service/relation.service';
+import { RelationService } from './service/relation.service'; 
 import { PoolComponent } from './pool/pool.component';
 import { SubDepartmentComponent } from './sub-department/sub-department.component';
 import { SubDepartmentService } from './service/sub-department.service';
 import { PoolService } from './service/pool.service';
 import { UserRoleComponent } from './user-role/user-role.component';
+
 import { BankComponent } from './bank/bank.component';
 import { BankBranchComponent } from './bank-branch/bank-branch.component';
 import { BankBranchService } from './service/bank-branch.service';
@@ -79,6 +81,15 @@ import { BankAccountTypeComponent } from './bank-account-type/bank-account-type.
 import { BankAccountTypeService } from './service/bank-account-type.service';
 import { LanguageComponent } from './language/language.component';
 import { LanguageService } from './service/language.service';
+
+import { InstituteComponent } from './institute/institute.component';
+import { OfficeComponent } from './office/office.component';
+import { OfficeAddressComponent } from './office-address/office-address.component';
+import { CompetenceComponent } from './competence/competence.component';
+import { BankComponent } from './bank/bank.component';
+import { BankBranchComponent } from './bank-branch/bank-branch.component';
+import { BankBranchService } from './service/bank-branch.service';
+
 
 
 
@@ -112,6 +123,7 @@ import { LanguageService } from './service/language.service';
     GradeTypeComponent,
     GradeClassComponent,
     DivisionComponent,
+    TrainingNameComponent,
     OccupationComponent,
     LeaveComponent,
     OverallEVPromotionComponent,
@@ -121,10 +133,19 @@ import { LanguageService } from './service/language.service';
     PoolComponent,
     SubDepartmentComponent,
     UserRoleComponent,
+
     BankComponent,
     BankBranchComponent,
     BankAccountTypeComponent,
     LanguageComponent,
+
+    InstituteComponent,
+    OfficeComponent,
+    OfficeAddressComponent,
+    CompetenceComponent,
+    BankComponent,
+    BankBranchComponent,
+
 
   ],
   imports: [
@@ -148,8 +169,11 @@ import { LanguageService } from './service/language.service';
     SpinnerModule,
   ],
   providers: [ 
+
     LanguageService,
     BankAccountTypeService,
+
+
     BankBranchService,
     PoolService,
     SubDepartmentService,
@@ -166,6 +190,7 @@ import { LanguageService } from './service/language.service';
     MaritalStatusService,
     ReligionService,
     GenderService,
+     
   ],
 })
 export class BasicSetupModule {}

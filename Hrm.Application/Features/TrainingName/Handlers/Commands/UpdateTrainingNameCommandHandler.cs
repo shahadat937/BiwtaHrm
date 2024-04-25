@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation.Results;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.TrainingName.Validators;
 using Hrm.Application.Exceptions;
@@ -9,7 +8,6 @@ using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,15 +17,14 @@ namespace Hrm.Application.Features.TrainingName.Handlers.Commands
     public class UpdateTrainingNameCommandHandler : IRequestHandler<UpdateTrainingNameCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.TrainingName> _TrainingNameRepository;
+        private readonly IHrmRepository<Hrm.Domain.TrainingName> _trainingNameRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public UpdateTrainingNameCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.TrainingName> TrainingNameRepository)
+        public UpdateTrainingNameCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.TrainingName> trainingNameRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _TrainingNameRepository = TrainingNameRepository;
+            _trainingNameRepository = trainingNameRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateTrainingNameCommand request, CancellationToken cancellationToken)
@@ -43,29 +40,27 @@ namespace Hrm.Application.Features.TrainingName.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var TrainingNameName = request.TrainingNameDto.TrainingNames.ToLower();
+            var TrainingName = await _unitOfWork.Repository<Hrm.Domain.TrainingName>().Get(request.TrainingNameDto.TrainingNameId);
 
-            IQueryable<Hrm.Domain.TrainingName> TrainingNamees = _TrainingNameRepository.Where(x => x.TrainingNames.ToLower() == TrainingNameName);
+            if (TrainingName is null)
+            {
+                throw new NotFoundException(nameof(TrainingName), request.TrainingNameDto.TrainingNameId);
+            }
+
+            var trainingNames = request.TrainingNameDto.TrainingNames.ToLower();
+
+            IQueryable<Hrm.Domain.TrainingName> trainingName = _trainingNameRepository.Where(x => x.TrainingNames.ToLower() == trainingNames);
 
 
-
-            if (TrainingNamees.Any())
+            if (trainingName.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.TrainingNameDto.TrainingNames}' already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }
-
             else
             {
-
-                var TrainingName = await _unitOfWork.Repository<Hrm.Domain.TrainingName>().Get(request.TrainingNameDto.TrainingNameId);
-
-                if (TrainingName is null)
-                {
-                    throw new NotFoundException(nameof(TrainingName), request.TrainingNameDto.TrainingNameId);
-                }
 
                 _mapper.Map(request.TrainingNameDto, TrainingName);
 
@@ -73,11 +68,10 @@ namespace Hrm.Application.Features.TrainingName.Handlers.Commands
                 await _unitOfWork.Save();
 
                 response.Success = true;
-                response.Message = "Update Successfull";
+                response.Message = "Update Successful";
                 response.Id = TrainingName.TrainingNameId;
 
             }
-
             return response;
         }
     }

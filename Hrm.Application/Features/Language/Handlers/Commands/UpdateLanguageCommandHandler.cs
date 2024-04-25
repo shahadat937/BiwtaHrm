@@ -19,15 +19,14 @@ namespace Hrm.Application.Features.Language.Handlers.Commands
     public class UpdateLanguageCommandHandler : IRequestHandler<UpdateLanguageCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.Language> _LanguageRepository;
+        private readonly IHrmRepository<Hrm.Domain.Language> _languageRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
         public UpdateLanguageCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Language> LanguageRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _LanguageRepository = LanguageRepository;
+            _languageRepository = languageRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateLanguageCommand request, CancellationToken cancellationToken)
@@ -52,9 +51,7 @@ namespace Hrm.Application.Features.Language.Handlers.Commands
             if (Languages.Any())
             {
                 response.Success = false;
-                response.Message = $"Update Failed '{request.LanguageDto.LanguageName}' already exists.";
-
-                //response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.LanguageDto.LanguageName}' already exists.";  
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

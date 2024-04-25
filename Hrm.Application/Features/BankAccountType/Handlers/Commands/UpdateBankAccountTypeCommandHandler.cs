@@ -19,15 +19,16 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
     public class UpdateBankAccountTypeCommandHandler : IRequestHandler<UpdateBankAccountTypeCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.BankAccountType> _BankAccountTypeRepository;
+        private readonly IHrmRepository<Hrm.Domain.BankAccountType> _bankAccountTypeRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+
 
         public UpdateBankAccountTypeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.BankAccountType> BankAccountTypeRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _BankAccountTypeRepository = BankAccountTypeRepository;
+            _bankAccountTypeRepository = bankAccountTypeRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateBankAccountTypeCommand request, CancellationToken cancellationToken)
@@ -43,6 +44,7 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
+
             //var BankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.ToLower();
             var BankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.Trim().ToLower().Replace(" ", string.Empty);
             IQueryable<Hrm.Domain.BankAccountType> BankAccountTypes = _BankAccountTypeRepository.Where(x => x.BankAccountTypeName.ToLower() == BankAccountTypeName);
@@ -55,6 +57,7 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
                 response.Message = $"Update Failed '{request.BankAccountTypeDto.BankAccountTypeName}' already exists.";
 
                 //response.Message = "Creation Failed Name already exists.";
+
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

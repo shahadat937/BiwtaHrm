@@ -40,16 +40,20 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService
+
   ) { }
   ngOnInit(): void {
     this.getAlBankBranchs();
     this.SelectModelCountry();
+
     //this.loaddivisions();
     this.handleRouteParams();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
+
       const id = params.get('bankBranchId');
+
       if (id) {
         this.btnText = 'Update';
         this.bankBranchService.find(+id).subscribe((res) => {
@@ -67,7 +71,9 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
   //     this.countrys = data;
   //   });
   // }
+
   SelectModelCountry() {
+
     this.bankService.selectGetBank().subscribe((data) => {
       //console.log(data);
       this.banks = data;
@@ -88,7 +94,9 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
+
   initaialBankBranch(form?: NgForm) {
+
     if (form != null) form.resetForm();
     this.bankBranchService.bankBranchs = {
       bankBranchId: 0,
@@ -117,6 +125,7 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
         bankBranchPerson: '',
         email: '',
         noOfEmployee: 0,
+
         menuPosition: 0,
         isActive: true,
       });
@@ -130,6 +139,7 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     });
   }
+
   onSubmit(form: NgForm): void {
     this.loading = true;
     this.bankBranchService.cachedData = [];
@@ -139,7 +149,7 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
       : this.bankBranchService.submit(form.value);
 
     this.subscription = action$.subscribe((response: any) => {
-      console.log(response)
+
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {

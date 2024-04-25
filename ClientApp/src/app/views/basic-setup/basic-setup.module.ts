@@ -75,6 +75,10 @@ import { UserRoleComponent } from './user-role/user-role.component';
 import { BankComponent } from './bank/bank.component';
 import { BankBranchComponent } from './bank-branch/bank-branch.component';
 import { BankBranchService } from './service/bank-branch.service';
+import { BankAccountTypeComponent } from './bank-account-type/bank-account-type.component';
+import { BankAccountTypeService } from './service/bank-account-type.service';
+import { LanguageComponent } from './language/language.component';
+import { LanguageService } from './service/language.service';
 
 
 
@@ -119,6 +123,8 @@ import { BankBranchService } from './service/bank-branch.service';
     UserRoleComponent,
     BankComponent,
     BankBranchComponent,
+    BankAccountTypeComponent,
+    LanguageComponent,
 
   ],
   imports: [
@@ -142,6 +148,8 @@ import { BankBranchService } from './service/bank-branch.service';
     SpinnerModule,
   ],
   providers: [ 
+    LanguageService,
+    BankAccountTypeService,
     BankBranchService,
     PoolService,
     SubDepartmentService,

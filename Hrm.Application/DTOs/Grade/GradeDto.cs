@@ -14,6 +14,9 @@ namespace Hrm.Application.DTOs.Grade
         public int GradeClassId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+        public required string? GradeClassName { get; set; }
+        public required string? GradeTypeName { get; set; }
+
 
     }
 }

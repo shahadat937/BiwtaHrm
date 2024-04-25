@@ -3,48 +3,76 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.ChildStatus.Validators;
 using Hrm.Application.Features.ChildStatus.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
 using MediatR;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.ChildStatus.Handlers.Commands
 {
     public class CreateChildStatusCommandHandler : IRequestHandler<CreateChildStatusCommand, BaseCommandResponse>
     {
+
+        private readonly IHrmRepository<Hrm.Domain.ChildStatus> _ChildStatusRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CreateChildStatusCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+
+        public CreateChildStatusCommandHandler(IHrmRepository<Hrm.Domain.ChildStatus> ChildStatusRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
+            _ChildStatusRepository = ChildStatusRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+
         public async Task<BaseCommandResponse> Handle(CreateChildStatusCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
             var validator = new CreateChildStatusDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.ChildStatusDto);
+            var validatorResult = await validator.ValidateAsync(request.ChildStatusDto);
 
-            if (validationResult.IsValid == false)
+            if (validatorResult.IsValid == false)
             {
                 response.Success = false;
                 response.Message = "Creation Failed";
-                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+                response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
             else
             {
-                var ChildStatus = _mapper.Map<Hrm.Domain.ChildStatus>(request.ChildStatusDto);
+                var ChildStatusName = request.ChildStatusDto.ChildStatusName.ToLower();
 
-                ChildStatus = await _unitOfWork.Repository<Hrm.Domain.ChildStatus>().Add(ChildStatus);
-                await _unitOfWork.Save();
+                IQueryable<Hrm.Domain.ChildStatus> ChildStatuss = _ChildStatusRepository.Where(x => x.ChildStatusName.ToLower() == ChildStatusName);
 
+                if (ChildStatusNameExists(request))
+                {
+                    response.Success = false;
+                    response.Message = $"Creation Failed '{request.ChildStatusDto.ChildStatusName}' already exists.";
 
-                response.Success = true;
-                response.Message = "Creation Successful";
-                response.Id = ChildStatus.ChildStatusId;
+                    //response.Message = "Creation Failed, Name already exists";
+                    response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
+                }
+                else
+                {
+                    var ChildStatus = _mapper.Map<Hrm.Domain.ChildStatus>(request.ChildStatusDto);
+
+                    ChildStatus = await _unitOfWork.Repository<Hrm.Domain.ChildStatus>().Add(ChildStatus);
+                    await _unitOfWork.Save();
+
+                    response.Success = true;
+                    response.Message = "Creation Successfull";
+                    response.Id = ChildStatus.ChildStatusId;
+                }
             }
-
             return response;
         }
+        private bool ChildStatusNameExists(CreateChildStatusCommand request)
+        {
+            var ChildStatusName = request.ChildStatusDto.ChildStatusName.Trim().ToLower().Replace(" ", string.Empty);
 
+            IQueryable<Hrm.Domain.ChildStatus> ChildStatuss = _ChildStatusRepository.Where(x => x.ChildStatusName.Trim().ToLower().Replace(" ", string.Empty) == ChildStatusName);
+
+            return ChildStatuss.Any();
+        }
     }
 }

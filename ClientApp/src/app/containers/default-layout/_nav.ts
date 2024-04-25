@@ -459,10 +459,6 @@ export const navItems: INavData[] = [
         url: '/bascisetup/child-status'
       },
       {
-        name: 'User Role',
-        url: '/base/breadcrumbs'
-      },
-      {
         name: 'Pool',
         url: '/bascisetup/pool'
       },
@@ -648,7 +644,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Account Type',
-        url: '/base/cards'
+        url: '/bascisetup/bankAccountType'
       },
 
 
@@ -661,7 +657,7 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Language Name',
-        url: '/base/accordion'
+        url: '/bascisetup/language'
       },
       {
         name: 'Competence',

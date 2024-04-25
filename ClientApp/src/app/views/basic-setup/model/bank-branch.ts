@@ -4,8 +4,8 @@ export class BankBranch {
     bankBranchId: number=0;
     bankBranchName: string="";
     bankId:number=0;
-    bankBranchcode: number=0;
-    bankBranchAddress: string="";
+    bankBranchCode: string="";
+    bankBranchAddress:string="";
     bankBranchContractNo:string="";
     bankBranchPerson:string="";
     email:string="";

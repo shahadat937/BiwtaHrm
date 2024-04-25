@@ -1,10 +1,5 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { BankAccountTypeService } from './../service/bank-account-type.service';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,48 +8,43 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { ChildStatusService } from '../service/child-status.service';
 
 @Component({
-  selector: 'app-child-status',
-  templateUrl: './child-status.component.html',
-  styleUrl: './child-status.component.scss',
+  selector: 'app-bank-account-type',
+  templateUrl: './bank-account-type.component.html',
+  styleUrl: './bank-account-type.component.scss'
 })
-export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
+export class BankAccountTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
-  @ViewChild('ChildStatusForm', { static: true }) ChildStatusForm!: NgForm;
+  @ViewChild('BankAccountTypeForm', { static: true }) BankAccountTypeForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = [
-    'slNo',
-    'childStatusName',
-    'isActive',
-    'Action',
-  ];
+  displayedColumns: string[] = ['slNo', 'bankAccountTypeName', 'isActive', 'Action'];
+  loading = false;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+
   constructor(
-    public childStatusService: ChildStatusService,
+    public bankAccountTypService: BankAccountTypeService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService
   ) {
-    //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
   }
   ngOnInit(): void {
-    this.getALlChildStatus();
+    this.getBankAccountTypes();
     this.handleRouteParams();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('childStatusId');
+      const id = params.get('bankAccountTypeId');
       if (id) {
         this.btnText = 'Update';
-        this.childStatusService.find(+id).subscribe((res) => {
-          this.ChildStatusForm?.form.patchValue(res);
+        this.bankAccountTypService.find(+id).subscribe((res) => {
+          this.BankAccountTypeForm?.form.patchValue(res);
         });
       } else {
         this.btnText = 'Submit';
@@ -76,42 +66,45 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  initaialBloodGroup(form?: NgForm) {
+  initaialBankAccountType(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.childStatusService.childStatus = {
-      childStatusId: 0,
-      childStatusName: '',
+    this.bankAccountTypService.bankAccountTypes = {
+      bankAccountTypeId: 0,
+      bankAccountTypeName: '',
       menuPosition: 0,
       isActive: true,
     };
   }
   resetForm() {
+    console.log(this.BankAccountTypeForm?.form.value);
+
     this.btnText = 'Submit';
-    if (this.ChildStatusForm?.form != null) {
-      this.ChildStatusForm.form.reset();
-      this.ChildStatusForm.form.patchValue({
-        childStatusId: 0,
-        childStatusName: '',
+    if (this.BankAccountTypeForm?.form != null) {
+      this.BankAccountTypeForm.form.reset();
+      this.BankAccountTypeForm.form.patchValue({
+        bankAccountTypeId: 0,
+      bankAccountTypeName: '',
         menuPosition: 0,
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/child-status']);
+    this.router.navigate(['/bascisetup/bankAccountType']);
   }
 
-  getALlChildStatus() {
-    this.subscription = this.childStatusService.getAll().subscribe((item) => {
+  getBankAccountTypes() {
+    this.subscription = this.bankAccountTypService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
   }
   onSubmit(form: NgForm): void {
-    this.childStatusService.cachedData = [];
-    const id = form.value.childStatusId;
+    this.loading = true;
+    this.bankAccountTypService.cachedData = [];
+    const id = form.value.bankAccountTypeId;
     const action$ = id
-      ? this.childStatusService.update(id, form.value)
-      : this.childStatusService.submit(form.value);
+      ? this.bankAccountTypService.update(id, form.value)
+      : this.bankAccountTypService.submit(form.value);
 
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
@@ -119,16 +112,18 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getALlChildStatus();
+        this.getBankAccountTypes();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/child-status']);
+          this.router.navigate(['/bascisetup/bankAccountType']);
         }
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = false;
     });
   }
   delete(element: any) {
@@ -136,7 +131,7 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.childStatusService.delete(element.childStatusId).subscribe(
+          this.bankAccountTypService.delete(element.bankAccountTypeId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {
@@ -144,14 +139,12 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
               this.toastr.success('Delete sucessfully ! ', ` `, {
-                positionClass: 'toast-top-right',
-              });
+                positionClass: 'toast-top-right',})
             },
             (err) => {
               this.toastr.error('Somethig Wrong ! ', ` `, {
                 positionClass: 'toast-top-right',
               });
-
               console.log(err);
             }
           );

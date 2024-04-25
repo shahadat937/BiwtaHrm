@@ -42,6 +42,8 @@ import { PoolComponent } from './pool/pool.component';
 import { UserRoleComponent } from './user-role/user-role.component';
 import { BankComponent } from './bank/bank.component';
 import { BankBranchComponent } from './bank-branch/bank-branch.component';
+import { BankAccountTypeComponent } from './bank-account-type/bank-account-type.component';
+import { LanguageComponent } from './language/language.component';
 
 const routes: Routes = [
 
@@ -342,6 +344,20 @@ const routes: Routes = [
   },
   { path: 'update-bankBranch/:bankBranchId',
     component: BankBranchComponent,
+  },
+  {
+    path: 'bankAccountType',
+    component: BankAccountTypeComponent,
+  },
+  { path: 'update-bankAccountType/:bankAccountTypeId',
+    component: BankAccountTypeComponent,
+  },
+  {
+    path: 'language',
+    component: LanguageComponent,
+  },
+  { path: 'update-language/:languageId',
+    component: LanguageComponent,
   },
 ];
 

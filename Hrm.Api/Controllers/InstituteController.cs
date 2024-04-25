@@ -1,13 +1,7 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Institute;
-using Hrm.Application.DTOs.Institute;
 using Hrm.Application.Features.Institute.Requests.Commands;
 using Hrm.Application.Features.Institute.Requests.Queries;
-using Hrm.Application.Features.Institute.Requests.Commands;
-using Hrm.Application.Features.Stores.Requests.Commands;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Shared.Models;
 using Hrm.Domain;
 

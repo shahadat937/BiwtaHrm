@@ -24,7 +24,7 @@ namespace Hrm.Application.Features.Language.Handlers.Commands
             _LanguageRepository = LanguageRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _languageRepository = languageRepository;
+            _LanguageRepository = LanguageRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(CreateLanguageCommand request, CancellationToken cancellationToken)

@@ -1,15 +1,9 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.SubDepartment;
-using Hrm.Application.DTOs.SubDepartment;
 using Hrm.Application.Features.SubDepartment.Requests.Commands;
 using Hrm.Application.Features.SubDepartment.Requests.Queries;
-using Hrm.Application.Features.SubDepartment.Requests.Commands;
 using Hrm.Application.Features.Stores.Requests.Commands;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Shared.Models;
-using Hrm.Domain;
 
 namespace Hrm.Api.Controllers
 {

@@ -29,7 +29,7 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _bankRepository = bankRepository;
+            _bankRepository = BankRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateBankCommand request, CancellationToken cancellationToken)
@@ -46,7 +46,7 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
             }
             //var BankName = request.BankDto.BankName.ToLower();
             var BankName = request.BankDto.BankName.Trim().ToLower().Replace(" ", string.Empty);
-            IQueryable<Hrm.Domain.Bank> Banks = _BankRepository.Where(x => x.BankName.ToLower() == BankName);
+            IQueryable<Hrm.Domain.Bank> Banks = _bankRepository.Where(x => x.BankName.ToLower() == BankName);
             if (Banks.Any())
             {
                 response.Success = false;

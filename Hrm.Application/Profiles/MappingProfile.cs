@@ -60,6 +60,8 @@ using Hrm.Application.DTOs.EyesColor;
 using Hrm.Application.DTOs.Pool;
 using Hrm.Application.DTOs.SubDepartment;
 using Hrm.Application.DTOs.UserRole;
+using Hrm.Application.DTOs.OfficeAddress;
+
 
 
  
@@ -193,6 +195,9 @@ namespace Hrm.Application.Profiles
              
             CreateMap<Office, OfficeDto>().ReverseMap();
             CreateMap<Office, CreateOfficeDto>().ReverseMap();
+            
+            CreateMap<OfficeAddress, OfficeAddressDto>().ReverseMap();
+            CreateMap<OfficeAddress, CreateOfficeAddressDto>().ReverseMap();
             
             CreateMap<Competence, CompetenceDto>().ReverseMap();
             CreateMap<Competence, CreateCompetenceDto>().ReverseMap();

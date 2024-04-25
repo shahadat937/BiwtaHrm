@@ -631,7 +631,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Institute Name',
-        url: '/base/cards'
+        url: '/bascisetup/institute'
       }
 
     ]
@@ -667,23 +667,23 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Competence',
-        url: '/base/breadcrumbs'
+        url: '/bascisetup/competence'
       }
 
     ]
   },
   {
     name:'Office Info. Setup',
-    url: '/base',
+    url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Office Name',
-        url: '/base/accordion'
+        url: '/bascisetup/office'
       },
       {
-        name: 'Address',
-        url: '/base/breadcrumbs'
+        name: 'Office Address',
+        url: '/bascisetup/officeAddress'
       }
 
     ]

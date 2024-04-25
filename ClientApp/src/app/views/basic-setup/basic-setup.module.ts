@@ -68,12 +68,15 @@ import { EyesColorComponent } from './eyes-color/eyes-color.component';
 import { EyesColorService } from './service/eyes-color.service';
 import { RelationComponent } from './relation/relation.component';
 import { RelationService } from './service/relation.service'; 
-import { RelationService } from './service/relation.service';
 import { PoolComponent } from './pool/pool.component';
 import { SubDepartmentComponent } from './sub-department/sub-department.component';
 import { SubDepartmentService } from './service/sub-department.service';
 import { PoolService } from './service/pool.service';
 import { UserRoleComponent } from './user-role/user-role.component';
+import { InstituteComponent } from './institute/institute.component';
+import { OfficeComponent } from './office/office.component';
+import { OfficeAddressComponent } from './office-address/office-address.component';
+import { CompetenceComponent } from './competence/competence.component';
 
 
 
@@ -117,6 +120,10 @@ import { UserRoleComponent } from './user-role/user-role.component';
     PoolComponent,
     SubDepartmentComponent,
     UserRoleComponent,
+    InstituteComponent,
+    OfficeComponent,
+    OfficeAddressComponent,
+    CompetenceComponent,
 
   ],
   imports: [

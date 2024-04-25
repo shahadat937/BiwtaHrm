@@ -16,6 +16,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import {TrainingNameService} from '../service/trainingName.service';
 
 
+
 @Component({
   selector: 'app-training-name',
   templateUrl: './training-name.component.html',

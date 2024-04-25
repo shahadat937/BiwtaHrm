@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Persistence
 {
-    public class HrmDbContext:AuditableDbContext
+    public class HrmDbContext : AuditableDbContext
     {
         public HrmDbContext(DbContextOptions<HrmDbContext> options)
             : base(options)
@@ -20,55 +20,41 @@ namespace Hrm.Persistence
         {
 
 
-            modelBuilder.Entity<BloodGroup>(entity =>
-            {
+            modelBuilder.Entity<BloodGroup>(entity => {
 
                 entity.HasKey(e => e.BloodGroupId)
                     .HasName("PK_BloodGroupId");
 
             });
-            modelBuilder.Entity<EmployeeType>(entity =>
-            {
+            modelBuilder.Entity<EmployeeType>(entity => {
 
                 entity.HasKey(e => e.EmployeeTypeId)
                     .HasName("PK_EmployeeTypeId");
 
             });
-            modelBuilder.Entity<Gender>(entity =>
-            {
+            modelBuilder.Entity<Gender>(entity => {
 
                 entity.HasKey(e => e.GenderId)
                     .HasName("PK_GenderId");
 
             });
-            modelBuilder.Entity<Religion>(entity =>
-            {
+            modelBuilder.Entity<Religion>(entity => {
 
                 entity.HasKey(e => e.ReligionId)
                     .HasName("PK_ReligionId");
 
             });
-            modelBuilder.Entity<ChildStatus>(entity =>
-            {
+            modelBuilder.Entity<ChildStatus>(entity => {
 
                 entity.HasKey(e => e.ChildStatusId)
                     .HasName("PK_ChildStatusId");
 
             });
-            modelBuilder.Entity<Division>(entity =>
-            {
-
-                entity.HasOne(d => d.Country)
-                  .WithMany(p => p.Divisions)
-                  .HasForeignKey(d => d.CountryId)
-                  .HasConstraintName("FK__Division__Countr__0D7A0286");
             modelBuilder.Entity<Division>(entity => {
                 entity.HasKey(e => e.DivisionId)
                     .HasName("PK__Division__20EFC6A8D5104B78");
 
             });
-            modelBuilder.Entity<Thana>(entity =>
-            {
 
             modelBuilder.Entity<Country>(entity =>
             {
@@ -86,8 +72,7 @@ namespace Hrm.Persistence
                     .HasName("PK__Thana__438130B46C389C43");
 
             });
-            modelBuilder.Entity<Upazila>(entity =>
-            {
+            modelBuilder.Entity<Upazila>(entity => {
 
                 entity.HasKey(e => e.UpazilaId)
                     .HasName("PK__Upazila__FE787458879EB561");
@@ -199,6 +184,13 @@ namespace Hrm.Persistence
                 .HasName("[[PK_Office]]");
             });
 
+            modelBuilder.Entity<OfficeAddress>(entity =>
+            {
+                entity.HasKey(e => e.OfficeAddressId)
+                .HasName("[[PK_OfficeAddress]]");
+
+            });
+
             modelBuilder.Entity<Competence>(entity =>
             {
                 entity.HasKey(e => e.CompetenceId)
@@ -217,8 +209,13 @@ namespace Hrm.Persistence
             modelBuilder.Entity<BankBranch>(entity =>
             {
                 entity.HasKey(e => e.BankBranchId)
-                .HasName("[[PK_BankBranch]]");
+                .HasName("[PK_BankBranch]");
             });
+            //modelBuilder.Entity<Division>(entity => {
+            //    entity.HasKey(e => e.DivisionId)
+            //        .HasName("PK__Division__20EFC6A8D5104B78");
+
+            //});
             modelBuilder.Entity<Bank>(entity =>
             {
                 entity.HasKey(e => e.BankId)
@@ -241,27 +238,12 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.OccupationId)
                 .HasName("[[PK_OccupationId]]");
             });
-
-            modelBuilder.Entity<OfficeAddress>(entity =>
-            {
-                entity.HasKey(e => e.OfficeAddressId)
-                .HasName("[[PK_OfficeAddressId]]");
-            });
             modelBuilder.Entity<HairColor>(entity =>
-                {
-                    entity.HasKey(e => e.HairColorId)
-                    .HasName("[[PK_HairColorId]]");
-                });
+            {
+                entity.HasKey(e => e.HairColorId)
+                .HasName("[[PK_HairColorId]]");
+            });
             modelBuilder.Entity<EyesColor>(entity =>
-                {
-                    entity.HasKey(e => e.EyesColorId)
-                    .HasName("[[PK_EyesColorId]]");
-                });
-
-        }
-            
-            
-           
             {
                 entity.HasKey(e => e.EyesColorId)
                 .HasName("[[PK_EyesColorId]]");
@@ -302,8 +284,8 @@ namespace Hrm.Persistence
         public virtual DbSet<PromotionType> PromotionType { get; set; } = null!;
         public virtual DbSet<Thana> Thana { get; set; } = null!;
         public virtual DbSet<Upazila> Upazila { get; set; } = null!;
-        public virtual DbSet<Union> Union { get; set; }= null!;
-        public virtual DbSet<District> District { get; set; }=null!;
+        public virtual DbSet<Union> Union { get; set; } = null!;
+        public virtual DbSet<District> District { get; set; } = null!;
         public virtual DbSet<Result> Result { get; set; } = null!;
         public virtual DbSet<Ward> Ward { get; set; } = null!;
         public virtual DbSet<Branch> Branch { get; set; } = null!;
@@ -319,7 +301,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Grade> Grade { get; set; } = null!;
         public virtual DbSet<Group> Group { get; set; } = null!;
         public virtual DbSet<Punishment> Punishment { get; set; } = null!;
-        public virtual DbSet<Reward> Reward { get; set; }= null!;
+        public virtual DbSet<Reward> Reward { get; set; } = null!;
         public virtual DbSet<HolidayType> HolidayType { get; set; } = null!;
         public virtual DbSet<Weekend> Weekend { get; set; } = null!;
         public virtual DbSet<Overall_EV_Promotion> Overall_EV_Promotion { get; set; } = null!;
@@ -333,13 +315,13 @@ namespace Hrm.Persistence
         public virtual DbSet<HairColor> HairColor { get; set; } = null!;
         public virtual DbSet<TrainingName> TrainingName { get; set; } = null!;
         public virtual DbSet<Office> Office { get; set; } = null!;
+        public virtual DbSet<OfficeAddress> OfficeAddress { get; set; } = null!;
         public virtual DbSet<Competence> Competence { get; set; } = null!;
         public virtual DbSet<Language> Language { get; set; } = null!;
         public virtual DbSet<BankAccountType> BankAccountType { get; set; } = null!;
         public virtual DbSet<BankBranch> BankBranch { get; set; } = null!;
         public virtual DbSet<Bank> Bank { get; set; } = null!;
         public virtual DbSet<Institute> Institute { get; set; } = null!;
-        public virtual DbSet<OfficeAddress> OfficeAddress { get; set; } = null!;
         public virtual DbSet<EyesColor> EyesColor { get; set; } = null!;
         public virtual DbSet<Pool> Pool { get; set; } = null!;
         public virtual DbSet<SubDepartment> SubDepartment { get; set; } = null!;

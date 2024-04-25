@@ -11,6 +11,7 @@ namespace Hrm.Domain
     {
         public int OfficeAddressId { get; set; }
         public string OfficeAddressName { get; set; }
+        public int? OfficeId { get; set; }
         public int? CountryId { get; set; }
         public int? DivisionId { get; set; }
         public int? DistrictId { get; set; }

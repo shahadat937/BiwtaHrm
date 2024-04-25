@@ -7,6 +7,7 @@ namespace Hrm.Application
     {
         private const string HRMRoutePrefixBase = ApiRoutePrefix.RoutePrefixBase + "hrm/";
 
+        public const string Account = HRMRoutePrefixBase + "account";
 
         public const string BloodGroup = HRMRoutePrefixBase + "blood-group";
         public const string MaritalStatus = HRMRoutePrefixBase + "marital-status";

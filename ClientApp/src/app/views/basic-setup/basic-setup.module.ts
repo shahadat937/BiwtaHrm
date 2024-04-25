@@ -73,6 +73,15 @@ import { SubDepartmentComponent } from './sub-department/sub-department.componen
 import { SubDepartmentService } from './service/sub-department.service';
 import { PoolService } from './service/pool.service';
 import { UserRoleComponent } from './user-role/user-role.component';
+
+import { BankComponent } from './bank/bank.component';
+import { BankBranchComponent } from './bank-branch/bank-branch.component';
+import { BankBranchService } from './service/bank-branch.service';
+import { BankAccountTypeComponent } from './bank-account-type/bank-account-type.component';
+import { BankAccountTypeService } from './service/bank-account-type.service';
+import { LanguageComponent } from './language/language.component';
+import { LanguageService } from './service/language.service';
+
 import { InstituteComponent } from './institute/institute.component';
 import { OfficeComponent } from './office/office.component';
 import { OfficeAddressComponent } from './office-address/office-address.component';
@@ -80,6 +89,7 @@ import { CompetenceComponent } from './competence/competence.component';
 import { BankComponent } from './bank/bank.component';
 import { BankBranchComponent } from './bank-branch/bank-branch.component';
 import { BankBranchService } from './service/bank-branch.service';
+
 
 
 
@@ -123,12 +133,19 @@ import { BankBranchService } from './service/bank-branch.service';
     PoolComponent,
     SubDepartmentComponent,
     UserRoleComponent,
+
+    BankComponent,
+    BankBranchComponent,
+    BankAccountTypeComponent,
+    LanguageComponent,
+
     InstituteComponent,
     OfficeComponent,
     OfficeAddressComponent,
     CompetenceComponent,
     BankComponent,
     BankBranchComponent,
+
 
   ],
   imports: [
@@ -152,6 +169,11 @@ import { BankBranchService } from './service/bank-branch.service';
     SpinnerModule,
   ],
   providers: [ 
+
+    LanguageService,
+    BankAccountTypeService,
+
+
     BankBranchService,
     PoolService,
     SubDepartmentService,

@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.BankAccountType;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.BankAccountType.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
+using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -27,8 +28,9 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Queries
         public async Task<object> Handle(GetBankAccountTypeRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.BankAccountType> BankAccountTypes = _BankAccountTypeRepository.Where(x => true);
-
+            BankAccountTypes = BankAccountTypes.OrderByDescending(x => x.BankAccountTypeId);
             var BankAccountTypeDtos = _mapper.Map<List<BankAccountTypeDto>>(BankAccountTypes);
+
 
             return BankAccountTypeDtos;
         }

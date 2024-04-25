@@ -12,39 +12,49 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
 {
     public class CreateBankAccountTypeCommandHandler : IRequestHandler<CreateBankAccountTypeCommand, BaseCommandResponse>
     {
-        private readonly IHrmRepository<Hrm.Domain.BankAccountType> _bankAccountTypeRepository;
+
+
+        private readonly IHrmRepository<Hrm.Domain.BankAccountType> _BankAccountTypeRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CreateBankAccountTypeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.BankAccountType> bankAccountTypeRepository)
+
+        public CreateBankAccountTypeCommandHandler(IHrmRepository<Hrm.Domain.BankAccountType> BankAccountTypeRepository, IUnitOfWork unitOfWork, IMapper mapper)
+
         {
+            _BankAccountTypeRepository = BankAccountTypeRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _bankAccountTypeRepository = bankAccountTypeRepository;
         }
+
         public async Task<BaseCommandResponse> Handle(CreateBankAccountTypeCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
             var validator = new CreateBankAccountTypeDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.BankAccountTypeDto);
 
-            if (validationResult.IsValid == false)
+            var validatorResult = await validator.ValidateAsync(request.BankAccountTypeDto);
+
+            if (validatorResult.IsValid == false)
             {
                 response.Success = false;
                 response.Message = "Creation Failed";
-                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+                response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
             else
             {
-                //   var bankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.Trim().ToLower().Replace(" ", string.Empty);
+                var BankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.ToLower();
 
-                //  IQueryable<Hrm.Domain.BankAccountType> bankAccountTypes = _bankAccountTypeRepository.Where(x => x.BankAccountTypeName.ToLower().Replace(" ", string.Empty) == bankAccountTypeName);
+                IQueryable<Hrm.Domain.BankAccountType> BankAccountTypes = _BankAccountTypeRepository.Where(x => x.BankAccountTypeName.ToLower() == BankAccountTypeName);
 
 
                 if (BankAccountTypeNameExists(request))
                 {
                     response.Success = false;
                     response.Message = $"Creation Failed '{request.BankAccountTypeDto.BankAccountTypeName}' already exists.";
-                    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+
+
+                    //response.Message = "Creation Failed, Name already exists";
+                    response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
 
                 }
                 else
@@ -53,6 +63,9 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
 
                     BankAccountType = await _unitOfWork.Repository<Hrm.Domain.BankAccountType>().Add(BankAccountType);
                     await _unitOfWork.Save();
+
+                    response.Success = true;
+                    response.Message = "Creation Successfull";
 
 
                     response.Success = true;
@@ -65,11 +78,13 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
         }
         private bool BankAccountTypeNameExists(CreateBankAccountTypeCommand request)
         {
-            var bankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.Trim().ToLower().Replace(" ", string.Empty);
 
-            IQueryable<Hrm.Domain.BankAccountType> bankAccountTypes = _bankAccountTypeRepository.Where(x => x.BankAccountTypeName.Trim().ToLower().Replace(" ", string.Empty) == bankAccountTypeName);
+            var BankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.Trim().ToLower().Replace(" ", string.Empty);
 
-            return bankAccountTypes.Any();
+            IQueryable<Hrm.Domain.BankAccountType> BankAccountTypes = _BankAccountTypeRepository.Where(x => x.BankAccountTypeName.Trim().ToLower().Replace(" ", string.Empty) == BankAccountTypeName);
+
+            return BankAccountTypes.Any();
+
         }
     }
 }

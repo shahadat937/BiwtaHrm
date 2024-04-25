@@ -12,10 +12,14 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
 {
     public class CreateBankCommandHandler : IRequestHandler<CreateBankCommand, BaseCommandResponse>
     {
-        private readonly IHrmRepository<Hrm.Domain.Bank> _bankRepository;
+
+
+        private readonly IHrmRepository<Hrm.Domain.Bank> _BankRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CreateBankCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Bank> bankRepository)
+
+        public CreateBankCommandHandler(IHrmRepository<Hrm.Domain.Bank> BankRepository, IUnitOfWork unitOfWork, IMapper mapper)
+       
         {
             _BankRepository = BankRepository;
             _unitOfWork = unitOfWork;
@@ -26,27 +30,30 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(CreateBankCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
-            var validator = new CreateBankDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.BankDto);
+            var validator = new CreateBankDtoValidator ();
+            var validatorResult = await validator.ValidateAsync(request.BankDto);
 
-            if (validationResult.IsValid == false)
+            if (validatorResult.IsValid == false)
             {
                 response.Success = false;
                 response.Message = "Creation Failed";
-                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+                response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
             else
             {
-                //   var bankName = request.BankDto.BankName.Trim().ToLower().Replace(" ", string.Empty);
+                var BankName = request.BankDto.BankName.ToLower();
 
-                //  IQueryable<Hrm.Domain.Bank> banks = _bankRepository.Where(x => x.BankName.ToLower().Replace(" ", string.Empty) == bankName);
+                IQueryable<Hrm.Domain.Bank> Banks = _BankRepository.Where(x => x.BankName.ToLower() == BankName);
 
 
                 if (BankNameExists(request))
                 {
                     response.Success = false;
                     response.Message = $"Creation Failed '{request.BankDto.BankName}' already exists.";
-                    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+
+
+                    //response.Message = "Creation Failed, Name already exists";
+                    response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
 
                 }
                 else
@@ -55,10 +62,8 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
 
                     Bank = await _unitOfWork.Repository<Hrm.Domain.Bank>().Add(Bank);
                     await _unitOfWork.Save();
-
-
                     response.Success = true;
-                    response.Message = "Creation Successful";
+                    response.Message = "Creation Successfull";
                     response.Id = Bank.BankId;
                 }
             }
@@ -67,11 +72,13 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
         }
         private bool BankNameExists(CreateBankCommand request)
         {
-            var bankName = request.BankDto.BankName.Trim().ToLower().Replace(" ", string.Empty);
 
-            IQueryable<Hrm.Domain.Bank> banks = _bankRepository.Where(x => x.BankName.Trim().ToLower().Replace(" ", string.Empty) == bankName);
+            var BankName = request.BankDto.BankName.Trim().ToLower().Replace(" ", string.Empty);
 
-            return banks.Any();
+            IQueryable<Hrm.Domain.Bank> Banks = _BankRepository.Where(x => x.BankName.Trim().ToLower().Replace(" ", string.Empty) == BankName);
+
+            return Banks.Any();
+
         }
     }
 }

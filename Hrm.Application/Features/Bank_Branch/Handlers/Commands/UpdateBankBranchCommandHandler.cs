@@ -17,14 +17,16 @@ namespace Hrm.Application.Features.BankBranch.Handlers.Commands
     public class UpdateBankBranchCommandHandler : IRequestHandler<UpdateBankBranchCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.BankBranch> _bankBranchRepository;
+
+        private readonly IHrmRepository<Hrm.Domain.BankBranch> _BankBranchRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public UpdateBankBranchCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.BankBranch> bankBranchRepository)
+        public UpdateBankBranchCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.BankBranch> BankBranchRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _bankBranchRepository = bankBranchRepository;
+            _BankBranchRepository = BankBranchRepository;
+
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateBankBranchCommand request, CancellationToken cancellationToken)
@@ -47,15 +49,20 @@ namespace Hrm.Application.Features.BankBranch.Handlers.Commands
                 throw new NotFoundException(nameof(BankBranch), request.BankBranchDto.BankBranchId);
             }
 
-            var bankBranchName = request.BankBranchDto.BankBranchName.ToLower();
 
-            IQueryable<Hrm.Domain.BankBranch> bankBranchs = _bankBranchRepository.Where(x => x.BankBranchName.ToLower() == bankBranchName);
+            //var BankBranchName = request.BankBranchDto.BankBranchName.ToLower();
+            var BankBranchName = request.BankBranchDto.BankBranchName.Trim().ToLower().Replace(" ", string.Empty);
+
+            IQueryable<Hrm.Domain.BankBranch> BankBranchs = _BankBranchRepository.Where(x => x.BankBranchName.ToLower() == BankBranchName);
 
 
-            if (bankBranchs.Any())
+            if (BankBranchs.Any())
             {
                 response.Success = false;
-                response.Message = $"Update Failed '{request.BankBranchDto.BankBranchName}' already exists.";
+                // response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Creation Failed '{request.BankBranchDto.BankBranchName}' already exists.";
+
+
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

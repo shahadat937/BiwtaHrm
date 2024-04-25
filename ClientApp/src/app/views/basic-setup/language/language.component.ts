@@ -1,10 +1,5 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { LanguageService } from './../service/language.service';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,30 +8,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { ChildStatusService } from '../service/child-status.service';
 
 @Component({
-  selector: 'app-child-status',
-  templateUrl: './child-status.component.html',
-  styleUrl: './child-status.component.scss',
+  selector: 'app-language',
+  templateUrl: './language.component.html',
+  styleUrl: './language.component.scss'
 })
-export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
+export class LanguageComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
-  @ViewChild('ChildStatusForm', { static: true }) ChildStatusForm!: NgForm;
+  @ViewChild('LanguageForm', { static: true }) LanguageForm!: NgForm;
+  loading = false;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = [
-    'slNo',
-    'childStatusName',
-    'isActive',
-    'Action',
-  ];
+  displayedColumns: string[] = ['slNo', 'languageName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
   constructor(
-    public childStatusService: ChildStatusService,
+    public languageService: LanguageService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -45,16 +35,16 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
     //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
   }
   ngOnInit(): void {
-    this.getALlChildStatus();
+    this.getALlLanguages();
     this.handleRouteParams();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('childStatusId');
+      const id = params.get('languageId');
       if (id) {
         this.btnText = 'Update';
-        this.childStatusService.find(+id).subscribe((res) => {
-          this.ChildStatusForm?.form.patchValue(res);
+        this.languageService.find(+id).subscribe((res) => {
+          this.LanguageForm?.form.patchValue(res);
         });
       } else {
         this.btnText = 'Submit';
@@ -78,57 +68,62 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
 
   initaialBloodGroup(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.childStatusService.childStatus = {
-      childStatusId: 0,
-      childStatusName: '',
+    this.languageService.languages = {
+      languageId: 0,
+      languageName: '',
       menuPosition: 0,
       isActive: true,
     };
   }
   resetForm() {
     this.btnText = 'Submit';
-    if (this.ChildStatusForm?.form != null) {
-      this.ChildStatusForm.form.reset();
-      this.ChildStatusForm.form.patchValue({
-        childStatusId: 0,
-        childStatusName: '',
+    if (this.LanguageForm?.form != null) {
+      this.LanguageForm.form.reset();
+      this.LanguageForm.form.patchValue({
+        languageId: 0,
+      languageName: '',
         menuPosition: 0,
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/child-status']);
+    this.router.navigate(['/bascisetup/language']);
   }
 
-  getALlChildStatus() {
-    this.subscription = this.childStatusService.getAll().subscribe((item) => {
+  getALlLanguages() {
+    this.subscription = this.languageService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
   }
+ 
   onSubmit(form: NgForm): void {
-    this.childStatusService.cachedData = [];
-    const id = form.value.childStatusId;
+    this.loading = true;
+    this.languageService.cachedData = [];
+    const id = form.value.languageId;
     const action$ = id
-      ? this.childStatusService.update(id, form.value)
-      : this.childStatusService.submit(form.value);
-
+      ? this.languageService.update(id, form.value)
+      : this.languageService.submit(form.value);
+    
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getALlChildStatus();
+        this.getALlLanguages();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/child-status']);
+          this.router.navigate(['/bascisetup/language']);
         }
+    this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      
+    this.loading = false;
     });
   }
   delete(element: any) {
@@ -136,7 +131,7 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.childStatusService.delete(element.childStatusId).subscribe(
+          this.languageService.delete(element.languageId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {
@@ -151,7 +146,6 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
               this.toastr.error('Somethig Wrong ! ', ` `, {
                 positionClass: 'toast-top-right',
               });
-
               console.log(err);
             }
           );

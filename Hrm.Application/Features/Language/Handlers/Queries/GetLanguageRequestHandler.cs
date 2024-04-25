@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.Language;
 using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.Language.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
+using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace Hrm.Application.Features.Language.Handlers.Queries
         public async Task<object> Handle(GetLanguageRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.Language> Languages = _LanguageRepository.Where(x => true);
-
+            Languages = Languages.OrderByDescending(x => x.LanguageId);
             var LanguageDtos = _mapper.Map<List<LanguageDto>>(Languages);
 
             return LanguageDtos;

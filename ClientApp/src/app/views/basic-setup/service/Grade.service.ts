@@ -36,7 +36,7 @@ export class GradeService {
     } else {
       // If data is not cached, make a server call to fetch it
       return this.http
-        .get<Grade[]>(this.baseUrl + '/grade_cls_type_Vw/get-Grade_cls_type_Vw')
+        .get<Grade[]>(this.baseUrl + '/grade/get-grade')
         .pipe(
           map((data) => {
             this.cachedData = data; // Cache the data

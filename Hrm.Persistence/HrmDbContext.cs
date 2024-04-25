@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Persistence
 {
-    public class HrmDbContext:AuditableDbContext
+    public class HrmDbContext : AuditableDbContext
     {
         public HrmDbContext(DbContextOptions<HrmDbContext> options)
             : base(options)
@@ -18,13 +18,13 @@ namespace Hrm.Persistence
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
-        
-        modelBuilder.Entity<BloodGroup>(entity => {
+
+
+            modelBuilder.Entity<BloodGroup>(entity => {
 
                 entity.HasKey(e => e.BloodGroupId)
                     .HasName("PK_BloodGroupId");
-                
+
             });
             modelBuilder.Entity<EmployeeType>(entity => {
 
@@ -184,6 +184,13 @@ namespace Hrm.Persistence
                 .HasName("[[PK_Office]]");
             });
 
+            modelBuilder.Entity<OfficeAddress>(entity =>
+            {
+                entity.HasKey(e => e.OfficeAddressId)
+                .HasName("[[PK_OfficeAddress]]");
+
+            });
+
             modelBuilder.Entity<Competence>(entity =>
             {
                 entity.HasKey(e => e.CompetenceId)
@@ -277,8 +284,8 @@ namespace Hrm.Persistence
         public virtual DbSet<PromotionType> PromotionType { get; set; } = null!;
         public virtual DbSet<Thana> Thana { get; set; } = null!;
         public virtual DbSet<Upazila> Upazila { get; set; } = null!;
-        public virtual DbSet<Union> Union { get; set; }= null!;
-        public virtual DbSet<District> District { get; set; }=null!;
+        public virtual DbSet<Union> Union { get; set; } = null!;
+        public virtual DbSet<District> District { get; set; } = null!;
         public virtual DbSet<Result> Result { get; set; } = null!;
         public virtual DbSet<Ward> Ward { get; set; } = null!;
         public virtual DbSet<Branch> Branch { get; set; } = null!;
@@ -294,7 +301,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Grade> Grade { get; set; } = null!;
         public virtual DbSet<Group> Group { get; set; } = null!;
         public virtual DbSet<Punishment> Punishment { get; set; } = null!;
-        public virtual DbSet<Reward> Reward { get; set; }= null!;
+        public virtual DbSet<Reward> Reward { get; set; } = null!;
         public virtual DbSet<HolidayType> HolidayType { get; set; } = null!;
         public virtual DbSet<Weekend> Weekend { get; set; } = null!;
         public virtual DbSet<Overall_EV_Promotion> Overall_EV_Promotion { get; set; } = null!;
@@ -308,6 +315,7 @@ namespace Hrm.Persistence
         public virtual DbSet<HairColor> HairColor { get; set; } = null!;
         public virtual DbSet<TrainingName> TrainingName { get; set; } = null!;
         public virtual DbSet<Office> Office { get; set; } = null!;
+        public virtual DbSet<OfficeAddress> OfficeAddress { get; set; } = null!;
         public virtual DbSet<Competence> Competence { get; set; } = null!;
         public virtual DbSet<Language> Language { get; set; } = null!;
         public virtual DbSet<BankAccountType> BankAccountType { get; set; } = null!;

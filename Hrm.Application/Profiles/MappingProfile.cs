@@ -52,6 +52,7 @@ using Hrm.Application.DTOs.BankAccountType;
 using Hrm.Application.DTOs.BankBranch;
 using Hrm.Application.DTOs.Bank;
 using Hrm.Application.DTOs.Institute;
+
 using Hrm.Application.DTOs.Relation;
 using Hrm.Application.DTOs.Occupation;
 using Hrm.Application.DTOs.HairColor;
@@ -59,9 +60,11 @@ using Hrm.Application.DTOs.EyesColor;
 using Hrm.Application.DTOs.Pool;
 using Hrm.Application.DTOs.SubDepartment;
 using Hrm.Application.DTOs.UserRole;
+using Hrm.Application.DTOs.OfficeAddress;
 
 
 
+ 
 namespace Hrm.Application.Profiles
 {
     public class MappingProfile : Profile
@@ -178,13 +181,23 @@ namespace Hrm.Application.Profiles
 
             CreateMap<SubBranch, SubBranchDto>().ReverseMap();
             CreateMap<SubBranch, CreateSubBranchDto>().ReverseMap();
+ 
 
+            CreateMap<Relation, RelationDto>().ReverseMap();
+            CreateMap<Relation, CreateRelationDto>().ReverseMap();
+
+            CreateMap<Occupation, OccupationDto>().ReverseMap();
+            CreateMap<Occupation, CreateOccupationDto>().ReverseMap();
+ 
             
             CreateMap<TrainingName, TrainingNameDto>().ReverseMap();
             CreateMap<TrainingName, CreateTrainingNameDto>().ReverseMap();
              
             CreateMap<Office, OfficeDto>().ReverseMap();
             CreateMap<Office, CreateOfficeDto>().ReverseMap();
+            
+            CreateMap<OfficeAddress, OfficeAddressDto>().ReverseMap();
+            CreateMap<OfficeAddress, CreateOfficeAddressDto>().ReverseMap();
             
             CreateMap<Competence, CompetenceDto>().ReverseMap();
             CreateMap<Competence, CreateCompetenceDto>().ReverseMap();
@@ -203,7 +216,7 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Institute, InstituteDto>().ReverseMap();
             CreateMap<Institute, CreateInstituteDto>().ReverseMap();
-
+ 
 
             CreateMap<Relation, RelationDto>().ReverseMap();
             CreateMap<Relation, CreateRelationDto>().ReverseMap();
@@ -217,6 +230,7 @@ namespace Hrm.Application.Profiles
             CreateMap<EyesColor, EyesColorDto>().ReverseMap();
             CreateMap<EyesColor, CreateEyesColorDto>().ReverseMap();
 
+ 
             CreateMap<Pool, PoolDto>().ReverseMap();
             CreateMap<Pool, CreatePoolDto>().ReverseMap();
 

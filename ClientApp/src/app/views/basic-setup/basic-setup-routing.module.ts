@@ -43,6 +43,13 @@ import { UserRoleComponent } from './user-role/user-role.component';
 import { BankComponent } from './bank/bank.component';
 import { BankBranchComponent } from './bank-branch/bank-branch.component';
 
+import { TrainingNameComponent } from './training-name/training-name.component';
+import { InstituteComponent } from './institute/institute.component';
+
+import { OfficeComponent } from './office/office.component';
+import { OfficeAddressComponent } from './office-address/office-address.component';
+import { CompetenceComponent } from './competence/competence.component';
+
 const routes: Routes = [
 
   {
@@ -307,6 +314,14 @@ const routes: Routes = [
   { path: 'update-relation/:relationId',
     component: RelationComponent,
   },
+
+  {
+    path: 'trainingName',
+    component: TrainingNameComponent,
+  },
+  { path: 'update-trainingName/:trainingNameId',
+    component: TrainingNameComponent,
+  },
   {
     path: 'subDepartment',
     component: SubDepartmentComponent,
@@ -328,7 +343,34 @@ const routes: Routes = [
   { path: 'update-userRole/:userRoleId',
     component: UserRoleComponent,
   },
-  
+  {
+    path: 'institute',
+    component: InstituteComponent,
+  },
+  { path: 'update-institute/:instituteId',
+    component: InstituteComponent,
+  },
+  {
+    path: 'office',
+    component: OfficeComponent,
+  },
+  { path: 'update-office/:officeId',
+    component: OfficeComponent,
+  },
+  {
+    path: 'officeAddress',
+    component: OfficeAddressComponent,
+  },
+  { path: 'update-officeAddress/:officeAddressId',
+    component: OfficeAddressComponent,
+  },
+  {
+    path: 'competence',
+    component: CompetenceComponent,
+  },
+  { path: 'update-competence/:competenceId',
+    component: CompetenceComponent,
+},
   {
     path: 'bank',
     component: BankComponent,

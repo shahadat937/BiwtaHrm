@@ -21,6 +21,13 @@ export class WardService {
     );
   }
 
+  
+  getward() {
+    return this.http.get<SelectedModel[]>(
+      this.baseUrl + '/ward/get-selectedward'
+    );
+  }
+
   find(id: number) {
     return this.http.get<Ward>(this.baseUrl + '/ward/get-wardbyid/' + id);
   }

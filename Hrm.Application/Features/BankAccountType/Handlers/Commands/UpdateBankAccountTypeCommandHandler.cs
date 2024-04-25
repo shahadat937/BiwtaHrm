@@ -18,14 +18,14 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
     public class UpdateBankAccountTypeCommandHandler : IRequestHandler<UpdateBankAccountTypeCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.BankAccountType> _BankAccountTypeRepository;
+        private readonly IHrmRepository<Hrm.Domain.BankAccountType> _bankAccountTypeRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public UpdateBankAccountTypeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.BankAccountType> BankAccountTypeRepository)
+        public UpdateBankAccountTypeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.BankAccountType> bankAccountTypeRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _BankAccountTypeRepository = BankAccountTypeRepository;
+            _bankAccountTypeRepository = bankAccountTypeRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateBankAccountTypeCommand request, CancellationToken cancellationToken)
@@ -48,15 +48,15 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
                 throw new NotFoundException(nameof(BankAccountType), request.BankAccountTypeDto.BankAccountTypeId);
             }
 
-            var BankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.ToLower();
+            var bankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.ToLower();
 
-            IQueryable<Hrm.Domain.BankAccountType> BankAccountTypes = _BankAccountTypeRepository.Where(x => x.BankAccountTypeName.ToLower() == BankAccountTypeName);
+            IQueryable<Hrm.Domain.BankAccountType> bankAccountTypes = _bankAccountTypeRepository.Where(x => x.BankAccountTypeName.ToLower() == bankAccountTypeName);
 
 
-            if (BankAccountTypes.Any())
+            if (bankAccountTypes.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.BankAccountTypeDto.BankAccountTypeName}' already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

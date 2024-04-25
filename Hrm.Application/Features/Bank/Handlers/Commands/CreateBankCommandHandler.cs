@@ -24,7 +24,7 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
             _BankRepository = BankRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _bankRepository = bankRepository;
+            _BankRepository = BankRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(CreateBankCommand request, CancellationToken cancellationToken)

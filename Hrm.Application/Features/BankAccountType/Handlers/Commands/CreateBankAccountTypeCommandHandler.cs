@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
-using Hrm.Application.DTOs.BankAccountType.Validators;
 using Hrm.Application.Features.BankAccountType.Requests.Commands;
 using Hrm.Application.Responses;
 using MediatR;
-using Hrm.Domain;
-using Microsoft.EntityFrameworkCore;
 using Hrm.Application.DTOs.BankAccountTypeBankAccountType.Validators;
 
 namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
@@ -24,7 +21,7 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
             _BankAccountTypeRepository = BankAccountTypeRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _bankAccountTypeRepository = bankAccountTypeRepository;
+  
         }
 
         public async Task<BaseCommandResponse> Handle(CreateBankAccountTypeCommand request, CancellationToken cancellationToken)
@@ -60,16 +57,10 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
                 else
                 {
                     var BankAccountType = _mapper.Map<Hrm.Domain.BankAccountType>(request.BankAccountTypeDto);
-
                     BankAccountType = await _unitOfWork.Repository<Hrm.Domain.BankAccountType>().Add(BankAccountType);
                     await _unitOfWork.Save();
-
                     response.Success = true;
                     response.Message = "Creation Successfull";
-
-
-                    response.Success = true;
-                    response.Message = "Creation Successful";
                     response.Id = BankAccountType.BankAccountTypeId;
                 }
             }

@@ -28,7 +28,7 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _bankAccountTypeRepository = bankAccountTypeRepository;
+            _bankAccountTypeRepository = BankAccountTypeRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateBankAccountTypeCommand request, CancellationToken cancellationToken)
@@ -47,7 +47,7 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
 
             //var BankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.ToLower();
             var BankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.Trim().ToLower().Replace(" ", string.Empty);
-            IQueryable<Hrm.Domain.BankAccountType> BankAccountTypes = _BankAccountTypeRepository.Where(x => x.BankAccountTypeName.ToLower() == BankAccountTypeName);
+            IQueryable<Hrm.Domain.BankAccountType> BankAccountTypes = _bankAccountTypeRepository.Where(x => x.BankAccountTypeName.ToLower() == BankAccountTypeName);
 
 
 

@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.Language.Handlers.Commands
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _languageRepository = languageRepository;
+            _languageRepository = LanguageRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateLanguageCommand request, CancellationToken cancellationToken)
@@ -44,7 +44,7 @@ namespace Hrm.Application.Features.Language.Handlers.Commands
 
             //var LanguageName = request.LanguageDto.LanguageName.ToLower();
             var LanguageName = request.LanguageDto.LanguageName.Trim().ToLower().Replace(" ", string.Empty);
-            IQueryable<Hrm.Domain.Language> Languages = _LanguageRepository.Where(x => x.LanguageName.ToLower() == LanguageName);
+            IQueryable<Hrm.Domain.Language> Languages = _languageRepository.Where(x => x.LanguageName.ToLower() == LanguageName);
 
 
 

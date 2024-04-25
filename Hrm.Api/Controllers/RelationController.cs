@@ -1,13 +1,9 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Relation;
-using Hrm.Application.DTOs.Relation;
-using Hrm.Application.DTOs.Relation; 
 using Hrm.Application.Features.Relation.Requests.Commands;
 using Hrm.Application.Features.Relation.Requests.Queries;
 using Hrm.Application.Features.Relations.Requests.Queries;
-using Hrm.Application.Responses;
 using Hrm.Shared.Models;
-using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
 

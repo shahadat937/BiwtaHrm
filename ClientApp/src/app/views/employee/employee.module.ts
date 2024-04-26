@@ -9,6 +9,7 @@ import {
   FormModule,
   GridModule,
   ListGroupModule,
+  ModalModule,
   ProgressModule,
   SharedModule,
   SpinnerModule,
@@ -24,6 +25,18 @@ import { ViewUsersComponent } from './add-employee/view-users/view-users.compone
 import { ViewInformationListComponent } from './add-employee/view-information-list/view-information-list.component';
 import { BasicInformationComponent } from './add-employee/employee-informations/basic-information/basic-information.component';
 import { PersonalInformationComponent } from './add-employee/employee-informations/personal-information/personal-information.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 @NgModule({
@@ -53,6 +66,21 @@ import { PersonalInformationComponent } from './add-employee/employee-informatio
     SharedCustomModule,
     ProgressModule,
     SpinnerModule,
+    ModalModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSnackBarModule,
+    MatPaginatorModule,
+    MatTableModule,
+    CardModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatListModule,
+    MatInputModule,
+    MatBottomSheetModule,
+    MatDialogModule
   ]
 })
 export class EmployeeModule { }

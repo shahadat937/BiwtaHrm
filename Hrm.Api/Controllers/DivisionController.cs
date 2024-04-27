@@ -10,6 +10,7 @@ using Hrm.Application.Features.Division.Requests.Queries;
 using Hrm.Application.Responses;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Domain;
 namespace Hrm.Api.Controllers
 {
 
@@ -76,7 +77,19 @@ namespace Hrm.Api.Controllers
             return Ok(Division);
 
         }
+        [HttpGet]
+        [Route("get-divisionByCountryId")]
+        public async Task<ActionResult<List<DivisionDto>>> GetByCountryId(int countryId)
+        {
+            //var Division = await _mediator.Send(new GetDivisionByCountryIdRequest { CountryId = id });
+            //return Ok(Division);
+            var DivisionsByCountryId = await _mediator.Send(new GetDivisionByCountryIdRequest
+            {
+                CountryId = countryId
+            });
+            return Ok(DivisionsByCountryId);
 
+        }
         [HttpGet]
         [Route("get-selecteddivision")]
         public async Task<ActionResult<List<SelectedModel>>> GetSelectedDivision()

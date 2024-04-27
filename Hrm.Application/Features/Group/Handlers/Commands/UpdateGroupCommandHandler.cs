@@ -2,8 +2,10 @@
 using FluentValidation.Results;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Group.Validators;
+using Hrm.Application.DTOs.Group.Validators;
 using Hrm.Application.DTOs.Group.ValidatorsGroup;
 using Hrm.Application.Exceptions;
+using Hrm.Application.Features.Group.Requests.Commands;
 using Hrm.Application.Features.Group.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
@@ -17,44 +19,71 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Group.Handlers.Commands
 {
-    public class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCommand, Unit>
+    public class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCommand, BaseCommandResponse>
     {
 
+        private readonly IHrmRepository<Hrm.Domain.Group> _GroupRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateGroupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateGroupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Group> GroupRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _GroupRepository = GroupRepository;
         }
 
-        public async Task<Unit> Handle(UpdateGroupCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateGroupCommand request, CancellationToken cancellationToken)
         {
-            var respose = new BaseCommandResponse();
+            var response = new BaseCommandResponse();
             var validator = new UpdateGroupDtoValidator();
             var validationResult = await validator.ValidateAsync(request.GroupDto);
 
             if (validationResult.IsValid == false)
             {
-                respose.Success = false;
-                respose.Message = "Creation Failed";
-                respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                response.Success = false;
+                response.Message = "Creation Failed";
+                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var Group = await _unitOfWork.Repository<Hrm.Domain.Group>().Get(request.GroupDto.GroupId);
+            //var GroupName = request.GroupDto.GroupName.ToLower();
+            var GroupName = request.GroupDto.GroupName.Trim().ToLower().Replace(" ", string.Empty);
+            IQueryable<Hrm.Domain.Group> Groups = _GroupRepository.Where(x => x.GroupName.ToLower() == GroupName);
 
-            if (Group is null)
+
+
+            if (Groups.Any())
             {
-                throw new NotFoundException(nameof(Group), request.GroupDto.GroupId);
+                response.Success = false;
+                response.Message = $"Update Failed '{request.GroupDto.GroupName}' already exists.";
+
+                //response.Message = "Creation Failed Name already exists.";
+                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+
             }
 
-            _mapper.Map(request.GroupDto, Group);
+            else
+            {
 
-            await _unitOfWork.Repository<Hrm.Domain.Group>().Update(Group);
-            await _unitOfWork.Save();
+                var Group = await _unitOfWork.Repository<Hrm.Domain.Group>().Get(request.GroupDto.GroupId);
 
-            return Unit.Value;
+                if (Group is null)
+                {
+                    throw new NotFoundException(nameof(Group), request.GroupDto.GroupId);
+                }
+
+                _mapper.Map(request.GroupDto, Group);
+
+                await _unitOfWork.Repository<Hrm.Domain.Group>().Update(Group);
+                await _unitOfWork.Save();
+
+                response.Success = true;
+                response.Message = "Update Successfull";
+                response.Id = Group.GroupId;
+
+            }
+
+            return response;
         }
     }
 }

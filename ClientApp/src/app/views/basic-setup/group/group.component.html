@@ -10,21 +10,11 @@
       cRow
       class="needs-validation"
     >
-      <c-col [md]="6">
-        <label cLabel for="validationCustom01"
-          >Subject<span class="text-danger">*</span></label
-        >
+      <!-- <c-col [md]="6">
+        <label cLabel for="validationCustom01">Subject<span class="text-danger">*</span></label>
         <div class="input-wrapper">
-          <select
-            [(ngModel)]="groupService.groups.subjectId"
-            name="subjectId"
-            #subjectId="ngModel"
-            cFormControl
-            id="validationCustom01"
-            required
-            aria-label="Default select example"
-            cSelect
-          >
+          <select [(ngModel)]="groupService.groups.subjectId" name="subjectId" #subjectId="ngModel" cFormControl
+            id="validationCustom01" required aria-label="Default select example" cSelect>
             <option [ngValue]="0">Select Subject</option>
             @for(subject of subjects; track subject.id;let index=$index) {
             <option [value]="subject.id">
@@ -32,12 +22,12 @@
             </option>
             }
           </select>
-
+      
           @if(!subjectId.valid && subjectId.touched){
           <div class="text-left text-danger">Grade is required</div>
           }
         </div>
-      </c-col>
+      </c-col> -->
 
       <c-col [md]="6">
         <input

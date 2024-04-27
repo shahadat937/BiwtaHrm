@@ -18,7 +18,7 @@ export class BoardService {
   }
   find(id: number) {
     return this.http.get<Board>(
-      this.baseUrl + '/Bank/get-bankbyid/' + id
+      this.baseUrl + '/board/get-Boardbyid/' + id
     );
   }
 

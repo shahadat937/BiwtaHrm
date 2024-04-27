@@ -1,4 +1,5 @@
 ﻿using Hrm.Application.DTOs.Group;
+using Hrm.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Group.Requests.Commands
 {
-    public class UpdateGroupCommand : IRequest<Unit>
+    public class UpdateGroupCommand : IRequest<BaseCommandResponse>
     {
         public GroupDto GroupDto { get; set; }
     }

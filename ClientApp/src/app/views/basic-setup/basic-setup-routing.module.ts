@@ -49,6 +49,7 @@ import { OfficeAddressComponent } from './office-address/office-address.componen
 import { CompetenceComponent } from './competence/competence.component';
 import { ExamTypeComponent } from './exam-type/exam-type.component';
 import { BoardComponent } from './board/board.component';
+import { group } from '@angular/animations';
 
 
 const routes: Routes = [
@@ -414,6 +415,13 @@ const routes: Routes = [
   },
   { path: 'update-board/:boardId',
     component: BoardComponent,
+  },
+  { 
+    path: 'group',
+    component: GroupComponent,
+  },
+  { path: 'update-group/:groupId',
+    component: GroupComponent,
   }
 ];
 

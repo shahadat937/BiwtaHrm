@@ -28,7 +28,7 @@ namespace Hrm.Application.Features.Subject.Handlers.Queries
         public async Task<object> Handle(GetSubjectRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.Subject> Subject = _SubjectRepository.Where(x => true);
-
+            Subject = Subject.OrderByDescending(x => x.SubjectId);
             var SubjectDtos = _mapper.Map<List<SubjectDto>>(Subject);
 
             return SubjectDtos;

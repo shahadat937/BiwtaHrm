@@ -62,7 +62,7 @@ namespace Hrm.Api.Controllers
         [Route("update-bank/{id}")]
         public async Task<ActionResult> Put([FromBody] BankDto Bank)
         {
-            var command = new UpdateBankCommand { BankDto = Bank };
+            var command = new UpdateExamTypeCommand { BankDto = Bank };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

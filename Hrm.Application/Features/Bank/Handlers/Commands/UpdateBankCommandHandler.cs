@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Bank.Handlers.Commands
 {
-    public class UpdateBankCommandHandler : IRequestHandler<UpdateBankCommand, BaseCommandResponse>
+    public class UpdateBankCommandHandler : IRequestHandler<UpdateExamTypeCommand, BaseCommandResponse>
     {
 
         private readonly IHrmRepository<Hrm.Domain.Bank> _bankRepository;
@@ -32,7 +32,7 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
             _bankRepository = BankRepository;
         }
 
-        public async Task<BaseCommandResponse> Handle(UpdateBankCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateExamTypeCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
             var validator = new UpdateBankDtoValidator();

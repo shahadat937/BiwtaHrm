@@ -28,6 +28,7 @@ namespace Hrm.Application.Features.Group.Handlers.Queries
         public async Task<object> Handle(GetGroupRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.Group> Group = _GroupRepository.Where(x => true);
+            Group = Group.OrderByDescending(x => x.GroupId);
 
             var GroupDtos = await Task.Run(() => _mapper.Map<List<GroupDto>>(Group));
 

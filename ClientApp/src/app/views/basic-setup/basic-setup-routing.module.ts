@@ -47,6 +47,9 @@ import { InstituteComponent } from './institute/institute.component';
 import { OfficeComponent } from './office/office.component';
 import { OfficeAddressComponent } from './office-address/office-address.component';
 import { CompetenceComponent } from './competence/competence.component';
+import { ExamTypeComponent } from './exam-type/exam-type.component';
+import { BoardComponent } from './board/board.component';
+import { group } from '@angular/animations';
 
 
 const routes: Routes = [
@@ -391,12 +394,34 @@ const routes: Routes = [
   { path: 'update-bankAccountType/:bankAccountTypeId',
     component: BankAccountTypeComponent,
   },
-  {
+  { 
     path: 'language',
     component: LanguageComponent,
   },
   { path: 'update-language/:languageId',
     component: LanguageComponent,
+  },
+  { 
+    path: 'examType',
+    component: ExamTypeComponent,
+  },
+  { path: 'update-examType/:examTypeId',
+    component: ExamTypeComponent,
+  }
+  ,
+  { 
+    path: 'board',
+    component: BoardComponent,
+  },
+  { path: 'update-board/:boardId',
+    component: BoardComponent,
+  },
+  { 
+    path: 'group',
+    component: GroupComponent,
+  },
+  { path: 'update-group/:groupId',
+    component: GroupComponent,
   }
 ];
 

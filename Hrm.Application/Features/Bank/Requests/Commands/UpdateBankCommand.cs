@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Bank.Requests.Commands
 {
-    public class UpdateBankCommand : IRequest<BaseCommandResponse>
+    public class UpdateExamTypeCommand : IRequest<BaseCommandResponse>
     {
         public BankDto BankDto { get; set; }
     }

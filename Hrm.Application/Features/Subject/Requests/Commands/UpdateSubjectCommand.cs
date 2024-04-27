@@ -1,4 +1,5 @@
 ﻿using Hrm.Application.DTOs.Subject;
+using Hrm.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Subject.Requests.Commands
 {
-    public class UpdateSubjectCommand : IRequest<Unit>
+    public class UpdateSubjectCommand : IRequest<BaseCommandResponse>
     {
         public SubjectDto SubjectDto { get; set; }
     }

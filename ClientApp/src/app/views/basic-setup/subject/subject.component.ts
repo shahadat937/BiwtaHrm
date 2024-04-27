@@ -54,6 +54,7 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
         this.btnText = 'Submit';
       }
     });
+
   }
   ngOnInit(): void {
     this.getALlSubjects();
@@ -108,6 +109,7 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    this.router.navigate(['/bascisetup/subject']);
   }
 
   getALlSubjects() {
@@ -118,52 +120,7 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  // onSubmit(form: NgForm) {
-  //   const id = this.SubjectForm.form.get('subjectId')?.value;
-  //   if (id) {
-  //     this.subjectService.update(+id, this.SubjectForm.value).subscribe(
-  //       (response: any) => {
-  //         //console.log(response);
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', 'Update', {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlSubjects();
-  //           this.resetForm();
-  //           this.router.navigate(['/bascisetup/subject']);
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   } else {
-  //     this.subscription = this.subjectService.submit(form?.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlSubjects();
-  //           this.resetForm();
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         this.toastr.error('Somethig Wrong ! ', ` `, {
-  //           positionClass: 'toast-top-right',})
-  //         console.log(err);
-  //       }
-  //     );
-  //   }
-  // }
+ 
   onSubmit(form: NgForm): void {
     this.subjectService.cachedData = [];
     const id = form.value.subjectId;

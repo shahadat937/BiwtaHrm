@@ -584,15 +584,15 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Exam Type',
-        url: '/base/accordion'
+        url: '/bascisetup/examType'
       },
       {
         name: 'Board',
-        url: '/base/breadcrumbs'
+        url: '/bascisetup/board'
       },
       {
         name: 'Group',
-        url: '/base/cards'
+        url: '/bascisetup/group'
       },
       {
         name: 'Result',
@@ -601,12 +601,7 @@ export const navItems: INavData[] = [
       {
         name: 'Subject',
         url: '/bascisetup/subject'
-      },
-      {
-        name: 'Subject Group',
-        url: '/bascisetup/group'
       }
-
     ]
   },
   {

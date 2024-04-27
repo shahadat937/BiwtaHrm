@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Result.Validators;
+using Hrm.Application.DTOs.MaritalStatus.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.Result.Requests.Commands;
+using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Hrm.Application.Features.Result.Handlers.Commands
         private readonly IHrmRepository<Hrm.Domain.Result> _ResultRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+
         public UpdateResultCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Result> ResultRepository)
         {
             _unitOfWork = unitOfWork;
@@ -40,16 +42,10 @@ namespace Hrm.Application.Features.Result.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var Result = await _unitOfWork.Repository<Hrm.Domain.Result>().Get(request.ResultDto.ResultId);
-
-            if (Result is null)
-            {
-                throw new NotFoundException(nameof(Result), request.ResultDto.ResultId);
-            }
-
             //var ResultName = request.ResultDto.ResultName.ToLower();
             var ResultName = request.ResultDto.ResultName.Trim().ToLower().Replace(" ", string.Empty);
             IQueryable<Hrm.Domain.Result> Results = _ResultRepository.Where(x => x.ResultName.ToLower() == ResultName);
+
 
 
             if (Results.Any())
@@ -61,8 +57,16 @@ namespace Hrm.Application.Features.Result.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }
+
             else
             {
+
+                var Result = await _unitOfWork.Repository<Hrm.Domain.Result>().Get(request.ResultDto.ResultId);
+
+                if (Result is null)
+                {
+                    throw new NotFoundException(nameof(Result), request.ResultDto.ResultId);
+                }
 
                 _mapper.Map(request.ResultDto, Result);
 
@@ -70,19 +74,12 @@ namespace Hrm.Application.Features.Result.Handlers.Commands
                 await _unitOfWork.Save();
 
                 response.Success = true;
-                response.Message = "Update Successful";
+                response.Message = "Update Successfull";
                 response.Id = Result.ResultId;
 
             }
+
             return response;
-        }
-        private bool ResultNameExists(CreateResultCommand request)
-        {
-            var ResultName = request.ResultDto.ResultName.Trim().ToLower().Replace(" ", string.Empty);
-
-            IQueryable<Hrm.Domain.Result> Results = _ResultRepository.Where(x => x.ResultName.Trim().ToLower().Replace(" ", string.Empty) == ResultName);
-
-            return Results.Any();
         }
     }
 }

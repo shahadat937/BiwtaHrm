@@ -33,7 +33,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   matSort!: MatSort;
   userBtnText = " Add User";
   buttonIcon : string = '';
-  showUserForm = false;
+  visible = false;
 
   constructor(
     public userService: UserService,
@@ -78,19 +78,20 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.dataSource.filter = filterValue;
   }
 
-  UserFormView(){
+  UserFormView() : void {
     if(this.userBtnText == " Add User"){
-      this.showUserForm = true;
       this.userBtnText = " Hide Form";
       this.buttonIcon = "cilTrash";
-      console.log(this.buttonIcon)
     }
     else {
-      this.showUserForm = false;
       this.userBtnText = " Add User";
       this.buttonIcon = "cilPencil";
-      console.log(this.buttonIcon)
     }
+    this.visible = !this.visible;
+  }
+
+  toggleCollapse(): void {
+    this.visible = !this.visible;
   }
 
   
@@ -170,6 +171,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         }
         
       this.loading = false;
+      this.resetForm();
       });
   }
 

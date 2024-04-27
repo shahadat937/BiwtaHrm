@@ -5,6 +5,7 @@ import {
   ButtonGroupModule,
   ButtonModule,
   CardModule,
+  CollapseDirective,
   DropdownModule,
   FormModule,
   GridModule,
@@ -45,6 +46,7 @@ import { UserService } from './service/user.service';
     SharedCustomModule,
     ProgressModule,
     SpinnerModule,
+    CollapseDirective,
   ],
   providers: [ 
     ToastrService,

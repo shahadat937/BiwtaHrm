@@ -3,7 +3,7 @@
       <div>User</div>
       <div><button cButton color="primary" shape="rounded-pill" (click)="UserFormView()"><svg cIcon name={{buttonIcon}}></svg> {{userBtnText}}</button></div>
     </c-card-header>
-    <c-card-body [hidden]="showUserForm == false">
+    <c-card-body [visible]="visible" cCollapse  class="shadow">
       <form
         #UserForm="ngForm"
         (submit)="onSubmit(UserForm)"

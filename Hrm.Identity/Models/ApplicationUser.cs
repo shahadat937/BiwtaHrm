@@ -14,8 +14,11 @@ namespace Hrm.Identity.Models
         public string? PNo { get; set; }
         public string? BranchId { get; set; }
         public bool IsActive { get; set; }
-        public string? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
+        public string? CreatedBy { get; set; } = null!;
+        public DateTime? DateCreated { get; set; } = DateTime.Now;
+
+        public string? LastModifiedBy { get; set; }
+        public DateTime? LastModifiedDate { get; set; } = DateTime.Now;
         public string? InActiveBy { get; set; }
         public DateTime? InActiveDate { get; set; }
     }

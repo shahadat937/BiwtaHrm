@@ -22,8 +22,8 @@
               <c-col [md]="4">
                 <input
                   type="hidden"
-                  [(ngModel)]="userService.users.userId"
-                  name="userId"
+                  [(ngModel)]="userService.users.id"
+                  name="id"
                 />
                 <label cLabel for="validationCustom01"
                   >User Name<span class="text-danger">*</span></label
@@ -286,9 +286,10 @@
             <td mat-cell *matCellDef="let element">
               <button
                 class="custom-button"
+                (click)="toggleCollapse()"
                 [routerLink]="[
-                  '/bascisetup/update-bloodgroup',
-                  element.bloodGroupId
+                  '/usermanagement/update-user',
+                  element.id
                 ]"
               >
                 <svg cIcon name="cilPencil"></svg>

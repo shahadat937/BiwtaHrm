@@ -32,10 +32,10 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-  userBtnText = " Add User";
-  userHeaderText = "User List";
+  userBtnText : string | undefined;
+  userHeaderText : string | undefined;
   buttonIcon : string = '';
-  visible = false;
+  visible : boolean | undefined;
 
   constructor(
     public userService: UserService,
@@ -53,14 +53,21 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('bloodGroupId');
+      const id = params.get('id');
       if (id) {
+        this.visible = true;
         this.btnText = 'Update';
+        this.userHeaderText = "Update User";
+        this.userBtnText = " Hide Form";
+        this.buttonIcon = "cilTrash";
         // this.bloodGroupService.find(+id).subscribe((res) => {
         //   this.BloodGroupForm?.form.patchValue(res);
         // });
       } else {
         this.btnText = 'Submit';
+        this.visible = false;
+        this.userHeaderText = "User List"
+        this.userBtnText = " Add User";
       }
     });
   }
@@ -82,28 +89,32 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   UserFormView() : void {
     this.resetForm();
+    this.router.navigate(['/usermanagement/user']);
     if(this.userBtnText == " Add User"){
       this.userBtnText = " Hide Form";
       this.buttonIcon = "cilTrash";
       this.userHeaderText = "Add New User";
+      this.visible = true;
     }
     else {
       this.userBtnText = " Add User";
       this.buttonIcon = "cilPencil";
       this.userHeaderText = "User List";
+      this.visible = false;
     }
-    this.visible = !this.visible;
   }
 
-  toggleCollapse(): void {
-    this.visible = !this.visible;
+  toggleCollapse(){
+    this.handleRouteParams();
+    this.userHeaderText = "Update User";
+    this.visible = true;
   }
 
   
   initaialUser(form?: NgForm) {
     if (form != null) form.resetForm();
     this.userService.users = {
-      userId: 0,
+      id: '',
       userName: '',
       password: '',
       rePassword: '',
@@ -118,24 +129,24 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   resetForm(){
-    this.btnText = 'Submit';
+    // this.btnText = 'Submit';
     if (this.UserForm?.form != null) {
       this.UserForm.form.reset();
       this.UserForm.form.patchValue({
-        userId: 0,
+        id: '',
         userName: '',
         password: '',
         rePassword: '',
         firstName: '',
         lastName: '',
         email: '',
-        phoneNumber : 0,
+        phoneNumber : '',
         pNo : '',
         menuPosition: 0,
         isActive : true,
       });
     }
-    this.router.navigate(['/usermanagement/user']);
+    // this.router.navigate(['/usermanagement/user']);
   }
 
   getAllUsers(){

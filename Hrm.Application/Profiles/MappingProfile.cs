@@ -62,6 +62,7 @@ using Hrm.Application.DTOs.SubDepartment;
 using Hrm.Application.DTOs.UserRole;
 using Hrm.Application.DTOs.OfficeAddress;
 using Hrm.Application.DTOs.ExamType;
+using Hrm.Application.DTOs.Board;
 
 
 
@@ -244,6 +245,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<ExamType, ExamTypeDto>().ReverseMap();
             CreateMap<ExamType, CreateExamTypeDto>().ReverseMap();
+
+            CreateMap<Board, BoardDto>().ReverseMap();
+            CreateMap<Board, CreateBoardDto>().ReverseMap();
 
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();

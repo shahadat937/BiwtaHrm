@@ -273,6 +273,11 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.ExamTypeId)
                 .HasName("[ExamTypeId]");
             });
+            modelBuilder.Entity<Board>(entity =>
+            {
+                entity.HasKey(e => e.BoardId)
+                .HasName("[BoardId]");
+            });
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
 
@@ -330,6 +335,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Pool> Pool { get; set; } = null!;
         public virtual DbSet<SubDepartment> SubDepartment { get; set; } = null!;
         public virtual DbSet<ExamType> ExamType { get; set; } = null!;
+        public virtual DbSet<Board> Board { get; set; } = null!;
 
 
     }

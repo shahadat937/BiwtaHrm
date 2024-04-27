@@ -48,6 +48,7 @@ import { OfficeComponent } from './office/office.component';
 import { OfficeAddressComponent } from './office-address/office-address.component';
 import { CompetenceComponent } from './competence/competence.component';
 import { ExamTypeComponent } from './exam-type/exam-type.component';
+import { BoardComponent } from './board/board.component';
 
 
 const routes: Routes = [
@@ -405,6 +406,14 @@ const routes: Routes = [
   },
   { path: 'update-examType/:examTypeId',
     component: ExamTypeComponent,
+  }
+  ,
+  { 
+    path: 'board',
+    component: BoardComponent,
+  },
+  { path: 'update-board/:boardId',
+    component: BoardComponent,
   }
 ];
 

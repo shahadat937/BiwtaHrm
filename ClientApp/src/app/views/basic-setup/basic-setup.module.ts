@@ -85,6 +85,10 @@ import { OfficeAddressComponent } from './office-address/office-address.componen
 import { OfficeComponent } from './office/office.component';
 import { BankBranchService } from './service/bank-branch.service';
 import { ExamTypeComponent } from './exam-type/exam-type.component';
+import { ExamTypeService } from './service/exam-type.service';
+import { BankService } from './service/bank.service';
+import { BoardComponent } from './board/board.component';
+import { BoardService } from './service/board.service';
 
 @NgModule({
   declarations: [
@@ -139,6 +143,7 @@ import { ExamTypeComponent } from './exam-type/exam-type.component';
     BankComponent,
     BankBranchComponent,
     ExamTypeComponent,
+    BoardComponent,
   ],
   imports: [
     CommonModule,
@@ -161,9 +166,13 @@ import { ExamTypeComponent } from './exam-type/exam-type.component';
     SpinnerModule,
   ],
   providers: [
+    BoardService,
+    BankService,
+    ExamTypeService,
+    BankAccountTypeService,
+    BankBranchService,
     LanguageService,
     BankAccountTypeService,
-
     BankBranchService,
     PoolService,
     SubDepartmentService,

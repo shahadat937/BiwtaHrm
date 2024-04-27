@@ -326,6 +326,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Pool> Pool { get; set; } = null!;
         public virtual DbSet<SubDepartment> SubDepartment { get; set; } = null!;
 
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; } = null!;
 
 
     }

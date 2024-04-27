@@ -1,1 +1,21 @@
-<p>basic-information works!</p>
+<h1 mat-dialog-title class="text-center text-light" style="background-color: #3f51b5">Create New Skill</h1>
+<mat-dialog-content class="mat-typography">
+    <form>
+        <div class="row mt-3">
+            <label class="col-4 col-form-label">Skill Name</label>
+            <div class="col-8">
+                <input type="text" class="form-control" name="categoryName" autocomplete="off" />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <label class="col-4 col-form-label">Skill Description</label>
+            <div class="col-8">
+                <input type="text" class="form-control" name="categoryUrlHandel" autocomplete="off" />
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-raised-button mat-dialog-close color="warn">Cancle</button>
+    <button mat-raised-button color="primary">Save</button>
+</mat-dialog-actions>

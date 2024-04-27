@@ -1,5 +1,5 @@
 export class UserModule {
-  userId: number;
+  id: string;
   userName: string;
   password: string;
   rePassword: string;
@@ -12,7 +12,7 @@ export class UserModule {
   isActive : boolean;
   
   constructor() {
-    this.userId = 0;
+    this.id = '';
     this.userName = '';
     this.password = '';
     this.rePassword = '';

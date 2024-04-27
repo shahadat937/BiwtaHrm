@@ -20,63 +20,70 @@ import {
 } from '@coreui/angular';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { ToastrService } from 'ngx-toastr';
-import { AppToastComponent } from '../notifications/toasters/toast-simple/toast.component';
 
-import { SubjectComponent } from './subject/subject.component';
-import { GroupComponent } from './group/group.component';
 import { BranchComponent } from './branch/branch.component';
+import { DepartmentComponent } from './department/department.component';
+import { GroupComponent } from './group/group.component';
+import { ShiftComponent } from './shift/shift.component';
+import { SubjectComponent } from './subject/subject.component';
+import { TrainingComponent } from './training/training.component';
 import { UnionComponent } from './union/union.component';
 import { WardComponent } from './ward/ward.component';
-import { ShiftComponent } from './shift/shift.component';
-import { TrainingComponent } from './training/training.component'
-import { DepartmentComponent } from './department/department.component';
- 
+
+import { SpinnerModule } from '@coreui/angular';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { NewAccountTypeComponent } from './accounttype/new-accounttype/new-accounttype.component';
+import { BankAccountTypeComponent } from './bank-account-type/bank-account-type.component';
 import { BasicSetupRoutingModule } from './basic-setup-routing.module';
 import { BloodGroupComponent } from './blood-group/blood-group.component';
 import { ChildStatusComponent } from './child-status/child-status.component';
+import { CountryComponent } from './country/country.component';
 import { DesignationComponent } from './designation/designation.component';
 import { DistrictComponent } from './district/district.component';
+import { DivisionComponent } from './division/division.component';
 import { EmployeeTypeComponent } from './employee-type/employee-type.component';
+import { EyesColorComponent } from './eyes-color/eyes-color.component';
 import { GenderComponent } from './gender/gender.component';
+import { GradeClassComponent } from './grade-class/grade-class.component';
+import { GradeTypeComponent } from './grade-type/grade-type.component';
 import { GradeComponent } from './grade/grade.component';
+import { HairColorComponent } from './hair-color/hair-color.component';
+import { LanguageComponent } from './language/language.component';
+import { LeaveComponent } from './leave/leave.component';
 import { MaritalStatusComponent } from './marital-status/marital-status.component';
+import { OccupationComponent } from './occupation/occupation.component';
+import { OverallEVPromotionComponent } from './overall-ev-promotion/overall-ev-promotion.component';
+import { PoolComponent } from './pool/pool.component';
 import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
 import { PunishmentComponent } from './punishment/punishment.component';
+import { RelationComponent } from './relation/relation.component';
 import { ReligionComponent } from './religion/religion.component';
 import { ResultComponent } from './result/result.component';
 import { ScaleComponent } from './scale/scale.component';
 import { BloodGroupService } from './service/BloodGroup.service';
-import { ThanaComponent } from './thana/thana.component';
-import { UpazilaComponent } from './upazila/upazila.component';
-import { CountryComponent } from './country/country.component';
-import { CountryService } from './service/country.service';
-import { GradeTypeComponent } from './grade-type/grade-type.component';
-import { GradeClassComponent } from './grade-class/grade-class.component';
-import { DivisionComponent } from './division/division.component';
-import { SpinnerModule } from '@coreui/angular';
-import { OccupationComponent } from './occupation/occupation.component';
-import { OccupationService } from './service/Occupation.service';
-import { LeaveComponent } from './leave/leave.component';
 import { LeaveService } from './service/Leave.service';
-import { OverallEVPromotionComponent } from './overall-ev-promotion/overall-ev-promotion.component';
+import { OccupationService } from './service/Occupation.service';
 import { Overall_EV_PromotionService } from './service/Overall_EV_Promotion.service';
-import { HairColorComponent } from './hair-color/hair-color.component';
-import { EyesColorComponent } from './eyes-color/eyes-color.component';
+import { BankAccountTypeService } from './service/bank-account-type.service';
+import { CountryService } from './service/country.service';
 import { EyesColorService } from './service/eyes-color.service';
-import { RelationComponent } from './relation/relation.component';
-import { RelationService } from './service/relation.service';
-import { PoolComponent } from './pool/pool.component';
-import { SubDepartmentComponent } from './sub-department/sub-department.component';
-import { SubDepartmentService } from './service/sub-department.service';
+import { LanguageService } from './service/language.service';
 import { PoolService } from './service/pool.service';
+import { RelationService } from './service/relation.service';
+import { SubDepartmentService } from './service/sub-department.service';
+import { SubDepartmentComponent } from './sub-department/sub-department.component';
+import { ThanaComponent } from './thana/thana.component';
+import { TrainingNameComponent } from './training-name/training-name.component';
+import { UpazilaComponent } from './upazila/upazila.component';
 import { UserRoleComponent } from './user-role/user-role.component';
-import { BankComponent } from './bank/bank.component';
+
 import { BankBranchComponent } from './bank-branch/bank-branch.component';
+import { BankComponent } from './bank/bank.component';
+import { CompetenceComponent } from './competence/competence.component';
+import { InstituteComponent } from './institute/institute.component';
+import { OfficeAddressComponent } from './office-address/office-address.component';
+import { OfficeComponent } from './office/office.component';
 import { BankBranchService } from './service/bank-branch.service';
-
-
 
 @NgModule({
   declarations: [
@@ -108,6 +115,7 @@ import { BankBranchService } from './service/bank-branch.service';
     GradeTypeComponent,
     GradeClassComponent,
     DivisionComponent,
+    TrainingNameComponent,
     OccupationComponent,
     LeaveComponent,
     OverallEVPromotionComponent,
@@ -117,9 +125,18 @@ import { BankBranchService } from './service/bank-branch.service';
     PoolComponent,
     SubDepartmentComponent,
     UserRoleComponent,
+
     BankComponent,
     BankBranchComponent,
+    BankAccountTypeComponent,
+    LanguageComponent,
 
+    InstituteComponent,
+    OfficeComponent,
+    OfficeAddressComponent,
+    CompetenceComponent,
+    BankComponent,
+    BankBranchComponent,
   ],
   imports: [
     CommonModule,
@@ -141,7 +158,10 @@ import { BankBranchService } from './service/bank-branch.service';
     ProgressModule,
     SpinnerModule,
   ],
-  providers: [ 
+  providers: [
+    LanguageService,
+    BankAccountTypeService,
+
     BankBranchService,
     PoolService,
     SubDepartmentService,

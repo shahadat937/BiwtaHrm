@@ -96,6 +96,7 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    this.router.navigate(['/bascisetup/child-status']);
   }
 
   getALlChildStatus() {
@@ -105,40 +106,6 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     });
   }
-  //  onSubmit(form:NgForm){
-  //   this.childStatusService.cachedData = [];
-  //   const id = this.ChildStatusForm.form.get('childStatusId')?.value;
-  //   if (id) {
-  //     this.childStatusService.update(+id,this.ChildStatusForm.value).subscribe((response:any) => {
-
-  //       if(response.success){
-  //         this.toastr.success('Successfully', 'Update',{ positionClass: 'toast-top-right' });
-  //         this.getALlChildStatus()
-  //         this.resetForm();
-  //         this.router.navigate(["/bascisetup/child-status"]);
-  //       }else{
-  //         this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
-  //       }
-
-  //     }, err => {
-  //       console.log(err)
-  //     })
-  //   }else{
-  //  this.subscription=this.childStatusService.submit(form?.value).subscribe((response:any)=>{
-  //   if(response.success){
-  //     this.toastr.success('Successfully', `${response.message}`,{ positionClass: 'toast-top-right' });
-  //     this.getALlChildStatus()
-  //     this.resetForm();
-  //   }else{
-  //     this.toastr.warning('', `${response.message}`,{ positionClass: 'toast-top-right' });
-  //   }
-
-  //  },err=>{
-  //    console.log(err);
-  //  })
-  //   }
-
-  // }
   onSubmit(form: NgForm): void {
     this.childStatusService.cachedData = [];
     const id = form.value.childStatusId;

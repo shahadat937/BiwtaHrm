@@ -18,14 +18,14 @@ namespace Hrm.Application.Features.Competence.Handlers.Commands
     public class UpdateCompetenceCommandHandler : IRequestHandler<UpdateCompetenceCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.Competence> _CompetenceRepository;
+        private readonly IHrmRepository<Hrm.Domain.Competence> _competenceRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public UpdateCompetenceCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Competence> CompetenceRepository)
+        public UpdateCompetenceCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Competence> competenceRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _CompetenceRepository = CompetenceRepository;
+            _competenceRepository = competenceRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateCompetenceCommand request, CancellationToken cancellationToken)
@@ -48,15 +48,15 @@ namespace Hrm.Application.Features.Competence.Handlers.Commands
                 throw new NotFoundException(nameof(Competence), request.CompetenceDto.CompetenceId);
             }
 
-            var CompetenceName = request.CompetenceDto.CompetenceName.ToLower();
+            var competenceName = request.CompetenceDto.CompetenceName.ToLower();
 
-            IQueryable<Hrm.Domain.Competence> Competences = _CompetenceRepository.Where(x => x.CompetenceName.ToLower() == CompetenceName);
+            IQueryable<Hrm.Domain.Competence> competences = _competenceRepository.Where(x => x.CompetenceName.ToLower() == competenceName);
 
 
-            if (Competences.Any())
+            if (competences.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.CompetenceDto.CompetenceName}' already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

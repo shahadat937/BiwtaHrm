@@ -2,10 +2,11 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.BankAccountType.Validators;
 using Hrm.Application.DTOs.BankAccountType.ValidatorsBankAccountType;
+using Hrm.Application.DTOs.MaritalStatus.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.BankAccountType.Requests.Commands;
+using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -18,14 +19,16 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
     public class UpdateBankAccountTypeCommandHandler : IRequestHandler<UpdateBankAccountTypeCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.BankAccountType> _BankAccountTypeRepository;
+        private readonly IHrmRepository<Hrm.Domain.BankAccountType> _bankAccountTypeRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+
+
         public UpdateBankAccountTypeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.BankAccountType> BankAccountTypeRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _BankAccountTypeRepository = BankAccountTypeRepository;
+            _bankAccountTypeRepository = BankAccountTypeRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateBankAccountTypeCommand request, CancellationToken cancellationToken)
@@ -41,27 +44,33 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var BankAccountType = await _unitOfWork.Repository<Hrm.Domain.BankAccountType>().Get(request.BankAccountTypeDto.BankAccountTypeId);
 
-            if (BankAccountType is null)
-            {
-                throw new NotFoundException(nameof(BankAccountType), request.BankAccountTypeDto.BankAccountTypeId);
-            }
+            //var BankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.ToLower();
+            var BankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.Trim().ToLower().Replace(" ", string.Empty);
+            IQueryable<Hrm.Domain.BankAccountType> BankAccountTypes = _bankAccountTypeRepository.Where(x => x.BankAccountTypeName.ToLower() == BankAccountTypeName);
 
-            var BankAccountTypeName = request.BankAccountTypeDto.BankAccountTypeName.ToLower();
-
-            IQueryable<Hrm.Domain.BankAccountType> BankAccountTypes = _BankAccountTypeRepository.Where(x => x.BankAccountTypeName.ToLower() == BankAccountTypeName);
 
 
             if (BankAccountTypes.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.BankAccountTypeDto.BankAccountTypeName}' already exists.";
+
+                //response.Message = "Creation Failed Name already exists.";
+
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }
+
             else
             {
+
+                var BankAccountType = await _unitOfWork.Repository<Hrm.Domain.BankAccountType>().Get(request.BankAccountTypeDto.BankAccountTypeId);
+
+                if (BankAccountType is null)
+                {
+                    throw new NotFoundException(nameof(BankAccountType), request.BankAccountTypeDto.BankAccountTypeId);
+                }
 
                 _mapper.Map(request.BankAccountTypeDto, BankAccountType);
 
@@ -69,10 +78,11 @@ namespace Hrm.Application.Features.BankAccountType.Handlers.Commands
                 await _unitOfWork.Save();
 
                 response.Success = true;
-                response.Message = "Update Successful";
+                response.Message = "Update Successfull";
                 response.Id = BankAccountType.BankAccountTypeId;
 
             }
+
             return response;
         }
     }

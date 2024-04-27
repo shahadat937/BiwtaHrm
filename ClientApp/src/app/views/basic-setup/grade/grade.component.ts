@@ -78,11 +78,13 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   GetModelGradeClass() {
     this.gradeServiceClass.getSelectedGradeClass().subscribe((res) => {
+      console.log(res);
       this.gradeClass = res;
     });
   }
   GetModelGradeType() {
     this.gradeTypeService.getSelectGradeType().subscribe((res) => {
+      console.log(res);
       this.gradeType = res;
     });
   }
@@ -128,44 +130,12 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getALlGrades() {
     this.subscription = this.gradeService.getAll().subscribe((item) => {
+      console.log(item);
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
   }
-  // onSubmit(form: NgForm) {
-  //   this.gradeService.cachedData = [];
-  //   const id = this.GradeForm.form.get('gradeId')?.value;
-  //   if (id) {
-  //     this.gradeService.update(+id, this.GradeForm.value).subscribe((response: any) => {
-  //       if (response.success) {
-  //         this.toastr.success('Successfully', 'Update', { positionClass: 'toast-top-right' });
-  //         this.getALlGrades()
-  //         this.resetForm();
-  //         this.router.navigate(["/bascisetup/grade"]);
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, { positionClass: 'toast-top-right' });
-  //       }
-
-  //     }, err => {
-  //       console.log(err)
-  //     })
-  //   } else {
-  //     this.subscription = this.gradeService.submit(form?.value).subscribe((response: any) => {
-  //       if (response.success) {
-  //         this.toastr.success('Successfully', `${response.message}`, { positionClass: 'toast-top-right' });
-  //         this.getALlGrades()
-  //         this.resetForm();
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, { positionClass: 'toast-top-right' });
-  //       }
-
-  //     }, err => {
-  //       console.log(err);
-  //     })
-  //   }
-
-  // }
   onSubmit(form: NgForm): void {
     this.loading = true;
     this.gradeService.cachedData = [];

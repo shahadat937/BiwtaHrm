@@ -26,7 +26,7 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
   loading = false;
   @ViewChild('BankBranchForm', { static: true }) BankBranchForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo','bankBranchName','bankBranchcode','bankBranchAddress','bankBranchContractNo','bankBranchPerson','email','noOfEmployee','divisionName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'bankBranchName', 'bankName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -40,16 +40,20 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService
-  ) {}
+
+  ) { }
   ngOnInit(): void {
     this.getAlBankBranchs();
-    this.SelectModelBank();
+    this.SelectModelCountry();
+
     //this.loaddivisions();
     this.handleRouteParams();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('divisionId');
+
+      const id = params.get('bankBranchId');
+
       if (id) {
         this.btnText = 'Update';
         this.bankBranchService.find(+id).subscribe((res) => {
@@ -67,7 +71,9 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
   //     this.countrys = data;
   //   });
   // }
-  SelectModelBank() {
+
+  SelectModelCountry() {
+
     this.bankService.selectGetBank().subscribe((data) => {
       //console.log(data);
       this.banks = data;
@@ -88,18 +94,20 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  initaialDivision(form?: NgForm) {
+
+  initaialBankBranch(form?: NgForm) {
+
     if (form != null) form.resetForm();
     this.bankBranchService.bankBranchs = {
       bankBranchId: 0,
       bankBranchName: '',
       bankId: 0,
+      bankBranchCode: '',
+      bankBranchAddress: '',
       bankBranchContractNo: '',
-      bankBranchAddress:'',
-      bankBranchPerson:'',
-      email:'',
-      bankBranchcode: 0,
-      noOfEmployee:0,
+      bankBranchPerson: '',
+      email: '',
+      noOfEmployee: 0,
       menuPosition: 0,
       isActive: true,
     };
@@ -111,12 +119,13 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
         bankBranchId: 0,
         bankBranchName: '',
         bankId: 0,
+        bankBranchCode: '',
+        bankBranchAddress: '',
         bankBranchContractNo: '',
-        bankBranchAddress:'',
-        bankBranchPerson:'',
-        email:'',
-        bankBranchcode: 0,
-        noOfEmployee:0,
+        bankBranchPerson: '',
+        email: '',
+        noOfEmployee: 0,
+
         menuPosition: 0,
         isActive: true,
       });
@@ -130,47 +139,17 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     });
   }
-  // onSubmit(form: NgForm) {
-  //   this.devisionService.cachedData = [];
-  //   const id = this.DivisionForm.form.get('divisionId')?.value;
-  //   if (id) {
-  //     this.devisionService.update(+id, this.DivisionForm.value).subscribe((response: any) => {
-  //       if (response.success) {
-  //         this.toastr.success('Successfully', 'Update', { positionClass: 'toast-top-right' });
-  //         this.getALlDivisions()
-  //         this.resetForm();
-  //         this.router.navigate(["/bascisetup/division"]);
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, { positionClass: 'toast-top-right' });
-  //       }
 
-  //     }, err => {
-  //       console.log(err)
-  //     })
-  //   } else {
-  //     this.subscription = this.devisionService.submit(form?.value).subscribe((response: any) => {
-  //       if (response.success) {
-  //         this.toastr.success('Successfully', `${response.message}`, { positionClass: 'toast-top-right' });
-  //         this.getALlDivisions()
-  //         this.resetForm();
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, { positionClass: 'toast-top-right' });
-  //       }
-
-  //     }, err => {
-  //       console.log(err);
-  //     })
-  //   }
-
-  // }
   onSubmit(form: NgForm): void {
-    this.loading = true;this.bankBranchService.cachedData = [];
+    this.loading = true;
+    this.bankBranchService.cachedData = [];
     const id = form.value.bankBranchId;
     const action$ = id
       ? this.bankBranchService.update(id, form.value)
       : this.bankBranchService.submit(form.value);
 
     this.subscription = action$.subscribe((response: any) => {
+
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {

@@ -19,15 +19,17 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
     public class UpdateBankCommandHandler : IRequestHandler<UpdateBankCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.Bank> _BankRepository;
+        private readonly IHrmRepository<Hrm.Domain.Bank> _bankRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
+
         public UpdateBankCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Bank> BankRepository)
+
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _BankRepository = BankRepository;
+            _bankRepository = BankRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateBankCommand request, CancellationToken cancellationToken)
@@ -42,13 +44,9 @@ namespace Hrm.Application.Features.Bank.Handlers.Commands
                 response.Message = "Creation Failed";
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
-
             //var BankName = request.BankDto.BankName.ToLower();
             var BankName = request.BankDto.BankName.Trim().ToLower().Replace(" ", string.Empty);
-            IQueryable<Hrm.Domain.Bank> Banks = _BankRepository.Where(x => x.BankName.ToLower() == BankName);
-
-
-
+            IQueryable<Hrm.Domain.Bank> Banks = _bankRepository.Where(x => x.BankName.ToLower() == BankName);
             if (Banks.Any())
             {
                 response.Success = false;

@@ -1,64 +1,51 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using Hrm.Application.Contracts.Persistence;
-using Hrm.Application.DTOs.BloodGroup.Validators;
 using Hrm.Application.DTOs.MaritalStatus.Validators;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Hrm.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.MaritalStatus.Handlers.Commands
 {
     public class CreateMaritalStatusCommandHandler : IRequestHandler<CreateMaritalStatusCommand, BaseCommandResponse>
     {
-        private readonly IHrmRepository<Hrm.Domain.MaritalStatus> _maritalStatusRepository; 
+        private readonly IHrmRepository<Hrm.Domain.MaritalStatus> _MaritalStatusRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public CreateMaritalStatusCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.MaritalStatus> maritalStatusRepository)
+        public CreateMaritalStatusCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.MaritalStatus> MaritalStatusRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _maritalStatusRepository = maritalStatusRepository;
+            _MaritalStatusRepository = MaritalStatusRepository;
         }
-
-
         public async Task<BaseCommandResponse> Handle(CreateMaritalStatusCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
             var validator = new CreateMaritalStatusDtoValidator();
-            var validatorResult = await validator.ValidateAsync(request.MaritalStatusDto);
+            var validationResult = await validator.ValidateAsync(request.MaritalStatusDto);
 
-            if (validatorResult.IsValid == false)
+            if (validationResult.IsValid == false)
             {
                 response.Success = false;
                 response.Message = "Creation Failed";
-                response.Errors = validatorResult.Errors.Select(x=> x.ErrorMessage).ToList();
+                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
             }
             else
             {
+                //   var MaritalStatusName = request.MaritalStatusDto.MaritalStatusName.Trim().ToLower().Replace(" ", string.Empty);
 
-                var maritalStatusName = request.MaritalStatusDto.MaritalStatusName.ToLower();
+                //  IQueryable<Hrm.Domain.MaritalStatus> MaritalStatuss = _MaritalStatusRepository.Where(x => x.MaritalStatusName.ToLower().Replace(" ", string.Empty) == MaritalStatusName);
 
-                IQueryable<Hrm.Domain.MaritalStatus> maritalStatuses = _maritalStatusRepository.Where(x => x.MaritalStatusName.ToLower() == maritalStatusName);
 
-                
-
-                if (maritalStatuses.Any())
+                if (MaritalStatusNameExists(request))
                 {
                     response.Success = false;
-                    response.Message = "Creation Failed Name already exists.";
-
-                    response.Errors = validatorResult.Errors.Select(q => q.ErrorMessage).ToList();
+                    response.Message = $"Creation Failed '{request.MaritalStatusDto.MaritalStatusName}' already exists.";
+                    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
                 }
-
                 else
                 {
                     var MaritalStatus = _mapper.Map<Hrm.Domain.MaritalStatus>(request.MaritalStatusDto);
@@ -66,13 +53,22 @@ namespace Hrm.Application.Features.MaritalStatus.Handlers.Commands
                     MaritalStatus = await _unitOfWork.Repository<Hrm.Domain.MaritalStatus>().Add(MaritalStatus);
                     await _unitOfWork.Save();
 
+
                     response.Success = true;
-                    response.Message = "Creation Successfull";
+                    response.Message = "Creation Successful";
                     response.Id = MaritalStatus.MaritalStatusId;
                 }
             }
 
             return response;
+        }
+        private bool MaritalStatusNameExists(CreateMaritalStatusCommand request)
+        {
+            var MaritalStatusName = request.MaritalStatusDto.MaritalStatusName.Trim().ToLower().Replace(" ", string.Empty);
+
+            IQueryable<Hrm.Domain.MaritalStatus> MaritalStatuss = _MaritalStatusRepository.Where(x => x.MaritalStatusName.Trim().ToLower().Replace(" ", string.Empty) == MaritalStatusName);
+
+            return MaritalStatuss.Any();
         }
     }
 }

@@ -1,27 +1,12 @@
 <c-card>
   <c-card-header>Division </c-card-header>
   <c-card-body>
-    <form
-      #DivisionForm="ngForm"
-      (submit)="onSubmit(DivisionForm)"
-      [gutter]="3"
-      novalidate
-      cForm
-      cRow
-      class="needs-validation"
-    >
+    <form #DivisionForm="ngForm" (submit)="onSubmit(DivisionForm)" [gutter]="3" novalidate cForm cRow
+      class="needs-validation">
       <c-col [md]="6">
-        <label cLabel for="validationCustom01"
-          >Country<span class="text-danger">*</span></label
-        >
-        <select
-          required
-          [(ngModel)]="devisionService.divisions.countryId"
-          name="countryId"
-          #countryId="ngModel"
-          aria-label="Default select example"
-          cSelect
-        >
+        <label cLabel for="validationCustom01">Country<span class="text-danger">*</span></label>
+        <select required [(ngModel)]="devisionService.divisions.countryId" name="countryId" #countryId="ngModel"
+          aria-label="Default select example" cSelect>
           <option [ngValue]="0">Select Country</option>
 
           @for(country of countrys; track country.id;let index=$index) {
@@ -36,57 +21,30 @@
       </c-col>
 
       <c-col [md]="6">
-        <input
-          type="hidden"
-          [(ngModel)]="devisionService.divisions.divisionId"
-          name="divisionId"
-        />
+        <input type="hidden" [(ngModel)]="devisionService.divisions.divisionId" name="divisionId" />
         <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
-        <label cLabel for="validationCustom01"
-          >Division Name<span class="text-danger">*</span></label
-        >
-        <input
-          [(ngModel)]="devisionService.divisions.divisionName"
-          name="divisionName"
-          #divisionName="ngModel"
-          placeholder="Enter Division Name"
-          cFormControl
-          id="validationCustom01"
-          required
-          type="text"
-          value="Mark"
-        />
+        <label cLabel for="validationCustom01">Division Name<span class="text-danger">*</span></label>
+        <input [(ngModel)]="devisionService.divisions.divisionName" name="divisionName" #divisionName="ngModel"
+          placeholder="Enter Division Name" cFormControl id="validationCustom01" required type="text" value="Mark" />
 
         @if(!divisionName.valid&&divisionName.touched){
-        <div class="text-left text-danger">Scale Name is required</div>
+        <div class="text-left text-danger">Division Name is required</div>
         }
       </c-col>
 
       <c-col [md]="6">
         <label cLabel for="validationCustom02">Is Active </label>
-        <input
-          [(ngModel)]="devisionService.divisions.isActive"
-          name="isActive"
-          cFormControl
-          id="validationCustom02"
-          type="text"
-          value="Otto"
-        />
+        <input [(ngModel)]="devisionService.divisions.isActive" name="isActive" cFormControl id="validationCustom02"
+          type="text" value="Otto" />
         <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
       </c-col>
 
       <c-col [xs]="12">
-        <button
-        [disabled]="loading"
-          [disabled]="DivisionForm.invalid"
-          cButton
-          class="me-1"
-          color="primary"
-          type="submit"
-        >
-        <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-        {{ btnText }}
-      </button>
+        <button [disabled]="loading" [disabled]="DivisionForm.invalid" cButton class="me-1" color="primary"
+          type="submit">
+          <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+          {{ btnText }}
+        </button>
         <button cButton color="secondary" (click)="resetForm()">Reset</button>
       </c-col>
     </form>
@@ -98,19 +56,9 @@
   <c-card-body>
     <div class="example-header">
       <mat-form-field>
-        <input
-          matInput
-          #filter
-          (keyup)="applyFilter(filter.value)"
-          placeholder="Search Here.."
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          aria-label="clear"
-          *ngIf="filter.value"
-          (click)="filter.value = ''; applyFilter('')"
-        ></button>
+        <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here.." />
+        <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
+          (click)="filter.value = ''; applyFilter('')"></button>
       </mat-form-field>
     </div>
 
@@ -139,10 +87,7 @@
         <ng-container matColumnDef="Action">
           <th mat-header-cell *matHeaderCellDef>Action</th>
           <td mat-cell *matCellDef="let element">
-            <button
-              class="custom-button"
-              [routerLink]="['/bascisetup/update-division', element.divisionId]"
-            >
+            <button class="custom-button" [routerLink]="['/bascisetup/update-division', element.divisionId]">
               <svg cIcon name="cilPencil"></svg>
             </button>
             <button class="custom-button" (click)="delete(element)">
@@ -158,13 +103,7 @@
   </c-card-body>
 
   <c-card-footer class="text-medium-emphasis">
-    <mat-paginator
-      appBubblePagination
-      [length]="dataSource.data.length"
-      [pageSize]="10"
-      aria-label="Select page"
-    >
+    <mat-paginator appBubblePagination [length]="dataSource.data.length" [pageSize]="10" aria-label="Select page">
     </mat-paginator>
   </c-card-footer>
-  <c-card> </c-card
-></c-card>
+  <c-card> </c-card></c-card>

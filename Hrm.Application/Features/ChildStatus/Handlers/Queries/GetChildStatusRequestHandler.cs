@@ -5,6 +5,7 @@ using Hrm.Application.DTOs.ChildStatus;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.ChildStatus.Requests.Queries;
 using Hrm.Application.Models;
+using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,8 @@ namespace Hrm.Application.Features.ChildStatus.Handlers.Queries
         public async Task<object> Handle(GetChildStatusRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.ChildStatus> ChildStatus = _ChildStatusRepository.Where(x => true);
-
+            ChildStatus = ChildStatus.OrderByDescending(x => x.ChildStatusId);
+            //BankBranchs = BankBranchs.OrderByDescending(x => x.BankBranchId);
             var ChildStatusDtos = await Task.Run(() => _mapper.Map<List<ChildStatusDto>>(ChildStatus));
 
             return ChildStatusDtos;

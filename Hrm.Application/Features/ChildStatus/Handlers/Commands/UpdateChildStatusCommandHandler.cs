@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
-using FluentValidation.Results;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.ChildStatus.Validators;
+using Hrm.Application.DTOs.MaritalStatus.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.ChildStatus.Requests.Commands;
+using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +17,7 @@ namespace Hrm.Application.Features.ChildStatus.Handlers.Commands
 {
     public class UpdateChildStatusCommandHandler : IRequestHandler<UpdateChildStatusCommand, BaseCommandResponse>
     {
+
         private readonly IHrmRepository<Hrm.Domain.ChildStatus> _ChildStatusRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.ChildStatus.Handlers.Commands
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _ChildStatusRepository =ChildStatusRepository;
+            _ChildStatusRepository = ChildStatusRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateChildStatusCommand request, CancellationToken cancellationToken)
@@ -42,28 +42,31 @@ namespace Hrm.Application.Features.ChildStatus.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var ChildStatus = await _unitOfWork.Repository<Hrm.Domain.ChildStatus>().Get(request.ChildStatusDto.ChildStatusId);
-
-            if (ChildStatus is null)
-            {
-                throw new NotFoundException(nameof(ChildStatus), request.ChildStatusDto.ChildStatusId);
-            }
+            //var ChildStatusName = request.ChildStatusDto.ChildStatusName.ToLower();
+            var ChildStatusName = request.ChildStatusDto.ChildStatusName.Trim().ToLower().Replace(" ", string.Empty);
+            IQueryable<Hrm.Domain.ChildStatus> ChildStatuss = _ChildStatusRepository.Where(x => x.ChildStatusName.ToLower() == ChildStatusName);
 
 
-            var ChildStatusName = request.ChildStatusDto.ChildStatusName.ToLower();
 
-            IQueryable<Hrm.Domain.ChildStatus> isCheckChildStatusName = _ChildStatusRepository.Where(x => x.ChildStatusName.ToLower() == ChildStatusName);
-
-
-            if (isCheckChildStatusName.Any())
+            if (ChildStatuss.Any())
             {
                 response.Success = false;
                 response.Message = $"Update Failed '{request.ChildStatusDto.ChildStatusName}' already exists.";
+
+                //response.Message = "Creation Failed Name already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }
+
             else
             {
+
+                var ChildStatus = await _unitOfWork.Repository<Hrm.Domain.ChildStatus>().Get(request.ChildStatusDto.ChildStatusId);
+
+                if (ChildStatus is null)
+                {
+                    throw new NotFoundException(nameof(ChildStatus), request.ChildStatusDto.ChildStatusId);
+                }
 
                 _mapper.Map(request.ChildStatusDto, ChildStatus);
 
@@ -71,12 +74,11 @@ namespace Hrm.Application.Features.ChildStatus.Handlers.Commands
                 await _unitOfWork.Save();
 
                 response.Success = true;
-                response.Message = "Update Successful";
+                response.Message = "Update Successfull";
                 response.Id = ChildStatus.ChildStatusId;
 
-
-
             }
+
             return response;
         }
     }

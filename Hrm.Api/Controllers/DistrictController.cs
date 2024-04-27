@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Shared.Models;
 using Hrm.Domain;
+using Hrm.Application.DTOs.Division;
+using Hrm.Application.Features.Division.Requests.Queries;
 
 namespace Hrm.Api.Controllers
 {
@@ -48,7 +50,18 @@ namespace Hrm.Api.Controllers
             return Ok(District);
 
         }
+        [HttpGet]
+        [Route("get-districByDivisionId")]
+        public async Task<ActionResult<List<DistrictDto>>> GetDistricByDivisionId(int divisionId)
+        {
+  
+            var districtByDivisionId = await _mediator.Send(new GetDistrictByDivisionIdRequest
+            {
+                DivisionId = divisionId
+            });
+            return Ok(districtByDivisionId);
 
+        }
         [HttpGet]
         [Route("get-selecteddistrict")]
         public async Task<ActionResult<List<SelectedModel>>> GetSelectedDistrict()

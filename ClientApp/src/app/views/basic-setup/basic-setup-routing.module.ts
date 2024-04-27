@@ -352,7 +352,7 @@ const routes: Routes = [
   { path: 'update-bankAccountType/:bankAccountTypeId',
     component: BankAccountTypeComponent,
   },
-  {
+  { 
     path: 'language',
     component: LanguageComponent,
   },

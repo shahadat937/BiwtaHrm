@@ -26,12 +26,14 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   @ViewChild('UserForm', { static: true }) UserForm!: NgForm;
   loading = false;
   subscription: Subscription = new Subscription();
+  displayedColumns: string[] = ['slNo', 'pNo', 'fullName', 'userName', 'email', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
   userBtnText = " Add User";
+  userHeaderText = "User List";
   buttonIcon : string = '';
   visible = false;
 
@@ -79,13 +81,16 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   UserFormView() : void {
+    this.resetForm();
     if(this.userBtnText == " Add User"){
       this.userBtnText = " Hide Form";
       this.buttonIcon = "cilTrash";
+      this.userHeaderText = "Add New User";
     }
     else {
       this.userBtnText = " Add User";
       this.buttonIcon = "cilPencil";
+      this.userHeaderText = "User List";
     }
     this.visible = !this.visible;
   }
@@ -136,9 +141,9 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   getAllUsers(){
     this.subscription = this.userService.getAll().subscribe((item) => {
       console.log("All Users : ", item);
-      // this.dataSource = new MatTableDataSource(item);
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.matSort;
+      this.dataSource = new MatTableDataSource(item);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.matSort;
     });
   }
 
@@ -175,4 +180,5 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
       });
   }
 
+  delete(element: any){}
 }

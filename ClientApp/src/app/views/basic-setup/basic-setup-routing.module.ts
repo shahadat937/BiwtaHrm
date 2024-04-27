@@ -15,7 +15,6 @@ import { WardComponent } from './ward/ward.component';
 import { ShiftComponent } from './shift/shift.component';
 import { TrainingComponent } from './training/training.component';
 import { DepartmentComponent } from './department/department.component';
-
 import { MaritalStatusComponent } from './marital-status/marital-status.component';
 import { EmployeeTypeComponent } from './employee-type/employee-type.component';
 import { GenderComponent } from './gender/gender.component';
@@ -27,7 +26,6 @@ import { PunishmentComponent } from './punishment/punishment.component';
 import { PromotionTypeComponent } from './promotion-type/promotion-type.component';
 import { GradeComponent } from './grade/grade.component';
 import { CountryComponent } from './country/country.component';
-
 import { GradeTypeComponent } from './grade-type/grade-type.component';
 import { GradeClassComponent } from './grade-class/grade-class.component';
 import { DivisionComponent } from './division/division.component';
@@ -44,6 +42,12 @@ import { BankComponent } from './bank/bank.component';
 import { BankBranchComponent } from './bank-branch/bank-branch.component';
 import { BankAccountTypeComponent } from './bank-account-type/bank-account-type.component';
 import { LanguageComponent } from './language/language.component';
+import { TrainingNameComponent } from './training-name/training-name.component';
+import { InstituteComponent } from './institute/institute.component';
+import { OfficeComponent } from './office/office.component';
+import { OfficeAddressComponent } from './office-address/office-address.component';
+import { CompetenceComponent } from './competence/competence.component';
+
 
 const routes: Routes = [
 
@@ -309,6 +313,14 @@ const routes: Routes = [
   { path: 'update-relation/:relationId',
     component: RelationComponent,
   },
+
+  {
+    path: 'trainingName',
+    component: TrainingNameComponent,
+  },
+  { path: 'update-trainingName/:trainingNameId',
+    component: TrainingNameComponent,
+  },
   {
     path: 'subDepartment',
     component: SubDepartmentComponent,
@@ -330,7 +342,34 @@ const routes: Routes = [
   { path: 'update-userRole/:userRoleId',
     component: UserRoleComponent,
   },
-  
+  {
+    path: 'institute',
+    component: InstituteComponent,
+  },
+  { path: 'update-institute/:instituteId',
+    component: InstituteComponent,
+  },
+  {
+    path: 'office',
+    component: OfficeComponent,
+  },
+  { path: 'update-office/:officeId',
+    component: OfficeComponent,
+  },
+  {
+    path: 'officeAddress',
+    component: OfficeAddressComponent,
+  },
+  { path: 'update-officeAddress/:officeAddressId',
+    component: OfficeAddressComponent,
+  },
+  {
+    path: 'competence',
+    component: CompetenceComponent,
+  },
+  { path: 'update-competence/:competenceId',
+    component: CompetenceComponent,
+},
   {
     path: 'bank',
     component: BankComponent,
@@ -358,7 +397,7 @@ const routes: Routes = [
   },
   { path: 'update-language/:languageId',
     component: LanguageComponent,
-  },
+  }
 ];
 
 @NgModule({

@@ -1,9 +1,7 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.BankAccountType;
-using Hrm.Application.DTOs.BankAccountType;
 using Hrm.Application.Features.BankAccountType.Requests.Commands;
 using Hrm.Application.Features.BankAccountType.Requests.Queries;
-using Hrm.Application.Features.BankAccountType.Requests.Commands;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

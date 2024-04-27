@@ -7,6 +7,7 @@ namespace Hrm.Application
     {
         private const string HRMRoutePrefixBase = ApiRoutePrefix.RoutePrefixBase + "hrm/";
 
+        public const string Account = HRMRoutePrefixBase + "account";
 
         public const string BloodGroup = HRMRoutePrefixBase + "blood-group";
         public const string MaritalStatus = HRMRoutePrefixBase + "marital-status";
@@ -60,6 +61,7 @@ namespace Hrm.Application
         public const string Institute = HRMRoutePrefixBase + "Institute";
         public const string BankBranch = HRMRoutePrefixBase + "BankBranch";
         public const string Occupation = HRMRoutePrefixBase + "Occupation";
+        public const string OfficeAddress = HRMRoutePrefixBase + "OfficeAddress";
         public const string HairColor = HRMRoutePrefixBase + "hairColor";
         public const string EyesColor = HRMRoutePrefixBase + "eyesColor";
         public const string Pool = HRMRoutePrefixBase + "pool";

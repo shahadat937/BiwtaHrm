@@ -1,9 +1,7 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Language;
-using Hrm.Application.DTOs.Language;
 using Hrm.Application.Features.Language.Requests.Commands;
 using Hrm.Application.Features.Language.Requests.Queries;
-using Hrm.Application.Features.Language.Requests.Commands;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

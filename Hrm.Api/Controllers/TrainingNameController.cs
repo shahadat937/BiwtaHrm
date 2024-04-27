@@ -26,7 +26,7 @@ namespace Hrm.Api.Controllers
             _mediator = mediator;
         }
         [HttpGet]
-        [Route("get-TrainingName")]
+        [Route("get-trainingName")]
         public async Task<ActionResult> Get()
         {
             var TrainingName = await _mediator.Send(new GetTrainingNameRequest { });
@@ -36,7 +36,7 @@ namespace Hrm.Api.Controllers
         [HttpPost]
         [ProducesResponseType(200)] 
         [ProducesResponseType(400)]
-        [Route("save-TrainingName")]
+        [Route("save-trainingName")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateTrainingNameDto TrainingName)
         {
             var command = new CreateTrainingNameCommand { TrainingNameDto = TrainingName };
@@ -48,7 +48,7 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
-        [Route("delete-TrainingName")]
+        [Route("delete-institute/{id}")]
         public async Task<ActionResult>Delete (int id)
         {
             var command = new DeleteTrainingNameCommand { TrainingNameId = id };
@@ -59,7 +59,7 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
-        [Route("update-TrainingName/{id}")]
+        [Route("update-trainingName/{id}")]
         public async Task<ActionResult> Put([FromBody] TrainingNameDto TrainingName)
         {
             var command = new UpdateTrainingNameCommand { TrainingNameDto = TrainingName };
@@ -70,7 +70,7 @@ namespace Hrm.Api.Controllers
 
 
         [HttpGet]
-        [Route("get-TrainingNamebyid/{id}")]
+        [Route("get-trainingNamebyid/{id}")]
         public async Task<ActionResult<TrainingNameDto>> Get(int id)
         {
             var TrainingName = await _mediator.Send(new GetTrainingNameByIdRequest { TrainingNameId = id });

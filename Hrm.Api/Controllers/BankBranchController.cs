@@ -1,7 +1,5 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.BankBranch;
-using Hrm.Application.DTOs.MaritalStatus;
-using Hrm.Application.DTOs.BankBranch;
 using Hrm.Application.Features.BankBranch.Requests.Commands;
 using Hrm.Application.Features.BankBranch.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;

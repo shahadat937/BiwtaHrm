@@ -60,6 +60,7 @@ using Hrm.Application.DTOs.EyesColor;
 using Hrm.Application.DTOs.Pool;
 using Hrm.Application.DTOs.SubDepartment;
 using Hrm.Application.DTOs.UserRole;
+using Hrm.Application.DTOs.AspNetUsers;
 using Hrm.Application.DTOs.OfficeAddress;
 using Hrm.Application.DTOs.ExamType;
 using Hrm.Application.DTOs.Board;
@@ -242,12 +243,15 @@ namespace Hrm.Application.Profiles
             CreateMap<UserRole, UserRoleDto>().ReverseMap();
             CreateMap<UserRole, CreateUserRoleDto>().ReverseMap();
 
-
             CreateMap<ExamType, ExamTypeDto>().ReverseMap();
             CreateMap<ExamType, CreateExamTypeDto>().ReverseMap();
 
             CreateMap<Board, BoardDto>().ReverseMap();
             CreateMap<Board, CreateBoardDto>().ReverseMap();
+
+            CreateMap<AspNetUsers, AspNetUserDto>().ReverseMap();
+            //CreateMap<UserRole, CreateUserRoleDto>().ReverseMap();
+
 
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();

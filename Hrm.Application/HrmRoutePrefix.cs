@@ -9,6 +9,8 @@ namespace Hrm.Application
 
         public const string Account = HRMRoutePrefixBase + "account";
 
+        public const string AspNetUsers = HRMRoutePrefixBase + "users";
+
         public const string BloodGroup = HRMRoutePrefixBase + "blood-group";
         public const string MaritalStatus = HRMRoutePrefixBase + "marital-status";
         public const string EmployeeType = HRMRoutePrefixBase + "employee-type";

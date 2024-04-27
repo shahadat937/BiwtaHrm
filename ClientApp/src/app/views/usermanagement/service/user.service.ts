@@ -22,7 +22,7 @@ export class UserService {
     } else {
       // If data is not cached, make a server call to fetch it
       return this.http
-        .get<UserModule[]>(this.baseUrl + '/account/get-users')
+        .get<UserModule[]>(this.baseUrl + '/users/get-users')
         .pipe(
           map((data) => {
             this.cachedData = data; // Cache the data

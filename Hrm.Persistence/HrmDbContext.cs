@@ -337,6 +337,9 @@ namespace Hrm.Persistence
         public virtual DbSet<ExamType> ExamType { get; set; } = null!;
         public virtual DbSet<Board> Board { get; set; } = null!;
 
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; } = null!;
+
+
 
     }
 }

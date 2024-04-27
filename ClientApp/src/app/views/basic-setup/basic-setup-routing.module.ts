@@ -47,6 +47,7 @@ import { InstituteComponent } from './institute/institute.component';
 import { OfficeComponent } from './office/office.component';
 import { OfficeAddressComponent } from './office-address/office-address.component';
 import { CompetenceComponent } from './competence/competence.component';
+import { ExamTypeComponent } from './exam-type/exam-type.component';
 
 
 const routes: Routes = [
@@ -397,6 +398,13 @@ const routes: Routes = [
   },
   { path: 'update-language/:languageId',
     component: LanguageComponent,
+  },
+  { 
+    path: 'examType',
+    component: ExamTypeComponent,
+  },
+  { path: 'update-examType/:examTypeId',
+    component: ExamTypeComponent,
   }
 ];
 

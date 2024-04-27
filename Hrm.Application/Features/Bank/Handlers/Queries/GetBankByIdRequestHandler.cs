@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Bank.Handlers.Queries
 {
-    public class GetBankByIdRequestHandler : IRequestHandler<GetBankByIdRequest, BankDto>
+    public class GetExamTypeByIdRequestHandler : IRequestHandler<GetBankByIdRequest, BankDto>
     {
 
         private readonly IHrmRepository<Hrm.Domain.Bank> _BankRepository;
         private readonly IMapper _mapper;
-        public GetBankByIdRequestHandler(IHrmRepository<Hrm.Domain.Bank> BankRepositoy, IMapper mapper)
+        public GetExamTypeByIdRequestHandler(IHrmRepository<Hrm.Domain.Bank> BankRepositoy, IMapper mapper)
         {
             _BankRepository = BankRepositoy;
             _mapper = mapper;

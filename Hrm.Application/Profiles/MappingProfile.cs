@@ -61,10 +61,11 @@ using Hrm.Application.DTOs.Pool;
 using Hrm.Application.DTOs.SubDepartment;
 using Hrm.Application.DTOs.UserRole;
 using Hrm.Application.DTOs.OfficeAddress;
+using Hrm.Application.DTOs.ExamType;
 
 
 
- 
+
 namespace Hrm.Application.Profiles
 {
     public class MappingProfile : Profile
@@ -239,6 +240,10 @@ namespace Hrm.Application.Profiles
             
             CreateMap<UserRole, UserRoleDto>().ReverseMap();
             CreateMap<UserRole, CreateUserRoleDto>().ReverseMap();
+
+
+            CreateMap<ExamType, ExamTypeDto>().ReverseMap();
+            CreateMap<ExamType, CreateExamTypeDto>().ReverseMap();
 
             #region Modules Mapping    
             CreateMap<Module, ModuleDto>().ReverseMap();

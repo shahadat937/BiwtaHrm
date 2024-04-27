@@ -584,7 +584,7 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Exam Type',
-        url: '/base/accordion'
+        url: '/bascisetup/examType'
       },
       {
         name: 'Board',

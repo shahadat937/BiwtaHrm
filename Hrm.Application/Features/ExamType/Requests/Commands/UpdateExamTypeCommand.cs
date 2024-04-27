@@ -1,4 +1,4 @@
-﻿using Hrm.Application.DTOs.Bank;
+﻿using Hrm.Application.DTOs.ExamType;
 using Hrm.Application.Responses;
 using MediatR;
 using System;
@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.Features.Bank.Requests.Commands
+namespace Hrm.Application.Features.ExamType.Requests.Commands
 {
     public class UpdateExamTypeCommand : IRequest<BaseCommandResponse>
     {
-        public BankDto BankDto { get; set; }
+        public ExamTypeDto ExamTypeDto { get; set; }
     }
 }

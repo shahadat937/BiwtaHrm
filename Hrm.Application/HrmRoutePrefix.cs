@@ -67,6 +67,7 @@ namespace Hrm.Application
         public const string Pool = HRMRoutePrefixBase + "pool";
         public const string SubDepartment = HRMRoutePrefixBase + "subDepartment";
         public const string UserRole = HRMRoutePrefixBase + "userRole";
+        public const string ExamType = HRMRoutePrefixBase + "examType";
 
 
 

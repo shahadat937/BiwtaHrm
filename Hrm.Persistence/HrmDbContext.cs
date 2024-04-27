@@ -268,7 +268,11 @@ namespace Hrm.Persistence
             //        .OnDelete(DeleteBehavior.ClientSetNull)
             //        .HasConstraintName("FK_DepartmentId");
             //});
-
+            modelBuilder.Entity<ExamType>(entity =>
+            {
+                entity.HasKey(e => e.ExamTypeId)
+                .HasName("[ExamTypeId]");
+            });
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
 
@@ -325,7 +329,7 @@ namespace Hrm.Persistence
         public virtual DbSet<EyesColor> EyesColor { get; set; } = null!;
         public virtual DbSet<Pool> Pool { get; set; } = null!;
         public virtual DbSet<SubDepartment> SubDepartment { get; set; } = null!;
-
+        public virtual DbSet<ExamType> ExamType { get; set; } = null!;
 
 
     }

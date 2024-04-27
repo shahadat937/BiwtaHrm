@@ -84,6 +84,7 @@ import { InstituteComponent } from './institute/institute.component';
 import { OfficeAddressComponent } from './office-address/office-address.component';
 import { OfficeComponent } from './office/office.component';
 import { BankBranchService } from './service/bank-branch.service';
+import { ExamTypeComponent } from './exam-type/exam-type.component';
 
 @NgModule({
   declarations: [
@@ -137,6 +138,7 @@ import { BankBranchService } from './service/bank-branch.service';
     CompetenceComponent,
     BankComponent,
     BankBranchComponent,
+    ExamTypeComponent,
   ],
   imports: [
     CommonModule,

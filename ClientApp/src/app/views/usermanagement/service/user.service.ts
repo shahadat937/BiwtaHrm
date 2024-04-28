@@ -33,7 +33,7 @@ export class UserService {
   }
    
   submit(model: any) {
-    return this.http.post(this.baseUrl + '/account/register', model);
+    return this.http.post(this.baseUrl + '/users/save-user', model);
   }
   update(id: number,model: any){
     return this.http.put(this.baseUrl + '/account/register', model);

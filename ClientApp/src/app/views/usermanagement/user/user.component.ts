@@ -151,7 +151,6 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   getAllUsers(){
     this.subscription = this.userService.getAll().subscribe((item) => {
-      console.log("All Users : ", item);
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -163,8 +162,6 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.userService.cachedData = [];
     const id = form.value.userId;
 
-    console.log("Form : ", form.value)
-
     const action$ = id
       ? this.userService.update(id, form.value)
       : this.userService.submit(form.value);
@@ -174,20 +171,18 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
           this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right',
           });
-          // this.getALlBloodGroups();
+          this.loading = false;
+          this.getAllUsers();
           this.resetForm();
           if (!id) {
             this.router.navigate(['/usermanagement/user']);
           }
-      this.loading = false;
         } else {
           this.toastr.warning('', `${response.message}`, {
             positionClass: 'toast-top-right',
           });
         }
-        
-      this.loading = false;
-      this.resetForm();
+        this.loading = false;
       });
   }
 

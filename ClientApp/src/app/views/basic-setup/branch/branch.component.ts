@@ -29,7 +29,7 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('BranchForm', { static: true }) BranchForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'branchName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'officeBranchName', 'isActive', 'Action'];
   loading = false;
 
   dataSource = new MatTableDataSource<any>();
@@ -51,8 +51,9 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('branchId');
+      const id = params.get('officeBranchId');
       if (id) {
+        //console.log(id);
         this.btnText = 'Update';
         this.branchService.getById(+id).subscribe((res) => {
           this.BranchForm?.form.patchValue(res);
@@ -91,8 +92,8 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
   initaialUpazila(form?: NgForm) {
     if (form != null) form.resetForm();
     this.branchService.branchs = {
-      branchId: 0,
-      branchName: '',
+      officeBranchId: 0,
+      officeBranchName: '',
       //districtName:"",
       menuPosition: 0,
       isActive: true,
@@ -105,71 +106,30 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
       // console.log(this.BranchForm?.form);
       this.BranchForm.form.reset();
       this.BranchForm.form.patchValue({
-        branchId: 0,
-        branchName: '',
+        officeBranchId: 0,
+      officeBranchName: '',
         //  districtName:"",
         menuPosition: 0,
         isActive: true,
       });
     }
+    this.router.navigate(['/bascisetup/officeBranch']);
   }
 
   getALlBranchs() {
     this.subscription = this.branchService.getAll().subscribe((item) => {
+      console.log(item)
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
   }
 
-  // onSubmit(form: NgForm) {
-  //   const id = this.BranchForm.form.get('branchId')?.value;
-  //   if (id) {
-  //     this.branchService.update(+id, this.BranchForm.value).subscribe(
-  //       (response: any) => {
-  //         //console.log(response);
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', 'Update', {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlBranchs();
-  //           this.resetForm();
-  //           this.router.navigate(['/bascisetup/branch']);
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   } else {
-  //     this.subscription = this.branchService.submit(form?.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlBranchs();
-  //           this.resetForm();
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   }
-  // }
+  
   onSubmit(form: NgForm): void {
     this.loading = false;
     this.branchService.cachedData = [];
-    const id = form.value.branchId;
+    const id = form.value.officeBranchId;
     const action$ = id
       ? this.branchService.update(id, form.value)
       : this.branchService.submit(form.value);
@@ -183,7 +143,7 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlBranchs();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/branch']);
+          this.router.navigate(['/bascisetup/officeBranch']);
         }
         this.loading = false;
 
@@ -201,8 +161,8 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          console.log('branch id ' + element.branchId);
-          this.branchService.delete(element.branchId).subscribe(
+          //console.log('branch id ' + element.officeBranchId);
+          this.branchService.delete(element.officeBranchId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {

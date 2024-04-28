@@ -16,7 +16,7 @@ export class SubjectService {
 
   getById(id: number) {
     return this.http.get<Subject>(
-      this.baseUrl + '/Subject/get-subjectbyid/' + id
+      this.baseUrl + '/Subject/get-SubjectDetail/' + id
     );
   }
   // getAll(): Observable<Subject[]> {

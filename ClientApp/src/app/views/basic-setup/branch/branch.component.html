@@ -13,16 +13,16 @@
       <c-col [md]="6">
         <input
           type="hidden"
-          [(ngModel)]="branchService.branchs.branchId"
-          name="branchId"
+          [(ngModel)]="branchService.branchs.officeBranchId"
+          name="officeBranchId"
         />
         <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
         <label cLabel for="validationCustom01"
           >Branch Name<span class="text-danger">*</span></label
         >
         <input
-          [(ngModel)]="branchService.branchs.branchName"
-          name="branchName"
+          [(ngModel)]="branchService.branchs.officeBranchName"
+          name="officeBranchName"
           #Branch="ngModel"
           placeholder="Enter Branch Name"
           cFormControl
@@ -92,9 +92,9 @@
           <th mat-header-cell *matHeaderCellDef>Serial No</th>
           <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
         </ng-container>
-        <ng-container matColumnDef="branchName">
+        <ng-container matColumnDef="officeBranchName">
           <th mat-header-cell *matHeaderCellDef>Branch Type Name</th>
-          <td mat-cell *matCellDef="let element">{{ element.branchName }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.officeBranchName }}</td>
         </ng-container>
 
         <!-- Name Column -->
@@ -108,7 +108,7 @@
           <td mat-cell *matCellDef="let element">
             <button
               class="custom-button"
-              [routerLink]="['/bascisetup/update-branch', element.branchId]"
+              [routerLink]="['/bascisetup/update-officeBranch', element.officeBranchId]"
             >
               <svg cIcon name="cilPencil"></svg>
             </button>

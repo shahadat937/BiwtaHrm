@@ -472,11 +472,11 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Branch',
-        url: '/bascisetup/branch'
+        url: '/bascisetup/officeBranch'
       },
       {
         name: 'Sub Branch',
-        url: '/bascisetup/subbranch'
+        url: '/bascisetup/subBranch'
       },
       {
         name: 'Section',
@@ -601,7 +601,7 @@ export const navItems: INavData[] = [
       {
         name: 'Subject',
         url: '/bascisetup/subject'
-      }
+      },
     ]
   },
   {

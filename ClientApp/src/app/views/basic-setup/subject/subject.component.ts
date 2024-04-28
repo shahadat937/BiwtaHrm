@@ -151,7 +151,7 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          console.log('subject id ' + element.subjectId);
+         // console.log('subject id ' + element.subjectId);
           this.subjectService.delete(element.subjectId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);

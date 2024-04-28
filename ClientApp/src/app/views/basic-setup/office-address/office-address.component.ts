@@ -168,10 +168,8 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
     });
   }
   divisionNameByCounterId(counterId:number){
-       console.log(counterId)
        this.districtService.getDivisionByCountryId(counterId).subscribe((data) => { 
         this.divisions = data;
-        console.log(this.divisions)
       });
   }
 

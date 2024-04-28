@@ -73,6 +73,7 @@
             >
             <div class="input-wrapper">
               <select
+                 (change)="divisionNameByCounterId(officeAddressService.officeAddresses.countryId)"
                 [(ngModel)]="officeAddressService.officeAddresses.countryId"
                 name="countryId"
                 #countryId="ngModel"

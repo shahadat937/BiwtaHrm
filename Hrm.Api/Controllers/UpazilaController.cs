@@ -13,6 +13,8 @@ using Hrm.Domain;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.DTOs.District;
+using Hrm.Application.Features.District.Requests.Queries;
 
 namespace Hrm.Api.Controllers
 {
@@ -32,6 +34,21 @@ namespace Hrm.Api.Controllers
             var Upazila = await _mediator.Send(new GetUpazilaRequest { });
             return Ok(Upazila);
         }
+
+        [HttpGet]
+        [Route("get-upazilaByDistrictId")]
+        public async Task<ActionResult<List<UpazilaDto>>> GetUpazilaByDistrictId(int districtId)
+        {
+
+            var districts = await _mediator.Send(new GetUpazilaByDistrictIdRequest
+            {
+                DistrictId = districtId
+            });
+            return Ok(districts);
+
+        }
+
+
 
         [HttpPost]
         [ProducesResponseType(200)] 

@@ -78,14 +78,14 @@ namespace Hrm.Api.Controllers
 
         }
         [HttpGet]
-        [Route("get-divisionByCountryId")]
-        public async Task<ActionResult<List<DivisionDto>>> GetByCountryId(int countryId)
+        [Route("get-divisionByCountryId/{id}")]
+        public async Task<ActionResult<List<DivisionDto>>> GetByCountryId(int id)
         {
             //var Division = await _mediator.Send(new GetDivisionByCountryIdRequest { CountryId = id });
             //return Ok(Division);
             var DivisionsByCountryId = await _mediator.Send(new GetDivisionByCountryIdRequest
             {
-                CountryId = countryId
+                CountryId = id
             });
             return Ok(DivisionsByCountryId);
 

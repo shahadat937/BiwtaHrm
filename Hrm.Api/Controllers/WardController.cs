@@ -57,7 +57,7 @@ namespace Hrm.Api.Controllers
 
 
         [HttpDelete]
-        [Route("delete-result/{id}")]
+        [Route("delete-ward/{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteWardCommand { WardId = id };

@@ -23,7 +23,13 @@ getDivision(): Observable<SelectedModel[]>{
     })
   );;
 }
-
+getDivisionByCountryId(id:number): Observable<SelectedModel[]>{
+  return this.http.get<SelectedModel[]>(this.baseUrl + '/division/get-divisionByCountryId/'+id).pipe(
+    map((data) => {
+      return data;
+    })
+  );; 
+}
 
   find(id: number) {
     return this.http.get<District>(this.baseUrl + '/district/get-districtbyid/' + id);

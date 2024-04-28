@@ -48,7 +48,7 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
-        [Route("delete-union")]
+        [Route("delete-union/{id}")]
         public async Task<ActionResult>Delete (int id)
         {
             var command = new DeleteUnionCommand { UnionId = id };

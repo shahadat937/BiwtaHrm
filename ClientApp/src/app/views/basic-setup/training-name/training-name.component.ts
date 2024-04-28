@@ -99,6 +99,7 @@ export class TrainingNameComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getALlTrainingNames() {
     this.subscription = this.trainingNameService.getAll().subscribe((item) => {
+      console.log(item)
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;

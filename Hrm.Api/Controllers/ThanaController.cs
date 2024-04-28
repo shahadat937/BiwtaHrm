@@ -13,6 +13,8 @@ using Hrm.Domain;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.DTOs.District;
+using Hrm.Application.Features.District.Requests.Queries;
 
 namespace Hrm.Api.Controllers
 {
@@ -32,7 +34,18 @@ namespace Hrm.Api.Controllers
             var Thana = await _mediator.Send(new GetThanaRequest { });
             return Ok(Thana);
         }
+        [HttpGet]
+        [Route("get-thanaByUpazilaId")]
+        public async Task<ActionResult<List<ThanaDto>>> GetThanaByUpazilaId(int upazilaId)
+        {
 
+            var thanas = await _mediator.Send(new GetThanaByUpazilaIdRequest
+            {
+                UpazilaId = upazilaId
+            });
+            return Ok(thanas);
+
+        }
         [HttpPost]
         [ProducesResponseType(200)] 
         [ProducesResponseType(400)]

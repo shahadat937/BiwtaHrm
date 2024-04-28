@@ -72,7 +72,7 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
     this.handleRouteParams();
     this.loadoffices();
     this.loadcountris();
-    this.loadedivisions();
+    //this.loadedivisions();
     this.loadedistricts();
     this.loadeupazila();
     this.loadethana();
@@ -106,14 +106,7 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  toggleToast() {
-    this.visible = !this.visible;
-  }
 
-  onVisibleChange($event: boolean) {
-    this.visible = $event;
-    this.percentage = !this.visible ? 0 : this.percentage;
-  }
 
   onTimerChange($event: number) {
     this.percentage = $event * 25;
@@ -173,6 +166,13 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
     this.officeService.selectGetoffice().subscribe((data) => { 
       this.offices = data;
     });
+  }
+  divisionNameByCounterId(counterId:number){
+       console.log(counterId)
+       this.districtService.getDivisionByCountryId(counterId).subscribe((data) => { 
+        this.divisions = data;
+        console.log(this.divisions)
+      });
   }
 
   loadcountris() { 

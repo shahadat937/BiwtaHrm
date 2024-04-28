@@ -24,9 +24,6 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
   styleUrl: './union.component.scss',
 })
 export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
-  position = 'top-end';
-  visible = false;
-  percentage = 0;
   btnText: string | undefined;
   @ViewChild('UnionForm', { static: true }) UnionForm!: NgForm;
   subscription: Subscription = new Subscription();
@@ -39,7 +36,6 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
   thanas: SelectedModel[] = [];
   constructor(
     public unionService: UnionService,
-    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -50,7 +46,6 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
       if (id) {
         this.btnText = 'Update';
         this.unionService.find(+id).subscribe((res) => {
-          console.log(res);
           this.UnionForm?.form.patchValue(res);
         });
       } else {
@@ -76,18 +71,9 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  toggleToast() {
-    this.visible = !this.visible;
-  }
 
-  onVisibleChange($event: boolean) {
-    this.visible = $event;
-    this.percentage = !this.visible ? 0 : this.percentage;
-  }
 
-  onTimerChange($event: number) {
-    this.percentage = $event * 25;
-  }
+
   initaialUnion(form?: NgForm) {
     if (form != null) form.resetForm();
     this.unionService.unions = {
@@ -103,7 +89,6 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log(this.UnionForm?.form.value);
     this.btnText = 'Submit';
     if (this.UnionForm?.form != null) {
-      console.log(this.UnionForm?.form);
       this.UnionForm.form.reset();
       this.UnionForm.form.patchValue({
         unionId: 0,
@@ -117,9 +102,7 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   loadthanas() {
-    console.log('thana');
-    this.unionService.getThana().subscribe((data) => {
-      console.log('thana' + data);
+    this.subscription =this.unionService.getThana().subscribe((data) => {
       this.thanas = data;
     });
   }
@@ -209,6 +192,7 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          console.log(result)
           this.unionService.delete(element.unionId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -216,6 +200,9 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.dataSource.data.splice(index, 1);
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
+              this.toastr.success('Delete sucessfully ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
             },
             (err) => {
               // console.log(err);

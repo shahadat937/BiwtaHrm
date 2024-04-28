@@ -48,6 +48,6 @@ export class UnionService {
     return this.http.post(this.baseUrl + '/union/save-union', model);
   }
   delete(id: number) {
-    return this.http.delete(this.baseUrl + '/union/delete-union/' + id);
+    return this.http.delete(this.baseUrl + '/union/delete-union/'+id);
   }
 }

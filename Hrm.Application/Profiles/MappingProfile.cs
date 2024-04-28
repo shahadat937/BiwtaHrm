@@ -250,7 +250,7 @@ namespace Hrm.Application.Profiles
             CreateMap<Board, CreateBoardDto>().ReverseMap();
 
             CreateMap<AspNetUsers, AspNetUserDto>().ReverseMap();
-            //CreateMap<UserRole, CreateUserRoleDto>().ReverseMap();
+            CreateMap<AspNetUsers, CreateAspNetUserDto>().ReverseMap();
 
 
             #region Modules Mapping    

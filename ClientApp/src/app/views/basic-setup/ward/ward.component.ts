@@ -50,7 +50,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
       if (id) {
         this.btnText = 'Update';
         this.wardService.find(+id).subscribe((res) => {
-          console.log(res);
+     
           this.WardForm?.form.patchValue(res);
         });
       } else {
@@ -100,10 +100,10 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
   resetForm() {
-    console.log(this.WardForm?.form.value);
+
     this.btnText = 'Submit';
     if (this.WardForm?.form != null) {
-      console.log(this.WardForm?.form);
+  
       this.WardForm.form.reset();
       this.WardForm.form.patchValue({
         wardId: 0,
@@ -117,9 +117,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   loadunions() {
-    console.log('union');
     this.wardService.getUnion().subscribe((data) => {
-      console.log('union' + data);
       this.unions = data;
     });
   }
@@ -191,7 +189,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlWards();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/upazila']);
+          this.router.navigate(['/bascisetup/ward']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {
@@ -205,6 +203,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          console.log(result)
           this.wardService.delete(element.wardId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -212,6 +211,9 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.dataSource.data.splice(index, 1);
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
+              this.toastr.success('Delete sucessfully ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
             },
             (err) => {
               // console.log(err);

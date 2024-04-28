@@ -55,11 +55,11 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<List<DistrictDto>>> GetDistricByDivisionId(int divisionId)
         {
   
-            var districtByDivisionId = await _mediator.Send(new GetDistrictByDivisionIdRequest
+            var districts = await _mediator.Send(new GetDistrictByDivisionIdRequest
             {
                 DivisionId = divisionId
             });
-            return Ok(districtByDivisionId);
+            return Ok(districts);
 
         }
         [HttpGet]

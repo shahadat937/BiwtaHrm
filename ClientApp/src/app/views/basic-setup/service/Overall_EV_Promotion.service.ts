@@ -12,11 +12,8 @@ export class Overall_EV_PromotionService {
     this.overall_EV_Promotions = new Overall_EV_Promotion();
    }
   find(id: number) {
-    return this.http.get<Overall_EV_Promotion>(this.baseUrl + '/Overall_EV_Promotion/get-overall_EV_PromotionDetail/' + id);
+    return this.http.get<Overall_EV_Promotion>(this.baseUrl + '/overallEVPromotion/get-overallEVPromotionDetail/' + id);
   }
-  // getAll():Observable<BloodGroup[]> {
-  //   return this.http.get<BloodGroup[]>(this.baseUrl + '/blood-group/get-bloodGroup');
-  // }
   getAll(): Observable<Overall_EV_Promotion[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call
@@ -24,7 +21,7 @@ export class Overall_EV_PromotionService {
     } else {
       // If data is not cached, make a server call to fetch it
       return this.http
-        .get<Overall_EV_Promotion[]>(this.baseUrl + '/Overall_EV_Promotion/get-overall_EV_Promotion')
+        .get<Overall_EV_Promotion[]>(this.baseUrl + '/overallEVPromotion/get-overallEVPromotion')
         .pipe(
           map((data) => {
             this.cachedData = data; // Cache the data
@@ -35,13 +32,13 @@ export class Overall_EV_PromotionService {
   }
 
   update(id: number,model: any) {
-    return this.http.put(this.baseUrl + '/Overall_EV_Promotion/update-overall_EV_Promotion/'+id, model);
+    return this.http.put(this.baseUrl + '/overallEVPromotion/update-overallEVPromotion/'+id, model);
   }
   submit(model: any) {
-    return this.http.post(this.baseUrl + '/Overall_EV_Promotion/save-overall_EV_Promotion', model);
+    return this.http.post(this.baseUrl + '/overallEVPromotion/save-overallEVPromotion', model);
   }
   delete(id:number){
-    return this.http.delete(this.baseUrl + '/Overall_EV_Promotion/delete-overall_EV_Promotion/'+id);
+    return this.http.delete(this.baseUrl + '/overallEVPromotion/delete-overallEVPromotion/'+id);
   }
 
 }

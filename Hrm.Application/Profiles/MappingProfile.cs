@@ -122,8 +122,8 @@ namespace Hrm.Application.Profiles
             CreateMap<Ward, WardDto>().ReverseMap();
             CreateMap<Ward, CreateWardDto>().ReverseMap();
             
-            CreateMap<Branch, BranchDto>().ReverseMap();
-            CreateMap<Branch, CreateBranchDto>().ReverseMap();
+            CreateMap<OfficeBranch, BranchDto>().ReverseMap();
+            CreateMap<OfficeBranch, CreateBranchDto>().ReverseMap();
 
             CreateMap<appraisalFormType, appraisalFormTypeDto>().ReverseMap();
             CreateMap<appraisalFormType,CreateappraisalFormTypeDto>().ReverseMap();
@@ -170,8 +170,8 @@ namespace Hrm.Application.Profiles
             CreateMap<Weekend, WeekendDto>().ReverseMap();
             CreateMap<Weekend, CreateWeekendDto>().ReverseMap();
 
-            CreateMap<Overall_EV_Promotion, Overall_EV_PromotionDto>().ReverseMap();
-            CreateMap<Overall_EV_Promotion, CreateOverall_EV_PromotionDto>().ReverseMap();
+            CreateMap<OverallEVPromotion, Overall_EV_PromotionDto>().ReverseMap();
+            CreateMap<OverallEVPromotion, CreateOverall_EV_PromotionDto>().ReverseMap();
 
             CreateMap<Scale, ScaleDto>().ReverseMap();
             CreateMap<Scale, CreateScaleDto>().ReverseMap();

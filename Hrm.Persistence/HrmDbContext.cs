@@ -94,9 +94,9 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.ResultId)
                 .HasName("PK__Result__97690208E73A8F36");
             });
-            modelBuilder.Entity<Branch>(entity =>
+            modelBuilder.Entity<OfficeBranch>(entity =>
             {
-                entity.HasKey(e => e.BranchId)
+                entity.HasKey(e => e.OfficeBranchId)
                 .HasName("[PK__Branch__A1682FC588459E1D]");
             });
             modelBuilder.Entity<Department>(entity =>
@@ -302,7 +302,7 @@ namespace Hrm.Persistence
         public virtual DbSet<District> District { get; set; } = null!;
         public virtual DbSet<Result> Result { get; set; } = null!;
         public virtual DbSet<Ward> Ward { get; set; } = null!;
-        public virtual DbSet<Branch> Branch { get; set; } = null!;
+        public virtual DbSet<OfficeBranch> OfficeBranch { get; set; } = null!;
         public virtual DbSet<Department> Department { get; set; } = null!;
         public virtual DbSet<SubBranch> SubBranch { get; set; } = null!;
         public virtual DbSet<Country> Country { get; set; } = null!;
@@ -318,7 +318,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Reward> Reward { get; set; } = null!;
         public virtual DbSet<HolidayType> HolidayType { get; set; } = null!;
         public virtual DbSet<Weekend> Weekend { get; set; } = null!;
-        public virtual DbSet<Overall_EV_Promotion> Overall_EV_Promotion { get; set; } = null!;
+        public virtual DbSet<OverallEVPromotion> OverallEVPromotion { get; set; } = null!;
         public virtual DbSet<Domain.Module> Module { get; set; } = null!;
         public virtual DbSet<Feature> Feature { get; set; } = null!;
         public virtual DbSet<Scale> Scale { get; set; } = null!;

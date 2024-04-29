@@ -65,6 +65,7 @@ using Hrm.Application.DTOs.OfficeAddress;
 using Hrm.Application.DTOs.ExamType;
 using Hrm.Application.DTOs.Board;
 using Hrm.Application.DTOs.Section;
+using Hrm.Application.DTOs.PostingOrderInfo;
 
 
 
@@ -255,6 +256,9 @@ namespace Hrm.Application.Profiles
             
             CreateMap<Section, SectionDto>().ReverseMap();
             CreateMap<Section, CreateSectionDto>().ReverseMap();
+
+            CreateMap<PostingOrderInfo, PostingOrderInfoDto>().ReverseMap();
+            CreateMap<PostingOrderInfo, CreatePostingOrderInfoDto>().ReverseMap();
 
 
             #region Modules Mapping    

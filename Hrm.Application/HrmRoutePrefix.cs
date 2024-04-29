@@ -72,6 +72,7 @@ namespace Hrm.Application
         public const string ExamType = HRMRoutePrefixBase + "examType";
         public const string Board = HRMRoutePrefixBase + "board";
         public const string Section = HRMRoutePrefixBase + "section";
+        public const string PostingOrderInfo = HRMRoutePrefixBase + "postingOrderInfo";
 
 
 

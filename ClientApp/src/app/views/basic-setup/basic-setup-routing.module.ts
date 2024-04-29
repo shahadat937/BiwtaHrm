@@ -436,6 +436,7 @@ const routes: Routes = [
   { path: 'update-section/:sectionId',
     component: SectionComponent,
   },
+  {
 
     path: 'subBranch',
     component: SubBranchComponent,

@@ -260,14 +260,6 @@ namespace Hrm.Persistence
                 .HasName("[SubDepartmentId]");
             });
 
-            //modelBuilder.Entity<SubDepartment>(entity =>
-            //{
-            //    entity.HasOne(d => d.Department)
-            //        .WithMany(p => p.SubDepartment)
-            //        .HasForeignKey(d => d.DepartmentId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_DepartmentId");
-            //});
             modelBuilder.Entity<ExamType>(entity =>
             {
                 entity.HasKey(e => e.ExamTypeId)
@@ -282,6 +274,11 @@ namespace Hrm.Persistence
             {
                 entity.HasKey(e => e.SectionId)
                 .HasName("[SectionId]");
+            });
+            modelBuilder.Entity<PostingOrderInfo>(entity =>
+            {
+                entity.HasKey(e => e.PostingOrderInfoId)
+                .HasName("[PostingOrderInfo]");
             });
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -344,6 +341,7 @@ namespace Hrm.Persistence
 
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; } = null!;
         public virtual DbSet<Section> Section { get; set; } = null!;
+        public virtual DbSet<PostingOrderInfo> PostingOrderInfo { get; set; } = null!;
 
 
 

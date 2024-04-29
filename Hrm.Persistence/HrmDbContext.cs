@@ -278,6 +278,11 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.BoardId)
                 .HasName("[BoardId]");
             });
+            modelBuilder.Entity<Section>(entity =>
+            {
+                entity.HasKey(e => e.SectionId)
+                .HasName("[SectionId]");
+            });
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
 
@@ -338,6 +343,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Board> Board { get; set; } = null!;
 
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; } = null!;
+        public virtual DbSet<Section> Section { get; set; } = null!;
 
 
 

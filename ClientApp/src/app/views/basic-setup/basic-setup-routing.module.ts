@@ -50,6 +50,7 @@ import { CompetenceComponent } from './competence/competence.component';
 import { ExamTypeComponent } from './exam-type/exam-type.component';
 import { BoardComponent } from './board/board.component';
 import { group } from '@angular/animations';
+import { SectionComponent } from './section/section.component';
 
 
 const routes: Routes = [
@@ -422,7 +423,14 @@ const routes: Routes = [
   },
   { path: 'update-group/:groupId',
     component: GroupComponent,
-  }
+  },
+  { 
+    path: 'section',
+    component: SectionComponent,
+  },
+  { path: 'update-section/:sectionId',
+    component: SectionComponent,
+  },
 ];
 
 @NgModule({

@@ -50,6 +50,9 @@ import { CompetenceComponent } from './competence/competence.component';
 import { ExamTypeComponent } from './exam-type/exam-type.component';
 import { BoardComponent } from './board/board.component';
 import { group } from '@angular/animations';
+
+import { SectionComponent } from './section/section.component';
+
 import { SubBranchComponent } from './sub-branch/sub-branch.component';
 
 
@@ -425,12 +428,21 @@ const routes: Routes = [
     component: GroupComponent,
   },
   { 
+
+    path: 'section',
+    component: SectionComponent,
+  },
+  { path: 'update-section/:sectionId',
+    component: SectionComponent,
+  },
+
     path: 'subBranch',
     component: SubBranchComponent,
   },
   { path: 'update-subBranch/:subBranchId',
     component: SubBranchComponent,
   }
+
 ];
 
 @NgModule({

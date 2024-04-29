@@ -480,7 +480,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Section',
-        url: '/base/pagination'
+        url: '/bascisetup/section'
       },
       {
         name: 'Designation',

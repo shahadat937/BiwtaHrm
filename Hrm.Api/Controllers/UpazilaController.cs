@@ -36,13 +36,13 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-upazilaByDistrictId")]
-        public async Task<ActionResult<List<UpazilaDto>>> GetUpazilaByDistrictId(int districtId)
+        [Route("get-upazilaByDistrictId/{id}")]
+        public async Task<ActionResult<List<UpazilaDto>>> GetUpazilaByDistrictId(int id)
         {
 
             var districts = await _mediator.Send(new GetUpazilaByDistrictIdRequest
             {
-                DistrictId = districtId
+                DistrictId = id
             });
             return Ok(districts);
 

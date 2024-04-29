@@ -73,7 +73,7 @@
             >
             <div class="input-wrapper">
               <select
-                 (change)="divisionNameByCounterId(officeAddressService.officeAddresses.countryId)"
+                 (change)="divisionNamesByCounterId(officeAddressService.officeAddresses.countryId)"
                 [(ngModel)]="officeAddressService.officeAddresses.countryId"
                 name="countryId"
                 #countryId="ngModel"
@@ -104,6 +104,7 @@
             >
             <div class="input-wrapper">
               <select
+              (change)="districtNamesByDivisionId(officeAddressService.officeAddresses.divisionId)"
                 [(ngModel)]="officeAddressService.officeAddresses.divisionId"
                 name="divisionId"
                 #divisionId="ngModel"
@@ -134,6 +135,7 @@
             >
             <div class="input-wrapper">
               <select
+              (change)="upazilaNamesByDistrictId(officeAddressService.officeAddresses.districtId)"
                 [(ngModel)]="officeAddressService.officeAddresses.districtId"
                 name="districtId"
                 #districtId="ngModel"

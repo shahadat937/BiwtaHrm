@@ -1,4 +1,5 @@
 ﻿using Hrm.Application.DTOs.Upazila;
+using Hrm.Shared.Models;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Upazila.Requests.Queries
 {
-    public class GetUpazilaByDistrictIdRequest:IRequest<List<UpazilaDto>>
+    public class GetUpazilaByDistrictIdRequest:IRequest<List<SelectedModel>>
     {
         public int DistrictId { get; set; }
     }

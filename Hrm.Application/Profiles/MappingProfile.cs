@@ -64,6 +64,7 @@ using Hrm.Application.DTOs.AspNetUsers;
 using Hrm.Application.DTOs.OfficeAddress;
 using Hrm.Application.DTOs.ExamType;
 using Hrm.Application.DTOs.Board;
+using Hrm.Application.DTOs.Section;
 
 
 
@@ -251,6 +252,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<AspNetUsers, AspNetUserDto>().ReverseMap();
             CreateMap<AspNetUsers, CreateAspNetUserDto>().ReverseMap();
+            
+            CreateMap<Section, SectionDto>().ReverseMap();
+            CreateMap<Section, CreateSectionDto>().ReverseMap();
 
 
             #region Modules Mapping    

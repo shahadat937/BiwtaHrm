@@ -91,8 +91,11 @@ import { ExamTypeService } from './service/exam-type.service';
 import { BankService } from './service/bank.service';
 import { BoardComponent } from './board/board.component';
 import { BoardService } from './service/board.service';
+import { SectionComponent } from './section/section.component';
+import { SectionService } from './service/section.service';
 import { SubBranchComponent } from './sub-branch/sub-branch.component';
 import { BranchService } from './service/branch.service';
+
 
 @NgModule({
   declarations: [
@@ -146,7 +149,8 @@ import { BranchService } from './service/branch.service';
     BankBranchComponent,
     ExamTypeComponent,
     BoardComponent,
-    SubBranchComponent,
+    SectionComponent,
+    SubBranchComponent
   ],
   imports: [
     CommonModule,
@@ -169,6 +173,7 @@ import { BranchService } from './service/branch.service';
     SpinnerModule,
   ],
   providers: [
+    SectionService,
     BranchService,
     BoardService,
     BankService,

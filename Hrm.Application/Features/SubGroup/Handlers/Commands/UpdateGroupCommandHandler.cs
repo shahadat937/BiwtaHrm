@@ -22,11 +22,11 @@ namespace Hrm.Application.Features.Group.Handlers.Commands
     public class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.Group> _GroupRepository;
+        private readonly IHrmRepository<Hrm.Domain.SubGroup> _GroupRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateGroupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Group> GroupRepository)
+        public UpdateGroupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.SubGroup> GroupRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -48,7 +48,7 @@ namespace Hrm.Application.Features.Group.Handlers.Commands
 
             //var GroupName = request.GroupDto.GroupName.ToLower();
             var GroupName = request.GroupDto.GroupName.Trim().ToLower().Replace(" ", string.Empty);
-            IQueryable<Hrm.Domain.Group> Groups = _GroupRepository.Where(x => x.GroupName.ToLower() == GroupName);
+            IQueryable<Hrm.Domain.SubGroup> Groups = _GroupRepository.Where(x => x.GroupName.ToLower() == GroupName);
 
 
 
@@ -65,7 +65,7 @@ namespace Hrm.Application.Features.Group.Handlers.Commands
             else
             {
 
-                var Group = await _unitOfWork.Repository<Hrm.Domain.Group>().Get(request.GroupDto.GroupId);
+                var Group = await _unitOfWork.Repository<Hrm.Domain.SubGroup>().Get(request.GroupDto.GroupId);
 
                 if (Group is null)
                 {
@@ -74,7 +74,7 @@ namespace Hrm.Application.Features.Group.Handlers.Commands
 
                 _mapper.Map(request.GroupDto, Group);
 
-                await _unitOfWork.Repository<Hrm.Domain.Group>().Update(Group);
+                await _unitOfWork.Repository<Hrm.Domain.SubGroup>().Update(Group);
                 await _unitOfWork.Save();
 
                 response.Success = true;

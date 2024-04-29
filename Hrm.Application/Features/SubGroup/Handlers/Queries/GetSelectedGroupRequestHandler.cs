@@ -11,17 +11,17 @@ namespace Hrm.Application.Features.Group.Handlers.Queries
 { 
     public class GetSelectedGroupRequestHandler : IRequestHandler<GetSelectedGroupRequest, List<SelectedModel>>
     {
-        private readonly IHrmRepository<Hrm.Domain.Group> _GroupRepository;
+        private readonly IHrmRepository<Hrm.Domain.SubGroup> _GroupRepository;
 
 
-        public GetSelectedGroupRequestHandler(IHrmRepository<Hrm.Domain.Group> GroupRepository)
+        public GetSelectedGroupRequestHandler(IHrmRepository<Hrm.Domain.SubGroup> GroupRepository)
         {
             _GroupRepository = GroupRepository;
         }
 
         public async Task<List<SelectedModel>> Handle(GetSelectedGroupRequest request, CancellationToken cancellationToken)
         {
-            ICollection<Hrm.Domain.Group> Groups = await _GroupRepository.FilterAsync(x => x.IsActive);
+            ICollection<Hrm.Domain.SubGroup> Groups = await _GroupRepository.FilterAsync(x => x.IsActive);
             List<SelectedModel> selectModels = Groups.Select(x => new SelectedModel 
             {
                 Name = x.GroupName,

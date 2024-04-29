@@ -154,8 +154,8 @@ namespace Hrm.Application.Profiles
             CreateMap<GradeDto, Grade>().ReverseMap();
               
             CreateMap<Grade, CreateGradeDto>().ReverseMap();
-            CreateMap<Group, GroupDto>().ReverseMap();
-            CreateMap<Group, CreateGroupDto>().ReverseMap();
+            CreateMap<SubGroup, GroupDto>().ReverseMap();
+            CreateMap<SubGroup, CreateGroupDto>().ReverseMap();
 
             CreateMap<Punishment, PunishmentDto>().ReverseMap();
             CreateMap<Punishment, CreatePunishmentDto>().ReverseMap();

@@ -9,6 +9,7 @@ import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
 import { SubjectComponent } from './subject/subject.component';
 import { GroupComponent } from './group/group.component';
+//import{GroupComponent} from './group/group.component'
 import { BranchComponent } from './branch/branch.component';
 import { UnionComponent } from './union/union.component';
 import { WardComponent } from './ward/ward.component';

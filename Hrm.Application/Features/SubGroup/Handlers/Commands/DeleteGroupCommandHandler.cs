@@ -21,12 +21,12 @@ namespace SchoolManagement.Application.Features.Groups.Handlers.Commands
 
         public async Task<Unit> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
         {
-            var Group = await _unitOfWork.Repository<Group>().Get(request.GroupId);
+            var Group = await _unitOfWork.Repository<SubGroup>().Get(request.GroupId);
 
             if (Group == null)
                 throw new NotFoundException(nameof(Group), request.GroupId);
 
-            await _unitOfWork.Repository<Group>().Delete(Group);
+            await _unitOfWork.Repository<SubGroup>().Delete(Group);
             try
             {
                 await _unitOfWork.Save();

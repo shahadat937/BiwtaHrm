@@ -22,7 +22,7 @@ export class GroupService {
   }
 
   find(id: number) {
-    return this.http.get<Group>(this.baseUrl + '/group/get-groupbyid/' + id);
+    return this.http.get<Group>(this.baseUrl + '/subGroup/get-subgroupbyid/' + id);
   }
   // getAll():Observable<Group[]> {
   //   return this.http.get<Group[]>(this.baseUrl + '/group/get-group');
@@ -33,7 +33,7 @@ export class GroupService {
       return of(this.cachedData);
     } else {
       // If data is not cached, make a server call to fetch it
-      return this.http.get<Group[]>(this.baseUrl + '/group/get-group').pipe(
+      return this.http.get<Group[]>(this.baseUrl + '/subGroup/get-subgroup').pipe(
         map((data) => {
           this.cachedData = data; // Cache the data
           return data;
@@ -42,12 +42,12 @@ export class GroupService {
     }
   }
   update(id: number, model: any) {
-    return this.http.put(this.baseUrl + '/group/update-group/' + id, model);
+    return this.http.put(this.baseUrl + '/subGroup/update-subgroup/' + id, model);
   }
   submit(model: any) {
-    return this.http.post(this.baseUrl + '/group/save-group', model);
+    return this.http.post(this.baseUrl + '/subGroup/save-subgroup', model);
   }
   delete(id: number) {
-    return this.http.delete(this.baseUrl + '/group/delete-group/' + id);
+    return this.http.delete(this.baseUrl + '/subGroup/delete-subgroup/' + id);
   }
 }

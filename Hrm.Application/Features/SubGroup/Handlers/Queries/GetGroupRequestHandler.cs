@@ -17,9 +17,9 @@ namespace Hrm.Application.Features.Group.Handlers.Queries
     public class GetGroupRequestHandler : IRequestHandler<GetGroupRequest, object>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.Group> _GroupRepository;
+        private readonly IHrmRepository<Hrm.Domain.SubGroup> _GroupRepository;
         private readonly IMapper _mapper;
-        public GetGroupRequestHandler(IHrmRepository<Hrm.Domain.Group> GroupRepository, IMapper mapper)
+        public GetGroupRequestHandler(IHrmRepository<Hrm.Domain.SubGroup> GroupRepository, IMapper mapper)
         {
             _GroupRepository = GroupRepository;
             _mapper = mapper;
@@ -27,7 +27,7 @@ namespace Hrm.Application.Features.Group.Handlers.Queries
 
         public async Task<object> Handle(GetGroupRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Hrm.Domain.Group> Group = _GroupRepository.Where(x => true);
+            IQueryable<Hrm.Domain.SubGroup> Group = _GroupRepository.Where(x => true);
             Group = Group.OrderByDescending(x => x.GroupId);
 
             var GroupDtos = await Task.Run(() => _mapper.Map<List<GroupDto>>(Group));

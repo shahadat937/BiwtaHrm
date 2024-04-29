@@ -124,7 +124,7 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.SubjectId)
                 .HasName("[[PK__Subject__AC1BA3A81467B256]]");
             });
-            modelBuilder.Entity<Group>(entity =>
+            modelBuilder.Entity<SubGroup>(entity =>
             {
                 entity.HasKey(e => e.GroupId)
                 .HasName("[[PK__Group__149AF36A7B245A3B]]");
@@ -308,7 +308,7 @@ namespace Hrm.Persistence
         public virtual DbSet<GradeType> GradeType { get; set; } = null!;
         public virtual DbSet<GradeClass> GradeClass { get; set; } = null!;
         public virtual DbSet<Grade> Grade { get; set; } = null!;
-        public virtual DbSet<Group> Group { get; set; } = null!;
+        public virtual DbSet<SubGroup> SubGroup { get; set; } = null!;
         public virtual DbSet<Punishment> Punishment { get; set; } = null!;
         public virtual DbSet<Reward> Reward { get; set; } = null!;
         public virtual DbSet<HolidayType> HolidayType { get; set; } = null!;

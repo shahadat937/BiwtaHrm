@@ -24,6 +24,8 @@ import { ToastrService } from 'ngx-toastr';
 import { BranchComponent } from './branch/branch.component';
 import { DepartmentComponent } from './department/department.component';
 import { GroupComponent } from './group/group.component';
+//import{GroupComponent} from './group/group.component'
+
 import { ShiftComponent } from './shift/shift.component';
 import { SubjectComponent } from './subject/subject.component';
 import { TrainingComponent } from './training/training.component';

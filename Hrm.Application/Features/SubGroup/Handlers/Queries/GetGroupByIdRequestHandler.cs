@@ -16,9 +16,9 @@ namespace Hrm.Application.Features.Group.Handlers.Queries
     public class GetGroupByIdRequestHandler : IRequestHandler<GetGroupByIdRequest, GroupDto>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.Group> _GroupRepository;
+        private readonly IHrmRepository<Hrm.Domain.SubGroup> _GroupRepository;
         private readonly IMapper _mapper;
-        public GetGroupByIdRequestHandler(IHrmRepository<Hrm.Domain.Group> GroupRepositoy, IMapper mapper)
+        public GetGroupByIdRequestHandler(IHrmRepository<Hrm.Domain.SubGroup> GroupRepositoy, IMapper mapper)
         {
             _GroupRepository = GroupRepositoy;
             _mapper = mapper;

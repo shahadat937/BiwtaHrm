@@ -16,18 +16,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
 
-    [Route(HrmRoutePrefix.Group)]
+    [Route(HrmRoutePrefix.SubGroup)]
     [ApiController]
-    public class GroupController : Controller
+    public class SubGroupController : Controller
     {
         private readonly IMediator _mediator;
-        public GroupController(IMediator mediator)
+        public SubGroupController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpGet]
-        [Route("get-group")]
+        [Route("get-subgroup")]
         public async Task<ActionResult> GetGroup()
         {
             var Group = await _mediator.Send(new GetGroupRequest { });
@@ -37,7 +37,7 @@ namespace Hrm.Api.Controllers
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        [Route("save-group")]
+        [Route("save-subgroup")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateGroupDto Group)
         {
             var command = new CreateGroupCommand { GroupDto = Group };
@@ -50,7 +50,7 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        [Route("update-group/{id}")]
+        [Route("update-subgroup/{id}")]
         public async Task<ActionResult> Put([FromBody] GroupDto Group)
         {
             var command = new UpdateGroupCommand { GroupDto = Group };
@@ -62,7 +62,7 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
-        [Route("delete-group/{id}")]
+        [Route("delete-subgroup/{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteGroupCommand { GroupId = id };
@@ -71,7 +71,7 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-groupbyid/{id}")]
+        [Route("get-subgroupbyid/{id}")]
         public async Task<ActionResult<GroupDto>> Get(int id)
         {
             var Group = await _mediator.Send(new GetGroupByIdRequest { GroupId = id });
@@ -80,7 +80,7 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-selectedgroup")]
+        [Route("get-selectedsubgroup")]
         public async Task<ActionResult<List<SelectedModel>>> GetSelectedGroup()
         {
             var group = await _mediator.Send(new GetSelectedGroupRequest { });

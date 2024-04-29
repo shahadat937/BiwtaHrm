@@ -591,7 +591,7 @@ export const navItems: INavData[] = [
         url: '/bascisetup/board'
       },
       {
-        name: 'Group',
+        name: 'Sub Group',
         url: '/bascisetup/group'
       },
       {

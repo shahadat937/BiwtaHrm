@@ -2,7 +2,7 @@
 
 namespace Hrm.Domain
 {
-    public class Group : BaseDomainEntity
+    public class SubGroup : BaseDomainEntity
     {
         public int GroupId { get; set; }
         public string? GroupName { get; set; }

@@ -16,11 +16,11 @@ namespace Hrm.Application.Features.Group.Handlers.Commands
     public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, BaseCommandResponse>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.Group> _GroupRepository;
+        private readonly IHrmRepository<Hrm.Domain.SubGroup> _GroupRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CreateGroupCommandHandler(IHrmRepository<Hrm.Domain.Group> GroupRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CreateGroupCommandHandler(IHrmRepository<Hrm.Domain.SubGroup> GroupRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _GroupRepository = GroupRepository;
             _unitOfWork = unitOfWork;
@@ -43,7 +43,7 @@ namespace Hrm.Application.Features.Group.Handlers.Commands
             {
                 var GroupName = request.GroupDto.GroupName.ToLower();
 
-                IQueryable<Hrm.Domain.Group> Groups = _GroupRepository.Where(x => x.GroupName.ToLower() == GroupName);
+                IQueryable<Hrm.Domain.SubGroup> Groups = _GroupRepository.Where(x => x.GroupName.ToLower() == GroupName);
 
                 if (GroupNameExists(request))
                 {
@@ -55,9 +55,9 @@ namespace Hrm.Application.Features.Group.Handlers.Commands
                 }
                 else
                 {
-                    var Group = _mapper.Map<Hrm.Domain.Group>(request.GroupDto);
+                    var Group = _mapper.Map<Hrm.Domain.SubGroup>(request.GroupDto);
 
-                    Group = await _unitOfWork.Repository<Hrm.Domain.Group>().Add(Group);
+                    Group = await _unitOfWork.Repository<Hrm.Domain.SubGroup>().Add(Group);
                     await _unitOfWork.Save();
 
                     response.Success = true;
@@ -71,7 +71,7 @@ namespace Hrm.Application.Features.Group.Handlers.Commands
         {
             var GroupName = request.GroupDto.GroupName.Trim().ToLower().Replace(" ", string.Empty);
 
-            IQueryable<Hrm.Domain.Group> Groups = _GroupRepository.Where(x => x.GroupName.Trim().ToLower().Replace(" ", string.Empty) == GroupName);
+            IQueryable<Hrm.Domain.SubGroup> Groups = _GroupRepository.Where(x => x.GroupName.Trim().ToLower().Replace(" ", string.Empty) == GroupName);
 
             return Groups.Any();
         }

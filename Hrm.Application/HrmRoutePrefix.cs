@@ -27,7 +27,7 @@ namespace Hrm.Application
         public const string Union = HRMRoutePrefixBase + "union";
         public const string District = HRMRoutePrefixBase + "district";
         public const string Result = HRMRoutePrefixBase + "Result";
-        public const string Branch = HRMRoutePrefixBase + "Branch";
+        public const string OfficeBranch = HRMRoutePrefixBase + "officeBranch";
         public const string SubBranch = HRMRoutePrefixBase + "SubBranch";
 
         public const string Ward = HRMRoutePrefixBase + "ward";
@@ -46,7 +46,7 @@ namespace Hrm.Application
         public const string Reward = HRMRoutePrefixBase + "reward";
         public const string HolidayType = HRMRoutePrefixBase + "holidayType";
         public const string Weekend = HRMRoutePrefixBase + "weekend";
-        public const string Overall_EV_Promotion = HRMRoutePrefixBase + "Overall_EV_Promotion";
+        public const string overallEVPromotion = HRMRoutePrefixBase + "overallEVPromotion";
         public const string Relation = HRMRoutePrefixBase + "Relation";
         public const string Scale = HRMRoutePrefixBase + "scale"; 
         public const string TaskName = HRMRoutePrefixBase + "task-name"; 

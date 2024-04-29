@@ -50,6 +50,7 @@ import { CompetenceComponent } from './competence/competence.component';
 import { ExamTypeComponent } from './exam-type/exam-type.component';
 import { BoardComponent } from './board/board.component';
 import { group } from '@angular/animations';
+import { SubBranchComponent } from './sub-branch/sub-branch.component';
 
 
 const routes: Routes = [
@@ -177,11 +178,11 @@ const routes: Routes = [
   component: GroupComponent, 
   },
   {
-    path: 'branch',
+    path: 'officeBranch',
     component: BranchComponent,
   },
   { 
-    path: 'update-branch/:branchId', 
+    path: 'update-officeBranch/:officeBranchId', 
     component: BranchComponent, 
   },
   {
@@ -292,7 +293,7 @@ const routes: Routes = [
     path: 'overall_EV_Promotion',
     component: OverallEVPromotionComponent,
   },
-  { path: 'update-overall_EV_Promotion/:overall_EV_PromotionId',
+  { path: 'update-overall_EV_Promotion/:overallEVPromotionId',
     component: OverallEVPromotionComponent,
   },
   {
@@ -422,6 +423,13 @@ const routes: Routes = [
   },
   { path: 'update-group/:groupId',
     component: GroupComponent,
+  },
+  { 
+    path: 'subBranch',
+    component: SubBranchComponent,
+  },
+  { path: 'update-subBranch/:subBranchId',
+    component: SubBranchComponent,
   }
 ];
 

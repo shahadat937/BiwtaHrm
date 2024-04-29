@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
-using Hrm.Application.DTOs.SubBranch.Validators;
+using Hrm.Application.DTOs.MaritalStatus.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.SubBranch.Requests.Commands;
 using Hrm.Application.Responses;
-using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -16,6 +15,7 @@ namespace Hrm.Application.Features.SubBranch.Handlers.Commands
 {
     public class DeleteSubBranchCommandHandler : IRequestHandler<DeleteSubBranchCommand, BaseCommandResponse>
     {
+
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 

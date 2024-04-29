@@ -1,54 +1,72 @@
-import { Overall_EV_PromotionService } from './../service/Overall_EV_Promotion.service';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { SubjectService } from './../service/subject.service';
+import { SubBranchService } from './../service/sub-branch.service';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { BranchService } from '../service/branch.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-overall-ev-promotion',
-  templateUrl: './overall-ev-promotion.component.html',
-  styleUrl: './overall-ev-promotion.component.scss'
+  selector: 'app-sub-branch',
+  templateUrl: './sub-branch.component.html',
+  styleUrl: './sub-branch.component.scss'
 })
-export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterViewInit {
+export class SubBranchComponent {
+  editMode: boolean = false;
+  branchs: any = [];
+
   btnText: string | undefined;
   loading = false;
-  @ViewChild('Overall_EV_PromotionForm', { static: true }) Overall_EV_PromotionForm!: NgForm;
+  @ViewChild('SubBranchForm', { static: true }) SubBranchForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'overallEVPromotionName', 'isActive', 'Action'];
+  displayedColumns: string[] = [
+    'slNo',
+    'subBranchName',
+    'branchName',
+    'isActive',
+    'Action',
+  ];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
   constructor(
-    public overall_EV_PromotionService: Overall_EV_PromotionService,
+    public subBranchsService: SubBranchService,
+    private branchService: BranchService,
+    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService
-  ) {
-    //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
-  }
+  ) { }
   ngOnInit(): void {
-    this.getAllOverall_EV_Promotions();
+    this.getAllSubBranchs();
+    this.SelectModelBranchs();
     this.handleRouteParams();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('overallEVPromotionId');
+      const id = params.get('subBranchId');
       if (id) {
         this.btnText = 'Update';
-        this.overall_EV_PromotionService.find(+id).subscribe((res) => {
-          this.Overall_EV_PromotionForm?.form.patchValue(res);
+        this.subBranchsService.find(+id).subscribe((res) => {
+          this.SubBranchForm?.form.patchValue(res);
         });
       } else {
         this.btnText = 'Submit';
       }
+    });
+  }
+  SelectModelBranchs() {
+    this.branchService.getSelectBranch().subscribe((data) => {
+      this.branchs = data;
     });
   }
   ngAfterViewInit() {
@@ -66,56 +84,56 @@ export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterView
     this.dataSource.filter = filterValue;
   }
 
-  initaialOverall_EV_Promotion(form?: NgForm) {
+  initaialSubBranch(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.overall_EV_PromotionService.overall_EV_Promotions = {
-      overallEVPromotionId: 0,
-      overallEVPromotionName: '',
+    this.subBranchsService.subBranchs = {
+      subBranchId: 0,
+      subBranchName: '',
+      branchId: 0,
       menuPosition: 0,
       isActive: true,
     };
   }
   resetForm() {
-    this.btnText = 'Submit';
-    if (this.Overall_EV_PromotionForm?.form != null) {
-      this.Overall_EV_PromotionForm.form.reset();
-      this.Overall_EV_PromotionForm.form.patchValue({
-        overallEVPromotionId: 0,
-        overallEVPromotionName: '',
+    if (this.SubBranchForm?.form != null) {
+      this.SubBranchForm.form.reset();
+      this.SubBranchForm.form.patchValue({
+        subBranchId: 0,
+        subBranchName: '',
+        branchId: 0,
         menuPosition: 0,
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/overall_EV_Promotion']);
-
+    this.router.navigate(['/bascisetup/SubBranch']);
   }
-
-  getAllOverall_EV_Promotions() {
-    this.subscription = this.overall_EV_PromotionService.getAll().subscribe((item) => {
-      //console.log(item);
+  getAllSubBranchs() {
+    this.subscription = this.subBranchsService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
   }
+
+
   onSubmit(form: NgForm): void {
     this.loading = true;
-    this.overall_EV_PromotionService.cachedData = [];
-    const id = form.value.overallEVPromotionId;
+    this.subBranchsService.cachedData = [];
+    const id = form.value.subBranchId;
     const action$ = id
-      ? this.overall_EV_PromotionService.update(id, form.value)
-      : this.overall_EV_PromotionService.submit(form.value);
+      ? this.subBranchsService.update(id, form.value)
+      : this.subBranchsService.submit(form.value);
 
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
-         //const successMessage = id ? '' : '';
+        //  const successMessage = id ? 'Update' : 'Successfully';
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getAllOverall_EV_Promotions();
+        this.getAllSubBranchs();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/overall_EV_Promotion']);
+          this.router.navigate(['/bascisetup/subBranch']);
         }
         this.loading = false;
       } else {
@@ -131,16 +149,13 @@ export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterView
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.overall_EV_PromotionService.delete(element.overallEVPromotionId).subscribe(
+          this.subBranchsService.delete(element.subBranchId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {
                 this.dataSource.data.splice(index, 1);
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
-              this.toastr.success('Delete sucessfully ! ', ` `, {
-                positionClass: 'toast-top-right',
-              });
             },
             (err) => {
               this.toastr.error('Somethig Wrong ! ', ` `, {

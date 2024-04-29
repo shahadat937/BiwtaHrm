@@ -1,5 +1,6 @@
-export class Branch {   branchId: number = 0;
-    branchName: string = ""; 
+export class Branch {   
+    officeBranchId: number = 0;
+    officeBranchName: string = ""; 
     menuPosition: number = 0;
     isActive: boolean = true;
 }

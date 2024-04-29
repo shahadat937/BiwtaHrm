@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.SubBranch;
+using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.SubBranch.Requests.Queries;
+using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,29 +19,41 @@ namespace Hrm.Application.Features.SubBranch.Handlers.Queries
     {
 
         private readonly IHrmRepository<Hrm.Domain.SubBranch> _SubBranchRepository;
+        private readonly IHrmRepository<Hrm.Domain.OfficeBranch> _BranchRepository;
         private readonly IMapper _mapper;
-        public GetSubBranchRequestHandler(IHrmRepository<Hrm.Domain.SubBranch> SubBranchRepository, IMapper mapper)
+        public GetSubBranchRequestHandler(IHrmRepository<Hrm.Domain.SubBranch> SubBranchRepository, IMapper mapper, IHrmRepository<Domain.OfficeBranch> BranchRepository)
         {
             _SubBranchRepository = SubBranchRepository;
             _mapper = mapper;
+            _BranchRepository = BranchRepository;
         }
 
         public async Task<object> Handle(GetSubBranchRequest request, CancellationToken cancellationToken)
         {
-            //IQueryable<Hrm.Domain.SubBranch> SubBranch = _SubBranchRepository.Where(x => true);
+            IQueryable<Hrm.Domain.SubBranch> SubBranchs = _SubBranchRepository.FilterWithInclude(x => true);
+            SubBranchs = SubBranchs.OrderByDescending(x => x.SubBranchId);
 
-            //var SubBranchDtos = _mapper.Map<List<SubBranchDto>>(SubBranch);
+            var SubBranchDtos = new List<SubBranchDto>();
 
-            //return SubBranchDtos;
-
-
-
-            IQueryable<Hrm.Domain.SubBranch> SubBranch = _SubBranchRepository.Where(x => true);
-
-            // Use Task.Run to offload the synchronous operation to a background thread
-            var SubBranchDtos = await Task.Run(() => _mapper.Map<List<SubBranchDto>>(SubBranch));
+            foreach (var SubBranch in SubBranchs)
+            {
+                var SubBranchDto = _mapper.Map<SubBranchDto>(SubBranch);
+                var BranchName = await GetBranchName(SubBranch.BranchId);
+                SubBranchDto.BranchName = BranchName;
+                SubBranchDtos.Add(SubBranchDto);
+            }
 
             return SubBranchDtos;
+        }
+
+        private async Task<string?> GetBranchName(int? BranchId)
+        {
+            if (BranchId.HasValue)
+            {
+                var Branch = await _BranchRepository.Get(BranchId.Value);
+                return Branch?.OfficeBranchName;
+            }
+            return null;
         }
     }
 }

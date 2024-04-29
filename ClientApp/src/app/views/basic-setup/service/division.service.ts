@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 import { Division } from '../model/division';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,13 @@ export class DivisionService {
           })
         );
     }
+  }
+  getDivisionByCountryId(id:number): Observable<SelectedModel[]>{
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/division/get-divisionByCountryId/'+id).pipe(
+      map((data) => {
+        return data;
+      })
+    );; 
   }
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/division/update-division/'+id, model);

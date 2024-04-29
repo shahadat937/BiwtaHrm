@@ -42,7 +42,13 @@ export class UapzilaService {
     }
   }
 
- 
+  getUpapzilaByDistrictId(id:number): Observable<SelectedModel[]>{
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/upazila/get-upazilaByDistrictId/'+id).pipe(
+      map((data) => {
+        return data;
+      })
+    );; 
+  }
 
   getdistrict(){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/district/get-selecteddistrict')

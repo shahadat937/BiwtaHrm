@@ -4,6 +4,8 @@ using Hrm.Application.DTOs.District;
 using Hrm.Application.DTOs.Division;
 using Hrm.Application.Features.District.Requests.Queries;
 using Hrm.Application.Features.Division.Requests.Queries;
+using Hrm.Domain;
+using Hrm.Shared.Models;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.District.Handlers.Queries
 {
-    public class GetDistrictByDivisionIdRequestHandler:IRequestHandler<GetDistrictByDivisionIdRequest, List<DistrictDto>>
+    public class GetDistrictByDivisionIdRequestHandler:IRequestHandler<GetDistrictByDivisionIdRequest, List<SelectedModel>>
     {
         private readonly IHrmRepository<Hrm.Domain.District> _DistrictRepository;
         private readonly IMapper _mapper;
@@ -23,13 +25,17 @@ namespace Hrm.Application.Features.District.Handlers.Queries
             _mapper = mapper;
         }
 
-        public async Task<List<DistrictDto>> Handle(GetDistrictByDivisionIdRequest request, CancellationToken cancellationToken)
+        public async Task<List<SelectedModel>> Handle(GetDistrictByDivisionIdRequest request, CancellationToken cancellationToken)
         {
             
             ICollection<Hrm.Domain.District> Districts = _DistrictRepository.FilterWithInclude(x => x.DivisionId == request.DivisionId).ToList();
-         
-            var DistrictsDtos = _mapper.Map<List<DistrictDto>>(Districts);
-            return DistrictsDtos;
+            List<SelectedModel> selectModels = Districts.Select(x => new SelectedModel
+            {
+                Id = x.DistrictId,
+                Name = x.DistrictName
+            }).ToList();
+            return selectModels;
+           
         }
     }
 }

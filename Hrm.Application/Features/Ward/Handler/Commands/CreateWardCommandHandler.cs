@@ -45,7 +45,7 @@ namespace Hrm.Application.Features.Ward.Handler.Commands
 
                 var wardName = request.WardDto.WardName.ToLower();
 
-                IQueryable<Hrm.Domain.Ward> wards = _wardRepository.Where(x => x.WardName.ToLower() == wardName);
+                IQueryable<Hrm.Domain.Ward> wards = _wardRepository.Where(x => x.WardName.ToLower() == wardName && x.UnionId == request.WardDto.UnionId);
 
 
 

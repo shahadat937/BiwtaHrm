@@ -41,6 +41,13 @@ export class UnionService {
       );
     }
   }
+  getUnionNamesByThanaId(id:number): Observable<SelectedModel[]>{
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/union/get-unionByThanaId/'+id).pipe(
+      map((data) => {
+        return data;
+      })
+    );; 
+  }
   update(id: number, model: any) {
     return this.http.put(this.baseUrl + '/union/update-union/' + id, model);
   }

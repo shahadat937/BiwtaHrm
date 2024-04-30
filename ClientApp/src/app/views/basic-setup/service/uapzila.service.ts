@@ -41,7 +41,9 @@ export class UapzilaService {
         );
     }
   }
-
+  getupazila(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/upazila/get-selectedUpazila')
+  }
   getUpapzilaByDistrictId(id:number): Observable<SelectedModel[]>{
     return this.http.get<SelectedModel[]>(this.baseUrl + '/upazila/get-upazilaByDistrictId/'+id).pipe(
       map((data) => {

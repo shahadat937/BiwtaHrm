@@ -35,7 +35,7 @@ namespace Hrm.Api.Controllers
             return Ok(Thana);
         }
         [HttpGet]
-        [Route("get-thanaByUpazilaId")]
+        [Route("get-thanaByUpazilaId/{upazilaId}")]
         public async Task<ActionResult<List<ThanaDto>>> GetThanaByUpazilaId(int upazilaId)
         {
 

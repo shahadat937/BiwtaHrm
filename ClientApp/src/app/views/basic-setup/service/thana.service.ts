@@ -17,12 +17,17 @@ export class ThanaService {
     this.thanas=new Thana();
    }
 
-   getupazila(){
-    return this.http.get<SelectedModel[]>(this.baseUrl + '/upazila/get-selectedUpazila')
-  }
+  
 
   getById(id: number) {
     return this.http.get<Thana>(this.baseUrl + '/thana/get-thanabyid/' + id);
+  }
+  getthanaNamesByUpazilaId(id:number): Observable<SelectedModel[]>{
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/thana/get-thanaByUpazilaId/'+id).pipe(
+      map((data) => {
+        return data;
+      })
+    );; 
   }
   // getAll():Observable<Thana[]> {
   //   return this.http.get<Thana[]>(this.baseUrl + '/thana/get-thana');

@@ -2,11 +2,13 @@
 using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.DTOs.District;
 using Hrm.Application.DTOs.MaritalStatus;
+using Hrm.Application.DTOs.Thana;
 using Hrm.Application.DTOs.Union;
 using Hrm.Application.Features.BloodGroup.Requests.Commands;
 using Hrm.Application.Features.District.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
+using Hrm.Application.Features.Thana.Requests.Queries;
 using Hrm.Application.Features.Union.Requests.Commands;
 using Hrm.Application.Features.Union.Requests.Queries;
 using Hrm.Domain;
@@ -32,7 +34,18 @@ namespace Hrm.Api.Controllers
             var Union = await _mediator.Send(new GetUnionRequest { });
             return Ok(Union);
         }
+        [HttpGet]
+        [Route("get-unionByThanaId/{thanaId}")]
+        public async Task<ActionResult<List<SelectedModel>>> GetUnionByThanaId(int thanaId)
+        {
 
+            var thanas = await _mediator.Send(new GetUnionByThanaIdRequest
+            {
+                ThanaId = thanaId
+            });
+            return Ok(thanas);
+
+        }
         [HttpPost]
         [ProducesResponseType(200)] 
         [ProducesResponseType(400)]

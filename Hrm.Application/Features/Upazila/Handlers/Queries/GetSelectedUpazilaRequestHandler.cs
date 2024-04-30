@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Upazila.Handlers.Queries
 { 
-    public class GetSelectedUpazilaRequestHandler : IRequestHandler<GetSelectedUpazilaRequest, UpazilaDto>
+    public class GetSelectedUpazilaRequestHandler : IRequestHandler<GetSelectedUpazilaRequest, List<SelectedModel>>
     {
         private readonly IHrmRepository<Hrm.Domain.Upazila> _UpazilaRepository;
         private readonly IMapper _mapper;
@@ -22,11 +22,16 @@ namespace Hrm.Application.Features.Upazila.Handlers.Queries
             _mapper = mapper;
         }
 
-        public async Task<UpazilaDto> Handle(GetSelectedUpazilaRequest request, CancellationToken cancellationToken)
+        public async Task<List<SelectedModel>> Handle(GetSelectedUpazilaRequest request, CancellationToken cancellationToken)
         {
             ICollection<Hrm.Domain.Upazila> Upazilas = await _UpazilaRepository.FilterAsync(x => x.IsActive);
-            var UpazilasDtos = _mapper.Map<UpazilaDto>(Upazilas);
-            return UpazilasDtos;
+            List<SelectedModel> SelectedModel = Upazilas.Select(x => new SelectedModel
+            {
+                Id = x.UpazilaId,
+                Name = x.UpazilaName
+            }).ToList();
+            //   var DivisionDtos = _mapper.Map<List<DivisionDto>>(DivisionNames);
+            return SelectedModel;
         }
     }
 }

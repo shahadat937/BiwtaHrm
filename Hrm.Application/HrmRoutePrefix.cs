@@ -41,7 +41,7 @@ namespace Hrm.Application
         public const string GradeType = HRMRoutePrefixBase + "grade-type";
         public const string GradeClass = HRMRoutePrefixBase + "grade-class";
         public const string Grade = HRMRoutePrefixBase + "grade";
-        public const string Group = HRMRoutePrefixBase + "group";
+        public const string SubGroup = HRMRoutePrefixBase + "subGroup";
         public const string Punishment = HRMRoutePrefixBase + "punishment";
         public const string Reward = HRMRoutePrefixBase + "reward";
         public const string HolidayType = HRMRoutePrefixBase + "holidayType";
@@ -72,6 +72,10 @@ namespace Hrm.Application
         public const string ExamType = HRMRoutePrefixBase + "examType";
         public const string Board = HRMRoutePrefixBase + "board";
         public const string Section = HRMRoutePrefixBase + "section";
+        public const string PostingOrderInfo = HRMRoutePrefixBase + "postingOrderInfo";
+        public const string TransferApproveInfo = HRMRoutePrefixBase + "transferApproveInfo";
+        public const string DepReleaseInfo = HRMRoutePrefixBase + "depReleaseInfo";
+        public const string EmpTnsferPostingJoin = HRMRoutePrefixBase + "EmpTnsferPostingJoin";
 
 
 

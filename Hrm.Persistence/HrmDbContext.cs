@@ -124,7 +124,7 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.SubjectId)
                 .HasName("[[PK__Subject__AC1BA3A81467B256]]");
             });
-            modelBuilder.Entity<Group>(entity =>
+            modelBuilder.Entity<SubGroup>(entity =>
             {
                 entity.HasKey(e => e.GroupId)
                 .HasName("[[PK__Group__149AF36A7B245A3B]]");
@@ -260,14 +260,6 @@ namespace Hrm.Persistence
                 .HasName("[SubDepartmentId]");
             });
 
-            //modelBuilder.Entity<SubDepartment>(entity =>
-            //{
-            //    entity.HasOne(d => d.Department)
-            //        .WithMany(p => p.SubDepartment)
-            //        .HasForeignKey(d => d.DepartmentId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_DepartmentId");
-            //});
             modelBuilder.Entity<ExamType>(entity =>
             {
                 entity.HasKey(e => e.ExamTypeId)
@@ -282,6 +274,26 @@ namespace Hrm.Persistence
             {
                 entity.HasKey(e => e.SectionId)
                 .HasName("[SectionId]");
+            });
+            modelBuilder.Entity<PostingOrderInfo>(entity =>
+            {
+                entity.HasKey(e => e.PostingOrderInfoId)
+                .HasName("[PostingOrderInfoId]");
+            });
+            modelBuilder.Entity<TransferApproveInfo>(entity =>
+            {
+                entity.HasKey(e => e.TransferApproveInfoId)
+                .HasName("[TransferApproveInfoId]");
+            });
+            modelBuilder.Entity<DepReleaseInfo>(entity =>
+            {
+                entity.HasKey(e => e.DepReleaseInfoId)
+                .HasName("[DepReleaseInfoId]");
+            });
+            modelBuilder.Entity<EmpTnsferPostingJoin>(entity =>
+            {
+                entity.HasKey(e => e.EmpTnsferPostingJoinId)
+                .HasName("[EmpTnsferPostingJoinId]");
             });
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -313,7 +325,7 @@ namespace Hrm.Persistence
         public virtual DbSet<GradeType> GradeType { get; set; } = null!;
         public virtual DbSet<GradeClass> GradeClass { get; set; } = null!;
         public virtual DbSet<Grade> Grade { get; set; } = null!;
-        public virtual DbSet<Group> Group { get; set; } = null!;
+        public virtual DbSet<SubGroup> SubGroup { get; set; } = null!;
         public virtual DbSet<Punishment> Punishment { get; set; } = null!;
         public virtual DbSet<Reward> Reward { get; set; } = null!;
         public virtual DbSet<HolidayType> HolidayType { get; set; } = null!;
@@ -344,6 +356,10 @@ namespace Hrm.Persistence
 
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; } = null!;
         public virtual DbSet<Section> Section { get; set; } = null!;
+        public virtual DbSet<PostingOrderInfo> PostingOrderInfo { get; set; } = null!;
+        public virtual DbSet<TransferApproveInfo> TransferApproveInfo { get; set; } = null!;
+        public virtual DbSet<DepReleaseInfo> DepReleaseInfo { get; set; } = null!;
+        public virtual DbSet<EmpTnsferPostingJoin> EmpTnsferPostingJoin { get; set; } = null!;
 
 
 

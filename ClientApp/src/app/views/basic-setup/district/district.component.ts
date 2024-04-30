@@ -23,10 +23,8 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
   templateUrl: './district.component.html',
   styleUrl: './district.component.scss',
 })
-export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
-  position = 'top-end';
-  visible = false;
-  percentage = 0;
+export class DistrictComponent implements OnInit, OnDestroy {
+
   btnText: string | undefined;
   @ViewChild('DistrictForm', { static: true }) DistrictForm!: NgForm;
   subscription: Subscription = new Subscription();
@@ -39,7 +37,6 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
   divisions: SelectedModel[] = [];
   constructor(
     public districtService: DistrictService,
-    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -76,18 +73,7 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  toggleToast() {
-    this.visible = !this.visible;
-  }
 
-  onVisibleChange($event: boolean) {
-    this.visible = $event;
-    this.percentage = !this.visible ? 0 : this.percentage;
-  }
-
-  onTimerChange($event: number) {
-    this.percentage = $event * 25;
-  }
   initaialDistrict(form?: NgForm) {
     if (form != null) form.resetForm();
     this.districtService.districts = {
@@ -100,10 +86,8 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
   resetForm() {
-    console.log(this.DistrictForm?.form.value);
     this.btnText = 'Submit';
     if (this.DistrictForm?.form != null) {
-      console.log(this.DistrictForm?.form);
       this.DistrictForm.form.reset();
       this.DistrictForm.form.patchValue({
         districtId: 0,
@@ -118,7 +102,6 @@ export class DistrictComponent implements OnInit, OnDestroy, AfterViewInit {
 
   loaddivisions() {
     this.districtService.getDivision().subscribe(data => {
-      console.log('division' + data);
       this.divisions = data;
     });
   }

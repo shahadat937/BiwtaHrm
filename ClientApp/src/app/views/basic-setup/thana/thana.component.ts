@@ -1,3 +1,4 @@
+import { UapzilaService } from './../service/uapzila.service';
 import {
   AfterViewInit,
   Component,
@@ -39,7 +40,7 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
   upazilas: SelectedModel[] = [];
   constructor(
     public thanaService: ThanaService,
-    private snackBar: MatSnackBar,
+    public uapzilaService: UapzilaService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -116,9 +117,7 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   loadupazila() {
-    // console.log('district');
-    this.thanaService.getupazila().subscribe((data) => {
-      // console.log('district' + data);
+    this.uapzilaService.getupazila().subscribe((data) => {
       this.upazilas = data;
     });
   }

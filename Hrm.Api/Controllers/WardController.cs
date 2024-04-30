@@ -13,6 +13,7 @@ using Hrm.Application.Features.Ward.Request.Queries;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.Features.Union.Requests.Queries;
 
 namespace Hrm.Api.Controllers
 {
@@ -35,7 +36,18 @@ namespace Hrm.Api.Controllers
             var Ward = await _mediator.Send(new GetWardRequest { });
             return Ok(Ward);
         }
+        [HttpGet]
+        [Route("get-wardByUnionId/{unionId}")]
+        public async Task<ActionResult<List<SelectedModel>>> GetWardByUnionId(int unionId)
+        {
 
+            var wards = await _mediator.Send(new GetWardByUnionIdRequest
+            {
+                UnionId = unionId
+            });
+            return Ok(wards);
+
+        }
         [HttpPost]
         [Route("save-ward")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateWardDto ward)

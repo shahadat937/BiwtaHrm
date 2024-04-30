@@ -73,7 +73,7 @@
             >
             <div class="input-wrapper">
               <select
-                 (change)="divisionNamesByCounterId(officeAddressService.officeAddresses.countryId)"
+                 (change)="onDivisionNamesChangeByCounterId(officeAddressService.officeAddresses.countryId)"
                 [(ngModel)]="officeAddressService.officeAddresses.countryId"
                 name="countryId"
                 #countryId="ngModel"
@@ -104,7 +104,7 @@
             >
             <div class="input-wrapper">
               <select
-              (change)="districtNamesByDivisionId(officeAddressService.officeAddresses.divisionId)"
+              (change)="onDistrictNamesChangeByDivisionId(officeAddressService.officeAddresses.divisionId)"
                 [(ngModel)]="officeAddressService.officeAddresses.divisionId"
                 name="divisionId"
                 #divisionId="ngModel"
@@ -135,7 +135,7 @@
             >
             <div class="input-wrapper">
               <select
-              (change)="upazilaNamesByDistrictId(officeAddressService.officeAddresses.districtId)"
+              (change)="onUpazilaNamesChangeByDistrictId(officeAddressService.officeAddresses.districtId)"
                 [(ngModel)]="officeAddressService.officeAddresses.districtId"
                 name="districtId"
                 #districtId="ngModel"
@@ -166,6 +166,7 @@
             >
             <div class="input-wrapper">
               <select
+              (change)="onThanaNamesChangeByUpazilaId(officeAddressService.officeAddresses.upazilaId)"
                 [(ngModel)]="officeAddressService.officeAddresses.upazilaId"
                 name="upazilaId"
                 #upazilaId="ngModel"
@@ -196,6 +197,7 @@
             >
             <div class="input-wrapper">
               <select
+              (change)="onUnionNamesChangeByThanaId(officeAddressService.officeAddresses.thanaId)"
                 [(ngModel)]="officeAddressService.officeAddresses.thanaId"
                 name="thanaId"
                 #thanaId="ngModel"
@@ -226,6 +228,7 @@
             >
             <div class="input-wrapper">
               <select
+              (change)="onWardNamesChangeByUnionId(officeAddressService.officeAddresses.unionId)"
                 [(ngModel)]="officeAddressService.officeAddresses.unionId"
                 name="unionId"
                 #unionId="ngModel"

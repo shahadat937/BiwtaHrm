@@ -21,7 +21,13 @@ export class WardService {
     );
   }
 
-  
+  getWardNamesByUnionId(id:number): Observable<SelectedModel[]>{
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/ward/get-wardByUnionId/'+id).pipe(
+      map((data) => {
+        return data;
+      })
+    );; 
+  }
   getward() {
     return this.http.get<SelectedModel[]>(
       this.baseUrl + '/ward/get-selectedward'

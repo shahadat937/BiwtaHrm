@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -30,10 +31,7 @@ import { DivisionService } from '../service/division.service';
   templateUrl: './office-address.component.html',
   styleUrl: './office-address.component.scss'
 })
-export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit {
-  position = 'top-end';
-  visible = false;
-  percentage = 0;
+export class OfficeAddressComponent implements OnInit, OnDestroy {
   offices :SelectedModel[]=[];
   countris: SelectedModel[] = [];
   divisions: SelectedModel[] = [];
@@ -47,7 +45,6 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'officeAddressName', 'isActive', 'Action'];
   loading = false;
-
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -63,23 +60,18 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
     public unionService :UnionService,
     public wardService :WardService,
     public divisionService :DivisionService,
-    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService
   ) {}
   ngOnInit(): void {
-    this.getALlOfficeAddresss();
+    this.getAllOfficeAddresss();
     this.handleRouteParams();
     this.loadoffices();
-    this.loadcountris();
-    //this.loadedivisions();
-    //this.loadedistricts();
-    //this.loadeupazila();
-    this.loadethana();
-    this.loadunions();
-    this.loadewards(); 
+    this.loadcountris(); 
+   // this.onDivisionNamesChangeByCounterId(0); 
+    //this.initaialofficeAddress();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
@@ -87,6 +79,12 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
       if (id) {
         this.btnText = 'Update';
         this.officeAddressService.getById(+id).subscribe((res) => {
+          this.onDivisionNamesChangeByCounterId(res.countryId);
+          this.onDistrictNamesChangeByDivisionId(res.divisionId);
+          this.onUpazilaNamesChangeByDistrictId(res.districtId);
+          this.onThanaNamesChangeByUpazilaId(res.upazilaId);
+          this.onUnionNamesChangeByThanaId(res.thanaId);
+          this.onWardNamesChangeByUnionId(res.unionId);
           this.OfficeAddressForm?.form.patchValue(res);
         });
       } else {
@@ -94,10 +92,8 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
       }
     });
   }
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.matSort;
-  }
+
+
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -110,10 +106,8 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
 
-  onTimerChange($event: number) {
-    this.percentage = $event * 25;
-  }
-  initaialUpazila(form?: NgForm) {
+
+  initaialofficeAddress(form?: NgForm) {
     if (form != null) form.resetForm();
     this.officeAddressService.officeAddresses = {
       officeAddressId: 0,
@@ -132,10 +126,8 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
     };
   }
   resetForm() {
-    // console.log(this.OfficeAddressForm?.form.value);
     this.btnText = 'Submit';
     if (this.OfficeAddressForm?.form != null) {
-      // console.log(this.OfficeAddressForm?.form);
       this.OfficeAddressForm.form.reset();
       this.OfficeAddressForm.form.patchValue({
         officeAddressId: 0,
@@ -153,10 +145,12 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
         isActive: true,
       });
     }
+    this.router.navigate(['/bascisetup/officeAddress']);
   }
 
-  getALlOfficeAddresss() {
+  getAllOfficeAddresss() {
     this.subscription = this.officeAddressService.getAll().subscribe((item) => {
+      
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -165,78 +159,49 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
 
 
   loadoffices() { 
-    this.officeService.selectGetoffice().subscribe((data) => { 
+    this.subscription=this.officeService.selectGetoffice().subscribe((data) => { 
       this.offices = data;
     });
   }
-  divisionNamesByCounterId(counterId:number){
-       this.divisionService.getDivisionByCountryId(counterId).subscribe((data) => { 
+  
+  onDivisionNamesChangeByCounterId(counterId:number){
+    this.subscription=this.divisionService.getDivisionByCountryId(counterId).subscribe((data) => { 
         this.divisions = data;
       });
   }
-  districtNamesByDivisionId(divisionId:number){
-       this.districtService.getDistrictByDivisionId(divisionId).subscribe((data) => { 
+  onDistrictNamesChangeByDivisionId(divisionId:number){
+    this.subscription=this.districtService.getDistrictByDivisionId(divisionId).subscribe((data) => { 
         this.districts = data;
  
       });
   }
-  upazilaNamesByDistrictId(districtId:number){
-       this.uapzilaService.getUpapzilaByDistrictId(districtId).subscribe((data) => { 
+  onUpazilaNamesChangeByDistrictId(districtId:number){
+    this.subscription=this.uapzilaService.getUpapzilaByDistrictId(districtId).subscribe((data) => { 
         this.upazilas = data;
-        console.log( this.upazilas)
       });
   }
-
+  onThanaNamesChangeByUpazilaId(upazilaId:number){
+ this.subscription=this.thanaService.getthanaNamesByUpazilaId(upazilaId).subscribe((data) => { 
+     this.thanas = data;
+    
+   });
+}
+onUnionNamesChangeByThanaId(thanaId:number){
+  this.subscription=this.unionService.getUnionNamesByThanaId(thanaId).subscribe((data) => { 
+      this.unions = data;
+        });
+ }
+ onWardNamesChangeByUnionId(unionId:number){
+  this.subscription=this.wardService.getWardNamesByUnionId(unionId).subscribe((data) => { 
+      this.wards = data;
+      
+        });
+ }
   loadcountris() { 
-    this.countryService.selectGetCountry().subscribe((data) => { 
+    this.subscription=this.countryService.selectGetCountry().subscribe((data) => { 
       this.countris = data;
     });
   }
-  loadedivisions() { 
-    this.districtService.getDivision().subscribe((data) => { 
-      this.divisions = data;
-    });
-  }
-
-
-
-    
-  loadedistricts() { 
-    this.uapzilaService.getdistrict().subscribe((data) => { 
-      this.districts = data;
-    });
-  }
-
-
-  loadeupazila() { 
-    this.thanaService.getupazila().subscribe((data) => { 
-      this.upazilas = data;
-    });
-  }
-
-
-
-  loadethana() { 
-    this.unionService.getThana().subscribe((data) => { 
-      this.thanas = data;
-    });
-  }
-
-
-
-
-  loadunions() { 
-    this.wardService.getUnion().subscribe((data) => { 
-      this.unions = data;
-    });
-  }
-  loadewards() { 
-    this.wardService.getward().subscribe((data) => { 
-      this.wards = data;
-    });
-  
-  }
-
 
 
   onSubmit(form: NgForm): void {
@@ -253,7 +218,7 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getALlOfficeAddresss();
+        this.getAllOfficeAddresss();
         this.resetForm();
         if (!id) {
           this.router.navigate(['/bascisetup/officeAddress']);

@@ -7,8 +7,9 @@ using System.Text;
 
 namespace Hrm.Application.Features.Upazila.Requests.Queries
 {
-    public class GetSelectedUpazilaRequest : IRequest<UpazilaDto>
+    public class GetSelectedUpazilaRequest : IRequest<List<SelectedModel>>
     {
+
     }
 } 
       

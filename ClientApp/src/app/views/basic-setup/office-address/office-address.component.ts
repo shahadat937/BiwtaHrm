@@ -24,6 +24,7 @@ import { WardService } from './../service/ward.service';
 import { OfficeService} from './../service/office.service';
 
 import {OfficeAddressService} from '../service/office-address.service';
+import { DivisionService } from '../service/division.service';
 @Component({
   selector: 'app-office-address',
   templateUrl: './office-address.component.html',
@@ -61,6 +62,7 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
     public thanaService :ThanaService,
     public unionService :UnionService,
     public wardService :WardService,
+    public divisionService :DivisionService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
@@ -73,8 +75,8 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
     this.loadoffices();
     this.loadcountris();
     //this.loadedivisions();
-    this.loadedistricts();
-    this.loadeupazila();
+    //this.loadedistricts();
+    //this.loadeupazila();
     this.loadethana();
     this.loadunions();
     this.loadewards(); 
@@ -167,9 +169,21 @@ export class OfficeAddressComponent implements OnInit, OnDestroy, AfterViewInit 
       this.offices = data;
     });
   }
-  divisionNameByCounterId(counterId:number){
-       this.districtService.getDivisionByCountryId(counterId).subscribe((data) => { 
+  divisionNamesByCounterId(counterId:number){
+       this.divisionService.getDivisionByCountryId(counterId).subscribe((data) => { 
         this.divisions = data;
+      });
+  }
+  districtNamesByDivisionId(divisionId:number){
+       this.districtService.getDistrictByDivisionId(divisionId).subscribe((data) => { 
+        this.districts = data;
+ 
+      });
+  }
+  upazilaNamesByDistrictId(districtId:number){
+       this.uapzilaService.getUpapzilaByDistrictId(districtId).subscribe((data) => { 
+        this.upazilas = data;
+        console.log( this.upazilas)
       });
   }
 

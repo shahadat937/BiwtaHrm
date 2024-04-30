@@ -441,7 +441,8 @@ const routes: Routes = [
     path: 'subBranch',
     component: SubBranchComponent,
   },
-  { path: 'update-subBranch/:subBranchId',
+  { 
+    path: 'update-subBranch/:subBranchId',
     component: SubBranchComponent,
   }
 

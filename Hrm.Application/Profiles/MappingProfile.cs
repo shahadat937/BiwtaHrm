@@ -65,6 +65,10 @@ using Hrm.Application.DTOs.OfficeAddress;
 using Hrm.Application.DTOs.ExamType;
 using Hrm.Application.DTOs.Board;
 using Hrm.Application.DTOs.Section;
+using Hrm.Application.DTOs.PostingOrderInfo;
+using Hrm.Application.DTOs.TransferApproveInfo;
+using Hrm.Application.DTOs.DepReleaseInfo;
+using Hrm.Application.DTOs.EmpTnsferPostingJoin;
 
 
 
@@ -155,8 +159,8 @@ namespace Hrm.Application.Profiles
             CreateMap<GradeDto, Grade>().ReverseMap();
               
             CreateMap<Grade, CreateGradeDto>().ReverseMap();
-            CreateMap<Group, GroupDto>().ReverseMap();
-            CreateMap<Group, CreateGroupDto>().ReverseMap();
+            CreateMap<SubGroup, GroupDto>().ReverseMap();
+            CreateMap<SubGroup, CreateGroupDto>().ReverseMap();
 
             CreateMap<Punishment, PunishmentDto>().ReverseMap();
             CreateMap<Punishment, CreatePunishmentDto>().ReverseMap();
@@ -255,6 +259,18 @@ namespace Hrm.Application.Profiles
             
             CreateMap<Section, SectionDto>().ReverseMap();
             CreateMap<Section, CreateSectionDto>().ReverseMap();
+
+            CreateMap<PostingOrderInfo, PostingOrderInfoDto>().ReverseMap();
+            CreateMap<PostingOrderInfo, CreatePostingOrderInfoDto>().ReverseMap();
+            
+            CreateMap<TransferApproveInfo, TransferApproveInfoDto>().ReverseMap();
+            CreateMap<TransferApproveInfo, CreateTransferApproveInfoDto>().ReverseMap();
+            
+            CreateMap<DepReleaseInfo, DepReleaseInfoDto>().ReverseMap();
+            CreateMap<DepReleaseInfo, CreateDepReleaseInfoDto>().ReverseMap();
+            
+            CreateMap<EmpTnsferPostingJoin, EmpTnsferPostingJoinDto>().ReverseMap();
+            CreateMap<EmpTnsferPostingJoin, CreateEmpTnsferPostingJoinDto>().ReverseMap();
 
 
             #region Modules Mapping    

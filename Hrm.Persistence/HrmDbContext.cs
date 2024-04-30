@@ -278,7 +278,22 @@ namespace Hrm.Persistence
             modelBuilder.Entity<PostingOrderInfo>(entity =>
             {
                 entity.HasKey(e => e.PostingOrderInfoId)
-                .HasName("[PostingOrderInfo]");
+                .HasName("[PostingOrderInfoId]");
+            });
+            modelBuilder.Entity<TransferApproveInfo>(entity =>
+            {
+                entity.HasKey(e => e.TransferApproveInfoId)
+                .HasName("[TransferApproveInfoId]");
+            });
+            modelBuilder.Entity<DepReleaseInfo>(entity =>
+            {
+                entity.HasKey(e => e.DepReleaseInfoId)
+                .HasName("[DepReleaseInfoId]");
+            });
+            modelBuilder.Entity<EmpTnsferPostingJoin>(entity =>
+            {
+                entity.HasKey(e => e.EmpTnsferPostingJoinId)
+                .HasName("[EmpTnsferPostingJoinId]");
             });
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -342,6 +357,9 @@ namespace Hrm.Persistence
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; } = null!;
         public virtual DbSet<Section> Section { get; set; } = null!;
         public virtual DbSet<PostingOrderInfo> PostingOrderInfo { get; set; } = null!;
+        public virtual DbSet<TransferApproveInfo> TransferApproveInfo { get; set; } = null!;
+        public virtual DbSet<DepReleaseInfo> DepReleaseInfo { get; set; } = null!;
+        public virtual DbSet<EmpTnsferPostingJoin> EmpTnsferPostingJoin { get; set; } = null!;
 
 
 

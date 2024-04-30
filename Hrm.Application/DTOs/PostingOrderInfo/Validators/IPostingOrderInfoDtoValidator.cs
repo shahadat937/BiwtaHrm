@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace Hrm.Application.DTOs.PostingOrderInfo.Validators
 {
 
-    
-        public class IPostingOrderInfoDtoValidator : AbstractValidator<IPostingOrderInfoDto>
+
+    public class IPostingOrderInfoDtoValidator : AbstractValidator<IPostingOrderInfoDto>
+    {
+        public IPostingOrderInfoDtoValidator()
         {
-            public IPostingOrderInfoDtoValidator()
-            {
-                RuleFor(b => b.PostingOrderInfoName)
-                    .NotEmpty().WithMessage("{PropertyName} is required.").MaximumLength(150).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
-            }
+            RuleFor(b => b.PostingOrderInfoName)
+                .NotEmpty().WithMessage("{PropertyName} is required.").MaximumLength(150).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
         }
-    
+    }
+
 }

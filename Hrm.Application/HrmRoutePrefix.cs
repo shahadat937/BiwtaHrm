@@ -73,6 +73,9 @@ namespace Hrm.Application
         public const string Board = HRMRoutePrefixBase + "board";
         public const string Section = HRMRoutePrefixBase + "section";
         public const string PostingOrderInfo = HRMRoutePrefixBase + "postingOrderInfo";
+        public const string TransferApproveInfo = HRMRoutePrefixBase + "transferApproveInfo";
+        public const string DepReleaseInfo = HRMRoutePrefixBase + "depReleaseInfo";
+        public const string EmpTnsferPostingJoin = HRMRoutePrefixBase + "EmpTnsferPostingJoin";
 
 
 

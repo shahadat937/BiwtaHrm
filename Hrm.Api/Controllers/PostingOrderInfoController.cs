@@ -1,12 +1,10 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.PostingOrderInfo;
 using Hrm.Application.DTOs.MaritalStatus;
-using Hrm.Application.DTOs.PostingOrderInfo;
 using Hrm.Application.Features.PostingOrderInfo.Requests.Commands;
 using Hrm.Application.Features.PostingOrderInfo.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
-using Hrm.Application.Features.PostingOrderInfo.Requests.Queries;
 using Hrm.Application.Responses;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;

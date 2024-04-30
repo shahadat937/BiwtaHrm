@@ -66,6 +66,9 @@ using Hrm.Application.DTOs.ExamType;
 using Hrm.Application.DTOs.Board;
 using Hrm.Application.DTOs.Section;
 using Hrm.Application.DTOs.PostingOrderInfo;
+using Hrm.Application.DTOs.TransferApproveInfo;
+using Hrm.Application.DTOs.DepReleaseInfo;
+using Hrm.Application.DTOs.EmpTnsferPostingJoin;
 
 
 
@@ -259,6 +262,15 @@ namespace Hrm.Application.Profiles
 
             CreateMap<PostingOrderInfo, PostingOrderInfoDto>().ReverseMap();
             CreateMap<PostingOrderInfo, CreatePostingOrderInfoDto>().ReverseMap();
+            
+            CreateMap<TransferApproveInfo, TransferApproveInfoDto>().ReverseMap();
+            CreateMap<TransferApproveInfo, CreateTransferApproveInfoDto>().ReverseMap();
+            
+            CreateMap<DepReleaseInfo, DepReleaseInfoDto>().ReverseMap();
+            CreateMap<DepReleaseInfo, CreateDepReleaseInfoDto>().ReverseMap();
+            
+            CreateMap<EmpTnsferPostingJoin, EmpTnsferPostingJoinDto>().ReverseMap();
+            CreateMap<EmpTnsferPostingJoin, CreateEmpTnsferPostingJoinDto>().ReverseMap();
 
 
             #region Modules Mapping    

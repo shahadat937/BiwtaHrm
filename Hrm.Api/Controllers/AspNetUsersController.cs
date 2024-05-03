@@ -1,9 +1,13 @@
 ﻿using Hrm.Application;
+using Hrm.Application.Contracts.Identity;
 using Hrm.Application.DTOs.AspNetUsers;
 using Hrm.Application.Features.AspNetUsers.Requests.Commands;
 using Hrm.Application.Features.AspNetUsers.Requests.Queries;
+using Hrm.Application.Features.BloodGroups.Requests.Queries;
+using Hrm.Application.Models.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hrm.Api.Controllers
 {
@@ -12,9 +16,11 @@ namespace Hrm.Api.Controllers
     public class AspNetUsersController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public AspNetUsersController(IMediator mediator)
+        private readonly IAuthService _authenticationService;
+        public AspNetUsersController(IMediator mediator, IAuthService authenticationService)
         {
             _mediator = mediator;
+            _authenticationService = authenticationService;
         }
 
 
@@ -26,13 +32,40 @@ namespace Hrm.Api.Controllers
             return Ok(Users);
         }
 
-        [HttpPost]
-        [Route("save-user")]
-        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateAspNetUserDto userDto)
+        [HttpGet]
+        [Route("get-userById/{id}")]
+        public async Task<ActionResult> GetById(string id)
         {
-            var command = new CreateAspNetUserCommand { AspNetUserDto = userDto };
-            var response = await _mediator.Send(command);
-            return Ok(response);
+            var users = await _mediator.Send(new GetUserDetailsRequest { Id = id });
+            return Ok(users);
         }
+
+        //[HttpPost]
+        //[Route("save-user")]
+        //public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateAspNetUserDto userDto)
+        //{
+        //    var command = new CreateAspNetUserCommand { AspNetUserDto = userDto };
+        //    var response = await _mediator.Send(command);
+        //    return Ok(response);
+        //}
+
+        [HttpPut]
+        [Route("update-user/{id}")]
+        public async Task<ActionResult<BaseCommandResponse>> UpdateUser(string id, [FromBody] UpdateUserRequest request)
+        {
+            return Ok(await _authenticationService.UpdateUser(new UpdateUserRequest
+            {
+                Id = id,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                UserName = request.UserName,
+                PhoneNumber = request.PhoneNumber,
+                PNo = request.PNo,
+                IsActive = request.IsActive,
+            }));
+        }
+
+
     }
 }

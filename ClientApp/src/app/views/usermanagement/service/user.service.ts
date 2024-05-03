@@ -15,6 +15,11 @@ export class UserService {
     this.users = new UserModule();
    }
 
+   
+  find(id: string) {
+    return this.http.get<UserModule>(this.baseUrl + '/users/get-userById/' + id);
+  }
+
    getAll(): Observable<UserModule[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call
@@ -35,7 +40,7 @@ export class UserService {
   submit(model: any) {
     return this.http.post(this.baseUrl + '/account/register', model);
   }
-  update(id: number,model: any){
-    return this.http.put(this.baseUrl + '/account/register', model);
+  update(id: string,model: any){
+    return this.http.put(this.baseUrl + '/users/update-user/'+id, model);
   }
 }

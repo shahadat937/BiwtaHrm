@@ -170,5 +170,71 @@ namespace Hrm.Identity.Services
                 signingCredentials: signingCredentials);
             return jwtSecurityToken;
         }
+
+        public async Task<BaseCommandResponse> UpdateUser(UpdateUserRequest request)
+        {
+            var response = new BaseCommandResponse();
+
+            var user = await _userManager.FindByIdAsync(request.Id);
+
+            if (user == null)
+            {
+                response.Success = false;
+                response.Message = $"User with ID '{request.Id}' not found.";
+                return response;
+            }
+
+            var existingUser = await _userManager.FindByNameAsync(request.UserName);
+
+            IQueryable<Domain.AspNetUsers> pNoFound = _aspNetUserRepository.Where(x => x.PNo.ToLower() == request.PNo.ToLower());
+
+            var existingEmail = await _userManager.FindByEmailAsync(request.Email);
+
+            if (existingUser != null)
+            {
+                response.Success = false;
+                response.Message = $"Registration Failed, UserName '{request.UserName}' already Exists.";
+            }
+
+            else if (pNoFound.Any())
+            {
+                response.Success = false;
+                response.Message = $"Registration Failed, pNo '{request.PNo}' already Exists.";
+            }
+
+            else if (existingEmail != null)
+            {
+                response.Success = false;
+                response.Message = $"Registration Failed, Email '{request.Email}' already Exists.";
+            }
+
+            else
+            {
+                // Update user properties
+                user.UserName = request.UserName;
+                user.FirstName = request.FirstName;
+                user.LastName = request.LastName;
+                user.Email = request.Email;
+                user.PhoneNumber = request.PhoneNumber;
+                user.PNo = request.PNo;
+                user.IsActive = request.IsActive;
+
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    response.Success = true;
+                    response.Message = $"User information updated successfully.";
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Message = $"Failed to update user information: {string.Join(", ", result.Errors)}";
+                }
+            }
+
+            return response;
+        }
     }
 }

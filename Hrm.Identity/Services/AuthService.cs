@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Hrm.Application.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Hrm.Application.Contracts.Persistence;
+using Hrm.Application.Responses;
 
 namespace Hrm.Identity.Services
 {
@@ -23,16 +24,18 @@ namespace Hrm.Identity.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IHrmRepository<Domain.AspNetUsers> _aspNetUserRepository;
         private readonly JwtSettings _jwtSettings;
 
         public AuthService(RoleManager<IdentityRole> roleManager,UserManager<ApplicationUser> userManager,
             IOptions<JwtSettings> jwtSettings,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager, IHrmRepository<Domain.AspNetUsers> aspNetUserRepository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtSettings = jwtSettings.Value;
             _signInManager = signInManager;
+            _aspNetUserRepository = aspNetUserRepository;
         }
 
         public async Task<AuthResponse> Login(AuthRequest request)
@@ -69,15 +72,11 @@ namespace Hrm.Identity.Services
             return response;
         }
 
-        public async Task<RegistrationResponse> Register(RegistrationRequest request)
+        public async Task<BaseCommandResponse> Register(RegistrationRequest request)
         {
-            var existingUser = await _userManager.FindByNameAsync(request.UserName);
+            var response = new BaseCommandResponse();
 
-            if (existingUser != null)
-            {
-                throw new BadRequestException($"Username '{request.UserName}' already exists.");
-            }
-
+            
             var user = new ApplicationUser
             {
                 Email = request.Email,
@@ -90,26 +89,48 @@ namespace Hrm.Identity.Services
                 EmailConfirmed = true
             };
 
+            var existingUser = await _userManager.FindByNameAsync(request.UserName);
+
+            IQueryable<Domain.AspNetUsers> pNoFound = _aspNetUserRepository.Where(x => x.PNo.ToLower() == request.PNo.ToLower());
+
             var existingEmail = await _userManager.FindByEmailAsync(request.Email);
 
-            if (existingEmail == null)
+            if (existingUser != null)
+            {
+                response.Success = false;
+                response.Message = $"Registration Failed, UserName '{request.UserName}' already Exists.";
+            }
+
+            else if (pNoFound.Any())
+            {
+                response.Success = false;
+                response.Message = $"Registration Failed, pNo '{request.PNo}' already Exists.";
+            }
+
+            else if (existingEmail != null)
+            {
+                response.Success = false;
+                response.Message = $"Registration Failed, Email '{request.Email}' already Exists.";
+            }
+
+            else 
             {
                 var result = await _userManager.CreateAsync(user, request.Password);
 
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "Admin");
-                    return new RegistrationResponse() { UserId = user.Id };
+                    response.Success = true;
+                    response.Message = $"Register Successfull, UserName : '{request.UserName}'.";
                 }
                 else
                 {
-                    throw new BadRequestException($"{result.Errors}");
+                    response.Success = false;
+                    response.Message = $"Register Failed! '{result.Errors}'";
                 }
             }
-            else
-            {
-                throw new BadRequestException($"Email {request.Email } already exists.");
-            }
+
+            return response;
         }
 
         private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)

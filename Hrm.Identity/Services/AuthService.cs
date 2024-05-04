@@ -66,7 +66,7 @@ namespace Hrm.Identity.Services
                 Username = user.UserName,
                 Role =user.RoleName,
                 BranchId = user.BranchId,
-                TraineeId = user.PNo
+                PNo = user.PNo
             };
 
             return response;

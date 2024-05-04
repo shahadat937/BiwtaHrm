@@ -204,18 +204,25 @@
               </c-col>
       
               <c-col [xs]="12">
-                <button
-                  [disabled]="loading"
-                  [disabled]="UserForm.invalid"
-                  cButton
-                  class="me-1"
-                  color="primary"
-                  type="submit"
-                >
-                  <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-                  {{ btnText }}
-                </button>
-                <button cButton color="secondary" (click)="resetForm()">Reset</button>
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <button
+                      [disabled]="loading"
+                      [disabled]="UserForm.invalid"
+                      cButton
+                      class="me-1"
+                      color="primary"
+                      type="submit"
+                    >
+                      <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                      {{ btnText }}
+                      </button>
+                    <button cButton color="secondary" (click)="resetForm()">Reset</button>
+                  </div>
+                  <div>
+                    <button [hidden]="btnText != 'Update'" cButton color="danger" (click)="cancelUpdate()">Cancel</button>
+                  </div>
+                </div>
               </c-col>
             </form>
         </c-card-body>

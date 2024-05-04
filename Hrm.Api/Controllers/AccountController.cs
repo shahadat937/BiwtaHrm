@@ -3,8 +3,8 @@ using Hrm.Application.Contracts.Identity;
 using Hrm.Application.Models.Identity;
 
 namespace Hrm.Api.Controllers;
-[Route(HrmRoutePrefix.Account)]
-//[Route("api/[controller]")]
+//[Route(HrmRoutePrefix.Account)]
+[Route("api/[controller]")]
 [ApiController]
 public class AccountController : ControllerBase
 {

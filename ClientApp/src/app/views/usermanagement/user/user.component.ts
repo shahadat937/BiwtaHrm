@@ -62,7 +62,6 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.buttonIcon = "cilTrash";
         this.userService.find(id).subscribe((res) => {
           this.UserForm?.form.patchValue(res);
-          console.log("Response : ", res)
         });
       } else {
         this.btnText = 'Submit';
@@ -111,6 +110,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   cancelUpdate(){
     this.router.navigate(['/usermanagement/user']);
+    this.resetForm();
   }
   
   initaialUser(form?: NgForm) {
@@ -163,7 +163,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.loading = true;
     this.userService.cachedData = [];
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
+      const id = form.value.id;
 
     const action$ = id
       ? this.userService.update(id, form.value)
@@ -177,9 +177,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
           this.loading = false;
           this.getAllUsers();
           this.resetForm();
-          if (!id) {
-            this.router.navigate(['/usermanagement/user']);
-          }
+          this.router.navigate(['/usermanagement/user']);
         } else {
           this.toastr.warning('', `${response.message}`, {
             positionClass: 'toast-top-right',

@@ -29,7 +29,8 @@ constructor(
   private formBuilder: FormBuilder,
   private route: ActivatedRoute,
   private router: Router,
-  private authService: AuthService,private snackBar: MatSnackBar
+  private authService: AuthService,
+  private snackBar: MatSnackBar
 ) {
   super();
 }

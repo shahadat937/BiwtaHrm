@@ -24,9 +24,9 @@ namespace Hrm.Application.Models.Identity
         public string PNo { get; set; }
 
 
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; }
 
         [MinLength(6)]
-        public string Password { get; set; }
+        public string? Password { get; set; }
     }
 }

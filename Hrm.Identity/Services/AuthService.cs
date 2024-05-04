@@ -66,7 +66,7 @@ namespace Hrm.Identity.Services
                 Username = user.UserName,
                 Role =user.RoleName,
                 BranchId = user.BranchId,
-                TraineeId = user.PNo
+                PNo = user.PNo
             };
 
             return response;
@@ -184,13 +184,13 @@ namespace Hrm.Identity.Services
                 return response;
             }
 
-            var existingUser = await _userManager.FindByNameAsync(request.UserName);
+            IQueryable<Domain.AspNetUsers> existingUser = _aspNetUserRepository.Where(x => x.UserName.ToLower() == request.UserName.ToLower() && x.Id != request.Id);
 
-            IQueryable<Domain.AspNetUsers> pNoFound = _aspNetUserRepository.Where(x => x.PNo.ToLower() == request.PNo.ToLower());
+            IQueryable<Domain.AspNetUsers> pNoFound = _aspNetUserRepository.Where(x => x.PNo.ToLower() == request.PNo.ToLower() && x.Id != request.Id);
 
-            var existingEmail = await _userManager.FindByEmailAsync(request.Email);
+            IQueryable<Domain.AspNetUsers> existingEmail = _aspNetUserRepository.Where(x => x.Email.ToLower() == request.Email.ToLower() && x.Id != request.Id);
 
-            if (existingUser != null)
+            if (existingUser.Any())
             {
                 response.Success = false;
                 response.Message = $"Registration Failed, UserName '{request.UserName}' already Exists.";
@@ -202,7 +202,7 @@ namespace Hrm.Identity.Services
                 response.Message = $"Registration Failed, pNo '{request.PNo}' already Exists.";
             }
 
-            else if (existingEmail != null)
+            else if (existingEmail.Any())
             {
                 response.Success = false;
                 response.Message = $"Registration Failed, Email '{request.Email}' already Exists.";

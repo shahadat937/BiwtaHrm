@@ -24,7 +24,7 @@ namespace Hrm.Application.Features.TransferApproveInfo.Handlers.Queries
             ICollection<Hrm.Domain.TransferApproveInfo> TransferApproveInfos = await _TransferApproveInfoRepository.FilterAsync(x => x.IsActive);
             List<SelectedModel> selectModels = TransferApproveInfos.Select(x => new SelectedModel 
             {
-                Name = x.TransferApproveInfoName,
+                //Name = x.TransferApproveInfoName,
                 Id = x.TransferApproveInfoId
             }).ToList();
             return selectModels;

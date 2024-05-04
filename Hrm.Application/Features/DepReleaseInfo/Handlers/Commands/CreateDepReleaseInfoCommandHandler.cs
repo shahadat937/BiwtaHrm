@@ -10,14 +10,12 @@ namespace Hrm.Application.Features.DepReleaseInfo.Handlers.Commands
 {
     public class CreateDepReleaseInfoCommandHandler : IRequestHandler<CreateDepReleaseInfoCommand, BaseCommandResponse>
     {
-        private readonly IHrmRepository<Hrm.Domain.DepReleaseInfo> _DepReleaseInfoRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CreateDepReleaseInfoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.DepReleaseInfo> DepReleaseInfoRepository)
+        public CreateDepReleaseInfoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _DepReleaseInfoRepository = DepReleaseInfoRepository;
         }
         public async Task<BaseCommandResponse> Handle(CreateDepReleaseInfoCommand request, CancellationToken cancellationToken)
         {
@@ -33,43 +31,18 @@ namespace Hrm.Application.Features.DepReleaseInfo.Handlers.Commands
             }
             else
             {
-                var DepReleaseInfoName = request.DepReleaseInfoDto.DepReleaseInfoName.ToLower();
+                var DepReleaseInfo = _mapper.Map<Hrm.Domain.DepReleaseInfo>(request.DepReleaseInfoDto);
 
-                IQueryable<Hrm.Domain.DepReleaseInfo> DepReleaseInfos = _DepReleaseInfoRepository.Where(x => x.DepReleaseInfoName.ToLower() == DepReleaseInfoName);
-
-
-                if (DepReleaseInfoNameExists(request))
-                {
-                    response.Success = false;
-                    // response.Message = "Creation Failed Name already exists.";
-                    response.Message = $"Creation Failed '{request.DepReleaseInfoDto.DepReleaseInfoName}' already exists.";
-
-                    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
-
-                }
-                else
-                {
-                    var DepReleaseInfo = _mapper.Map<Hrm.Domain.DepReleaseInfo>(request.DepReleaseInfoDto);
-
-                    DepReleaseInfo = await _unitOfWork.Repository<Hrm.Domain.DepReleaseInfo>().Add(DepReleaseInfo);
-                    await _unitOfWork.Save();
+                DepReleaseInfo = await _unitOfWork.Repository<Hrm.Domain.DepReleaseInfo>().Add(DepReleaseInfo);
+                await _unitOfWork.Save();
 
 
-                    response.Success = true;
-                    response.Message = "Creation Successful";
-                    response.Id = DepReleaseInfo.DepReleaseInfoId;
-                }
+                response.Success = true;
+                response.Message = "Creation Successful";
+                response.Id = DepReleaseInfo.DepReleaseInfoId;
             }
 
             return response;
-        }
-        private bool DepReleaseInfoNameExists(CreateDepReleaseInfoCommand request)
-        {
-            var DepReleaseInfoName = request.DepReleaseInfoDto.DepReleaseInfoName.Trim().ToLower().Replace(" ", string.Empty);
-
-            IQueryable<Hrm.Domain.DepReleaseInfo> DepReleaseInfos = _DepReleaseInfoRepository.Where(x => x.DepReleaseInfoName.Trim().ToLower().Replace(" ", string.Empty) == DepReleaseInfoName);
-
-            return DepReleaseInfos.Any();
         }
 
     }

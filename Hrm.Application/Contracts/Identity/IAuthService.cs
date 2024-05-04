@@ -11,6 +11,8 @@ namespace Hrm.Application.Contracts.Identity
     {
         Task<AuthResponse> Login(AuthRequest request);
         Task<BaseCommandResponse> Register(RegistrationRequest request);
+        Task<BaseCommandResponse> UpdateUser(UpdateUserRequest request);
+
 
     }
 }

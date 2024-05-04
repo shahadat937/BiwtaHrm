@@ -60,9 +60,9 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.userHeaderText = "Update User";
         this.userBtnText = " Hide Form";
         this.buttonIcon = "cilTrash";
-        // this.bloodGroupService.find(+id).subscribe((res) => {
-        //   this.BloodGroupForm?.form.patchValue(res);
-        // });
+        this.userService.find(id).subscribe((res) => {
+          this.UserForm?.form.patchValue(res);
+        });
       } else {
         this.btnText = 'Submit';
         this.visible = false;
@@ -88,8 +88,6 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   UserFormView() : void {
-    this.resetForm();
-    this.router.navigate(['/usermanagement/user']);
     if(this.userBtnText == " Add User"){
       this.userBtnText = " Hide Form";
       this.buttonIcon = "cilTrash";
@@ -110,6 +108,10 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.visible = true;
   }
 
+  cancelUpdate(){
+    this.router.navigate(['/usermanagement/user']);
+    this.resetForm();
+  }
   
   initaialUser(form?: NgForm) {
     if (form != null) form.resetForm();
@@ -160,7 +162,8 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   onSubmit(form: NgForm): void{
     this.loading = true;
     this.userService.cachedData = [];
-    const id = form.value.userId;
+    this.route.paramMap.subscribe((params) => {
+      const id = form.value.id;
 
     const action$ = id
       ? this.userService.update(id, form.value)
@@ -174,9 +177,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
           this.loading = false;
           this.getAllUsers();
           this.resetForm();
-          if (!id) {
-            this.router.navigate(['/usermanagement/user']);
-          }
+          this.router.navigate(['/usermanagement/user']);
         } else {
           this.toastr.warning('', `${response.message}`, {
             positionClass: 'toast-top-right',
@@ -184,6 +185,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         }
         this.loading = false;
       });
+    });
   }
 
   delete(element: any){}

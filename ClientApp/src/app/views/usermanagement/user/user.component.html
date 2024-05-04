@@ -160,9 +160,11 @@
                   placeholder="Enter Your Password"
                   cFormControl
                   id="validationCustom07"
-                  required
+                  [required]="btnText != 'Update'"
+                  [disabled]="btnText === 'Update'"
                   type="password"
                   minlength="8"
+                  autocomplete="new-password" 
                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                 />
                 @if(!Password.value&&Password.touched){
@@ -184,8 +186,10 @@
                   placeholder="Re-Type Your Password"
                   cFormControl
                   id="validationCustom08"
-                  required
+                  [required]="btnText != 'Update'"
+                  [disabled]="btnText === 'Update'"
                   type="password"
+                  autocomplete="new-password" 
                 />
                 @if(RePassword.touched && Password.value !== RePassword.value){
                 <div class="text-left text-danger">Password Doesn't Match</div>
@@ -204,18 +208,25 @@
               </c-col>
       
               <c-col [xs]="12">
-                <button
-                  [disabled]="loading"
-                  [disabled]="UserForm.invalid"
-                  cButton
-                  class="me-1"
-                  color="primary"
-                  type="submit"
-                >
-                  <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-                  {{ btnText }}
-                </button>
-                <button cButton color="secondary" (click)="resetForm()">Reset</button>
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <button
+                      [disabled]="loading"
+                      [disabled]="UserForm.invalid"
+                      cButton
+                      class="me-1"
+                      color="primary"
+                      type="submit"
+                    >
+                      <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                      {{ btnText }}
+                      </button>
+                    <button cButton color="secondary" (click)="resetForm()">Reset</button>
+                  </div>
+                  <div>
+                    <button [hidden]="btnText != 'Update'" cButton color="danger" (click)="cancelUpdate()">Cancel</button>
+                  </div>
+                </div>
               </c-col>
             </form>
         </c-card-body>
@@ -278,7 +289,10 @@
           <!-- Name Column -->
           <ng-container matColumnDef="isActive">
             <th mat-header-cell *matHeaderCellDef>Is Active</th>
-            <td mat-cell *matCellDef="let element">{{ element.isActive }}</td>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.isActive">Active</span>
+              <span *ngIf="!element.isActive">De-Active</span>
+            </td>
           </ng-container>
   
           <ng-container matColumnDef="Action">

@@ -10,12 +10,12 @@ namespace Hrm.Application.DTOs.Shift
     {
         public int ShiftId { get; set; }
         public string? ShiftName { get; set; }
-        public TimeOnly? StartTime { get; set; }
-        public TimeOnly? EndTime { get; set; }
+        public string? StartTime { get; set; }
+        public string? EndTime { get; set; }
         public DateOnly? StartDate { get; set; }
         public DateOnly? EndDate { get; set; }
-        public TimeOnly? BufferTime { get; set; }
-        public TimeOnly? AbsentTime { get; set; }
+        public string? BufferTime { get; set; }
+        public string? AbsentTime { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }

@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.Pools.Handlers.Commands
+namespace hrm.Application.Features.Pools.Handlers.Commands
 {
     public class DeletePoolCommandHandler : IRequestHandler<DeletePoolCommand>
     {

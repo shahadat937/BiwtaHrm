@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.BankAccountTypes.Handlers.Commands
+namespace hrm.Application.Features.BankAccountTypes.Handlers.Commands
 {
     public class DeleteBankAccountTypeCommandHandler : IRequestHandler<DeleteBankAccountTypeCommand>
     {

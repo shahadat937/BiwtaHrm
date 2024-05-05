@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.Religions.Handlers.Commands
+namespace hrm.Application.Features.Religions.Handlers.Commands
 {
     public class DeleteReligionCommandHandler : IRequestHandler<DeleteReligionCommand>
     {

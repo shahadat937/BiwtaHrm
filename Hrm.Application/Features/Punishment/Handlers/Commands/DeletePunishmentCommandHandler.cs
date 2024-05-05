@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.Punishments.Handlers.Commands
+namespace hrm.Application.Features.Punishments.Handlers.Commands
 {
     public class DeletePunishmentCommandHandler : IRequestHandler<DeletePunishmentCommand>
     {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SchoolManagement.Identity.Configurations
+namespace Hrm.Identity.Configurations
 {
     public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
     {

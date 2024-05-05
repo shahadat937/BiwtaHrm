@@ -10,10 +10,16 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationExtras, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthService,private snackBar: MatSnackBar,private router: Router) {}
+  constructor(
+    private authenticationService: AuthService,
+    private snackBar: MatSnackBar,
+    private toastr: ToastrService,
+    private router: Router
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -39,59 +45,75 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
                 throw modalStateErrors;
               } else if (typeof(err.error) === 'object') {
-                this.snackBar.open(err.error.ErrorMessage, err.error.ErrorType, {
-                  duration: 2000,
-                  verticalPosition: 'bottom',
-                  horizontalPosition: 'right',
-                  panelClass: 'snackbar-danger'
+                // this.snackBar.open(err.error.ErrorMessage, err.error.ErrorType, {
+                //   duration: 2000,
+                //   verticalPosition: 'bottom',
+                //   horizontalPosition: 'right',
+                //   panelClass: 'snackbar-danger'
+                // });
+                this.toastr.warning(`${err.error.ErrorMessage}`, `${err.error.ErrorType}`, {
+                  positionClass: 'toast-top-right',
                 });
               
               } else {
                
-                this.snackBar.open(err.error.ErrorMessage, err.error.ErrorType, {
-                  duration: 2000,
-                  verticalPosition: 'bottom',
-                  horizontalPosition: 'right',
-                  panelClass: 'snackbar-danger'
+                // this.snackBar.open(err.error.ErrorMessage, err.error.ErrorType, {
+                //   duration: 2000,
+                //   verticalPosition: 'bottom',
+                //   horizontalPosition: 'right',
+                //   panelClass: 'snackbar-danger'
+                // });
+                this.toastr.warning(`${err.error.ErrorMessage}`, `${err.error.ErrorType}`, {
+                  positionClass: 'toast-top-right',
                 });
               }
               break;
             case 401:
-              this.snackBar.open(err.error.ErrorMessage, err.error.ErrorType, {
-                duration: 2000,
-                verticalPosition: 'bottom',
-                horizontalPosition: 'right',
-                panelClass: 'snackbar-danger'
+              // this.snackBar.open(err.error.ErrorMessage, err.error.ErrorType, {
+              //   duration: 2000,
+              //   verticalPosition: 'bottom',
+              //   horizontalPosition: 'right',
+              //   panelClass: 'snackbar-danger'
+              // });
+              this.toastr.warning(`${err.error.ErrorMessage}`, `${err.error.ErrorType}`, {
+                positionClass: 'toast-top-right',
               });
-           
               break;
             case 404:
-              this.snackBar.open(err.error.ErrorMessage, err.error.ErrorType, {
-                duration: 2000,
-                verticalPosition: 'bottom',
-                horizontalPosition: 'right',
-                panelClass: 'snackbar-danger'
+              // this.snackBar.open(err.error.ErrorMessage, err.error.ErrorType, {
+              //   duration: 2000,
+              //   verticalPosition: 'bottom',
+              //   horizontalPosition: 'right',
+              //   panelClass: 'snackbar-danger'
+              // });
+              this.toastr.warning(`${err.error.ErrorMessage}`, `${err.error.ErrorType}`, {
+                positionClass: 'toast-top-right',
               });
               //this.router.navigateByUrl('/authentication/page404');
               break;
             case 500:
               // const navigationExtras: NavigationExtras = {state: {error: err.error}}
               // this.router.navigateByUrl('/authentication/page500', navigationExtras);
- 		this.snackBar.open('Something unexpected went wrong','', {
-                duration: 2000,
-                verticalPosition: 'bottom',
-                horizontalPosition: 'right',
-                panelClass: 'snackbar-danger'
-              });
+ 		// this.snackBar.open('Something unexpected went wrong','', {
+    //             duration: 2000,
+    //             verticalPosition: 'bottom',
+    //             horizontalPosition: 'right',
+    //             panelClass: 'snackbar-danger'
+    //           });
+    this.toastr.warning(`${err.error.ErrorMessage}`, `${err.error.ErrorType}`, {
+      positionClass: 'toast-top-right',
+    });
               break;
             default:
-              this.snackBar.open('Something unexpected went wrong','', {
-                duration: 2000,
-                verticalPosition: 'bottom',
-                horizontalPosition: 'right',
-                panelClass: 'snackbar-danger'
+              // this.snackBar.open('Something unexpected went wrong','', {
+              //   duration: 2000,
+              //   verticalPosition: 'bottom',
+              //   horizontalPosition: 'right',
+              //   panelClass: 'snackbar-danger'
+              // });
+              this.toastr.warning('', `Something unexpected went wrong`, {
+                positionClass: 'toast-top-right',
               });
-            
               break;
           }
         }

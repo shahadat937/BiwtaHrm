@@ -14,6 +14,7 @@ import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroy
 export class LoginComponent extends UnsubscribeOnDestroyAdapter
 implements OnInit
 {
+  btnText: string | undefined;
 authForm!: FormGroup;
 submitted = false;
 loading = false;
@@ -56,12 +57,9 @@ onSubmit() {
   console.log(this.authForm.value)
   if (this.authForm.invalid) {
 
-    this.snackBar.open('Email and Password not valid !', '', {
-      duration: 2000,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'right',
-      panelClass: 'snackbar-danger'
-    });
+    // this.toastr.warning('', `login Faild`, {
+    //   positionClass: 'toast-top-right',
+    // });
    
     return;
   } 
@@ -71,19 +69,30 @@ onSubmit() {
       .subscribe(
         (res) => {
           if (res) {
-            this.toastr.success('', `login successful`, {
-              positionClass: 'toast-top-right',
-            });
+            console.log(res)  
+            const role = this.authService.currentUserValue.role
+           // const role = "Master Admin"
+          console.log(role === Role.MasterAdmin)
              // this.router.navigate(['/dashboard']);
-              this.router.navigate(['/dashboard']);
+             if ( role === Role.MasterAdmin) {
+            
+           //   this.router.navigate(['/admin/dashboard/main']);
+           this.router.navigate(['/dashboard']);
+            }
+              //this.router.navigate(['/dashboard']);
               this.loading = false;
+              // this.toastr.success('', `login successful`, {
+              //   positionClass: 'toast-top-right',
+              // });
           //  }, 1000);
           } else {
            
           }
         },
         (error) => {
-          this.error = error;
+          // this.toastr.warning('', `login Faild`, {
+          //   positionClass: 'toast-top-right',
+          // });
           this.submitted = false;
           this.loading = false;
         }

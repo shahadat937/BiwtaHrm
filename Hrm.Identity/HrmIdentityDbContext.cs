@@ -1,7 +1,7 @@
 ﻿using Hrm.Identity.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SchoolManagement.Identity.Configurations;
+using Hrm.Identity.Configurations;
 using System;
 using System.Collections.Generic;
 using System.Linq;

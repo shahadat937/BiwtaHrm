@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.Genders.Handlers.Commands
+namespace hrm.Application.Features.Genders.Handlers.Commands
 {
     public class DeleteGenderCommandHandler : IRequestHandler<DeleteGenderCommand>
     {

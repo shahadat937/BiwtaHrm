@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 
-namespace SchoolManagement.Identity.Configurations
+namespace Hrm.Identity.Configurations
 {
     public class UserRoleConfiguration : IEntityTypeConfiguration<IdentityUserRole<string>>
     {

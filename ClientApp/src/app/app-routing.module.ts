@@ -10,6 +10,8 @@ import { Page404Component } from './views/pages/page404/page404.component';
 import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
+import { AuthGuard } from './core/guard/auth.guard';
+import { Role } from './core/models/role';
 const routes: Routes = [
   {
     path: '',
@@ -22,9 +24,15 @@ const routes: Routes = [
     data: {
       title: 'Home'
     },
+    canActivate: [AuthGuard],
     children: [
       {
+        
         path: 'dashboard',
+       canActivate: [AuthGuard],
+        data: {
+          role: [Role.MasterAdmin]
+        },
         loadChildren: () =>
           import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
@@ -75,6 +83,7 @@ const routes: Routes = [
       },
       {
         path: 'bascisetup',
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./views/basic-setup/basic-setup.module').then((m) => m.BasicSetupModule)
       },
@@ -143,9 +152,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    data: {
-      title: 'Login Page'
-    }
+   
   },
   {
     path: 'register',

@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.EmployeeTypes.Handlers.Commands
+namespace hrm.Application.Features.EmployeeTypes.Handlers.Commands
 {
     public class DeleteEmployeeTypeCommandHandler : IRequestHandler<DeleteEmployeeTypeCommand>
     {

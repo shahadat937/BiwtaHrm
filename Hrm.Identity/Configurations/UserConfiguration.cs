@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hrm.Identity.Models;
 
-namespace SchoolManagement.Identity.Configurations
+namespace Hrm.Identity.Configurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {

@@ -35,25 +35,25 @@ namespace Hrm.Application.Features.DepReleaseInfo.Handlers.Queries
 
             var DepReleaseInfoDtos = new List<DepReleaseInfoDto>();
 
-            //foreach (var DepReleaseInfo in DepReleaseInfos)
-            //{
-            //    var DepReleaseInfoDto = _mapper.Map<DepReleaseInfoDto>(DepReleaseInfo);
-            //    var countryName = await GetCountryName(DepReleaseInfo.CountryId);
-            //    DepReleaseInfoDto.CountryName = countryName;
-            //    DepReleaseInfoDtos.Add(DepReleaseInfoDto);
-            //}
+            foreach (var DepReleaseInfo in DepReleaseInfos)
+            {
+                var DepReleaseInfoDto = _mapper.Map<DepReleaseInfoDto>(DepReleaseInfo);
+               // var countryName = await GetCountryName(DepReleaseInfo.CountryId);
+               // DepReleaseInfoDto.CountryName = countryName;
+                DepReleaseInfoDtos.Add(DepReleaseInfoDto);
+            }
 
             return DepReleaseInfoDtos;
         }
 
-        //private async Task<string?> GetCountryName(int? countryId)
-        //{
-        //    if (countryId.HasValue)
-        //    {
-        //        var country = await _countryRepository.Get(countryId.Value);
-        //        return country?.CountryName;
-        //    }
-        //    return null;
-        //}
+        private async Task<string?> GetCountryName(int? countryId)
+        {
+            if (countryId.HasValue)
+            {
+                var country = await _countryRepository.Get(countryId.Value);
+                return country?.CountryName;
+            }
+            return null;
+        }
     }
 }

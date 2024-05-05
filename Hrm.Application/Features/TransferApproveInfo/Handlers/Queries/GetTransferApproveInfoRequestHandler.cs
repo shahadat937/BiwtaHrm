@@ -35,25 +35,25 @@ namespace Hrm.Application.Features.TransferApproveInfo.Handlers.Queries
 
             var TransferApproveInfoDtos = new List<TransferApproveInfoDto>();
 
-            //foreach (var TransferApproveInfo in TransferApproveInfos)
-            //{
-            //    var TransferApproveInfoDto = _mapper.Map<TransferApproveInfoDto>(TransferApproveInfo);
-            //    var countryName = await GetCountryName(TransferApproveInfo.CountryId);
-            //    TransferApproveInfoDto.CountryName = countryName;
-            //    TransferApproveInfoDtos.Add(TransferApproveInfoDto);
-            //}
+            foreach (var TransferApproveInfo in TransferApproveInfos)
+            {
+                var TransferApproveInfoDto = _mapper.Map<TransferApproveInfoDto>(TransferApproveInfo);
+               // var countryName = await GetCountryName(TransferApproveInfo.CountryId);
+             //   TransferApproveInfoDto.CountryName = countryName;
+                TransferApproveInfoDtos.Add(TransferApproveInfoDto);
+            }
 
             return TransferApproveInfoDtos;
         }
 
-        //private async Task<string?> GetCountryName(int? countryId)
-        //{
-        //    if (countryId.HasValue)
-        //    {
-        //        var country = await _countryRepository.Get(countryId.Value);
-        //        return country?.CountryName;
-        //    }
-        //    return null;
-        //}
+        private async Task<string?> GetCountryName(int? countryId)
+        {
+            if (countryId.HasValue)
+            {
+                var country = await _countryRepository.Get(countryId.Value);
+                return country?.CountryName;
+            }
+            return null;
+        }
     }
 }

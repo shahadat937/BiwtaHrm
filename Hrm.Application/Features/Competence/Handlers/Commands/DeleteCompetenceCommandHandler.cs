@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.Competences.Handlers.Commands
+namespace hrm.Application.Features.Competences.Handlers.Commands
 {
     public class DeleteCompetenceCommandHandler : IRequestHandler<DeleteCompetenceCommand>
     {

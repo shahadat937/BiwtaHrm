@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.Weekends.Handlers.Commands
+namespace hrm.Application.Features.Weekends.Handlers.Commands
 {
     public class DeleteWeekendCommandHandler : IRequestHandler<DeleteWeekendCommand>
     {

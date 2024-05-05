@@ -8,7 +8,7 @@ using Hrm.Domain;
 using Microsoft.EntityFrameworkCore;
 using Hrm.Application.DTOs.BankBank.Validators;
 
-namespace Hrm.Application.Features.Bank.Handlers.Commands
+namespace hrm.Application.Features.Bank.Handlers.Commands
 {
     public class CreateBankCommandHandler : IRequestHandler<CreateBankCommand, BaseCommandResponse>
     {

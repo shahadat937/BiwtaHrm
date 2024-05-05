@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.HairColors.Handlers.Commands
+namespace hrm.Application.Features.HairColors.Handlers.Commands
 {
     public class DeleteHairColorCommandHandler : IRequestHandler<DeleteHairColorCommand>
     {

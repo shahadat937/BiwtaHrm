@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using Hrm.Application;
 using Hrm.Persistence;
 using Hrm.Identity;

@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.SubDepartments.Handlers.Commands
+namespace hrm.Application.Features.SubDepartments.Handlers.Commands
 {
     public class DeleteSubDepartmentCommandHandler : IRequestHandler<DeleteSubDepartmentCommand>
     {

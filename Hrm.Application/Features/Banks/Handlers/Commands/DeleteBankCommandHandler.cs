@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.Banks.Handlers.Commands
+namespace hrm.Application.Features.Banks.Handlers.Commands
 {
     public class DeleteBankCommandHandler : IRequestHandler<DeleteBankCommand>
     {
@@ -21,12 +21,12 @@ namespace SchoolManagement.Application.Features.Banks.Handlers.Commands
 
         public async Task<Unit> Handle(DeleteBankCommand request, CancellationToken cancellationToken)
         {
-            var Bank = await _unitOfWork.Repository<Bank>().Get(request.BankId);
+            var Bank = await _unitOfWork.Repository<Hrm.Domain.Bank>().Get(request.BankId);
 
             if (Bank == null)
                 throw new NotFoundException(nameof(Bank), request.BankId);
 
-            await _unitOfWork.Repository<Bank>().Delete(Bank);
+            await _unitOfWork.Repository<Hrm.Domain.Bank>().Delete(Bank);
             try
             {
                 await _unitOfWork.Save();

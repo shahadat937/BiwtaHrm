@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.Features.Bank.Handlers.Commands
+namespace hrm.Application.Features.Bank.Handlers.Commands
 {
     public class UpdateBankCommandHandler : IRequestHandler<UpdateExamTypeCommand, BaseCommandResponse>
     {

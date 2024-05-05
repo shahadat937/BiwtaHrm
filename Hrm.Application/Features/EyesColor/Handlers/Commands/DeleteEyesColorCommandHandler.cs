@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.EyesColors.Handlers.Commands
+namespace hrm.Application.Features.EyesColors.Handlers.Commands
 {
     public class DeleteEyesColorCommandHandler : IRequestHandler<DeleteEyesColorCommand>
     {

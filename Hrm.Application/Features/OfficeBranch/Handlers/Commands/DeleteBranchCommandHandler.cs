@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.Branchs.Handlers.Commands
+namespace hrm.Application.Features.Branchs.Handlers.Commands
 {
     public class DeleteBranchCommandHandler : IRequestHandler<DeleteBranchCommand>
     {

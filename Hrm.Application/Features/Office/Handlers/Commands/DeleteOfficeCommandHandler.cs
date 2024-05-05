@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace SchoolManagement.Application.Features.Office.Handlers.Commands
+namespace hrm.Application.Features.Office.Handlers.Commands
 {
     public class DeleteOfficeCommandHandler : IRequestHandler<DeleteOfficeCommand>
     {

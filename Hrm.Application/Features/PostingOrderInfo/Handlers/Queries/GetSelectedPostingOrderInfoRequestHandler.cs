@@ -24,7 +24,7 @@ namespace Hrm.Application.Features.PostingOrderInfo.Handlers.Queries
             ICollection<Hrm.Domain.PostingOrderInfo> PostingOrderInfos = await _PostingOrderInfoRepository.FilterAsync(x => x.IsActive);
             List<SelectedModel> selectModels = PostingOrderInfos.Select(x => new SelectedModel 
             {
-                Name = x.PostingOrderInfoName,
+               // Name = x.PostingOrderInfoName,
                 Id = x.PostingOrderInfoId
             }).ToList();
             return selectModels;

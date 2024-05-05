@@ -51,19 +51,9 @@ namespace Hrm.Api.Controllers
 
         [HttpPut]
         [Route("update-user/{id}")]
-        public async Task<ActionResult<BaseCommandResponse>> UpdateUser(string id, [FromBody] UpdateUserRequest request)
+        public async Task<ActionResult<BaseCommandResponse>> UpdateUser(UpdateUserRequest request)
         {
-            return Ok(await _authenticationService.UpdateUser(new UpdateUserRequest
-            {
-                Id = id,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                UserName = request.UserName,
-                PhoneNumber = request.PhoneNumber,
-                PNo = request.PNo,
-                IsActive = request.IsActive,
-            }));
+            return Ok(await _authenticationService.UpdateUser(request));
         }
 
 

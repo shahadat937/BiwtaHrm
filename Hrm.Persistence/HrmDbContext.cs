@@ -295,6 +295,7 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.EmpTnsferPostingJoinId)
                 .HasName("[EmpTnsferPostingJoinId]");
             });
+
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
 
@@ -360,6 +361,9 @@ namespace Hrm.Persistence
         public virtual DbSet<TransferApproveInfo> TransferApproveInfo { get; set; } = null!;
         public virtual DbSet<DepReleaseInfo> DepReleaseInfo { get; set; } = null!;
         public virtual DbSet<EmpTnsferPostingJoin> EmpTnsferPostingJoin { get; set; } = null!;
+
+        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; } = null!;
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; } = null!;
 
 
 

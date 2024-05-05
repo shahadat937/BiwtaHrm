@@ -13,7 +13,7 @@ namespace Hrm.Application.DTOs.PostingOrderInfo.Validators
     {
         public IPostingOrderInfoDtoValidator()
         {
-            RuleFor(b => b.PostingOrderInfoName)
+            RuleFor(b => b.OfficeOrderNo)
                 .NotEmpty().WithMessage("{PropertyName} is required.").MaximumLength(150).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
         }
     }

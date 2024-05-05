@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.PostingOrderInfo.Requests.Commands
 {
-    public class UpdatePostingOrderInfoCommand : IRequest<BaseCommandResponse>
+    public class UpdatePostingOrderInfoCommand : IRequest<Unit>
     {
         public PostingOrderInfoDto PostingOrderInfoDto { get; set; }
     }

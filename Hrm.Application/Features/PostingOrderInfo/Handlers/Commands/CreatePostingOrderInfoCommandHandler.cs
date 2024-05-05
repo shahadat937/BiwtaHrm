@@ -10,14 +10,12 @@ namespace Hrm.Application.Features.PostingOrderInfo.Handlers.Commands
 {
     public class CreatePostingOrderInfoCommandHandler : IRequestHandler<CreatePostingOrderInfoCommand, BaseCommandResponse>
     {
-        private readonly IHrmRepository<Hrm.Domain.PostingOrderInfo> _PostingOrderInfoRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CreatePostingOrderInfoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.PostingOrderInfo> PostingOrderInfoRepository)
+        public CreatePostingOrderInfoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _PostingOrderInfoRepository = PostingOrderInfoRepository;
         }
         public async Task<BaseCommandResponse> Handle(CreatePostingOrderInfoCommand request, CancellationToken cancellationToken)
         {
@@ -33,43 +31,18 @@ namespace Hrm.Application.Features.PostingOrderInfo.Handlers.Commands
             }
             else
             {
-                var PostingOrderInfoName = request.PostingOrderInfoDto.PostingOrderInfoName.ToLower();
+                var PostingOrderInfo = _mapper.Map<Hrm.Domain.PostingOrderInfo>(request.PostingOrderInfoDto);
 
-                IQueryable<Hrm.Domain.PostingOrderInfo> PostingOrderInfos = _PostingOrderInfoRepository.Where(x => x.PostingOrderInfoName.ToLower() == PostingOrderInfoName);
-
-
-                if (PostingOrderInfoNameExists(request))
-                {
-                    response.Success = false;
-                    // response.Message = "Creation Failed Name already exists.";
-                    response.Message = $"Creation Failed '{request.PostingOrderInfoDto.PostingOrderInfoName}' already exists.";
-
-                    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
-
-                }
-                else
-                {
-                    var PostingOrderInfo = _mapper.Map<Hrm.Domain.PostingOrderInfo>(request.PostingOrderInfoDto);
-
-                    PostingOrderInfo = await _unitOfWork.Repository<Hrm.Domain.PostingOrderInfo>().Add(PostingOrderInfo);
-                    await _unitOfWork.Save();
+                PostingOrderInfo = await _unitOfWork.Repository<Hrm.Domain.PostingOrderInfo>().Add(PostingOrderInfo);
+                await _unitOfWork.Save();
 
 
-                    response.Success = true;
-                    response.Message = "Creation Successful";
-                    response.Id = PostingOrderInfo.PostingOrderInfoId;
-                }
+                response.Success = true;
+                response.Message = "Creation Successful";
+                response.Id = PostingOrderInfo.PostingOrderInfoId;
             }
 
             return response;
-        }
-        private bool PostingOrderInfoNameExists(CreatePostingOrderInfoCommand request)
-        {
-            var PostingOrderInfoName = request.PostingOrderInfoDto.PostingOrderInfoName.Trim().ToLower().Replace(" ", string.Empty);
-
-            IQueryable<Hrm.Domain.PostingOrderInfo> PostingOrderInfos = _PostingOrderInfoRepository.Where(x => x.PostingOrderInfoName.Trim().ToLower().Replace(" ", string.Empty) == PostingOrderInfoName);
-
-            return PostingOrderInfos.Any();
         }
 
     }

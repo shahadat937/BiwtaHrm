@@ -24,7 +24,7 @@ namespace Hrm.Application.Features.EmpTnsferPostingJoin.Handlers.Queries
             ICollection<Hrm.Domain.EmpTnsferPostingJoin> EmpTnsferPostingJoins = await _EmpTnsferPostingJoinRepository.FilterAsync(x => x.IsActive);
             List<SelectedModel> selectModels = EmpTnsferPostingJoins.Select(x => new SelectedModel 
             {
-                Name = x.EmpTnsferPostingJoinName,
+                //Name = x.EmpTnsferPostingJoinName,
                 Id = x.EmpTnsferPostingJoinId
             }).ToList();
             return selectModels;

@@ -13,7 +13,7 @@ namespace Hrm.Application.DTOs.TransferApproveInfo.Validators
     {
         public ITransferApproveInfoDtoValidator()
         {
-            RuleFor(b => b.TransferApproveInfoName)
+            RuleFor(b => b.ApproveBy)
                 .NotEmpty().WithMessage("{PropertyName} is required.").MaximumLength(150).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
         }
     }

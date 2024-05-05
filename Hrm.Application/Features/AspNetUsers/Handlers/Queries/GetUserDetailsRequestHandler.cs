@@ -25,12 +25,9 @@ namespace Hrm.Application.Features.AspNetUsers.Handlers.Queries
         public async Task<object> Handle(GetUserDetailsRequest request, CancellationToken cancellationToken)
         {
 
-            IQueryable<Hrm.Domain.AspNetUsers> users = _AspNetUserRepository.Where(x => x.Id == request.Id);
+            var users = _AspNetUserRepository.FinedOneInclude(x => x.Id == request.Id);
 
-
-            var userDtos = _mapper.Map<List<AspNetUserDto>>(users.ToList());
-
-            return userDtos;
+            return users;
         }
     }
 }

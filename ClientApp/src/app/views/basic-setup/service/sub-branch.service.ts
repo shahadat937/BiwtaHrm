@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { SubBranch } from '../model/sub-branch';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,11 @@ export class SubBranchService {
   find(id: number) {
     return this.http.get<SubBranch>(this.baseUrl + '/SubBranch/get-subBranchbyid/' + id);
   }
+
+  getSelectSubBranchs(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/SubBranch/get-selectedsubBranch');
+  }
+
 
   getAll(): Observable<SubBranch[]> {
     if (this.cachedData.length > 0) {

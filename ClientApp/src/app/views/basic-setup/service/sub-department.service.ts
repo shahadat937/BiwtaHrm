@@ -3,6 +3,7 @@ import { SubDepartment } from './../model/sub-department';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable, map, of } from 'rxjs';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class SubDepartmentService {
    //custom
   find(id: number) {
     return this.http.get<SubDepartment>(this.baseUrl + '/subDepartment/get-subDepartmentbyid/' + id);
+  }
+
+  getSelectSubDepartment(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/subDepartment/get-selectedSubDepartment');
   }
 
   getAll(): Observable<SubDepartment[]> {

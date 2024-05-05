@@ -5,8 +5,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path:'posting',
+    path:'postingOrderInfo',
     component:PostingComponent
+  },
+  { path: 'update-postingOrderInfo/:postingOrderInfoId',
+    component: PostingComponent,
   },
   {
     path:'release',

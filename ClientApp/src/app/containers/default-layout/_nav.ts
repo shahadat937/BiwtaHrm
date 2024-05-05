@@ -341,7 +341,7 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Transfer&Posting Management',
-        url: '/transfer/posting'
+        url: '/transfer/postingOrderInfo'
       },
       {
         name: 'Deparment Release',

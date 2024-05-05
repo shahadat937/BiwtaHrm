@@ -1,15 +1,21 @@
-import { PostingOrderInfoService } from './../../basic-setup/service/posting-order-info.service';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { SubBranch } from './../../basic-setup/model/sub-branch';
+import { DepartmentService } from './../../basic-setup/service/department.service';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PositioningService } from 'ngx-bootstrap/positioning';
-import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { PostingOrderInfoService } from '../../basic-setup/service/posting-order-info.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { ToastrService } from 'ngx-toastr';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { SubDepartmentService } from '../../basic-setup/service/sub-department.service';
+import { BranchService } from '../../basic-setup/service/branch.service';
+import { SubBranchService } from '../../basic-setup/service/sub-branch.service';
+
 
 @Component({
   selector: 'app-posting',
@@ -19,13 +25,16 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   //grades: any[] = [];
   editMode: boolean = false;
-  //countrys: SelectedModel[] = [];
+  departments: SelectedModel[] = [];
+  subDepartments:SelectedModel[]=[];
+  officeBranchs:SelectedModel[]=[];
+  subBranchs:SelectedModel[]=[];
 
   btnText: string | undefined;
   loading = false;
-  @ViewChild('PostingForm', { static: true }) PostingForm!: NgForm;
+  @ViewChild('PostingAndTrnsForm', { static: true }) PostingAndTrnsForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo','officeOrderNo','officeOrderDate', 'orderOfficeBy','transferSection','releaseType','isActive', 'Action'];
+  displayedColumns: string[] = ['slNo','officeOrderNo','isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -33,7 +42,10 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   matSort!: MatSort;
   constructor(
     public postingOrderInfoService: PostingOrderInfoService,
-    //private countryService: CountryService,
+    private branchServices: BranchService,
+    private departmentService:DepartmentService,
+    private subDepartmentService:SubDepartmentService,
+    private subBranchService:SubBranchService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
@@ -42,17 +54,45 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
   ngOnInit(): void {
     this.getAllPostingOrderInfos();
-    //this.SelectModelCountry();
-    //this.loaddivisions();
+    this.SelectDepartments();
+    this.SelectsubDepartments();
+    this.SelectBranchs();
+    this.SelectSubBranchs();
     this.handleRouteParams();
   }
+
+  SelectDepartments() {
+    this.departmentService.getSelectDepartments().subscribe((data) => {
+      console.log(data);
+      this.departments = data;
+    });
+  }
+  SelectsubDepartments() {
+    this.subDepartmentService.getSelectSubDepartment().subscribe((res) => {
+      console.log(res);
+      this.subDepartments = res;
+    });
+  }
+  SelectBranchs() {
+    this.branchServices.getSelectBranch().subscribe((res) => {
+      console.log(res);
+      this.officeBranchs = res;
+    });
+  }
+  SelectSubBranchs() {
+    this.subBranchService.getSelectSubBranchs().subscribe((res) => {
+      console.log(res);
+      this.subBranchs = res;
+    });
+  }
+
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('postingOrderInfoId');
       if (id) {
         this.btnText = 'Update';
         this.postingOrderInfoService.find(+id).subscribe((res) => {
-          this.PostingForm?.form.patchValue(res);
+          this.PostingAndTrnsForm?.form.patchValue(res);
         });
       } else {
         this.btnText = 'Submit';
@@ -95,9 +135,9 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
      };
   }
   resetForm() {
-    if (this.PostingForm?.form != null) {
-      this.PostingForm.form.reset();
-      this.PostingForm.form.patchValue({
+    if (this.PostingAndTrnsForm?.form != null) {
+      this.PostingAndTrnsForm.form.reset();
+      this.PostingAndTrnsForm.form.patchValue({
         postingOrderInfoId:0,
         empId:0,
         departmentId:0,
@@ -113,7 +153,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true
       });
     }
-    this.router.navigate(['/bascisetup/postingOrderInfo']);
+    this.router.navigate(['/transfer/postingOrderInfo']);
   }
   getAllPostingOrderInfos() {
     this.subscription = this.postingOrderInfoService.getAll().subscribe((item) => {
@@ -124,7 +164,9 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
  
- 
+
+  
+  
   onSubmit(form: NgForm): void {
     this.loading = true;
     this.postingOrderInfoService.cachedData = [];
@@ -142,7 +184,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllPostingOrderInfos();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/postingOrderInfo']);
+          this.router.navigate(['/transfer/postingOrderInfo']);
         }
         this.loading = false;
       } else {

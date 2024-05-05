@@ -72,6 +72,43 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
+
+  initaialUser(form?: NgForm) {
+    if (form != null) form.resetForm();
+    this.shiftService.shifts = {
+      id :  0,
+      shiftName: '',
+      startTime: '',
+      endTime: '',
+      startDate : new Date,
+      endDate : new Date,
+      bufferTime: '',
+      absentTime : '',
+      remark : '',
+      isActive : true,
+    };
+  }
+
+  resetForm(){
+    // this.btnText = 'Submit';
+    if (this.ShiftForm?.form != null) {
+      this.ShiftForm.form.reset();
+      this.ShiftForm.form.patchValue({
+        id :  0,
+        shiftName: '',
+        startTime: '',
+        endTime: '',
+        startDate : new Date,
+        endDate : new Date,
+        bufferTime: '',
+        absentTime : '',
+        remark : '',
+        isActive : true,
+      });
+    }
+    // this.router.navigate(['/usermanagement/user']);
+  }
+
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -89,6 +126,25 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   UserFormView(){
+    if(this.BtnText == " Add Shift"){
+      this.BtnText = " Hide Form";
+      this.buttonIcon = "cilTrash";
+      this.HeaderText = "Add New Shift";
+      this.visible = true;
+    }
+    else {
+      this.BtnText = " Add Shift";
+      this.buttonIcon = "cilPencil";
+      this.HeaderText = "Shift List";
+      this.visible = false;
+    }
+  }
+
+  cancelUpdate(){
+
+  }
+
+  onSubmit(form: NgForm): void{
 
   }
 }

@@ -25,17 +25,21 @@ namespace Hrm.Identity.Services
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IHrmRepository<Domain.AspNetUsers> _aspNetUserRepository;
+        private readonly IHrmRepository<Domain.AspNetUserRoles> _aspNetUserRolesRepository;
+        private readonly IHrmRepository<Domain.AspNetRoles> _aspNetRolesRepository;
         private readonly JwtSettings _jwtSettings;
 
         public AuthService(RoleManager<IdentityRole> roleManager,UserManager<ApplicationUser> userManager,
             IOptions<JwtSettings> jwtSettings,
-            SignInManager<ApplicationUser> signInManager, IHrmRepository<Domain.AspNetUsers> aspNetUserRepository)
+            SignInManager<ApplicationUser> signInManager, IHrmRepository<Domain.AspNetUsers> aspNetUserRepository, IHrmRepository<Domain.AspNetUserRoles> aspNetUserRolesRepository, IHrmRepository<Domain.AspNetRoles> aspNetRolesRepository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtSettings = jwtSettings.Value;
             _signInManager = signInManager;
             _aspNetUserRepository = aspNetUserRepository;
+            _aspNetUserRolesRepository = aspNetUserRolesRepository;
+            _aspNetRolesRepository = aspNetRolesRepository;
         }
 
         public async Task<AuthResponse> Login(AuthRequest request)
@@ -56,6 +60,13 @@ namespace Hrm.Identity.Services
                 throw new BadRequestException($"Credentials for '{request.Email} aren't valid'.");
             }
 
+
+            string id = _aspNetUserRepository.Where(x=>x.UserName == request.Email || x.Email == request.Email).Select(x=>x.Id).FirstOrDefault();
+
+            string role = _aspNetUserRolesRepository.Where(x => x.UserId == id).Select(x => x.RoleId).FirstOrDefault();
+
+            string roleName = _aspNetRolesRepository.Where(x => x.Id == role).Select(x => x.Name).FirstOrDefault();
+
             JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
 
             AuthResponse response = new AuthResponse
@@ -64,7 +75,7 @@ namespace Hrm.Identity.Services
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                 Email = user.Email,
                 Username = user.UserName,
-                Role =user.RoleName,
+                Role = roleName,
                 BranchId = user.BranchId,
                 PNo = user.PNo
             };

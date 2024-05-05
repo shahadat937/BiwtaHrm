@@ -20,6 +20,9 @@ export class DepartmentService {
   getSelectSubDepartment(){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/department/get-selecteddepartment');
   }
+  getSelectDepartments(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/department/get-selecteddepartment');
+  }
 
   getById(id: number) {
     return this.http.get<Department>(

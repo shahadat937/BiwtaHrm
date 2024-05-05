@@ -12,7 +12,6 @@ namespace Hrm.Domain
 
     public class EmpTnsferPostingJoin : BaseDomainEntity
     {
-
         public int EmpTnsferPostingJoinId { get; set; }
         public int? EmpId { get; set; }
         public DateTime? JoinDate { get; set; }

@@ -1,40 +1,33 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { SubBranch } from '../model/sub-branch';
+import { PostingOrderInfo } from '../model/posting-order-info';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
-import { SelectedModel } from 'src/app/core/models/selectedModel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SubBranchService {
+export class PostingOrderInfoService {
+
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
-  subBranchs: SubBranch;
+  postingOrderInfos: PostingOrderInfo;
 
   constructor(private http: HttpClient) {
-    this.subBranchs = new SubBranch();
+    this.postingOrderInfos = new PostingOrderInfo();
     
    }
-   //custom
   find(id: number) {
-    return this.http.get<SubBranch>(this.baseUrl + '/SubBranch/get-subBranchbyid/' + id);
+    return this.http.get<PostingOrderInfo>(this.baseUrl + '/postingOrderInfo/get-PostingOrderInfobyid/' + id);
   }
-
-  getSelectSubBranchs(){
-    return this.http.get<SelectedModel[]>(this.baseUrl + '/SubBranch/get-selectedsubBranch');
-  }
-
-
-  getAll(): Observable<SubBranch[]> {
+  getAll(): Observable<PostingOrderInfo[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call
       return of(this.cachedData);
     } else {
       // If data is not cached, make a server call to fetch it
       return this.http
-        .get<SubBranch[]>(this.baseUrl + '/SubBranch/get-subBranch')
+        .get<PostingOrderInfo[]>(this.baseUrl + '/postingOrderInfo/get-PostingOrderInfo')
         .pipe(
           map((data: any[]) => {
             this.cachedData = data; // Cache the data
@@ -43,14 +36,16 @@ export class SubBranchService {
         );
     }
   }
+
+
   update(id: number,model: any) {
-    return this.http.put(this.baseUrl + '/SubBranch/update-subBranch/'+id, model);
+    return this.http.put(this.baseUrl + '/postingOrderInfo/update-PostingOrderInfo/'+id, model);
   }
   submit(model: any) {
-    return this.http.post(this.baseUrl + '/SubBranch/save-subBranch', model);
+    return this.http.post(this.baseUrl + '/postingOrderInfo/save-PostingOrderInfo', model);
   }
   delete(id:number){
-    return this.http.delete(this.baseUrl + '/SubBranch/delete-subBranch/'+id);
+    return this.http.delete(this.baseUrl + '/postingOrderInfo/delete-PostingOrderInfo/'+id);
   }
 
 }

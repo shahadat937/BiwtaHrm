@@ -24,7 +24,7 @@ namespace Hrm.Application.Features.DepReleaseInfo.Handlers.Queries
             ICollection<Hrm.Domain.DepReleaseInfo> DepReleaseInfos = await _DepReleaseInfoRepository.FilterAsync(x => x.IsActive);
             List<SelectedModel> selectModels = DepReleaseInfos.Select(x => new SelectedModel 
             {
-                Name = x.DepReleaseInfoName,
+               // Name = x.DepReleaseInfoName,
                 Id = x.DepReleaseInfoId
             }).ToList();
             return selectModels;

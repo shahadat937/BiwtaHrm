@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpTnsferPostingJoin.Requests.Commands
 {
-    public class UpdateEmpTnsferPostingJoinCommand : IRequest<BaseCommandResponse>
+    public class UpdateEmpTnsferPostingJoinCommand : IRequest<Unit>
     {
         public EmpTnsferPostingJoinDto EmpTnsferPostingJoinDto { get; set; }
     }

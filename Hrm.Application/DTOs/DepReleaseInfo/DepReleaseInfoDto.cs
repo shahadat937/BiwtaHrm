@@ -9,7 +9,7 @@ namespace Hrm.Application.DTOs.DepReleaseInfo
     public class DepReleaseInfoDto : IDepReleaseInfoDto
     {
         public int DepReleaseInfoId { get; set; }
-        public string? DepReleaseInfoName { get; set; }
+      
         public int? EmpId { get; set; }
         public string? OfficeOrderNo { get; set; }
         public DateTime? ReleaseDate { get; set; }

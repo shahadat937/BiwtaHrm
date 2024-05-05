@@ -9,8 +9,12 @@ namespace Hrm.Application.DTOs.PostingOrderInfo
     public class CreatePostingOrderInfoDto : IPostingOrderInfoDto
     {
         public int PostingOrderInfoId { get; set; }
-        public string? PostingOrderInfoName { get; set; }
+
         public int? EmpId { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? SubBranchId { get; set; }
+        public int? SubDepartmentId { get; set; }
+        public int? OfficeBranchId { get; set; }
         public string? OfficeOrderNo { get; set; }
         public DateTime? OfficeOrderDate { get; set; }
         public string? OrderOfficeBy { get; set; }

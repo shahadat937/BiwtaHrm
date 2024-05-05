@@ -9,7 +9,7 @@ namespace Hrm.Application.DTOs.EmpTnsferPostingJoin
     public interface IEmpTnsferPostingJoinDto
     {
         public int EmpTnsferPostingJoinId { get; set; }
-        public string? EmpTnsferPostingJoinName { get; set; }
+        
         public int? EmpId { get; set; }
         public DateTime? JoinDate { get; set; }
         public string? Remarks { get; set; }

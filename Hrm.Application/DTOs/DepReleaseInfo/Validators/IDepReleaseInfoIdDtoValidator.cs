@@ -13,7 +13,7 @@ namespace Hrm.Application.DTOs.DepReleaseInfo.Validators
     {
         public IDepReleaseInfoDtoValidator()
         {
-            RuleFor(b => b.DepReleaseInfoName)
+            RuleFor(b => b.DepClearance)
                 .NotEmpty().WithMessage("{PropertyName} is required.").MaximumLength(150).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
         }
     }

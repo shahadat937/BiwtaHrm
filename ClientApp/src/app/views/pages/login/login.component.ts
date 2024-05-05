@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Role } from 'src/app/core/models/role';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
@@ -29,7 +30,9 @@ constructor(
   private formBuilder: FormBuilder,
   private route: ActivatedRoute,
   private router: Router,
-  private authService: AuthService,private snackBar: MatSnackBar
+  private authService: AuthService,
+  private snackBar: MatSnackBar,
+  private toastr: ToastrService
 ) {
   super();
 }
@@ -68,17 +71,15 @@ onSubmit() {
       .subscribe(
         (res) => {
           if (res) {
-            console.log('login successfull')
-            this.snackBar.open('login successfull.', '', {
-              duration: 3000,
-              verticalPosition: 'bottom',
-              horizontalPosition: 'right',
-              panelClass: 'snackbar-success'
-            })
+            this.toastr.success('', `login successful`, {
+              positionClass: 'toast-top-right',
+            });
+             // this.router.navigate(['/dashboard']);
+              this.router.navigate(['/dashboard']);
               this.loading = false;
           //  }, 1000);
           } else {
-            this.error = 'Invalid Login';
+           
           }
         },
         (error) => {

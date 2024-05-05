@@ -10,6 +10,7 @@ using Hrm.Domain;
 using Hrm.Application.DTOs.EmpTnsferPostingJoin;
 using Hrm.Application.Features.EmpTnsferPostingJoin.Requests.Commands;
 using Hrm.Application.Features.EmpTnsferPostingJoin.Requests.Queries;
+using Hrm.Application.Features.EmpTnsferPostingJoin.Handlers.Queries;
 namespace Hrm.Api.Controllers
 {
 
@@ -96,5 +97,13 @@ namespace Hrm.Api.Controllers
             var EmpTnsferPostingJoin = await _mediator.Send(new GetSelectedEmpTnsferPostingJoinRequest { });
             return Ok(EmpTnsferPostingJoin);
         }
+        [HttpGet]
+        [Route("get-AllEmpTnsferPostingJoin")]
+        public async Task<ActionResult> Gets()
+        {
+            var EmpTnsferPostingJoin = await _mediator.Send(new GetEmpTnsferPostingJoinRequest { });
+            return Ok(EmpTnsferPostingJoin);
+        }
+
     }
 }

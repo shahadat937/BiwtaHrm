@@ -17,7 +17,7 @@ namespace Hrm.Api.Middleware
             _next = next;
         }
         public async Task InvokeAsync(HttpContext httpContext)
-        {
+          {
             try
             {
                 await _next(httpContext);

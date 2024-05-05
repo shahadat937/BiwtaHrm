@@ -10,14 +10,12 @@ namespace Hrm.Application.Features.EmpTnsferPostingJoin.Handlers.Commands
 {
     public class CreateEmpTnsferPostingJoinCommandHandler : IRequestHandler<CreateEmpTnsferPostingJoinCommand, BaseCommandResponse>
     {
-        private readonly IHrmRepository<Hrm.Domain.EmpTnsferPostingJoin> _EmpTnsferPostingJoinRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CreateEmpTnsferPostingJoinCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.EmpTnsferPostingJoin> EmpTnsferPostingJoinRepository)
+        public CreateEmpTnsferPostingJoinCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _EmpTnsferPostingJoinRepository = EmpTnsferPostingJoinRepository;
         }
         public async Task<BaseCommandResponse> Handle(CreateEmpTnsferPostingJoinCommand request, CancellationToken cancellationToken)
         {
@@ -33,43 +31,18 @@ namespace Hrm.Application.Features.EmpTnsferPostingJoin.Handlers.Commands
             }
             else
             {
-                var EmpTnsferPostingJoinName = request.EmpTnsferPostingJoinDto.EmpTnsferPostingJoinName.ToLower();
+                var EmpTnsferPostingJoin = _mapper.Map<Hrm.Domain.EmpTnsferPostingJoin>(request.EmpTnsferPostingJoinDto);
 
-                IQueryable<Hrm.Domain.EmpTnsferPostingJoin> EmpTnsferPostingJoins = _EmpTnsferPostingJoinRepository.Where(x => x.EmpTnsferPostingJoinName.ToLower() == EmpTnsferPostingJoinName);
-
-
-                if (EmpTnsferPostingJoinNameExists(request))
-                {
-                    response.Success = false;
-                    // response.Message = "Creation Failed Name already exists.";
-                    response.Message = $"Creation Failed '{request.EmpTnsferPostingJoinDto.EmpTnsferPostingJoinName}' already exists.";
-
-                    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
-
-                }
-                else
-                {
-                    var EmpTnsferPostingJoin = _mapper.Map<Hrm.Domain.EmpTnsferPostingJoin>(request.EmpTnsferPostingJoinDto);
-
-                    EmpTnsferPostingJoin = await _unitOfWork.Repository<Hrm.Domain.EmpTnsferPostingJoin>().Add(EmpTnsferPostingJoin);
-                    await _unitOfWork.Save();
+                EmpTnsferPostingJoin = await _unitOfWork.Repository<Hrm.Domain.EmpTnsferPostingJoin>().Add(EmpTnsferPostingJoin);
+                await _unitOfWork.Save();
 
 
-                    response.Success = true;
-                    response.Message = "Creation Successful";
-                    response.Id = EmpTnsferPostingJoin.EmpTnsferPostingJoinId;
-                }
+                response.Success = true;
+                response.Message = "Creation Successful";
+                response.Id = EmpTnsferPostingJoin.EmpTnsferPostingJoinId;
             }
 
             return response;
-        }
-        private bool EmpTnsferPostingJoinNameExists(CreateEmpTnsferPostingJoinCommand request)
-        {
-            var EmpTnsferPostingJoinName = request.EmpTnsferPostingJoinDto.EmpTnsferPostingJoinName.Trim().ToLower().Replace(" ", string.Empty);
-
-            IQueryable<Hrm.Domain.EmpTnsferPostingJoin> EmpTnsferPostingJoins = _EmpTnsferPostingJoinRepository.Where(x => x.EmpTnsferPostingJoinName.Trim().ToLower().Replace(" ", string.Empty) == EmpTnsferPostingJoinName);
-
-            return EmpTnsferPostingJoins.Any();
         }
 
     }

@@ -8,6 +8,24 @@ import { AttendanceRecordComponent } from './attendance-record/attendance-record
 import { ManualAttendanceComponent } from './manual-attendance/manual-attendance.component';
 import { SiteVisitComponent } from './site-visit/site-visit.component';
 import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
+import { DocsComponentsModule } from '@docs-components/docs-components.module';
+import {
+  ButtonGroupModule,
+  ButtonModule,
+  CardModule,
+  CollapseDirective,
+  DropdownModule,
+  FormModule,
+  GridModule,
+  ListGroupModule,
+  ProgressModule,
+  SharedModule,
+  SpinnerModule,
+} from '@coreui/angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedCustomModule } from 'src/app/shared/shared.module';
+import { ToastrService } from 'ngx-toastr';
+import { ShiftService } from './services/shift.service';
 
 
 @NgModule({
@@ -21,7 +39,28 @@ import { AttendanceReportComponent } from './attendance-report/attendance-report
   ],
   imports: [
     CommonModule,
-    AttendanceRoutingModule
-  ]
+    AttendanceRoutingModule,
+    DocsComponentsModule,
+    CardModule,
+    FormModule,
+    GridModule,
+    ButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FormModule,
+    ButtonModule,
+    ButtonGroupModule,
+    DropdownModule,
+    SharedModule,
+    ListGroupModule,
+    SharedCustomModule,
+    ProgressModule,
+    SpinnerModule,
+    CollapseDirective,
+  ],
+  providers: [ 
+    ToastrService,
+    ShiftService,
+  ],
 })
 export class AttendanceModule { }

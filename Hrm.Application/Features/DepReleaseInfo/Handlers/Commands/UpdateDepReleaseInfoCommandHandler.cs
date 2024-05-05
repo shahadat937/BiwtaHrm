@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation.Results;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.DepReleaseInfo.Validators;
 using Hrm.Application.Exceptions;
@@ -8,36 +9,36 @@ using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.DepReleaseInfo.Handlers.Commands
 {
-    public class UpdateDepReleaseInfoCommandHandler : IRequestHandler<UpdateDepReleaseInfoCommand, BaseCommandResponse>
+    public class UpdateDepReleaseInfoCommandHandler : IRequestHandler<UpdateDepReleaseInfoCommand, Unit>
     {
 
-        private readonly IHrmRepository<Hrm.Domain.DepReleaseInfo> _DepReleaseInfoRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public UpdateDepReleaseInfoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.DepReleaseInfo> DepReleaseInfoRepository)
+
+        public UpdateDepReleaseInfoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _DepReleaseInfoRepository = DepReleaseInfoRepository;
         }
 
-        public async Task<BaseCommandResponse> Handle(UpdateDepReleaseInfoCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateDepReleaseInfoCommand request, CancellationToken cancellationToken)
         {
-            var response = new BaseCommandResponse();
+            var respose = new BaseCommandResponse();
             var validator = new UpdateDepReleaseInfoDtoValidators();
             var validationResult = await validator.ValidateAsync(request.DepReleaseInfoDto);
 
             if (validationResult.IsValid == false)
             {
-                response.Success = false;
-                response.Message = "Creation Failed";
-                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                respose.Success = false;
+                respose.Message = "Creation Failed";
+                respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
             var DepReleaseInfo = await _unitOfWork.Repository<Hrm.Domain.DepReleaseInfo>().Get(request.DepReleaseInfoDto.DepReleaseInfoId);
@@ -47,35 +48,12 @@ namespace Hrm.Application.Features.DepReleaseInfo.Handlers.Commands
                 throw new NotFoundException(nameof(DepReleaseInfo), request.DepReleaseInfoDto.DepReleaseInfoId);
             }
 
-            //var DepReleaseInfoName = request.DepReleaseInfoDto.DepReleaseInfoName.ToLower();
-            var DepReleaseInfoName = request.DepReleaseInfoDto.DepReleaseInfoName.Trim().ToLower().Replace(" ", string.Empty);
+            _mapper.Map(request.DepReleaseInfoDto, DepReleaseInfo);
 
-            IQueryable<Hrm.Domain.DepReleaseInfo> DepReleaseInfos = _DepReleaseInfoRepository.Where(x => x.DepReleaseInfoName.ToLower() == DepReleaseInfoName);
+            await _unitOfWork.Repository<Hrm.Domain.DepReleaseInfo>().Update(DepReleaseInfo);
+            await _unitOfWork.Save();
 
-
-            if (DepReleaseInfos.Any())
-            {
-                response.Success = false;
-                // response.Message = "Creation Failed Name already exists.";
-                response.Message = $"Creation Failed '{request.DepReleaseInfoDto.DepReleaseInfoName}' already exists.";
-
-                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
-
-            }
-            else
-            {
-
-                _mapper.Map(request.DepReleaseInfoDto, DepReleaseInfo);
-
-                await _unitOfWork.Repository<Hrm.Domain.DepReleaseInfo>().Update(DepReleaseInfo);
-                await _unitOfWork.Save();
-
-                response.Success = true;
-                response.Message = "Update Successful";
-                response.Id = DepReleaseInfo.DepReleaseInfoId;
-
-            }
-            return response;
+            return Unit.Value;
         }
     }
 }

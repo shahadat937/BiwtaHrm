@@ -13,7 +13,7 @@ namespace Hrm.Application.DTOs.EmpTnsferPostingJoin.Validators
     {
         public IEmpTnsferPostingJoinDtoValidator()
         {
-            RuleFor(b => b.EmpTnsferPostingJoinName)
+            RuleFor(b => b.Remarks)
                 .NotEmpty().WithMessage("{PropertyName} is required.").MaximumLength(150).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
         }
     }

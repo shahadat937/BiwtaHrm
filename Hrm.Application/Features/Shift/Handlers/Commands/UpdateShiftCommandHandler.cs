@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Shift.Handlers.Commands
 {
-    public class UpdateShiftCommandHandler : IRequestHandler<UpdateShiftCommand, Unit>
+    public class UpdateShiftCommandHandler : IRequestHandler<UpdateShiftCommand, BaseCommandResponse>
     {
 
         private readonly IUnitOfWork _unitOfWork;
@@ -28,24 +28,25 @@ namespace Hrm.Application.Features.Shift.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdateShiftCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateShiftCommand request, CancellationToken cancellationToken)
         {
-            var respose = new BaseCommandResponse();
+            var response = new BaseCommandResponse();
             var validator = new UpdateShiftDtoValidator();
             var validationResult = await validator.ValidateAsync(request.ShiftDto);
 
             if (validationResult.IsValid == false)
             {
-                respose.Success = false;
-                respose.Message = "Creation Failed";
-                respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                response.Success = false;
+                response.Message = "Creation Failed";
+                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
             var Shift = await _unitOfWork.Repository<Hrm.Domain.Shift>().Get(request.ShiftDto.ShiftId);
 
             if (Shift is null)
             {
-                throw new NotFoundException(nameof(Shift), request.ShiftDto.ShiftId);
+                response.Success = false;
+                response.Message = "Creation Failed";
             }
 
             _mapper.Map(request.ShiftDto, Shift);
@@ -53,7 +54,11 @@ namespace Hrm.Application.Features.Shift.Handlers.Commands
             await _unitOfWork.Repository<Hrm.Domain.Shift>().Update(Shift);
             await _unitOfWork.Save();
 
-            return Unit.Value;
+            response.Success = true;
+            response.Message = "Update Successfull";
+            response.Id = Shift.ShiftId;
+
+            return response;
         }
     }
 }

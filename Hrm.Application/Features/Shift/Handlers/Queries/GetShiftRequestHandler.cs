@@ -27,9 +27,11 @@ namespace Hrm.Application.Features.Shift.Handlers.Queries
 
         public async Task<object> Handle(GetShiftRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Hrm.Domain.Shift> Shift = _ShiftRepository.Where(x => true);
+            IQueryable<Hrm.Domain.Shift> Shifts = _ShiftRepository.Where(x => true);
 
-            var ShiftDtos = _mapper.Map<List<ShiftDto>>(Shift);
+            Shifts = Shifts.OrderByDescending(x => x.ShiftId);
+
+            var ShiftDtos = _mapper.Map<List<ShiftDto>>(Shifts);
 
             return ShiftDtos;
         }

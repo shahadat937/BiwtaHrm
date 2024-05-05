@@ -26,7 +26,7 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('ShiftForm', { static: true }) ShiftForm!: NgForm;
   loading = false;
   subscription: Subscription = new Subscription();
-  // displayedColumns: string[] = ['slNo', 'pNo', 'fullName', 'userName', 'email', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'shiftName', 'startTime', 'endTime', 'bufferTime', 'absentTime', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -54,16 +54,16 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
+      const id = params.get('shiftId');
       if (id) {
         this.visible = true;
         this.btnText = 'Update';
         this.HeaderText = "Update Shift";
         this.BtnText = " Hide Form";
         this.buttonIcon = "cilTrash";
-        // this.userService.find(id).subscribe((res) => {
-        //   this.UserForm?.form.patchValue(res);
-        // });
+        this.shiftService.find(id).subscribe((res) => {
+          this.ShiftForm?.form.patchValue(res);
+        });
       } else {
         this.btnText = 'Submit';
         this.visible = false;
@@ -76,14 +76,14 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
   initaialUser(form?: NgForm) {
     if (form != null) form.resetForm();
     this.shiftService.shifts = {
-      id :  0,
+      shiftId :  0,
       shiftName: '',
-      startTime: '',
-      endTime: '',
+      startTime: null,
+      endTime: null,
       startDate : null,
       endDate : null,
-      bufferTime: '',
-      absentTime : '',
+      bufferTime: null,
+      absentTime : null,
       remark : '',
       isActive : true,
     };
@@ -94,14 +94,14 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.ShiftForm?.form != null) {
       this.ShiftForm.form.reset();
       this.ShiftForm.form.patchValue({
-        id :  0,
+        shiftId :  0,
         shiftName: '',
-        startTime: '',
-        endTime: '',
+        startTime: null,
+        endTime: null,
         startDate : null,
         endDate : null,
-        bufferTime: '',
-        absentTime : '',
+        bufferTime: null,
+        absentTime : null,
         remark : '',
         isActive : true,
       });
@@ -114,8 +114,6 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-
-      console.log(item);
     });
   }
 
@@ -150,9 +148,17 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  cancelUpdate(){
-
+  toggleCollapse(){
+    this.handleRouteParams();
+    this.HeaderText = "Update User";
+    this.visible = true;
   }
+
+  cancelUpdate(){
+    this.router.navigate(['/attendance/manageShift']);
+    this.resetForm();
+  }
+  
 
   onSubmit(form: NgForm): void{
 
@@ -160,7 +166,8 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shiftService.cachedData = [];
 
     this.route.paramMap.subscribe((params) => {
-      const id = form.value.id;
+      const id = form.value.shiftId;
+
       const action$ = id
         ? this.shiftService.update(id, form.value)
         : this.shiftService.submit(form.value);
@@ -171,7 +178,7 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
               positionClass: 'toast-top-right',
             });
             this.loading = false;
-            // this.getAllUsers();
+            this.getAllUsers();
             this.resetForm();
             this.router.navigate(['/attendance/manageShift']);
           } else {
@@ -183,4 +190,30 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       });
     }
+
+    delete(element: any){
+      this.confirmService
+      .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+      .subscribe((result) => {
+        if (result) {
+          this.shiftService.delete(element.shiftId).subscribe(
+            (res) => {
+              const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
+              }
+              this.toastr.success('Delete sucessfully ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+            },
+            (err) => {
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+            }
+          );
+        }
+      });
+  }
 }

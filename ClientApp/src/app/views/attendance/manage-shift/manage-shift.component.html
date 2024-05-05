@@ -113,15 +113,16 @@
             
             <c-col [md]="4">
                 <label cLabel for="validationCustom06"
-                >Buffer Time<span class="text-danger"></span></label>
+                >Buffer Time<span class="text-danger">*</span></label>
               <input
                 [(ngModel)]="shiftService.shifts.bufferTime"
                 name="bufferTime" 
                 #BufferTime="ngModel"
                 placeholder="Enter Buffer Time"
                 cFormControl
+                required
                 id="validationCustom06"
-                type="date"
+                type="time"
               />
               @if(!BufferTime.valid&&BufferTime.touched){
               <div class="text-left text-danger">Buffer Time is required</div>
@@ -130,15 +131,16 @@
             
             <c-col [md]="4">
                 <label cLabel for="validationCustom07"
-                >Absent Time<span class="text-danger"></span></label>
+                >Absent Time<span class="text-danger">*</span></label>
               <input
                 [(ngModel)]="shiftService.shifts.absentTime"
                 name="absentTime" 
                 #AbsentTime="ngModel"
                 placeholder="Enter Absent Time"
                 cFormControl
+                required
                 id="validationCustom07"
-                type="date"
+                type="time"
               />
               @if(!AbsentTime.valid&&AbsentTime.touched){
               <div class="text-left text-danger">Buffer Time is required</div>

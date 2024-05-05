@@ -3,8 +3,8 @@ export class ShiftModule {
   shiftName: string;
   startTime: string;
   endTime: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | null;
+  endDate: Date| null;
   bufferTime: string;
   absentTime : string;
   remark : string;
@@ -15,8 +15,8 @@ export class ShiftModule {
     this.shiftName="";
     this.startTime="";
     this.endTime="";
-    this.startDate = new Date;
-    this.endDate = new Date;
+    this.startDate = null;
+    this.endDate = null;
     this.bufferTime="";
     this.absentTime ="";
     this.remark ="";

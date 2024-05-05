@@ -50,7 +50,7 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.buttonIcon = "cilPencil";
     this.handleRouteParams();
-    // this.getAllUsers();
+    this.getAllUsers();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
@@ -80,8 +80,8 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
       shiftName: '',
       startTime: '',
       endTime: '',
-      startDate : new Date,
-      endDate : new Date,
+      startDate : null,
+      endDate : null,
       bufferTime: '',
       absentTime : '',
       remark : '',
@@ -98,8 +98,8 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
         shiftName: '',
         startTime: '',
         endTime: '',
-        startDate : new Date,
-        endDate : new Date,
+        startDate : null,
+        endDate : null,
         bufferTime: '',
         absentTime : '',
         remark : '',
@@ -107,6 +107,16 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
     // this.router.navigate(['/usermanagement/user']);
+  }
+
+  getAllUsers(){
+    this.subscription = this.shiftService.getAll().subscribe((item) => {
+      this.dataSource = new MatTableDataSource(item);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.matSort;
+
+      console.log(item);
+    });
   }
 
   ngOnDestroy(): void {
@@ -146,5 +156,31 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSubmit(form: NgForm): void{
 
-  }
+    this.loading = true;
+    this.shiftService.cachedData = [];
+
+    this.route.paramMap.subscribe((params) => {
+      const id = form.value.id;
+      const action$ = id
+        ? this.shiftService.update(id, form.value)
+        : this.shiftService.submit(form.value);
+  
+        this.subscription =action$.subscribe((response: any)  => {
+          if (response.success) {
+            this.toastr.success('', `${response.message}`, {
+              positionClass: 'toast-top-right',
+            });
+            this.loading = false;
+            // this.getAllUsers();
+            this.resetForm();
+            this.router.navigate(['/attendance/manageShift']);
+          } else {
+            this.toastr.warning('', `${response.message}`, {
+              positionClass: 'toast-top-right',
+            });
+          }
+          this.loading = false;
+        });
+      });
+    }
 }

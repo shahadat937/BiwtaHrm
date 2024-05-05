@@ -16,4 +16,33 @@ export class ShiftService {
   constructor(private http: HttpClient) {
     this.shifts = new ShiftModule;
    }
+
+    
+  find(id: string) {
+    return this.http.get<ShiftModule>(this.baseUrl + '/users/get-userById/' + id);
+  }
+
+   getAll(): Observable<ShiftModule[]> {
+    if (this.cachedData.length > 0) {
+      // If data is already cached, return it without making a server call
+      return of (this.cachedData);
+    } else {
+      // If data is not cached, make a server call to fetch it
+      return this.http
+        .get<ShiftModule[]>(this.baseUrl + '/Shift/get-Shift')
+        .pipe(
+          map((data) => {
+            this.cachedData = data; // Cache the data
+            return data;
+          })
+        );
+    }
+  }
+   
+  submit(model: any) {
+    return this.http.post(this.baseUrl + '/Shift/save-Shift', model);
+  }
+  update(id: string,model: any){
+    return this.http.put(this.baseUrl + '/users/update-user/'+id, model);
+  }
 }

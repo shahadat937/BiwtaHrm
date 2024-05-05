@@ -14,6 +14,7 @@ import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroy
 export class LoginComponent extends UnsubscribeOnDestroyAdapter
 implements OnInit
 {
+  btnText: string | undefined;
 authForm!: FormGroup;
 submitted = false;
 loading = false;
@@ -56,9 +57,9 @@ onSubmit() {
   console.log(this.authForm.value)
   if (this.authForm.invalid) {
 
-    this.toastr.warning('', `login Faild`, {
-      positionClass: 'toast-top-right',
-    });
+    // this.toastr.warning('', `login Faild`, {
+    //   positionClass: 'toast-top-right',
+    // });
    
     return;
   } 
@@ -68,29 +69,30 @@ onSubmit() {
       .subscribe(
         (res) => {
           if (res) {
+            console.log(res)  
             const role = this.authService.currentUserValue.role
            // const role = "Master Admin"
           console.log(role === Role.MasterAdmin)
              // this.router.navigate(['/dashboard']);
              if ( role === Role.MasterAdmin) {
-              alert("login")
+            
            //   this.router.navigate(['/admin/dashboard/main']);
            this.router.navigate(['/dashboard']);
             }
               //this.router.navigate(['/dashboard']);
               this.loading = false;
-              this.toastr.success('', `login successful`, {
-                positionClass: 'toast-top-right',
-              });
+              // this.toastr.success('', `login successful`, {
+              //   positionClass: 'toast-top-right',
+              // });
           //  }, 1000);
           } else {
            
           }
         },
         (error) => {
-          this.toastr.warning('', `login Faild`, {
-            positionClass: 'toast-top-right',
-          });
+          // this.toastr.warning('', `login Faild`, {
+          //   positionClass: 'toast-top-right',
+          // });
           this.submitted = false;
           this.loading = false;
         }

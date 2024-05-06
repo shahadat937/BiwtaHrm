@@ -8,6 +8,7 @@ import { Observable, map, of } from 'rxjs';
   providedIn: 'root'
 })
 export class PostingOrderInfoService {
+  [x: string]: any;
 
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

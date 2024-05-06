@@ -1,3 +1,5 @@
+import { TransferApproveInfoService } from './../../basic-setup/service/transfer-approve-info.service';
+import { TransferApproveInfo } from './../../basic-setup/model/transfer-approve-info';
 import { SubBranch } from './../../basic-setup/model/sub-branch';
 import { DepartmentService } from './../../basic-setup/service/department.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
@@ -29,6 +31,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   subDepartments:SelectedModel[]=[];
   officeBranchs:SelectedModel[]=[];
   subBranchs:SelectedModel[]=[];
+  transferApproveInfos: TransferApproveInfo[]=[];
 
   btnText: string | undefined;
   loading = false;
@@ -46,45 +49,47 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     private departmentService:DepartmentService,
     private subDepartmentService:SubDepartmentService,
     private subBranchService:SubBranchService,
+    public transferApproveInfoService: TransferApproveInfoService,
+    //private transferApproveInfoService: TransferApproveInfoService;
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService
-  ) {}
+  ) {
+      }
   ngOnInit(): void {
     this.getAllPostingOrderInfos();
+    this.loadTransferApproveInfos();
     this.SelectDepartments();
     this.SelectsubDepartments();
     this.SelectBranchs();
     this.SelectSubBranchs();
     this.handleRouteParams();
+    
   }
 
   SelectDepartments() {
     this.departmentService.getSelectDepartments().subscribe((data) => {
-      console.log(data);
       this.departments = data;
     });
   }
   SelectsubDepartments() {
     this.subDepartmentService.getSelectSubDepartment().subscribe((res) => {
-      console.log(res);
       this.subDepartments = res;
     });
   }
   SelectBranchs() {
     this.branchServices.getSelectBranch().subscribe((res) => {
-      console.log(res);
       this.officeBranchs = res;
     });
   }
   SelectSubBranchs() {
     this.subBranchService.getSelectSubBranchs().subscribe((res) => {
-      console.log(res);
       this.subBranchs = res;
     });
   }
+    
 
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
@@ -92,6 +97,9 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       if (id) {
         this.btnText = 'Update';
         this.postingOrderInfoService.find(+id).subscribe((res) => {
+          this.onSubDepartmentNamesChangeByDepartmentId(res.departmentId);
+          this.onSubBranchNamesChangeByOfficeBranchId(res.officeBranchId);
+          
           this.PostingAndTrnsForm?.form.patchValue(res);
         });
       } else {
@@ -157,16 +165,25 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getAllPostingOrderInfos() {
     this.subscription = this.postingOrderInfoService.getAll().subscribe((item) => {
-      console.log(item);
+     
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
   }
  
+  onSubDepartmentNamesChangeByDepartmentId(departmentId:number){
+    this.subscription=this.subDepartmentService.getSubDepartmentByDepartmentId(departmentId).subscribe((data) => { 
+        this.subDepartments = data;
+      });
+  }
 
-  
-  
+  onSubBranchNamesChangeByOfficeBranchId(officeBranchId:number){
+    this.subscription=this.subBranchService.getSubBranchByOfficeBranchId(officeBranchId).subscribe((data) => { 
+        this.subBranchs = data;
+      });
+  }
+
   onSubmit(form: NgForm): void {
     this.loading = true;
     this.postingOrderInfoService.cachedData = [];
@@ -218,4 +235,88 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
   }
+
+  // transferApproveInfos
+  
+  initaialtransferApproveInfo(form?: NgForm) {
+    if (form != null) form.resetForm();
+    this.transferApproveInfoService.transferApproveInfos = {
+      transferApproveInfoId: 0,
+      empId:  0,
+      approveStatus:"",
+      approveBy:"",
+      approveDate:new Date(),
+      remarks:"",
+      menuPosition:  0,
+      isActive:true
+    
+    };
+  }
+  resetFormTransfer() {
+
+    this.btnText = 'Submit';
+    if (this.PostingAndTrnsForm?.form != null) {
+  
+      this.PostingAndTrnsForm.form.reset();
+      this.PostingAndTrnsForm.form.patchValue({
+        transferApproveInfoId: 0,
+        empId:  0,
+        approveStatus:"",
+        approveBy:"",
+        approveDate:new Date(),
+        remarks:"",
+        menuPosition:  0,
+        isActive:true
+      });
+    }
+  }
+  loadTransferApproveInfos() {
+    this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((h) => {
+      console.log(h)
+      this.transferApproveInfos = h;
+    });
+  }
+
+  //Departmental Release Information
+
+  initaialDepartmentalReleaseInfo
+  (form?: NgForm) {
+    if (form != null) form.resetForm();
+    this.transferApproveInfoService.transferApproveInfos = {
+      transferApproveInfoId: 0,
+      empId:  0,
+      approveStatus:"",
+      approveBy:"",
+      approveDate:new Date(),
+      remarks:"",
+      menuPosition:  0,
+      isActive:true
+    
+    };
+  }
+  resetFormDepartmentalReleaseInfo() {
+
+    this.btnText = 'Submit';
+    if (this.PostingAndTrnsForm?.form != null) {
+  
+      this.PostingAndTrnsForm.form.reset();
+      this.PostingAndTrnsForm.form.patchValue({
+        transferApproveInfoId: 0,
+        empId:  0,
+        approveStatus:"",
+        approveBy:"",
+        approveDate:new Date(),
+        remarks:"",
+        menuPosition:  0,
+        isActive:true
+      });
+    }
+  }
+  loadDepartmentalReleaseInfos() {
+    this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((h) => {
+      console.log(h)
+      this.transferApproveInfos = h;
+    });
+  }
+
 }

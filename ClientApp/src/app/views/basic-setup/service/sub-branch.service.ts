@@ -27,6 +27,14 @@ export class SubBranchService {
   }
 
 
+  getSubBranchByOfficeBranchId(id:number): Observable<SelectedModel[]>{
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/SubBranch/get-SubBranchByOfficeBranchId/'+id).pipe(
+      map((data) => {
+        return data;
+      })
+    );; 
+  }
+
   getAll(): Observable<SubBranch[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call

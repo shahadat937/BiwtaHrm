@@ -1,3 +1,4 @@
+import { SubBranch } from './../model/sub-branch';
 import { SubjectService } from './../service/subject.service';
 import { SubBranchService } from './../service/sub-branch.service';
 import { Component, ViewChild } from '@angular/core';
@@ -11,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
 
 @Component({
   selector: 'app-sub-branch',
@@ -20,6 +22,7 @@ import { ToastrService } from 'ngx-toastr';
 export class SubBranchComponent {
   editMode: boolean = false;
   branchs: any = [];
+  subBranchs:SelectedModel[]=[];
 
   btnText: string | undefined;
   loading = false;
@@ -57,6 +60,7 @@ export class SubBranchComponent {
       if (id) {
         this.btnText = 'Update';
         this.subBranchsService.find(+id).subscribe((res) => {
+          this.onSubBranchNamesChangeByOfficeBranchId(res.branchId);
           this.SubBranchForm?.form.patchValue(res);
         });
       } else {
@@ -115,6 +119,12 @@ export class SubBranchComponent {
     });
   }
 
+
+  onSubBranchNamesChangeByOfficeBranchId(officeBranchId:number){
+    this.subscription=this.subBranchsService.getSubBranchByOfficeBranchId(officeBranchId).subscribe((data) => { 
+        this.subBranchs = data;
+      });
+  }
 
   onSubmit(form: NgForm): void {
     this.loading = true;

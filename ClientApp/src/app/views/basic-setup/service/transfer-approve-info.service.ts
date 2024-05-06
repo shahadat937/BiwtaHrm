@@ -12,23 +12,23 @@ export class TransferApproveInfoService {
 
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
-  transferApproveInfo: TransferApproveInfo;
+  transferApproveInfos: TransferApproveInfo;
 
   constructor(private http: HttpClient) {
-    this.transferApproveInfo = new TransferApproveInfo();
+    this.transferApproveInfos = new TransferApproveInfo();
     
    }
   find(id: number) {
     return this.http.get<TransferApproveInfo>(this.baseUrl + '/division/get-divisionbyid/' + id);
   }
-  getAll(): Observable<TransferApproveInfo[]> {
+  getTransferApproveInfoAll(): Observable<TransferApproveInfo[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call
       return of(this.cachedData);
     } else {
       // If data is not cached, make a server call to fetch it
       return this.http
-        .get<TransferApproveInfo[]>(this.baseUrl + '/division/get-division')
+        .get<TransferApproveInfo[]>(this.baseUrl + '/transferApproveInfo/get-transferApproveInfo')
         .pipe(
           map((data: any[]) => {
             this.cachedData = data; // Cache the data
@@ -37,13 +37,18 @@ export class TransferApproveInfoService {
         );
     }
   }
-  getDivisionByCountryId(id:number): Observable<SelectedModel[]>{
-    return this.http.get<SelectedModel[]>(this.baseUrl + '/division/get-divisionByCountryId/'+id).pipe(
-      map((data) => {
-        return data;
-      })
-    );; 
-  }
+  // getDivisionByCountryId(id:number): Observable<SelectedModel[]>{
+  //   return this.http.get<SelectedModel[]>(this.baseUrl + '/division/get-divisionByCountryId/'+id).pipe(
+  //     map((data) => {
+  //       return data;
+  //     })
+  //   );; 
+  // }
+
+
+
+
+
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/transferApproveInfo/update-transferApproveInfo/'+id, model);
   }

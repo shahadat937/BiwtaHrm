@@ -129,50 +129,6 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     });
   }
-  // onSubmit(form: NgForm) {
-  //   const id = this.WardForm.form.get('wardId')?.value;
-  //   if (id) {
-  //     this.wardService.update(+id, this.WardForm.value).subscribe(
-  //       (response: any) => {
-  //         console.log(response);
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', 'Update', {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlWards();
-  //           this.resetForm();
-  //           this.router.navigate(['/bascisetup/ward']);
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   } else {
-  //     this.subscription = this.wardService.submit(form?.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlWards();
-  //           this.resetForm();
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   }
-  // }
   onSubmit(form: NgForm): void {
     this.wardService.cachedData = [];
     const id = form.value.wardId;

@@ -1,198 +1,268 @@
 <c-card>
-    <c-card-header>Posting and Transfer  </c-card-header>
-    <c-card-body>
-      <form #PostingAndTrnsForm="ngForm" (submit)="onSubmit(PostingAndTrnsForm)" [gutter]="3" novalidate cForm cRow
-        class="needs-validation">
-        <c-col [md]="6">
-          <label cLabel for="validationCustom01">Department<span class="text-danger">*</span></label>
-          <select required [(ngModel)]="postingOrderInfoService.postingOrderInfos.departmentId" name="departmentId" #departmentId="ngModel"
-            aria-label="Default select example" cSelect>
-            <option [ngValue]="0">Select Department</option>
-  
+  <c-card-header>Posting and Transfer </c-card-header>
+  <c-card-body>
+    <form #PostingAndTrnsForm="ngForm" (submit)="onSubmit(PostingAndTrnsForm)" [gutter]="3" novalidate cForm cRow
+      class="needs-validation">
+
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">Department<span class="text-danger">*</span></label>
+        <div class="input-wrapper">
+          <select
+            (change)="onSubDepartmentNamesChangeByDepartmentId(postingOrderInfoService.postingOrderInfos.departmentId)"
+            [(ngModel)]="postingOrderInfoService.postingOrderInfos.departmentId" name="departmentId"
+            #departmentId="ngModel" cFormControl id="validationCustom01" required aria-label="Default select example"
+            cSelect>
+            <option [ngValue]="null">Select Department</option>
+
             @for(department of departments; track department.id;let index=$index) {
             <option [value]="department.id">
               {{ department.name }}
             </option>
             }
           </select>
+
           @if(!departmentId.valid && departmentId.touched){
           <div class="text-left text-danger">Department is required</div>
           }
-        </c-col>
+        </div>
+      </c-col>
 
-        <c-col [md]="6">
-            <label cLabel for="validationCustom01">Sub Department<span class="text-danger">*</span></label>
-            <select required [(ngModel)]="postingOrderInfoService.postingOrderInfos.subDepartmentId" name="subDepartmentId" #subDepartmentId="ngModel"
-              aria-label="Default select example" cSelect>
-              <option [ngValue]="0">Select Sub Department</option>
-    
-              @for(subdepartment of subDepartments; track subdepartment.id;let index=$index) {
-              <option [value]="subdepartment.id">
-                {{ subdepartment.name }}
-              </option>
-              }
-            </select>
-            @if(!subDepartmentId.valid && subDepartmentId.touched){
-            <div class="text-left text-danger">Sub Department is required</div>
-            }
-          </c-col>
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">Sub Department<span class="text-danger">*</span></label>
+        <div class="input-wrapper">
+          <select (change)="postingOrderInfoService.postingOrderInfos.subDepartmentId"
+            [(ngModel)]="postingOrderInfoService.postingOrderInfos.subDepartmentId" name="subDepartmentId"
+            #subDepartmentId="ngModel" cFormControl id="validationCustom01" required aria-label="Default select example"
+            cSelect>
+            <option [ngValue]="null">Select Sub Department</option>
 
-          <c-col [md]="6">
-            <label cLabel for="validationCustom01">Office Branch <span class="text-danger">*</span></label>
-            <select required [(ngModel)]="postingOrderInfoService.postingOrderInfos.officeBranchId" name="officeBranchId" #officeBranchId="ngModel"
-              aria-label="Default select example" cSelect>
-              <option [ngValue]="0">Select Sub Office Branch</option>
-    
-              @for(officeBranch of officeBranchs; track officeBranch.id;let index=$index) {
-              <option [value]="officeBranch.id">
-                {{ officeBranch.name }}
-              </option>
-              }
-            </select>
-            @if(!officeBranchId.valid && officeBranchId.touched){
-            <div class="text-left text-danger">Sub Office Branch is required</div>
+            @for(subdepartment of subDepartments; track subdepartment.id;let index=$index) {
+            <option [value]="subdepartment.id">
+              {{ subdepartment.name }}
+            </option>
             }
-          </c-col>
-  
+          </select>
 
-          <c-col [md]="6">
-            <label cLabel for="validationCustom01">Sub Branch <span class="text-danger">*</span></label>
-            <select required [(ngModel)]="postingOrderInfoService.postingOrderInfos.subBranchId" name="subBranchId" #subBranchId="ngModel"
-              aria-label="Default select example" cSelect>
-              <option [ngValue]="0">Select Sub Branch</option>
-    
-              @for(subBranch of subBranchs; track subBranch.id;let index=$index) {
-              <option [value]="subBranch.id">
-                {{ subBranch.name }}
-              </option>
-              }
-            </select>
-            @if(!subBranchId.valid && subBranchId.touched){
-            <div class="text-left text-danger">Sub Branch is required</div>
-            }
-          </c-col>
-  
-  
-        <c-col [md]="6">
-          <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" />
-          <label cLabel for="validationCustom01">OfficeOrder No<span class="text-danger">*</span></label>
-          <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.officeOrderNo" name="officeOrderNo" #officeOrderNo="ngModel"
-            placeholder="Enter OfficeOrder No " cFormControl id="validationCustom01" required type="text" value="Mark" />
-  
-          @if(!officeOrderNo.valid&&officeOrderNo.touched){
-          <div class="text-left text-danger">OfficeOrder No is required</div>
+          @if(!subDepartmentId.valid && subDepartmentId.touched){
+          <div class="text-left text-danger">Sub Department is required</div>
           }
-        </c-col>
-        <c-col [md]="6">
-            <label cLabel for="validationCustom01">EmployeeId<span class="text-danger">*</span></label>
-            <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.empId" name="empId" #empId="ngModel"
-              placeholder="Enter Employee Id " cFormControl id="validationCustom01" required type="number" value="Mark" />
-            @if(!empId.valid&&empId.touched){
-            <div class="text-left text-danger">Employee Id is required</div>
-            }
-          </c-col>
-        <c-col [md]="6">
-            <label cLabel for="validationCustom01">OfficeOrderDate<span class="text-danger">*</span></label>
-            <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.officeOrderDate" name="officeOrderDate" #officeOrderDate="ngModel"
-              placeholder="Enter OfficeOrder No " cFormControl id="validationCustom01" required type="date" value="Mark" />
-            @if(!officeOrderDate.valid&&officeOrderDate.touched){
-            <div class="text-left text-danger">officeOrderDate value is required</div>
-            }
-          </c-col>
-          <c-col [md]="6">
-            <label cLabel for="validationCustom01">OrderOffice By<span class="text-danger">*</span></label>
-            <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.orderOfficeBy" name="orderOfficeBy" #orderOfficeBy="ngModel"
-              placeholder="Enter orderOfficeBy  " cFormControl id="validationCustom01" required type="text" value="Mark" />
-            @if(!orderOfficeBy.valid&&orderOfficeBy.touched){
-            <div class="text-left text-danger">OrderOfficeBy value is required</div>
-            }
-          </c-col>
+        </div>
+      </c-col>
 
-          <c-col [md]="6">
-            <label cLabel for="validationCustom01">Transfer Section<span class="text-danger">*</span></label>
-            <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.transferSection" name="transferSection" #transferSection="ngModel"
-              placeholder="Enter transferSection  " cFormControl id="validationCustom01" required type="text" value="Mark" />
-            @if(!transferSection.valid&&transferSection.touched){
-            <div class="text-left text-danger">transferSection value is required</div>
-            }
-          </c-col>
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">OfficeBranch<span class="text-danger">*</span></label>
+        <div class="input-wrapper">
+          <select
+            (change)="onSubBranchNamesChangeByOfficeBranchId(postingOrderInfoService.postingOrderInfos.officeBranchId)"
+            [(ngModel)]="postingOrderInfoService.postingOrderInfos.officeBranchId" name="officeBranchId"
+            #officeBranchId="ngModel" cFormControl id="validationCustom01" required aria-label="Default select example"
+            cSelect>
+            <option [ngValue]="null">Select Office Branch</option>
 
-          <c-col [md]="6">
-            <label cLabel for="validationCustom01">Release Type<span class="text-danger">*</span></label>
-            <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.releaseType" name="releaseType" #releaseType="ngModel"
-              placeholder="Enter releaseType  " cFormControl id="validationCustom01" required type="text" value="Mark" />
-            @if(!releaseType.valid&&releaseType.touched){
-            <div class="text-left text-danger">ReleaseType value is required</div>
+            @for(officeBranch of officeBranchs; track officeBranch.id;let index=$index) {
+            <option [value]="officeBranch.id">
+              {{ officeBranch.name }}
+            </option>
             }
-          </c-col>
-  
-        <c-col [md]="6">
-          <label cLabel for="validationCustom02">Is Active </label>
-          <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.isActive" name="isActive" cFormControl id="validationCustom02"
-            type="text" value="Otto" />
-          <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
-        </c-col>
-  
-        <c-col [xs]="12">
-          <button [disabled]="loading" [disabled]="PostingAndTrnsForm.invalid" cButton class="me-1" color="primary"
-            type="submit">
-            <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-            {{ btnText }}
-          </button>
-          <button cButton color="secondary" (click)="resetForm()">Reset</button>
-        </c-col>
-      </form>
-    </c-card-body>
-  </c-card>
-  
-  <c-card class="mt-3">
-    <c-card-header>PostingOrderInfo List</c-card-header>
-    <c-card-body>
-      <div class="example-header">
-        <mat-form-field>
-          <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here.." />
-          <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
-            (click)="filter.value = ''; applyFilter('')"></button>
-        </mat-form-field>
-      </div>
-  
-      <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource">
-          <!-- Position Column -->
-          <ng-container matColumnDef="slNo">
-            <th mat-header-cell *matHeaderCellDef>Serial No</th>
-            <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-          </ng-container>
-  
-          <ng-container matColumnDef="officeOrderNo">
-            <th mat-header-cell *matHeaderCellDef>OfficeOrder No</th>
-            <td mat-cell *matCellDef="let element">{{ element.officeOrderNo }}</td>
-          </ng-container>
-          <!-- Name Column -->
-          <ng-container matColumnDef="isActive">
-            <th mat-header-cell *matHeaderCellDef>Is Active</th>
-            <td mat-cell *matCellDef="let element">{{ element.isActive }}</td>
-          </ng-container>
-          <ng-container matColumnDef="Action">
-            <th mat-header-cell *matHeaderCellDef>Action</th>
-            <td mat-cell *matCellDef="let element">
-              <button class="custom-button" [routerLink]="['/transfer/update-postingOrderInfo', element.postingOrderInfoId]">
-                <svg cIcon name="cilPencil"></svg>
-              </button>
-              <button class="custom-button" (click)="delete(element)">
-                <svg cIcon name="cilTrash"></svg>
-              </button>
-            </td>
-          </ng-container>
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </div>
-    </c-card-body>
-  
-    <c-card-footer class="text-medium-emphasis">
-      <mat-paginator appBubblePagination [length]="dataSource.data.length" [pageSize]="10" aria-label="Select page">
-      </mat-paginator>
-    </c-card-footer>
-    <c-card> </c-card></c-card>
+          </select>
+          @if(!officeBranchId.valid && officeBranchId.touched){
+          <div class="text-left text-danger">Office Branch is required</div>
+          }
+        </div>
+      </c-col>
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">Sub Branch<span class="text-danger">*</span></label>
+        <div class="input-wrapper">
+          <select (change)="postingOrderInfoService.postingOrderInfos.subBranchId"
+            [(ngModel)]="postingOrderInfoService.postingOrderInfos.subBranchId" name="subBranchId"
+            #subBranchId="ngModel" placeholder="Enter OfficeOrder No " cFormControl id="validationCustom01" required
+            aria-label="Default select example" cSelect>
+            <option [ngValue]="null">Select Sub Department</option>
+
+            @for(subBranch of subBranchs; track subBranch.id;let index=$index) {
+            <option [value]="subBranch.id">
+              {{ subBranch.name }}
+            </option>
+            }
+          </select>
+
+          @if(!subBranchId.valid && subBranchId.touched){
+          <div class="text-left text-danger">Sub Branch is required</div>
+          }
+        </div>
+      </c-col>
+      <c-col [md]="3">
+        <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId"
+          name="postingOrderInfoId" />
+        <label cLabel for="validationCustom01">OfficeOrder No<span class="text-danger">*</span></label>
+        <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.officeOrderNo" name="officeOrderNo"
+          #officeOrderNo="ngModel" placeholder="Enter OfficeOrder No " cFormControl id="validationCustom01" required
+          type="text" value="Mark" />
+
+        @if(!officeOrderNo.valid&&officeOrderNo.touched){
+        <div class="text-left text-danger">OfficeOrder No is required</div>
+        }
+      </c-col>
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">EmployeeId<span class="text-danger">*</span></label>
+        <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.empId" name="empId" #empId="ngModel"
+          placeholder="Enter Employee Id " cFormControl id="validationCustom01" required type="number" value="Mark" />
+        @if(!empId.valid&&empId.touched){
+        <div class="text-left text-danger">Employee Id is required</div>
+        }
+      </c-col>
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">OfficeOrderDate<span class="text-danger">*</span></label>
+        <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.officeOrderDate" name="officeOrderDate"
+          #officeOrderDate="ngModel" placeholder="Enter OfficeOrder No " cFormControl id="validationCustom01" required
+          type="date" value="Mark" />
+        @if(!officeOrderDate.valid&&officeOrderDate.touched){
+        <div class="text-left text-danger">officeOrderDate value is required</div>
+        }
+      </c-col>
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">OrderOffice By<span class="text-danger">*</span></label>
+        <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.orderOfficeBy" name="orderOfficeBy"
+          #orderOfficeBy="ngModel" placeholder="Enter orderOfficeBy  " cFormControl id="validationCustom01" required
+          type="text" value="Mark" />
+        @if(!orderOfficeBy.valid&&orderOfficeBy.touched){
+        <div class="text-left text-danger">OrderOfficeBy value is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">Transfer Section<span class="text-danger">*</span></label>
+        <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.transferSection" name="transferSection"
+          #transferSection="ngModel" placeholder="Enter transferSection  " cFormControl id="validationCustom01" required
+          type="text" value="Mark" />
+        @if(!transferSection.valid&&transferSection.touched){
+        <div class="text-left text-danger">transferSection value is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">Release Type<span class="text-danger">*</span></label>
+        <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.releaseType" name="releaseType"
+          #releaseType="ngModel" placeholder="Enter releaseType  " cFormControl id="validationCustom01" required
+          type="text" value="Mark" />
+        @if(!releaseType.valid&&releaseType.touched){
+        <div class="text-left text-danger">ReleaseType value is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="3">
+        <label cLabel for="validationCustom02">Is Active </label>
+        <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.isActive" name="isActive" cFormControl
+          id="validationCustom02" type="text" value="Otto" />
+        <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
+      </c-col>
+
+      <!-- <c-col [xs]="12">
+        <button [disabled]="loading" [disabled]="PostingAndTrnsForm.invalid" cButton class="me-1" color="primary"
+          type="submit">
+          <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+          {{ btnText }}
+        </button>
+        <button cButton color="secondary" (click)="resetForm()">Reset</button>
+      </c-col> -->
+    </form>
+
+
+
+
+    <form #PostingAndTrnsForm="ngForm" (submit)="onSubmit(PostingAndTrnsForm)" [gutter]="3" novalidate cForm cRow>
+
+      <c-card-header>Transfer Approve Info</c-card-header>
+      <c-col [md]="3">
+        <input type="hidden" [(ngModel)]="transferApproveInfoService.transferApproveInfos.transferApproveInfoId" name="transferApproveInfoId" />
+        <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
+        <label cLabel for="validationCustom01">Approve Status<span class="text-danger">*</span></label>
+        <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveStatus" name="approveStatus" #approveStatus="ngModel"
+          placeholder="Enter Approve Status" cFormControl id="validationCustom01" required type="text" value="Mark" />
+        @if(!approveStatus.valid&&approveStatus.touched){
+        <div class="text-left text-danger">Approve Status is required</div>
+        }
+      </c-col>
+ 
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">Approve By<span class="text-danger">*</span></label>
+        <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveBy" name="approveBy" #approveBy="ngModel"
+          placeholder="Enter Approve By Status" cFormControl id="validationCustom01" required type="text" value="Mark" />
+        @if(!approveBy.valid&&approveBy.touched){
+        <div class="text-left text-danger">Approve By is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">Approve Date<span class="text-danger">*</span></label>
+        <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveDate" name="approveDate" #approveDate="ngModel"
+          placeholder="Enter Approve Date Status" cFormControl id="validationCustom01" required type="date" value="Mark" />
+        @if(!approveDate.valid&&approveDate.touched){
+        <div class="text-left text-danger">Approve Date is required</div>
+        }
+      </c-col>
+      
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">Remarks<span class="text-danger">*</span></label>
+        <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.remarks" name="remarks" #remarks="ngModel"
+          placeholder="Enter Remarks" cFormControl id="validationCustom01" required type="text" value="Mark" />
+        @if(!remarks.valid&&remarks.touched){
+        <div class="text-left text-danger">Remarks is required</div>
+        }
+      </c-col>
+    </form>
+  </c-card-body>
+</c-card>
+
+<c-card class="mt-3">
+  <c-card-header>PostingOrderInfo List</c-card-header>
+  <c-card-body>
+    <div class="example-header">
+      <mat-form-field>
+        <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here.." />
+        <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
+          (click)="filter.value = ''; applyFilter('')"></button>
+      </mat-form-field>
+    </div>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+        <!-- Position Column -->
+        <ng-container matColumnDef="slNo">
+          <th mat-header-cell *matHeaderCellDef>Serial No</th>
+          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="officeOrderNo">
+          <th mat-header-cell *matHeaderCellDef>OfficeOrder No</th>
+          <td mat-cell *matCellDef="let element">{{ element.officeOrderNo }}</td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="isActive">
+          <th mat-header-cell *matHeaderCellDef>Is Active</th>
+          <td mat-cell *matCellDef="let element">{{ element.isActive }}</td>
+        </ng-container>
+        <ng-container matColumnDef="Action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+            <button class="custom-button"
+              [routerLink]="['/transfer/update-postingOrderInfo', element.postingOrderInfoId]">
+              <svg cIcon name="cilPencil"></svg>
+            </button>
+            <button class="custom-button" (click)="delete(element)">
+              <svg cIcon name="cilTrash"></svg>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </c-card-body>
+
+  <c-card-footer class="text-medium-emphasis">
+    <mat-paginator appBubblePagination [length]="dataSource.data.length" [pageSize]="10" aria-label="Select page">
+    </mat-paginator>
+  </c-card-footer>
+  <c-card> </c-card></c-card>

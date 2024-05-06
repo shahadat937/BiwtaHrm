@@ -62,17 +62,16 @@
         <label cLabel for="validationCustom01">Division<span class="text-danger">*</span></label>
         <div class="input-wrapper">
           <select (change)="onDistrictNamesChangeByDivisionId(officeAddressService.officeAddresses.divisionId)"
+
             [(ngModel)]="officeAddressService.officeAddresses.divisionId" name="divisionId" #divisionId="ngModel"
             cFormControl id="validationCustom01" required aria-label="Default select example" cSelect>
             <option [ngValue]="null">Select Division</option>
-
             @for(division of divisions; track division.id;let index=$index) {
             <option [value]="division.id">
               {{ division.name }}
             </option>
             }
           </select>
-
           @if(!divisionId.valid && divisionId.touched){
           <div class="text-left text-danger">Division is required</div>
           }

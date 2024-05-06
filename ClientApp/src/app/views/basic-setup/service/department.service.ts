@@ -17,9 +17,10 @@ export class DepartmentService {
 
 
   
-  getSelectSubDepartment(){
-    return this.http.get<SelectedModel[]>(this.baseUrl + '/department/get-selecteddepartment');
-  }
+  // getSelectSubDepartment(){
+  //   return this.http.get<SelectedModel[]>(this.baseUrl + '/department/get-selecteddepartment');
+  // }
+  
   getSelectDepartments(){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/department/get-selecteddepartment');
   }
@@ -29,11 +30,6 @@ export class DepartmentService {
       this.baseUrl + '/Department/get-departmentbyid/' + id
     );
   }
-  // getAll(): Observable<Department[]> {
-  //   return this.http.get<Department[]>(
-  //     this.baseUrl + '/Department/get-department'
-  //   );
-  // }
   getAll(): Observable<Department[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call

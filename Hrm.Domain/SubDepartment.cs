@@ -14,6 +14,6 @@ namespace Hrm.Domain
         public int? DepartmentId { get; set; }
         public int MenuPosition { get; set; }
         public bool IsActive { get; set; }
-        public virtual Department Department { get; set; } = null!;
+        //public virtual Department Department { get; set; } = null!;
     }
 }

@@ -1,3 +1,4 @@
+import { Country } from './../model/Country';
 import { SubDepartmentService } from './../service/sub-department.service';
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -10,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
 
 @Component({
   selector: 'app-sub-department',
@@ -19,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
 export class SubDepartmentComponent {
   editMode: boolean = false;
   departments: any = [];
+  subDepartments:SelectedModel[]=[];
 
   btnText: string | undefined;
   loading = false;
@@ -27,6 +30,7 @@ export class SubDepartmentComponent {
   displayedColumns: string[] = [
     'slNo',
     'subDepartmentName',
+    'departmentName',
     'isActive',
     'Action',
   ];
@@ -55,6 +59,7 @@ export class SubDepartmentComponent {
       if (id) {
         this.btnText = 'Update';
         this.subDepartmentService.find(+id).subscribe((res) => {
+          this.onSubDepartmentNamesChangeByDepartmentId(res.departmentId);
           this.SubDepartmentForm?.form.patchValue(res);
         });
       } else {
@@ -63,7 +68,7 @@ export class SubDepartmentComponent {
     });
   }
   SelectModelDepartment() {
-    this.departmentService.getSelectSubDepartment().subscribe((data) => {
+    this.departmentService.getSelectDepartments().subscribe((data) => {
       this.departments = data;
     });
   }
@@ -98,7 +103,6 @@ export class SubDepartmentComponent {
       this.SubDepartmentForm.form.patchValue({
         subDepartmentId: 0,
         subDepartmentName: '',
-       
         departmentId: 0,
         menuPosition: 0,
         isActive: true,
@@ -114,6 +118,18 @@ export class SubDepartmentComponent {
     });
   }
  
+  onSubDepartmentNamesChangeByDepartmentId(departmentId:number){
+    this.subscription=this.subDepartmentService.getSubDepartmentByDepartmentId(departmentId).subscribe((data) => { 
+        this.subDepartments = data;
+      });
+  }
+
+  // loadDepartments() { 
+  //   this.subscription=this.departmentService.getSelectDepartments().subscribe((data) => { 
+  //     this.departments = data;
+  //   });
+  // }
+
  
   onSubmit(form: NgForm): void {
     this.loading = true;

@@ -3,7 +3,7 @@
     <c-card-body>
         <form #SubBranchForm="ngForm" (submit)="onSubmit(SubBranchForm)" [gutter]="3" novalidate cForm cRow
             class="needs-validation">
-            <c-col [md]="6">
+            <!-- <c-col [md]="6">
                 <label cLabel for="validationCustom01">Branch<span class="text-danger">*</span></label>
                 <select required [(ngModel)]="subBranchsService.subBranchs.branchId" name="branchId" #branchId="ngModel"
                     aria-label="Default select example" cSelect>
@@ -18,7 +18,30 @@
                 @if(!branchId.valid && branchId.touched){
                 <div class="text-left text-danger">Branch Type is required</div>
                 }
-            </c-col>
+            </c-col> -->
+
+            <c-col [md]="6">
+                <label cLabel for="validationCustom01">Office Branch<span class="text-danger">*</span></label>
+                <div class="input-wrapper">
+                  <select (change)="onSubBranchNamesChangeByOfficeBranchId(subBranchsService.subBranchs.branchId)"
+                    [(ngModel)]="subBranchsService.subBranchs.branchId" name="branchId" #branchId="ngModel"
+                    cFormControl id="validationCustom01" required aria-label="Default select example" cSelect>
+                    <option [ngValue]="null">Select Branch</option>
+        
+                    @for(subBranch of branchs; track subBranch.id;let index=$index) {
+                    <option [value]="subBranch.id">
+                      {{ subBranch.name }}
+                    </option>
+                    }
+                  </select>
+        
+                  @if(!branchId.valid && branchId.touched){
+                  <div class="text-left text-danger">Department is required</div>
+                  }
+                </div>
+              </c-col>
+
+
             <c-col [md]="6">
                 <input type="hidden" [(ngModel)]="subBranchsService.subBranchs.subBranchId" name="subBranchId" />
                 <label cLabel for="validationCustom01">Sub Branch Name<span class="text-danger">*</span></label>

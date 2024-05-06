@@ -4,6 +4,8 @@ using Hrm.Application.Features.SubDepartment.Requests.Commands;
 using Hrm.Application.Features.SubDepartment.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Shared.Models;
+using Hrm.Application.DTOs.SubDepartment;
+using Hrm.Application.Features.SubDepartment.Requests.Queries;
 
 namespace Hrm.Api.Controllers
 {
@@ -50,7 +52,19 @@ namespace Hrm.Api.Controllers
             var SubDepartment = await _mediator.Send(new GetSelectedSubDepartmentRequest { });
             return Ok(SubDepartment);
         }
+        [HttpGet]
+        [Route("get-subDepartmentByDepartmentId/{id}")]
+        public async Task<ActionResult<List<SubDepartmentDto>>> GetByDepartmentId(int id)
+        {
+            //var SubDepartment = await _mediator.Send(new GetSubDepartmentByCountryIdRequest { CountryId = id });
+            //return Ok(SubDepartment);
+            var SubDepartmentsByDepartmentId = await _mediator.Send(new GetSubDepartmentByDepartmentIdRequest
+            {
+                DepartmentId = id
+            });
+            return Ok(SubDepartmentsByDepartmentId);
 
+        }
         [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

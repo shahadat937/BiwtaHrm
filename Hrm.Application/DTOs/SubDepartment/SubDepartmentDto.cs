@@ -13,6 +13,6 @@ namespace Hrm.Application.DTOs.SubDepartment
         public int? DepartmentId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
-        public string? Department { get; set; }
+        public string? DepartmentName { get; set; }
     }
 }

@@ -26,6 +26,15 @@ export class SubDepartmentService {
     return this.http.get<SelectedModel[]>(this.baseUrl + '/subDepartment/get-selectedSubDepartment');
   }
 
+  getSubDepartmentByDepartmentId(id:number): Observable<SelectedModel[]>{
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/subDepartment/get-subDepartmentByDepartmentId/'+id).pipe(
+      map((data) => {
+        return data;
+      })
+    );; 
+  }
+
+
   getAll(): Observable<SubDepartment[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call

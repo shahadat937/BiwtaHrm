@@ -10,6 +10,8 @@ using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Responses;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.DTOs.SubBranch;
+using Hrm.Application.Features.SubBranch.Requests.Queries;
 namespace Hrm.Api.Controllers
 {
 
@@ -39,6 +41,19 @@ namespace Hrm.Api.Controllers
         {
             var SubBranch = await _mediator.Send(new GetSubBranchRequest { });
             return Ok(SubBranch);
+        }
+        [HttpGet]
+        [Route("get-SubBranchByOfficeBranchId/{id}")]
+        public async Task<ActionResult<List<SubBranchDto>>> GetByOfficeBranchId(int id)
+        {
+            //var SubBranch = await _mediator.Send(new GetSubBranchByCountryIdRequest { CountryId = id });
+            //return Ok(SubBranch);
+            var SubBranchsByOfficeBranchId = await _mediator.Send(new GetSubBranchByOfficeBranchIdRequest
+            {
+                OfficeBranchId = id
+            });
+            return Ok(SubBranchsByOfficeBranchId);
+
         }
 
         [HttpPut]

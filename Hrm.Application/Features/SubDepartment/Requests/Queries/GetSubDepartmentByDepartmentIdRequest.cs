@@ -1,4 +1,5 @@
-﻿using Hrm.Application.Responses;
+﻿using Hrm.Application.DTOs.SubDepartment;
+using Hrm.Shared.Models;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.SubDepartment.Requests.Queries
 {
-    public class GetSubDepartmentRequest : IRequest<object>
+    public class GetSubDepartmentByDepartmentIdRequest : IRequest<List<SelectedModel>>
     {
+        public int DepartmentId { get; set; }
     }
 }

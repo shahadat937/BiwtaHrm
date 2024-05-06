@@ -12,6 +12,12 @@ const routes: Routes = [
     path: 'manageShift',
     component: ManageShiftComponent,
   },
+  
+  {
+    path: 'update-shift/:shiftId',
+    component: ManageShiftComponent,
+  },
+
   {
     path: 'workdaySetting',
     component: WorkdaySettingComponent,

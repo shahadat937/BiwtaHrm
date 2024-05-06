@@ -1,4 +1,5 @@
 ﻿using Hrm.Application.DTOs.Shift;
+using Hrm.Application.Responses;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Shift.Requests.Commands
 {
-    public class UpdateShiftCommand : IRequest<Unit>
+    public class UpdateShiftCommand : IRequest<BaseCommandResponse>
     {
         public ShiftDto ShiftDto { get; set; }
     }

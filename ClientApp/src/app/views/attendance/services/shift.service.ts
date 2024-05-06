@@ -19,7 +19,7 @@ export class ShiftService {
 
     
   find(id: string) {
-    return this.http.get<ShiftModule>(this.baseUrl + '/users/get-userById/' + id);
+    return this.http.get<ShiftModule>(this.baseUrl + '/Shift/get-shiftbyid/' + id);
   }
 
    getAll(): Observable<ShiftModule[]> {
@@ -43,6 +43,9 @@ export class ShiftService {
     return this.http.post(this.baseUrl + '/Shift/save-Shift', model);
   }
   update(id: string,model: any){
-    return this.http.put(this.baseUrl + '/users/update-user/'+id, model);
+    return this.http.put(this.baseUrl + '/Shift/update-Shift/'+id, model);
+  }
+  delete(id:number){
+    return this.http.delete(this.baseUrl + '/Shift/delete-Shift/'+id);
   }
 }

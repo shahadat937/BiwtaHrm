@@ -5,10 +5,11 @@ using MediatR;
 
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
+using Hrm.Application.Responses;
 
 namespace hrm.Application.Features.Shifts.Handlers.Commands
 {
-    public class DeleteShiftCommandHandler : IRequestHandler<DeleteShiftCommand>
+    public class DeleteShiftCommandHandler : IRequestHandler<DeleteShiftCommand, BaseCommandResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -19,26 +20,27 @@ namespace hrm.Application.Features.Shifts.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(DeleteShiftCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(DeleteShiftCommand request, CancellationToken cancellationToken)
         {
+
+            var response = new BaseCommandResponse();
+
             var Shift = await _unitOfWork.Repository<Shift>().Get(request.ShiftId);
 
             if (Shift == null)
-                throw new NotFoundException(nameof(Shift), request.ShiftId);
+            {
+                response.Success = false;
+                response.Message = "Creation Failed";
+            }
 
             await _unitOfWork.Repository<Shift>().Delete(Shift);
-            try
-            {
-                await _unitOfWork.Save();
-            }
-            catch (Exception ex)
-            {
+            await _unitOfWork.Save();
 
-                Console.WriteLine(ex);
-            }
-            //await _unitOfWork.Save();
+            response.Success = true;
+            response.Message = "Deleted Successfull";
 
-            return Unit.Value;
+
+            return response;
         }
     }
 }

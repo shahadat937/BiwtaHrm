@@ -1,24 +1,24 @@
 export class ShiftModule {
-  id: number;
+  shiftId: number;
   shiftName: string;
-  startTime: string;
-  endTime: string;
+  startTime: Date | null;
+  endTime: Date | null;
   startDate: Date | null;
   endDate: Date| null;
-  bufferTime: string;
-  absentTime : string;
+  bufferTime: Date | null;
+  absentTime : Date | null;
   remark : string;
   isActive : boolean;
   
   constructor() {
-    this.id = 0;
+    this.shiftId = 0;
     this.shiftName="";
-    this.startTime="";
-    this.endTime="";
+    this.startTime= null;
+    this.endTime= null;
     this.startDate = null;
     this.endDate = null;
-    this.bufferTime="";
-    this.absentTime ="";
+    this.bufferTime= null;
+    this.absentTime = null;
     this.remark ="";
     this.isActive = true;
   }

@@ -38,7 +38,7 @@ namespace Hrm.Api.Controllers
         [Route("get-EmpTnsferPostingJoin")]
         public async Task<ActionResult> Get()
         {
-            var EmpTnsferPostingJoin = await _mediator.Send(new GetEmpTnsferPostingJoinByEmployeeIdRequest { });
+            var EmpTnsferPostingJoin = await _mediator.Send(new GetEmpTnsferPostingJoinRequest  { });
             return Ok(EmpTnsferPostingJoin);
         }
 

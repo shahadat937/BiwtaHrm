@@ -3,27 +3,33 @@ import { CommonModule } from '@angular/common';
 import { TransferRoutingModule } from './transfer-routing.module';
 import { PostingComponent } from './posting/posting.component';
 import { ReleaseComponent } from './release/release.component';
-import { SpinnerModule } from '@coreui/angular';
+import { ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, SpinnerModule } from '@coreui/angular';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import {CollapseDirective} from '@coreui/angular';
+
 import {
   ButtonGroupModule,ButtonModule,CardModule,DropdownModule,FormModule, GridModule, ListGroupModule, 
   ProgressModule,SharedModule,} from '@coreui/angular';
 import { PostingOrderInfoService } from '../basic-setup/service/posting-order-info.service';
 import { FormsModule } from '@angular/forms';
+import { SharedCustomModule } from 'src/app/shared/shared.module';
+import { EmpDemoComponent } from './emp-demo/emp-demo.component';
+
 @NgModule({
   declarations: [
 
     PostingComponent,
-    ReleaseComponent
+    ReleaseComponent,
+    EmpDemoComponent
   ],
   imports: [
+    MatCardModule,
     SpinnerModule,
     DropdownModule,
-    FormsModule,
-    FormModule,
     FormModule,
     GridModule,
     ListGroupModule,
@@ -39,9 +45,18 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     MatPaginatorModule,
     MatInputModule,
+    CollapseDirective,
+    SharedCustomModule,
+    ModalBodyComponent,
+    CommonModule,
+    ModalComponent,
+    ModalFooterComponent,
+  ModalHeaderComponent,
   ],
   providers:[
     PostingOrderInfoService
   ]
 })
-export class TransferModule { }
+export class TransferModule {
+  
+ }

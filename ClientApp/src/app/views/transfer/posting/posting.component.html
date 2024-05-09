@@ -1,9 +1,48 @@
-<c-card>
+<c-card class="mt-3">
+  <c-card-header>Employee </c-card-header>
+  <c-card-body>
+    <form #PostingAndTrnsForm="ngForm" (submit)="onSubmit(PostingAndTrnsForm)" [gutter]="3" novalidate cForm cRow>
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">List Of Employee <span class="text-danger">*</span></label>
+      <input class="input"(click)="EmployeeSubmit(employees)"/>
+    </c-col>
+      <c-col [md]="3">
+        <input type="hidden" [(ngModel)]="employeeService.demoEmployee.Id" name="Id" />
+        <label cLabel for="validationCustom01">firstName <span class="text-danger">*</span></label>
+        <input [(ngModel)]="employeeService.demoEmployee.firstName" name="firstName" #firstName="ngModel"
+          placeholder="Enter firstName"  cFormControl id="validationCustom01" required type="text" value="Mark" />
+          
+        @if(!firstName.valid&&firstName.touched){
+        <div class="text-left text-danger">firstName value is required</div>
+        }
+      </c-col>
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">lastName <span class="text-danger">*</span></label>
+        <input [(ngModel)]="employeeService.demoEmployee.lastName" name="lastName" #lastName="ngModel"
+          placeholder="Enter lastName  " cFormControl id="validationCustom01" required type="text" value="Mark" />
+        @if(!lastName.valid&&lastName.touched){
+        <div class="text-left text-danger">lastName value is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">email <span class="text-danger">*</span></label>
+        <input [(ngModel)]="employeeService.demoEmployee.email" name="email" #email="ngModel"
+          placeholder="Enter email  " cFormControl id="validationCustom01" required type="text" value="Mark" />
+        @if(!email.valid&&email.touched){
+        <div class="text-left text-danger">email value is required</div>
+        }
+      </c-col>
+
+    </form>
+  </c-card-body>
+</c-card>
+
+<c-card class="mt-3">
   <c-card-header>Posting and Transfer </c-card-header>
   <c-card-body>
     <form #PostingAndTrnsForm="ngForm" (submit)="onSubmit(PostingAndTrnsForm)" [gutter]="3" novalidate cForm cRow
       class="needs-validation">
-
       <c-col [md]="3">
         <label cLabel for="validationCustom01">Department<span class="text-danger">*</span></label>
         <div class="input-wrapper">
@@ -167,102 +206,152 @@
       </c-col> -->
     </form>
 
+  </c-card-body>
+</c-card>
 
+<c-card class="mt-3">
+  <c-card-header>Transfer Approve Information</c-card-header>
+  <c-card-body>
+    <mat-card-content>
+      <form #PostingAndTrnsForm="ngForm" (submit)="onSubmit(PostingAndTrnsForm)" [gutter]="3" novalidate cForm cRow>
+        <c-col [md]="3">
+          <input type="hidden" [(ngModel)]="transferApproveInfoService.transferApproveInfos.transferApproveInfoId"
+            name="transferApproveInfoId" />
+          <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
+          <label cLabel for="validationCustom01">Approve Status<span class="text-danger">*</span></label>
+          <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveStatus" name="approveStatus"
+            #approveStatus="ngModel" placeholder="Enter Approve Status" cFormControl id="validationCustom01" required
+            type="text" value="Mark" />
+          @if(!approveStatus.valid&&approveStatus.touched){
+          <div class="text-left text-danger">Approve Status is required</div>
+          }
+        </c-col>
 
+        <c-col [md]="3">
+          <label cLabel for="validationCustom01">Approve By<span class="text-danger">*</span></label>
+          <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveBy" name="approveBy"
+            #approveBy="ngModel" placeholder="Enter Approve By Status" cFormControl id="validationCustom01" required
+            type="text" value="Mark" />
+          @if(!approveBy.valid&&approveBy.touched){
+          <div class="text-left text-danger">Approve By is required</div>
+          }
+        </c-col>
 
+        <c-col [md]="3">
+          <label cLabel for="validationCustom01">Approve Date<span class="text-danger">*</span></label>
+          <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveDate" name="approveDate"
+            #approveDate="ngModel" placeholder="Enter Approve Date Status" cFormControl id="validationCustom01" required
+            type="date" value="Mark" />
+          @if(!approveDate.valid&&approveDate.touched){
+          <div class="text-left text-danger">Approve Date is required</div>
+          }
+        </c-col>
+
+        <c-col [md]="3">
+          <label cLabel for="validationCustom01">Remarks<span class="text-danger">*</span></label>
+          <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.remarks" name="remarks" #remarks="ngModel"
+            placeholder="Enter Remarks" cFormControl id="validationCustom01" required type="text" value="Mark" />
+          @if(!remarks.valid&&remarks.touched){
+          <div class="text-left text-danger">Remarks is required</div>
+          }
+        </c-col>
+      </form>
+    </mat-card-content>
+  </c-card-body>
+</c-card>
+<c-card-header class="d-flex justify-content-between">
+  <div>{{userHeaderText}}</div>
+  <div><button cButton color="primary" shape="rounded-pill" (click)="UserFormView()"><svg cIcon
+        name={{buttonIcon}}></svg> {{userBtnText}}</button></div>
+</c-card-header>
+<c-card class="mt-3 shadow">
+  <c-card-body [visible]="visible" cCollapse class="shadow">
     <form #PostingAndTrnsForm="ngForm" (submit)="onSubmit(PostingAndTrnsForm)" [gutter]="3" novalidate cForm cRow>
 
-      <c-card-header>Transfer Approve Info</c-card-header>
+      <c-card-header>Departmental Release Information</c-card-header>
+
       <c-col [md]="3">
-        <input type="hidden" [(ngModel)]="transferApproveInfoService.transferApproveInfos.transferApproveInfoId" name="transferApproveInfoId" />
-        <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
-        <label cLabel for="validationCustom01">Approve Status<span class="text-danger">*</span></label>
-        <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveStatus" name="approveStatus" #approveStatus="ngModel"
-          placeholder="Enter Approve Status" cFormControl id="validationCustom01" required type="text" value="Mark" />
-        @if(!approveStatus.valid&&approveStatus.touched){
-        <div class="text-left text-danger">Approve Status is required</div>
-        }
-      </c-col>
- 
-      <c-col [md]="3">
-        <label cLabel for="validationCustom01">Approve By<span class="text-danger">*</span></label>
-        <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveBy" name="approveBy" #approveBy="ngModel"
-          placeholder="Enter Approve By Status" cFormControl id="validationCustom01" required type="text" value="Mark" />
-        @if(!approveBy.valid&&approveBy.touched){
-        <div class="text-left text-danger">Approve By is required</div>
+        <input type="hidden" [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.depReleaseInfoId"
+          name="depReleaseInfoId" />
+        <label cLabel for="validationCustom01">Relese Type<span class="text-danger">*</span></label>
+        <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.releaseType" name="releaseType"
+          #releaseType="ngModel" placeholder="Enter Release Type" cFormControl id="validationCustom01" required
+          type="text" value="Mark" />
+        @if(!releaseType.valid&&releaseType.touched){
+        <div class="text-left text-danger">Release Type is required</div>
         }
       </c-col>
 
       <c-col [md]="3">
-        <label cLabel for="validationCustom01">Approve Date<span class="text-danger">*</span></label>
-        <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveDate" name="approveDate" #approveDate="ngModel"
-          placeholder="Enter Approve Date Status" cFormControl id="validationCustom01" required type="date" value="Mark" />
-        @if(!approveDate.valid&&approveDate.touched){
-        <div class="text-left text-danger">Approve Date is required</div>
+        <label cLabel for="validationCustom01">Relese Date<span class="text-danger">*</span></label>
+        <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.releaseDate" name="releaseDate"
+          #releaseDate="ngModel" placeholder="Enter Relese Date Status" cFormControl id="validationCustom01" required
+          type="date" value="Mark" />
+        @if(!releaseDate.valid&&releaseDate.touched){
+        <div class="text-left text-danger">Relese Date is required</div>
         }
       </c-col>
-      
+
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">Referenc no <span class="text-danger">*</span></label>
+        <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.referenceNo" name="referenceNo"
+          #referenceNo="ngModel" placeholder="Enter References Status" cFormControl id="validationCustom01" required
+          type="text" value="Mark" />
+        @if(!referenceNo.valid&&referenceNo.touched){
+        <div class="text-left text-danger">References No is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="3">
+        <label cLabel for="validationCustom01">Depertmental Clearance<span class="text-danger">*</span></label>
+        <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.depClearance" name="depClearance"
+          #depClearance="ngModel" placeholder="Enter Departmental Clearance" cFormControl id="validationCustom01"
+          required type="text" value="Mark" />
+        @if(!depClearance.valid&&depClearance.touched){
+        <div class="text-left text-danger">Departmental Clearance required</div>
+        }
+      </c-col>
       <c-col [md]="3">
         <label cLabel for="validationCustom01">Remarks<span class="text-danger">*</span></label>
-        <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.remarks" name="remarks" #remarks="ngModel"
-          placeholder="Enter Remarks" cFormControl id="validationCustom01" required type="text" value="Mark" />
+        <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.remarks" name="remarks" #remarks="ngModel"
+          placeholder="Enter Remarks " cFormControl id="validationCustom01" required type="text" value="Mark" />
         @if(!remarks.valid&&remarks.touched){
-        <div class="text-left text-danger">Remarks is required</div>
+        <div class="text-left text-danger">Remarks required</div>
         }
       </c-col>
     </form>
   </c-card-body>
 </c-card>
 
-<c-card class="mt-3">
-  <c-card-header>PostingOrderInfo List</c-card-header>
-  <c-card-body>
-    <div class="example-header">
-      <mat-form-field>
-        <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here.." />
-        <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
-          (click)="filter.value = ''; applyFilter('')"></button>
-      </mat-form-field>
-    </div>
+<c-card class="mt-3 shadow">
+  <c-card-body [visible]="visible" cCollapse class="shadow">
+    <mat-card>
+      <form #PostingAndTrnsForm="ngForm" (submit)="onSubmit(PostingAndTrnsForm)" [gutter]="3" novalidate cForm cRow>
 
-    <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource">
-        <!-- Position Column -->
-        <ng-container matColumnDef="slNo">
-          <th mat-header-cell *matHeaderCellDef>Serial No</th>
-          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-        </ng-container>
+        <c-card-header>Employee Transfer/Posting Joining</c-card-header>
 
-        <ng-container matColumnDef="officeOrderNo">
-          <th mat-header-cell *matHeaderCellDef>OfficeOrder No</th>
-          <td mat-cell *matCellDef="let element">{{ element.officeOrderNo }}</td>
-        </ng-container>
-        <!-- Name Column -->
-        <ng-container matColumnDef="isActive">
-          <th mat-header-cell *matHeaderCellDef>Is Active</th>
-          <td mat-cell *matCellDef="let element">{{ element.isActive }}</td>
-        </ng-container>
-        <ng-container matColumnDef="Action">
-          <th mat-header-cell *matHeaderCellDef>Action</th>
-          <td mat-cell *matCellDef="let element">
-            <button class="custom-button"
-              [routerLink]="['/transfer/update-postingOrderInfo', element.postingOrderInfoId]">
-              <svg cIcon name="cilPencil"></svg>
-            </button>
-            <button class="custom-button" (click)="delete(element)">
-              <svg cIcon name="cilTrash"></svg>
-            </button>
-          </td>
-        </ng-container>
+        <c-col [md]="3">
+          <input type="hidden" [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.empTnsferPostingJoinId"
+            name="depReleaseInfoId" />
+          <label cLabel for="validationCustom01">Join Date<span class="text-danger">*</span></label>
+          <input [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.joinDate" name="joinDate"
+            #joinDate="ngModel" placeholder="Enter Join Date" cFormControl id="validationCustom01" required type="date"
+            value="Mark" />
+          @if(!joinDate.valid&&joinDate.touched){
+          <div class="text-left text-danger">Join Date is required</div>
+          }
+        </c-col>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
+        <c-col [md]="3">
+          <label cLabel for="validationCustom01">Remarks<span class="text-danger">*</span></label>
+          <input [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.remarks" name="remarks"
+            #remarks="ngModel" placeholder="Enter Remarks " cFormControl id="validationCustom01" required type="text"
+            value="Mark" />
+          @if(!remarks.valid&&remarks.touched){
+          <div class="text-left text-danger">Remarks required</div>
+          }
+        </c-col>
+      </form>
+    </mat-card>
   </c-card-body>
-
-  <c-card-footer class="text-medium-emphasis">
-    <mat-paginator appBubblePagination [length]="dataSource.data.length" [pageSize]="10" aria-label="Select page">
-    </mat-paginator>
-  </c-card-footer>
-  <c-card> </c-card></c-card>
+</c-card>

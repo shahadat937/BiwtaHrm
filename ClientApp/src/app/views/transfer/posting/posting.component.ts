@@ -5,7 +5,6 @@ import { DeptReleaseInfoService } from './../../basic-setup/service/dept-release
 import { DeptReleaseInfo } from './../../basic-setup/model/dept-release-info';
 import { TransferApproveInfoService } from './../../basic-setup/service/transfer-approve-info.service';
 import { TransferApproveInfo } from './../../basic-setup/model/transfer-approve-info';
-import { SubBranch } from './../../basic-setup/model/sub-branch';
 import { DepartmentService } from './../../basic-setup/service/department.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -23,8 +22,8 @@ import { SubDepartmentService } from '../../basic-setup/service/sub-department.s
 import { BranchService } from '../../basic-setup/service/branch.service';
 import { SubBranchService } from '../../basic-setup/service/sub-branch.service';
 import { MatDialog } from '@angular/material/dialog';
-import { EmpDemoComponent } from '../emp-demo/emp-demo.component';
-
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EmpModalComponent } from '../emp-modal/emp-modal.component';
 
 @Component({
   selector: 'app-posting',
@@ -74,18 +73,10 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     private toastr: ToastrService,
     public dialog: MatDialog,
     private _dialog: MatDialog,
+    private modalService: BsModalService,
   ) {
   }
-  openDialog(): void {
-    const dialogRef = this.dialog.open(EmpDemoComponent, {
-      width: '250px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
+  
   ngOnInit(): void {
     this.getAllPostingOrderInfos();
     this.loadTransferApproveInfos();
@@ -430,30 +421,8 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  EmployeeSubmit(element: any) {
-    this.employeeService
-      .confirm('Employee List')
-      .subscribe((result) => {
-        if (result) {
-          this.employeeService.saveEmployee(element.Id).subscribe(
-            (res) => {
-              const index = this.dataSource.data.indexOf(element);
-              if (index !== -1) {
-                this.dataSource.data.splice(index, 1);
-                this.dataSource = new MatTableDataSource(this.dataSource.data);
-              }
-              this.toastr.success('Delete sucessfully ! ', ` `, {
-                positionClass: 'toast-top-right',
-              });
-            },
-            (err) => {
-              this.toastr.error('Somethig Wrong ! ', ` `, {
-                positionClass: 'toast-top-right',
-              });
-              console.log(err);
-            }
-          );
-        }
-      });
+  bsModelRef!: BsModalRef;
+  openModal():void{
+    this.bsModelRef = this.modalService.show(EmpModalComponent)
   }
 }

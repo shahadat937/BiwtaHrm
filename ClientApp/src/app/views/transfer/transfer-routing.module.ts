@@ -1,4 +1,3 @@
-import { EmpDemoComponent } from './emp-demo/emp-demo.component';
 import { ReleaseComponent } from './release/release.component';
 import { PostingComponent } from './posting/posting.component';
 import { NgModule } from '@angular/core';
@@ -12,10 +11,6 @@ const routes: Routes = [
   },
   { path: 'update-postingOrderInfo/:postingOrderInfoId',
     component: PostingComponent,
-  },
-  {
-    path:'empdemo',
-    component:EmpDemoComponent
   },
   {
     path:'release',

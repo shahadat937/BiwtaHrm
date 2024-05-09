@@ -1,4 +1,3 @@
-import { EmpDemoComponent } from './../emp-demo/emp-demo.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -25,7 +24,7 @@ export class EmployeesService {
           btnCancelText
         }
       }
-    this.bsModelRef = this.modalService.show(EmpDemoComponent, config);
+    
     
     return new Observable<boolean>(this.getResult());
   }

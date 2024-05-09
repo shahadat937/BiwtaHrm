@@ -17,14 +17,15 @@ import {
 import { PostingOrderInfoService } from '../basic-setup/service/posting-order-info.service';
 import { FormsModule } from '@angular/forms';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
-import { EmpDemoComponent } from './emp-demo/emp-demo.component';
+import { EmpModalComponent } from './emp-modal/emp-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
 
     PostingComponent,
     ReleaseComponent,
-    EmpDemoComponent
+    EmpModalComponent,
   ],
   imports: [
     MatCardModule,
@@ -52,10 +53,12 @@ import { EmpDemoComponent } from './emp-demo/emp-demo.component';
     ModalComponent,
     ModalFooterComponent,
   ModalHeaderComponent,
+  MatDialogModule,
   ],
   providers:[
     PostingOrderInfoService
-  ]
+  ],
+  bootstrap: [EmpModalComponent]
 })
 export class TransferModule {
   

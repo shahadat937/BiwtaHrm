@@ -1,7 +1,3 @@
-import { AppraisalModule } from './views/appraisal/appraisal.module';
-import { PromotionModule } from './views/promotion/promotion.module';
-import { Leave } from './views/basic-setup/model/Leave';
-import { EmployeeModule } from './views/employee/employee.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

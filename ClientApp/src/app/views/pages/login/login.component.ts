@@ -81,9 +81,9 @@ onSubmit() {
             }
               //this.router.navigate(['/dashboard']);
               this.loading = false;
-              // this.toastr.success('', `login successful`, {
-              //   positionClass: 'toast-top-right',
-              // });
+              this.toastr.success('', `login successful`, {
+                positionClass: 'toast-top-right',
+              });
           //  }, 1000);
           } else {
            

@@ -45,7 +45,7 @@ namespace Hrm.Application
         public const string Punishment = HRMRoutePrefixBase + "punishment";
         public const string Reward = HRMRoutePrefixBase + "reward";
         public const string HolidayType = HRMRoutePrefixBase + "holidayType";
-        public const string Weekend = HRMRoutePrefixBase + "weekend";
+        public const string WeekDay = HRMRoutePrefixBase + "weekDay";
         public const string overallEVPromotion = HRMRoutePrefixBase + "overallEVPromotion";
         public const string Relation = HRMRoutePrefixBase + "Relation";
         public const string Scale = HRMRoutePrefixBase + "scale"; 

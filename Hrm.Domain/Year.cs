@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Hrm.Domain
 {
-    public class WeekDay : BaseDomainEntity
+    public class Year : BaseDomainEntity
     {
-        public int WeekDayId { get; set; }
-        public string? WeekDayName { get; set; }
+        public int YearId { get; set; }
+        public int YearName { get; set; }
         public string? Remark { get; set; }
-        public int? MenuPosition { get; set; }
+        public int MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }
 }

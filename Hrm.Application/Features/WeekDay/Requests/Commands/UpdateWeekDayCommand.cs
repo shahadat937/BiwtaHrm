@@ -1,5 +1,4 @@
-﻿using Hrm.Application.DTOs.Weekend;
-using Hrm.Application.Responses;
+﻿using Hrm.Application.DTOs.WeekDay;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Weekend.Requests.Commands
 {
-    public class CreateEmployeeCommand : IRequest<BaseCommandResponse>
+    public class UpdateWeekDayCommand : IRequest<Unit>
     {
-        public CreateWeekendDto WeekendDto { get; set; }
+        public WeekDayDto WeekendDto { get; set; }
     }
 }

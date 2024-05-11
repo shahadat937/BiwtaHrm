@@ -69,6 +69,7 @@ using Hrm.Application.DTOs.PostingOrderInfo;
 using Hrm.Application.DTOs.TransferApproveInfo;
 using Hrm.Application.DTOs.DepReleaseInfo;
 using Hrm.Application.DTOs.EmpTnsferPostingJoin;
+using Hrm.Application.DTOs.Year;
 
 
 
@@ -271,6 +272,9 @@ namespace Hrm.Application.Profiles
             
             CreateMap<EmpTnsferPostingJoin, EmpTnsferPostingJoinDto>().ReverseMap();
             CreateMap<EmpTnsferPostingJoin, CreateEmpTnsferPostingJoinDto>().ReverseMap();
+
+            CreateMap<Year, YearDto>().ReverseMap();
+            CreateMap<Year, CreateYearDto>().ReverseMap();
 
 
             #region Modules Mapping    

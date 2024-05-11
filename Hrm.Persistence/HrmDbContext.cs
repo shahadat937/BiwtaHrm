@@ -364,6 +364,7 @@ namespace Hrm.Persistence
 
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; } = null!;
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; } = null!;
+        public virtual DbSet<Year> Year { get; set; } = null!;
 
 
 

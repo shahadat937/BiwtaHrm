@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -73,6 +73,7 @@ export class EmpModalComponent implements OnInit, AfterViewInit{
   }
   selectEmployee(employee: Employee) {
     this.employeeSelected.emit(employee);
+    console.log(employee)
   }
 
 
@@ -86,12 +87,12 @@ export class EmpModalComponent implements OnInit, AfterViewInit{
     { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
     { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
     { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
+    { employeePMSNo: 1, employeeName: 'Rakib', department: 'Doe', designation: 'john@example.com' },
+    { employeePMSNo: 1, employeeName: 'Sujon', department: 'Doe', designation: 'john@example.com' },
+    { employeePMSNo: 1, employeeName: 'Saje', department: 'Doe', designation: 'john@example.com' },
+    { employeePMSNo: 1, employeeName: 'Pavel', department: 'Doe', designation: 'john@example.com' },
+    { employeePMSNo: 1, employeeName: 'Rahim', department: 'Doe', designation: 'john@example.com' },
+    { employeePMSNo: 1, employeeName: 'Ariful', department: 'IT', designation: 'john@example.com' },
 
 
 

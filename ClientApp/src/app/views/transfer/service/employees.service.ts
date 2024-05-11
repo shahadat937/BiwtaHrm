@@ -12,6 +12,13 @@ export class EmployeesService {
   getemployees:any[]=[];
   constructor(private modalService: BsModalService,private http: HttpClient) { }
 
+  saveEmployeeData(employeeData: any): Observable<any> {
+    // Make an HTTP POST request to your backend API endpoint
+    // Replace 'your-api-endpoint' with the actual endpoint URL
+    return this.http.post<any>('your-api-endpoint/save-employee', employeeData);
+  }
+
+
    demoEmployee: Employee = {
     employeePMSNo:0,
     employeeName: '',

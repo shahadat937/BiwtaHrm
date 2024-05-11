@@ -1,37 +1,44 @@
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, NgForm } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+
+import { PostingOrderInfoService } from '../../basic-setup/service/posting-order-info.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { Employee, EmployeesService } from './../service/employees.service';
-import { EmpTnsferPostingJoin } from './../../basic-setup/model/emp-tnsfer-posting-join';
-import { EmpTnsferPostingJoinService } from './../../basic-setup/service/emp-tnsfer-posting-join.service';
+import { EmpModalComponent } from '../emp-modal/emp-modal.component';
 import { DeptReleaseInfoService } from './../../basic-setup/service/dept-release-info.service';
 import { DeptReleaseInfo } from './../../basic-setup/model/dept-release-info';
 import { TransferApproveInfoService } from './../../basic-setup/service/transfer-approve-info.service';
 import { TransferApproveInfo } from './../../basic-setup/model/transfer-approve-info';
 import { DepartmentService } from './../../basic-setup/service/department.service';
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
-import { PostingOrderInfoService } from '../../basic-setup/service/posting-order-info.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { ToastrService } from 'ngx-toastr';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { SubDepartmentService } from '../../basic-setup/service/sub-department.service';
 import { BranchService } from '../../basic-setup/service/branch.service';
 import { SubBranchService } from '../../basic-setup/service/sub-branch.service';
-import { MatDialog } from '@angular/material/dialog';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { EmpModalComponent } from '../emp-modal/emp-modal.component';
+import { EmpTnsferPostingJoin } from './../../basic-setup/model/emp-tnsfer-posting-join';
+import { EmpTnsferPostingJoinService } from './../../basic-setup/service/emp-tnsfer-posting-join.service';
 
 @Component({
   selector: 'app-posting',
   templateUrl: './posting.component.html',
-  styleUrl: './posting.component.scss'
+  styleUrls: ['./posting.component.scss']
 })
 export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
-  //grades: any[] = [];
+  postingForm: FormGroup;
+  form1: FormGroup;
+  form2: FormGroup;
+  form3: FormGroup;
+  form4: FormGroup;
+  form5: FormGroup;
+
   editMode: boolean = false;
   departments: SelectedModel[] = [];
   subDepartments: SelectedModel[] = [];
@@ -41,6 +48,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   deptReleaseInfo: DeptReleaseInfo[] = [];
   empTnsferPostingJoin: EmpTnsferPostingJoin[] = [];
   employees: any[] = [];
+  select: any[] = [];
   userBtnText: string | undefined;
   userHeaderText: string | undefined;
   buttonIcon: string = '';
@@ -56,8 +64,10 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-  @Output() employeeSelected = new EventEmitter<Employee>();
+  @Input() employeeSelected = new EventEmitter<Employee>();
+
   constructor(
+    
     public postingOrderInfoService: PostingOrderInfoService,
     private branchServices: BranchService,
     private departmentService: DepartmentService,
@@ -75,10 +85,36 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     public dialog: MatDialog,
     private _dialog: MatDialog,
     private modalService: BsModalService,
-    private cdRef: ChangeDetectorRef
-  ) {
+    private cdRef: ChangeDetectorRef,
+    private formBuilder: FormBuilder,
+    private fb: FormBuilder // Inject FormBuilder here
+  ) { 
+    this.postingForm = this.formBuilder.group({
+      // Define your form controls and validators here
+    });
+
+    // Initialize other form groups if needed
+    this.form1 = this.formBuilder.group({
+      // Define form controls for form1
+    });
+
+    this.form2 = this.formBuilder.group({
+      // Define form controls for form2
+    });
+
+    this.form3 = this.formBuilder.group({
+      // Define form controls for form3
+    });
+
+    this.form4 = this.formBuilder.group({
+      // Define form controls for form4
+    });
+
+    this.form5 = this.formBuilder.group({
+      // Define form controls for form5
+    });
   }
-  
+
   ngOnInit(): void {
     this.getAllPostingOrderInfos();
     this.loadTransferApproveInfos();
@@ -89,7 +125,13 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.SelectBranchs();
     this.SelectSubBranchs();
     this.handleRouteParams();
-    this.buttonIcon = "cilPencil"; 
+    this.buttonIcon = "cilPencil";
+    console.log(this.employeeSelected)
+  }
+
+  selectEmployee(employee: Employee) {
+    this.employeeSelected.emit(employee);
+    console.log(employee)
   }
 
   SelectDepartments() {
@@ -97,22 +139,24 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       this.departments = data;
     });
   }
+
   SelectsubDepartments() {
     this.subDepartmentService.getSelectSubDepartment().subscribe((res) => {
       this.subDepartments = res;
     });
   }
+
   SelectBranchs() {
     this.branchServices.getSelectBranch().subscribe((res) => {
       this.officeBranchs = res;
     });
   }
+
   SelectSubBranchs() {
     this.subBranchService.getSelectSubBranchs().subscribe((res) => {
       this.subBranchs = res;
     });
   }
-
 
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
@@ -144,30 +188,31 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       this.buttonIcon = "cilTrash";
       this.userHeaderText = "Add New Value";
       this.visible = true;
-    }
-    else {
+    } else {
       this.userBtnText = " Add Value";
       this.buttonIcon = "cilPencil";
       this.userHeaderText = "Value List";
       this.visible = false;
     }
   }
+
   toggleCollapse() {
     this.handleRouteParams();
     this.userHeaderText = "Update Value";
     this.visible = true;
   }
 
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.matSort;
   }
+
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
@@ -177,7 +222,6 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   initaialPostingOrderInfo(form?: NgForm) {
     if (form != null) form.resetForm();
     this.postingOrderInfoService.postingOrderInfos = {
-
       postingOrderInfoId: 0,
       empId: 0,
       departmentId: 0,
@@ -191,9 +235,9 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       releaseType: "",
       menuPosition: 0,
       isActive: true
-
     };
   }
+
   resetForm() {
     if (this.PostingAndTrnsForm?.form != null) {
       this.PostingAndTrnsForm.form.reset();
@@ -215,9 +259,9 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.router.navigate(['/transfer/postingOrderInfo']);
   }
+
   getAllPostingOrderInfos() {
     this.subscription = this.postingOrderInfoService.getAll().subscribe((item) => {
-
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -246,7 +290,6 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
-        //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
@@ -264,28 +307,27 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       this.loading = false;
     });
   }
+
   delete(element: any) {
-    this.confirmService
-      .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
-      .subscribe((result) => {
-        if (result) {
-          this.postingOrderInfoService.delete(element.postingOrderInfoId).subscribe(
-            (res) => {
-              const index = this.dataSource.data.indexOf(element);
-              if (index !== -1) {
-                this.dataSource.data.splice(index, 1);
-                this.dataSource = new MatTableDataSource(this.dataSource.data);
-              }
-            },
-            (err) => {
-              this.toastr.error('Somethig Wrong ! ', ` `, {
-                positionClass: 'toast-top-right',
-              });
-              console.log(err);
+    this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe((result) => {
+      if (result) {
+        this.postingOrderInfoService.delete(element.postingOrderInfoId).subscribe(
+          (res) => {
+            const index = this.dataSource.data.indexOf(element);
+            if (index !== -1) {
+              this.dataSource.data.splice(index, 1);
+              this.dataSource = new MatTableDataSource(this.dataSource.data);
             }
-          );
-        }
-      });
+          },
+          (err) => {
+            this.toastr.error('Somethig Wrong ! ', ` `, {
+              positionClass: 'toast-top-right',
+            });
+            console.log(err);
+          }
+        );
+      }
+    });
   }
 
   // transferApproveInfos
@@ -301,14 +343,12 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       remarks: "",
       menuPosition: 0,
       isActive: true
-
     };
   }
-  resetFormTransfer() {
 
+  resetFormTransfer() {
     this.btnText = 'Submit';
     if (this.PostingAndTrnsForm?.form != null) {
-
       this.PostingAndTrnsForm.form.reset();
       this.PostingAndTrnsForm.form.patchValue({
         transferApproveInfoId: 0,
@@ -322,6 +362,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
   }
+
   loadTransferApproveInfos() {
     this.subscription = this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((h) => {
       this.transferApproveInfos = h;
@@ -330,8 +371,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //Departmental Release Information
 
-  initaialDepartmentalReleaseInfo
-    (form?: NgForm) {
+  initaialDepartmentalReleaseInfo(form?: NgForm) {
     if (form != null) form.resetForm();
     this.deptReleaseInfoService.deptReleaseInfo = {
       depReleaseInfoId: 0,
@@ -345,14 +385,12 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       remarks: "",
       menuPosition: 0,
       isActive: true
-
     };
   }
-  resetFormDepartmentalReleaseInfo() {
 
+  resetFormDepartmentalReleaseInfo() {
     this.btnText = 'Submit';
     if (this.PostingAndTrnsForm?.form != null) {
-
       this.PostingAndTrnsForm.form.reset();
       this.PostingAndTrnsForm.form.patchValue({
         depReleaseInfoId: 0,
@@ -369,11 +407,13 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
   }
+
   loadDepartmentalReleaseInfos() {
     this.deptReleaseInfoService.getdeptReleaseInfoAll().subscribe((h) => {
       this.deptReleaseInfo = h;
     });
   }
+
   //EmpTnsferPostingJoin
   initaialEmpTnsferPostingJoin(form?: NgForm) {
     if (form != null) form.resetForm();
@@ -384,14 +424,12 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       remarks: "",
       menuPosition: 0,
       isActive: true
-
     };
   }
-  resetFormEmpTnsferPostingJoin() {
 
+  resetFormEmpTnsferPostingJoin() {
     this.btnText = 'Submit';
     if (this.PostingAndTrnsForm?.form != null) {
-
       this.PostingAndTrnsForm.form.reset();
       this.PostingAndTrnsForm.form.patchValue({
         empTnsferPostingJoinId: 0,
@@ -403,19 +441,23 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
   }
+
   loadEmpTnsferPostingJoins() {
     this.subscription = this.empTnsferPostingJoinService.getempTnsferPostingJoinAll().subscribe((h) => {
       this.empTnsferPostingJoin = h;
     });
   }
 
-  //employees
   bsModelRef!: BsModalRef;
-  openModal():void{
-    this.bsModelRef = this.modalService.show(EmpModalComponent)
+
+  openModal(): void {
+    const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
+      this.handleEmployeeSelection(selectedEmployee);
+    });
   }
- handleEmployeeSelection(employee: Employee) {
-  this.employeeService.demoEmployee = employee;
-  this.cdRef.detectChanges(); // Force change detection
-}
+
+  handleEmployeeSelection(employee: Employee) {
+    this.employeeService.demoEmployee = employee;
+  }
 }

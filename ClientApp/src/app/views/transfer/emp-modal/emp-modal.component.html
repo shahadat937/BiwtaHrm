@@ -20,6 +20,17 @@
     <mat-dialog-content>
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <!-- Name Column -->
+        <ng-container matColumnDef="Action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+            <button 
+              class="custom-button"
+              [routerLink]="['/release', element.Id]"
+            >
+              <svg cIcon name="cilPencil"></svg>
+            </button>
+          </td>
+        </ng-container>
         <ng-container matColumnDef="slNo">
           <th mat-header-cell *matHeaderCellDef>Serial No</th>
           <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>

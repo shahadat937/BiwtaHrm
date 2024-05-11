@@ -22,7 +22,7 @@ export class EmpModalComponent implements OnInit, AfterViewInit{
   btnText: string | undefined;
 //  @ViewChild('WardForm', { static: true }) WardForm!: NgForm;
   //subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'firstName', 'lastName', 'email'];
+  displayedColumns: string[] = ['Action','slNo', 'firstName', 'lastName', 'email'];
   dataSource = new MatTableDataSource<Employee>(); // Correct the type of MatTableDataSource
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

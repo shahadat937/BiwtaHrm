@@ -6,7 +6,7 @@ import { DeptReleaseInfo } from './../../basic-setup/model/dept-release-info';
 import { TransferApproveInfoService } from './../../basic-setup/service/transfer-approve-info.service';
 import { TransferApproveInfo } from './../../basic-setup/model/transfer-approve-info';
 import { DepartmentService } from './../../basic-setup/service/department.service';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -56,6 +56,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+  @Output() employeeSelected = new EventEmitter<Employee>();
   constructor(
     public postingOrderInfoService: PostingOrderInfoService,
     private branchServices: BranchService,
@@ -74,6 +75,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     public dialog: MatDialog,
     private _dialog: MatDialog,
     private modalService: BsModalService,
+    private cdRef: ChangeDetectorRef
   ) {
   }
   
@@ -237,7 +239,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   onSubmit(form: NgForm): void {
     this.loading = true;
     this.postingOrderInfoService.cachedData = [];
-    const id = form.value.divisionId;
+    const id = form.value.postingOrderInfoId;
     const action$ = id
       ? this.postingOrderInfoService.update(id, form.value)
       : this.postingOrderInfoService.submit(form.value);
@@ -408,21 +410,12 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   //employees
-  saveEmployeeData() {
-    const newEmployee: Employee = {
-      Id:0,
-      firstName: '',
-      lastName: '',
-      email: ''
-    };
-
-    this.employeeService.saveEmployee(newEmployee).subscribe(response => {
-      console.log('Employee data saved:', response);
-    });
-  }
-
   bsModelRef!: BsModalRef;
   openModal():void{
     this.bsModelRef = this.modalService.show(EmpModalComponent)
   }
+ handleEmployeeSelection(employee: Employee) {
+  this.employeeService.demoEmployee = employee;
+  this.cdRef.detectChanges(); // Force change detection
+}
 }

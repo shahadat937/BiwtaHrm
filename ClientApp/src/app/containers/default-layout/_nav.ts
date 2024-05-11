@@ -350,6 +350,10 @@ export const navItems: INavData[] = [
       {
         name: 'Deparment Release',
         url: '/transfer/release'
+      },
+      {
+        name: 'EmpModal',
+        url: '/transfer/EmpModal'
       }
     ]
   },

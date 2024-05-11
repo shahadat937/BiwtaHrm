@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
 using Hrm.Application.Contracts.Persistence;
-using Hrm.Application.DTOs.Weekend.Validators;
+using Hrm.Application.DTOs.WeekDay.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.Weekend.Requests.Commands;
 using Hrm.Application.Responses;
@@ -16,22 +16,22 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Weekend.Handlers.Commands
 {
-    public class UpdateWeekendCommandHandler : IRequestHandler<UpdateWeekendCommand, Unit>
+    public class UpdateWeekDayCommandHandler : IRequestHandler<UpdateWeekDayCommand, Unit>
     {
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateWeekendCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateWeekDayCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdateWeekendCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateWeekDayCommand request, CancellationToken cancellationToken)
         {
             var respose = new BaseCommandResponse();
-            var validator = new UpdateWeekendDtoValidator();
+            var validator = new UpdateWeekDayDtoValidator();
             var validationResult = await validator.ValidateAsync(request.WeekendDto);
 
             if (validationResult.IsValid == false)
@@ -41,16 +41,16 @@ namespace Hrm.Application.Features.Weekend.Handlers.Commands
                 respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var Weekend = await _unitOfWork.Repository<Hrm.Domain.Weekend>().Get(request.WeekendDto.WeekendId);
+            var Weekend = await _unitOfWork.Repository<Hrm.Domain.WeekDay>().Get(request.WeekendDto.WeekDayId);
 
             if (Weekend is null)
             {
-                throw new NotFoundException(nameof(Weekend), request.WeekendDto.WeekendId);
+                throw new NotFoundException(nameof(Weekend), request.WeekendDto.WeekDayId);
             }
 
             _mapper.Map(request.WeekendDto, Weekend);
 
-            await _unitOfWork.Repository<Hrm.Domain.Weekend>().Update(Weekend);
+            await _unitOfWork.Repository<Hrm.Domain.WeekDay>().Update(Weekend);
             await _unitOfWork.Save();
 
             return Unit.Value;

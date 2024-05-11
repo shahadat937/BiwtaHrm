@@ -144,10 +144,10 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.HolidayTypeId)
                 .HasName("[[PK_HolidayTypeId]]");
             });
-            modelBuilder.Entity<Weekend>(entity =>
+            modelBuilder.Entity<WeekDay>(entity =>
             {
-                entity.HasKey(e => e.WeekendId)
-                .HasName("[[PK_WeekendId]]");
+                entity.HasKey(e => e.WeekDayId)
+                .HasName("[[PK_WeekDayId]]");
             });
             modelBuilder.Entity<Scale>(entity =>
             {
@@ -330,7 +330,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Punishment> Punishment { get; set; } = null!;
         public virtual DbSet<Reward> Reward { get; set; } = null!;
         public virtual DbSet<HolidayType> HolidayType { get; set; } = null!;
-        public virtual DbSet<Weekend> Weekend { get; set; } = null!;
+        public virtual DbSet<WeekDay> WeekDay { get; set; } = null!;
         public virtual DbSet<OverallEVPromotion> OverallEVPromotion { get; set; } = null!;
         public virtual DbSet<Domain.Module> Module { get; set; } = null!;
         public virtual DbSet<Feature> Feature { get; set; } = null!;

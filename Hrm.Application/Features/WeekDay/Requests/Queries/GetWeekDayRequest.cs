@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Weekend.Handlers.Queries
 {
-    public class GetWeekendRequest : IRequest<object>
+    public class GetWeekDayRequest : IRequest<object>
     {
     }
 }

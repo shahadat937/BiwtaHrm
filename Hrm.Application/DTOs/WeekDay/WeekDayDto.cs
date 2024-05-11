@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.DTOs.Weekend
+namespace Hrm.Application.DTOs.WeekDay
 {
-    public  class CreateWeekendDto:IWeekendDto
+    public class WeekDayDto: IWeekDayDto
     {
-        public int WeekendId { get; set; }
-        public string? WeekendName { get; set; }
+
+        public int WeekDayId { get; set; }
+        public string? WeekDayName { get; set; }
+        public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

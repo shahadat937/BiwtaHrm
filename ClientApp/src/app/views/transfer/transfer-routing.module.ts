@@ -1,8 +1,8 @@
-import { EmpDemoComponent } from './emp-demo/emp-demo.component';
 import { ReleaseComponent } from './release/release.component';
 import { PostingComponent } from './posting/posting.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EmpModalComponent } from './emp-modal/emp-modal.component';
 
 
 const routes: Routes = [
@@ -14,12 +14,12 @@ const routes: Routes = [
     component: PostingComponent,
   },
   {
-    path:'empdemo',
-    component:EmpDemoComponent
-  },
-  {
     path:'release',
     component:ReleaseComponent
+  },
+  {
+    path:'EmpModal',
+    component:EmpModalComponent
   }
 ];
 

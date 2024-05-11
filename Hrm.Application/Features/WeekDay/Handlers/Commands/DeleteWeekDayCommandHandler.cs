@@ -8,25 +8,25 @@ using Hrm.Domain;
 
 namespace hrm.Application.Features.Weekends.Handlers.Commands
 {
-    public class DeleteWeekendCommandHandler : IRequestHandler<DeleteWeekendCommand>
+    public class DeleteWeekDayCommandHandler : IRequestHandler<DeleteWeekDayCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public DeleteWeekendCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public DeleteWeekDayCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(DeleteWeekendCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteWeekDayCommand request, CancellationToken cancellationToken)
         {
-            var Weekend = await _unitOfWork.Repository<Weekend>().Get(request.WeekendId);
+            var Weekend = await _unitOfWork.Repository<WeekDay>().Get(request.WeekendId);
 
             if (Weekend == null)
                 throw new NotFoundException(nameof(Weekend), request.WeekendId);
 
-            await _unitOfWork.Repository<Weekend>().Delete(Weekend);
+            await _unitOfWork.Repository<WeekDay>().Delete(Weekend);
             try
             {
                 await _unitOfWork.Save();

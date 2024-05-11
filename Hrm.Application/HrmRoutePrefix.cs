@@ -76,6 +76,7 @@ namespace Hrm.Application
         public const string TransferApproveInfo = HRMRoutePrefixBase + "transferApproveInfo";
         public const string DepReleaseInfo = HRMRoutePrefixBase + "depReleaseInfo";
         public const string EmpTnsferPostingJoin = HRMRoutePrefixBase + "EmpTnsferPostingJoin";
+        public const string Year = HRMRoutePrefixBase + "year";
 
 
 

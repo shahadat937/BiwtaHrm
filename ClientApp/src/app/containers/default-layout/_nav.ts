@@ -543,6 +543,10 @@ export const navItems: INavData[] = [
         name: 'Promotion Type',
         url: '/bascisetup/promotionType'
       },
+      {
+        name: 'Year Setup',
+        url: '/bascisetup/yearsetup'
+      },
     ]
   },
   {

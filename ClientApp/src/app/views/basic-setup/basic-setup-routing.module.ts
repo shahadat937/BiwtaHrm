@@ -55,6 +55,7 @@ import { group } from '@angular/animations';
 import { SectionComponent } from './section/section.component';
 
 import { SubBranchComponent } from './sub-branch/sub-branch.component';
+import { YearSetupComponent } from './year-setup/year-setup.component';
 
 
 const routes: Routes = [
@@ -444,6 +445,14 @@ const routes: Routes = [
   { 
     path: 'update-subBranch/:subBranchId',
     component: SubBranchComponent,
+  },
+  {
+    path: 'yearsetup',
+    component: YearSetupComponent,
+  },
+  { 
+    path: 'update-year/:yearId',
+    component: YearSetupComponent,
   }
 
 ];

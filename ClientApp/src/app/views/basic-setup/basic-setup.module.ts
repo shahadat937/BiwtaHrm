@@ -95,6 +95,8 @@ import { SectionComponent } from './section/section.component';
 import { SectionService } from './service/section.service';
 import { SubBranchComponent } from './sub-branch/sub-branch.component';
 import { BranchService } from './service/branch.service';
+import { YearSetupService } from './service/year-setup.service';
+import { YearSetupComponent } from './year-setup/year-setup.component';
 
 
 @NgModule({
@@ -150,7 +152,8 @@ import { BranchService } from './service/branch.service';
     ExamTypeComponent,
     BoardComponent,
     SectionComponent,
-    SubBranchComponent
+    SubBranchComponent,
+    YearSetupComponent
   ],
   imports: [
     CommonModule,
@@ -198,6 +201,7 @@ import { BranchService } from './service/branch.service';
     MaritalStatusService,
     ReligionService,
     GenderService,
+    YearSetupService
   ],
 })
 export class BasicSetupModule {}

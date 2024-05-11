@@ -1,0 +1,66 @@
+<c-card>
+    <c-card-header>Blood Group </c-card-header>
+    <c-card-body>
+      <form
+        #BloodGroupForm="ngForm"
+        (submit)="onSubmit(BloodGroupForm)"
+        [gutter]="3"
+        novalidate
+        cForm
+        cRow
+        class="needs-validation"
+      >
+        <c-col [md]="6">
+          <input
+            type="hidden"
+            [(ngModel)]="yearService.years.yearId"
+            name="bloodGroupId"
+          />
+          <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
+          <label cLabel for="validationCustom01"
+            >Blood Name<span class="text-danger">*</span></label
+          >
+          <input
+            [(ngModel)]="yearService.years.yearName"
+            name="bloodGroupName"
+            #BloodGroupName="ngModel"
+            placeholder="Enter Blood Group Name"
+            cFormControl
+            id="validationCustom01"
+            required
+            type="text"
+            value="Mark"
+          />
+          @if(!BloodGroupName.valid&&BloodGroupName.touched){
+          <div class="text-left text-danger">Blood Name is required</div>
+          }
+        </c-col>
+        <c-col [md]="6">
+          <label cLabel for="validationCustom02">Is Active </label>
+          <input
+            [(ngModel)]="yearService.years.remark"
+            name="isActive"
+            cFormControl
+            id="validationCustom02"
+            type="text"
+            value="Otto"
+          />
+          <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
+        </c-col>
+        <c-col [xs]="12">
+          <button
+            [disabled]="loading"
+            [disabled]="BloodGroupForm.invalid"
+            cButton
+            class="me-1"
+            color="primary"
+            type="submit"
+          >
+            <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+            {{ btnText }}
+          </button>
+          <button cButton color="secondary" (click)="resetForm()">Reset</button>
+        </c-col>
+      </form>
+    </c-card-body>
+  </c-card>

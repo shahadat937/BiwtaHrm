@@ -13,14 +13,12 @@ export class EmployeesService {
   constructor(private modalService: BsModalService,private http: HttpClient) { }
 
   saveEmployeeData(employeeData: any): Observable<any> {
-    // Make an HTTP POST request to your backend API endpoint
-    // Replace 'your-api-endpoint' with the actual endpoint URL
     return this.http.post<any>('your-api-endpoint/save-employee', employeeData);
   }
 
 
    demoEmployee: Employee = {
-    employeePMSNo:0,
+    empId:0,
     employeeName: '',
     department: '',
     designation: ''
@@ -28,7 +26,7 @@ export class EmployeesService {
 }
 // user.model.ts
 export interface Employee {
-  employeePMSNo: number;
+  empId: number;
   employeeName: string;
   department: string;
   designation: string;

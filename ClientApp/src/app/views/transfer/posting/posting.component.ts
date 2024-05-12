@@ -32,12 +32,6 @@ import { EmpTnsferPostingJoinService } from './../../basic-setup/service/emp-tns
   styleUrls: ['./posting.component.scss']
 })
 export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
-  postingForm: FormGroup;
-  form1: FormGroup;
-  form2: FormGroup;
-  form3: FormGroup;
-  form4: FormGroup;
-  form5: FormGroup;
 
   editMode: boolean = false;
   departments: SelectedModel[] = [];
@@ -56,7 +50,12 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
 
   btnText: string | undefined;
   loading = false;
+  @ViewChild('EmployeeForm', { static: true }) EmployeeForm!: NgForm;
   @ViewChild('PostingAndTrnsForm', { static: true }) PostingAndTrnsForm!: NgForm;
+  @ViewChild('TransferApproveInfoForm', { static: true }) TransferApproveInfoForm!: NgForm;
+  @ViewChild('DeptReleaseInfoForm', { static: true }) DeptReleaseInfoForm!: NgForm;
+  @ViewChild('EmpTransferPostingJoinForm', { static: true }) EmpTransferPostingJoinForm!: NgForm;
+
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'officeOrderNo', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
@@ -89,29 +88,17 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     private formBuilder: FormBuilder,
     private fb: FormBuilder // Inject FormBuilder here
   ) { 
-    this.postingForm = this.formBuilder.group({
-      // Define your form controls and validators here
-    });
-
-    // Initialize other form groups if needed
-    this.form1 = this.formBuilder.group({
-      // Define form controls for form1
-    });
-
-    this.form2 = this.formBuilder.group({
-      // Define form controls for form2
-    });
-
-    this.form3 = this.formBuilder.group({
-      // Define form controls for form3
-    });
-
-    this.form4 = this.formBuilder.group({
-      // Define form controls for form4
-    });
-
-    this.form5 = this.formBuilder.group({
-      // Define form controls for form5
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('postingOrderInfoId');
+      if (id) {
+        this.btnText = 'Update';
+        this.postingOrderInfoService.find(+id).subscribe((res) => {
+     
+          this.PostingAndTrnsForm?.form.patchValue(res);
+        });
+      } else {
+        this.btnText = 'Submit';
+      }
     });
   }
 
@@ -126,12 +113,12 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.SelectSubBranchs();
     this.handleRouteParams();
     this.buttonIcon = "cilPencil";
-    console.log(this.employeeSelected)
+    //console.log(this.employeeSelected)
   }
 
   selectEmployee(employee: Employee) {
     this.employeeSelected.emit(employee);
-    console.log(employee)
+    //console.log(employee)
   }
 
   SelectDepartments() {
@@ -281,30 +268,39 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSubmit(form: NgForm): void {
-    this.loading = true;
+    this.employeeService.cachedData=[];
     this.postingOrderInfoService.cachedData = [];
-    const id = form.value.postingOrderInfoId;
+    this.transferApproveInfoService.cachedData=[];
+    this.deptReleaseInfoService.cachedData=[];
+    this.empTnsferPostingJoinService.cachedData=[];
+
+    const id= form.value.empId;
+    const postingOrderInfoId = form.value.postingOrderInfoId;
+    const transferApproveInfoId = form.value.transferApproveInfoId;
+    const depReleaseInfoId = form.value.depReleaseInfoId;
+    const empTnsferPostingJoinId = form.value.empTnsferPostingJoinId;
+    
+    console.log(form.value)
     const action$ = id
       ? this.postingOrderInfoService.update(id, form.value)
       : this.postingOrderInfoService.submit(form.value);
 
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
+        //  const successMessage = id ? 'Update' : 'Successfully';
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
         this.getAllPostingOrderInfos();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/transfer/postingOrderInfo']);
+          this.router.navigate(['/bascisetup/ward']);
         }
-        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
-      this.loading = false;
     });
   }
 

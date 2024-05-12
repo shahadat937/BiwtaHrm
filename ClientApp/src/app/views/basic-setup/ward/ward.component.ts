@@ -1,3 +1,4 @@
+import { Value } from './../../../../../node_modules/regjsparser/parser.d';
 import {
   AfterViewInit,
   Component,
@@ -47,10 +48,11 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('wardId');
+
       if (id) {
         this.btnText = 'Update';
         this.wardService.find(+id).subscribe((res) => {
-     
+          console.log(res);
           this.WardForm?.form.patchValue(res);
         });
       } else {
@@ -132,6 +134,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
   onSubmit(form: NgForm): void {
     this.wardService.cachedData = [];
     const id = form.value.wardId;
+    console.log(form.value)
     const action$ = id
       ? this.wardService.update(id, form.value)
       : this.wardService.submit(form.value);

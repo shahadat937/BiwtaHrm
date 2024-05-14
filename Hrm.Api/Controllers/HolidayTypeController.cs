@@ -9,6 +9,9 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.DTOs.Year;
+using Hrm.Application.Features.Year.Requests.Queries;
+using Hrm.Shared.Models;
 namespace Hrm.Api.Controllers
 {
 
@@ -30,8 +33,6 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
         [Route("save-holidayType")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateHolidayTypeDto HolidayType)
         {
@@ -40,11 +41,23 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("get-holidayTypeDetail/{id}")]
+        public async Task<ActionResult<HolidayTypeDto>> Get(int id)
+        {
+            var HolidayType = await _mediator.Send(new GetHolidayTypeDetailRequest { HolidayTypeId = id });
+            return Ok(HolidayType);
+        }
+        [HttpGet]
+        [Route("get-selectedHolidayType")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedHolidayType()
+        {
+            var HolidayType = await _mediator.Send(new GetSelectedHolidayTypeRequest { });
+            return Ok(HolidayType);
+        }
+
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
         [Route("update-holidayType/{id}")]
         public async Task<ActionResult> Put([FromBody] HolidayTypeDto HolidayType)
         {
@@ -54,9 +67,6 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpDelete]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesDefaultResponseType]
         [Route("delete-holidayType/{id}")]
         public async Task<ActionResult> Delete(int id)
         {

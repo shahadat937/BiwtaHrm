@@ -12,8 +12,13 @@ export class EmployeesService {
   getemployees:any[]=[];
   constructor(private modalService: BsModalService,private http: HttpClient) { }
 
+  saveEmployeeData(employeeData: any): Observable<any> {
+    return this.http.post<any>('your-api-endpoint/save-employee', employeeData);
+  }
+
+
    demoEmployee: Employee = {
-    employeePMSNo:0,
+    empId:0,
     employeeName: '',
     department: '',
     designation: ''
@@ -21,7 +26,7 @@ export class EmployeesService {
 }
 // user.model.ts
 export interface Employee {
-  employeePMSNo: number;
+  empId: number;
   employeeName: string;
   department: string;
   designation: string;

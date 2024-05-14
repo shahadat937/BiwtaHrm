@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.HolidayType.Requests.Commands
 {
-    public class CreateEmployeeCommand : IRequest<BaseCommandResponse>
+    public class CreateHolidayTypeCommand : IRequest<BaseCommandResponse>
     {
         public CreateHolidayTypeDto HolidayTypeDto { get; set; }
     }

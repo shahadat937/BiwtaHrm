@@ -6,7 +6,7 @@ using MediatR;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Domain;
 
-namespace hrm.Application.Features.HanHolidayTypesdlers.Commands
+namespace hrm.Application.Features.HolidayTypes.Handlers.Commands
 {
     public class DeleteHolidayTypeCommandHandler : IRequestHandler<DeleteHolidayTypeCommand>
     {

@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.HolidayType;
+using Hrm.Application.DTOs.MaritalStatus;
+using Hrm.Application.Features.HolidayType.Requests.Queries;
+using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Domain;
 using MediatR;
 using System;
@@ -24,9 +27,10 @@ namespace Hrm.Application.Features.HolidayType.Handlers.Queries
 
         public async Task<object> Handle(GetHolidayTypeRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Hrm.Domain.HolidayType> HolidayType = _HolidayTypeRepository.Where(x => true);
+            IQueryable<Hrm.Domain.HolidayType> HolidayTypes = _HolidayTypeRepository.Where(x => true);
+            HolidayTypes = HolidayTypes.OrderByDescending(x => x.HolidayTypeId);
 
-            var HolidayTypeDtos = _mapper.Map<List<HolidayTypeDto>>(HolidayType);
+            var HolidayTypeDtos = _mapper.Map<List<HolidayTypeDto>>(HolidayTypes);
 
             return HolidayTypeDtos;
         }

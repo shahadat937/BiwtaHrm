@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -23,7 +23,7 @@ export class EmpModalComponent implements OnInit, AfterViewInit{
   btnText: string | undefined;
 //  @ViewChild('WardForm', { static: true }) WardForm!: NgForm;
   //subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['Action','employeePMSNo', 'employeeName', 'department', 'designation'];
+  displayedColumns: string[] = ['Action','empId', 'employeeName', 'department', 'designation'];
   dataSource = new MatTableDataSource<Employee>(); // Correct the type of MatTableDataSource
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -73,27 +73,25 @@ export class EmpModalComponent implements OnInit, AfterViewInit{
   }
   selectEmployee(employee: Employee) {
     this.employeeSelected.emit(employee);
+    //console.log(employee)
   }
-
-
   employees: Employee[] = [
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-    { employeePMSNo: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
-
-
+    { empId: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
+    { empId: 2, employeeName: 'Ariful', department: 'Doe', designation: 'john@example.com' },
+    { empId: 3, employeeName: 'shoriful', department: 'Doe', designation: 'john@example.com' },
+    { empId: 4, employeeName: 'rasel', department: 'Doe', designation: 'john@example.com' },
+    { empId: 5, employeeName: 'jubair', department: 'Doe', designation: 'john@example.com' },
+    { empId: 6, employeeName: 'jannatul', department: 'Doe', designation: 'john@example.com' },
+    { empId: 7, employeeName: 'naima', department: 'Doe', designation: 'john@example.com' },
+    { empId: 8, employeeName: 'shishir', department: 'Doe', designation: 'john@example.com' },
+    { empId: 9, employeeName: 'diba', department: 'Doe', designation: 'john@example.com' },
+    { empId: 10, employeeName: 'rakib', department: 'Doe', designation: 'john@example.com' },
+    { empId: 11, employeeName: 'pavel', department: 'Doe', designation: 'john@example.com' },
+    { empId: 12, employeeName: 'sujon', department: 'Doe', designation: 'john@example.com' },
+    { empId: 13, employeeName: 'isrita', department: 'Doe', designation: 'john@example.com' },
+    { empId: 14, employeeName: 'wamia', department: 'Doe', designation: 'john@example.com' },
+    { empId: 15, employeeName: 'dina appu', department: 'Doe', designation: 'john@example.com' },
+    { empId: 16, employeeName: 'hasan bhai', department: 'Doe', designation: 'john@example.com' },
 
     // Add more employees here if needed
   ];

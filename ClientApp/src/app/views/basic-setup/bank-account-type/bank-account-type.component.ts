@@ -16,6 +16,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 })
 export class BankAccountTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  headerText: string | undefined;
   @ViewChild('BankAccountTypeForm', { static: true }) BankAccountTypeForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'bankAccountTypeName', 'isActive', 'Action'];
@@ -42,11 +43,14 @@ export class BankAccountTypeComponent implements OnInit, OnDestroy, AfterViewIni
     this.route.paramMap.subscribe((params) => {
       const id = params.get('bankAccountTypeId');
       if (id) {
+        this.headerText = 'Update Bank Account Type'
         this.btnText = 'Update';
         this.bankAccountTypService.find(+id).subscribe((res) => {
           this.BankAccountTypeForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Bank Account Type'
         this.btnText = 'Submit';
       }
     });

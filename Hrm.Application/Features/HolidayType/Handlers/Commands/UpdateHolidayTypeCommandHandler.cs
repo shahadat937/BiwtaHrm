@@ -45,7 +45,10 @@ namespace Hrm.Application.Features.HolidayType.Handlers.Commands
             }
             //var HolidayTypeName = request.HolidayTypeDto.HolidayTypeName.ToLower();
             var HolidayTypeName = request.HolidayTypeDto.HolidayTypeName.Trim().ToLower().Replace(" ", string.Empty);
-            IQueryable<Hrm.Domain.HolidayType> HolidayTypes = _HolidayTypeRepository.Where(x => x.HolidayTypeName.ToLower() == HolidayTypeName);
+            IQueryable<Hrm.Domain.HolidayType> HolidayTypes = _HolidayTypeRepository.Where(x => x.HolidayTypeName.ToLower() == HolidayTypeName && x.HolidayTypeId != request.HolidayTypeDto.HolidayTypeId);
+
+            IQueryable<Hrm.Domain.HolidayType> isSame = _HolidayTypeRepository.Where(x => x.HolidayTypeName.Trim().ToLower().Replace(" ", string.Empty) == HolidayTypeName && x.IsActive == request.HolidayTypeDto.IsActive && x.HolidayTypeId == request.HolidayTypeDto.HolidayTypeId);
+
             if (HolidayTypes.Any())
             {
                 response.Success = false;
@@ -54,6 +57,13 @@ namespace Hrm.Application.Features.HolidayType.Handlers.Commands
                 //response.Message = "Creation Failed Name already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
+            }
+
+            else if (isSame.Any())
+            {
+                response.Success = false;
+                response.Message = $"Update Failed Nothing Changed.";
+                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
             }
 
             else

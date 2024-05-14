@@ -22,6 +22,7 @@ import { BloodGroupService } from './../service/BloodGroup.service';
 })
 export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  headerText: string | undefined;
   @ViewChild('BloodGroupForm', { static: true }) BloodGroupForm!: NgForm;
   loading = false;
   subscription: Subscription = new Subscription();
@@ -49,10 +50,13 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
       const id = params.get('bloodGroupId');
       if (id) {
         this.btnText = 'Update';
+        this.headerText = 'Update Blood Group';
         this.bloodGroupService.find(+id).subscribe((res) => {
           this.BloodGroupForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Blood Group';
         this.btnText = 'Submit';
       }
     });

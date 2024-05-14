@@ -1,15 +1,14 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.HolidayType;
+using Hrm.Application.DTOs.Year;
+using Hrm.Application.Features.HolidayType.Handlers.Queries;
 using Hrm.Application.Features.HolidayType.Requests.Commands;
 using Hrm.Application.Features.HolidayType.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
+using Hrm.Application.Features.Year.Requests.Queries;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Hrm.Application.Features.BloodGroups.Requests.Queries;
-using Hrm.Shared.Models;
-using Hrm.Domain;
-using Hrm.Application.Features.HolidayType.Handlers.Queries;
-
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.HolidayType)]
@@ -22,45 +21,40 @@ namespace Hrm.Api.Controllers
             _mediator = mediator;
         }
         [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [Route("save-HolidayType")]
+        [Route("save-holidayType")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateHolidayTypeDto HolidayType)
         {
             var command = new CreateHolidayTypeCommand { HolidayTypeDto = HolidayType };
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+
         [HttpGet]
-        [Route("get-HolidayType")]
+        [Route("get-holidayType")]
         public async Task<ActionResult> Get()
         {
-            var HolidayType = await _mediator.Send(new GetHolidayTypeRequest { });
-            return Ok(HolidayType);
+            var Year = await _mediator.Send(new GetHolidayTypeRequest { });
+            return Ok(Year);
         }
-
         [HttpGet]
-        [Route("get-HolidayTypebyid/{id}")]
-        public async Task<ActionResult<HolidayTypeDto>> Get(int id)
+        [Route("get-holidayTypeDetail/{id}")]
+        public async Task<ActionResult<YearDto>> Get(int id)
         {
-            var HolidayType = await _mediator.Send(new GetHolidayTypeByIdRequest { HolidayTypeId = id });
+            var HolidayType = await _mediator.Send(new GetHolidayTypeDetailRequest { HolidayTypeId = id });
             return Ok(HolidayType);
-
+        }
+        [HttpGet]
+        [Route("get-selectedholidayTypes")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedHolidayType()
+        {
+            var HolidayType = await _mediator.Send(new GetSelectedHolidayTypeRequest { });
+            return Ok(HolidayType);
         }
 
-        //[HttpGet]
-        //[Route("get-selectedHolidayType")]
-        //public async Task<ActionResult<List<SelectedModel>>> GetSelectedHolidayType()
-        //{
-        //    var HolidayType = await _mediator.Send(new GetSelectedHolidayTypeRequest { });
-        //    return Ok(HolidayType);
-        //}
 
         [HttpPut]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesDefaultResponseType]
-        [Route("update-HolidayType/{id}")]
+        [Route("update-holidayType/{id}")]
         public async Task<ActionResult> Put([FromBody] HolidayTypeDto HolidayType)
         {
             var command = new UpdateHolidayTypeCommand { HolidayTypeDto = HolidayType };
@@ -69,10 +63,7 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpDelete]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesDefaultResponseType]
-        [Route("delete-HolidayType/{id}")]
+        [Route("delete-holidayType/{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteHolidayTypeCommand { HolidayTypeId = id };

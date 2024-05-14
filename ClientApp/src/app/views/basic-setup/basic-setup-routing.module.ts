@@ -56,6 +56,7 @@ import { SectionComponent } from './section/section.component';
 
 import { SubBranchComponent } from './sub-branch/sub-branch.component';
 import { YearSetupComponent } from './year-setup/year-setup.component';
+import { HolidayTypeComponent } from './holiday-type/holiday-type.component';
 
 
 const routes: Routes = [
@@ -453,7 +454,15 @@ const routes: Routes = [
   { 
     path: 'update-year/:yearId',
     component: YearSetupComponent,
-  }
+  },
+  {
+    path: 'holidaytype',
+    component: HolidayTypeComponent,
+  },
+  { 
+    path: 'update-holidaytype/:holidayTypeId',
+    component: HolidayTypeComponent,
+  },
 
 ];
 

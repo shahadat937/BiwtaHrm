@@ -42,7 +42,7 @@ namespace Hrm.Application.Features.Year.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            IQueryable<Hrm.Domain.Year> Years = _YearRepository.Where(x => x.YearName == request.YearDto.YearName);
+            IQueryable<Hrm.Domain.Year> Years = _YearRepository.Where(x => x.YearName == request.YearDto.YearName && x.YearId != request.YearDto.YearId);
 
 
 
@@ -50,8 +50,6 @@ namespace Hrm.Application.Features.Year.Handlers.Commands
             {
                 response.Success = false;
                 response.Message = $"Update Failed '{request.YearDto.YearName}' already exists.";
-
-                //response.Message = "Creation Failed Name already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }
@@ -63,7 +61,8 @@ namespace Hrm.Application.Features.Year.Handlers.Commands
 
                 if (Year is null)
                 {
-                    throw new NotFoundException(nameof(Year), request.YearDto.YearId);
+                    response.Success = false;
+                    response.Message = $"Update Failed '{request.YearDto.YearId}' not found.";
                 }
 
                 _mapper.Map(request.YearDto, Year);

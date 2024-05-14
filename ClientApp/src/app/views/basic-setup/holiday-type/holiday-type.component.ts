@@ -7,27 +7,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { YearSetupService } from '../service/year-setup.service';
+import { HolidaytypeService } from '../service/holidaytype.service';
 
 @Component({
-  selector: 'app-year-setup',
-  templateUrl: './year-setup.component.html',
-  styleUrl: './year-setup.component.scss'
+  selector: 'app-holiday-type',
+  templateUrl: './holiday-type.component.html',
+  styleUrl: './holiday-type.component.scss'
 })
-export class YearSetupComponent implements OnInit, OnDestroy, AfterViewInit {
+
+export class HolidayTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   headerText: string | undefined;
-  @ViewChild('YearForm', { static: true }) YearForm!: NgForm;
+  @ViewChild('HolidayTypeForm', { static: true }) HolidayTypeForm!: NgForm;
   loading = false;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'yearName', 'isActive', 'remark','Action'];
+  displayedColumns: string[] = ['slNo', 'holidayTypeName', 'isActive', 'remark','Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
   constructor(
-    public yearService: YearSetupService,
+    public holidayTypeService: HolidaytypeService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -42,16 +43,16 @@ export class YearSetupComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('yearId');
+      const id = params.get('holidayTypeId');
       if (id) {
-        this.headerText = 'Update Year';
+        this.headerText = 'Update Holiday Type';
         this.btnText = 'Update';
-        this.yearService.find(+id).subscribe((res) => {
-          this.YearForm?.form.patchValue(res);
+        this.holidayTypeService.find(+id).subscribe((res) => {
+          this.HolidayTypeForm?.form.patchValue(res);
         });
       } else {
         this.resetForm();
-        this.headerText = 'Add New Year';
+        this.headerText = 'Add New Holiday Type';
         this.btnText = 'Submit';
       }
     });
@@ -74,7 +75,7 @@ export class YearSetupComponent implements OnInit, OnDestroy, AfterViewInit {
 
   
   getALlYears() {
-    this.subscription = this.yearService.getAll().subscribe((item) => {
+    this.subscription = this.holidayTypeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -84,9 +85,9 @@ export class YearSetupComponent implements OnInit, OnDestroy, AfterViewInit {
   
   initaialBloodGroup(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.yearService.years = {
-      yearId: 0,
-      yearName: undefined,
+    this.holidayTypeService.holidayType = {
+      holidayTypeId: 0,
+      holidayTypeName: '',
       remark: '',
       menuPosition: 0,
       isActive: true,
@@ -94,27 +95,27 @@ export class YearSetupComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   resetForm() {
     this.btnText = 'Submit';
-    if (this.YearForm?.form != null) {
-      this.YearForm.form.reset();
-      this.YearForm.form.patchValue({
-        yearId: 0,
-        yearName: undefined,
+    if (this.HolidayTypeForm?.form != null) {
+      this.HolidayTypeForm.form.reset();
+      this.HolidayTypeForm.form.patchValue({
+        holidayTypeId: 0,
+        holidayTypeName: '',
         remark: '',
         menuPosition: 0,
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/yearsetup']);
+    this.router.navigate(['/bascisetup/holidaytype']);
   }
 
 
   onSubmit(form: NgForm): void{
     this.loading = true;
-    this.yearService.cachedData = [];
-    const id = form.value.yearId;
+    this.holidayTypeService.cachedData = [];
+    const id = form.value.holidayTypeId;
     const action$ = id
-      ? this.yearService.update(id, form.value)
-      : this.yearService.submit(form.value);
+      ? this.holidayTypeService.update(id, form.value)
+      : this.holidayTypeService.submit(form.value);
     
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
@@ -125,7 +126,7 @@ export class YearSetupComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlYears();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/yearsetup']);
+          this.router.navigate(['/bascisetup/holidaytype']);
         }
     this.loading = false;
       } else {
@@ -143,7 +144,7 @@ export class YearSetupComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.yearService.delete(element.yearId).subscribe(
+          this.holidayTypeService.delete(element.holidayTypeId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {

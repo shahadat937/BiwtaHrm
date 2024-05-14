@@ -16,6 +16,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 })
 export class BoardComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  headerText: string | undefined;
   @ViewChild('BoardForm', { static: true }) BoardForm!: NgForm;
   loading = false;
   subscription: Subscription = new Subscription();
@@ -43,10 +44,13 @@ export class BoardComponent implements OnInit, OnDestroy, AfterViewInit {
       const id = params.get('boardId');
       if (id) {
         this.btnText = 'Update';
+        this.headerText = 'Update Board';
         this.boardService.find(+id).subscribe((res) => {
           this.BoardForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Board';
         this.btnText = 'Submit';
       }
     });

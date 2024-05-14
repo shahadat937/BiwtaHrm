@@ -48,7 +48,6 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('wardId');
-
       if (id) {
         this.btnText = 'Update';
         this.wardService.find(+id).subscribe((res) => {

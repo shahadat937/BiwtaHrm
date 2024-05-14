@@ -75,8 +75,6 @@ export class EmpModalComponent implements OnInit, AfterViewInit{
     this.employeeSelected.emit(employee);
     //console.log(employee)
   }
-
-
   employees: Employee[] = [
     { empId: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
     { empId: 2, employeeName: 'Ariful', department: 'Doe', designation: 'john@example.com' },

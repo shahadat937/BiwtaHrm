@@ -66,7 +66,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() employeeSelected = new EventEmitter<Employee>();
 
   constructor(
-    
+
     public postingOrderInfoService: PostingOrderInfoService,
     private branchServices: BranchService,
     private departmentService: DepartmentService,
@@ -87,13 +87,32 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     private cdRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private fb: FormBuilder // Inject FormBuilder here
-  ) { 
+    
+  ) {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('postingOrderInfoId');
+      const id4 = params.get('depReleaseInfoId');
+      const id5= params.get('empTnsferPostingJoinId')
+      const id3= params.get('transferApproveInfoId')
+      //transferApproveInfoId
+      console.log(params)
+      if (id3) {
+        this.btnText = 'Submit'
+      }
+      //empTnsferPostingJoinId
+      console.log(params)
+      if (id4) {
+        this.btnText = 'Submit'
+      }
+      //depreleseInfo
+      console.log(params)
+      if (id5) {
+        this.btnText = 'Submit'
+      }
       if (id) {
         this.btnText = 'Update';
         this.postingOrderInfoService.find(+id).subscribe((res) => {
-     
+
           this.PostingAndTrnsForm?.form.patchValue(res);
         });
       } else {
@@ -101,6 +120,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
+  
 
   ngOnInit(): void {
     this.getAllPostingOrderInfos();
@@ -267,42 +287,132 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  onSubmit(form: NgForm): void {
-    this.employeeService.cachedData=[];
+  onSubmit(form: any): void {
+    // Clear cached data
+    this.employeeService.cachedData = [];
     this.postingOrderInfoService.cachedData = [];
-    this.transferApproveInfoService.cachedData=[];
-    this.deptReleaseInfoService.cachedData=[];
-    this.empTnsferPostingJoinService.cachedData=[];
-
-    const id= form.value.empId;
-    const postingOrderInfoId = form.value.postingOrderInfoId;
-    const transferApproveInfoId = form.value.transferApproveInfoId;
-    const depReleaseInfoId = form.value.depReleaseInfoId;
-    const empTnsferPostingJoinId = form.value.empTnsferPostingJoinId;
-    
-    console.log(form.value)
-    const action$ = id
-      ? this.postingOrderInfoService.update(id, form.value)
+    this.transferApproveInfoService.cachedData = [];
+    this.deptReleaseInfoService.cachedData = [];
+    this.empTnsferPostingJoinService.cachedData = [];
+    // Extract IDs from form value
+    const id1 = form.value.empId;
+    const id2 = form.value.postingOrderInfoId;
+    const id3 = form.value.transferApproveInfoId;
+    const id4 = form.value.depReleaseInfoId;
+    const id5 = form.value.empTnsferPostingJoinId;
+    // Submit or update Employee Transfer/Posting Joining
+    const empTnsferPostingJoinId$ = id5
+      ? this.empTnsferPostingJoinService.update(id5, form.value)
+      : this.empTnsferPostingJoinService.submit(form.value);
+      const depReleaseInfoId$ = id4
+      ? this.deptReleaseInfoService.update(id1, form.value)
+      : this.deptReleaseInfoService.submit(form.value);
+      const transferApproveInfoId$ = id3
+      ? this.transferApproveInfoService.update(id3, form.value)
+      : this.transferApproveInfoService.submit(form.value);
+      const postingOrderInfoId$ = id2
+      ? this.postingOrderInfoService.update(id2, form.value)
       : this.postingOrderInfoService.submit(form.value);
-
-    this.subscription = action$.subscribe((response: any) => {
+      //console
+      console.log(form.value)
+    this.subscription = empTnsferPostingJoinId$.subscribe((response: any) => {
+      this.subscription = depReleaseInfoId$.subscribe(response.depReleaseInfoId)
+      this.subscription = transferApproveInfoId$.subscribe(response.transferApproveInfoId)
+      this.subscription = postingOrderInfoId$.subscribe(response.postingOrderInfoId)
       if (response.success) {
-        //  const successMessage = id ? 'Update' : 'Successfully';
+        //console
+        console.log(response);
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
         this.getAllPostingOrderInfos();
         this.resetForm();
-        if (!id) {
-          this.router.navigate(['/bascisetup/ward']);
-        }
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
     });
-  }
+
+  } 
+  
+  // onSubmit(form: NgForm): void {
+  //   this.employeeService.cachedData = [];
+  //   this.postingOrderInfoService.cachedData = [];
+  //   this.transferApproveInfoService.cachedData = [];
+  //   this.deptReleaseInfoService.cachedData = [];
+  //   this.empTnsferPostingJoinService.cachedData = [];
+
+  //   const id1 = form.value.empId;
+  //   const id2 = form.value.postingOrderInfoId;
+  //   const id3 = form.value.transferApproveInfoId;
+  //   const id4 = form.value.depReleaseInfoId;
+  //   const id5 = form.value.empTnsferPostingJoinId;
+
+
+  //   //EmployeeTransfer/Posting Joining
+  //   const empTnsferPostingJoinId$ = id5
+  //     ? this.empTnsferPostingJoinService.update(id5, form.value)
+  //     : this.empTnsferPostingJoinService.submit(form.value);
+  //   this.subscription = empTnsferPostingJoinId$.subscribe((response: any) => {
+  //     console.log(response)
+  //     if (response.success) {
+  //       this.toastr.success('', `${response.message}`, {
+  //         positionClass: 'toast-top-right',
+  //       });
+  //     }
+  //   })
+  //   //depReaseInfo
+  //   const depReleaseInfoId$ = id4
+  //     ? this.deptReleaseInfoService.update(id1, form.value)
+  //     : this.deptReleaseInfoService.submit(form.value);
+  //   this.subscription = depReleaseInfoId$.subscribe((response: any) => {
+  //     console.log(response)
+  //     if (response.success) {
+  //       this.toastr.success('', `${response.message}`, {
+  //         positionClass: 'toast-top-right',
+  //       });
+  //     }
+  //   })
+
+  //   //Transfer Approve Information
+  //   const transferApproveInfoId$ = id3
+  //     ? this.transferApproveInfoService.update(id3, form.value)
+  //     : this.transferApproveInfoService.submit(form.value);
+  //   //console.log(form.value)
+  //   this.subscription = transferApproveInfoId$.subscribe((response: any) => {
+  //     console.log(response)
+  //     if (response.success) {
+  //       this.toastr.success('', `${response.message}`, {
+  //         positionClass: 'toast-top-right',
+  //       });
+  //     }
+  //   })
+
+  //   //Posting and Transfer
+  //   const postingOrderInfoId$ = id2
+  //     ? this.postingOrderInfoService.update(id2, form.value)
+  //     : this.postingOrderInfoService.submit(form.value);
+  //   // console.log(form.value)
+  //   this.subscription = postingOrderInfoId$.subscribe((response: any) => {
+  //     if (response.success) {
+  //       console.log(response)
+  //       //  const successMessage = id ? 'Update' : 'Successfully';
+  //       this.toastr.success('', `${response.message}`, {
+  //         positionClass: 'toast-top-right',
+  //       });
+  //       this.getAllPostingOrderInfos();
+  //       this.resetForm();
+  //       if (!id2) {
+  //         // this.router.navigate(['/bascisetup/ward']);
+  //       }
+  //     } else {
+  //       this.toastr.warning('', `${response.message}`, {
+  //         positionClass: 'toast-top-right',
+  //       });
+  //     }
+  //   });
+  // }
 
   delete(element: any) {
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe((result) => {
@@ -386,9 +496,9 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
 
   resetFormDepartmentalReleaseInfo() {
     this.btnText = 'Submit';
-    if (this.PostingAndTrnsForm?.form != null) {
-      this.PostingAndTrnsForm.form.reset();
-      this.PostingAndTrnsForm.form.patchValue({
+    if (this.DeptReleaseInfoForm?.form != null) {
+      this.DeptReleaseInfoForm.form.reset();
+      this.DeptReleaseInfoForm.form.patchValue({
         depReleaseInfoId: 0,
         empId: 0,
         officeOrderNo: "",
@@ -425,9 +535,9 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
 
   resetFormEmpTnsferPostingJoin() {
     this.btnText = 'Submit';
-    if (this.PostingAndTrnsForm?.form != null) {
-      this.PostingAndTrnsForm.form.reset();
-      this.PostingAndTrnsForm.form.patchValue({
+    if (this.EmpTransferPostingJoinForm?.form != null) {
+      this.EmpTransferPostingJoinForm.form.reset();
+      this.EmpTransferPostingJoinForm.form.patchValue({
         empTnsferPostingJoinId: 0,
         empId: 0,
         joinDate: new Date(),

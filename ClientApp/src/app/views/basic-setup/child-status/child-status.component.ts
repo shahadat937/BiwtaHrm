@@ -22,6 +22,7 @@ import { ChildStatusService } from '../service/child-status.service';
 })
 export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  headerText: string | undefined;
   @ViewChild('ChildStatusForm', { static: true }) ChildStatusForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
@@ -53,10 +54,13 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
       const id = params.get('childStatusId');
       if (id) {
         this.btnText = 'Update';
+        this.headerText = 'Update Child Status';
         this.childStatusService.find(+id).subscribe((res) => {
           this.ChildStatusForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Child Status';
         this.btnText = 'Submit';
       }
     });

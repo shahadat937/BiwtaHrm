@@ -23,6 +23,7 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
   banks: SelectedModel[] = [];
 
   btnText: string | undefined;
+  headerText: string | undefined;
   loading = false;
   @ViewChild('BankBranchForm', { static: true }) BankBranchForm!: NgForm;
   subscription: Subscription = new Subscription();
@@ -48,6 +49,8 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //this.loaddivisions();
     this.handleRouteParams();
+
+    console.log("Value : ", this.BankBranchForm.value)
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
@@ -56,10 +59,13 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (id) {
         this.btnText = 'Update';
+        this.headerText = 'Update Bank Branch';
         this.bankBranchService.find(+id).subscribe((res) => {
           this.BankBranchForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Bank Branch';
         this.btnText = 'Submit';
       }
     });

@@ -10,6 +10,7 @@ namespace Hrm.Application.DTOs.HolidayType
     {
         public int HolidayTypeId { get; set; }
         public string? HolidayTypeName { get; set; }
+        public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

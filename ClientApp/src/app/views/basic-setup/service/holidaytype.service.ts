@@ -1,32 +1,33 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { YearSetup } from '../model/yearsetup';
+import { HolidayType } from '../model/holidaytype';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class YearSetupService {
+
+export class HolidaytypeService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
-  years: YearSetup;
+  holidayType: HolidayType;
   constructor(private http: HttpClient) {
-    this.years = new YearSetup();
+    this.holidayType = new HolidayType();
    }
 
    find(id: number) {
-    return this.http.get<YearSetup>(this.baseUrl + '/year/get-yearDetail/' + id);
+    return this.http.get<HolidayType>(this.baseUrl + '/holidayType/get-holidayTypeDetail/' + id);
   }
   // getAll():Observable<BloodGroup[]> {
   //   return this.http.get<BloodGroup[]>(this.baseUrl + '/blood-group/get-bloodGroup');
   // }
-  getAll(): Observable<YearSetup[]> {
+  getAll(): Observable<HolidayType[]> {
     if (this.cachedData.length > 0) {
       return of(this.cachedData);
     } else {
       return this.http
-        .get<YearSetup[]>(this.baseUrl + '/year/get-year')
+        .get<HolidayType[]>(this.baseUrl + '/holidayType/get-holidayType')
         .pipe(
           map((data) => {
             this.cachedData = data; // Cache the data
@@ -37,12 +38,12 @@ export class YearSetupService {
   }
 
   update(id: number,model: any) {
-    return this.http.put(this.baseUrl + '/year/update-year/'+id, model);
+    return this.http.put(this.baseUrl + '/holidayType/update-holidayType/'+id, model);
   }
   submit(model: any) {
-    return this.http.post(this.baseUrl + '/year/save-year', model);
+    return this.http.post(this.baseUrl + '/holidayType/save-holidayType', model);
   }
   delete(id:number){
-    return this.http.delete(this.baseUrl + '/year/delete-year/'+id);
+    return this.http.delete(this.baseUrl + '/holidayType/delete-holidayType/'+id);
   }
 }

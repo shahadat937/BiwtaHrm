@@ -97,6 +97,8 @@ import { SubBranchComponent } from './sub-branch/sub-branch.component';
 import { BranchService } from './service/branch.service';
 import { YearSetupService } from './service/year-setup.service';
 import { YearSetupComponent } from './year-setup/year-setup.component';
+import { HolidayTypeComponent } from './holiday-type/holiday-type.component';
+import { HolidaytypeService } from './service/holidaytype.service';
 
 
 @NgModule({
@@ -153,7 +155,8 @@ import { YearSetupComponent } from './year-setup/year-setup.component';
     BoardComponent,
     SectionComponent,
     SubBranchComponent,
-    YearSetupComponent
+    YearSetupComponent,
+    HolidayTypeComponent
   ],
   imports: [
     CommonModule,
@@ -201,7 +204,8 @@ import { YearSetupComponent } from './year-setup/year-setup.component';
     MaritalStatusService,
     ReligionService,
     GenderService,
-    YearSetupService
+    YearSetupService,
+    HolidaytypeService
   ],
 })
 export class BasicSetupModule {}

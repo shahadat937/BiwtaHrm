@@ -27,6 +27,7 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
   visible = false;
   percentage = 0;
   btnText: string | undefined;
+  headerText: string | undefined;
   @ViewChild('BranchForm', { static: true }) BranchForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'officeBranchName', 'isActive', 'Action'];
@@ -55,10 +56,13 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
       if (id) {
         //console.log(id);
         this.btnText = 'Update';
+        this.headerText = 'Update Branch Type';
         this.branchService.getById(+id).subscribe((res) => {
           this.BranchForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Branch Type';
         this.btnText = 'Submit';
       }
     });

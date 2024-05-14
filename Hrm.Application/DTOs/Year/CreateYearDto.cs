@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.DTOs.Year
 {
-    public class CreateYearDto
+    public class CreateYearDto : IYearDto
     {
         public int YearId { get; set; }
         public int? YearName { get; set; }

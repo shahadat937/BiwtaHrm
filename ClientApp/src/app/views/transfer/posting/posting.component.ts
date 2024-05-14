@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -66,7 +66,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() employeeSelected = new EventEmitter<Employee>();
 
   constructor(
-
+    public bsModalRef: BsModalRef, 
     public postingOrderInfoService: PostingOrderInfoService,
     private branchServices: BranchService,
     private departmentService: DepartmentService,
@@ -91,24 +91,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('postingOrderInfoId');
-      const id4 = params.get('depReleaseInfoId');
-      const id5= params.get('empTnsferPostingJoinId')
-      const id3= params.get('transferApproveInfoId')
-      //transferApproveInfoId
-      console.log(params)
-      if (id3) {
-        this.btnText = 'Submit'
-      }
-      //empTnsferPostingJoinId
-      console.log(params)
-      if (id4) {
-        this.btnText = 'Submit'
-      }
-      //depreleseInfo
-      console.log(params)
-      if (id5) {
-        this.btnText = 'Submit'
-      }
+      // 
       if (id) {
         this.btnText = 'Update';
         this.postingOrderInfoService.find(+id).subscribe((res) => {
@@ -287,132 +270,162 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  
+  onSubmitAllForms(): void {
+    // Call onSubmit for each form
+    this.onSubmit(this.EmployeeForm);
+    this.onSubmit(this.PostingAndTrnsForm);
+    this.onSubmit(this.TransferApproveInfoForm);
+    this.onSubmit(this.DeptReleaseInfoForm);
+    this.onSubmit(this.EmpTransferPostingJoinForm);
+  }
+
+
+//start
+clearCachedData(): void {
+  this.employeeService.cachedData = [];
+  this.postingOrderInfoService.cachedData = [];
+  this.transferApproveInfoService.cachedData = [];
+  this.deptReleaseInfoService.cachedData = [];
+  this.empTnsferPostingJoinService.cachedData = [];
+}
+
+handleResponse(response: any): void {
+  if (response.success) {
+    this.toastr.success('', `${response.message}`, {
+      positionClass: 'toast-top-right',
+    });
+    this.getAllPostingOrderInfos();
+    this.resetForm();
+  } else {
+    this.toastr.warning('', `${response.message}`, {
+      positionClass: 'toast-top-right',
+    });
+  }
+}
+
+  //valid 1
+
+
   onSubmit(form: any): void {
     // Clear cached data
-    this.employeeService.cachedData = [];
-    this.postingOrderInfoService.cachedData = [];
-    this.transferApproveInfoService.cachedData = [];
-    this.deptReleaseInfoService.cachedData = [];
-    this.empTnsferPostingJoinService.cachedData = [];
+    this.clearCachedData();
+    
     // Extract IDs from form value
     const id1 = form.value.empId;
     const id2 = form.value.postingOrderInfoId;
     const id3 = form.value.transferApproveInfoId;
     const id4 = form.value.depReleaseInfoId;
     const id5 = form.value.empTnsferPostingJoinId;
-    // Submit or update Employee Transfer/Posting Joining
-    const empTnsferPostingJoinId$ = id5
-      ? this.empTnsferPostingJoinService.update(id5, form.value)
-      : this.empTnsferPostingJoinService.submit(form.value);
-      const depReleaseInfoId$ = id4
-      ? this.deptReleaseInfoService.update(id1, form.value)
-      : this.deptReleaseInfoService.submit(form.value);
-      const transferApproveInfoId$ = id3
-      ? this.transferApproveInfoService.update(id3, form.value)
-      : this.transferApproveInfoService.submit(form.value);
-      const postingOrderInfoId$ = id2
-      ? this.postingOrderInfoService.update(id2, form.value)
-      : this.postingOrderInfoService.submit(form.value);
-      //console
-      console.log(form.value)
-    this.subscription = empTnsferPostingJoinId$.subscribe((response: any) => {
-      this.subscription = depReleaseInfoId$.subscribe(response.depReleaseInfoId)
-      this.subscription = transferApproveInfoId$.subscribe(response.transferApproveInfoId)
-      this.subscription = postingOrderInfoId$.subscribe(response.postingOrderInfoId)
-      if (response.success) {
-        //console
-        console.log(response);
-        this.toastr.success('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-        this.getAllPostingOrderInfos();
-        this.resetForm();
-      } else {
-        this.toastr.warning('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-      }
-    });
-
-  } 
   
-  // onSubmit(form: NgForm): void {
-  //   this.employeeService.cachedData = [];
-  //   this.postingOrderInfoService.cachedData = [];
-  //   this.transferApproveInfoService.cachedData = [];
-  //   this.deptReleaseInfoService.cachedData = [];
-  //   this.empTnsferPostingJoinService.cachedData = [];
+    // Submit or update based on the form
+    if (form === this.EmployeeForm) {
+      // Handle EmployeeForm submission
+      const empTnsferPostingJoinId$ = id5
+        ? this.empTnsferPostingJoinService.update(id5, form.value)
+        : this.empTnsferPostingJoinService.submit(form.value);
+        console.log(form.value)
+  
+      // Subscribe to the response and handle accordingly
+      this.subscription = empTnsferPostingJoinId$.subscribe((response: any) => {
+        if (response.success.empTnsferPostingJoinId) {
+          this.handleResponse(response);
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+        }
+      });
+    } else if (form === this.PostingAndTrnsForm) {
+      // Handle PostingAndTrnsForm submission
+      const postingOrderInfoId$ = id2
+       ? this.postingOrderInfoService.update(id2, form.value) 
+      : this.postingOrderInfoService.submit(form.value);
+      // No action needed, do not submit data
+      this.subscription = postingOrderInfoId$.subscribe((response: any) => {
+        if (response.success.postingOrderInfoId) {
+          this.handleResponse(response);
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+        }
+      });
+      console.log('PostingAndTrnsForm submitted, no action taken');
+    } else if (form === this.TransferApproveInfoForm) {
+      // Handle TransferApproveInfoForm submission
+      const transferApproveInfoId$ = id3
+        ? this.transferApproveInfoService.update(id3, form.value)
+        : this.transferApproveInfoService.submit(form.value);
+  
+      // Subscribe to the response and handle accordingly
+      this.subscription = transferApproveInfoId$.subscribe((response: any) => {
+        if (response.success.transferApproveInfoId) {
+          this.handleResponse(response);
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+        }
+      });
+    } else if (form === this.EmpTransferPostingJoinForm) {
+      // Handle EmpTransferPostingJoinForm submission
+      const empTransferPostingJoinId$ = id5
+        ? this.empTnsferPostingJoinService.update(id5, form.value)
+        : this.empTnsferPostingJoinService.submit(form.value);
+  
+      // Subscribe to the response and handle accordingly
+      this.subscription = empTransferPostingJoinId$.subscribe((response: any) => {
+        if (response.success.empTnsferPostingJoinId) {
+          this.handleResponse(response);
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+        }
+      });
+    } else if (form === this.DeptReleaseInfoForm) {
+      // Handle DeptReleaseInfoForm submission
+      const deptReleaseInfoId$ = id4
+        ? this.deptReleaseInfoService.update(id4, form.value)
+        : this.deptReleaseInfoService.submit(form.value);
+  
+      // Subscribe to the response and handle accordingly
+      this.subscription = deptReleaseInfoId$.subscribe((response: any) => {
+        if (response.success.deptReleaseInfoId) {
+          this.handleResponse(response);
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+        }
+      });
+    }
+    // Add similar conditions for other forms
+    
+    console.log('Submitting form:', form.value);
+  }
+  
 
-  //   const id1 = form.value.empId;
-  //   const id2 = form.value.postingOrderInfoId;
-  //   const id3 = form.value.transferApproveInfoId;
-  //   const id4 = form.value.depReleaseInfoId;
-  //   const id5 = form.value.empTnsferPostingJoinId;
+  
+
+  
 
 
-  //   //EmployeeTransfer/Posting Joining
-  //   const empTnsferPostingJoinId$ = id5
-  //     ? this.empTnsferPostingJoinService.update(id5, form.value)
-  //     : this.empTnsferPostingJoinService.submit(form.value);
-  //   this.subscription = empTnsferPostingJoinId$.subscribe((response: any) => {
-  //     console.log(response)
-  //     if (response.success) {
-  //       this.toastr.success('', `${response.message}`, {
-  //         positionClass: 'toast-top-right',
-  //       });
-  //     }
-  //   })
-  //   //depReaseInfo
-  //   const depReleaseInfoId$ = id4
-  //     ? this.deptReleaseInfoService.update(id1, form.value)
-  //     : this.deptReleaseInfoService.submit(form.value);
-  //   this.subscription = depReleaseInfoId$.subscribe((response: any) => {
-  //     console.log(response)
-  //     if (response.success) {
-  //       this.toastr.success('', `${response.message}`, {
-  //         positionClass: 'toast-top-right',
-  //       });
-  //     }
-  //   })
 
-  //   //Transfer Approve Information
-  //   const transferApproveInfoId$ = id3
-  //     ? this.transferApproveInfoService.update(id3, form.value)
-  //     : this.transferApproveInfoService.submit(form.value);
-  //   //console.log(form.value)
-  //   this.subscription = transferApproveInfoId$.subscribe((response: any) => {
-  //     console.log(response)
-  //     if (response.success) {
-  //       this.toastr.success('', `${response.message}`, {
-  //         positionClass: 'toast-top-right',
-  //       });
-  //     }
-  //   })
 
-  //   //Posting and Transfer
-  //   const postingOrderInfoId$ = id2
-  //     ? this.postingOrderInfoService.update(id2, form.value)
-  //     : this.postingOrderInfoService.submit(form.value);
-  //   // console.log(form.value)
-  //   this.subscription = postingOrderInfoId$.subscribe((response: any) => {
-  //     if (response.success) {
-  //       console.log(response)
-  //       //  const successMessage = id ? 'Update' : 'Successfully';
-  //       this.toastr.success('', `${response.message}`, {
-  //         positionClass: 'toast-top-right',
-  //       });
-  //       this.getAllPostingOrderInfos();
-  //       this.resetForm();
-  //       if (!id2) {
-  //         // this.router.navigate(['/bascisetup/ward']);
-  //       }
-  //     } else {
-  //       this.toastr.warning('', `${response.message}`, {
-  //         positionClass: 'toast-top-right',
-  //       });
-  //     }
-  //   });
-  // }
+
+
+
+
+
+
+
+
+
+
+
+
 
   delete(element: any) {
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe((result) => {
@@ -566,4 +579,6 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   handleEmployeeSelection(employee: Employee) {
     this.employeeService.demoEmployee = employee;
   }
+
+  
 }

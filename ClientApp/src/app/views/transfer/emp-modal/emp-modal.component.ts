@@ -73,6 +73,7 @@ export class EmpModalComponent implements OnInit, AfterViewInit{
   }
   selectEmployee(employee: Employee) {
     this.employeeSelected.emit(employee);
+    this.bsModalRef.hide();
     //console.log(employee)
   }
   employees: Employee[] = [

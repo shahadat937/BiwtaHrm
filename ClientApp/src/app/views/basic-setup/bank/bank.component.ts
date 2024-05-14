@@ -16,6 +16,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 })
 export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  headerText: string | undefined;
   @ViewChild('BankForm', { static: true }) BankForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'bankName', 'isActive', 'Action'];
@@ -42,11 +43,14 @@ export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('bankId');
       if (id) {
+        this.headerText = 'Update Bank Name'
         this.btnText = 'Update';
         this.bankService.find(+id).subscribe((res) => {
           this.BankForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Bank Name'
         this.btnText = 'Submit';
       }
     });
@@ -76,8 +80,6 @@ export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
   resetForm() {
-    console.log(this.BankForm?.form.value);
-
     this.btnText = 'Submit';
     if (this.BankForm?.form != null) {
       this.BankForm.form.reset();

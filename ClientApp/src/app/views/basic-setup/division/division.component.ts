@@ -29,6 +29,7 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
   countrys: SelectedModel[] = [];
 
   btnText: string | undefined;
+  headerText: string | undefined;
   loading = false;
   @ViewChild('DivisionForm', { static: true }) DivisionForm!: NgForm;
   subscription: Subscription = new Subscription();
@@ -58,10 +59,13 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
       const id = params.get('divisionId');
       if (id) {
         this.btnText = 'Update';
+        this.headerText = 'Update Division';
         this.devisionService.find(+id).subscribe((res) => {
           this.DivisionForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Division';
         this.btnText = 'Submit';
       }
     });

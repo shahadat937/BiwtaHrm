@@ -27,6 +27,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   visible = false;
   percentage = 0;
   btnText: string | undefined;
+  headerText: string | undefined;
   @ViewChild('DepartmentForm', { static: true }) DepartmentForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'departmentName', 'isActive', 'Action'];
@@ -47,10 +48,13 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
       const id = params.get('departmentId');
       if (id) {
         this.btnText = 'Update';
+        this.headerText = 'Update Department';
         this.departmentService.getById(+id).subscribe((res) => {
           this.DepartmentForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Department';
         this.btnText = 'Submit';
       }
     });

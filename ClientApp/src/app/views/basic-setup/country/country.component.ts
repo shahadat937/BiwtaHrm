@@ -22,6 +22,7 @@ import { CountryService } from '../service/country.service';
 })
 export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  headerText: string | undefined;
   @ViewChild('CountryForm', { static: true }) CountryForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'countryName', 'isActive', 'Action'];
@@ -50,10 +51,13 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
       const id = params.get('countryId');
       if (id) {
         this.btnText = 'Update';
+        this.headerText = 'Update Country';
         this.countryServices.find(+id).subscribe((res) => {
           this.CountryForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Country';
         this.btnText = 'Submit';
       }
     });

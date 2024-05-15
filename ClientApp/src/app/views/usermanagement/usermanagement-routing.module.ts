@@ -4,14 +4,33 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'user',
-    component: UserComponent,
-  },
+    path: '',
+    data: {
+      title: 'User Management',
+    },
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'user',
+      },
+      {
+        path: 'user',
+        component: UserComponent,
+        data: {
+          title: 'User',
+        },
+      },
 
-  {
-    path: 'update-user/:id',
-    component: UserComponent,
-  },
+      {
+        path: 'update-user/:id',
+        component: UserComponent,
+        data: {
+          title: 'Update User',
+        },
+      },
+    ]
+  }
 ];
 
 @NgModule({

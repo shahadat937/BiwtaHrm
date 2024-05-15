@@ -16,6 +16,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 })
 export class ExamTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  headerText: string | undefined;
   @ViewChild('ExamTypeForm', { static: true }) ExamTypeForm!: NgForm;
   loading = false;
   subscription: Subscription = new Subscription();
@@ -43,10 +44,13 @@ export class ExamTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       const id = params.get('examTypeId');
       if (id) {
         this.btnText = 'Update';
+        this.headerText = 'Update Exam Type';
         this.examTypeService.find(+id).subscribe((res) => {
           this.ExamTypeForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Exam Type';
         this.btnText = 'Submit';
       }
     });

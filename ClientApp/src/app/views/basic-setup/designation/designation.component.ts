@@ -23,6 +23,7 @@ import { DesignationService } from '../service/designation.service';
 })
 export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
+  headerText: string | undefined;
   loading = false;
   @ViewChild('DesignationForm', { static: true }) DesignationForm!: NgForm;
   subscription: Subscription = new Subscription();
@@ -56,10 +57,13 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       const id = params.get('designationId');
       if (id) {
         this.btnText = 'Update';
+        this.headerText = 'Update Designation';
         this.designationService.find(+id).subscribe((res) => {
           this.DesignationForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Designation';
         this.btnText = 'Submit';
       }
     });

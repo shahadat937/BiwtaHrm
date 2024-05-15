@@ -1,5 +1,5 @@
 <c-card>
-  <c-card-header>Employee Type</c-card-header>
+  <c-card-header>{{headerText}}</c-card-header>
   <c-card-body>
     <form
       #employeeTypeForm="ngForm"
@@ -35,17 +35,16 @@
         <div class="text-left text-danger">Employee Type Name is required</div>
         }
       </c-col>
+      
       <c-col [md]="6">
-        <label cLabel for="validationCustom02">Is Active </label>
-        <input
-          [(ngModel)]="employeeTypeService.employeeType.isActive"
-          name="isActive"
-          cFormControl
-          id="validationCustom02"
-          type="text"
-          value="Otto"
-        />
-        <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
+        <label cLabel for="activeStatus">Active Status</label>
+        <select [(ngModel)]="employeeTypeService.employeeType.isActive"
+        name="isActive"
+        cSelect
+        id="activeStatus">
+          <option value="true">Active</option>
+          <option value="false">De-Active</option>
+        </select>
       </c-col>
       <c-col [xs]="12">
         <button
@@ -97,10 +96,12 @@
           </td>
         </ng-container>
 
-        <!-- Name Column -->
         <ng-container matColumnDef="isActive">
           <th mat-header-cell *matHeaderCellDef>Is Active</th>
-          <td mat-cell *matCellDef="let element">{{ element.isActive }}</td>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.isActive">Active</span>
+            <span *ngIf="!element.isActive">De-Active</span>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="Action">

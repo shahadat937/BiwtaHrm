@@ -107,7 +107,7 @@ namespace Hrm.Application.Features.PostingOrderInfo.Handlers.Queries
             if (officeBranchId.HasValue)
             {
                 var officeBranch = await _officeBranch.Get(officeBranchId.Value);
-                return officeBranch?.OfficeBranchName;
+                return officeBranch?.BranchName;
             }
             return null;
         }

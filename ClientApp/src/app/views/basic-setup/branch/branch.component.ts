@@ -16,6 +16,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { OfficeService } from '../service/office.service';
 
 @Component({
   selector: 'app-branch',
@@ -26,11 +28,14 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
   position = 'top-end';
   visible = false;
   percentage = 0;
+  BtnText: string | undefined;
   btnText: string | undefined;
-  headerText: string | undefined;
+  headerText : string | undefined;
+  buttonIcon : string | undefined;
+  offices: SelectedModel[] = [];
   @ViewChild('BranchForm', { static: true }) BranchForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'officeBranchName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'branchName','branchNameBangla', 'isActive', 'Action'];
   loading = false;
 
   dataSource = new MatTableDataSource<any>();
@@ -44,26 +49,33 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public officeService : OfficeService,
   ) {}
   ngOnInit(): void {
     this.getALlBranchs();
     this.handleRouteParams();
+    this.loadOffice();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('officeBranchId');
       if (id) {
-        //console.log(id);
+        this.visible = true;
         this.btnText = 'Update';
-        this.headerText = 'Update Branch Type';
+        this.headerText = "Update Branch";
+        this.BtnText = " Hide Form";
+        this.buttonIcon = "cilTrash";
         this.branchService.getById(+id).subscribe((res) => {
           this.BranchForm?.form.patchValue(res);
         });
       } else {
         this.resetForm();
-        this.headerText = 'Add Branch Type';
         this.btnText = 'Submit';
+        this.visible = false;
+        this.headerText = "Branch List"
+        this.buttonIcon = "cilPencil";
+        this.BtnText = " Add Branch";
       }
     });
   }
@@ -81,38 +93,70 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  toggleToast() {
-    this.visible = !this.visible;
+
+
+  UserFormView(){
+    if(this.BtnText == " Add Branch"){
+      this.BtnText = " Hide Form";
+      this.buttonIcon = "cilTrash";
+      this.headerText = "Add New Branch";
+      this.visible = true;
+    }
+    else {
+      this.BtnText = " Add Branch";
+      this.buttonIcon = "cilPencil";
+      this.headerText = "Branch List";
+      this.visible = false;
+    }
+  }
+  
+  toggleCollapse(){
+    this.handleRouteParams();
+    this.headerText = "Update User";
+    this.visible = true;
   }
 
-  onVisibleChange($event: boolean) {
-    this.visible = $event;
-    this.percentage = !this.visible ? 0 : this.percentage;
+  cancelUpdate(){
+    this.resetForm();
+    this.router.navigate(['/bascisetup/officeBranch']);
   }
 
-  onTimerChange($event: number) {
-    this.percentage = $event * 25;
-  }
-  initaialUpazila(form?: NgForm) {
+  initaialBranch(form?: NgForm) {
     if (form != null) form.resetForm();
     this.branchService.branchs = {
-      officeBranchId: 0,
-      officeBranchName: '',
-      //districtName:"",
+      branchId: 0,
+      branchName: "",
+      branchNameBangla: "",
+      branchCode: "",
+      officeId: 0,
+      upperBranchId: 0,
+      phone: "",
+      mobile: "",
+      fax: "",
+      email: "",
+      sequence: 0,
+      remark: "",
       menuPosition: 0,
       isActive: true,
     };
   }
   resetForm() {
-    // console.log(this.BranchForm?.form.value);
     this.btnText = 'Submit';
     if (this.BranchForm?.form != null) {
-      // console.log(this.BranchForm?.form);
       this.BranchForm.form.reset();
       this.BranchForm.form.patchValue({
-        officeBranchId: 0,
-      officeBranchName: '',
-        //  districtName:"",
+        branchId: 0,
+        branchName: "",
+        branchNameBangla: "",
+        branchCode: "",
+        officeId: 0,
+        upperBranchId: 0,
+        phone: "",
+        mobile: "",
+        fax: "",
+        email: "",
+        sequence: 0,
+        remark: "",
         menuPosition: 0,
         isActive: true,
       });
@@ -120,9 +164,19 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/bascisetup/officeBranch']);
   }
 
+
+  loadOffice() { 
+    this.subscription=this.officeService.selectGetoffice().subscribe((data) => { 
+      this.offices = data;
+    });
+  }
+
+  onOfficeSelect(officeId:number){
+
+  }
+
   getALlBranchs() {
     this.subscription = this.branchService.getAll().subscribe((item) => {
-      console.log(item)
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -165,7 +219,6 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          //console.log('branch id ' + element.officeBranchId);
           this.branchService.delete(element.officeBranchId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -178,8 +231,6 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
               });
             },
             (err) => {
-              // console.log(err);
-
               this.toastr.error('Somethig Wrong ! ', ` `, {
                 positionClass: 'toast-top-right',
               });

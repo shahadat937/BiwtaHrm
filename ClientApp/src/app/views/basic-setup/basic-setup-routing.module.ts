@@ -193,20 +193,6 @@ const routes: Routes = [
         },
       },
       {
-        path: 'officeBranch',
-        component: BranchComponent,
-        data: {
-          title: 'Branch',
-        },
-      },
-      {
-        path: 'update-officeBranch/:officeBranchId',
-        component: BranchComponent,
-        data: {
-          title: 'Update Branch',
-        },
-      },
-      {
         path: 'department',
         component: DepartmentComponent,
         data: {
@@ -834,6 +820,20 @@ const routes: Routes = [
         component: OfficeComponent,
         data: {
           title: 'Update Office',
+        },
+      },
+      {
+        path: 'officeBranch',
+        component: BranchComponent,
+        data: {
+          title: 'Branch',
+        },
+      },
+      {
+        path: 'update-officeBranch/:officeBranchId',
+        component: BranchComponent,
+        data: {
+          title: 'Update Branch',
         },
       },
       {

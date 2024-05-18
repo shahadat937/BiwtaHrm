@@ -13,7 +13,7 @@ namespace Hrm.Application.DTOs.Branch.Validators
         {
             Include(new IBranchDtoValidator());
 
-            RuleFor(x => x.OfficeBranchName).NotNull().WithMessage("{PropertyName} must be present");
+            RuleFor(x => x.BranchName).NotNull().WithMessage("{PropertyName} must be present");
         }
     }
 }

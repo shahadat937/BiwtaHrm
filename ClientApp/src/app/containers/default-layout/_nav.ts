@@ -651,10 +651,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Account Type',
-
         url: '/bascisetup/bankAccountType'
-
-
       },
 
 
@@ -684,6 +681,10 @@ export const navItems: INavData[] = [
       {
         name: 'Office Name',
         url: '/bascisetup/office'
+      },
+      {
+        name: 'Branch',
+        url: '/bascisetup/officeBranch'
       },
       {
         name: 'Office Address',

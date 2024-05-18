@@ -48,7 +48,7 @@ namespace Hrm.Application.Features.OfficeBranch.Handlers.Commands
                 if (OfficeBranchNameExists(request))
                 {
                     response.Success = false;
-                    response.Message = $"Creation Failed '{request.BranchDto.OfficeBranchName}' already exists.";
+                    response.Message = $"Creation Failed '{request.BranchDto.BranchName}' already exists in same Office.";
                     response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
                 }
@@ -62,7 +62,7 @@ namespace Hrm.Application.Features.OfficeBranch.Handlers.Commands
 
                     response.Success = true;
                     response.Message = "Creation Successful";
-                    response.Id = OfficeBranch.OfficeBranchId;
+                    response.Id = OfficeBranch.BranchId;
                 }
             }
 
@@ -70,9 +70,9 @@ namespace Hrm.Application.Features.OfficeBranch.Handlers.Commands
         }
         private bool OfficeBranchNameExists(CreateBranchCommand request)
         {
-            var OfficeBranchName = request.BranchDto.OfficeBranchName.Trim().ToLower().Replace(" ", string.Empty);
+            var OfficeBranchName = request.BranchDto.BranchName.Trim().ToLower().Replace(" ", string.Empty);
 
-            IQueryable<Hrm.Domain.OfficeBranch> OfficeBranchs = _OfficeBranchRepository.Where(x => x.OfficeBranchName.Trim().ToLower().Replace(" ", string.Empty) == OfficeBranchName);
+            IQueryable<Hrm.Domain.OfficeBranch> OfficeBranchs = _OfficeBranchRepository.Where(x => x.BranchName.Trim().ToLower().Replace(" ", string.Empty) == OfficeBranchName && x.OfficeId == request.BranchDto.OfficeId);
 
             return OfficeBranchs.Any();
         }

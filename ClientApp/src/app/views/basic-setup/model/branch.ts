@@ -1,6 +1,16 @@
 export class Branch {   
-    officeBranchId: number = 0;
-    officeBranchName: string = ""; 
+    branchId: number = 0;
+    branchName: string = ""; 
+    branchNameBangla: string = ""; 
+    branchCode: string = ""; 
+    officeId: any = null;
+    upperBranchId: any = null;
+    phone: string = ""; 
+    mobile: string = ""; 
+    fax: string = ""; 
+    email: string = ""; 
+    sequence: number = 0;
+    remark: string = ""; 
     menuPosition: number = 0;
     isActive: boolean = true;
 }

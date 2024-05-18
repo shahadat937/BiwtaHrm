@@ -24,8 +24,8 @@ namespace Hrm.Application.Features.Branch.Handlers.Queries
             ICollection<Hrm.Domain.OfficeBranch> Branchs = await _BranchRepository.FilterAsync(x => x.IsActive);
             List<SelectedModel> selectModels = Branchs.Select(x => new SelectedModel 
             {
-                Name = x.OfficeBranchName,
-                Id = x.OfficeBranchId
+                Name = x.BranchName,
+                Id = x.BranchId
             }).ToList();
             return selectModels;
         }

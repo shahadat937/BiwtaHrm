@@ -20,6 +20,12 @@ namespace Hrm.Persistence
         {
 
 
+            modelBuilder.Entity<OfficeBranch>(entity => {
+
+                entity.HasKey(e => e.BranchId)
+                    .HasName("PK_OfficeBranch");
+
+            });
             modelBuilder.Entity<BloodGroup>(entity => {
 
                 entity.HasKey(e => e.BloodGroupId)
@@ -94,11 +100,11 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.ResultId)
                 .HasName("PK__Result__97690208E73A8F36");
             });
-            modelBuilder.Entity<OfficeBranch>(entity =>
-            {
-                entity.HasKey(e => e.OfficeBranchId)
-                .HasName("[PK__Branch__A1682FC588459E1D]");
-            });
+            //modelBuilder.Entity<OfficeBranch>(entity =>
+            //{
+            //    entity.HasKey(e => e.OfficeBranchId)
+            //    .HasName("[PK__Branch__A1682FC588459E1D]");
+            //});
             modelBuilder.Entity<Department>(entity =>
             {
                 entity.HasKey(e => e.DepartmentId)

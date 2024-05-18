@@ -28,7 +28,7 @@ namespace Hrm.Application.Features.Branch.Handlers.Queries
         public async Task<object> Handle(GetBranchRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.OfficeBranch> Branch = _BranchRepository.Where(x => true);
-            Branch = Branch.OrderByDescending(x => x.OfficeBranchId);
+            Branch = Branch.OrderByDescending(x => x.BranchId);
             var BranchDtos = _mapper.Map<List<BranchDto>>(Branch);
 
             return BranchDtos;

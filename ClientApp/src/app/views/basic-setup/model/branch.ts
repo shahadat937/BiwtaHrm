@@ -9,7 +9,7 @@ export class Branch {
     mobile: string = ""; 
     fax: string = ""; 
     email: string = ""; 
-    sequence: number = 0;
+    sequence: any = null;
     remark: string = ""; 
     menuPosition: number = 0;
     isActive: boolean = true;

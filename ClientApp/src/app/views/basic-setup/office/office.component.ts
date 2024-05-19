@@ -93,7 +93,6 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.onUnionNamesChangeByThanaId(res.thanaId);
           this.onWardNamesChangeByUnionId(res.unionId);
           this.OfficeForm?.form.patchValue(res);
-          console.log(res)
         });
       } else {
         this.btnText = 'Submit';
@@ -248,7 +247,7 @@ onUnionNamesChangeByThanaId(thanaId:number){
   }
 
   onSubmit(form: NgForm): void {
-    this.loading = false;
+    this.loading = true;
     this.officeService.cachedData = [];
     const id = form.value.officeId;
     const action$ = id
@@ -261,12 +260,10 @@ onUnionNamesChangeByThanaId(thanaId:number){
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
+        this.loading = false;
         this.getALlOffices();
         this.resetForm();
-        if (!id) {
-          this.router.navigate(['/bascisetup/office']);
-        }
-        this.loading = false;
+        this.router.navigate(['/bascisetup/office']);
 
       } else {
         this.toastr.warning('', `${response.message}`, {

@@ -33,6 +33,8 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
   headerText : string | undefined;
   buttonIcon : string | undefined;
   offices: SelectedModel[] = [];
+  branches: SelectedModel[] = [];
+  upperBranchView = false;
   @ViewChild('BranchForm', { static: true }) BranchForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'branchName','branchNameBangla', 'isActive', 'Action'];
@@ -59,7 +61,7 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('officeBranchId');
+      const id = params.get('branchId');
       if (id) {
         this.visible = true;
         this.btnText = 'Update';
@@ -67,6 +69,7 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
         this.BtnText = " Hide Form";
         this.buttonIcon = "cilTrash";
         this.branchService.getById(+id).subscribe((res) => {
+          this.onOfficeSelect(res.officeId);
           this.BranchForm?.form.patchValue(res);
         });
       } else {
@@ -128,19 +131,20 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
       branchName: "",
       branchNameBangla: "",
       branchCode: "",
-      officeId: 0,
-      upperBranchId: 0,
+      officeId: null,
+      upperBranchId: null,
       phone: "",
       mobile: "",
       fax: "",
       email: "",
-      sequence: 0,
+      sequence: null,
       remark: "",
       menuPosition: 0,
       isActive: true,
     };
   }
   resetForm() {
+    console.log("reseted")
     this.btnText = 'Submit';
     if (this.BranchForm?.form != null) {
       this.BranchForm.form.reset();
@@ -149,19 +153,18 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
         branchName: "",
         branchNameBangla: "",
         branchCode: "",
-        officeId: 0,
-        upperBranchId: 0,
+        officeId: null,
+        upperBranchId: null,
         phone: "",
         mobile: "",
         fax: "",
         email: "",
-        sequence: 0,
+        sequence: null,
         remark: "",
         menuPosition: 0,
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/officeBranch']);
   }
 
 
@@ -172,7 +175,15 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onOfficeSelect(officeId:number){
-
+    this.branchService.getBranchByOfficeId(+officeId).subscribe((res) => {
+      this.branches = res;
+      if(res.length>0){
+        this.upperBranchView = true;
+      }
+      else{
+        this.upperBranchView = false;
+      }
+    });
   }
 
   getALlBranchs() {
@@ -185,9 +196,9 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   
   onSubmit(form: NgForm): void {
-    this.loading = false;
+    this.loading = true;
     this.branchService.cachedData = [];
-    const id = form.value.officeBranchId;
+    const id = form.value.branchId;
     const action$ = id
       ? this.branchService.update(id, form.value)
       : this.branchService.submit(form.value);
@@ -200,18 +211,14 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.getALlBranchs();
         this.resetForm();
-        if (!id) {
-          this.router.navigate(['/bascisetup/officeBranch']);
-        }
+        this.router.navigate(['/bascisetup/officeBranch']);
         this.loading = false;
-
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
       this.loading = false;
-
     });
   }
   delete(element: any) {

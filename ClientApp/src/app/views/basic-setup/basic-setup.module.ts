@@ -11,6 +11,7 @@ import {
   ButtonGroupModule,
   ButtonModule,
   CardModule,
+  CollapseDirective,
   DropdownModule,
   FormModule,
   GridModule,
@@ -177,6 +178,7 @@ import { HolidaytypeService } from './service/holidaytype.service';
     SharedCustomModule,
     ProgressModule,
     SpinnerModule,
+    CollapseDirective,
   ],
   providers: [
     SectionService,

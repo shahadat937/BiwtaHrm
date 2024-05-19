@@ -26,6 +26,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 export class DistrictComponent implements OnInit, OnDestroy {
 
   btnText: string | undefined;
+  headerText: string | undefined;
   @ViewChild('DistrictForm', { static: true }) DistrictForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'divisionName','districtName', 'isActive', 'Action'];
@@ -46,11 +47,14 @@ export class DistrictComponent implements OnInit, OnDestroy {
       const id = params.get('districtId');
       if (id) {
         this.btnText = 'Update';
+        this.headerText = 'Update District';
         this.districtService.find(+id).subscribe((res) => {
           console.log(res);
           this.DistrictForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add District';
         this.btnText = 'Submit';
       }
     });

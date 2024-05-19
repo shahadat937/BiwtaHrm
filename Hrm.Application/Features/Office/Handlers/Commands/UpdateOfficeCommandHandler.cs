@@ -50,7 +50,7 @@ namespace Hrm.Application.Features.Office.Handlers.Commands
 
             var officeName = request.OfficeDto.OfficeName.ToLower();
 
-            IQueryable<Hrm.Domain.Office> offices = _officeRepository.Where(x => x.OfficeName.ToLower() == officeName);
+            IQueryable<Hrm.Domain.Office> offices = _officeRepository.Where(x => x.OfficeName.ToLower() == officeName && x.OfficeId != request.OfficeDto.OfficeId);
 
 
             if (offices.Any())

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NewAccountTypeComponent } from './accounttype/new-accounttype/new-accounttype.component';
 import { BloodGroupComponent } from './blood-group/blood-group.component';
 import { ScaleComponent } from './scale/scale.component';
-import {DistrictComponent} from './district/district.component';
+import { DistrictComponent } from './district/district.component';
 import { UpazilaComponent } from './upazila/upazila.component';
 import { ThanaComponent } from './thana/thana.component';
 import { ResultComponent } from './result/result.component';
@@ -62,406 +62,816 @@ import { HolidayTypeComponent } from './holiday-type/holiday-type.component';
 const routes: Routes = [
 
   {
+    path: '',
+    data: {
+      title: 'Personal Info. Setup',
+    },
+    children: [
+      {
+        path: 'blood-group',
+        component: BloodGroupComponent,
+        data: {
+          title: 'Blood Group',
+        },
+      },
+      {
+        path: 'update-bloodgroup/:bloodGroupId',
+        component: BloodGroupComponent,
+        data: {
+          title: 'Update Blood Group',
+        },
+      }, {
+        path: 'marital-status',
+        component: MaritalStatusComponent,
+        data: {
+          title: 'Marital Status',
+        },
+      },
+      {
+        path: 'update-marital-status/:maritalStatusId',
+        component: MaritalStatusComponent,
+        data: {
+          title: 'Update Marital Status',
+        },
+      },
+      {
+        path: 'employee-type',
+        component: EmployeeTypeComponent,
+        data: {
+          title: 'Employee Type',
+        },
+      },
+      {
+        path: 'update-employee-type/:employeeTypeId',
+        component: EmployeeTypeComponent,
+        data: {
+          title: 'Update Employee Type',
+        },
+      },
+      {
+        path: 'gender',
+        component: GenderComponent,
+        data: {
+          title: 'Gender',
+        },
+      },
+      {
+        path: 'update-gender/:genderId',
+        component: GenderComponent,
+        data: {
+          title: 'Update Gender',
+        },
+      },
+      {
+        path: 'religion',
+        component: ReligionComponent,
+        data: {
+          title: 'Religion',
+        },
+      },
+      {
+        path: 'update-religion/:religionId',
+        component: ReligionComponent,
+        data: {
+          title: 'Update Religion',
+        },
+      },
+      {
+        path: 'child-status',
+        component: ChildStatusComponent,
+        data: {
+          title: 'Child Status',
+        },
+      },
+      {
+        path: 'update-child-status/:childStatusId',
+        component: ChildStatusComponent,
+        data: {
+          title: 'Update Child Status',
+        },
+      },
+      {
+        path: 'pool',
+        component: PoolComponent,
+        data: {
+          title: 'Pool',
+        },
+      },
+      {
+        path: 'update-pool/:poolId',
+        component: PoolComponent,
+        data: {
+          title: 'Update Pool',
+        },
+      },
+      {
+        path: 'occupation',
+        component: OccupationComponent,
+        data: {
+          title: 'Occupation',
+        },
+      },
+      {
+        path: 'update-occupation/:occupationId',
+        component: OccupationComponent,
+        data: {
+          title: 'Update Occupation',
+        },
+      },
+      {
+        path: 'shift',
+        component: ShiftComponent,
+        data: {
+          title: 'Shift',
+        },
+      },
+      {
+        path: 'update-shift/:shiftId',
+        component: ShiftComponent,
+        data: {
+          title: 'Update Shift',
+        },
+      },
+      {
+        path: 'department',
+        component: DepartmentComponent,
+        data: {
+          title: 'Department',
+        },
+      },
+      {
+        path: 'update-department/:departmentId',
+        component: DepartmentComponent,
+        data: {
+          title: 'Update Department',
+        },
+      },
+      {
+        path: 'designation',
+        component: DesignationComponent,
+        data: {
+          title: 'Designation',
+        },
+      },
+      {
+        path: 'update-designation/:designationId',
+        component: DesignationComponent,
+        data: {
+          title: 'Update Designation',
+        },
+      },
+      {
+        path: 'promotionType',
+        component: PromotionTypeComponent,
+        data: {
+          title: 'Promotion Type',
+        },
+      },
+      {
+        path: 'update-promotionType/:promotionTypeId',
+        component: PromotionTypeComponent,
+        data: {
+          title: 'Update Promotion Type',
+        },
+      },
+      {
+        path: 'punishment',
+        component: PunishmentComponent,
+        data: {
+          title: 'Punishment',
+        },
+      },
+      {
+        path: 'update-punishment/:punishmentId',
+        component: PunishmentComponent,
+        data: {
+          title: 'Update Punishment',
+        },
+      },
+      {
+        path: 'scale',
+        component: ScaleComponent,
+        data: {
+          title: 'Scale',
+        },
+      },
+      {
+        path: 'update-scale/:scaleId',
+        component: ScaleComponent,
+        data: {
+          title: 'Update Scale',
+        },
+      },
+
+      {
+        path: 'grade',
+        component: GradeComponent,
+        data: {
+          title: 'Grade',
+        },
+      },
+      {
+        path: 'update-grade/:gradeId',
+        component: GradeComponent,
+        data: {
+          title: 'Update Grade',
+        },
+      },
+      {
+        path: 'grade-type',
+        component: GradeTypeComponent,
+        data: {
+          title: 'Grade Type',
+        },
+      },
+      {
+        path: 'update-grade-type/:gradeTypeId',
+        component: GradeTypeComponent,
+        data: {
+          title: 'Update Grade Type',
+        },
+      },
+      {
+        path: 'grade-class',
+        component: GradeClassComponent,
+        data: {
+          title: 'Grade Class',
+        },
+      },
+      {
+        path: 'update-grade-class/:gradeClassId',
+        component: GradeClassComponent,
+        data: {
+          title: 'Update Grade',
+        },
+      },
+      {
+        path: 'leave',
+        component: LeaveComponent,
+        data: {
+          title: 'Leave Type',
+        },
+      },
+      {
+        path: 'update-leave/:leaveId',
+        component: LeaveComponent,
+        data: {
+          title: 'Update Leave Type',
+        },
+      },
+      {
+        path: 'overall_EV_Promotion',
+        component: OverallEVPromotionComponent,
+        data: {
+          title: 'Evolution & Promotion',
+        },
+      },
+      {
+        path: 'update-overall_EV_Promotion/:overallEVPromotionId',
+        component: OverallEVPromotionComponent,
+        data: {
+          title: 'Update Evolution & Promotion',
+        },
+      },
+      {
+        path: 'hairColor',
+        component: HairColorComponent,
+        data: {
+          title: 'Hair Color',
+        },
+      },
+      {
+        path: 'update-hairColor/:hairColorId',
+        component: HairColorComponent,
+        data: {
+          title: 'Update Hair Color',
+        },
+      },
+      {
+        path: 'eyesColor',
+        component: EyesColorComponent,
+        data: {
+          title: 'Eyes Color',
+        },
+      },
+      {
+        path: 'update-eyesColor/:eyesColorId',
+        component: EyesColorComponent,
+        data: {
+          title: 'Update Eye Color',
+        },
+      },
+      {
+        path: 'relation',
+        component: RelationComponent,
+        data: {
+          title: 'Relation',
+        },
+      },
+      {
+        path: 'update-relation/:relationId',
+        component: RelationComponent,
+        data: {
+          title: 'Update Relation',
+        },
+      },
+      {
+        path: 'subDepartment',
+        component: SubDepartmentComponent,
+        data: {
+          title: 'Sub Department',
+        },
+      },
+      {
+        path: 'update-subDepartment/:subDepartmentId',
+        component: SubDepartmentComponent,
+        data: {
+          title: 'Update Sub Department',
+        },
+      },
+      {
+        path: 'userRole',
+        component: UserRoleComponent,
+        data: {
+          title: 'User Role',
+        },
+      },
+      {
+        path: 'update-userRole/:userRoleId',
+        component: UserRoleComponent,
+        data: {
+          title: 'Update User Role',
+        },
+      },
+      {
+        path: 'section',
+        component: SectionComponent,
+        data: {
+          title: 'Section',
+        },
+      },
+      {
+        path: 'update-section/:sectionId',
+        component: SectionComponent,
+        data: {
+          title: 'Update Section',
+        },
+      },
+      {
+        path: 'officeBranch',
+        component: BranchComponent,
+        data: {
+          title: 'Branch',
+        },
+      },
+      {
+        path: 'update-officeBranch/:branchId',
+        component: BranchComponent,
+        data: {
+          title: 'Update Branch',
+        },
+      },
+      {
+        path: 'subBranch',
+        component: SubBranchComponent,
+        data: {
+          title: 'Sub Branch',
+        },
+      },
+      {
+        path: 'update-subBranch/:subBranchId',
+        component: SubBranchComponent,
+        data: {
+          title: 'Update Sub Branch',
+        },
+      },
+      {
+        path: 'yearsetup',
+        component: YearSetupComponent,
+        data: {
+          title: 'Year',
+        },
+      },
+      {
+        path: 'update-year/:yearId',
+        component: YearSetupComponent,
+        data: {
+          title: 'Update Year',
+        },
+      },
+      {
+        path: 'holidaytype',
+        component: HolidayTypeComponent,
+        data: {
+          title: 'Holiday Type',
+        },
+      },
+      {
+        path: 'update-holidaytype/:holidayTypeId',
+        component: HolidayTypeComponent,
+        data: {
+          title: 'Update Holiday Type',
+        },
+      },
+
+    ]
+  },
+  {
+    path: '',
+    data: {
+      title: 'Address Setup',
+    },
+    children: [
+
+      {
+        path: 'country',
+        component: CountryComponent,
+        data: {
+          title: 'Country',
+        },
+      },
+      {
+        path: 'update-country/:countryId',
+        component: CountryComponent,
+        data: {
+          title: 'Update Country',
+        },
+      },
+      {
+        path: 'division',
+        component: DivisionComponent,
+        data: {
+          title: 'Division',
+        },
+      },
+      {
+        path: 'update-division/:divisionId',
+        component: DivisionComponent,
+        data: {
+          title: 'Update Division',
+        },
+      },
+      {
+        path: 'district',
+        component: DistrictComponent,
+        data: {
+          title: 'District',
+        },
+      },
+      {
+        path: 'update-district/:districtId',
+        component: DistrictComponent,
+        data: {
+          title: 'Update District',
+        },
+      },
+      {
+        path: 'upazila',
+        component: UpazilaComponent,
+        data: {
+          title: 'Upazila',
+        },
+      },
+      {
+        path: 'update-upazila/:upazilaId',
+        component: UpazilaComponent,
+        data: {
+          title: 'Update Upazila',
+        },
+      },
+      {
+        path: 'thana',
+        component: ThanaComponent,
+        data: {
+          title: 'Thana',
+        },
+      },
+      {
+        path: 'update-thana/:thanaId',
+        component: ThanaComponent,
+        data: {
+          title: 'Update Thana',
+        },
+      }, {
+        path: 'union',
+        component: UnionComponent,
+        data: {
+          title: 'Union',
+        },
+      },
+      {
+        path: 'update-union/:unionId',
+        component: UnionComponent,
+        data: {
+          title: 'Update Union',
+        },
+      },
+      {
+        path: 'ward',
+        component: WardComponent,
+        data: {
+          title: 'Ward',
+        },
+      },
+      {
+        path: 'update-ward/:wardId',
+        component: WardComponent,
+        data: {
+          title: 'Update Ward',
+        },
+      },
+
+    ]
+  },
+  {
+    path: '',
+    data: {
+      title: 'Education Setup',
+    },
+    children: [
+      {
+        path: 'examType',
+        component: ExamTypeComponent,
+        data: {
+          title: 'Exam Type',
+        },
+      },
+      {
+        path: 'update-examType/:examTypeId',
+        component: ExamTypeComponent,
+        data: {
+          title: 'Update Exam Type',
+        },
+      },
+      {
+        path: 'group',
+        component: GroupComponent,
+        data: {
+          title: 'Group',
+        },
+      },
+      {
+        path: 'update-group/:groupId',
+        component: GroupComponent,
+        data: {
+          title: 'Update Group',
+        },
+      },
+      {
+        path: 'board',
+        component: BoardComponent,
+        data: {
+          title: 'Board',
+        },
+      },
+      {
+        path: 'update-board/:boardId',
+        component: BoardComponent,
+        data: {
+          title: 'Update Board',
+        },
+      },
+      {
+        path: 'group',
+        component: GroupComponent,
+        data: {
+          title: 'Group',
+        },
+      },
+      {
+        path: 'update-group/:groupId',
+        component: GroupComponent,
+        data: {
+          title: 'Update Group',
+        },
+      },
+      {
+        path: 'result',
+        component: ResultComponent,
+        data: {
+          title: 'Result',
+        },
+      },
+      {
+        path: 'update-result/:resultId',
+        component: ResultComponent,
+        data: {
+          title: 'Update Result',
+        },
+      },
+      {
+        path: 'subject',
+        component: SubjectComponent,
+        data: {
+          title: 'Subject',
+        },
+      },
+      {
+        path: 'update-subject/:subjectId',
+        component: SubjectComponent,
+        data: {
+          title: 'Update Subject',
+        },
+      },
+
+    ]
+  },
+  {
+    path: '',
+    data: {
+      title: 'Training Setup',
+    },
+    children: [
+      {
+        path: 'training',
+        component: TrainingComponent,
+        data: {
+          title: 'Training',
+        },
+      },
+      {
+        path: 'update-trainingType/:trainingTypeId',
+        component: TrainingComponent,
+        data: {
+          title: 'Update Training',
+        },
+      },
+
+      {
+        path: 'trainingName',
+        component: TrainingNameComponent,
+        data: {
+          title: 'Training Name',
+        },
+      },
+      {
+        path: 'update-trainingName/:trainingNameId',
+        component: TrainingNameComponent,
+        data: {
+          title: 'Update Training Name',
+        },
+      },
+      {
+        path: 'institute',
+        component: InstituteComponent,
+        data: {
+          title: 'Institute',
+        },
+      },
+      {
+        path: 'update-institute/:instituteId',
+        component: InstituteComponent,
+        data: {
+          title: 'Update Institute',
+        },
+      },
+
+    ]
+  },
+  {
+    path: '',
+    data: {
+      title: 'Bank Info. Setup',
+    },
+    children: [
+      {
+        path: 'bank',
+        component: BankComponent,
+        data: {
+          title: 'Bank',
+        },
+      },
+      {
+        path: 'update-bank/:bankId',
+        component: BankComponent,
+        data: {
+          title: 'Update Bank',
+        },
+      },
+      {
+        path: 'bankBranch',
+        component: BankBranchComponent,
+        data: {
+          title: 'Bank Branch',
+        },
+      },
+      {
+        path: 'update-bankBranch/:bankBranchId',
+        component: BankBranchComponent,
+        data: {
+          title: 'Update Bank Branch',
+        },
+      },
+      {
+        path: 'bankAccountType',
+        component: BankAccountTypeComponent,
+        data: {
+          title: 'Bank Account Type',
+        },
+      },
+      {
+        path: 'update-bankAccountType/:bankAccountTypeId',
+        component: BankAccountTypeComponent,
+        data: {
+          title: 'Update Bank Account Type',
+        },
+      },
+
+    ]
+  },
+  {
+    path: '',
+    data: {
+      title: 'Language Setup',
+    },
+    children: [
+      {
+        path: 'competence',
+        component: CompetenceComponent,
+        data: {
+          title: 'Competence',
+        },
+      },
+      {
+        path: 'update-competence/:competenceId',
+        component: CompetenceComponent,
+        data: {
+          title: 'Update Competence',
+        },
+      },
+      {
+        path: 'language',
+        component: LanguageComponent,
+        data: {
+          title: 'Language',
+        },
+      },
+      {
+        path: 'update-language/:languageId',
+        component: LanguageComponent,
+        data: {
+          title: 'Update Language',
+        },
+      },
+
+    ]
+  },
+  {
+    path: '',
+    data: {
+      title: 'Office Info. Setup',
+    },
+    children: [
+      {
+        path: 'office',
+        component: OfficeComponent,
+        data: {
+          title: 'Office',
+        },
+      },
+      {
+        path: 'update-office/:officeId',
+        component: OfficeComponent,
+        data: {
+          title: 'Update Office',
+        },
+      },
+      {
+        path: 'officeBranch',
+        component: BranchComponent,
+        data: {
+          title: 'Branch',
+        },
+      },
+      {
+        path: 'update-officeBranch/:branchId',
+        component: BranchComponent,
+        data: {
+          title: 'Update Branch',
+        },
+      },
+      {
+        path: 'officeAddress',
+        component: OfficeAddressComponent,
+        data: {
+          title: 'Office Address',
+        },
+      },
+      {
+        path: 'update-officeAddress/:officeAddressId',
+        component: OfficeAddressComponent,
+        data: {
+          title: 'Update Office Address',
+        },
+      },
+
+    ]
+  },
+
+
+  {
     path: 'add-accounttype',
     component: NewAccountTypeComponent,
-  },
-  {
-    path: 'blood-group',
-    component: BloodGroupComponent,
-  },
-  { path: 'update-bloodgroup/:bloodGroupId',
-    component: BloodGroupComponent,
-  },
-  {
-    path: 'pool',
-    component: PoolComponent,
-  },
-  { path: 'update-pool/:poolId',
-    component: PoolComponent,
-  },
-  {
-    path: 'occupation',
-    component: OccupationComponent,
-  },
-  { path: 'update-occupation/:occupationId',
-    component: OccupationComponent,
-  },
-  {
-    path:'marital-status',
-    component: MaritalStatusComponent,
-  },
-  {
-    path:'update-marital-status/:maritalStatusId',
-    component: MaritalStatusComponent,
-  },
-  {
-    path: 'employee-type',
-    component: EmployeeTypeComponent,
-  },
-  {
-    path: 'update-employee-type/:employeeTypeId',
-    component: EmployeeTypeComponent,
-  },
-  {
-    path: 'gender',
-    component: GenderComponent,
-  },
-  {
-    path: 'update-gender/:genderId',
-    component: GenderComponent,
-  },
-  {
-    path: 'religion',
-    component: ReligionComponent,
-  },
-  {
-    path: 'update-religion/:religionId',
-    component: ReligionComponent,
-  },
-  {
-    path: 'child-status',
-    component: ChildStatusComponent
-  },
-  { path: 'update-child-status/:childStatusId',
-  component: ChildStatusComponent,
-  },
-  {
-    path: 'country',
-    component: CountryComponent,
-  },
-  { path: 'update-country/:countryId', 
-  component: CountryComponent, 
-  },
-  {
-    path: 'division',
-    component: DivisionComponent,
-  },
-  { path: 'update-division/:divisionId', 
-  component: DivisionComponent, 
-  },
-  {
-    path: 'district',
-    component: DistrictComponent,
-  },
-  { path: 'update-district/:districtId', 
-  component: DistrictComponent, 
-  },
-  {
-    path: 'upazila',
-    component: UpazilaComponent,
-  },
-  { path: 'update-upazila/:upazilaId', 
-  component: UpazilaComponent, 
-  },
-  {
-    path: 'thana',
-    component: ThanaComponent,
-  },
-  { 
-    path: 'update-thana/:thanaId', 
-    component: ThanaComponent, 
-  },
-  {
-    path: 'result',
-    component: ResultComponent,
-  },
-  {
-    path: 'update-result/:resultId',
-    component: ResultComponent,
-  },
-  { 
-    path: 'subject',
-    component: SubjectComponent,
-  },
-  { path: 'update-subject/:subjectId', 
-  component: SubjectComponent, 
-  },
-  {
-    path: 'group',
-    component: GroupComponent,
-  },
-  { path: 'update-group/:groupId', 
-  component: GroupComponent, 
-  },
-  {
-    path: 'officeBranch',
-    component: BranchComponent,
-  },
-  { 
-    path: 'update-officeBranch/:officeBranchId', 
-    component: BranchComponent, 
-  },
-  {
-    path: 'union',
-    component: UnionComponent,
-  },
-  {
-    path: 'update-union/:unionId',
-    component: UnionComponent,
-  },
-  {
-    path: 'ward',
-    component: WardComponent,
-  },
-  { 
-    path: 'update-ward/:wardId', 
-    component: WardComponent, 
-  },
-  {
-    path: 'shift',
-    component: ShiftComponent,
-  },
-  {
-    path: 'update-shift/:shiftId',
-    component: ShiftComponent,
-  },
-  {
-    path: 'training',
-    component: TrainingComponent,
-  },
-  { 
-    path: 'update-trainingType/:trainingTypeId', 
-    component: TrainingComponent, 
-  },
-  {
-    path: 'department',
-    component: DepartmentComponent,
-  },
-  {
-    path: 'update-department/:departmentId',
-    component: DepartmentComponent,
-  },
-  {
-    path: 'designation',
-    component: DesignationComponent,
-  },
-  {
-    path: 'update-designation/:designationId',
-    component: DesignationComponent,
-  },
-  {
-
-    path: 'promotionType',
-    component: PromotionTypeComponent,
-  },
-  {
-    path: 'update-promotionType/:promotionTypeId',
-    component: PromotionTypeComponent,
-  },
-  {
-
-    path: 'punishment',
-    component: PunishmentComponent,
-  },
-  {
-    path: 'update-punishment/:punishmentId',
-    component: PunishmentComponent,
-  },
-  {
-    path: 'scale',
-    component: ScaleComponent,
-  },
-  {
-    path: 'update-scale/:scaleId',
-    component: ScaleComponent,
-  },
-
-  {
-    path: 'grade',
-    component: GradeComponent,
-  },
-  {
-    path: 'update-grade/:gradeId',
-    component: GradeComponent,
-  },
-    {
-    path: 'grade-type',
-    component: GradeTypeComponent,
-  },
-  { path: 'update-grade-type/:gradeTypeId',
-    component: GradeTypeComponent,
-  },
-  {
-    path: 'grade-class',
-    component: GradeClassComponent,
-  },
-  { path: 'update-grade-class/:gradeClassId',
-    component: GradeClassComponent,
-  },
-  {
-    path: 'leave',
-    component: LeaveComponent,
-  },
-  { path: 'update-leave/:leaveId',
-    component: LeaveComponent,
-  },
-  {
-    path: 'overall_EV_Promotion',
-    component: OverallEVPromotionComponent,
-  },
-  { path: 'update-overall_EV_Promotion/:overallEVPromotionId',
-    component: OverallEVPromotionComponent,
-  },
-  {
-    path: 'hairColor',
-    component: HairColorComponent,
-  },
-  { path: 'update-hairColor/:hairColorId',
-    component: HairColorComponent,
-  },
-  {
-    path: 'eyesColor',
-    component: EyesColorComponent,
-  },
-  { path: 'update-eyesColor/:eyesColorId',
-    component: EyesColorComponent,
-  },
-  {
-    path: 'relation',
-    component: RelationComponent,
-  },
-  { path: 'update-relation/:relationId',
-    component: RelationComponent,
-  },
-
-  {
-    path: 'trainingName',
-    component: TrainingNameComponent,
-  },
-  { path: 'update-trainingName/:trainingNameId',
-    component: TrainingNameComponent,
-  },
-  {
-    path: 'subDepartment',
-    component: SubDepartmentComponent,
-  },
-  { path: 'update-subDepartment/:subDepartmentId',
-    component: SubDepartmentComponent,
-  },
-  {
-    path: 'subDepartment',
-    component: SubDepartmentComponent,
-  },
-  { path: 'update-subDepartment/:subDepartmentId',
-    component: SubDepartmentComponent,
-  },
-  {
-    path: 'userRole',
-    component: UserRoleComponent,
-  },
-  { path: 'update-userRole/:userRoleId',
-    component: UserRoleComponent,
-  },
-  {
-    path: 'institute',
-    component: InstituteComponent,
-  },
-  { path: 'update-institute/:instituteId',
-    component: InstituteComponent,
-  },
-  {
-    path: 'office',
-    component: OfficeComponent,
-  },
-  { path: 'update-office/:officeId',
-    component: OfficeComponent,
-  },
-  {
-    path: 'officeAddress',
-    component: OfficeAddressComponent,
-  },
-  { path: 'update-officeAddress/:officeAddressId',
-    component: OfficeAddressComponent,
-  },
-  {
-    path: 'competence',
-    component: CompetenceComponent,
-  },
-  { path: 'update-competence/:competenceId',
-    component: CompetenceComponent,
-},
-  {
-    path: 'bank',
-    component: BankComponent,
-  },
-  { path: 'update-bank/:bankId',
-    component: BankComponent,
-  },
-  {
-    path: 'bankBranch',
-    component: BankBranchComponent,
-  },
-  { path: 'update-bankBranch/:bankBranchId',
-    component: BankBranchComponent,
-  },
-  {
-    path: 'bankAccountType',
-    component: BankAccountTypeComponent,
-  },
-  { path: 'update-bankAccountType/:bankAccountTypeId',
-    component: BankAccountTypeComponent,
-  },
-  { 
-    path: 'language',
-    component: LanguageComponent,
-  },
-  { path: 'update-language/:languageId',
-    component: LanguageComponent,
-  },
-  { 
-    path: 'examType',
-    component: ExamTypeComponent,
-  },
-  { path: 'update-examType/:examTypeId',
-    component: ExamTypeComponent,
-  }
-  ,
-  { 
-    path: 'board',
-    component: BoardComponent,
-  },
-  { path: 'update-board/:boardId',
-    component: BoardComponent,
-  },
-  { 
-    path: 'group',
-    component: GroupComponent,
-  },
-  { path: 'update-group/:groupId',
-    component: GroupComponent,
-  },
-  { 
-
-    path: 'section',
-    component: SectionComponent,
-  },
-  { path: 'update-section/:sectionId',
-    component: SectionComponent,
-  },
-  {
-
-    path: 'subBranch',
-    component: SubBranchComponent,
-  },
-  { 
-    path: 'update-subBranch/:subBranchId',
-    component: SubBranchComponent,
-  },
-  {
-    path: 'yearsetup',
-    component: YearSetupComponent,
-  },
-  { 
-    path: 'update-year/:yearId',
-    component: YearSetupComponent,
-  },
-  {
-    path: 'holidaytype',
-    component: HolidayTypeComponent,
-  },
-  { 
-    path: 'update-holidaytype/:holidayTypeId',
-    component: HolidayTypeComponent,
   },
 
 ];

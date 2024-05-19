@@ -16,6 +16,7 @@ import { EmployeeTypeService } from '../service/employee-type.service';
 })
 export class EmployeeTypeComponent {
   btnText: string | undefined;
+  headerText: string | undefined;
   @ViewChild('employeeTypeForm', { static: true }) employeeTypeForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
@@ -47,10 +48,13 @@ export class EmployeeTypeComponent {
       const id = params.get('employeeTypeId');
       if (id) {
         this.btnText = 'Update';
+        this.headerText = 'Update Employee Type';
         this.employeeTypeService.find(+id).subscribe((res) => {
           this.employeeTypeForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Employee Type';
         this.btnText = 'Submit';
       }
     });

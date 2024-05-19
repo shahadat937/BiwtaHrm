@@ -28,6 +28,7 @@ export class CompetenceComponent implements OnInit, OnDestroy, AfterViewInit {
   visible = false;
   percentage = 0;
   btnText: string | undefined;
+  headerText: string | undefined;
   @ViewChild('CompetenceForm', { static: true }) CompetenceForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'competenceName', 'isActive', 'Action'];
@@ -55,10 +56,13 @@ export class CompetenceComponent implements OnInit, OnDestroy, AfterViewInit {
       const id = params.get('competenceId');
       if (id) {
         this.btnText = 'Update';
+        this.headerText = 'Update Competence';
         this.competenceService.getById(+id).subscribe((res) => {
           this.CompetenceForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
+        this.headerText = 'Add Competence';
         this.btnText = 'Submit';
       }
     });

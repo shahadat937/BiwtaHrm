@@ -49,7 +49,9 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   userHeaderText: string | undefined;
   buttonIcon: string = '';
   visible: boolean | undefined;
-
+  visible2: boolean | undefined;  
+  visible3: boolean | undefined; 
+  visible4: boolean | undefined; 
   btnText: string | undefined;
   loading = false;
   @ViewChild('EmployeeForm', { static: true }) EmployeeForm!: NgForm;
@@ -190,6 +192,45 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       this.buttonIcon = "cilPencil";
       this.userHeaderText = "Value List";
       this.visible = false;
+    }
+  }
+  UserFormView2(): void {
+    if (this.userBtnText == " Add Value") {
+      this.userBtnText = " Hide Form";
+      this.buttonIcon = "cilTrash";
+      this.userHeaderText = "Add New Value";
+      this.visible2 = true;
+    } else {
+      this.userBtnText = " Add Value";
+      this.buttonIcon = "cilPencil";
+      this.userHeaderText = "Value List";
+      this.visible2 = false;
+    }
+  }
+  UserFormView3(): void {
+    if (this.userBtnText == " Add Value") {
+      this.userBtnText = " Hide Form";
+      this.buttonIcon = "cilTrash";
+      this.userHeaderText = "Add New Value";
+      this.visible3 = true;
+    } else {
+      this.userBtnText = " Add Value";
+      this.buttonIcon = "cilPencil";
+      this.userHeaderText = "Value List";
+      this.visible3 = false;
+    }
+  }
+  UserFormView4(): void {
+    if (this.userBtnText == " Add Value") {
+      this.userBtnText = " Hide Form";
+      this.buttonIcon = "cilTrash";
+      this.userHeaderText = "Add New Value";
+      this.visible4 = true;
+    } else {
+      this.userBtnText = " Add Value";
+      this.buttonIcon = "cilPencil";
+      this.userHeaderText = "Value List";
+      this.visible4 = false;
     }
   }
   toggleCollapse() {
@@ -476,6 +517,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       empId: 0,
       approveByName:"",
       approveBy: 0,
+      approveStatus:true,
       officeOrderNo: "",
       releaseDate: new Date(),
       orderOfficeBy: "",
@@ -496,6 +538,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
         transferApproveInfoId:0,
         approveByName:"",
         approveBy: 0,
+        approveStatus:true,
         empId: 0,
         officeOrderNo: "",
         releaseDate: new Date(),
@@ -524,6 +567,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       depReleaseInfoId:0,
       approveByName:"",
       approveBy: 0,
+      approveStatus:true,
       empId: 0,
       joinDate: new Date(),
       remarks: "",
@@ -540,6 +584,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
         depReleaseInfoId:0,
         approveByName:"",
         approveBy: 0,
+        approveStatus:true,
         empId: 0,
         joinDate: new Date(),
         remarks: "",

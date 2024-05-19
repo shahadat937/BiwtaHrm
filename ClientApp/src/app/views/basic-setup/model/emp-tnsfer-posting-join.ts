@@ -3,6 +3,7 @@ export class EmpTnsferPostingJoin {
     depReleaseInfoId:number=0;
     approveByName:string= "";
     approveBy:number=0;
+    approveStatus:  boolean = true;
     empId: number = 0;
     joinDate:Date= new Date();
     remarks:string="";

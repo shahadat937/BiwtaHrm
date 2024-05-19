@@ -1,8 +1,6 @@
 <c-card class="mt-3">
   <c-card-header>Employee </c-card-header>
   <c-card-body>
-    <c-col [md]="4">
-    </c-col>
     <form #EmployeeForm="ngForm" name="EmployeeForm" (submit)="onSubmit(EmployeeForm)" [gutter]="3" novalidate cForm cRow class="needs-validation">
       <c-col [md]="3">
         <input type="hidden" [(ngModel)]="employeeService.demoEmployee.empId" name="empId" />
@@ -176,7 +174,7 @@
         <div class="text-left text-danger">ReleaseType value is required</div>
         }
       </c-col>      
-      <c-col [md]="4">
+      <c-col [md]="3">
         <label cLabel for="validationCustom09">Active Status</label>
         <select [(ngModel)]="postingOrderInfoService.postingOrderInfos.isActive" name="isActive" cSelect id="validationCustom09">
           <option value="true">Active</option>
@@ -188,12 +186,18 @@
   </c-card-body>
 </c-card>
 
-<c-card class="mt-3">
-  <c-card-header>Transfer Approve Information</c-card-header>
-  <c-card-body>
-    <mat-card-content>
+<c-card>
+  <c-card-header class="d-flex justify-content-between">
+    <div> 
+      <input type="checkbox"(click)="UserFormView()" />
+      <label cFormCheckLabel for="checkThree">Transfer Approve Info</label>
+    </div>
+  </c-card-header>
+<c-card class="shadow">
+  <c-card-body [visible]="visible" cCollapse class="shadow">
       <form #TransferApproveInfoForm="ngForm" name="TransferApproveInfoForm"(submit)="onSubmit(TransferApproveInfoForm)" [gutter]="3" novalidate cForm
         cRow>
+        <c-card-header>Employee Transfer/Posting Joining</c-card-header>
         <c-col [md]="3">
           <input type="hidden" [(ngModel)]="employeeService.demoEmployee.empId" name="empId" />
           <label cLabel for="validationCustom1">Approve Status</label>
@@ -210,6 +214,13 @@
           <input  [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveBy" name="approveBy" hidden />
           <div *ngIf="approveBy.touched && !approveBy.valid" class="text-left text-danger">Approve By value is
             required</div>
+        </c-col>
+        <c-col [md]="3">
+          <label cLabel for="validationCustom77">Active Status</label>
+          <select [(ngModel)]="transferApproveInfoService.transferApproveInfos.isActive" name="isActive" cSelect id="validationCustom77">
+            <option value="true">Active</option>
+            <option value="false">De-Active</option>
+          </select>
         </c-col>
         <c-col [md]="3">
           <label cLabel for="validationCustom03">Approve Date<span class="text-danger">*</span></label>
@@ -230,16 +241,21 @@
           }
         </c-col>
       </form>
-    </mat-card-content>
   </c-card-body>
 </c-card>
-<c-card-header class="d-flex justify-content-between">
-  <div>{{userHeaderText}}</div>
-  <div><button cButton color="primary" shape="rounded-pill" (click)="UserFormView()"><svg cIcon
-        name={{buttonIcon}}></svg> {{userBtnText}}</button></div>
-</c-card-header>
-<c-card class="mt-3 shadow">
-  <c-card-body [visible]="visible" cCollapse class="shadow">
+</c-card>
+
+
+<c-card>
+  <c-card-header class="d-flex justify-content-between">
+    <div> 
+      <input type="checkbox"(click)="UserFormView2()" />
+      <label cFormCheckLabel for="checkThree">Departmental Release Information</label>
+    </div>
+  </c-card-header>
+  
+<c-card class="shadow">
+  <c-card-body [visible]="visible2" cCollapse class="shadow">
     <form #DeptReleaseInfoForm="ngForm" name="DeptReleaseInfoForm" name="EmployeeForm" (submit)="onSubmit(DeptReleaseInfoForm)" [gutter]="3" novalidate cForm cRow>
       
       <c-card-header>Departmental Release Information</c-card-header>
@@ -274,6 +290,14 @@
           required</div>
       </c-col>
       <c-col [md]="3">
+        <label cLabel for="validationCustom09">Active Status</label>
+        <select [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.isActive" name="isActive" cSelect id="validationCustom09">
+          <option value="true">Active</option>
+          <option value="false">De-Active</option>
+        </select>
+      </c-col>
+
+      <c-col [md]="3">
         <label cLabel for="validationCustom07">Referenc no <span class="text-danger">*</span></label>
         <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.referenceNo" name="referenceNo"
           #referenceNo="ngModel" placeholder="Enter References Status" cFormControl id="validationCustom07" required
@@ -302,12 +326,21 @@
         }
       </c-col>
     </form>
+    
   </c-card-body>
 </c-card>
+</c-card>
 
-<c-card class="mt-3 shadow">
-  <c-card-body [visible]="visible" cCollapse class="shadow">
-    <mat-card>
+<c-card>
+  <c-card-header class="d-flex justify-content-between">
+    <div> 
+      <input type="checkbox"(click)="UserFormView3()" />
+      <label cFormCheckLabel for="checkThree">Employee Transfer Posting & Join</label>
+    </div>
+  </c-card-header>
+
+<c-card class="shadow">
+  <c-card-body [visible]="visible3" cCollapse class="shadow">
       <form #EmpTransferPostingJoinForm="ngForm" name="EmpTransferPostingJoinForm" (submit)="onSubmit(EmpTransferPostingJoinForm)" [gutter]="3" novalidate
         cForm cRow>
         <c-card-header>Employee Transfer/Posting Joining</c-card-header>
@@ -332,6 +365,13 @@
             required</div>
         </c-col>
         <c-col [md]="3">
+          <label cLabel for="validationCustom09">Active Status</label>
+          <select [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.isActive" name="isActive" cSelect id="validationCustom09">
+            <option value="true">Active</option>
+            <option value="false">De-Active</option>
+          </select>
+        </c-col>
+        <c-col [md]="3">
           <label cLabel for="validationCustom02">Remarks<span class="text-danger">*</span></label>         
           <input [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.remarks" name="remarks"
             #remarks="ngModel" placeholder="Enter Remarks " cFormControl id="validationCustom02" required type="text"
@@ -341,8 +381,9 @@
           }
         </c-col>
       </form>
-    </mat-card>
   </c-card-body>
+</c-card>
+
   <c-card-footer>
     <c-col [xs]="12">
     <button cButton color="primary" shape="rounded-pill" type="submit" (click)="onSubmitAllForms()">
@@ -351,3 +392,7 @@
   </c-col>
 </c-card-footer>
 </c-card>
+<!-- <c-form-check>
+  <input cFormCheckInput formControlName="checkThree" id="checkThree" type="checkbox" />
+  <label cFormCheckLabel for="checkThree">Disabled checkbox</label>
+</c-form-check> -->

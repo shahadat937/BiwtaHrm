@@ -5,6 +5,7 @@ export class DeptReleaseInfo {
     transferApproveInfoId:number=0;
     approveByName:string= "";
     approveBy:number=0;
+    approveStatus:  boolean = true;
     empId:number=0;
     officeOrderNo: string = ""; 
     releaseDate:Date= new Date();

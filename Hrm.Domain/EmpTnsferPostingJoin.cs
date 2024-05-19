@@ -13,7 +13,11 @@ namespace Hrm.Domain
     public class EmpTnsferPostingJoin : BaseDomainEntity
     {
         public int EmpTnsferPostingJoinId { get; set; }
+
         public int? EmpId { get; set; }
+        public int? DepReleaseInfoId { get; set; }
+        public string? ApproveBy { get; set; }
+       public bool? ApproveStatus { get; set; }
         public DateTime? JoinDate { get; set; }
         public string? Remarks { get; set; }
         public int? MenuPosition { get; set; }

@@ -524,7 +524,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       return of({ success: false, message: 'Invalid form ID' });
     }
   }
-  
+
   clearCachedData(): void {
     this.employeeService.cachedData = [];
     this.postingOrderInfoService.cachedData = [];

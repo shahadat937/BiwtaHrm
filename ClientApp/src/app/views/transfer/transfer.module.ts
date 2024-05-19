@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { EmpModalComponent } from './emp-modal/emp-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ApproveEmpModalComponent } from './approve-emp-modal/approve-emp-modal.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     PostingComponent,
     ReleaseComponent,
     EmpModalComponent,
+    ApproveEmpModalComponent,
   ],
   imports: [
     MatCardModule,

@@ -1,3 +1,5 @@
+import { Employee } from './../../basic-setup/model/employees';
+
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,7 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostingComponent } from '../posting/posting.component';
-import { Employee, EmployeesService } from '../service/employees.service';
+import { EmployeesService } from '../service/employees.service';
 
 
 @Component({
@@ -73,7 +75,7 @@ export class EmpModalComponent implements OnInit, AfterViewInit{
   }
   selectEmployee(employee: Employee) {
     this.employeeSelected.emit(employee);
-    //console.log(employee)
+    this.bsModalRef.hide();
   }
   employees: Employee[] = [
     { empId: 1, employeeName: 'John', department: 'Doe', designation: 'john@example.com' },
@@ -92,13 +94,6 @@ export class EmpModalComponent implements OnInit, AfterViewInit{
     { empId: 14, employeeName: 'wamia', department: 'Doe', designation: 'john@example.com' },
     { empId: 15, employeeName: 'dina appu', department: 'Doe', designation: 'john@example.com' },
     { empId: 16, employeeName: 'hasan bhai', department: 'Doe', designation: 'john@example.com' },
-
     // Add more employees here if needed
   ];
 }
-// export interface Employee {
-//   employeePMSNo: number;
-//   employeeName: string;
-//   department: string;
-//   designation: string;
-// }

@@ -479,10 +479,6 @@ export const navItems: INavData[] = [
         url: '/bascisetup/section'
       },
       {
-        name: 'Designation',
-        url: '/bascisetup/designation'
-      },
-      {
         name: 'Grade Type',
         url: '/bascisetup/grade-type'
       },
@@ -677,6 +673,10 @@ export const navItems: INavData[] = [
       {
         name: 'Department',
         url: '/bascisetup/department'
+      },
+      {
+        name: 'Designation',
+        url: '/bascisetup/designation'
       },
       {
         name: 'Office Address',

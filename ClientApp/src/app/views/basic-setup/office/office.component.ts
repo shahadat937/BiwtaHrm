@@ -181,19 +181,38 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   
-  UserFormView(){
-    if(this.BtnText == " Add Office"){
-      this.BtnText = " Hide Form";
-      this.buttonIcon = "cilTrash";
-      this.HeaderText = "Add New Office";
-      this.visible = true;
-    }
-    else {
-      this.BtnText = " Add Office";
-      this.buttonIcon = "cilPencil";
-      this.HeaderText = "Office List";
-      this.visible = false;
-    }
+  UserFormView() {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('officeId');
+      if(id){
+        if (this.BtnText == " View Form") {
+          this.BtnText = " Hide Form";
+          this.buttonIcon = "cilTrash";
+          this.HeaderText = "Update Office";
+          this.visible = true;
+        }
+        else {
+          this.BtnText = " View Form";
+          this.buttonIcon = "cilPencil";
+          this.HeaderText = "Office List";
+          this.visible = false;
+        }
+      }
+      else {
+        if (this.BtnText == " Add Office") {
+          this.BtnText = " Hide Form";
+          this.buttonIcon = "cilTrash";
+          this.HeaderText = "Add New Office";
+          this.visible = true;
+        }
+        else {
+          this.BtnText = " Add Office";
+          this.buttonIcon = "cilPencil";
+          this.HeaderText = "Office List";
+          this.visible = false;
+        }
+      }
+    });
   }
   
   toggleCollapse(){

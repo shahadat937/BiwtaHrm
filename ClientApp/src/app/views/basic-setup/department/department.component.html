@@ -311,7 +311,7 @@
           <th mat-header-cell *matHeaderCellDef>Action</th>
           <td mat-cell *matCellDef="let element">
             <button
-              class="custom-button" 
+              class="custom-button" (click)="handleRouteParams()"
               [routerLink]="[
                 '/bascisetup/update-department',
                 element.departmentId

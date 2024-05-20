@@ -56,15 +56,15 @@ namespace Hrm.Application.Features.Designation.Handlers.Commands
             IQueryable<Hrm.Domain.Designation> Designations = _DesignationRepository.Where(x => x.DesignationName.ToLower() == DesignationName);
 
 
-            if (Designations.Any())
-            {
-                response.Success = false;
-                response.Message = $"Update Failed '{request.DesignationDto.DesignationName}' already exists.";
-                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+            //if (Designations.Any())
+            //{
+            //    response.Success = false;
+            //    response.Message = $"Update Failed '{request.DesignationDto.DesignationName}' already exists.";
+            //    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
-            }
-            else
-            {
+            //}
+            //else
+            //{
 
                 _mapper.Map(request.DesignationDto, Designation);
 
@@ -75,7 +75,7 @@ namespace Hrm.Application.Features.Designation.Handlers.Commands
                 response.Message = "Update Successful";
                 response.Id = Designation.DesignationId;
 
-            }
+            //}
             return response;
         }
     }

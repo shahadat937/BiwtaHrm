@@ -97,25 +97,43 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-
+  
   UserFormView() {
-    if (this.BtnText == " Add Department") {
-      this.BtnText = " Hide Form";
-      this.buttonIcon = "cilTrash";
-      this.headerText = "Add New Department";
-      this.visible = true;
-    }
-    else {
-      this.BtnText = " Add Department";
-      this.buttonIcon = "cilPencil";
-      this.headerText = "Department List";
-      this.visible = false;
-    }
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('departmentId');
+      if(id){
+        if (this.BtnText == " View Form") {
+          this.BtnText = " Hide Form";
+          this.buttonIcon = "cilTrash";
+          this.headerText = "Update Department";
+          this.visible = true;
+        }
+        else {
+          this.BtnText = " View Form";
+          this.buttonIcon = "cilPencil";
+          this.headerText = "Department List";
+          this.visible = false;
+        }
+      }
+      else {
+        if (this.BtnText == " Add Department") {
+          this.BtnText = " Hide Form";
+          this.buttonIcon = "cilTrash";
+          this.headerText = "Add New Department";
+          this.visible = true;
+        }
+        else {
+          this.BtnText = " Add Department";
+          this.buttonIcon = "cilPencil";
+          this.headerText = "Department List";
+          this.visible = false;
+        }
+      }
+    });
   }
 
   toggleCollapse() {
     this.handleRouteParams();
-    this.headerText = "Update User";
     this.visible = true;
   }
 

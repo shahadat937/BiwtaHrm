@@ -193,20 +193,6 @@ const routes: Routes = [
         },
       },
       {
-        path: 'designation',
-        component: DesignationComponent,
-        data: {
-          title: 'Designation',
-        },
-      },
-      {
-        path: 'update-designation/:designationId',
-        component: DesignationComponent,
-        data: {
-          title: 'Update Designation',
-        },
-      },
-      {
         path: 'promotionType',
         component: PromotionTypeComponent,
         data: {
@@ -816,10 +802,10 @@ const routes: Routes = [
         },
       },
       {
-        path: 'update-officeBranch/:branchId',
-        component: BranchComponent,
+        path: 'update-office/:officeId',
+        component: OfficeComponent,
         data: {
-          title: 'Update Branch',
+          title: 'Update Office',
         },
       },
       {
@@ -834,6 +820,20 @@ const routes: Routes = [
         component: DepartmentComponent,
         data: {
           title: 'Update Department',
+        },
+      },
+      {
+        path: 'designation',
+        component: DesignationComponent,
+        data: {
+          title: 'Designation',
+        },
+      },
+      {
+        path: 'update-designation/:designationId',
+        component: DesignationComponent,
+        data: {
+          title: 'Update Designation',
         },
       },
       {

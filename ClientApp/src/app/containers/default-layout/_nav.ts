@@ -463,10 +463,6 @@ export const navItems: INavData[] = [
         url: '/bascisetup/pool'
       },
       {
-        name: 'Department',
-        url: '/bascisetup/department'
-      },
-      {
         name: 'Sub Department',
         url: '/bascisetup/subDepartment'
       },
@@ -677,6 +673,10 @@ export const navItems: INavData[] = [
       {
         name: 'Office Name',
         url: '/bascisetup/office'
+      },
+      {
+        name: 'Department',
+        url: '/bascisetup/department'
       },
       {
         name: 'Office Address',

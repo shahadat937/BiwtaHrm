@@ -45,9 +45,9 @@ namespace Hrm.Application.Features.Department.Handlers.Commands
             else
             {
 
-                var DepartmentName = request.DepartmentDto.DepartmentName.ToLower();
+                var DepartmentName = request.DepartmentDto.DepartmentName.Trim().ToLower().Replace(" ", string.Empty);
 
-                IQueryable<Hrm.Domain.Department> Departmentes = _DepartmentRepository.Where(x => x.DepartmentName.ToLower() == DepartmentName);
+                IQueryable<Hrm.Domain.Department> Departmentes = _DepartmentRepository.Where(x => x.DepartmentName.Trim().ToLower().Replace(" ", string.Empty) == DepartmentName);
 
                 
 

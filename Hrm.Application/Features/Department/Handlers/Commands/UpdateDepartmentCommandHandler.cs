@@ -40,20 +40,20 @@ namespace Hrm.Application.Features.Department.Handlers.Commands
             if (validationResult.IsValid == false)
             {
                 response.Success = false;
-                response.Message = "Creation Failed";
+                response.Message = "Update Failed";
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var DepartmentName = request.DepartmentDto.DepartmentName.ToLower();
+            var DepartmentName = request.DepartmentDto.DepartmentName.Trim().ToLower().Replace(" ", string.Empty);
 
-            IQueryable<Hrm.Domain.Department> Departmentes = _DepartmentRepository.Where(x => x.DepartmentName.ToLower() == DepartmentName);
+            IQueryable<Hrm.Domain.Department> Departmentes = _DepartmentRepository.Where(x => x.DepartmentName.Trim().ToLower().Replace(" ", string.Empty) == DepartmentName && x.DepartmentId != request.DepartmentDto.DepartmentId);
 
 
 
             if (Departmentes.Any())
             {
                 response.Success = false;
-                response.Message = "Creation Failed Name already exists.";
+                response.Message = $"Update Failed '{request.DepartmentDto.DepartmentName}' Name already exists.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }

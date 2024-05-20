@@ -144,8 +144,6 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
   resetForm() {
-    console.log("reseted")
-    this.btnText = 'Submit';
     if (this.BranchForm?.form != null) {
       this.BranchForm.form.reset();
       this.BranchForm.form.patchValue({

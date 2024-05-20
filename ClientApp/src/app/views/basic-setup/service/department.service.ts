@@ -60,4 +60,9 @@ export class DepartmentService {
       this.baseUrl + '/Department/delete-department/' + id
     );
   }
+
+  
+  getDepartmentByOfficeId(id:number){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/Department/get-selectedDepartmentByOfficeId/' + id);
+  }
 }

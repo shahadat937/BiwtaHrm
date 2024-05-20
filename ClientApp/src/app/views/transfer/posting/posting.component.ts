@@ -1,3 +1,4 @@
+import { DesignationService } from './../../basic-setup/service/designation.service';
 import { Employee } from './../../basic-setup/model/employees';
 import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import {FormBuilder, NgForm } from '@angular/forms';
@@ -26,7 +27,7 @@ import { BranchService } from '../../basic-setup/service/branch.service';
 import { SubBranchService } from '../../basic-setup/service/sub-branch.service';
 import { EmpTnsferPostingJoin } from './../../basic-setup/model/emp-tnsfer-posting-join';
 import { EmpTnsferPostingJoinService } from './../../basic-setup/service/emp-tnsfer-posting-join.service';
-import { ApproveEmpModalComponent } from '../approve-emp-modal/approve-emp-modal.component';
+import { OfficeService } from '../../basic-setup/service/office.service';
 
 @Component({
   selector: 'app-posting',
@@ -45,6 +46,8 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   empTnsferPostingJoin: EmpTnsferPostingJoin[] = [];
   employees: any[] = [];
   select: any[] = [];
+  offices: SelectedModel[] = [];
+  designations: SelectedModel[] = [];
   userBtnText: string | undefined;
   userHeaderText: string | undefined;
   buttonIcon: string = '';
@@ -67,10 +70,10 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort)
   matSort!: MatSort;
   @Input() employeeSelected = new EventEmitter<Employee>();
-  // @Input()employeeApprove = new EventEmitter<Employee>();
-  // @Input()ApprovedeptReleaseInfo = new EventEmitter<Employee>();
 
   constructor(
+    public designationService: DesignationService,
+    public officeService : OfficeService,
     public bsModalRef: BsModalRef,
     public postingOrderInfoService: PostingOrderInfoService,
     private branchServices: BranchService,
@@ -121,6 +124,9 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.SelectSubBranchs();
     this.handleRouteParams();
     this.buttonIcon = "cilPencil";
+    this.loadOffice();
+    this.loadDepartment();
+    this.loadDesignation();
   }
 
   GetEmployees(): void {
@@ -131,11 +137,10 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   
-
   SelectDepartments() {
     this.departmentService.getSelectDepartments().subscribe((data) => {
       this.departments = data;
-      //console.log(data)
+      
     });
   }
   SelectsubDepartments() {
@@ -164,9 +169,9 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.userBtnText = " Hide Form";
         this.buttonIcon = "cilTrash";
         this.postingOrderInfoService.find(+id).subscribe((res) => {
-          this.onSubDepartmentNamesChangeByDepartmentId(res.departmentId);
-          this.onSubBranchNamesChangeByOfficeBranchId(res.officeBranchId);
-
+          this.onOfficeSelect(res.officeId)
+          this.onDepartmentSelect(res.departmentId)
+          this.onDesignationSelect(res.designationId)
           this.PostingAndTrnsForm?.form.patchValue(res);
         });
       } else {
@@ -259,7 +264,8 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       departmentId: 0,
       subBranchId: 0,
       subDepartmentId: 0,
-      officeBranchId: 0,
+      designationId:null,
+      officeId: null,
       officeOrderNo: "",
       officeOrderDate: new Date(),
       orderOfficeBy: "",
@@ -279,7 +285,8 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
         departmentId: 0,
         subBranchId: 0,
         subDepartmentId: 0,
-        officeBranchId: 0,
+        designationId:null,
+      officeId: null,
         officeOrderNo: "",
         officeOrderDate: new Date(),
         orderOfficeBy: "",
@@ -299,15 +306,44 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     });
   }
-
-  onSubDepartmentNamesChangeByDepartmentId(departmentId: number) {
-    this.subscription = this.subDepartmentService.getSubDepartmentByDepartmentId(departmentId).subscribe((data) => {
-      this.subDepartments = data;
+  loadOffice() { 
+    this.subscription=this.officeService.selectGetoffice().subscribe((data) => { 
+      this.offices = data;
     });
   }
 
-  onSubBranchNamesChangeByOfficeBranchId(officeBranchId: number) {
-    this.subscription = this.subBranchService.getSubBranchByOfficeBranchId(officeBranchId).subscribe((data) => {
+  onOfficeSelect(officeId : number){
+    this.departmentService.getDepartmentByOfficeId(+officeId).subscribe((res) => {
+      this.departments = res;
+
+    });
+  }
+  loadDepartment() { 
+    this.subscription=this.departmentService.getSelectDepartments().subscribe((data) => { 
+      this.departments = data;
+    });
+  }
+
+  onDepartmentSelect(departmentId : number){
+    this.designationService.getDesignationByDepartmentId(+departmentId).subscribe((res) => {
+      this.designations = res;
+
+    });
+  }
+
+  loadDesignation() { 
+    this.subscription=this.designationService.selectDesignation().subscribe((data) => { 
+      this.designations = data;
+    });
+  }
+  onDesignationSelect(designationId:number){
+    this.designationService.getDesignationByDepartmentId(+designationId).subscribe((res)=>{
+      this.designations
+    })
+  }
+
+  onSubBranchNamesChangeByOfficeBranchId(branchId: number) {
+    this.subscription = this.subBranchService.getSubBranchByOfficeBranchId(branchId).subscribe((data) => {
       this.subBranchs = data;
     });
   }
@@ -531,10 +567,6 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.transferApproveInfoService.cachedData = [];
     this.deptReleaseInfoService.cachedData = [];
     this.empTnsferPostingJoinService.cachedData = [];
-  }
-  
-  handleResponse(response: any): void {
-    // This method is no longer needed, handling responses directly in the observable chain
   }
   
   delete(element: any) {

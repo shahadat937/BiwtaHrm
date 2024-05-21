@@ -667,15 +667,15 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
-        name: 'Office Name',
+        name: 'অফিস',
         url: '/bascisetup/office'
       },
       {
-        name: 'Department',
+        name: 'শাখা',
         url: '/bascisetup/department'
       },
       {
-        name: 'Designation',
+        name: 'পদবি',
         url: '/bascisetup/designation'
       },
       {

@@ -24,5 +24,10 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
 
+        public Office Office { get; set; }
+        public Department UpperDepartment { get; set; }
+        public ICollection<Department> SubDepartments { get; set; }
+        public ICollection<Designation> Designations { get; set; }
+
     }
 }

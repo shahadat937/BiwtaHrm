@@ -75,7 +75,7 @@ namespace Hrm.Api.Controllers
 
             var result = offices.Select(o => new OrganogramOfficeNameDto
             {
-                OfficeName = o.OfficeNameBangla,
+                Name = o.OfficeNameBangla,
                 Departments = o.Departments
                     .Where(d => d.UpperDepartmentId == null)
                     .Select(d => MapDepartmentName(d))
@@ -89,10 +89,10 @@ namespace Hrm.Api.Controllers
         {
             var departmentNameDto = new OrganogramDepartmentNameDto
             {
-                DepartmentName = department.DepartmentNameBangla,
+                Name = department.DepartmentNameBangla,
                 Designations = department.Designations.Select(de => new OrganogramDesignationNameDto
                 {
-                    DesignationName = de.DesignationNameBangla
+                    Name = de.DesignationNameBangla
                 }).ToList(),
                 SubDepartments = department.SubDepartments.Select(sd => MapDepartmentName(sd)).ToList()
             };

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.DTOs.Organograms
+namespace Hrm.Application.Features.Organogram.Handlers.Queries
 {
-    public class OrganogramDesignationNameDto
+    public class GetOrganogramRequestHandler
     {
-        public string Name { get; set; }
     }
 }

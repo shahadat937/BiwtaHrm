@@ -13,5 +13,8 @@ namespace Hrm.Domain
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+
+        public Office Office { get; set; }
+        public Department Department { get; set; }
     }
 }

@@ -12,12 +12,12 @@ export class OrganogramService {
   baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
-  getOrganogramNamesOnly(): Observable<any[]> {
+  getOrganogramNamesOnly(): Observable<OrganogramOfficeNameDto[]> {
     if (this.cachedData.length > 0) {
       return of(this.cachedData);
     } else {
       return this.http
-        .get<any[]>(this.baseUrl + '/organogram/get-organogramNamesOnly')
+        .get<OrganogramOfficeNameDto[]>(this.baseUrl + '/organogram/get-organogramNamesOnly')
         .pipe(
           map((data) => {
             this.cachedData = data; 
@@ -26,4 +26,19 @@ export class OrganogramService {
         );
     }
   }
+}
+
+export interface OrganogramOfficeNameDto {
+  name: string;
+  departments: OrganogramDepartmentNameDto[];
+}
+
+export interface OrganogramDepartmentNameDto {
+  name: string;
+  designations: OrganogramDesignationNameDto[];
+  subDepartments: OrganogramDepartmentNameDto[];
+}
+
+export interface OrganogramDesignationNameDto {
+  name: string;
 }

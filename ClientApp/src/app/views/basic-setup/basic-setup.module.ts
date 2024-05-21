@@ -102,6 +102,7 @@ import { HolidayTypeComponent } from './holiday-type/holiday-type.component';
 import { HolidaytypeService } from './service/holidaytype.service';
 import { OrganogramService } from './service/organogram.service';
 import { OrganogramComponent } from './organogram/organogram.component';
+import { MatTreeModule } from '@angular/material/tree';
 
 
 @NgModule({
@@ -182,6 +183,7 @@ import { OrganogramComponent } from './organogram/organogram.component';
     ProgressModule,
     SpinnerModule,
     CollapseDirective,
+    MatTreeModule,
   ],
   providers: [
     SectionService,

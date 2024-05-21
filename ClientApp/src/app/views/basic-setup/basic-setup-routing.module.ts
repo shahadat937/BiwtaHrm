@@ -57,6 +57,7 @@ import { SectionComponent } from './section/section.component';
 import { SubBranchComponent } from './sub-branch/sub-branch.component';
 import { YearSetupComponent } from './year-setup/year-setup.component';
 import { HolidayTypeComponent } from './holiday-type/holiday-type.component';
+import { OrganogramComponent } from './organogram/organogram.component';
 
 
 const routes: Routes = [
@@ -834,6 +835,14 @@ const routes: Routes = [
         component: DesignationComponent,
         data: {
           title: 'Update Designation',
+        },
+      },
+      
+      {
+        path: 'organogram',
+        component: OrganogramComponent,
+        data: {
+          title: 'Organogram',
         },
       },
       {

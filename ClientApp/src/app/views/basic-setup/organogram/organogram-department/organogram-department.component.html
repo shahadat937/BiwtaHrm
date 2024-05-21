@@ -1,0 +1,12 @@
+<li>
+    {{ department.name }}
+    <ul *ngIf="department.designations.length">
+      <li *ngFor="let designation of department.designations">
+        {{ designation.name }}
+      </li>
+    </ul>
+    <ul *ngIf="department.subDepartments.length">
+      <app-organogram-department *ngFor="let subDept of department.subDepartments" [department]="subDept"></app-organogram-department>
+    </ul>
+  </li>
+  

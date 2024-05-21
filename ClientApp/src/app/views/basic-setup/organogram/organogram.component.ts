@@ -43,14 +43,6 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     });
   }
 
-  toggle(event: Event): void {
-    const element = event.target as HTMLElement;
-    const nextUl = element.nextElementSibling as HTMLElement;
-
-    if (nextUl) {
-      nextUl.style.display = nextUl.style.display === 'none' ? 'block' : 'none';
-    }
-  }
   
 }
 

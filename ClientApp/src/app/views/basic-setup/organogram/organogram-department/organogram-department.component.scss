@@ -1,0 +1,27 @@
+ul {
+    list-style-type: none;
+    /* Remove bullets */
+    padding-left: 20px;
+    /* Adjust the padding if needed */
+}
+
+.toggle-icon {
+    font-weight: bold;
+    border: 1px solid black;
+    padding: 0 5px;
+}
+
+li {
+    margin-bottom: 5px;
+    list-style-type: none;
+    /* Ensure nested lists also don't have bullets */
+}
+
+.department-text {
+    color: brown;
+    font-weight: bold;
+}
+
+.designation-text {
+    color: green;
+}

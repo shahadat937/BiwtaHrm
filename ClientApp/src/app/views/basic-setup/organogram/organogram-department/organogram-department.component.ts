@@ -9,4 +9,9 @@ import { OrganogramDepartmentNameDto } from '../../service/organogram.service';
 })
 export class OrganogramDepartmentComponent {
   @Input() department!: OrganogramDepartmentNameDto;
+  isExpanded: boolean = false;
+
+  toggleExpand(): void {
+    this.isExpanded = !this.isExpanded;
+  }
 }

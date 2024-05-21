@@ -4,14 +4,15 @@
   </c-card-header>
   <c-card-body>
     <div class="tree">
-      <div *ngFor="let office of offices">
-        <h2>{{ office.name }}</h2>
-        <ul>
+      <div class="office-view" *ngFor="let office of offices">
+        <div (click)="toggleOfficeExpand(office.name)" class="office-header">
+          <span class="toggle-icon">{{ isOfficeExpanded(office.name) ? '-' : '+' }}</span>
+          <span class="office-text" >&nbsp;{{ office.name }}</span>
+        </div>
+        <ul *ngIf="isOfficeExpanded(office.name)">
           <app-organogram-department *ngFor="let department of office.departments" [department]="department"></app-organogram-department>
         </ul>
       </div>
-      
-       
     </div>
   </c-card-body>
 </c-card>

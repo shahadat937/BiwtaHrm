@@ -16,6 +16,7 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   subscription: Subscription = new Subscription();
   organograms:any[] = [];
   offices: OrganogramOfficeNameDto[] = [];
+  expandedOffices: { [key: string]: boolean } = {};
 
   constructor(
     public organogramService: OrganogramService,
@@ -42,7 +43,14 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
       console.log(this.offices)
     });
   }
+  
+  toggleOfficeExpand(officeName: string): void {
+    this.expandedOffices[officeName] = !this.expandedOffices[officeName];
+  }
 
+  isOfficeExpanded(officeName: string): boolean {
+    return this.expandedOffices[officeName];
+  }
   
 }
 

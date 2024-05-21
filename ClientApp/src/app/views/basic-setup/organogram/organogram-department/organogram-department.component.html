@@ -1,12 +1,23 @@
 <li>
-    {{ department.name }}
-    <ul *ngIf="department.designations.length">
-      <li *ngFor="let designation of department.designations">
-        {{ designation.name }}
+    <span>Department</span><br>
+    <div (click)="toggleExpand()" class="department-header">
+        &nbsp;&nbsp;<span class="toggle-icon">{{ isExpanded ? '-' : '+' }}</span>   
+      <span class="department-text">&nbsp; {{ department.name }}</span>
+    </div>
+    <ul *ngIf="isExpanded">
+      <li *ngIf="department.designations.length">
+        <span>Designations</span><br>
+        <ul>
+          <li *ngFor="let designation of department.designations" class="designation-text">
+            {{ designation.name }}
+          </li>
+        </ul>
       </li>
-    </ul>
-    <ul *ngIf="department.subDepartments.length">
-      <app-organogram-department *ngFor="let subDept of department.subDepartments" [department]="subDept"></app-organogram-department>
+      <div *ngIf="department.subDepartments.length">
+        <li>
+          <app-organogram-department *ngFor="let subDept of department.subDepartments" [department]="subDept"></app-organogram-department>
+        </li>
+      </div>
     </ul>
   </li>
   

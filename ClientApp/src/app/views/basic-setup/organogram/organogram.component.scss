@@ -1,0 +1,70 @@
+.tree ul {
+    list-style-type: none;
+    position: relative;
+    padding-left: 1em;
+    transition: all 0.5s;
+  }
+  
+  .tree ul ul {
+    margin-left: 1em;
+    padding-left: 1em;
+    border-left: 1px dashed #ccc;
+  }
+  
+  .tree li {
+    margin: 0.5em 0;
+    padding-left: 1em;
+    line-height: 2em;
+    position: relative;
+  }
+  
+  .tree li:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -0.5em;
+    border-left: 1px solid #ccc;
+    bottom: 50%;
+    height: 50%;
+  }
+  
+  .tree li:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -0.5em;
+    border-top: 1px solid #ccc;
+    width: 1em;
+  }
+  
+  .tree li:last-child:before {
+    height: 100%;
+  }
+  
+  .tree li:last-child:after {
+    width: 0.5em;
+  }
+  
+  .tree span {
+    cursor: pointer;
+  }
+  
+  .tree span.office {
+    font-weight: bold;
+    color: #4CAF50;
+  }
+  
+  .tree span.department {
+    font-weight: bold;
+    color: #2196F3;
+  }
+  
+  .tree span.sub-department {
+    font-weight: bold;
+    color: #FF5722;
+  }
+  
+  .tree span.designation {
+    color: #9C27B0;
+  }
+  

@@ -42,22 +42,22 @@ namespace Hrm.Application.Features.OfficeBranch.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var OfficeBranch = await _unitOfWork.Repository<Hrm.Domain.OfficeBranch>().Get(request.BranchDto.OfficeBranchId);
+            var OfficeBranch = await _unitOfWork.Repository<Hrm.Domain.OfficeBranch>().Get(request.BranchDto.BranchId);
 
             if (OfficeBranch is null)
             {
-                throw new NotFoundException(nameof(OfficeBranch), request.BranchDto.OfficeBranchId);
+                throw new NotFoundException(nameof(OfficeBranch), request.BranchDto.BranchId);
             }
 
-            var OfficeBranchName = request.BranchDto.OfficeBranchName.ToLower();
+            var OfficeBranchName = request.BranchDto.BranchName.ToLower();
 
-            IQueryable<Hrm.Domain.OfficeBranch> OfficeBranchs = _OfficeBranchRepository.Where(x => x.OfficeBranchName.ToLower() == OfficeBranchName);
+            IQueryable<Hrm.Domain.OfficeBranch> OfficeBranchs = _OfficeBranchRepository.Where(x => x.BranchName.ToLower() == OfficeBranchName && x.OfficeId == request.BranchDto.OfficeId && x.BranchId != request.BranchDto.BranchId);
 
 
             if (OfficeBranchs.Any())
             {
                 response.Success = false;
-                response.Message = $"Update Failed '{request.BranchDto.OfficeBranchName}' already exists.";
+                response.Message = $"Update Failed '{request.BranchDto.BranchName}' already exists in this Office.";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
             }
@@ -71,7 +71,7 @@ namespace Hrm.Application.Features.OfficeBranch.Handlers.Commands
 
                 response.Success = true;
                 response.Message = "Update Successful";
-                response.Id = OfficeBranch.OfficeBranchId;
+                response.Id = OfficeBranch.BranchId;
 
             }
             return response;

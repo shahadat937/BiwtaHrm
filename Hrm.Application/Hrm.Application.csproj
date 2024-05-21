@@ -32,4 +32,9 @@
 
 		<ProjectReference Include="..\Hrm.Shared\Hrm.Shared.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Features\Organogram\Handlers\Commands\" />
+	  <Folder Include="Features\Organogram\Requests\Commands\" />
+	</ItemGroup>
 </Project>

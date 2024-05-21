@@ -45,4 +45,8 @@ export class BranchService {
   delete(id: number) {
     return this.http.delete(this.baseUrl + '/officeBranch/delete-officeBranch/' + id);
   }
+  getBranchByOfficeId(id:number){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/officeBranch/get-selectedBranchByOfficeId/' + id);
+  }
+  
 }

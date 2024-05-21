@@ -8,6 +8,7 @@ namespace Hrm.Application
         private const string HRMRoutePrefixBase = ApiRoutePrefix.RoutePrefixBase + "hrm/";
 
         public const string Account = HRMRoutePrefixBase + "account";
+        public const string Organogram = HRMRoutePrefixBase + "organogram";
 
         public const string AspNetUsers = HRMRoutePrefixBase + "users";
 

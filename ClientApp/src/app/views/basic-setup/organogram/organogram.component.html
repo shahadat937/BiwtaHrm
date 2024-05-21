@@ -1,0 +1,33 @@
+<c-card class="mt-3">
+    <c-card-header class="d-flex justify-content-between">
+        <div>Organogram</div>
+    </c-card-header>
+    <c-card-body>
+        <div class="tree">
+            <ul>
+              <li *ngFor="let office of offices">
+                <span class="office">{{ office.name }}</span>
+                <ul>
+                  <li *ngFor="let department of office.departments">
+                    <span class="department">{{ department.name }}</span>
+                    <ul>
+                      <li *ngFor="let designation of department.designations">
+                        <span class="designation">{{ designation.name }}</span>
+                      </li>
+                      <li *ngFor="let subDept of department.subDepartments">
+                        <span class="sub-department">{{ subDept.name }}</span>
+                        <ul>
+                          <li *ngFor="let subDesignation of subDept.designations">
+                            <span class="designation">{{ subDesignation.name }}</span>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          
+    </c-card-body>
+</c-card>

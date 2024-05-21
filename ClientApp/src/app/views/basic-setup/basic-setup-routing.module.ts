@@ -57,6 +57,7 @@ import { SectionComponent } from './section/section.component';
 import { SubBranchComponent } from './sub-branch/sub-branch.component';
 import { YearSetupComponent } from './year-setup/year-setup.component';
 import { HolidayTypeComponent } from './holiday-type/holiday-type.component';
+import { OrganogramComponent } from './organogram/organogram.component';
 
 
 const routes: Routes = [
@@ -190,48 +191,6 @@ const routes: Routes = [
         component: ShiftComponent,
         data: {
           title: 'Update Shift',
-        },
-      },
-      {
-        path: 'officeBranch',
-        component: BranchComponent,
-        data: {
-          title: 'Branch',
-        },
-      },
-      {
-        path: 'update-officeBranch/:officeBranchId',
-        component: BranchComponent,
-        data: {
-          title: 'Update Branch',
-        },
-      },
-      {
-        path: 'department',
-        component: DepartmentComponent,
-        data: {
-          title: 'Department',
-        },
-      },
-      {
-        path: 'update-department/:departmentId',
-        component: DepartmentComponent,
-        data: {
-          title: 'Update Department',
-        },
-      },
-      {
-        path: 'designation',
-        component: DesignationComponent,
-        data: {
-          title: 'Designation',
-        },
-      },
-      {
-        path: 'update-designation/:designationId',
-        component: DesignationComponent,
-        data: {
-          title: 'Update Designation',
         },
       },
       {
@@ -429,6 +388,20 @@ const routes: Routes = [
         component: SectionComponent,
         data: {
           title: 'Update Section',
+        },
+      },
+      {
+        path: 'officeBranch',
+        component: BranchComponent,
+        data: {
+          title: 'Branch',
+        },
+      },
+      {
+        path: 'update-officeBranch/:branchId',
+        component: BranchComponent,
+        data: {
+          title: 'Update Branch',
         },
       },
       {
@@ -834,6 +807,42 @@ const routes: Routes = [
         component: OfficeComponent,
         data: {
           title: 'Update Office',
+        },
+      },
+      {
+        path: 'department',
+        component: DepartmentComponent,
+        data: {
+          title: 'Department',
+        },
+      },
+      {
+        path: 'update-department/:departmentId',
+        component: DepartmentComponent,
+        data: {
+          title: 'Update Department',
+        },
+      },
+      {
+        path: 'designation',
+        component: DesignationComponent,
+        data: {
+          title: 'Designation',
+        },
+      },
+      {
+        path: 'update-designation/:designationId',
+        component: DesignationComponent,
+        data: {
+          title: 'Update Designation',
+        },
+      },
+      
+      {
+        path: 'organogram',
+        component: OrganogramComponent,
+        data: {
+          title: 'Organogram',
         },
       },
       {

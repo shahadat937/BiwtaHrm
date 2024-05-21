@@ -7,6 +7,7 @@ using Hrm.Application.Features.Branch.Requests.Queries;
 using Hrm.Application.Features.District.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
+using Hrm.Application.Features.OfficeBranch.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
@@ -90,6 +91,17 @@ namespace Hrm.Api.Controllers
             var branch = await _mediator.Send(new GetSelectedBranchRequest { });
             return Ok(branch);
         }
+
+
+        [HttpGet]
+        [Route("get-selectedBranchByOfficeId/{id}")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedBranchByOfficeId(int id)
+        {
+            var branch = await _mediator.Send(new GetBranchByOfficeIdRequest { OfficeId = id });
+            return Ok(branch);
+        }
+
+
 
     }
 }

@@ -348,12 +348,8 @@ export const navItems: INavData[] = [
         url: '/transfer/release'
       },
       {
-        name: 'Deparment Release',
+        name: 'Transfer posting History',
         url: '/transfer/release'
-      },
-      {
-        name: 'EmpModal',
-        url: '/transfer/EmpModal'
       }
     ]
   },
@@ -467,10 +463,6 @@ export const navItems: INavData[] = [
         url: '/bascisetup/pool'
       },
       {
-        name: 'Department',
-        url: '/bascisetup/department'
-      },
-      {
         name: 'Sub Department',
         url: '/bascisetup/subDepartment'
       },
@@ -485,10 +477,6 @@ export const navItems: INavData[] = [
       {
         name: 'Section',
         url: '/bascisetup/section'
-      },
-      {
-        name: 'Designation',
-        url: '/bascisetup/designation'
       },
       {
         name: 'Grade Type',
@@ -651,10 +639,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Account Type',
-
         url: '/bascisetup/bankAccountType'
-
-
       },
 
 
@@ -682,8 +667,20 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
-        name: 'Office Name',
+        name: 'অফিস',
         url: '/bascisetup/office'
+      },
+      {
+        name: 'শাখা',
+        url: '/bascisetup/department'
+      },
+      {
+        name: 'পদবি',
+        url: '/bascisetup/designation'
+      },
+      {
+        name: 'অর্গানোগ্রাম',
+        url: '/bascisetup/organogram'
       },
       {
         name: 'Office Address',

@@ -51,7 +51,7 @@ namespace Hrm.Application.Features.SubBranch.Handlers.Queries
             if (BranchId.HasValue)
             {
                 var Branch = await _BranchRepository.Get(BranchId.Value);
-                return Branch?.OfficeBranchName;
+                return Branch?.BranchName;
             }
             return null;
         }

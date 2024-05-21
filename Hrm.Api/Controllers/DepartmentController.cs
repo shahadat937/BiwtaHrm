@@ -7,6 +7,7 @@ using Hrm.Application.Features.Department.Requests.Queries;
 using Hrm.Application.Features.Department.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
+using Hrm.Application.Features.OfficeBranch.Requests.Queries;
 using Hrm.Application.Responses;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -82,6 +83,14 @@ namespace Hrm.Api.Controllers
         {
             var department = await _mediator.Send(new GetSelectedDepartmentRequest { });
             return Ok(department);
+        }
+
+        [HttpGet]
+        [Route("get-selectedDepartmentByOfficeId/{id}")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedDepartmentByOfficeId(int id)
+        {
+            var branch = await _mediator.Send(new GetDepartmentByOfficeIdRequest { OfficeId = id });
+            return Ok(branch);
         }
 
     }

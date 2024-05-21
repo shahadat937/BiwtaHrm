@@ -19,7 +19,43 @@ namespace Hrm.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            //modelBuilder.Entity<Office>(entity =>
+            //{
+            //    entity.HasKey(e => e.OfficeId)
+            //    .HasName("[[PK_Office]]");
+            //});
+            //modelBuilder.Entity<Department>(entity =>
+            //{
+            //    entity.HasKey(e => e.DepartmentId)
+            //    .HasName("[[PK_Department]]");
+            //});
+            //modelBuilder.Entity<Designation>(entity =>
+            //{
+            //    entity.HasKey(e => e.DesignationId)
+            //    .HasName("[[PK_Designation]]");
+            //});
 
+            modelBuilder.Entity<Office>()
+            .HasMany(o => o.Departments)
+            .WithOne(d => d.Office)
+            .HasForeignKey(d => d.OfficeId);
+
+            modelBuilder.Entity<Department>()
+                .HasOne(d => d.UpperDepartment)
+                .WithMany(d => d.SubDepartments)
+                .HasForeignKey(d => d.UpperDepartmentId);
+
+            modelBuilder.Entity<Department>()
+                .HasMany(d => d.Designations)
+                .WithOne(d => d.Department)
+                .HasForeignKey(d => d.DepartmentId);
+
+            modelBuilder.Entity<OfficeBranch>(entity => {
+
+                entity.HasKey(e => e.BranchId)
+                    .HasName("PK_OfficeBranch");
+
+            });
             modelBuilder.Entity<BloodGroup>(entity => {
 
                 entity.HasKey(e => e.BloodGroupId)
@@ -94,21 +130,11 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.ResultId)
                 .HasName("PK__Result__97690208E73A8F36");
             });
-            modelBuilder.Entity<OfficeBranch>(entity =>
-            {
-                entity.HasKey(e => e.OfficeBranchId)
-                .HasName("[PK__Branch__A1682FC588459E1D]");
-            });
-            modelBuilder.Entity<Department>(entity =>
-            {
-                entity.HasKey(e => e.DepartmentId)
-                .HasName("[[PK__Departme__B2079BED028213CD]]");
-            });
-            modelBuilder.Entity<Designation>(entity =>
-            {
-                entity.HasKey(e => e.DesignationId)
-                .HasName("[[PK__Designat__BABD60DE3D706100]]");
-            });
+            //modelBuilder.Entity<OfficeBranch>(entity =>
+            //{
+            //    entity.HasKey(e => e.OfficeBranchId)
+            //    .HasName("[PK__Branch__A1682FC588459E1D]");
+            //});
             modelBuilder.Entity<Shift>(entity =>
             {
                 entity.HasKey(e => e.ShiftId)
@@ -176,12 +202,6 @@ namespace Hrm.Persistence
             {
                 entity.HasKey(e => e.TrainingNameId)
                 .HasName("[[PK_TrainingNameId]]");
-            });
-
-            modelBuilder.Entity<Office>(entity =>
-            {
-                entity.HasKey(e => e.OfficeId)
-                .HasName("[[PK_Office]]");
             });
 
             modelBuilder.Entity<OfficeAddress>(entity =>
@@ -296,6 +316,7 @@ namespace Hrm.Persistence
                 .HasName("[EmpTnsferPostingJoinId]");
             });
 
+            base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
 

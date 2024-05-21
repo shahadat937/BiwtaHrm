@@ -16,6 +16,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { OfficeService } from '../service/office.service';
 
 @Component({
   selector: 'app-department',
@@ -26,11 +28,17 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   position = 'top-end';
   visible = false;
   percentage = 0;
+  BtnText: string | undefined;
   btnText: string | undefined;
   headerText: string | undefined;
+  buttonIcon: string | undefined;
+  offices: SelectedModel[] = [];
+  departments: SelectedModel[] = [];
+  upperDepartmentView = false;
+  loading = false;
   @ViewChild('DepartmentForm', { static: true }) DepartmentForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'departmentName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'departmentName', 'departmentNameBangla','isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -42,25 +50,38 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public officeService : OfficeService,
   ) {
+  }
+  ngOnInit(): void {
+    this.getALlDepartments();
+    this.handleRouteParams();
+    this.loadOffice();
+  }
+
+  handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('departmentId');
       if (id) {
+        this.visible = true;
         this.btnText = 'Update';
-        this.headerText = 'Update Department';
+        this.headerText = "Update Department";
+        this.BtnText = " Hide Form";
+        this.buttonIcon = "cilTrash";
         this.departmentService.getById(+id).subscribe((res) => {
+          this.onOfficeSelect(res.officeId);
           this.DepartmentForm?.form.patchValue(res);
         });
       } else {
         this.resetForm();
-        this.headerText = 'Add Department';
         this.btnText = 'Submit';
+        this.visible = false;
+        this.headerText = "Department List"
+        this.buttonIcon = "cilPencil";
+        this.BtnText = " Add Department";
       }
     });
-  }
-  ngOnInit(): void {
-    this.getALlDepartments();
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -76,38 +97,86 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  toggleToast() {
-    this.visible = !this.visible;
+  
+  UserFormView() {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('departmentId');
+      if(id){
+        if (this.BtnText == " View Form") {
+          this.BtnText = " Hide Form";
+          this.buttonIcon = "cilTrash";
+          this.headerText = "Update Department";
+          this.visible = true;
+        }
+        else {
+          this.BtnText = " View Form";
+          this.buttonIcon = "cilPencil";
+          this.headerText = "Department List";
+          this.visible = false;
+        }
+      }
+      else {
+        if (this.BtnText == " Add Department") {
+          this.BtnText = " Hide Form";
+          this.buttonIcon = "cilTrash";
+          this.headerText = "Add New Department";
+          this.visible = true;
+        }
+        else {
+          this.BtnText = " Add Department";
+          this.buttonIcon = "cilPencil";
+          this.headerText = "Department List";
+          this.visible = false;
+        }
+      }
+    });
   }
 
-  onVisibleChange($event: boolean) {
-    this.visible = $event;
-    this.percentage = !this.visible ? 0 : this.percentage;
+  toggleCollapse() {
+    this.handleRouteParams();
+    this.visible = true;
   }
 
-  onTimerChange($event: number) {
-    this.percentage = $event * 25;
+  cancelUpdate() {
+    this.resetForm();
+    this.router.navigate(['/bascisetup/department']);
   }
+
   initaialUpazila(form?: NgForm) {
     if (form != null) form.resetForm();
     this.departmentService.departments = {
       departmentId: 0,
-      departmentName: '',
-      //districtName:"",
+      departmentName: "",
+      departmentNameBangla: "",
+      departmentCode: "",
+      officeId: null,
+      upperDepartmentId: null,
+      phone: "",
+      mobile: "",
+      fax: "",
+      email: "",
+      sequence: null,
+      remark: "",
       menuPosition: 0,
       isActive: true,
     };
   }
   resetForm() {
-    // console.log(this.DepartmentForm?.form.value);
-    this.btnText = 'Submit';
     if (this.DepartmentForm?.form != null) {
-      // console.log(this.DepartmentForm?.form);
       this.DepartmentForm.form.reset();
       this.DepartmentForm.form.patchValue({
         departmentId: 0,
-        departmentName: '',
-        //  districtName:"",
+        departmentName: "",
+        departmentNameBangla: "",
+        departmentCode: "",
+        officeId: null,
+        upperDepartmentId: null,
+        phone: "",
+        mobile: "",
+        fax: "",
+        email: "",
+        sequence: null,
+        remark: "",
         menuPosition: 0,
         isActive: true,
       });
@@ -121,52 +190,27 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     });
   }
+  
+  loadOffice() { 
+    this.subscription=this.officeService.selectGetoffice().subscribe((data) => { 
+      this.offices = data;
+    });
+  }
 
-  // onSubmit(form: NgForm) {
-  //   const id = this.DepartmentForm.form.get('departmentId')?.value;
-  //   if (id) {
-  //     this.departmentService.update(+id, this.DepartmentForm.value).subscribe(
-  //       (response: any) => {
-  //         //console.log(response);
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', 'Update', {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlDepartments();
-  //           this.resetForm();
-  //           this.router.navigate(['/bascisetup/department']);
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   } else {
-  //     this.subscription = this.departmentService.submit(form?.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlDepartments();
-  //           this.resetForm();
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   }
-  // }
+  onOfficeSelect(officeId : number){
+    this.departmentService.getDepartmentByOfficeId(+officeId).subscribe((res) => {
+      this.departments = res;
+      if(res.length>0){
+        this.upperDepartmentView = true;
+      }
+      else{
+        this.upperDepartmentView = false;
+      }
+    });
+  }
+
   onSubmit(form: NgForm): void {
+    this.loading = true;
     this.departmentService.cachedData = [];
     const id = form.value.departmentId;
     const action$ = id
@@ -181,14 +225,14 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.getALlDepartments();
         this.resetForm();
-        if (!id) {
-          this.router.navigate(['/bascisetup/department']);
-        }
+        this.router.navigate(['/bascisetup/department']);
+        this.loading = true;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
+      this.loading = true;
     });
   }
   delete(element: any) {
@@ -196,7 +240,6 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          console.log('department id ' + element.departmentId);
           this.departmentService.delete(element.departmentId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -209,8 +252,6 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
               });
             },
             (err) => {
-              // console.log(err);
-
               this.toastr.error('Somethig Wrong ! ', ` `, {
                 positionClass: 'toast-top-right',
               });

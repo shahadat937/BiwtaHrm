@@ -41,15 +41,15 @@ namespace Hrm.Application.Features.Designation.Handlers.Commands
                 //  IQueryable<Hrm.Domain.Designation> Designations = _DesignationRepository.Where(x => x.DesignationName.ToLower().Replace(" ", string.Empty) == DesignationName);
 
 
-                if (DesignationNameExists(request))
-                {
-                    response.Success = false;
-                    response.Message = $"Creation Failed '{request.DesignationDto.DesignationName}' already exists.";
-                    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+                //if (DesignationNameExists(request))
+                //{
+                //    response.Success = false;
+                //    response.Message = $"Creation Failed '{request.DesignationDto.DesignationName}' already exists.";
+                //    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     var Designation = _mapper.Map<Hrm.Domain.Designation>(request.DesignationDto);
 
                     Designation = await _unitOfWork.Repository<Hrm.Domain.Designation>().Add(Designation);
@@ -59,7 +59,7 @@ namespace Hrm.Application.Features.Designation.Handlers.Commands
                     response.Success = true;
                     response.Message = "Creation Successful";
                     response.Id = Designation.DesignationId;
-                }
+                //}
             }
 
             return response;

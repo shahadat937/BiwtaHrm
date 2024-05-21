@@ -14,7 +14,7 @@ namespace Hrm.Application.DTOs.Organograms
         public string DepartmentName { get; set; }
         public int? OfficeId { get; set; }
         public int? UpperDepartmentId { get; set; }
-        public List<OrganogramDepartmentDto> SubDepartments { get; set; }
         public List<OrganogramDesignationDto> Designations { get; set; }
+        public List<OrganogramDepartmentDto> SubDepartments { get; set; }
     }
 }

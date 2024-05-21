@@ -679,6 +679,10 @@ export const navItems: INavData[] = [
         url: '/bascisetup/designation'
       },
       {
+        name: 'অর্গানোগ্রাম',
+        url: '/bascisetup/organogram'
+      },
+      {
         name: 'Office Address',
         url: '/bascisetup/officeAddress'
       }

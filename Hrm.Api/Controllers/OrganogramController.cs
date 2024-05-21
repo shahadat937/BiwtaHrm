@@ -36,7 +36,7 @@ namespace Hrm.Api.Controllers
             var result = offices.Select(o => new OrganogramOfficeDto
             {
                 OfficeId = o.OfficeId,
-                OfficeName = o.OfficeName,
+                OfficeName = o.OfficeNameBangla,
                 Departments = o.Departments.Where(d => d.UpperDepartmentId == null).Select(d => MapDepartment(d)).ToList()
             });
 
@@ -48,18 +48,56 @@ namespace Hrm.Api.Controllers
             return new OrganogramDepartmentDto
             {
                 DepartmentId = department.DepartmentId,
-                DepartmentName = department.DepartmentName,
+                DepartmentName = department.DepartmentNameBangla,
                 OfficeId = department.OfficeId,
                 UpperDepartmentId = department.UpperDepartmentId,
-                SubDepartments = department.SubDepartments.Select(sd => MapDepartment(sd)).ToList(),
                 Designations = department.Designations.Select(de => new OrganogramDesignationDto
                 {
                     DesignationId = de.DesignationId,
-                    DesignationName = de.DesignationName,
+                    DesignationName = de.DesignationNameBangla,
                     OfficeId = de.OfficeId,
                     DepartmentId = de.DepartmentId
-                }).ToList()
+                }).ToList(),
+                SubDepartments = department.SubDepartments.Select(sd => MapDepartment(sd)).ToList(),
             };
+        }
+
+        [HttpGet]
+        [Route("get-organogramNamesOnly")]
+        public async Task<ActionResult<IEnumerable<OrganogramOfficeNameDto>>> GetOfficeNames()
+        {
+            var offices = await _context.Office
+                .Include(o => o.Departments)
+                    .ThenInclude(d => d.SubDepartments)
+                .Include(o => o.Departments)
+                    .ThenInclude(d => d.Designations)
+                .ToListAsync();
+
+            var result = offices.Select(o => new OrganogramOfficeNameDto
+            {
+                OfficeName = o.OfficeNameBangla,
+                Departments = o.Departments
+                    .Where(d => d.UpperDepartmentId == null)
+                    .Select(d => MapDepartmentName(d))
+                    .ToList()
+            });
+
+            return Ok(result);
+        }
+
+        private OrganogramDepartmentNameDto MapDepartmentName(Department department)
+        {
+            var departmentNameDto = new OrganogramDepartmentNameDto
+            {
+                DepartmentName = department.DepartmentNameBangla,
+                Designations = department.Designations.Select(de => new OrganogramDesignationNameDto
+                {
+                    DesignationName = de.DesignationNameBangla
+                }).ToList(),
+                SubDepartments = department.SubDepartments.Select(sd => MapDepartmentName(sd)).ToList()
+            };
+
+            return departmentNameDto;
         }
     }
 }

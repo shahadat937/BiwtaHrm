@@ -14,3 +14,4 @@ export class PostingOrderInfo {
     menuPosition: number = 0;
     isActive: boolean = true
 }
+

@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EmployeesService {
+  [x: string]: any;
   bsModelRef!: BsModalRef;
   cachedData: any[] = [];
   getemployees:any[]=[];

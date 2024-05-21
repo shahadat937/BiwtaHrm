@@ -35,10 +35,10 @@ import { OfficeService } from '../../basic-setup/service/office.service';
   styleUrls: ['./posting.component.scss']
 })
 export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
+  formattedDate!: string;
   bsModelRef!: BsModalRef;
   editMode: boolean = false;
   departments: SelectedModel[] = [];
-  subDepartments: SelectedModel[] = [];
   officeBranchs: SelectedModel[] = [];
   subBranchs: SelectedModel[] = [];
   transferApproveInfos: TransferApproveInfo[] = [];
@@ -76,10 +76,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     public officeService : OfficeService,
     public bsModalRef: BsModalRef,
     public postingOrderInfoService: PostingOrderInfoService,
-    private branchServices: BranchService,
     private departmentService: DepartmentService,
-    private subDepartmentService: SubDepartmentService,
-    private subBranchService: SubBranchService,
     public transferApproveInfoService: TransferApproveInfoService,
     public deptReleaseInfoService: DeptReleaseInfoService,
     public empTnsferPostingJoinService: EmpTnsferPostingJoinService,
@@ -98,13 +95,46 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ) {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('postingOrderInfoId');
-      // 
-      if (id) {
-        this.btnText = 'Update';
-        this.postingOrderInfoService.find(+id).subscribe((res) => {
 
-          this.PostingAndTrnsForm?.form.patchValue(res);
+      
+      // const id = params.get('postingOrderInfoId');
+      const id1 = params.get("empId")
+      const id2 = params.get("postingOrderInfoId");
+      const id3 = params.get("transferApproveInfoId");
+      const id4 = params.get("depReleaseInfoId");
+      const id5 = params.get("empTnsferPostingJoinId");
+      // 
+      if (id1) {
+        this.btnText = 'Update';
+        this.postingOrderInfoService.find(+id1).subscribe((res) => {
+        this.PostingAndTrnsForm?.form.patchValue(res);
+        });
+      } else {
+        this.btnText = 'Submit';
+      }
+      //Transfer Approve
+      if (id2) {
+        this.btnText = 'Update';
+        this.transferApproveInfoService.find(+id2).subscribe((res) => {
+        this.TransferApproveInfoForm?.form.patchValue(res);
+        });
+      } else {
+        this.btnText = 'Submit';
+      }
+      //DeptReleaseInfo
+      if (id2) {
+        this.btnText = 'Update';
+        this.deptReleaseInfoService.find(+id2).subscribe((res) => {
+        this.DeptReleaseInfoForm?.form.patchValue(res);
+        });
+      } else {
+        this.btnText = 'Submit';
+      }
+      //EmpTransferPostingJoin
+      if (id2) {
+        this.btnText = 'Update';
+        this.empTnsferPostingJoinService.find(+id2).subscribe((res) => {
+        this.EmpTransferPostingJoinForm?.form.patchValue(res);
         });
       } else {
         this.btnText = 'Submit';
@@ -118,47 +148,13 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadTransferApproveInfos();
     this.loadEmpTnsferPostingJoins();
     this.loadDepartmentalReleaseInfos();
-    this.SelectDepartments();
-    this.SelectsubDepartments();
-    this.SelectBranchs();
-    this.SelectSubBranchs();
     this.handleRouteParams();
     this.buttonIcon = "cilPencil";
     this.loadOffice();
     this.loadDepartment();
     this.loadDesignation();
   }
-
-  GetEmployees(): void {
-    this.employeeService.getEmployees().subscribe(res => {
-      //console.log(res)
-        this.employees = res;
-
-      });
-  }
   
-  SelectDepartments() {
-    this.departmentService.getSelectDepartments().subscribe((data) => {
-      this.departments = data;
-      
-    });
-  }
-  SelectsubDepartments() {
-    this.subDepartmentService.getSelectSubDepartment().subscribe((res) => {
-      this.subDepartments = res;
-    });
-  }
-  SelectBranchs() {
-    this.branchServices.getSelectBranch().subscribe((res) => {
-      this.officeBranchs = res;
-    });
-  }
-  SelectSubBranchs() {
-    this.subBranchService.getSelectSubBranchs().subscribe((res) => {
-      this.subBranchs = res;
-    });
-  }
-
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('postingOrderInfoId');
@@ -342,233 +338,109 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     })
   }
 
-  onSubBranchNamesChangeByOfficeBranchId(branchId: number) {
-    this.subscription = this.subBranchService.getSubBranchByOfficeBranchId(branchId).subscribe((data) => {
-      this.subBranchs = data;
-    });
-  }
+///
 
+onSubmitAllForms(): void {
+  // Gather all form submission observables
+  const submissions: Observable<any>[] = [
+    this.onSubmit(this.EmployeeForm),
+    this.onSubmit(this.PostingAndTrnsForm),
+    this.onSubmit(this.TransferApproveInfoForm),
+    this.onSubmit(this.DeptReleaseInfoForm),
+    this.onSubmit(this.EmpTransferPostingJoinForm),
+  ];
 
-  // onSubmitAllForms(): void {
-  //   // Call onSubmit for each form
-  //   this.onSubmit(this.EmployeeForm);
-  //   this.onSubmit(this.PostingAndTrnsForm);
-  //   this.onSubmit(this.TransferApproveInfoForm);
-  //   this.onSubmit(this.DeptReleaseInfoForm);
-  //   this.onSubmit(this.EmpTransferPostingJoinForm);
-  // }
-  // //start
-  // clearCachedData(): void {
-  //   this.employeeService.cachedData = [];
-  //   this.postingOrderInfoService.cachedData = [];
-  //   this.transferApproveInfoService.cachedData = [];
-  //   this.deptReleaseInfoService.cachedData = [];
-  //   this.empTnsferPostingJoinService.cachedData = [];
-  // }
-  // handleResponse(response: any): void {
-  //   if (response.success) {
-  //     this.toastr.success('', `${response.message}`, {
-  //       positionClass: 'toast-top-right',
-  //     });
-  //     this.getAllPostingOrderInfos();
-  //     this.resetForm();
-  //   } else {
-  //     this.toastr.warning('', `${response.message}`, {
-  //       positionClass: 'toast-top-right',
-  //     });
-  //   }
-  // }
-  // //valid 1
-  // onSubmit(form: any): void {
-  //   // Clear cached data
-  //   this.clearCachedData();
+  // Use forkJoin to wait for all form submissions
+  forkJoin(submissions).subscribe(
+    responses => {
+      // Check if any form submission was successful
+      const anySuccess = responses.some(response => response.success);
 
-  //   // Extract IDs from form value
-  //   const id1 = form.value.empId;
-  //   const id2 = form.value.postingOrderInfoId;
-  //   const id3 = form.value.transferApproveInfoId;
-  //   const id4 = form.value.depReleaseInfoId;
-  //   const id5 = form.value.empTnsferPostingJoinId;
-
-  //   // Submit or update based on the form
-  //   if (form === this.EmployeeForm) {
-  //     // Handle EmployeeForm submission
-  //     const empTnsferPostingJoinId$ = id5
-  //       ? this.empTnsferPostingJoinService.update(id5, form.value)
-  //       : this.empTnsferPostingJoinService.submit(form.value);
-  //     console.log(form.value)
-
-  //     // Subscribe to the response and handle accordingly
-  //     this.subscription = empTnsferPostingJoinId$.subscribe((response: any) => {
-  //       if (response.success.empTnsferPostingJoinId) {
-  //         this.handleResponse(response);
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, {
-  //           positionClass: 'toast-top-right',
-  //         });
-  //       }
-  //     });
-  //   } else if (form === this.PostingAndTrnsForm) {
-  //     // Handle PostingAndTrnsForm submission
-  //     const postingOrderInfoId$ = id2
-  //       ? this.postingOrderInfoService.update(id2, form.value)
-  //       : this.postingOrderInfoService.submit(form.value);
-  //     // No action needed, do not submit data
-  //     this.subscription = postingOrderInfoId$.subscribe((response: any) => {
-  //       if (response.success.postingOrderInfoId) {
-  //         this.handleResponse(response);
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, {
-  //           positionClass: 'toast-top-right',
-  //         });
-  //       }
-  //     });
-  //     console.log('PostingAndTrnsForm submitted, no action taken');
-  //   } else if (form === this.TransferApproveInfoForm) {
-  //     // Handle TransferApproveInfoForm submission
-  //     const transferApproveInfoId$ = id3
-  //       ? this.transferApproveInfoService.update(id3, form.value)
-  //       : this.transferApproveInfoService.submit(form.value);
-
-  //     // Subscribe to the response and handle accordingly
-  //     this.subscription = transferApproveInfoId$.subscribe((response: any) => {
-  //       if (response.success.transferApproveInfoId) {
-  //         this.handleResponse(response);
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, {
-  //           positionClass: 'toast-top-right',
-  //         });
-  //       }
-  //     });
-  //   } else if (form === this.EmpTransferPostingJoinForm) {
-  //     // Handle EmpTransferPostingJoinForm submission
-  //     const empTransferPostingJoinId$ = id5
-  //       ? this.empTnsferPostingJoinService.update(id5, form.value)
-  //       : this.empTnsferPostingJoinService.submit(form.value);
-
-  //     // Subscribe to the response and handle accordingly
-  //     this.subscription = empTransferPostingJoinId$.subscribe((response: any) => {
-  //       if (response.success.empTnsferPostingJoinId) {
-  //         this.handleResponse(response);
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, {
-  //           positionClass: 'toast-top-right',
-  //         });
-  //       }
-  //     });
-  //   } else if (form === this.DeptReleaseInfoForm) {
-  //     // Handle DeptReleaseInfoForm submission
-  //     const deptReleaseInfoId$ = id4
-  //       ? this.deptReleaseInfoService.update(id4, form.value)
-  //       : this.deptReleaseInfoService.submit(form.value);
-
-  //     // Subscribe to the response and handle accordingly
-  //     this.subscription = deptReleaseInfoId$.subscribe((response: any) => {
-  //       if (response.success.deptReleaseInfoId) {
-  //         this.handleResponse(response);
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, {
-  //           positionClass: 'toast-top-right',
-  //         });
-  //       }
-  //     });
-  //   }
-  //   // Add similar conditions for other forms
-
-  //   console.log('Submitting form:', form.value);
-  // }
-
-
-
-
-
-  onSubmitAllForms(): void {
-    const formSubmissionObservables: Observable<any>[] = [];
-  
-    // Collect all form submission observables
-    if (this.EmployeeForm.dirty) {
-      formSubmissionObservables.push(this.onSubmit(this.EmployeeForm));
-    }
-    if (this.PostingAndTrnsForm.dirty) {
-      formSubmissionObservables.push(this.onSubmit(this.PostingAndTrnsForm));
-    }
-    if (this.TransferApproveInfoForm.dirty) {
-      formSubmissionObservables.push(this.onSubmit(this.TransferApproveInfoForm));
-    }
-    if (this.DeptReleaseInfoForm.dirty) {
-      formSubmissionObservables.push(this.onSubmit(this.DeptReleaseInfoForm));
-    }
-    if (this.EmpTransferPostingJoinForm.dirty) {
-      formSubmissionObservables.push(this.onSubmit(this.EmpTransferPostingJoinForm));
-    }
-  
-    // Aggregate the responses and show a single toast message
-    forkJoin(formSubmissionObservables).subscribe(
-      (      responses: { success: any; }[]) => {
-        const success = responses.some((response: { success: any; }) => response.success);
-        if (success) {
-          this.toastr.success('', 'Data saved successfully', {
-            positionClass: 'toast-top-right',
-          });
-        } else {
-          this.toastr.warning('', 'Failed to save data', {
-            positionClass: 'toast-top-right',
-          });
-        }
-      },
-      error => {
-        this.toastr.error('', 'Error occurred while saving data', {
+      // Show success or failure message based on the responses
+      if (anySuccess) {
+        this.toastr.success('', 'Data saved successfully', {
+          positionClass: 'toast-top-right',
+        });
+      } else {
+        this.toastr.warning('', 'Failed to save data', {
           positionClass: 'toast-top-right',
         });
       }
-    );
-  }
-  
-  onSubmit(form: any): Observable<any> {
-    // Clear cached data
-    this.clearCachedData();
-  
-    // Extract IDs from form value
-    const id1 = form.value.empId;
-    const id2 = form.value.postingOrderInfoId;
-    const id3 = form.value.transferApproveInfoId;
-    const id4 = form.value.depReleaseInfoId;
-    const id5 = form.value.empTnsferPostingJoinId;
-  
-    // Return the corresponding observable based on the form
-    if (form === this.EmployeeForm) {
-      return id5
-        ? this.empTnsferPostingJoinService.update(id5, form.value)
-        : this.empTnsferPostingJoinService.submit(form.value);
-    } else if (form === this.PostingAndTrnsForm) {
-      return id2
-        ? this.postingOrderInfoService.update(id2, form.value)
-        : this.postingOrderInfoService.submit(form.value);
-    } else if (form === this.TransferApproveInfoForm) {
-      return id3
-        ? this.transferApproveInfoService.update(id3, form.value)
-        : this.transferApproveInfoService.submit(form.value);
-    } else if (form === this.EmpTransferPostingJoinForm) {
-      return id5
-        ? this.empTnsferPostingJoinService.update(id5, form.value)
-        : this.empTnsferPostingJoinService.submit(form.value);
-    } else if (form === this.DeptReleaseInfoForm) {
-      return id4
-        ? this.deptReleaseInfoService.update(id4, form.value)
-        : this.deptReleaseInfoService.submit(form.value);
-    } else {
-      return of({ success: false, message: 'Invalid form ID' });
+      this.getAllPostingOrderInfos();
+      this.resetForm();
+    },
+    error => {
+      this.toastr.error('', 'Error occurred during submission', {
+        positionClass: 'toast-top-right',
+      });
     }
-  }
+  );
+}
 
-  clearCachedData(): void {
-    this.employeeService.cachedData = [];
-    this.postingOrderInfoService.cachedData = [];
-    this.transferApproveInfoService.cachedData = [];
-    this.deptReleaseInfoService.cachedData = [];
-    this.empTnsferPostingJoinService.cachedData = [];
-  }
+onSubmit(form: any): Observable<any> {
+  this.clearCachedData();
+
+  const id1 = form.value.empId;
+  const id2 = form.value.postingOrderInfoId;
+  const id3 = form.value.transferApproveInfoId;
+  const id4 = form.value.depReleaseInfoId;
+  const id5 = form.value.empTnsferPostingJoinId;
+
+  if (form === this.EmployeeForm) {
+    return id5
+      ? this.empTnsferPostingJoinService.update(id5, form.value)
+      : this.empTnsferPostingJoinService.submit(form.value);
+  } else if (form === this.PostingAndTrnsForm) {
+    return id2
+      ? this.postingOrderInfoService.update(id2, form.value)
+      : this.postingOrderInfoService.submit(form.value);   
+  } else if (form === this.TransferApproveInfoForm) {
+    return id3
+      ? this.transferApproveInfoService.update(id3, form.value)
+      : this.transferApproveInfoService.submit(form.value);
+  } else if (form === this.EmpTransferPostingJoinForm) {
+    return id5
+      ? this.empTnsferPostingJoinService.update(id5, form.value)
+      : this.empTnsferPostingJoinService.submit(form.value);
+  } else if (form === this.DeptReleaseInfoForm) {
+    return id4
+      ? this.deptReleaseInfoService.update(id4, form.value)
+      : this.deptReleaseInfoService.submit(form.value);
+  } else {
+    // Return an empty observable if no valid form is provided
+    return new Observable(observer => {
+      observer.next({ success: false, message: 'Invalid form ID' });
+      observer.complete();
   
+    });
+  }
+}
+
+
+clearCachedData(): void {
+  this.employeeService.cachedData = [];
+  this.postingOrderInfoService.cachedData = [];
+  this.transferApproveInfoService.cachedData = [];
+  this.deptReleaseInfoService.cachedData = [];
+  this.empTnsferPostingJoinService.cachedData = [];
+}
+
+handleResponse(response: any): void {
+  if (response.success) {
+    this.toastr.success('', `${response.message}`, {
+      positionClass: 'toast-top-right',
+    });
+    this.getAllPostingOrderInfos();
+    this.resetForm();
+  } else {
+    this.toastr.warning('', `${response.message}`, {
+      positionClass: 'toast-top-right',
+    });
+  }
+}
+
+
+
   delete(element: any) {
     this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe((result) => {
       if (result) {
@@ -723,6 +595,8 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  
+
   //Employee
   selectEmployee(employee: Employee) {
     this.employeeSelected.emit(employee);
@@ -775,3 +649,4 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.transferApproveInfoService.transferApproveInfos.approveByName = employee.employeeName
   }
 }
+

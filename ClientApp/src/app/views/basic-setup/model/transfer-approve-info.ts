@@ -10,3 +10,4 @@ export class TransferApproveInfo {
     menuPosition: number = 0;
     isActive: boolean = true
 }
+

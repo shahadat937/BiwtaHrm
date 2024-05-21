@@ -96,72 +96,9 @@
           </select>
         </div>
       </c-col>
-      <!-- <c-col [md]="3">
-        <label cLabel for="validationCustom04">Sub Department<span class="text-danger">*</span></label>
-        <div class="input-wrapper">
-          <select (change)="postingOrderInfoService.postingOrderInfos.subDepartmentId"
-            [(ngModel)]="postingOrderInfoService.postingOrderInfos.subDepartmentId" name="subDepartmentId"
-            #subDepartmentId="ngModel" cFormControl id="validationCustom04" required aria-label="Default select example"
-            cSelect>
-            <option [ngValue]="null">Select Sub Department</option>
-
-            @for(subdepartment of subDepartments; track subdepartment.id;let index=$index) {
-            <option [value]="subdepartment.id">
-              {{ subdepartment.name }}
-            </option>
-            }
-          </select>
-
-          @if(!subDepartmentId.valid && subDepartmentId.touched){
-          <div class="text-left text-danger">Sub Department is required</div>
-          }
-        </div>
-      </c-col> -->
-      <!-- <c-col [md]="3">
-        <label cLabel for="validationCustom05">Office Branch<span class="text-danger">*</span></label>
-        <div class="input-wrapper">
-          <select
-            (change)="onSubBranchNamesChangeByOfficeBranchId(postingOrderInfoService.postingOrderInfos.designationId)"
-            [(ngModel)]="postingOrderInfoService.postingOrderInfos.designationId" name="branchId"
-            #branchId="ngModel" cFormControl id="validationCustom05" required aria-label="Default select example"
-            cSelect>
-            <option [ngValue]="null">Select Office Branch</option>
-
-            @for(officeBranch of officeBranchs; track officeBranch.id;let index=$index) {
-            <option [value]="officeBranch.id">
-              {{ officeBranch.name }}
-            </option>
-            }
-          </select>
-          @if(!branchId.valid && branchId.touched){
-          <div class="text-left text-danger">Office Branch is required</div>
-          }
-        </div>
-      </c-col> -->
-      <!-- <c-col [md]="3">
-        <label cLabel for="validationCustom06">Sub Branch<span class="text-danger">*</span></label>
-        <div class="input-wrapper">
-          <select (change)="postingOrderInfoService.postingOrderInfos.subBranchId"
-            [(ngModel)]="postingOrderInfoService.postingOrderInfos.subBranchId" name="subBranchId"
-            #subBranchId="ngModel" placeholder="Enter OfficeOrder No " cFormControl id="validationCustom06" required
-            aria-label="Default select example" cSelect>
-            <option [ngValue]="null">Select Sub Department</option>
-
-            @for(subBranch of subBranchs; track subBranch.id;let index=$index) {
-            <option [value]="subBranch.id">
-              {{ subBranch.name }}
-            </option>
-            }
-          </select>
-
-          @if(!subBranchId.valid && subBranchId.touched){
-          <div class="text-left text-danger">Sub Branch is required</div>
-          }
-        </div>
-      </c-col> -->
-
+     
       <c-col [md]="3">
-        <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.empId" name="empId" />
+       
         <label cLabel for="validationCustom07">OfficeOrder No<span class="text-danger">*</span></label>
         <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.officeOrderNo" name="officeOrderNo"
           #officeOrderNo="ngModel" placeholder="Enter OfficeOrder No " cFormControl id="validationCustom07" required
@@ -171,15 +108,15 @@
         <div class="text-left text-danger">OfficeOrder No is required</div>
         }
       </c-col>
+
       <c-col [md]="3">
         <label cLabel for="validationCustom09">Office Order Date<span class="text-danger">*</span></label>
-        <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.officeOrderDate" name="officeOrderDate"
-          #officeOrderDate="ngModel" placeholder="Enter OfficeOrder No " cFormControl id="validationCustom09" required
-          type="date" value="Mark" />
-        @if(!officeOrderDate.valid&&officeOrderDate.touched){
-        <div class="text-left text-danger">officeOrderDate value is required</div>
-        }
+        <input [(ngModel)]="formattedDate" name="officeOrderDate" #officeOrderDate="ngModel" 
+               placeholder="Enter Office Order Date" cFormControl id="validationCustom09" required
+               type="date" />
+        <div *ngIf="!officeOrderDate.valid && officeOrderDate.touched" class="text-left text-danger">Office Order Date is required</div>
       </c-col>
+      
       <c-col [md]="3">
         <label cLabel for="validationCustom011">Order Office By<span class="text-danger">*</span></label>
         <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.orderOfficeBy" name="orderOfficeBy"
@@ -217,6 +154,7 @@
           <option value="false">De-Active</option>
         </select>
       </c-col>
+      
     </form>
 
   </c-card-body>
@@ -254,16 +192,8 @@
             required</div>
         </c-col>
         <c-col [md]="3">
-          <label cLabel for="validationCustom77">Active Status</label>
-          <select [(ngModel)]="transferApproveInfoService.transferApproveInfos.isActive" name="isActive" cSelect
-            id="validationCustom77">
-            <option value="true">Active</option>
-            <option value="false">De-Active</option>
-          </select>
-        </c-col>
-        <c-col [md]="3">
           <label cLabel for="validationCustom03">Approve Date<span class="text-danger">*</span></label>
-          <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveDate" name="approveDate"
+          <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveDate" name="formattedDate"
             #approveDate="ngModel" placeholder="Enter Approve Date Status" cFormControl id="validationCustom03" required
             type="date" value="Mark" />
           @if(!approveDate.valid&&approveDate.touched){
@@ -388,7 +318,7 @@
         <c-col [md]="3">
           <input type="hidden" [(ngModel)]="employeeService.demoEmployee.empId" name="empId" />
           <label cLabel for="validationCustom01">Join Date<span class="text-danger">*</span></label>
-          <input [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.joinDate" name="joinDate"
+          <input [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.joinDate" name="formattedDate"
             #joinDate="ngModel" placeholder="Enter Join Date" cFormControl id="validationCustom01" required type="date"
             value="Mark" />
           @if(!joinDate.valid&&joinDate.touched){
@@ -430,12 +360,12 @@
   <c-card-footer>
     <c-col [xs]="12">
       <button cButton color="primary" shape="rounded-pill" type="submit" (click)="onSubmitAllForms()">
-        Save All
+        {{btnText}}
+      </button>
+      <!-- Your existing HTML code for forms -->
+      <button cButton color="primary" shape="rounded-pill" type="submit" (click)="resetForm()">
+        Reset
       </button>
     </c-col>
   </c-card-footer>
 </c-card>
-<!-- <c-form-check>
-  <input cFormCheckInput formControlName="checkThree" id="checkThree" type="checkbox" />
-  <label cFormCheckLabel for="checkThree">Disabled checkbox</label>
-</c-form-check> -->

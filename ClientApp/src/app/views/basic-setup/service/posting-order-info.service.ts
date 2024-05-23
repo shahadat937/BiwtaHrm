@@ -39,8 +39,8 @@ export class PostingOrderInfoService {
   }
 
 
-  update(id: number,model: any) {
-    return this.http.put(this.baseUrl + '/postingOrderInfo/update-PostingOrderInfo/'+id, model);
+  update(id2: number,model: any) {
+    return this.http.put(this.baseUrl + '/postingOrderInfo/update-PostingOrderInfo/'+id2, model);
   }
   submit(model: any) {
     return this.http.post(this.baseUrl + '/postingOrderInfo/save-PostingOrderInfo', model);

@@ -18,7 +18,7 @@ namespace Hrm.Domain
         public int? DepReleaseInfoId { get; set; }
         public string? ApproveBy { get; set; }
        public bool? ApproveStatus { get; set; }
-        public DateTime? JoinDate { get; set; }
+        public DateTime? JoinDate { get; set; } = DateTime.Now;
         public string? Remarks { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }

@@ -51,14 +51,12 @@ namespace Hrm.Application.Features.PostingOrderInfo.Handlers.Queries
                 var departmentName = await GetDepartmentName(PostingOrderInfo.DepartmentId);
                 var subBranchName = await GetSubBranchName(PostingOrderInfo.SubBranchId);
                 var subDepartmentName = await GetSubDepartmentName(PostingOrderInfo.SubDepartmentId);
-                var officeBranchName = await GetSOfficeBranchName(PostingOrderInfo.OfficeBranchId);
                 
               //  PostingOrderInfoDto.CountryName = countryName;
                 PostingOrderInfoDto.DepartmentName = departmentName;
                 PostingOrderInfoDto.SubBranchName = subBranchName;
 
                 PostingOrderInfoDto.SubBranchName = subDepartmentName;
-                PostingOrderInfoDto.OfficeBranchName = officeBranchName;
 
                 PostingOrderInfoDtos.Add(PostingOrderInfoDto);
             }

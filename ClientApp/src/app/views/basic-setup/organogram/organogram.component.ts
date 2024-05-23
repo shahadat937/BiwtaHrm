@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { OrganogramService } from '../service/organogram.service';
+import { OrganogramOfficeNameDto, OrganogramService } from '../service/organogram.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -15,6 +15,8 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
 
   subscription: Subscription = new Subscription();
   organograms:any[] = [];
+  offices: OrganogramOfficeNameDto[] = [];
+  expandedOffices: { [key: string]: boolean } = {};
 
   constructor(
     public organogramService: OrganogramService,
@@ -35,45 +37,20 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   }
 
   getOrganogram(){
-    this.subscription=this.organogramService.getOrganogramNamesOnly().subscribe((data) => { 
+    this.subscription=this.organogramService.getOrganogramNamesOnly().subscribe((data: OrganogramOfficeNameDto[]) => { 
       this.organograms = data;
-      console.log(this.organograms)
+      this.offices = data;
+      console.log(this.offices)
     });
   }
+  
+  toggleOfficeExpand(officeName: string): void {
+    this.expandedOffices[officeName] = !this.expandedOffices[officeName];
+  }
+
+  isOfficeExpanded(officeName: string): boolean {
+    return this.expandedOffices[officeName];
+  }
+  
 }
 
-// export class DynamicFlatNode {
-//   constructor(
-//     public item: string,
-//     public level = 1,
-//     public expandable = false,
-//     public isLoading = false
-//   ) {}
-// }
-// @Injectable({ providedIn: 'root' })
-// export class DynamicDatabase {
-
-//   subscription: Subscription = new Subscription();
-//   organograms:any[] = [];
-
-//   constructor(
-//     public organogramService: OrganogramService,
-//   ) {
-//   }
-
-//   getingOrganogram(){
-//     this.subscription=this.organogramService.getOrganogram().subscribe((data) => { 
-//       this.organograms = data;
-      
-//       const dataMap = new Map<any, any[]>(
-//         [
-//         ['Fruits', ['Apple', 'Orange', 'Banana']],
-//         ['Vegetables', ['Tomato', 'Potato', 'Onion']],
-//         ['Apple', ['Fuji', 'Macintosh']],
-//         ['Onion', ['Yellow', 'White', 'Purple']],
-//         ['Onion', ['Yellow', 'White', 'Purple']],
-//       ]);
-//     });
-//   }
-
-// }

@@ -226,13 +226,13 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlDepartments();
         this.resetForm();
         this.router.navigate(['/bascisetup/department']);
-        this.loading = true;
+        this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
       }
-      this.loading = true;
+      this.loading = false;
     });
   }
   delete(element: any) {

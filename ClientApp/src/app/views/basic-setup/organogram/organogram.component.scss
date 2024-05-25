@@ -9,6 +9,33 @@
 }
 
 .office-text {
-    color: blue;
+    color: #4CAF50;
     font-weight: bold;
+}
+.tree ul {
+  list-style-type: none;
+  position: relative;
+  padding-left: 1em;
+  transition: all 0.5s;
+}
+.tree ul ul {
+  margin-left: 1em;
+  padding-left: 1em;
+  border-left: 1px dashed #929292;
+}
+
+.tree li {
+  margin: 0.5em 0;
+  padding-left: 1em;
+  line-height: 2em;
+  position: relative;
+}
+
+.designation-text {
+  color: #9C27B0;
+}
+
+
+.tree span {
+  cursor: pointer;
 }

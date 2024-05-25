@@ -53,6 +53,9 @@
                 </option>
                 }
               </select>
+              @if(!Department.valid && Department.touched){
+              <div class="text-left text-danger">Department is required</div>
+              }
             </div>
           </c-col>
 
@@ -76,7 +79,7 @@
                 type="text"
               />
               @if(!DesignationName.valid&&DesignationName.touched){
-              <div class="text-left text-danger">Department Name is required</div>
+              <div class="text-left text-danger">Designation Name is required</div>
               }
             </c-col>
           

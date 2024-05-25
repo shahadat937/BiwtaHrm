@@ -1,18 +1,45 @@
 <c-card class="mt-3">
-  <c-card-header class="d-flex justify-content-between">
-    <div>Organogram</div>
-  </c-card-header>
-  <c-card-body>
-    <div class="tree">
-      <div class="office-view" *ngFor="let office of offices">
-        <div (click)="toggleOfficeExpand(office.name)" class="office-header">
-          <span class="toggle-icon">{{ isOfficeExpanded(office.name) ? '-' : '+' }}</span>
-          <span class="office-text" >&nbsp;{{ office.name }}</span>
+    <c-card-header class="d-flex justify-content-between">
+        <div>Organogram</div>
+    </c-card-header>
+    <c-card-body>
+        <div class="tree">
+            <ul>
+                <li class="office-view" *ngFor="let office of offices">
+                    <div class="office-header">
+                        <label (click)="toggleOfficeExpand(office.name)"><span class="toggle-icon">{{
+                                isOfficeExpanded(office.name) ? '-' : '+' }}</span>
+                            <span class="office-text">&nbsp;{{ office.name }}</span></label>
+                    </div>
+                    <ul *ngIf="isOfficeExpanded(office.name)">
+                        <li *ngIf="office.directDesignations.length">
+                            <div class="designation-header">
+                                <label (click)="toggleDesignationExpand()">
+                                    &nbsp;&nbsp;<span class="toggle-icon">{{ isDesignationExpanded ? '-' : '+' }}</span>
+                                    &nbsp;<span>পদবি</span>
+                                </label>
+                            </div>
+                            <ul *ngIf="isDesignationExpanded">
+                                <li *ngFor="let designation of office.directDesignations" class="designation-text">
+                                    {{ designation.name }}
+                                </li>
+                            </ul>
+                        </li>
+                        <li *ngIf="office.departments.length">
+                            <div class="sub-department-header">
+                                <label (click)="toggleDepartmentExpand()">
+                                    &nbsp;&nbsp;<span class="toggle-icon">{{ isDepartmentExpanded ? '-' : '+' }}</span>
+                                    &nbsp;<span class="sub-department-text">শাখা</span>
+                                </label>
+                            </div>
+                            <ul *ngIf="isDepartmentExpanded">
+                                <app-organogram-department *ngFor="let department of office.departments"
+                                    [department]="department"></app-organogram-department>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-        <ul *ngIf="isOfficeExpanded(office.name)">
-          <app-organogram-department *ngFor="let department of office.departments" [department]="department"></app-organogram-department>
-        </ul>
-      </div>
-    </div>
-  </c-card-body>
+    </c-card-body>
 </c-card>

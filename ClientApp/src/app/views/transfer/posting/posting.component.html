@@ -62,6 +62,7 @@
         </div>
       </c-col>
       <c-col [md]="3">
+        <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" />
         <label cLabel for="office">Department<span class="text-danger">*</span></label>
         <div class="input-wrapper">
           <select (change)="onDepartmentSelect(postingOrderInfoService.postingOrderInfos.departmentId)"
@@ -87,7 +88,6 @@
           <select [(ngModel)]="postingOrderInfoService.postingOrderInfos.designationId" name="designationId"
             #designation="ngModel" cFormControl id="designation" aria-label="Default select example" cSelect>
             <option [ngValue]="null">Select Designation</option>
-
             @for(designation of designations; track designation.id;let index=$index) {
             <option [value]="designation.id">
               {{ designation.name }}
@@ -98,7 +98,6 @@
       </c-col>
      
       <c-col [md]="3">
-       
         <label cLabel for="validationCustom07">OfficeOrder No<span class="text-danger">*</span></label>
         <input [(ngModel)]="postingOrderInfoService.postingOrderInfos.officeOrderNo" name="officeOrderNo"
           #officeOrderNo="ngModel" placeholder="Enter OfficeOrder No " cFormControl id="validationCustom07" required
@@ -182,6 +181,7 @@
           </select>
         </c-col>
         <c-col [md]="3">
+          <!-- <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" /> -->
           <label cLabel for="validationCustom51">Approve By <span class="text-danger">*</span></label>
           <input (dblclick)="openApprovtransferApproveInfos()"
             [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveByName" name="approveByName"
@@ -213,8 +213,6 @@
     </c-card-body>
   </c-card>
 </c-card>
-
-
 <c-card>
   <c-card-header class="d-flex justify-content-between">
     <div>
@@ -227,9 +225,7 @@
     <c-card-body [visible]="visible2" cCollapse class="shadow">
       <form #DeptReleaseInfoForm="ngForm" name="DeptReleaseInfoForm" name="EmployeeForm"
         (submit)="onSubmit(DeptReleaseInfoForm)" [gutter]="3" novalidate cForm cRow>
-
         <c-card-header>Departmental Release Information</c-card-header>
-
         <c-col [md]="3">
           <input type="hidden" [(ngModel)]="employeeService.demoEmployee.empId" name="empId" />
           <label cLabel for="validationCustom05">Relese Type<span class="text-danger">*</span></label>
@@ -240,8 +236,8 @@
           <div class="text-left text-danger">Release Type is required</div>
           }
         </c-col>
-
         <c-col [md]="3">
+          <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" />
           <label cLabel for="validationCustom06">Relese Date<span class="text-danger">*</span></label>
           <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.releaseDate" name="releaseDate"
             #releaseDate="ngModel" placeholder="Enter Relese Date Status" cFormControl id="validationCustom06" required
@@ -327,6 +323,7 @@
         </c-col>
 
         <c-col [md]="3">
+          <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" />
           <label cLabel for="validationCustom55">Approve By <span class="text-danger">*</span></label>
           <input (dblclick)="openApproveEmpTransferJoin()"
             [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.approveByName" name="approveByName"
@@ -356,7 +353,6 @@
       </form>
     </c-card-body>
   </c-card>
-
   <c-card-footer>
     <c-col [xs]="12">
       <button cButton color="primary" shape="rounded-pill" type="submit" (click)="onSubmitAllForms()">

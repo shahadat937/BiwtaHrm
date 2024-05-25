@@ -56,6 +56,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       } else {
         this.btnText = 'Submit';
+        console.log(this.btnText)
       }
     });
   }

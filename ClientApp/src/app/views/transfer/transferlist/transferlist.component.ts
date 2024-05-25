@@ -40,7 +40,6 @@ export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
       if (id) {
         this.btnText = 'Update';
         this.postingOrderInfoService.find(+id).subscribe((res) => {
-          console.log(res);
           this.postingOrderForm?.form.patchValue(res);
         });
       } else {
@@ -135,8 +134,8 @@ export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onSubmit(form: NgForm): void {
     this.postingOrderInfoService.cachedData = [];
-    const id = form.value.wardId;
-    console.log(form.value)
+    const id = form.value.postingOrderInfoId;
+    //console.log(form.value)
     const action$ = id
       ? this.postingOrderInfoService.update(id, form.value)
       : this.postingOrderInfoService.submit(form.value);

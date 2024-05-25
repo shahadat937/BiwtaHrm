@@ -22,9 +22,6 @@ import { TransferApproveInfoService } from './../../basic-setup/service/transfer
 import { TransferApproveInfo } from './../../basic-setup/model/transfer-approve-info';
 import { DepartmentService } from './../../basic-setup/service/department.service';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
-import { SubDepartmentService } from '../../basic-setup/service/sub-department.service';
-import { BranchService } from '../../basic-setup/service/branch.service';
-import { SubBranchService } from '../../basic-setup/service/sub-branch.service';
 import { EmpTnsferPostingJoin } from './../../basic-setup/model/emp-tnsfer-posting-join';
 import { EmpTnsferPostingJoinService } from './../../basic-setup/service/emp-tnsfer-posting-join.service';
 import { OfficeService } from '../../basic-setup/service/office.service';
@@ -94,54 +91,54 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     private fb: FormBuilder // Inject FormBuilder here
 
   ) {
-    this.route.paramMap.subscribe((params) => {
+  
+  this.route.paramMap.subscribe((params) => {
+    const id2 = params.get("postingOrderInfoId");
+    const id3 = params.get("transferApproveInfoId");
+    const id4 = params.get("depReleaseInfoId");
+    const id5 = params.get("empTnsferPostingJoinId");
 
-      
-      // const id = params.get('postingOrderInfoId');
-      const id1 = params.get("empId")
-      const id2 = params.get("postingOrderInfoId");
-      const id3 = params.get("transferApproveInfoId");
-      const id4 = params.get("depReleaseInfoId");
-      const id5 = params.get("empTnsferPostingJoinId");
-      // 
-      if (id1) {
-        this.btnText = 'Update';
-        this.postingOrderInfoService.find(+id1).subscribe((res) => {
+    // Posting Order Info
+    if (id2) {
+      this.btnText = 'Update';
+      this.postingOrderInfoService.find(+id2).subscribe((res) => {
         this.PostingAndTrnsForm?.form.patchValue(res);
-        });
-      } else {
-        this.btnText = 'Submit';
-      }
-      //Transfer Approve
-      if (id2) {
-        this.btnText = 'Update';
-        this.transferApproveInfoService.find(+id2).subscribe((res) => {
-        this.TransferApproveInfoForm?.form.patchValue(res);
-        });
-      } else {
-        this.btnText = 'Submit';
-      }
-      //DeptReleaseInfo
-      if (id2) {
-        this.btnText = 'Update';
-        this.deptReleaseInfoService.find(+id2).subscribe((res) => {
-        this.DeptReleaseInfoForm?.form.patchValue(res);
-        });
-      } else {
-        this.btnText = 'Submit';
-      }
-      //EmpTransferPostingJoin
-      if (id2) {
-        this.btnText = 'Update';
-        this.empTnsferPostingJoinService.find(+id2).subscribe((res) => {
-        this.EmpTransferPostingJoinForm?.form.patchValue(res);
-        });
-      } else {
-        this.btnText = 'Submit';
-      }
-    });
-  }
+      });
+    } else {
+      this.btnText = 'Submit';
+    }
 
+    // Transfer Approve Info
+    if (id3) {
+      this.btnText = 'Update';
+      this.transferApproveInfoService.find(+id3).subscribe((res) => {
+        this.TransferApproveInfoForm?.form.patchValue(res);  
+              
+      });
+    } else {
+      this.btnText = 'Submit';
+    }
+    // Dept Release Info
+    if (id4) {
+      this.btnText = 'Update';
+      this.deptReleaseInfoService.find(+id4).subscribe((res) => {
+        this.DeptReleaseInfoForm?.form.patchValue(res);
+      });
+    } else {
+      this.btnText = 'Submit';
+    }
+
+    // Emp Transfer Posting Join
+    if (id5) {
+      this.btnText = 'Update';
+      this.empTnsferPostingJoinService.find(+id5).subscribe((res) => {
+        this.EmpTransferPostingJoinForm?.form.patchValue(res);
+      });
+    } else {
+      this.btnText = 'Submit';
+    }
+  });
+}
 
   ngOnInit(): void {
     this.getAllPostingOrderInfos();
@@ -182,52 +179,36 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   UserFormView(): void {
     if (this.userBtnText == " Add Value") {
       this.userBtnText = " Hide Form";
-      this.buttonIcon = "cilTrash";
-      this.userHeaderText = "Add New Value";
       this.visible = true;
     } else {
       this.userBtnText = " Add Value";
-      this.buttonIcon = "cilPencil";
-      this.userHeaderText = "Value List";
       this.visible = false;
     }
   }
   UserFormView2(): void {
     if (this.userBtnText == " Add Value") {
       this.userBtnText = " Hide Form";
-      this.buttonIcon = "cilTrash";
-      this.userHeaderText = "Add New Value";
       this.visible2 = true;
     } else {
       this.userBtnText = " Add Value";
-      this.buttonIcon = "cilPencil";
-      this.userHeaderText = "Value List";
       this.visible2 = false;
     }
   }
   UserFormView3(): void {
     if (this.userBtnText == " Add Value") {
       this.userBtnText = " Hide Form";
-      this.buttonIcon = "cilTrash";
-      this.userHeaderText = "Add New Value";
       this.visible3 = true;
     } else {
       this.userBtnText = " Add Value";
-      this.buttonIcon = "cilPencil";
-      this.userHeaderText = "Value List";
       this.visible3 = false;
     }
   }
   UserFormView4(): void {
     if (this.userBtnText == " Add Value") {
       this.userBtnText = " Hide Form";
-      this.buttonIcon = "cilTrash";
-      this.userHeaderText = "Add New Value";
       this.visible4 = true;
     } else {
       this.userBtnText = " Add Value";
-      this.buttonIcon = "cilPencil";
-      this.userHeaderText = "Value List";
       this.visible4 = false;
     }
   }
@@ -326,7 +307,6 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     });
   }
-
   loadDesignation() { 
     this.subscription=this.designationService.selectDesignation().subscribe((data) => { 
       this.designations = data;
@@ -347,7 +327,7 @@ onSubmitAllForms(): void {
     this.onSubmit(this.PostingAndTrnsForm),
     this.onSubmit(this.TransferApproveInfoForm),
     this.onSubmit(this.DeptReleaseInfoForm),
-    this.onSubmit(this.EmpTransferPostingJoinForm),
+    this.onSubmit(this.EmpTransferPostingJoinForm)    
   ];
 
   // Use forkJoin to wait for all form submissions
@@ -377,44 +357,46 @@ onSubmitAllForms(): void {
   );
 }
 
+
+
 onSubmit(form: any): Observable<any> {
   this.clearCachedData();
-
-  const id1 = form.value.empId;
-  const id2 = form.value.postingOrderInfoId;
-  const id3 = form.value.transferApproveInfoId;
-  const id4 = form.value.depReleaseInfoId;
-  const id5 = form.value.empTnsferPostingJoinId;
-
-  if (form === this.EmployeeForm) {
-    return id5
-      ? this.empTnsferPostingJoinService.update(id5, form.value)
-      : this.empTnsferPostingJoinService.submit(form.value);
-  } else if (form === this.PostingAndTrnsForm) {
-    return id2
-      ? this.postingOrderInfoService.update(id2, form.value)
-      : this.postingOrderInfoService.submit(form.value);   
+  // Identify which form is being submitted and extract relevant IDs
+  let id: string;
+  let service: any;
+if (form === this.PostingAndTrnsForm) {
+    id = form.value.postingOrderInfoId;
+    service = this.postingOrderInfoService;
+    
   } else if (form === this.TransferApproveInfoForm) {
-    return id3
-      ? this.transferApproveInfoService.update(id3, form.value)
-      : this.transferApproveInfoService.submit(form.value);
-  } else if (form === this.EmpTransferPostingJoinForm) {
-    return id5
-      ? this.empTnsferPostingJoinService.update(id5, form.value)
-      : this.empTnsferPostingJoinService.submit(form.value);
+    id = form.value.transferApproveInfoId;
+    service = this.transferApproveInfoService;
+    console.log(form.value)
   } else if (form === this.DeptReleaseInfoForm) {
-    return id4
-      ? this.deptReleaseInfoService.update(id4, form.value)
-      : this.deptReleaseInfoService.submit(form.value);
+    id = form.value.depReleaseInfoId;
+    service = this.deptReleaseInfoService;
+  } else if (form === this.EmpTransferPostingJoinForm) {
+    id = form.value.empTnsferPostingJoinId;
+    service = this.empTnsferPostingJoinService;
   } else {
     // Return an empty observable if no valid form is provided
     return new Observable(observer => {
       observer.next({ success: false, message: 'Invalid form ID' });
       observer.complete();
-  
     });
   }
+
+  // Submit or update based on the presence of the ID
+  if (id) {
+
+    return service.update(id, form.value);
+    
+  } else {
+    console.log(id)
+    return service.submit(form.value);
+  }
 }
+
 
 
 clearCachedData(): void {
@@ -438,6 +420,11 @@ handleResponse(response: any): void {
     });
   }
 }
+
+
+
+
+
 
 
 
@@ -469,7 +456,7 @@ handleResponse(response: any): void {
     if (form != null) form.resetForm();
     this.transferApproveInfoService.transferApproveInfos = {
       transferApproveInfoId: 0,
-      PostingOrderInfoId:0,
+      postingOrderInfoId:0,
       empId: 0,
       approveStatus: true,
       approveByName: "",
@@ -486,7 +473,7 @@ handleResponse(response: any): void {
       this.PostingAndTrnsForm.form.reset();
       this.PostingAndTrnsForm.form.patchValue({
         transferApproveInfoId: 0,
-        PostingOrderInfoId:0,
+        postingOrderInfoId:0,
         empId: 0,
         approveByName: "",
         approveBy:0,
@@ -509,6 +496,7 @@ handleResponse(response: any): void {
     if (form != null) form.resetForm();
     this.deptReleaseInfoService.deptReleaseInfo = {
       depReleaseInfoId: 0,
+      postingOrderInfoId:0,
       transferApproveInfoId:0,
       empId: 0,
       approveByName:"",
@@ -531,6 +519,7 @@ handleResponse(response: any): void {
       this.DeptReleaseInfoForm.form.reset();
       this.DeptReleaseInfoForm.form.patchValue({
         depReleaseInfoId: 0,
+        postingOrderInfoId:0,
         transferApproveInfoId:0,
         approveByName:"",
         approveBy: 0,
@@ -560,6 +549,7 @@ handleResponse(response: any): void {
     if (form != null) form.resetForm();
     this.empTnsferPostingJoinService.empTnsferPostingJoin = {
       empTnsferPostingJoinId: 0,
+      postingOrderInfoId:0,
       depReleaseInfoId:0,
       approveByName:"",
       approveBy: 0,
@@ -577,6 +567,7 @@ handleResponse(response: any): void {
       this.EmpTransferPostingJoinForm.form.reset();
       this.EmpTransferPostingJoinForm.form.patchValue({
         empTnsferPostingJoinId: 0,
+        postingOrderInfoId:0,
         depReleaseInfoId:0,
         approveByName:"",
         approveBy: 0,

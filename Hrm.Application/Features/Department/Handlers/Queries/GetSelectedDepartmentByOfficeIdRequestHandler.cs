@@ -11,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.OfficeBranch.Handlers.Queries
 {
-    public class GetDepartmentByOfficeIdRequestHandler : IRequestHandler<GetDepartmentByOfficeIdRequest, List<SelectedModel>>
+    public class GetSelectedDepartmentByOfficeIdRequestHandler : IRequestHandler<GetSelectedDepartmentByOfficeIdRequest, List<SelectedModel>>
     {
 
         private readonly IHrmRepository<Hrm.Domain.Department> _DepartmentRepository;
         private readonly IMapper _mapper;
-        public GetDepartmentByOfficeIdRequestHandler(IHrmRepository<Hrm.Domain.Department> DepartmentRepository, IMapper mapper)
+        public GetSelectedDepartmentByOfficeIdRequestHandler(IHrmRepository<Hrm.Domain.Department> DepartmentRepository, IMapper mapper)
         {
             _DepartmentRepository = DepartmentRepository;
             _mapper = mapper;
 
         }
 
-        public async Task<List<SelectedModel>> Handle(GetDepartmentByOfficeIdRequest request, CancellationToken cancellationToken)
+        public async Task<List<SelectedModel>> Handle(GetSelectedDepartmentByOfficeIdRequest request, CancellationToken cancellationToken)
         {
             ICollection<Hrm.Domain.Department> departments = _DepartmentRepository.FilterWithInclude(x => x.OfficeId == request.OfficeId).ToList();
             List<SelectedModel> SelectedModel = departments.Select(x => new SelectedModel

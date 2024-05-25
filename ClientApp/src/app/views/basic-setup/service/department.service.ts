@@ -61,8 +61,11 @@ export class DepartmentService {
     );
   }
 
-  
-  getDepartmentByOfficeId(id:number){
+  getSelectedDepartmentByOfficeId(id:number){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/Department/get-selectedDepartmentByOfficeId/' + id);
+  }
+  
+  onOfficeSelectGetDepartment(id:number){
+    return this.http.get<Department[]>(this.baseUrl + '/Department/get-DepartmentsByOfficeId/' + id);
   }
 }

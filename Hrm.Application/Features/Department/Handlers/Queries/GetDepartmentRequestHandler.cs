@@ -33,7 +33,7 @@ namespace Hrm.Application.Features.Department.Handlers.Queries
 
 
 
-            IQueryable<Hrm.Domain.Department> Department = _DepartmentRepository.Where(x => true);
+            IQueryable<Hrm.Domain.Department> Department = _DepartmentRepository.Where(x => true).OrderByDescending(x=>x.DepartmentId);
 
             // Use Task.Run to offload the synchronous operation to a background thread
             var DepartmentDtos = await Task.Run(() => _mapper.Map<List<DepartmentDto>>(Department));

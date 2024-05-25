@@ -198,7 +198,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onOfficeSelect(officeId : number){
-    this.departmentService.getDepartmentByOfficeId(+officeId).subscribe((res) => {
+    this.departmentService.getSelectedDepartmentByOfficeId(+officeId).subscribe((res) => {
       this.departments = res;
       if(res.length>0){
         this.upperDepartmentView = true;
@@ -207,6 +207,18 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
         this.upperDepartmentView = false;
       }
     });
+  }
+  onOfficeSelectGetDepartment(officeId : number){
+    if(officeId == null){
+      this.getALlDepartments();
+    }
+    else {
+      this.departmentService.onOfficeSelectGetDepartment(+officeId).subscribe((res) => {
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.matSort;
+      });
+    }
   }
 
   onSubmit(form: NgForm): void {

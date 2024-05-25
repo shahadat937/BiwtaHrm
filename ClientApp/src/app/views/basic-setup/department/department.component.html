@@ -261,22 +261,39 @@
     <!-- user form end here -->
     
     <br/>
-    <div class="example-header">
-      <mat-form-field>
-        <input
-          matInput
-          #filter
-          (keyup)="applyFilter(filter.value)"
-          placeholder="Search Here.."
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          aria-label="clear"
-          *ngIf="filter.value"
-          (click)="filter.value = ''; applyFilter('')"
-        ></button>
-      </mat-form-field>
+    <div class="example-header d-flex justify-content-between" cRow>
+        <c-col [md]="4">
+          <div class="input-wrapper">
+            <select (change)="onOfficeSelect(departmentService.departments.officeId)" (change)="onOfficeSelectGetDepartment(departmentService.departments.officeId)"
+              [(ngModel)]="departmentService.departments.officeId" name="officeId" #officeId="ngModel"
+              cFormControl id="office" aria-label="Default select example" cSelect>
+              <option [ngValue]="null">Select Office</option>
+  
+              @for(office of offices; track office.id;let index=$index) {
+              <option [value]="office.id">
+                {{ office.name }}
+              </option>
+              }
+            </select>
+          </div>
+        </c-col>
+      <c-col  [md]="4">
+        <mat-form-field>
+          <input
+            matInput
+            #filter
+            (keyup)="applyFilter(filter.value)"
+            placeholder="Search Here.."
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            aria-label="clear"
+            *ngIf="filter.value"
+            (click)="filter.value = ''; applyFilter('')"
+          ></button>
+        </mat-form-field>
+      </c-col>
     </div>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource">

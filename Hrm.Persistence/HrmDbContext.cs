@@ -19,22 +19,6 @@ namespace Hrm.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            //modelBuilder.Entity<Office>(entity =>
-            //{
-            //    entity.HasKey(e => e.OfficeId)
-            //    .HasName("[[PK_Office]]");
-            //});
-            //modelBuilder.Entity<Department>(entity =>
-            //{
-            //    entity.HasKey(e => e.DepartmentId)
-            //    .HasName("[[PK_Department]]");
-            //});
-            //modelBuilder.Entity<Designation>(entity =>
-            //{
-            //    entity.HasKey(e => e.DesignationId)
-            //    .HasName("[[PK_Designation]]");
-            //});
-
             modelBuilder.Entity<Office>()
             .HasMany(o => o.Departments)
             .WithOne(d => d.Office)
@@ -54,6 +38,18 @@ namespace Hrm.Persistence
             .HasMany(o => o.Designations)
             .WithOne(d => d.Office)
             .HasForeignKey(d => d.OfficeId);
+
+
+            modelBuilder.Entity<Designation>()
+                .HasOne(d => d.Office)
+                .WithMany(o => o.Designations)
+                .HasForeignKey(d => d.OfficeId);
+
+            modelBuilder.Entity<Designation>()
+                .HasOne(d => d.Department)
+                .WithMany(dp => dp.Designations)
+                .HasForeignKey(d => d.DepartmentId);
+
 
             modelBuilder.Entity<OfficeBranch>(entity => {
 

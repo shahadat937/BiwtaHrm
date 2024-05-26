@@ -10,7 +10,7 @@
       <div class="designation-header">
         <label (click)="toggleDesignationExpand()">
           &nbsp;&nbsp;<span class="toggle-icon">{{ isDesignationExpanded ? '-' : '+' }}</span>
-          &nbsp;<span>পদবি</span>
+          &nbsp;<span>Designation</span>
         </label>
       </div>
       <ul *ngIf="isDesignationExpanded">
@@ -24,7 +24,7 @@
         <div class="sub-department-header">
           <label (click)="toggleDepartmentExpand()">
             &nbsp;&nbsp;<span class="toggle-icon">{{ isDepartmentExpanded ? '-' : '+' }}</span>
-            &nbsp;<span class="sub-department-text">শাখা</span>
+            &nbsp;<span class="sub-department-text">Department</span>
           </label>
         </div>
         <ul *ngIf="isDepartmentExpanded">

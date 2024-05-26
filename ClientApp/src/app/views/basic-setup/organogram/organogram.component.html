@@ -14,12 +14,12 @@
                     <ul *ngIf="isOfficeExpanded(office.name)">
                         <li *ngIf="office.directDesignations.length">
                             <div class="designation-header">
-                                <label (click)="toggleDesignationExpand()">
-                                    &nbsp;&nbsp;<span class="toggle-icon">{{ isDesignationExpanded ? '-' : '+' }}</span>
-                                    &nbsp;<span>পদবি</span>
+                                <label (click)="toggleDesignationExpand(office.name)">
+                                    &nbsp;&nbsp;<span class="toggle-icon">{{ isDesignationExpanded(office.name) ? '-' : '+' }}</span>
+                                    &nbsp;<span>Designation</span>
                                 </label>
                             </div>
-                            <ul *ngIf="isDesignationExpanded">
+                            <ul *ngIf="isDesignationExpanded(office.name)">
                                 <li *ngFor="let designation of office.directDesignations" class="designation-text">
                                     {{ designation.name }}
                                 </li>
@@ -27,12 +27,12 @@
                         </li>
                         <li *ngIf="office.departments.length">
                             <div class="sub-department-header">
-                                <label (click)="toggleDepartmentExpand()">
-                                    &nbsp;&nbsp;<span class="toggle-icon">{{ isDepartmentExpanded ? '-' : '+' }}</span>
-                                    &nbsp;<span class="sub-department-text">শাখা</span>
+                                <label (click)="toggleDepartmentExpand(office.name)">
+                                    &nbsp;&nbsp;<span class="toggle-icon">{{ isDepartmentExpanded(office.name) ? '-' : '+' }}</span>
+                                    &nbsp;<span class="sub-department-text">Department</span>
                                 </label>
                             </div>
-                            <ul *ngIf="isDepartmentExpanded">
+                            <ul *ngIf="isDepartmentExpanded(office.name)">
                                 <app-organogram-department *ngFor="let department of office.departments"
                                     [department]="department"></app-organogram-department>
                             </ul>

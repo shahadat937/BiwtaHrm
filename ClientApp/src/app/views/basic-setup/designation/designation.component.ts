@@ -40,8 +40,10 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
     'slNo',
+    'officeName',
+    'departmentName',
     'designationName',
-    'designationNameBangla',
+    // 'designationNameBangla',
     'isActive',
     'Action',
   ];
@@ -161,6 +163,8 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       remark: '',
       menuPosition: 0,
       isActive: true,
+      officeName: "",
+      departmentName: "",
     };
   }
   resetForm() {
@@ -175,6 +179,8 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         remark: '',
         menuPosition: 0,
         isActive: true,
+        officeName: "",
+        departmentName: "",
       });
     }
   }
@@ -184,6 +190,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
+      console.log(item)
     });
   }
 

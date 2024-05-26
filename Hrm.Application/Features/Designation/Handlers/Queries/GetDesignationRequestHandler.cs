@@ -8,6 +8,7 @@ using Hrm.Application.Features.Designation.Requests.Queries;
 using Hrm.Application.Features.Designation.Requests.Queries;
 using Hrm.Application.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,16 +30,15 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
 
         public async Task<object> Handle(GetDesignationRequest request, CancellationToken cancellationToken)
         {
-            // Fetch blood groups from repository
-            IQueryable<Hrm.Domain.Designation> Designations = _DesignationRepository.Where(x => true);
+            var designations = _DesignationRepository
+            .Where(x => true)
+            .Include(d => d.Office)
+            .Include(d => d.Department)
+            .OrderByDescending(x => x.DesignationId);
 
-            // Order blood groups by descending order
-            Designations = Designations.OrderByDescending(x => x.DesignationId);
+            var designationDtos = _mapper.Map<List<DesignationDto>>(await designations.ToListAsync(cancellationToken));
 
-            // Map the ordered blood groups to DesignationDto
-            var DesignationDtos = _mapper.Map<List<DesignationDto>>(Designations.ToList());
-
-            return DesignationDtos;
+            return designationDtos;
         }
     }
 }

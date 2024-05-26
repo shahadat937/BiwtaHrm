@@ -142,6 +142,14 @@ namespace Hrm.Application.Profiles
             CreateMap<Designation, DesignationDto>().ReverseMap();
             CreateMap<Designation, CreateDesignationDto>().ReverseMap();
 
+            CreateMap<Designation, DesignationDto>()
+            .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName));
+
+            CreateMap<Department, DepartmentDto>()
+            .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
+            .ForMember(dest => dest.UpperDepartmentName, opt => opt.MapFrom(src => src.UpperDepartment.DepartmentName));
+
             CreateMap<Shift, ShiftDto>().ReverseMap();
             CreateMap<Shift, CreateShiftDto>().ReverseMap();
 

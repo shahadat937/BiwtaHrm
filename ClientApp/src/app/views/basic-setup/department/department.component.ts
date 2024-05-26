@@ -38,7 +38,14 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   loading = false;
   @ViewChild('DepartmentForm', { static: true }) DepartmentForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'departmentName', 'departmentNameBangla','isActive', 'Action'];
+  displayedColumns: string[] = [
+    'slNo', 
+    'officeName',
+    'upperDepartmentName',
+    'departmentName', 
+    // 'departmentNameBangla',
+    'isActive', 
+    'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -142,7 +149,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/bascisetup/department']);
   }
 
-  initaialUpazila(form?: NgForm) {
+  initaialDepartment(form?: NgForm) {
     if (form != null) form.resetForm();
     this.departmentService.departments = {
       departmentId: 0,
@@ -159,6 +166,8 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
       remark: "",
       menuPosition: 0,
       isActive: true,
+      officeName: "",
+      upperDepartmentName: "",
     };
   }
   resetForm() {

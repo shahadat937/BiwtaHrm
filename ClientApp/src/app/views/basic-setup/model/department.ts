@@ -13,4 +13,6 @@ export class Department {
     remark: string = ""; 
     menuPosition: number = 0;
     isActive: boolean = true;
+    officeName: string = ""; 
+    upperDepartmentName: string = ""; 
 }

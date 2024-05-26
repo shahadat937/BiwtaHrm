@@ -3,6 +3,7 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Designation;
 using Hrm.Application.Features.Designation.Requests.Queries;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +25,16 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
 
         public async Task<object> Handle(GetDesignationByOfficeIdAndDepartmentIdRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Hrm.Domain.Designation> Designation = _DesignationRepository.Where(x => x.OfficeId == request.OfficeId && x.DepartmentId == request.DepartmentId).OrderByDescending(x => x.DesignationId);
+            var designations = _DesignationRepository
+            .Where(x => true)
+            .Include(d => d.Office)
+            .Include(d => d.Department)
+            .Where(x => x.OfficeId == request.OfficeId && x.DepartmentId == request.DepartmentId)
+            .OrderByDescending(x => x.DesignationId);
 
-            var DesignationDtos = await Task.Run(() => _mapper.Map<List<DesignationDto>>(Designation));
+            var designationDtos = _mapper.Map<List<DesignationDto>>(await designations.ToListAsync(cancellationToken));
 
-            return DesignationDtos;
+            return designationDtos;
         }
     }
 }

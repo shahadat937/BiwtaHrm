@@ -46,9 +46,39 @@
                 </option>
                 }
               </select>
+              @if(!Department.valid && Department.touched){
+              <div class="text-left text-danger">Department is required</div>
+              }
             </div>
           </c-col>
 
+<<<<<<< HEAD
+=======
+            <c-col [md]="4">
+              <input
+                type="hidden"
+                [(ngModel)]="designationService.designation.designationId"
+                name="designationId" #DesignationId="ngModel"
+              />
+              <label cLabel for="validationCustom01"
+                >Designation Name<span class="text-danger">*</span></label
+              >
+              <input
+                [(ngModel)]="designationService.designation.designationName"
+                name="designationName"
+                #DesignationName="ngModel"
+                placeholder="Enter Designation Name"
+                cFormControl
+                id="validationCustom01"
+                required
+                type="text"
+              />
+              @if(!DesignationName.valid&&DesignationName.touched){
+              <div class="text-left text-danger">Designation Name is required</div>
+              }
+            </c-col>
+          
+>>>>>>> f5987e279c5eb23b281f99b4267d004da375f28d
           <c-col [md]="4">
             <input type="hidden" [(ngModel)]="designationService.designation.designationId" name="designationId"
               #DesignationId="ngModel" />

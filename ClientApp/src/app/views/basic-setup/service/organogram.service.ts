@@ -30,6 +30,7 @@ export class OrganogramService {
 
 export interface OrganogramOfficeNameDto {
   name: string;
+  directDesignations: OrganogramDesignationNameDto[];
   departments: OrganogramDepartmentNameDto[];
 }
 

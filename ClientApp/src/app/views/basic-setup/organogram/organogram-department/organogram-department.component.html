@@ -1,23 +1,37 @@
-<li>
-    <span>Department</span><br>
-    <div (click)="toggleExpand()" class="department-header">
-        &nbsp;&nbsp;<span class="toggle-icon">{{ isExpanded ? '-' : '+' }}</span>   
-      <span class="department-text">&nbsp; {{ department.name }}</span>
-    </div>
-    <ul *ngIf="isExpanded">
-      <li *ngIf="department.designations.length">
-        <span>Designations</span><br>
-        <ul>
-          <li *ngFor="let designation of department.designations" class="designation-text">
-            {{ designation.name }}
-          </li>
+<li class="tree">
+  <div class="department-header">
+    <label (click)="toggleExpand()">
+      &nbsp;&nbsp;<span class="toggle-icon">{{ isExpanded ? '-' : '+' }}</span>
+      <span class="department-text">&nbsp;{{ department.name }}</span>
+    </label>
+  </div>
+  <ul *ngIf="isExpanded">
+    <li *ngIf="department.designations.length">
+      <div class="designation-header">
+        <label (click)="toggleDesignationExpand()">
+          &nbsp;&nbsp;<span class="toggle-icon">{{ isDesignationExpanded ? '-' : '+' }}</span>
+          &nbsp;<span>পদবি</span>
+        </label>
+      </div>
+      <ul *ngIf="isDesignationExpanded">
+        <li *ngFor="let designation of department.designations" class="designation-text">
+          {{ designation.name }}
+        </li>
+      </ul>
+    </li>
+    <div *ngIf="department.subDepartments.length">
+      <li>
+        <div class="sub-department-header">
+          <label (click)="toggleDepartmentExpand()">
+            &nbsp;&nbsp;<span class="toggle-icon">{{ isDepartmentExpanded ? '-' : '+' }}</span>
+            &nbsp;<span class="sub-department-text">শাখা</span>
+          </label>
+        </div>
+        <ul *ngIf="isDepartmentExpanded">
+          <app-organogram-department *ngFor="let subDept of department.subDepartments"
+            [department]="subDept"></app-organogram-department>
         </ul>
       </li>
-      <div *ngIf="department.subDepartments.length">
-        <li>
-          <app-organogram-department *ngFor="let subDept of department.subDepartments" [department]="subDept"></app-organogram-department>
-        </li>
-      </div>
-    </ul>
-  </li>
-  
+    </div>
+  </ul>
+</li>

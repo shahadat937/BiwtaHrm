@@ -21,6 +21,7 @@ import { EmpModalComponent } from './emp-modal/emp-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ApproveEmpModalComponent } from './approve-emp-modal/approve-emp-modal.component';
 import { TransferlistComponent } from './transferlist/transferlist.component';
+import { TransferPostingHistoryComponent } from './transfer-posting-history/transfer-posting-history.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { TransferlistComponent } from './transferlist/transferlist.component';
     EmpModalComponent,
     ApproveEmpModalComponent,
     TransferlistComponent,
+    TransferPostingHistoryComponent,
   ],
   imports: [
     MatCardModule,

@@ -9,6 +9,7 @@ namespace Hrm.Application.DTOs.Organograms
     public class OrganogramOfficeNameDto
     {
         public string Name { get; set; }
+        public List<OrganogramDesignationNameDto> DirectDesignations { get; set; }
         public List<OrganogramDepartmentNameDto> Departments { get; set; }
     }
 }

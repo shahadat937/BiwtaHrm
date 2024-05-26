@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EmpModalComponent } from './emp-modal/emp-modal.component';
 import { TransferlistComponent } from './transferlist/transferlist.component';
 import { getPositionOfLineAndCharacter } from 'typescript';
+import { TransferPostingHistoryComponent } from './transfer-posting-history/transfer-posting-history.component';
 
 
 const routes: Routes = [
@@ -31,10 +32,10 @@ const routes: Routes = [
     path: 'update-TransferOrderList/:postingOrderInfoId',
     component: PostingComponent,
   },
-  //  { path: 'TransferOrderList', component: TransferlistComponent },
-  // { path: 'update-TransferOrderList/:postingOrderInfoId', component: PostingComponent },
-  // { path: '', redirectTo: '/TransferOrderList', pathMatch: 'full' }, // Redirect to the list by default
-
+{
+  path:"transferhistory",
+  component:TransferPostingHistoryComponent
+}
 ];
 
 @NgModule({

@@ -31,5 +31,6 @@ namespace Hrm.Domain
         public bool IsActive { get; set; }
 
         public ICollection<Department> Departments { get; set; }
+        public ICollection<Designation> Designations { get; set; }
     }
 }

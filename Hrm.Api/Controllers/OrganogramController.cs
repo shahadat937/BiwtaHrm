@@ -71,6 +71,7 @@ namespace Hrm.Api.Controllers
                     .ThenInclude(d => d.SubDepartments)
                 .Include(o => o.Departments)
                     .ThenInclude(d => d.Designations)
+                .Include(o => o.Designations) // Include direct designations
                 .ToListAsync();
 
             var result = offices.Select(o => new OrganogramOfficeNameDto
@@ -79,8 +80,12 @@ namespace Hrm.Api.Controllers
                 Departments = o.Departments
                     .Where(d => d.UpperDepartmentId == null)
                     .Select(d => MapDepartmentName(d))
+                    .ToList(),
+                DirectDesignations = o.Designations
+                    .Where(d => d.DepartmentId == null)
+                    .Select(d => new OrganogramDesignationNameDto { Name = d.DesignationNameBangla })
                     .ToList()
-            });
+            }).ToList();
 
             return Ok(result);
         }

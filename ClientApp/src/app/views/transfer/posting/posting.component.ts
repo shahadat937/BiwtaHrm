@@ -46,12 +46,14 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   offices: SelectedModel[] = [];
   designations: SelectedModel[] = [];
   userBtnText: string | undefined;
+  userBtnText2: string | undefined;
+  userBtnText3: string | undefined;
   userHeaderText: string | undefined;
   buttonIcon: string = '';
   visible: boolean | undefined;
   visible2: boolean | undefined;  
   visible3: boolean | undefined; 
-  visible4: boolean | undefined; 
+
   btnText: string | undefined;
   loading = false;
   @ViewChild('EmployeeForm', { static: true }) EmployeeForm!: NgForm;
@@ -111,6 +113,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     // Transfer Approve Info
     if (id3) {
       this.btnText = 'Update';
+      this.visible2=true
       this.transferApproveInfoService.find(+id3).subscribe((res) => {
         this.TransferApproveInfoForm?.form.patchValue(res);  
               
@@ -186,32 +189,30 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   UserFormView2(): void {
-    if (this.userBtnText == " Add Value") {
-      this.userBtnText = " Hide Form";
+    if (this.userBtnText2 == " Add Value") {
+      this.userBtnText2 = " Hide Form";
       this.visible2 = true;
+      console.log(this.visible2);
     } else {
-      this.userBtnText = " Add Value";
+      this.userBtnText2 = " Add Value";
       this.visible2 = false;
     }
   }
   UserFormView3(): void {
-    if (this.userBtnText == " Add Value") {
-      this.userBtnText = " Hide Form";
+    if (this.userBtnText3 == " Add Value") {
+      this.userBtnText3 = " Hide Form";
       this.visible3 = true;
     } else {
-      this.userBtnText = " Add Value";
+      this.userBtnText3 = " Add Value";
       this.visible3 = false;
     }
   }
-  UserFormView4(): void {
-    if (this.userBtnText == " Add Value") {
-      this.userBtnText = " Hide Form";
-      this.visible4 = true;
-    } else {
-      this.userBtnText = " Add Value";
-      this.visible4 = false;
-    }
+  visible4: boolean = false;
+  UserFormView4(event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    this.visible = checkbox.checked;
   }
+
   toggleCollapse() {
     this.handleRouteParams();
     this.userHeaderText = "Update Value";
@@ -238,7 +239,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.postingOrderInfoService.postingOrderInfos = {
       postingOrderInfoId: 0,
       empId: 0,
-      departmentId: 0,
+      departmentId: null,
       subBranchId: 0,
       subDepartmentId: 0,
       designationId:null,
@@ -259,7 +260,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       this.PostingAndTrnsForm.form.patchValue({
         postingOrderInfoId: 0,
         empId: 0,
-        departmentId: 0,
+        departmentId: null,
         subBranchId: 0,
         subDepartmentId: 0,
         designationId:null,
@@ -371,10 +372,10 @@ if (form === this.PostingAndTrnsForm) {
   } else if (form === this.TransferApproveInfoForm) {
     id = form.value.transferApproveInfoId;
     service = this.transferApproveInfoService;
-    console.log(form.value)
   } else if (form === this.DeptReleaseInfoForm) {
     id = form.value.depReleaseInfoId;
     service = this.deptReleaseInfoService;
+    console.log(form.value)
   } else if (form === this.EmpTransferPostingJoinForm) {
     id = form.value.empTnsferPostingJoinId;
     service = this.empTnsferPostingJoinService;
@@ -398,7 +399,6 @@ if (form === this.PostingAndTrnsForm) {
 }
 
 
-
 clearCachedData(): void {
   this.employeeService.cachedData = [];
   this.postingOrderInfoService.cachedData = [];
@@ -420,7 +420,13 @@ handleResponse(response: any): void {
     });
   }
 }
-
+resetForms() {
+  this.EmployeeForm.reset();
+  this.PostingAndTrnsForm.reset();
+  this.TransferApproveInfoForm.reset();
+  this.DeptReleaseInfoForm.reset();
+  this.EmpTransferPostingJoinForm.reset();
+}
 
 
 

@@ -8,82 +8,82 @@
     <c-card-body>
         <div class="row">
             <c-col [md]="4">
-                <div (click)="openDialog()" class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div (click)="openBasicInfoModal()" class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Basic Information</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div (click)="openModal()" class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div (click)="openModal()" class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Personal Information</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div [cModalToggle]="verticallyCenteredModal.id" class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Spouse Information</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Children Information</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Job Details</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h5>Promotion/Increment Information</h5>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Present/Mailing Address</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Permanent Address</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Education Information</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Training Details</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>PSI &Training History</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Bank Information</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Nominee Information</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Language Details</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Foreign Trip</h4>
                 </div>
             </c-col>
             <c-col [md]="4">
-                <div class="py-4 mb-3 bg-primary text-center text-light rounded-3" style="cursor: pointer;">
+                <div class="info-box py-4 mb-3 {{box_background}} text-center text-light rounded-3">
                     <h4>Photo & Signature</h4>
                 </div>
             </c-col>
@@ -92,20 +92,3 @@
     </c-card-body>
 </c-card>
 
-
-<!-- Employee Spouse Information Modal -->
-<c-modal #verticallyCenteredModal alignment="center" id="verticallyCenteredModal" #modalXl id="modalXl" size="xl">
-    <c-modal-header class="bg-success">
-        <h5 cModalTitl>Employee Spouse Information</h5>
-        <button [cModalToggle]="verticallyCenteredModal.id" cButtonClose></button>
-    </c-modal-header>
-    <c-modal-body>
-        
-    </c-modal-body>
-    <c-modal-footer>
-        <button [cModalToggle]="verticallyCenteredModal.id" cButton color="secondary">
-        Close
-        </button>
-        <button cButton color="primary">Save</button>
-    </c-modal-footer>
-</c-modal>

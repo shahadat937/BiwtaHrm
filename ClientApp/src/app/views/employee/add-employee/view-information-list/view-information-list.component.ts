@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { BasicInformationComponent } from '../employee-informations/basic-information/basic-information.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PersonalInformationComponent } from '../employee-informations/personal-information/personal-information.component';
 import { config } from 'rxjs';
+import { BasicInformationComponent } from '../employee-informations/basic-information/basic-information.component';
 
 @Component({
   selector: 'app-view-information-list',
@@ -11,10 +11,13 @@ import { config } from 'rxjs';
   styleUrl: './view-information-list.component.scss'
 })
 export class ViewInformationListComponent {
+
+  box_background : string = 'bg-primary';
   bsModelRef!: BsModalRef;
+
   constructor(public dialog: MatDialog, private modalService: BsModalService) { }
-  openDialog(){
-    const dialogRef = this.dialog.open(BasicInformationComponent, { disableClose: true, minWidth: '40vw' });
+  openBasicInfoModal(){
+    this.bsModelRef = this.modalService.show(BasicInformationComponent);
   }
   openModal(){
     this.bsModelRef = this.modalService.show(PersonalInformationComponent);

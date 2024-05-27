@@ -26,16 +26,16 @@
                             </ul>
                         </li>
                         <li *ngIf="office.departments.length">
-                            <div class="sub-department-header">
+                            <!-- <div class="sub-department-header">
                                 <label (click)="toggleDepartmentExpand(office.name)">
                                     &nbsp;&nbsp;<span class="toggle-icon">{{ isDepartmentExpanded(office.name) ? '-' : '+' }}</span>
                                     &nbsp;<span class="sub-department-text">Department</span>
                                 </label>
-                            </div>
-                            <ul *ngIf="isDepartmentExpanded(office.name)">
+                            </div> -->
+                            <div>
                                 <app-organogram-department *ngFor="let department of office.departments"
                                     [department]="department"></app-organogram-department>
-                            </ul>
+                            </div>
                         </li>
                     </ul>
                 </li>

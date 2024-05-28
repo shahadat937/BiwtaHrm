@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Employee.Requests.Queries
 {
-    public class GetEmployeeByIdRequest : IRequest<EmployeesDto>
+    public class GetEmployeeByIdRequest : IRequest<object>
     {
         public int EmpolyeeId { get; set; }
     }

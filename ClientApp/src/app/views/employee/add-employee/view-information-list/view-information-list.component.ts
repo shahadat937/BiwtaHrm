@@ -5,6 +5,8 @@ import { PersonalInformationComponent } from '../employee-informations/personal-
 import { config } from 'rxjs';
 import { BasicInformationComponent } from '../employee-informations/basic-information/basic-information.component';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/views/usermanagement/service/user.service';
+import { EmployeeService } from '../../service/employee.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -14,21 +16,43 @@ import { ActivatedRoute } from '@angular/router';
 export class ViewInformationListComponent implements OnInit {
 
   gettingStatus : boolean = false;
+  entryStatus : boolean = false;
+  basicInfoEntryStatus : boolean = false;
   bsModelRef!: BsModalRef;
   userId : any;
   empId : any;
+  userInfo:any;
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
-    private route: ActivatedRoute,) { }
+    private route: ActivatedRoute,
+    public userService: UserService,
+    public employeeService: EmployeeService,) { }
 
   ngOnInit(): void {
+    this.handleRouteParams();
+    this.getEmployeeByAspNetUserId();
+  }
+
+  handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
       this.userId = params.get('id');
+      this.userService.find(this.userId).subscribe((res) => {
+
+      });
     });
   }
 
-
+  getEmployeeByAspNetUserId(){
+    this.employeeService.findByAspNetUserId(this.userId).subscribe((res) => {
+      if(res.empId != null){
+        console.log("Have", res)
+      }
+      else{
+        console.log("none", res)
+      }
+    });
+  }
 
   openBasicInfoModal(){
     const initialState = {

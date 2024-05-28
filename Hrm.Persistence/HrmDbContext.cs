@@ -317,6 +317,12 @@ namespace Hrm.Persistence
                 .HasName("[EmpTnsferPostingJoinId]");
             });
 
+            modelBuilder.Entity<Employees>(entity =>
+            {
+                entity.HasKey(e => e.EmpId)
+                .HasName("[PK_EmpId]");
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -387,6 +393,7 @@ namespace Hrm.Persistence
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; } = null!;
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; } = null!;
         public virtual DbSet<Year> Year { get; set; } = null!;
+        public virtual DbSet<Employees> Employees { get; set; } = null!;
 
 
 

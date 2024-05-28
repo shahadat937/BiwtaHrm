@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Domain
+namespace Hrm.Application.DTOs.Employee
 {
-    public class Employees
+    public class CreateEmployeesDto : IEmployeesDto
     {
         public int EmpId { get; set; }
         public string? Title { get; set; }
@@ -86,4 +86,3 @@ namespace Hrm.Domain
         public bool? IsActive { get; set; }
     }
 }
-

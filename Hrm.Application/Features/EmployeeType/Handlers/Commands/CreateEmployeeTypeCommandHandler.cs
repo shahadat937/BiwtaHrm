@@ -8,7 +8,7 @@ using Hrm.Domain;
 
 namespace Hrm.Application.Features.EmployeeType.Handlers.Commands
 {
-    public class CreateEmployeeTypeCommandHandler : IRequestHandler<CreateEmployeeCommand, BaseCommandResponse>
+    public class CreateEmployeeTypeCommandHandler : IRequestHandler<CreateEmployeeTypeCommand, BaseCommandResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -17,7 +17,7 @@ namespace Hrm.Application.Features.EmployeeType.Handlers.Commands
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<BaseCommandResponse> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(CreateEmployeeTypeCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
             var validator = new CreateEmployeeTypeDtoValidator();

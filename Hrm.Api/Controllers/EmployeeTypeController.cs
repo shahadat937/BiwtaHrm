@@ -44,7 +44,7 @@ namespace Hrm.Api.Controllers
         [Route("save-employeeType")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateEmployeeTypeDto EmployeeType)
         {
-            var command = new CreateEmployeeCommand { EmployeeTypeDto = EmployeeType };
+            var command = new CreateEmployeeTypeCommand { EmployeeTypeDto = EmployeeType };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

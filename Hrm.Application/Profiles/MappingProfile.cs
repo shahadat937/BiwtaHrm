@@ -70,6 +70,7 @@ using Hrm.Application.DTOs.TransferApproveInfo;
 using Hrm.Application.DTOs.DepReleaseInfo;
 using Hrm.Application.DTOs.EmpTnsferPostingJoin;
 using Hrm.Application.DTOs.Year;
+using Hrm.Application.DTOs.Employee;
 
 
 
@@ -284,12 +285,9 @@ namespace Hrm.Application.Profiles
             CreateMap<Year, YearDto>().ReverseMap();
             CreateMap<Year, CreateYearDto>().ReverseMap();
 
+            CreateMap<Employees, EmployeesDto>().ReverseMap();
+            CreateMap<Employees, CreateEmployeesDto>().ReverseMap();
 
-            #region Modules Mapping    
-            CreateMap<Module, ModuleDto>().ReverseMap();
-            CreateMap<Module, ModuleFeatureDto>().ReverseMap();
-            CreateMap<Module, CreateModuleDto>().ReverseMap();
-            #endregion
         }
     }
 }

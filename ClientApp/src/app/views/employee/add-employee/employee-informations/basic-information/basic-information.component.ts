@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -6,8 +6,16 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './basic-information.component.html',
   styleUrl: './basic-information.component.scss'
 })
-export class BasicInformationComponent {
+export class BasicInformationComponent implements OnInit {
+
+  userId: any;
+
   constructor(public bsModalRef: BsModalRef){}
+
+  ngOnInit(): void {
+    console.log('User ID:', this.userId);
+  }
+  
   confirm() {
     this.bsModalRef.hide();
   }

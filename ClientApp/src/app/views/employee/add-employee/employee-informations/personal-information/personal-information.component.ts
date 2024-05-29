@@ -7,12 +7,9 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   styleUrl: './personal-information.component.scss'
 })
 export class PersonalInformationComponent {
-    constructor(public bsModalRef: BsModalRef){}
-  confirm() {
-    this.bsModalRef.hide();
-  }
+  
+  visible:boolean = true;
 
-  decline() {
-    this.bsModalRef.hide();
-  }
+    constructor(public bsModalRef: BsModalRef){}
+    
 }

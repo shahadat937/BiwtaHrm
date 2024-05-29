@@ -34,7 +34,7 @@ namespace Hrm.Api.Controllers
         [Route("get-employeeById/{id}")]
         public async Task<ActionResult<EmployeesDto>> GetEmployeeById(int id)
         {
-            var Employee = await _mediator.Send(new GetEmployeeByIdRequest { EmpolyeeId = id });
+            var Employee = await _mediator.Send(new GetEmployeeByIdRequest { EmpId = id });
             return Ok(Employee);
         }
 

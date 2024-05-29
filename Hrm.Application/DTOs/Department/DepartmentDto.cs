@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.DTOs.Department
 {
-    public class DepartmentDto: IDepartmentDto
+    public class DepartmentDto : IDepartmentDto
     {
         public int DepartmentId { get; set; }
         public string? DepartmentName { get; set; }
@@ -22,5 +22,8 @@ namespace Hrm.Application.DTOs.Department
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+        public string? OfficeName { get; set; }
+        public string? UpperDepartmentName { get; set; }
     }
+
 }

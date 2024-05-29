@@ -45,5 +45,12 @@ export class DesignationService {
   delete(id:number){
     return this.http.delete(this.baseUrl + '/designation/delete-Designation/'+id);
   }
+  getDesignationsByOfficeId(id:number){
+    return this.http.get<Designation[]>(this.baseUrl + '/designation/get-designationByOfficeId/' + id);
+  }
+  
+  getDesignationsByOfficeIdAndDepartmentId(officeId:number, departmentId:number){
+    return this.http.get<Designation[]>(this.baseUrl + '/designation/get-designationByOfficeIdAndDepartmentId?&officeId=' + officeId + '&departmentId='+departmentId);
+  }
 
 }

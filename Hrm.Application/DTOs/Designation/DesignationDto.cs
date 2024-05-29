@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.DTOs.Designation
 {
-    public class DesignationDto: IDesignationDto
+    public class DesignationDto : IDesignationDto
     {
-
         public int DesignationId { get; set; }
         public string? DesignationName { get; set; }
         public string? DesignationNameBangla { get; set; }
@@ -17,5 +16,7 @@ namespace Hrm.Application.DTOs.Designation
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+        public string? OfficeName { get; set; }
+        public string? DepartmentName { get; set; }
     }
 }

@@ -233,10 +233,14 @@
           placeholder="Enter Phone Number"
           cFormControl
           id="validationCustom11"
-          type="number"
+          type="text"
+          pattern="^[0-9]*$"
         />
-        @if(!Phone.valid&&Phone.touched){
+        <!-- @if(!Phone.value&&Phone.touched){
         <div class="text-left text-danger">Phone is required</div>
+        } -->
+        @if(Phone.value&&!Phone.valid){
+        <div class="text-left text-danger">Phone is not valid</div>
         }
       </c-col>
 
@@ -250,10 +254,14 @@
           placeholder="Enter Mobile Number"
           cFormControl
           id="validationCustom11"
-          type="number"
+          type="text"
+          pattern="^[0-9]*$"
         />
-        @if(!Mobile.valid&&Mobile.touched){
+        <!-- @if(!Mobile.value&&Mobile.touched){
         <div class="text-left text-danger">Mobile is required</div>
+        } -->
+        @if(Mobile.value&&!Mobile.valid){
+        <div class="text-left text-danger">Mobile is not valid</div>
         }
       </c-col>
           
@@ -311,7 +319,7 @@
       type="text"
     />
     @if(!OfficeWebsite.valid&&OfficeWebsite.touched){
-    <div class="text-left text-danger">Fax is required</div>
+    <div class="text-left text-danger">Office Website is required</div>
     }
   </c-col>
 

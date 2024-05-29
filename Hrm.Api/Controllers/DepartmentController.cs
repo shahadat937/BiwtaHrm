@@ -89,8 +89,16 @@ namespace Hrm.Api.Controllers
         [Route("get-selectedDepartmentByOfficeId/{id}")]
         public async Task<ActionResult<List<SelectedModel>>> GetSelectedDepartmentByOfficeId(int id)
         {
-            var branch = await _mediator.Send(new GetDepartmentByOfficeIdRequest { OfficeId = id });
-            return Ok(branch);
+            var department = await _mediator.Send(new GetSelectedDepartmentByOfficeIdRequest { OfficeId = id });
+            return Ok(department);
+        }
+
+        [HttpGet]
+        [Route("get-DepartmentsByOfficeId/{id}")]
+        public async Task<ActionResult<List<SelectedModel>>> GetDepartmentsByOfficeId(int id)
+        {
+            var department = await _mediator.Send(new GetDepartmentsByOfficeIdRequest { OfficeId = id });
+            return Ok(department);
         }
 
     }

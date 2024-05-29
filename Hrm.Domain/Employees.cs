@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Domain
 {
-    public class Employee
+    public class Employees
     {
         public int EmpId { get; set; }
         public string? Title { get; set; }
@@ -44,6 +44,7 @@ namespace Hrm.Domain
         public string? PassportNo { get; set; }
         public DateTime? PassportExpireDate { get; set; }
         public int? PoolId { get; set; }
+        public int? OfficeId { get; set; }
         public int? DepartmentID { get; set; }
         public int? BranchId { get; set; }
         public int? SubBranchId { get; set; }

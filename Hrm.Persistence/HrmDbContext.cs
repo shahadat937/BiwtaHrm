@@ -19,22 +19,6 @@ namespace Hrm.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            //modelBuilder.Entity<Office>(entity =>
-            //{
-            //    entity.HasKey(e => e.OfficeId)
-            //    .HasName("[[PK_Office]]");
-            //});
-            //modelBuilder.Entity<Department>(entity =>
-            //{
-            //    entity.HasKey(e => e.DepartmentId)
-            //    .HasName("[[PK_Department]]");
-            //});
-            //modelBuilder.Entity<Designation>(entity =>
-            //{
-            //    entity.HasKey(e => e.DesignationId)
-            //    .HasName("[[PK_Designation]]");
-            //});
-
             modelBuilder.Entity<Office>()
             .HasMany(o => o.Departments)
             .WithOne(d => d.Office)
@@ -54,6 +38,18 @@ namespace Hrm.Persistence
             .HasMany(o => o.Designations)
             .WithOne(d => d.Office)
             .HasForeignKey(d => d.OfficeId);
+
+
+            modelBuilder.Entity<Designation>()
+                .HasOne(d => d.Office)
+                .WithMany(o => o.Designations)
+                .HasForeignKey(d => d.OfficeId);
+
+            modelBuilder.Entity<Designation>()
+                .HasOne(d => d.Department)
+                .WithMany(dp => dp.Designations)
+                .HasForeignKey(d => d.DepartmentId);
+
 
             modelBuilder.Entity<OfficeBranch>(entity => {
 
@@ -321,6 +317,12 @@ namespace Hrm.Persistence
                 .HasName("[EmpTnsferPostingJoinId]");
             });
 
+            modelBuilder.Entity<Employees>(entity =>
+            {
+                entity.HasKey(e => e.EmpId)
+                .HasName("[PK_EmpId]");
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -391,6 +393,7 @@ namespace Hrm.Persistence
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; } = null!;
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; } = null!;
         public virtual DbSet<Year> Year { get; set; } = null!;
+        public virtual DbSet<Employees> Employees { get; set; } = null!;
 
 
 

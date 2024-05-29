@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.OfficeBranch.Requests.Queries
 {
-    public class GetDepartmentByOfficeIdRequest : IRequest<List<SelectedModel>>
+    public class GetSelectedDepartmentByOfficeIdRequest : IRequest<List<SelectedModel>>
     {
         public int OfficeId { get; set; }
     }

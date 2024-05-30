@@ -112,5 +112,17 @@ namespace Hrm.Api.Controllers
             var DepReleaseInfo = await _mediator.Send(new GetSelectedDepReleaseInfoRequest { });
             return Ok(DepReleaseInfo);
         }
+        [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [Route("save-AnoterdepReleaseInfo")]
+        public async Task<ActionResult<BaseCommandResponse>> DepPost([FromBody] CreateDepReleaseInfoDto DepReleaseInfo)
+        {
+           
+
+                var command = new CreateDepReleaseInfoCommand { DepReleaseInfoDto = DepReleaseInfo };
+                var response = await _mediator.Send(command);
+                return Ok(response);
+        }
     }
 }

@@ -15,11 +15,15 @@ export class TransferApproveInfoService {
 
   constructor(private http: HttpClient) {
     this.transferApproveInfos = new TransferApproveInfo();
-    
-   }
-  find(id: number) {
-    return this.http.get<TransferApproveInfo>(this.baseUrl + '/division/get-divisionbyid/' + id);
+
   }
+  find(id: number) {
+    return this.http.get<TransferApproveInfo>(this.baseUrl + '/transferApproveInfo/get-transferApproveInfobyid/' + id);
+  }
+  findDetails(id: number) {
+    return this.http.get<TransferApproveInfo>(this.baseUrl + '/postingOrderInfo/get-PostingOrderInfobyid/' + id);
+  }
+
   getTransferApproveInfoAll(): Observable<TransferApproveInfo[]> {
     if (this.cachedData.length > 0) {
       // If data is already cached, return it without making a server call
@@ -37,16 +41,16 @@ export class TransferApproveInfoService {
     }
   }
 
-  update(id: number,model: any) {
-    return this.http.put(this.baseUrl + '/transferApproveInfo/update-transferApproveInfo/'+id, model);
+  update(id: number, model: any) {
+    return this.http.put(this.baseUrl + '/transferApproveInfo/update-transferApproveInfo/' + id, model);
   }
   submit(model: any) {
     return this.http.post(this.baseUrl + '/transferApproveInfo/save-transferApproveInfo', model);
   }
-  delete(id:number){
-    return this.http.delete(this.baseUrl + '/transferApproveInfo/delete-transferApproveInfo/'+id);
+  delete(id: number) {
+    return this.http.delete(this.baseUrl + '/transferApproveInfo/delete-transferApproveInfo/' + id);
   }
-  
+
   submitApproved(model: any) {
     return this.http.post(this.baseUrl + '/transferApproveInfo/save-transferApprove', model);
   }

@@ -351,10 +351,10 @@ export const navItems: INavData[] = [
         name: 'Deparment Release',
         url: '/transfer/release'
       },
-      {
-        name: 'Transfer Approved',
-        url: '/transfer/transferApproveInfo'
-      },
+      // {
+      //   name: 'Transfer Approved',
+      //   url: '/transfer/transferApproveInfo'
+      // },
       {
         name: 'Transfer Approved List',
         url: '/transfer/transferApproveInfoList'

@@ -82,21 +82,6 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
   ngOnInit(): void {
     this.getAllTransferApproveInfo();
     this.loadTransferApproveInfos();
-    // this.route.paramMap.subscribe(params => {
-    //   const postingOrderInfoId = params.get('postingOrderInfoId');
-    //   if (postingOrderInfoId) {
-    //     const id = Number(postingOrderInfoId); // Convert to number
-    //     if (!isNaN(id)) {
-    //       this.postingOrderInfoService.find(id).subscribe(data => {
-    //         this.postingOrderInfoService.postingOrderInfos = data;
-    //         // Initialize other services or form data if needed
-    //         this.btnText='Submit'
-    //       });
-    //     } else {
-    //       console.error('Invalid ID:', postingOrderInfoId);
-    //     }
-    //   }
-    // });
   }
 
   ngAfterViewInit() {
@@ -127,7 +112,6 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   // transferApproveInfos
-
   initaialtransferApproveInfo(form?: NgForm) {
     if (form != null) form.resetForm();
     this.transferApproveInfoService.transferApproveInfos = {
@@ -161,6 +145,7 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
       });
     }
   }
+  //
   loadTransferApproveInfos() {
     this.subscription = this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((h) => {
       this.getAllTransferApproveInfo
@@ -186,6 +171,7 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
       console.log(form.value)
       this.subscription = action$.subscribe((response: any) => {
         if (response.success) {
+
           this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right',
           });
@@ -203,6 +189,7 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
     } else {
       this.toastr.error('Form is invalid');
     }
+
   }
 
   delete(element: any) {

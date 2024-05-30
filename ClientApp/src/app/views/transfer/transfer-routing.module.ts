@@ -1,3 +1,4 @@
+import { DepartmetnReleaseComponent } from './departmetn-release/departmetn-release.component';
 import { ReleaseComponent } from './release/release.component';
 import { PostingComponent } from './posting/posting.component';
 import { NgModule } from '@angular/core';
@@ -9,6 +10,7 @@ import { TransferPostingHistoryComponent } from './transfer-posting-history/tran
 import { TransferApprovedComponent } from './transfer-approved/transfer-approved.component';
 import { TransferApprovedListComponent } from './transfer-approved-list/transfer-approved-list.component';
 import { DepartmetnReleaseListComponent } from './departmetn-release-list/departmetn-release-list.component';
+import { DeptReleaseInfo } from '../basic-setup/model/dept-release-info';
 
 
 const routes: Routes = [
@@ -47,18 +49,18 @@ const routes: Routes = [
     path:'transferApproveInfo',
     component:TransferApprovedComponent
   },
-  {
-    path:'transferApproveInfo/:transferApproveInfoId',
-    component:TransferApprovedComponent
-  },
+  // {
+  //   path:'transferApproveInfo/:transferApproveInfoId',
+  //   component:TransferApprovedComponent
+  // },
   //
   {
     path:'departmetnReleaseList',
     component:DepartmetnReleaseListComponent
   },
   {
-    path:'departmetnRelease/:',
-    component:DepartmetnReleaseListComponent
+    path:'departmetnRelease/:transferApproveInfoId',
+    component:DepartmetnReleaseComponent
   },
 
 {

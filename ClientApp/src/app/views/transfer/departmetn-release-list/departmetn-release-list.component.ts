@@ -1,3 +1,5 @@
+import { DepartmentService } from './../../basic-setup/service/department.service';
+import { DeptReleaseInfoService } from './../../basic-setup/service/dept-release-info.service';
 import { TransferApproveInfo } from './../../basic-setup/model/transfer-approve-info';
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -12,6 +14,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { PostingOrderInfo } from '../../basic-setup/model/posting-order-info';
 import { PostingOrderInfoService } from '../../basic-setup/service/posting-order-info.service';
 import { TransferApproveInfoService } from '../../basic-setup/service/transfer-approve-info.service';
+import { DeptReleaseInfo } from '../../basic-setup/model/dept-release-info';
 
 
 @Component({
@@ -27,18 +30,19 @@ export class DepartmetnReleaseListComponent implements OnInit, OnDestroy, AfterV
   btnText: string | undefined;
   @ViewChild('postingOrderForm', { static: true }) postingOrderForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo',"departmentName" ,"approveBy","approveDate","officeName","designationName",'officeOrderDate','transferSection','releaseType', 'Action'];
+  displayedColumns: string[] = ['slNo', "departmentName", "officeName", "designationName", "approveBy", "approveDate", 'officeOrderDate', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-  transferApproveInfo:TransferApproveInfo[]=[];
-  postingOrderInfo: PostingOrderInfo[]=[];
+  transferApproveInfo: TransferApproveInfo[] = [];
+  postingOrderInfo: PostingOrderInfo[] = [];
+  deptReleaseInfo:DeptReleaseInfo[]=[];
   constructor(
     public postingOrderInfoService: PostingOrderInfoService,
     public transferApproveInfoService: TransferApproveInfoService,
-
+    public deptReleaseInfoService: DeptReleaseInfoService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -57,8 +61,8 @@ export class DepartmetnReleaseListComponent implements OnInit, OnDestroy, AfterV
     });
   }
   ngOnInit(): void {
-    this.getTransferEmployes();
-    this.getTransferApproved();
+    this.getDepReleaseList();
+    this.getTransferApprovedList();
     this.route.paramMap.subscribe(params => {
       this.postingOrderInfoId = +params.get('postingOrderInfoId')!;
     });
@@ -93,23 +97,23 @@ export class DepartmetnReleaseListComponent implements OnInit, OnDestroy, AfterV
   initaialWard(form?: NgForm) {
     if (form != null) form.resetForm();
     this.postingOrderInfoService.postingOrderInfos = {
-      postingOrderInfoId:   0,
-      empId:0,
-      departmentId:null,
-      subBranchId:0,
-      subDepartmentId:0,
-      designationId:null,
+      postingOrderInfoId: 0,
+      empId: 0,
+      departmentId: null,
+      subBranchId: 0,
+      subDepartmentId: 0,
+      designationId: null,
       officeId: null,
-      designationName:"",
-    officeName:"",
-    departmentName:"",
-      officeOrderNo:"",
-      officeOrderDate:new Date(),
-      orderOfficeBy:"",
-      transferSection:"",
-      releaseType:"",
-      menuPosition:  0,
-      isActive:  true
+      designationName: "",
+      officeName: "",
+      departmentName: "",
+      officeOrderNo: "",
+      officeOrderDate: new Date(),
+      orderOfficeBy: "",
+      transferSection: "",
+      releaseType: "",
+      menuPosition: 0,
+      isActive: true
 
     };
   }
@@ -117,49 +121,72 @@ export class DepartmetnReleaseListComponent implements OnInit, OnDestroy, AfterV
 
     this.btnText = 'Submit';
     if (this.postingOrderForm?.form != null) {
-  
+
       this.postingOrderForm.form.reset();
       this.postingOrderForm.form.patchValue({
-        postingOrderInfoId:   0,
-        empId:0,
-        departmentId:null,
-        subBranchId:0,
-        subDepartmentId:0,
-        designationId:null,
+        postingOrderInfoId: 0,
+        empId: 0,
+        departmentId: null,
+        subBranchId: 0,
+        subDepartmentId: 0,
+        designationId: null,
         officeId: null,
-        designationName:"",
-    officeName:"",
-    departmentName:"",
-        officeOrderNo:"",
-        officeOrderDate:new Date(),
-        orderOfficeBy:"",
-        transferSection:"",
-        releaseType:"",
-        menuPosition:  0,
-        isActive:  true
+        designationName: "",
+        officeName: "",
+        departmentName: "",
+        officeOrderNo: "",
+        officeOrderDate: new Date(),
+        orderOfficeBy: "",
+        transferSection: "",
+        releaseType: "",
+        menuPosition: 0,
+        isActive: true
       });
     }
   }
 
-  getTransferEmployes() {
+  getTransferOrderList() {
     this.subscription = this.postingOrderInfoService.getAll().subscribe((item) => {
-      this.postingOrderInfo= item;
-      this.dataSource = new MatTableDataSource(item);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.matSort;
+      this.postingOrderInfo = item;
+      this.mergeData();
     });
   }
-  getTransferApproved() {
-this.subscription= this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((res)=>{
-  console.log(res)
-this.transferApproveInfo=res;
-})
 
+  getTransferApprovedList() {
+    this.subscription = this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((res) => {
+      this.transferApproveInfo = res;
+      this.mergeData();
+    })
   }
+  getDepReleaseList() {
+    this.subscription = this.deptReleaseInfoService.getdeptReleaseInfoAll().subscribe((res) => {
+      this.deptReleaseInfo = res;
+      this.mergeData();
+    })
+  }
+
+  mergeData() {
+    if (!this.postingOrderInfo || !this.transferApproveInfo) {
+      return; // Ensure both datasets are loaded
+    }
+    const mergedData = this.postingOrderInfo.map(posting => {
+      const transferApprove = this.transferApproveInfo.find(transfer => transfer.postingOrderInfoId === posting.postingOrderInfoId);
+      return {
+        ...posting,
+        ...transferApprove,
+      };
+    });
+
+    this.dataSource = new MatTableDataSource(mergedData);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.matSort;
+  }
+
+
+
   onSubmit(form: NgForm): void {
     this.postingOrderInfoService.cachedData = [];
     const id = form.value.postingOrderInfoId;
-    //console.log(form.value)
     const action$ = id
       ? this.postingOrderInfoService.update(id, form.value)
       : this.postingOrderInfoService.submit(form.value);
@@ -170,10 +197,11 @@ this.transferApproveInfo=res;
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getTransferEmployes();
+        this.getDepReleaseList();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/transfer/TransferOrderList']);
+          //this.router.navigate(['/transfer/TransferOrderList']);
+          this.router.navigate(['/transfer/departmetnReleaseList']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {
@@ -187,7 +215,6 @@ this.transferApproveInfo=res;
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          console.log(result)
           this.postingOrderInfoService.delete(element.postingOrderInfoId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);

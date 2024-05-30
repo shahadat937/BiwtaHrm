@@ -26,7 +26,7 @@
           cFormControl
           id="validationCustom01"
           type="text"
-          disabled
+          readonly
         />
       </c-col>
 
@@ -72,8 +72,8 @@
           >NID Number<span class="text-danger">*</span></label
         >
           <input
-            [(ngModel)]="employeeService.basicInfo.nId"
-            name="nId"
+            [(ngModel)]="employeeService.basicInfo.nid"
+            name="nid"
             #NID="ngModel"
             placeholder="Enter NID Number"
             cFormControl
@@ -102,7 +102,7 @@
             id="validationCustom05"
             type="text"
           />
-          @if(!PersonalFileNo.value&&PersonalFileNo.touched){
+          @if(!PersonalFileNo.valid&&PersonalFileNo.touched){
           <div class="text-left text-danger">Personal File No. is required</div>
           }
         </c-col>
@@ -111,7 +111,7 @@
           <label cLabel for="validationCustom06">Employee Type<span class="text-danger">*</span></label>
           <div class="input-wrapper">
             <select 
-              [(ngModel)]="employeeService.basicInfo.employeeTypeId" name="EmployeeTypeId" #EmployeeTypeId="ngModel"
+              [(ngModel)]="employeeService.basicInfo.employeeTypeId" name="employeeTypeId" #EmployeeTypeId="ngModel"
               cFormControl id="validationCustom06" aria-label="Default select example" required cSelect>
               <option [ngValue]="null">Select Employee Type</option>
   
@@ -124,6 +124,28 @@
             @if(!EmployeeTypeId.valid && EmployeeTypeId.touched){
             <div class="text-left text-danger">Employee Type is required</div>
             }
+          </div>
+        </c-col>
+
+        <c-col [xs]="12">
+          <div class="d-flex justify-content-between">
+            <div>
+              <button
+                [disabled]="loading"
+                [disabled]="BasicInfoForm.invalid"
+                cButton
+                class="me-1"
+                color="primary"
+                type="submit"
+              >
+                <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                {{ btnText }}
+                </button>
+                <button cButton color="secondary" (click)="resetForm()">Reset</button>
+            </div>
+            <div>
+              <button cButton color="danger" (click)="cancel()">Cancel</button>
+            </div>
           </div>
         </c-col>
 

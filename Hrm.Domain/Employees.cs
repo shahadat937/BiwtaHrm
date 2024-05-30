@@ -15,7 +15,7 @@ namespace Hrm.Domain
         public string? EmpCode { get; set; }
         public string? EmpGovNo { get; set; }
         public string? PersonalFileNo { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public DateOnly? DateOfBirth { get; set; }
         public int? NID { get; set; }
         public int? SmartNID { get; set; }
         public DateTime? ProbabilityRetirementDate { get; set; }

@@ -49,5 +49,11 @@ export class EmployeeService {
     return this.http.get<SelectedModel[]>(this.baseUrl + '/employee-type/get-selectedEmployeeType');
   }
 
+  saveBasicInfo(model: any) {
+    return this.http.post(this.baseUrl + '/employee/save-employee', model);
+  }
+  updateBasicInfo(id: number,model: any) {
+    return this.http.put(this.baseUrl + '/employee/update-employee/'+id, model);
+  }
 
 }

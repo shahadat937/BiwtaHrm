@@ -4,6 +4,7 @@ import { EmployeesModule } from '../model/employees.module';
 import { BasicInfoModule } from '../model/basic-info.module';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, map } from 'rxjs';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,10 @@ export class EmployeeService {
   
   findByAspNetUserId(id: string) {
     return this.http.get<EmployeesModule>(this.baseUrl + '/employee/get-employeeByAspNetUserId/' + id);
+  }
+
+  getSelectedEmployeeType(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/employee-type/get-selectedEmployeeType');
   }
 
 

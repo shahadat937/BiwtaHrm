@@ -49,24 +49,83 @@
         }
       </c-col>
 
-      <c-col [md]="4">
-        <label cLabel for="validationCustom03"
-        >Date of Birth<span class="text-danger">*</span></label
-      >
-        <input
-          [(ngModel)]="employeeService.basicInfo.dateOfBirth"
-          name="dateOfBirth"
-          #DateOfBirth="ngModel"
-          cFormControl
-          id="validationCustom03"
-          required
-          type="date"
-        />
-        @if(!DateOfBirth.value&&DateOfBirth.touched){
-        <div class="text-left text-danger">Date of Birth is required</div>
-        }
-      </c-col>
+        <c-col [md]="4">
+          <label cLabel for="validationCustom03"
+          >Date of Birth<span class="text-danger">*</span></label
+        >
+          <input
+            [(ngModel)]="employeeService.basicInfo.dateOfBirth"
+            name="dateOfBirth"
+            #DateOfBirth="ngModel"
+            cFormControl
+            id="validationCustom03"
+            required
+            type="date"
+          />
+          @if(!DateOfBirth.value&&DateOfBirth.touched){
+          <div class="text-left text-danger">Date of Birth is required</div>
+          }
+        </c-col>
+      
+        <c-col [md]="4">
+          <label cLabel for="validationCustom04"
+          >NID Number<span class="text-danger">*</span></label
+        >
+          <input
+            [(ngModel)]="employeeService.basicInfo.nId"
+            name="nId"
+            #NID="ngModel"
+            placeholder="Enter NID Number"
+            cFormControl
+            id="validationCustom04"
+            required
+            type="text"
+            pattern="[0-9]*"
+          />
+          @if(!NID.value&&NID.touched){
+          <div class="text-left text-danger">NID Number is required</div>
+          }
+          @if(!NID.valid&&NID.touched&&NID.value){
+          <div class="text-left text-danger">Invalid NID Number</div>
+          }
+        </c-col>
 
+        <c-col [md]="4">
+          <label cLabel for="validationCustom05"
+          >Personal File No.<span class="text-danger"></span></label>
+          <input
+            [(ngModel)]="employeeService.basicInfo.personalFileNo"
+            name="personalFileNo"
+            #PersonalFileNo="ngModel"
+            placeholder="Enter Personal File No."
+            cFormControl
+            id="validationCustom05"
+            type="text"
+          />
+          @if(!PersonalFileNo.value&&PersonalFileNo.touched){
+          <div class="text-left text-danger">Personal File No. is required</div>
+          }
+        </c-col>
+        
+        <c-col [md]="4">
+          <label cLabel for="validationCustom06">Employee Type<span class="text-danger">*</span></label>
+          <div class="input-wrapper">
+            <select 
+              [(ngModel)]="employeeService.basicInfo.employeeTypeId" name="EmployeeTypeId" #EmployeeTypeId="ngModel"
+              cFormControl id="validationCustom06" aria-label="Default select example" required cSelect>
+              <option [ngValue]="null">Select Employee Type</option>
+  
+              @for(employee of employeeType; track employee.id;let index=$index) {
+              <option [value]="employee.id">
+                {{ employee.name }}
+              </option>
+              }
+            </select>
+            @if(!EmployeeTypeId.valid && EmployeeTypeId.touched){
+            <div class="text-left text-danger">Employee Type is required</div>
+            }
+          </div>
+        </c-col>
 
     </form>
   </c-card-body>

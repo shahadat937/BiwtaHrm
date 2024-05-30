@@ -3,6 +3,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { EmployeeService } from '../../../service/employee.service';
 import { NgForm } from '@angular/forms';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-basic-information',
@@ -16,6 +18,8 @@ export class BasicInformationComponent implements OnInit {
   headerText: string = '';
   headerBtnText: string = 'Hide From';
   btnText:string='';
+  employeeType: SelectedModel[] = [];
+  subscription: Subscription = new Subscription();
   @ViewChild('BasicInfoForm', { static: true }) BasicInfoForm!: NgForm;
   
   constructor(
@@ -25,6 +29,7 @@ export class BasicInformationComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployeeByAspNetUserId();
+    this.getSelectedEmployeeType();
     this.getUserDetails();
   }
 
@@ -36,7 +41,8 @@ export class BasicInformationComponent implements OnInit {
       empBdName: '',
       dateOfBirth: undefined,
       personalFileNo: '',
-      nId: 0,
+      nId: null,
+      employeeTypeId: null,
       AspNetUserId: this.userId,
     };
   }
@@ -50,7 +56,8 @@ export class BasicInformationComponent implements OnInit {
         empBdName: '',
         dateOfBirth: undefined,
         personalFileNo: '',
-        nId: 0,
+        nId: null,
+        employeeTypeId: null,
         AspNetUserId: this.userId,
       });
     }
@@ -78,6 +85,12 @@ export class BasicInformationComponent implements OnInit {
       else{
         this.headerText = 'Add Basic Information';
       }
+    });
+  }
+
+  getSelectedEmployeeType(){
+    this.subscription=this.employeeService.getSelectedEmployeeType().subscribe((data) => { 
+      this.employeeType = data;
     });
   }
 

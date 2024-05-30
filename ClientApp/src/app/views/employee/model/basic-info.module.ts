@@ -4,6 +4,7 @@ export class BasicInfoModule {
   empBdName: string='';
   dateOfBirth: Date|undefined;
   personalFileNo: string='';
-  nId: number=0;
+  nId: any=null;
   AspNetUserId: string='';
+  employeeTypeId: any=null;
 }

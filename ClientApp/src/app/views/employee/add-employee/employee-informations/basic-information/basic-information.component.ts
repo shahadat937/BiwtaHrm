@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { EmployeeService } from '../../../service/employee.service';
@@ -17,6 +17,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 export class BasicInformationComponent implements OnInit, OnDestroy  {
 
   @Input() userId!: string;
+  @Output() close = new EventEmitter<void>();
   fullName: string = '';
   empId: number = 0;
   visible:boolean = true;
@@ -117,7 +118,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   }
 
   cancel(){
-    this.visible = false;
+    this.close.emit();
   }
 
   onSubmit(form: NgForm): void{

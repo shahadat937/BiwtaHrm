@@ -11,7 +11,8 @@
 
         <c-card>
             <c-card-header [visible]="visible" cCollapse>
-                <app-basic-information *ngIf="visibleComponent === 'basicInfo'" [userId]="userId"></app-basic-information>
+                <app-basic-information *ngIf="visibleComponent === 'basicInfo'" [userId]="userId" 
+                    (close)="toggleComponent('basicInfo')"></app-basic-information>
                 <app-personal-information *ngIf="visibleComponent === 'personalInfo'"></app-personal-information>
                 <app-family-information *ngIf="visibleComponent === 'familyInfo'"></app-family-information>
             </c-card-header>
@@ -28,7 +29,7 @@
                     <c-col [md]="4">
                         <div (click)="gettingStatus && toggleComponent('personalInfo')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            [ngStyle]="{'background-color': (personalInfoEntryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Personal Information</h4>
                         </div>
                     </c-col>

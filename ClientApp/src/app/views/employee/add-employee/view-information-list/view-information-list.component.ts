@@ -18,6 +18,7 @@ export class ViewInformationListComponent implements OnInit {
   gettingStatus : boolean = true;
   entryStatus : boolean = false;
   basicInfoEntryStatus : boolean = false;
+  personalInfoEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -52,6 +53,9 @@ export class ViewInformationListComponent implements OnInit {
         this.gettingStatus = true;
         this.empId = res.empId;
         this.basicInfoEntryStatus=true;
+        if(res.genderId){
+          this.personalInfoEntryStatus= true;
+        }
       }
       else{
         this.gettingStatus = false;

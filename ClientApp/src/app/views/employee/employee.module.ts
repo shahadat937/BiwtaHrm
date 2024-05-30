@@ -5,6 +5,7 @@ import {
   ButtonGroupModule,
   ButtonModule,
   CardModule,
+  CollapseDirective,
   DropdownModule,
   FormModule,
   GridModule,
@@ -37,6 +38,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { FamilyInformationComponent } from './add-employee/employee-informations/family-information/family-information.component';
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ViewUsersComponent,
     ViewInformationListComponent,
     BasicInformationComponent,
-    PersonalInformationComponent
+    PersonalInformationComponent,
+    FamilyInformationComponent
   ],
   imports: [
     CommonModule,
@@ -80,7 +83,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatListModule,
     MatInputModule,
     MatBottomSheetModule,
-    MatDialogModule
+    MatDialogModule,
+    CollapseDirective,
   ]
 })
 export class EmployeeModule { }

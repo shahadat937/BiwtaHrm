@@ -15,9 +15,12 @@ import { EmployeeService } from '../../service/employee.service';
 })
 export class ViewInformationListComponent implements OnInit {
 
-  gettingStatus : boolean = false;
+  gettingStatus : boolean = true;
   entryStatus : boolean = false;
   basicInfoEntryStatus : boolean = false;
+  visible : boolean = false;
+  componentVisible : boolean = false;
+  visibleComponent: string | null = null;
   bsModelRef!: BsModalRef;
   userId : any;
   empId : any;
@@ -38,33 +41,34 @@ export class ViewInformationListComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.userId = params.get('id');
       this.userService.find(this.userId).subscribe((res) => {
-
+        
       });
     });
   }
 
   getEmployeeByAspNetUserId(){
     this.employeeService.findByAspNetUserId(this.userId).subscribe((res) => {
-      if(res.empId != null){
-        console.log("Have", res)
+      if(res){
+        this.gettingStatus = true;
+        this.empId = res.empId;
+        this.basicInfoEntryStatus=true;
       }
       else{
-        console.log("none", res)
+        this.gettingStatus = false;
       }
     });
   }
 
-  openBasicInfoModal(){
-    const initialState = {
-      userId: this.userId
-    };
+  toggleComponent(component: string) {
+    this.componentVisible = false;
+    if (this.visibleComponent === component) {
+      this.visibleComponent = null;
+      this.visible = false;
+    } else {
+      this.visibleComponent = component;
+      this.visible = true;
+      this.componentVisible = true;
+    }
+  }
 
-    this.bsModelRef = this.modalService.show(BasicInformationComponent, {
-      initialState,
-      ignoreBackdropClick: true
-    });
-  }
-  openModal(){
-    this.bsModelRef = this.modalService.show(PersonalInformationComponent);
-  }
 }

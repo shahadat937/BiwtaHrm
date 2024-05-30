@@ -6,11 +6,13 @@ using Hrm.Application.Features.ChildStatus.Requests.Queries;
 using Hrm.Application.Features.EmployeeType.Handlers.Queries;
 using Hrm.Application.Features.EmployeeType.Requests.Commands;
 using Hrm.Application.Features.EmployeeType.Requests.Queries;
+using Hrm.Application.Features.ExamType.Requests.Queries;
 using Hrm.Application.Features.Gender.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
@@ -47,6 +49,14 @@ namespace Hrm.Api.Controllers
             var command = new CreateEmployeeTypeCommand { EmployeeTypeDto = EmployeeType };
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-selectedEmployeeType")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedEmployeeType()
+        {
+            var EmployeeType = await _mediator.Send(new GetSelectedEmployeeTypeRequest { });
+            return Ok(EmployeeType);
         }
 
 

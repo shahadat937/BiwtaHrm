@@ -10,6 +10,6 @@ namespace Hrm.Application.Features.Employee.Requests.Queries
 {
     public class GetEmployeeByIdRequest : IRequest<object>
     {
-        public int EmpolyeeId { get; set; }
+        public int EmpId { get; set; }
     }
 }

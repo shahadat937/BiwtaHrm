@@ -1,94 +1,113 @@
 <c-card>
     <c-card-header class="d-flex justify-content-between">
-        <div><h5>Add Employee Information</h5></div>
+        <div>
+            <h5>Add Employee Information</h5>
+        </div>
         <div>
             <button cButton color="danger" [routerLink]="['/employee/addEmployee']" class="text-light">Back</button>
         </div>
     </c-card-header>
     <c-card-body>
-        <div class="row">
-            <c-col [md]="4">
-                <div (click)="openBasicInfoModal()" class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (basicInfoEntryStatus == true) ? ('green') : ('#003574')}">
-                    <h4>Basic Information</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div (click)="gettingStatus && openModal()" class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Personal Information</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Spouse Information</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Children Information</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Job Details</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h5>Promotion/Increment Information</h5>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Present/Mailing Address</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Permanent Address</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Education Information</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Training Details</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>PSI &Training History</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Bank Information</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Nominee Information</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Language Details</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Foreign Trip</h4>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="info-box py-4 mb-3 text-center rounded-3 text-light" [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                    <h4>Photo & Signature</h4>
-                </div>
-            </c-col>
 
-        </div>
+        <c-card>
+            <c-card-header [visible]="visible" cCollapse>
+                <app-basic-information *ngIf="visibleComponent === 'basicInfo'" [userId]="userId"></app-basic-information>
+                <app-personal-information *ngIf="visibleComponent === 'personalInfo'"></app-personal-information>
+                <app-family-information *ngIf="visibleComponent === 'familyInfo'"></app-family-information>
+            </c-card-header>
+
+            <c-card-body>
+                <div cRow>
+                    <c-col [md]="4">
+                        <div (click)="toggleComponent('basicInfo')"
+                            class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (basicInfoEntryStatus == true) ? ('#165b16') : ('#003574')}">
+                            <h4>Basic Information</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div (click)="gettingStatus && toggleComponent('personalInfo')"
+                            class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Personal Information</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div (click)="gettingStatus && toggleComponent('familyInfo')"
+                            class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Family Information</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Job Details</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Present Address</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Permanent Address</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Education Information</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Training Details</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>PSI &Training History</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Bank Information</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Nominee Information</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Language Details</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Foreign Trip</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('green') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Photo & Signature</h4>
+                        </div>
+                    </c-col>
+
+                </div>
+            </c-card-body>
+        </c-card>
     </c-card-body>
 </c-card>
-

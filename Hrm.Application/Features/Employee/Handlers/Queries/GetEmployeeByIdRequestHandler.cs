@@ -26,11 +26,9 @@ namespace Hrm.Application.Features.Employee.Handlers.Queries
 
         public async Task<object> Handle(GetEmployeeByIdRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Employees> Employee = _EmployeeRepository.Where(x => x.EmpId == request.EmpolyeeId);
+            var Employee = _EmployeeRepository.FinedOneInclude(x => x.EmpId == request.EmpId);
 
-            var EmployeeDtos = _mapper.Map<List<EmployeesDto>>(Employee);
-
-            return EmployeeDtos;
+            return Employee;
         }
     }
 }

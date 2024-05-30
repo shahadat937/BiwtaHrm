@@ -6,6 +6,9 @@ import { EmpModalComponent } from './emp-modal/emp-modal.component';
 import { TransferlistComponent } from './transferlist/transferlist.component';
 import { getPositionOfLineAndCharacter } from 'typescript';
 import { TransferPostingHistoryComponent } from './transfer-posting-history/transfer-posting-history.component';
+import { TransferApprovedComponent } from './transfer-approved/transfer-approved.component';
+import { TransferApprovedListComponent } from './transfer-approved-list/transfer-approved-list.component';
+import { DepartmetnReleaseListComponent } from './departmetn-release-list/departmetn-release-list.component';
 
 
 const routes: Routes = [
@@ -32,6 +35,32 @@ const routes: Routes = [
     path: 'update-TransferOrderList/:postingOrderInfoId',
     component: PostingComponent,
   },
+  {
+    path:'transferApproveInfoList',
+    component:TransferApprovedListComponent
+  },
+  {
+    path:'transferApproveInfo/:postingOrderInfoId',
+    component:TransferApprovedComponent
+  },
+  {
+    path:'transferApproveInfo',
+    component:TransferApprovedComponent
+  },
+  {
+    path:'transferApproveInfo/:transferApproveInfoId',
+    component:TransferApprovedComponent
+  },
+  //
+  {
+    path:'departmetnReleaseList',
+    component:DepartmetnReleaseListComponent
+  },
+  {
+    path:'departmetnRelease/:',
+    component:DepartmetnReleaseListComponent
+  },
+
 {
   path:"transferhistory",
   component:TransferPostingHistoryComponent

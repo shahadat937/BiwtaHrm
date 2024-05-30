@@ -46,5 +46,8 @@ export class TransferApproveInfoService {
   delete(id:number){
     return this.http.delete(this.baseUrl + '/transferApproveInfo/delete-transferApproveInfo/'+id);
   }
-
+  
+  submitApproved(model: any) {
+    return this.http.post(this.baseUrl + '/transferApproveInfo/save-transferApprove', model);
+  }
 }

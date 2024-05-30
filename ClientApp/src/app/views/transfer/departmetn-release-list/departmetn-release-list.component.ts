@@ -1,20 +1,25 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { PostingOrderInfoService } from '../../basic-setup/service/posting-order-info.service';
-import { Subscription } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
+import { TransferApproveInfo } from './../../basic-setup/model/transfer-approve-info';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
+
+import { PostingOrderInfo } from '../../basic-setup/model/posting-order-info';
+import { PostingOrderInfoService } from '../../basic-setup/service/posting-order-info.service';
+import { TransferApproveInfoService } from '../../basic-setup/service/transfer-approve-info.service';
+
 
 @Component({
-  selector: 'app-transferlist',
-  templateUrl: './transferlist.component.html',
-  styleUrl: './transferlist.component.scss'
+  selector: 'app-departmetn-release-list',
+  templateUrl: './departmetn-release-list.component.html',
+  styleUrl: './departmetn-release-list.component.scss'
 })
-export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
+export class DepartmetnReleaseListComponent implements OnInit, OnDestroy, AfterViewInit {
   postingOrderInfoId: number | null = null;
   position = 'top-end';
   visible = false;
@@ -22,14 +27,18 @@ export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('postingOrderForm', { static: true }) postingOrderForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'officeOrderNo',"departmentName" ,"officeName","designationName",'officeOrderDate','transferSection','releaseType','isActive', 'Action'];
+  displayedColumns: string[] = ['slNo',"departmentName" ,"approveBy","approveDate","officeName","designationName",'officeOrderDate','transferSection','releaseType', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+  transferApproveInfo:TransferApproveInfo[]=[];
+  postingOrderInfo: PostingOrderInfo[]=[];
   constructor(
     public postingOrderInfoService: PostingOrderInfoService,
+    public transferApproveInfoService: TransferApproveInfoService,
+
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -49,6 +58,7 @@ export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnInit(): void {
     this.getTransferEmployes();
+    this.getTransferApproved();
     this.route.paramMap.subscribe(params => {
       this.postingOrderInfoId = +params.get('postingOrderInfoId')!;
     });
@@ -133,10 +143,18 @@ export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getTransferEmployes() {
     this.subscription = this.postingOrderInfoService.getAll().subscribe((item) => {
+      this.postingOrderInfo= item;
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
+  }
+  getTransferApproved() {
+this.subscription= this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((res)=>{
+  console.log(res)
+this.transferApproveInfo=res;
+})
+
   }
   onSubmit(form: NgForm): void {
     this.postingOrderInfoService.cachedData = [];

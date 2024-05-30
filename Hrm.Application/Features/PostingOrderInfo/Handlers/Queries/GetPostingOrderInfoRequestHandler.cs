@@ -23,17 +23,20 @@ namespace Hrm.Application.Features.PostingOrderInfo.Handlers.Queries
        private readonly IHrmRepository<Hrm.Domain.Department> _departmentRepository;
         private readonly IHrmRepository<Hrm.Domain.SubBranch> _subBranch;
         private readonly IHrmRepository<Hrm.Domain.SubDepartment> _subDepartment;
-        private readonly IHrmRepository<Hrm.Domain.OfficeBranch> _officeBranch;
+        private readonly IHrmRepository<Hrm.Domain.Office> _Office;
+        private readonly IHrmRepository<Hrm.Domain.Designation> _designation;
+
 
         private readonly IMapper _mapper;
-        public GetPostingOrderInfoRequestHandler(IHrmRepository<Hrm.Domain.PostingOrderInfo> PostingOrderInfoRepository, IMapper mapper, IHrmRepository<Domain.Country> countryRepository, IHrmRepository<Domain.Department> departmentRepository, IHrmRepository<Domain.SubBranch> subBranch, IHrmRepository<Domain.SubDepartment> subDepartment, IHrmRepository<Domain.OfficeBranch> officeBranch)
+        public GetPostingOrderInfoRequestHandler(IHrmRepository<Hrm.Domain.PostingOrderInfo> PostingOrderInfoRepository, IMapper mapper, IHrmRepository<Domain.Country> countryRepository, IHrmRepository<Domain.Department> departmentRepository, IHrmRepository<Domain.SubBranch> subBranch, IHrmRepository<Domain.SubDepartment> subDepartment, IHrmRepository<Domain.Office> Office, IHrmRepository<Domain.Designation> designation)
         {
             _PostingOrderInfoRepository = PostingOrderInfoRepository;
             _mapper = mapper;
             _departmentRepository = departmentRepository;
             _subBranch = subBranch;
             _subDepartment = subDepartment;
-            _officeBranch = officeBranch;
+            _Office = Office;
+            _designation = designation;
             //  _countryRepository = countryRepository;
         }
 
@@ -55,24 +58,22 @@ namespace Hrm.Application.Features.PostingOrderInfo.Handlers.Queries
               //  PostingOrderInfoDto.CountryName = countryName;
                 PostingOrderInfoDto.DepartmentName = departmentName;
                 PostingOrderInfoDto.SubBranchName = subBranchName;
-
                 PostingOrderInfoDto.SubBranchName = subDepartmentName;
-
                 PostingOrderInfoDtos.Add(PostingOrderInfoDto);
             }
 
             return PostingOrderInfoDtos;
         }
 
-        //private async Task<string?> GetCountryName(int? countryId)
-        //{
-        //    if (countryId.HasValue)
-        //    {
-        //        //var country = await _countryRepository.Get(countryId.Value);
-        //        //return country?.CountryName;
-        //    }
-        //    return null;
-        //}
+        private async Task<string?> GetDesignationName(int? designationId)
+        {
+            if (designationId.HasValue)
+            {
+                var designation = await _designation.Get(designationId.Value);
+                return designation?.DesignationName;
+            }
+            return null;
+        }
         private async Task<string?> GetDepartmentName(int? departmentId)
         {
             if (departmentId.HasValue)
@@ -104,8 +105,8 @@ namespace Hrm.Application.Features.PostingOrderInfo.Handlers.Queries
         {
             if (officeBranchId.HasValue)
             {
-                var officeBranch = await _officeBranch.Get(officeBranchId.Value);
-                return officeBranch?.BranchName;
+                var officeBranch = await _Office.Get(officeBranchId.Value);
+                return officeBranch?.OfficeName;
             }
             return null;
         }

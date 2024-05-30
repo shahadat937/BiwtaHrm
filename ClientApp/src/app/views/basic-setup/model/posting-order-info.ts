@@ -4,7 +4,10 @@ export class PostingOrderInfo {
     departmentId:any=null;
     subBranchId:number=0;
     subDepartmentId:number=0;
-    designationId:any=null
+    designationId:any=null;
+    designationName:string="";
+    officeName:string="";
+    departmentName:string="";
     officeId: any=null;
     officeOrderNo:string="";
     officeOrderDate:Date= new Date();

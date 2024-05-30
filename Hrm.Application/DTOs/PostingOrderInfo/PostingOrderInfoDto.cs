@@ -26,8 +26,9 @@ namespace Hrm.Application.DTOs.PostingOrderInfo
 
         public string? EmployeeName { get; set; }
         public string? DepartmentName { get; set; }
+        public string? DesignationName { get; set; }
         public string? SubDepartmentName { get; set; }
-        public string? OfficeBranchName { get; set; }
+        public string? OfficeName { get; set; }
         public string? SubBranchName { get; set; }
     }
 }

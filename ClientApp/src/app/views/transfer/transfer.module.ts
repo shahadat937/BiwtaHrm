@@ -22,6 +22,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ApproveEmpModalComponent } from './approve-emp-modal/approve-emp-modal.component';
 import { TransferlistComponent } from './transferlist/transferlist.component';
 import { TransferPostingHistoryComponent } from './transfer-posting-history/transfer-posting-history.component';
+import { TransferApprovedComponent } from './transfer-approved/transfer-approved.component';
+import { TransferApprovedListComponent } from './transfer-approved-list/transfer-approved-list.component';
+import { DepartmetnReleaseComponent } from './departmetn-release/departmetn-release.component';
+import { DepartmetnReleaseListComponent } from './departmetn-release-list/departmetn-release-list.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +36,10 @@ import { TransferPostingHistoryComponent } from './transfer-posting-history/tran
     ApproveEmpModalComponent,
     TransferlistComponent,
     TransferPostingHistoryComponent,
+    TransferApprovedComponent,
+    TransferApprovedListComponent,
+    DepartmetnReleaseComponent,
+    DepartmetnReleaseListComponent,
   ],
   imports: [
     MatCardModule,

@@ -1,54 +1,66 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { PostingOrderInfoService } from '../../basic-setup/service/posting-order-info.service';
-import { Subscription } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
+import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { PostingOrderInfoService } from '../../basic-setup/service/posting-order-info.service';
+import { TransferApproveInfoService } from '../../basic-setup/service/transfer-approve-info.service';
+import { EmployeesService } from '../service/employees.service';
+import { TransferApproveInfo } from '../../basic-setup/model/transfer-approve-info';
 
 @Component({
-  selector: 'app-transferlist',
-  templateUrl: './transferlist.component.html',
-  styleUrl: './transferlist.component.scss'
+  selector: 'app-transfer-approved-list',
+  templateUrl: './transfer-approved-list.component.html',
+  styleUrl: './transfer-approved-list.component.scss'
 })
-export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TransferApprovedListComponent  implements OnInit, OnDestroy, AfterViewInit {
+  visible1: boolean | undefined;
+  userBtnText: string | undefined;
   postingOrderInfoId: number | null = null;
   position = 'top-end';
   visible = false;
   percentage = 0;
   btnText: string | undefined;
-  @ViewChild('postingOrderForm', { static: true }) postingOrderForm!: NgForm;
+  @ViewChild('PostingAndTrnsForm', { static: true }) PostingAndTrnsForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'officeOrderNo',"departmentName" ,"officeName","designationName",'officeOrderDate','transferSection','releaseType','isActive', 'Action'];
+  displayedColumns: string[] = ['slNo',"departmentName" ,"officeName","designationName",'officeOrderDate','transferSection','releaseType', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+  transferApproveInfo:TransferApproveInfo[]=[];
   constructor(
     public postingOrderInfoService: PostingOrderInfoService,
+    public transferApproveInfoService: TransferApproveInfoService,
+    public employeeService: EmployeesService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService
   ) {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('postingOrderInfoId');
-      if (id) {
-        this.btnText = 'Update';
-        this.postingOrderInfoService.find(+id).subscribe((res) => {
-          this.postingOrderForm?.form.patchValue(res);
-        });
-      } else {
-        this.btnText = 'Submit';
-      }
+             this.btnText = 'Submit';
+      
     });
+  }
+
+  UserFormView(): void {
+    if (this.userBtnText == " Add Value") {
+      this.userBtnText = " Hide Form";
+      this.visible1 = true;
+    } else {
+      this.userBtnText = " Add Value";
+      this.visible1 = false;
+    }
   }
   ngOnInit(): void {
     this.getTransferEmployes();
+    this.getTransferApproved();
     this.route.paramMap.subscribe(params => {
       this.postingOrderInfoId = +params.get('postingOrderInfoId')!;
     });
@@ -80,53 +92,39 @@ export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
   onTimerChange($event: number) {
     this.percentage = $event * 25;
   }
-  initaialWard(form?: NgForm) {
-    if (form != null) form.resetForm();
-    this.postingOrderInfoService.postingOrderInfos = {
-      postingOrderInfoId:   0,
-      empId:0,
-      departmentId:null,
-      subBranchId:0,
-      subDepartmentId:0,
-      designationId:null,
-      officeId: null,
-      designationName:"",
-    officeName:"",
-    departmentName:"",
-      officeOrderNo:"",
-      officeOrderDate:new Date(),
-      orderOfficeBy:"",
-      transferSection:"",
-      releaseType:"",
-      menuPosition:  0,
-      isActive:  true
 
+
+  initaialtransferApproveInfo(form?: NgForm) {
+    if (form != null) form.resetForm();
+    this.transferApproveInfoService.transferApproveInfos = {
+      transferApproveInfoId: 0,
+      postingOrderInfoId:0,
+      empId: 0,
+      approveStatus: true,
+      approveByName: "",
+      approveBy:0,
+      approveDate: new Date(),
+      remarks: "",
+      menuPosition: 0,
+      isActive: true
     };
   }
-  resetForm() {
-
-    this.btnText = 'Submit';
-    if (this.postingOrderForm?.form != null) {
   
-      this.postingOrderForm.form.reset();
-      this.postingOrderForm.form.patchValue({
-        postingOrderInfoId:   0,
-        empId:0,
-        departmentId:null,
-        subBranchId:0,
-        subDepartmentId:0,
-        designationId:null,
-        officeId: null,
-        designationName:"",
-    officeName:"",
-    departmentName:"",
-        officeOrderNo:"",
-        officeOrderDate:new Date(),
-        orderOfficeBy:"",
-        transferSection:"",
-        releaseType:"",
-        menuPosition:  0,
-        isActive:  true
+  resetFormTransfer() {
+    this.btnText = 'Submit';
+    if (this.PostingAndTrnsForm?.form != null) {
+      this.PostingAndTrnsForm.form.reset();
+      this.PostingAndTrnsForm.form.patchValue({
+        transferApproveInfoId: 0,
+        postingOrderInfoId:0,
+        empId: 0,
+        approveByName: "",
+        approveBy:0,
+        approveStatus: true,
+        approveDate: new Date(),
+        remarks: "",
+        menuPosition: 0,
+        isActive: true
       });
     }
   }
@@ -138,14 +136,19 @@ export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     });
   }
+  getTransferApproved() {
+this.subscription= this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((res)=>{
+this.transferApproveInfo=res
+})
+  }
   onSubmit(form: NgForm): void {
-    this.postingOrderInfoService.cachedData = [];
-    const id = form.value.postingOrderInfoId;
+    this.transferApproveInfoService.cachedData = [];
+    const id = form.value.transferApproveInfoId;
     //console.log(form.value)
     const action$ = id
-      ? this.postingOrderInfoService.update(id, form.value)
-      : this.postingOrderInfoService.submit(form.value);
-
+      ? this.transferApproveInfoService.update(id, form.value)
+      : this.transferApproveInfoService.submit(form.value);
+console.log(form.value)
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? 'Update' : 'Successfully';
@@ -153,7 +156,7 @@ export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
           positionClass: 'toast-top-right',
         });
         this.getTransferEmployes();
-        this.resetForm();
+        this.resetFormTransfer();
         if (!id) {
           this.router.navigate(['/transfer/TransferOrderList']);
         }

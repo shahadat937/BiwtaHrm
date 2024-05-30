@@ -344,14 +344,31 @@ export const navItems: INavData[] = [
         url: '/transfer/postingOrderInfo'
       },
       {
-        name: 'Transfer Approved List',
+        name: 'Transfer Order List',
         url: '/transfer/TransferOrderList'
       },
       {
         name: 'Deparment Release',
         url: '/transfer/release'
       },
-   
+      {
+        name: 'Transfer Approved',
+        url: '/transfer/transferApproveInfo'
+      },
+      {
+        name: 'Transfer Approved List',
+        url: '/transfer/transferApproveInfoList'
+      },
+
+      {
+        name: 'Departmetn Release List',
+        url: '/transfer/departmetnReleaseList'
+      },
+      {
+        name: 'Departmetn Release',
+        url: '/transfer/departmetnRelease'
+      },
+
       {
         name: 'Transfer posting History',
         url: '/transfer/transferhistory'

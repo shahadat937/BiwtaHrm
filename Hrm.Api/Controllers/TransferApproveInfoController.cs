@@ -9,6 +9,9 @@ using Hrm.Application.Responses;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Hrm.Domain;
+using Hrm.Application.Features.PostingOrderInfo.Requests.Queries;
+using Hrm.Persistence;
+using Microsoft.EntityFrameworkCore;
 namespace Hrm.Api.Controllers
 {
 
@@ -17,9 +20,12 @@ namespace Hrm.Api.Controllers
     public class TransferApproveInfoController : Controller
     {
         private readonly IMediator _mediator;
-        public TransferApproveInfoController(IMediator mediator)
+        private readonly HrmDbContext _dbContext;
+        public TransferApproveInfoController(IMediator mediator, HrmDbContext dbContext)
         {
             _mediator = mediator;
+            _dbContext = dbContext;
+            
         }
         [HttpPost]
         [ProducesResponseType(200)]
@@ -27,9 +33,24 @@ namespace Hrm.Api.Controllers
         [Route("save-transferApproveInfo")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateTransferApproveInfoDto TransferApproveInfo)
         {
-            var command = new CreateTransferApproveInfoCommand { TransferApproveInfoDto = TransferApproveInfo };
-            var response = await _mediator.Send(command);
-            return Ok(response);
+
+           
+
+            if (TransferApproveInfo.ApproveBy  == "0")
+            {
+                return NoContent();
+            }
+            else
+            {
+                var PostingOrderInfo = await _dbContext.PostingOrderInfo.ToListAsync();
+                //int maxId = PostingOrderInfo.Max(x => x.PostingOrderInfoId);
+                int maxId = PostingOrderInfo.Max(x => x.PostingOrderInfoId);
+                TransferApproveInfo.PostingOrderInfoId = maxId;
+
+                var command = new CreateTransferApproveInfoCommand { TransferApproveInfoDto = TransferApproveInfo };
+                var response = await _mediator.Send(command);
+                return Ok(response);
+            }
         }
 
         [HttpGet]
@@ -47,12 +68,24 @@ namespace Hrm.Api.Controllers
         [Route("update-transferApproveInfo/{id}")]
         public async Task<ActionResult> Put([FromBody] TransferApproveInfoDto TransferApproveInfo)
         {
-            var command = new UpdateTransferApproveInfoCommand { TransferApproveInfoDto = TransferApproveInfo };
-            var response = await _mediator.Send(command);
-            return Ok(response);
+
+            if (TransferApproveInfo.ApproveBy == "0")
+            {
+                return NoContent();
+            }
+            else
+            {
+                var PostingOrderInfo = await _dbContext.PostingOrderInfo.ToListAsync();
+                int maxId = PostingOrderInfo.Max(x => x.PostingOrderInfoId);
+
+                TransferApproveInfo.PostingOrderInfoId = maxId;
+
+                var command = new UpdateTransferApproveInfoCommand { TransferApproveInfoDto = TransferApproveInfo };
+                var response = await _mediator.Send(command);
+                return Ok(response);
+            }
+
         }
-
-
         [HttpDelete]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -94,6 +127,18 @@ namespace Hrm.Api.Controllers
         {
             var TransferApproveInfo = await _mediator.Send(new GetSelectedTransferApproveInfoRequest { });
             return Ok(TransferApproveInfo);
+        }
+        [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [Route("save-transferApprove")]
+        public async Task<ActionResult<BaseCommandResponse>> ApprovePost([FromBody] CreateTransferApproveInfoDto TransferApproveInfo)
+        {
+            //TransferApproveInfo.ApproveBy = "1";
+            var command = new CreateTransferApproveInfoCommand { TransferApproveInfoDto = TransferApproveInfo };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+
         }
     }
 }

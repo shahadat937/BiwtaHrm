@@ -9,6 +9,8 @@ using Hrm.Application.Responses;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Hrm.Domain;
+using Microsoft.EntityFrameworkCore;
+using Hrm.Persistence;
 namespace Hrm.Api.Controllers
 {
 
@@ -16,10 +18,13 @@ namespace Hrm.Api.Controllers
     [ApiController]
     public class DepReleaseInfoController : Controller
     {
+        private readonly HrmDbContext _dbContext;
         private readonly IMediator _mediator;
-        public DepReleaseInfoController(IMediator mediator)
+        public DepReleaseInfoController(IMediator mediator,HrmDbContext dbContext)
         {
             _mediator = mediator;
+            _dbContext = dbContext;
+
         }
         [HttpPost]
         [ProducesResponseType(200)]
@@ -27,9 +32,21 @@ namespace Hrm.Api.Controllers
         [Route("save-depReleaseInfo")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateDepReleaseInfoDto DepReleaseInfo)
         {
-            var command = new CreateDepReleaseInfoCommand { DepReleaseInfoDto = DepReleaseInfo };
-            var response = await _mediator.Send(command);
-            return Ok(response);
+            if (DepReleaseInfo.ApproveBy == "0")
+            {
+                return NoContent();
+            }
+            else
+            {
+                var PostingOrderInfo = await _dbContext.PostingOrderInfo.ToListAsync();
+                //int maxId = PostingOrderInfo.Max(x => x.PostingOrderInfoId);
+                int maxId = PostingOrderInfo.Max(x => x.PostingOrderInfoId);
+                DepReleaseInfo.PostingOrderInfoId = maxId;
+
+                var command = new CreateDepReleaseInfoCommand { DepReleaseInfoDto = DepReleaseInfo };
+                var response = await _mediator.Send(command);
+                return Ok(response);
+            }
         }
 
         [HttpGet]

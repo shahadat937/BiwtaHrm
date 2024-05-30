@@ -127,7 +127,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
     this.employeeService.cachedData = [];
     const id = form.value.empId;
     const action$ = id
-      ? this.employeeService.updateBasicInfo(id, form.value)
+      ? this.employeeService.updateEmployeeInfo(id, form.value)
       : this.employeeService.saveBasicInfo(form.value);
     
       this.subscription = action$.subscribe((response: any) => {

@@ -51,8 +51,8 @@ export class ViewInformationListComponent implements OnInit {
     this.employeeService.findByAspNetUserId(this.userId).subscribe((res) => {
       if(res){
         this.gettingStatus = true;
-        this.empId = res.empId;
         this.basicInfoEntryStatus=true;
+        this.empId = res.empId;
         if(res.genderId){
           this.personalInfoEntryStatus= true;
         }

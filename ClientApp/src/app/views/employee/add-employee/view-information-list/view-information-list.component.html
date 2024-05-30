@@ -13,7 +13,8 @@
             <c-card-header [visible]="visible" cCollapse>
                 <app-basic-information *ngIf="visibleComponent === 'basicInfo'" [userId]="userId" 
                     (close)="toggleComponent('basicInfo')"></app-basic-information>
-                <app-personal-information *ngIf="visibleComponent === 'personalInfo'"></app-personal-information>
+                <app-personal-information *ngIf="visibleComponent === 'personalInfo'" [empId]="empId" 
+                (close)="toggleComponent('basicInfo')"></app-personal-information>
                 <app-family-information *ngIf="visibleComponent === 'familyInfo'"></app-family-information>
             </c-card-header>
 

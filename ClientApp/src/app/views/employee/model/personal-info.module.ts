@@ -10,6 +10,7 @@ export class PersonalInfoModule {
   mabileNumber: any;
   email: string;
   birthRegNo: any;
+  placeOfBirth: string;
   tinNo: any;
   drivingLicenceNo: any;
   drivingLicenceDate:  Date | null;
@@ -30,6 +31,7 @@ export class PersonalInfoModule {
     this.mabileNumber= null ;
     this.email= '';
     this.birthRegNo= null ;
+    this.placeOfBirth="";
     this.tinNo= null ;
     this.drivingLicenceNo= null ;
     this.drivingLicenceDate= null;

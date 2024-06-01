@@ -51,7 +51,7 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-selectedMaritalStatuss")]
+        [Route("get-selectedMaritalStatus")]
         public async Task<ActionResult<List<SelectedModel>>> GetSelectedMaritalStatus()
         {
             var MaritalStatus = await _mediator.Send(new GetSelectedMaritalStatusRequest { });

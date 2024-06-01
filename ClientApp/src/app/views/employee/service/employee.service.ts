@@ -52,7 +52,32 @@ export class EmployeeService {
     return this.http.get<SelectedModel[]>(this.baseUrl + '/employee-type/get-selectedEmployeeType');
   }
 
-  saveBasicInfo(model: any) {
+  getSelectedGender(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/gender/get-selectedGenders');
+  }
+
+  getSelectedMaritalStatus(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/marital-status/get-selectedMaritalStatus');
+  }
+  
+  getSelectedBloodGroup(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/blood-group/get-selectedBloodGroups');
+  }
+  
+  getSelectedReligion(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/religion/get-selectedReligions');
+  }
+  
+  getSelectedHairColor(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/hairColor/get-selectedHairColors');
+  }
+  
+  getSelectedEyeColor(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/eyesColor/get-selectedEyesColors');
+  }
+
+
+  saveEmployeeInfo(model: any) {
     return this.http.post(this.baseUrl + '/employee/save-employee', model);
   }
   updateEmployeeInfo(id: number,model: any) {

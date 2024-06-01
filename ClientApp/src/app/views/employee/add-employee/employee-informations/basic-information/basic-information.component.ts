@@ -122,12 +122,11 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
 
   onSubmit(form: NgForm): void{
     this.loading = true;
-    console.log(form.value)
     this.employeeService.cachedData = [];
     const id = form.value.empId;
     const action$ = id
       ? this.employeeService.updateEmployeeInfo(id, form.value)
-      : this.employeeService.saveBasicInfo(form.value);
+      : this.employeeService.saveEmployeeInfo(form.value);
     
       this.subscription = action$.subscribe((response: any) => {
         if (response.success) {

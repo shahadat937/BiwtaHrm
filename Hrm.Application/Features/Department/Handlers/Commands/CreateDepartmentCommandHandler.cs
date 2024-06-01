@@ -51,16 +51,16 @@ namespace Hrm.Application.Features.Department.Handlers.Commands
 
                 
 
-                if (Departmentes.Any())
-                {
-                    response.Success = false;
-                    response.Message = "Creation Failed Name already exists.";
-                    response.Errors = validatorResult.Errors.Select(q => q.ErrorMessage).ToList();
+                //if (Departmentes.Any())
+                //{
+                //    response.Success = false;
+                //    response.Message = "Creation Failed Name already exists.";
+                //    response.Errors = validatorResult.Errors.Select(q => q.ErrorMessage).ToList();
 
-                }
+                //}
 
-                else
-                {
+                //else
+                //{
                     var Department = _mapper.Map<Hrm.Domain.Department>(request.DepartmentDto);
 
                     Department = await _unitOfWork.Repository<Hrm.Domain.Department>().Add(Department);
@@ -69,7 +69,7 @@ namespace Hrm.Application.Features.Department.Handlers.Commands
                     response.Success = true;
                     response.Message = "Creation Successfull";
                     response.Id = Department.DepartmentId;
-                }
+                //}
             }
 
             return response;

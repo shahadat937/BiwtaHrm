@@ -16,9 +16,9 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   subscription: Subscription = new Subscription();
   organograms:any[] = [];
   offices: OrganogramOfficeNameDto[] = [];
-  isDesignationExpanded: boolean = false;
-  isDepartmentExpanded: boolean = false;
   expandedOffices: { [key: string]: boolean } = {};
+  expandedDesignations: { [key: string]: boolean } = {};
+  expandedDepartments: { [key: string]: boolean } = {};
 
   constructor(
     public organogramService: OrganogramService,
@@ -54,12 +54,20 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     return this.expandedOffices[officeName];
   }
   
-  toggleDesignationExpand(): void {
-    this.isDesignationExpanded = !this.isDesignationExpanded;
+  toggleDesignationExpand(officeName: string): void {
+    this.expandedDesignations[officeName] = !this.expandedDesignations[officeName];
   }
-  
-  toggleDepartmentExpand(): void {
-    this.isDepartmentExpanded = !this.isDepartmentExpanded;
+
+  isDesignationExpanded(officeName: string): boolean {
+    return this.expandedDesignations[officeName];
+  }
+
+  toggleDepartmentExpand(officeName: string): void {
+    this.expandedDepartments[officeName] = !this.expandedDepartments[officeName];
+  }
+
+  isDepartmentExpanded(officeName: string): boolean {
+    return this.expandedDepartments[officeName];
   }
   
 }

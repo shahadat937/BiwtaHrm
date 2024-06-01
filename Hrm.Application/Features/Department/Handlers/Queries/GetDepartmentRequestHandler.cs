@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.Department;
 using Hrm.Application.Features.Department.Requests.Queries;
 using Hrm.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,20 +26,15 @@ namespace Hrm.Application.Features.Department.Handlers.Queries
 
         public async Task<object> Handle(GetDepartmentRequest request, CancellationToken cancellationToken)
         {
-            //IQueryable<Hrm.Domain.Department> Department = _DepartmentRepository.Where(x => true);
+            var departments = _DepartmentRepository
+            .Where(x => true)
+            .Include(d => d.Office)
+            .Include(d => d.UpperDepartment)
+            .OrderByDescending(x => x.DepartmentId);
 
-            //var DepartmentDtos = _mapper.Map<List<DepartmentDto>>(Department);
+            var departmentDtos = _mapper.Map<List<DepartmentDto>>(await departments.ToListAsync(cancellationToken));
 
-            //return DepartmentDtos;
-
-
-
-            IQueryable<Hrm.Domain.Department> Department = _DepartmentRepository.Where(x => true);
-
-            // Use Task.Run to offload the synchronous operation to a background thread
-            var DepartmentDtos = await Task.Run(() => _mapper.Map<List<DepartmentDto>>(Department));
-
-            return DepartmentDtos;
+            return departmentDtos;
         }
     }
 }

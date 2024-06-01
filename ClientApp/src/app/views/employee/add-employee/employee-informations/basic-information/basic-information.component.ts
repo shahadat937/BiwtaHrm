@@ -51,7 +51,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   }
 
 
-  initaialUser(form?: NgForm) {
+  initaialForm(form?: NgForm) {
     if (form != null) form.resetForm();
     this.employeeService.basicInfo = {
       empId: 0,
@@ -100,13 +100,12 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
         this.empId = res.empId;
         this.headerText = 'Update Basic Information';
         this.BasicInfoForm?.form.patchValue(res);
-        console.log(res)
         this.btnText='Update';
       }
       else{
         this.headerText = 'Add Basic Information';
         this.btnText='Submit';
-        this.resetForm();
+        this.initaialForm();
       }
     });
   }

@@ -28,7 +28,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     public employeeService: EmployeeService,) { }
 
   ngOnInit(): void {
-    this.getEmployeeByAspNetUserId();
+    this.getEmployeeByEmpId();
   }
 
   ngOnDestroy(): void {
@@ -36,27 +36,81 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
-  
-  UserFormView(): void{
+
+  UserFormView(): void {
     this.visible = !this.visible;
     this.headerBtnText = this.visible ? 'Hide Form' : 'Show Form';
   }
 
-  getEmployeeByAspNetUserId(){
+  getEmployeeByEmpId() {
     this.employeeService.findByEmpId(this.empId).subscribe((res) => {
-      if(res.genderId){
+      if (res.genderId) {
         this.headerText = 'Update Personal Information';
-        // this.BasicInfoForm?.form.patchValue(res);
+        this.PersonalInfoForm?.form.patchValue(res);
         console.log(res)
-        this.btnText='Update';
+        this.btnText = 'Update';
       }
-      else{
+      else {
         this.headerText = 'Add Personal Information';
-        this.btnText='Submit';
-        // this.resetForm();
+        this.btnText = 'Submit';
+        this.initaialForm();
       }
     });
   }
 
+  initaialForm(form?: NgForm) {
+    if (form != null) form.resetForm();
+    this.employeeService.personalInfo = {
+      empId : this.empId,
+      genderId : null ,
+      maritalStatusId : null ,
+      bloodGroupId : null ,
+      nationalatyId : null ,
+      religionId : null ,
+      hairColorId : null ,
+      eyesColor : null ,
+      mabileNumber : null ,
+      email : '',
+      birthRegNo : null ,
+      tinNo : null ,
+      drivingLicenceNo : null ,
+      drivingLicenceDate : null,
+      height : '',
+      weight : '',
+      passportNo : '',
+      passportExpireDate : null,
+    };
+  }
 
+  resetForm() {
+    this.PersonalInfoForm.form.reset();
+    this.PersonalInfoForm.form.patchValue({
+      empId : this.empId,
+      genderId : null ,
+      maritalStatusId : null ,
+      bloodGroupId : null ,
+      nationalatyId : null ,
+      religionId : null ,
+      hairColorId : null ,
+      eyesColor : null ,
+      mabileNumber : null ,
+      email : '',
+      birthRegNo : null ,
+      tinNo : null ,
+      drivingLicenceNo : null ,
+      drivingLicenceDate : null,
+      height : '',
+      weight : '',
+      passportNo : '',
+      passportExpireDate : null,
+    });
+  }
+
+  cancel() {
+    this.close.emit();
+  }
+
+  onSubmit(form: NgForm): void {
+
+  }
 }

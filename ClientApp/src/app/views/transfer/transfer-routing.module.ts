@@ -11,6 +11,8 @@ import { TransferApprovedComponent } from './transfer-approved/transfer-approved
 import { TransferApprovedListComponent } from './transfer-approved-list/transfer-approved-list.component';
 import { DepartmetnReleaseListComponent } from './departmetn-release-list/departmetn-release-list.component';
 import { DeptReleaseInfo } from '../basic-setup/model/dept-release-info';
+import { EmployePostingJoinListComponent } from './employe-posting-join-list/employe-posting-join-list.component';
+import { EmployePostingJoinApproveComponent } from './employe-posting-join-approve/employe-posting-join-approve.component';
 
 
 const routes: Routes = [
@@ -49,11 +51,7 @@ const routes: Routes = [
     path:'transferApproveInfo',
     component:TransferApprovedComponent
   },
-  // {
-  //   path:'transferApproveInfo/:transferApproveInfoId',
-  //   component:TransferApprovedComponent
-  // },
-  //
+
   {
     path:'departmetnReleaseList',
     component:DepartmetnReleaseListComponent
@@ -62,7 +60,14 @@ const routes: Routes = [
     path:'departmetnRelease/:transferApproveInfoId',
     component:DepartmetnReleaseComponent
   },
-
+  {
+    path:'employePostingJoinList',
+    component:EmployePostingJoinListComponent
+  },
+  {
+    path:'employePostingJoin/:depReleaseInfoId',
+    component:EmployePostingJoinApproveComponent
+  },
 {
   path:"transferhistory",
   component:TransferPostingHistoryComponent

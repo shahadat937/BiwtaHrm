@@ -405,7 +405,13 @@ if (form === this.PostingAndTrnsForm) {
     return service.submit(form.value);
   }
 }
-
+resetAllForm(): void {
+  this.EmployeeForm.reset();
+  this.PostingAndTrnsForm.reset();
+  this.TransferApproveInfoForm.reset();
+  this.DeptReleaseInfoForm.reset();
+  this.EmpTransferPostingJoinForm.reset();
+}
 
 
 clearCachedData(): void {
@@ -429,35 +435,6 @@ handleResponse(response: any): void {
     });
   }
 }
-
-
-
-
-
-
-
-
-  delete(element: any) {
-    this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe((result) => {
-      if (result) {
-        this.postingOrderInfoService.delete(element.postingOrderInfoId).subscribe(
-          (res) => {
-            const index = this.dataSource.data.indexOf(element);
-            if (index !== -1) {
-              this.dataSource.data.splice(index, 1);
-              this.dataSource = new MatTableDataSource(this.dataSource.data);
-            }
-          },
-          (err) => {
-            this.toastr.error('Somethig Wrong ! ', ` `, {
-              positionClass: 'toast-top-right',
-            });
-            console.log(err);
-          }
-        );
-      }
-    });
-  }
 
   // transferApproveInfos
 

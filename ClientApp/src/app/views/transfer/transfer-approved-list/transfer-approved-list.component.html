@@ -51,7 +51,10 @@
                 <a [routerLink]="['/transfer/transferApproveInfo', element.postingOrderInfoId]">
                   <button class="custom-button">Approved</button>
                 </a>
-                <a (click)="delete(element)"><button class="custom-button">Reject</button></a>
+                  |
+                <a [routerLink]="['/transfer/transferApproveInfo', element.postingOrderInfoId]">
+                  <button class="custom-button">Reject</button>
+                </a>
               </td>
             </ng-container>
     

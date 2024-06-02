@@ -26,6 +26,8 @@ import { TransferApprovedComponent } from './transfer-approved/transfer-approved
 import { TransferApprovedListComponent } from './transfer-approved-list/transfer-approved-list.component';
 import { DepartmetnReleaseComponent } from './departmetn-release/departmetn-release.component';
 import { DepartmetnReleaseListComponent } from './departmetn-release-list/departmetn-release-list.component';
+import { EmployePostingJoinListComponent } from './employe-posting-join-list/employe-posting-join-list.component';
+import { EmployePostingJoinApproveComponent } from './employe-posting-join-approve/employe-posting-join-approve.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { DepartmetnReleaseListComponent } from './departmetn-release-list/depart
     TransferApprovedListComponent,
     DepartmetnReleaseComponent,
     DepartmetnReleaseListComponent,
+    EmployePostingJoinListComponent,
+    EmployePostingJoinApproveComponent,
   ],
   imports: [
     MatCardModule,

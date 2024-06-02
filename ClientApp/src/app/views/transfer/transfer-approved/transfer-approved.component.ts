@@ -59,13 +59,11 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
   loadPostingOrderInfo(postingOrderInfoId: number) {
     this.postingOrderInfoService.find(postingOrderInfoId).subscribe(data => {
       this.postingOrderInfoService.postingOrderInfos = data;
-      console.log(data)
       // Ensure the form model is updated with the fetched data
       this.transferApproveInfoService.transferApproveInfos.postingOrderInfoId = data.postingOrderInfoId;
       // Optionally, load other necessary data into the form
     });
   }
-
 
   //Employee/Transfer
   openApproveEmpTransferJoin(): void {
@@ -78,7 +76,6 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
     this.transferApproveInfoService.transferApproveInfos.approveBy= employee.empId,
     this.transferApproveInfoService.transferApproveInfos.approveByName= employee.employeeName
   }
-
   ngOnInit(): void {
     this.getAllTransferApproveInfo();
     this.loadTransferApproveInfos();
@@ -127,6 +124,7 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
       isActive: true
     };
   }
+
   resetFormTransfer() {
     this.btnText = 'Submit';
     if (this.TransferApproveInfoForm?.form != null) {
@@ -178,7 +176,7 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
           this.getAllTransferApproveInfo();
           this.resetFormTransfer();
           if (!id) {
-            this.router.navigate(['/transfer/transferApproveInfoList']);
+            this.router.navigate(['/transfer/departmetnReleaseList']);
           }
         } else {
           this.toastr.warning('', `${response.message}`, {

@@ -36,21 +36,18 @@
                 <th mat-header-cell *matHeaderCellDef>approveBy</th>
                 <td mat-cell *matCellDef="let element">{{ element.approveBy }}</td>
               </ng-container>
+
+              <ng-container matColumnDef="depClearance">
+                <th mat-header-cell *matHeaderCellDef>depClearance</th>
+                <td mat-cell *matCellDef="let element">{{ element.depClearance }}</td>
+              </ng-container>
               <ng-container matColumnDef="approveDate">
                 <th mat-header-cell *matHeaderCellDef>approveDate</th>
                 <td mat-cell *matCellDef="let element">{{ element.approveDate | date: 'yyyy-MM-dd' }}</td>
             </ng-container>
-            <!-- <ng-container matColumnDef="approveStatus">
-              <th mat-header-cell *matHeaderCellDef>Approve Status</th>
-              <td mat-cell *matCellDef="let element">{{ element.approveStatus}}</td>
-            </ng-container> -->
-            <ng-container matColumnDef="approveStatus">
-              <th mat-header-cell *matHeaderCellDef>Status</th>
-              <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.approveStatus === true">Approved</span>
-                <span *ngIf="element.approveStatus === false">Rejected</span>
-                <span *ngIf="element.approveStatus === null">Pending</span>
-              </td>
+            <ng-container matColumnDef="officeOrderDate">
+              <th mat-header-cell *matHeaderCellDef>OfficeOrder Date</th>
+              <td mat-cell *matCellDef="let element">{{ element.officeOrderDate | date: 'yyyy-MM-dd' }}</td>
             </ng-container>
             
             <!-- Name Column -->
@@ -58,11 +55,11 @@
               <th mat-header-cell *matHeaderCellDef>Action</th>
               <td mat-cell *matCellDef="let element">
           
-                <a [routerLink]="['/transfer/departmetnRelease', element.transferApproveInfoId]">
+                <a [routerLink]="['/transfer/employePostingJoin', element.depReleaseInfoId]">
                   <button class="custom-button">Approved</button>
                 </a>
                 |
-                <a [routerLink]="['/transfer/departmetnRelease', element.transferApproveInfoId]">
+                <a [routerLink]="['/transfer/employePostingJoin', element.depReleaseInfoId]">
                   <button class="custom-button">Reject</button>
                 </a>
               </td>

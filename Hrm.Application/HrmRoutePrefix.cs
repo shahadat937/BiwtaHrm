@@ -80,6 +80,9 @@ namespace Hrm.Application
         public const string Year = HRMRoutePrefixBase + "year";
         public const string Employee = HRMRoutePrefixBase + "employee";
 
+        public const string EmpBasicInfo = HRMRoutePrefixBase + "empBasicInfo";
+        public const string EmpPersonalInfo = HRMRoutePrefixBase + "empPersonalInfo";
+
 
 
 

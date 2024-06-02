@@ -71,6 +71,8 @@ using Hrm.Application.DTOs.DepReleaseInfo;
 using Hrm.Application.DTOs.EmpTnsferPostingJoin;
 using Hrm.Application.DTOs.Year;
 using Hrm.Application.DTOs.Employee;
+using Hrm.Application.DTOs.EmpBasicInfo;
+using Hrm.Application.DTOs.EmpPersonalInfo;
 
 
 
@@ -287,6 +289,12 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Employees, EmployeesDto>().ReverseMap();
             CreateMap<Employees, CreateEmployeesDto>().ReverseMap();
+
+            CreateMap<EmpBasicInfo, EmpBasicInfoDto>().ReverseMap();
+            CreateMap<EmpBasicInfo, CreateEmpBasicInfoDto>().ReverseMap();
+
+            CreateMap<EmpPersonalInfo, EmpPersonalInfoDto>().ReverseMap();
+            CreateMap<EmpPersonalInfo, CreateEmpPersonalInfoDto>().ReverseMap();
 
         }
     }

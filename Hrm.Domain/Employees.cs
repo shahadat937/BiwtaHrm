@@ -18,8 +18,8 @@ namespace Hrm.Domain
         public DateOnly? DateOfBirth { get; set; }
         public int? NID { get; set; }
         public int? SmartNID { get; set; }
-        public DateTime? ProbabilityRetirementDate { get; set; }
-        public DateTime? PRLDate { get; set; }
+        public DateOnly? ProbabilityRetirementDate { get; set; }
+        public DateOnly? PRLDate { get; set; }
         public string? AspNetUserId { get; set; }
         public int? EmployeeTypeId { get; set; }
         public int? ShiftId { get; set; }
@@ -40,9 +40,9 @@ namespace Hrm.Domain
         public string? Weight { get; set; }
         public int? HealthIssueStatusId { get; set; }
         public int? DrivingLicenceNo { get; set; }
-        public DateTime? DrivingLicenceDate { get; set; }
+        public DateOnly? DrivingLicenceDate { get; set; }
         public string? PassportNo { get; set; }
-        public DateTime? PassportExpireDate { get; set; }
+        public DateOnly? PassportExpireDate { get; set; }
         public int? PoolId { get; set; }
         public int? OfficeId { get; set; }
         public int? DepartmentID { get; set; }
@@ -52,7 +52,7 @@ namespace Hrm.Domain
         public int? PresentDesignationId { get; set; }
         public int? PresentGradeId { get; set; }
         public int? BasicPay { get; set; }
-        public DateTime? JoiningDate { get; set; }
+        public DateOnly? JoiningDate { get; set; }
         public string? PlaceOfFirstJoining { get; set; }
         public int? FirstGradeId { get; set; }
         public int? FirstScaleId { get; set; }

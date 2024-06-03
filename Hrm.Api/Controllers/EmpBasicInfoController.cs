@@ -1,7 +1,9 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.EmpBasicInfo;
+using Hrm.Application.DTOs.Employee;
 using Hrm.Application.Features.EmpBasicInfos.Requests.Commands;
 using Hrm.Application.Features.EmpBasicInfos.Requests.Queries;
+using Hrm.Application.Features.Employee.Requests.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +34,14 @@ namespace Hrm.Api.Controllers
         {
             var EmpBasicInfos = await _mediator.Send(new GetEmpBasicInfoByIdRequest { Id = id });
             return Ok(EmpBasicInfos);
+        }
+
+        [HttpGet]
+        [Route("get-EmpBasicInfoByAspNetUserId/{id}")]
+        public async Task<ActionResult<EmpBasicInfoDto>> GetEmpBasicInfoByAspNetUserId(string id)
+        {
+            var EmpBasicInfo = await _mediator.Send(new GetEmpBasicInfoByAspNetUserIdRequest { AspNetUserId = id });
+            return Ok(EmpBasicInfo);
         }
 
 

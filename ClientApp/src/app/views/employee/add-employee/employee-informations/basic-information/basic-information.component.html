@@ -8,57 +8,97 @@
       <c-col [md]="4">
         <input
           type="hidden"
-          [(ngModel)]="employeeService.basicInfo.AspNetUserId"
+          [(ngModel)]="empBasicInfoService.basicInfo.AspNetUserId"
           name="AspNetUserId"
         />
         <input
           type="hidden"
-          [(ngModel)]="employeeService.basicInfo.empId"
-          name="empId"
+          [(ngModel)]="empBasicInfoService.basicInfo.id"
+          name="id"
         />
         <label cLabel for="validationCustom01"
-          >Full Name<span class="text-danger"></span></label
+          >First Name<span class="text-danger"></span></label
         >
         <input
-          [(ngModel)]="employeeService.basicInfo.empEngName"
-          name="empEngName"
-          #EmpEngName="ngModel"
+          [(ngModel)]="empBasicInfoService.basicInfo.firstName"
+          name="firstName"
+          #firstName="ngModel"
           cFormControl
           id="validationCustom01"
           type="text"
           readonly
         />
       </c-col>
-
+      
       <c-col [md]="4">
         <label cLabel for="validationCustom02"
-        >Full Name Bangla<span class="text-danger">*</span></label
+        >Last Name<span class="text-danger"></span></label
       >
         <input
-          [(ngModel)]="employeeService.basicInfo.empBdName"
-          name="empBdName"
-          #EmpBdName="ngModel"
-          placeholder="Enter Full Name Bangla"
+        [(ngModel)]="empBasicInfoService.basicInfo.lastName"
+        name="lastName"
+        #lastName="ngModel"
+        cFormControl
+        id="validationCustom02"
+        type="text"
+        readonly
+        />
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom03"
+        >First Name Bangla<span class="text-danger">*</span></label
+      >
+        <input
+          [(ngModel)]="empBasicInfoService.basicInfo.firstNameBangla"
+          name="firstNameBangla"
+          #firstNameBangla="ngModel"
+          placeholder="Enter First Name Bangla"
           cFormControl
-          id="validationCustom02"
+          id="validationCustom03"
           required
           type="text"
         />
-        @if(!EmpBdName.value&&EmpBdName.touched){
-        <div class="text-left text-danger">Full Name Bangla is required</div>
+        @if(!firstNameBangla.value&&firstNameBangla.touched){
+        <div class="text-left text-danger">First Name Bangla is required</div>
+        }
+        @if(firstNameBangla.value&&lastNameBangla.value&&firstNameBangla.value==lastNameBangla.value){
+        <div class="text-left text-danger">First Name and Last Name Can't be same</div>
+        }
+      </c-col>
+      
+      <c-col [md]="4">
+        <label cLabel for="validationCustom04"
+        >Last Name Bangla<span class="text-danger">*</span></label
+      >
+        <input
+          [(ngModel)]="empBasicInfoService.basicInfo.lastNameBangla"
+          name="lastNameBangla"
+          #lastNameBangla="ngModel"
+          placeholder="Enter Last Name Bangla"
+          cFormControl
+          id="validationCustom04"
+          required
+          type="text"
+        />
+        @if(!lastNameBangla.value&&lastNameBangla.touched){
+        <div class="text-left text-danger">First Name Bangla is required</div>
+        }
+        @if(firstNameBangla.value&&lastNameBangla.value&&firstNameBangla.value==lastNameBangla.value){
+        <div class="text-left text-danger">First Name and Last Name Can't be same</div>
         }
       </c-col>
 
         <c-col [md]="4">
-          <label cLabel for="validationCustom03"
+          <label cLabel for="validationCustom05"
           >Date of Birth<span class="text-danger">*</span></label
         >
           <input
-            [(ngModel)]="employeeService.basicInfo.dateOfBirth"
+            [(ngModel)]="empBasicInfoService.basicInfo.dateOfBirth"
             name="dateOfBirth"
             #DateOfBirth="ngModel"
             cFormControl
-            id="validationCustom03"
+            id="validationCustom05"
             required
             type="date"
           />
@@ -68,16 +108,16 @@
         </c-col>
       
         <c-col [md]="4">
-          <label cLabel for="validationCustom04"
+          <label cLabel for="validationCustom06"
           >NID Number<span class="text-danger">*</span></label
         >
           <input
-            [(ngModel)]="employeeService.basicInfo.nid"
+            [(ngModel)]="empBasicInfoService.basicInfo.nid"
             name="nid"
             #NID="ngModel"
             placeholder="Enter NID Number"
             cFormControl
-            id="validationCustom04"
+            id="validationCustom06"
             required
             type="text"
             pattern="[0-9]*"
@@ -91,15 +131,15 @@
         </c-col>
 
         <c-col [md]="4">
-          <label cLabel for="validationCustom05"
+          <label cLabel for="validationCustom07"
           >Personal File No.<span class="text-danger"></span></label>
           <input
-            [(ngModel)]="employeeService.basicInfo.personalFileNo"
+            [(ngModel)]="empBasicInfoService.basicInfo.personalFileNo"
             name="personalFileNo"
             #PersonalFileNo="ngModel"
             placeholder="Enter Personal File No."
             cFormControl
-            id="validationCustom05"
+            id="validationCustom07"
             type="text"
           />
           @if(!PersonalFileNo.valid&&PersonalFileNo.touched){
@@ -108,11 +148,11 @@
         </c-col>
         
         <c-col [md]="4">
-          <label cLabel for="validationCustom06">Employee Type<span class="text-danger">*</span></label>
+          <label cLabel for="validationCustom08">Employee Type<span class="text-danger">*</span></label>
           <div class="input-wrapper">
             <select 
-              [(ngModel)]="employeeService.basicInfo.employeeTypeId" name="employeeTypeId" #EmployeeTypeId="ngModel"
-              cFormControl id="validationCustom06" aria-label="Default select example" required cSelect>
+              [(ngModel)]="empBasicInfoService.basicInfo.employeeTypeId" name="employeeTypeId" #EmployeeTypeId="ngModel"
+              cFormControl id="validationCustom08" aria-label="Default select example" required cSelect>
               <option [ngValue]="null">Select Employee Type</option>
   
               @for(employee of employeeType; track employee.id;let index=$index) {

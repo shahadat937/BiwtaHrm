@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
-import { EmployeeService } from '../../../service/employee.service';
+import { EmpBasicInfoService } from '../../../service/emp-basic-info.service';
 import { NgForm } from '@angular/forms';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { Subscription } from 'rxjs';
@@ -18,7 +18,8 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
 
   @Input() userId!: string;
   @Output() close = new EventEmitter<void>();
-  fullName: string = '';
+  firstName: string = '';
+  lastName: string = '';
   empId: number = 0;
   visible:boolean = true;
   headerText: string = '';
@@ -31,7 +32,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   
   constructor(
     public userService: UserService,
-    public employeeService: EmployeeService,
+    public empBasicInfoService: EmpBasicInfoService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -53,10 +54,12 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
 
   initaialForm(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.employeeService.basicInfo = {
-      empId: 0,
-      empEngName: this.fullName,
-      empBdName: '',
+    this.empBasicInfoService.basicInfo = {
+      id: this.empId,
+      firstName : this.firstName,
+      lastName : this.lastName,
+      firstNameBangla : '',
+      lastNameBangla : '',
       dateOfBirth: null,
       personalFileNo: '',
       nid: null,
@@ -68,9 +71,11 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   resetForm(){
       this.BasicInfoForm.form.reset();
       this.BasicInfoForm.form.patchValue({
-        empId: this.empId,
-        empEngName: this.fullName,
-        empBdName: '',
+        id: this.empId,
+        firstName : this.firstName,
+        lastName : this.firstName,
+        firstNameBangla : '',
+        lastNameBangla : '',
         dateOfBirth: undefined,
         personalFileNo: '',
         nid: null,
@@ -86,18 +91,20 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
 
   getUserDetails(){
     this.userService.find(this.userId).subscribe((res) => {
-      this.fullName = res.firstName+" "+res.lastName;
+      this.firstName= res.firstName;
+      this.lastName= res.lastName;
       this.BasicInfoForm.form.patchValue({
-        empEngName: res.firstName+" "+res.lastName,
+        firstName: res.firstName,
+        lastName: res.lastName,
         AspNetUserId: res.id,
       });
     });
   }
   
   getEmployeeByAspNetUserId(){
-    this.employeeService.findByAspNetUserId(this.userId).subscribe((res) => {
+    this.empBasicInfoService.findByAspNetUserId(this.userId).subscribe((res) => {
       if(res){
-        this.empId = res.empId;
+        this.empId = res.id;
         this.headerText = 'Update Basic Information';
         this.BasicInfoForm?.form.patchValue(res);
         this.btnText='Update';
@@ -111,7 +118,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   }
 
   getSelectedEmployeeType(){
-    this.subscription=this.employeeService.getSelectedEmployeeType().subscribe((data) => { 
+    this.subscription=this.empBasicInfoService.getSelectedEmployeeType().subscribe((data) => { 
       this.employeeType = data;
     });
   }
@@ -122,11 +129,11 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
 
   onSubmit(form: NgForm): void{
     this.loading = true;
-    this.employeeService.cachedData = [];
-    const id = form.value.empId;
+    this.empBasicInfoService.cachedData = [];
+    const id = form.value.id;
     const action$ = id
-      ? this.employeeService.updateEmployeeInfo(id, form.value)
-      : this.employeeService.saveEmployeeInfo(form.value);
+      ? this.empBasicInfoService.updateEmpBasicInfo(id, form.value)
+      : this.empBasicInfoService.saveEmpBasicInfo(form.value);
     
       this.subscription = action$.subscribe((response: any) => {
         if (response.success) {

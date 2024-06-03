@@ -11,6 +11,8 @@ using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.DTOs.ChildStatus;
 using Hrm.Application.Features.ChildStatus.Requests.Queries;
+using Hrm.Application.Features.BloodGroups.Requests.Queries;
+using Hrm.Shared.Models;
 namespace Hrm.Api.Controllers
 {
 
@@ -38,6 +40,15 @@ namespace Hrm.Api.Controllers
             var Religion = await _mediator.Send(new GetReligionByIdRequest { ReligionId = id });
             return Ok(Religion);
         }
+
+        [HttpGet]
+        [Route("get-selectedReligions")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedReligion()
+        {
+            var Religion = await _mediator.Send(new GetSelectedReligionRequest { });
+            return Ok(Religion);
+        }
+
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

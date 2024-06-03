@@ -174,9 +174,9 @@
           type="text"
           pattern="[0-9]*"
           />
-          @if(!mobileNumber.value&&mobileNumber.touched){
+          <!-- @if(!mobileNumber.value&&mobileNumber.touched){
           <div class="text-left text-danger">Phone Number is required</div>
-          }
+          } -->
           @if(!mobileNumber.valid&&mobileNumber.touched&&mobileNumber.value){
           <div class="text-left text-danger">Invalid Phone Number</div>
           }
@@ -237,6 +237,156 @@
           />
           @if(!placeOfBirth.valid&&placeOfBirth.touched){
           <div class="text-left text-danger">Place of Birth is required</div>
+          }
+        </c-col>
+        
+        <c-col [md]="4">
+          <label cLabel for="fatherName"
+          >Father Name<span class="text-danger">*</span></label>
+          <input
+            [(ngModel)]="empPersonalInfoService.personalInfo.fatherName"
+            name="fatherName"
+            #fatherName="ngModel"
+            placeholder="Enter Father Name"
+            cFormControl
+            required
+            id="fatherName"
+            type="text"
+          />
+          @if(!fatherName.valid&&fatherName.touched){
+          <div class="text-left text-danger">Father Name required</div>
+          }
+        </c-col>
+        
+        <c-col [md]="4">
+          <label cLabel for="fatherNameBangla"
+          >Father Name Bangla<span class="text-danger"></span></label>
+          <input
+            [(ngModel)]="empPersonalInfoService.personalInfo.fatherNameBangla"
+            name="fatherNameBangla"
+            #fatherNameBangla="ngModel"
+            placeholder="Enter Father Name Bangla"
+            cFormControl
+            id="fatherNameBangla"
+            type="text"
+          />
+          @if(!fatherNameBangla.valid&&fatherNameBangla.touched){
+          <div class="text-left text-danger">Father Name Bangla is required</div>
+          }
+        </c-col>
+        
+        <c-col [md]="4">
+          <label cLabel for="motherName"
+          >Mother Name<span class="text-danger">*</span></label>
+          <input
+            [(ngModel)]="empPersonalInfoService.personalInfo.motherName"
+            name="motherName"
+            #motherName="ngModel"
+            placeholder="Enter Mother Name"
+            cFormControl
+            required
+            id="motherName"
+            type="text"
+          />
+          @if(!motherName.valid&&motherName.touched){
+          <div class="text-left text-danger">Mother Name required</div>
+          }
+        </c-col>
+        
+        <c-col [md]="4">
+          <label cLabel for="motherNameBangla"
+          >Mother Name Bangla<span class="text-danger"></span></label>
+          <input
+            [(ngModel)]="empPersonalInfoService.personalInfo.motherNameBangla"
+            name="motherNameBangla"
+            #motherNameBangla="ngModel"
+            placeholder="Enter Mother Name Bangla"
+            cFormControl
+            id="motherNameBangla"
+            type="text"
+          />
+          @if(!motherNameBangla.valid&&motherNameBangla.touched){
+          <div class="text-left text-danger">Father Mother Bangla is required</div>
+          }
+        </c-col>
+        
+        <c-col [md]="4">
+          <label cLabel for="gurdianName"
+          >Gurdian Name<span class="text-danger"></span></label>
+          <input
+            [(ngModel)]="empPersonalInfoService.personalInfo.gurdianName"
+            name="gurdianName"
+            #gurdianName="ngModel"
+            placeholder="Enter Gurdian Name"
+            cFormControl
+            id="gurdianName"
+            type="text"
+          />
+          @if(!gurdianName.valid&&gurdianName.touched){
+          <div class="text-left text-danger">Gurdian Name is required</div>
+          }
+        </c-col>
+        
+        <c-col [md]="4">
+          <label cLabel for="gurdianNameBangla"
+          >Gurdian Name Bangla<span class="text-danger"></span></label>
+          <input
+            [(ngModel)]="empPersonalInfoService.personalInfo.gurdianNameBangla"
+            name="gurdianNameBangla"
+            #gurdianNameBangla="ngModel"
+            placeholder="Enter Gurdian Name Bangla"
+            cFormControl
+            id="gurdianNameBangla"
+            type="text"
+          />
+          @if(!gurdianNameBangla.valid&&gurdianNameBangla.touched){
+          <div class="text-left text-danger">Gurdian Name Bangla is required</div>
+          }
+        </c-col>
+        
+        <c-col [md]="4">
+          <label cLabel for="validationCustom04">Relation With Gurdian<span class="text-danger"></span></label>
+          <div class="input-wrapper">
+            <select 
+              [(ngModel)]="empPersonalInfoService.personalInfo.gurdianRelationId" 
+              name="gurdianRelationId" 
+              #gurdianRelationId="ngModel"
+              cFormControl id="validationCustom04" 
+              aria-label="Default select example" 
+              cSelect>
+              <option [ngValue]="null">Select Relation</option>
+  
+              @for(relation of relations; track relation.id;let index=$index) {
+              <option [value]="relation.id">
+                {{ relation.name }}
+              </option>
+              }
+            </select>
+            @if(!gurdianRelationId.valid && gurdianRelationId.touched){
+            <div class="text-left text-danger">Religion is required</div>
+            }
+          </div>
+        </c-col>
+        
+        <c-col [md]="4">
+          <label cLabel for="emergencyContact"
+          >Emergency Contact Number<span class="text-danger"></span></label
+        >
+        <input
+          [(ngModel)]="empPersonalInfoService.personalInfo.emergencyContact"
+          name="emergencyContact"
+          #emergencyContact="ngModel"
+          placeholder="Enter Emergency Contact Number"
+          cFormControl
+          id="emergencyContact"
+          type="text"
+          pattern="[0-9]*"
+          />
+          <!-- @if(!mobileNumber.value&&mobileNumber.touched){
+          <div class="text-left text-danger">Phone Number is required</div>
+          } -->
+          @if(!emergencyContact.valid&&emergencyContact.touched&&emergencyContact.value){
+          <div class="text-left text-danger">Invalid Contact Number</div>
           }
         </c-col>
         

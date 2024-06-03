@@ -67,6 +67,10 @@ export class EmpPersonalInfoService {
     return this.http.get<SelectedModel[]>(this.baseUrl + '/eyesColor/get-selectedEyesColors');
   }
   
+  getSelectedRelationType(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/Relation/get-selectedRelation');
+  }
+  
   saveEmpPersonalInfo(model: any) {
     return this.http.post(this.baseUrl + '/empPersonalInfo/save-EmpPersonalInfos', model);
   }

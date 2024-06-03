@@ -26,6 +26,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   religions: SelectedModel[] = [];
   hairColors: SelectedModel[] = [];
   eyeColors: SelectedModel[] = [];
+  relations: SelectedModel[] = [];
   subscription: Subscription = new Subscription();
   loading: boolean = false;
   @ViewChild('PersonalInfoForm', { static: true }) PersonalInfoForm!: NgForm;
@@ -43,6 +44,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.getSelectedReligions();
     this.getSelectedHairColors();
     this.getSelectedEyeColors();
+    this.getSelectedRelation();
   }
 
   ngOnDestroy(): void {
@@ -97,6 +99,14 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       hairColorId : null ,
       eyesColor : null ,
       mobileNumber : '' ,
+      fatherName: '',
+      fatherNameBangla: '',
+      motherName: '',
+      motherNameBangla: '',
+      gurdianName: '',
+      gurdianNameBangla: '',
+      gurdianRelationId: null,
+      emergencyContact: '',
       email : '',
       birthRegNo : null ,
       placeOfBirth : '',
@@ -123,6 +133,14 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       hairColorId : null ,
       eyesColor : null ,
       mobileNumber : null ,
+      fatherName: '',
+      fatherNameBangla: '',
+      motherName: '',
+      motherNameBangla: '',
+      gurdianName: '',
+      gurdianNameBangla: '',
+      gurdianRelationId: null,
+      emergencyContact: '',
       email : '',
       birthRegNo : null ,
       placeOfBirth : '',
@@ -166,6 +184,11 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   getSelectedEyeColors(){
     this.subscription=this.empPersonalInfoService.getSelectedEyeColor().subscribe((data) => { 
       this.eyeColors = data;
+    });
+  }
+  getSelectedRelation(){
+    this.subscription=this.empPersonalInfoService.getSelectedRelationType().subscribe((data) => { 
+      this.relations = data;
     });
   }
 

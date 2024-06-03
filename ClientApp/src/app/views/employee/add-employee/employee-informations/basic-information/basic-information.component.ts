@@ -64,7 +64,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
       personalFileNo: '',
       nid: null,
       employeeTypeId: null,
-      AspNetUserId: this.userId,
+      aspNetUserId: this.userId,
     };
   }
 
@@ -80,7 +80,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
         personalFileNo: '',
         nid: null,
         employeeTypeId: null,
-        AspNetUserId: this.userId,
+        aspNetUserId: this.userId,
       });
   }
   
@@ -96,7 +96,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
       this.BasicInfoForm.form.patchValue({
         firstName: res.firstName,
         lastName: res.lastName,
-        AspNetUserId: res.id,
+        aspNetUserId: res.id,
       });
     });
   }

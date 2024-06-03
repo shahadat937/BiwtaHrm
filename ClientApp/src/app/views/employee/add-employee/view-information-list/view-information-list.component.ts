@@ -6,7 +6,7 @@ import { config } from 'rxjs';
 import { BasicInformationComponent } from '../employee-informations/basic-information/basic-information.component';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
-import { EmployeeService } from '../../service/employee.service';
+import { EmpPersonalInfoService } from '../../service/emp-personal-info.service';
 import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 
 @Component({
@@ -32,7 +32,7 @@ export class ViewInformationListComponent implements OnInit {
     private modalService: BsModalService,
     private route: ActivatedRoute,
     public userService: UserService,
-    public employeeService: EmployeeService,
+    public empPersonalInfoService: EmpPersonalInfoService,
     public empBasicInfoService: EmpBasicInfoService,) { }
 
   ngOnInit(): void {
@@ -52,15 +52,26 @@ export class ViewInformationListComponent implements OnInit {
   getEmployeeByAspNetUserId(){
     this.empBasicInfoService.findByAspNetUserId(this.userId).subscribe((res) => {
       if(res){
-        console.log(res)
         this.gettingStatus = true;
         this.basicInfoEntryStatus=true;
         this.empId = res.id;
+        this.getStatusOfPersonalInfo();
       }
       else{
         this.gettingStatus = false;
       }
     });
+  }
+
+  getStatusOfPersonalInfo(){
+    this.empPersonalInfoService.findByEmpId(this.empId).subscribe((res)=>{
+      if(res){
+        this.personalInfoEntryStatus = true;
+      }
+      else{
+        this.personalInfoEntryStatus = false;
+      }
+    })
   }
 
   toggleComponent(component: string) {

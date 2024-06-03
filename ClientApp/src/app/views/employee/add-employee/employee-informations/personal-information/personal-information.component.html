@@ -7,7 +7,12 @@
     <form #PersonalInfoForm="ngForm" (submit)="onSubmit(PersonalInfoForm)" [gutter]="3" novalidate cForm cRow class="needs-validation">
         <input
           type="hidden"
-          [(ngModel)]="employeeService.personalInfo.empId"
+          [(ngModel)]="empPersonalInfoService.personalInfo.id"
+          name="id"
+        />
+        <input
+          type="hidden"
+          [(ngModel)]="empPersonalInfoService.personalInfo.empId"
           name="empId"
         />
 
@@ -15,7 +20,7 @@
           <label cLabel for="validationCustom01">Gender<span class="text-danger"></span></label>
           <div class="input-wrapper">
             <select 
-              [(ngModel)]="employeeService.personalInfo.genderId" 
+              [(ngModel)]="empPersonalInfoService.personalInfo.genderId" 
               name="genderId" 
               #genderId="ngModel"
               cFormControl id="validationCustom01" 
@@ -39,7 +44,7 @@
           <label cLabel for="validationCustom02">Marital Status<span class="text-danger"></span></label>
           <div class="input-wrapper">
             <select 
-              [(ngModel)]="employeeService.personalInfo.maritalStatusId" 
+              [(ngModel)]="empPersonalInfoService.personalInfo.maritalStatusId" 
               name="maritalStatusId" 
               #maritalStatusId="ngModel"
               cFormControl id="validationCustom02" 
@@ -63,7 +68,7 @@
           <label cLabel for="validationCustom03">Blood Group<span class="text-danger"></span></label>
           <div class="input-wrapper">
             <select 
-              [(ngModel)]="employeeService.personalInfo.bloodGroupId" 
+              [(ngModel)]="empPersonalInfoService.personalInfo.bloodGroupId" 
               name="bloodGroupId" 
               #bloodGroupId="ngModel"
               cFormControl id="validationCustom03" 
@@ -87,7 +92,7 @@
           <label cLabel for="validationCustom04">Religion<span class="text-danger"></span></label>
           <div class="input-wrapper">
             <select 
-              [(ngModel)]="employeeService.personalInfo.religionId" 
+              [(ngModel)]="empPersonalInfoService.personalInfo.religionId" 
               name="religionId" 
               #religionId="ngModel"
               cFormControl id="validationCustom04" 
@@ -111,7 +116,7 @@
           <label cLabel for="validationCustom05">Hair Color<span class="text-danger"></span></label>
           <div class="input-wrapper">
             <select 
-              [(ngModel)]="employeeService.personalInfo.hairColorId" 
+              [(ngModel)]="empPersonalInfoService.personalInfo.hairColorId" 
               name="hairColorId" 
               #hairColorId="ngModel"
               cFormControl id="validationCustom05" 
@@ -135,7 +140,7 @@
           <label cLabel for="validationCustom06">Eye Color<span class="text-danger"></span></label>
           <div class="input-wrapper">
             <select 
-              [(ngModel)]="employeeService.personalInfo.eyesColor" 
+              [(ngModel)]="empPersonalInfoService.personalInfo.eyesColor" 
               name="eyesColor" 
               #eyesColor="ngModel"
               cFormControl id="validationCustom06" 
@@ -160,19 +165,19 @@
           >Phone Number<span class="text-danger"></span></label
         >
         <input
-          [(ngModel)]="employeeService.personalInfo.mabileNumber"
-          name="mabileNumber"
-          #mabileNumber="ngModel"
+          [(ngModel)]="empPersonalInfoService.personalInfo.mobileNumber"
+          name="mobileNumber"
+          #mobileNumber="ngModel"
           placeholder="Enter Phone Number"
           cFormControl
           id="validationCustom07"
           type="text"
           pattern="[0-9]*"
           />
-          @if(!mabileNumber.value&&mabileNumber.touched){
+          @if(!mobileNumber.value&&mobileNumber.touched){
           <div class="text-left text-danger">Phone Number is required</div>
           }
-          @if(!mabileNumber.valid&&mabileNumber.touched&&mabileNumber.value){
+          @if(!mobileNumber.valid&&mobileNumber.touched&&mobileNumber.value){
           <div class="text-left text-danger">Invalid Phone Number</div>
           }
         </c-col>
@@ -181,7 +186,7 @@
           <label cLabel for="validationCustom08"
           >Email<span class="text-danger"></span></label>
           <input
-            [(ngModel)]="employeeService.personalInfo.email"
+            [(ngModel)]="empPersonalInfoService.personalInfo.email"
             name="email"
             #Email="ngModel"
             placeholder="Enter Email Address"
@@ -203,7 +208,7 @@
           >Birth Registration Number<span class="text-danger">*</span></label
         >
         <input
-          [(ngModel)]="employeeService.personalInfo.birthRegNo"
+          [(ngModel)]="empPersonalInfoService.personalInfo.birthRegNo"
           name="birthRegNo"
           #birthRegNo="ngModel"
           placeholder="Enter Birth Registration Number"
@@ -222,7 +227,7 @@
           <label cLabel for="validationCustom10"
           >Place of Birth<span class="text-danger"></span></label>
           <input
-            [(ngModel)]="employeeService.personalInfo.placeOfBirth"
+            [(ngModel)]="empPersonalInfoService.personalInfo.placeOfBirth"
             name="placeOfBirth"
             #placeOfBirth="ngModel"
             placeholder="Enter Place of Birth"
@@ -240,7 +245,7 @@
           >Tin Number<span class="text-danger"></span></label
         >
         <input
-          [(ngModel)]="employeeService.personalInfo.tinNo"
+          [(ngModel)]="empPersonalInfoService.personalInfo.tinNo"
           name="tinNo"
           #tinNo="ngModel"
           placeholder="Enter Tin Number"
@@ -259,7 +264,7 @@
           >Height<span class="text-danger"></span></label
         >
         <input
-          [(ngModel)]="employeeService.personalInfo.height"
+          [(ngModel)]="empPersonalInfoService.personalInfo.height"
           name="height"
           #height="ngModel"
           placeholder="Enter Height"
@@ -277,7 +282,7 @@
           >Weight<span class="text-danger"></span></label
         >
         <input
-          [(ngModel)]="employeeService.personalInfo.weight"
+          [(ngModel)]="empPersonalInfoService.personalInfo.weight"
           name="weight"
           #weight="ngModel"
           placeholder="Enter Weight"
@@ -295,7 +300,7 @@
           >Driving License Number<span class="text-danger"></span></label
         >
         <input
-          [(ngModel)]="employeeService.personalInfo.drivingLicenceNo"
+          [(ngModel)]="empPersonalInfoService.personalInfo.drivingLicenceNo"
           name="drivingLicenceNo"
           #drivingLicenceNo="ngModel"
           placeholder="Enter Driving License Number"
@@ -314,7 +319,7 @@
           >Driving License Expire Date<span class="text-danger"></span></label
         >
           <input
-            [(ngModel)]="employeeService.personalInfo.drivingLicenceDate"
+            [(ngModel)]="empPersonalInfoService.personalInfo.drivingLicenceDate"
             name="drivingLicenceDate"
             #drivingLicenceDate="ngModel"
             cFormControl
@@ -331,7 +336,7 @@
           >Passport Number<span class="text-danger"></span></label
         >
         <input
-          [(ngModel)]="employeeService.personalInfo.passportNo"
+          [(ngModel)]="empPersonalInfoService.personalInfo.passportNo"
           name="passportNo"
           #passportNo="ngModel"
           placeholder="Enter Passport Number"
@@ -349,7 +354,7 @@
           >Passport Expire Date<span class="text-danger"></span></label
         >
           <input
-            [(ngModel)]="employeeService.personalInfo.passportExpireDate"
+            [(ngModel)]="empPersonalInfoService.personalInfo.passportExpireDate"
             name="passportExpireDate"
             #passportExpireDate="ngModel"
             cFormControl

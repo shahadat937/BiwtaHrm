@@ -56,6 +56,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       } else {
         this.btnText = 'Submit';
+        console.log(this.btnText)
       }
     });
   }
@@ -133,7 +134,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
   onSubmit(form: NgForm): void {
     this.wardService.cachedData = [];
     const id = form.value.wardId;
-    console.log(form.value)
+    //console.log(form.value)
     const action$ = id
       ? this.wardService.update(id, form.value)
       : this.wardService.submit(form.value);
@@ -156,6 +157,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
+  
   delete(element: any) {
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')

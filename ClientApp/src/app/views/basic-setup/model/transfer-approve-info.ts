@@ -1,6 +1,6 @@
 export class TransferApproveInfo {
     transferApproveInfoId: number = 0;
-    PostingOrderInfoId=0;
+    postingOrderInfoId:number =0;
     empId: number = 0;
     approveStatus: boolean = true;
     approveByName:string= "";

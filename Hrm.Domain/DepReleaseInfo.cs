@@ -11,7 +11,7 @@ namespace Hrm.Domain
         public bool? ApproveStatus { get; set; }
         public int? EmpId { get; set; }     
         public string? OfficeOrderNo { get; set; }
-        public DateTime? ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; } = DateTime.Now;
         public string? OrderOfficeBy { get; set; }
         public string? ReferenceNo { get; set; }
         public string? DepClearance { get; set; }

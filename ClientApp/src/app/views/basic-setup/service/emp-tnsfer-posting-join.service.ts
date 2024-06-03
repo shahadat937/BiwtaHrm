@@ -37,8 +37,8 @@ export class EmpTnsferPostingJoinService {
   }
 
 
-  update(id: number,model: any) {
-    return this.http.put(this.baseUrl + '/EmpTnsferPostingJoin/update-EmpTnsferPostingJoin/'+id, model);
+  update(id5: number,model: any) {
+    return this.http.put(this.baseUrl + '/EmpTnsferPostingJoin/update-EmpTnsferPostingJoin/'+id5, model);
   }
   submit(model: any) {
     return this.http.post(this.baseUrl + '/EmpTnsferPostingJoin/save-EmpTnsferPostingJoin', model);

@@ -1,21 +1,20 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { PostingOrderInfoService } from '../../basic-setup/service/posting-order-info.service';
+import { Subscription } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
-import { PostingOrderInfoService } from '../../basic-setup/service/posting-order-info.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
-import { TransferApproveInfoService } from '../../basic-setup/service/transfer-approve-info.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-release',
-  templateUrl: './release.component.html',
-  styleUrl: './release.component.scss'
+  selector: 'app-transferlist',
+  templateUrl: './transferlist.component.html',
+  styleUrl: './transferlist.component.scss'
 })
-export class ReleaseComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
   postingOrderInfoId: number | null = null;
   position = 'top-end';
   visible = false;
@@ -31,8 +30,6 @@ export class ReleaseComponent implements OnInit, OnDestroy, AfterViewInit {
   matSort!: MatSort;
   constructor(
     public postingOrderInfoService: PostingOrderInfoService,
-    public transferApproveInfoService: TransferApproveInfoService,
-
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -52,7 +49,6 @@ export class ReleaseComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnInit(): void {
     this.getTransferEmployes();
-    this.getTransferApproved();
     this.route.paramMap.subscribe(params => {
       this.postingOrderInfoId = +params.get('postingOrderInfoId')!;
     });
@@ -135,11 +131,6 @@ export class ReleaseComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
-  }
-  getTransferApproved() {
-this.subscription= this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((res)=>{
-console.log(res)
-})
   }
   onSubmit(form: NgForm): void {
     this.postingOrderInfoService.cachedData = [];

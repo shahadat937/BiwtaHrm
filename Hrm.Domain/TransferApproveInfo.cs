@@ -14,7 +14,7 @@ namespace Hrm.Domain
         public int? PostingOrderInfoId { get; set; }
         public int? EmpId { get; set; }
         public bool? ApproveStatus { get; set; }
-        public DateTime? ApproveDate { get; set; }
+        public DateTime? ApproveDate { get; set; } = DateTime.Now;
         public string? ApproveBy { get; set; }
         public string? Remarks { get; set; }
         public int? MenuPosition { get; set; }

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 //import { BloodGroup } from '../model/BloodGroup';
 import { Observable, map, of } from 'rxjs';
 import { Designation } from '../model/Designation';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
 @Injectable({
   providedIn: 'root'
 })
@@ -53,4 +54,13 @@ export class DesignationService {
     return this.http.get<Designation[]>(this.baseUrl + '/designation/get-designationByOfficeIdAndDepartmentId?&officeId=' + officeId + '&departmentId='+departmentId);
   }
 
+  selectDesignation() {
+    return this.http.get<SelectedModel[]>(
+      this.baseUrl + '/designation/get-designation'
+    );
+  }
+
+  getDesignationByDepartmentId(id:number){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationByDepartmentId/' + id);
+  }
 }

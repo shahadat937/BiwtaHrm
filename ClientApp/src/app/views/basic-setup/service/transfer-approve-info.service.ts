@@ -9,7 +9,6 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
   providedIn: 'root'
 })
 export class TransferApproveInfoService {
-
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
   transferApproveInfos: TransferApproveInfo;
@@ -37,17 +36,6 @@ export class TransferApproveInfoService {
         );
     }
   }
-  // getDivisionByCountryId(id:number): Observable<SelectedModel[]>{
-  //   return this.http.get<SelectedModel[]>(this.baseUrl + '/division/get-divisionByCountryId/'+id).pipe(
-  //     map((data) => {
-  //       return data;
-  //     })
-  //   );; 
-  // }
-
-
-
-
 
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/transferApproveInfo/update-transferApproveInfo/'+id, model);

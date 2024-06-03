@@ -2,6 +2,7 @@ import { SafeResourceUrl } from "@angular/platform-browser";
 
 export class DeptReleaseInfo {
     depReleaseInfoId: number = 0;
+    postingOrderInfoId:number=0;
     transferApproveInfoId:number=0;
     approveByName:string= "";
     approveBy:number=0;

@@ -1,30 +1,42 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
-import { EmployeeService } from '../../../service/employee.service';
+import { EmpBasicInfoService } from '../../../service/emp-basic-info.service';
 import { NgForm } from '@angular/forms';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
   selector: 'app-basic-information',
   templateUrl: './basic-information.component.html',
   styleUrl: './basic-information.component.scss'
 })
-export class BasicInformationComponent implements OnInit {
+export class BasicInformationComponent implements OnInit, OnDestroy  {
 
   @Input() userId!: string;
+  @Output() close = new EventEmitter<void>();
+  firstName: string = '';
+  lastName: string = '';
+  empId: number = 0;
   visible:boolean = true;
   headerText: string = '';
   headerBtnText: string = 'Hide From';
   btnText:string='';
   employeeType: SelectedModel[] = [];
   subscription: Subscription = new Subscription();
+  loading: boolean = false;
   @ViewChild('BasicInfoForm', { static: true }) BasicInfoForm!: NgForm;
   
   constructor(
     public userService: UserService,
-    public employeeService: EmployeeService,
+    public empBasicInfoService: EmpBasicInfoService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private confirmService: ConfirmService,
+    private toastr: ToastrService,
   ){}
 
   ngOnInit(): void {
@@ -33,34 +45,43 @@ export class BasicInformationComponent implements OnInit {
     this.getUserDetails();
   }
 
-  initaialUser(form?: NgForm) {
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+
+  initaialForm(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.employeeService.basicInfo = {
-      empId: 0,
-      empEngName: '',
-      empBdName: '',
-      dateOfBirth: undefined,
+    this.empBasicInfoService.basicInfo = {
+      id: this.empId,
+      firstName : this.firstName,
+      lastName : this.lastName,
+      firstNameBangla : '',
+      lastNameBangla : '',
+      dateOfBirth: null,
       personalFileNo: '',
-      nId: null,
+      nid: null,
       employeeTypeId: null,
       AspNetUserId: this.userId,
     };
   }
 
   resetForm(){
-    if (this.BasicInfoForm?.form != null) {
       this.BasicInfoForm.form.reset();
       this.BasicInfoForm.form.patchValue({
-        empId: 0,
-        empEngName: '',
-        empBdName: '',
+        id: this.empId,
+        firstName : this.firstName,
+        lastName : this.firstName,
+        firstNameBangla : '',
+        lastNameBangla : '',
         dateOfBirth: undefined,
         personalFileNo: '',
-        nId: null,
+        nid: null,
         employeeTypeId: null,
         AspNetUserId: this.userId,
       });
-    }
   }
   
   UserFormView(): void{
@@ -70,31 +91,63 @@ export class BasicInformationComponent implements OnInit {
 
   getUserDetails(){
     this.userService.find(this.userId).subscribe((res) => {
+      this.firstName= res.firstName;
+      this.lastName= res.lastName;
       this.BasicInfoForm.form.patchValue({
-        empEngName: res.firstName+" "+res.lastName,
+        firstName: res.firstName,
+        lastName: res.lastName,
+        AspNetUserId: res.id,
       });
     });
   }
   
   getEmployeeByAspNetUserId(){
-    this.employeeService.findByAspNetUserId(this.userId).subscribe((res) => {
+    this.empBasicInfoService.findByAspNetUserId(this.userId).subscribe((res) => {
       if(res){
+        this.empId = res.id;
         this.headerText = 'Update Basic Information';
-        this.BasicInfoForm.form.patchValue(res);
+        this.BasicInfoForm?.form.patchValue(res);
+        this.btnText='Update';
       }
       else{
         this.headerText = 'Add Basic Information';
+        this.btnText='Submit';
+        this.initaialForm();
       }
     });
   }
 
   getSelectedEmployeeType(){
-    this.subscription=this.employeeService.getSelectedEmployeeType().subscribe((data) => { 
+    this.subscription=this.empBasicInfoService.getSelectedEmployeeType().subscribe((data) => { 
       this.employeeType = data;
     });
   }
 
-  onSubmit(form: NgForm): void{
+  cancel(){
+    this.close.emit();
+  }
 
+  onSubmit(form: NgForm): void{
+    this.loading = true;
+    this.empBasicInfoService.cachedData = [];
+    const id = form.value.id;
+    const action$ = id
+      ? this.empBasicInfoService.updateEmpBasicInfo(id, form.value)
+      : this.empBasicInfoService.saveEmpBasicInfo(form.value);
+    
+      this.subscription = action$.subscribe((response: any) => {
+        if (response.success) {
+          this.toastr.success('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.loading = false;
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.loading = false;
+        }
+        this.loading = false;
+      });
   }
 }

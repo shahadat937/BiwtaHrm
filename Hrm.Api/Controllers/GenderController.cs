@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.ChildStatus;
 using Hrm.Application.DTOs.Gender;
 using Hrm.Application.DTOs.MaritalStatus;
+using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Application.Features.ChildStatus.Requests.Queries;
 using Hrm.Application.Features.EmployeeType.Requests.Queries;
 using Hrm.Application.Features.Gender.Requests.Commands;
@@ -11,6 +12,7 @@ using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hrm.Api.Controllers
@@ -33,6 +35,15 @@ namespace Hrm.Api.Controllers
             var Gender = await _mediator.Send(new GetGenderRequest { });
             return Ok(Gender);
         }
+
+        [HttpGet]
+        [Route("get-selectedGenders")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedGender()
+        {
+            var Gender = await _mediator.Send(new GetSelectedGenderRequest { });
+            return Ok(Gender);
+        }
+
         [HttpGet]
         [Route("get-genderById/{id}")]
         public async Task<ActionResult<GenderDto>> Get(int id)

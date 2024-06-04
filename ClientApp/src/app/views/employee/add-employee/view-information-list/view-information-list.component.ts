@@ -7,6 +7,7 @@ import { BasicInformationComponent } from '../employee-informations/basic-inform
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { EmployeeService } from '../../service/employee.service';
+import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -18,6 +19,7 @@ export class ViewInformationListComponent implements OnInit {
   gettingStatus : boolean = true;
   entryStatus : boolean = false;
   basicInfoEntryStatus : boolean = false;
+  personalInfoEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -30,7 +32,8 @@ export class ViewInformationListComponent implements OnInit {
     private modalService: BsModalService,
     private route: ActivatedRoute,
     public userService: UserService,
-    public employeeService: EmployeeService,) { }
+    public employeeService: EmployeeService,
+    public empBasicInfoService: EmpBasicInfoService,) { }
 
   ngOnInit(): void {
     this.handleRouteParams();
@@ -47,11 +50,12 @@ export class ViewInformationListComponent implements OnInit {
   }
 
   getEmployeeByAspNetUserId(){
-    this.employeeService.findByAspNetUserId(this.userId).subscribe((res) => {
+    this.empBasicInfoService.findByAspNetUserId(this.userId).subscribe((res) => {
       if(res){
+        console.log(res)
         this.gettingStatus = true;
-        this.empId = res.empId;
         this.basicInfoEntryStatus=true;
+        this.empId = res.id;
       }
       else{
         this.gettingStatus = false;

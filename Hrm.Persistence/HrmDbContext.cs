@@ -395,6 +395,9 @@ namespace Hrm.Persistence
         public virtual DbSet<Year> Year { get; set; } = null!;
         public virtual DbSet<Employees> Employees { get; set; } = null!;
 
+        public virtual DbSet<EmpBasicInfo> EmpBasicInfo { get; set; } = null!;
+        public virtual DbSet<EmpPersonalInfo> EmpPersonalInfo { get; set; } = null!;
+
 
 
     }

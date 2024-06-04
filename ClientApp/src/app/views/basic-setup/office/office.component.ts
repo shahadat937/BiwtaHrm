@@ -48,7 +48,13 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
   wards: SelectedModel[] = [];
   @ViewChild('OfficeForm', { static: true }) OfficeForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'officeName', 'officeNameBangla', 'officeCode', 'isActive', 'Action'];
+  displayedColumns: string[] = [
+    'slNo', 
+    'officeName', 
+    // 'officeNameBangla', 
+    'officeCode', 
+    'isActive', 
+    'Action'];
   loading = false;
 
   dataSource = new MatTableDataSource<any>();

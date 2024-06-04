@@ -76,14 +76,14 @@ namespace Hrm.Api.Controllers
 
             var result = offices.Select(o => new OrganogramOfficeNameDto
             {
-                Name = o.OfficeNameBangla,
+                Name = o.OfficeName,
                 Departments = o.Departments
                     .Where(d => d.UpperDepartmentId == null)
                     .Select(d => MapDepartmentName(d))
                     .ToList(),
                 DirectDesignations = o.Designations
                     .Where(d => d.DepartmentId == null)
-                    .Select(d => new OrganogramDesignationNameDto { Name = d.DesignationNameBangla })
+                    .Select(d => new OrganogramDesignationNameDto { Name = d.DesignationName })
                     .ToList()
             }).ToList();
 
@@ -94,10 +94,10 @@ namespace Hrm.Api.Controllers
         {
             var departmentNameDto = new OrganogramDepartmentNameDto
             {
-                Name = department.DepartmentNameBangla,
+                Name = department.DepartmentName,
                 Designations = department.Designations.Select(de => new OrganogramDesignationNameDto
                 {
-                    Name = de.DesignationNameBangla
+                    Name = de.DesignationName
                 }).ToList(),
                 SubDepartments = department.SubDepartments.Select(sd => MapDepartmentName(sd)).ToList()
             };

@@ -8,7 +8,7 @@ describe('BasicInformationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BasicInformationComponent]
+      imports: [BasicInformationComponent]
     })
     .compileComponents();
     

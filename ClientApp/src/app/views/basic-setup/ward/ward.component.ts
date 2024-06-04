@@ -52,7 +52,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
        // console.log()
         this.btnText = 'Update';
         this.wardService.find(+id).subscribe((res) => {
-          
+          console.log(res)
           this.WardForm?.form.patchValue(res);
         });
       } else {

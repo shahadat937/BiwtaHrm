@@ -68,21 +68,10 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Put([FromBody] TransferApproveInfoDto TransferApproveInfo)
         {
 
-            if (TransferApproveInfo.ApproveBy == "0")
-            {
-                return NoContent();
-            }
-            else
-            {
-                var PostingOrderInfo = await _dbContext.PostingOrderInfo.ToListAsync();
-                int maxId = PostingOrderInfo.Max(x => x.PostingOrderInfoId);
 
-                TransferApproveInfo.PostingOrderInfoId = maxId;
-
-                var command = new UpdateTransferApproveInfoCommand { TransferApproveInfoDto = TransferApproveInfo };
-                var response = await _mediator.Send(command);
-                return Ok(response);
-            }
+            var command = new UpdateTransferApproveInfoCommand { TransferApproveInfoDto = TransferApproveInfo };
+            var response = await _mediator.Send(command);
+            return Ok(response);
 
         }
         [HttpDelete]

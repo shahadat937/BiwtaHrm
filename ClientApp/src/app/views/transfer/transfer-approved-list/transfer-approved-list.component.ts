@@ -1,5 +1,4 @@
-import { PostingComponent } from './../posting/posting.component';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit,Input, Component, EventEmitter, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,13 +12,17 @@ import { TransferApproveInfoService } from '../../basic-setup/service/transfer-a
 import { EmployeesService } from '../service/employees.service';
 import { TransferApproveInfo } from '../../basic-setup/model/transfer-approve-info';
 import { PostingOrderInfo } from '../../basic-setup/model/posting-order-info';
-
+import { Employee } from '../../basic-setup/model/employees';
+import { EmpModalComponent } from '../emp-modal/emp-modal.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-transfer-approved-list',
   templateUrl: './transfer-approved-list.component.html',
   styleUrl: './transfer-approved-list.component.scss'
 })
 export class TransferApprovedListComponent implements OnInit, OnDestroy, AfterViewInit {
+  cachedData: any[] = [];
   visible1: boolean | undefined;
   userBtnText: string | undefined;
   postingOrderInfoId: number | null = null;
@@ -27,17 +30,26 @@ export class TransferApprovedListComponent implements OnInit, OnDestroy, AfterVi
   visible = false;
   percentage = 0;
   btnText: string | undefined;
-  @ViewChild('PostingAndTrnsForm', { static: true }) PostingAndTrnsForm!: NgForm;
+  btnTextApproved: string | undefined;
+  @ViewChild('TransferApproveInfoForm', { static: true }) TransferApproveInfoForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', "departmentName", "officeName", "designationName", 'officeOrderDate', 'transferSection', 'releaseType', 'Action'];
+
+  approveDisplayedColumns: string[] = ['transferApproveInfoId','approveStatus','approveDate','remarks' ,'Action']
+  
   dataSource = new MatTableDataSource<any>();
+  dataSourceApproved=new MatTableDataSource<any>();
+
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
   transferApproveInfo: TransferApproveInfo[] = [];
   postingOrderInfos: PostingOrderInfo[]=[];
+
+  @Input() employeeSelected = new EventEmitter<Employee>();
   constructor(
+    private modalService: BsModalService,
     public postingOrderInfoService: PostingOrderInfoService,
     public transferApproveInfoService: TransferApproveInfoService,
     public employeeService: EmployeesService,
@@ -48,18 +60,26 @@ export class TransferApprovedListComponent implements OnInit, OnDestroy, AfterVi
   ) {
     this.route.paramMap.subscribe((params) => {
       this.btnText = 'Submit';
+      const id = params.get('transferApproveInfoId');
+      if (id) {
+        this.btnTextApproved = 'Update';
+        this.transferApproveInfoService.find(+id).subscribe((res) => {
+          this.TransferApproveInfoForm?.form.patchValue(res);
+        });
+      } else {
+        this.btnTextApproved = 'Submit';
+      }
+
     });
   }
-
+  
   ngOnInit(): void {
     // this.getTransferEmployes();
+    this.loadTransferApproveInfos();
+    this.getTransferApprovedStatus();
     this.mergeData();
     this.getTransferApproved();
     this.getTransferPostingOrder();
-    this.route.paramMap.subscribe(params => {
-      this.postingOrderInfoId = +params.get('postingOrderInfoId')!;
-    });
-
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -83,9 +103,32 @@ export class TransferApprovedListComponent implements OnInit, OnDestroy, AfterVi
     this.visible = $event;
     this.percentage = !this.visible ? 0 : this.percentage;
   }
-
   onTimerChange($event: number) {
     this.percentage = $event * 25;
+  }
+
+  //Approved data show
+  getTransferApprovedStatus() {
+    this.subscription.add(
+      this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((res) => {
+        this.transferApproveInfo = res;
+        this.dataSourceApproved.data = res;
+        this.dataSourceApproved.paginator = this.paginator;
+        this.dataSourceApproved.sort = this.matSort;
+      })
+    );
+  }
+
+  //Employee/Transfer
+  openApproveEmpTransferJoin(): void {
+    const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
+      this.handleApproveEmpTransferJoin(selectedEmployee);
+    });
+  }
+  handleApproveEmpTransferJoin(employee: Employee) {
+    this.transferApproveInfoService.transferApproveInfos.approveBy= employee.empId,
+    this.transferApproveInfoService.transferApproveInfos.approveByName= employee.employeeName
   }
 
 
@@ -94,7 +137,6 @@ export class TransferApprovedListComponent implements OnInit, OnDestroy, AfterVi
       this.postingOrderInfoService.getAll().subscribe((res) => {
         this.postingOrderInfos = res;
         this.mergeData();
-         console.log(res)
       })
     );
   }
@@ -104,7 +146,6 @@ export class TransferApprovedListComponent implements OnInit, OnDestroy, AfterVi
       this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((res) => {
         this.transferApproveInfo = res;
         this.mergeData();
-        console.log(res)
       })
     );
   }
@@ -124,9 +165,108 @@ export class TransferApprovedListComponent implements OnInit, OnDestroy, AfterVi
         mergedData.push();
       }
     });
-
     this.dataSource.data = mergedData;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.matSort;
   }
+
+
+
+  // transferApproveInfos
+
+  initaialtransferApproveInfo(form?: NgForm) {
+    if (form != null) form.resetForm();
+    this.transferApproveInfoService.transferApproveInfos = {
+      transferApproveInfoId: 0,
+      postingOrderInfoId: 0,
+      empId: 0,
+      approveStatus: true,
+      approveByName: "",
+      approveBy: 0,
+      approveDate: new Date(),
+      remarks: "",
+      menuPosition: 0,
+      isActive: true
+    };
+  }
+  resetFormTransfer() {
+    this.btnText = 'Submit';
+    if (this.TransferApproveInfoForm?.form != null) {
+      this.TransferApproveInfoForm.form.reset();
+      this.TransferApproveInfoForm.form.patchValue({
+        transferApproveInfoId: 0,
+        postingOrderInfoId: 0,
+        empId: 0,
+        approveByName: "",
+        approveBy: 0,
+        approveStatus: true,
+        approveDate: new Date(),
+        remarks: "",
+        menuPosition: 0,
+        isActive: true
+      });
+    }
+    this.router.navigate(['/transfer/transferApproveInfoList']);
+
+  }
+  loadTransferApproveInfos() {
+    this.subscription = this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((h) => {
+      this.transferApproveInfo = h;
+    });
+  }
+
+onSubmit(form: NgForm): void {
+  this.transferApproveInfoService.cachedData = [];
+  const id = form.value.transferApproveInfoId;
+  const action$ = id
+    ? this.transferApproveInfoService.update(id, form.value)
+    : this.transferApproveInfoService.submit(form.value);
+  this.subscription = action$.subscribe((response: any) => {
+    if (response.success) {
+      //  const successMessage = id ? 'Update' : 'Successfully';
+      this.toastr.success('', `${response.message}`, {
+        positionClass: 'toast-top-right',
+      });
+      this.ngOnInit();
+      // this.getTransferApprovedStatus();
+      this.resetFormTransfer();
+      // if (!id) {
+      //   this.router.navigate(['/transfer/transferApproveInfoList']);
+     
+      // }
+    } else {
+      this.toastr.warning('', `${response.message}`, {
+        positionClass: 'toast-top-right',
+      });
+    }
+  });
+}
+
+delete(element: any) {
+  this.confirmService
+    .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+    .subscribe((result) => {
+      if (result) {
+        this.transferApproveInfoService.delete(element.transferApproveInfoId).subscribe(
+          (res) => {
+            const index = this.dataSource.data.indexOf(element);
+            if (index !== -1) {
+              this.dataSource.data.splice(index, 1);
+              this.dataSource = new MatTableDataSource(this.dataSource.data);
+            }
+            this.toastr.success('Delete sucessfully ! ', ` `, {
+              positionClass: 'toast-top-right',
+            });
+          },
+          (err) => {
+            // console.log(err);
+
+            this.toastr.error('Somethig Wrong ! ', ` `, {
+              positionClass: 'toast-top-right',
+            });
+          }
+        );
+      }
+    });
+}
 }

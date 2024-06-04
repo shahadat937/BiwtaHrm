@@ -47,19 +47,27 @@ const routes: Routes = [
     path:'transferApproveInfo/:postingOrderInfoId',
     component:TransferApprovedComponent
   },
+
   {
     path:'transferApproveInfo',
     component:TransferApprovedComponent
   },
-
+  {
+    path:'transferApproveInfoList',
+    component:TransferApprovedListComponent
+  },
+  {
+    path:'transferApproveInfoList/:transferApproveInfoId',
+    component:TransferApprovedListComponent
+  },
   {
     path:'departmetnReleaseList',
     component:DepartmetnReleaseListComponent
   },
-  {
-    path:'departmetnRelease/:transferApproveInfoId',
-    component:DepartmetnReleaseComponent
-  },
+  // {
+  //   path:'departmetnRelease/:transferApproveInfoId',
+  //   component:DepartmetnReleaseComponent
+  // },
   {
     path:'employePostingJoinList',
     component:EmployePostingJoinListComponent

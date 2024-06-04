@@ -7,7 +7,7 @@ namespace Hrm.Domain.Common
     public abstract class BaseDomainEntity
     {
         public string? CreatedBy { get; set; } = null!;
-        public DateTime? DateCreated { get; set; }
+        public DateTime? DateCreated { get; set; } = DateTime.Now;
 
         public string? LastModifiedBy { get; set; }
         public DateTime? LastModifiedDate { get; set; }= DateTime.Now;

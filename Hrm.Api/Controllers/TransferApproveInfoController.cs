@@ -43,7 +43,6 @@ namespace Hrm.Api.Controllers
             else
             {
                 var PostingOrderInfo = await _dbContext.PostingOrderInfo.ToListAsync();
-                //int maxId = PostingOrderInfo.Max(x => x.PostingOrderInfoId);
                 int maxId = PostingOrderInfo.Max(x => x.PostingOrderInfoId);
                 TransferApproveInfo.PostingOrderInfoId = maxId;
 

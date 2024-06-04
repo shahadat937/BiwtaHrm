@@ -91,21 +91,6 @@ namespace Hrm.Api.Controllers
         {
             var branch = await _mediator.Send(new GetDesignationByDepartmentIdRequest { DepartmentId = id });
             return Ok(branch);
-
-
-        [HttpGet]
-        [Route("get-designationByOfficeId/{id}")]
-        public async Task<ActionResult<DesignationDto>> GetDesignationByOfficeId(int id)
-        {
-            var Designations = await _mediator.Send(new GetDesignationByOfficeIdRequest { OfficeId = id });
-            return Ok(Designations);
-        }
-        [HttpGet]
-        [Route("get-designationByOfficeIdAndDepartmentId")]
-        public async Task<ActionResult<DesignationDto>> GetDesignationByOfficeIdAndDepartmentId(int officeId, int departmentId)
-        {
-            var Designations = await _mediator.Send(new GetDesignationByOfficeIdAndDepartmentIdRequest { OfficeId = officeId, DepartmentId = departmentId });
-            return Ok(Designations);
         }
     }
 }

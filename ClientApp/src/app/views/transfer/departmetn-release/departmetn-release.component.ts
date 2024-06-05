@@ -38,6 +38,7 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
   transferApproveInfos: TransferApproveInfo[] = [];
   postingOrderInfo: PostingOrderInfo[] = [];
   deptReleaseInfo:DeptReleaseInfo[]=[];
+  btnTextApproved: string | undefined;
   @Input() employeeSelected = new EventEmitter<Employee>();
   constructor(
     private modalService: BsModalService,
@@ -56,6 +57,16 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
         this.loadTransferApproveInfo(Number(transferApproveInfoId));
         this.btnText='submit'
       } 
+      const id2 = params.get('depReleaseInfoId');
+      if (id2) {
+        this.btnTextApproved = 'Update';
+        this.deptReleaseInfoService.find(+id2).subscribe((res) => {
+          console.log(id2)
+          this.DeptReleaseInfoForm?.form.patchValue(res);
+        });
+      } else {
+        this.btnTextApproved = 'Submit';
+      }
     });
   }
   loadTransferApproveInfo(transferApproveInfoId: number) {
@@ -167,10 +178,8 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
     });
   }
 
-  
-
-
   onSubmit(form: NgForm): void {
+    console.log(form.value)
     if (form.valid) {
       this.deptReleaseInfoService.cachedData = [];
       const id = form.value.depReleaseInfoId;
@@ -186,7 +195,7 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
           this.getAllDepartmentReleases();
           this.resetdeptReleaseInfoForm();
           if (!id) {
-            this.router.navigate(['transfer/employePostingJoinList']);
+            this.router.navigate(['transfer/departmetnReleaseList']);
           }
         } else {
           this.toastr.warning('', `${response.message}`, {

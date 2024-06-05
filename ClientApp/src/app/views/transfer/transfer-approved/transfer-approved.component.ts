@@ -38,6 +38,7 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
   transferApproveInfos: TransferApproveInfo[] = [];
   postingOrderInfo: PostingOrderInfo[] = [];
   @Input() employeeSelected = new EventEmitter<Employee>();
+  btnTextApproved: string | undefined;
   constructor(
     private modalService: BsModalService,
     public postingOrderInfoService: PostingOrderInfoService,
@@ -54,6 +55,16 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
         this.loadPostingOrderInfo(Number(postingOrderInfoId));
         this.btnText='submit'
       } 
+      const id = params.get('transferApproveInfoId');
+      if (id) {
+        this.btnTextApproved = 'Update';
+        this.transferApproveInfoService.find(+id).subscribe((res) => {
+          this.TransferApproveInfoForm?.form.patchValue(res);
+          console.log('Form Values after patching:', this.TransferApproveInfoForm.form.value); // Debugging: Verify form values
+        });
+      } else {
+        this.btnTextApproved = 'Submit';
+      }
     });
   }
   loadPostingOrderInfo(postingOrderInfoId: number) {
@@ -146,7 +157,7 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
   //
   loadTransferApproveInfos() {
     this.subscription = this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((h) => {
-      this.getAllTransferApproveInfo
+      this.transferApproveInfos= h;
 
     });
   }
@@ -160,13 +171,13 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
 
 
   onSubmit(form: NgForm): void {
+
     if (form.valid) {
       this.transferApproveInfoService.cachedData = [];
       const id = form.value.transferApproveInfoId;
       const action$ = id
         ? this.transferApproveInfoService.update(id, form.value)
         : this.transferApproveInfoService.submitApproved(form.value);
-      console.log(form.value)
       this.subscription = action$.subscribe((response: any) => {
         if (response.success) {
 
@@ -176,7 +187,7 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
           this.getAllTransferApproveInfo();
           this.resetFormTransfer();
           if (!id) {
-            this.router.navigate(['/transfer/departmetnReleaseList']);
+            this.router.navigate(['/transfer/transferApproveInfoList']);
           }
         } else {
           this.toastr.warning('', `${response.message}`, {

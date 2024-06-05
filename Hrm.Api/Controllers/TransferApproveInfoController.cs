@@ -36,7 +36,7 @@ namespace Hrm.Api.Controllers
 
            
 
-            if (TransferApproveInfo.ApproveBy  == "0")
+            if (TransferApproveInfo.ApproveBy  == 0)
             {
                 return NoContent();
             }

@@ -15,21 +15,20 @@
               <option value="false">Reject</option>
             </select>
           </c-col>
+
           <c-col [md]="3">
             <label cLabel for="validationCustom55">Approve By <span class="text-danger">*</span></label>
             <input (dblclick)="openApproveEmpTransferJoin()"
               [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveByName" name="approveByName"
               #approveBy="ngModel" placeholder="Enter Approve By " cFormControl id="validationCustom55" required
-              type="text" value="Mark" />
+              type="text" />
             <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveBy" name="approveBy" hidden />
-            <div *ngIf="approveBy.touched && !approveBy.valid" class="text-left text-danger">Approve By value is
-              required</div>
-          </c-col>
-          
+            <div *ngIf="approveBy.touched && !approveBy.valid" class="text-left text-danger">Approve By value is required</div>
+          </c-col>       
           <c-col [md]="3">
                  <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" />
             <label cLabel for="validationCustom03">Approve Date<span class="text-danger">*</span></label>
-            <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveDate" name="formattedDate"
+            <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveDate" name="approveDate"
               #approveDate="ngModel" placeholder="Enter Approve Date Status" cFormControl id="validationCustom03" required
               type="date" value="Mark" />
             @if(!approveDate.valid&&approveDate.touched){
@@ -38,6 +37,7 @@
           </c-col>
   
           <c-col [md]="3">
+            <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.transferApproveInfoId" name="transferApproveInfoId" hidden />
             <label cLabel for="validationCustom04">Remarks<span class="text-danger">*</span></label>
             <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.remarks" name="remarks" #remarks="ngModel"
               placeholder="Enter Remarks" cFormControl id="validationCustom04" required type="text" value="Mark" />
@@ -47,7 +47,7 @@
           </c-col>
           <c-col [xs]="12">
             <button [disabled]="TransferApproveInfoForm.invalid" cButton class="me-1" color="primary" type="submit">
-              {{ btnText }}
+              {{ btnText }}{{btnTextApproved}}
             </button>
             <button cButton color="secondary" (click)="resetFormTransfer()">Reset</button>
           </c-col>

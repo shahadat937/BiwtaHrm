@@ -1,52 +1,3 @@
-<c-card>
-  <c-card-header>Transfer Approved  </c-card-header>
-  <c-card-body>
-    <c-card>
-      <c-card-body>
-          <form #TransferApproveInfoForm="ngForm" (submit)="onSubmit(TransferApproveInfoForm)" [gutter]="3" novalidate cForm cRow class="needs-validation">
-          <c-card-header>Transfer Approve Info</c-card-header>
-          <c-col [md]="3">
-            <input type="hidden" [(ngModel)]="transferApproveInfoService.transferApproveInfos.transferApproveInfoId" name="transferApproveInfoId" />
-            <label cLabel for="validationCustom1">Approve Status</label>
-            <select [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveStatus" name="approveStatus"
-              cSelect id="validationCustom01">
-              <option value="true">Approve</option>
-              <option value="false">Reject</option>
-            </select>
-          </c-col>
-          
-          <c-col [md]="3">
-                 <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" />
-            <label cLabel for="validationCustom03">Approve Date<span class="text-danger">*</span></label>
-            <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveDate" name="approveDate"
-              #approveDate="ngModel" placeholder="Enter Approve Date Status" cFormControl id="validationCustom03" required
-              type="date"/>
-            @if(!approveDate.valid&&approveDate.touched){
-            <div class="text-left text-danger">Approve Date is required</div>
-            }
-          </c-col>
-  
-          <c-col [md]="3">
-            <input type="hidden" [(ngModel)]="transferApproveInfoService.transferApproveInfos.empId" name="empId" />
-            <label cLabel for="validationCustom04">Remarks<span class="text-danger">*</span></label>
-            <input [(ngModel)]="transferApproveInfoService.transferApproveInfos.remarks" name="remarks" #remarks="ngModel"
-              placeholder="Enter Remarks" cFormControl id="validationCustom04" required type="text" value="Mark" />
-            @if(!remarks.valid&&remarks.touched){
-            <div class="text-left text-danger">Remarks is required</div>
-            }
-          </c-col>
-          <c-col [xs]="12">
-            <button [disabled]="TransferApproveInfoForm.invalid" cButton class="me-1" color="primary" type="submit">
-              {{ btnTextApproved }}
-            </button>
-            <button cButton color="secondary" (click)="resetFormTransfer()">Reset</button>
-          </c-col>
-        </form>
-      </c-card-body>
-    </c-card>
-  </c-card-body>
-</c-card>
-
 
 
 
@@ -100,12 +51,8 @@
               <th mat-header-cell *matHeaderCellDef>Action</th>
               <td mat-cell *matCellDef="let element">
           
-                <a [routerLink]="['/transfer/transferApproveInfo', element.postingOrderInfoId]">
+                <a [routerLink]="['/transfer/approved-transferApproveInfo', element.postingOrderInfoId]">
                   <button class="custom-button">Approved</button>
-                </a>
-                  |
-                <a [routerLink]="['/transfer/transferApproveInfo', element.postingOrderInfoId]">
-                  <button class="custom-button">Reject</button>
                 </a>
               </td>
             </ng-container>
@@ -155,7 +102,10 @@
           <th mat-header-cell *matHeaderCellDef>Action</th>
           <td mat-cell *matCellDef="let element">
       
-            <a [routerLink]="['/transfer/transferApproveInfoList', element.transferApproveInfoId]">
+            <!-- <a [routerLink]="['/transfer/update-transferApproveInfoList', element.transferApproveInfoId]">
+              <button class="custom-button">Approved</button>
+            </a> -->
+            <a [routerLink]="['/transfer/update-transferApproveInfo', element.transferApproveInfoId]">
               <button class="custom-button">Approved</button>
             </a>
             <button class="custom-button" (click)="delete(element)">

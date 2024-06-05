@@ -32,7 +32,7 @@ namespace Hrm.Api.Controllers
         [Route("save-depReleaseInfo")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateDepReleaseInfoDto DepReleaseInfo)
         {
-            if (DepReleaseInfo.ApproveBy == "0")
+            if (DepReleaseInfo.ApproveBy == 0)
             {
                 return NoContent();
             }

@@ -4,7 +4,7 @@
         (submit)="onSubmit(DeptReleaseInfoForm)" [gutter]="3" novalidate cForm cRow>
         <c-card-header>Departmental Release Information</c-card-header>
         <c-col [md]="3">
-          <input type="hidden" [(ngModel)]="transferApproveInfoService.transferApproveInfos.empId" name="empId" />
+          <input type="hidden" [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.empId" name="empId" />
           <label cLabel for="validationCustom05">Relese Type<span class="text-danger">*</span></label>
           <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.releaseType" name="releaseType"
             #releaseType="ngModel" placeholder="Enter Release Type" cFormControl id="validationCustom05" required
@@ -14,7 +14,7 @@
           }
         </c-col>
         <c-col [md]="3">
-          <input type="hidden" [(ngModel)]="transferApproveInfoService.transferApproveInfos.postingOrderInfoId" name="postingOrderInfoId" />
+          <input type="hidden" [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.postingOrderInfoId" name="postingOrderInfoId" />
           <label cLabel for="validationCustom06">Relese Date<span class="text-danger">*</span></label>
           <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.releaseDate" name="releaseDate"
             #releaseDate="ngModel" placeholder="Enter Relese Date Status" cFormControl id="validationCustom06" required
@@ -24,7 +24,7 @@
           }
         </c-col>
         <c-col [md]="3">
-            <input type="hidden" [(ngModel)]="transferApproveInfoService.transferApproveInfos.transferApproveInfoId" name="transferApproveInfoId" />
+            <input type="hidden" [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.transferApproveInfoId" name="transferApproveInfoId" />
           <label cLabel for="validationCustom51">Approve By <span class="text-danger">*</span></label>
           <input (dblclick)="openApproveDepartmentRelease()"
             [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.approveByName" name="approveByName" #approveBy="ngModel"
@@ -53,6 +53,7 @@
         </c-col>
 
         <c-col [md]="3">
+          <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.depReleaseInfoId" name="depReleaseInfoId" hidden />
           <label cLabel for="validationCustom08">Depertmental Clearance<span class="text-danger">*</span></label>
           <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.depClearance" name="depClearance"
             #depClearance="ngModel" placeholder="Enter Departmental Clearance" cFormControl id="validationCustom08"
@@ -63,6 +64,9 @@
         </c-col>
 
         <c-col [md]="3">
+          <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.transferApproveInfoId" name="transferApproveInfoId" hidden />
+          
+
           <label cLabel for="validationCustom09">Remarks<span class="text-danger">*</span></label>
           <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.remarks" name="remarks" #remarks="ngModel"
             placeholder="Enter Remarks " cFormControl id="validationCustom09" required type="text" value="Mark" />
@@ -72,7 +76,7 @@
         </c-col>
         <c-col [xs]="12">
             <button [disabled]="DeptReleaseInfoForm.invalid" cButton class="me-1" color="primary" type="submit">
-              {{ btnText }}
+              {{ btnText }}{{btnTextApproved}}
             </button>
             <button cButton color="secondary" (click)="resetdeptReleaseInfoForm()">Reset</button>
           </c-col>

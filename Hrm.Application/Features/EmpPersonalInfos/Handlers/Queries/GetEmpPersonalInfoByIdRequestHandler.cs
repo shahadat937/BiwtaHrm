@@ -25,7 +25,7 @@ namespace Hrm.Application.Features.EmpPersonalInfos.Handlers.Queries
 
         public async Task<object> Handle(GetEmpPersonalInfoByIdRequest request, CancellationToken cancellationToken)
         {
-            var EmpPersonalInfo = _EmpPersonalInfoRepository.FinedOneInclude(x => x.Id == request.Id);
+            var EmpPersonalInfo = _EmpPersonalInfoRepository.FinedOneInclude(x => x.EmpId == request.Id);
 
             return EmpPersonalInfo;
         }

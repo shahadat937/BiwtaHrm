@@ -1,13 +1,22 @@
 export class PersonalInfoModule { 
-  empId: number;
+  id: number;
+  empId: any;
   genderId: any;
   maritalStatusId: any;
   bloodGroupId: any;
-  nationalatyId: any;
+  nationalityId: any;
   religionId: any;
   hairColorId: any;
   eyesColor: any;
-  mabileNumber: any;
+  mobileNumber: string;
+  fatherName: string;
+  fatherNameBangla: string;
+  motherName: string;
+  motherNameBangla: string;
+  gurdianName: string;
+  gurdianNameBangla: string;
+  gurdianRelationId: any;
+  emergencyContact: string;
   email: string;
   birthRegNo: any;
   placeOfBirth: string;
@@ -18,17 +27,27 @@ export class PersonalInfoModule {
   weight: string;
   passportNo: string;
   passportExpireDate:  Date | null;
+  remark: string;
 
   constructor() {
-    this.empId= 0;
+    this.id= 0;
+    this.empId= null;
     this.genderId= null ;
     this.maritalStatusId= null ;
     this.bloodGroupId= null ;
-    this.nationalatyId= null ;
+    this.nationalityId= null ;
     this.religionId= null ;
     this.hairColorId= null ;
     this.eyesColor= null ;
-    this.mabileNumber= null ;
+    this.mobileNumber= '';
+    this.fatherName= '';
+    this.fatherNameBangla= '';
+    this.motherName= '';
+    this.motherNameBangla= '';
+    this.gurdianName= '';
+    this.gurdianNameBangla= '';
+    this.gurdianRelationId= null;
+    this.emergencyContact= '';
     this.email= '';
     this.birthRegNo= null ;
     this.placeOfBirth="";
@@ -39,5 +58,6 @@ export class PersonalInfoModule {
     this.weight= '';
     this.passportNo= '';
     this.passportExpireDate= null;
+    this.remark= '';
   }
 }

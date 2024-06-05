@@ -27,7 +27,7 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-EmpPersonalInfosById/{id}")]
+        [Route("get-EmpPersonalInfoByEmpId/{id}")]
         public async Task<ActionResult<EmpPersonalInfoDto>> GetEmpPersonalInfosById(int id)
         {
             var EmpPersonalInfos = await _mediator.Send(new GetEmpPersonalInfoByIdRequest { Id = id });

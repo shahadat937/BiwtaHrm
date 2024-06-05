@@ -82,6 +82,8 @@ namespace Hrm.Application
 
         public const string EmpBasicInfo = HRMRoutePrefixBase + "empBasicInfo";
         public const string EmpPersonalInfo = HRMRoutePrefixBase + "empPersonalInfo";
+        public const string EmpPresentAddress = HRMRoutePrefixBase + "empPresentAddress";
+        public const string EmpPermanentAddress = HRMRoutePrefixBase + "empPermanentAddress";
 
 
 

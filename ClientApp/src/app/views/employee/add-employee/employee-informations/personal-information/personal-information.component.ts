@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
-import { EmployeeService } from '../../../service/employee.service';
+import { EmpPersonalInfoService } from '../../../service/emp-personal-info.service';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,7 +16,6 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 
   @Input() empId!: number;
   @Output() close = new EventEmitter<void>();
-  userId : any;
   visible: boolean = true;
   headerText: string = '';
   headerBtnText: string = 'Hide From';
@@ -27,12 +26,13 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   religions: SelectedModel[] = [];
   hairColors: SelectedModel[] = [];
   eyeColors: SelectedModel[] = [];
+  relations: SelectedModel[] = [];
   subscription: Subscription = new Subscription();
   loading: boolean = false;
   @ViewChild('PersonalInfoForm', { static: true }) PersonalInfoForm!: NgForm;
 
   constructor(public bsModalRef: BsModalRef,
-    public employeeService: EmployeeService,
+    public empPersonalInfoService: EmpPersonalInfoService,
     public userService: UserService,
     private toastr: ToastrService,) { }
 
@@ -44,6 +44,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.getSelectedReligions();
     this.getSelectedHairColors();
     this.getSelectedEyeColors();
+    this.getSelectedRelation();
   }
 
   ngOnDestroy(): void {
@@ -58,10 +59,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   }
 
   getEmployeeByEmpId() {
-    this.employeeService.findByEmpId(this.empId).subscribe((res) => {
-      this.userId = res.aspNetUserId;
+    this.empPersonalInfoService.findByEmpId(this.empId).subscribe((res) => {
       this.PersonalInfoForm?.form.patchValue(res);
-      if (res.genderId) {
+      if (res) {
         this.headerText = 'Update Personal Information';
         console.log(res)
         this.btnText = 'Update';
@@ -76,26 +76,37 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   }
 
   getUserDetails(){
-    this.userService.find(this.userId).subscribe((res) => {
-      this.PersonalInfoForm.form.patchValue({
-        mabileNumber: res.phoneNumber,
-        email: res.email,
-      });
-    });
+    this.empPersonalInfoService.findBasicInfoByEmpId(this.empId).subscribe((res) => {
+      this.userService.find(res.aspNetUserId).subscribe((response) =>{
+        this.PersonalInfoForm.form.patchValue({
+          mobileNumber: response.phoneNumber,
+          email: response.email,
+        });
+      })
+    })
   }
 
   initaialForm(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.employeeService.personalInfo = {
+    this.empPersonalInfoService.personalInfo = {
+      id: 0,
       empId : this.empId,
       genderId : null ,
       maritalStatusId : null ,
       bloodGroupId : null ,
-      nationalatyId : null ,
+      nationalityId : null ,
       religionId : null ,
       hairColorId : null ,
       eyesColor : null ,
-      mabileNumber : null ,
+      mobileNumber : '' ,
+      fatherName: '',
+      fatherNameBangla: '',
+      motherName: '',
+      motherNameBangla: '',
+      gurdianName: '',
+      gurdianNameBangla: '',
+      gurdianRelationId: null,
+      emergencyContact: '',
       email : '',
       birthRegNo : null ,
       placeOfBirth : '',
@@ -106,6 +117,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       weight : '',
       passportNo : '',
       passportExpireDate : null,
+      remark: '',
     };
   }
 
@@ -120,7 +132,15 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       religionId : null ,
       hairColorId : null ,
       eyesColor : null ,
-      mabileNumber : null ,
+      mobileNumber : null ,
+      fatherName: '',
+      fatherNameBangla: '',
+      motherName: '',
+      motherNameBangla: '',
+      gurdianName: '',
+      gurdianNameBangla: '',
+      gurdianRelationId: null,
+      emergencyContact: '',
       email : '',
       birthRegNo : null ,
       placeOfBirth : '',
@@ -131,38 +151,44 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       weight : '',
       passportNo : '',
       passportExpireDate : null,
+      remark: '',
     });
   }
 
   
   getSelectedGenders(){
-    this.subscription=this.employeeService.getSelectedGender().subscribe((data) => { 
+    this.subscription=this.empPersonalInfoService.getSelectedGender().subscribe((data) => { 
       this.genders = data;
     });
   }
   getSelectedMaritalStatuses(){
-    this.subscription=this.employeeService.getSelectedMaritalStatus().subscribe((data) => { 
+    this.subscription=this.empPersonalInfoService.getSelectedMaritalStatus().subscribe((data) => { 
       this.maritalStatuses = data;
     });
   }
   getSelectedBloodGroups(){
-    this.subscription=this.employeeService.getSelectedBloodGroup().subscribe((data) => { 
+    this.subscription=this.empPersonalInfoService.getSelectedBloodGroup().subscribe((data) => { 
       this.bloodGroups = data;
     });
   }
   getSelectedReligions(){
-    this.subscription=this.employeeService.getSelectedReligion().subscribe((data) => { 
+    this.subscription=this.empPersonalInfoService.getSelectedReligion().subscribe((data) => { 
       this.religions = data;
     });
   }
   getSelectedHairColors(){
-    this.subscription=this.employeeService.getSelectedHairColor().subscribe((data) => { 
+    this.subscription=this.empPersonalInfoService.getSelectedHairColor().subscribe((data) => { 
       this.hairColors = data;
     });
   }
   getSelectedEyeColors(){
-    this.subscription=this.employeeService.getSelectedEyeColor().subscribe((data) => { 
+    this.subscription=this.empPersonalInfoService.getSelectedEyeColor().subscribe((data) => { 
       this.eyeColors = data;
+    });
+  }
+  getSelectedRelation(){
+    this.subscription=this.empPersonalInfoService.getSelectedRelationType().subscribe((data) => { 
+      this.relations = data;
     });
   }
 
@@ -172,11 +198,11 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm): void {
     this.loading = true;
-    this.employeeService.cachedData = [];
-    const id = form.value.empId;
+    this.empPersonalInfoService.cachedData = [];
+    const id = form.value.id;
     const action$ = id
-      ? this.employeeService.updateEmployeeInfo(id, form.value)
-      : this.employeeService.saveEmployeeInfo(form.value);
+      ? this.empPersonalInfoService.updateEmpPersonalInfo(id, form.value)
+      : this.empPersonalInfoService.saveEmpPersonalInfo(form.value);
 
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {

@@ -19,6 +19,14 @@ namespace Hrm.Domain
         public string? Email { get; set; }
         public int? BirthRegNo { get; set; }
         public string? PlaceOfBirth { get; set; }
+        public string? FatherName { get; set; }
+        public string? FatherNameBangla { get; set; }
+        public string? MotherName { get; set; }
+        public string? MotherNameBangla { get; set; }
+        public string? GurdianName { get; set; }
+        public string? GurdianNameBangla { get; set; }
+        public int? GurdianRelationId { get; set; }
+        public string? EmergencyContact { get; set; }
         public string? FreedomfighterStatus { get; set; }
         public int? ReligionId { get; set; }
         public int? TinNo { get; set; }

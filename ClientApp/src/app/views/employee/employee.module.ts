@@ -39,6 +39,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FamilyInformationComponent } from './add-employee/employee-informations/family-information/family-information.component';
+import { EmpPresentAddressComponent } from './add-employee/employee-informations/emp-present-address/emp-present-address.component';
+import { EmpPermanentAddressComponent } from './add-employee/employee-informations/emp-permanent-address/emp-permanent-address.component';
+import { CountryService } from '../basic-setup/service/country.service';
 
 
 @NgModule({
@@ -48,7 +51,9 @@ import { FamilyInformationComponent } from './add-employee/employee-informations
     ViewInformationListComponent,
     BasicInformationComponent,
     PersonalInformationComponent,
-    FamilyInformationComponent
+    FamilyInformationComponent,
+    EmpPresentAddressComponent,
+    EmpPermanentAddressComponent,
   ],
   imports: [
     CommonModule,
@@ -85,6 +90,10 @@ import { FamilyInformationComponent } from './add-employee/employee-informations
     MatBottomSheetModule,
     MatDialogModule,
     CollapseDirective,
-  ]
+  ],
+  providers:
+  [
+    CountryService,
+  ],
 })
 export class EmployeeModule { }

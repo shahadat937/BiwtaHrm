@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.TransferApproveInfo.Requests.Commands
 {
-    public class UpdateTransferApproveInfoCommand : IRequest<Unit>
+    public class UpdateTransferApproveInfoCommand : IRequest<BaseCommandResponse>
     {
         public TransferApproveInfoDto TransferApproveInfoDto { get; set; }
     }

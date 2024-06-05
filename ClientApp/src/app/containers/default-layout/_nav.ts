@@ -264,13 +264,13 @@ export const navItems: INavData[] = [
     name: 'Employee Management'
   },
   {
-    name:'Add Employee',
+    name: 'Add Employee',
     url: '/employee/addEmployee',
     iconComponent: { name: 'cil-puzzle' },
 
   },
   {
-    name:'Manage Employee',
+    name: 'Manage Employee',
     url: '/employee/manageEmployee',
     iconComponent: { name: 'cil-puzzle' },
 
@@ -280,7 +280,7 @@ export const navItems: INavData[] = [
     name: 'Attendance Setup'
   },
   {
-    name:'Attendance',
+    name: 'Attendance',
     url: '/attendance',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -316,7 +316,7 @@ export const navItems: INavData[] = [
     name: 'Leave Management'
   },
   {
-    name:'Leave',
+    name: 'Leave',
     url: '/leave',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -335,7 +335,7 @@ export const navItems: INavData[] = [
     name: 'Transfer'
   },
   {
-    name:'Transfer',
+    name: 'Transfer',
     url: '/transfer',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -344,17 +344,26 @@ export const navItems: INavData[] = [
         url: '/transfer/postingOrderInfo'
       },
       {
-        name: 'Transfer Approved List',
+        name: 'Transfer Order List',
         url: '/transfer/TransferOrderList'
       },
       {
-        name: 'Deparment Release',
-        url: '/transfer/release'
+        name: 'Transfer Approved List',
+        url: '/transfer/transferApproveInfoList'
       },
-   
+
+      {
+        name: 'Departmetn Release List',
+        url: '/transfer/departmetnReleaseList'
+      },
+      {
+        name: 'Employee Transfer Join',
+        url: '/transfer/employePostingJoinList'
+      },
+      
       {
         name: 'Transfer posting History',
-        url: '/transfer/transferhistory'
+        url: '/transfer/'
       }
     ]
   },
@@ -363,7 +372,7 @@ export const navItems: INavData[] = [
     name: 'Promotion Management'
   },
   {
-    name:'Promotion',
+    name: 'Promotion',
     url: '/promotion',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -385,7 +394,7 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name:'PromotionType',
+    name: 'PromotionType',
     url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -397,7 +406,7 @@ export const navItems: INavData[] = [
     name: 'Appraisal Management'
   },
   {
-    name:'Appraisal',
+    name: 'Appraisal',
     url: '/appraisal',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -423,13 +432,13 @@ export const navItems: INavData[] = [
     name: 'User Management'
   },
   {
-    name:'Role',
+    name: 'Role',
     url: '/base',
     iconComponent: { name: 'cil-puzzle' },
 
   },
   {
-    name:'User',
+    name: 'User',
     url: '/usermanagement/user',
     iconComponent: { name: 'cil-puzzle' },
 
@@ -439,7 +448,7 @@ export const navItems: INavData[] = [
     name: 'Basic Setup'
   },
   {
-    name:'Personal Info. Setup',
+    name: 'Personal Info. Setup',
     url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -527,7 +536,7 @@ export const navItems: INavData[] = [
         name: 'leave',
         url: '/bascisetup/leave'
       },
-      
+
       {
         name: 'Overall Evelation and Promotion',
         url: '/bascisetup/overall_EV_Promotion'
@@ -547,7 +556,7 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name:'Address Setup',
+    name: 'Address Setup',
     url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -583,7 +592,7 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name:'Education Setup',
+    name: 'Education Setup',
     url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -610,7 +619,7 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name:'Training Setup',
+    name: 'Training Setup',
     url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -630,7 +639,7 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name:'Bank Info. Setup',
+    name: 'Bank Info. Setup',
     url: '/base',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -651,7 +660,7 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name:'Language Name Setup',
+    name: 'Language Name Setup',
     url: '/base',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -667,7 +676,7 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name:'Office Info. Setup',
+    name: 'Office Info. Setup',
     url: '/bascisetup',
     iconComponent: { name: 'cil-puzzle' },
     children: [

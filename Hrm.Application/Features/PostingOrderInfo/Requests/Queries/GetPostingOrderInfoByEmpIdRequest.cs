@@ -9,8 +9,11 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.PostingOrderInfo.Requests.Queries
 {
-    public class GetPostingOrderInfoByCountryIdRequest:IRequest<List<SelectedModel>>
+    public class GetPostingOrderInfoByDesignationDepartmentOfficeRequest:IRequest<List<SelectedModel>>
     {
-        public int CountryId { get; set; }
+        public int OfficeId { get; set; }
+        public int DepartmentId { get; set; }
+        public int DeginationId { get; set; }
+
     }
 }

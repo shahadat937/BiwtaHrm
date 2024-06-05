@@ -91,6 +91,7 @@ namespace Hrm.Api.Controllers
         {
             var branch = await _mediator.Send(new GetDesignationByDepartmentIdRequest { DepartmentId = id });
             return Ok(branch);
+
         }
 
         [HttpGet]

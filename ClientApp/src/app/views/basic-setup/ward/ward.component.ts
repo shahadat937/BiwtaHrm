@@ -49,14 +49,14 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('wardId');
       if (id) {
+       // console.log()
         this.btnText = 'Update';
         this.wardService.find(+id).subscribe((res) => {
-          console.log(res);
+          console.log(res)
           this.WardForm?.form.patchValue(res);
         });
       } else {
         this.btnText = 'Submit';
-        console.log(this.btnText)
       }
     });
   }
@@ -126,6 +126,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getALlWards() {
     this.subscription = this.wardService.getAll().subscribe((item) => {
+     // console.log(item)
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -163,7 +164,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          console.log(result)
+          //console.log(result)
           this.wardService.delete(element.wardId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);

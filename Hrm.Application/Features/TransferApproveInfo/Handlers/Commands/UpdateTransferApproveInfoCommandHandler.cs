@@ -16,44 +16,53 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.TransferApproveInfo.Handlers.Commands
 {
-    public class UpdateTransferApproveInfoCommandHandler : IRequestHandler<UpdateTransferApproveInfoCommand, Unit>
+    public class UpdateTransferApproveInfoCommandHandler : IRequestHandler<UpdateTransferApproveInfoCommand, BaseCommandResponse>
     {
 
+        private readonly IHrmRepository<Hrm.Domain.TransferApproveInfo> _TransferApproveInfoRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateTransferApproveInfoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateTransferApproveInfoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.TransferApproveInfo> TransferApproveInfoRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _TransferApproveInfoRepository = TransferApproveInfoRepository;
         }
 
-        public async Task<Unit> Handle(UpdateTransferApproveInfoCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateTransferApproveInfoCommand request, CancellationToken cancellationToken)
         {
-            var respose = new BaseCommandResponse();
+            var response = new BaseCommandResponse();
             var validator = new UpdateTransferApproveInfoDtoValidators();
             var validationResult = await validator.ValidateAsync(request.TransferApproveInfoDto);
 
             if (validationResult.IsValid == false)
             {
-                respose.Success = false;
-                respose.Message = "Creation Failed";
-                respose.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
+                response.Success = false;
+                response.Message = "Creation Failed";
+                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
 
-            var TransferApproveInfo = await _unitOfWork.Repository<Hrm.Domain.TransferApproveInfo>().Get(request.TransferApproveInfoDto.TransferApproveInfoId);
+           
+                var TransferApproveInfo = await _unitOfWork.Repository<Hrm.Domain.TransferApproveInfo>().Get(request.TransferApproveInfoDto.TransferApproveInfoId);
 
-            if (TransferApproveInfo is null)
-            {
-                throw new NotFoundException(nameof(TransferApproveInfo), request.TransferApproveInfoDto.TransferApproveInfoId);
-            }
+                if (TransferApproveInfo is null)
+                {
+                    throw new NotFoundException(nameof(TransferApproveInfo), request.TransferApproveInfoDto.TransferApproveInfoId);
+                }
 
-            _mapper.Map(request.TransferApproveInfoDto, TransferApproveInfo);
+                _mapper.Map(request.TransferApproveInfoDto, TransferApproveInfo);
 
-            await _unitOfWork.Repository<Hrm.Domain.TransferApproveInfo>().Update(TransferApproveInfo);
-            await _unitOfWork.Save();
+                await _unitOfWork.Repository<Hrm.Domain.TransferApproveInfo>().Update(TransferApproveInfo);
+                await _unitOfWork.Save();
 
-            return Unit.Value;
+                response.Success = true;
+                response.Message = "Update Successfull";
+                response.Id = TransferApproveInfo.TransferApproveInfoId;
+
+
+
+            return response;
         }
     }
 }

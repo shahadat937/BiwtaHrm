@@ -23,7 +23,7 @@ export class ReleaseComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('postingOrderForm', { static: true }) postingOrderForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'officeOrderNo', 'officeOrderDate','transferSection','releaseType','isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'officeOrderNo', "departmentName", "officeName", "designationName", 'officeOrderDate', 'transferSection', 'releaseType', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -87,20 +87,23 @@ export class ReleaseComponent implements OnInit, OnDestroy, AfterViewInit {
   initaialWard(form?: NgForm) {
     if (form != null) form.resetForm();
     this.postingOrderInfoService.postingOrderInfos = {
-      postingOrderInfoId:   0,
-      empId:0,
-      departmentId:null,
-      subBranchId:0,
-      subDepartmentId:0,
-      designationId:null,
+      postingOrderInfoId: 0,
+      empId: 0,
+      departmentId: null,
+      subBranchId: 0,
+      subDepartmentId: 0,
+      designationId: null,
       officeId: null,
-      officeOrderNo:"",
-      officeOrderDate:new Date(),
-      orderOfficeBy:"",
-      transferSection:"",
-      releaseType:"",
-      menuPosition:  0,
-      isActive:  true
+      designationName: "",
+      officeName: "",
+      departmentName: "",
+      officeOrderNo: "",
+      officeOrderDate: new Date(),
+      orderOfficeBy: "",
+      transferSection: "",
+      releaseType: "",
+      menuPosition: 0,
+      isActive: true
 
     };
   }
@@ -108,23 +111,26 @@ export class ReleaseComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.btnText = 'Submit';
     if (this.postingOrderForm?.form != null) {
-  
+
       this.postingOrderForm.form.reset();
       this.postingOrderForm.form.patchValue({
-        postingOrderInfoId:   0,
-        empId:0,
-        departmentId:null,
-        subBranchId:0,
-        subDepartmentId:0,
-        designationId:null,
+        postingOrderInfoId: 0,
+        empId: 0,
+        departmentId: null,
+        subBranchId: 0,
+        subDepartmentId: 0,
+        designationId: null,
         officeId: null,
-        officeOrderNo:"",
-        officeOrderDate:new Date(),
-        orderOfficeBy:"",
-        transferSection:"",
-        releaseType:"",
-        menuPosition:  0,
-        isActive:  true
+        designationName: "",
+        officeName: "",
+        departmentName: "",
+        officeOrderNo: "",
+        officeOrderDate: new Date(),
+        orderOfficeBy: "",
+        transferSection: "",
+        releaseType: "",
+        menuPosition: 0,
+        isActive: true
       });
     }
   }
@@ -137,9 +143,9 @@ export class ReleaseComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getTransferApproved() {
-this.subscription= this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((res)=>{
-console.log(res)
-})
+    this.subscription = this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((res) => {
+      console.log(res)
+    })
   }
   onSubmit(form: NgForm): void {
     this.postingOrderInfoService.cachedData = [];

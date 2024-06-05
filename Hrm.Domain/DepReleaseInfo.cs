@@ -7,6 +7,7 @@ namespace Hrm.Domain
 
         public int DepReleaseInfoId { get; set; }
         public int? TransferApproveInfoId { get; set; }
+        public int? PostingOrderInfoId { get; set; }
         public string? ApproveBy { get; set; }
         public bool? ApproveStatus { get; set; }
         public int? EmpId { get; set; }     

@@ -22,7 +22,7 @@ export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('postingOrderForm', { static: true }) postingOrderForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'officeOrderNo', 'officeOrderDate','transferSection','releaseType','isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'officeOrderNo',"departmentName" ,"officeName","designationName",'officeOrderDate','transferSection','releaseType','isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -90,6 +90,9 @@ export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
       subDepartmentId:0,
       designationId:null,
       officeId: null,
+      designationName:"",
+    officeName:"",
+    departmentName:"",
       officeOrderNo:"",
       officeOrderDate:new Date(),
       orderOfficeBy:"",
@@ -114,6 +117,9 @@ export class TransferlistComponent implements OnInit, OnDestroy, AfterViewInit {
         subDepartmentId:0,
         designationId:null,
         officeId: null,
+        designationName:"",
+    officeName:"",
+    departmentName:"",
         officeOrderNo:"",
         officeOrderDate:new Date(),
         orderOfficeBy:"",

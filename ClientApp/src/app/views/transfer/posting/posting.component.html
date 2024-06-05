@@ -43,6 +43,8 @@
       <c-col [md]="3">
         <input type="hidden" [(ngModel)]="employeeService.demoEmployee.empId" name="empId" />
         <label cLabel for="office">Office<span class="text-danger">*</span></label>
+        <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" />
+
         <div class="input-wrapper">
           <select (change)="onOfficeSelect(postingOrderInfoService.postingOrderInfos.officeId)"
             [(ngModel)]="postingOrderInfoService.postingOrderInfos.officeId" name="officeId" #officeId="ngModel"
@@ -62,7 +64,7 @@
         </div>
       </c-col>
       <c-col [md]="3">
-        <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" />
+        <!-- <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" /> -->
         <label cLabel for="office">Department<span class="text-danger">*</span></label>
         <div class="input-wrapper">
           <select (change)="onDepartmentSelect(postingOrderInfoService.postingOrderInfos.departmentId)"
@@ -145,14 +147,6 @@
         <div class="text-left text-danger">ReleaseType value is required</div>
         }
       </c-col>
-      <c-col [md]="3">
-        <label cLabel for="validationCustom09">Active Status</label>
-        <select [(ngModel)]="postingOrderInfoService.postingOrderInfos.isActive" name="isActive" cSelect
-          id="validationCustom09">
-          <option value="true">Approve</option>
-            <option value="false">Reject</option>
-        </select>
-      </c-col>
       
     </form>
 
@@ -181,7 +175,6 @@
           </select>
         </c-col>
         <c-col [md]="3">
-          <!-- <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" /> -->
           <label cLabel for="validationCustom51">Approve By <span class="text-danger">*</span></label>
           <input (dblclick)="openApprovtransferApproveInfos()"
             [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveByName" name="approveByName"
@@ -300,17 +293,13 @@
 
 <c-card>
   <c-card-header class="d-flex justify-content-between">
-    <!-- <div>
+    <div>
       <input type="checkbox" (click)="UserFormView3()" />
       <label cFormCheckLabel for="checkThree">Employee Transfer Posting & Join</label>
-    </div> -->
-    <div (click)="toggleVisibility($event)">
-      <input type="checkbox" id="checkThree" (change)="UserFormView4($event)" />
-      <label for="checkThree">Employee Transfer Posting & Join</label>
     </div>
   </c-card-header>
 
-  <c-card *ngIf="visible">
+  <c-card class="shadow">
     <c-card-body [visible]="visible3" cCollapse class="shadow">
       <form #EmpTransferPostingJoinForm="ngForm" name="EmpTransferPostingJoinForm"
         (submit)="onSubmit(EmpTransferPostingJoinForm)" [gutter]="3" novalidate cForm cRow>
@@ -363,7 +352,7 @@
         {{btnText}}
       </button>
       <!-- Your existing HTML code for forms -->
-      <button cButton color="primary" shape="rounded-pill" type="submit" (click)="resetForms()">
+      <button cButton color="primary" shape="rounded-pill" type="submit" (click)="resetAllForm()">
         Reset
       </button>
     </c-col>

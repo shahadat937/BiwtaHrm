@@ -11,6 +11,8 @@ using Hrm.Application.DTOs.EmpTnsferPostingJoin;
 using Hrm.Application.Features.EmpTnsferPostingJoin.Requests.Commands;
 using Hrm.Application.Features.EmpTnsferPostingJoin.Requests.Queries;
 using Hrm.Application.Features.EmpTnsferPostingJoin.Handlers.Queries;
+using Microsoft.EntityFrameworkCore;
+using Hrm.Persistence;
 namespace Hrm.Api.Controllers
 {
 
@@ -19,9 +21,11 @@ namespace Hrm.Api.Controllers
     public class EmpTnsferPostingJoinController : Controller
     {
         private readonly IMediator _mediator;
-        public EmpTnsferPostingJoinController(IMediator mediator)
+        private readonly HrmDbContext _dbContext;
+        public EmpTnsferPostingJoinController(IMediator mediator, HrmDbContext dbContext)
         {
             _mediator = mediator;
+            _dbContext = dbContext;
         }
         [HttpPost]
         [ProducesResponseType(200)]
@@ -29,15 +33,27 @@ namespace Hrm.Api.Controllers
         [Route("save-EmpTnsferPostingJoin")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateEmpTnsferPostingJoinDto EmpTnsferPostingJoin)
         {
-            var command = new CreateEmpTnsferPostingJoinCommand { EmpTnsferPostingJoinDto = EmpTnsferPostingJoin };
-            var response = await _mediator.Send(command);
-            return Ok(response);
+            if (EmpTnsferPostingJoin.ApproveBy == "0")
+            {
+                return NoContent();
+            }
+            else
+            {
+                var PostingOrderInfo = await _dbContext.PostingOrderInfo.ToListAsync();
+                int maxId = PostingOrderInfo.Max(x => x.PostingOrderInfoId);
+               // int maxId = postingOrderInfos.Max(x => x.PostingOrderInfoId);
+                EmpTnsferPostingJoin .PostingOrderInfoId = maxId;
+                var command = new CreateEmpTnsferPostingJoinCommand { EmpTnsferPostingJoinDto = EmpTnsferPostingJoin };
+                var response = await _mediator.Send(command);
+                return Ok(response);
+            }
         }
 
         [HttpGet]
         [Route("get-EmpTnsferPostingJoin")]
         public async Task<ActionResult> Get()
         {
+
             var EmpTnsferPostingJoin = await _mediator.Send(new GetEmpTnsferPostingJoinRequest  { });
             return Ok(EmpTnsferPostingJoin);
         }

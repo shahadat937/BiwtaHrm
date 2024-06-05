@@ -81,10 +81,13 @@ namespace Hrm.Api.Controllers
         {
             //var PostingOrderInfo = await _mediator.Send(new GetPostingOrderInfoByCountryIdRequest { CountryId = id });
             //return Ok(PostingOrderInfo);
-            var PostingOrderInfosByCountryId = await _mediator.Send(new GetPostingOrderInfoByCountryIdRequest
+            var PostingOrderInfosByCountryId = await _mediator.Send(new GetPostingOrderInfoByDesignationDepartmentOfficeRequest
             {
-                CountryId = id
-            });
+                DeginationId = id,
+                OfficeId=id,
+                DepartmentId=id
+
+            }) ;
             return Ok(PostingOrderInfosByCountryId);
 
         }

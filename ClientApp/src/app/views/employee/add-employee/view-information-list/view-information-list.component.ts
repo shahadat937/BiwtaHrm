@@ -9,6 +9,7 @@ import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { EmpPersonalInfoService } from '../../service/emp-personal-info.service';
 import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 import { EmpPresentAddressService } from '../../service/emp-present-address.service';
+import { EmpPermanentAddressService } from '../../service/emp-permanent-address.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -37,7 +38,8 @@ export class ViewInformationListComponent implements OnInit {
     public userService: UserService,
     public empPersonalInfoService: EmpPersonalInfoService,
     public empBasicInfoService: EmpBasicInfoService,
-    public empPresentAddressService: EmpPresentAddressService,) { }
+    public empPresentAddressService: EmpPresentAddressService,
+    public empPermanentAddressService: EmpPermanentAddressService,) { }
 
   ngOnInit(): void {
     this.handleRouteParams();
@@ -61,6 +63,7 @@ export class ViewInformationListComponent implements OnInit {
         this.empId = res.id;
         this.getStatusOfPersonalInfo();
         this.getStatusOfPresentAddress();
+        this.getStatusOfPermanentAddress();
       }
       else{
         this.gettingStatus = false;
@@ -77,6 +80,12 @@ export class ViewInformationListComponent implements OnInit {
   getStatusOfPresentAddress(){
     this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
       this.presentAddressEntryStatus = !!res;
+    })
+  }
+
+  getStatusOfPermanentAddress(){
+    this.empPermanentAddressService.findByEmpId(this.empId).subscribe((res) => {
+      this.permanentAddressEntryStatus = !!res;
     })
   }
 

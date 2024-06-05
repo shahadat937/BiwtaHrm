@@ -12,8 +12,6 @@ export class EmpPermanentAddressModule {
     zipCode:  any=null;
     address: string = "";
     email: string = "";
-    officeWebsite: string = "";
-    officeCode: string = "";
     remark: string = "";
     menuPosition: number = 0;
     isActive: boolean = true

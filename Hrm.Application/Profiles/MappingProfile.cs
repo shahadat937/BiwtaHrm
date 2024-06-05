@@ -302,7 +302,7 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpPresentAddress, CreateEmpPresentAddressDto>().ReverseMap();
 
             CreateMap<EmpPermanentAddress, EmpPermanentAddressDto>().ReverseMap();
-            CreateMap<EmpPermanentAddress, CreateEmpPresentAddressDto>().ReverseMap();
+            CreateMap<EmpPermanentAddress, CreateEmpPermanentAddressDto>().ReverseMap();
 
         }
     }

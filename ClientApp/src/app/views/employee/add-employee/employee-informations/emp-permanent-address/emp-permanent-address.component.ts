@@ -11,6 +11,7 @@ import { UnionService } from 'src/app/views/basic-setup/service/union.service';
 import { WardService } from 'src/app/views/basic-setup/service/ward.service';
 import { EmpPermanentAddressService } from '../../../service/emp-permanent-address.service';
 import { ToastrService } from 'ngx-toastr';
+import { EmpPresentAddressService } from '../../../service/emp-present-address.service';
 
 @Component({
   selector: 'app-emp-permanent-address',
@@ -34,6 +35,8 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
   wards: SelectedModel[] = [];
   subscription: Subscription = new Subscription();
   loading: boolean = false;
+  sameAsPresentAddress: boolean = false;
+  presentAddressStatus: boolean = false;
   @ViewChild('EmpPermanentAddressForm', { static: true }) EmpPermanentAddressForm!: NgForm;
 
   constructor(
@@ -45,7 +48,8 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
     public unionService: UnionService,
     public wardService: WardService,
     public divisionService: DivisionService,
-    private toastr: ToastrService,) {
+    private toastr: ToastrService,
+    public empPresentAddressService: EmpPresentAddressService,) {
 
   }
 
@@ -82,6 +86,7 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
         this.headerText = 'Add Permanent Address';
         this.btnText = 'Submit';
         this.initaialForm();
+        this.getPresentAddress();
       }
     })
   }
@@ -125,6 +130,35 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
       menuPosition: 0,
       isActive: true
     });
+  }
+
+  loadEmpPresentAddress(){
+    this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
+      if (res) {
+        const { id, ...formData } = res;
+        this.onDivisionNamesChangeByCounterId(formData.countryId);
+        this.onDistrictNamesChangeByDivisionId(formData.divisionId);
+        this.onUpazilaNamesChangeByDistrictId(formData.districtId);
+        this.onThanaNamesChangeByUpazilaId(formData.upazilaId);
+        this.onUnionNamesChangeByThanaId(formData.thanaId);
+        this.onWardNamesChangeByUnionId(formData.unionId);
+        this.EmpPermanentAddressForm?.form.patchValue(formData);
+      }
+    })
+  }
+  getPresentAddress(){
+    this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
+      this.presentAddressStatus = res ? true : false;
+    })
+  }
+  onPresentCheckboxChange(event: any): void {
+    if (event.target.checked) {
+      this.sameAsPresentAddress = true;
+      this.loadEmpPresentAddress();
+    } else {
+      this.sameAsPresentAddress = false;
+      this.getEmployeeByEmpId();
+    }
   }
 
   loadcountris() {

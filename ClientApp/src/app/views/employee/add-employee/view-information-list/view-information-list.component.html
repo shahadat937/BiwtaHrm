@@ -15,11 +15,12 @@
                     (close)="toggleComponent('basicInfo')"></app-basic-information>
                 <app-personal-information *ngIf="visibleComponent === 'personalInfo'" [empId]="empId" 
                 (close)="toggleComponent('personalInfo')"></app-personal-information>
-                <app-family-information *ngIf="visibleComponent === 'familyInfo'"></app-family-information>
                 <app-emp-present-address *ngIf="visibleComponent === 'presentAddress'" [empId]="empId" 
                 (close)="toggleComponent('presentAddress')"></app-emp-present-address>
                 <app-emp-permanent-address *ngIf="visibleComponent === 'permanentAddress'" [empId]="empId" 
                 (close)="toggleComponent('permanentAddress')"></app-emp-permanent-address>
+                <app-emp-job-details *ngIf="visibleComponent === 'jobDetails'" [empId]="empId" 
+                (close)="toggleComponent('jobDetails')"></app-emp-job-details>
             </c-card-header>
 
             <c-card-body>
@@ -39,17 +40,17 @@
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div (click)="gettingStatus && toggleComponent('familyInfo')"
+                        <div (click)="gettingStatus && toggleComponent('spouseInfo')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
                             [ngStyle]="{'background-color': (entryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                            <h4>Family Information</h4>
+                            <h4>Spouse Information</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div (click)="gettingStatus && toggleComponent('jobDetails')"
+                        <div (click)="gettingStatus && toggleComponent('ChildrenInfo')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
                             [ngStyle]="{'background-color': (entryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                            <h4>Job Details</h4>
+                            <h4>Children Information</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
@@ -64,6 +65,13 @@
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
                             [ngStyle]="{'background-color': (permanentAddressEntryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Permanent Address</h4>
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <div (click)="gettingStatus && toggleComponent('jobDetails')"
+                            class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Job Details</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">

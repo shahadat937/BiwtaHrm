@@ -399,6 +399,7 @@ namespace Hrm.Persistence
         public virtual DbSet<EmpPersonalInfo> EmpPersonalInfo { get; set; } = null!;
         public virtual DbSet<EmpPresentAddress> EmpPresentAddress { get; set; } = null!;
         public virtual DbSet<EmpPermanentAddress> EmpPermanentAddress { get; set; } = null!;
+        public virtual DbSet<EmpJobDetail> EmpJobDetail { get; set; } = null!;
 
 
 

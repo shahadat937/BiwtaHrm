@@ -38,10 +38,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { FamilyInformationComponent } from './add-employee/employee-informations/family-information/family-information.component';
 import { EmpPresentAddressComponent } from './add-employee/employee-informations/emp-present-address/emp-present-address.component';
 import { EmpPermanentAddressComponent } from './add-employee/employee-informations/emp-permanent-address/emp-permanent-address.component';
 import { CountryService } from '../basic-setup/service/country.service';
+import { EmpJobDetailsComponent } from './add-employee/employee-informations/emp-job-details/emp-job-details.component';
 
 
 @NgModule({
@@ -51,9 +51,9 @@ import { CountryService } from '../basic-setup/service/country.service';
     ViewInformationListComponent,
     BasicInformationComponent,
     PersonalInformationComponent,
-    FamilyInformationComponent,
     EmpPresentAddressComponent,
     EmpPermanentAddressComponent,
+    EmpJobDetailsComponent,
   ],
   imports: [
     CommonModule,

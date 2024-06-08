@@ -10,6 +10,7 @@ import { EmpPersonalInfoService } from '../../service/emp-personal-info.service'
 import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 import { EmpPresentAddressService } from '../../service/emp-present-address.service';
 import { EmpPermanentAddressService } from '../../service/emp-permanent-address.service';
+import { EmpJobDetailsService } from '../../service/emp-job-details.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -24,6 +25,7 @@ export class ViewInformationListComponent implements OnInit {
   personalInfoEntryStatus : boolean = false;
   presentAddressEntryStatus : boolean = false;
   permanentAddressEntryStatus : boolean = false;
+  empJobDetailsEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -39,7 +41,8 @@ export class ViewInformationListComponent implements OnInit {
     public empPersonalInfoService: EmpPersonalInfoService,
     public empBasicInfoService: EmpBasicInfoService,
     public empPresentAddressService: EmpPresentAddressService,
-    public empPermanentAddressService: EmpPermanentAddressService,) { }
+    public empPermanentAddressService: EmpPermanentAddressService,
+    public empJobDetailsService: EmpJobDetailsService,) { }
 
   ngOnInit(): void {
     this.handleRouteParams();
@@ -64,6 +67,7 @@ export class ViewInformationListComponent implements OnInit {
         this.getStatusOfPersonalInfo();
         this.getStatusOfPresentAddress();
         this.getStatusOfPermanentAddress();
+        this.getStatusOfEmpJobDetails();
       }
       else{
         this.gettingStatus = false;
@@ -89,6 +93,11 @@ export class ViewInformationListComponent implements OnInit {
     })
   }
 
+  getStatusOfEmpJobDetails(){
+    this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
+      this.empJobDetailsEntryStatus = !!res;
+    })
+  }
 
   toggleComponent(component: string) {
     this.componentVisible = false;

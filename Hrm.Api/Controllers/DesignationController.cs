@@ -1,13 +1,8 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Designation;
-using Hrm.Application.DTOs.Designation;
-using Hrm.Application.DTOs.MaritalStatus;
 using Hrm.Application.Features.Designation.Requests.Queries;
 using Hrm.Application.Features.Designations.Requests.Queries;
 using Hrm.Application.Features.Designation.Requests.Commands;
-using Hrm.Application.Features.Designation.Requests.Queries;
-using Hrm.Application.Features.MaritalStatus.Requests.Commands;
-using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
@@ -93,6 +88,23 @@ namespace Hrm.Api.Controllers
             var Designations = await _mediator.Send(new GetDesignationByOfficeIdRequest { OfficeId = id });
             return Ok(Designations);
         }
+
+        [HttpGet]
+        [Route("get-selectedDesignationByDepartment")]
+        public async Task<ActionResult<DesignationDto>> GetDesignationByDepartmentId(int departmentId, int empJobDetailId)
+        {
+            var Designations = await _mediator.Send(new GetSelectedDesignationByDepartmentIdRequest { DepartmentId = departmentId, EmpJobDetailId = empJobDetailId });
+            return Ok(Designations);
+        }
+
+        [HttpGet]
+        [Route("get-selectedDesignationByOffice")]
+        public async Task<ActionResult<DesignationDto>> GetDesignationByOfficeId(int officeId, int empJobDetailId)
+        {
+            var Designations = await _mediator.Send(new GetSelectedDesignationByOfficeIdRequest { OfficeId = officeId, EmpJobDetailId = empJobDetailId });
+            return Ok(Designations);
+        }
+
         [HttpGet]
         [Route("get-designationByOfficeIdAndDepartmentId")]
         public async Task<ActionResult<DesignationDto>> GetDesignationByOfficeIdAndDepartmentId(int officeId, int departmentId)

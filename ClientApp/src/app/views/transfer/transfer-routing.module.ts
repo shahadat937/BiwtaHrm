@@ -63,7 +63,7 @@ const routes: Routes = [
     component:DepartmetnReleaseListComponent
   },
   {
-    path:'departmetnRelease/:depReleaseInfoId',
+    path:'update-departmetnRelease/:depReleaseInfoId',
     component:DepartmetnReleaseComponent
   },
   {
@@ -76,6 +76,10 @@ const routes: Routes = [
   },
   {
     path:'employePostingJoin/:depReleaseInfoId',
+    component:EmployePostingJoinApproveComponent
+  },
+  {
+    path:'update-employePostingJoin/:empTnsferPostingJoinId',
     component:EmployePostingJoinApproveComponent
   },
 {

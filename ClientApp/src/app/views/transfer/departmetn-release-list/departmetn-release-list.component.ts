@@ -55,26 +55,26 @@ export class DepartmetnReleaseListComponent implements OnInit, OnDestroy, AfterV
     private confirmService: ConfirmService,
     private toastr: ToastrService
   ) {
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('postingOrderInfoId');
-      if (id) {
-        this.btnText = 'Update';
-        this.postingOrderInfoService.find(+id).subscribe((res) => {
-          this.DeptReleaseInfoForm?.form.patchValue(res);
-        });
-      } else {
-        this.btnText = 'Submit';
-      }
-      const id2 = params.get('transferApproveInfoId');
-      if (id2) {
-        this.btnTextApproved = 'Update';
-        this.transferApproveInfoService.find(+id2).subscribe((res) => {
-          this.DeptReleaseInfoForm?.form.patchValue(res);
-        });
-      } else {
-        this.btnTextApproved = 'Submit';
-      }
-    });
+    // this.route.paramMap.subscribe((params) => {
+    //   const id = params.get('postingOrderInfoId');
+    //   if (id) {
+    //     this.btnText = 'Update';
+    //     this.postingOrderInfoService.find(+id).subscribe((res) => {
+    //       this.DeptReleaseInfoForm?.form.patchValue(res);
+    //     });
+    //   } else {
+    //     this.btnText = 'Submit';
+    //   }
+    //   const id2 = params.get('transferApproveInfoId');
+    //   if (id2) {
+    //     this.btnTextApproved = 'Update';
+    //     this.transferApproveInfoService.find(+id2).subscribe((res) => {
+    //       this.DeptReleaseInfoForm?.form.patchValue(res);
+    //     });
+    //   } else {
+    //     this.btnTextApproved = 'Submit';
+    //   }
+    // });
   }
   ngOnInit(): void {
     this.getDepReleaseStatus();
@@ -164,30 +164,6 @@ export class DepartmetnReleaseListComponent implements OnInit, OnDestroy, AfterV
   }
 
   
-onSubmit(form: NgForm): void {
-  const id = form.value.depReleaseInfoId;
-  const action$ = id
-    ? this.deptReleaseInfoService.update(id, form.value)
-    : this.deptReleaseInfoService.submit(form.value);
-
-  this.subscription.add(action$.subscribe((response: any) => {
-    if (response.success) {
-      this.toastr.success('', `${response.message}`, {
-        positionClass: 'toast-top-right',
-      });
-      this.getDepReleaseStatus(); // Refresh data source
-     this.resetFormDepartmentalReleaseInfo();
-      if (!id) {
-        this.router.navigate(['/transfer/transferApproveInfoList']);
-      }
-    } else {
-      this.toastr.warning('', `${response.message}`, {
-        positionClass: 'toast-top-right',
-      });
-    }
-  }));
-}
-
 delete (element: any) {
   this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This Item').subscribe((result) => {
     if (result) {

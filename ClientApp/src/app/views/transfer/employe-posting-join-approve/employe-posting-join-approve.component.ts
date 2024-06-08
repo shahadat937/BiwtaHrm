@@ -60,6 +60,16 @@ export class EmployePostingJoinApproveComponent implements OnInit, OnDestroy, Af
         this.loadEmpTnsferPostingJoin(Number(depReleaseInfoId));
         this.btnText='submit'
       } 
+      const id = params.get('empTnsferPostingJoinId');
+      if (id) {
+        this.btnText = 'Update';
+        this.empTnsferPostingJoinService.find(+id).subscribe((res) => {
+          this.EmpTransferPostingJoinForm?.form.patchValue(res);
+          // console.log('Form Values after patching:', this.DeptReleaseInfoForm.form.value); // Debugging: Verify form values
+        });
+      } else {
+        this.btnText = 'Submit';
+      }
     });
   }
 
@@ -71,6 +81,7 @@ export class EmployePostingJoinApproveComponent implements OnInit, OnDestroy, Af
 
     });
   }
+  
   loadPostingOrderInfo(postingOrderInfoId: number) {
     this.postingOrderInfoService.find(postingOrderInfoId).subscribe(data => {
       this.postingOrderInfoService.postingOrderInfos = data;
@@ -123,7 +134,6 @@ export class EmployePostingJoinApproveComponent implements OnInit, OnDestroy, Af
     this.percentage = $event * 25;
   }
 
-
   //EmpTnsferPostingJoin
   initaialEmpTnsferPostingJoin(form?: NgForm) {
     if (form != null) form.resetForm();
@@ -131,6 +141,7 @@ export class EmployePostingJoinApproveComponent implements OnInit, OnDestroy, Af
       empTnsferPostingJoinId: 0,
       postingOrderInfoId:0,
       depReleaseInfoId:0,
+      transferApproveInfoId:0,
       approveByName:"",
       approveBy: 0,
       approveStatus:true,
@@ -149,6 +160,7 @@ export class EmployePostingJoinApproveComponent implements OnInit, OnDestroy, Af
         empTnsferPostingJoinId: 0,
         postingOrderInfoId:0,
         depReleaseInfoId:0,
+        transferApproveInfoId:0,
         approveByName:"",
         approveBy: 0,
         approveStatus:true,
@@ -167,7 +179,6 @@ export class EmployePostingJoinApproveComponent implements OnInit, OnDestroy, Af
   }
   getAllEmpTnsferPostingJoins() {
     this.subscription = this.empTnsferPostingJoinService.getempTnsferPostingJoinAll().subscribe((item) => {
-      console.log(item)
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -183,15 +194,15 @@ export class EmployePostingJoinApproveComponent implements OnInit, OnDestroy, Af
         ? this.empTnsferPostingJoinService.update(id, form.value)
         : this.empTnsferPostingJoinService.submit(form.value);
       this.subscription = action$.subscribe((response: any) => {
+        console.log(response)
         if (response.success) {
-          
           this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right',
           });
           this.getAllEmpTnsferPostingJoins();
           this.resetFormEmpTnsferPostingJoin();
           if (!id) {
-            this.router.navigate(['transfer/departmetnReleaseList']);
+            this.router.navigate(['transfer/employePostingJoin']);
           }
         } else {
           this.toastr.warning('', `${response.message}`, {

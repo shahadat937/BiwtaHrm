@@ -74,7 +74,7 @@ namespace Hrm.Application.Features.DepReleaseInfo.Handlers.Commands
         private readonly IMapper _mapper;
 
         public CreateDepReleaseInfoApprovedCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.TransferApproveInfo> TransferApproveInfoRepository)
-        {
+          {
             _TransferApproveInfoRepository = TransferApproveInfoRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;

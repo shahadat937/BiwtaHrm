@@ -34,14 +34,13 @@
             required</div>
         </c-col>
         <c-col [md]="3">
-          <label cLabel for="validationCustom09">Active Status</label>
-          <select [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.isActive" name="isActive" cSelect
-            id="validationCustom09">
+            <label cLabel for="validationCustom1">Approve Status</label>
+          <select [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.approveStatus" name="approveStatus"
+            cSelect id="validationCustom01">
             <option value="true">Approve</option>
             <option value="false">Reject</option>
           </select>
         </c-col>
-
         <c-col [md]="3">
           <label cLabel for="validationCustom07">Referenc no <span class="text-danger">*</span></label>
           <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.referenceNo" name="referenceNo"
@@ -51,7 +50,6 @@
           <div class="text-left text-danger">References No is required</div>
           }
         </c-col>
-
         <c-col [md]="3">
           <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.depReleaseInfoId" name="depReleaseInfoId" hidden />
           <label cLabel for="validationCustom08">Depertmental Clearance<span class="text-danger">*</span></label>
@@ -65,8 +63,6 @@
 
         <c-col [md]="3">
           <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.transferApproveInfoId" name="transferApproveInfoId" hidden />
-          
-
           <label cLabel for="validationCustom09">Remarks<span class="text-danger">*</span></label>
           <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.remarks" name="remarks" #remarks="ngModel"
             placeholder="Enter Remarks " cFormControl id="validationCustom09" required type="text" value="Mark" />
@@ -78,7 +74,7 @@
             <button [disabled]="DeptReleaseInfoForm.invalid" cButton class="me-1" color="primary" type="submit">
               {{ btnText }}{{btnTextApproved}}
             </button>
-            <button cButton color="secondary" (click)="resetdeptReleaseInfoForm()">Reset</button>
+            <button cButton color="secondary" (click)="resetFormDepartmentalReleaseInfo()">Reset</button>
           </c-col>
       </form>
 

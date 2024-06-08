@@ -11,6 +11,7 @@ namespace Hrm.Application.DTOs.EmpTnsferPostingJoin
         public int EmpTnsferPostingJoinId { get; set; }
         public int? DepReleaseInfoId { get; set; }
         public int? PostingOrderInfoId { get; set; }
+        public int? TransferApproveInfoId { get; set; }
         public int? ApproveBy { get; set; }
         public bool? ApproveStatus { get; set; }
         public int? EmpId { get; set; }

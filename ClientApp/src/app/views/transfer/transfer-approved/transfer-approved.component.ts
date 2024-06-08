@@ -54,6 +54,7 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
       if (postingOrderInfoId) {
         this.loadPostingOrderInfo(Number(postingOrderInfoId));
         this.btnText='submit'
+        console.log(postingOrderInfoId)
       } 
       const id = params.get('transferApproveInfoId');
       if (id) {
@@ -171,7 +172,7 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
 
 
   onSubmit(form: NgForm): void {
-
+    console.log(form.value)
     if (form.valid) {
       this.transferApproveInfoService.cachedData = [];
       const id = form.value.transferApproveInfoId;

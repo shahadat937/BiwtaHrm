@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.DepReleaseInfo.Requests.Commands
 {
-    public class UpdateDepReleaseInfoCommand : IRequest<Unit>
+    public class UpdateDepReleaseInfoCommand : IRequest<BaseCommandResponse>
     {
         public DepReleaseInfoDto DepReleaseInfoDto { get; set; }
     }

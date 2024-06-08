@@ -536,6 +536,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.empTnsferPostingJoinService.empTnsferPostingJoin = {
       empTnsferPostingJoinId: 0,
       postingOrderInfoId: 0,
+      transferApproveInfoId:0,
       depReleaseInfoId: 0,
       approveByName: "",
       approveBy: 0,
@@ -555,6 +556,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
         empTnsferPostingJoinId: 0,
         postingOrderInfoId: 0,
         depReleaseInfoId: 0,
+            transferApproveInfoId:0,
         approveByName: "",
         approveBy: 0,
         approveStatus: true,

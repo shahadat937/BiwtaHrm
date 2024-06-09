@@ -9,10 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hrm.Application.DTOs.EmpSpouseInfo;
 
 namespace Hrm.Application.Features.EmpSpouseInfos.Handlers.Queries
 {
-    public class GetEmpSpouseInfoByEmpIdRequestHandler : IRequestHandler<GetEmpSpouseInfoByEmpIdRequest, object>
+    public class GetEmpSpouseInfoByEmpIdRequestHandler : IRequestHandler<GetEmpSpouseInfoByEmpIdRequest, List<EmpSpouseInfoDto>>
     {
 
         private readonly IHrmRepository<EmpSpouseInfo> _EmpSpouseInfoRepository;
@@ -23,11 +24,13 @@ namespace Hrm.Application.Features.EmpSpouseInfos.Handlers.Queries
             _mapper = mapper;
         }
 
-        public async Task<object> Handle(GetEmpSpouseInfoByEmpIdRequest request, CancellationToken cancellationToken)
+        public async Task<List<EmpSpouseInfoDto>> Handle(GetEmpSpouseInfoByEmpIdRequest request, CancellationToken cancellationToken)
         {
-            var EmpJobDetail = _EmpSpouseInfoRepository.FinedOneInclude(x => x.EmpId == request.Id);
+            ICollection<EmpSpouseInfo> empSpouseInfos = await _EmpSpouseInfoRepository.FilterAsync(x => x.EmpId == request.Id);
 
-            return EmpJobDetail;
+            List<EmpSpouseInfoDto> result = _mapper.Map<List<EmpSpouseInfoDto>>(empSpouseInfos);
+
+            return result;
         }
     }
 }

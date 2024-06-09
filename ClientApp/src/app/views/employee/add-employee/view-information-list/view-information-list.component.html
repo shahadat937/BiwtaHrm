@@ -15,6 +15,8 @@
                     (close)="toggleComponent('basicInfo')"></app-basic-information>
                 <app-personal-information *ngIf="visibleComponent === 'personalInfo'" [empId]="empId" 
                 (close)="toggleComponent('personalInfo')"></app-personal-information>
+                <app-emp-spouse-info *ngIf="visibleComponent === 'spouseInfo'" [empId]="empId" 
+                (close)="toggleComponent('spouseInfo')"></app-emp-spouse-info>
                 <app-emp-present-address *ngIf="visibleComponent === 'presentAddress'" [empId]="empId" 
                 (close)="toggleComponent('presentAddress')"></app-emp-present-address>
                 <app-emp-permanent-address *ngIf="visibleComponent === 'permanentAddress'" [empId]="empId" 
@@ -47,7 +49,7 @@
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div (click)="gettingStatus && toggleComponent('ChildrenInfo')"
+                        <div (click)="gettingStatus && toggleComponent('childrenInfo')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
                             [ngStyle]="{'background-color': (entryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Children Information</h4>

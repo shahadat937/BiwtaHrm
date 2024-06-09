@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hrm.Api.Controllers
 {
-    [Route(HrmRoutePrefix.Department)]
+    [Route(HrmRoutePrefix.EmpSpouseInfo)]
     [ApiController]
     public class EmpSpouseInfoController : ControllerBase
     {

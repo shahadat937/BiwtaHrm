@@ -34,6 +34,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="DTOs\EmpChildInfo\" />
 	  <Folder Include="Features\Organogram\Handlers\Commands\" />
 	  <Folder Include="Features\Organogram\Requests\Commands\" />
 	</ItemGroup>

@@ -400,6 +400,8 @@ namespace Hrm.Persistence
         public virtual DbSet<EmpPresentAddress> EmpPresentAddress { get; set; } = null!;
         public virtual DbSet<EmpPermanentAddress> EmpPermanentAddress { get; set; } = null!;
         public virtual DbSet<EmpJobDetail> EmpJobDetail { get; set; } = null!;
+        public virtual DbSet<EmpSpouseInfo> EmpSpouseInfo { get; set; } = null!;
+        public virtual DbSet<EmpChildInfo> EmpChildInfo { get; set; } = null!;
 
 
 

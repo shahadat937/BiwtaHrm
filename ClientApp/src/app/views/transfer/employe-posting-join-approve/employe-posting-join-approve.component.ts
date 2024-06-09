@@ -193,9 +193,10 @@ export class EmployePostingJoinApproveComponent implements OnInit, OnDestroy, Af
       const action$ = id
         ? this.empTnsferPostingJoinService.update(id, form.value)
         : this.empTnsferPostingJoinService.submit(form.value);
+        console.log(id)
       this.subscription = action$.subscribe((response: any) => {
-        console.log(response)
         if (response.success) {
+
           this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right',
           });

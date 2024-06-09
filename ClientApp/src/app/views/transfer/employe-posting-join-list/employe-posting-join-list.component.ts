@@ -134,14 +134,7 @@ export class EmployePostingJoinListComponent implements OnInit, OnDestroy, After
       this.mergeData();
     })
   }
-
-  // getEmpJoinList() {
-  //   this.subscription = this.empTnsferPostingJoinService.getempTnsferPostingJoinAll().subscribe((res) => {
-  //     this.empTnsferPostingJoin = res;
-
-
-  //   })
-  // }
+  
   mergeData() {
     if (!this.postingOrderInfo.length || !this.transferApproveInfo.length || !this.deptReleaseInfo.length) {
       return; // Ensure all datasets are loaded

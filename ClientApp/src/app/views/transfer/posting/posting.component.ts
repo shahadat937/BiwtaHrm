@@ -254,7 +254,8 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       transferSection: "",
       releaseType: "",
       menuPosition: 0,
-      isActive: true
+      isActive: true,
+      status:""
     };
   }
 

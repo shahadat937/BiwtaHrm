@@ -103,7 +103,8 @@ export class ReleaseComponent implements OnInit, OnDestroy, AfterViewInit {
       transferSection: "",
       releaseType: "",
       menuPosition: 0,
-      isActive: true
+      isActive: true,
+            status:""
 
     };
   }

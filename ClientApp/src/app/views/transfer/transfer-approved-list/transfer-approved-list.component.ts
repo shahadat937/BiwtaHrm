@@ -467,7 +467,9 @@ import { PostingOrderInfo } from '../../basic-setup/model/posting-order-info';
 import { Employee } from '../../basic-setup/model/employees';
 import { EmpModalComponent } from '../emp-modal/emp-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-
+interface PostingOrderInfoWithStatus extends PostingOrderInfo {
+  status: 'Pending' | 'Approved' | 'Rejected';
+}
 @Component({
   selector: 'app-transfer-approved-list',
   templateUrl: './transfer-approved-list.component.html',
@@ -563,6 +565,13 @@ getTransferApprovedStatus() {
   );
 }
 
+ filterByStatus(status: 'Approved' | 'Pending' | 'Rejected') {
+    this.dataSource.filterPredicate = (data: PostingOrderInfoWithStatus, filter: string) => {
+      return data.status === filter;
+    };
+    this.dataSource.filter = status;
+  }
+  
 onSubmit(form: NgForm): void {
   const id = form.value.transferApproveInfoId;
   const action$ = id

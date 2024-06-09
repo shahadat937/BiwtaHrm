@@ -1,6 +1,12 @@
 <c-card>
     <c-card class="mt-3">
-      <c-card-header>Transfer Order List </c-card-header>
+      <c-card class="mt-3">
+        <c-card-header>
+          <button class="custom-button" (click)="filterByStatus('Approved')">Approved</button> |
+          <button class="custom-button" (click)="filterByStatus('Pending')">Pending</button> |
+          <button class="custom-button" (click)="filterByStatus('Rejected')">Reject</button>
+        </c-card-header>
+        
       <c-card-body>
         <div class="example-header">
           <mat-form-field>

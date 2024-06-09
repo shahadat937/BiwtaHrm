@@ -126,13 +126,13 @@ export class TransferPostingHistoryComponent implements OnInit, OnDestroy, After
       this.designations
     })
   }
-  getemployee() {
-    this.subscription = this.employeeService.getEmployees().subscribe((item) => {
-      this.dataSource = new MatTableDataSource(item);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.matSort;
-    });
-  }
+  // getemployee() {
+  //   this.subscription = this.employeeService.getEmployees().subscribe((item) => {
+  //     this.dataSource = new MatTableDataSource(item);
+  //     this.dataSource.paginator = this.paginator;
+  //     this.dataSource.sort = this.matSort;
+  //   });
+  // }
   resetForm():void{
     this.TransferPostingHistoryForm
   }
@@ -150,7 +150,7 @@ export class TransferPostingHistoryComponent implements OnInit, OnDestroy, After
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getemployee();
+      //  this.getemployee();
         this.resetForm();
         if (!id) {
           this.router.navigate(['/bascisetup/ward']);

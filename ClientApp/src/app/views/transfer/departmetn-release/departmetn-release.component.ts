@@ -17,6 +17,7 @@ import { EmployeesService } from '../service/employees.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EmpModalComponent } from '../emp-modal/emp-modal.component';
 import { Employee } from '../../basic-setup/model/employees';
+import { EmployeesModule } from '../../employee/model/employees.module';
 
 @Component({
   selector: 'app-departmetn-release',
@@ -39,7 +40,7 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
   postingOrderInfo: PostingOrderInfo[] = [];
   deptReleaseInfo:DeptReleaseInfo[]=[];
   btnTextApproved: string | undefined;
-  @Input() employeeSelected = new EventEmitter<Employee>();
+  @Input() employeeSelected = new EventEmitter<EmployeesModule>();
   constructor(
     private modalService: BsModalService,
     public postingOrderInfoService: PostingOrderInfoService,
@@ -59,13 +60,13 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
       } 
       const id = params.get('depReleaseInfoId');
       if (id) {
-        this.btnTextApproved = 'Update';
+        this.btnText = 'Update';
         this.deptReleaseInfoService.find(+id).subscribe((res) => {
           this.DeptReleaseInfoForm?.form.patchValue(res);
            console.log('Form Values after patching:', this.DeptReleaseInfoForm.form.value); // Debugging: Verify form values
         });
       } else {
-        this.btnTextApproved = 'Submit';
+        this.btnText = 'Submit';
       }
     });
   }
@@ -91,13 +92,13 @@ loadTransferApproveInfo(transferApproveInfoId: number) {
   //Employee/Transfer
   openApproveDepartmentRelease(): void {
     const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: EmployeesModule) => {
       this.handleApproveDepartmentRelease(selectedEmployee);
     });
   }
-  handleApproveDepartmentRelease(employee: Employee) {
+  handleApproveDepartmentRelease(employee: EmployeesModule) {
     this.deptReleaseInfoService.deptReleaseInfo.approveBy= employee.empId,
-    this.deptReleaseInfoService.deptReleaseInfo.approveByName= employee.employeeName
+    this.deptReleaseInfoService.deptReleaseInfo.approveByName= employee.empEngName
   }
 
   ngOnInit(): void {

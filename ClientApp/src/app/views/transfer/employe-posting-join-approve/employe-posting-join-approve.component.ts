@@ -19,6 +19,7 @@ import { EmpModalComponent } from '../emp-modal/emp-modal.component';
 import { EmployeesService } from '../service/employees.service';
 import { EmpTnsferPostingJoin } from '../../basic-setup/model/emp-tnsfer-posting-join';
 import { EmpTnsferPostingJoinService } from '../../basic-setup/service/emp-tnsfer-posting-join.service';
+import { EmployeesModule } from '../../employee/model/employees.module';
 
 @Component({
   selector: 'app-employe-posting-join-approve',
@@ -41,7 +42,7 @@ export class EmployePostingJoinApproveComponent implements OnInit, OnDestroy, Af
   postingOrderInfo: PostingOrderInfo[] = [];
   deptReleaseInfo:DeptReleaseInfo[]=[];
   empTnsferPostingJoin: EmpTnsferPostingJoin[] = [];
-  @Input() employeeSelected = new EventEmitter<Employee>();
+  @Input() employeeSelected = new EventEmitter<EmployeesModule>();
   constructor(
     public empTnsferPostingJoinService: EmpTnsferPostingJoinService,
     private modalService: BsModalService,
@@ -95,13 +96,13 @@ export class EmployePostingJoinApproveComponent implements OnInit, OnDestroy, Af
   //EmployeeJoin/Transfer
   openApproveEmpTransferJoin(): void {
     const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: EmployeesModule) => {
       this.handleApproveEmpTransferJoin(selectedEmployee);
     });
   }
-  handleApproveEmpTransferJoin(employee: Employee) {
+  handleApproveEmpTransferJoin(employee: EmployeesModule) {
     this.empTnsferPostingJoinService.empTnsferPostingJoin.approveBy= employee.empId,
-    this.empTnsferPostingJoinService.empTnsferPostingJoin.approveByName= employee.employeeName
+    this.empTnsferPostingJoinService.empTnsferPostingJoin.approveByName= employee.empEngName
   }
 
   ngOnInit(): void {

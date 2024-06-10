@@ -7,9 +7,9 @@
     <form #EmployeeForm="ngForm" name="EmployeeForm" (submit)="onSubmit(EmployeeForm)" [gutter]="3" novalidate cForm
       cRow class="needs-validation">
       <c-col [md]="3">
-        <input type="hidden" [(ngModel)]="employeeService.demoEmployee.empId" name="empId" />
+        <input type="hidden" [(ngModel)]="employeeService2.employee.empId" name="empId" />
         <label cLabel for="validationCustom01">Employee Name <span class="text-danger">*</span></label>
-        <input (dblclick)="openModal()" [(ngModel)]="employeeService.demoEmployee.employeeName" name="employeeName"
+        <input (dblclick)="openModal()" [(ngModel)]="employeeService2.employee.empEngName" name="empEngName"
           #employeeName="ngModel" placeholder="Enter Employee Name" cFormControl id="validationCustom01" required
           type="text" value="Mark" />
         <div *ngIf="employeeName.touched && !employeeName.valid" class="text-left text-danger">Employee Name value is
@@ -44,7 +44,7 @@
       novalidate cForm cRow class="needs-validation">
 
       <c-col [md]="3">
-        <input type="hidden" [(ngModel)]="employeeService.demoEmployee.empId" name="empId" />
+        <input type="hidden" [(ngModel)]="employeeService2.employee.empId" name="empId" />
         <label cLabel for="office">Office<span class="text-danger">*</span></label>
         <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" />
 
@@ -169,7 +169,7 @@
         (submit)="onSubmit(TransferApproveInfoForm)" [gutter]="3" novalidate cForm cRow>
         <c-card-header>Transfer Approve Info</c-card-header>
         <c-col [md]="3">
-          <input type="hidden" [(ngModel)]="employeeService.demoEmployee.empId" name="empId" />
+          <input type="hidden" [(ngModel)]="employeeService2.employee.empId" name="empId" />
           <label cLabel for="validationCustom1">Approve Status</label>
           <select [(ngModel)]="transferApproveInfoService.transferApproveInfos.approveStatus" name="approveStatus"
             cSelect id="validationCustom01">
@@ -223,7 +223,7 @@
         (submit)="onSubmit(DeptReleaseInfoForm)" [gutter]="3" novalidate cForm cRow>
         <c-card-header>Departmental Release Information</c-card-header>
         <c-col [md]="3">
-          <input type="hidden" [(ngModel)]="employeeService.demoEmployee.empId" name="empId" />
+          <input type="hidden" [(ngModel)]="employeeService2.employee.empId" name="empId" />
           <label cLabel for="validationCustom05">Relese Type<span class="text-danger">*</span></label>
           <input [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.releaseType" name="releaseType"
             #releaseType="ngModel" placeholder="Enter Release Type" cFormControl id="validationCustom05" required
@@ -308,7 +308,7 @@
         (submit)="onSubmit(EmpTransferPostingJoinForm)" [gutter]="3" novalidate cForm cRow>
         <c-card-header>Employee Transfer/Posting Joining</c-card-header>
         <c-col [md]="3">
-          <input type="hidden" [(ngModel)]="employeeService.demoEmployee.empId" name="empId" />
+          <input type="hidden" [(ngModel)]="employeeService2.employee.empId" name="empId" />
           <label cLabel for="validationCustom01">Join Date<span class="text-danger">*</span></label>
           <input [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.joinDate" name="formattedDate"
             #joinDate="ngModel" placeholder="Enter Join Date" cFormControl id="validationCustom01" required type="date"

@@ -16,6 +16,7 @@ import { PostingOrderInfo } from '../../basic-setup/model/posting-order-info';
 import { Employee } from '../../basic-setup/model/employees';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EmpModalComponent } from '../emp-modal/emp-modal.component';
+import { EmployeesModule } from '../../employee/model/employees.module';
 
 @Component({
   selector: 'app-transfer-approved',
@@ -37,8 +38,9 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
   matSort!: MatSort;
   transferApproveInfos: TransferApproveInfo[] = [];
   postingOrderInfo: PostingOrderInfo[] = [];
-  @Input() employeeSelected = new EventEmitter<Employee>();
+  @Input() employeeSelected = new EventEmitter<EmployeesModule>();
   btnTextApproved: string | undefined;
+  postingOrderInfoResponse: any; 
   constructor(
     private modalService: BsModalService,
     public postingOrderInfoService: PostingOrderInfoService,
@@ -51,21 +53,33 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
   ) {
     this.route.paramMap.subscribe((params) => {
       const postingOrderInfoId = params.get('postingOrderInfoId');
+
       if (postingOrderInfoId) {
         this.loadPostingOrderInfo(Number(postingOrderInfoId));
+        this.postingOrderInfoService.find(+postingOrderInfoId).subscribe((res)=>{
+          console.log(res) 
+          this.postingOrderInfoResponse = res;
+        })
         this.btnText='submit'
-        console.log(postingOrderInfoId)
       } 
+
       const id = params.get('transferApproveInfoId');
       if (id) {
-        this.btnTextApproved = 'Update';
+        this.btnText = 'Update';
         this.transferApproveInfoService.find(+id).subscribe((res) => {
           this.TransferApproveInfoForm?.form.patchValue(res);
-          console.log('Form Values after patching:', this.TransferApproveInfoForm.form.value); // Debugging: Verify form values
+          // console.log('Form Values after patching:', this.TransferApproveInfoForm.form.value); // Debugging: Verify form values
+          
         });
       } else {
-        this.btnTextApproved = 'Submit';
+        this.btnText = 'Submit';
       }
+    });
+  }
+  loadPostingOrderInfos(postingOrderInfoId: number) {
+    this.postingOrderInfoService.find(postingOrderInfoId).subscribe(data => {
+      this.postingOrderInfoService.postingOrderInfos = data;
+      this.dataSource.data = [data];
     });
   }
   loadPostingOrderInfo(postingOrderInfoId: number) {
@@ -80,13 +94,13 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
   //Employee/Transfer
   openApproveEmpTransferJoin(): void {
     const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: EmployeesModule) => {
       this.handleApproveEmpTransferJoin(selectedEmployee);
     });
   }
-  handleApproveEmpTransferJoin(employee: Employee) {
+  handleApproveEmpTransferJoin(employee: EmployeesModule) {
     this.transferApproveInfoService.transferApproveInfos.approveBy= employee.empId,
-    this.transferApproveInfoService.transferApproveInfos.approveByName= employee.employeeName
+    this.transferApproveInfoService.transferApproveInfos.approveByName= employee.empEngName
   }
   ngOnInit(): void {
     this.getAllTransferApproveInfo();
@@ -172,7 +186,7 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
 
 
   onSubmit(form: NgForm): void {
-    console.log(form.value)
+    // console.log(form.value)
     if (form.valid) {
       this.transferApproveInfoService.cachedData = [];
       const id = form.value.transferApproveInfoId;

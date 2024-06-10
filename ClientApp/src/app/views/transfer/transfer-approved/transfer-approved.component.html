@@ -2,6 +2,24 @@
   <c-card-header>Transfer Approved  </c-card-header>
   <c-card-body>
     <c-card>
+      <c-card>
+       
+        <table class="table table-striped" *ngIf="postingOrderInfoResponse">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of (postingOrderInfoResponse | keyvalue)">
+              <td>{{ item.key }}</td>
+              <td>{{ item.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+    
+      </c-card>
       <c-card-body>
         <form #TransferApproveInfoForm="ngForm" name="TransferApproveInfoForm"
           (submit)="onSubmit(TransferApproveInfoForm)" [gutter]="3" novalidate cForm cRow>
@@ -47,7 +65,7 @@
           </c-col>
           <c-col [xs]="12">
             <button [disabled]="TransferApproveInfoForm.invalid" cButton class="me-1" color="primary" type="submit">
-              {{ btnText }}{{btnTextApproved}}
+              {{ btnText }}
             </button>
             <button cButton color="secondary" (click)="resetFormTransfer()">Reset</button>
           </c-col>

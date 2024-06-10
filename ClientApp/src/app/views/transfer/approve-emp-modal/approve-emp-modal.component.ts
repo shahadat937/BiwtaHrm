@@ -1,3 +1,4 @@
+import { EmployeeService } from './../../employee/service/employee.service';
 import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Employee } from '../../basic-setup/model/employees';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EmployeesModule } from '../../employee/model/employees.module';
 
 @Component({
   selector: 'app-approve-emp-modal',
@@ -26,13 +28,15 @@ export class ApproveEmpModalComponent implements OnInit, AfterViewInit{
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
     @Output() employeeApproved = new EventEmitter<Employee>();
+    employee: EmployeesModule[]=[];
+    
     constructor(
       //private employeeservice:EmployeesService,
       public bsModalRef: BsModalRef, 
       private dialog: MatDialog,
       private router: Router,
       private route: ActivatedRoute,
-  
+      public employeeService:EmployeeService,
   
     ) {
   

@@ -29,7 +29,7 @@ namespace Hrm.Application.Features.EmpSpouseInfos.Handlers.Commands
             {
                 if (item.Id == 0 )
                 {
-                    var EmpSpouseInfo = _mapper.Map<EmpSpouseInfo>(request.EmpSpouseInfoDto);
+                    var EmpSpouseInfo = _mapper.Map<EmpSpouseInfo>(item);
 
                     EmpSpouseInfo = await _unitOfWork.Repository<EmpSpouseInfo>().Add(EmpSpouseInfo);
                     await _unitOfWork.Save();

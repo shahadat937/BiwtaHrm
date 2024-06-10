@@ -68,7 +68,6 @@ import { EmpSpouseInfoComponent } from './add-employee/employee-informations/emp
     FormsModule,
     ReactiveFormsModule,
     FormModule,
-    ButtonModule,
     ButtonGroupModule,
     DropdownModule,
     SharedModule,

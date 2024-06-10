@@ -75,6 +75,8 @@ using Hrm.Application.DTOs.EmpBasicInfo;
 using Hrm.Application.DTOs.EmpPersonalInfo;
 using Hrm.Application.DTOs.EmpPresentAddress;
 using Hrm.Application.DTOs.EmpPermanentAddress;
+using Hrm.Application.DTOs.EmpJobDetail;
+using Hrm.Application.DTOs.EmpSpouseInfo;
 
 
 
@@ -302,7 +304,13 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpPresentAddress, CreateEmpPresentAddressDto>().ReverseMap();
 
             CreateMap<EmpPermanentAddress, EmpPermanentAddressDto>().ReverseMap();
-            CreateMap<EmpPermanentAddress, CreateEmpPresentAddressDto>().ReverseMap();
+            CreateMap<EmpPermanentAddress, CreateEmpPermanentAddressDto>().ReverseMap();
+
+            CreateMap<EmpJobDetail, EmpJobDetailDto>().ReverseMap();
+            CreateMap<EmpJobDetail, CreateEmpJobDetailDto>().ReverseMap();
+
+            CreateMap<EmpSpouseInfo, EmpSpouseInfoDto>().ReverseMap();
+            CreateMap<EmpSpouseInfo, CreateEmpSpouseInfoDto>().ReverseMap();
 
         }
     }

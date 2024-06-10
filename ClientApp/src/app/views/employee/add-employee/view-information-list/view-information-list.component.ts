@@ -8,6 +8,9 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { EmpPersonalInfoService } from '../../service/emp-personal-info.service';
 import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
+import { EmpPresentAddressService } from '../../service/emp-present-address.service';
+import { EmpPermanentAddressService } from '../../service/emp-permanent-address.service';
+import { EmpJobDetailsService } from '../../service/emp-job-details.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -20,6 +23,9 @@ export class ViewInformationListComponent implements OnInit {
   entryStatus : boolean = false;
   basicInfoEntryStatus : boolean = false;
   personalInfoEntryStatus : boolean = false;
+  presentAddressEntryStatus : boolean = false;
+  permanentAddressEntryStatus : boolean = false;
+  empJobDetailsEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -33,7 +39,10 @@ export class ViewInformationListComponent implements OnInit {
     private route: ActivatedRoute,
     public userService: UserService,
     public empPersonalInfoService: EmpPersonalInfoService,
-    public empBasicInfoService: EmpBasicInfoService,) { }
+    public empBasicInfoService: EmpBasicInfoService,
+    public empPresentAddressService: EmpPresentAddressService,
+    public empPermanentAddressService: EmpPermanentAddressService,
+    public empJobDetailsService: EmpJobDetailsService,) { }
 
   ngOnInit(): void {
     this.handleRouteParams();
@@ -56,6 +65,9 @@ export class ViewInformationListComponent implements OnInit {
         this.basicInfoEntryStatus=true;
         this.empId = res.id;
         this.getStatusOfPersonalInfo();
+        this.getStatusOfPresentAddress();
+        this.getStatusOfPermanentAddress();
+        this.getStatusOfEmpJobDetails();
       }
       else{
         this.gettingStatus = false;
@@ -65,12 +77,25 @@ export class ViewInformationListComponent implements OnInit {
 
   getStatusOfPersonalInfo(){
     this.empPersonalInfoService.findByEmpId(this.empId).subscribe((res)=>{
-      if(res){
-        this.personalInfoEntryStatus = true;
-      }
-      else{
-        this.personalInfoEntryStatus = false;
-      }
+      this.personalInfoEntryStatus = !!res;
+    })
+  }
+
+  getStatusOfPresentAddress(){
+    this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
+      this.presentAddressEntryStatus = !!res;
+    })
+  }
+
+  getStatusOfPermanentAddress(){
+    this.empPermanentAddressService.findByEmpId(this.empId).subscribe((res) => {
+      this.permanentAddressEntryStatus = !!res;
+    })
+  }
+
+  getStatusOfEmpJobDetails(){
+    this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
+      this.empJobDetailsEntryStatus = !!res;
     })
   }
 

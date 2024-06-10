@@ -23,7 +23,7 @@ namespace Hrm.Application.Features.Scale.Handlers.Queries
 
         public async Task<List<SelectedModel>> Handle(GetSelectScaleRequest request, CancellationToken cancellationToken)
         {
-            ICollection<Hrm.Domain.Scale> Scales = await _ScaleRepository.FilterAsync(x => x.IsActive);
+            ICollection<Hrm.Domain.Scale> Scales = await _ScaleRepository.FilterAsync(x => x.GradeId == request.GradeId);
             List<SelectedModel> selectModels = Scales.Select(x => new SelectedModel
             {
                 Name = x.ScaleName,

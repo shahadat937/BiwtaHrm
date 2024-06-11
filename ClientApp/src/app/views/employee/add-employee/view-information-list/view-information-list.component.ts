@@ -12,6 +12,7 @@ import { EmpPresentAddressService } from '../../service/emp-present-address.serv
 import { EmpPermanentAddressService } from '../../service/emp-permanent-address.service';
 import { EmpJobDetailsService } from '../../service/emp-job-details.service';
 import { EmpSpouseInfoService } from '../../service/emp-spouse-info.service';
+import { EmpChildInfoService } from '../../service/emp-child-info.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -28,6 +29,7 @@ export class ViewInformationListComponent implements OnInit {
   permanentAddressEntryStatus : boolean = false;
   empJobDetailsEntryStatus : boolean = false;
   empSpouseInfoEntryStatus : boolean = false;
+  empChildInfoEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -45,7 +47,8 @@ export class ViewInformationListComponent implements OnInit {
     public empPresentAddressService: EmpPresentAddressService,
     public empPermanentAddressService: EmpPermanentAddressService,
     public empJobDetailsService: EmpJobDetailsService,
-    public empSpouseInfoService: EmpSpouseInfoService,) { }
+    public empSpouseInfoService: EmpSpouseInfoService,
+    public empChildInfoService: EmpChildInfoService,) { }
 
   ngOnInit(): void {
     this.handleRouteParams();
@@ -71,7 +74,8 @@ export class ViewInformationListComponent implements OnInit {
         this.getStatusOfPresentAddress();
         this.getStatusOfPermanentAddress();
         this.getStatusOfEmpJobDetails();
-        this.getStatusOfEmpSpouseInfo()
+        this.getStatusOfEmpSpouseInfo();
+        this.getStatusOfEmpChildStatus();
       }
       else{
         this.gettingStatus = false;
@@ -96,13 +100,11 @@ export class ViewInformationListComponent implements OnInit {
       this.permanentAddressEntryStatus = !!res;
     })
   }
-
   getStatusOfEmpJobDetails(){
     this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
       this.empJobDetailsEntryStatus = !!res;
     })
   }
-  
   getStatusOfEmpSpouseInfo(){
     this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res: any[]) => {
       if(res.length>0){
@@ -113,6 +115,17 @@ export class ViewInformationListComponent implements OnInit {
       }
     })
   }
+  getStatusOfEmpChildStatus() {
+    this.empChildInfoService.findByEmpId(this.empId).subscribe((res) => {
+      if(res.length>0){
+        this.empChildInfoEntryStatus = true;
+      }
+      else {
+        this.empChildInfoEntryStatus = false;
+      }
+    })
+  }
+  
 
   toggleComponent(component: string) {
     this.componentVisible = false;

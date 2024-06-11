@@ -52,7 +52,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
   get empSpouseListArray() {
     return this.EmpSpouseInfoForm.controls["empSpouseList"] as FormArray;
   }
-  addSkill() {
+  addSpouse() {
     this.empSpouseListArray.push(new FormGroup({
       id: new FormControl(0),
       empId: new FormControl(this.empId),
@@ -65,7 +65,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
     }));
   }
 
-  removeSkillList(index: number, id: number) {
+  removeSpouselList(index: number, id: number) {
     if (id != 0) {
       this.confirmService
         .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
@@ -110,7 +110,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
       else {
         this.headerText = 'Add Spouse Information';
         this.btnText = 'Submit';
-        this.addSkill();
+        this.addSpouse();
       }
     })
   }

@@ -25,6 +25,8 @@
                 (close)="toggleComponent('permanentAddress')"></app-emp-permanent-address>
                 <app-emp-job-details *ngIf="visibleComponent === 'jobDetails'" [empId]="empId" 
                 (close)="toggleComponent('jobDetails')"></app-emp-job-details>
+                <app-emp-education-info *ngIf="visibleComponent === 'educationInfo'" [empId]="empId" 
+                (close)="toggleComponent('educationInfo')"></app-emp-education-info>
             </c-card-header>
 
             <c-card-body>
@@ -32,97 +34,103 @@
                     <c-col [md]="4">
                         <div (click)="toggleComponent('basicInfo')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (basicInfoEntryStatus == true) ? ('#165b16') : ('#003574')}">
+                            [ngStyle]="{'background-color': (basicInfoEntryStatus) ? ('#165b16') : ('#003574')}">
                             <h4>Basic Information</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
                         <div (click)="gettingStatus && toggleComponent('personalInfo')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (personalInfoEntryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            [ngStyle]="{'background-color': (personalInfoEntryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Personal Information</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
                         <div (click)="gettingStatus && toggleComponent('spouseInfo')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (empJobDetailsEntryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            [ngStyle]="{'background-color': (empJobDetailsEntryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Spouse Information</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
                         <div (click)="gettingStatus && toggleComponent('childrenInfo')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (empChildInfoEntryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            [ngStyle]="{'background-color': (empChildInfoEntryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Children Information</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
                         <div (click)="gettingStatus && toggleComponent('presentAddress')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (presentAddressEntryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            [ngStyle]="{'background-color': (presentAddressEntryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Present Address</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
                         <div (click)="gettingStatus && toggleComponent('permanentAddress')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (permanentAddressEntryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            [ngStyle]="{'background-color': (permanentAddressEntryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Permanent Address</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
                         <div (click)="gettingStatus && toggleComponent('jobDetails')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (empJobDetailsEntryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            [ngStyle]="{'background-color': (empJobDetailsEntryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Job Details</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (entryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                        <div (click)="gettingStatus && toggleComponent('educationInfo')"
+                            class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (empEducationInfoEntryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Education Information</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (entryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
-                            <h4>Training Details</h4>
+                        <div (click)="gettingStatus && toggleComponent('trainingInfo')"
+                            class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            <h4>Training Information</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (entryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                        <div (click)="gettingStatus && toggleComponent('jobDetails')"
+                            class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>PSI &Training History</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (entryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                        <div (click)="gettingStatus && toggleComponent('jobDetails')"
+                            class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Bank Information</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (entryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                        <div (click)="gettingStatus && toggleComponent('jobDetails')"
+                            class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Nominee Information</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (entryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                        <div (click)="gettingStatus && toggleComponent('jobDetails')"
+                            class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (entryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Language Details</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
                         <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (entryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            [ngStyle]="{'background-color': (entryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Foreign Trip</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
                         <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (entryStatus == true) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            [ngStyle]="{'background-color': (entryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Photo & Signature</h4>
                         </div>
                     </c-col>

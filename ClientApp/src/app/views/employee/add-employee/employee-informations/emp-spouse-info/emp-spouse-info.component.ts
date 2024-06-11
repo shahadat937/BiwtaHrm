@@ -62,6 +62,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
       birthRegNo: new FormControl(undefined),
       nid: new FormControl(undefined),
       occupationId: new FormControl(undefined),
+      remark: new FormControl(undefined),
     }));
   }
 
@@ -129,6 +130,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
         birthRegNo: [spouseInfo.birthRegNo],
         nid: [spouseInfo.nid],
         occupationId: [spouseInfo.occupationId],
+        remark: [spouseInfo.remark],
       }));
     });
   }

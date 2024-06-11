@@ -13,6 +13,7 @@ import { EmpPermanentAddressService } from '../../service/emp-permanent-address.
 import { EmpJobDetailsService } from '../../service/emp-job-details.service';
 import { EmpSpouseInfoService } from '../../service/emp-spouse-info.service';
 import { EmpChildInfoService } from '../../service/emp-child-info.service';
+import { EmpEducationInfoService } from '../../service/emp-education-info.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -21,7 +22,7 @@ import { EmpChildInfoService } from '../../service/emp-child-info.service';
 })
 export class ViewInformationListComponent implements OnInit {
 
-  gettingStatus : boolean = true;
+  gettingStatus : boolean = false;
   entryStatus : boolean = false;
   basicInfoEntryStatus : boolean = false;
   personalInfoEntryStatus : boolean = false;
@@ -30,6 +31,7 @@ export class ViewInformationListComponent implements OnInit {
   empJobDetailsEntryStatus : boolean = false;
   empSpouseInfoEntryStatus : boolean = false;
   empChildInfoEntryStatus : boolean = false;
+  empEducationInfoEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -48,7 +50,8 @@ export class ViewInformationListComponent implements OnInit {
     public empPermanentAddressService: EmpPermanentAddressService,
     public empJobDetailsService: EmpJobDetailsService,
     public empSpouseInfoService: EmpSpouseInfoService,
-    public empChildInfoService: EmpChildInfoService,) { }
+    public empChildInfoService: EmpChildInfoService,
+    public empEducationInfoService: EmpEducationInfoService,) { }
 
   ngOnInit(): void {
     this.handleRouteParams();
@@ -76,6 +79,7 @@ export class ViewInformationListComponent implements OnInit {
         this.getStatusOfEmpJobDetails();
         this.getStatusOfEmpSpouseInfo();
         this.getStatusOfEmpChildStatus();
+        this.getStatusOfEmpEducationStatus();
       }
       else{
         this.gettingStatus = false;
@@ -122,6 +126,16 @@ export class ViewInformationListComponent implements OnInit {
       }
       else {
         this.empChildInfoEntryStatus = false;
+      }
+    })
+  }
+  getStatusOfEmpEducationStatus() {
+    this.empEducationInfoService.findByEmpId(this.empId).subscribe((res) => {
+      if(res.length>0){
+        this.empEducationInfoEntryStatus = true;
+      }
+      else {
+        this.empEducationInfoEntryStatus = false;
       }
     })
   }

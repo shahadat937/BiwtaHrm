@@ -44,6 +44,7 @@ import { CountryService } from '../basic-setup/service/country.service';
 import { EmpJobDetailsComponent } from './add-employee/employee-informations/emp-job-details/emp-job-details.component';
 import { EmpSpouseInfoComponent } from './add-employee/employee-informations/emp-spouse-info/emp-spouse-info.component';
 import { EmpChildInfoComponent } from './add-employee/employee-informations/emp-child-info/emp-child-info.component';
+import { EmpEducationInfoComponent } from './add-employee/employee-informations/emp-education-info/emp-education-info.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { EmpChildInfoComponent } from './add-employee/employee-informations/emp-
     EmpJobDetailsComponent,
     EmpSpouseInfoComponent,
     EmpChildInfoComponent,
+    EmpEducationInfoComponent,
   ],
   imports: [
     CommonModule,

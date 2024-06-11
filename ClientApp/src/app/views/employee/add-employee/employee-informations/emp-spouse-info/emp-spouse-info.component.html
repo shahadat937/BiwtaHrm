@@ -53,6 +53,12 @@
                                             </option>
                                         </select>
                                     </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="remark{{i}}">Remark</label>
+                                        <input type="text" formControlName="remark" class="form-control"
+                                            id="remark{{i}}" placeholder="Enter Remark" />
+                                    </c-col>
 
                                     <c-col [md]="12" class="d-flex justify-content-end">
                                         <button mat-icon-button class="bg-danger text-light" type="button"

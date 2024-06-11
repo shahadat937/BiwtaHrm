@@ -89,6 +89,7 @@ export class EmpChildInfoComponent implements OnInit, OnDestroy {
         genderId: [childInfo.genderId],
         maritalStatusId: [childInfo.maritalStatusId],
         childStatusId: [childInfo.childStatusId],
+        remark: [childInfo.remark],
       }));
     });
   }
@@ -113,6 +114,7 @@ export class EmpChildInfoComponent implements OnInit, OnDestroy {
       genderId: new FormControl(undefined),
       maritalStatusId: new FormControl(undefined),
       childStatusId: new FormControl(undefined),
+      remark: new FormControl(undefined),
     }));
   }
 

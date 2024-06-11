@@ -73,12 +73,13 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
           if (result) {
             this.empSpouseInfoService.deleteEmpSpouseInfo(id).subscribe(
               (res) => {
-                this.toastr.success('Delete sucessfully ! ', ` `, {
+                this.toastr.warning('Delete sucessfully ! ', ` `, {
                   positionClass: 'toast-top-right',
                 });
 
                 if (this.empSpouseListArray.controls.length > 0)
                   this.empSpouseListArray.removeAt(index);
+                this.getEmployeeSpouseInfoByEmpId();
               },
               (err) => {
                 this.toastr.error('Somethig Wrong ! ', ` `, {
@@ -137,38 +138,6 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
     this.headerBtnText = this.visible ? 'Hide Form' : 'Show Form';
   }
 
-  // initaialForm(form?: NgForm) {
-  //   if (form != null) form.resetForm();
-  //   this.empSpouseInfoService.empSpouseInfo = {
-  //     id: 0,
-  //     empId: this.empId,
-  //     spouseName: '',
-  //     spouseNameBangla: '',
-  //     dateOfBirth : null,
-  //     birthRegNo : null,
-  //     nid : null,
-  //     occupationId : null,
-  //     remark: '',
-  //     menuPosition: 0,
-  //     isActive: true,
-  //   };
-  // }
-
-  // resetForm() {
-  //   this.EmpSpouseInfoForm.form.reset();
-  //   this.EmpSpouseInfoForm.form.patchValue({
-  //     empId: this.empId,
-  //     spouseName: '',
-  //     spouseNameBangla: '',
-  //     dateOfBirth : null,
-  //     birthRegNo : null,
-  //     nid : null,
-  //     occupationId : null,
-  //     remark: '',
-  //     menuPosition: 0,
-  //     isActive: true,
-  //   });
-  // }
 
   getSelectedOccupation() {
     this.empSpouseInfoService.getSelectedOccupation().subscribe((res) => {
@@ -181,45 +150,25 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
   }
 
   insertSpouse() {
-    var formData = new FormData();
-
-    // formData.append("skillStringify", JSON.stringify(this.EmpSpouseInfoForm.get("empSpouseList")?.value));
-
-    console.log("Form Value: ", this.EmpSpouseInfoForm.get("empSpouseList")?.value)
-
-    this.empSpouseInfoService.saveEmpSpouseInfo(this.EmpSpouseInfoForm.get("empSpouseList")?.value).subscribe((res => {
-      // if (response.success) {
-      //   this.toastr.success('', `${response.message}`, {
-      //     positionClass: 'toast-top-right',
-      //   });
-      //   this.loading = false;
-      // } else {
-      //   this.toastr.warning('', `${response.message}`, {
-      //     positionClass: 'toast-top-right',
-      //   });
-      //   this.loading = false;
-      // }
-      // this.loading = false;
+    this.loading = true;
+    this.empSpouseInfoService.saveEmpSpouseInfo(this.EmpSpouseInfoForm.get("empSpouseList")?.value).subscribe(((res: any) => {
+      if (res.success) {
+        this.toastr.success('', `${res.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.loading = false;
+        this.cancel();
+      } else {
+        this.toastr.warning('', `${res.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.loading = false;
+      }
+      this.loading = false;
     })
-
     )
-    // this.dataSvc.postCandidateSkill(formData).subscribe({
-    //   next: r => {
-    //     console.log(r);
-    //     this.router.navigate(['/masterDetails']);
-    //     this.notifySvc.message('Data inserted successfully!!!', 'DISMISS');
-    //   },
-    //   error: err => {
-    //     console.log(err);
-    //     this.notifySvc.message('Data inserted Failed!!!', 'DISMISS');
-    //   }
-    // })
   }
 
 
-
-  onSubmit(form: NgForm): void {
-    console.log("Form Value: ", form.value)
-  }
 
 }

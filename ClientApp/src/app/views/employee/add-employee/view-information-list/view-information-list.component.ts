@@ -104,8 +104,13 @@ export class ViewInformationListComponent implements OnInit {
   }
   
   getStatusOfEmpSpouseInfo(){
-    this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res) => {
-      this.empSpouseInfoEntryStatus = !!res;
+    this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res: any[]) => {
+      if(res.length>0){
+        this.empJobDetailsEntryStatus = true;
+      }
+      else {
+        this.empJobDetailsEntryStatus = false;
+      }
     })
   }
 
@@ -119,6 +124,7 @@ export class ViewInformationListComponent implements OnInit {
       this.visible = true;
       this.componentVisible = true;
     }
+    this.getEmployeeByAspNetUserId();
   }
 
 }

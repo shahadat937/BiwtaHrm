@@ -38,7 +38,7 @@ namespace Hrm.Application.Features.EmpSpouseInfos.Handlers.Commands
                 {
                     var EmpSpouseInfo = await _unitOfWork.Repository<EmpSpouseInfo>().Get(item.Id);
 
-                    _mapper.Map(request.EmpSpouseInfoDto, EmpSpouseInfo);
+                    _mapper.Map(item, EmpSpouseInfo);
 
                     await _unitOfWork.Repository<EmpSpouseInfo>().Update(EmpSpouseInfo);
                     await _unitOfWork.Save();

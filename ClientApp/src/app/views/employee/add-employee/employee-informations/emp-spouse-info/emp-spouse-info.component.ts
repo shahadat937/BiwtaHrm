@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { EmpSpouseInfoService } from '../../../service/emp-spouse-info.service';
-import { cilPlus, cilShieldAlt } from '@coreui/icons';
 import { EmpSpouseInfoModule } from '../../../model/emp-spouse-info.module';
 
 @Component({
@@ -16,7 +15,7 @@ import { EmpSpouseInfoModule } from '../../../model/emp-spouse-info.module';
 })
 export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
   @Input() empId!: number;
-  @Output() close = new EventEmitter<void>();visible: boolean = true;
+  @Output() close = new EventEmitter<void>(); visible: boolean = true;
   headerText: string = '';
   headerBtnText: string = 'Hide From';
   btnText: string = '';
@@ -30,20 +29,15 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService,
-    public empSpouseInfoService: EmpSpouseInfoService,){}
+    public empSpouseInfoService: EmpSpouseInfoService,
+    private fb: FormBuilder) { }
 
-  icons = { cilPlus, cilShieldAlt };
-    
+
   ngOnInit(): void {
     this.getEmployeeSpouseInfoByEmpId();
     this.getSelectedOccupation();
-    this.addSkill();
-    // this.dataSvc.getSkillList().subscribe((result) => {
-    //   this.skillList = result;
-    // });
-    // this.addSkill();
   }
-  
+
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -54,7 +48,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
   EmpSpouseInfoForm: FormGroup = new FormGroup({
     empSpouseList: new FormArray([])
   });
-  
+
   get empSpouseListArray() {
     return this.EmpSpouseInfoForm.controls["empSpouseList"] as FormArray;
   }
@@ -71,33 +65,78 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
     }));
   }
 
-  removeSkillList(index: number) {
-    if (this.empSpouseListArray.controls.length > 0)
-      this.empSpouseListArray.removeAt(index);
+  removeSkillList(index: number, id: number) {
+    if (id != 0) {
+      this.confirmService
+        .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+        .subscribe((result) => {
+          if (result) {
+            this.empSpouseInfoService.deleteEmpSpouseInfo(id).subscribe(
+              (res) => {
+                this.toastr.success('Delete sucessfully ! ', ` `, {
+                  positionClass: 'toast-top-right',
+                });
+
+                if (this.empSpouseListArray.controls.length > 0)
+                  this.empSpouseListArray.removeAt(index);
+              },
+              (err) => {
+                this.toastr.error('Somethig Wrong ! ', ` `, {
+                  positionClass: 'toast-top-right',
+                });
+                console.log(err);
+              }
+            );
+          }
+        });
+    }
+    else if (id == 0) {
+      if (this.empSpouseListArray.controls.length > 0)
+        this.empSpouseListArray.removeAt(index);
+    }
   }
 
-  
+
   getEmployeeSpouseInfoByEmpId() {
     this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res) => {
       if (res.length > 0) {
-        console.log("Spouse Info: ",res)
+        console.log("Spouse Info: ", res)
         this.headerText = 'Update Spouse Information';
         this.btnText = 'Update';
         this.empSpouse = res;
+        this.patchSpouseInfo(res);
       }
       else {
         this.headerText = 'Add Spouse Information';
         this.btnText = 'Submit';
-        // this.initaialForm();
+        this.addSkill();
       }
     })
+  }
+
+  patchSpouseInfo(spouseInfoList: any[]) {
+    const control = <FormArray>this.EmpSpouseInfoForm.controls['empSpouseList'];
+    control.clear();
+
+    spouseInfoList.forEach(spouseInfo => {
+      control.push(this.fb.group({
+        id: [spouseInfo.id],
+        empId: [spouseInfo.empId],
+        spouseName: [spouseInfo.spouseName, Validators.required],
+        spouseNameBangla: [spouseInfo.spouseNameBangla],
+        dateOfBirth: [spouseInfo.dateOfBirth],
+        birthRegNo: [spouseInfo.birthRegNo],
+        nid: [spouseInfo.nid],
+        occupationId: [spouseInfo.occupationId],
+      }));
+    });
   }
 
   UserFormView(): void {
     this.visible = !this.visible;
     this.headerBtnText = this.visible ? 'Hide Form' : 'Show Form';
   }
-  
+
   // initaialForm(form?: NgForm) {
   //   if (form != null) form.resetForm();
   //   this.empSpouseInfoService.empSpouseInfo = {
@@ -131,7 +170,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
   //   });
   // }
 
-  getSelectedOccupation(){
+  getSelectedOccupation() {
     this.empSpouseInfoService.getSelectedOccupation().subscribe((res) => {
       this.occupations = res;
     })
@@ -148,7 +187,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
 
     console.log("Form Value: ", this.EmpSpouseInfoForm.get("empSpouseList")?.value)
 
-    this.empSpouseInfoService.saveEmpSpouseInfo(this.EmpSpouseInfoForm.get("empSpouseList")?.value).subscribe((res=>{
+    this.empSpouseInfoService.saveEmpSpouseInfo(this.EmpSpouseInfoForm.get("empSpouseList")?.value).subscribe((res => {
       // if (response.success) {
       //   this.toastr.success('', `${response.message}`, {
       //     positionClass: 'toast-top-right',

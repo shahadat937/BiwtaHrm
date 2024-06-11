@@ -11,6 +11,7 @@ import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 import { EmpPresentAddressService } from '../../service/emp-present-address.service';
 import { EmpPermanentAddressService } from '../../service/emp-permanent-address.service';
 import { EmpJobDetailsService } from '../../service/emp-job-details.service';
+import { EmpSpouseInfoService } from '../../service/emp-spouse-info.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -26,6 +27,7 @@ export class ViewInformationListComponent implements OnInit {
   presentAddressEntryStatus : boolean = false;
   permanentAddressEntryStatus : boolean = false;
   empJobDetailsEntryStatus : boolean = false;
+  empSpouseInfoEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -42,7 +44,8 @@ export class ViewInformationListComponent implements OnInit {
     public empBasicInfoService: EmpBasicInfoService,
     public empPresentAddressService: EmpPresentAddressService,
     public empPermanentAddressService: EmpPermanentAddressService,
-    public empJobDetailsService: EmpJobDetailsService,) { }
+    public empJobDetailsService: EmpJobDetailsService,
+    public empSpouseInfoService: EmpSpouseInfoService,) { }
 
   ngOnInit(): void {
     this.handleRouteParams();
@@ -68,6 +71,7 @@ export class ViewInformationListComponent implements OnInit {
         this.getStatusOfPresentAddress();
         this.getStatusOfPermanentAddress();
         this.getStatusOfEmpJobDetails();
+        this.getStatusOfEmpSpouseInfo()
       }
       else{
         this.gettingStatus = false;
@@ -96,6 +100,12 @@ export class ViewInformationListComponent implements OnInit {
   getStatusOfEmpJobDetails(){
     this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
       this.empJobDetailsEntryStatus = !!res;
+    })
+  }
+  
+  getStatusOfEmpSpouseInfo(){
+    this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res) => {
+      this.empSpouseInfoEntryStatus = !!res;
     })
   }
 

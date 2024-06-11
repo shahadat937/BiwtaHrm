@@ -12,8 +12,8 @@
                         <c-card-body>
                             <div [formGroupName]="i">
                                 <div class="form-group mb-2" cRow [gutter]="3">
-                                    <input type="hidden" formControlName="spouseName" />
-                                    <input type="hidden" formControlName="spouseName" />
+                                    <input type="hidden" formControlName="id" />
+                                    <input type="hidden" formControlName="empId" />
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="spouseName{{i}}">Spouse NameBangla</label>
                                         <input type="text" formControlName="spouseName" class="form-control"
@@ -55,8 +55,8 @@
                                     </c-col>
 
                                     <c-col [md]="12" class="d-flex justify-content-end">
-                                        <button mat-icon-button class="bg-danger text-light"
-                                            (click)="removeSkillList(i)"><mat-icon>delete</mat-icon></button>
+                                        <button mat-icon-button class="bg-danger text-light" type="button"
+                                            (click)="removeSkillList(i, p.get('id')?.value ?? null)"><mat-icon>delete</mat-icon></button>
                                     </c-col>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
                             </button>
                         </div>
                         <div>
-                            <button cButton color="danger" class="text-light" (click)="cancel()">Cancel</button>
+                            <button cButton color="danger" class="text-light" (click)="cancel()" type="button">Cancel</button>
                         </div>
                     </div>
                 </c-col>

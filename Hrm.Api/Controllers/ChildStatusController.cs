@@ -10,6 +10,7 @@ using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
+using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hrm.Api.Controllers
@@ -50,6 +51,13 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("get-selectedChildStatus")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedChildStatus()
+        {
+            var ChildStatus = await _mediator.Send(new GetSelectedChildStatusRequest { });
+            return Ok(ChildStatus);
+        }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

@@ -56,10 +56,10 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-selectedScale")]
-        public async Task<ActionResult<List<SelectedModel>>> GetSelectedScale()
+        [Route("get-selectedScale/{id}")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedScale(int id)
         {
-            var Scales = await _mediator.Send(new GetSelectScaleRequest { });
+            var Scales = await _mediator.Send(new GetSelectScaleRequest { GradeId = id });
             return Ok(Scales);
         }
 

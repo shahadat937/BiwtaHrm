@@ -204,7 +204,7 @@ export class EmployePostingJoinApproveComponent implements OnInit, OnDestroy, Af
           this.getAllEmpTnsferPostingJoins();
           this.resetFormEmpTnsferPostingJoin();
           if (!id) {
-            this.router.navigate(['transfer/employePostingJoin']);
+            this.router.navigate(['transfer/employePostingJoinList']);
           }
         } else {
           this.toastr.warning('', `${response.message}`, {

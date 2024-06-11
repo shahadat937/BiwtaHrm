@@ -67,6 +67,7 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
       if (id) {
         this.btnText = 'Update';
         this.transferApproveInfoService.find(+id).subscribe((res) => {
+          console.log(res)
           this.TransferApproveInfoForm?.form.patchValue(res);
           // console.log('Form Values after patching:', this.TransferApproveInfoForm.form.value); // Debugging: Verify form values
           
@@ -195,7 +196,6 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
         : this.transferApproveInfoService.submitApproved(form.value);
       this.subscription = action$.subscribe((response: any) => {
         if (response.success) {
-
           this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right',
           });
@@ -215,7 +215,6 @@ export class TransferApprovedComponent implements OnInit, OnDestroy, AfterViewIn
     }
 
   }
-
   delete(element: any) {
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')

@@ -1,3 +1,4 @@
+import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
 import { DeptReleaseInfoService } from './../../basic-setup/service/dept-release-info.service';
 import { TransferApproveInfo } from './../../basic-setup/model/transfer-approve-info';
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -167,7 +168,7 @@ export class DepartmetnReleaseListComponent implements OnInit, OnDestroy, AfterV
 delete (element: any) {
   this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This Item').subscribe((result) => {
     if (result) {
-      this.transferApproveInfoService.delete(element.transferApproveInfoId).subscribe(
+      this.deptReleaseInfoService.delete(element.depReleaseInfoId).subscribe(
         (res) => {
           const index = this.depReleasedataSource.data.indexOf(element);
           if (index !== -1) {

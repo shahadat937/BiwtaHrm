@@ -15,6 +15,7 @@ import { EmpSpouseInfoService } from '../../service/emp-spouse-info.service';
 import { EmpChildInfoService } from '../../service/emp-child-info.service';
 import { EmpEducationInfoService } from '../../service/emp-education-info.service';
 import { EmpPsiTrainingInfoService } from '../../service/emp-psi-training-info.service';
+import { EmpBankInfoService } from '../../service/emp-bank-info.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -34,6 +35,7 @@ export class ViewInformationListComponent implements OnInit {
   empChildInfoEntryStatus : boolean = false;
   empEducationInfoEntryStatus : boolean = false;
   empPsiTrainingInfoEntryStatus : boolean = false;
+  empBankInfoEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -54,7 +56,8 @@ export class ViewInformationListComponent implements OnInit {
     public empSpouseInfoService: EmpSpouseInfoService,
     public empChildInfoService: EmpChildInfoService,
     public empEducationInfoService: EmpEducationInfoService,
-    public empPsiTrainingInfoService: EmpPsiTrainingInfoService,) { }
+    public empPsiTrainingInfoService: EmpPsiTrainingInfoService,
+    public empBankInfoService: EmpBankInfoService,) { }
 
   ngOnInit(): void {
     this.handleRouteParams();
@@ -84,6 +87,7 @@ export class ViewInformationListComponent implements OnInit {
         this.getStatusOfEmpChildStatus();
         this.getStatusOfEmpEducationStatus();
         this.getStatusOfEmpPsiTrainingStatus();
+        this.getStatusOfEmpBankInfoStatus()
       }
       else{
         this.gettingStatus = false;
@@ -150,6 +154,16 @@ export class ViewInformationListComponent implements OnInit {
       }
       else {
         this.empPsiTrainingInfoEntryStatus = false;
+      }
+    })
+  }
+  getStatusOfEmpBankInfoStatus() {
+    this.empBankInfoService.findByEmpId(this.empId).subscribe((res) => {
+      if(res.length>0){
+        this.empBankInfoEntryStatus = true;
+      }
+      else {
+        this.empBankInfoEntryStatus = false;
       }
     })
   }

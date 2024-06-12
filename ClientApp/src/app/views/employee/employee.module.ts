@@ -45,6 +45,7 @@ import { EmpJobDetailsComponent } from './add-employee/employee-informations/emp
 import { EmpSpouseInfoComponent } from './add-employee/employee-informations/emp-spouse-info/emp-spouse-info.component';
 import { EmpChildInfoComponent } from './add-employee/employee-informations/emp-child-info/emp-child-info.component';
 import { EmpEducationInfoComponent } from './add-employee/employee-informations/emp-education-info/emp-education-info.component';
+import { EmpPsiTrainingInfoComponent } from './add-employee/employee-informations/emp-psi-training-info/emp-psi-training-info.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { EmpEducationInfoComponent } from './add-employee/employee-informations/
     EmpSpouseInfoComponent,
     EmpChildInfoComponent,
     EmpEducationInfoComponent,
+    EmpPsiTrainingInfoComponent,
   ],
   imports: [
     CommonModule,

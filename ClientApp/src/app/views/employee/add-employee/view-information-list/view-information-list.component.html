@@ -27,6 +27,9 @@
                 (close)="toggleComponent('jobDetails')"></app-emp-job-details>
                 <app-emp-education-info *ngIf="visibleComponent === 'educationInfo'" [empId]="empId" 
                 (close)="toggleComponent('educationInfo')"></app-emp-education-info>
+                
+                <app-emp-psi-training-info *ngIf="visibleComponent === 'psiTrainingInfo'" [empId]="empId" 
+                (close)="toggleComponent('psiTrainingInfo')"></app-emp-psi-training-info>
             </c-card-header>
 
             <c-card-body>
@@ -95,9 +98,9 @@
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div (click)="gettingStatus && toggleComponent('jobDetails')"
+                        <div (click)="gettingStatus && toggleComponent('psiTrainingInfo')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (entryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            [ngStyle]="{'background-color': (empPsiTrainingInfoEntryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>PSI &Training History</h4>
                         </div>
                     </c-col>

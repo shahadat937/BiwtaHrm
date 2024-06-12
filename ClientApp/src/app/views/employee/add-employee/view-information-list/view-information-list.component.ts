@@ -14,6 +14,7 @@ import { EmpJobDetailsService } from '../../service/emp-job-details.service';
 import { EmpSpouseInfoService } from '../../service/emp-spouse-info.service';
 import { EmpChildInfoService } from '../../service/emp-child-info.service';
 import { EmpEducationInfoService } from '../../service/emp-education-info.service';
+import { EmpPsiTrainingInfoService } from '../../service/emp-psi-training-info.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -32,6 +33,7 @@ export class ViewInformationListComponent implements OnInit {
   empSpouseInfoEntryStatus : boolean = false;
   empChildInfoEntryStatus : boolean = false;
   empEducationInfoEntryStatus : boolean = false;
+  empPsiTrainingInfoEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -51,7 +53,8 @@ export class ViewInformationListComponent implements OnInit {
     public empJobDetailsService: EmpJobDetailsService,
     public empSpouseInfoService: EmpSpouseInfoService,
     public empChildInfoService: EmpChildInfoService,
-    public empEducationInfoService: EmpEducationInfoService,) { }
+    public empEducationInfoService: EmpEducationInfoService,
+    public empPsiTrainingInfoService: EmpPsiTrainingInfoService,) { }
 
   ngOnInit(): void {
     this.handleRouteParams();
@@ -80,6 +83,7 @@ export class ViewInformationListComponent implements OnInit {
         this.getStatusOfEmpSpouseInfo();
         this.getStatusOfEmpChildStatus();
         this.getStatusOfEmpEducationStatus();
+        this.getStatusOfEmpPsiTrainingStatus();
       }
       else{
         this.gettingStatus = false;
@@ -136,6 +140,16 @@ export class ViewInformationListComponent implements OnInit {
       }
       else {
         this.empEducationInfoEntryStatus = false;
+      }
+    })
+  }
+  getStatusOfEmpPsiTrainingStatus() {
+    this.empPsiTrainingInfoService.findByEmpId(this.empId).subscribe((res) => {
+      if(res.length>0){
+        this.empPsiTrainingInfoEntryStatus = true;
+      }
+      else {
+        this.empPsiTrainingInfoEntryStatus = false;
       }
     })
   }

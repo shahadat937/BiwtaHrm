@@ -35,6 +35,8 @@
                 
                 <app-emp-language-info *ngIf="visibleComponent === 'languageInfo'" [empId]="empId" 
                 (close)="toggleComponent('languageInfo')"></app-emp-language-info>
+                <app-emp-foreign-tour-info *ngIf="visibleComponent === 'foreignTour'" [empId]="empId" 
+                (close)="toggleComponent('foreignTour')"></app-emp-foreign-tour-info>
             </c-card-header>
 
             <c-card-body>
@@ -131,13 +133,15 @@
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (entryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                        <div (click)="gettingStatus && toggleComponent('foreignTour')"
+                            class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                            [ngStyle]="{'background-color': (empForeignTourInfoEntryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Foreign Trip</h4>
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div class="info-box py-4 mb-3 text-center rounded-3 text-light"
+                        <div (click)="gettingStatus && toggleComponent('languageInfo')"
+                            class="info-box py-4 mb-3 text-center rounded-3 text-light"
                             [ngStyle]="{'background-color': (entryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Photo & Signature</h4>
                         </div>

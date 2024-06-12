@@ -16,6 +16,7 @@ import { EmpChildInfoService } from '../../service/emp-child-info.service';
 import { EmpEducationInfoService } from '../../service/emp-education-info.service';
 import { EmpPsiTrainingInfoService } from '../../service/emp-psi-training-info.service';
 import { EmpBankInfoService } from '../../service/emp-bank-info.service';
+import { EmpLanguageInfoService } from '../../service/emp-language-info.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -36,6 +37,7 @@ export class ViewInformationListComponent implements OnInit {
   empEducationInfoEntryStatus : boolean = false;
   empPsiTrainingInfoEntryStatus : boolean = false;
   empBankInfoEntryStatus : boolean = false;
+  empLanguageInfoEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -57,7 +59,8 @@ export class ViewInformationListComponent implements OnInit {
     public empChildInfoService: EmpChildInfoService,
     public empEducationInfoService: EmpEducationInfoService,
     public empPsiTrainingInfoService: EmpPsiTrainingInfoService,
-    public empBankInfoService: EmpBankInfoService,) { }
+    public empBankInfoService: EmpBankInfoService,
+    public empLanguageInfoService: EmpLanguageInfoService,) { }
 
   ngOnInit(): void {
     this.handleRouteParams();
@@ -87,7 +90,8 @@ export class ViewInformationListComponent implements OnInit {
         this.getStatusOfEmpChildStatus();
         this.getStatusOfEmpEducationStatus();
         this.getStatusOfEmpPsiTrainingStatus();
-        this.getStatusOfEmpBankInfoStatus()
+        this.getStatusOfEmpBankInfoStatus();
+        this.getStatusOfEmpLanguageInfoStatus();
       }
       else{
         this.gettingStatus = false;
@@ -164,6 +168,16 @@ export class ViewInformationListComponent implements OnInit {
       }
       else {
         this.empBankInfoEntryStatus = false;
+      }
+    })
+  }
+  getStatusOfEmpLanguageInfoStatus() {
+    this.empLanguageInfoService.findByEmpId(this.empId).subscribe((res) => {
+      if(res.length>0){
+        this.empLanguageInfoEntryStatus = true;
+      }
+      else {
+        this.empLanguageInfoEntryStatus = false;
       }
     })
   }

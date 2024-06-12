@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hrm.Api.Controllers
 {
-    [Route(HrmRoutePrefix.EmpPsiTraining)]
+    [Route(HrmRoutePrefix.EmpPsiTrainingInfo)]
     [ApiController]
     public class EmpPsiTrainingInfoController : ControllerBase
     {

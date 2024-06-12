@@ -13,7 +13,7 @@ import { EmpPsiTrainingInfoService } from '../../../service/emp-psi-training-inf
   templateUrl: './emp-psi-training-info.component.html',
   styleUrl: './emp-psi-training-info.component.scss'
 })
-export class EmpPsiTrainingInfoComponent   implements OnInit, OnDestroy {
+export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
   @Input() empId!: number;
   @Output() close = new EventEmitter<void>(); visible: boolean = true;
   headerText: string = '';

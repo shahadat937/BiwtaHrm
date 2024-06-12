@@ -30,6 +30,8 @@
                 
                 <app-emp-psi-training-info *ngIf="visibleComponent === 'psiTrainingInfo'" [empId]="empId" 
                 (close)="toggleComponent('psiTrainingInfo')"></app-emp-psi-training-info>
+                <app-emp-bank-info *ngIf="visibleComponent === 'bankInfo'" [empId]="empId" 
+                (close)="toggleComponent('bankInfo')"></app-emp-bank-info>
             </c-card-header>
 
             <c-card-body>
@@ -105,9 +107,9 @@
                         </div>
                     </c-col>
                     <c-col [md]="4">
-                        <div (click)="gettingStatus && toggleComponent('jobDetails')"
+                        <div (click)="gettingStatus && toggleComponent('bankInfo')"
                             class="info-box py-4 mb-3 text-center rounded-3 text-light"
-                            [ngStyle]="{'background-color': (entryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
+                            [ngStyle]="{'background-color': (empBankInfoEntryStatus) ? ('#165b16') : (gettingStatus) ? ('#003574') : ('#707070')}">
                             <h4>Bank Information</h4>
                         </div>
                     </c-col>

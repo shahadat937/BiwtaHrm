@@ -61,7 +61,6 @@ export class EmpChildInfoComponent implements OnInit, OnDestroy {
         console.log("Child Info: ", res)
         this.headerText = 'Update Child Information';
         this.btnText = 'Update';
-        this.empChild = res;
         this.patchChildInfo(res);
       }
       else {

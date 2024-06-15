@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PersonalInformationComponent } from '../employee-informations/personal-information/personal-information.component';
@@ -65,6 +65,7 @@ export class ViewInformationListComponent implements OnInit {
     public empLanguageInfoService: EmpLanguageInfoService,
     public empForeignTourInfoService: EmpForeignTourInfoService,) { }
 
+  @HostListener('window:scroll')
   ngOnInit(): void {
     this.handleRouteParams();
     this.getEmployeeByAspNetUserId();
@@ -202,10 +203,11 @@ export class ViewInformationListComponent implements OnInit {
     if (this.visibleComponent === component) {
       this.visibleComponent = null;
       this.visible = false;
-    } else {
-      this.visibleComponent = component;
-      this.visible = true;
-      this.componentVisible = true;
+      } else {
+        this.visibleComponent = component;
+        this.visible = true;
+        this.componentVisible = true;
+        window.scrollTo(0, 0);
     }
     this.getEmployeeByAspNetUserId();
   }

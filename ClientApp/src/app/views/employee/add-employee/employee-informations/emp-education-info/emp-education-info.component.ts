@@ -56,7 +56,6 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
         console.log("Education Info: ", res)
         this.headerText = 'Update Education Information';
         this.btnText = 'Update';
-        this.empEducation = res;
         this.patchEducationInfo(res);
       }
       else {

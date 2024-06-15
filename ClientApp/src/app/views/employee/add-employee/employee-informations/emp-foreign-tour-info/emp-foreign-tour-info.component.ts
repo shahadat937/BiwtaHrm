@@ -52,7 +52,6 @@ export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
       if (res.length > 0) {
         this.headerText = 'Updat Foreign Tour Information';
         this.btnText = 'Update';
-        this.empForeignTour = res;
         this.patchForeignTourInfo(res);
       }
       else {

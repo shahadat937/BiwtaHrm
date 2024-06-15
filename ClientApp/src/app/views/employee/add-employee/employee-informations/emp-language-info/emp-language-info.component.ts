@@ -52,7 +52,6 @@ export class EmpLanguageInfoComponent implements OnInit, OnDestroy {
       if (res.length > 0) {
         this.headerText = 'Update Language Information';
         this.btnText = 'Update';
-        this.empLanguage = res;
         this.patchLanguageInfo(res);
       }
       else {

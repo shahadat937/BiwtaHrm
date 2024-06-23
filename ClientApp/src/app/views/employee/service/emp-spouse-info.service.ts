@@ -25,7 +25,7 @@ export class EmpSpouseInfoService {
     return this.http.get<SelectedModel[]>(this.baseUrl + '/Occupation/get-selectedOccupations/');
   }
   
-  saveEmpSpouseInfo(model: any[]) {
+  saveEmpSpouseInfo(model: FormData) {
     return this.http.post(this.baseUrl + '/empSpouseInfo/save-EmpSpouseInfo', model);
   }
   deleteEmpSpouseInfo(id: number) {

@@ -11,6 +11,11 @@ import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 import { EmpPresentAddressService } from '../../service/emp-present-address.service';
 import { EmpPermanentAddressService } from '../../service/emp-permanent-address.service';
 import { EmpJobDetailsService } from '../../service/emp-job-details.service';
+import { EmpSpouseInfoService } from '../../service/emp-spouse-info.service';
+import { EmpChildInfoService } from '../../service/emp-child-info.service';
+import { EmpEducationInfoService } from '../../service/emp-education-info.service';
+import { EmpPsiTrainingInfoService } from '../../service/emp-psi-training-info.service';
+import { EmpBankInfoService } from '../../service/emp-bank-info.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -19,13 +24,18 @@ import { EmpJobDetailsService } from '../../service/emp-job-details.service';
 })
 export class ViewInformationListComponent implements OnInit {
 
-  gettingStatus : boolean = true;
+  gettingStatus : boolean = false;
   entryStatus : boolean = false;
   basicInfoEntryStatus : boolean = false;
   personalInfoEntryStatus : boolean = false;
   presentAddressEntryStatus : boolean = false;
   permanentAddressEntryStatus : boolean = false;
   empJobDetailsEntryStatus : boolean = false;
+  empSpouseInfoEntryStatus : boolean = false;
+  empChildInfoEntryStatus : boolean = false;
+  empEducationInfoEntryStatus : boolean = false;
+  empPsiTrainingInfoEntryStatus : boolean = false;
+  empBankInfoEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -42,7 +52,12 @@ export class ViewInformationListComponent implements OnInit {
     public empBasicInfoService: EmpBasicInfoService,
     public empPresentAddressService: EmpPresentAddressService,
     public empPermanentAddressService: EmpPermanentAddressService,
-    public empJobDetailsService: EmpJobDetailsService,) { }
+    public empJobDetailsService: EmpJobDetailsService,
+    public empSpouseInfoService: EmpSpouseInfoService,
+    public empChildInfoService: EmpChildInfoService,
+    public empEducationInfoService: EmpEducationInfoService,
+    public empPsiTrainingInfoService: EmpPsiTrainingInfoService,
+    public empBankInfoService: EmpBankInfoService,) { }
 
   ngOnInit(): void {
     this.handleRouteParams();
@@ -68,6 +83,11 @@ export class ViewInformationListComponent implements OnInit {
         this.getStatusOfPresentAddress();
         this.getStatusOfPermanentAddress();
         this.getStatusOfEmpJobDetails();
+        this.getStatusOfEmpSpouseInfo();
+        this.getStatusOfEmpChildStatus();
+        this.getStatusOfEmpEducationStatus();
+        this.getStatusOfEmpPsiTrainingStatus();
+        this.getStatusOfEmpBankInfoStatus()
       }
       else{
         this.gettingStatus = false;
@@ -92,12 +112,62 @@ export class ViewInformationListComponent implements OnInit {
       this.permanentAddressEntryStatus = !!res;
     })
   }
-
   getStatusOfEmpJobDetails(){
     this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
       this.empJobDetailsEntryStatus = !!res;
     })
   }
+  getStatusOfEmpSpouseInfo(){
+    this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res: any[]) => {
+      if(res.length>0){
+        this.empJobDetailsEntryStatus = true;
+      }
+      else {
+        this.empJobDetailsEntryStatus = false;
+      }
+    })
+  }
+  getStatusOfEmpChildStatus() {
+    this.empChildInfoService.findByEmpId(this.empId).subscribe((res) => {
+      if(res.length>0){
+        this.empChildInfoEntryStatus = true;
+      }
+      else {
+        this.empChildInfoEntryStatus = false;
+      }
+    })
+  }
+  getStatusOfEmpEducationStatus() {
+    this.empEducationInfoService.findByEmpId(this.empId).subscribe((res) => {
+      if(res.length>0){
+        this.empEducationInfoEntryStatus = true;
+      }
+      else {
+        this.empEducationInfoEntryStatus = false;
+      }
+    })
+  }
+  getStatusOfEmpPsiTrainingStatus() {
+    this.empPsiTrainingInfoService.findByEmpId(this.empId).subscribe((res) => {
+      if(res.length>0){
+        this.empPsiTrainingInfoEntryStatus = true;
+      }
+      else {
+        this.empPsiTrainingInfoEntryStatus = false;
+      }
+    })
+  }
+  getStatusOfEmpBankInfoStatus() {
+    this.empBankInfoService.findByEmpId(this.empId).subscribe((res) => {
+      if(res.length>0){
+        this.empBankInfoEntryStatus = true;
+      }
+      else {
+        this.empBankInfoEntryStatus = false;
+      }
+    })
+  }
+  
 
   toggleComponent(component: string) {
     this.componentVisible = false;
@@ -109,6 +179,7 @@ export class ViewInformationListComponent implements OnInit {
       this.visible = true;
       this.componentVisible = true;
     }
+    this.getEmployeeByAspNetUserId();
   }
 
 }

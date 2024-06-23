@@ -43,7 +43,10 @@ import { EmpPermanentAddressComponent } from './add-employee/employee-informatio
 import { CountryService } from '../basic-setup/service/country.service';
 import { EmpJobDetailsComponent } from './add-employee/employee-informations/emp-job-details/emp-job-details.component';
 import { EmpSpouseInfoComponent } from './add-employee/employee-informations/emp-spouse-info/emp-spouse-info.component';
-
+import { EmpChildInfoComponent } from './add-employee/employee-informations/emp-child-info/emp-child-info.component';
+import { EmpEducationInfoComponent } from './add-employee/employee-informations/emp-education-info/emp-education-info.component';
+import { EmpPsiTrainingInfoComponent } from './add-employee/employee-informations/emp-psi-training-info/emp-psi-training-info.component';
+import { EmpBankInfoComponent } from './add-employee/employee-informations/emp-bank-info/emp-bank-info.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +59,12 @@ import { EmpSpouseInfoComponent } from './add-employee/employee-informations/emp
     EmpPermanentAddressComponent,
     EmpJobDetailsComponent,
     EmpSpouseInfoComponent,
+
+    EmpChildInfoComponent,
+    EmpEducationInfoComponent,
+    EmpPsiTrainingInfoComponent,
+    EmpBankInfoComponent,
+
   ],
   imports: [
     CommonModule,
@@ -68,7 +77,6 @@ import { EmpSpouseInfoComponent } from './add-employee/employee-informations/emp
     FormsModule,
     ReactiveFormsModule,
     FormModule,
-    ButtonModule,
     ButtonGroupModule,
     DropdownModule,
     SharedModule,

@@ -9,7 +9,10 @@ namespace Hrm.Application.DTOs.EmpSpouseInfo
     public class EmpSpouseInfoDto : IEmpSpouseInfoDto
     {
         public int Id { get; set; }
+
         public int? EmpId { get; set; }
+
+        public int EmpId { get; set; }
         public string? SpouseName { get; set; }
         public string? SpouseNameBangla { get; set; }
         public DateOnly? DateOfBirth { get; set; }

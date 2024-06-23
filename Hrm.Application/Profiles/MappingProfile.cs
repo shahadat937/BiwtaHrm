@@ -77,6 +77,12 @@ using Hrm.Application.DTOs.EmpPresentAddress;
 using Hrm.Application.DTOs.EmpPermanentAddress;
 using Hrm.Application.DTOs.EmpJobDetail;
 using Hrm.Application.DTOs.EmpSpouseInfo;
+using Hrm.Application.DTOs.EmpChildInfo;
+using Hrm.Application.DTOs.EmpEducationInfo;
+using Hrm.Application.DTOs.EmpPsiTrainingInfo;
+using Hrm.Application.DTOs.EmpBankInfo;
+using Hrm.Application.DTOs.EmpForeignTourInfo;
+using Hrm.Application.DTOs.EmpLanguageInfo;
 
 
 
@@ -311,6 +317,23 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpSpouseInfo, EmpSpouseInfoDto>().ReverseMap();
             CreateMap<EmpSpouseInfo, CreateEmpSpouseInfoDto>().ReverseMap();
+            CreateMap<EmpChildInfo, EmpChildInfoDto>().ReverseMap();
+            CreateMap<EmpChildInfo, CreateEmpChildInfoDto>().ReverseMap();
+
+            CreateMap<EmpEducationInfo, EmpEducationInfoDto>().ReverseMap();
+            CreateMap<EmpEducationInfo, CreateEmpEducationInfoDto>().ReverseMap();
+
+            CreateMap<EmpPsiTrainingInfo, EmpPsiTrainingInfoDto>().ReverseMap();
+            CreateMap<EmpPsiTrainingInfo, CreateEmpPsiTrainingInfoDto>().ReverseMap();
+
+            CreateMap<EmpBankInfo, EmpBankInfoDto>().ReverseMap();
+            CreateMap<EmpBankInfo, CreateEmpBankInfoDto>().ReverseMap();
+
+            CreateMap<EmpForeignTourInfo, EmpForeignTourInfoDto>().ReverseMap();
+            CreateMap<EmpForeignTourInfo, CreateEmpForeignTourInfoDto>().ReverseMap();
+
+            CreateMap<EmpLanguageInfo, EmpLanguageInfoDto>().ReverseMap();
+            CreateMap<EmpLanguageInfo, CreateEmpLanguageInfoDto>().ReverseMap();
 
         }
     }

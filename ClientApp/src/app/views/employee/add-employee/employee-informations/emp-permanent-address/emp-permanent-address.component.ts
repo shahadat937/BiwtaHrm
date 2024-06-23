@@ -219,6 +219,7 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
+        this.cancel();
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',

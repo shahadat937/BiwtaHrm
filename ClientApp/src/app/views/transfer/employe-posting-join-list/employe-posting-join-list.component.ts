@@ -30,11 +30,18 @@ export class EmployePostingJoinListComponent implements OnInit, OnDestroy, After
   @ViewChild('EmpTransferPostingJoinForm', { static: true }) EmpTransferPostingJoinForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'departmentName', 'officeName', 'designationName', 'approveBy', 'approveDate', 'depClearance','officeOrderDate', 'Action'];
+
+  depReleasedisplayedColumns: string[] = ['slNo', 'approveStatus','joinDate','remarks','Action'];
+
   dataSource = new MatTableDataSource<any>();
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
-  @ViewChild(MatSort)
-  matSort!: MatSort;
+  employeJoindataSource = new MatTableDataSource<any>();
+
+  @ViewChild(MatPaginator)paginator!: MatPaginator;
+  @ViewChild(MatSort)matSort!: MatSort;
+  @ViewChild('postingPaginator') postingPaginator!: MatPaginator;
+  @ViewChild('postingSort') postingSort!: MatSort;
+  @ViewChild('approvePaginator') approvePaginator!: MatPaginator;
+  @ViewChild('approveSort') approveSort!: MatSort;
   transferApproveInfo: TransferApproveInfo[] = [];
   postingOrderInfo: PostingOrderInfo[] = [];
   deptReleaseInfo:DeptReleaseInfo[]=[];
@@ -57,7 +64,6 @@ export class EmployePostingJoinListComponent implements OnInit, OnDestroy, After
         this.btnText = 'Update';
         this.empTnsferPostingJoinService.find(+id).subscribe((res) => {
           this.EmpTransferPostingJoinForm?.form.patchValue(res);
-
         });
       } else {
         this.btnText = 'Submit';
@@ -104,48 +110,46 @@ export class EmployePostingJoinListComponent implements OnInit, OnDestroy, After
   loadEmpTnsferPostingJoins() {
     this.subscription = this.empTnsferPostingJoinService.getempTnsferPostingJoinAll().subscribe((h) => {
       this.empTnsferPostingJoin = h;
+      console.log(h)
+      this.employeJoindataSource.data = h;
+      this.employeJoindataSource.paginator = this.approvePaginator;
+      this.employeJoindataSource.sort = this.approveSort;
     });
   }
   getTransferOrderList() {
     this.subscription = this.postingOrderInfoService.getAll().subscribe((item) => {
       this.postingOrderInfo = item;
       this.mergeData();
-
     });
   }
   getTransferApprovedList() {
     this.subscription = this.transferApproveInfoService.getTransferApproveInfoAll().subscribe((res) => {
-      this.transferApproveInfo= res
+      this.transferApproveInfo= res;
       this.mergeData();
     })
   }
   getDepReleaseList() {
     this.subscription = this.deptReleaseInfoService.getdeptReleaseInfoAll().subscribe((res) => {
       this.deptReleaseInfo = res;
-      console.log(res)
       this.mergeData();
-
     })
   }
+  
   mergeData() {
     if (!this.postingOrderInfo.length || !this.transferApproveInfo.length || !this.deptReleaseInfo.length) {
       return; // Ensure all datasets are loaded
     }
-
     const mergedData = this.postingOrderInfo.map(posting => {
       const transferApprove = this.transferApproveInfo.find(transfer => transfer.postingOrderInfoId === posting.postingOrderInfoId) || {} as TransferApproveInfo;
       const deptRelease = this.deptReleaseInfo.find(dept => dept.transferApproveInfoId === transferApprove.transferApproveInfoId) || {} as DeptReleaseInfo;
-
       return {
         ...posting,
         ...transferApprove,
         ...deptRelease,
       };
     });
-
     this.dataSource = new MatTableDataSource(mergedData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.matSort;
   }
-
 }

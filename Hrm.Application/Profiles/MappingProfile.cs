@@ -317,7 +317,6 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpSpouseInfo, EmpSpouseInfoDto>().ReverseMap();
             CreateMap<EmpSpouseInfo, CreateEmpSpouseInfoDto>().ReverseMap();
-
             CreateMap<EmpChildInfo, EmpChildInfoDto>().ReverseMap();
             CreateMap<EmpChildInfo, CreateEmpChildInfoDto>().ReverseMap();
 

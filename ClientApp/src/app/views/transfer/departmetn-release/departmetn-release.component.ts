@@ -17,6 +17,7 @@ import { EmployeesService } from '../service/employees.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EmpModalComponent } from '../emp-modal/emp-modal.component';
 import { Employee } from '../../basic-setup/model/employees';
+import { EmployeesModule } from '../../employee/model/employees.module';
 
 @Component({
   selector: 'app-departmetn-release',
@@ -38,7 +39,8 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
   transferApproveInfos: TransferApproveInfo[] = [];
   postingOrderInfo: PostingOrderInfo[] = [];
   deptReleaseInfo:DeptReleaseInfo[]=[];
-  @Input() employeeSelected = new EventEmitter<Employee>();
+  btnTextApproved: string | undefined;
+  @Input() employeeSelected = new EventEmitter<EmployeesModule>();
   constructor(
     private modalService: BsModalService,
     public postingOrderInfoService: PostingOrderInfoService,
@@ -56,39 +58,53 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
         this.loadTransferApproveInfo(Number(transferApproveInfoId));
         this.btnText='submit'
       } 
-    });
-  }
-  loadTransferApproveInfo(transferApproveInfoId: number) {
-    this.transferApproveInfoService.find(transferApproveInfoId).subscribe(data => {
-      this.transferApproveInfoService.transferApproveInfos = data;
-      // Ensure the form model is updated with the fetched data
-      this.deptReleaseInfoService.deptReleaseInfo.transferApproveInfoId = data.transferApproveInfoId;
-    });
-  }
-  loadPostingOrderInfo(postingOrderInfoId: number) {
-    this.postingOrderInfoService.find(postingOrderInfoId).subscribe(data => {
-      this.postingOrderInfoService.postingOrderInfos = data;
-
-      // Ensure the form model is updated with the fetched data
-      this.transferApproveInfoService.transferApproveInfos.postingOrderInfoId = data.postingOrderInfoId;
+      const id = params.get('depReleaseInfoId');
+      if (id) {
+        this.btnText = 'Update';
+        this.deptReleaseInfoService.find(+id).subscribe((res) => {
+          this.DeptReleaseInfoForm?.form.patchValue(res);
+           console.log('Form Values after patching:', this.DeptReleaseInfoForm.form.value); // Debugging: Verify form values
+        });
+      } else {
+        this.btnText = 'Submit';
+      }
     });
   }
 
+loadTransferApproveInfo(transferApproveInfoId: number) {
+  this.transferApproveInfoService.find(transferApproveInfoId).subscribe(data => {
+    // Patch form with the fetched data
+    this.DeptReleaseInfoForm.form.patchValue({
+      transferApproveInfoId: data.transferApproveInfoId,
+      postingOrderInfoId: data.postingOrderInfoId,
+      empId: data.empId,
+      approveStatus: data.approveStatus,
+      approveDate: data.approveDate,
+      approveBy: data.approveBy,
+      approveByName: data.approveByName || '',  // Handle missing values
+      remarks: data.remarks,
+      menuPosition: data.menuPosition,
+      isActive: data.isActive,
+      employeeName: data.approveByName || ''  // Handle missing values
+    });
+  });
+}
   //Employee/Transfer
   openApproveDepartmentRelease(): void {
     const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: EmployeesModule) => {
       this.handleApproveDepartmentRelease(selectedEmployee);
     });
   }
-  handleApproveDepartmentRelease(employee: Employee) {
+  handleApproveDepartmentRelease(employee: EmployeesModule) {
     this.deptReleaseInfoService.deptReleaseInfo.approveBy= employee.empId,
-    this.deptReleaseInfoService.deptReleaseInfo.approveByName= employee.employeeName
+    this.deptReleaseInfoService.deptReleaseInfo.approveByName= employee.empEngName
   }
 
   ngOnInit(): void {
     this.getAllDepartmentReleases();
-    this.loadApproveDepartmentRelease();
+    this.loadDepartmentalReleaseInfos();
+
   }
 
   ngAfterViewInit() {
@@ -118,45 +134,55 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
     this.percentage = $event * 25;
   }
 
-  // transferApproveInfos
-  initaialtransferApproveInfo(form?: NgForm) {
+  //Departmental Release Information
+  initaialDepartmentalReleaseInfo(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.transferApproveInfoService.transferApproveInfos = {
-      transferApproveInfoId: 0,
+    this.deptReleaseInfoService.deptReleaseInfo = {
+      depReleaseInfoId: 0,
       postingOrderInfoId: 0,
+      transferApproveInfoId: 0,
       empId: 0,
-      approveStatus: true,
       approveByName: "",
       approveBy: 0,
-      approveDate: new Date(),
+      approveStatus: true,
+      officeOrderNo: "",
+      releaseDate: new Date(),
+      orderOfficeBy: "",
+      referenceNo: "",
+      depClearance: "",
+      releaseType: "",
       remarks: "",
       menuPosition: 0,
       isActive: true
     };
   }
-  resetdeptReleaseInfoForm() {
+  resetFormDepartmentalReleaseInfo() {
     this.btnText = 'Submit';
     if (this.DeptReleaseInfoForm?.form != null) {
       this.DeptReleaseInfoForm.form.reset();
       this.DeptReleaseInfoForm.form.patchValue({
-        transferApproveInfoId: 0,
+        depReleaseInfoId: 0,
         postingOrderInfoId: 0,
-        empId: 0,
+        transferApproveInfoId: 0,
         approveByName: "",
         approveBy: 0,
         approveStatus: true,
-        approveDate: new Date(),
+        empId: 0,
+        officeOrderNo: "",
+        releaseDate: new Date(),
+        orderOfficeBy: "",
+        referenceNo: "",
+        depClearance: "",
+        releaseType: "",
         remarks: "",
         menuPosition: 0,
         isActive: true
       });
     }
   }
-  //
-  loadApproveDepartmentRelease() {
-    this.subscription = this.deptReleaseInfoService.getdeptReleaseInfoAll().subscribe((h) => {
-      this.getAllDepartmentReleases();
-
+  loadDepartmentalReleaseInfos() {
+    this.deptReleaseInfoService.getdeptReleaseInfoAll().subscribe((h) => {
+      this.deptReleaseInfo = h;
     });
   }
   getAllDepartmentReleases() {
@@ -167,10 +193,8 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
     });
   }
 
-  
-
-
   onSubmit(form: NgForm): void {
+    console.log(form.value)
     if (form.valid) {
       this.deptReleaseInfoService.cachedData = [];
       const id = form.value.depReleaseInfoId;
@@ -184,9 +208,9 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
             positionClass: 'toast-top-right',
           });
           this.getAllDepartmentReleases();
-          this.resetdeptReleaseInfoForm();
+          this.resetFormDepartmentalReleaseInfo();
           if (!id) {
-            this.router.navigate(['transfer/employePostingJoinList']);
+            this.router.navigate(['transfer/departmetnReleaseList']);
           }
         } else {
           this.toastr.warning('', `${response.message}`, {
@@ -198,7 +222,7 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
       this.toastr.error('Form is invalid');
     }
   }
-
+ 
   delete(element: any) {
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
@@ -224,6 +248,6 @@ export class DepartmetnReleaseComponent implements OnInit, OnDestroy, AfterViewI
             }
           );
         }
-      });
+    });
   }
 }

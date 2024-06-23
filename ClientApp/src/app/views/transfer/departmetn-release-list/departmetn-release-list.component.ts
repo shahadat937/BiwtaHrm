@@ -1,3 +1,4 @@
+import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
 import { DeptReleaseInfoService } from './../../basic-setup/service/dept-release-info.service';
 import { TransferApproveInfo } from './../../basic-setup/model/transfer-approve-info';
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -27,17 +28,24 @@ export class DepartmetnReleaseListComponent implements OnInit, OnDestroy, AfterV
   visible = false;
   percentage = 0;
   btnText: string | undefined;
-  @ViewChild('postingOrderForm', { static: true }) postingOrderForm!: NgForm;
+  @ViewChild('DeptReleaseInfoForm', { static: true }) DeptReleaseInfoForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = ['slNo', 'departmentName', 'officeName', 'designationName', 'approveBy', 'approveDate', 'approveStatus', 'Action'];
+  depReleasedisplayedColumns: string[] = ['slNo', 'depClearance','remarks','releaseType', 'approveStatus', 'Action'];
   dataSource = new MatTableDataSource<any>();
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
-  @ViewChild(MatSort)
-  matSort!: MatSort;
+  depReleasedataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator)paginator!: MatPaginator;
+  @ViewChild(MatSort)matSort!: MatSort;
+  @ViewChild('postingPaginator') postingPaginator!: MatPaginator;
+  @ViewChild('postingSort') postingSort!: MatSort;
+  @ViewChild('approvePaginator') approvePaginator!: MatPaginator;
+  @ViewChild('approveSort') approveSort!: MatSort;
+
   transferApproveInfo: TransferApproveInfo[] = [];
   postingOrderInfo: PostingOrderInfo[] = [];
   deptReleaseInfo:DeptReleaseInfo[]=[];
+  btnTextApproved: string | undefined;
+
 
   constructor(
     public postingOrderInfoService: PostingOrderInfoService,
@@ -48,19 +56,29 @@ export class DepartmetnReleaseListComponent implements OnInit, OnDestroy, AfterV
     private confirmService: ConfirmService,
     private toastr: ToastrService
   ) {
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('postingOrderInfoId');
-      if (id) {
-        this.btnText = 'Update';
-        this.postingOrderInfoService.find(+id).subscribe((res) => {
-          this.postingOrderForm?.form.patchValue(res);
-        });
-      } else {
-        this.btnText = 'Submit';
-      }
-    });
+    // this.route.paramMap.subscribe((params) => {
+    //   const id = params.get('postingOrderInfoId');
+    //   if (id) {
+    //     this.btnText = 'Update';
+    //     this.postingOrderInfoService.find(+id).subscribe((res) => {
+    //       this.DeptReleaseInfoForm?.form.patchValue(res);
+    //     });
+    //   } else {
+    //     this.btnText = 'Submit';
+    //   }
+    //   const id2 = params.get('transferApproveInfoId');
+    //   if (id2) {
+    //     this.btnTextApproved = 'Update';
+    //     this.transferApproveInfoService.find(+id2).subscribe((res) => {
+    //       this.DeptReleaseInfoForm?.form.patchValue(res);
+    //     });
+    //   } else {
+    //     this.btnTextApproved = 'Submit';
+    //   }
+    // });
   }
   ngOnInit(): void {
+    this.getDepReleaseStatus();
     this.getDepReleaseList();
     this.getTransferApprovedList();
     this.getTransferOrderList();
@@ -134,4 +152,75 @@ export class DepartmetnReleaseListComponent implements OnInit, OnDestroy, AfterV
     this.dataSource.sort = this.matSort;
 
   }
+
+  getDepReleaseStatus() {
+    this.subscription.add(
+      this.deptReleaseInfoService.getdeptReleaseInfoAll().subscribe((res) => {
+        this.deptReleaseInfo = res;
+        this.depReleasedataSource.data = res;
+        this.depReleasedataSource.paginator = this.approvePaginator;
+        this.depReleasedataSource.sort = this.approveSort;
+      })
+    );
+  }
+
+  
+delete (element: any) {
+  this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This Item').subscribe((result) => {
+    if (result) {
+      this.deptReleaseInfoService.delete(element.depReleaseInfoId).subscribe(
+        (res) => {
+          const index = this.depReleasedataSource.data.indexOf(element);
+          if (index !== -1) {
+            this.depReleasedataSource.data.splice(index, 1);
+            this.depReleasedataSource = new MatTableDataSource(this.depReleasedataSource.data);
+            this.depReleasedataSource.paginator = this.approvePaginator; // Update paginator
+            this.depReleasedataSource.sort = this.approveSort; // Update sorting
+          }
+          this.toastr.success('Delete successfully!', '', {
+            positionClass: 'toast-top-right',
+          });
+        },
+        (err) => {
+          this.toastr.error('Something went wrong!', '', {
+            positionClass: 'toast-top-right',
+          });
+        }
+      );
+    }
+  });
 }
+
+resetFormDepartmentalReleaseInfo() {
+  this.btnText = 'Submit';
+  if (this.DeptReleaseInfoForm?.form != null) {
+    this.DeptReleaseInfoForm.form.reset();
+    this.DeptReleaseInfoForm.form.patchValue({
+      depReleaseInfoId: 0,
+      postingOrderInfoId: 0,
+      transferApproveInfoId: 0,
+      approveByName: "",
+      approveBy: 0,
+      approveStatus: true,
+      empId: 0,
+      officeOrderNo: "",
+      releaseDate: new Date(),
+      orderOfficeBy: "",
+      referenceNo: "",
+      depClearance: "",
+      releaseType: "",
+
+      remarks: "",
+      menuPosition: 0,
+      isActive: true
+    });
+  }
+
+  this.router.navigate(['/transfer/transferApproveInfoList']);
+}
+
+update(element: any) {
+  this.router.navigate(['/transfer/transferApproveInfoList', element.depReleaseInfoId]);
+}
+}
+

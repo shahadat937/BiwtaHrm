@@ -37,7 +37,10 @@ export class PostingOrderInfoService {
         );
     }
   }
-
+  updateStatus(id: number, data: PostingOrderInfo): Observable<any> {
+    // return this.http.put(`${this.baseUrl}/postingOrderInfo/update-PostingOrderInfo/${id}`, data);
+    return this.http.put(this.baseUrl + '/postingOrderInfo/update-PostingOrderInfo/'+id, data);
+  }
 
   update(id2: number,model: any) {
     return this.http.put(this.baseUrl + '/postingOrderInfo/update-PostingOrderInfo/'+id2, model);

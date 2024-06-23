@@ -74,7 +74,7 @@ namespace Hrm.Application.Features.DepReleaseInfo.Handlers.Commands
         private readonly IMapper _mapper;
 
         public CreateDepReleaseInfoApprovedCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.TransferApproveInfo> TransferApproveInfoRepository)
-        {
+          {
             _TransferApproveInfoRepository = TransferApproveInfoRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -95,11 +95,7 @@ namespace Hrm.Application.Features.DepReleaseInfo.Handlers.Commands
                 response.Message = "Creation Failed";
                 response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
             }
-            else if (mostRecentTransferApproveInfo != null && mostRecentTransferApproveInfo.ApproveStatus == false)
-            {
-                response.Success = false;
-                response.Message = "Creation Failed: The most recent TransferApproveInfo has an ApproveStatus of false.";
-            }
+           
             else
             {
                 var DepReleaseInfo = _mapper.Map<Hrm.Domain.DepReleaseInfo>(request.DepReleaseInfoDto);

@@ -52,13 +52,13 @@ export class EmpBankInfoComponent implements OnInit, OnDestroy {
   getEmployeeBankInfoByEmpId() {
     this.empBankInfoService.findByEmpId(this.empId).subscribe((res) => {
       if (res.length > 0) {
-        this.headerText = 'Update Bank Information';
+        this.headerText = 'Update PSI Training Information';
         this.btnText = 'Update';
         this.empBank = res;
         this.patchBankInfo(res);
       }
       else {
-        this.headerText = 'Add Bank Information';
+        this.headerText = 'Add PSI Training Information';
         this.btnText = 'Submit';
         this.addBank();
       }

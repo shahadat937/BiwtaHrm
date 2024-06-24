@@ -22,7 +22,5 @@
 		<ProjectReference Include="..\Hrm.Infrastructure\Hrm.Infrastructure.csproj" />
 		<ProjectReference Include="..\Hrm.Persistence\Hrm.Persistence.csproj" />
 	</ItemGroup>
-	
-	
 
 </Project>

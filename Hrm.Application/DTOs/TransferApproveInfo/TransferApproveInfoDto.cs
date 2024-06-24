@@ -14,7 +14,7 @@ namespace Hrm.Application.DTOs.TransferApproveInfo
         public int? EmpId { get; set; }
         public bool? ApproveStatus { get; set; }
         public DateOnly? ApproveDate { get; set; }
-        public int? ApproveBy { get; set; }
+        public string? ApproveBy { get; set; }
         public string? Remarks { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }

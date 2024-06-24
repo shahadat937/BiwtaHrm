@@ -6,26 +6,16 @@
         <c-col [md]="3">
           <input type="hidden" [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.empId" name="empId" />
           <label cLabel for="validationCustom01">Join Date<span class="text-danger">*</span></label>
-          <input [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.joinDate" name="joinDate"
+          <input [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.joinDate" name="formattedDate"
             #joinDate="ngModel" placeholder="Enter Join Date" cFormControl id="validationCustom01" required type="date"
             value="Mark" />
           @if(!joinDate.valid&&joinDate.touched){
           <div class="text-left text-danger">Join Date is required</div>
           }
         </c-col>
-        <c-col [md]="3">
-          <label cLabel for="validationCustom1">Approve Status</label>
-        <select [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.approveStatus" name="approveStatus"
-          cSelect id="validationCustom01">
-          <option value="true">Approve</option>
-          <option value="false">Reject</option>
-        </select>
-      </c-col>
-        <c-col [md]="3">
-          <input type="hidden" [(ngModel)]="postingOrderInfoService.postingOrderInfos.postingOrderInfoId" name="postingOrderInfoId" />
-          <input type="hidden" [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.depReleaseInfoId" name="depReleaseInfoId" />
-          <input type="hidden" [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.transferApproveInfoId" name="transferApproveInfoId" />
 
+        <c-col [md]="3">
+          <input type="hidden" [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.postingOrderInfoId" name="postingOrderInfoId" />
           <label cLabel for="validationCustom55">Approve By <span class="text-danger">*</span></label>
           <input (dblclick)="openApproveEmpTransferJoin()"
             [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.approveByName" name="approveByName"
@@ -35,10 +25,18 @@
           <div *ngIf="approveBy.touched && !approveBy.valid" class="text-left text-danger">Approve By value is
             required</div>
         </c-col>
-        
+        <c-col [md]="3">
+          <input type="hidden" [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.postingOrderInfoId" name="postingOrderInfoId" />
+          <label cLabel for="validationCustom09">Approve Status</label>
+          <select [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.isActive" name="isActive" cSelect
+            id="validationCustom09">
+            <option value="true">Approve</option>
+            <option value="false">Reject</option>
+          </select>
+        </c-col>
         <c-col [md]="3">
           <label cLabel for="validationCustom02">Remarks<span class="text-danger">*</span></label>
-          <input type="hidden" [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.empTnsferPostingJoinId" name="empTnsferPostingJoinId" />
+          <!-- <input type="hidden" [(ngModel)]="deptReleaseInfoService.deptReleaseInfo.depReleaseInfoId" name="depReleaseInfoId" /> -->
           <input [(ngModel)]="empTnsferPostingJoinService.empTnsferPostingJoin.remarks" name="remarks"
             #remarks="ngModel" placeholder="Enter Remarks " cFormControl id="validationCustom02" required type="text"
             value="Mark" />
@@ -46,7 +44,6 @@
           <div class="text-left text-danger">Remarks required</div>
           }
         </c-col>
-
         <c-col [xs]="12">
           <button [disabled]="EmpTransferPostingJoinForm.invalid" cButton class="me-1" color="primary" type="submit">
             {{ btnText }}

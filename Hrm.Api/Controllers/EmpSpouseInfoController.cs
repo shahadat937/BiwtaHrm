@@ -33,14 +33,6 @@ namespace Hrm.Api.Controllers
         {
             var EmpSpouseInfos = await _mediator.Send(new GetEmpSpouseInfoByEmpIdRequest { Id = id });
             return Ok(EmpSpouseInfos);
-        }    
-        [HttpPut]
-        [Route("update-EmpSpouseInfo/{id}")]
-        public async Task<ActionResult> Put([FromBody] EmpSpouseInfoDto EmpSpouseInfo)
-        {
-            var command = new UpdateEmpSpouseInfoCommand { EmpSpouseInfoDto = EmpSpouseInfo };
-            var response = await _mediator.Send(command);
-            return Ok(response);
         }
 
         [HttpDelete]

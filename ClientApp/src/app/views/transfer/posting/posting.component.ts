@@ -1,10 +1,11 @@
+import { DesignationService } from './../../basic-setup/service/designation.service';
 import { Employee } from './../../basic-setup/model/employees';
 import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import {FormBuilder, NgForm } from '@angular/forms';
+import { FormBuilder, NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import {Observable, Subscription, forkJoin, of } from 'rxjs';
+import { Observable, Subscription, forkJoin, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,12 +22,11 @@ import { TransferApproveInfoService } from './../../basic-setup/service/transfer
 import { TransferApproveInfo } from './../../basic-setup/model/transfer-approve-info';
 import { DepartmentService } from './../../basic-setup/service/department.service';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
-import { SubDepartmentService } from '../../basic-setup/service/sub-department.service';
-import { BranchService } from '../../basic-setup/service/branch.service';
-import { SubBranchService } from '../../basic-setup/service/sub-branch.service';
 import { EmpTnsferPostingJoin } from './../../basic-setup/model/emp-tnsfer-posting-join';
 import { EmpTnsferPostingJoinService } from './../../basic-setup/service/emp-tnsfer-posting-join.service';
-import { ApproveEmpModalComponent } from '../approve-emp-modal/approve-emp-modal.component';
+import { OfficeService } from '../../basic-setup/service/office.service';
+import { EmployeesModule } from '../../employee/model/employees.module';
+import { EmployeeService } from '../../employee/service/employee.service';
 
 @Component({
   selector: 'app-posting',
@@ -34,24 +34,26 @@ import { ApproveEmpModalComponent } from '../approve-emp-modal/approve-emp-modal
   styleUrls: ['./posting.component.scss']
 })
 export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
+  formattedDate!: string;
   bsModelRef!: BsModalRef;
   editMode: boolean = false;
   departments: SelectedModel[] = [];
-  subDepartments: SelectedModel[] = [];
   officeBranchs: SelectedModel[] = [];
   subBranchs: SelectedModel[] = [];
   transferApproveInfos: TransferApproveInfo[] = [];
   deptReleaseInfo: DeptReleaseInfo[] = [];
   empTnsferPostingJoin: EmpTnsferPostingJoin[] = [];
-  employees: any[] = [];
+  //employees: any[] = [];
   select: any[] = [];
+  offices: SelectedModel[] = [];
+  designations: SelectedModel[] = [];
   userBtnText: string | undefined;
   userHeaderText: string | undefined;
   buttonIcon: string = '';
   visible: boolean | undefined;
-  visible2: boolean | undefined;  
-  visible3: boolean | undefined; 
-  visible4: boolean | undefined; 
+  visible2: boolean | undefined;
+  visible3: boolean | undefined;
+  visible4: boolean | undefined;
   btnText: string | undefined;
   loading = false;
   @ViewChild('EmployeeForm', { static: true }) EmployeeForm!: NgForm;
@@ -66,17 +68,17 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-  @Input() employeeSelected = new EventEmitter<Employee>();
-  // @Input()employeeApprove = new EventEmitter<Employee>();
-  // @Input()ApprovedeptReleaseInfo = new EventEmitter<Employee>();
+  // @Input() employeeSelected = new EventEmitter<Employee>();
+  //OutPut Decorator
+  @Input() employeeSelected = new EventEmitter<EmployeesModule>();
+  employee2: EmployeesModule[]=[];
 
   constructor(
+    public designationService: DesignationService,
+    public officeService: OfficeService,
     public bsModalRef: BsModalRef,
     public postingOrderInfoService: PostingOrderInfoService,
-    private branchServices: BranchService,
     private departmentService: DepartmentService,
-    private subDepartmentService: SubDepartmentService,
-    private subBranchService: SubBranchService,
     public transferApproveInfoService: TransferApproveInfoService,
     public deptReleaseInfoService: DeptReleaseInfoService,
     public empTnsferPostingJoinService: EmpTnsferPostingJoinService,
@@ -91,17 +93,54 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     private modalService: BsModalService,
     private cdRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
-    private fb: FormBuilder // Inject FormBuilder here
-
+    private fb: FormBuilder ,// Inject FormBuilder here
+    //OutPut Decorator
+    public employeeService2:EmployeeService
   ) {
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('postingOrderInfoId');
-      // 
-      if (id) {
-        this.btnText = 'Update';
-        this.postingOrderInfoService.find(+id).subscribe((res) => {
 
+    this.route.paramMap.subscribe((params) => {
+      const id2 = params.get("postingOrderInfoId");
+      const id3 = params.get("transferApproveInfoId");
+      const id4 = params.get("depReleaseInfoId");
+      const id5 = params.get("empTnsferPostingJoinId");
+
+      // Posting Order Info
+      if (id2) {
+        this.visible3 = false
+        this.btnText = 'Update';
+
+        this.postingOrderInfoService.find(+id2).subscribe((res) => {
           this.PostingAndTrnsForm?.form.patchValue(res);
+        });
+      } else {
+        this.btnText = 'Submit';
+      }
+      // Transfer Approve Info
+      if (id3) {
+        this.btnText = 'Update';
+        this.visible3 = true
+        this.transferApproveInfoService.find(+id3).subscribe((res) => {
+          this.TransferApproveInfoForm?.form.patchValue(res);
+
+        });
+      } else {
+        this.btnText = 'Submit';
+      }
+      // Dept Release Info
+      if (id4) {
+        this.btnText = 'Update';
+        this.deptReleaseInfoService.find(+id4).subscribe((res) => {
+          this.DeptReleaseInfoForm?.form.patchValue(res);
+        });
+      } else {
+        this.btnText = 'Submit';
+      }
+
+      // Emp Transfer Posting Join
+      if (id5) {
+        this.btnText = 'Update';
+        this.empTnsferPostingJoinService.find(+id5).subscribe((res) => {
+          this.EmpTransferPostingJoinForm?.form.patchValue(res);
         });
       } else {
         this.btnText = 'Submit';
@@ -109,49 +148,16 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-
   ngOnInit(): void {
     this.getAllPostingOrderInfos();
     this.loadTransferApproveInfos();
     this.loadEmpTnsferPostingJoins();
     this.loadDepartmentalReleaseInfos();
-    this.SelectDepartments();
-    this.SelectsubDepartments();
-    this.SelectBranchs();
-    this.SelectSubBranchs();
     this.handleRouteParams();
     this.buttonIcon = "cilPencil";
-  }
-
-  GetEmployees(): void {
-    this.employeeService.getEmployees().subscribe(res => {
-      //console.log(res)
-        this.employees = res;
-
-      });
-  }
-  
-
-  SelectDepartments() {
-    this.departmentService.getSelectDepartments().subscribe((data) => {
-      this.departments = data;
-      //console.log(data)
-    });
-  }
-  SelectsubDepartments() {
-    this.subDepartmentService.getSelectSubDepartment().subscribe((res) => {
-      this.subDepartments = res;
-    });
-  }
-  SelectBranchs() {
-    this.branchServices.getSelectBranch().subscribe((res) => {
-      this.officeBranchs = res;
-    });
-  }
-  SelectSubBranchs() {
-    this.subBranchService.getSelectSubBranchs().subscribe((res) => {
-      this.subBranchs = res;
-    });
+    this.loadOffice();
+    this.loadDepartment();
+    this.loadDesignation();
   }
 
   handleRouteParams() {
@@ -164,9 +170,9 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.userBtnText = " Hide Form";
         this.buttonIcon = "cilTrash";
         this.postingOrderInfoService.find(+id).subscribe((res) => {
-          this.onSubDepartmentNamesChangeByDepartmentId(res.departmentId);
-          this.onSubBranchNamesChangeByOfficeBranchId(res.officeBranchId);
-
+          this.onOfficeSelect(res.officeId)
+          this.onDepartmentSelect(res.departmentId)
+          this.onDesignationSelect(res.designationId)
           this.PostingAndTrnsForm?.form.patchValue(res);
         });
       } else {
@@ -181,52 +187,36 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   UserFormView(): void {
     if (this.userBtnText == " Add Value") {
       this.userBtnText = " Hide Form";
-      this.buttonIcon = "cilTrash";
-      this.userHeaderText = "Add New Value";
       this.visible = true;
     } else {
       this.userBtnText = " Add Value";
-      this.buttonIcon = "cilPencil";
-      this.userHeaderText = "Value List";
       this.visible = false;
     }
   }
   UserFormView2(): void {
     if (this.userBtnText == " Add Value") {
       this.userBtnText = " Hide Form";
-      this.buttonIcon = "cilTrash";
-      this.userHeaderText = "Add New Value";
       this.visible2 = true;
     } else {
       this.userBtnText = " Add Value";
-      this.buttonIcon = "cilPencil";
-      this.userHeaderText = "Value List";
       this.visible2 = false;
     }
   }
   UserFormView3(): void {
     if (this.userBtnText == " Add Value") {
       this.userBtnText = " Hide Form";
-      this.buttonIcon = "cilTrash";
-      this.userHeaderText = "Add New Value";
       this.visible3 = true;
     } else {
       this.userBtnText = " Add Value";
-      this.buttonIcon = "cilPencil";
-      this.userHeaderText = "Value List";
       this.visible3 = false;
     }
   }
   UserFormView4(): void {
     if (this.userBtnText == " Add Value") {
       this.userBtnText = " Hide Form";
-      this.buttonIcon = "cilTrash";
-      this.userHeaderText = "Add New Value";
       this.visible4 = true;
     } else {
       this.userBtnText = " Add Value";
-      this.buttonIcon = "cilPencil";
-      this.userHeaderText = "Value List";
       this.visible4 = false;
     }
   }
@@ -256,17 +246,22 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.postingOrderInfoService.postingOrderInfos = {
       postingOrderInfoId: 0,
       empId: 0,
-      departmentId: 0,
+      departmentId: null,
       subBranchId: 0,
       subDepartmentId: 0,
-      officeBranchId: 0,
+      designationId: null,
+      officeId: null,
+      designationName: "",
+      officeName: "",
+      departmentName: "",
       officeOrderNo: "",
       officeOrderDate: new Date(),
       orderOfficeBy: "",
       transferSection: "",
       releaseType: "",
       menuPosition: 0,
-      isActive: true
+      isActive: true,
+      status:""
     };
   }
 
@@ -276,10 +271,14 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       this.PostingAndTrnsForm.form.patchValue({
         postingOrderInfoId: 0,
         empId: 0,
-        departmentId: 0,
+        departmentId: null,
         subBranchId: 0,
-        subDepartmentId: 0,
-        officeBranchId: 0,
+        subDepartmentId: null,
+        designationId: null,
+        officeId: null,
+        designationName: "",
+        officeName: "",
+        departmentName: "",
         officeOrderNo: "",
         officeOrderDate: new Date(),
         orderOfficeBy: "",
@@ -299,178 +298,61 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     });
   }
-
-  onSubDepartmentNamesChangeByDepartmentId(departmentId: number) {
-    this.subscription = this.subDepartmentService.getSubDepartmentByDepartmentId(departmentId).subscribe((data) => {
-      this.subDepartments = data;
+  loadOffice() {
+    this.subscription = this.officeService.selectGetoffice().subscribe((data) => {
+      this.offices = data;
     });
   }
 
-  onSubBranchNamesChangeByOfficeBranchId(officeBranchId: number) {
-    this.subscription = this.subBranchService.getSubBranchByOfficeBranchId(officeBranchId).subscribe((data) => {
-      this.subBranchs = data;
+  onOfficeSelect(officeId: number) {
+    this.departmentService.getSelectedDepartmentByOfficeId(+officeId).subscribe((res) => {
+      this.departments = res;
+
+    });
+  }
+  loadDepartment() {
+    this.subscription = this.departmentService.getSelectDepartments().subscribe((data) => {
+      this.departments = data;
     });
   }
 
+  onDepartmentSelect(departmentId: number) {
+    this.designationService.getDesignationByDepartmentId(+departmentId).subscribe((res) => {
+      this.designations = res;
 
-  // onSubmitAllForms(): void {
-  //   // Call onSubmit for each form
-  //   this.onSubmit(this.EmployeeForm);
-  //   this.onSubmit(this.PostingAndTrnsForm);
-  //   this.onSubmit(this.TransferApproveInfoForm);
-  //   this.onSubmit(this.DeptReleaseInfoForm);
-  //   this.onSubmit(this.EmpTransferPostingJoinForm);
-  // }
-  // //start
-  // clearCachedData(): void {
-  //   this.employeeService.cachedData = [];
-  //   this.postingOrderInfoService.cachedData = [];
-  //   this.transferApproveInfoService.cachedData = [];
-  //   this.deptReleaseInfoService.cachedData = [];
-  //   this.empTnsferPostingJoinService.cachedData = [];
-  // }
-  // handleResponse(response: any): void {
-  //   if (response.success) {
-  //     this.toastr.success('', `${response.message}`, {
-  //       positionClass: 'toast-top-right',
-  //     });
-  //     this.getAllPostingOrderInfos();
-  //     this.resetForm();
-  //   } else {
-  //     this.toastr.warning('', `${response.message}`, {
-  //       positionClass: 'toast-top-right',
-  //     });
-  //   }
-  // }
-  // //valid 1
-  // onSubmit(form: any): void {
-  //   // Clear cached data
-  //   this.clearCachedData();
+    });
+  }
+  loadDesignation() {
+    this.subscription = this.designationService.selectDesignation().subscribe((data) => {
+      this.designations = data;
+    });
+  }
+  onDesignationSelect(designationId: number) {
+    this.designationService.getDesignationByDepartmentId(+designationId).subscribe((res) => {
+      this.designations
+    })
+  }
 
-  //   // Extract IDs from form value
-  //   const id1 = form.value.empId;
-  //   const id2 = form.value.postingOrderInfoId;
-  //   const id3 = form.value.transferApproveInfoId;
-  //   const id4 = form.value.depReleaseInfoId;
-  //   const id5 = form.value.empTnsferPostingJoinId;
-
-  //   // Submit or update based on the form
-  //   if (form === this.EmployeeForm) {
-  //     // Handle EmployeeForm submission
-  //     const empTnsferPostingJoinId$ = id5
-  //       ? this.empTnsferPostingJoinService.update(id5, form.value)
-  //       : this.empTnsferPostingJoinService.submit(form.value);
-  //     console.log(form.value)
-
-  //     // Subscribe to the response and handle accordingly
-  //     this.subscription = empTnsferPostingJoinId$.subscribe((response: any) => {
-  //       if (response.success.empTnsferPostingJoinId) {
-  //         this.handleResponse(response);
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, {
-  //           positionClass: 'toast-top-right',
-  //         });
-  //       }
-  //     });
-  //   } else if (form === this.PostingAndTrnsForm) {
-  //     // Handle PostingAndTrnsForm submission
-  //     const postingOrderInfoId$ = id2
-  //       ? this.postingOrderInfoService.update(id2, form.value)
-  //       : this.postingOrderInfoService.submit(form.value);
-  //     // No action needed, do not submit data
-  //     this.subscription = postingOrderInfoId$.subscribe((response: any) => {
-  //       if (response.success.postingOrderInfoId) {
-  //         this.handleResponse(response);
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, {
-  //           positionClass: 'toast-top-right',
-  //         });
-  //       }
-  //     });
-  //     console.log('PostingAndTrnsForm submitted, no action taken');
-  //   } else if (form === this.TransferApproveInfoForm) {
-  //     // Handle TransferApproveInfoForm submission
-  //     const transferApproveInfoId$ = id3
-  //       ? this.transferApproveInfoService.update(id3, form.value)
-  //       : this.transferApproveInfoService.submit(form.value);
-
-  //     // Subscribe to the response and handle accordingly
-  //     this.subscription = transferApproveInfoId$.subscribe((response: any) => {
-  //       if (response.success.transferApproveInfoId) {
-  //         this.handleResponse(response);
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, {
-  //           positionClass: 'toast-top-right',
-  //         });
-  //       }
-  //     });
-  //   } else if (form === this.EmpTransferPostingJoinForm) {
-  //     // Handle EmpTransferPostingJoinForm submission
-  //     const empTransferPostingJoinId$ = id5
-  //       ? this.empTnsferPostingJoinService.update(id5, form.value)
-  //       : this.empTnsferPostingJoinService.submit(form.value);
-
-  //     // Subscribe to the response and handle accordingly
-  //     this.subscription = empTransferPostingJoinId$.subscribe((response: any) => {
-  //       if (response.success.empTnsferPostingJoinId) {
-  //         this.handleResponse(response);
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, {
-  //           positionClass: 'toast-top-right',
-  //         });
-  //       }
-  //     });
-  //   } else if (form === this.DeptReleaseInfoForm) {
-  //     // Handle DeptReleaseInfoForm submission
-  //     const deptReleaseInfoId$ = id4
-  //       ? this.deptReleaseInfoService.update(id4, form.value)
-  //       : this.deptReleaseInfoService.submit(form.value);
-
-  //     // Subscribe to the response and handle accordingly
-  //     this.subscription = deptReleaseInfoId$.subscribe((response: any) => {
-  //       if (response.success.deptReleaseInfoId) {
-  //         this.handleResponse(response);
-  //       } else {
-  //         this.toastr.warning('', `${response.message}`, {
-  //           positionClass: 'toast-top-right',
-  //         });
-  //       }
-  //     });
-  //   }
-  //   // Add similar conditions for other forms
-
-  //   console.log('Submitting form:', form.value);
-  // }
-
-
-
-
+  ///
 
   onSubmitAllForms(): void {
-    const formSubmissionObservables: Observable<any>[] = [];
-  
-    // Collect all form submission observables
-    if (this.EmployeeForm.dirty) {
-      formSubmissionObservables.push(this.onSubmit(this.EmployeeForm));
-    }
-    if (this.PostingAndTrnsForm.dirty) {
-      formSubmissionObservables.push(this.onSubmit(this.PostingAndTrnsForm));
-    }
-    if (this.TransferApproveInfoForm.dirty) {
-      formSubmissionObservables.push(this.onSubmit(this.TransferApproveInfoForm));
-    }
-    if (this.DeptReleaseInfoForm.dirty) {
-      formSubmissionObservables.push(this.onSubmit(this.DeptReleaseInfoForm));
-    }
-    if (this.EmpTransferPostingJoinForm.dirty) {
-      formSubmissionObservables.push(this.onSubmit(this.EmpTransferPostingJoinForm));
-    }
-  
-    // Aggregate the responses and show a single toast message
-    forkJoin(formSubmissionObservables).subscribe(
-      (      responses: { success: any; }[]) => {
-        const success = responses.some((response: { success: any; }) => response.success);
-        if (success) {
+    // Gather all form submission observables
+    const submissions: Observable<any>[] = [
+      this.onSubmit(this.EmployeeForm),
+      this.onSubmit(this.PostingAndTrnsForm),
+      this.onSubmit(this.TransferApproveInfoForm),
+      this.onSubmit(this.DeptReleaseInfoForm),
+      this.onSubmit(this.EmpTransferPostingJoinForm)
+    ];
+
+    // Use forkJoin to wait for all form submissions
+    forkJoin(submissions).subscribe(
+      responses => {
+        // Check if any form submission was successful
+        const anySuccess = responses.some(response => response.success);
+
+        // Show success or failure message based on the responses
+        if (anySuccess) {
           this.toastr.success('', 'Data saved successfully', {
             positionClass: 'toast-top-right',
           });
@@ -479,51 +361,64 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
             positionClass: 'toast-top-right',
           });
         }
+        this.getAllPostingOrderInfos();
+        this.resetForm();
       },
       error => {
-        this.toastr.error('', 'Error occurred while saving data', {
+        this.toastr.error('', 'Error occurred during submission', {
           positionClass: 'toast-top-right',
         });
       }
     );
   }
-  
+
+
+
   onSubmit(form: any): Observable<any> {
-    // Clear cached data
     this.clearCachedData();
-  
-    // Extract IDs from form value
-    const id1 = form.value.empId;
-    const id2 = form.value.postingOrderInfoId;
-    const id3 = form.value.transferApproveInfoId;
-    const id4 = form.value.depReleaseInfoId;
-    const id5 = form.value.empTnsferPostingJoinId;
-  
-    // Return the corresponding observable based on the form
-    if (form === this.EmployeeForm) {
-      return id5
-        ? this.empTnsferPostingJoinService.update(id5, form.value)
-        : this.empTnsferPostingJoinService.submit(form.value);
-    } else if (form === this.PostingAndTrnsForm) {
-      return id2
-        ? this.postingOrderInfoService.update(id2, form.value)
-        : this.postingOrderInfoService.submit(form.value);
+    // Identify which form is being submitted and extract relevant IDs
+    let id: string;
+    let service: any;
+    if (form === this.PostingAndTrnsForm) {
+      id = form.value.postingOrderInfoId;
+      service = this.postingOrderInfoService;
+      console.log(form.Value)
     } else if (form === this.TransferApproveInfoForm) {
-      return id3
-        ? this.transferApproveInfoService.update(id3, form.value)
-        : this.transferApproveInfoService.submit(form.value);
-    } else if (form === this.EmpTransferPostingJoinForm) {
-      return id5
-        ? this.empTnsferPostingJoinService.update(id5, form.value)
-        : this.empTnsferPostingJoinService.submit(form.value);
+      id = form.value.transferApproveInfoId;
+      service = this.transferApproveInfoService;
     } else if (form === this.DeptReleaseInfoForm) {
-      return id4
-        ? this.deptReleaseInfoService.update(id4, form.value)
-        : this.deptReleaseInfoService.submit(form.value);
+      id = form.value.depReleaseInfoId;
+      service = this.deptReleaseInfoService;
+      console.log(form.value)
+    } else if (form === this.EmpTransferPostingJoinForm) {
+      id = form.value.empTnsferPostingJoinId;
+      service = this.empTnsferPostingJoinService;
     } else {
-      return of({ success: false, message: 'Invalid form ID' });
+      // Return an empty observable if no valid form is provided
+      return new Observable(observer => {
+        observer.next({ success: false, message: 'Invalid form ID' });
+        observer.complete();
+      });
+    }
+
+    // Submit or update based on the presence of the ID
+    if (id) {
+
+      return service.update(id, form.value);
+
+    } else {
+      console.log(id)
+      return service.submit(form.value);
     }
   }
+  resetAllForm(): void {
+    this.EmployeeForm.reset();
+    this.PostingAndTrnsForm.reset();
+    this.TransferApproveInfoForm.reset();
+    this.DeptReleaseInfoForm.reset();
+    this.EmpTransferPostingJoinForm.reset();
+  }
+
 
   clearCachedData(): void {
     this.employeeService.cachedData = [];
@@ -532,31 +427,19 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.deptReleaseInfoService.cachedData = [];
     this.empTnsferPostingJoinService.cachedData = [];
   }
-  
+
   handleResponse(response: any): void {
-    // This method is no longer needed, handling responses directly in the observable chain
-  }
-  
-  delete(element: any) {
-    this.confirmService.confirm('Confirm delete message', 'Are You Sure Delete This  Item').subscribe((result) => {
-      if (result) {
-        this.postingOrderInfoService.delete(element.postingOrderInfoId).subscribe(
-          (res) => {
-            const index = this.dataSource.data.indexOf(element);
-            if (index !== -1) {
-              this.dataSource.data.splice(index, 1);
-              this.dataSource = new MatTableDataSource(this.dataSource.data);
-            }
-          },
-          (err) => {
-            this.toastr.error('Somethig Wrong ! ', ` `, {
-              positionClass: 'toast-top-right',
-            });
-            console.log(err);
-          }
-        );
-      }
-    });
+    if (response.success) {
+      this.toastr.success('', `${response.message}`, {
+        positionClass: 'toast-top-right',
+      });
+      this.getAllPostingOrderInfos();
+      this.resetForm();
+    } else {
+      this.toastr.warning('', `${response.message}`, {
+        positionClass: 'toast-top-right',
+      });
+    }
   }
 
   // transferApproveInfos
@@ -565,11 +448,11 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     if (form != null) form.resetForm();
     this.transferApproveInfoService.transferApproveInfos = {
       transferApproveInfoId: 0,
-      PostingOrderInfoId:0,
+      postingOrderInfoId: 0,
       empId: 0,
       approveStatus: true,
       approveByName: "",
-      approveBy:0,
+      approveBy: 0,
       approveDate: new Date(),
       remarks: "",
       menuPosition: 0,
@@ -578,14 +461,14 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   resetFormTransfer() {
     this.btnText = 'Submit';
-    if (this.PostingAndTrnsForm?.form != null) {
-      this.PostingAndTrnsForm.form.reset();
-      this.PostingAndTrnsForm.form.patchValue({
+    if (this.TransferApproveInfoForm?.form != null) {
+      this.TransferApproveInfoForm.form.reset();
+      this.TransferApproveInfoForm.form.patchValue({
         transferApproveInfoId: 0,
-        PostingOrderInfoId:0,
+        postingOrderInfoId: 0,
         empId: 0,
         approveByName: "",
-        approveBy:0,
+        approveBy: 0,
         approveStatus: true,
         approveDate: new Date(),
         remarks: "",
@@ -600,16 +483,18 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+
   //Departmental Release Information
   initaialDepartmentalReleaseInfo(form?: NgForm) {
     if (form != null) form.resetForm();
     this.deptReleaseInfoService.deptReleaseInfo = {
       depReleaseInfoId: 0,
-      transferApproveInfoId:0,
+      postingOrderInfoId: 0,
+      transferApproveInfoId: 0,
       empId: 0,
-      approveByName:"",
+      approveByName: "",
       approveBy: 0,
-      approveStatus:true,
+      approveStatus: true,
       officeOrderNo: "",
       releaseDate: new Date(),
       orderOfficeBy: "",
@@ -627,10 +512,11 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       this.DeptReleaseInfoForm.form.reset();
       this.DeptReleaseInfoForm.form.patchValue({
         depReleaseInfoId: 0,
-        transferApproveInfoId:0,
-        approveByName:"",
+        postingOrderInfoId: 0,
+        transferApproveInfoId: 0,
+        approveByName: "",
         approveBy: 0,
-        approveStatus:true,
+        approveStatus: true,
         empId: 0,
         officeOrderNo: "",
         releaseDate: new Date(),
@@ -656,10 +542,12 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     if (form != null) form.resetForm();
     this.empTnsferPostingJoinService.empTnsferPostingJoin = {
       empTnsferPostingJoinId: 0,
-      depReleaseInfoId:0,
-      approveByName:"",
+      postingOrderInfoId: 0,
+      transferApproveInfoId:0,
+      depReleaseInfoId: 0,
+      approveByName: "",
       approveBy: 0,
-      approveStatus:true,
+      approveStatus: true,
       empId: 0,
       joinDate: new Date(),
       remarks: "",
@@ -673,10 +561,12 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       this.EmpTransferPostingJoinForm.form.reset();
       this.EmpTransferPostingJoinForm.form.patchValue({
         empTnsferPostingJoinId: 0,
-        depReleaseInfoId:0,
-        approveByName:"",
+        postingOrderInfoId: 0,
+        depReleaseInfoId: 0,
+            transferApproveInfoId:0,
+        approveByName: "",
         approveBy: 0,
-        approveStatus:true,
+        approveStatus: true,
         empId: 0,
         joinDate: new Date(),
         remarks: "",
@@ -691,55 +581,74 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  //Employee
-  selectEmployee(employee: Employee) {
-    this.employeeSelected.emit(employee);
-  }
-  openModal(): void {
-    const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
-      this.handleEmployeeSelection(selectedEmployee);
-    });
-  }
-  handleEmployeeSelection(employee: Employee) {
-    this.employeeService.demoEmployee = employee;
 
 
-  }
+
+
+
+//Employee
+selectEmployee(employee: EmployeesModule) {
+  this.employeeSelected.emit(employee);
+}
+openModal(): void {
+  const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
+  modalRef.content?.employeeSelected.subscribe((selectedEmployee: EmployeesModule) => {
+    this.handleEmployeeSelection(selectedEmployee);
+  });
+}
+handleEmployeeSelection(employee1: EmployeesModule) {
+  console.log(employee1)
+  this.employeeService2.employee = employee1;
+}
+
+  // //Employee
+  // selectEmployee(employee: Employee) {
+  //   this.employeeSelected.emit(employee);
+  // }
+  // openModal(): void {
+  //   const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
+  //   modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
+  //     this.handleEmployeeSelection(selectedEmployee);
+  //   });
+  // }
+  // handleEmployeeSelection(employee: Employee) {
+  //   this.employeeService.demoEmployee = employee;
+  // }
 
 
   //EmployeeJoin/Transfer
   openApproveEmpTransferJoin(): void {
     const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: EmployeesModule) => {
       this.handleApproveEmpTransferJoin(selectedEmployee);
     });
   }
-  handleApproveEmpTransferJoin(employee: Employee) {
-    this.empTnsferPostingJoinService.empTnsferPostingJoin.approveBy= employee.empId,
-    this.empTnsferPostingJoinService.empTnsferPostingJoin.approveByName= employee.employeeName
+  handleApproveEmpTransferJoin(employee: EmployeesModule) {
+    this.empTnsferPostingJoinService.empTnsferPostingJoin.approveBy = employee.empId,
+      this.empTnsferPostingJoinService.empTnsferPostingJoin.approveByName = employee.empEngName
   }
 
   //DeptReleaseInfo
   openApprovDeptReleaseInfo(): void {
     const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: EmployeesModule) => {
       this.handleApprovedeptReleaseInfo(selectedEmployee);
     });
   }
-  handleApprovedeptReleaseInfo(employee: Employee) {
+  handleApprovedeptReleaseInfo(employee: EmployeesModule) {
     this.deptReleaseInfoService.deptReleaseInfo.approveBy = employee.empId,
-    this.deptReleaseInfoService.deptReleaseInfo.approveByName = employee.employeeName
+      this.deptReleaseInfoService.deptReleaseInfo.approveByName = employee.empEngName
   }
   //transferApproveInfos
   openApprovtransferApproveInfos(): void {
     const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: EmployeesModule) => {
       this.handletransferApproveInfos(selectedEmployee);
     });
   }
-  handletransferApproveInfos(employee: Employee) {
+  handletransferApproveInfos(employee: EmployeesModule) {
     this.transferApproveInfoService.transferApproveInfos.approveBy = employee.empId,
-    this.transferApproveInfoService.transferApproveInfos.approveByName = employee.employeeName
+      this.transferApproveInfoService.transferApproveInfos.approveByName = employee.empEngName
   }
 }
+

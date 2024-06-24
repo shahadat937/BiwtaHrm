@@ -14,9 +14,10 @@ namespace Hrm.Application.DTOs.PostingOrderInfo
         public int? DepartmentId { get; set; }
         public int? SubBranchId { get; set; }
         public int? SubDepartmentId { get; set; }
-        public int? OfficeBranchId { get; set; }
+        public int? OfficeId { get; set; }
+        public int? DesignationId { get; set; }
         public string? OfficeOrderNo { get; set; }
-        public DateTime? OfficeOrderDate { get; set; }
+        public DateOnly? OfficeOrderDate { get; set; }
         public string? OrderOfficeBy { get; set; }
         public string? TransferSection { get; set; }
         public string? ReleaseType { get; set; }

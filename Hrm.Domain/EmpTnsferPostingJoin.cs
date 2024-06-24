@@ -16,8 +16,10 @@ namespace Hrm.Domain
 
         public int? EmpId { get; set; }
         public int? DepReleaseInfoId { get; set; }
-        public string? ApproveBy { get; set; }
-       public bool? ApproveStatus { get; set; }
+        public int? PostingOrderInfoId { get; set; }
+        public int? TransferApproveInfoId { get; set; }
+        public int? ApproveBy { get; set; }
+        public bool? ApproveStatus { get; set; }
         public DateTime? JoinDate { get; set; }
         public string? Remarks { get; set; }
         public int? MenuPosition { get; set; }

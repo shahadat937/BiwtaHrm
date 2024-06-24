@@ -22,5 +22,6 @@ $enable-rtl: true;
 // If you want to add something do it here
 @import "custom";
 // regular style toast
-@import 'ngx-toastr/toastr'
+@import 'ngx-toastr/toastr';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 

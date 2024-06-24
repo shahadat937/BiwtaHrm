@@ -40,6 +40,9 @@ export class DeptReleaseInfoService {
   submit(model: any) {
     return this.http.post(this.baseUrl + '/depReleaseInfo/save-depReleaseInfo', model);
   }
+  submitDepRelease(model: any) {
+    return this.http.post(this.baseUrl + '/depReleaseInfo/save-AnoterdepReleaseInfo', model);
+  }
   delete(id:number){
     return this.http.delete(this.baseUrl + '/depReleaseInfo/delete-depReleaseInfo/'+id);
   }

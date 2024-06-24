@@ -8,6 +8,7 @@ using Hrm.Application.Responses;
 using Hrm.Domain;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.Features.OfficeBranch.Requests.Queries;
 namespace Hrm.Api.Controllers
 {
 
@@ -79,7 +80,14 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+        [HttpGet]
+        [Route("get-selectedDesignationByDepartmentId/{id}")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedDesignationByDepartmentId(int id)
+        {
+            var branch = await _mediator.Send(new GetDesignationByDepartmentIdRequest { DepartmentId = id });
+            return Ok(branch);
 
+        }
 
         [HttpGet]
         [Route("get-designationByOfficeId/{id}")]

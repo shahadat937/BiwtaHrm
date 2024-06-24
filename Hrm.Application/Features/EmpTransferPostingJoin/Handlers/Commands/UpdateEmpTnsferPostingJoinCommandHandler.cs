@@ -45,8 +45,7 @@ namespace Hrm.Application.Features.EmpTnsferPostingJoin.Handlers.Commands
 
             if (EmpTnsferPostingJoin is null)
             {
-                respose.Success = false;
-                respose.Message = "Creation Failed";
+                throw new NotFoundException(nameof(EmpTnsferPostingJoin), request.EmpTnsferPostingJoinDto.EmpTnsferPostingJoinId);
             }
 
             _mapper.Map(request.EmpTnsferPostingJoinDto, EmpTnsferPostingJoin);
@@ -54,24 +53,7 @@ namespace Hrm.Application.Features.EmpTnsferPostingJoin.Handlers.Commands
             await _unitOfWork.Repository<Hrm.Domain.EmpTnsferPostingJoin>().Update(EmpTnsferPostingJoin);
             await _unitOfWork.Save();
 
-            respose.Success = true;
-            respose.Message = "Update Successfull";
-            respose.Id = EmpTnsferPostingJoin.EmpTnsferPostingJoinId;
-
             return Unit.Value;
-
-
-
-            //_mapper.Map(request.DepReleaseInfoDto, DepReleaseInfo);
-
-            //await _unitOfWork.Repository<Hrm.Domain.DepReleaseInfo>().Update(DepReleaseInfo);
-            //await _unitOfWork.Save();
-
-            //response.Success = true;
-            //response.Message = "Update Successfull";
-            //response.Id = DepReleaseInfo.DepReleaseInfoId;
-
-            //return response;
         }
     }
 }

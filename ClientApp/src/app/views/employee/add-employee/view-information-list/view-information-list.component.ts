@@ -31,7 +31,6 @@ export class ViewInformationListComponent implements OnInit {
   presentAddressEntryStatus : boolean = false;
   permanentAddressEntryStatus : boolean = false;
   empJobDetailsEntryStatus : boolean = false;
-
   empSpouseInfoEntryStatus : boolean = false;
   empChildInfoEntryStatus : boolean = false;
   empEducationInfoEntryStatus : boolean = false;
@@ -53,9 +52,6 @@ export class ViewInformationListComponent implements OnInit {
     public empBasicInfoService: EmpBasicInfoService,
     public empPresentAddressService: EmpPresentAddressService,
     public empPermanentAddressService: EmpPermanentAddressService,
-
-    public empJobDetailsService: EmpJobDetailsService,) { }
-
     public empJobDetailsService: EmpJobDetailsService,
     public empSpouseInfoService: EmpSpouseInfoService,
     public empChildInfoService: EmpChildInfoService,
@@ -116,10 +112,6 @@ export class ViewInformationListComponent implements OnInit {
       this.permanentAddressEntryStatus = !!res;
     })
   }
-
-  getStatusOfEmpJobDetails(){
-    this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
-      this.empJobDetailsEntryStatus = !!res;
   getStatusOfEmpJobDetails(){
     this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
       this.empJobDetailsEntryStatus = !!res;

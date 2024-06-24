@@ -1,6 +1,5 @@
 export class EmpTnsferPostingJoin {
     empTnsferPostingJoinId: number = 0;
-    transferApproveInfoId:number=0;
     postingOrderInfoId:number=0;
     depReleaseInfoId:number=0;
     approveByName:string= "";

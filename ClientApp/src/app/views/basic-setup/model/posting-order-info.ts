@@ -15,33 +15,6 @@ export class PostingOrderInfo {
     transferSection:string="";
     releaseType:string="";
     menuPosition: number = 0;
-    isActive: boolean = true;
-    status:string=""
+    isActive: boolean = true
 }
-interface PostingOrderInfoWithStatus extends PostingOrderInfo {
-    status: 'Pending' | 'Approved' | 'Rejected';
-  }
-  
-
-// export interface PostingOrderInfo {
-//     postingOrderInfoId: number;
-//     empId: number;
-//     departmentId: any;
-//     subBranchId: number;
-//     subDepartmentId: number;
-//     designationId: any;
-//     officeId: any;
-//     designationName: string;
-//     officeName: string;
-//     departmentName: string;
-//     officeOrderNo: string;
-//     officeOrderDate: Date;
-//     orderOfficeBy: string;
-//     transferSection: string;
-//     releaseType: string;
-//     menuPosition: number;
-//     isActive: boolean;
-//     status: 'Pending' | 'Approved' | 'Rejected'; // Add this field
-//   }
-  
 

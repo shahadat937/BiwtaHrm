@@ -120,6 +120,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
         console.log("Spouse Info: ", res)
         this.headerText = 'Update Spouse Information';
         this.btnText = 'Update';
+        this.empSpouse = res;
         this.patchSpouseInfo(res);
       }
       else {

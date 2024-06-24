@@ -50,6 +50,7 @@ export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
       if (res.length > 0) {
         this.headerText = 'Update PSI Training Information';
         this.btnText = 'Update';
+        this.empPsiTraining = res;
         this.patchPsiTrainingInfo(res);
       }
       else {

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PersonalInformationComponent } from '../employee-informations/personal-information/personal-information.component';
@@ -16,8 +16,6 @@ import { EmpChildInfoService } from '../../service/emp-child-info.service';
 import { EmpEducationInfoService } from '../../service/emp-education-info.service';
 import { EmpPsiTrainingInfoService } from '../../service/emp-psi-training-info.service';
 import { EmpBankInfoService } from '../../service/emp-bank-info.service';
-import { EmpLanguageInfoService } from '../../service/emp-language-info.service';
-import { EmpForeignTourInfoService } from '../../service/emp-foreign-tour-info.service';
 
 @Component({
   selector: 'app-view-information-list',
@@ -39,8 +37,6 @@ export class ViewInformationListComponent implements OnInit {
   empEducationInfoEntryStatus : boolean = false;
   empPsiTrainingInfoEntryStatus : boolean = false;
   empBankInfoEntryStatus : boolean = false;
-  empLanguageInfoEntryStatus : boolean = false;
-  empForeignTourInfoEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -65,11 +61,8 @@ export class ViewInformationListComponent implements OnInit {
     public empChildInfoService: EmpChildInfoService,
     public empEducationInfoService: EmpEducationInfoService,
     public empPsiTrainingInfoService: EmpPsiTrainingInfoService,
-    public empBankInfoService: EmpBankInfoService,
-    public empLanguageInfoService: EmpLanguageInfoService,
-    public empForeignTourInfoService: EmpForeignTourInfoService,) { }
+    public empBankInfoService: EmpBankInfoService,) { }
 
-  @HostListener('window:scroll')
   ngOnInit(): void {
     this.handleRouteParams();
     this.getEmployeeByAspNetUserId();
@@ -98,9 +91,7 @@ export class ViewInformationListComponent implements OnInit {
         this.getStatusOfEmpChildStatus();
         this.getStatusOfEmpEducationStatus();
         this.getStatusOfEmpPsiTrainingStatus();
-        this.getStatusOfEmpBankInfoStatus();
-        this.getStatusOfEmpLanguageInfoStatus();
-        this.getStatusOfEmpForeignTourInfoStatus();
+        this.getStatusOfEmpBankInfoStatus()
       }
       else{
         this.gettingStatus = false;
@@ -184,26 +175,6 @@ export class ViewInformationListComponent implements OnInit {
       }
     })
   }
-  getStatusOfEmpLanguageInfoStatus() {
-    this.empLanguageInfoService.findByEmpId(this.empId).subscribe((res) => {
-      if(res.length>0){
-        this.empLanguageInfoEntryStatus = true;
-      }
-      else {
-        this.empLanguageInfoEntryStatus = false;
-      }
-    })
-  }
-  getStatusOfEmpForeignTourInfoStatus() {
-    this.empForeignTourInfoService.findByEmpId(this.empId).subscribe((res) => {
-      if(res.length>0){
-        this.empForeignTourInfoEntryStatus = true;
-      }
-      else {
-        this.empForeignTourInfoEntryStatus = false;
-      }
-    })
-  }
   
 
   toggleComponent(component: string) {
@@ -211,11 +182,10 @@ export class ViewInformationListComponent implements OnInit {
     if (this.visibleComponent === component) {
       this.visibleComponent = null;
       this.visible = false;
-      } else {
-        this.visibleComponent = component;
-        this.visible = true;
-        this.componentVisible = true;
-        window.scrollTo(0, 0);
+    } else {
+      this.visibleComponent = component;
+      this.visible = true;
+      this.componentVisible = true;
     }
     this.getEmployeeByAspNetUserId();
   }

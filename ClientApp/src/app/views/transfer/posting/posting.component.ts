@@ -25,8 +25,6 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { EmpTnsferPostingJoin } from './../../basic-setup/model/emp-tnsfer-posting-join';
 import { EmpTnsferPostingJoinService } from './../../basic-setup/service/emp-tnsfer-posting-join.service';
 import { OfficeService } from '../../basic-setup/service/office.service';
-import { EmployeesModule } from '../../employee/model/employees.module';
-import { EmployeeService } from '../../employee/service/employee.service';
 
 @Component({
   selector: 'app-posting',
@@ -43,7 +41,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   transferApproveInfos: TransferApproveInfo[] = [];
   deptReleaseInfo: DeptReleaseInfo[] = [];
   empTnsferPostingJoin: EmpTnsferPostingJoin[] = [];
-  //employees: any[] = [];
+  employees: any[] = [];
   select: any[] = [];
   offices: SelectedModel[] = [];
   designations: SelectedModel[] = [];
@@ -68,10 +66,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-  // @Input() employeeSelected = new EventEmitter<Employee>();
-  //OutPut Decorator
-  @Input() employeeSelected = new EventEmitter<EmployeesModule>();
-  employee2: EmployeesModule[]=[];
+  @Input() employeeSelected = new EventEmitter<Employee>();
 
   constructor(
     public designationService: DesignationService,
@@ -93,9 +88,8 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     private modalService: BsModalService,
     private cdRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
-    private fb: FormBuilder ,// Inject FormBuilder here
-    //OutPut Decorator
-    public employeeService2:EmployeeService
+    private fb: FormBuilder // Inject FormBuilder here
+
   ) {
 
     this.route.paramMap.subscribe((params) => {
@@ -260,8 +254,7 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
       transferSection: "",
       releaseType: "",
       menuPosition: 0,
-      isActive: true,
-      status:""
+      isActive: true
     };
   }
 
@@ -543,7 +536,6 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.empTnsferPostingJoinService.empTnsferPostingJoin = {
       empTnsferPostingJoinId: 0,
       postingOrderInfoId: 0,
-      transferApproveInfoId:0,
       depReleaseInfoId: 0,
       approveByName: "",
       approveBy: 0,
@@ -563,7 +555,6 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
         empTnsferPostingJoinId: 0,
         postingOrderInfoId: 0,
         depReleaseInfoId: 0,
-            transferApproveInfoId:0,
         approveByName: "",
         approveBy: 0,
         approveStatus: true,
@@ -583,72 +574,54 @@ export class PostingComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
-
-
-
-//Employee
-selectEmployee(employee: EmployeesModule) {
-  this.employeeSelected.emit(employee);
-}
-openModal(): void {
-  const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-  modalRef.content?.employeeSelected.subscribe((selectedEmployee: EmployeesModule) => {
-    this.handleEmployeeSelection(selectedEmployee);
-  });
-}
-handleEmployeeSelection(employee1: EmployeesModule) {
-  console.log(employee1)
-  this.employeeService2.employee = employee1;
-}
-
-  // //Employee
-  // selectEmployee(employee: Employee) {
-  //   this.employeeSelected.emit(employee);
-  // }
-  // openModal(): void {
-  //   const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-  //   modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
-  //     this.handleEmployeeSelection(selectedEmployee);
-  //   });
-  // }
-  // handleEmployeeSelection(employee: Employee) {
-  //   this.employeeService.demoEmployee = employee;
-  // }
+  //Employee
+  selectEmployee(employee: Employee) {
+    this.employeeSelected.emit(employee);
+  }
+  openModal(): void {
+    const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
+      this.handleEmployeeSelection(selectedEmployee);
+    });
+  }
+  handleEmployeeSelection(employee: Employee) {
+    this.employeeService.demoEmployee = employee;
+  }
 
 
   //EmployeeJoin/Transfer
   openApproveEmpTransferJoin(): void {
     const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-    modalRef.content?.employeeSelected.subscribe((selectedEmployee: EmployeesModule) => {
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
       this.handleApproveEmpTransferJoin(selectedEmployee);
     });
   }
-  handleApproveEmpTransferJoin(employee: EmployeesModule) {
+  handleApproveEmpTransferJoin(employee: Employee) {
     this.empTnsferPostingJoinService.empTnsferPostingJoin.approveBy = employee.empId,
-      this.empTnsferPostingJoinService.empTnsferPostingJoin.approveByName = employee.empEngName
+      this.empTnsferPostingJoinService.empTnsferPostingJoin.approveByName = employee.employeeName
   }
 
   //DeptReleaseInfo
   openApprovDeptReleaseInfo(): void {
     const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-    modalRef.content?.employeeSelected.subscribe((selectedEmployee: EmployeesModule) => {
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
       this.handleApprovedeptReleaseInfo(selectedEmployee);
     });
   }
-  handleApprovedeptReleaseInfo(employee: EmployeesModule) {
+  handleApprovedeptReleaseInfo(employee: Employee) {
     this.deptReleaseInfoService.deptReleaseInfo.approveBy = employee.empId,
-      this.deptReleaseInfoService.deptReleaseInfo.approveByName = employee.empEngName
+      this.deptReleaseInfoService.deptReleaseInfo.approveByName = employee.employeeName
   }
   //transferApproveInfos
   openApprovtransferApproveInfos(): void {
     const modalRef: BsModalRef = this.modalService.show(EmpModalComponent);
-    modalRef.content?.employeeSelected.subscribe((selectedEmployee: EmployeesModule) => {
+    modalRef.content?.employeeSelected.subscribe((selectedEmployee: Employee) => {
       this.handletransferApproveInfos(selectedEmployee);
     });
   }
-  handletransferApproveInfos(employee: EmployeesModule) {
+  handletransferApproveInfos(employee: Employee) {
     this.transferApproveInfoService.transferApproveInfos.approveBy = employee.empId,
-      this.transferApproveInfoService.transferApproveInfos.approveByName = employee.empEngName
+      this.transferApproveInfoService.transferApproveInfos.approveByName = employee.employeeName
   }
 }
 

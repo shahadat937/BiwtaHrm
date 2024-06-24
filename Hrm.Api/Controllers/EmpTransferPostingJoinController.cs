@@ -33,7 +33,7 @@ namespace Hrm.Api.Controllers
         [Route("save-EmpTnsferPostingJoin")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateEmpTnsferPostingJoinDto EmpTnsferPostingJoin)
         {
-            if (EmpTnsferPostingJoin.ApproveBy == 0)
+            if (EmpTnsferPostingJoin.ApproveBy == "0")
             {
                 return NoContent();
             }

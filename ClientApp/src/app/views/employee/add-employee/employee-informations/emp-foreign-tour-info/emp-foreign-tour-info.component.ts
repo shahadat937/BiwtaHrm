@@ -5,37 +5,39 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { EmpPsiTrainingInfoModule } from '../../../model/emp-psi-training-info.module';
-import { EmpPsiTrainingInfoService } from '../../../service/emp-psi-training-info.service';
+import { EmpForeignTourInfoModule } from '../../../model/emp-foreign-tour-info.module';
+import { EmpForeignTourInfoService } from '../../../service/emp-foreign-tour-info.service';
+import { CountryService } from 'src/app/views/basic-setup/service/country.service';
 
 @Component({
-  selector: 'app-emp-psi-training-info',
-  templateUrl: './emp-psi-training-info.component.html',
-  styleUrl: './emp-psi-training-info.component.scss'
+  selector: 'app-emp-foreign-tour-info',
+  templateUrl: './emp-foreign-tour-info.component.html',
+  styleUrl: './emp-foreign-tour-info.component.scss'
 })
-export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
+export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
   @Input() empId!: number;
   @Output() close = new EventEmitter<void>(); visible: boolean = true;
   headerText: string = '';
   headerBtnText: string = 'Hide From';
   btnText: string = '';
-  trainingNames: SelectedModel[] = [];
+  countris: SelectedModel[] = [];
   subscription: Subscription = new Subscription();
   loading: boolean = false;
-  empPsiTraining: EmpPsiTrainingInfoModule[] = [];
+  empForeignTour: EmpForeignTourInfoModule[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
     private toastr: ToastrService,
-    public empPsiTrainingInfoService: EmpPsiTrainingInfoService,
+    public empForeignTourInfoService: EmpForeignTourInfoService,
+    public countryService: CountryService,
     private fb: FormBuilder) { }
 
 
   ngOnInit(): void {
-    this.getEmployeePsiTrainingInfoByEmpId();
-    this.getSelectedTrainingName();
+    this.getEmployeeForeignTourInfoByEmpId();
+    this.getSelectedCountries();
   }
 
   ngOnDestroy(): void {
@@ -45,72 +47,72 @@ export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
   }
 
 
-  getEmployeePsiTrainingInfoByEmpId() {
-    this.empPsiTrainingInfoService.findByEmpId(this.empId).subscribe((res) => {
+  getEmployeeForeignTourInfoByEmpId() {
+    this.empForeignTourInfoService.findByEmpId(this.empId).subscribe((res) => {
       if (res.length > 0) {
-        this.headerText = 'Update PSI Training Information';
+        this.headerText = 'Updat Foreign Tour Information';
         this.btnText = 'Update';
-        this.patchPsiTrainingInfo(res);
+        this.patchForeignTourInfo(res);
       }
       else {
-        this.headerText = 'Add PSI Training Information';
+        this.headerText = 'Add Foreign Tour Information';
         this.btnText = 'Submit';
-        this.addPsiTraining();
+        this.addForeignTour();
       }
     })
   }
 
-  patchPsiTrainingInfo(psiTrainingInfoList: any[]) {
-    const control = <FormArray>this.EmpPsiTrainingInfoForm.controls['empPsiTrainingList'];
+  patchForeignTourInfo(foreignTourInfoList: any[]) {
+    const control = <FormArray>this.EmpForeignTourInfoForm.controls['empForeignTourList'];
     control.clear();
 
-    psiTrainingInfoList.forEach(psiTrainingInfo => {
+    foreignTourInfoList.forEach(foreignTourInfo => {
       control.push(this.fb.group({
-        id: [psiTrainingInfo.id],
-        empId: [psiTrainingInfo.empId],
-        trainingNameId: [psiTrainingInfo.trainingNameId, Validators.required],
-        workPurpose: [psiTrainingInfo.workPurpose],
-        fromDate: [psiTrainingInfo.fromDate],
-        toDate: [psiTrainingInfo.toDate],
-        remark: [psiTrainingInfo.remark],
+        id: [foreignTourInfo.id],
+        empId: [foreignTourInfo.empId],
+        countryId: [foreignTourInfo.countryId, Validators.required],
+        fromDate: [foreignTourInfo.fromDate],
+        toDate: [foreignTourInfo.toDate],
+        purpose: [foreignTourInfo.purpose],
+        remark: [foreignTourInfo.remark],
       }));
     });
   }
-  EmpPsiTrainingInfoForm: FormGroup = new FormGroup({
-    empPsiTrainingList: new FormArray([])
+  EmpForeignTourInfoForm: FormGroup = new FormGroup({
+    empForeignTourList: new FormArray([])
   });
 
-  get empPsiTrainingListArray() {
-    return this.EmpPsiTrainingInfoForm.controls["empPsiTrainingList"] as FormArray;
+  get empForeignTourListArray() {
+    return this.EmpForeignTourInfoForm.controls["empForeignTourList"] as FormArray;
   }
 
-  addPsiTraining() {
-    this.empPsiTrainingListArray.push(new FormGroup({
+  addForeignTour() {
+    this.empForeignTourListArray.push(new FormGroup({
       id: new FormControl(0),
       empId: new FormControl(this.empId),
-      trainingNameId: new FormControl(undefined, Validators.required),
-      workPurpose: new FormControl(undefined),
+      countryId: new FormControl(undefined, Validators.required),
       fromDate: new FormControl(undefined),
       toDate: new FormControl(undefined),
+      purpose: new FormControl(undefined),
       remark: new FormControl(undefined),
     }));
   }
 
-  removePsiTrainingList(index: number, id: number) {
+  removeForeignTourList(index: number, id: number) {
     if (id != 0) {
       this.confirmService
         .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
         .subscribe((result) => {
           if (result) {
-            this.empPsiTrainingInfoService.deleteEmpPsiTrainingInfo(id).subscribe(
+            this.empForeignTourInfoService.deleteEmpForeignTourInfo(id).subscribe(
               (res) => {
                 this.toastr.warning('Delete sucessfully ! ', ` `, {
                   positionClass: 'toast-top-right',
                 });
 
-                if (this.empPsiTrainingListArray.controls.length > 0)
-                  this.empPsiTrainingListArray.removeAt(index);
-                this.getEmployeePsiTrainingInfoByEmpId();
+                if (this.empForeignTourListArray.controls.length > 0)
+                  this.empForeignTourListArray.removeAt(index);
+                this.getEmployeeForeignTourInfoByEmpId();
               },
               (err) => {
                 this.toastr.error('Somethig Wrong ! ', ` `, {
@@ -123,8 +125,8 @@ export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
         });
     }
     else if (id == 0) {
-      if (this.empPsiTrainingListArray.controls.length > 0)
-        this.empPsiTrainingListArray.removeAt(index);
+      if (this.empForeignTourListArray.controls.length > 0)
+        this.empForeignTourListArray.removeAt(index);
     }
   }
 
@@ -134,19 +136,19 @@ export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
   }
 
 
-  getSelectedTrainingName() {
-    this.empPsiTrainingInfoService.getSelectedTrainingName().subscribe((res) => {
-      this.trainingNames = res;
-    })
+  getSelectedCountries() {
+    this.subscription = this.countryService.selectGetCountry().subscribe((data) => {
+      this.countris = data;
+    });
   }
 
   cancel() {
     this.close.emit();
   }
 
-  insertPsiTraining() {
+  insertForeignTour() {
     this.loading = true;
-    this.empPsiTrainingInfoService.saveEmpPsiTrainingInfo(this.EmpPsiTrainingInfoForm.get("empPsiTrainingList")?.value).subscribe(((res: any) => {
+    this.empForeignTourInfoService.saveEmpForeignTourInfo(this.EmpForeignTourInfoForm.get("empForeignTourList")?.value).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -164,5 +166,4 @@ export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
     )
   }
 }
-
 

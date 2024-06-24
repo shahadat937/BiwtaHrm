@@ -1,0 +1,266 @@
+<c-card class="mt-3 mb-3 shadow">
+    <c-card-header class="d-flex justify-content-between">
+      <div>{{headerText}}</div>
+      <div><button cButton color="primary" shape="rounded-pill" (click)="UserFormView()">{{headerBtnText}}</button></div>
+    </c-card-header>
+    <c-card-body [visible]="visible" cCollapse>
+      <form #EmpPresentAddressForm="ngForm" (submit)="onSubmit(EmpPresentAddressForm)" [gutter]="3" novalidate cForm cRow class="needs-validation">
+          <input
+            type="hidden"
+            [(ngModel)]="empPresentAddressService.empPresentAddress.id"
+            name="id"
+          />
+          <input
+            type="hidden"
+            [(ngModel)]="empPresentAddressService.empPresentAddress.empId"
+            name="empId"
+          />
+          
+          <c-col [md]="3">
+            <label cLabel for="validationCustom03">Country<span class="text-danger">*</span></label>
+            <div class="input-wrapper">
+              <select (change)="onDivisionNamesChangeByCounterId(empPresentAddressService.empPresentAddress.countryId)"
+                [(ngModel)]="empPresentAddressService.empPresentAddress.countryId" name="countryId" #countryId="ngModel"
+                cFormControl id="validationCustom03" required aria-label="Default select example" cSelect>
+                <option [ngValue]="null">Select Country</option>
+    
+                @for(country of countris; track country.id;let index=$index) {
+                <option [value]="country.id">
+                  {{ country.name }}
+                </option>
+                }
+              </select>
+    
+              @if(!countryId.valid && countryId.touched){
+              <div class="text-left text-danger">Country is required</div>
+              }
+            </div>
+          </c-col>
+    
+          <c-col [md]="3">
+            <label cLabel for="validationCustom04">Division<span class="text-danger">*</span></label>
+            <div class="input-wrapper">
+              <select (change)="onDistrictNamesChangeByDivisionId(empPresentAddressService.empPresentAddress.divisionId)"
+    
+                [(ngModel)]="empPresentAddressService.empPresentAddress.divisionId" name="divisionId" #divisionId="ngModel"
+                cFormControl id="validationCustom04" required aria-label="Default select example" cSelect>
+                <option [ngValue]="null">Select Division</option>
+                @for(division of divisions; track division.id;let index=$index) {
+                <option [value]="division.id">
+                  {{ division.name }}
+                </option>
+                }
+              </select>
+              @if(!divisionId.valid && divisionId.touched){
+              <div class="text-left text-danger">Division is required</div>
+              }
+            </div>
+          </c-col>
+    
+          <c-col [md]="3">
+            <label cLabel for="validationCustom05">District<span class="text-danger">*</span></label>
+            <div class="input-wrapper">
+              <select (change)="onUpazilaNamesChangeByDistrictId(empPresentAddressService.empPresentAddress.districtId)"
+                [(ngModel)]="empPresentAddressService.empPresentAddress.districtId" name="districtId" #districtId="ngModel"
+                cFormControl id="validationCustom05" required aria-label="Default select example" cSelect>
+                <option [ngValue]="null">Select District</option>
+    
+                @for(district of districts; track district.id;let index=$index) {
+                <option [value]="district.id">
+                  {{ district.name }}
+                </option>
+                }
+              </select>
+    
+              @if(!districtId.valid && districtId.touched){
+              <div class="text-left text-danger">District is required</div>
+              }
+            </div>
+          </c-col>
+    
+          <c-col [md]="3">
+            <label cLabel for="validationCustom06">Upazila<span class="text-danger"></span></label>
+            <div class="input-wrapper">
+              <select (change)="onThanaNamesChangeByUpazilaId(empPresentAddressService.empPresentAddress.upazilaId)"
+                [(ngModel)]="empPresentAddressService.empPresentAddress.upazilaId" name="upazilaId" #upazilaId="ngModel"
+                cFormControl id="validationCustom06" aria-label="Default select example" cSelect>
+                <option [ngValue]="null">Select Upazila</option>
+    
+                @for(upazila of upazilas; track upazila.id;let index=$index) {
+                <option [value]="upazila.id">
+                  {{ upazila.name }}
+                </option>
+                }
+              </select>
+    
+              @if(!upazilaId.valid && upazilaId.touched){
+              <div class="text-left text-danger">Upazila is required</div>
+              }
+            </div>
+          </c-col>
+    
+          <c-col [md]="3">
+            <label cLabel for="validationCustom07">Thana<span class="text-danger"></span></label>
+            <div class="input-wrapper">
+              <select (change)="onUnionNamesChangeByThanaId(empPresentAddressService.empPresentAddress.thanaId)"
+                [(ngModel)]="empPresentAddressService.empPresentAddress.thanaId" name="thanaId" #thanaId="ngModel" cFormControl
+                id="validationCustom07" aria-label="Default select example" cSelect>
+                <option [ngValue]="null">Select Thana</option>
+    
+                @for(thana of thanas; track thana.id;let index=$index) {
+                <option [value]="thana.id">
+                  {{ thana.name }}
+                </option>
+                }
+              </select>
+    
+              @if(!thanaId.valid && thanaId.touched){
+              <div class="text-left text-danger">Thana is required</div>
+              }
+            </div>
+          </c-col>
+    
+          <c-col [md]="3">
+            <label cLabel for="validationCustom08">Union<span class="text-danger"></span></label>
+            <div class="input-wrapper">
+              <select (change)="onWardNamesChangeByUnionId(empPresentAddressService.empPresentAddress.unionId)"
+                [(ngModel)]="empPresentAddressService.empPresentAddress.unionId" name="unionId" #unionId="ngModel" cFormControl
+                id="validationCustom08" aria-label="Default select example" cSelect>
+                <option [ngValue]="null">Select Union</option>
+    
+                @for(union of unions; track union.id;let index=$index) {
+                <option [value]="union.id">
+                  {{ union.name }}
+                </option>
+                }
+              </select>
+    
+              @if(!unionId.valid && unionId.touched){
+              <div class="text-left text-danger">Union is required</div>
+              }
+            </div>
+          </c-col>
+    
+    
+    
+          <c-col [md]="3">
+            <label cLabel for="validationCustom09">Ward<span class="text-danger"></span></label>
+            <div class="input-wrapper">
+              <select [(ngModel)]="empPresentAddressService.empPresentAddress.wardId" name="wardId" #wardId="ngModel" cFormControl
+                id="validationCustom09" aria-label="Default select example" cSelect>
+                <option [ngValue]="null">Select Ward</option>
+    
+                @for(ward of wards; track ward.id;let index=$index) {
+                <option [value]="ward.id">
+                  {{ ward.name }}
+                </option>
+                }
+              </select>
+    
+              @if(!wardId.valid && wardId.touched){
+              <div class="text-left text-danger">Ward is required</div>
+              }
+            </div>
+          </c-col>
+  
+          <c-col [md]="3">
+            <label cLabel for="zipCode"
+            >Zip Code<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="empPresentAddressService.empPresentAddress.zipCode"
+              name="zipCode"
+              #zipCode="ngModel"
+              placeholder="Enter Zip Code"
+              cFormControl
+              id="zipCode"
+              type="text"
+              pattern="[0-9]*"
+            />
+            <!-- @if(!zipCode.valid&&zipCode.touched){
+            <div class="text-left text-danger">Place of Birth is required</div>
+            } -->
+            @if(!zipCode.valid&&zipCode.touched&&zipCode.value){
+            <div class="text-left text-danger">Invalid Phone Number</div>
+            }
+          </c-col>
+          
+          <c-col [md]="4">
+            <label cLabel for="address"
+            >Village/Road<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="empPresentAddressService.empPresentAddress.address"
+              name="address"
+              #address="ngModel"
+              placeholder="Enter Village/Road"
+              cFormControl
+              id="address"
+              type="text"
+            />
+            @if(!address.valid&&address.touched){
+            <div class="text-left text-danger">Village/Road is required</div>
+            }
+          </c-col>
+          
+          <c-col [md]="4">
+            <label cLabel for="validationCustom08"
+            >Email<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="empPresentAddressService.empPresentAddress.email"
+              name="email"
+              #Email="ngModel"
+              placeholder="Enter Email Address"
+              cFormControl
+              id="validationCustom08"
+              type="email"
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            />
+            @if(!Email.value&&Email.touched){
+            <div class="text-left text-danger">Email is required</div>
+            }
+            @if(!Email.valid&&Email.touched&&Email.value){
+              <div class="text-left text-danger">Email is not valid</div>
+              }
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="remark"
+            >Remark<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="empPresentAddressService.empPresentAddress.remark"
+              name="remark"
+              #remark="ngModel"
+              placeholder="Enter remark"
+              cFormControl
+              id="remark"
+              type="text"
+            />
+            @if(!remark.valid&&remark.touched){
+            <div class="text-left text-danger">Remark is required</div>
+            }
+          </c-col>
+  
+          <c-col [xs]="12">
+            <div class="d-flex justify-content-between">
+              <div>
+                <button
+                  [disabled]="loading"
+                  [disabled]="EmpPresentAddressForm.invalid"
+                  cButton
+                  class="me-1"
+                  color="primary"
+                  type="submit"
+                >
+                  <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                  {{ btnText }}
+                  </button>
+                  <button cButton color="secondary" (click)="resetForm()">Reset</button>
+              </div>
+              <div>
+                <button cButton color="danger" class="text-light" (click)="cancel()">Cancel</button>
+              </div>
+            </div>
+          </c-col>
+  
+      </form>
+    </c-card-body>
+  </c-card>

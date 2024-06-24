@@ -1,0 +1,141 @@
+<c-card>
+    <c-card-header>{{headerText}}</c-card-header>
+    <c-card-body>
+      <form
+        #EyesColorForm="ngForm"
+        (submit)="onSubmit(EyesColorForm)"
+        [gutter]="3"
+        novalidate
+        cForm
+        cRow
+        class="needs-validation"
+      >
+        <c-col [md]="6">
+          <input
+            type="hidden"
+            [(ngModel)]="eyesColorService.eyesColors.eyesColorId"
+            name="eyesColorId"
+          />
+          <label cLabel for="validationCustom01"
+            >Eyes Color Name<span class="text-danger">*</span></label
+          >
+          <input
+            [(ngModel)]="eyesColorService.eyesColors.eyesColorName"
+            name="eyesColorName"
+            #EyesColorName="ngModel"
+            placeholder="Enter EyesColor Name "
+            cFormControl
+            id="validationCustom01"
+            required
+            type="text"
+            value="Mark"
+          />
+          @if(!EyesColorName.valid&&EyesColorName.touched){
+          <div class="text-left text-danger">Eyes Color Name is required</div>
+          }
+        </c-col>
+        
+        <c-col [md]="6">
+          <label cLabel for="activeStatus">Active Status</label>
+          <select [(ngModel)]="eyesColorService.eyesColors.isActive"
+          name="isActive"
+          cSelect
+          id="activeStatus">
+            <option value="true">Active</option>
+            <option value="false">De-Active</option>
+          </select>
+        </c-col>
+        <c-col [xs]="12">
+          <button
+          [disabled]="loading"
+            [disabled]="EyesColorForm.invalid"
+            cButton
+            class="me-1"
+            color="primary"
+            type="submit"
+          >
+          <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+          {{ btnText }}
+        </button>
+          <button cButton color="secondary" (click)="resetForm()">Reset</button>
+        </c-col>
+      </form>
+    </c-card-body>
+  </c-card>
+  
+  <c-card class="mt-3">
+    <c-card-header>Eyes Color List</c-card-header>
+    <c-card-body>
+      <div class="example-header">
+        <mat-form-field>
+          <input
+            matInput
+            #filter
+            (keyup)="applyFilter(filter.value)"
+            placeholder="Search Here.."
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            aria-label="clear"
+            *ngIf="filter.value"
+            (click)="filter.value = ''; applyFilter('')"
+          ></button>
+        </mat-form-field>
+      </div>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+          <!-- Position Column -->
+          <ng-container matColumnDef="slNo">
+            <th mat-header-cell *matHeaderCellDef>Serial No</th>
+            <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+          </ng-container>
+          <ng-container matColumnDef="eyesColorName">
+            <th mat-header-cell *matHeaderCellDef>Eyes Color Name</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.eyesColorName }}
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="isActive">
+            <th mat-header-cell *matHeaderCellDef>Is Active</th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.isActive">Active</span>
+              <span *ngIf="!element.isActive">De-Active</span>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                class="custom-button"
+                [routerLink]="[
+                  '/bascisetup/update-eyesColor',
+                  element.eyesColorId
+                ]"
+              >
+                <svg cIcon name="cilPencil"></svg>
+              </button>
+              <button class="custom-button" (click)="delete(element)">
+                <svg cIcon name="cilTrash"></svg>
+              </button>
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </c-card-body>
+    <c-card-footer class="text-medium-emphasis">
+      <mat-paginator
+        appBubblePagination
+        [length]="dataSource.data.length"
+        [pageSize]="10"
+        aria-label="Select page"
+      >
+      </mat-paginator>
+    </c-card-footer>
+  </c-card>
+  

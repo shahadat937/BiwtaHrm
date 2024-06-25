@@ -1,0 +1,68 @@
+<c-card class="mt-3 mb-3 shadow">
+    <c-card-header class="d-flex justify-content-between">
+        <div>{{headerText}}</div>
+        <div>
+            <button cButton color="primary" shape="rounded-pill" (click)="UserFormView()">
+                {{headerBtnText}}
+            </button>
+        </div>
+    </c-card-header>
+    <c-card-body [visible]="visible" cCollapse>
+        <form #EmpPhotoSignForm="ngForm" (submit)="onSubmit(EmpPhotoSignForm)" [gutter]="3" novalidate cForm cRow class="needs-validation">
+            <input type="hidden" [(ngModel)]="empPhotoSignService.empPhotoSign.id" name="id" />
+            <input type="hidden" [(ngModel)]="empPhotoSignService.empPhotoSign.empId" name="empId" />
+
+            <c-col [md]="6">
+                <div *ngIf="photoPreviewUrl">
+                    <img [src]="photoPreviewUrl" alt="Employee Photo" style="max-width: 100px; max-height: 100px;"/>
+                </div>
+                <label cLabel for="photoFile">Photo<span class="text-danger">*</span></label>
+                <input [(ngModel)]="empPhotoSignService.empPhotoSign.photoFile" name="photoFile" #photoFile="ngModel" cFormControl id="photoFile" required="" type="file" (change)="onPhotoSelected($event)" />
+                @if(!photoFile.valid&&photoFile.touched){
+                <div class="text-left text-danger">Photo is required</div>
+                }
+            </c-col>
+
+            <c-col [md]="6">
+                <div *ngIf="signaturePreviewUrl">
+                    <img [src]="signaturePreviewUrl" alt="Employee Signature" style="max-width: 100px; max-height: 100px;"/>
+                </div>
+                <label cLabel for="signatureFile">Signature<span class="text-danger">*</span></label>
+                <input [(ngModel)]="empPhotoSignService.empPhotoSign.signatureFile" name="signatureFile" #signatureFile="ngModel" cFormControl id="signatureFile" required="" type="file" (change)="onSignatureSelected($event)" />
+                @if(!signatureFile.valid&&signatureFile.touched){
+                <div class="text-left text-danger">Signature is required</div>
+                }
+            </c-col>
+
+            <c-col [md]="4">
+                <label cLabel for="uniqueIdentity">Unique Identity<span class="text-danger"></span></label>
+                <input [(ngModel)]="empPhotoSignService.empPhotoSign.uniqueIdentity" name="uniqueIdentity" #uniqueIdentity="ngModel" placeholder="Enter Unique Identity" cFormControl id="uniqueIdentity" type="text" />
+                @if(!uniqueIdentity.valid&&uniqueIdentity.touched){
+                <div class="text-left text-danger">Unique Identity is required</div>
+                }
+            </c-col>
+
+            <c-col [md]="4">
+                <label cLabel for="remark">Remark<span class="text-danger"></span></label>
+                <input [(ngModel)]="empPhotoSignService.empPhotoSign.remark" name="remark" #remark="ngModel" placeholder="Enter remark" cFormControl id="remark" type="text" />
+                @if(!remark.valid&&remark.touched){
+                <div class="text-left text-danger">Remark is required</div>
+                }
+            </c-col>
+
+            <c-col [xs]="12">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <button [disabled]="loading" [disabled]="EmpPhotoSignForm.invalid" cButton class="me-1" color="primary" type="submit">
+                            <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                            {{ btnText }}
+                        </button>
+                    </div>
+                    <div>
+                        <button cButton color="danger" class="text-light" (click)="cancel()">Cancel</button>
+                    </div>
+                </div>
+            </c-col>
+        </form>
+    </c-card-body>
+</c-card>

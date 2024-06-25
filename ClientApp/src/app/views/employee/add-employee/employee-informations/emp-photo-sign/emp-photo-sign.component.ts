@@ -15,6 +15,7 @@ import { EmpPersonalInfoService } from '../../../service/emp-personal-info.servi
 export class EmpPhotoSignComponent implements OnInit, OnDestroy {
 
   @Input() empId!: number;
+  @Input() pNo!: string;
   @Output() close = new EventEmitter<void>();
   visible: boolean = true;
   headerText: string = '';
@@ -23,7 +24,6 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   loading: boolean = false;
 
-  pNo: string = '';
   empPhoto: File = null!;
   empSignature: File = null!;
 
@@ -43,7 +43,6 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getEmployeeByEmpId();
-    this.getUserDetails();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -60,9 +59,9 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
     this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
       if (res) {
         this.EmpPhotoSignForm?.form.patchValue(res);
-        this.photoPreviewUrl = res.photoUrl ? `../../../../../../../../Hrm.Api/wwwroot/assets/Images/EmpPhoto/${res.photoUrl}` : null;
+        this.photoPreviewUrl = res.photoUrl ? `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}` : null;
         console.log("Photo  : ", this.photoPreviewUrl);
-        this.signaturePreviewUrl = res.signatureUrl ? `../../../../../../../../Hrm.Api/wwwroot/assets/Images/EmpSignature/${res.signatureUrl}` : null;
+        this.signaturePreviewUrl = res.signatureUrl ? `${this.empPhotoSignService.imageUrl}EmpSignature/${res.signatureUrl}` : null;
         this.headerText = 'Update Employee Photo and Signature';
         this.btnText = 'Update';
       }
@@ -78,7 +77,7 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
     this.empPhotoSignService.empPhotoSign = {
       id: 0,
       empId: this.empId,
-      pNo: '',
+      pNo: this.pNo,
       photoUrl: '',
       signatureUrl: '',
       photoFile: null,
@@ -88,14 +87,6 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
       menuPosition: 0,
       isActive: true
     };
-  }
-  getUserDetails(){
-    this.empPersonalInfoService.findBasicInfoByEmpId(this.empId).subscribe((res) => {
-      this.userService.find(res.aspNetUserId).subscribe((response) =>{
-        console.log("Response: ", response);
-        this.pNo = response.pNo;
-      })
-    })
   }
 
   onPhotoSelected(event: any) {

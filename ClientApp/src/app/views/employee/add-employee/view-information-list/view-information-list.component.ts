@@ -50,6 +50,7 @@ export class ViewInformationListComponent implements OnInit {
   userId : any;
   empId : any;
   userInfo:any;
+  pNo: string = '';
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -79,7 +80,7 @@ export class ViewInformationListComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.userId = params.get('id');
       this.userService.find(this.userId).subscribe((res) => {
-        
+        this.pNo = res.pNo;
       });
     });
   }
@@ -134,10 +135,10 @@ export class ViewInformationListComponent implements OnInit {
   getStatusOfEmpSpouseInfo(){
     this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res: any[]) => {
       if(res.length>0){
-        this.empJobDetailsEntryStatus = true;
+        this.empSpouseInfoEntryStatus = true;
       }
       else {
-        this.empJobDetailsEntryStatus = false;
+        this.empSpouseInfoEntryStatus = false;
       }
     })
   }

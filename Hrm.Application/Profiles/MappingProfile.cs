@@ -83,6 +83,7 @@ using Hrm.Application.DTOs.EmpPsiTrainingInfo;
 using Hrm.Application.DTOs.EmpBankInfo;
 using Hrm.Application.DTOs.EmpForeignTourInfo;
 using Hrm.Application.DTOs.EmpLanguageInfo;
+using Hrm.Application.DTOs.EmpPhotoSign;
 
 
 
@@ -335,6 +336,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpLanguageInfo, EmpLanguageInfoDto>().ReverseMap();
             CreateMap<EmpLanguageInfo, CreateEmpLanguageInfoDto>().ReverseMap();
+
+            CreateMap<EmpPhotoSign, EmpPhotoSignDto>().ReverseMap();
+            CreateMap<EmpPhotoSign, CreateEmpPhotoSignDto>().ReverseMap();
 
         }
     }

@@ -18,6 +18,8 @@ import { EmpPsiTrainingInfoService } from '../../service/emp-psi-training-info.s
 import { EmpBankInfoService } from '../../service/emp-bank-info.service';
 import { EmpLanguageInfoService } from '../../service/emp-language-info.service';
 import { EmpForeignTourInfoService } from '../../service/emp-foreign-tour-info.service';
+import { EmpPhotoSignService } from '../../service/emp-photo-sign.service';
+
 
 @Component({
   selector: 'app-view-information-list',
@@ -40,6 +42,7 @@ export class ViewInformationListComponent implements OnInit {
   empBankInfoEntryStatus : boolean = false;
   empLanguageInfoEntryStatus : boolean = false;
   empForeignTourInfoEntryStatus : boolean = false;
+  empPhotoSignEntryStatus : boolean = false;
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
@@ -63,10 +66,10 @@ export class ViewInformationListComponent implements OnInit {
     public empPsiTrainingInfoService: EmpPsiTrainingInfoService,
     public empBankInfoService: EmpBankInfoService,
     public empLanguageInfoService: EmpLanguageInfoService,
-    public empForeignTourInfoService: EmpForeignTourInfoService,) { }
+    public empForeignTourInfoService: EmpForeignTourInfoService,
+    public empPhotoSignService: EmpPhotoSignService,) { }
 
   @HostListener('window:scroll')
-  
   ngOnInit(): void {
     this.handleRouteParams();
     this.getEmployeeByAspNetUserId();
@@ -98,6 +101,7 @@ export class ViewInformationListComponent implements OnInit {
         this.getStatusOfEmpBankInfoStatus();
         this.getStatusOfEmpLanguageInfoStatus();
         this.getStatusOfEmpForeignTourInfoStatus();
+        this.getStatusOfEmpPhotoSign();
       }
       else{
         this.gettingStatus = false;
@@ -197,7 +201,12 @@ export class ViewInformationListComponent implements OnInit {
       }
     })
   }
-  
+  getStatusOfEmpPhotoSign(){
+    this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
+      this.empPhotoSignEntryStatus = !!res;
+    })
+  }
+
 
   toggleComponent(component: string) {
     this.componentVisible = false;

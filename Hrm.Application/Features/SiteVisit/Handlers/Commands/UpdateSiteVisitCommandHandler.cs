@@ -1,9 +1,11 @@
-﻿using Hrm.Application.Contracts.Persistence;
+﻿using AutoMapper;
+using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.SiteVisit.Validators;
 using Hrm.Application.Features.appraisalFormType.Requests.Commands;
 using Hrm.Application.Features.EmpBasicInfos.Handlers.Queries;
 using Hrm.Application.Features.SiteVisit.Requests.Commands;
 using Hrm.Application.Responses;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +32,7 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
 
             var validationResult = await validator.ValidateAsync(request.SiteVisitDto);
 
-            if (validationResult.isValid == false)
+            if (validationResult.IsValid == false)
             {
                 response.Success = false;
                 response.Message = "Creation Failed";

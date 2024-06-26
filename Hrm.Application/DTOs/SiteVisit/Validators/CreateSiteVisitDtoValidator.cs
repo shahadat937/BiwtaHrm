@@ -10,8 +10,8 @@ namespace Hrm.Application.DTOs.SiteVisit.Validators
 {
     public class CreateSiteVisitDtoValidator: AbstractValidator<CreateSiteVisitDto>
     {
-        public CreateSiteVisitDtoValidator() {
-            Include(new ISiteVisitDtoValidator());
-        }
+        //public CreateSiteVisitDtoValidator() {
+        //    Include(new ISiteVisitDtoValidator());
+        //}
     }
 }

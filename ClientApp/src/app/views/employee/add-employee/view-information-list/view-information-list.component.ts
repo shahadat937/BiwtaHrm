@@ -70,7 +70,6 @@ export class ViewInformationListComponent implements OnInit {
     public empForeignTourInfoService: EmpForeignTourInfoService,
     public empPhotoSignService: EmpPhotoSignService,) { }
 
-  @HostListener('window:scroll')
   ngOnInit(): void {
     this.handleRouteParams();
     this.getEmployeeByAspNetUserId();
@@ -214,13 +213,13 @@ export class ViewInformationListComponent implements OnInit {
     if (this.visibleComponent === component) {
       this.visibleComponent = null;
       this.visible = false;
+      this.getEmployeeByAspNetUserId();
       } else {
         this.visibleComponent = component;
         this.visible = true;
         this.componentVisible = true;
-        window.scrollTo(0, 0);
     }
-    this.getEmployeeByAspNetUserId();
+    
   }
 
 }

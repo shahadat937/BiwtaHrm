@@ -2,8 +2,7 @@
 using Hrm.Shared.Models;
 using Hrm.Application.DTOs.SiteVisit;
 using Microsoft.AspNetCore.Mvc;
-using Hrm.Features.SiteVisit.Requests.Commands;
-using Hrm.Features.SiteVisit.Requests.Queries;
+using Hrm.Application.Features.SiteVisit.Requests.Queries;
 
 namespace Hrm.Api.Controllers
 {
@@ -11,7 +10,7 @@ namespace Hrm.Api.Controllers
     [ApiController]
     public class SiteVisitController: Controller
     {
-        private readonly Imediator _imediator;
+        private readonly IMediator _imediator;
         public SiteVisitController(IMediator mediator) {
             _imediator= mediator;
         }

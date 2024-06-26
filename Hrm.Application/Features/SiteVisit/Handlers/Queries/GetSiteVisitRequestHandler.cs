@@ -1,8 +1,10 @@
-﻿using Hrm.Application.Contracts.Persistence;
+﻿using AutoMapper;
+using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Shift;
 using Hrm.Application.DTOs.SiteVisit;
 using Hrm.Application.Features.Shift.Requests.Queries;
 using Hrm.Application.Features.SiteVisit.Requests.Queries;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;

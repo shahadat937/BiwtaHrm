@@ -1,9 +1,11 @@
-﻿using Hrm.Application.Contracts.Persistence;
+﻿using AutoMapper;
+using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Shift.Validators;
 using Hrm.Application.DTOs.SiteVisit.Validators;
 using Hrm.Application.Features.EmpBasicInfos.Handlers.Queries;
 using Hrm.Application.Features.SiteVisit.Requests.Commands;
 using Hrm.Application.Responses;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;

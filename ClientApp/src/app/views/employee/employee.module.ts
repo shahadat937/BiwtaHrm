@@ -14,6 +14,7 @@ import {
   ProgressModule,
   SharedModule,
   SpinnerModule,
+  TableModule,
 } from '@coreui/angular';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { ToastrService } from 'ngx-toastr';
@@ -21,7 +22,6 @@ import { ToastrService } from 'ngx-toastr';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 
 import { EmployeeRoutingModule } from './employee-routing.module';
-import { ManageEmployeeComponent } from './manage-employee/manage-employee.component';
 import { ViewUsersComponent } from './add-employee/view-users/view-users.component';
 import { ViewInformationListComponent } from './add-employee/view-information-list/view-information-list.component';
 import { BasicInformationComponent } from './add-employee/employee-informations/basic-information/basic-information.component';
@@ -50,11 +50,13 @@ import { EmpBankInfoComponent } from './add-employee/employee-informations/emp-b
 import { EmpLanguageInfoComponent } from './add-employee/employee-informations/emp-language-info/emp-language-info.component';
 import { EmpForeignTourInfoComponent } from './add-employee/employee-informations/emp-foreign-tour-info/emp-foreign-tour-info.component';
 import { EmpPhotoSignComponent } from './add-employee/employee-informations/emp-photo-sign/emp-photo-sign.component';
+import { IconModule } from '@coreui/icons-angular';
+import { EmployeeListComponent } from './manage-employee/employee-list/employee-list.component';
+import { EmployeeInformationComponent } from './manage-employee/employee-information/employee-information.component';
 
 
 @NgModule({
   declarations: [
-    ManageEmployeeComponent,
     ViewUsersComponent,
     ViewInformationListComponent,
     BasicInformationComponent,
@@ -70,6 +72,8 @@ import { EmpPhotoSignComponent } from './add-employee/employee-informations/emp-
     EmpLanguageInfoComponent,
     EmpForeignTourInfoComponent,
     EmpPhotoSignComponent,
+    EmployeeListComponent,
+    EmployeeInformationComponent,
   ],
   imports: [
     CommonModule,
@@ -101,10 +105,11 @@ import { EmpPhotoSignComponent } from './add-employee/employee-informations/emp-
     MatDatepickerModule,
     MatNativeDateModule,
     MatListModule,
-    MatInputModule,
     MatBottomSheetModule,
     MatDialogModule,
     CollapseDirective,
+    IconModule,
+    TableModule,
   ],
   providers:
   [

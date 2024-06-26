@@ -480,14 +480,14 @@ export const navItems: INavData[] = [
         name: 'Sub Department',
         url: '/bascisetup/subDepartment'
       },
-      {
-        name: 'Branch',
-        url: '/bascisetup/officeBranch'
-      },
-      {
-        name: 'Sub Branch',
-        url: '/bascisetup/subBranch'
-      },
+      // {
+      //   name: 'Branch',
+      //   url: '/bascisetup/officeBranch'
+      // },
+      // {
+      //   name: 'Sub Branch',
+      //   url: '/bascisetup/subBranch'
+      // },
       {
         name: 'Section',
         url: '/bascisetup/section'
@@ -519,6 +519,10 @@ export const navItems: INavData[] = [
       {
         name: 'Eyes Color',
         url: '/bascisetup/eyesColor'
+      },
+      {
+        name: 'Gender',
+        url: '/bascisetup/gender'
       },
       {
         name: 'Relation',

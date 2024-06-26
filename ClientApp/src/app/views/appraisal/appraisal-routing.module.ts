@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StaffFormComponent } from './staff-form/staff-form.component';
 import { OfficerFormComponent } from './officer-form/officer-form.component';
+import { OfficerForm2Component } from './officer-form/officer-form-2/officer-form-2.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path:'officerForm',
     component:OfficerFormComponent
+  },
+  {
+    path:'officerForm2',
+    component:OfficerForm2Component
   }
 ];
 

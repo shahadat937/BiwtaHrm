@@ -15,19 +15,24 @@ import {
   UtilitiesModule
 } from '@coreui/angular';
 
+
 import { AppraisalRoutingModule } from './appraisal-routing.module';
 import { StaffFormComponent } from './staff-form/staff-form.component';
 import { ManageFormComponent } from './manage-form/manage-form.component';
 import { OfficerFormComponent } from './officer-form/officer-form.component';
 import { OfficerForm2Component } from './officer-form/officer-form-2/officer-form-2.component';
 
+import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.component';
+import { StaffForm3Component } from './staff-form/staff-form-3/staff-form-3.component';
 
 @NgModule({
   declarations: [
     StaffFormComponent,
     ManageFormComponent,
     OfficerFormComponent,
-    OfficerForm2Component
+    OfficerForm2Component,
+    StaffForm2Component,
+    StaffForm3Component,
   ],
   imports: [
     CommonModule,

@@ -1,1 +1,129 @@
-<p>staff-form works!</p>
+<div class="container mt-4">
+  <c-card>
+    <c-card-header>ACR Staff Form</c-card-header>
+
+    <c-card-body>
+      <c-button-group aria-label="Basic example" role="group">
+        <button cButton color="primary" [active]="true">Part-1</button>
+        <button cButton color="primary" [routerLink]="[
+        '/appraisal/staffForm2']">Part-2</button>
+        <button cButton color="primary" [routerLink]="[
+        '/appraisal/staffForm3']">Part-3</button>
+      </c-button-group>
+    </c-card-body>
+
+    <c-card>
+      <c-card-body>
+        <form cRow cForm>
+          <c-col [md]="3">
+            <label cLabel for="validationCustom01">Division</label>
+            <input type="text" cFormControl id="validationCustom01" placeholder="Division"/>
+          </c-col>
+
+          <c-col [md]="3">
+            <label cLabel for="validationCustom02">From Date</label>
+            <input type="date" cFormControl id="validationCustom02"/>
+          </c-col>
+
+          <c-col [md]="3">
+            <label cLabel for="validationCustom03">To Date</label>
+            <input type="date" cFormControl id="validationCustom03"/>
+          </c-col>
+        </form>
+      </c-card-body>
+    </c-card>
+
+    <c-card>
+      <c-card-body>
+        <form cRow cForm>
+          <c-col [md]="4">
+            <label cLabel for="validationCustom04">Name</label>
+            <input type="text" cFormControl id="validationCustom04" placeholder="Name"/>
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="validationCustom05">Employee Code</label>
+            <input type="text" cFormControl id="validationCustom05" placeholder="Employee Code"/>
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="validationCustom06">Father's Name</label>
+            <input type="text" cFormControl id="validationCustom06" placeholder="Father's Name"/>
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="validationCustom07">Mother's Name</label>
+            <input type="text" cFormControl id="validationCustom07" placeholder="Mother's Name"/>
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="validationCustom08">Designation</label>
+            <input type="text" cFormControl id="validationCustom08" placeholder="Designation"/>
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="validationCustom09">Date of Birth</label>
+            <input type="date" cFormControl id="validationCustom09"/>
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="validationCustom10">Present Salary</label>
+            <select cSelect>
+            <option></option>
+            </select>
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="validationCustom11">Scale Of Pay</label>
+            <input type="text" cFormControl id="validationCustom11" placeholder="Scale Of Pay"/>
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="validationCustom12">Joining Date</label>
+            <input type="date" cFormControl id="validationCustom12"/>
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="validationCustom13">Present Designation Joining Date</label>
+            <input type="date" cFormControl id="validationCustom13"/>
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="validationCustom14">Education</label>
+            <input type="text" cFormControl id="validationCustom14" placeholder="Education"/>
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="validationCustom15">Linguistics</label>
+            <input type="text" cFormControl id="validationCustom15" placeholder="Linguistics"/>
+          </c-col>
+
+          <c-col [md]="4">
+            <label cLabel for="validationCustom16">Training/Special Training (If Any)</label>
+            <input type="text" cFormControl id="validationCustom16" placeholder="Training/Special Training (If Any)"/>
+          </c-col>
+        </form>
+
+        <form cRow cForm class="mt-4">
+          <c-col [md]="5">
+            <label>Exact tenure of service under the reporting officer</label>
+          </c-col>
+          <c-col [md]="3">
+            <label cLabel for="validationCustom17">From Date</label>
+            <input type="date" cFormControl id="validationCustom17"/>
+          </c-col>
+          <c-col [md]="3">
+            <label cLabel for="validationCustom18">To Date</label>
+            <input type="date" cFormControl id="validationCustom18"/>
+          </c-col>
+        </form>
+      </c-card-body>
+    </c-card>
+
+    <c-card-footer>
+      <div class="text-end">
+        <button cButton color="primary">To be continue...</button>
+      </div>
+    </c-card-footer>
+  </c-card>
+</div>

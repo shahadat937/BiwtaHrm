@@ -1,1 +1,126 @@
-<p>officer-form works!</p>
+
+<div>
+<c-card>
+    <c-card-header>Acr Officer Form  </c-card-header>
+    <c-button-group aria-label="Basic example" role="group">
+        <c-button-group aria-label="Basic example" role="group">
+            <button cButton color="primary" [active]="true">Part-1</button>
+            <button cButton color="primary" [routerLink]="[
+                '/appraisal/officerForm2']">Part-2</button>
+            <button cButton color="primary">Part-3</button>
+            <button cButton color="primary">Part-4</button> 
+            <button cButton color="primary">Part-5</button>
+            <button cButton color="primary">Part-6</button>
+            <button cButton color="primary">Part-7</button>
+          </c-button-group>
+      </c-button-group> 
+    <c-card-body>       
+          <form cFrom cRow>
+            <c-col [md]="4">
+                <label cLabel for="division">Division</label>
+                <input type="text" cFormControl id="division" placeholder="Division">
+            </c-col>
+            <c-col [md]="4">
+                <label cLabel for="fromdate">From Date</label>
+                <input type="date" cFormControl id="fromdate">
+            </c-col>
+            
+        <c-col [md]="4">
+            <label cLabel for="todate"
+            >To Date</label>
+            <input
+              cFormControl
+              id="todate"
+              type="date"/>
+          </c-col>
+          </form>
+    </c-card-body>
+    <c-card>
+        <c-card-header class="text-center">1st part <br>To be Filled by the Reporting Officer</c-card-header>
+        <c-card-body>
+            <form cRow>
+                <c-col [md]="4">
+                    <label cLabel for="empname">Employee Name</label>
+                    <input type="text" cFormControl id="empname" placeholder="Employee Name">
+                </c-col>
+                <c-col [md]="4">
+                    <label cLabel for="empcode">Employee Code</label>
+                    <input type="text" cFormControl id="empcode" placeholder="Employee Code">
+                </c-col>
+                <c-col [md]="4">
+                    <label cLabel for="fatherName">Father's Name</label>
+                    <input type="text" cFormControl id="fatherName" placeholder="Father's Name">
+                </c-col>
+                <c-col [md]="4">
+                    <label cLabel for="mothername">Mother's Name</label>
+                    <input type="text" cFormControl id="mothername" placeholder="Mother's Name">
+                </c-col>
+                <c-col [md]="4">
+                    <label cLabel for="brn">Birth Reg.no</label>
+                    <input type="number" cFormControl id="brn" placeholder="Birth Reg.no">
+                </c-col>
+                <c-col [md]="4">
+                    <label cLabel for="dob">Date of Birth</label>
+                    <input type="date"cFormControl id="dob" >
+                </c-col>
+                <c-col [md]="4">
+                    <label cLabelfor="des" >Designation</label>
+                    <input type="text" cFormControl id="des" placeholder="Designation">
+                </c-col>
+                <c-col [md]="4">
+                    <label  for="work">Workplace</label>
+                    <input type="text" cFormControl id="work" placeholder="Workplace">
+                </c-col>
+                <c-col [md]="4">
+                    <label cLabel for="jondate">Joining Date</label>
+                    <input type="date" cFormControl id="jondate">
+                </c-col>
+                <c-col [md]="4">
+                    <label cLabel for="pdjd">Present Designation Joining Date</label>
+                    <input type="date" cFormControl id="pdjd">
+                </c-col>
+                <c-col [md]="4">
+                    <label cLabel for="edu">Education</label>
+                    <input type="text" cFormControl id="edu" placeholder="Education">
+                </c-col>
+                <c-col [md]="4">
+                    <label cLabel for="training" >Training/Special Training(If Any)</label>
+                    <input type="text" cFormControl id="training" placeholder="Training/Special Training">
+                </c-col>
+                <form cRow cForm class="mt-4">
+                    <c-col [md]="5">
+                        <label cLabel >Exact tenure of service under reportintg provider</label>
+                    </c-col>
+                    <c-col [md]="3">
+                         <label cLabel for="fromdate">From Date</label>
+                        <input type="date" cFormControl id="fromdate">
+                    </c-col>
+                    <c-col [md]="3">
+                        <label cLabel for="todate">To Date</label>
+                        <input type="date" cFormControl id="todate">
+                   </c-col>
+                </form>
+                
+                <h4 class="mt-2">Held The Position at The Time Under Consideration</h4>
+                <table  cTable class=" mt-3">
+                    <thead>
+                    <tr>
+                      <th scope="col">Designation</th>
+                      <th scope="col">Time</th>
+                      <th scope="col">Salary&salary scale</th>
+                    </tr>
+                    </thead>
+                </table>
+              </form>
+              <div class="text-end mt-3">             
+                    <button cButton >Submit</button>
+                    <button cButton class="ms-3">X Cancel</button>              
+              </div>
+        </c-card-body>
+    </c-card>
+</c-card>
+</div>
+   
+
+
+

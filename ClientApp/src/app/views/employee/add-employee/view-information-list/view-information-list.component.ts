@@ -69,7 +69,7 @@ export class ViewInformationListComponent implements OnInit {
     public empLanguageInfoService: EmpLanguageInfoService,
     public empForeignTourInfoService: EmpForeignTourInfoService,
     public empPhotoSignService: EmpPhotoSignService,) { }
-    
+
   ngOnInit(): void {
     this.handleRouteParams();
     this.getEmployeeByAspNetUserId();

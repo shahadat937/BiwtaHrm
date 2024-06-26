@@ -94,7 +94,7 @@ namespace Hrm.Application
         public const string EmpLanguageInfo = HRMRoutePrefixBase + "empLanguageInfo";
         public const string EmpPhotoSign = HRMRoutePrefixBase + "empPhotoSign";
 
-
+        public const string SiteVisit = HRMRoutePrefixBase + "siteVisit";
 
 
 

@@ -37,6 +37,10 @@ const routes: Routes = [
     component:StaffForm3Component
   },
   {
+    path:'officerForm2',
+    component:OfficerForm2Component
+  },
+  {
     path:'officerFormPart3',
     component:OfficerFormPart3Component
   },

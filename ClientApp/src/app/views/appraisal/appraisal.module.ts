@@ -39,6 +39,7 @@ import { StaffForm3Component } from './staff-form/staff-form-3/staff-form-3.comp
     OfficerForm2Component,
     StaffForm2Component,
     StaffForm3Component,
+    OfficerForm2Component,
     OfficerFormPart3Component,
     OfficerFormPart4Component,
     OfficerFormPart5Component,

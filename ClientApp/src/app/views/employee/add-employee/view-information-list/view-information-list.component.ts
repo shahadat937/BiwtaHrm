@@ -50,6 +50,7 @@ export class ViewInformationListComponent implements OnInit {
   userId : any;
   empId : any;
   userInfo:any;
+  pNo: string = '';
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -69,7 +70,6 @@ export class ViewInformationListComponent implements OnInit {
     public empForeignTourInfoService: EmpForeignTourInfoService,
     public empPhotoSignService: EmpPhotoSignService,) { }
 
-  @HostListener('window:scroll')
   ngOnInit(): void {
     this.handleRouteParams();
     this.getEmployeeByAspNetUserId();
@@ -79,7 +79,7 @@ export class ViewInformationListComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.userId = params.get('id');
       this.userService.find(this.userId).subscribe((res) => {
-        
+        this.pNo = res.pNo;
       });
     });
   }
@@ -134,10 +134,10 @@ export class ViewInformationListComponent implements OnInit {
   getStatusOfEmpSpouseInfo(){
     this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res: any[]) => {
       if(res.length>0){
-        this.empJobDetailsEntryStatus = true;
+        this.empSpouseInfoEntryStatus = true;
       }
       else {
-        this.empJobDetailsEntryStatus = false;
+        this.empSpouseInfoEntryStatus = false;
       }
     })
   }
@@ -213,13 +213,13 @@ export class ViewInformationListComponent implements OnInit {
     if (this.visibleComponent === component) {
       this.visibleComponent = null;
       this.visible = false;
+      this.getEmployeeByAspNetUserId();
       } else {
         this.visibleComponent = component;
         this.visible = true;
         this.componentVisible = true;
-        window.scrollTo(0, 0);
     }
-    this.getEmployeeByAspNetUserId();
+    
   }
 
 }

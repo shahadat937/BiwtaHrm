@@ -26,11 +26,13 @@ namespace Hrm.Application.Features.EmpPhotoSigns.Handlers.Commands
         {
             var response = new BaseCommandResponse();
 
-            string uniqueImageName = request.EmpPhotoSignDto.PNo + "_Photo";
-            var photoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\Images\\EmpPhoto", uniqueImageName);
+            var photoName = Path.GetFileName(request.EmpPhotoSignDto.PhotoFile.FileName);
+            string uniqueImageName = request.EmpPhotoSignDto.PNo + "_Photo" + "_" + photoName;
+            var photoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\EmpPhoto", uniqueImageName);
 
-            string uniqueSignName = request.EmpPhotoSignDto.PNo + "_Signature";
-            var signPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\Images\\EmpSignature", uniqueSignName);
+            var signName = Path.GetFileName(request.EmpPhotoSignDto.SignatureFile.FileName);
+            string uniqueSignName = request.EmpPhotoSignDto.PNo + "_Signature" + "_" + signName;
+            var signPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\EmpSignature", uniqueSignName);
 
             using (var photoSteam = new FileStream(photoPath, FileMode.Create))
             {

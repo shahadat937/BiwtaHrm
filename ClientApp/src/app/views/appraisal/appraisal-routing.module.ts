@@ -9,6 +9,8 @@ import { OfficerForm2Component } from './officer-form/officer-form-2/officer-for
 import { OfficerFormPart3Component } from './officer-form/officer-form-part-3/officer-form-part-3.component';
 import { OfficerFormPart6Component } from './officer-form/officer-form-part-6/officer-form-part-6.component';
 import { OfficerFormPart7Component } from './officer-form/officer-form-part-7/officer-form-part-7.component';
+import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.component';
+import { StaffForm3Component } from './staff-form/staff-form-3/staff-form-3.component';
 
 const routes: Routes = [
   {
@@ -23,7 +25,8 @@ const routes: Routes = [
   {
     path:'officerForm',
     component:OfficerFormComponent
-  },
+  }
+  ,
   {
     path:'officerForm2',
     component:OfficerForm2Component
@@ -47,6 +50,13 @@ const routes: Routes = [
   {
     path:'officerFormPart7',
     component:OfficerFormPart7Component
+  
+    
+  }
+  ,
+  {
+    path: "staffForm3",
+    component:StaffForm3Component
   }
 ];
 

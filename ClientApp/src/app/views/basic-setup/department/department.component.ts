@@ -207,6 +207,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onOfficeSelect(officeId : number){
+    this.departmentService.departments.upperDepartmentId = null;
     this.departmentService.getSelectedDepartmentByOfficeId(+officeId).subscribe((res) => {
       this.departments = res;
       if(res.length>0){

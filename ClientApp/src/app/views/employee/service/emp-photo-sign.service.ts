@@ -9,6 +9,7 @@ import { EmpPhotoSignModule } from '../model/emp-photo-sign.module';
 export class EmpPhotoSignService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
+  imageUrl = environment.imageUrl;
   empPhotoSign: EmpPhotoSignModule;
 
   constructor(private http: HttpClient) { 

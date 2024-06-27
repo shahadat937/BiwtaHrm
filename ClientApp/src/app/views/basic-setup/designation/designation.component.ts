@@ -18,7 +18,6 @@ import { DesignationService } from '../service/designation.service';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { OfficeService } from '../service/office.service';
 import { DepartmentService } from '../service/department.service';
-
 @Component({
   selector: 'app-designation',
   templateUrl: './designation.component.html',
@@ -47,6 +46,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     'isActive',
     'Action',
   ];
+
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -106,7 +106,6 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-
   
   UserFormView() {
     this.route.paramMap.subscribe((params) => {
@@ -141,17 +140,14 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-
   toggleCollapse() {
     this.handleRouteParams();
     this.visible = true;
   }
-
   cancelUpdate() {
     this.resetForm();
     this.router.navigate(['/bascisetup/designation']);
   }
-
   initaialDesignation(form?: NgForm) {
     if (form != null) form.resetForm();
     this.designationService.designation = {
@@ -184,7 +180,6 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
   }
-
   getALlDesignations() {
     this.subscription = this.designationService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
@@ -194,15 +189,13 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-
-  
   loadOffice() { 
     this.subscription=this.officeService.selectGetoffice().subscribe((data) => { 
       this.offices = data;
     });
   }
-
   onOfficeSelect(officeId : number){
+    this.designationService.designation.departmentId = null;
     this.departmentService.getSelectedDepartmentByOfficeId(+officeId).subscribe((res) => {
       this.departments = res;
       if(res.length>0){
@@ -239,7 +232,6 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
   }
-
   onSubmit(form: NgForm): void {
     this.loading = true;
     this.designationService.cachedData = [];
@@ -247,7 +239,6 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     const action$ = id
       ? this.designationService.update(id, form.value)
       : this.designationService.submit(form.value);
-
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';

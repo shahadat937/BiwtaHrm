@@ -11,16 +11,20 @@
 		
  <ItemGroup>
     <Compile Remove="DTOs\User\Validators\**" />
+    <Compile Remove="DTOs\Workday\NewFolder\**" />
     <Compile Remove="Features\Users\**" />
     <EmbeddedResource Remove="DTOs\User\Validators\**" />
+    <EmbeddedResource Remove="DTOs\Workday\NewFolder\**" />
     <EmbeddedResource Remove="Features\Users\**" />
     <None Remove="DTOs\User\Validators\**" />
+    <None Remove="DTOs\Workday\NewFolder\**" />
     <None Remove="Features\Users\**" />
   </ItemGroup>
 
 	
 		
  <ItemGroup>
+   <Compile Remove="DTOs\Workday.cs" />
    <Compile Remove="Features\SiteVisit\Requests\Queries\GetSiteVisitById.cs" />
  </ItemGroup>
 

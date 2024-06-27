@@ -1,0 +1,72 @@
+<div>
+    <c-card>
+        <c-card-header class="text-center">5th part (Recommendation)</c-card-header>
+        <c-card-body>
+            <form cForm cRow>
+                <h4>1 Brief Comment</h4>               
+                    <c-col [md]="6">
+                        <label cLabel for="special" >i.Speciality</label>
+                        (Administrative/External/Field)
+                    </c-col>
+                <c-col [md]="6">
+                    <input type="text" id="special" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                </c-col>
+                <c-col [md]="6">
+                    <label cLabel >ii.Suitability for Further employment</label>
+                </c-col>
+                <c-col [md]="6">
+                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                </c-col>
+                <c-col [md]="6">
+                    <label cLabel >iii.Recommend more in service traning</label>
+                </c-col>
+                <c-col [md]="6">
+                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                </c-col>
+                <c-col [md]="6">
+                    <label cLabel >iv.Not Eligable for Further Promotion,Maximum limit reached</label>
+                </c-col>
+                <c-col [md]="6">
+                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                </c-col>
+                <h4>1 Eligablity For Promotion</h4>                             
+                    <c-col [md]="6">
+                        <label cLabel >i.Faster Promotion is Recomended</label>
+                        <div>(If the officer achives outstanding Standard)</div>
+                    </c-col>
+            <c-col [md]="6">
+                <input type="file" cFormControl class="mt-2">
+            </c-col>
+            <c-col [md]="6">
+                <label cLabel >ii.Eligible For Promotion</label>
+            </c-col>
+            <c-col [md]="6">
+                <input type="file" cFormControl class="mt-2">
+            </c-col>
+            <c-col [md]="6">
+                <label cLabel >iii.Recently Promoted not due for further Promotion</label>
+            </c-col>
+            <c-col [md]="6">
+                <input type="file" cFormControl class="mt-2" >
+            </c-col>
+            </form>
+        </c-card-body>
+        <c-pagination class="d-flex justify-content-end"aria-label="Page navigation example">
+            <li cPageItem>
+              <a cPageLink [routerLink]>Previous</a>
+            </li>
+            <li cPageItem>
+              <a cPageLink [routerLink]>1</a>
+            </li>
+            <li cPageItem>
+              <a cPageLink [routerLink]>2</a>
+            </li>
+            <li cPageItem>
+              <a cPageLink [routerLink]>3</a>
+            </li>
+            <li cPageItem>
+              <a cPageLink [routerLink]>Next</a>
+            </li>
+          </c-pagination>
+    </c-card>
+</div>

@@ -1,0 +1,48 @@
+<div>
+    <c-card>
+        <c-card-header class="text-center">6th part (Remarks of the Countersigning officer)</c-card-header>
+        <c-card-body>
+            <form cRow cForm >
+                <c-col [md]="6">
+                    <label cLabel >1.Exact tenure of Employment Under you</label>
+                </c-col>
+                <c-col [md]="3">
+                     <label cLabel for="fromdate">From Date</label>
+                    <input type="date" cFormControl id="fromdate">
+                </c-col>
+                <c-col [md]="3">
+                    <label cLabel for="todate">To Date</label>
+                    <input type="date" cFormControl id="todate">
+               </c-col>
+            <c-col [md]="6">
+                <label cLabel class="mt-4">2.Additional Comment</label>
+            </c-col>
+            <c-col [md]="6">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+            </c-col>
+            <c-col [md]="6">
+                <label cLabel class="mt-4">3.Overall Assessment</label>
+            </c-col>
+            <c-col [md]="6">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+            </c-col>
+            <c-col [md]="6">
+                <label cLabel class="mt-4">4.Recommendation</label>
+            </c-col>
+            <c-col [md]="6">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+            </c-col>
+            <c-col class="d-flex justify-content-end align-items-center mt-3">           
+                <div class="text-center">
+                    <input type="file" cFormControl class="">
+                    <div>Signature of Reporting Officer</div>
+                </div>
+            </c-col>
+            <div>
+            <button cButton color="primary">Submit</button>
+            <button cButton color="dark" class="ms-3">Cancel</button>
+            </div>
+            </form>         
+        </c-card-body>
+    </c-card>
+</div>

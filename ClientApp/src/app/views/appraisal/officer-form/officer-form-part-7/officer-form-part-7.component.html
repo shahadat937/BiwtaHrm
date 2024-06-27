@@ -1,0 +1,51 @@
+<div>
+    <c-card>
+        <c-card-header class="text-center">7th part (For use by the office/department keeping the report)</c-card-header>
+        <c-card-body>
+            <form cForm cRow>
+                <h4>1 Date of Recipt of filled form</h4>               
+                    <c-col [md]="6">
+                        <label cLabel class="mt-2" >a.Reporting signatory submission date</label>
+                    </c-col>
+                <c-col [md]="6">
+                    <input type="text"  class="mt-2" cFormControl placeholder="Enter Your Comment">
+                </c-col>
+                <c-col [md]="6">
+                    <label cLabel class="mt-2">b.counter signatory submission date</label>
+                </c-col>
+                <c-col [md]="6">
+                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                </c-col>
+                <h4>2 Abnormal delay causes</h4>               
+                    <c-col [md]="6">
+                        <label cLabel class="mt-2">a.Reporting signatory delay causes</label>
+                    </c-col>
+                <c-col [md]="6">
+                    <input type="text"  class="mt-2" cFormControl placeholder="Enter Your Comment">
+                </c-col>
+                <c-col [md]="6">
+                    <label cLabel class="mt-2">b.counter signatory delay causes</label>
+                </c-col>
+                <c-col [md]="6">
+                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                </c-col>
+                <c-col [md]="6">
+                    <label cLabel class="mt-2" >3.Application Editor(If Any)</label>
+                </c-col>
+            <c-col [md]="6">
+                <input type="text" id="special" class="mt-2" cFormControl placeholder="Enter Your Comment">
+            </c-col>
+            <c-col class="d-flex justify-content-end align-items-center mt-3">           
+                <div class="text-center">
+                    <input type="file" cFormControl class="">
+                    <div>Signature of Reporting Officer</div>
+                </div>
+            </c-col>
+            <div class="d-flex justify-content-center">
+                <button cButton color="primary">Save & Download</button>
+                <button cButton color="dark" class="ms-3">Cancel</button>
+            </div>           
+            </form>            
+        </c-card-body>
+    </c-card>
+</div>

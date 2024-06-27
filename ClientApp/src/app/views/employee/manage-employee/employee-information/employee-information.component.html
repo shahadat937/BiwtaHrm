@@ -1,0 +1,49 @@
+<c-card>
+    <c-card-body>
+
+        <!-- Employee Photo and Signature -->
+        <c-card class="shadow mb-3">
+            <c-card-header class="text-center">
+                Employee Photo and Signature
+            </c-card-header>
+            <c-card-body>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p>Employee Photo</p>
+                        <img src="{{empPhoto}}" style="max-width: auto; max-height: 150px;">
+                    </div>
+                    <div>
+                        <p>Employee Signature</p>
+                        <img src="{{empSignature}}" style="max-width: auto; max-height: 50px;">
+                    </div>
+                </div>
+            </c-card-body>
+        </c-card>
+
+        <!-- Employee Basic Information -->
+        <c-card class="shadow mb-3">
+            <c-card-header class="text-center">
+                Employee Basic Information
+            </c-card-header>
+            <c-card-body>
+                <table cTable bordered hover>
+                    <tbody>
+                        <tr>
+                            <th>Employee Name</th>
+                            <td>{{empBasicInfo.firstName}} {{empBasicInfo.lastName}}</td>
+                            <th>Employee Name Bangla</th>
+                            <td>{{empBasicInfo.firstNameBangla}} {{empBasicInfo.lastNameBangla}}</td>
+                        </tr>
+                        <tr>
+                            <th>Personal File No</th>
+                            <td>{{empBasicInfo.personalFileNo}}</td>
+                            <th>NID Number</th>
+                            <td>{{empBasicInfo.nid}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </c-card-body>
+        </c-card>
+    </c-card-body>
+</c-card>

@@ -87,6 +87,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
         this.headerText = "Department List"
         this.buttonIcon = "cilPencil";
         this.BtnText = " Add Department";
+        this.departmentService.departments.officeId = null;
       }
     });
   }

@@ -89,6 +89,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         this.headerText = "Designation List"
         this.buttonIcon = "cilPencil";
         this.BtnText = " Add Designation";
+        this.designationService.designation.officeId = null;
       }
     });
   }

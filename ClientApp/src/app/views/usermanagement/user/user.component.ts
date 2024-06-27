@@ -65,9 +65,10 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         });
       } else {
         this.btnText = 'Submit';
-       
         this.userHeaderText = "User List"
-        this.userBtnText = " Add User"; this.visible = false;
+        this.userBtnText = " Add User"; 
+        this.visible = false;
+        this.initaialUser();
       }
     });
   }

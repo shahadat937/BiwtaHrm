@@ -1,0 +1,40 @@
+﻿using Hrm.Application.DTOs.Workday;
+using Microsoft.AspNetCore.Mvc;
+using Hrm.Shared.Models;
+using Hrm.Domain;
+using Hrm.Application;
+using Hrm.Application.Features.Workday.Requests.Queries;
+
+namespace Hrm.Api.Controllers
+{
+    [Route(HrmRoutePrefix.Workday)]
+    [ApiController]
+    public class WorkdayController : Controller
+    {
+        private readonly IMediator _mediator;
+
+        public WorkdayController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpGet]
+        [Route("/get-Workday")]
+        public async Task<ActionResult> GetWork()
+        {
+            var workday = await _mediator.Send(new GetWorkdayRequest { });
+            return Ok(workday);
+        }
+
+        [HttpGet]
+        [Route("/get-workdayById/{id}")]
+        public async Task<ActionResult> Get(int id)
+        {
+
+            var workday = await _mediator.Send(new GetWorkdayByIdRequest { WorkdayId = id });
+            return Ok(workday);
+        }
+
+
+    }
+}

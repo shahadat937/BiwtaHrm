@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.SiteVisit.Handlers.Queries
 {
-    public class GetSiteVisitRequestHandler:IRequestHandler< GetSiteVisitRequest ,object>
+    public class GetSiteVisitRequestHandler:IRequestHandler< GetSiteVisitRequest , object>
     {
         private readonly IHrmRepository<Hrm.Domain.SiteVisit> _SiteVisitRepository;
         private readonly IMapper _mapper;

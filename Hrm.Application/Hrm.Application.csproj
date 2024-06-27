@@ -18,6 +18,12 @@
     <None Remove="Features\Users\**" />
   </ItemGroup>
 
+	
+		
+ <ItemGroup>
+   <Compile Remove="Features\SiteVisit\Requests\Queries\GetSiteVisitById.cs" />
+ </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />

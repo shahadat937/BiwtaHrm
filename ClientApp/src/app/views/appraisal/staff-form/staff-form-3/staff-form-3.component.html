@@ -1,1 +1,71 @@
-<p>staff-form-3 works!</p>
+<div class="container mt-4">
+    <c-card>
+      <c-card-header>ACR Staff Form</c-card-header>
+
+      <c-card-body>
+        <c-button-group aria-label="Basic example" role="group">
+          <button cButton color="primary" [routerLink]="[
+          '/appraisal/staffForm']">Part-1</button>
+          <button cButton color="primary" [routerLink]="[
+          '/appraisal/staffForm2']">Part-2</button>
+          <button cButton color="primary" [active]="true">Part-3</button>
+        </c-button-group>
+      </c-card-body>
+
+      <c-card>
+        <c-card-body>
+          <form cForm cRow>
+            <c-col [md]="4">
+              <label cLabel for="validationCustom01">Interest in using Bengali language</label>
+              <input type="text" cFormControl id="validationCustom01" placeholder="Interest in using Bengali language"/>
+            </c-col>
+
+            <c-col [md]="4">
+              <label cLabel>Overall evaluation and promotion</label>
+              <select cSelect>
+              <option></option>
+              </select>
+            </c-col>
+
+            <c-col [md]="4">
+              <label cLabel for="validationCustom03">Date</label>
+              <input type="date" cFormControl id="validationCustom03"/>
+            </c-col>
+
+            <c-col [md]="8" class="mt-4">
+              <label>Reporting Office signature</label>
+              <input type="file" cFormControl/>
+            </c-col>
+            <c-col [md]="4" class="d-flex align-items-end mt-4">
+              <button cButton color="success">Upload</button>
+            </c-col>
+
+            <c-col [md]="8" class="mt-4">
+              <label cLabel for="validationCustom04">Remarks of the Countersigning Officer</label>
+              <textarea cFormControl placeholder="Write comments" id="validationCustom04"></textarea>
+            </c-col>
+
+            <c-col [md]="4" class="mt-4">
+              <label cLabel for="validationCustom05">Date</label>
+              <input type="date" cFormControl id="validationCustom05"/>
+            </c-col>
+
+            <c-col [md]="8" class="mt-4">
+              <label>Signature of Countersigning Officer</label>
+              <input type="file" cFormControl/>
+            </c-col>
+            <c-col [md]="4" class="d-flex align-items-end mt-4">
+              <button cButton color="success">Upload</button>
+            </c-col>
+
+            <c-col [md]="12" class="mt-4">
+              <div class="d-flex justify-content-end">
+                <button cButton color="primary" class="me-2">Submit</button>
+                <button cButton color="dark">Cancel</button>
+              </div>
+            </c-col>
+          </form>
+        </c-card-body>
+      </c-card>
+    </c-card>
+  </div> 

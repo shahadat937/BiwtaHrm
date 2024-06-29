@@ -16,11 +16,8 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 })
 export class BasicInformationComponent implements OnInit, OnDestroy  {
 
-  @Input() userId!: string;
+  @Input() empId!: number;
   @Output() close = new EventEmitter<void>();
-  firstName: string = '';
-  lastName: string = '';
-  empId: number = 0;
   visible:boolean = true;
   headerText: string = '';
   headerBtnText: string = 'Hide From';
@@ -40,9 +37,10 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   ){}
 
   ngOnInit(): void {
-    this.getEmployeeByAspNetUserId();
+    // this.getEmployeeByAspNetUserId();
     this.getSelectedEmployeeType();
-    this.getUserDetails();
+    // this.getUserDetails();
+    this.getEmployeeByEmpId();
   }
 
   ngOnDestroy(): void {
@@ -56,15 +54,15 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
     if (form != null) form.resetForm();
     this.empBasicInfoService.basicInfo = {
       id: this.empId,
-      firstName : this.firstName,
-      lastName : this.lastName,
+      firstName : '',
+      lastName : '',
       firstNameBangla : '',
       lastNameBangla : '',
       dateOfBirth: null,
       personalFileNo: '',
       nid: null,
       employeeTypeId: null,
-      aspNetUserId: this.userId,
+      aspNetUserId: null,
     };
   }
 
@@ -72,15 +70,15 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
       this.BasicInfoForm.form.reset();
       this.BasicInfoForm.form.patchValue({
         id: this.empId,
-        firstName : this.firstName,
-        lastName : this.firstName,
+        firstName : '',
+        lastName : '',
         firstNameBangla : '',
         lastNameBangla : '',
         dateOfBirth: undefined,
         personalFileNo: '',
         nid: null,
         employeeTypeId: null,
-        aspNetUserId: this.userId,
+        aspNetUserId: null,
       });
   }
   
@@ -89,22 +87,37 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
     this.headerBtnText = this.visible ? 'Hide Form' : 'Show Form';
   }
 
-  getUserDetails(){
-    this.userService.find(this.userId).subscribe((res) => {
-      this.firstName= res.firstName;
-      this.lastName= res.lastName;
-      this.BasicInfoForm.form.patchValue({
-        firstName: res.firstName,
-        lastName: res.lastName,
-        aspNetUserId: res.id,
-      });
-    });
-  }
+  // getUserDetails(){
+  //   this.userService.find(this.userId).subscribe((res) => {
+  //     this.firstName= res.firstName;
+  //     this.lastName= res.lastName;
+  //     this.BasicInfoForm.form.patchValue({
+  //       firstName: res.firstName,
+  //       lastName: res.lastName,
+  //       aspNetUserId: res.id,
+  //     });
+  //   });
+  // }
   
-  getEmployeeByAspNetUserId(){
-    this.empBasicInfoService.findByAspNetUserId(this.userId).subscribe((res) => {
+  // getEmployeeByAspNetUserId(){
+  //   this.empBasicInfoService.findByAspNetUserId(this.userId).subscribe((res) => {
+  //     if(res){
+  //       this.empId = res.id;
+  //       this.headerText = 'Update Basic Information';
+  //       this.BasicInfoForm?.form.patchValue(res);
+  //       this.btnText='Update';
+  //     }
+  //     else{
+  //       this.headerText = 'Add Basic Information';
+  //       this.btnText='Submit';
+  //       this.initaialForm();
+  //     }
+  //   });
+  // }
+  
+  getEmployeeByEmpId(){
+    this.empBasicInfoService.findByEmpId(this.empId).subscribe((res) => {
       if(res){
-        this.empId = res.id;
         this.headerText = 'Update Basic Information';
         this.BasicInfoForm?.form.patchValue(res);
         this.btnText='Update';
@@ -128,6 +141,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   }
 
   onSubmit(form: NgForm): void{
+    console.log("Form Value: ", form.value)
     this.loading = true;
     this.empBasicInfoService.cachedData = [];
     const id = form.value.id;
@@ -142,6 +156,8 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
           });
           this.loading = false;
           this.cancel();
+          this.router.navigate(['/employee/update-employee-information/',
+            response.id]);
         } else {
           this.toastr.warning('', `${response.message}`, {
             positionClass: 'toast-top-right',

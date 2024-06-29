@@ -51,6 +51,7 @@ export class ViewInformationListComponent implements OnInit {
   empId : any;
   userInfo:any;
   pNo: string = '';
+  headerText: string = '';
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -70,16 +71,36 @@ export class ViewInformationListComponent implements OnInit {
     public empForeignTourInfoService: EmpForeignTourInfoService,
     public empPhotoSignService: EmpPhotoSignService,) { }
 
-  ngOnInit(): void {
-    this.handleRouteParams();
-    this.getEmployeeByAspNetUserId();
-  }
+    ngOnInit(): void {
+      this.handleRouteParams();
+    }
 
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      this.userId = params.get('id');
-      this.userService.find(this.userId).subscribe((res) => {
-        this.pNo = res.pNo;
+      this.empId = Number(params.get('id'));
+      this.empBasicInfoService.findByEmpId(this.empId).subscribe((res) => {
+        console.log("Employee Response", res)
+        if(res){
+          this.gettingStatus = true;
+          this.basicInfoEntryStatus=true;
+          this.headerText = "Update Employee Information";
+          this.getStatusOfPersonalInfo();
+          this.getStatusOfPresentAddress();
+          this.getStatusOfPermanentAddress();
+          this.getStatusOfEmpJobDetails();
+          this.getStatusOfEmpSpouseInfo();
+          this.getStatusOfEmpChildStatus();
+          this.getStatusOfEmpEducationStatus();
+          this.getStatusOfEmpPsiTrainingStatus();
+          this.getStatusOfEmpBankInfoStatus();
+          this.getStatusOfEmpLanguageInfoStatus();
+          this.getStatusOfEmpForeignTourInfoStatus();
+          this.getStatusOfEmpPhotoSign();
+        }
+        else{
+          this.gettingStatus = false;
+          this.headerText = "Add Employee Information";
+        }
       });
     });
   }
@@ -213,7 +234,7 @@ export class ViewInformationListComponent implements OnInit {
     if (this.visibleComponent === component) {
       this.visibleComponent = null;
       this.visible = false;
-      this.getEmployeeByAspNetUserId();
+      this.handleRouteParams();
       } else {
         this.visibleComponent = component;
         this.visible = true;

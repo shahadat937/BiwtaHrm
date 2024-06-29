@@ -1,6 +1,24 @@
 <div>
     <c-card>
         <c-card-header class="text-center">6th part (Remarks of the Countersigning officer)</c-card-header>
+        <c-button-group aria-label="Basic example" role="group">
+            <c-button-group aria-label="Basic example" role="group">
+                <button cButton color="primary"  [routerLink]="[
+                    '/appraisal/officerForm']" >Part-1</button>
+                <button cButton color="primary" [routerLink]="[
+                  '/appraisal/officerForm2']">Part-2</button>
+                <button cButton color="primary" [routerLink]="[
+              '/appraisal/officerForm3']">Part-3</button>
+                <button cButton color="primary" [routerLink]="[
+                    '/appraisal/officerFormPart4']">Part-4</button> 
+                <button cButton color="primary" [routerLink]="[
+                  '/appraisal/officerForm5']">Part-5</button>
+                <button cButton color="primary" [active]="true">Part-6</button>
+                <button cButton color="primary" [routerLink]="[
+                    '/appraisal/officerFormPart7'
+                ]">Part-7</button>
+              </c-button-group>
+          </c-button-group>
         <c-card-body>
             <form cRow cForm >
                 <c-col [md]="6">

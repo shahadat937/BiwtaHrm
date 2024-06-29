@@ -389,8 +389,11 @@ export const navItems: INavData[] = [
         name: 'Incr.& Promo. History',
         url: '/promotion/incrementAndPromotionHistory'
       }
-
-
+      ,
+      {
+         name:'Manage Promotion',
+         url:'/promotion/managePromotion'
+      }
     ]
   },
   {

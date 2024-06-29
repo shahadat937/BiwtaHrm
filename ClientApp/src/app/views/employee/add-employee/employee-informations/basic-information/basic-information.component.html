@@ -17,31 +17,31 @@
           name="id"
         />
         <label cLabel for="validationCustom01"
-          >First Name<span class="text-danger"></span></label
+          >First Name<span class="text-danger">*</span></label
         >
         <input
           [(ngModel)]="empBasicInfoService.basicInfo.firstName"
           name="firstName"
           #firstName="ngModel"
           cFormControl
+          placeholder="Enter First Name"
           id="validationCustom01"
           type="text"
-          readonly
         />
       </c-col>
       
       <c-col [md]="4">
         <label cLabel for="validationCustom02"
-        >Last Name<span class="text-danger"></span></label
+        >Last Name<span class="text-danger">*</span></label
       >
         <input
         [(ngModel)]="empBasicInfoService.basicInfo.lastName"
         name="lastName"
         #lastName="ngModel"
         cFormControl
+        placeholder="Enter Last Name"
         id="validationCustom02"
         type="text"
-        readonly
         />
       </c-col>
 

@@ -4,6 +4,7 @@ import { ViewUsersComponent } from './add-employee/view-users/view-users.compone
 import { ViewInformationListComponent } from './add-employee/view-information-list/view-information-list.component';
 import { EmployeeListComponent } from './manage-employee/employee-list/employee-list.component';
 import { EmployeeInformationComponent } from './manage-employee/employee-information/employee-information.component';
+import { ViewEmployeeComponent } from './add-employee/view-employee/view-employee.component';
 
 const routes: Routes = [
   {
@@ -18,10 +19,10 @@ const routes: Routes = [
         redirectTo: 'addEmployee',
       },
       {
-        path: 'addEmployee',
-        component: ViewUsersComponent,
+        path: 'employeeList',
+        component: ViewEmployeeComponent,
         data: {
-          title: 'User List',
+          title: 'Employee List',
         },
       },
       {
@@ -32,10 +33,17 @@ const routes: Routes = [
         },
       },
       {
-        path: 'view-imformation-list/:id',
+        path: 'create-new-employee',
         component: ViewInformationListComponent,
         data: {
-          title: 'Employee Information List',
+          title: 'Create New Employee',
+        },
+      },
+      {
+        path: 'update-employee-information/:id',
+        component: ViewInformationListComponent,
+        data: {
+          title: 'Update Employee Information',
         },
       },
       

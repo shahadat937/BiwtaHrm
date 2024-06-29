@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Domain
 {
-    public class SiteVisit : BaseDomainEntity
+    public class SiteVisit:BaseDomainEntity
     {
         public int SiteVisitId { get; set; }
         public int EmpId { get; set; }

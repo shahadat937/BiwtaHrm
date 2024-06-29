@@ -11,8 +11,11 @@ namespace Hrm.Application.DTOs.Workday
         public int WorkdayId { get; set; }
         public int YearId { get; set; }
         public int WeekDayId { get; set; }
-        public int MenuPosition {  get; set; }
-        public string Remark { get; set; }
-        public bool isActive { get; set; }
+
+        public int YearName { get; set; }
+        public string WeekDayName { get; set; }
+        public int? MenuPosition {  get; set; }
+        public string? Remark { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

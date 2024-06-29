@@ -28,8 +28,9 @@ import { OfficerFormPart5Component } from './officer-form/officer-form-part-5/of
 import { OfficerFormPart6Component } from './officer-form/officer-form-part-6/officer-form-part-6.component';
 import { OfficerFormPart7Component } from './officer-form/officer-form-part-7/officer-form-part-7.component';
 
-import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.component';
+
 import { StaffForm3Component } from './staff-form/staff-form-3/staff-form-3.component';
+import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { StaffForm3Component } from './staff-form/staff-form-3/staff-form-3.comp
     OfficerFormPart4Component,
     OfficerFormPart5Component,
     OfficerFormPart6Component,
-    OfficerFormPart7Component
+    OfficerFormPart7Component,
     StaffForm2Component,
     StaffForm3Component,
   ],

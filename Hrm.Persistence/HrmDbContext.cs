@@ -323,9 +323,6 @@ namespace Hrm.Persistence
                 .HasName("[PK_EmpId]");
             });
 
-            modelBuilder.Entity<Workday>()
-           .HasKey(sc => new { sc.WorkdayId });
-
             /*modelBuilder.Entity<Workday>()
             .HasOne<Year>(d => d.year)
             .WithMany(sc => sc.Workday)

@@ -110,14 +110,14 @@
                 </form>
                 
                 <h4 class="mt-2">Held The Position at The Time Under Consideration</h4>
-                <table  cTable class=" mt-3">
+                <table [cBorder]="1" borderColor="dark" bordered cTable>
                     <thead>
-                    <tr>
-                      <th scope="col">Designation</th>
-                      <th scope="col">Time</th>
-                      <th scope="col">Salary&salary scale</th>
-                    </tr>
-                    </thead>
+                        <tr>
+                            <th scope="col">Designation</th>
+                            <th scope="col">Time</th>
+                            <th scope="col" class="text-center">Salary & Salary Scale</th>
+                        </tr>
+                    </thead>                  
                 </table>
                 <div class="text-end mt-3">             
                     <button cButton >Submit</button>

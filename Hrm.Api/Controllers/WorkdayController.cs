@@ -4,6 +4,8 @@ using Hrm.Shared.Models;
 using Hrm.Domain;
 using Hrm.Application;
 using Hrm.Application.Features.Workday.Requests.Queries;
+using Hrm.Application.Features.Workday.Requests.Commands;
+using Hrm.Application.Contracts.Persistence;
 
 namespace Hrm.Api.Controllers
 {
@@ -19,7 +21,7 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("/get-Workday")]
+        [Route("get-Workday")]
         public async Task<ActionResult> GetWork()
         {
             var workday = await _mediator.Send(new GetWorkdayRequest { });
@@ -27,7 +29,7 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("/get-workdayById/{id}")]
+        [Route("get-workdayById/{id}")]
         public async Task<ActionResult> Get(int id)
         {
 
@@ -35,6 +37,36 @@ namespace Hrm.Api.Controllers
             return Ok(workday);
         }
 
+        [HttpPost]
+        [Route("save-Workday")]
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateWorkdayDto Workdaydto)
+        {
+            var command = new CreateWorkdayCommand { WorkdayDto = Workdaydto };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [Route("update-Workday/{id}")]
+        public async Task<ActionResult<BaseCommandResponse>> Put([FromBody] CreateWorkdayDto workdaydto, int id)
+        {
+            var command = new UpdateWorkdayCommand { WorkdayDto = workdaydto};
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
+
+        [HttpDelete]
+        [Route("delete-Workday/{id}")]
+        public async Task<ActionResult<BaseCommandResponse>> Delete(int id)
+        {
+            var command = new DeleteWorkdayCommand { WorkdayId = id };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
 
     }
 }

@@ -11,7 +11,14 @@ namespace Hrm.Domain
     {
         public int WorkdayId { get; set; }
         public int YearId { get; set; }
-        public int WeekendId { get; set; }
+        public int WeekDayId { get; set; }
+        public string? Remark {  get; set; }
+        public int? MenuPosition { get; set; }
+        public bool? IsActive { get; set; }
+
+        public virtual Year year { get; set; } = null!;
+        public virtual WeekDay weekDay { get; set; } = null!;
+
 
     }
 }

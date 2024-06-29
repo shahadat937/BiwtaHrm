@@ -323,6 +323,37 @@ namespace Hrm.Persistence
                 .HasName("[PK_EmpId]");
             });
 
+            /*modelBuilder.Entity<Workday>()
+            .HasOne<Year>(d => d.year)
+            .WithMany(sc => sc.Workday)
+            .HasForeignKey(sc => sc.YearId);
+
+            modelBuilder.Entity<Workday>()
+            .HasOne<WeekDay>(d => d.weekDay)
+            .WithMany(sc => sc.Workday)
+            .HasForeignKey(sc => sc.WeekDayId);*/
+
+            modelBuilder.Entity<Workday>()
+            .HasKey(w => w.WorkdayId);
+
+            modelBuilder.Entity<Workday>()
+                .HasOne(w => w.year)
+                .WithMany(y => y.Workday)
+                .HasForeignKey(w => w.YearId);
+
+            modelBuilder.Entity<Workday>()
+                .HasOne(w => w.weekDay)
+                .WithMany(wd => wd.Workday)
+                .HasForeignKey(w => w.WeekDayId);
+
+            // Optionally, configure Year and WeekDay entities as needed
+            modelBuilder.Entity<Year>()
+                .HasKey(y => y.YearId);
+
+            modelBuilder.Entity<WeekDay>()
+                .HasKey(wd => wd.WeekDayId);
+
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;

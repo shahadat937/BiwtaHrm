@@ -10,6 +10,6 @@ namespace Hrm.Application.DTOs.Workday
     {
         public int WorkdayId { get; set; }
         public int YearId { get; set; }
-        public int WeekendId { get; set; }
+        public int WeekDayId { get; set; }
     }
 }

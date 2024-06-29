@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.SiteVisit;
+using Hrm.Application.DTOs.Workday;
 using Hrm.Application.Features.Workday.Requests.Queries;
 using MediatR;
 using System;
@@ -28,7 +29,7 @@ namespace Hrm.Application.Features.Workday.Handlers.Queries
 
             Workdays = Workdays.OrderByDescending(x => x.WorkdayId);
 
-            var WorkdayDto = _mapper.Map<List<SiteVisitDto>>(Workdays);
+            var WorkdayDto = _mapper.Map<List<WorkdayDto>>(Workdays);
 
             return WorkdayDto;
         }

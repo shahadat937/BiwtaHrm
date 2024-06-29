@@ -22,7 +22,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { cilPlus, cilCloudUpload } from '@coreui/icons';
+import { cilPlus, cilCloudUpload, cilUser, cilUserPlus } from '@coreui/icons';
 
 @Component({
   selector: 'app-view-employee',
@@ -45,6 +45,7 @@ export class ViewEmployeeComponent implements OnInit {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+  userStatus : string = '';
 
   constructor(
     public userService: UserService,
@@ -55,7 +56,7 @@ export class ViewEmployeeComponent implements OnInit {
     public empBasicInfoService: EmpBasicInfoService,
   ) {
   }
-  icons = { cilPlus, cilCloudUpload };
+  icons = { cilPlus, cilCloudUpload,cilUser,cilUserPlus };
 
   ngOnInit(): void {
     this.getAllEmpBasicInfo();

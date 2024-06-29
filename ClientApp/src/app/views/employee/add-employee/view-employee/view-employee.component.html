@@ -26,12 +26,12 @@
         <table mat-table [dataSource]="dataSource">
           <!-- Position Column -->
           <ng-container matColumnDef="slNo">
-            <th mat-header-cell *matHeaderCellDef>Serial No</th>
+            <th mat-header-cell *matHeaderCellDef>SL</th>
             <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
           </ng-container>
 
           <ng-container matColumnDef="pNo">
-            <th mat-header-cell *matHeaderCellDef>Personal File No.</th>
+            <th mat-header-cell *matHeaderCellDef>PNo.</th>
             <td mat-cell *matCellDef="let element">
               {{ element.personalFileNo }}
             </td>
@@ -66,10 +66,16 @@
               <span *ngIf="!element.isActive">De-Active</span>
             </td>
           </ng-container>
-  
+          
           <ng-container matColumnDef="Action">
             <th mat-header-cell *matHeaderCellDef>Action</th>
             <td mat-cell *matCellDef="let element">
+                  <button class="btn btn-dark" *ngIf="!element.userStatus">
+                  <svg [cIcon]="icons.cilUserPlus"></svg> Create User
+                  </button>
+                  <button class="btn btn-dark" *ngIf="element.userStatus">
+                  <svg [cIcon]="icons.cilUser"></svg> Update User
+                </button> &nbsp;
               <button
                 class="btn btn-dark"
                 [routerLink]="[

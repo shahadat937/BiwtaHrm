@@ -4,6 +4,7 @@ import { IncrementAndPromotionComponent } from './increment-and-promotion/increm
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+
 const routes: Routes = [
   {
     path:'incrementAndPromotion',
@@ -16,7 +17,7 @@ const routes: Routes = [
   {
     path:'incrementAndPromotionHistory',
     component:IncrementAndPromotionHistoryComponent
-  }
+  },
 ];
 
 @NgModule({

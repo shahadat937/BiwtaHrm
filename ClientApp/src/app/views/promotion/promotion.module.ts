@@ -1,5 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  ButtonGroupModule,
+  ButtonModule,
+  CardModule,
+  CollapseDirective,
+  DropdownModule,
+  FormModule,
+  GridModule,
+  ListGroupModule,
+  ProgressModule,
+  SharedModule,
+  TableModule, 
+  UtilitiesModule,
+  PaginationModule,
+  CollapseModule
+} from '@coreui/angular';
 
 import { PromotionRoutingModule } from './promotion-routing.module';
 import { PromotionComponent } from './promotion/promotion.component';
@@ -19,7 +35,22 @@ import { IncrementAndPromotionHistoryComponent } from './increment-and-promotion
   ],
   imports: [
     CommonModule,
-    PromotionRoutingModule
+    PromotionRoutingModule,
+    CardModule,
+    FormModule,
+    GridModule,
+    ButtonModule,
+    FormModule,
+    ButtonModule,
+    ButtonGroupModule,
+    DropdownModule,
+    SharedModule,
+    ListGroupModule,
+    ProgressModule,
+    CollapseDirective,
+    TableModule,
+    UtilitiesModule,
+    PaginationModule
   ]
 })
 export class PromotionModule { }

@@ -219,7 +219,6 @@ export class ViewInformationListComponent implements OnInit {
         this.visible = true;
         this.componentVisible = true;
     }
-    
   }
 
 }

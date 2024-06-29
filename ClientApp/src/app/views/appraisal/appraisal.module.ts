@@ -38,13 +38,14 @@ import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.comp
     ManageFormComponent,
     OfficerFormComponent,
     OfficerForm2Component,
+    StaffForm2Component,
+    StaffForm3Component,
+    OfficerForm2Component,
     OfficerFormPart3Component,
     OfficerFormPart4Component,
     OfficerFormPart5Component,
     OfficerFormPart6Component,
-    OfficerFormPart7Component,
-    StaffForm2Component,
-    StaffForm3Component,
+    OfficerFormPart7Component
   ],
   imports: [
     CommonModule,

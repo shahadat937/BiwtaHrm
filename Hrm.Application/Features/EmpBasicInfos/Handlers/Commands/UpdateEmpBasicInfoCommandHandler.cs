@@ -39,6 +39,7 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Commands
 
             response.Success = true;
             response.Message = "Update Successfull";
+            response.Id = EmpBasicInfo.Id;
 
             return response;
         }

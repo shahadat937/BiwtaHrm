@@ -7,7 +7,7 @@ export class BasicInfoModule {
   dateOfBirth: Date | null;
   personalFileNo: string;
   nid: any;
-  aspNetUserId: string;
+  aspNetUserId: any;
   employeeTypeId: any;
 
   constructor() {
@@ -19,7 +19,7 @@ export class BasicInfoModule {
     this.dateOfBirth = null;
     this.personalFileNo ='';
     this.nid =null;
-    this.aspNetUserId ='';
+    this.aspNetUserId = null;
     this.employeeTypeId =null;
   }
 }

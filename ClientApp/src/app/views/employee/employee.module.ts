@@ -53,6 +53,7 @@ import { EmpPhotoSignComponent } from './add-employee/employee-informations/emp-
 import { IconModule } from '@coreui/icons-angular';
 import { EmployeeListComponent } from './manage-employee/employee-list/employee-list.component';
 import { EmployeeInformationComponent } from './manage-employee/employee-information/employee-information.component';
+import { ViewEmployeeComponent } from './add-employee/view-employee/view-employee.component';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { EmployeeInformationComponent } from './manage-employee/employee-informa
     EmpPhotoSignComponent,
     EmployeeListComponent,
     EmployeeInformationComponent,
+    ViewEmployeeComponent,
   ],
   imports: [
     CommonModule,

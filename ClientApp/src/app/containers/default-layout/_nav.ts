@@ -265,7 +265,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Add Employee',
-    url: '/employee/addEmployee',
+    url: '/employee/employeeList',
     iconComponent: { name: 'cil-puzzle' },
 
   },
@@ -389,8 +389,11 @@ export const navItems: INavData[] = [
         name: 'Incr.& Promo. History',
         url: '/promotion/incrementAndPromotionHistory'
       }
-
-
+      ,
+      {
+         name:'Manage Promotion',
+         url:'/promotion/managePromotion'
+      }
     ]
   },
   {

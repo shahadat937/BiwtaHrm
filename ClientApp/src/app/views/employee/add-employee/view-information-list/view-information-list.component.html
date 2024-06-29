@@ -1,17 +1,17 @@
 <c-card>
     <c-card-header class="d-flex justify-content-between">
         <div>
-            <h5>Add Employee Information</h5>
+            <h5>{{headerText}}</h5>
         </div>
         <div>
-            <button cButton color="danger" [routerLink]="['/employee/addEmployee']" class="text-light">Back</button>
+            <button cButton color="danger" [routerLink]="['/employee/employeeList']" class="text-light">Back</button>
         </div>
     </c-card-header>
     <c-card-body>
 
         <c-card>
             <c-card-header [visible]="visible" cCollapse>
-                <app-basic-information *ngIf="visibleComponent === 'basicInfo'" [userId]="userId" 
+                <app-basic-information *ngIf="visibleComponent === 'basicInfo'" [empId]="empId" 
                     (close)="toggleComponent('basicInfo')"></app-basic-information>
                 <app-personal-information *ngIf="visibleComponent === 'personalInfo'" [empId]="empId" 
                 (close)="toggleComponent('personalInfo')"></app-personal-information>

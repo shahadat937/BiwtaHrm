@@ -10,7 +10,7 @@ export class EmpEducationInfoModule {
   remark: string;
   menuPosition: number;
   isActive: boolean
-
+  
   constructor(){
     this.id= 0;
     this.empId= null;

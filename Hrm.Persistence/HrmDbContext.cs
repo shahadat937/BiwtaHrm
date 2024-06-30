@@ -350,8 +350,14 @@ namespace Hrm.Persistence
             modelBuilder.Entity<Year>()
                 .HasKey(y => y.YearId);
 
-            modelBuilder.Entity<WeekDay>()
-                .HasKey(wd => wd.WeekDayId);
+
+            modelBuilder.Entity<Employees>(entity =>
+            {
+                entity.HasMany( s => s.SiteVisits)
+                .WithOne(e=>e.Employees)
+                .HasForeignKey(e=>e.EmpId);
+            });
+
 
 
             base.OnModelCreating(modelBuilder);

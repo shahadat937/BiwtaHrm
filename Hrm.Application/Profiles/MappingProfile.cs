@@ -165,9 +165,7 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
             .ForMember(dest => dest.UpperDepartmentName, opt => opt.MapFrom(src => src.UpperDepartment.DepartmentName));
 
-            CreateMap<Workday, WorkdayDto>()
-            .ForMember(dest => dest.YearName, opt => opt.MapFrom(src => src.year.YearName))
-            .ForMember(dest => dest.WeekDayName, opt => opt.MapFrom(src => src.weekDay.WeekDayName));
+
 
             CreateMap<Shift, ShiftDto>().ReverseMap();
             CreateMap<Shift, CreateShiftDto>().ReverseMap();
@@ -350,6 +348,13 @@ namespace Hrm.Application.Profiles
             CreateMap<SiteVisit, CreateSiteVisitDto>().ReverseMap();
             CreateMap<Workday, WorkdayDto>().ReverseMap();
             CreateMap<Workday,  CreateWorkdayDto>().ReverseMap();
+
+            CreateMap<SiteVisit, SiteVisitDto>()
+            .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.Employees.EmpEngName));
+
+            CreateMap<Workday, WorkdayDto>()
+            .ForMember(dest => dest.YearName, opt => opt.MapFrom(src => src.year.YearName))
+            .ForMember(dest => dest.WeekDayName, opt => opt.MapFrom(src => src.weekDay.WeekDayName));
 
         }
     }

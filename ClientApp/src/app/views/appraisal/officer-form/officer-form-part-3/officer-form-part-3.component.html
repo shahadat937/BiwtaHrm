@@ -22,12 +22,2462 @@
               </c-button-group>
           </c-button-group> 
         <c-card-body>
-            <form cForm>
+            <form cForm cRow>
                 <div class="table-responsive">
                     <table cTable [striped]="true">
                         <thead>
                             <tr>
-                                <th scope="col">Overall Assessment</th>
+                                <th scope="col">1 Professional Knowledge</th>
+                                <th scope="col">Evaluation</th>
+                                <th scope="col">5</th>
+                                <th scope="col">4</th>
+                                <th scope="col">3</th>
+                                <th scope="col">2</th>
+                                <th scope="col">1</th>
+                                <th scope="col">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>i)</td>
+                                <td>Significant Knowledge</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-1" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-2" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-3" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-4" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-5" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ii)</td>
+                                <td>Sufficent Knowledge</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-1" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-2" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-3" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-4" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-5" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iii)</td>
+                                <td>Fairly Good Knowledge</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-1" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-2" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-3" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-4" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-5" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iv)</td>
+                                <td>Insufficent</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-1" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-2" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-3" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-4" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-5" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>v)</td>
+                                <td>Low Quality</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-1" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-2" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-3" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-4" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-5" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cTable [striped]="true">
+                        <thead>
+                            <tr>
+                                <th scope="col">2 Quality Of Work</th>
+                                <th scope="col">Evaluation</th>
+                                <th scope="col">5</th>
+                                <th scope="col">4</th>
+                                <th scope="col">3</th>
+                                <th scope="col">2</th>
+                                <th scope="col">1</th>
+                                <th scope="col">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>i)</td>
+                                <td>Acurate and Complete</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-1" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-2" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-3" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-4" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-5" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ii)</td>
+                                <td>High Standard</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-1" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-2" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-3" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-4" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-5" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iii)</td>
+                                <td>General</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-1" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-2" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-3" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-4" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-5" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iv)</td>
+                                <td>Unequal Values</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-1" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-2" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-3" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-4" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-5" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>v)</td>
+                                <td>Low Quality</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-1" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-2" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-3" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-4" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-5" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cTable [striped]="true">
+                        <thead>
+                            <tr>
+                                <th scope="col">3 Amount of Work</th>
+                                <th scope="col">Evaluation</th>
+                                <th scope="col">5</th>
+                                <th scope="col">4</th>
+                                <th scope="col">3</th>
+                                <th scope="col">2</th>
+                                <th scope="col">1</th>
+                                <th scope="col">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>i)</td>
+                                <td>Too Much</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-1" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-2" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-3" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-4" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-5" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ii)</td>
+                                <td>Sufficent</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-1" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-2" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-3" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-4" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-5" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iii)</td>
+                                <td>Satisfactory</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-1" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-2" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-3" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-4" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-5" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iv)</td>
+                                <td>Not as Expected</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-1" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-2" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-3" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-4" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-5" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>v)</td>
+                                <td>Insufficent</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-1" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-2" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-3" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-4" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-5" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cTable [striped]="true">
+                        <thead>
+                            <tr>
+                                <th scope="col">4 Punctuality</th>
+                                <th scope="col">Evaluation</th>
+                                <th scope="col">5</th>
+                                <th scope="col">4</th>
+                                <th scope="col">3</th>
+                                <th scope="col">2</th>
+                                <th scope="col">1</th>
+                                <th scope="col">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>i)</td>
+                                <td>Never Delay</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-1" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-2" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-3" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-4" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-5" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ii)</td>
+                                <td>Rarely Late</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-1" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-2" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-3" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-4" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-5" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iii)</td>
+                                <td>Usually Punctual</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-1" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-2" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-3" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-4" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-5" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iv)</td>
+                                <td>Sometimes Delay</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-1" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-2" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-3" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-4" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-5" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>v)</td>
+                                <td>Habitualy Late</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-1" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-2" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-3" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-4" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-5" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cTable [striped]="true">
+                        <thead>
+                            <tr>
+                                <th scope="col">5 Sence of Responsibility and Commitment</th>
+                                <th scope="col">Evaluation</th>
+                                <th scope="col">5</th>
+                                <th scope="col">4</th>
+                                <th scope="col">3</th>
+                                <th scope="col">2</th>
+                                <th scope="col">1</th>
+                                <th scope="col">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>i)</td>
+                                <td>Always Ready to Perform duties</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-1" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-2" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-3" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-4" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-5" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ii)</td>
+                                <td>Very Wiling to take Responsibility</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-1" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-2" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-3" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-4" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-5" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iii)</td>
+                                <td>Traditional</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-1" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-2" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-3" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-4" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-5" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iv)</td>
+                                <td>Tendency to submit superiors despite having decision-making power</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-1" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-2" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-3" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-4" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-5" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>v)</td>
+                                <td>Avoid Responssibility</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-1" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-2" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-3" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-4" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-5" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cTable [striped]="true">
+                        <thead>
+                            <tr>
+                                <th scope="col">6 Promptness in taking measures and following orders</th>
+                                <th scope="col">Evaluation</th>
+                                <th scope="col">5</th>
+                                <th scope="col">4</th>
+                                <th scope="col">3</th>
+                                <th scope="col">2</th>
+                                <th scope="col">1</th>
+                                <th scope="col">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>i)</td>
+                                <td>Extraordinaryd
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-1" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-2" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-3" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-4" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-5" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ii)</td>
+                                <td>Very Active</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-1" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-2" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-3" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-4" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-5" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iii)</td>
+                                <td>Activity Is Effortful</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-1" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-2" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-3" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-4" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-5" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iv)</td>
+                                <td>Slow</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-1" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-2" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-3" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-4" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-5" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>v)</td>
+                                <td>Careless</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-1" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-2" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-3" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-4" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-5" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cTable [striped]="true">
+                        <thead>
+                            <tr>
+                                <th scope="col">7 Interest of Work</th>
+                                <th scope="col">Evaluation</th>
+                                <th scope="col">5</th>
+                                <th scope="col">4</th>
+                                <th scope="col">3</th>
+                                <th scope="col">2</th>
+                                <th scope="col">1</th>
+                                <th scope="col">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>i)</td>
+                                <td>Extraordinaryd
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-1" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-2" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-3" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-4" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-5" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ii)</td>
+                                <td> Stedy</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-1" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-2" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-3" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-4" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-5" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iii)</td>
+                                <td>Responsible</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-1" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-2" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-3" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-4" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-5" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iv)</td>
+                                <td>Low</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-1" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-2" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-3" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-4" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-5" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>v)</td>
+                                <td>Lack of Interest</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-1" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-2" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-3" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-4" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-5" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cTable [striped]="true">
+                        <thead>
+                            <tr>
+                                <th scope="col">8 Supervise and Manage</th>
+                                <th scope="col">Evaluation</th>
+                                <th scope="col">5</th>
+                                <th scope="col">4</th>
+                                <th scope="col">3</th>
+                                <th scope="col">2</th>
+                                <th scope="col">1</th>
+                                <th scope="col">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>i)</td>
+                                <td>A Source of Motivation for subordinates</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-1" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-2" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-3" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-4" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-5" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ii)</td>
+                                <td>Godd at Management </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-1" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-2" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-3" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-4" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-5" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iii)</td>
+                                <td>Assistant to Subordinate</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-1" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-2" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-3" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-4" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-5" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iv)</td>
+                                <td>Lack of Control</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-1" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-2" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-3" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-4" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-5" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>v)</td>
+                                <td>Inferior</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-1" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-2" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-3" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-4" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-5" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cTable [striped]="true">
+                        <thead>
+                            <tr>
+                                <th scope="col">9 Relation With Colleagues</th>
+                                <th scope="col">Evaluation</th>
+                                <th scope="col">5</th>
+                                <th scope="col">4</th>
+                                <th scope="col">3</th>
+                                <th scope="col">2</th>
+                                <th scope="col">1</th>
+                                <th scope="col">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>i)</td>
+                                <td>Extraordinary</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-1" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-2" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-3" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-4" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-5" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ii)</td>
+                                <td>Highly Respective and Preferred</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-1" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-2" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-3" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-4" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-5" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iii)</td>
+                                <td>Sincere</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-1" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-2" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-3" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-4" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-5" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iv)</td>
+                                <td>Avoidence Tendency</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-1" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-2" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-3" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-4" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-5" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>v)</td>
+                                <td>Behaviour is Consistent</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-1" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-2" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-3" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-4" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-5" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cTable [striped]="true">
+                        <thead>
+                            <tr>
+                                <th scope="col">10 Ability to implement decision</th>
+                                <th scope="col">Evaluation</th>
+                                <th scope="col">5</th>
+                                <th scope="col">4</th>
+                                <th scope="col">3</th>
+                                <th scope="col">2</th>
+                                <th scope="col">1</th>
+                                <th scope="col">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>i)</td>
+                                <td>Extraordinary</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-1" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-2" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-3" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-4" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-5" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ii)</td>
+                                <td>Highly Very Good</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-1" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-2" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-3" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-4" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-5" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iii)</td>
+                                <td>Good</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-1" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-2" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-3" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-4" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-5" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iv)</td>
+                                <td>Hesitation</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-1" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-2" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-3" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-4" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-5" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>v)</td>
+                                <td>Weak</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-1" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-2" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-3" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-4" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-5" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cTable [striped]="true">
+                        <thead>
+                            <tr>
+                                <th scope="col">11 Expressive Power (Writing)</th>
+                                <th scope="col">Evaluation</th>
+                                <th scope="col">5</th>
+                                <th scope="col">4</th>
+                                <th scope="col">3</th>
+                                <th scope="col">2</th>
+                                <th scope="col">1</th>
+                                <th scope="col">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>i)</td>
+                                <td>Extraordinary</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-1" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-2" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-3" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-4" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-5" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ii)</td>
+                                <td>Clear,Irrefutable,Orderly</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-1" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-2" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-3" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-4" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-5" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iii)</td>
+                                <td>Generally clear and concise</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-1" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-2" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-3" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-4" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-5" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iv)</td>
+                                <td>Nt So Good</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-1" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-2" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-3" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-4" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-5" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>v)</td>
+                                <td>Not Clear</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-1" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-2" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-3" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-4" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-5" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cTable [striped]="true">
+                        <thead>
+                            <tr>
+                                <th scope="col">11 Expressive Power (Speech)</th>
+                                <th scope="col">Evaluation</th>
+                                <th scope="col">5</th>
+                                <th scope="col">4</th>
+                                <th scope="col">3</th>
+                                <th scope="col">2</th>
+                                <th scope="col">1</th>
+                                <th scope="col">Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>i)</td>
+                                <td>Extraordinary</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-1" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-2" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-3" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-4" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio1-5" name="discipline" type="radio" />
+                                        <label cFormCheckLabel for="radio1-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ii)</td>
+                                <td>Strong</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-1" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-2" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-3" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-4" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio2-5" name="standard" type="radio" />
+                                        <label cFormCheckLabel for="radio2-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iii)</td>
+                                <td>Much</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-1" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-2" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-3" name="intelligent" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-4" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio3-5" name="intelligent" type="radio" />
+                                        <label cFormCheckLabel for="radio3-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>iv)</td>
+                                <td>Not Clear</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-1" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-2" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-3" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-4" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio4-5" name="value" type="radio" />
+                                        <label cFormCheckLabel for="radio4-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>v)</td>
+                                <td>Vegue and Ineffective</td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-1" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-1"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-2" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-2"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-3" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-3"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-4" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-4"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <c-form-check inline>
+                                        <input cFormCheckInput id="radio5-5" name="quality" type="radio" />
+                                        <label cFormCheckLabel for="radio5-5"></label>
+                                    </c-form-check>
+                                </td>
+                                <td>
+                                    <input type="text" cFormControl>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>             
+                    <div class="container mt-4">
+                        <div class="row justify-content-center">
+                          <c-col [md]="3">
+                            <label cLabel class="mt-2">13 Total marks obtain in 3rd part out of 60</label>
+                          </c-col>
+                          <c-col [md]="3">
+                            <label cLabel class="mt-2">In Mathematices</label>
+                            <input type="text" class="mt-2" cFormControl>
+                            <label cLabel class="mt-2">In Words</label>
+                            <input type="text" class="mt-2" cFormControl>
+                          </c-col>
+                          <c-col [md]="3">
+                            <label cLabel class="mt-2">In Mathematices</label>
+                            <input type="text" class="mt-2" cFormControl>
+                            <label cLabel class="mt-2">In Words</label>                          
+                            <input type="text" class="mt-2" cFormControl>
+                          </c-col>
+                        </div>
+                      </div>
+                      <div class="container mt-4">
+                        <div class="row justify-content-center">
+                          <c-col [md]="3">
+                            <label cLabel class="mt-2">14 Total marks obtain in two part and 3rd part out of 100</label>
+                          </c-col>
+                          <c-col [md]="3">
+                            <label cLabel class="mt-2">In Mathematices</label>
+                            <input type="text" class="mt-2" cFormControl>
+                            <label cLabel class="mt-2">In words</label>
+                            <input type="text" class="mt-2" cFormControl>
+                          </c-col>
+                          <c-col [md]="3">
+                            <label cLabel class="mt-2">In Mathematices</label>
+                            <input type="text" class="mt-2" cFormControl>
+                            <label cLabel class="mt-2">In words</label>
+                            <input type="text" class="mt-2" cFormControl>
+                          </c-col>
+                        </div>
+                      </div>      
+                    <table cTable [striped]="true">
+                        <thead>
+                            <tr>
+                                <th scope="col">15 Overall Assessment</th>
                                 <th scope="col">Evaluation</th>
                                 <th scope="col">91-100</th>
                                 <th scope="col">81-90</th>

@@ -26,12 +26,12 @@
         <table mat-table [dataSource]="dataSource">
           <!-- Position Column -->
           <ng-container matColumnDef="slNo">
-            <th mat-header-cell *matHeaderCellDef>Serial No</th>
+            <th mat-header-cell *matHeaderCellDef>SL</th>
             <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
           </ng-container>
 
           <ng-container matColumnDef="pNo">
-            <th mat-header-cell *matHeaderCellDef>Personal File No.</th>
+            <th mat-header-cell *matHeaderCellDef>PNo.</th>
             <td mat-cell *matCellDef="let element">
               {{ element.personalFileNo }}
             </td>
@@ -44,7 +44,7 @@
             </td>
           </ng-container>
           
-          <ng-container matColumnDef="userName">
+          <ng-container matColumnDef="fullNameBangla">
             <th mat-header-cell *matHeaderCellDef>Full Name Bangla</th>
             <td mat-cell *matCellDef="let element">
                 {{ element.firstNameBangla }} {{element.lastNameBangla}}
@@ -57,26 +57,19 @@
               {{ element.email }}
             </td>
           </ng-container>
-  
-          <!-- Name Column -->
-          <ng-container matColumnDef="isActive">
-            <th mat-header-cell *matHeaderCellDef>Is Active</th>
-            <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.isActive">Active</span>
-              <span *ngIf="!element.isActive">De-Active</span>
-            </td>
-          </ng-container>
-  
+          
           <ng-container matColumnDef="Action">
             <th mat-header-cell *matHeaderCellDef>Action</th>
             <td mat-cell *matCellDef="let element">
-              <button
-                class="btn btn-dark"
-                [routerLink]="[
-                  '/employee/update-employee-information/',
-                  element.id
-                ]"
-              >
+              <button [disabled]="loadingMap[element.id]" class="btn btn-dark" *ngIf="!element.userStatus" (click)="createUser(element.id)">
+                <c-spinner *ngIf="loadingMap[element.id]" size="sm"></c-spinner>
+                <svg *ngIf="!loadingMap[element.id]" [cIcon]="icons.cilUserPlus"></svg> Create User
+              </button>
+              <button class="btn btn-dark" *ngIf="element.userStatus" (click)="updateUser(element.id)">
+                <svg [cIcon]="icons.cilUser"></svg> Update User
+              </button> &nbsp;
+              
+              <button class="btn btn-dark" [routerLink]="['/employee/update-employee-information/', element.id]">
                 <svg [cIcon]="icons.cilCloudUpload"></svg> Update Information
               </button>
             </td>

@@ -19,18 +19,7 @@ export class EmpBasicInfoService {
   }
   
   getAll(): Observable<BasicInfoModule[]> {
-    if (this.cachedData.length > 0) {
-      return of (this.cachedData);
-    } else {
-      return this.http
-        .get<BasicInfoModule[]>(this.baseUrl + '/empBasicInfo/get-allEmpBasicInfo')
-        .pipe(
-          map((data) => {
-            this.cachedData = data; 
-            return data;
-          })
-        );
-    }
+      return this.http.get<BasicInfoModule[]>(this.baseUrl + '/empBasicInfo/get-allEmpBasicInfo')
   }
 
   findByEmpId(id: number) {
@@ -52,6 +41,8 @@ export class EmpBasicInfoService {
     return this.http.put(this.baseUrl + '/empBasicInfo/update-EmpBasicInfos/'+id, model);
   }
 
-
+  updateUserStatus(id: number){
+    return this.http.get<any>(this.baseUrl + '/empBasicInfo/update-userStatus/' + id);
+  }
 
 }

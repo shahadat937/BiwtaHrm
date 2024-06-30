@@ -8,6 +8,7 @@ export class UserModule {
   email: string;
   phoneNumber : string;
   pNo : string;
+  empId : number;
   menuPosition: number;
   isActive : boolean;
   
@@ -21,6 +22,7 @@ export class UserModule {
     this.email = '';
     this.phoneNumber = '';
     this.pNo = '';
+    this.empId = 0;
     this.menuPosition = 0;
     this.isActive = true;
   }

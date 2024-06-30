@@ -17,24 +17,37 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CreateEmpBasicInfoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IHrmRepository<EmpBasicInfo> _EmpBasicInfoRepository;
+        public CreateEmpBasicInfoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<EmpBasicInfo> EmpBasicInfoRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _EmpBasicInfoRepository = EmpBasicInfoRepository;
         }
         public async Task<BaseCommandResponse> Handle(CreateEmpBasicInfoCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
 
-            var EmpBasicInfo = _mapper.Map<EmpBasicInfo>(request.EmpBasicInfoDto);
+            var FindPNo = await _EmpBasicInfoRepository.FindOneAsync(x=>x.PersonalFileNo == request.EmpBasicInfoDto.PersonalFileNo);
 
-            EmpBasicInfo = await _unitOfWork.Repository<EmpBasicInfo>().Add(EmpBasicInfo);
-            await _unitOfWork.Save();
+            if (FindPNo != null)
+            {
+                response.Success = false;
+                response.Message = $"Creation Failed Personal File No '{request.EmpBasicInfoDto.PersonalFileNo}' already Exists";
+            }
+
+            else
+            {
+                var EmpBasicInfo = _mapper.Map<EmpBasicInfo>(request.EmpBasicInfoDto);
+
+                EmpBasicInfo = await _unitOfWork.Repository<EmpBasicInfo>().Add(EmpBasicInfo);
+                await _unitOfWork.Save();
 
 
-            response.Success = true;
-            response.Message = "Creation Successful";
-            response.Id = EmpBasicInfo.Id;
+                response.Success = true;
+                response.Message = "Creation Successful";
+                response.Id = EmpBasicInfo.Id;
+            }
 
             return response;
         }

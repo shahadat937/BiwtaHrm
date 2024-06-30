@@ -10,19 +10,18 @@ namespace Hrm.Application.Models.Identity
         [Required]
         public string LastName { get; set; }
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        //[Required]
+        //[EmailAddress]
+        public string? Email { get; set; }
 
         [Required]
-        [MinLength(6)]
+        //[MinLength(6)]
         public string UserName { get; set; }
         
-        [Required]
-        public string PhoneNumber { get; set; }
+        //[Required]
+        public string? PhoneNumber { get; set; }
 
-        [Required]
-        public string PNo { get; set; }
+        public int? EmpId { get; set; }
 
 
         [Required]

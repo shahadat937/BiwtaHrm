@@ -32,12 +32,5 @@ public class AccountController : ControllerBase
         return Ok(await _authenticationService.Register(request));
     }
 
-    [HttpPost]
-    [Route("autoResigter/{id}")]
-    public async Task<ActionResult<RegistrationResponse>> AutoCreateUser(int id)
-    {
-        var BloodGroups = await _mediator.Send(new GetBloodGroupDetailRequest { BloodGroupId = id });
-        return Ok(BloodGroups);
-    }
 }
 

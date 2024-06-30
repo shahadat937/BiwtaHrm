@@ -26,7 +26,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   @ViewChild('UserForm', { static: true }) UserForm!: NgForm;
   loading = false;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'pNo', 'fullName', 'userName', 'email', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'fullName', 'userName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -119,6 +119,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.userService.users = {
       id: '',
       userName: '',
+      oldPassword : '',
       password: '',
       rePassword: '',
       firstName: '',
@@ -126,7 +127,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
       email: '',
       phoneNumber : '',
       pNo : '',
-      empId: 0,
+      empId: null,
       menuPosition: 0,
       isActive : true,
     };
@@ -146,7 +147,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         email: '',
         phoneNumber : '',
         pNo : '',
-        empId : 0,
+        empId : null,
         menuPosition: 0,
         isActive : true,
       });
@@ -161,16 +162,26 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
       this.dataSource.sort = this.matSort;
     });
   }
+  
 
   onSubmit(form: NgForm): void{
     this.loading = true;
+    console.log("Form Value : ", form.value)
     this.userService.cachedData = [];
     this.route.paramMap.subscribe((params) => {
       const id = form.value.id;
+      const oldPassword = form.value.oldPassword;
+      const currentPassword = form.value.password;
 
-    const action$ = id
-      ? this.userService.update(id, form.value)
-      : this.userService.submit(form.value);
+    let action$;
+
+      if (id && oldPassword && currentPassword) {
+        action$ = this.userService.updateAndChangePassword(id, form.value);
+      } else if (id && !oldPassword && !currentPassword) {
+        action$ = this.userService.update(id, form.value);
+      } else {
+        action$ = this.userService.submit(form.value);
+      }
 
       this.subscription =action$.subscribe((response: any)  => {
         if (response.success) {

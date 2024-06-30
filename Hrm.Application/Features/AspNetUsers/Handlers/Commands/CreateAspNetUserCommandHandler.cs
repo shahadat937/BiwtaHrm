@@ -31,7 +31,7 @@ namespace Hrm.Application.Features.AspNetUsers.Handlers.Commands
             var response = new BaseCommandResponse();
             IQueryable<Domain.AspNetUsers> userNameFound = _aspNetUserRepository.Where(x => x.UserName.ToLower() == request.AspNetUserDto.UserName.ToLower());
             IQueryable<Domain.AspNetUsers> emailFound = _aspNetUserRepository.Where(x => x.Email.ToLower() == request.AspNetUserDto.Email.ToLower());
-            IQueryable<Domain.AspNetUsers> pNoFound = _aspNetUserRepository.Where(x => x.PNo.ToLower() == request.AspNetUserDto.PNo.ToLower());
+            //IQueryable<Domain.AspNetUsers> pNoFound = _aspNetUserRepository.Where(x => x.PNo.ToLower() == request.AspNetUserDto.PNo.ToLower());
 
             if (userNameFound.Any())
             {
@@ -43,11 +43,11 @@ namespace Hrm.Application.Features.AspNetUsers.Handlers.Commands
                 response.Success = false;
                 response.Message = $"Creation Failed '{request.AspNetUserDto.Email}' already exists.";
             }
-            else if (pNoFound.Any())
-            {
-                response.Success = false;
-                response.Message = $"Creation Failed '{request.AspNetUserDto.PNo}' already exists.";
-            }
+            //else if (pNoFound.Any())
+            //{
+            //    response.Success = false;
+            //    response.Message = $"Creation Failed '{request.AspNetUserDto.PNo}' already exists.";
+            //}
             else
             {
                 Guid UserId = Guid.NewGuid();
@@ -64,7 +64,7 @@ namespace Hrm.Application.Features.AspNetUsers.Handlers.Commands
                     Email = request.AspNetUserDto.Email,
                     NormalizedEmail = request.AspNetUserDto.Email.ToUpper(),
                     PhoneNumber = request.AspNetUserDto.PhoneNumber,
-                    PNo = request.AspNetUserDto.PNo,
+                    //PNo = request.AspNetUserDto.PNo,
                     PasswordHash = passwordHash,
                     IsActive = request.AspNetUserDto.IsActive,
                 };

@@ -13,20 +13,21 @@ namespace Hrm.Application.Models.Identity
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        [EmailAddress]
-        public string Email { get; set; }
+        //[EmailAddress]
+        public string? Email { get; set; }
 
-        [MinLength(6)]
-        public string UserName { get; set; }
+        //[MinLength(6)]
+        public string? UserName { get; set; }
 
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
-        public int EmpId { get; set; }
+        public int? EmpId { get; set; }
 
+        public string? OldPassword { get; set; }
 
         public bool IsActive { get; set; }
 
-        [MinLength(6)]
+        //[MinLength(6)]
         public string? Password { get; set; }
     }
 }

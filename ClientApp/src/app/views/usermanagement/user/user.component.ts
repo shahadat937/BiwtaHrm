@@ -126,6 +126,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
       email: '',
       phoneNumber : '',
       pNo : '',
+      empId: 0,
       menuPosition: 0,
       isActive : true,
     };
@@ -145,6 +146,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         email: '',
         phoneNumber : '',
         pNo : '',
+        empId : 0,
         menuPosition: 0,
         isActive : true,
       });

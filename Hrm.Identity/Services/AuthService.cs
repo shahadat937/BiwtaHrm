@@ -77,7 +77,7 @@ namespace Hrm.Identity.Services
                 Username = user.UserName,
                 Role = roleName,
                 BranchId = user.BranchId,
-                PNo = user.PNo
+                EmpId = user.EmpId
             };
 
             return response;
@@ -95,16 +95,16 @@ namespace Hrm.Identity.Services
                 LastName = request.LastName,
                 UserName = request.UserName,
                 PhoneNumber = request.PhoneNumber,
-                PNo = request.PNo,
+                EmpId = request.EmpId,
                 IsActive = request.IsActive,
                 EmailConfirmed = true
             };
 
             var existingUser = await _userManager.FindByNameAsync(request.UserName);
 
-            IQueryable<Domain.AspNetUsers> pNoFound = _aspNetUserRepository.Where(x => x.PNo.ToLower() == request.PNo.ToLower());
+            //IQueryable<Domain.AspNetUsers> pNoFound = _aspNetUserRepository.Where(x => x.PNo.ToLower() == request.PNo.ToLower());
 
-            var existingEmail = await _userManager.FindByEmailAsync(request.Email);
+            //var existingEmail = await _userManager.FindByEmailAsync(request.Email);
 
             if (existingUser != null)
             {
@@ -112,17 +112,17 @@ namespace Hrm.Identity.Services
                 response.Message = $"Registration Failed, UserName '{request.UserName}' already Exists.";
             }
 
-            else if (pNoFound.Any())
-            {
-                response.Success = false;
-                response.Message = $"Registration Failed, pNo '{request.PNo}' already Exists.";
-            }
+            //else if (pNoFound.Any())
+            //{
+            //    response.Success = false;
+            //    response.Message = $"Registration Failed, pNo '{request.PNo}' already Exists.";
+            //}
 
-            else if (existingEmail != null)
-            {
-                response.Success = false;
-                response.Message = $"Registration Failed, Email '{request.Email}' already Exists.";
-            }
+            //else if (existingEmail != null)
+            //{
+            //    response.Success = false;
+            //    response.Message = $"Registration Failed, Email '{request.Email}' already Exists.";
+            //}
 
             else 
             {
@@ -197,27 +197,27 @@ namespace Hrm.Identity.Services
 
             IQueryable<Domain.AspNetUsers> existingUser = _aspNetUserRepository.Where(x => x.UserName.ToLower() == request.UserName.ToLower() && x.Id != request.Id);
 
-            IQueryable<Domain.AspNetUsers> pNoFound = _aspNetUserRepository.Where(x => x.PNo.ToLower() == request.PNo.ToLower() && x.Id != request.Id);
+            //IQueryable<Domain.AspNetUsers> pNoFound = _aspNetUserRepository.Where(x => x.PNo.ToLower() == request.PNo.ToLower() && x.Id != request.Id);
 
-            IQueryable<Domain.AspNetUsers> existingEmail = _aspNetUserRepository.Where(x => x.Email.ToLower() == request.Email.ToLower() && x.Id != request.Id);
+            //IQueryable<Domain.AspNetUsers> existingEmail = _aspNetUserRepository.Where(x => x.Email.ToLower() == request.Email.ToLower() && x.Id != request.Id);
 
             if (existingUser.Any())
             {
                 response.Success = false;
-                response.Message = $"Registration Failed, UserName '{request.UserName}' already Exists.";
+                response.Message = $"Update Failed, UserName '{request.UserName}' already Exists.";
             }
 
-            else if (pNoFound.Any())
-            {
-                response.Success = false;
-                response.Message = $"Registration Failed, pNo '{request.PNo}' already Exists.";
-            }
+            //else if (pNoFound.Any())
+            //{
+            //    response.Success = false;
+            //    response.Message = $"Registration Failed, pNo '{request.PNo}' already Exists.";
+            //}
 
-            else if (existingEmail.Any())
-            {
-                response.Success = false;
-                response.Message = $"Registration Failed, Email '{request.Email}' already Exists.";
-            }
+            //else if (existingEmail.Any())
+            //{
+            //    response.Success = false;
+            //    response.Message = $"Registration Failed, Email '{request.Email}' already Exists.";
+            //}
 
             else
             {
@@ -227,7 +227,7 @@ namespace Hrm.Identity.Services
                 user.LastName = request.LastName;
                 user.Email = request.Email;
                 user.PhoneNumber = request.PhoneNumber;
-                user.PNo = request.PNo;
+                user.EmpId = request.EmpId;
                 user.IsActive = request.IsActive;
 
 

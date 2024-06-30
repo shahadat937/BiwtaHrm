@@ -63,5 +63,14 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("update-userStatus/{id}")]
+        public async Task<ActionResult> UpdateUserStatus(int id)
+        {
+            var command = new UpdateUserStatusCommand { Id = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
     }
 }

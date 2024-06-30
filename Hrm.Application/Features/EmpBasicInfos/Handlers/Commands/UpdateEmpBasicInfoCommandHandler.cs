@@ -30,16 +30,28 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Commands
         {
             var response = new BaseCommandResponse();
 
-            var EmpBasicInfo = await _unitOfWork.Repository<EmpBasicInfo>().Get(request.EmpBasicInfoDto.Id);
+            var FindPNo = await _EmpBasicInfoRepository.FindOneAsync(x => x.PersonalFileNo == request.EmpBasicInfoDto.PersonalFileNo);
 
-            _mapper.Map(request.EmpBasicInfoDto, EmpBasicInfo);
+            if (FindPNo != null)
+            {
+                response.Success = false;
+                response.Message = $"Creation Failed Personal File No '{request.EmpBasicInfoDto.PersonalFileNo}' already Exists";
+            }
 
-            await _unitOfWork.Repository<EmpBasicInfo>().Update(EmpBasicInfo);
-            await _unitOfWork.Save();
+            else
+            {
+                var EmpBasicInfo = await _unitOfWork.Repository<EmpBasicInfo>().Get(request.EmpBasicInfoDto.Id);
 
-            response.Success = true;
-            response.Message = "Update Successfull";
-            response.Id = EmpBasicInfo.Id;
+                _mapper.Map(request.EmpBasicInfoDto, EmpBasicInfo);
+
+                await _unitOfWork.Repository<EmpBasicInfo>().Update(EmpBasicInfo);
+                await _unitOfWork.Save();
+
+                response.Success = true;
+                response.Message = "Update Successfull";
+                response.Id = EmpBasicInfo.Id;
+            }
+            
 
             return response;
         }

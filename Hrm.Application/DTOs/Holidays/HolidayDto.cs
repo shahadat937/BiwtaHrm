@@ -13,12 +13,12 @@ namespace Hrm.Application.DTOs.Holidays
         public int HolidayTypeId { get; set; }
         public int YearId { get; set; }
         public int YearName { get; set; }
-        public string HolidayTypeName { get; set; }
+        public string? HolidayTypeName { get; set; }
         public DateOnly HolidayStart { get; set; }
         public DateOnly HolidayEnd { get; set; }
         public int MenuPosition { get; set; }
         public bool IsActive { get; set; }
-        public string Remark { get; set; }
+        public string? Remark { get; set; }
 
     }
 }

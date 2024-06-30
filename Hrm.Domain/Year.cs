@@ -17,5 +17,6 @@ namespace Hrm.Domain
 
         public ICollection<Workday> Workday { get; } = new List<Workday>();
         public ICollection<WeekDay> weekDays { get; } = new List<WeekDay>();
+        public ICollection<Holidays> Holidays { get; } = new List<Holidays>();
     }
 }

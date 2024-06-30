@@ -13,8 +13,8 @@ namespace Hrm.Application.DTOs.Holidays
         public int YearId { get; set; }
         public DateOnly HolidayStart { get; set; }
         public DateOnly HolidayEnd { get; set; }
-        public int MenuPosition { get; set; }
+        public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
-        public string Remark { get; set; }
+        public string? Remark { get; set; }
     }
 }

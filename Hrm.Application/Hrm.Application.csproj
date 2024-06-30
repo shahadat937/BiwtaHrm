@@ -31,6 +31,8 @@
 		
  <ItemGroup>
    <Compile Remove="DTOs\Workday.cs" />
+   <Compile Remove="Features\Holidays\Handlers\Queries\GetHolidaysByIdHandler.cs" />
+   <Compile Remove="Features\Holidays\Requests\Queries\GetHolidaysByYearIdRequest.cs" />
    <Compile Remove="Features\SiteVisit\Requests\Queries\GetSiteVisitById.cs" />
  </ItemGroup>
 
@@ -50,6 +52,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Features\Holidays\Handlers\Commands\" />
+	  <Folder Include="Features\Holidays\Requests\Commands\" />
 	  <Folder Include="Features\Organogram\Handlers\Commands\" />
 	  <Folder Include="Features\Organogram\Requests\Commands\" />
 	</ItemGroup>

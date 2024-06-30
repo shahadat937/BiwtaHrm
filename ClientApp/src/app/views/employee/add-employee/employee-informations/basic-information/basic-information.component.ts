@@ -63,6 +63,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
       nid: null,
       employeeTypeId: null,
       aspNetUserId: null,
+      userStatus: false,
     };
   }
 
@@ -79,6 +80,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
         nid: null,
         employeeTypeId: null,
         aspNetUserId: null,
+        userStatus: false,
       });
   }
   
@@ -121,6 +123,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
         this.headerText = 'Update Basic Information';
         this.BasicInfoForm?.form.patchValue(res);
         this.btnText='Update';
+        console.log("EmpBasiInfo : ",res)
       }
       else{
         this.headerText = 'Add Basic Information';
@@ -142,7 +145,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
 
   onSubmit(form: NgForm): void{
     console.log("Form Value: ", form.value)
-    this.loading = true;
+    // this.loading = true;
     this.empBasicInfoService.cachedData = [];
     const id = form.value.id;
     const action$ = id

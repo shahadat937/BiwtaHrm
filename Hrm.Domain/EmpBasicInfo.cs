@@ -24,6 +24,7 @@ namespace Hrm.Domain
         public string? EmpGovNo { get; set; }
         public string? PersonalFileNo { get; set; }
         public int? EmployeeTypeId { get; set; }
+        public bool? UserStatus { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }

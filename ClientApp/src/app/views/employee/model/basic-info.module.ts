@@ -8,6 +8,7 @@ export class BasicInfoModule {
   personalFileNo: string;
   nid: any;
   aspNetUserId: any;
+  userStatus : boolean | null;
   employeeTypeId: any;
 
   constructor() {
@@ -20,6 +21,7 @@ export class BasicInfoModule {
     this.personalFileNo ='';
     this.nid =null;
     this.aspNetUserId = null;
+    this.userStatus = false;
     this.employeeTypeId =null;
   }
 }

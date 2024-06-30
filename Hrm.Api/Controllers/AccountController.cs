@@ -1,5 +1,7 @@
 ﻿using Hrm.Application;
 using Hrm.Application.Contracts.Identity;
+using Hrm.Application.DTOs.BloodGroup;
+using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Application.Models.Identity;
 
 namespace Hrm.Api.Controllers;
@@ -9,9 +11,11 @@ namespace Hrm.Api.Controllers;
 public class AccountController : ControllerBase
 {
     private readonly IAuthService _authenticationService;
-    public AccountController(IAuthService authenticationService)
+    private readonly IMediator _mediator;
+    public AccountController(IAuthService authenticationService, IMediator mediator)
     {
         _authenticationService = authenticationService;
+        _mediator = mediator;
     }
 
     [HttpPost]
@@ -26,6 +30,14 @@ public class AccountController : ControllerBase
     public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request)
     {
         return Ok(await _authenticationService.Register(request));
+    }
+
+    [HttpPost]
+    [Route("autoResigter/{id}")]
+    public async Task<ActionResult<RegistrationResponse>> AutoCreateUser(int id)
+    {
+        var BloodGroups = await _mediator.Send(new GetBloodGroupDetailRequest { BloodGroupId = id });
+        return Ok(BloodGroups);
     }
 }
 

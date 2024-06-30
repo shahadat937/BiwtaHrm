@@ -21,7 +21,7 @@ namespace Hrm.Application.Models.Identity
 
         public string PhoneNumber { get; set; }
 
-        public string PNo { get; set; }
+        public int EmpId { get; set; }
 
 
         public bool IsActive { get; set; }

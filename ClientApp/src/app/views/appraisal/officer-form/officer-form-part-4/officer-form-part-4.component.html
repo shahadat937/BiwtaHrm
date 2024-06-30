@@ -1,1 +1,70 @@
-<p>officer-form-part-4 works!</p>
+<div>
+    <c-card>
+        <c-card-header class="text-center">4th part(Detailed Comment)</c-card-header>
+        <c-button-group aria-label="Basic example" role="group">
+            <c-button-group aria-label="Basic example" role="group">
+                <button cButton color="primary" [routerLink]="['/appraisal/officerForm']">Part-1</button>
+                <button cButton color="primary" [routerLink]="['/appraisal/officerForm2']">Part-2</button>
+                <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart3']">Part-3</button>
+                <button cButton color="primary" [active]="true">Part-4</button>
+                <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart5']">Part-5</button>
+                <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart6']">Part-6</button>
+                <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart7']">Part-7</button>
+            </c-button-group>
+        </c-button-group>
+        <c-card-body>
+            <form cRow cForm >
+            <c-col [md]="6">
+                <label cLabel class="mt-4">1.Personal Characteristics</label>
+            </c-col>
+            <c-col [md]="6">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+            </c-col>
+            <c-col [md]="6">
+                <label cLabel class="mt-4">2.Professional Skill</label>
+            </c-col>
+            <c-col [md]="6">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+            </c-col>
+            <c-col [md]="6">
+                <label cLabel class="mt-4">3.Loyality and relaiability</label>
+            </c-col>
+            <c-col [md]="6">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+            </c-col>
+           <c-col [md]="6">
+                <label cLabel class="mt-4">4.Other Matters</label>
+            </c-col>
+            <c-col [md]="6">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+            </c-col><c-col [md]="6">
+                <label cLabel class="mt-4">5.Annual Confidential report writing & Countersigning Activates</label>
+            </c-col>
+            <c-col [md]="6">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+            </c-col><c-col [md]="6">
+                <label cLabel class="mt-4">6.Advice to Officers</label>
+            </c-col>
+            <c-col [md]="6">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+            </c-col>
+            <c-col [md]="6">
+                <label cLabel class="mt-4">7.Proficency and Interest in Bengali Language</label>
+            </c-col>
+            <c-col [md]="6">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+            </c-col>
+            <c-col class="d-flex justify-content-end align-items-center mt-3">           
+                <div class="text-center">
+                    <input type="file" cFormControl class="">
+                    <div>Signature of Reporting Officer</div>
+                </div>
+            </c-col>
+            <div>
+            <button cButton color="primary">Submit</button>
+            <button cButton color="dark" class="ms-3">Cancel</button>
+            </div>
+            </form>         
+        </c-card-body>
+    </c-card>
+</div>

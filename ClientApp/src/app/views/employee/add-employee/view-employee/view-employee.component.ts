@@ -1,21 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
-import { EmpBankInfoService } from '../../service/emp-bank-info.service';
 import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
-import { EmpChildInfoService } from '../../service/emp-child-info.service';
-import { EmpEducationInfoService } from '../../service/emp-education-info.service';
-import { EmpForeignTourInfoService } from '../../service/emp-foreign-tour-info.service';
-import { EmpJobDetailsService } from '../../service/emp-job-details.service';
-import { EmpLanguageInfoService } from '../../service/emp-language-info.service';
-import { EmpPermanentAddressService } from '../../service/emp-permanent-address.service';
-import { EmpPersonalInfoService } from '../../service/emp-personal-info.service';
-import { EmpPhotoSignService } from '../../service/emp-photo-sign.service';
-import { EmpPresentAddressService } from '../../service/emp-present-address.service';
-import { EmpPsiTrainingInfoService } from '../../service/emp-psi-training-info.service';
-import { EmpSpouseInfoService } from '../../service/emp-spouse-info.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -23,11 +9,12 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { cilPlus, cilCloudUpload, cilUser, cilUserPlus } from '@coreui/icons';
+import { UserModule } from 'src/app/views/usermanagement/model/user.module';
 
 @Component({
   selector: 'app-view-employee',
   templateUrl: './view-employee.component.html',
-  styleUrl: './view-employee.component.scss'
+  styleUrl: './view-employee.component.scss',
 })
 export class ViewEmployeeComponent implements OnInit {
 
@@ -36,9 +23,8 @@ export class ViewEmployeeComponent implements OnInit {
     'slNo',
     'pNo',
     'fullName',
-    'userName',
+    'fullNameBangla',
     // 'email', 
-    'isActive',
     'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -46,6 +32,8 @@ export class ViewEmployeeComponent implements OnInit {
   @ViewChild(MatSort)
   matSort!: MatSort;
   userStatus : string = '';
+  loadingMap: { [key: number]: boolean } = {};
+  userForm : UserModule;
 
   constructor(
     public userService: UserService,
@@ -55,6 +43,7 @@ export class ViewEmployeeComponent implements OnInit {
     private toastr: ToastrService,
     public empBasicInfoService: EmpBasicInfoService,
   ) {
+    this.userForm = new UserModule;
   }
   icons = { cilPlus, cilCloudUpload,cilUser,cilUserPlus };
 
@@ -75,4 +64,40 @@ export class ViewEmployeeComponent implements OnInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
+
+  createUser(id : number){
+    this.loadingMap[id] = true;
+    this.empBasicInfoService.findByEmpId(id).subscribe((res) => {
+      this.userForm.firstName = res.firstName;
+      this.userForm.lastName = res.lastName;
+      this.userForm.userName = res.personalFileNo;
+      this.userForm.password = "Admin@123";
+      this.userForm.empId = id;
+      this.userService.submit(this.userForm).subscribe(((res: any) => {
+        if (res.success) {
+          this.toastr.success('', `${res.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.empBasicInfoService.updateUserStatus(id).subscribe((res) =>{
+              if(res){
+                this.getAllEmpBasicInfo();
+              }
+          });
+          this.loadingMap[id] = false;
+        } else {
+          this.toastr.warning('', `${res.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.loadingMap[id] = false;
+        }
+        this.loadingMap[id] = false;
+      })
+      )
+    })
+  }
+
+  updateUser(id : number){
+
+  }
+
 }

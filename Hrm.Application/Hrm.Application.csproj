@@ -10,12 +10,18 @@
 	
 		
  <ItemGroup>
+    <Compile Remove="DTOs\NewFolder3\**" />
+    <Compile Remove="DTOs\NewFolder4\**" />
     <Compile Remove="DTOs\User\Validators\**" />
     <Compile Remove="DTOs\Workday\NewFolder\**" />
     <Compile Remove="Features\Users\**" />
+    <EmbeddedResource Remove="DTOs\NewFolder3\**" />
+    <EmbeddedResource Remove="DTOs\NewFolder4\**" />
     <EmbeddedResource Remove="DTOs\User\Validators\**" />
     <EmbeddedResource Remove="DTOs\Workday\NewFolder\**" />
     <EmbeddedResource Remove="Features\Users\**" />
+    <None Remove="DTOs\NewFolder3\**" />
+    <None Remove="DTOs\NewFolder4\**" />
     <None Remove="DTOs\User\Validators\**" />
     <None Remove="DTOs\Workday\NewFolder\**" />
     <None Remove="Features\Users\**" />
@@ -25,6 +31,8 @@
 		
  <ItemGroup>
    <Compile Remove="DTOs\Workday.cs" />
+   <Compile Remove="Features\Holidays\Handlers\Queries\GetHolidaysByIdHandler.cs" />
+   <Compile Remove="Features\Holidays\Requests\Queries\GetHolidaysByYearIdRequest.cs" />
    <Compile Remove="Features\SiteVisit\Requests\Queries\GetSiteVisitById.cs" />
  </ItemGroup>
 

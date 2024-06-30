@@ -53,9 +53,9 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
         [Route("update-SiteVisit/{id}")]
-        public async Task<ActionResult> Put([FromBody] SiteVisitDto Shift)
+        public async Task<ActionResult> Put([FromBody] CreateSiteVisitDto SiteVisit)
         {
-            var command = new UpdateSiteVisitCommand { SiteVisitDto = Shift };
+            var command = new UpdateSiteVisitCommand { SiteVisitDto = SiteVisit };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

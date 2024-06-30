@@ -14,5 +14,7 @@ namespace Hrm.Domain
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+
+        public ICollection<Holidays> Holidays { get; } = new List<Holidays>();
     }
 }

@@ -350,8 +350,20 @@ namespace Hrm.Persistence
             modelBuilder.Entity<Year>()
                 .HasKey(y => y.YearId);
 
-            modelBuilder.Entity<WeekDay>()
-                .HasKey(wd => wd.WeekDayId);
+
+            modelBuilder.Entity<Employees>(entity =>
+            {
+                entity.HasMany( s => s.SiteVisits)
+                .WithOne(e=>e.Employees)
+                .HasForeignKey(e=>e.EmpId);
+            });
+
+            modelBuilder.Entity<Holidays>(entity =>
+            {
+                entity.HasKey(e => e.HolidayId)
+                .HasName("[[PK_Holidays]]");
+            });
+
 
 
             base.OnModelCreating(modelBuilder);
@@ -441,6 +453,7 @@ namespace Hrm.Persistence
         public virtual DbSet<EmpPhotoSign> EmpPhotoSign { get; set; } = null!;
         public virtual DbSet<SiteVisit> SiteVisit { get; set; } = null!;
         public virtual DbSet<Workday> Workday { get; set; } = null!;
+        public virtual DbSet<Holidays> Holidays { get; set; } = null!;
 
     }
 }

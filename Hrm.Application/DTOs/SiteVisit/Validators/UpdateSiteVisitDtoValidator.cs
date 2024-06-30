@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.DTOs.SiteVisit.Validators
 {
-    public class UpdateSiteVisitDtoValidator: AbstractValidator<SiteVisitDto>
+    public class UpdateSiteVisitDtoValidator: AbstractValidator<CreateSiteVisitDto>
     {
         //public UpdateSiteVisitDtoValidator() {
         //    Include(new ISiteVisitDtoValidator());

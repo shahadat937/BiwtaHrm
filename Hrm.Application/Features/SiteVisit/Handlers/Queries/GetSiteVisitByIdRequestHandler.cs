@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.Contracts.Persistence;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.SiteVisit.Handlers.Queries
 {
@@ -26,7 +28,7 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Queries
 
         public async Task<SiteVisitDto> Handle(GetSiteVisitByIdRequest request, CancellationToken cancellationToken)
         {
-            var SiteVisit= await _SiteVisitRepository.Get(request.SiteVisitId);
+            var SiteVisit = await _SiteVisitRepository.Get(request.SiteVisitId);
             return _mapper.Map<SiteVisitDto>(SiteVisit);
         }
     }

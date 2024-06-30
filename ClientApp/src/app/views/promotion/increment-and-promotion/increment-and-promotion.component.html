@@ -1,1 +1,134 @@
-<p>increment-and-promotion works!</p>
+<div class="container mt-4">
+    <c-card>
+      <c-card-header>Increment & Promotion Form</c-card-header>
+      <c-card-body>
+        <div class="mt-4">
+            <h5>Employee Information</h5></div>
+        <form cRow cForm>
+          
+            <c-col [md]="3">
+              <label cLabel for="employeePMSNo">Employee PMS No</label>
+              <input type="text" cFormControl id="employeePMSNo" placeholder="Employee PMS No" />
+            </c-col>
+            <c-col [md]="3">
+              <label cLabel for="employeeName">Employee Name</label>
+              <input type="text" cFormControl id="employeeName" placeholder="Employee Name" />
+            </c-col>
+            <c-col [md]="3">
+              <label cLabel for="department">Department</label>
+              <input type="text" cFormControl id="department" placeholder="Department" />
+            </c-col>
+            <c-col [md]="3">
+              <label cLabel for="designation">Designation</label>
+              <input type="text" cFormControl id="designation" placeholder="Designation" />
+            </c-col>
+  
+          <div class="mt-4">
+            <h5>Disciplinary Action Information</h5>
+            <table bordered cTable>
+              <thead>
+                <tr>
+                  <th scope="col">Employee ID</th>
+                  <th scope="col">Incident Remarks</th>
+                  <th scope="col">Incident Date</th>
+                  <th scope="col">Letter Issue Date</th>
+                  <th scope="col">Letter Ref. No</th>
+                  <th scope="col">Only Showcase?</th>
+                  <th scope="col">Offence Type</th>
+                  <th scope="col">Punishment Type</th>
+                  <th scope="col">From Date</th>
+                  <th scope="col">To Date</th>
+                  <th scope="col">Punishment Provider</th>
+                </tr>
+              </thead>
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+  
+          <div class="mt-4">
+            <h5>Current Pay Scale Information</h5></div>
+            <c-col [md]="3">
+              <label cLabel for="payScaleLevel">Pay Scale Level</label>
+              <input type="text" cFormControl id="payScaleLevel" placeholder="Pay Scale Level" />
+            </c-col>
+            <c-col [md]="3">
+              <label cLabel for="basic">Basic</label>
+              <input type="text" cFormControl id="basic" placeholder="Basic" />
+            </c-col>
+  
+          <div class="mt-4">
+            <c-form-check [inline]="true">
+                <input cFormCheckInput id="inline1" name="action" type="radio" />
+                <label cFormCheckLabel for="inline1">Increment & Promotion</label>
+            </c-form-check>
+            <c-form-check inline>
+                <input cFormCheckInput id="inline2" name="action" type="radio" />
+                <label cFormCheckLabel for="inline2">Promotion</label>
+            </c-form-check>
+            <c-form-check inline>
+                <input cFormCheckInput id="inline3" name="action" type="radio" />
+                <label cFormCheckLabel for="inline3">Increment</label>
+            </c-form-check>
+        </div>
+            <c-col [md]="3">
+              <label cLabel for="designation2">Designation</label>
+              <input type="text" cFormControl id="designation2" placeholder="Designation" />
+            </c-col>
+            <c-col [md]="3">
+              <label cLabel for="payScaleCode">Pay Scale Code</label>
+              <select cSelect cFormControl id="payScaleCode">
+                <option></option>
+              </select>
+            </c-col>
+            <c-col [md]="3">
+              <label cLabel for="basic2">Basic</label>
+              <input type="text" cFormControl id="basic2" placeholder="Basic" />
+            </c-col>
+            <c-col [md]="3">
+              <label cLabel for="effectiveDate">Effective Date</label>
+              <input type="date" cFormControl id="effectiveDate" />
+            </c-col>
+            <c-col [md]="3">
+              <label cLabel for="payScaleLevel2">Pay Scale Level</label>
+              <input type="text" cFormControl id="payScaleLevel2" placeholder="Pay Scale Level" />
+            </c-col>
+            <c-col [md]="3">
+              <label cLabel for="orderDate">Order Date</label>
+              <input type="date" cFormControl id="orderDate" />
+            </c-col>
+            <c-col [md]="3">
+              <label cLabel for="comment">Comment</label>
+              <input type="text" cFormControl id="comment" placeholder="Comment" />
+            </c-col>
+            <c-col [md]="12" class="mt-3">
+              <div class="form-check">
+                <input type="checkbox" cFormCheckInput id="incrementPromotionApproveInfo" />
+                <label cFormCheckLabel for="incrementPromotionApproveInfo">Increment/Promotion Approve info</label>
+              </div>
+            </c-col>
+  
+            <c-col [md]="12" class="mt-4">
+              <div class="d-flex justify-content-end">
+                <button cButton color="primary" class="me-2">Submit</button>
+                <button cButton color="dark">Cancel</button>
+              </div>
+            </c-col>
+        </form>
+      </c-card-body>
+    </c-card>
+  </div>
+  

@@ -11,6 +11,6 @@ namespace Hrm.Application.Features.Workday.Requests.Commands
 {
     public class UpdateWorkdayCommand : IRequest<BaseCommandResponse>
     {
-        public WorkdayDto WorkdayDto { get; set; }
+        public CreateWorkdayDto WorkdayDto { get; set; }
     }
 }

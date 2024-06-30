@@ -56,6 +56,12 @@ namespace Hrm.Api.Controllers
             return Ok(await _authenticationService.UpdateUser(request));
         }
 
+        [HttpPut]
+        [Route("update-userUserAndPassword/{id}")]
+        public async Task<ActionResult<BaseCommandResponse>> UpdateUserAndPassword(UpdateUserRequest request)
+        {
+            return Ok(await _authenticationService.UpdateUserAndChangePassword(request));
+        }
 
     }
 }

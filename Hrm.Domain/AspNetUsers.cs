@@ -23,7 +23,7 @@ namespace Hrm.Domain
         public string? PasswordHash { get; set; }
         public bool LockoutEnabled { get; set; } = true;
         public int AccessFailedCount { get; set; } = 0;
-        public string? PNo { get; set; }
+        public int? EmpId { get; set; }
         public bool IsActive { get; set; }
     }
 }

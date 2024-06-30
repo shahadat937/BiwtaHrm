@@ -1,6 +1,7 @@
 export class UserModule {
   id: string;
   userName: string;
+  oldPassword : string;
   password: string;
   rePassword: string;
   firstName: string;
@@ -8,13 +9,14 @@ export class UserModule {
   email: string;
   phoneNumber : string;
   pNo : string;
-  empId : number;
+  empId : number | null;
   menuPosition: number;
   isActive : boolean;
   
   constructor() {
     this.id = '';
     this.userName = '';
+    this.oldPassword = '';
     this.password = '';
     this.rePassword = '';
     this.firstName = '';
@@ -22,7 +24,7 @@ export class UserModule {
     this.email = '';
     this.phoneNumber = '';
     this.pNo = '';
-    this.empId = 0;
+    this.empId = null;
     this.menuPosition = 0;
     this.isActive = true;
   }

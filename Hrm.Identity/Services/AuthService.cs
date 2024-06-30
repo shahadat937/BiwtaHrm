@@ -29,7 +29,7 @@ namespace Hrm.Identity.Services
         private readonly IHrmRepository<Domain.AspNetRoles> _aspNetRolesRepository;
         private readonly JwtSettings _jwtSettings;
 
-        public AuthService(RoleManager<IdentityRole> roleManager,UserManager<ApplicationUser> userManager,
+        public AuthService(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager,
             IOptions<JwtSettings> jwtSettings,
             SignInManager<ApplicationUser> signInManager, IHrmRepository<Domain.AspNetUsers> aspNetUserRepository, IHrmRepository<Domain.AspNetUserRoles> aspNetUserRolesRepository, IHrmRepository<Domain.AspNetRoles> aspNetRolesRepository)
         {
@@ -45,11 +45,11 @@ namespace Hrm.Identity.Services
         public async Task<AuthResponse> Login(AuthRequest request)
         {
 
-            
-            var user = await  _userManager.Users.FirstOrDefaultAsync(x =>x.Email == request.Email || x.UserName == request.Email);
+
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == request.Email || x.UserName == request.Email);
             if (user == null)
             {
-              
+
                 throw new NotFoundException("User", request.Email);
             }
 
@@ -61,7 +61,7 @@ namespace Hrm.Identity.Services
             }
 
 
-            string id = _aspNetUserRepository.Where(x=>x.UserName == request.Email || x.Email == request.Email).Select(x=>x.Id).FirstOrDefault();
+            string id = _aspNetUserRepository.Where(x => x.UserName == request.Email || x.Email == request.Email).Select(x => x.Id).FirstOrDefault();
 
             string role = _aspNetUserRolesRepository.Where(x => x.UserId == id).Select(x => x.RoleId).FirstOrDefault();
 
@@ -87,7 +87,7 @@ namespace Hrm.Identity.Services
         {
             var response = new BaseCommandResponse();
 
-            
+
             var user = new ApplicationUser
             {
                 Email = request.Email,
@@ -124,7 +124,7 @@ namespace Hrm.Identity.Services
             //    response.Message = $"Registration Failed, Email '{request.Email}' already Exists.";
             //}
 
-            else 
+            else
             {
                 var result = await _userManager.CreateAsync(user, request.Password);
 
@@ -148,9 +148,9 @@ namespace Hrm.Identity.Services
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
-         
-             var rolelist = _roleManager.Roles.Where(r => roles.Contains(r.Name)).Select(x =>x.Id).ToList();
-             string roleid = rolelist[0].ToString();
+
+            var rolelist = _roleManager.Roles.Where(r => roles.Contains(r.Name)).Select(x => x.Id).ToList();
+            string roleid = rolelist[0].ToString();
 
             var roleClaims = new List<Claim>();
 
@@ -247,5 +247,57 @@ namespace Hrm.Identity.Services
 
             return response;
         }
+
+        public async Task<BaseCommandResponse> UpdateUserAndChangePassword(UpdateUserRequest request)
+        {
+            var response = new BaseCommandResponse();
+
+            var user = await _userManager.FindByIdAsync(request.Id);
+
+            if (user == null)
+            {
+                response.Success = false;
+                response.Message = $"User with ID '{request.Id}' not found.";
+                return response;
+            }
+
+            IQueryable<Domain.AspNetUsers> existingUser = _aspNetUserRepository.Where(x => x.UserName.ToLower() == request.UserName.ToLower() && x.Id != request.Id);
+
+
+            if (existingUser.Any())
+            {
+                response.Success = false;
+                response.Message = $"Update Failed, UserName '{request.UserName}' already Exists.";
+            }
+
+            else
+            {
+                // Update user properties
+                user.UserName = request.UserName;
+                user.FirstName = request.FirstName;
+                user.LastName = request.LastName;
+                user.Email = request.Email;
+                user.PhoneNumber = request.PhoneNumber;
+                user.EmpId = request.EmpId;
+                user.IsActive = request.IsActive;
+
+
+                var result = await _userManager.ChangePasswordAsync(user, request.OldPassword,request.Password);
+
+                if (result.Succeeded)
+                {
+                    response.Success = true;
+                    response.Message = $"User information updated successfully.";
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Message = $"Failed to update user information: {string.Join(", ", result.Errors)}";
+                }
+            }
+
+            return response;
+        }
+
     }
 }

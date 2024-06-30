@@ -24,7 +24,7 @@ namespace Hrm.Application.DTOs.AspNetUsers
         public string? Password { get; set; }
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
-        public string? PNo { get; set; }
+        public int? EmpId { get; set; }
         public bool IsActive { get; set; }
     }
 }

@@ -43,4 +43,8 @@ export class UserService {
   update(id: string,model: any){
     return this.http.put(this.baseUrl + '/users/update-user/'+id, model);
   }
+
+  updateAndChangePassword(id: string,model: any){
+    return this.http.put(this.baseUrl + '/users/update-userUserAndPassword/'+id, model);
+  }
 }

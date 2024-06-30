@@ -1,1 +1,86 @@
-<p>addleave works!</p>
+<div class="container mt-4">
+    <c-card>
+      <c-card-body>
+        <form cForm>
+          <div>
+            <h5 class="mb-3">Leave</h5>
+            <c-row>
+              <c-col [md]="4">
+                <label cLabel for="employeeId">Employee ID</label>
+                <input type="text" cFormControl id="employeeId" />
+              </c-col>
+              <c-col [md]="4">
+                <label cLabel for="employeeName">Employee Name</label>
+                <input type="text" cFormControl id="employeeName" />
+              </c-col>
+              <c-col [md]="4">
+                <label cLabel for="leaveType">Leave Type</label>
+                <select cSelect cFormControl id="leaveType">
+                  <option value=""></option>
+                </select>
+              </c-col>
+              <c-col [md]="4">
+                <label cLabel for="startDate">Start Date</label>
+                <input type="date" cFormControl id="startDate" />
+              </c-col>
+              <c-col [md]="4">
+                <label cLabel for="endDate">End Date</label>
+                <input type="date" cFormControl id="endDate" />
+              </c-col>
+              <c-col [md]="4">
+                <label cLabel for="totalLeaveDue">Total Leave Due</label>
+                <input type="text" cFormControl id="totalLeaveDue" />
+              </c-col>
+              <c-col [md]="4">
+                <label cLabel for="totalLeaveDays">Total Leave Days</label>
+                <input type="text" cFormControl id="totalLeaveDays" />
+              </c-col>
+              <c-col [md]="4">
+                <label cLabel for="leavePurpose">Leave Purpose</label>
+                <input type="text" cFormControl id="leavePurpose" />
+              </c-col>
+              <c-col [md]="4">
+                <label cLabel for="remarks">Remarks</label>
+                <input type="text" cFormControl id="remarks" />
+              </c-col>
+            </c-row>
+          </div>
+  
+          <div class="mt-4">
+            <h5 class="mb-3">Foreign Leave</h5>
+            <c-row>
+              <c-col [md]="4">
+                <label cLabel for="country">Country</label>
+                <select cSelect cFormControl id="country">
+                  <option value=""></option>
+                </select>
+              </c-col>
+              <c-col [md]="4">
+                <label cLabel for="purpose">Purpose</label>
+                <input type="text" cFormControl id="purpose" />
+              </c-col>
+              <c-col [md]="4">
+                <label cLabel for="accompanyBy">Accompany by</label>
+                <input type="text" cFormControl id="accompanyBy" />
+              </c-col>
+            </c-row>
+          </div>
+  
+          <div class="mt-4">
+            <h5 class="mb-3">Leave Associate File Upload</h5>
+            <c-row>
+              <c-col class="mb-4" [md]="4">
+                <input type="file" cFormControl />
+              </c-col>
+            </c-row>
+          </div>
+  
+          <div class="d-flex justify-content-end">
+            <button cButton color="primary" class="me-2">Submit</button>
+            <button cButton color="dark">Cancel</button>
+          </div>
+        </form>
+      </c-card-body>
+    </c-card>
+  </div>
+  

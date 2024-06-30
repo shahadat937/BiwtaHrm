@@ -52,8 +52,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features\Holidays\Handlers\Commands\" />
-	  <Folder Include="Features\Holidays\Requests\Commands\" />
 	  <Folder Include="Features\Organogram\Handlers\Commands\" />
 	  <Folder Include="Features\Organogram\Requests\Commands\" />
 	</ItemGroup>

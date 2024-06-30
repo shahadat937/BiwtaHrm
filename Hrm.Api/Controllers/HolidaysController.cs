@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Hrm.Application;
+using Hrm.Application.Features.Holidays.Requests.Commands;
 using Hrm.Application.Features.Holidays.Requests.Queries;
 using Hrm.Application.Features.HolidayType.Requests.Queries;
 using Hrm.Persistence.Repositories;
@@ -46,6 +47,18 @@ namespace Hrm.Api.Controllers
         {
             var holidays = await _mediator.Send(new GetHolidaysByYearRequest { YearName = year });
             return Ok(holidays);
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [Route("delete-Holidays/{id}")]
+        public async Task<ActionResult<BaseCommandResponse>> Delete(int id)
+        {
+            var command = new DeleteHolidaysCommand { HolidayId=id };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
         }
     }
 }

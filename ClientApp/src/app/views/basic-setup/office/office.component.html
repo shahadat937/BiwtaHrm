@@ -105,7 +105,7 @@
             <div class="input-wrapper">
               <select (change)="onUpazilaNamesChangeByDistrictId(officeService.offices.districtId)"
                 [(ngModel)]="officeService.offices.districtId" name="districtId" #districtId="ngModel"
-                cFormControl id="validationCustom05" required aria-label="Default select example" cSelect>
+                cFormControl id="validationCustom05" aria-label="Default select example" cSelect>
                 <option [ngValue]="null">Select District</option>
     
                 @for(district of districts; track district.id;let index=$index) {
@@ -126,7 +126,7 @@
             <div class="input-wrapper">
               <select (change)="onThanaNamesChangeByUpazilaId(officeService.offices.upazilaId)"
                 [(ngModel)]="officeService.offices.upazilaId" name="upazilaId" #upazilaId="ngModel"
-                cFormControl id="validationCustom06" required aria-label="Default select example" cSelect>
+                cFormControl id="validationCustom06" aria-label="Default select example" cSelect>
                 <option [ngValue]="null">Select Upazila</option>
     
                 @for(upazila of upazilas; track upazila.id;let index=$index) {
@@ -147,7 +147,7 @@
             <div class="input-wrapper">
               <select (change)="onUnionNamesChangeByThanaId(officeService.offices.thanaId)"
                 [(ngModel)]="officeService.offices.thanaId" name="thanaId" #thanaId="ngModel" cFormControl
-                id="validationCustom07" required aria-label="Default select example" cSelect>
+                id="validationCustom07" aria-label="Default select example" cSelect>
                 <option [ngValue]="null">Select Thana</option>
     
                 @for(thana of thanas; track thana.id;let index=$index) {
@@ -168,7 +168,7 @@
             <div class="input-wrapper">
               <select (change)="onWardNamesChangeByUnionId(officeService.offices.unionId)"
                 [(ngModel)]="officeService.offices.unionId" name="unionId" #unionId="ngModel" cFormControl
-                id="validationCustom08" required aria-label="Default select example" cSelect>
+                id="validationCustom08" aria-label="Default select example" cSelect>
                 <option [ngValue]="null">Select Union</option>
     
                 @for(union of unions; track union.id;let index=$index) {
@@ -190,7 +190,7 @@
             <label cLabel for="validationCustom09">Ward<span class="text-danger">*</span></label>
             <div class="input-wrapper">
               <select [(ngModel)]="officeService.offices.wardId" name="wardId" #wardId="ngModel" cFormControl
-                id="validationCustom09" required aria-label="Default select example" cSelect>
+                id="validationCustom09" aria-label="Default select example" cSelect>
                 <option [ngValue]="null">Select Ward</option>
     
                 @for(ward of wards; track ward.id;let index=$index) {

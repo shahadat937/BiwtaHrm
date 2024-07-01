@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Hrm.Application;
+using Hrm.Application.DTOs.Holidays;
 using Hrm.Application.Features.Holidays.Requests.Commands;
 using Hrm.Application.Features.Holidays.Requests.Queries;
+using Hrm.Application.Features.HolidayType.Requests.Commands;
 using Hrm.Application.Features.HolidayType.Requests.Queries;
 using Hrm.Persistence.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -16,6 +18,16 @@ namespace Hrm.Api.Controllers
         public HolidaysController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpPost]
+        [Route("save-Holidays")]
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateHolidayDto holidayDto)
+        {
+            var command = new CreateHolidaysCommand { HolidayDto = holidayDto };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
         }
 
         [HttpGet]
@@ -60,5 +72,18 @@ namespace Hrm.Api.Controllers
 
             return Ok(response);
         }
+
+        [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [Route("update-Holidays")]
+        public async Task<ActionResult<BaseCommandResponse>> Put([FromBody] CreateHolidayDto holidayDto)
+        {
+            var command = new UpdateHolidaysCommand { HolidayDto = holidayDto };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+
     }
 }

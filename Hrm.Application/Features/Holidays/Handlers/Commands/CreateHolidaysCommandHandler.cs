@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
+using Hrm.Application.DTOs.Holidays.Validators;
 using Hrm.Application.Features.Holidays.Requests.Commands;
 using Hrm.Application.Responses;
 using MediatR;
@@ -25,10 +26,17 @@ namespace Hrm.Application.Features.Holidays.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(CreateHolidaysCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
-            // Validation Yet to implement
-            // Validation Yet to implement
 
-            var Holidays = _mapper.Map<Hrm.Domain.Holidays>(request.holidayDto);
+            var validator = new CreateHolidayDtoValidator();
+
+            var validationResult = await validator.ValidateAsync(request.HolidayDto);
+
+            if(!validationResult.IsValid)
+            {
+                throw new Hrm.Application.Exceptions.ValidationException(validationResult);
+            }
+
+            var Holidays = _mapper.Map<Hrm.Domain.Holidays>(request.HolidayDto);
 
             Holidays = await _unitOfWork.Repository<Hrm.Domain.Holidays>().Add(Holidays);
             await _unitOfWork.Save();

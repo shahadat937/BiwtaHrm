@@ -1,16 +1,16 @@
-﻿using Hrm.Domain.Common;
+﻿using Hrm.Application.DTOs.TaskName;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Domain
+namespace Hrm.Application.DTOs.Attendance
 {
-    public class Attendance:BaseDomainEntity
+    public class CreateAttendanceDto: IAttendanceDto
     {
         public int AttendanceId { get; set; }
-        public DateOnly AttendanceDate { get; set; }
+        public DateOnly AttendanceDate {  get; set; }
         public int EmpId { get; set; }
         public int OfficeId { get; set; }
         public int OfficeBranchId { get; set; }
@@ -27,10 +27,5 @@ namespace Hrm.Domain
         public bool? Done { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
-
-        public Employees Employees { get; set; }
-        public Office Office { get; set; }
-        public OfficeBranch OfficeBranch { get; set; }
-        public DayType DayType { get; set; }
     }
 }

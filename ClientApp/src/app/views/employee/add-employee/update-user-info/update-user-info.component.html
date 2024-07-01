@@ -1,0 +1,200 @@
+<c-card class="mt-3 mb-3">
+    <c-card-header class="d-flex justify-content-between">
+      <div>Update User Information</div>
+    </c-card-header>
+    <c-card-body>
+
+      <!-- user form start from here -->
+      <c-card class="mt-3 shadow">
+        <c-card-body class="shadow">
+            <form
+              #UserForm="ngForm"
+              (submit)="onSubmit(UserForm)"
+              [gutter]="3"
+              novalidate
+              cForm
+              cRow
+              class="needs-validation"
+            >
+              
+              <c-col [md]="4">
+                  <label cLabel for="validationCustom02"
+                  >First Name<span class="text-danger">*</span></label
+                >
+                <input
+                  [(ngModel)]="userService.users.firstName"
+                  name="firstName"
+                  #FirstName="ngModel"
+                  placeholder="Enter First Name"
+                  cFormControl
+                  id="validationCustom02"
+                  required
+                  type="text"
+                  [readOnly]="userService.users.id != ''"
+                />
+                @if(!FirstName.value&&FirstName.touched){
+                <div class="text-left text-danger">First Name is required</div>
+                }
+                @if(FirstName.touched && FirstName.value == LastName.value && FirstName.value){
+                <div class="text-left text-danger">First Name & Last Name can't be same</div>
+                }
+              </c-col>
+              
+              <c-col [md]="4">
+                  <label cLabel for="validationCustom03"
+                  >Last Name<span class="text-danger">*</span></label>
+                <input
+                  [(ngModel)]="userService.users.lastName"
+                  name="lastName"
+                  #LastName="ngModel"
+                  placeholder="Enter Last Name"
+                  cFormControl
+                  id="validationCustom03"
+                  required
+                  type="text"
+                  [readOnly]="userService.users.id != ''"
+                />
+                @if(!LastName.value&&LastName.touched){
+                <div class="text-left text-danger">Last Name is required</div>
+                }
+                @if(LastName.touched && FirstName.value == LastName.value && LastName.value){
+                <div class="text-left text-danger">First Name & Last Name can't be same</div>
+                }
+              </c-col>
+
+              <c-col [md]="4">
+                <input
+                  type="hidden"
+                  [(ngModel)]="userService.users.id"
+                  name="id"
+                />
+                <input
+                  type="hidden"
+                  [(ngModel)]="userService.users.empId"
+                  name="empId"
+                />
+                <label cLabel for="validationCustom01"
+                  >User Name<span class="text-danger">*</span></label
+                >
+                <input
+                  [(ngModel)]="userService.users.userName"
+                  name="userName"
+                  #UserName="ngModel"
+                  placeholder="Enter User Name"
+                  cFormControl
+                  id="validationCustom01"
+                  required
+                  type="text"
+                />
+                @if(!UserName.value&&UserName.touched){
+                <div class="text-left text-danger">User Name is required</div>
+                }
+                @if(!UserName.valid&&UserName.touched&&UserName.value){
+                <div class="text-left text-danger">Invalid User Name (Min 6 Character)</div>
+                }
+              </c-col>
+
+
+              <c-col [md]="4" *ngIf="userService.users.id != ''">
+                <label cLabel for="oldPassword"
+                >Enter Old Password<span class="text-danger">*</span></label
+              >
+              <input
+                [(ngModel)]="userService.users.oldPassword"
+                name="oldPassword"
+                #OldPassword="ngModel"
+                placeholder="Enter Your Old Password"
+                cFormControl
+                id="oldPassword"
+                [required]="btnText != 'Update'"
+                type="password"
+                minlength="8"
+                autocomplete="new-password" 
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+              />
+              @if(!OldPassword.valid&&OldPassword.touched&&OldPassword.value){
+                <div class="text-left text-danger">Password is not valid</div>
+                <div class="text-left text-success">Password must contain (8 character, 1 uppercase, 1 lowercase, 1 number, 1 symbol)</div>
+                }
+            </c-col>
+
+              <c-col [md]="4">
+                  <label cLabel for="validationCustom07"
+                  >Enter Password<span class="text-danger">*</span></label
+                >
+                <input
+                  [(ngModel)]="userService.users.password"
+                  name="password"
+                  #Password="ngModel"
+                  placeholder="Enter Your Password"
+                  cFormControl
+                  id="validationCustom07"
+                  [required]="btnText != 'Update'"
+                  type="password"
+                  minlength="8"
+                  autocomplete="new-password" 
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                />
+                @if(!Password.value&&Password.touched&&btnText != 'Update'){
+                <div class="text-left text-danger">Password is required</div>
+                }
+                @if(!Password.valid&&Password.touched&&Password.value){
+                  <div class="text-left text-danger">Please is not valid</div>
+                  <div class="text-left text-success">Password must contain (8 character, 1 uppercase, 1 lowercase, 1 number, 1 symbol)</div>
+                  }
+              </c-col>
+              <c-col [md]="4">
+                  <label cLabel for="validationCustom08"
+                  >Re-Type Password<span class="text-danger">*</span></label
+                >
+                <input
+                  [(ngModel)]="userService.users.rePassword"
+                  name="rePassword"
+                  #RePassword="ngModel"
+                  placeholder="Re-Type Your Password"
+                  cFormControl
+                  id="validationCustom08"
+                  [required]="btnText != 'Update'"
+                  type="password"
+                  autocomplete="new-password" 
+                />
+                @if(RePassword.touched && Password.value !== RePassword.value){
+                <div class="text-left text-danger">Password Doesn't Match</div>
+                }
+              </c-col>
+      
+              <c-col [md]="4">
+                <label cLabel for="validationCustom09">Active Status</label>
+                <select [(ngModel)]="userService.users.isActive"
+                name="isActive"
+                cSelect
+                id="validationCustom09">
+                  <option value="true">Active</option>
+                  <option value="false">De-Active</option>
+                </select>
+              </c-col>
+      
+              <c-col [xs]="12">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <button
+                      [disabled]="loading"
+                      [disabled]="UserForm.invalid"
+                      [disabled]="Password.value != RePassword.value && RePassword.value && Password.value"
+                      cButton
+                      class="me-1"
+                      color="primary"
+                      type="submit"
+                    >
+                      <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                      {{ btnText }}
+                    </button>
+                  </div>
+                  <div>
+                    <button cButton color="danger" (click)="cancelUpdate()">Cancel</button>
+                  </div>
+                </div>
+              </c-col>
+            </form>
+        </c-card-body>
+      </c-card>

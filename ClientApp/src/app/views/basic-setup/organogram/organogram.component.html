@@ -16,7 +16,7 @@
                             <div class="designation-header">
                                 <label (click)="toggleDesignationExpand(office.name)">
                                     &nbsp;&nbsp;<span class="toggle-icon">{{ isDesignationExpanded(office.name) ? '-' : '+' }}</span>
-                                    &nbsp;<span>Designation</span>
+                                    &nbsp;<span>পদবী</span>
                                 </label>
                             </div>
                             <ul *ngIf="isDesignationExpanded(office.name)">
@@ -32,10 +32,16 @@
                                     &nbsp;<span class="sub-department-text">Department</span>
                                 </label>
                             </div> -->
-                            <div>
+                            <div class="designation-header">
+                                <label (click)="toggleDepartmentExpand(office.name)">
+                                    &nbsp;&nbsp;<span class="toggle-icon">{{ isDepartmentExpanded(office.name) ? '-' : '+' }}</span>
+                                    &nbsp;<span>বিভাগ</span>
+                                </label>
+                            </div>
+                            <ul *ngIf="isDepartmentExpanded(office.name)">
                                 <app-organogram-department *ngFor="let department of office.departments"
                                     [department]="department"></app-organogram-department>
-                            </div>
+                            </ul>
                         </li>
                     </ul>
                 </li>

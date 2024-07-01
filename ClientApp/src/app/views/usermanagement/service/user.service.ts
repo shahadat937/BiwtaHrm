@@ -36,6 +36,10 @@ export class UserService {
         );
     }
   }
+
+  getInfoByEmpId(id: number){
+    return this.http.get<UserModule>(this.baseUrl + '/users/get-userByEmpId/' + id);
+  }
    
   submit(model: any) {
     return this.http.post(`${environment.securityUrl}/account/register`, model);

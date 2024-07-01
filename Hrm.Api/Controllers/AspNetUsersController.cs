@@ -63,5 +63,14 @@ namespace Hrm.Api.Controllers
             return Ok(await _authenticationService.UpdateUserAndChangePassword(request));
         }
 
+
+        [HttpGet]
+        [Route("get-userByEmpId/{id}")]
+        public async Task<ActionResult> GetByEmpId(int id)
+        {
+            var users = await _mediator.Send(new GetUserDetailsByEmpIdRequest { Id = id });
+            return Ok(users);
+        }
+
     }
 }

@@ -5,7 +5,13 @@
                 [routerLink]="[
                   '/employee/create-new-employee']"><svg [cIcon]="icons.cilPlus"></svg> Add New Employee</button></div>
     </c-card-header>
-    <c-card-body><div class="example-header">
+    <c-card-body>
+      <div class="example-header">
+
+        <ng-container *ngIf="showUpdateUserInfo">
+          <app-update-user-info [empId]="selectedEmpId" (cancel)="handleCancel()"></app-update-user-info>
+        </ng-container>
+
         <mat-form-field>
           <input
             matInput

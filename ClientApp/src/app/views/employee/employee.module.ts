@@ -54,6 +54,7 @@ import { IconModule } from '@coreui/icons-angular';
 import { EmployeeListComponent } from './manage-employee/employee-list/employee-list.component';
 import { EmployeeInformationComponent } from './manage-employee/employee-information/employee-information.component';
 import { ViewEmployeeComponent } from './add-employee/view-employee/view-employee.component';
+import { UpdateUserInfoComponent } from './add-employee/update-user-info/update-user-info.component';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { ViewEmployeeComponent } from './add-employee/view-employee/view-employe
     EmployeeListComponent,
     EmployeeInformationComponent,
     ViewEmployeeComponent,
+    UpdateUserInfoComponent,
   ],
   imports: [
     CommonModule,

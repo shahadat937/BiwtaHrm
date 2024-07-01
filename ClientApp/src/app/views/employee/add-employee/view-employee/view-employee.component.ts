@@ -34,6 +34,8 @@ export class ViewEmployeeComponent implements OnInit {
   userStatus : string = '';
   loadingMap: { [key: number]: boolean } = {};
   userForm : UserModule;
+  selectedEmpId!: number;
+  showUpdateUserInfo: boolean = false;
 
   constructor(
     public userService: UserService,
@@ -97,7 +99,15 @@ export class ViewEmployeeComponent implements OnInit {
   }
 
   updateUser(id : number){
+    this.selectedEmpId = id;
+    this.showUpdateUserInfo = false;
+    setTimeout(() => {
+      this.showUpdateUserInfo = true;
+    }, 0);
+  }
 
+  handleCancel() {
+    this.showUpdateUserInfo = false;
   }
 
 }

@@ -11,6 +11,7 @@ namespace Hrm.Domain
     {
         public int AttendanceId { get; set; }
         public DateOnly AttendanceDate { get; set; }
+        public int AttendanceTypeId { get; set; }
         public int EmpId { get; set; }
         public int OfficeId { get; set; }
         public int OfficeBranchId { get; set; }
@@ -32,5 +33,6 @@ namespace Hrm.Domain
         public Office Office { get; set; }
         public OfficeBranch OfficeBranch { get; set; }
         public DayType DayType { get; set; }
+        public AttendanceType AttendanceType { get; set; }
     }
 }

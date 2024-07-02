@@ -376,6 +376,12 @@ namespace Hrm.Persistence
                 .HasName("[[PK_DayType]]");
             });
 
+            modelBuilder.Entity<AttendanceType>(entity =>
+            {
+                entity.HasKey(k => k.AttendanceTypeId)
+                .HasName("[[PK_AttendanceType]]");
+            });
+
 
 
             base.OnModelCreating(modelBuilder);
@@ -468,6 +474,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Holidays> Holidays { get; set; } = null!;
         public virtual DbSet<Attendance> Attendance { get; set; } = null!;
         public virtual DbSet<DayType> DayType { get; set; } = null!;
+        public virtual DbSet<AttendanceType> AttendanceType { get; set; } = null!;
 
     }
 }

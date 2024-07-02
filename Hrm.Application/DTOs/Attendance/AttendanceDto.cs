@@ -10,6 +10,8 @@ namespace Hrm.Application.DTOs.Attendance
     {
         public int AttendanceId { get; set; }
         public DateOnly AttendanceDate { get; set; }
+        public int AttendanceTypeId { get; set; }
+        public string AttendanceTypeName { get; set; }
         public int EmpId { get; set; }
         public string EmpName { get; set; }
         public int OfficeId { get; set; }

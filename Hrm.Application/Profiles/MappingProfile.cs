@@ -88,6 +88,7 @@ using Hrm.Application.DTOs.SiteVisit;
 using Hrm.Application.DTOs.Workday;
 using Hrm.Application.DTOs.Holidays;
 using Hrm.Application.DTOs.DayType;
+using Hrm.Application.DTOs.Attendance;
 
 
 
@@ -354,6 +355,12 @@ namespace Hrm.Application.Profiles
             CreateMap<Holidays, CreateHolidayDto>().ReverseMap();
             CreateMap<DayType, DayTypeDto>().ReverseMap();
             CreateMap<DayType, CreateDayTypeDto>().ReverseMap();
+            CreateMap<Attendance, AttendanceDto>().ReverseMap();
+            CreateMap<Attendance, CreateAttendanceDto>().ReverseMap();
+            CreateMap<DayType, DayTypeDto>().ReverseMap();
+            CreateMap<DayType, CreateDayTypeDto>().ReverseMap();
+            CreateMap<AttendanceType, AttendanceDto>().ReverseMap();
+            CreateMap<AttendanceType, CreateAttendanceDto>().ReverseMap();
 
             CreateMap<SiteVisit, SiteVisitDto>()
             .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.Employees.EmpEngName));
@@ -365,6 +372,13 @@ namespace Hrm.Application.Profiles
             CreateMap<Holidays, HolidayDto>()
             .ForMember(dest => dest.YearName, opt => opt.MapFrom(src => src.Year.YearName))
             .ForMember(dest => dest.HolidayTypeName, opt => opt.MapFrom(src => src.HolidayType.HolidayTypeName));
+
+            CreateMap<Attendance, AttendanceDto>()
+            .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.Employees.EmpEngName))
+            .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
+            .ForMember(dest=>dest.OfficeBranchName, opt=>opt.MapFrom(src=>src.OfficeBranch.BranchName))
+            .ForMember(dest => dest.DayTypeName, opt => opt.MapFrom(src => src.DayType.DayTypeName))
+            .ForMember(dest => dest.AttendanceTypeName, opt => opt.MapFrom(src=>src.AttendanceType.AttendanceTypeName));
 
         }
     }

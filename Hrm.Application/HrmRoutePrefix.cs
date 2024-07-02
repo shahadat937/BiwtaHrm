@@ -97,6 +97,7 @@ namespace Hrm.Application
         public const string SiteVisit = HRMRoutePrefixBase + "siteVisit";
         public const string Workday = HRMRoutePrefixBase + "workday";
         public const string Holidays = HRMRoutePrefixBase + "holidays";
+        public const string DayType = HRMRoutePrefixBase + "dayType";
 
 
 

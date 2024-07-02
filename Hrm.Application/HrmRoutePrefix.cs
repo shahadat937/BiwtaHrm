@@ -99,6 +99,7 @@ namespace Hrm.Application
         public const string Holidays = HRMRoutePrefixBase + "holidays";
         public const string DayType = HRMRoutePrefixBase + "dayType";
         public const string AttendanceType = HRMRoutePrefixBase + "attendanceType";
+        public const string AttendanceStatus = HRMRoutePrefixBase + "attendanceStatus";
 
 
 

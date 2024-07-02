@@ -12,6 +12,7 @@ namespace Hrm.Domain
         public int DayTypeId { get; set; }
         public required string DayTypeName { get; set; }
         public string? Remark { get; set; }
+        public bool IsActive { get; set; }
 
         public ICollection<Attendance> Attendances { get; set; }
     }

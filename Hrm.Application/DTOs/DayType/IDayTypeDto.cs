@@ -10,5 +10,6 @@ namespace Hrm.Application.DTOs.DayType
     {
         public int DayTypeId { get; set; }
         public string DayTypeName { get; set; }
+        public bool IsActive { get; set; }
     }
 }

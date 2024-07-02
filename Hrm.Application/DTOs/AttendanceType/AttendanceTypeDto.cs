@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.DTOs.DayType
+namespace Hrm.Application.DTOs.AttendanceType
 {
-    public class CreateDayTypeDto:IDayTypeDto
+    public class AttendanceTypeDto: IAttendanceTypeDto
     {
-        public int DayTypeId { get; set; }
-        public string DayTypeName { get; set; }
+        public int AttendanceTypeId { get; set; }
+        public string AttendanceTypeName { get; set; }
         public bool IsActive { get; set; }
         public string? Remark { get; set; }
     }

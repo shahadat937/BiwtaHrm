@@ -12,6 +12,7 @@ namespace Hrm.Application.DTOs.DayType.Validators
         public IDayTypeDtoValidator()
         {
             RuleFor(dt => dt.DayTypeName).NotEmpty().WithMessage("{PropertyName} is required");
+            RuleFor(dt => dt.IsActive).NotEmpty().WithMessage("{PropertyName} is required");
         }
     }
 }

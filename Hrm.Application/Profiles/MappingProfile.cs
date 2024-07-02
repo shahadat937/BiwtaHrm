@@ -89,6 +89,7 @@ using Hrm.Application.DTOs.Workday;
 using Hrm.Application.DTOs.Holidays;
 using Hrm.Application.DTOs.DayType;
 using Hrm.Application.DTOs.Attendance;
+using Hrm.Application.DTOs.AttendanceType;
 
 
 
@@ -359,8 +360,8 @@ namespace Hrm.Application.Profiles
             CreateMap<Attendance, CreateAttendanceDto>().ReverseMap();
             CreateMap<DayType, DayTypeDto>().ReverseMap();
             CreateMap<DayType, CreateDayTypeDto>().ReverseMap();
-            CreateMap<AttendanceType, AttendanceDto>().ReverseMap();
-            CreateMap<AttendanceType, CreateAttendanceDto>().ReverseMap();
+            CreateMap<AttendanceType, AttendanceTypeDto>().ReverseMap();
+            CreateMap<AttendanceType, CreateAttendanceTypeDto>().ReverseMap();
 
             CreateMap<SiteVisit, SiteVisitDto>()
             .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.Employees.EmpEngName));

@@ -5,26 +5,20 @@
         </div>
     </c-card-header>
     <c-card-body [visible]="visible" cCollapse>
-        <form [formGroup]="EmpChildInfoForm" (ngSubmit)="saveChild()">
-            <ng-container formArrayName="empChildList">
-                <ng-container *ngFor="let p of empChildListArray.controls; let i=index">
+        <form [formGroup]="EmpNomineeInfoForm" (ngSubmit)="saveNominee()">
+            <ng-container formArrayName="empNomineeList">
+                <ng-container *ngFor="let p of empNomineeListArray.controls; let i=index">
                     <c-card class="mt-3 mb-3 shadow">
                         <c-card-body>
                             <div [formGroupName]="i">
                                 <div class="form-group mb-2" cRow [gutter]="3">
                                     <input type="hidden" formControlName="id" />
                                     <input type="hidden" formControlName="empId" />
+                                    <input type="hidden" formControlName="pNo" />
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="childName{{i}}">Child Name</label>
-                                        <input type="text" formControlName="childName" class="form-control"
-                                            id="childName{{i}}" placeholder="Enter Child Name" />
-                                    </c-col>
-
-                                    <c-col [md]="4">
-                                        <label class="col-form-label" for="childNameBangla{{i}}">Child Bangla
-                                            Name</label>
-                                        <input type="text" formControlName="childNameBangla" class="form-control"
-                                            id="childNameBangla{{i}}" placeholder="Enter Child Bangla Name" />
+                                        <label class="col-form-label" for="nomineeName{{i}}">Nominee Name</label>
+                                        <input type="text" formControlName="nomineeName" class="form-control"
+                                            id="nomineeName{{i}}" placeholder="Enter Nominee Name" />
                                     </c-col>
 
                                     <c-col [md]="4">
@@ -44,52 +38,66 @@
                                         <input type="number" formControlName="nid" class="form-control" id="nid{{i}}"
                                             placeholder="NID No" />
                                     </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="relationId{{i}}">Relation Type</label>
+                                        <select formControlName="relationId" class="form-select">
+                                            <option value="null" disabled>Select Relation</option>
+                                            <option *ngFor="let item of relationType" value="{{item.id}}">{{item.name}}
+                                            </option>
+                                        </select>
+                                    </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="percentage{{i}}">Percentage</label>
+                                        <input type="number" formControlName="percentage" class="form-control" id="percentage{{i}}"
+                                            placeholder="Percentage" />
+                                    </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="address{{i}}">Address</label>
+                                        <input type="text" formControlName="address" class="form-control" id="address{{i}}"
+                                            placeholder="Enter Address" />
+                                    </c-col>
+                                    
+                                    
+                                    <c-col [md]="4">
+                                        <img *ngIf="empNomineeListArray.controls[i].get('photoPreviewUrl')?.value" [src]="empNomineeListArray.controls[i].get('photoPreviewUrl')?.value" alt="Photo Preview" width="100"/>
+                                        <label class="col-form-label" for="photoFile{{i}}">Photo</label>
+                                        <input type="file" formControlName="photoFile" class="form-control" id="photoFile{{i}}" (change)="onPhotoSelected($event, i)"/>
+  
+                                    </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <img *ngIf="empNomineeListArray.controls[i].get('signaturePreviewUrl')?.value" [src]="empNomineeListArray.controls[i].get('signaturePreviewUrl')?.value" alt="Signature Preview" width="100"/>
+                                        <label class="col-form-label" for="signatureFile{{i}}">Signature</label>
+                                        <input type="file" formControlName="signatureFile" class="form-control" id="signatureFile{{i}}" (change)="onSignatureSelected($event, i)"/>
+  
+                                    </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="uniqueIdentity{{i}}">Unique Identity</label>
+                                        <input type="text" formControlName="uniqueIdentity" class="form-control" id="uniqueIdentity{{i}}"
+                                            placeholder="Enter Unique Identity" />
+                                    </c-col>
 
-                                    <c-col [md]="4">
-                                        <label class="col-form-label" for="occupationId{{i}}">Select Occupation</label>
-                                        <select formControlName="occupationId" class="form-select">
-                                            <option value="null" disabled>Select Occupation</option>
-                                            <option *ngFor="let item of occupations" value="{{item.id}}">{{item.name}}
-                                            </option>
-                                        </select>
-                                    </c-col>
-
-                                    <c-col [md]="4">
-                                        <label class="col-form-label" for="genderId{{i}}">Select Gender</label>
-                                        <select formControlName="genderId" class="form-select">
-                                            <option value="null" disabled>Select Gender</option>
-                                            <option *ngFor="let item of genders" value="{{item.id}}">{{item.name}}
-                                            </option>
-                                        </select>
-                                    </c-col>
-                                    
-                                    <c-col [md]="4">
-                                        <label class="col-form-label" for="maritalStatusId{{i}}">Select Marital Status</label>
-                                        <select formControlName="maritalStatusId" class="form-select">
-                                            <option value="null" disabled>Select Marital Status</option>
-                                            <option *ngFor="let item of maritalStatuses" value="{{item.id}}">{{item.name}}
-                                            </option>
-                                        </select>
-                                    </c-col>
-                                    
-                                    <c-col [md]="4">
-                                        <label class="col-form-label" for="childStatusId{{i}}">Select Child Status</label>
-                                        <select formControlName="childStatusId" class="form-select">
-                                            <option value="null" disabled>Select Child Status</option>
-                                            <option *ngFor="let item of childStatuses" value="{{item.id}}">{{item.name}}
-                                            </option>
-                                        </select>
-                                    </c-col>
-                                    
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="remark{{i}}">Remark</label>
                                         <input type="text" formControlName="remark" class="form-control"
                                             id="remark{{i}}" placeholder="Enter Remark" />
                                     </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="isActive{{i}}">Active Status</label>
+                                        <select formControlName="isActive" class="form-select">
+                                            <option value="true">Active</option>
+                                            <option value="true">De-Active</option>
+                                        </select>
+                                    </c-col>
 
                                     <c-col [md]="12" class="d-flex justify-content-end">
                                         <button mat-icon-button class="bg-danger text-light" type="button"
-                                            (click)="removeChildList(i, p.get('id')?.value ?? null)"><mat-icon>delete</mat-icon></button>
+                                            (click)="removeNomineeList(i, p.get('id')?.value ?? null)"><mat-icon>delete</mat-icon></button>
                                     </c-col>
                                 </div>
                             </div>
@@ -99,13 +107,13 @@
             </ng-container>
             <c-col [md]="12" class="d-flex justify-content-end">
                 <button mat-icon-button class="bg-success text-light mb-3" type="button"
-                    (click)="addChild()"><mat-icon>add</mat-icon></button>
+                    (click)="addNominee()"><mat-icon>add</mat-icon></button>
             </c-col>
             <div class="form-group">
                 <c-col [xs]="12">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <button [disabled]="loading" [disabled]="EmpChildInfoForm.invalid" cButton class="me-1"
+                            <button [disabled]="loading" [disabled]="EmpNomineeInfoForm.invalid" cButton class="me-1"
                                 color="primary" type="submit">
                                 <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
                                 {{ btnText }}

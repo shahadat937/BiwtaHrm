@@ -55,6 +55,7 @@ import { EmployeeListComponent } from './manage-employee/employee-list/employee-
 import { EmployeeInformationComponent } from './manage-employee/employee-information/employee-information.component';
 import { ViewEmployeeComponent } from './add-employee/view-employee/view-employee.component';
 import { UpdateUserInfoComponent } from './add-employee/update-user-info/update-user-info.component';
+import { EmpNomineeInfoComponent } from './add-employee/employee-informations/emp-nominee-info/emp-nominee-info.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { UpdateUserInfoComponent } from './add-employee/update-user-info/update-
     EmployeeInformationComponent,
     ViewEmployeeComponent,
     UpdateUserInfoComponent,
+    EmpNomineeInfoComponent,
   ],
   imports: [
     CommonModule,

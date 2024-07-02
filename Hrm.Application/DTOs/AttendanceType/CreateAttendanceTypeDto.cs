@@ -11,5 +11,6 @@ namespace Hrm.Application.DTOs.AttendanceType
         public int AttendanceTypeId { get; set; }
         public string AttendanceTypeName { get; set; }
         public bool IsActive { get; set; }
+        public string Remark { get; set; }
     }
 }

@@ -87,6 +87,7 @@ using Hrm.Application.DTOs.EmpPhotoSign;
 using Hrm.Application.DTOs.SiteVisit;
 using Hrm.Application.DTOs.Workday;
 using Hrm.Application.DTOs.Holidays;
+using Hrm.Application.DTOs.EmpNomineeInfo;
 
 
 
@@ -343,6 +344,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpPhotoSign, EmpPhotoSignDto>().ReverseMap();
             CreateMap<EmpPhotoSign, CreateEmpPhotoSignDto>().ReverseMap();
+
+            CreateMap<EmpNomineeInfo, EmpNomineeInfoDto>().ReverseMap();
+            CreateMap<EmpNomineeInfo, CreateEmpNomineeInfoDto>().ReverseMap();
 
             // Site Visit Dto Mapping Created By Joy
             CreateMap<SiteVisit, SiteVisitDto>().ReverseMap();

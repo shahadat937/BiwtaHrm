@@ -15,7 +15,8 @@ import { EmpLanguageInfoService } from '../../../service/emp-language-info.servi
 })
 export class EmpLanguageInfoComponent implements OnInit, OnDestroy {
   @Input() empId!: number;
-  @Output() close = new EventEmitter<void>(); visible: boolean = true;
+  @Output() close = new EventEmitter<void>(); 
+  visible: boolean = true;
   headerText: string = '';
   headerBtnText: string = 'Hide From';
   btnText: string = '';

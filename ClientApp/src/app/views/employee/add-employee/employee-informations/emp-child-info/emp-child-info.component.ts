@@ -17,7 +17,8 @@ import { EmpPersonalInfoService } from '../../../service/emp-personal-info.servi
 })
 export class EmpChildInfoComponent implements OnInit, OnDestroy {
   @Input() empId!: number;
-  @Output() close = new EventEmitter<void>(); visible: boolean = true;
+  @Output() close = new EventEmitter<void>();
+  visible: boolean = true;
   headerText: string = '';
   headerBtnText: string = 'Hide From';
   btnText: string = '';
@@ -93,6 +94,7 @@ export class EmpChildInfoComponent implements OnInit, OnDestroy {
       }));
     });
   }
+  
   EmpChildInfoForm: FormGroup = new FormGroup({
     empChildList: new FormArray([])
   });
@@ -181,7 +183,7 @@ export class EmpChildInfoComponent implements OnInit, OnDestroy {
     this.close.emit();
   }
 
-  insertChild() {
+  saveChild() {
     this.loading = true;
     this.empChildInfoService.saveEmpChildInfo(this.EmpChildInfoForm.get("empChildList")?.value).subscribe(((res: any) => {
       if (res.success) {

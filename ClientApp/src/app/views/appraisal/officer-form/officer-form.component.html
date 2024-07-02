@@ -1,130 +1,139 @@
-
 <div>
-<c-card>
-    <c-card-header>Acr Officer Form  </c-card-header>
-    <c-button-group aria-label="Basic example" role="group">
-        <c-button-group aria-label="Basic example" role="group">
-            <button cButton color="primary" [active]="true">Part-1</button>
-            <button cButton color="primary" [routerLink]="[
-                '/appraisal/officerForm2']">Part-2</button>
-            <button cButton color="primary" [routerLink]="[
-                '/appraisal/officerFormPart3']">Part-3</button>
-            <button cButton color="primary" [routerLink]="[
-                '/appraisal/officerFormPart4']">Part-4</button> 
-            <button cButton color="primary" [routerLink]="[
-                '/appraisal/officerFormPart5'
-            ]">Part-5</button>
-            <button cButton color="primary" [routerLink]="[
-                '/appraisal/officerFormPart6'
-            ]">Part-6</button>
-            <button cButton color="primary" [routerLink]="[
-                '/appraisal/officerFormPart7'
-            ]">Part-7</button>
-          </c-button-group>
-      </c-button-group> 
-    <c-card-body>       
-          <form cFrom cRow>
-            <c-col [md]="4">
-                <label cLabel for="division">Division</label>
-                <input type="text" cFormControl id="division" placeholder="Division">
-            </c-col>
-            <c-col [md]="4">
-                <label cLabel for="fromdate">From Date</label>
-                <input type="date" cFormControl id="fromdate">
-            </c-col>
-            
-        <c-col [md]="4">
-            <label cLabel for="todate"
-            >To Date</label>
-            <input
-              cFormControl
-              id="todate"
-              type="date"/>
-          </c-col>
-          </form>
-    </c-card-body>
     <c-card>
-        <c-card-header class="text-center">1st part <br>To be Filled by the Reporting Officer</c-card-header>
-        <c-card-body>
-            <form cRow>
+      <c-card-header>Acr Officer Form</c-card-header>
+      <c-card-body>
+        <form cForm cRow  
+        #officerForm="ngForm"
+        (submit)="onSubmit(officerForm)"
+        novalidate>
+          <c-col [md]="4">
+            <label cLabel for="division">Division</label>
+            <input type="text" cFormControl id="division" placeholder="Division"
+            [(ngModel)]="officerservice.officerModels.division"
+            name="division" required
+            #division="ngModel">
+            @if(!division.valid && division.touched)
+            {
+              <div class="text-left text-danger"> division is required</div>
+            }
+
+          </c-col>
+          <c-col [md]="4">
+            <label cLabel for="fromdate">From Date</label>
+            <input type="date" cFormControl id="fromdate" 
+            [(ngModel)]="officerservice.officerModels.yearStartDate"
+            name="yearStartDate">
+          </c-col>
+          <c-col [md]="4">
+            <label cLabel for="todate">To Date</label>
+            <input type="date" cFormControl id="todate"  
+            [(ngModel)]="officerservice.officerModels.yearEndDate"
+            name="yearEndDate">
+          </c-col>
+          <c-card class="mt-4">
+            <c-card-header class="text-center">1st part <br>To be Filled by the Reporting Officer</c-card-header>
+            <c-card-body>
+              <c-row>
                 <c-col [md]="4">
-                    <label cLabel for="empname">Employee Name</label>
-                    <input type="text" cFormControl id="empname" placeholder="Employee Name">
+                  <label cLabel for="empname">Employee Name</label>
+                  <input type="text" cFormControl id="empname" placeholder="Employee Name"  [(ngModel)]="officerservice.officerModels.employeeName"
+                  name="employeeName">
                 </c-col>
                 <c-col [md]="4">
-                    <label cLabel for="fatherName">Father's Name</label>
-                    <input type="text" cFormControl id="fatherName" placeholder="Father's Name">
+                  <label cLabel for="fatherName">Father's Name</label>
+                  <input type="text" cFormControl id="fatherName" placeholder="Father's Name" [(ngModel)]="officerservice.officerModels.fathersName"
+                  name="fathersName">
                 </c-col>
                 <c-col [md]="4">
-                    <label cLabel for="mothername">Mother's Name</label>
-                    <input type="text" cFormControl id="mothername" placeholder="Mother's Name">
+                  <label cLabel for="mothername">Mother's Name</label>
+                  <input type="text" cFormControl id="mothername" placeholder="Mother's Name" [(ngModel)]="officerservice.officerModels.mothersName"
+                  name="mothersName">
                 </c-col>
                 <c-col [md]="4">
-                    <label cLabel for="brn">Birth Reg.no</label>
-                    <input type="number" cFormControl id="brn" placeholder="Birth Reg.no">
+                  <label cLabel for="brn">Birth Reg.no</label>
+                  <input type="number" cFormControl id="brn" placeholder="Birth Reg.no" [(ngModel)]="officerservice.officerModels.birthRegNo"
+                  name="birthRegNo">
                 </c-col>
                 <c-col [md]="4">
-                    <label cLabel for="dob">Date of Birth</label>
-                    <input type="date"cFormControl id="dob" >
+                  <label cLabel for="dob">Date of Birth</label>
+                  <input type="date" cFormControl id="dob" 
+                  [(ngModel)]="officerservice.officerModels.dateofBirth"
+                  name="dateofBirth">
                 </c-col>
                 <c-col [md]="4">
-                    <label cLabelfor="des" >Designation</label>
-                    <input type="text" cFormControl id="des" placeholder="Designation">
+                  <label cLabel for="des">Designation</label>
+                  <input type="text" cFormControl id="des" placeholder="Designation" 
+                  [(ngModel)]="officerservice.officerModels.designation"
+                  name="designation">
                 </c-col>
                 <c-col [md]="4">
-                    <label  for="work">Workplace</label>
-                    <input type="text" cFormControl id="work" placeholder="Workplace">
+                  <label cLabel for="work">Workplace</label>
+                  <input type="text" cFormControl id="work" placeholder="Workplace" 
+                  [(ngModel)]="officerservice.officerModels.workplace"
+                  name="workplace">
                 </c-col>
                 <c-col [md]="4">
-                    <label cLabel for="jondate">Joining Date</label>
-                    <input type="date" cFormControl id="jondate">
+                  <label cLabel for="jondate">Joining Date</label>
+                  <input type="date" cFormControl id="jondate" 
+                  [(ngModel)]="officerservice.officerModels.joiningDate"
+                  name="joiningDate">
                 </c-col>
                 <c-col [md]="4">
-                    <label cLabel for="pdjd">Present Designation Joining Date</label>
-                    <input type="date" cFormControl id="pdjd">
+                  <label cLabel for="pdjd">Present Designation Joining Date</label>
+                  <input type="date" cFormControl id="pdjd" 
+                  [(ngModel)]="officerservice.officerModels.presentDesignationJoiningDate"
+                  name="presentDesignationJoiningDate">
                 </c-col>
                 <c-col [md]="4">
-                    <label cLabel for="edu">Education</label>
-                    <input type="text" cFormControl id="edu" placeholder="Education">
+                  <label cLabel for="edu">Education</label>
+                  <input type="text" cFormControl id="edu" placeholder="Education" 
+                  [(ngModel)]="officerservice.officerModels.education"
+                  name="education">
                 </c-col>
                 <c-col [md]="4">
-                    <label cLabel for="training" >Training/Special Training(If Any)</label>
-                    <input type="text" cFormControl id="training" placeholder="Training/Special Training">
+                  <label cLabel for="training">Training/Special Training (If Any)</label>
+                  <input type="text" cFormControl id="training" placeholder="Training/Special Training" 
+                  [(ngModel)]="officerservice.officerModels.trainingSpecialTraining"
+                  name="trainingSpecialTraining">
                 </c-col>
-                <form cRow cForm class="mt-4">
-                    <c-col [md]="5">
-                        <label cLabel >Exact tenure of service under reportintg provider</label>
-                    </c-col>
-                    <c-col [md]="3">
-                         <label cLabel for="fromdate">From Date</label>
-                        <input type="date" cFormControl id="fromdate">
-                    </c-col>
-                    <c-col [md]="3">
-                        <label cLabel for="todate">To Date</label>
-                        <input type="date" cFormControl id="todate">
-                   </c-col>
-                </form>
-                
-                <h4 class="mt-2">Held The Position at The Time Under Consideration</h4>
-                <table [cBorder]="1" borderColor="dark" bordered cTable>
-                    <thead>
-                        <tr>
-                            <th scope="col">Designation</th>
-                            <th scope="col">Time</th>
-                            <th scope="col" class="text-center">Salary & Salary Scale</th>
-                        </tr>
-                    </thead>                  
-                </table>
-                <div class="text-end mt-3">             
-                    <button cButton >Submit</button>
-                    <button cButton class="ms-3">X Cancel</button>              
-              </div>
-              </form>
-        </c-card-body>
+              </c-row>
+              
+              <c-row class="mt-4">
+                <c-col [md]="5">
+                  <label cLabel>Exact tenure of service under reporting provider</label>
+                </c-col>
+                <c-col [md]="3">
+                  <label cLabel for="fromdate_reporting">From Date</label>
+                  <input type="date" cFormControl id="fromdate_reporting" 
+                  [(ngModel)]="officerservice.officerModels.reportinFromDate"
+                  name="reportinFromDate">
+                </c-col>
+                <c-col [md]="3">
+                  <label cLabel for="todate_reporting">To Date</label>
+                  <input type="date" cFormControl id="todate_reporting" 
+                  [(ngModel)]="officerservice.officerModels.reportingEndDate"
+                  name="reportingEndDate">
+                </c-col>
+              </c-row>
+  
+              <h4 class="mt-2">Held The Position at The Time Under Consideration</h4>
+              <table [cBorder]="1" borderColor="dark" bordered cTable>
+                <thead>
+                  <tr>
+                    <th scope="col">Designation</th>
+                    <th scope="col">Time</th>
+                    <th scope="col" class="text-center">Salary & Salary Scale</th>
+                  </tr>
+                </thead>
+              </table>
+            </c-card-body>
+          </c-card>
+          <div class="text-end mt-3">
+            <button cButton type="submit">Submit</button>
+            <button cButton class="ms-3">X Cancel</button>
+          </div>
+        </form>
+      </c-card-body>
     </c-card>
-</c-card>
-</div>
-   
-
-
-
+  </div>
+  

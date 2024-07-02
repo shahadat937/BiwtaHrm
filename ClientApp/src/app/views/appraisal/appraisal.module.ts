@@ -28,9 +28,9 @@ import { OfficerFormPart5Component } from './officer-form/officer-form-part-5/of
 import { OfficerFormPart6Component } from './officer-form/officer-form-part-6/officer-form-part-6.component';
 import { OfficerFormPart7Component } from './officer-form/officer-form-part-7/officer-form-part-7.component';
 
-
 import { StaffForm3Component } from './staff-form/staff-form-3/staff-form-3.component';
 import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.component';
+import { SharedCustomModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -64,7 +64,8 @@ import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.comp
     CollapseDirective,
     TableModule,
     UtilitiesModule,
-    PaginationModule
+    PaginationModule,
+    SharedCustomModule
   ]
 })
 export class AppraisalModule { }

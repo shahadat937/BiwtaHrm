@@ -18,7 +18,7 @@ namespace Hrm.Api.Controllers
         }
         [HttpPost]
         [Route("save-EmpNomineeInfo")]
-        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] List<CreateEmpNomineeInfoDto> EmpNomineeInfo)
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromForm] List<CreateEmpNomineeInfoDto> EmpNomineeInfo)
         {
             var command = new CreateEmpNomineeInfoCommand { EmpNomineeInfoDto = EmpNomineeInfo };
             var response = await _mediator.Send(command);

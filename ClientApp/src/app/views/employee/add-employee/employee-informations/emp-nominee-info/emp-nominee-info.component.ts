@@ -188,19 +188,9 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
 
   saveNominee() {
     this.loading = true;
-    const formData = new FormData();
-    const nomineeList = this.EmpNomineeInfoForm.get('empNomineeList')?.value;
-    nomineeList.forEach((nominee: any, index: number) => {
-      Object.keys(nominee).forEach(key => {
-        if (key === 'photoFile' || key === 'signatureFile') {
-          formData.append(`nomineeList[${index}].${key}`, nominee[key]);
-        } else {
-          formData.append(`nomineeList[${index}].${key}`, nominee[key]);
-        }
-      });
-    });
-    console.log("Form Date : ", this.EmpNomineeInfoForm.get('empNomineeList')?.value);
-    this.empNomineeInfoService.saveEmpNomineeInfo(this.EmpNomineeInfoForm.get('empNomineeList')?.value).subscribe((res: any) => {
+    const formData = this.EmpNomineeInfoForm.get('empNomineeList')?.value;
+    console.log("Form Data: ", formData);
+    this.empNomineeInfoService.saveEmpNomineeInfo(formData).subscribe((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -215,4 +205,5 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
       }
     });
   }
+  
 }

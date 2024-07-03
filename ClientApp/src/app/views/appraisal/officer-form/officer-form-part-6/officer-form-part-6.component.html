@@ -20,44 +20,89 @@
               </c-button-group>
           </c-button-group>
         <c-card-body>
-            <form cRow cForm >
+            <form cRow cForm 
+            #officerFormPart6="ngForm"
+            (submit)="onSubmit(officerFormPart6)"
+            novalidate>
                 <c-col [md]="6">
                     <label cLabel >1.Exact tenure of Employment Under you</label>
                 </c-col>
                 <c-col [md]="3">
                      <label cLabel for="fromdate">From Date</label>
-                    <input type="date" cFormControl id="fromdate">
+                    <input type="date" cFormControl id="fromdate" 
+            [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.fromDate"
+            name="fromDate" required
+            #fromDate="ngModel">
+                @if(!fromDate.valid && fromDate.touched)
+                {
+                <div class="text-left text-danger"> From Date is required</div>
+                }
                 </c-col>
                 <c-col [md]="3">
                     <label cLabel for="todate">To Date</label>
-                    <input type="date" cFormControl id="todate">
+                    <input type="date" cFormControl id="todate" 
+                    [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.toDate"
+                    name="toDate" required
+                    #toDate="ngModel">
+                @if(!toDate.valid && toDate.touched)
+                {
+                <div class="text-left text-danger"> To Date is required</div>
+                }
                </c-col>
             <c-col [md]="6">
                 <label cLabel class="mt-4">2.Additional Comment</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
+            [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.additionalComment"
+            name="additionalComment" required
+            #additionalComment="ngModel">
+            @if(!additionalComment.valid && additionalComment.touched)
+            {
+            <div class="text-left text-danger"> To Date is required</div>
+            }
             </c-col>
             <c-col [md]="6">
                 <label cLabel class="mt-4">3.Overall Assessment</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
+                [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.overallAssessment"
+                name="overallAssessment" required
+                #overallAssessment="ngModel">
+                @if(!overallAssessment.valid && overallAssessment.touched)
+                {
+                <div class="text-left text-danger"> Overall Assessment is required</div>
+                }
             </c-col>
             <c-col [md]="6">
                 <label cLabel class="mt-4">4.Recommendation</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
+                [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.recommendation"
+                name="recommendation" required
+                #recommendation="ngModel">
+                @if(!recommendation.valid && recommendation.touched)
+                {
+                <div class="text-left text-danger"> Recommendation required</div>
+                }
             </c-col>
             <c-col class="d-flex justify-content-end align-items-center mt-3">           
                 <div class="text-center">
-                    <input type="file" cFormControl class="">
+                    <input type="file" cFormControl class="" 
+                    [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.signature"
+                    name="signature" required
+                    #signature="ngModel">
+                    @if(!signature.valid && signature.touched)
+                    {
+                    <div class="text-left text-danger"> Signature required</div>
+                    }
                     <div>Signature of Reporting Officer</div>
                 </div>
             </c-col>
             <div>
-            <button cButton color="primary">Submit</button>
+            <button cButton color="primary" type="submit">Submit</button>
             <button cButton color="dark" class="ms-3">Cancel</button>
             </div>
             </form>         

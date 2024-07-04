@@ -89,9 +89,9 @@ using Hrm.Application.DTOs.Workday;
 using Hrm.Application.DTOs.Holidays;
 using Hrm.Application.DTOs.EmpNomineeInfo;
 using Hrm.Application.DTOs.DayType;
-using Hrm.Application.DTOs.Attendance;
 using Hrm.Application.DTOs.AttendanceType;
 using Hrm.Application.DTOs.AttendanceStatus;
+using Hrm.Application.DTOs.Attendance;
 
 
 
@@ -361,14 +361,13 @@ namespace Hrm.Application.Profiles
             CreateMap<Holidays, CreateHolidayDto>().ReverseMap();
             CreateMap<DayType, DayTypeDto>().ReverseMap();
             CreateMap<DayType, CreateDayTypeDto>().ReverseMap();
-            CreateMap<Attendance, AttendanceDto>().ReverseMap();
-            CreateMap<Attendance, CreateAttendanceDto>().ReverseMap();
             CreateMap<DayType, DayTypeDto>().ReverseMap();
             CreateMap<DayType, CreateDayTypeDto>().ReverseMap();
             CreateMap<AttendanceType, AttendanceTypeDto>().ReverseMap();
             CreateMap<AttendanceType, CreateAttendanceTypeDto>().ReverseMap();
             CreateMap<AttendanceStatus, AttendanceStatusDto>().ReverseMap();
             CreateMap<AttendanceStatus, CreateAttendanceStatusDto>().ReverseMap();
+            CreateMap<Attendance, AttendanceDto>().ReverseMap();
 
             CreateMap<SiteVisit, SiteVisitDto>()
             .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.Employees.EmpEngName));
@@ -382,11 +381,14 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.HolidayTypeName, opt => opt.MapFrom(src => src.HolidayType.HolidayTypeName));
 
             CreateMap<Attendance, AttendanceDto>()
-            .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.Employees.EmpEngName))
+            .ForMember(dest => dest.AttendanceTypeName, opt => opt.MapFrom(src => src.AttendanceType.AttendanceTypeName))
+            .ForMember(dest => dest.EmpFirstName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName))
+            .ForMember(dest => dest.EmpLastName, opt => opt.MapFrom(src => src.EmpBasicInfo.LastName))
             .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
-            .ForMember(dest=>dest.OfficeBranchName, opt=>opt.MapFrom(src=>src.OfficeBranch.BranchName))
+            .ForMember(dest => dest.OfficeBranchName, opt => opt.MapFrom(src => src.OfficeBranch.BranchName))
+            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.Shift.ShiftName))
             .ForMember(dest => dest.DayTypeName, opt => opt.MapFrom(src => src.DayType.DayTypeName))
-            .ForMember(dest => dest.AttendanceTypeName, opt => opt.MapFrom(src=>src.AttendanceType.AttendanceTypeName));
+            .ForMember(dest => dest.AttendanceStatusName, opt => opt.MapFrom(src => src.AttendanceStatus.AttendanceStatusName));
 
         }
     }

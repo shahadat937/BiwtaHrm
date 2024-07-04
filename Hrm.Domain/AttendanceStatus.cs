@@ -13,5 +13,6 @@ namespace Hrm.Domain
         public string AttendanceStatusName { get; set; }
         public int? MenuPosition { get; set; }
         public string? Remark { get; set; }
+        public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
     }
 }

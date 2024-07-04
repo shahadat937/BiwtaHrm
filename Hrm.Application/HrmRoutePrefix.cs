@@ -101,7 +101,7 @@ namespace Hrm.Application
         public const string DayType = HRMRoutePrefixBase + "dayType";
         public const string AttendanceType = HRMRoutePrefixBase + "attendanceType";
         public const string AttendanceStatus = HRMRoutePrefixBase + "attendanceStatus";
-
+        public const string Attendance = HRMRoutePrefixBase + "attendance";
 
 
     }

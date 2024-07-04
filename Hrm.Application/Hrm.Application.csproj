@@ -52,6 +52,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="DTOs\Attendance\Validators\" />
+	  <Folder Include="Features\Attendance\Handlers\Commands\" />
+	  <Folder Include="Features\Attendance\Requests\Commands\" />
 	  <Folder Include="Features\Organogram\Handlers\Commands\" />
 	  <Folder Include="Features\Organogram\Requests\Commands\" />
 	</ItemGroup>

@@ -364,11 +364,6 @@ namespace Hrm.Persistence
                 .HasName("[[PK_Holidays]]");
             });
 
-            modelBuilder.Entity<Attendance>(entity =>
-            {
-                entity.HasKey(k => k.AttendanceId)
-                .HasName("[[PK_Attendance]]");
-            });
 
             modelBuilder.Entity<DayType>(entity =>
             {
@@ -387,6 +382,62 @@ namespace Hrm.Persistence
                 entity.HasKey(s => s.AttendanceStatusId)
                 .HasName("[[PK_AttendanceStatus]]");
             });
+
+            modelBuilder.Entity<Attendance>(entity =>
+            {
+                entity.HasKey(at => at.AttendanceId)
+                .HasName("[[PK_Attendance]]");
+            });
+
+            modelBuilder.Entity<AttendanceType>(entity =>
+            {
+                entity.HasMany(at => at.Attendances)
+                .WithOne(ad => ad.AttendanceType)
+                .HasForeignKey(ad => ad.AttendanceTypeId);
+            });
+
+            modelBuilder.Entity<EmpBasicInfo>(entity =>
+            {
+                entity.HasMany(em => em.Attendances)
+                .WithOne(ad => ad.EmpBasicInfo)
+                .HasForeignKey(ad => ad.EmpId);
+            });
+
+            modelBuilder.Entity<Office>(entity =>
+            {
+                entity.HasMany(ofc => ofc.Attendances)
+                .WithOne(ad => ad.Office)
+                .HasForeignKey(ad => ad.OfficeId);
+            });
+
+            modelBuilder.Entity<OfficeBranch>(entity =>
+            {
+                entity.HasMany(ofb => ofb.Attendances)
+                .WithOne(ad => ad.OfficeBranch)
+                .HasForeignKey(ad => ad.OfficeBranchId);
+            });
+
+            modelBuilder.Entity<Shift>(entity =>
+            {
+                entity.HasMany(sf => sf.Attendances)
+                .WithOne(ad => ad.Shift)
+                .HasForeignKey(ad => ad.ShiftId);
+            });
+
+            modelBuilder.Entity<DayType>(entity =>
+            {
+                entity.HasMany(dt => dt.Attendances)
+                .WithOne(ad => ad.DayType)
+                .HasForeignKey(ad => ad.DayTypeId);
+            });
+
+            modelBuilder.Entity<AttendanceStatus>(entity =>
+            {
+                entity.HasMany(ats => ats.Attendances)
+                .WithOne(ad => ad.AttendanceStatus)
+                .HasForeignKey(ad => ad.AttendanceStatusId);
+            });
+
 
 
 
@@ -481,10 +532,10 @@ namespace Hrm.Persistence
         public virtual DbSet<SiteVisit> SiteVisit { get; set; } = null!;
         public virtual DbSet<Workday> Workday { get; set; } = null!;
         public virtual DbSet<Holidays> Holidays { get; set; } = null!;
-        public virtual DbSet<Attendance> Attendance { get; set; } = null!;
         public virtual DbSet<DayType> DayType { get; set; } = null!;
         public virtual DbSet<AttendanceType> AttendanceType { get; set; } = null!;
         public virtual DbSet<AttendanceStatus> AttendanceStatus { get; set; } = null!;
+        public virtual DbSet<Attendance> Attendance { get; set; } = null!;
 
     }
 }

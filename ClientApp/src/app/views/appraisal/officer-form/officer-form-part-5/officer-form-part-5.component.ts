@@ -11,6 +11,8 @@ import { NgForm } from '@angular/forms';
 export class OfficerFormPart5Component  implements OnInit, OnDestroy{
   
   @ViewChild('officerFormPart5', { static: true }) OfficerFormPart5Module!: NgForm;
+
+  loading:boolean=false
 constructor(public OfficerFormPart5ServiceService: OfficerFormPart5ServiceService){
 
 }
@@ -21,6 +23,7 @@ constructor(public OfficerFormPart5ServiceService: OfficerFormPart5ServiceServic
   }
 
   onSubmit(form: NgForm): void {
+    this.loading=true;
     console.log("Form Value: ",form.value)
   }
 

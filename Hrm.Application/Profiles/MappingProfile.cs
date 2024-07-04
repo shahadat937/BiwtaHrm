@@ -368,6 +368,7 @@ namespace Hrm.Application.Profiles
             CreateMap<AttendanceStatus, AttendanceStatusDto>().ReverseMap();
             CreateMap<AttendanceStatus, CreateAttendanceStatusDto>().ReverseMap();
             CreateMap<Attendance, AttendanceDto>().ReverseMap();
+            CreateMap<Attendance, CreateAttendanceDto>().ReverseMap();
 
             CreateMap<SiteVisit, SiteVisitDto>()
             .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.Employees.EmpEngName));

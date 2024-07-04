@@ -32,5 +32,6 @@ namespace Hrm.Domain
         //public virtual AspNetUsers? AspNetUser { get; set; }
         //public virtual EmployeeType? EmployeeType { get; set; }
         //public virtual ICollection<EmpPersonalInfo>? EmpPersonalInfos { get; set; }
+        public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
     }
 }

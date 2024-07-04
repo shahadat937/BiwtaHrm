@@ -32,5 +32,6 @@ namespace Hrm.Domain
 
         public ICollection<Department> Departments { get; set; }
         public ICollection<Designation> Designations { get; set; }
+        public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
     }
 }

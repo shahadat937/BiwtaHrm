@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Hrm.Domain
@@ -29,8 +30,7 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
 
-        //public virtual AspNetUsers? AspNetUser { get; set; }
-        //public virtual EmployeeType? EmployeeType { get; set; }
-        //public virtual ICollection<EmpPersonalInfo>? EmpPersonalInfos { get; set; }
+        public virtual EmployeeType? EmployeeType { get; set; }
+        public ICollection<EmpPersonalInfo>? EmpPersonalInfo { get; set; }
     }
 }

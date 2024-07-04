@@ -43,12 +43,13 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
 
-        //public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
-        //public virtual Gender? Gender { get; set; }
-        //public virtual MaritalStatus? MaritalStatus { get; set; }
-        //public virtual BloodGroup? BloodGroup { get; set; }
-        //public virtual Religion? Religion { get; set; }
-        //public virtual HairColor? HairColor { get; set; }
-        //public virtual EyesColor? EyesColor { get; set; }
+        public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
+        public virtual Gender? Gender { get; set; }
+        public virtual MaritalStatus? MaritalStatus { get; set; }
+        public virtual BloodGroup? BloodGroup { get; set; }
+        public virtual Religion? Religion { get; set; }
+        public virtual HairColor? HairColor { get; set; }
+        public virtual EyesColor? EyesColor { get; set; }
+        public virtual Country? Country { get; set; }
     }
 }

@@ -19,6 +19,7 @@ import { EmpSpouseInfoService } from '../../service/emp-spouse-info.service';
 import { ManageEmployeeService } from '../../service/manage-employee.service';
 import { BasicInfoModule } from '../../model/basic-info.module';
 import { EmpPhotoSignModule } from '../../model/emp-photo-sign.module';
+import { PersonalInfoModule } from '../../model/personal-info.module';
 
 @Component({
   selector: 'app-employee-information',
@@ -30,6 +31,7 @@ export class EmployeeInformationComponent implements OnInit {
   employeeId : any = null;
   empBasicInfo : BasicInfoModule = new BasicInfoModule;
   empPhotoSign : EmpPhotoSignModule = new EmpPhotoSignModule;
+  empPersonalInfo : PersonalInfoModule = new PersonalInfoModule;
   empPhoto : string = '';
   empSignature : string = '';
 
@@ -57,6 +59,7 @@ export class EmployeeInformationComponent implements OnInit {
       this.handleRouteParams();
       this.getEmpBasicInfoByEmpId();
       this.getEmpPhotoSign();
+      this.getEmpPersonalInfoByEmpId()
     }
   
     handleRouteParams() {
@@ -67,8 +70,14 @@ export class EmployeeInformationComponent implements OnInit {
 
     getEmpBasicInfoByEmpId(){
       this.manageEmployeeService.getEmpBasicInfoByEmpId(this.employeeId).subscribe((res) => {
-        console.log(res)
         this.empBasicInfo = res;
+      });
+    }
+    
+    getEmpPersonalInfoByEmpId(){
+      this.empPersonalInfoService.findByEmpId(this.employeeId).subscribe((res) => {
+        console.log(res)
+        this.empPersonalInfo = res;
       });
     }
 

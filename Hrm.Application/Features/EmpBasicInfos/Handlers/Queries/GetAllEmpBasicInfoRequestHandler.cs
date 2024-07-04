@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
 {
@@ -27,7 +28,8 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
 
         public async Task<object> Handle(GetAllEmpBasicInfoRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<EmpBasicInfo> EmpBasicInfo = _EmpBasicInfoRepository.Where(x => true);
+            IQueryable<EmpBasicInfo> EmpBasicInfo = _EmpBasicInfoRepository.Where(x => true)
+                .Include(x => x.EmployeeType); ;
 
             EmpBasicInfo = EmpBasicInfo.OrderByDescending(x => x.Id);
 

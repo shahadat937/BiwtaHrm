@@ -9,14 +9,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Hrm.Application.DTOs.EmpBasicInfo;
 
 namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
 {
     public class GetEmpBasicInfoByIdRequestHandler : IRequestHandler<GetEmpBasicInfoByIdRequest, object>
     {
-
         private readonly IHrmRepository<EmpBasicInfo> _EmpBasicInfoRepository;
         private readonly IMapper _mapper;
+
         public GetEmpBasicInfoByIdRequestHandler(IHrmRepository<EmpBasicInfo> EmpBasicInfoRepository, IMapper mapper)
         {
             _EmpBasicInfoRepository = EmpBasicInfoRepository;
@@ -25,9 +27,19 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
 
         public async Task<object> Handle(GetEmpBasicInfoByIdRequest request, CancellationToken cancellationToken)
         {
-            var EmpBasicInfo = _EmpBasicInfoRepository.FinedOneInclude(x => x.Id == request.Id);
+            var EmpBasicInfo = await _EmpBasicInfoRepository.Where(x => x.Id == request.Id)
+                                                            .Include(x => x.EmployeeType)
+                                                            .FirstOrDefaultAsync(cancellationToken);
 
-            return EmpBasicInfo;
+            if (EmpBasicInfo == null)
+            {
+                return null; 
+            }
+
+            var EmpBasicInfoDto = _mapper.Map<EmpBasicInfoDto>(EmpBasicInfo);
+
+            return EmpBasicInfoDto;
         }
     }
+
 }

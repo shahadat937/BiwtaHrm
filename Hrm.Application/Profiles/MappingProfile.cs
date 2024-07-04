@@ -313,8 +313,21 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpBasicInfo, EmpBasicInfoDto>().ReverseMap();
             CreateMap<EmpBasicInfo, CreateEmpBasicInfoDto>().ReverseMap();
 
+            CreateMap<EmpBasicInfo, EmpBasicInfoDto>()
+            .ForMember(dest => dest.EmployeeTypeName, opt => opt.MapFrom(src => src.EmployeeType.EmployeeTypeName));
+
             CreateMap<EmpPersonalInfo, EmpPersonalInfoDto>().ReverseMap();
             CreateMap<EmpPersonalInfo, CreateEmpPersonalInfoDto>().ReverseMap();
+
+            CreateMap<EmpPersonalInfo, EmpPersonalInfoDto>()
+            .ForMember(dest => dest.GenderName, opt => opt.MapFrom(src => src.Gender.GenderName))
+            .ForMember(dest => dest.MaritalStatusName, opt => opt.MapFrom(src => src.MaritalStatus.MaritalStatusName))
+            .ForMember(dest => dest.BloodGroupName, opt => opt.MapFrom(src => src.BloodGroup.BloodGroupName))
+            .ForMember(dest => dest.ReligionName, opt => opt.MapFrom(src => src.Religion.ReligionName))
+            .ForMember(dest => dest.HairColorName, opt => opt.MapFrom(src => src.HairColor.HairColorName))
+            .ForMember(dest => dest.EyesColorName, opt => opt.MapFrom(src => src.EyesColor.EyesColorName))
+            .ForMember(dest => dest.NationalityName, opt => opt.MapFrom(src => src.Country.CountryName));
+
 
             CreateMap<EmpPresentAddress, EmpPresentAddressDto>().ReverseMap();
             CreateMap<EmpPresentAddress, CreateEmpPresentAddressDto>().ReverseMap();

@@ -388,9 +388,55 @@ namespace Hrm.Persistence
                 .HasName("[[PK_AttendanceStatus]]");
             });
 
+            modelBuilder.Entity<EmpPersonalInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("[[PK_EmpPersonalInfo]]");
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Gender)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.GenderId);
+
+                entity.HasOne(e => e.MaritalStatus)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.MaritalStatusId);
+
+                entity.HasOne(e => e.BloodGroup)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.BloodGroupId);
+
+                entity.HasOne(e => e.Religion)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.ReligionId);
+
+                entity.HasOne(e => e.HairColor)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.HairColorId);
+
+                entity.HasOne(e => e.EyesColor)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.EyesColorId);
+
+                entity.HasOne(e => e.Country)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.NationalityId);
+            });
+
+            modelBuilder.Entity<EmpBasicInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("[[PK_EmpBasicInfo]]");
+
+                entity.HasOne(e => e.EmployeeType)
+                    .WithMany(eb => eb.EmpBasicInfo)
+                    .HasForeignKey(e => e.EmployeeTypeId);
+            });
 
 
-            base.OnModelCreating(modelBuilder);
+
+                base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
 

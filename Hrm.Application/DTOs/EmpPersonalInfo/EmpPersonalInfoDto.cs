@@ -41,5 +41,13 @@ namespace Hrm.Application.DTOs.EmpPersonalInfo
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+
+        public string? GenderName { get; set; }
+        public string? MaritalStatusName { get; set; }
+        public string? BloodGroupName { get; set; }
+        public string? ReligionName { get; set; }
+        public string? HairColorName { get; set; }
+        public string? EyesColorName { get; set; }
+        public string? NationalityName { get; set; }
     }
 }

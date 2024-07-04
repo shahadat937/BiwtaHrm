@@ -40,10 +40,96 @@
                             <th>NID Number</th>
                             <td>{{empBasicInfo.nid}}</td>
                         </tr>
+                        <tr>
+                            <th>Employee Type</th>
+                            <td>{{empBasicInfo.employeeTypeName}}</td>
+                        </tr>
                     </tbody>
                 </table>
 
             </c-card-body>
         </c-card>
+
+        
+        <!-- Employee Personal Information -->
+        <c-card class="shadow mb-3">
+            <c-card-header class="text-center">
+                Employee Personal Information
+            </c-card-header>
+            <c-card-body>
+                <table cTable bordered hover>
+                    <tbody>
+                        <tr>
+                            <th>Gender</th>
+                            <td>{{empPersonalInfo.genderName}}</td>
+                            <th>Father Name</th>
+                            <td>{{empPersonalInfo.fatherName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Marital Status</th>
+                            <td>{{empPersonalInfo.maritalStatusName}}</td>
+                            <th>Mother Name</th>
+                            <td>{{empPersonalInfo.motherName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Blood Group</th>
+                            <td>{{empPersonalInfo.bloodGroupName}}</td>
+                            <th>Guardian Name</th>
+                            <td>{{empPersonalInfo.gurdianName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Nationality</th>
+                            <td>{{empPersonalInfo.nationalityName}}</td>
+                            <th>Mother Name</th>
+                            <td>{{empPersonalInfo.religionName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Mobile Number</th>
+                            <td>{{empPersonalInfo.mobileNumber}}</td>
+                            <th>Height</th>
+                            <td>{{empPersonalInfo.height}}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{empPersonalInfo.email}}</td>
+                            <th>Weight</th>
+                            <td>{{empPersonalInfo.weight}}</td>
+                        </tr>
+                        <tr>
+                            <th>Birth Reg. No.</th>
+                            <td>{{empPersonalInfo.birthRegNo}}</td>
+                            <th>Hair Color</th>
+                            <td>{{empPersonalInfo.hairColorName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Place of Birth</th>
+                            <td>{{empPersonalInfo.placeOfBirth}}</td>
+                            <th>Eyes Color</th>
+                            <td>{{empPersonalInfo.eyesColorName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Religion</th>
+                            <td>{{empPersonalInfo.religionName}}</td>
+                            <th>TIN Number</th>
+                            <td>{{empPersonalInfo.tinNo}}</td>
+                        </tr>
+                        <tr>
+                            <th>Driving License No</th>
+                            <td>{{empPersonalInfo.drivingLicenceNo}}</td>
+                            <th>Driving License Expire Date</th>
+                            <td>{{empPersonalInfo.drivingLicenceDate}}</td>
+                        </tr>
+                        <tr>
+                            <th>Passport Number</th>
+                            <td>{{empPersonalInfo.passportNo}}</td>
+                            <th>Passport Expire Date</th>
+                            <td>{{empPersonalInfo.passportExpireDate}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
+
+        
     </c-card-body>
 </c-card>

@@ -6,6 +6,7 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { EmpPersonalInfoService } from '../../../service/emp-personal-info.service';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { CountryService } from 'src/app/views/basic-setup/service/country.service';
 
 @Component({
   selector: 'app-personal-information',
@@ -27,6 +28,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   hairColors: SelectedModel[] = [];
   eyeColors: SelectedModel[] = [];
   relations: SelectedModel[] = [];
+  countries: SelectedModel[] = [];
   subscription: Subscription = new Subscription();
   loading: boolean = false;
   @ViewChild('PersonalInfoForm', { static: true }) PersonalInfoForm!: NgForm;
@@ -34,7 +36,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   constructor(public bsModalRef: BsModalRef,
     public empPersonalInfoService: EmpPersonalInfoService,
     public userService: UserService,
-    private toastr: ToastrService,) { }
+    private toastr: ToastrService,
+    public countryService: CountryService,) { }
 
   ngOnInit(): void {
     this.getEmployeeByEmpId();
@@ -45,6 +48,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.getSelectedHairColors();
     this.getSelectedEyeColors();
     this.getSelectedRelation();
+    this.getSelectedCountris();
   }
 
   ngOnDestroy(): void {
@@ -97,7 +101,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       nationalityId : null ,
       religionId : null ,
       hairColorId : null ,
-      eyesColor : null ,
+      eyesColorId : null ,
       mobileNumber : '' ,
       fatherName: '',
       fatherNameBangla: '',
@@ -118,6 +122,13 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       passportNo : '',
       passportExpireDate : null,
       remark: '',
+      genderName : '',
+      maritalStatusName : '',
+      bloodGroupName : '',
+      religionName : '',
+      hairColorName : '',
+      eyesColorName : '',
+      nationalityName : '',
     };
   }
 
@@ -131,7 +142,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       nationalatyId : null ,
       religionId : null ,
       hairColorId : null ,
-      eyesColor : null ,
+      eyesColorId : null ,
       mobileNumber : null ,
       fatherName: '',
       fatherNameBangla: '',
@@ -169,6 +180,11 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   getSelectedBloodGroups(){
     this.subscription=this.empPersonalInfoService.getSelectedBloodGroup().subscribe((data) => { 
       this.bloodGroups = data;
+    });
+  }
+  getSelectedCountris() {
+    this.subscription = this.countryService.selectGetCountry().subscribe((data) => {
+      this.countries = data;
     });
   }
   getSelectedReligions(){

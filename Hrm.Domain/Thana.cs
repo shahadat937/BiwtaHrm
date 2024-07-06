@@ -16,6 +16,8 @@ namespace Hrm.Domain
         public bool IsActive { get; set; }
 
         public virtual Upazila? Upazila { get; set; }
+        public virtual ICollection<EmpPresentAddress>? EmpPresentAddress { get; set; }
+        public virtual ICollection<EmpPermanentAddress>? EmpPermanentAddress { get; set; }
 
     }
 }

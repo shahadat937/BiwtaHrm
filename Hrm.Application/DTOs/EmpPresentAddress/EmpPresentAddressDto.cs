@@ -23,5 +23,13 @@ namespace Hrm.Application.DTOs.EmpPresentAddress
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+
+        public string? CountryName { get; set; }
+        public string? DivisionName { get; set; }
+        public string? DistrictName { get; set; }
+        public string? UpazilaName { get; set; }
+        public string? ThanaName { get; set; }
+        public string? UnionName { get; set; }
+        public string? WardName { get; set; }
     }
 }

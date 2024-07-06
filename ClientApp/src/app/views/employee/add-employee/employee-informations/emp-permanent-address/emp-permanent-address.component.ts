@@ -108,7 +108,15 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
       email: "",
       remark: '',
       menuPosition: 0,
-      isActive: true
+      isActive: true,
+
+      countryName: '',
+      divisionName: '',
+      districtName: '',
+      upazilaName: '',
+      thanaName: '',
+      unionName: '',
+      wardName: '',
     };
   }
 

@@ -20,6 +20,8 @@ import { ManageEmployeeService } from '../../service/manage-employee.service';
 import { BasicInfoModule } from '../../model/basic-info.module';
 import { EmpPhotoSignModule } from '../../model/emp-photo-sign.module';
 import { PersonalInfoModule } from '../../model/personal-info.module';
+import { EmpPresentAddressModule } from '../../model/emp-present-address.module';
+import { EmpPermanentAddressModule } from '../../model/emp-permanent-address.module';
 
 @Component({
   selector: 'app-employee-information',
@@ -32,6 +34,8 @@ export class EmployeeInformationComponent implements OnInit {
   empBasicInfo : BasicInfoModule = new BasicInfoModule;
   empPhotoSign : EmpPhotoSignModule = new EmpPhotoSignModule;
   empPersonalInfo : PersonalInfoModule = new PersonalInfoModule;
+  empPresentAddress : EmpPresentAddressModule = new EmpPresentAddressModule;
+  empPermanentAddress : EmpPermanentAddressModule = new EmpPermanentAddressModule;
   empPhoto : string = '';
   empSignature : string = '';
 
@@ -59,7 +63,9 @@ export class EmployeeInformationComponent implements OnInit {
       this.handleRouteParams();
       this.getEmpBasicInfoByEmpId();
       this.getEmpPhotoSign();
-      this.getEmpPersonalInfoByEmpId()
+      this.getEmpPersonalInfoByEmpId();
+      this.getEmpPresentAddressByEmpId();
+      this.getEmpPermanentAddressByEmpId();
     }
   
     handleRouteParams() {
@@ -76,8 +82,19 @@ export class EmployeeInformationComponent implements OnInit {
     
     getEmpPersonalInfoByEmpId(){
       this.empPersonalInfoService.findByEmpId(this.employeeId).subscribe((res) => {
-        console.log(res)
         this.empPersonalInfo = res;
+      });
+    }
+    
+    getEmpPresentAddressByEmpId(){
+      this.empPresentAddressService.findByEmpId(this.employeeId).subscribe((res) => {
+        this.empPresentAddress = res;
+      });
+    }
+    
+    getEmpPermanentAddressByEmpId(){
+      this.empPermanentAddressService.findByEmpId(this.employeeId).subscribe((res) => {
+        this.empPermanentAddress = res;
       });
     }
 

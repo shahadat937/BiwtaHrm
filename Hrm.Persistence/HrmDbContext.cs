@@ -425,6 +425,7 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.NationalityId);
             });
 
+
             modelBuilder.Entity<EmpBasicInfo>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("[[PK_EmpBasicInfo]]");
@@ -435,8 +436,85 @@ namespace Hrm.Persistence
             });
 
 
+            modelBuilder.Entity<EmpPresentAddress>(entity =>
+            {
+                entity.HasKey(e => e.Id);
 
-                base.OnModelCreating(modelBuilder);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Country)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.CountryId);
+
+                entity.HasOne(e => e.Division)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.DivisionId);
+
+                entity.HasOne(e => e.District)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.DistrictId);
+
+                entity.HasOne(e => e.Upazila)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.UpazilaId);
+
+                entity.HasOne(e => e.Thana)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.ThanaId);
+
+                entity.HasOne(e => e.Union)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.UnionId);
+
+                entity.HasOne(e => e.Ward)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.WardId);
+
+            });
+
+            modelBuilder.Entity<EmpPermanentAddress>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Country)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.CountryId);
+
+                entity.HasOne(e => e.Division)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.DivisionId);
+
+                entity.HasOne(e => e.District)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.DistrictId);
+
+                entity.HasOne(e => e.Upazila)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.UpazilaId);
+
+                entity.HasOne(e => e.Thana)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.ThanaId);
+
+                entity.HasOne(e => e.Union)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.UnionId);
+
+                entity.HasOne(e => e.Ward)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.WardId);
+
+            });
+
+            base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
 

@@ -1,12 +1,3 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+export class OfficerFormPart2Module { 
 
-
-
-@NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
-})
-export class OfficerFormPart2Module { }
+}

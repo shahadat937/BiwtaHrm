@@ -11,6 +11,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   @ViewChild('officerForm', { static: true }) BloodGroupForm!: NgForm;
 
+  loading :boolean=false;
+
   constructor(public officerservice :OfficerFormService ){}
 
   ngOnInit(): void {
@@ -18,6 +20,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
   onSubmit(form: NgForm): void {
+    this.loading=true;
     console.log("Form Value: ",form.value)
   }
   initaialUser(form?: NgForm) {

@@ -352,6 +352,17 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpJobDetail, EmpJobDetailDto>().ReverseMap();
             CreateMap<EmpJobDetail, CreateEmpJobDetailDto>().ReverseMap();
+            CreateMap<EmpJobDetail, EmpJobDetailDto>()
+            .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeNameBangla))
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentNameBangla))
+            .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.Designation.DesignationNameBangla))
+            .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Section.SectionName))
+            .ForMember(dest => dest.PresentGradeName, opt => opt.MapFrom(src => src.PresentGrade.GradeName))
+            .ForMember(dest => dest.PresentScaleName, opt => opt.MapFrom(src => src.PresentScale.ScaleName))
+            .ForMember(dest => dest.FirstDepartmentName, opt => opt.MapFrom(src => src.FirstDepartment.DepartmentNameBangla))
+            .ForMember(dest => dest.FirstDesignationName, opt => opt.MapFrom(src => src.FirstDesignation.DesignationNameBangla))
+            .ForMember(dest => dest.FirstGradeName, opt => opt.MapFrom(src => src.FirstGrade.GradeName))
+            .ForMember(dest => dest.FirstScaleName, opt => opt.MapFrom(src => src.FirstScale.ScaleName));
 
             CreateMap<EmpSpouseInfo, EmpSpouseInfoDto>().ReverseMap();
             CreateMap<EmpSpouseInfo, CreateEmpSpouseInfoDto>().ReverseMap();

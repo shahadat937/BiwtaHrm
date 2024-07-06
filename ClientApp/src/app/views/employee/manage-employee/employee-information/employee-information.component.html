@@ -224,5 +224,61 @@
             </c-card-body>
         </c-card>
         
+        <!-- Employee Job Details Information -->
+        <c-card class="shadow mb-3">
+            <c-card-header class="text-center">
+                Employee Job Details
+            </c-card-header>
+            <c-card-body>
+                <table cTable bordered hover>
+                    <tbody>
+                        <tr>
+                            <th>Office</th>
+                            <td>{{empJobDetails.officeName}}</td>
+                            <th>Joining Date</th>
+                            <td>{{empJobDetails.joiningDate}}</td>
+                        </tr>
+                        <tr>
+                            <th>Department</th>
+                            <td>{{empJobDetails.departmentName}}</td>
+                            <th>First Department</th>
+                            <td>{{empJobDetails.firstDepartmentName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Designation</th>
+                            <td>{{empJobDetails.designationName}}</td>
+                            <th>First Designation</th>
+                            <td>{{empJobDetails.firstDesignationName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Present Grade</th>
+                            <td>{{empJobDetails.presentGradeName}}</td>
+                            <th>First Grade</th>
+                            <td>{{empJobDetails.firstGradeName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Present Scale</th>
+                            <td>{{empJobDetails.presentScaleName}}</td>
+                            <th>First Scale</th>
+                            <td>{{empJobDetails.firstScaleName}}</td>
+                        </tr>
+                        <tr>
+                            <th>PRT Date</th>
+                            <td>{{empJobDetails.prlDate}}</td>
+                            <th>Retirment Date</th>
+                            <td>{{empJobDetails.retirementDate}}</td>
+                        </tr>
+                        <tr>
+                            <th>Service Status</th>
+                            <td *ngIf="empJobDetails.serviceStatus">On Service</td>
+                            <td *ngIf="!empJobDetails.serviceStatus">Out of Service</td>
+                            <th>Remark</th>
+                            <td>{{empJobDetails.remark}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
+        
     </c-card-body>
 </c-card>

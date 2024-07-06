@@ -27,5 +27,16 @@ namespace Hrm.Application.DTOs.EmpJobDetail
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+
+        public string? OfficeName { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? DesignationName { get; set; }
+        public string? SectionName { get; set; }
+        public string? PresentGradeName { get; set; }
+        public string? PresentScaleName { get; set; }
+        public string? FirstDepartmentName { get; set; }
+        public string? FirstDesignationName { get; set; }
+        public string? FirstGradeName { get; set; }
+        public string? FirstScaleName { get; set; }
     }
 }

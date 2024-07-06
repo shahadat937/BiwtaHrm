@@ -514,6 +514,55 @@ namespace Hrm.Persistence
 
             });
 
+            modelBuilder.Entity<EmpJobDetail>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Office)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.OfficeId);
+
+                entity.HasOne(e => e.Department)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.DepartmentId);
+
+                entity.HasOne(e => e.Designation)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.DesignationId);
+
+                entity.HasOne(e => e.Section)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.SectionId);
+
+                entity.HasOne(e => e.PresentGrade)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.PresentGradeId);
+
+                entity.HasOne(e => e.PresentScale)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.PresentScaleId);
+
+                //entity.HasOne(e => e.FirstDepartment)
+                //    .WithMany(eb => eb.EmpJobDetail)
+                //    .HasForeignKey(e => e.FirstDepartmentId);
+
+                //entity.HasOne(e => e.FirstDesignation)
+                //    .WithMany(eb => eb.EmpJobDetail)
+                //    .HasForeignKey(e => e.FirstDesignationId);
+
+                //entity.HasOne(e => e.FirstGrade)
+                //    .WithMany(eb => eb.EmpJobDetail)
+                //    .HasForeignKey(e => e.FirstGradeId);
+
+                //entity.HasOne(e => e.FirstScale)
+                //    .WithMany(eb => eb.EmpJobDetail)
+                //    .HasForeignKey(e => e.FirstScaleId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;

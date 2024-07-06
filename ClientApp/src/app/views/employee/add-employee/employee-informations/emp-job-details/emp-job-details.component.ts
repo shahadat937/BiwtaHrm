@@ -13,7 +13,7 @@ import { GradeService } from 'src/app/views/basic-setup/service/Grade.service';
   templateUrl: './emp-job-details.component.html',
   styleUrl: './emp-job-details.component.scss'
 })
-export class EmpJobDetailsComponent implements OnInit, OnDestroy  {
+export class EmpJobDetailsComponent implements OnInit, OnDestroy {
 
   @Input() empId!: number;
   @Output() close = new EventEmitter<void>();
@@ -38,8 +38,8 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy  {
   constructor(
     private toastr: ToastrService,
     public empJobDetailsService: EmpJobDetailsService,
-    public officeService:OfficeService,  
-    public departmentService:DepartmentService,
+    public officeService: OfficeService,
+    public departmentService: DepartmentService,
     private gradeService: GradeService,
   ) {
 
@@ -49,33 +49,34 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy  {
     this.getEmployeeByEmpId();
     this.loadOffice();
     this.SelectModelGrade();
-    this.getAllDepartmentAndDesignation();
+    this.getAllDepartment();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
-  
+
   UserFormView(): void {
     this.visible = !this.visible;
     this.headerBtnText = this.visible ? 'Hide Form' : 'Show Form';
   }
-  
+
   getEmployeeByEmpId() {
     this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
       if (res) {
         this.empJobDetailsId = res.id;
         this.onOfficeSelect(res.officeId);
-        if(res.departmentId != null){
+        if (res.departmentId != null) {
           this.onDepartmentSelectGetDesignation(res.departmentId, res.id);
         }
-        else{
+        else {
           this.onOfficeSelectGetDesignation(res.officeId, res.id);
         }
         this.onChangeGradeGetScale(res.presentGradeId);
         this.onChangeScaleGetBasicPay(res.presentScaleId);
         this.onChangeFirstGradeGetFirstScale(res.firstGradeId);
+        this.getOldDesignationByDepartment(res.firstDepartmentId);
         this.EmpJobDetailsForm?.form.patchValue(res);
         this.headerText = 'Update Job Details';
         this.btnText = 'Update';
@@ -100,17 +101,28 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy  {
       presentGradeId: null,
       presentScaleId: null,
       basicPay: null,
-      joiningDate : null,
+      joiningDate: null,
       firstGradeId: null,
       firstScaleId: null,
       firstDepartmentId: null,
       firstDesignationId: null,
-      prlDate : null,
-      retirementDate : null,
+      prlDate: null,
+      retirementDate: null,
       serviceStatus: true,
       remark: '',
       menuPosition: 0,
       isActive: true,
+
+      officeName: '',
+      departmentName: '',
+      designationName: '',
+      sectionName: '',
+      presentGradeName: '',
+      presentScaleName: '',
+      firstDepartmentName: '',
+      firstDesignationName: '',
+      firstGradeName: '',
+      firstScaleName: '',
     };
   }
 
@@ -125,13 +137,13 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy  {
       presentGradeId: null,
       presentScaleId: null,
       basicPay: null,
-      joiningDate : null,
+      joiningDate: null,
       firstGradeId: null,
       firstScaleId: null,
       firstDepartmentId: null,
       firstDesignationId: null,
-      prlDate : null,
-      retirementDate : null,
+      prlDate: null,
+      retirementDate: null,
       serviceStatus: true,
       remark: '',
       menuPosition: 0,
@@ -139,27 +151,27 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy  {
     });
   }
 
-  loadOffice() { 
-    this.subscription=this.officeService.selectGetoffice().subscribe((data) => { 
+  loadOffice() {
+    this.subscription = this.officeService.selectGetoffice().subscribe((data) => {
       this.offices = data;
     });
   }
 
-  onOfficeSelect(officeId : number){
+  onOfficeSelect(officeId: number) {
     this.empJobDetailsService.empJobDetails.departmentId = null;
     this.departmentService.getSelectedDepartmentByOfficeId(+officeId).subscribe((res) => {
       this.departments = res;
     });
   }
-  onOfficeSelectGetDesignation(officeId : number, empJobDetailsId : number){
+  onOfficeSelectGetDesignation(officeId: number, empJobDetailsId: number) {
     this.empJobDetailsService.empJobDetails.designationId = null;
     this.empJobDetailsService.getDesignationByOfficeId(officeId, empJobDetailsId).subscribe((res) => {
       this.designations = res;
     });
   }
 
-  onDepartmentSelectGetDesignation(departmentId : number, empJobDetailsId : number){
-    if(departmentId == null){
+  onDepartmentSelectGetDesignation(departmentId: number, empJobDetailsId: number) {
+    if (departmentId == null) {
       this.onOfficeSelectGetDesignation(this.empJobDetailsService.empJobDetails.officeId, this.empJobDetailsId);
     }
     this.empJobDetailsService.empJobDetails.designationId = null;
@@ -167,37 +179,40 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy  {
       this.designations = res;
     });
   }
-  
-  getAllDepartmentAndDesignation(){
+
+  getAllDepartment() {
     this.empJobDetailsService.getAllDepartment().subscribe((res) => {
       this.firstDepartments = res;
     });
-    this.empJobDetailsService.getAllDesignation().subscribe((res) => {
+  }
+  getOldDesignationByDepartment(departmentId: number) {
+    this.empJobDetailsService.empJobDetails.firstDesignationId = null;
+    this.empJobDetailsService.getOldDesignationByDepartment(departmentId).subscribe((res) => {
       this.firstDesignations = res;
     });
   }
-  
+
   SelectModelGrade() {
     this.gradeService.selectModelGrade().subscribe((data) => {
       this.grades = data;
     });
   }
 
-  onChangeGradeGetScale(gradeId : number){
+  onChangeGradeGetScale(gradeId: number) {
     this.empJobDetailsService.empJobDetails.presentScaleId = null;
-    this.empJobDetailsService.getScaleByGradeId(+gradeId).subscribe((res)=>{
+    this.empJobDetailsService.getScaleByGradeId(+gradeId).subscribe((res) => {
       this.scales = res;
     })
   }
-  onChangeScaleGetBasicPay(scaleId : number){
-    this.empJobDetailsService.getBasicPayByScale(scaleId).subscribe((res)=>{
+  onChangeScaleGetBasicPay(scaleId: number) {
+    this.empJobDetailsService.getBasicPayByScale(scaleId).subscribe((res) => {
       this.empJobDetailsService.empJobDetails.basicPay = res.basicPay;
     })
   }
-  
-  onChangeFirstGradeGetFirstScale(gradeId : number){
+
+  onChangeFirstGradeGetFirstScale(gradeId: number) {
     this.empJobDetailsService.empJobDetails.firstScaleId = null;
-    this.empJobDetailsService.getScaleByGradeId(+gradeId).subscribe((res)=>{
+    this.empJobDetailsService.getScaleByGradeId(+gradeId).subscribe((res) => {
       this.firstScale = res;
     })
   }
@@ -206,7 +221,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy  {
     this.close.emit();
   }
 
-  
+
   onSubmit(form: NgForm): void {
     this.loading = true;
     this.empJobDetailsService.cachedData = [];

@@ -29,16 +29,16 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
 
-        //public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
-        //public virtual Office? Office { get; set; }
-        //public virtual Department? Department { get; set; }
-        //public virtual Designation? Designation { get; set; }
-        //public virtual Section? Section { get; set; }
-        //public virtual Grade? PresentGrade { get; set; }
-        //public virtual Scale? PresentScale { get; set; }
-        //public virtual Department? FirstDepartment { get; set; }
-        //public virtual Designation? FirstDesignation { get; set; }
-        //public virtual Grade? FirstGrade { get; set; }
-        //public virtual Scale? FirstScale { get; set; }
+        public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
+        public virtual Office? Office { get; set; }
+        public virtual Department? Department { get; set; }
+        public virtual Designation? Designation { get; set; }
+        public virtual Section? Section { get; set; }
+        public virtual Grade? PresentGrade { get; set; }
+        public virtual Scale? PresentScale { get; set; }
+        public virtual Department? FirstDepartment { get; set; }
+        public virtual Designation? FirstDesignation { get; set; }
+        public virtual Grade? FirstGrade { get; set; }
+        public virtual Scale? FirstScale { get; set; }
     }
 }

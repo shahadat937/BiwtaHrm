@@ -155,7 +155,7 @@
                 <label cLabel for="firstDepartmentId">First Department<span class="text-danger"></span></label>
                 <div class="input-wrapper">
                 <select 
-                    [(ngModel)]="empJobDetailsService.empJobDetails.firstDepartmentId" name="firstDepartmentId" #firstDepartmentId="ngModel"
+                    [(ngModel)]="empJobDetailsService.empJobDetails.firstDepartmentId" name="firstDepartmentId" #firstDepartmentId="ngModel" (change)="getOldDesignationByDepartment(empJobDetailsService.empJobDetails.firstDepartmentId)"
                     cFormControl id="firstDepartmentId" aria-label="Default select example" cSelect>
                     <option [ngValue]="null">Select First Department</option>
         

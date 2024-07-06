@@ -28,6 +28,7 @@ namespace Hrm.Domain
         public Department UpperDepartment { get; set; }
         public ICollection<Department> SubDepartments { get; set; }
         public ICollection<Designation> Designations { get; set; }
+        public virtual ICollection<EmpJobDetail>? EmpJobDetail { get; set; }
 
     }
 }

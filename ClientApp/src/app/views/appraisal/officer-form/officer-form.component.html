@@ -1,6 +1,17 @@
 <div>
     <c-card>
       <c-card-header>Acr Officer Form</c-card-header>
+      <c-button-group aria-label="Basic example" role="group">
+        <c-button-group aria-label="Basic example" role="group">
+            <button cButton color="primary" [active]="true">Part-1</button>
+            <button cButton color="primary" [routerLink]="['/appraisal/officerForm2']">Part-2</button>
+            <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart3']">Part-3</button>
+            <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart4']">Part-4</button>
+            <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart5']">Part-5</button>
+            <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart6']">Part-6</button>
+            <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart7']">Part-7</button>
+        </c-button-group>
+    </c-button-group>
       <c-card-body>
         <form cForm cRow  
         #officerForm="ngForm"
@@ -22,13 +33,23 @@
             <label cLabel for="fromdate">From Date</label>
             <input type="date" cFormControl id="fromdate" 
             [(ngModel)]="officerservice.officerModels.yearStartDate"
-            name="yearStartDate">
+            name="yearStartDate" required
+            #yearStartDate="ngModel">
+            @if(!yearStartDate.valid && yearStartDate.touched)
+            {
+              <div class="text-left text-danger"> YearStartDate is required</div>
+            }
           </c-col>
           <c-col [md]="4">
             <label cLabel for="todate">To Date</label>
             <input type="date" cFormControl id="todate"  
             [(ngModel)]="officerservice.officerModels.yearEndDate"
-            name="yearEndDate">
+            name="yearEndDate" required 
+            #yearEndDate="ngModel">
+            @if(!yearEndDate.valid && yearEndDate.touched)
+            {
+              <div class="text-left text-danger"> yearEndDate is required</div>
+            }
           </c-col>
           <c-card class="mt-4">
             <c-card-header class="text-center">1st part <br>To be Filled by the Reporting Officer</c-card-header>
@@ -37,58 +58,108 @@
                 <c-col [md]="4">
                   <label cLabel for="empname">Employee Name</label>
                   <input type="text" cFormControl id="empname" placeholder="Employee Name"  [(ngModel)]="officerservice.officerModels.employeeName"
-                  name="employeeName">
+                  name="employeeName" required
+                  #employeeName="ngModel">
+                  @if(!employeeName.valid && employeeName.touched)
+                  {
+                    <div class="text-left text-danger"> Employee Name is required</div>
+                  }
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="fatherName">Father's Name</label>
                   <input type="text" cFormControl id="fatherName" placeholder="Father's Name" [(ngModel)]="officerservice.officerModels.fathersName"
-                  name="fathersName">
+                  name="fathersName" required
+                  #fathersName="ngModel">
+                  @if(!fathersName.valid && fathersName.touched)
+                  {
+                    <div class="text-left text-danger"> Father Name is required</div>
+                  }
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="mothername">Mother's Name</label>
                   <input type="text" cFormControl id="mothername" placeholder="Mother's Name" [(ngModel)]="officerservice.officerModels.mothersName"
-                  name="mothersName">
+                  name="mothersName" required
+                  #mothersName="ngModel">
+                  @if(!mothersName.valid && mothersName.touched)
+                  {
+                    <div class="text-left text-danger"> Mother Name is required</div>
+                  }
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="brn">Birth Reg.no</label>
                   <input type="number" cFormControl id="brn" placeholder="Birth Reg.no" [(ngModel)]="officerservice.officerModels.birthRegNo"
-                  name="birthRegNo">
+                  name="birthRegNo" required
+                  #birthRegNo="ngModel">
+                  @if(!birthRegNo.valid && birthRegNo.touched)
+                  {
+                    <div class="text-left text-danger"> Birth Registration No is required</div>
+                  }
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="dob">Date of Birth</label>
                   <input type="date" cFormControl id="dob" 
                   [(ngModel)]="officerservice.officerModels.dateofBirth"
-                  name="dateofBirth">
+                  name="dateofBirth" required
+                  #dateofBirth="ngModel">
+                  @if(!dateofBirth.valid && dateofBirth.touched)
+                  {
+                    <div class="text-left text-danger"> Date of Birth is required</div>
+                  }
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="des">Designation</label>
                   <input type="text" cFormControl id="des" placeholder="Designation" 
                   [(ngModel)]="officerservice.officerModels.designation"
-                  name="designation">
+                  name="designation" required
+                  #designation="ngModel">
+                  @if(!designation.valid && designation.touched)
+                  {
+                    <div class="text-left text-danger"> Designation is required</div>
+                  }
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="work">Workplace</label>
                   <input type="text" cFormControl id="work" placeholder="Workplace" 
                   [(ngModel)]="officerservice.officerModels.workplace"
-                  name="workplace">
+                  name="workplace" required
+                  #workplace="ngModel">
+                  @if(!workplace.valid && workplace.touched)
+                  {
+                    <div class="text-left text-danger"> Workplace is required</div>
+                  }
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="jondate">Joining Date</label>
                   <input type="date" cFormControl id="jondate" 
                   [(ngModel)]="officerservice.officerModels.joiningDate"
-                  name="joiningDate">
+                  name="joiningDate" required
+                  #joiningDate="ngModel">
+                  @if(!joiningDate.valid && joiningDate.touched)
+                  {
+                    <div class="text-left text-danger"> Joining Date is required</div>
+                  }
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="pdjd">Present Designation Joining Date</label>
                   <input type="date" cFormControl id="pdjd" 
                   [(ngModel)]="officerservice.officerModels.presentDesignationJoiningDate"
-                  name="presentDesignationJoiningDate">
+                  name="presentDesignationJoiningDate" required
+                  #presentDesignationJoiningDate="ngModel">
+                  @if(!presentDesignationJoiningDate.valid && presentDesignationJoiningDate.touched)
+                  {
+                    <div class="text-left text-danger"> Present Designation Joining Date is required</div>
+                  }
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="edu">Education</label>
                   <input type="text" cFormControl id="edu" placeholder="Education" 
                   [(ngModel)]="officerservice.officerModels.education"
-                  name="education">
+                  name="education" required
+                  #education="ngModel">
+                  @if(!education.valid && education.touched)
+                  {
+                    <div class="text-left text-danger"> Education is required</div>
+                  }
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="training">Training/Special Training (If Any)</label>
@@ -106,13 +177,23 @@
                   <label cLabel for="fromdate_reporting">From Date</label>
                   <input type="date" cFormControl id="fromdate_reporting" 
                   [(ngModel)]="officerservice.officerModels.reportinFromDate"
-                  name="reportinFromDate">
+                  name="reportinFromDate" required
+                  #reportinFromDate="ngModel">
+                  @if(!reportinFromDate.valid && reportinFromDate.touched)
+                  {
+                    <div class="text-left text-danger"> Reporting From date is required</div>
+                  }
                 </c-col>
                 <c-col [md]="3">
                   <label cLabel for="todate_reporting">To Date</label>
                   <input type="date" cFormControl id="todate_reporting" 
                   [(ngModel)]="officerservice.officerModels.reportingEndDate"
-                  name="reportingEndDate">
+                  name="reportingEndDate" required
+                  #reportingEndDate="ngModel">
+                  @if(!reportingEndDate.valid && reportingEndDate.touched)
+                  {
+                    <div class="text-left text-danger"> Reporting End date is required</div>
+                  }
                 </c-col>
               </c-row>
   
@@ -129,7 +210,11 @@
             </c-card-body>
           </c-card>
           <div class="text-end mt-3">
-            <button cButton type="submit">Submit</button>
+            <button cButton type="submit" [disabled]="!officerForm.valid" [disabled]="loading">
+              Submit
+              <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+            </button>
+            
             <button cButton class="ms-3">X Cancel</button>
           </div>
         </form>

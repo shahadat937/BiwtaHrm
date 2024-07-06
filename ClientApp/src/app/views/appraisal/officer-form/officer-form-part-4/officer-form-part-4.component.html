@@ -13,55 +13,118 @@
             </c-button-group>
         </c-button-group>
         <c-card-body>
-            <form cRow cForm >
+            <form cRow cForm 
+            #officerFormPart4="ngForm"
+            (submit)="onSubmit(officerFormPart4)"
+            novalidate>
             <c-col [md]="6">
                 <label cLabel class="mt-4">1.Personal Characteristics</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment" 
+            [(ngModel)]="officerform4service.officerFormpart4.personalCharacteristics"
+            name="personalCharacteristics" required
+            #personalCharacteristics="ngModel">
+            @if(!personalCharacteristics.valid && personalCharacteristics.touched)
+            {
+              <div class="text-left text-danger"> Personal Characteristics is required</div>
+            }
             </c-col>
             <c-col [md]="6">
                 <label cLabel class="mt-4">2.Professional Skill</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
+            [(ngModel)]="officerform4service.officerFormpart4.professionalSkill"
+            name="professionalSkill" required
+            #professionalSkill="ngModel">
+            @if(!professionalSkill.valid && professionalSkill.touched)
+            {
+              <div class="text-left text-danger"> Professional Skill is required</div>
+            }
             </c-col>
             <c-col [md]="6">
                 <label cLabel class="mt-4">3.Loyality and relaiability</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment" 
+            [(ngModel)]="officerform4service.officerFormpart4.loyalityAndRelaiability"
+            name="loyalityAndRelaiability" required
+            #loyalityAndRelaiability="ngModel">
+            @if(!loyalityAndRelaiability.valid && loyalityAndRelaiability.touched)
+            {
+              <div class="text-left text-danger"> Loyality and relaiability is required</div>
+            }
             </c-col>
            <c-col [md]="6">
                 <label cLabel class="mt-4">4.Other Matters</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
-            </c-col><c-col [md]="6">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment" [(ngModel)]="officerform4service.officerFormpart4.otherMatters"
+                name="otherMatters" required
+                #otherMatters="ngModel">
+                @if(!otherMatters.valid && otherMatters.touched)
+                {
+                  <div class="text-left text-danger"> Other Matters is required</div>
+                }
+            </c-col>
+            <c-col [md]="6">
                 <label cLabel class="mt-4">5.Annual Confidential report writing & Countersigning Activates</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
-            </c-col><c-col [md]="6">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
+            [(ngModel)]="officerform4service.officerFormpart4.annualConfidentialReportWritingAndCountersigningActivates"
+            name="annualConfidentialReportWritingAndCountersigningActivates" required
+            #annualConfidentialReportWritingAndCountersigningActivates="ngModel">
+            @if(!annualConfidentialReportWritingAndCountersigningActivates.valid && annualConfidentialReportWritingAndCountersigningActivates.touched)
+            {
+              <div class="text-left text-danger"> Annual Confidential report writing & Countersigning Activates is required</div>
+            }
+            </c-col>
+            <c-col [md]="6">
                 <label cLabel class="mt-4">6.Advice to Officers</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
+            [(ngModel)]="officerform4service.officerFormpart4.adviceToOfficers"
+            name="adviceToOfficers" required
+            #adviceToOfficers="ngModel">
+            @if(!adviceToOfficers.valid && adviceToOfficers.touched)
+            {
+              <div class="text-left text-danger"> Advice to Officers is required</div>
+            }
             </c-col>
             <c-col [md]="6">
                 <label cLabel class="mt-4">7.Proficency and Interest in Bengali Language</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment">
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
+            [(ngModel)]="officerform4service.officerFormpart4.proficencyAndInterestBengaliLanguage"
+            name="proficencyAndInterestBengaliLanguage" required
+            #proficencyAndInterestBengaliLanguage="ngModel">
+            @if(!proficencyAndInterestBengaliLanguage.valid && proficencyAndInterestBengaliLanguage.touched)
+            {
+              <div class="text-left text-danger"> Proficency and Interest in Bengali Language is required</div>
+            }
             </c-col>
             <c-col class="d-flex justify-content-end align-items-center mt-3">           
                 <div class="text-center">
-                    <input type="file" cFormControl class="">
+                    <input type="file" cFormControl class="" 
+                    [(ngModel)]="officerform4service.officerFormpart4.signatureOfReportingOfficer"
+                    name="signatureOfReportingOfficer" required
+                    #signatureOfReportingOfficer="ngModel">
+                    @if(!signatureOfReportingOfficer.valid && signatureOfReportingOfficer.touched)
+                    {
+                      <div class="text-left text-danger"> Signature is required</div>
+                    }
                     <div>Signature of Reporting Officer</div>
                 </div>
             </c-col>
             <div>
-            <button cButton color="primary">Submit</button>
+            <button cButton color="primary" type="submit" [disabled]="!officerFormPart4.valid" [disabled]="loading">
+                Submit
+            <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+            </button>
             <button cButton color="dark" class="ms-3">Cancel</button>
             </div>
             </form>         

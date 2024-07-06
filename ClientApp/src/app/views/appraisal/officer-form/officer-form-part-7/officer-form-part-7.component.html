@@ -19,47 +19,92 @@
               </c-button-group>
           </c-button-group> 
         <c-card-body>
-            <form cForm cRow>
+            <form cForm cRow 
+            #officerFormPart7="ngForm"
+            (submit)="onSubmit(officerFormPart7)"
+            novalidate>
                 <h4>1 Date of Recipt of filled form</h4>               
                     <c-col [md]="6">
                         <label cLabel class="mt-2" >a.Reporting signatory submission date</label>
                     </c-col>
                 <c-col [md]="6">
-                    <input type="text"  class="mt-2" cFormControl placeholder="Enter Your Comment">
+                    <input type="text"  class="mt-2" cFormControl placeholder="Enter Your Comment" 
+                    [(ngModel)]="OfficerFormPart7ServiceService.officerFormPart7.reportingSignatorySubmissionDate"
+                    name="reportingSignatorySubmissionDate" required
+                    #reportingSignatorySubmissionDate="ngModel">
+                    @if(!reportingSignatorySubmissionDate.valid && reportingSignatorySubmissionDate.touched)
+                    {
+                    <div class="text-left text-danger"> Reporting signatory submission date is required</div>
+                    }
                 </c-col>
                 <c-col [md]="6">
                     <label cLabel class="mt-2">b.counter signatory submission date</label>
                 </c-col>
                 <c-col [md]="6">
-                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment"
+                    [(ngModel)]="OfficerFormPart7ServiceService.officerFormPart7.counterSignatorySubmissionDate"
+                    name="counterSignatorySubmissionDate" required
+                    #counterSignatorySubmissionDate="ngModel">
+                    @if(!counterSignatorySubmissionDate.valid && counterSignatorySubmissionDate.touched)
+                    {
+                    <div class="text-left text-danger"> Counter Signatory Submission Date is required</div>
+                    }
                 </c-col>
                 <h4>2 Abnormal delay causes</h4>               
                     <c-col [md]="6">
                         <label cLabel class="mt-2">a.Reporting signatory delay causes</label>
                     </c-col>
                 <c-col [md]="6">
-                    <input type="text"  class="mt-2" cFormControl placeholder="Enter Your Comment">
+                    <input type="text"  class="mt-2" cFormControl placeholder="Enter Your Comment"
+                    [(ngModel)]="OfficerFormPart7ServiceService.officerFormPart7.reportingSignatoryDelayCauses"
+                    name="reportingSignatoryDelayCauses" required
+                    #reportingSignatoryDelayCauses="ngModel" >
+                    @if(!reportingSignatoryDelayCauses.valid && reportingSignatoryDelayCauses.touched)
+                    {
+                    <div class="text-left text-danger"> Reporting signatory delay causes is required</div>
+                    }
                 </c-col>
                 <c-col [md]="6">
                     <label cLabel class="mt-2">b.counter signatory delay causes</label>
                 </c-col>
                 <c-col [md]="6">
-                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment"
+                    [(ngModel)]="OfficerFormPart7ServiceService.officerFormPart7.counterSignatoryDelayCauses"
+                    name="counterSignatoryDelayCauses" required
+                    #counterSignatoryDelayCauses="ngModel">
+                    @if(!counterSignatoryDelayCauses.valid && counterSignatoryDelayCauses.touched)
+                    {
+                    <div class="text-left text-danger"> Counter signatory delay causes is required</div>
+                    }
+
                 </c-col>
                 <c-col [md]="6">
                     <label cLabel class="mt-2" >3.Application Editor(If Any)</label>
                 </c-col>
             <c-col [md]="6">
-                <input type="text" id="special" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                <input type="text" id="special" class="mt-2" cFormControl placeholder="Enter Your Comment"
+                 [(ngModel)]="OfficerFormPart7ServiceService.officerFormPart7.applicationEditor"
+                    name="applicationEditor" required
+                    #applicationEditor="ngModel">
             </c-col>
             <c-col class="d-flex justify-content-end align-items-center mt-3">           
                 <div class="text-center">
-                    <input type="file" cFormControl class="">
+                    <input type="file" cFormControl class=""  
+                    [(ngModel)]="OfficerFormPart7ServiceService.officerFormPart7.signature"
+                    name="signature" required
+                    #signature="ngModel">
+                    @if(!signature.valid && signature.touched)
+                    {
+                    <div class="text-left text-danger"> Signature is required</div>
+                    }
                     <div>Signature of Reporting Officer</div>
                 </div>
             </c-col>
             <div class="d-flex justify-content-center">
-                <button cButton color="primary">Save & Download</button>
+                <button cButton color="primary" type="submit" [disabled]="!officerFormPart7.valid" [disabled]="loading">
+                    Save & Download
+                    <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+                </button>
                 <button cButton color="dark" class="ms-3">Cancel</button>
             </div>           
             </form>            

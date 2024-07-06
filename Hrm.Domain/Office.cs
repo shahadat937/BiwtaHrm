@@ -33,5 +33,6 @@ namespace Hrm.Domain
         public ICollection<Department> Departments { get; set; }
         public ICollection<Designation> Designations { get; set; }
         public virtual ICollection<EmpJobDetail>? EmpJobDetail { get; set; }
+        public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
     }
 }

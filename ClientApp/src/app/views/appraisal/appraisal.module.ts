@@ -13,7 +13,8 @@ import {
   SharedModule,
   TableModule, 
   UtilitiesModule,
-  PaginationModule 
+  PaginationModule,
+  SpinnerModule,
 } from '@coreui/angular';
 
 
@@ -65,7 +66,8 @@ import { SharedCustomModule } from 'src/app/shared/shared.module';
     TableModule,
     UtilitiesModule,
     PaginationModule,
-    SharedCustomModule
+    SharedCustomModule,
+    SpinnerModule,
   ]
 })
 export class AppraisalModule { }

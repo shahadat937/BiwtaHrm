@@ -21,32 +21,63 @@
                     ]">Part-7</button>
                   </c-button-group>
               </c-button-group> 
-            <form cForm cRow>
+            <form cForm cRow 
+            #officerFormPart5="ngForm"
+            (submit)="onSubmit(officerFormPart5)"
+            novalidate>
                 <h4>1 Brief Comment</h4>               
                     <c-col [md]="6">
                         <label cLabel for="special" >i.Speciality</label>
                         (Administrative/External/Field)
                     </c-col>
                 <c-col [md]="6">
-                    <input type="text" id="special" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                    <input type="text" id="special" class="mt-2" cFormControl placeholder="Enter Your Comment"  
+                    [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.setpeciality"
+                    name="setpeciality" required
+                    #setpeciality="ngModel">
+                    @if(!setpeciality.valid && setpeciality.touched)
+                    {
+                    <div class="text-left text-danger"> Speciality  is required</div>
+                    }
                 </c-col>
                 <c-col [md]="6">
                     <label cLabel >ii.Suitability for Further employment</label>
                 </c-col>
                 <c-col [md]="6">
-                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment"
+                    [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.suitabilityForFurtherEmployment"
+                    name="suitabilityForFurtherEmployment" required
+                    #suitabilityForFurtherEmployment="ngModel">
+                    @if(!suitabilityForFurtherEmployment.valid && suitabilityForFurtherEmployment.touched)
+                    {
+                    <div class="text-left text-danger"> Suitability for Further employment is required</div>
+                    }
                 </c-col>
                 <c-col [md]="6">
                     <label cLabel >iii.Recommend more in service traning</label>
                 </c-col>
                 <c-col [md]="6">
-                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment"
+                    [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.recommendMoreServiceTraning"
+                    name="recommendMoreServiceTraning" required
+                    #recommendMoreServiceTraning="ngModel">
+                    @if(!recommendMoreServiceTraning.valid && recommendMoreServiceTraning.touched)
+                    {
+                    <div class="text-left text-danger"> Recommend more in service traning is required</div>
+                    }
                 </c-col>
                 <c-col [md]="6">
                     <label cLabel >iv.Not Eligable for Further Promotion,Maximum limit reached</label>
                 </c-col>
                 <c-col [md]="6">
-                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment">
+                    <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment"
+                    [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.notEligableForFurtherPromotion"
+                    name="notEligableForFurtherPromotion" required
+                    #notEligableForFurtherPromotion="ngModel">
+                    @if(!notEligableForFurtherPromotion.valid && notEligableForFurtherPromotion.touched)
+                    {
+                    <div class="text-left text-danger"> Not Eligable for Further Promotion</div>
+                    }
                 </c-col>
                 <h4>1 Eligablity For Promotion</h4>                             
                     <c-col [md]="6">
@@ -54,39 +85,68 @@
                         <div>(If the officer achives outstanding Standard)</div>
                     </c-col>
             <c-col [md]="6">
-                <input type="file" cFormControl class="mt-2">
+                <input type="file" cFormControl class="mt-2" 
+                [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.fasterPromotionIsRecomended"
+                name="fasterPromotionIsRecomended" 
+                #fasterPromotionIsRecomended="ngModel">
             </c-col>
             <c-col [md]="6">
                 <label cLabel >ii.Eligible For Promotion</label>
             </c-col>
             <c-col [md]="6">
-                <input type="file" cFormControl class="mt-2">
+                <input type="file" cFormControl class="mt-2"
+                [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.eligibleForPromotion"
+                name="eligibleForPromotion" 
+                #eligibleForPromotion="ngModel">
             </c-col>
             <c-col [md]="6">
                 <label cLabel >iii.Recently Promoted not due for further Promotion</label>
             </c-col>
             <c-col [md]="6">
-                <input type="file" cFormControl class="mt-2" >
+                <input type="file" cFormControl class="mt-2" 
+                [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.recentlyPromotedNotDueForFurtherPromotion"
+                name="recentlyPromotedNotDueForFurtherPromotion" 
+                #recentlyPromotedNotDueForFurtherPromotion="ngModel">
             </c-col>
             <c-col [md]="6">
                 <label cLabel >iv.Not yet Eligable for promotion but will be in due course</label>
             </c-col>
             <c-col [md]="6">
-                <input type="file" cFormControl class="mt-2" >
+                <input type="file" cFormControl class="mt-2" 
+                [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.notyetEligableForPromotionButWillBeDueCourse"
+                name="notyetEligableForPromotionButWillBeDueCourse" 
+                #notyetEligableForPromotionButWillBeDueCourse="ngModel">
             </c-col>
             <c-col [md]="6">
                 <label cLabel >v.Not Eligable for Further promotion maximum Limit Reached</label>
             </c-col>
             <c-col [md]="6">
-                <input type="file" cFormControl class="mt-2" >
+                <input type="file" cFormControl class="mt-2" 
+                [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.notEligableForFurtherPromotionMaximumLimitReached"
+                name="notEligableForFurtherPromotionMaximumLimitReached" 
+                #notEligableForFurtherPromotionMaximumLimitReached="ngModel">               
             </c-col>
             <h4>1 Other Recommendation</h4>     
             <c-col class="d-flex justify-content-end align-items-center mt-3">           
                 <div class="text-center">
-                    <input type="file" cFormControl class="">
+                    <input type="file" cFormControl 
+                    [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.signature"
+                    name="signature" 
+                    #signature="ngModel" required>
+                    @if(!signature.valid && signature.touched)
+                    {
+                        <div class="text-left text-danger"> Signature required</div>
+                    } 
                     <div>Signature of Reporting Officer</div>
-                </div>
-            </c-col>                        
+                </div>                                              
+            </c-col> 
+            <div>
+                    <button cButton color="primary" type="submit" [disabled]="!officerFormPart5.valid" [disabled]="loading">
+                        Submit 
+                        <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+                    </button>
+                    <button cButton color="dark" class="ms-3">Cancel</button>
+            </div>                       
             </form>
         </c-card-body>
     </c-card>

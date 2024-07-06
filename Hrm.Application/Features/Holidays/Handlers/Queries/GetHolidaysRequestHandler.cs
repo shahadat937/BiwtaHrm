@@ -28,6 +28,8 @@ namespace Hrm.Application.Features.Holidays.Handlers.Queries
             IQueryable<Hrm.Domain.Holidays> holidays = _HolidaysRepository.Where(x => true)
                 .Include(hd => hd.Year)
                 .Include(hd => hd.HolidayType)
+                .Include(hd => hd.Office)
+                .Include(hd => hd.OfficeBranch)
                 .OrderByDescending(x => x.HolidayId);
 
             var HolidaysDto = _mapper.Map<List<HolidayDto>>(holidays);

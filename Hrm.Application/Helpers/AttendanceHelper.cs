@@ -42,7 +42,7 @@ namespace Hrm.Application.Helpers
 
         public static bool IsHoliday(DateOnly GivenDate, IHrmRepository<Hrm.Domain.Holidays> _HolidayRepository)
         {
-            var IsHoliday = _HolidayRepository.Where(x => x.Year.YearName == GivenDate.Year && x.HolidayStart <= GivenDate && x.HolidayEnd >= GivenDate).Any();
+            var IsHoliday = _HolidayRepository.Where(x => x.Year.YearName == GivenDate.Year && x.IsActive == true && x.HolidayDate == GivenDate).Any();
             return IsHoliday;
         }
 
@@ -81,15 +81,16 @@ namespace Hrm.Application.Helpers
 
             int daytype = (int)DayTypeOption.Workday;
 
+            if(holiday)
+            {
+                daytype = (int) DayTypeOption.Holiday;
+            }
+
             if(!weekday)
             {
                 daytype = (int)DayTypeOption.Weekend;
             }
 
-            if(holiday)
-            {
-                daytype = (int)DayTypeOption.Holiday;
-            }
 
             return daytype;
         }

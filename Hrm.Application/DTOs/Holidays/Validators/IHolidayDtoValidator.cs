@@ -11,8 +11,8 @@ namespace Hrm.Application.DTOs.Holidays.Validators
     {
         public IHolidayDtoValidator() {
             RuleFor(e => e.HolidayTypeId).NotEmpty().WithMessage("{PropertyName} is required");
-            RuleFor(e => e.HolidayStart).NotEmpty().WithMessage("{PropertyName} is required");
-            RuleFor(e => e.HolidayEnd).NotEmpty().WithMessage("{PropertyName} is required");
+            RuleFor(e => e.HolidayName).NotEmpty().WithMessage("{PropertyName} is required");
+            RuleFor(e => e.HolidayDate).NotEmpty().WithMessage("{PropertyName} is required");
             RuleFor(e => e.IsActive).NotNull().WithMessage("{PropertyName} is required");
         }
     }

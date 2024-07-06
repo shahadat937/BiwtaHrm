@@ -71,10 +71,10 @@
                 </c-col>
                 <c-col [md]="6">
                     <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment"
-                    [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.notEligableForFurtherPromotionMaximumLimitReached"
-                    name="notEligableForFurtherPromotionMaximumLimitReached" required
-                    #notEligableForFurtherPromotionMaximumLimitReached="ngModel">
-                    @if(!notEligableForFurtherPromotionMaximumLimitReached.valid && notEligableForFurtherPromotionMaximumLimitReached.touched)
+                    [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.notEligableForFurtherPromotion"
+                    name="notEligableForFurtherPromotion" required
+                    #notEligableForFurtherPromotion="ngModel">
+                    @if(!notEligableForFurtherPromotion.valid && notEligableForFurtherPromotion.touched)
                     {
                     <div class="text-left text-danger"> Not Eligable for Further Promotion</div>
                     }
@@ -138,9 +138,15 @@
                         <div class="text-left text-danger"> Signature required</div>
                     } 
                     <div>Signature of Reporting Officer</div>
-                </div> 
-                               
-            </c-col>                        
+                </div>                                              
+            </c-col> 
+            <div>
+                    <button cButton color="primary" type="submit" [disabled]="!officerFormPart5.valid" [disabled]="loading">
+                        Submit 
+                        <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+                    </button>
+                    <button cButton color="dark" class="ms-3">Cancel</button>
+            </div>                       
             </form>
         </c-card-body>
     </c-card>

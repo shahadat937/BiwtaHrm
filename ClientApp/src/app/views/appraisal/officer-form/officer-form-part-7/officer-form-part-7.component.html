@@ -101,7 +101,10 @@
                 </div>
             </c-col>
             <div class="d-flex justify-content-center">
-                <button cButton color="primary" type="submit">Save & Download</button>
+                <button cButton color="primary" type="submit" [disabled]="!officerFormPart7.valid" [disabled]="loading">
+                    Save & Download
+                    <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+                </button>
                 <button cButton color="dark" class="ms-3">Cancel</button>
             </div>           
             </form>            

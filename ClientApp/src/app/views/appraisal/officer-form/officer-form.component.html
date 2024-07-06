@@ -210,7 +210,11 @@
             </c-card-body>
           </c-card>
           <div class="text-end mt-3">
-            <button cButton type="submit">Submit</button>
+            <button cButton type="submit" [disabled]="!officerForm.valid" [disabled]="loading">
+              Submit
+              <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+            </button>
+            
             <button cButton class="ms-3">X Cancel</button>
           </div>
         </form>

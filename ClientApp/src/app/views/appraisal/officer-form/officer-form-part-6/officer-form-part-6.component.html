@@ -102,7 +102,10 @@
                 </div>
             </c-col>
             <div>
-            <button cButton color="primary" type="submit">Submit</button>
+            <button cButton color="primary" type="submit" [disabled]="!officerFormPart6.valid" [disabled]="loading">
+                Submit 
+                <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+            </button>
             <button cButton color="dark" class="ms-3">Cancel</button>
             </div>
             </form>         

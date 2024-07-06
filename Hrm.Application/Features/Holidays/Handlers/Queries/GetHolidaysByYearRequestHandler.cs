@@ -27,6 +27,8 @@ namespace Hrm.Application.Features.Holidays.Handlers.Queries
         {
             var holidays = _HolidayRepository.Where(x => x.Year.YearName == request.YearName)
                 .Include(e => e.Year)
+                .Include(hd => hd.Office)
+                .Include(hd => hd.OfficeBranch)
                 .OrderByDescending(e => e.HolidayId);
 
             var holidaydtos = _mapper.Map<List<HolidayDto>>(holidays);

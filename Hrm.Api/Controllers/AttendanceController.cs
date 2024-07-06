@@ -29,11 +29,30 @@ namespace Hrm.Api.Controllers
         [Route("save-AttendanceFromDevice")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateAttendanceDto attendance)
         {
+            
             var command = new CreateAttendanceFromDeviceCommand { Attendancedto = attendance };
             var response = await _mediator.Send(command);
             return Ok(response);
         }
 
+        [HttpPost]
+        [Route("save-ManualAttendance")]
+        public async Task<ActionResult<BaseCommandResponse>> ManualAttendance([FromBody] CreateAttendanceDto attendance)
+        {
+            var command = new CreateManualAttendanceCommand { Attendancedto = attendance };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("update-AttendanceById")]
+        public async Task<ActionResult<BaseCommandResponse>> UpdateAttendanceById([FromBody] CreateAttendanceDto attendance)
+        {
+            var command = new UpdateAttendanceByIdCommand { Attendancedto = attendance };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+
+        }
 
     }
 }

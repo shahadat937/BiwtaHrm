@@ -14,10 +14,20 @@
 
       <c-card>
         <c-card-body>
-          <form cForm cRow>
+          <form cForm cRow
+          #staffForms3="ngForm"
+          (submit)="onSubmit(staffForms3)"
+          novalidate>
             <c-col [md]="4">
               <label cLabel for="validationCustom01">Interest in using Bengali language</label>
-              <input type="text" cFormControl id="validationCustom01" placeholder="Interest in using Bengali language"/>
+              <input type="text" cFormControl id="validationCustom01" placeholder="Interest in using Bengali language"
+              [(ngModel)]="staffForm3.staffForm3Module.interestBengaliLanguage"
+              name="interestBengaliLanguage" required
+              #interestBengaliLanguage="ngModel">
+              @if(!interestBengaliLanguage.valid && interestBengaliLanguage.touched)
+              {
+                <div class="text-left text-danger">Interest in Bengali is required</div>
+              }
             </c-col>
 
             <c-col [md]="4">
@@ -29,38 +39,83 @@
 
             <c-col [md]="4">
               <label cLabel for="validationCustom03">Date</label>
-              <input type="date" cFormControl id="validationCustom03"/>
+              <input type="date" cFormControl id="validationCustom03"
+              [(ngModel)]="staffForm3.staffForm3Module.date"
+              name="date" required
+              #date="ngModel">
+              @if(!date.valid && date.touched)
+              {
+                <div class="text-left text-danger">Date is required</div>
+              }
             </c-col>
 
             <c-col [md]="8" class="mt-4">
               <label>Reporting Office signature</label>
-              <input type="file" cFormControl/>
+              <input type="file" cFormControl
+              [(ngModel)]="staffForm3.staffForm3Module.reportingOfficeSignature"
+              name="reportingOfficeSignature" required
+              #reportingOfficeSignature="ngModel">
+              @if(!reportingOfficeSignature.valid && reportingOfficeSignature.touched)
+              {
+                <div class="text-left text-danger">Reporting Officer required</div>
+              }
+            
             </c-col>
             <c-col [md]="4" class="d-flex align-items-end mt-4">
-              <button cButton color="success">Upload</button>
+              <button cButton color="success">
+                Upload
+              </button>
             </c-col>
 
             <c-col [md]="8" class="mt-4">
               <label cLabel for="validationCustom04">Remarks of the Countersigning Officer</label>
-              <textarea cFormControl placeholder="Write comments" id="validationCustom04"></textarea>
+              <textarea cFormControl placeholder="Write comments" id="validationCustom04"
+              [(ngModel)]="staffForm3.staffForm3Module.remarks"
+              name="remarks" required
+              #remarks="ngModel">
+              @if(!remarks.valid && remarks.touched)
+              {
+                <div class="text-left text-danger">Remarks is required</div>
+              }
+              </textarea>
             </c-col>
 
             <c-col [md]="4" class="mt-4">
               <label cLabel for="validationCustom05">Date</label>
-              <input type="date" cFormControl id="validationCustom05"/>
+              <input type="date" cFormControl id="validationCustom05"
+              [(ngModel)]="staffForm3.staffForm3Module.remarksDate"
+              name="remarksDate" required
+              #remarksDate="ngModel">
+              @if(!remarksDate.valid && remarksDate.touched)
+              {
+                <div class="text-left text-danger">Remarks Date is required</div>
+              }
             </c-col>
 
             <c-col [md]="8" class="mt-4">
               <label>Signature of Countersigning Officer</label>
-              <input type="file" cFormControl/>
+              <input type="file" cFormControl
+              [(ngModel)]="staffForm3.staffForm3Module.countersigningOfficeSignature"
+              name="countersigningOfficeSignature" required
+              #countersigningOfficeSignature="ngModel">
+              @if(!countersigningOfficeSignature.valid && countersigningOfficeSignature.touched)
+              {
+                <div class="text-left text-danger">Countersigning Officer Signature Date is required</div>
+              }
             </c-col>
             <c-col [md]="4" class="d-flex align-items-end mt-4">
-              <button cButton color="success">Upload</button>
+              <button cButton color="success">
+                Upload
+              </button>
             </c-col>
 
             <c-col [md]="12" class="mt-4">
               <div class="d-flex justify-content-end">
-                <button cButton color="primary" class="me-2">Submit</button>
+                <button cButton color="primary" class="me-2" type="submit" [disabled]="!staffForms3.valid" [disabled]="loading">
+                  Submit
+                  <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+                </button>
+
                 <button cButton color="dark">Cancel</button>
               </div>
             </c-col>
@@ -68,4 +123,4 @@
         </c-card-body>
       </c-card>
     </c-card>
-  </div> 
+  </div>

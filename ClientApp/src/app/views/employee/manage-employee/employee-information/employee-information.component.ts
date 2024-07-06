@@ -23,6 +23,7 @@ import { PersonalInfoModule } from '../../model/personal-info.module';
 import { EmpPresentAddressModule } from '../../model/emp-present-address.module';
 import { EmpPermanentAddressModule } from '../../model/emp-permanent-address.module';
 import { EmpJobDetailsModule } from '../../model/emp-job-details.module';
+import { EmpSpouseInfoModule } from '../../model/emp-spouse-info.module';
 
 @Component({
   selector: 'app-employee-information',
@@ -38,6 +39,7 @@ export class EmployeeInformationComponent implements OnInit {
   empPresentAddress : EmpPresentAddressModule = new EmpPresentAddressModule;
   empPermanentAddress : EmpPermanentAddressModule = new EmpPermanentAddressModule;
   empJobDetails : EmpJobDetailsModule = new EmpJobDetailsModule;
+  empSpouseInfo : EmpSpouseInfoModule[] = [];
   empPhoto : string = '';
   empSignature : string = '';
 
@@ -69,6 +71,7 @@ export class EmployeeInformationComponent implements OnInit {
       this.getEmpPresentAddressByEmpId();
       this.getEmpPermanentAddressByEmpId();
       this.getEmpJobDetailsByEmpId();
+      this.getEmpSpouseInfoByEmpId();
     }
   
     handleRouteParams() {
@@ -104,6 +107,12 @@ export class EmployeeInformationComponent implements OnInit {
     getEmpJobDetailsByEmpId(){
       this.empJobDetailsService.findByEmpId(this.employeeId).subscribe((res) => {
         this.empJobDetails = res;
+      });
+    }
+    
+    getEmpSpouseInfoByEmpId(){
+      this.empSpouseInfoService.findByEmpId(this.employeeId).subscribe((res) => {
+        this.empSpouseInfo = res;
       });
     }
 

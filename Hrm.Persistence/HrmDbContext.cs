@@ -546,24 +546,18 @@ namespace Hrm.Persistence
                     .WithMany(eb => eb.EmpJobDetail)
                     .HasForeignKey(e => e.PresentScaleId);
 
-                //entity.HasOne(e => e.FirstDepartment)
-                //    .WithMany(eb => eb.EmpJobDetail)
-                //    .HasForeignKey(e => e.FirstDepartmentId);
-
-                //entity.HasOne(e => e.FirstDesignation)
-                //    .WithMany(eb => eb.EmpJobDetail)
-                //    .HasForeignKey(e => e.FirstDesignationId);
-
-                //entity.HasOne(e => e.FirstGrade)
-                //    .WithMany(eb => eb.EmpJobDetail)
-                //    .HasForeignKey(e => e.FirstGradeId);
-
-                //entity.HasOne(e => e.FirstScale)
-                //    .WithMany(eb => eb.EmpJobDetail)
-                //    .HasForeignKey(e => e.FirstScaleId);
             });
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<EmpSpouseInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.Occupation)
+                    .WithMany(eb => eb.EmpSpouseInfo)
+                    .HasForeignKey(e => e.OccupationId);
+            });
+
+                base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
 

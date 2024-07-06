@@ -129,6 +129,37 @@
                 </table>
             </c-card-body>
         </c-card>
+         
+        <!-- Employee Personal Information -->
+        <c-card class="shadow mb-3">
+            <c-card-header class="text-center">
+                Employee Spouse Information
+            </c-card-header>
+            <c-card-body>
+                <table cTable bordered hover  *ngFor="let item of empSpouseInfo" class="mb-3 shadow">
+                    <tbody>
+                        <tr>
+                            <th>Spouse Name</th>
+                            <td>{{item.spouseName}}</td>
+                            <th>Spouse Name Bangla</th>
+                            <td>{{item.spouseNameBangla}}</td>
+                        </tr>
+                        <tr>
+                            <th>Date of Birth</th>
+                            <td>{{item.dateOfBirth}}</td>
+                            <th>Birth Registration No</th>
+                            <td>{{item.birthRegNo}}</td>
+                        </tr>
+                        <tr>
+                            <th>Occupation</th>
+                            <td>{{item.occupationName}}</td>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
 
         <!-- Employee Present Address Information -->
         <c-card class="shadow mb-3">

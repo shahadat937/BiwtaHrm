@@ -13,5 +13,7 @@ namespace Hrm.Domain
         public string? OccupationName { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual ICollection<EmpSpouseInfo>? EmpSpouseInfo { get; set; }
     }
 }

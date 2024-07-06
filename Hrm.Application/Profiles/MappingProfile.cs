@@ -366,6 +366,8 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpSpouseInfo, EmpSpouseInfoDto>().ReverseMap();
             CreateMap<EmpSpouseInfo, CreateEmpSpouseInfoDto>().ReverseMap();
+            CreateMap<EmpSpouseInfo, EmpSpouseInfoDto>()
+            .ForMember(dest => dest.OccupationName, opt => opt.MapFrom(src => src.Occupation.OccupationName));
 
             CreateMap<EmpChildInfo, EmpChildInfoDto>().ReverseMap();
             CreateMap<EmpChildInfo, CreateEmpChildInfoDto>().ReverseMap();

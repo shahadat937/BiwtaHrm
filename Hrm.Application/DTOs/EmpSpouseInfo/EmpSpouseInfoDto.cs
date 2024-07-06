@@ -19,5 +19,7 @@ namespace Hrm.Application.DTOs.EmpSpouseInfo
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+
+        public string? OccupationName { get; set; }
     }
 }

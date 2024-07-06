@@ -634,7 +634,26 @@ namespace Hrm.Persistence
                 .HasForeignKey(ad => ad.AttendanceStatusId);
             });
 
+            modelBuilder.Entity<EmpEducationInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
 
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.ExamType)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.ExamTypeId);
+
+                entity.HasOne(e => e.Board)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.BoardId);
+
+                entity.HasOne(e => e.SubGroup)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.SubGroupId);
+            });
 
 
             base.OnModelCreating(modelBuilder);

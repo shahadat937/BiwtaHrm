@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.DTOs.EmpEducationInfo;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.EmpEducationInfos.Handlers.Queries
 {
@@ -26,7 +27,16 @@ namespace Hrm.Application.Features.EmpEducationInfos.Handlers.Queries
 
         public async Task<List<EmpEducationInfoDto>> Handle(GetEmpEducationInfoByEmpIdRequest request, CancellationToken cancellationToken)
         {
-            ICollection<EmpEducationInfo> empEducationInfos = await _EmpEducationInfoRepository.FilterAsync(x => x.EmpId == request.Id);
+            List<EmpEducationInfo> empEducationInfos = await _EmpEducationInfoRepository.Where(x => x.EmpId == request.Id)
+                .Include(x => x.ExamType)
+                .Include(x => x.Board)
+                .Include(x => x.SubGroup)
+                .ToListAsync(cancellationToken);
+
+            if (empEducationInfos == null)
+            {
+                return null;
+            }
 
             List<EmpEducationInfoDto> result = _mapper.Map<List<EmpEducationInfoDto>>(empEducationInfos);
 

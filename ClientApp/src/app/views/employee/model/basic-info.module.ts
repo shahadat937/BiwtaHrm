@@ -10,6 +10,7 @@ export class BasicInfoModule {
   aspNetUserId: any;
   userStatus : boolean | null;
   employeeTypeId: any;
+  employeeTypeName : string;
 
   constructor() {
     this.id=0;
@@ -23,5 +24,6 @@ export class BasicInfoModule {
     this.aspNetUserId = null;
     this.userStatus = false;
     this.employeeTypeId =null;
+    this.employeeTypeName = '';
   }
 }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Hrm.Application.DTOs.EmpBasicInfo;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;

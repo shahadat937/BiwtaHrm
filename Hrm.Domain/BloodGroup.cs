@@ -13,5 +13,7 @@ namespace Hrm.Domain
         public string? BloodGroupName { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+
+        public ICollection<EmpPersonalInfo>? EmpPersonalInfo { get; set; }
     }
 }

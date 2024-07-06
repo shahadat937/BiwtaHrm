@@ -21,9 +21,9 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
 
-        //public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
-        //public virtual ExamType? ExamType { get; set; }
-        //public virtual Board? Board { get; set; }
-        //public virtual SubGroup? SubGroup { get; set; }
+        public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
+        public virtual ExamType? ExamType { get; set; }
+        public virtual Board? Board { get; set; }
+        public virtual SubGroup? SubGroup { get; set; }
     }
 }

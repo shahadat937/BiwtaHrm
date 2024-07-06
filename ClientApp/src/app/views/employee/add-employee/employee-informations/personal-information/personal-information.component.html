@@ -87,6 +87,30 @@
             }
           </div>
         </c-col>
+        
+        <c-col [md]="4">
+          <label cLabel for="nationalityId">Nationality<span class="text-danger"></span></label>
+          <div class="input-wrapper">
+            <select 
+              [(ngModel)]="empPersonalInfoService.personalInfo.nationalityId" 
+              name="nationalityId" 
+              #nationalityId="ngModel"
+              cFormControl id="nationalityId" 
+              aria-label="Default select example" 
+              cSelect>
+              <option [ngValue]="null">Select Nationality</option>
+  
+              @for(countrie of countries; track countrie.id;let index=$index) {
+              <option [value]="countrie.id">
+                {{ countrie.name }}
+              </option>
+              }
+            </select>
+            @if(!nationalityId.valid && nationalityId.touched){
+            <div class="text-left text-danger">Blood Group is required</div>
+            }
+          </div>
+        </c-col>
 
         <c-col [md]="4">
           <label cLabel for="validationCustom04">Religion<span class="text-danger"></span></label>
@@ -140,8 +164,8 @@
           <label cLabel for="validationCustom06">Eye Color<span class="text-danger"></span></label>
           <div class="input-wrapper">
             <select 
-              [(ngModel)]="empPersonalInfoService.personalInfo.eyesColor" 
-              name="eyesColor" 
+              [(ngModel)]="empPersonalInfoService.personalInfo.eyesColorId" 
+              name="eyesColorId" 
               #eyesColor="ngModel"
               cFormControl id="validationCustom06" 
               aria-label="Default select example" 

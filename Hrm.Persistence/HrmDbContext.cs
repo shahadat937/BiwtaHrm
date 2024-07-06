@@ -383,7 +383,203 @@ namespace Hrm.Persistence
                 .HasName("[[PK_AttendanceStatus]]");
             });
 
-            modelBuilder.Entity<Attendance>(entity =>
+            modelBuilder.Entity<EmpPersonalInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("[[PK_EmpPersonalInfo]]");
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Gender)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.GenderId);
+
+                entity.HasOne(e => e.MaritalStatus)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.MaritalStatusId);
+
+                entity.HasOne(e => e.BloodGroup)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.BloodGroupId);
+
+                entity.HasOne(e => e.Religion)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.ReligionId);
+
+                entity.HasOne(e => e.HairColor)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.HairColorId);
+
+                entity.HasOne(e => e.EyesColor)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.EyesColorId);
+
+                entity.HasOne(e => e.Country)
+                    .WithMany(eb => eb.EmpPersonalInfo)
+                    .HasForeignKey(e => e.NationalityId);
+            });
+
+
+            modelBuilder.Entity<EmpBasicInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("[[PK_EmpBasicInfo]]");
+
+                entity.HasOne(e => e.EmployeeType)
+                    .WithMany(eb => eb.EmpBasicInfo)
+                    .HasForeignKey(e => e.EmployeeTypeId);
+            });
+
+
+            modelBuilder.Entity<EmpPresentAddress>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Country)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.CountryId);
+
+                entity.HasOne(e => e.Division)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.DivisionId);
+
+                entity.HasOne(e => e.District)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.DistrictId);
+
+                entity.HasOne(e => e.Upazila)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.UpazilaId);
+
+                entity.HasOne(e => e.Thana)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.ThanaId);
+
+                entity.HasOne(e => e.Union)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.UnionId);
+
+                entity.HasOne(e => e.Ward)
+                    .WithMany(eb => eb.EmpPresentAddress)
+                    .HasForeignKey(e => e.WardId);
+
+            });
+
+            modelBuilder.Entity<EmpPermanentAddress>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Country)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.CountryId);
+
+                entity.HasOne(e => e.Division)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.DivisionId);
+
+                entity.HasOne(e => e.District)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.DistrictId);
+
+                entity.HasOne(e => e.Upazila)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.UpazilaId);
+
+                entity.HasOne(e => e.Thana)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.ThanaId);
+
+                entity.HasOne(e => e.Union)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.UnionId);
+
+                entity.HasOne(e => e.Ward)
+                    .WithMany(eb => eb.EmpPermanentAddress)
+                    .HasForeignKey(e => e.WardId);
+
+            });
+
+            modelBuilder.Entity<EmpJobDetail>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Office)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.OfficeId);
+
+                entity.HasOne(e => e.Department)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.DepartmentId);
+
+                entity.HasOne(e => e.Designation)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.DesignationId);
+
+                entity.HasOne(e => e.Section)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.SectionId);
+
+                entity.HasOne(e => e.PresentGrade)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.PresentGradeId);
+
+                entity.HasOne(e => e.PresentScale)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.PresentScaleId);
+
+            });
+
+            modelBuilder.Entity<EmpSpouseInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpSpouseInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Occupation)
+                    .WithMany(eb => eb.EmpSpouseInfo)
+                    .HasForeignKey(e => e.OccupationId);
+            });
+
+            modelBuilder.Entity<EmpChildInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpChildInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Occupation)
+                    .WithMany(eb => eb.EmpChildInfo)
+                    .HasForeignKey(e => e.OccupationId);
+
+                entity.HasOne(e => e.Gender)
+                    .WithMany(eb => eb.EmpChildInfo)
+                    .HasForeignKey(e => e.GenderId);
+
+                entity.HasOne(e => e.MaritalStatus)
+                    .WithMany(eb => eb.EmpChildInfo)
+                    .HasForeignKey(e => e.MaritalStatusId);
+
+                entity.HasOne(e => e.ChildStatus)
+                    .WithMany(eb => eb.EmpChildInfo)
+                    .HasForeignKey(e => e.ChildStatusId);
+            });            modelBuilder.Entity<Attendance>(entity =>
             {
                 entity.HasKey(at => at.AttendanceId)
                 .HasName("[[PK_Attendance]]");
@@ -438,7 +634,26 @@ namespace Hrm.Persistence
                 .HasForeignKey(ad => ad.AttendanceStatusId);
             });
 
+            modelBuilder.Entity<EmpEducationInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
 
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.ExamType)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.ExamTypeId);
+
+                entity.HasOne(e => e.Board)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.BoardId);
+
+                entity.HasOne(e => e.SubGroup)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.SubGroupId);
+            });
 
 
             base.OnModelCreating(modelBuilder);

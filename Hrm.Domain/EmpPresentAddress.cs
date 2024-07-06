@@ -25,13 +25,13 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
 
-        //public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
-        //public virtual Country? Country { get; set; }
-        //public virtual Division? Division { get; set; }
-        //public virtual District? District { get; set; }
-        //public virtual Upazila? Upazila { get; set; }
-        //public virtual Thana? Thana { get; set; }
-        //public virtual Union? Union { get; set; }
-        //public virtual Ward? Ward { get; set; }
+        public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
+        public virtual Country? Country { get; set; }
+        public virtual Division? Division { get; set; }
+        public virtual District? District { get; set; }
+        public virtual Upazila? Upazila { get; set; }
+        public virtual Thana? Thana { get; set; }
+        public virtual Union? Union { get; set; }
+        public virtual Ward? Ward { get; set; }
     }
 }

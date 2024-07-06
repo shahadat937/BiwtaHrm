@@ -19,6 +19,12 @@ import { EmpSpouseInfoService } from '../../service/emp-spouse-info.service';
 import { ManageEmployeeService } from '../../service/manage-employee.service';
 import { BasicInfoModule } from '../../model/basic-info.module';
 import { EmpPhotoSignModule } from '../../model/emp-photo-sign.module';
+import { PersonalInfoModule } from '../../model/personal-info.module';
+import { EmpPresentAddressModule } from '../../model/emp-present-address.module';
+import { EmpPermanentAddressModule } from '../../model/emp-permanent-address.module';
+import { EmpJobDetailsModule } from '../../model/emp-job-details.module';
+import { EmpSpouseInfoModule } from '../../model/emp-spouse-info.module';
+import { EmpChildInfoModule } from '../../model/emp-child-info.module';
 
 @Component({
   selector: 'app-employee-information',
@@ -30,6 +36,12 @@ export class EmployeeInformationComponent implements OnInit {
   employeeId : any = null;
   empBasicInfo : BasicInfoModule = new BasicInfoModule;
   empPhotoSign : EmpPhotoSignModule = new EmpPhotoSignModule;
+  empPersonalInfo : PersonalInfoModule = new PersonalInfoModule;
+  empPresentAddress : EmpPresentAddressModule = new EmpPresentAddressModule;
+  empPermanentAddress : EmpPermanentAddressModule = new EmpPermanentAddressModule;
+  empJobDetails : EmpJobDetailsModule = new EmpJobDetailsModule;
+  empSpouseInfo : EmpSpouseInfoModule[] = [];
+  empChildInfo : EmpChildInfoModule[] = [];
   empPhoto : string = '';
   empSignature : string = '';
 
@@ -57,6 +69,12 @@ export class EmployeeInformationComponent implements OnInit {
       this.handleRouteParams();
       this.getEmpBasicInfoByEmpId();
       this.getEmpPhotoSign();
+      this.getEmpPersonalInfoByEmpId();
+      this.getEmpPresentAddressByEmpId();
+      this.getEmpPermanentAddressByEmpId();
+      this.getEmpJobDetailsByEmpId();
+      this.getEmpSpouseInfoByEmpId();
+      this.getEmpChildInfoByEmpId();
     }
   
     handleRouteParams() {
@@ -67,8 +85,43 @@ export class EmployeeInformationComponent implements OnInit {
 
     getEmpBasicInfoByEmpId(){
       this.manageEmployeeService.getEmpBasicInfoByEmpId(this.employeeId).subscribe((res) => {
-        console.log(res)
         this.empBasicInfo = res;
+      });
+    }
+    
+    getEmpPersonalInfoByEmpId(){
+      this.empPersonalInfoService.findByEmpId(this.employeeId).subscribe((res) => {
+        this.empPersonalInfo = res;
+      });
+    }
+    
+    getEmpPresentAddressByEmpId(){
+      this.empPresentAddressService.findByEmpId(this.employeeId).subscribe((res) => {
+        this.empPresentAddress = res;
+      });
+    }
+    
+    getEmpPermanentAddressByEmpId(){
+      this.empPermanentAddressService.findByEmpId(this.employeeId).subscribe((res) => {
+        this.empPermanentAddress = res;
+      });
+    }
+
+    getEmpJobDetailsByEmpId(){
+      this.empJobDetailsService.findByEmpId(this.employeeId).subscribe((res) => {
+        this.empJobDetails = res;
+      });
+    }
+    
+    getEmpSpouseInfoByEmpId(){
+      this.empSpouseInfoService.findByEmpId(this.employeeId).subscribe((res) => {
+        this.empSpouseInfo = res;
+      });
+    }
+    
+    getEmpChildInfoByEmpId(){
+      this.empChildInfoService.findByEmpId(this.employeeId).subscribe((res) => {
+        this.empChildInfo = res;
       });
     }
 

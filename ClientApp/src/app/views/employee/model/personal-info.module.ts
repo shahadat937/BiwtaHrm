@@ -7,7 +7,7 @@ export class PersonalInfoModule {
   nationalityId: any;
   religionId: any;
   hairColorId: any;
-  eyesColor: any;
+  eyesColorId: any;
   mobileNumber: string;
   fatherName: string;
   fatherNameBangla: string;
@@ -28,6 +28,14 @@ export class PersonalInfoModule {
   passportNo: string;
   passportExpireDate:  Date | null;
   remark: string;
+  genderName : string = '';
+  maritalStatusName : string = '';
+  bloodGroupName : string = '';
+  religionName : string = '';
+  hairColorName : string = '';
+  eyesColorName : string = '';
+  nationalityName : string = '';
+
 
   constructor() {
     this.id= 0;
@@ -38,7 +46,7 @@ export class PersonalInfoModule {
     this.nationalityId= null ;
     this.religionId= null ;
     this.hairColorId= null ;
-    this.eyesColor= null ;
+    this.eyesColorId= null ;
     this.mobileNumber= '';
     this.fatherName= '';
     this.fatherNameBangla= '';

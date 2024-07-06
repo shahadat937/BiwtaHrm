@@ -18,7 +18,18 @@ export class EmpJobDetailsModule {
   serviceStatus: boolean;
   remark: string;
   menuPosition: number;
-  isActive: boolean
+  isActive: boolean;
+
+  officeName: string = '';
+  departmentName: string = '';
+  designationName: string = '';
+  sectionName: string = '';
+  presentGradeName: string = '';
+  presentScaleName: string = '';
+  firstDepartmentName: string = '';
+  firstDesignationName: string = '';
+  firstGradeName: string = '';
+  firstScaleName: string = '';
 
   constructor() {
     this.id= 0;

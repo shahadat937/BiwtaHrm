@@ -19,5 +19,9 @@ namespace Hrm.Application.DTOs.EmpEducationInfo
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+
+        public string? ExamTypeName { get; set; }
+        public string? BoardName { get; set; }
+        public string? SubGroupName { get; set; }
     }
 }

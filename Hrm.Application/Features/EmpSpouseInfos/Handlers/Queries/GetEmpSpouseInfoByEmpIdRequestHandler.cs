@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.DTOs.EmpSpouseInfo;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.EmpSpouseInfos.Handlers.Queries
 {
@@ -26,7 +27,12 @@ namespace Hrm.Application.Features.EmpSpouseInfos.Handlers.Queries
 
         public async Task<List<EmpSpouseInfoDto>> Handle(GetEmpSpouseInfoByEmpIdRequest request, CancellationToken cancellationToken)
         {
-            ICollection<EmpSpouseInfo> empSpouseInfos = await _EmpSpouseInfoRepository.FilterAsync(x => x.EmpId == request.Id);
+            List<EmpSpouseInfo> empSpouseInfos = await _EmpSpouseInfoRepository.Where(x => x.EmpId == request.Id).Include(x => x.Occupation).ToListAsync(cancellationToken);
+
+            if (empSpouseInfos == null)
+            {
+                return null;
+            }
 
             List<EmpSpouseInfoDto> result = _mapper.Map<List<EmpSpouseInfoDto>>(empSpouseInfos);
 

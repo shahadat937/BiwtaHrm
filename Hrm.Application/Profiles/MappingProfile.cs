@@ -313,26 +313,76 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpBasicInfo, EmpBasicInfoDto>().ReverseMap();
             CreateMap<EmpBasicInfo, CreateEmpBasicInfoDto>().ReverseMap();
 
+            CreateMap<EmpBasicInfo, EmpBasicInfoDto>()
+            .ForMember(dest => dest.EmployeeTypeName, opt => opt.MapFrom(src => src.EmployeeType.EmployeeTypeName));
+
             CreateMap<EmpPersonalInfo, EmpPersonalInfoDto>().ReverseMap();
             CreateMap<EmpPersonalInfo, CreateEmpPersonalInfoDto>().ReverseMap();
+            CreateMap<EmpPersonalInfo, EmpPersonalInfoDto>()
+            .ForMember(dest => dest.GenderName, opt => opt.MapFrom(src => src.Gender.GenderName))
+            .ForMember(dest => dest.MaritalStatusName, opt => opt.MapFrom(src => src.MaritalStatus.MaritalStatusName))
+            .ForMember(dest => dest.BloodGroupName, opt => opt.MapFrom(src => src.BloodGroup.BloodGroupName))
+            .ForMember(dest => dest.ReligionName, opt => opt.MapFrom(src => src.Religion.ReligionName))
+            .ForMember(dest => dest.HairColorName, opt => opt.MapFrom(src => src.HairColor.HairColorName))
+            .ForMember(dest => dest.EyesColorName, opt => opt.MapFrom(src => src.EyesColor.EyesColorName))
+            .ForMember(dest => dest.NationalityName, opt => opt.MapFrom(src => src.Country.CountryName));
+
 
             CreateMap<EmpPresentAddress, EmpPresentAddressDto>().ReverseMap();
             CreateMap<EmpPresentAddress, CreateEmpPresentAddressDto>().ReverseMap();
+            CreateMap<EmpPresentAddress, EmpPresentAddressDto>()
+            .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.CountryName))
+            .ForMember(dest => dest.DivisionName, opt => opt.MapFrom(src => src.Division.DivisionName))
+            .ForMember(dest => dest.DistrictName, opt => opt.MapFrom(src => src.District.DistrictName))
+            .ForMember(dest => dest.UpazilaName, opt => opt.MapFrom(src => src.Upazila.UpazilaName))
+            .ForMember(dest => dest.ThanaName, opt => opt.MapFrom(src => src.Thana.ThanaName))
+            .ForMember(dest => dest.UnionName, opt => opt.MapFrom(src => src.Union.UnionName))
+            .ForMember(dest => dest.WardName, opt => opt.MapFrom(src => src.Ward.WardName));
 
             CreateMap<EmpPermanentAddress, EmpPermanentAddressDto>().ReverseMap();
             CreateMap<EmpPermanentAddress, CreateEmpPermanentAddressDto>().ReverseMap();
+            CreateMap<EmpPermanentAddress, EmpPermanentAddressDto>()
+            .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.CountryName))
+            .ForMember(dest => dest.DivisionName, opt => opt.MapFrom(src => src.Division.DivisionName))
+            .ForMember(dest => dest.DistrictName, opt => opt.MapFrom(src => src.District.DistrictName))
+            .ForMember(dest => dest.UpazilaName, opt => opt.MapFrom(src => src.Upazila.UpazilaName))
+            .ForMember(dest => dest.ThanaName, opt => opt.MapFrom(src => src.Thana.ThanaName))
+            .ForMember(dest => dest.UnionName, opt => opt.MapFrom(src => src.Union.UnionName))
+            .ForMember(dest => dest.WardName, opt => opt.MapFrom(src => src.Ward.WardName));
 
             CreateMap<EmpJobDetail, EmpJobDetailDto>().ReverseMap();
             CreateMap<EmpJobDetail, CreateEmpJobDetailDto>().ReverseMap();
+            CreateMap<EmpJobDetail, EmpJobDetailDto>()
+            .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeNameBangla))
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentNameBangla))
+            .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.Designation.DesignationNameBangla))
+            .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Section.SectionName))
+            .ForMember(dest => dest.PresentGradeName, opt => opt.MapFrom(src => src.PresentGrade.GradeName))
+            .ForMember(dest => dest.PresentScaleName, opt => opt.MapFrom(src => src.PresentScale.ScaleName))
+            .ForMember(dest => dest.FirstDepartmentName, opt => opt.MapFrom(src => src.FirstDepartment.DepartmentNameBangla))
+            .ForMember(dest => dest.FirstDesignationName, opt => opt.MapFrom(src => src.FirstDesignation.DesignationNameBangla))
+            .ForMember(dest => dest.FirstGradeName, opt => opt.MapFrom(src => src.FirstGrade.GradeName))
+            .ForMember(dest => dest.FirstScaleName, opt => opt.MapFrom(src => src.FirstScale.ScaleName));
 
             CreateMap<EmpSpouseInfo, EmpSpouseInfoDto>().ReverseMap();
             CreateMap<EmpSpouseInfo, CreateEmpSpouseInfoDto>().ReverseMap();
+            CreateMap<EmpSpouseInfo, EmpSpouseInfoDto>()
+            .ForMember(dest => dest.OccupationName, opt => opt.MapFrom(src => src.Occupation.OccupationName));
 
             CreateMap<EmpChildInfo, EmpChildInfoDto>().ReverseMap();
             CreateMap<EmpChildInfo, CreateEmpChildInfoDto>().ReverseMap();
+            CreateMap<EmpChildInfo, EmpChildInfoDto>()
+            .ForMember(dest => dest.OccupationName, opt => opt.MapFrom(src => src.Occupation.OccupationName))
+            .ForMember(dest => dest.GenderName, opt => opt.MapFrom(src => src.Gender.GenderName))
+            .ForMember(dest => dest.MaritalStatusName, opt => opt.MapFrom(src => src.MaritalStatus.MaritalStatusName))
+            .ForMember(dest => dest.ChildStatusName, opt => opt.MapFrom(src => src.ChildStatus.ChildStatusName));
 
             CreateMap<EmpEducationInfo, EmpEducationInfoDto>().ReverseMap();
             CreateMap<EmpEducationInfo, CreateEmpEducationInfoDto>().ReverseMap();
+            CreateMap<EmpEducationInfo, EmpEducationInfoDto>()
+            .ForMember(dest => dest.ExamTypeName, opt => opt.MapFrom(src => src.ExamType.ExamTypeName))
+            .ForMember(dest => dest.BoardName, opt => opt.MapFrom(src => src.Board.BoardName))
+            .ForMember(dest => dest.SubGroupName, opt => opt.MapFrom(src => src.SubGroup.GroupName));
 
             CreateMap<EmpPsiTrainingInfo, EmpPsiTrainingInfoDto>().ReverseMap();
             CreateMap<EmpPsiTrainingInfo, CreateEmpPsiTrainingInfoDto>().ReverseMap();

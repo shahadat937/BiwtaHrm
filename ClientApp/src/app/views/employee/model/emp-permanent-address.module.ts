@@ -14,5 +14,13 @@ export class EmpPermanentAddressModule {
     email: string = "";
     remark: string = "";
     menuPosition: number = 0;
-    isActive: boolean = true
+    isActive: boolean = true;
+
+    countryName: string = '';
+    divisionName: string = '';
+    districtName: string = '';
+    upazilaName: string = '';
+    thanaName: string = '';
+    unionName: string = '';
+    wardName: string = '';
 }

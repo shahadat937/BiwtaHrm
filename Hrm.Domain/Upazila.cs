@@ -21,5 +21,7 @@ namespace Hrm.Domain
         public bool IsActive { get; set; }
 
         public virtual ICollection<Thana> Thanas { get; set; }
+        public virtual ICollection<EmpPresentAddress>? EmpPresentAddress { get; set; }
+        public virtual ICollection<EmpPermanentAddress>? EmpPermanentAddress { get; set; }
     }
 }

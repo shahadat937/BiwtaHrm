@@ -9,7 +9,9 @@ export class EmpSpouseInfoModule {
   occupationId: any;
   remark: string;
   menuPosition: number;
-  isActive: boolean
+  isActive: boolean;
+
+  occupationName: string = '';
 
   constructor(){
     this.id= 0;

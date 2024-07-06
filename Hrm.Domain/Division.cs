@@ -16,6 +16,8 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
 
+        public virtual ICollection<EmpPresentAddress>? EmpPresentAddress { get; set; }
+        public virtual ICollection<EmpPermanentAddress>? EmpPermanentAddress { get; set; }
         //public virtual Country? Country { get; set; }
     }
 }

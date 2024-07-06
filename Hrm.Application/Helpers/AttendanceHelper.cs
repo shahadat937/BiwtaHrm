@@ -1,6 +1,7 @@
 ﻿using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Attendance;
 using Hrm.Application.Enum;
+using Hrm.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,13 @@ namespace Hrm.Application.Helpers
                 return null;
             }
 
-            var shift = _ShiftRepository.Get((int)dto.ShiftId).Result;
+            var shift =  _ShiftRepository.Get((int)dto.ShiftId).Result;
 
-            if (shift == null)
+            if (shift==null)
             {
                 return null;
             }
+
 
             if (dto.InTime > shift.AbsentTime)
             {
@@ -70,6 +72,26 @@ namespace Hrm.Application.Helpers
             return difference;
 
 
+        }
+
+        public static int SetDayTypeId(CreateAttendanceDto dto, IHrmRepository<Workday> _WorkdayRepo, IHrmRepository<Holidays> _HolidaysRepo)
+        {
+            bool weekday = IsWeekDay(dto.AttendanceDate, _WorkdayRepo);
+            bool holiday = IsHoliday(dto.AttendanceDate, _HolidaysRepo);
+
+            int daytype = (int)DayTypeOption.Workday;
+
+            if(!weekday)
+            {
+                daytype = (int)DayTypeOption.Weekend;
+            }
+
+            if(holiday)
+            {
+                daytype = (int)DayTypeOption.Holiday;
+            }
+
+            return daytype;
         }
 
         public static int? SetOverTime(CreateAttendanceDto dto,IHrmRepository<Hrm.Domain.Shift> _ShiftRepository)

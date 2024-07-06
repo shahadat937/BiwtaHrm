@@ -5,6 +5,7 @@ using Hrm.Application.Features.Attendance.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Enum;
+using Hrm.Application.Helpers;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -45,24 +46,23 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
             {
                 throw new ValidationException(validationResult);
             }
+            
+
 
             //Set DayType
-            request.Attendancedto.DayTypeId = (int)DayTypeOption.Workday;
+            request.Attendancedto.DayTypeId = AttendanceHelper.SetDayTypeId(request.Attendancedto, _WorkdayRepository, _HolidayRepository);
 
-            if(!IsWeekDay(request.Attendancedto.AttendanceDate))
-            {
-                request.Attendancedto.DayTypeId = (int)DayTypeOption.Weekend;
-            }
+            // Set Attendance Status
+            request.Attendancedto.AttendanceStatusId = AttendanceHelper.SetAttendanceStatus(request.Attendancedto, _ShiftRepository);
 
-            if(IsHoliday(request.Attendancedto.AttendanceDate))
-            {
-                request.Attendancedto.DayTypeId = (int) DayTypeOption.Holiday;
-            }
+            // Set Work Hour
+            request.Attendancedto.WorkHour = AttendanceHelper.SetWorkHour(request.Attendancedto);
 
-            request.Attendancedto.ShiftId = SetAttendanceStatus(request.Attendancedto);
+            // Set OverTime
+            request.Attendancedto.OverTime = AttendanceHelper.SetOverTime(request.Attendancedto, _ShiftRepository);
+
 
             var attendance = _mapper.Map<Hrm.Domain.Attendance>(request.Attendancedto);
-
             attendance = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Add(attendance);
             await _unitOfWork.Save();
 
@@ -74,7 +74,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
 
         }
 
-        private bool IsWeekDay(DateOnly GivenDate)
+       /* private bool IsWeekDay(DateOnly GivenDate)
         {
             var IsWeekDay = _WorkdayRepository.Where(x => x.weekDay.WeekDayName == GivenDate.DayOfWeek.ToString()).Any();
             return IsWeekDay;
@@ -111,6 +111,6 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
             }
 
             return (int)AttendanceStatusOption.Present;
-        }
+        } */
     }
 }

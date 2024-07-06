@@ -552,12 +552,41 @@ namespace Hrm.Persistence
             {
                 entity.HasKey(e => e.Id);
 
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpSpouseInfo)
+                    .HasForeignKey(e => e.EmpId);
+
                 entity.HasOne(e => e.Occupation)
                     .WithMany(eb => eb.EmpSpouseInfo)
                     .HasForeignKey(e => e.OccupationId);
             });
 
-                base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<EmpChildInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpChildInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Occupation)
+                    .WithMany(eb => eb.EmpChildInfo)
+                    .HasForeignKey(e => e.OccupationId);
+
+                entity.HasOne(e => e.Gender)
+                    .WithMany(eb => eb.EmpChildInfo)
+                    .HasForeignKey(e => e.GenderId);
+
+                entity.HasOne(e => e.MaritalStatus)
+                    .WithMany(eb => eb.EmpChildInfo)
+                    .HasForeignKey(e => e.MaritalStatusId);
+
+                entity.HasOne(e => e.ChildStatus)
+                    .WithMany(eb => eb.EmpChildInfo)
+                    .HasForeignKey(e => e.ChildStatusId);
+            });
+
+            base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
 

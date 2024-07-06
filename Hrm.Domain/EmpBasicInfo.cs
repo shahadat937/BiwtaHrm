@@ -35,5 +35,7 @@ namespace Hrm.Domain
         public virtual ICollection<EmpPresentAddress>? EmpPresentAddress { get; set; }
         public virtual ICollection<EmpPermanentAddress>? EmpPermanentAddress { get; set; }
         public virtual ICollection<EmpJobDetail>? EmpJobDetail { get; set; }
+        public virtual ICollection<EmpSpouseInfo>? EmpSpouseInfo { get; set; }
+        public virtual ICollection<EmpChildInfo>? EmpChildInfo { get; set; }
     }
 }

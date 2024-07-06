@@ -371,6 +371,11 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpChildInfo, EmpChildInfoDto>().ReverseMap();
             CreateMap<EmpChildInfo, CreateEmpChildInfoDto>().ReverseMap();
+            CreateMap<EmpChildInfo, EmpChildInfoDto>()
+            .ForMember(dest => dest.OccupationName, opt => opt.MapFrom(src => src.Occupation.OccupationName))
+            .ForMember(dest => dest.GenderName, opt => opt.MapFrom(src => src.Gender.GenderName))
+            .ForMember(dest => dest.MaritalStatusName, opt => opt.MapFrom(src => src.MaritalStatus.MaritalStatusName))
+            .ForMember(dest => dest.ChildStatusName, opt => opt.MapFrom(src => src.ChildStatus.ChildStatusName));
 
             CreateMap<EmpEducationInfo, EmpEducationInfoDto>().ReverseMap();
             CreateMap<EmpEducationInfo, CreateEmpEducationInfoDto>().ReverseMap();

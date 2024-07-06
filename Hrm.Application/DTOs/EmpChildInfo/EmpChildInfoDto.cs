@@ -22,5 +22,10 @@ namespace Hrm.Application.DTOs.EmpChildInfo
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+
+        public string? OccupationName { get; set; }
+        public string? GenderName { get; set; }
+        public string? MaritalStatusName { get; set; }
+        public string? ChildStatusName { get; set; }
     }
 }

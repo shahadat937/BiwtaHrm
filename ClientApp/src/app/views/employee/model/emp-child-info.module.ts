@@ -12,7 +12,12 @@ export class EmpChildInfoModule {
   childStatusId: any;
   remark: string;
   menuPosition: number;
-  isActive: boolean
+  isActive: boolean;
+  occupationName: string = '';
+  genderName: string = '';
+  maritalStatusName: string = '';
+  childStatusName: string = '';
+
 
   constructor(){
     this.id= 0;

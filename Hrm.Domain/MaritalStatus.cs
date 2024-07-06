@@ -16,5 +16,6 @@ namespace Hrm.Domain
         public bool IsActive { get; set; }
 
         public ICollection<EmpPersonalInfo>? EmpPersonalInfo { get; set; }
+        public virtual ICollection<EmpChildInfo>? EmpChildInfo { get; set; }
     }
 }

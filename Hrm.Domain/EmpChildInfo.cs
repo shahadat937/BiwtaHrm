@@ -24,10 +24,10 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
 
-        //public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
-        //public virtual Occupation? Occupation { get; set; }
-        //public virtual Gender? Gender { get; set; }
-        //public virtual MaritalStatus? MaritalStatus { get; set; }
-        //public virtual ChildStatus? ChildStatus { get; set; }
+        public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
+        public virtual Occupation? Occupation { get; set; }
+        public virtual Gender? Gender { get; set; }
+        public virtual MaritalStatus? MaritalStatus { get; set; }
+        public virtual ChildStatus? ChildStatus { get; set; }
     }
 }

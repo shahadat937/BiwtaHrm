@@ -2,7 +2,7 @@
     <c-card-body>
 
         <!-- Employee Photo and Signature -->
-        <c-card class="shadow mb-3">
+        <c-card class="shadow mb-4">
             <c-card-header class="text-center">
                 Employee Photo and Signature
             </c-card-header>
@@ -21,7 +21,7 @@
         </c-card>
 
         <!-- Employee Basic Information -->
-        <c-card class="shadow mb-3">
+        <c-card class="shadow mb-4">
             <c-card-header class="text-center">
                 Employee Basic Information
             </c-card-header>
@@ -52,7 +52,7 @@
 
         
         <!-- Employee Personal Information -->
-        <c-card class="shadow mb-3">
+        <c-card class="shadow mb-4">
             <c-card-header class="text-center">
                 Employee Personal Information
             </c-card-header>
@@ -130,8 +130,8 @@
             </c-card-body>
         </c-card>
          
-        <!-- Employee Personal Information -->
-        <c-card class="shadow mb-3">
+        <!-- Employee Spouse Information -->
+        <c-card class="shadow mb-4">
             <c-card-header class="text-center">
                 Employee Spouse Information
             </c-card-header>
@@ -160,9 +160,52 @@
                 </table>
             </c-card-body>
         </c-card>
+        
+        <!-- Employee Child Information -->
+        <c-card class="shadow mb-4">
+            <c-card-header class="text-center">
+                Employee Child Information
+            </c-card-header>
+            <c-card-body>
+                <table cTable bordered hover  *ngFor="let item of empChildInfo" class="mb-3 shadow">
+                    <tbody>
+                        <tr>
+                            <th>Child Name</th>
+                            <td>{{item.childName}}</td>
+                            <th>Child Name Bangla</th>
+                            <td>{{item.childNameBangla}}</td>
+                        </tr>
+                        <tr>
+                            <th>Date of Birth</th>
+                            <td>{{item.dateOfBirth}}</td>
+                            <th>Birth Registration No</th>
+                            <td>{{item.birthRegNo}}</td>
+                        </tr>
+                        <tr>
+                            <th>Gender</th>
+                            <td>{{item.genderName}}</td>
+                            <th>Occupation</th>
+                            <td>{{item.occupationName}}</td>
+                        </tr>
+                        <tr>
+                            <th>NID</th>
+                            <td>{{item.nid}}</td>
+                            <th>Marital Status</th>
+                            <td>{{item.maritalStatusName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Child Status</th>
+                            <td>{{item.childStatusName}}</td>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
 
         <!-- Employee Present Address Information -->
-        <c-card class="shadow mb-3">
+        <c-card class="shadow mb-4">
             <c-card-header class="text-center">
                 Employee Present/Mailing Address
             </c-card-header>
@@ -209,7 +252,7 @@
         </c-card>
         
         <!-- Employee Permanent Address Information -->
-        <c-card class="shadow mb-3">
+        <c-card class="shadow mb-4">
             <c-card-header class="text-center">
                 Employee Permanent Address
             </c-card-header>
@@ -256,7 +299,7 @@
         </c-card>
         
         <!-- Employee Job Details Information -->
-        <c-card class="shadow mb-3">
+        <c-card class="shadow mb-4">
             <c-card-header class="text-center">
                 Employee Job Details
             </c-card-header>

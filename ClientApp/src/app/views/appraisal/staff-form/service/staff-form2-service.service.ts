@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
+import { StaffFormpart2Module } from './../model/staff-formpart2.module';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { StaffFormModule } from '../model/staff-form.module';
 
 @Injectable({
   providedIn: 'root'
 })
-export class OfficerFormserviceService {
+export class StaffForm2ServiceService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
-  StaffModels :StaffFormModule;
+  staffForm2module:StaffFormpart2Module
   constructor(private http: HttpClient) {
-    this.StaffModels=new StaffFormModule();
+    this.staffForm2module=new StaffFormpart2Module();
    }
 }

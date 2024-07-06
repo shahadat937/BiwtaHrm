@@ -30,9 +30,9 @@
                 <c-col [md]="3">
                      <label cLabel for="fromdate">From Date</label>
                     <input type="date" cFormControl id="fromdate" 
-            [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.fromDate"
-            name="fromDate" required
-            #fromDate="ngModel">
+                    [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.fromDate"
+                    name="fromDate" required
+                    #fromDate="ngModel">
                 @if(!fromDate.valid && fromDate.touched)
                 {
                 <div class="text-left text-danger"> From Date is required</div>

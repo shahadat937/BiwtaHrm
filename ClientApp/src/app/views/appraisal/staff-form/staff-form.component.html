@@ -17,15 +17,36 @@
       novalidate>
         <c-col [md]="4">
           <label cLabel for="division">Division</label>
-          <input type="text" cFormControl id="division" placeholder="Division">
+          <input type="text" cFormControl id="division" placeholder="Division"
+          [(ngModel)]="staffService.staffModule.division"
+            name="division" required
+            #division="ngModel">
+            @if(!division.valid && division.touched)
+            {
+              <div class="text-left text-danger"> division is required</div>
+            }
         </c-col>
         <c-col [md]="4">
           <label cLabel for="fromdate">From Date</label>
-          <input type="date" cFormControl id="fromdate"/>
+          <input type="date" cFormControl id="fromdate"
+          [(ngModel)]="staffService.staffModule.yearStartDate"
+            name="yearStartDate" required
+            #yearStartDate="ngModel">
+            @if(!yearStartDate.valid && yearStartDate.touched)
+            {
+              <div class="text-left text-danger"> Year start is required</div>
+            }
         </c-col>
         <c-col [md]="4">
           <label cLabel for="todate">To Date</label>
-          <input type="date" cFormControl id="todate"/> 
+          <input type="date" cFormControl id="todate"
+          [(ngModel)]="staffService.staffModule.yearEndDate"
+          name="yearEndDate" required
+          #yearEndDate="ngModel">
+          @if(!yearEndDate.valid && yearEndDate.touched)
+          {
+            <div class="text-left text-danger"> Year end date is required</div>
+          } 
         </c-col>
         <c-card class="mt-4">
           
@@ -33,56 +54,139 @@
             <c-row>
               <c-col [md]="4">
                 <label cLabel for="empname"> Name</label>
-                <input type="text" cFormControl id="empname" placeholder="Employee Name"/> 
+                <input type="text" cFormControl id="empname" placeholder="Employee Name"
+                [(ngModel)]="staffService.staffModule.name"
+                name="name" required
+                #name="ngModel">
+                @if(!name.valid && name.touched)
+                {
+                  <div class="text-left text-danger"> Name is required</div>
+                }
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="fatherName">Father's Name</label>
-                <input type="text" cFormControl id="fatherName" placeholder="Father's Name"/> 
+                <input type="text" cFormControl id="fatherName" placeholder="Father's Name"
+                [(ngModel)]="staffService.staffModule.fathersName"
+                name="fathersName" required
+                #fathersName="ngModel">
+                @if(!fathersName.valid && fathersName.touched)
+                {
+                  <div class="text-left text-danger"> Father Name is required</div>
+                } 
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="mothername">Mother's Name</label>
-                <input type="text" cFormControl id="mothername" placeholder="Mother's Name"/> 
+                <input type="text" cFormControl id="mothername" placeholder="Mother's Name"
+                [(ngModel)]="staffService.staffModule.mothersName"
+                name="mothersName" required
+                #mothersName="ngModel">
+                @if(!mothersName.valid && mothersName.touched)
+                {
+                  <div class="text-left text-danger"> Mother Name is required</div>
+                }  
               </c-col>
               
               <c-col [md]="4">
                 <label cLabel for="des">Designation</label>
-                <input type="text" cFormControl id="des" placeholder="Designation"/>  
+                <input type="text" cFormControl id="des" placeholder="Designation"
+                [(ngModel)]="staffService.staffModule.designation"
+                name="designation" required
+                #designation="ngModel">
+                @if(!designation.valid && designation.touched)
+                {
+                  <div class="text-left text-danger">Designation required</div>
+                }   
               </c-col>
 
                <c-col [md]="4">
                 <label cLabel for="dob">Date of Birth</label>
-                <input type="date" cFormControl id="dob"/> 
+                <input type="date" cFormControl id="dob"
+                [(ngModel)]="staffService.staffModule.dateofBirth"
+                name="dateofBirth" required
+                #dateofBirth="ngModel">
+                @if(!dateofBirth.valid && dateofBirth.touched)
+                {
+                  <div class="text-left text-danger">Date of Birth is required</div>
+                }  
               </c-col>
 
-               <c-col [md]="4">
-                <label cLabel for="dob">Present Salary</label>
-                <input type="number" cFormControl id="presentsalary"/>
+              <c-col [md]="4">
+                <label cLabel for="presentSalary">Present Salary</label>
+                <select cSelect cFormControl id="presentSalary"
+                [(ngModel)]="staffService.staffModule.presentSalary"
+                name="presentSalary" required
+                #presentSalary="ngModel">
+                @if(!dateofBirth.valid && dateofBirth.touched)
+                {
+                  <div class="text-left text-danger">Date of Birth is required</div>
+                } 
+                <option>25000</option>
+                <option>30000</option>
+                </select>
               </c-col>
 
                <c-col [md]="4">
                 <label cLabel for="dob">Scale Of Pay</label>
-                <input type="text" cFormControl id="scaleofpay"/>
+                <input type="text" cFormControl id="scaleofpay"
+                [(ngModel)]="staffService.staffModule.scaleOfpay"
+                name="scaleOfpay" required
+                #scaleOfpay="ngModel">
+                @if(!scaleOfpay.valid && scaleOfpay.touched)
+                {
+                  <div class="text-left text-danger">Scale of Pay is required</div>
+                } 
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="jondate">Joining Date</label>
-                <input type="date" cFormControl id="jondate" /> 
+                <input type="date" cFormControl id="jondate" 
+                [(ngModel)]="staffService.staffModule.joiningDate"
+                name="joiningDate" required
+                #joiningDate="ngModel">
+                @if(!joiningDate.valid && joiningDate.touched)
+                {
+                  <div class="text-left text-danger">joining Date is required</div>
+                }  
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="pdjd">Present Designation Joining Date</label>
-                <input type="date" cFormControl id="pdjd" />
-                
+                <input type="date" cFormControl id="pdjd" 
+                [(ngModel)]="staffService.staffModule.presentDesignationJoiningDate"
+                name="presentDesignationJoiningDate" required
+                #presentDesignationJoiningDate="ngModel">
+                @if(!presentDesignationJoiningDate.valid && presentDesignationJoiningDate.touched)
+                {
+                  <div class="text-left text-danger">Present Designation  joining Date is required</div>
+                } 
+  
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="edu">Education</label>
-                <input type="text" cFormControl id="edu" placeholder="Education" />
+                <input type="text" cFormControl id="edu" placeholder="Education" 
+                [(ngModel)]="staffService.staffModule.education"
+                name="education" required
+                #education="ngModel">
+                @if(!education.valid && education.touched)
+                {
+                  <div class="text-left text-danger">Education date is required </div>
+                } 
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="training">Training/Special Training (If Any)</label>
-                <input type="text" cFormControl id="training" placeholder="Training/Special Training">
+                <input type="text" cFormControl id="training" placeholder="Training/Special Training"
+                [(ngModel)]="staffService.staffModule.trainingSpecialTraining"
+                name="trainingSpecialTraining" required
+                #trainingSpecialTraining="ngModel">
               </c-col> 
               <c-col [md]="4">
                 <label cLabel for="edu">Linguistics</label>
-                <input type="text" cFormControl id="edu" placeholder="linguistics" />
+                <input type="text" cFormControl id="edu" placeholder="linguistics" 
+                [(ngModel)]="staffService.staffModule.lingutstics"
+                name="lingutstics" required
+                #lingutstics="ngModel">
+                @if(!lingutstics.valid && lingutstics.touched)
+                {
+                  <div class="text-left text-danger">Linguistics is required </div>
+                } 
               </c-col>
             </c-row>
             <c-row class="mt-4">
@@ -91,15 +195,27 @@
               </c-col>
               <c-col [md]="3">
                 <label cLabel for="fromdate_reporting">From Date</label>
-                <input type="date" cFormControl id="fromdate_reporting"/> 
-
+                <input type="date" cFormControl id="fromdate_reporting"
+                [(ngModel)]="staffService.staffModule.reportinFromDate"
+                name="reportinFromDate" required
+                #reportinFromDate="ngModel">
+                @if(!reportinFromDate.valid && reportinFromDate.touched)
+                {
+                  <div class="text-left text-danger">Reporting From Date is required </div>
+                } 
               </c-col>
               <c-col [md]="3">
                 <label cLabel for="todate_reporting">To Date</label>
-                <input type="date" cFormControl id="todate_reporting"/>
+                <input type="date" cFormControl id="todate_reporting"
+                [(ngModel)]="staffService.staffModule.reportingEndDate"
+                name="reportingEndDate" required
+                #reportingEndDate="ngModel">
+                @if(!reportingEndDate.valid && reportingEndDate.touched)
+                {
+                  <div class="text-left text-danger">Reporting End Date is required </div>
+                } 
               </c-col>
             </c-row>
-
           </c-card-body>
         </c-card>
         <div class="text-end mt-3">

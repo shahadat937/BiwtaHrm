@@ -16,7 +16,10 @@
           <h5>Appraisals should be recorded by signature in the appropriate box.</h5>
           <p>"A-1 Very Good", "A- Good", "B- Current level", "C-Below current level" & "D- Not satisfactory"</p>
         </div>
-        <form cForm>
+        <form cForm
+        #staffForm2="ngForm"
+        (submit)="onSubmit(staffForm2)"
+        novalidate>
           <div class="table-responsive">
             <table cTable [striped]="true">
               <thead>
@@ -37,35 +40,59 @@
                   <td>Intelligence and human activity</td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio1-1" name="group1" type="radio" />
                       <label cFormCheckLabel for="radio1-1"></label>
-                    </c-form-check>
+                      <input cFormCheckInput id="radio1-1" name="group1" type="radio" 
+                      [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio1"
+                    name="intelligenceAndHumanActivityRadio1" required
+                    #intelligenceAndHumanActivityRadio1="ngModel">
+                  </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio1-2" name="group1" type="radio" />
                       <label cFormCheckLabel for="radio1-2"></label>
+                      <input cFormCheckInput id="radio1-2" name="group1" type="radio" 
+                      [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio2"
+                      name="intelligenceAndHumanActivityRadio2" required
+                      #intelligenceAndHumanActivityRadio2="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio1-3" name="group1" type="radio" />
                       <label cFormCheckLabel for="radio1-3"></label>
+                      <input cFormCheckInput id="radio1-3" name="group1" type="radio" 
+                      [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio3"
+                      name="intelligenceAndHumanActivityRadio3" required
+                      #intelligenceAndHumanActivityRadio3="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio1-4" name="group1" type="radio" />
                       <label cFormCheckLabel for="radio1-4"></label>
+                      <input cFormCheckInput id="radio1-4" name="group1" type="radio" 
+                      [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio4"
+                      name="intelligenceAndHumanActivityRadio4" required
+                      #intelligenceAndHumanActivityRadio4="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio1-5" name="group1" type="radio" />
                       <label cFormCheckLabel for="radio1-5"></label>
+                      <input cFormCheckInput id="radio1-5" name="group1" type="radio" 
+                      [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio5"
+                      name="intelligenceAndHumanActivityRadio5" required
+                      #intelligenceAndHumanActivityRadio5="ngModel">
                     </c-form-check>
                   </td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl 
+                    [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivity"
+                    name="intelligenceAndHumanActivity" required
+                    #intelligenceAndHumanActivity="ngModel">
+                    @if(!intelligenceAndHumanActivity.valid && intelligenceAndHumanActivity.touched)
+                    {
+                      <div class="text-left text-danger">Intelligence and human activity is required </div>
+                    } 
+                  </td>
                 </tr>
                 <tr>
                   <td>2</td>
@@ -100,7 +127,16 @@
                       <label cFormCheckLabel for="radio2-5"></label>
                     </c-form-check>
                   </td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.professionalKnowledge"
+                    name="professionalKnowledge" required
+                    #professionalKnowledge="ngModel">
+                    @if(!professionalKnowledge.valid && professionalKnowledge.touched)
+                    {
+                      <div class="text-left text-danger">Professional Knowledge  is required </div>
+                    } 
+                  </td>
                 </tr>
                 <tr>
                   <td rowspan="3">3</td>
@@ -119,7 +155,16 @@
                   <td><input cFormCheckInput id="radio3a-3" name="group3a" type="radio" /></td>
                   <td><input cFormCheckInput id="radio3a-4" name="group3a" type="radio" /></td>
                   <td><input cFormCheckInput id="radio3a-5" name="group3a" type="radio" /></td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerWriting"
+                    name="expressivePowerWriting" required
+                    #expressivePowerWriting="ngModel">
+                    @if(!expressivePowerWriting.valid && expressivePowerWriting.touched)
+                    {
+                      <div class="text-left text-danger">Expressive Power Writing  is required </div>
+                    } 
+                  </td>
                 </tr>
                 <tr>
                   <td>&nbsp;&nbsp;&nbsp;B. Speaking</td>
@@ -128,7 +173,16 @@
                   <td><input cFormCheckInput id="radio3b-3" name="group3b" type="radio" /></td>
                   <td><input cFormCheckInput id="radio3b-4" name="group3b" type="radio" /></td>
                   <td><input cFormCheckInput id="radio3b-5" name="group3b" type="radio" /></td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerSpeaking"
+                    name="expressivePowerSpeaking" required
+                    #expressivePowerSpeaking="ngModel">
+                    @if(!expressivePowerSpeaking.valid && expressivePowerSpeaking.touched)
+                    {
+                      <div class="text-left text-danger">Expressive Power Speaking  is required </div>
+                    } 
+                  </td>
                 </tr>
                 <tr>
                   <td>4</td>
@@ -138,43 +192,18 @@
                   <td><input cFormCheckInput id="radio4-3" name="group4" type="radio" /></td>
                   <td><input cFormCheckInput id="radio4-4" name="group4" type="radio" /></td>
                   <td><input cFormCheckInput id="radio4-5" name="group4" type="radio" /></td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.initiative"
+                    name="initiative" required
+                    #initiative="ngModel">
+                    @if(!initiative.valid && initiative.touched)
+                    {
+                      <div class="text-left text-danger">Initiative is required </div>
+                    } 
+                  </td>
                 </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Initiative</td>
-                  <td>
-                    <c-form-check inline>
-                      <input cFormCheckInput id="radio4-1" name="group4" type="radio" />
-                      <label cFormCheckLabel for="radio4-1"></label>
-                    </c-form-check>
-                  </td>
-                  <td>
-                    <c-form-check inline>
-                      <input cFormCheckInput id="radio4-2" name="group4" type="radio" />
-                      <label cFormCheckLabel for="radio4-2"></label>
-                    </c-form-check>
-                  </td>
-                  <td>
-                    <c-form-check inline>
-                      <input cFormCheckInput id="radio4-3" name="group4" type="radio" />
-                      <label cFormCheckLabel for="radio4-3"></label>
-                    </c-form-check>
-                  </td>
-                  <td>
-                    <c-form-check inline>
-                      <input cFormCheckInput id="radio4-4" name="group4" type="radio" />
-                      <label cFormCheckLabel for="radio4-4"></label>
-                    </c-form-check>
-                  </td>
-                  <td>
-                    <c-form-check inline>
-                      <input cFormCheckInput id="radio4-5" name="group4" type="radio" />
-                      <label cFormCheckLabel for="radio4-5"></label>
-                    </c-form-check>
-                  </td>
-                  <td><input type="text" cFormControl></td>
-                </tr>
+               
                 <tr>
                   <td>5</td>
                   <td>Quality and Quantity of work</td>
@@ -208,7 +237,16 @@
                       <label cFormCheckLabel for="radio5-5"></label>
                     </c-form-check>
                   </td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.qualityAndQuantityOfWork"
+                    name="qualityAndQuantityOfWork" required
+                    #qualityAndQuantityOfWork="ngModel">
+                    @if(!qualityAndQuantityOfWork.valid && qualityAndQuantityOfWork.touched)
+                    {
+                      <div class="text-left text-danger">Quality And Quantity Of Work is required </div>
+                    } 
+                  </td>
                 </tr>
                 <tr>
                   <td>6</td>
@@ -243,7 +281,16 @@
                       <label cFormCheckLabel for="radio6-5"></label>
                     </c-form-check>
                   </td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.cooperationAndPrudence"
+                    name="cooperationAndPrudence" required
+                    #cooperationAndPrudence="ngModel">
+                    @if(!cooperationAndPrudence.valid && cooperationAndPrudence.touched)
+                    {
+                      <div class="text-left text-danger">Cooperation And Prudence is required </div>
+                    } 
+                  </td>
                 </tr>
                 <tr>
                   <td>7</td>
@@ -278,7 +325,16 @@
                       <label cFormCheckLabel for="radio7-5"></label>
                     </c-form-check>
                   </td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.interestAndHardWork"
+                    name="interestAndHardWork" required
+                    #interestAndHardWork="ngModel">
+                    @if(!interestAndHardWork.valid && interestAndHardWork.touched)
+                    {
+                      <div class="text-left text-danger">Interest and HardWork is required </div>
+                    } 
+                  </td>
                 </tr>
                 <tr>
                   <td rowspan="3">8</td>
@@ -297,7 +353,16 @@
                   <td><input cFormCheckInput id="radio8a-3" name="group8a" type="radio" /></td>
                   <td><input cFormCheckInput id="radio8a-4" name="group8a" type="radio" /></td>
                   <td><input cFormCheckInput id="radio8a-5" name="group8a" type="radio" /></td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.responsibilityGeneral"
+                    name="responsibilityGeneral" required
+                    #responsibilityGeneral="ngModel">
+                    @if(!responsibilityGeneral.valid && responsibilityGeneral.touched)
+                    {
+                      <div class="text-left text-danger">Responsibility General is required </div>
+                    } 
+                  </td>
                 </tr>
                 <tr>
                   <td>&nbsp;&nbsp;&nbsp;B. Financial Matters</td>
@@ -306,7 +371,16 @@
                   <td><input cFormCheckInput id="radio8b-3" name="group8b" type="radio" /></td>
                   <td><input cFormCheckInput id="radio8b-4" name="group8b" type="radio" /></td>
                   <td><input cFormCheckInput id="radio8b-5" name="group8b" type="radio" /></td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.responsibilityFinancialMatters"
+                    name="responsibilityFinancialMatters" required
+                    #responsibilityFinancialMatters="ngModel">
+                    @if(!responsibilityFinancialMatters.valid && responsibilityFinancialMatters.touched)
+                    {
+                      <div class="text-left text-danger">Responsibility Financial Matters is required </div>
+                    } 
+                  </td>
                 </tr>
                 
 
@@ -343,7 +417,16 @@
                       <label cFormCheckLabel for="radio9-5"></label>
                     </c-form-check>
                   </td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.integrityAndReputation"
+                    name="integrityAndReputation" required
+                    #integrityAndReputation="ngModel">
+                    @if(!integrityAndReputation.valid && integrityAndReputation.touched)
+                    {
+                      <div class="text-left text-danger">Integrity And Reputation is required </div>
+                    } 
+                  </td>
                 </tr>
                 <tr>
                   <td>10</td>
@@ -378,7 +461,16 @@
                       <label cFormCheckLabel for="radio10-5"></label>
                     </c-form-check>
                   </td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.personalityAndCharacter"
+                    name="personalityAndCharacter" required
+                    #personalityAndCharacter="ngModel">
+                    @if(!personalityAndCharacter.valid && personalityAndCharacter.touched)
+                    {
+                      <div class="text-left text-danger">Personality And Character is required </div>
+                    } 
+                  </td>
                 </tr>
                 <tr>
                   <td>11</td>
@@ -413,7 +505,16 @@
                       <label cFormCheckLabel for="radio11-5"></label>
                     </c-form-check>
                   </td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.health"
+                    name="health" required
+                    #health="ngModel">
+                    @if(!health.valid && health.touched)
+                    {
+                      <div class="text-left text-danger">Health is required </div>
+                    } 
+                  </td>
                 </tr>
                 <tr>
                   <td>12</td>
@@ -448,7 +549,16 @@
                       <label cFormCheckLabel for="radio12-5"></label>
                     </c-form-check>
                   </td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.punctuality"
+                    name="punctuality" required
+                    #punctuality="ngModel">
+                    @if(!punctuality.valid && punctuality.touched)
+                    {
+                      <div class="text-left text-danger">punctuality is required </div>
+                    } 
+                  </td>
                 </tr>
                 <tr>
                   <td>13</td>
@@ -483,12 +593,25 @@
                       <label cFormCheckLabel for="radio13-5"></label>
                     </c-form-check>
                   </td>
-                  <td><input type="text" cFormControl></td>
+                  <td>
+                    <input type="text" cFormControl
+                    [(ngModel)]="staffForm2Service.staffForm2module.senseOfDiscipline"
+                    name="senseOfDiscipline" required
+                    #senseOfDiscipline="ngModel">
+                    @if(!senseOfDiscipline.valid && senseOfDiscipline.touched)
+                    {
+                      <div class="text-left text-danger">Sense Of Discipline is required </div>
+                    } 
+                  </td>
                 </tr>
-
-
               </tbody>
             </table>
+          </div>
+          <div class="text-end mt-3">
+            <button cButton type="submit" [disabled]="!staffForm2.valid" [disabled]="loading">
+              Submit
+              <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+            </button>
           </div>
         </form>
       </c-card-body>
@@ -499,6 +622,7 @@
         <button cButton color="primary" [routerLink]="[
         '/appraisal/staffForm3']">To be continue...</button>
       </div>
+
     </c-card-footer>
   </c-card>
 </div>

@@ -402,6 +402,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpLanguageInfo, EmpLanguageInfoDto>().ReverseMap();
             CreateMap<EmpLanguageInfo, CreateEmpLanguageInfoDto>().ReverseMap();
+            CreateMap<EmpLanguageInfo, EmpLanguageInfoDto>()
+            .ForMember(dest => dest.LanguageName, opt => opt.MapFrom(src => src.Language.LanguageName))
+            .ForMember(dest => dest.CompetenceName, opt => opt.MapFrom(src => src.Competence.CompetenceName));
 
             CreateMap<EmpPhotoSign, EmpPhotoSignDto>().ReverseMap();
             CreateMap<EmpPhotoSign, CreateEmpPhotoSignDto>().ReverseMap();

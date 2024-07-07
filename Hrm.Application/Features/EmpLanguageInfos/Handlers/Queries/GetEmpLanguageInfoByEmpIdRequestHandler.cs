@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.DTOs.EmpLanguageInfo;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.EmpLanguageInfos.Handlers.Queries
 {
@@ -26,7 +27,16 @@ namespace Hrm.Application.Features.EmpLanguageInfos.Handlers.Queries
 
         public async Task<List<EmpLanguageInfoDto>> Handle(GetEmpLanguageInfoByEmpIdRequest request, CancellationToken cancellationToken)
         {
-            ICollection<EmpLanguageInfo> empLanguageInfos = await _EmpLanguageInfoRepository.FilterAsync(x => x.EmpId == request.Id);
+
+            List<EmpLanguageInfo> empLanguageInfos = await _EmpLanguageInfoRepository.Where(x => x.EmpId == request.Id)
+                .Include(x => x.Language)
+                .Include(x => x.Competence)
+                .ToListAsync(cancellationToken);
+
+            if (empLanguageInfos == null)
+            {
+                return null;
+            }
 
             List<EmpLanguageInfoDto> result = _mapper.Map<List<EmpLanguageInfoDto>>(empLanguageInfos);
 

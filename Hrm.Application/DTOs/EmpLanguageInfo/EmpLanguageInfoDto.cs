@@ -15,5 +15,8 @@ namespace Hrm.Application.DTOs.EmpLanguageInfo
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+
+        public string? LanguageName { get; set; }
+        public string? CompetenceName { get; set; }
     }
 }

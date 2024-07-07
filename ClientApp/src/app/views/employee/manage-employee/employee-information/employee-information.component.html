@@ -136,7 +136,7 @@
                 Employee Spouse Information
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover  *ngFor="let item of empSpouseInfo" class="mb-3 shadow">
+                <table cTable bordered hover  *ngFor="let item of empSpouseInfo" class="mb-3">
                     <tbody>
                         <tr>
                             <th>Spouse Name</th>
@@ -167,7 +167,7 @@
                 Employee Child Information
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover  *ngFor="let item of empChildInfo" class="mb-3 shadow">
+                <table cTable bordered hover  *ngFor="let item of empChildInfo" class="mb-3">
                     <tbody>
                         <tr>
                             <th>Child Name</th>
@@ -360,7 +360,7 @@
                 Employee Education Information
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover  *ngFor="let item of empEducationInfo" class="mb-3 shadow">
+                <table cTable bordered hover  *ngFor="let item of empEducationInfo" class="mb-3">
                     <tbody>
                         <tr>
                             <th>Exam Type</th>
@@ -383,6 +383,7 @@
                         <tr>
                             <th>Remark</th>
                             <td>{{item.remark}}</td>
+                            <th colspan="2"></th>
                         </tr>
                     </tbody>
                 </table>
@@ -395,7 +396,7 @@
                 Employee Psi & Training Information
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover  *ngFor="let item of empPsiTrainingInfo" class="mb-3 shadow">
+                <table cTable bordered hover  *ngFor="let item of empPsiTrainingInfo" class="mb-3">
                     <tbody>
                         <tr>
                             <th>Training Name</th>
@@ -412,6 +413,7 @@
                         <tr>
                             <th>Remark</th>
                             <td>{{item.remark}}</td>
+                            <th colspan="2"></th>
                         </tr>
                     </tbody>
                 </table>
@@ -424,7 +426,7 @@
                 Employee Bank Information
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover  *ngFor="let item of empBankInfo" class="mb-3 shadow">
+                <table cTable bordered hover  *ngFor="let item of empBankInfo" class="mb-3">
                     <tbody>
                         <tr>
                             <th>Account Name</th>
@@ -447,12 +449,36 @@
                         <tr>
                             <th>Remark</th>
                             <td>{{item.remark}}</td>
+                            <th colspan="2"></th>
                         </tr>
                     </tbody>
                 </table>
             </c-card-body>
         </c-card>
 
+        <!-- Employee Language Information -->
+        <c-card class="shadow mb-4">
+            <c-card-header class="text-center">
+                Employee Language Information
+            </c-card-header>
+            <c-card-body>
+                <table cTable bordered hover  *ngFor="let item of empLanguageInfo" class="mb-3">
+                    <tbody>
+                        <tr>
+                            <th>Language Name</th>
+                            <td>{{item.languageName}}</td>
+                            <th>Competence</th>
+                            <td>{{item.competenceName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                            <th colspan="2"></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
 
         
         

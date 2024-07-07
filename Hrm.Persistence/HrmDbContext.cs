@@ -691,6 +691,23 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.BranchId);
             });
 
+            modelBuilder.Entity<EmpLanguageInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpLanguageInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Language)
+                    .WithMany(eb => eb.EmpLanguageInfo)
+                    .HasForeignKey(e => e.LanguageId);
+
+                entity.HasOne(e => e.Competence)
+                    .WithMany(eb => eb.EmpLanguageInfo)
+                    .HasForeignKey(e => e.CompetenceId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;

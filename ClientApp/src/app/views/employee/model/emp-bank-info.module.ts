@@ -9,7 +9,11 @@ export class EmpBankInfoModule {
   routingNo: string;
   remark: string;
   menuPosition: number;
-  isActive: boolean
+  isActive: boolean;
+
+  accountTypeName: string = '';
+  bankName: string = '';
+  branchName: string = '';
 
   constructor() {
     this.id= 0;

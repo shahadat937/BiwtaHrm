@@ -662,15 +662,34 @@ namespace Hrm.Persistence
 
                 entity.HasOne(e => e.EmpBasicInfo)
                     .WithMany(eb => eb.EmpPsiTrainingInfo)
-                    .HasForeignKey(e => e.EmpId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .HasForeignKey(e => e.EmpId);
 
                 entity.HasOne(e => e.TrainingName)
                     .WithMany(eb => eb.EmpPsiTrainingInfo)
-                    .HasForeignKey(e => e.TrainingNameId)
-                    .OnDelete(DeleteBehavior.SetNull);
+                    .HasForeignKey(e => e.TrainingNameId);
             });
 
+            modelBuilder.Entity<EmpBankInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpBankInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.AccountType)
+                    .WithMany(eb => eb.EmpBankInfo)
+                    .HasForeignKey(e => e.AccountTypeId);
+
+                entity.HasOne(e => e.Bank)
+                    .WithMany(eb => eb.EmpBankInfo)
+                    .HasForeignKey(e => e.BankId);
+
+                entity.HasOne(e => e.BankBranch)
+                    .WithMany(eb => eb.EmpBankInfo)
+                    .HasForeignKey(e => e.BranchId);
+            });
 
             base.OnModelCreating(modelBuilder);
         }

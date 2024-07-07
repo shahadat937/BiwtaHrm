@@ -418,6 +418,40 @@
             </c-card-body>
         </c-card>
         
+        <!-- Employee Bank Information -->
+        <c-card class="shadow mb-4">
+            <c-card-header class="text-center">
+                Employee Bank Information
+            </c-card-header>
+            <c-card-body>
+                <table cTable bordered hover  *ngFor="let item of empBankInfo" class="mb-3 shadow">
+                    <tbody>
+                        <tr>
+                            <th>Account Name</th>
+                            <td>{{item.accountName}}</td>
+                            <th>Account Number</th>
+                            <td>{{item.accountNumber}}</td>
+                        </tr>
+                        <tr>
+                            <th>Account Type</th>
+                            <td>{{item.accountTypeName}}</td>
+                            <th>Bank Name</th>
+                            <td>{{item.bankName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Branch Name</th>
+                            <td>{{item.branchName}}</td>
+                            <th>Routing No</th>
+                            <td>{{item.routingNo}}</td>
+                        </tr>
+                        <tr>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
 
 
         

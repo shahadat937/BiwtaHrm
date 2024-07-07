@@ -27,6 +27,7 @@ import { EmpSpouseInfoModule } from '../../model/emp-spouse-info.module';
 import { EmpChildInfoModule } from '../../model/emp-child-info.module';
 import { EmpEducationInfoModule } from '../../model/emp-education-info.module';
 import { EmpPsiTrainingInfoModule } from '../../model/emp-psi-training-info.module';
+import { EmpBankInfoModule } from '../../model/emp-bank-info.module';
 
 @Component({
   selector: 'app-employee-information',
@@ -46,6 +47,7 @@ export class EmployeeInformationComponent implements OnInit {
   empChildInfo : EmpChildInfoModule[] = [];
   empEducationInfo : EmpEducationInfoModule[] = [];
   empPsiTrainingInfo : EmpPsiTrainingInfoModule[] = [];
+  empBankInfo : EmpBankInfoModule[] = [];
   empPhoto : string = '';
   empSignature : string = '';
 
@@ -81,6 +83,7 @@ export class EmployeeInformationComponent implements OnInit {
       this.getEmpChildInfoByEmpId();
       this.getEmpEducationInfoByEmpId();
       this.getEmpPsiTrainingInfoByEmpId(); 
+      this.getEmpBankInfoByEmpId();
     }
   
     handleRouteParams() {
@@ -140,6 +143,12 @@ export class EmployeeInformationComponent implements OnInit {
     getEmpPsiTrainingInfoByEmpId(){
       this.empPsiTrainingInfoService.findByEmpId(this.employeeId).subscribe((res) => {
         this.empPsiTrainingInfo = res;
+      });
+    }
+    
+    getEmpBankInfoByEmpId(){
+      this.empBankInfoService.findByEmpId(this.employeeId).subscribe((res) => {
+        this.empBankInfo = res;
       });
     }
 

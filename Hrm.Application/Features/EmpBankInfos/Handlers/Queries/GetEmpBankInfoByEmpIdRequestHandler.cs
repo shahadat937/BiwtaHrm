@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.DTOs.EmpBankInfo;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.EmpBankInfos.Handlers.Queries
 {
@@ -26,7 +27,16 @@ namespace Hrm.Application.Features.EmpBankInfos.Handlers.Queries
 
         public async Task<List<EmpBankInfoDto>> Handle(GetEmpBankInfoByEmpIdRequest request, CancellationToken cancellationToken)
         {
-            ICollection<EmpBankInfo> empBankInfos = await _EmpBankInfoRepository.FilterAsync(x => x.EmpId == request.Id);
+            List<EmpBankInfo> empBankInfos = await _EmpBankInfoRepository.Where(x => x.EmpId == request.Id)
+                .Include(x => x.AccountType)
+                .Include(x => x.Bank)
+                .Include(x => x.BankBranch)
+                .ToListAsync(cancellationToken);
+
+            if (empBankInfos == null)
+            {
+                return null;
+            }
 
             List<EmpBankInfoDto> result = _mapper.Map<List<EmpBankInfoDto>>(empBankInfos);
 

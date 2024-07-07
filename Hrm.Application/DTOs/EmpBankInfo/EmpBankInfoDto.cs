@@ -19,5 +19,9 @@ namespace Hrm.Application.DTOs.EmpBankInfo
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+
+        public string? AccountTypeName { get; set; }
+        public string? BankName { get; set; }
+        public string? BranchName { get; set; }
     }
 }

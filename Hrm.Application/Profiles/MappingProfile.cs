@@ -392,6 +392,10 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpBankInfo, EmpBankInfoDto>().ReverseMap();
             CreateMap<EmpBankInfo, CreateEmpBankInfoDto>().ReverseMap();
+            CreateMap<EmpBankInfo, EmpBankInfoDto>()
+            .ForMember(dest => dest.AccountTypeName, opt => opt.MapFrom(src => src.AccountType.BankAccountTypeName))
+            .ForMember(dest => dest.BankName, opt => opt.MapFrom(src => src.Bank.BankName))
+            .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.BankBranch.BankBranchName));
 
             CreateMap<EmpForeignTourInfo, EmpForeignTourInfoDto>().ReverseMap();
             CreateMap<EmpForeignTourInfo, CreateEmpForeignTourInfoDto>().ReverseMap();

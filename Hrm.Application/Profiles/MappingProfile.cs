@@ -441,6 +441,8 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Holidays, HolidayDto>()
             .ForMember(dest => dest.YearName, opt => opt.MapFrom(src => src.Year.YearName))
+            .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
+            .ForMember(dest => dest.OfficeBranchName, opt => opt.MapFrom(src => src.OfficeBranch.BranchName))
             .ForMember(dest => dest.HolidayTypeName, opt => opt.MapFrom(src => src.HolidayType.HolidayTypeName));
 
             CreateMap<Attendance, AttendanceDto>()

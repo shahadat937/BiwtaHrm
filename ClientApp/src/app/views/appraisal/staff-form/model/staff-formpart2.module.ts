@@ -1,12 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
-
-
-@NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
-})
-export class StaffFormpart2Module { }
+export class StaffFormpart2Module { 
+  intelligenceAndHumanActivity: string = '';
+  intelligenceAndHumanActivityRadio: number =0;
+  professionalKnowledge: string = '';
+  expressivePowerWriting: string = '';
+  expressivePowerSpeaking: string = '';
+  initiative: string = '';
+  qualityAndQuantityOfWork: string = '';
+  cooperationAndPrudence: string = '';
+  interestAndHardWork: string = '';
+  responsibilityGeneral: string = '';
+  responsibilityFinancialMatters: string = '';
+  integrityAndReputation: string = '';
+  personalityAndCharacter: string = '';
+  health: string = '';
+  punctuality: string = '';
+  senseOfDiscipline: string = '';
+}

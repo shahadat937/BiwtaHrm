@@ -1,10 +1,29 @@
 <c-card>
+    <c-card-header class="d-flex justify-content-between">
+        <div>
+            <h5>Employee Information</h5>
+        </div>
+        <div>
+            <button cButton color="danger" [routerLink]="['/employee/manageEmployee']" class="text-light">Back</button>
+        </div>
+    </c-card-header>
     <c-card-body>
 
         <!-- Employee Photo and Signature -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Photo and Signature
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Photo and Signature
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('empPhotoSign')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-emp-photo-sign *ngIf="visibleComponent === 'empPhotoSign'" [empId]="empId" [pNo]="pNo" (close)="toggleComponent('empPhotoSign')"></app-emp-photo-sign>
             </c-card-header>
             <c-card-body>
                 <div class="d-flex justify-content-between">
@@ -22,8 +41,20 @@
 
         <!-- Employee Basic Information -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Basic Information
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Basic Information
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('empBasicInfo')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-basic-information *ngIf="visibleComponent === 'empBasicInfo'" [empId]="empId" 
+                    (close)="toggleComponent('empBasicInfo')"></app-basic-information>
             </c-card-header>
             <c-card-body>
                 <table cTable bordered hover>
@@ -53,8 +84,20 @@
         
         <!-- Employee Personal Information -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Personal Information
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Personal Information
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('personalInfo')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-personal-information *ngIf="visibleComponent === 'personalInfo'" [empId]="empId" 
+                (close)="toggleComponent('personalInfo')"></app-personal-information>
             </c-card-header>
             <c-card-body>
                 <table cTable bordered hover>
@@ -132,8 +175,20 @@
          
         <!-- Employee Spouse Information -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Spouse Information
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Spouse Information
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('spouseInfo')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-emp-spouse-info *ngIf="visibleComponent === 'spouseInfo'" [empId]="empId" 
+                (close)="toggleComponent('spouseInfo')"></app-emp-spouse-info>
             </c-card-header>
             <c-card-body>
                 <table cTable bordered hover  *ngFor="let item of empSpouseInfo" class="mb-3">
@@ -163,8 +218,20 @@
         
         <!-- Employee Child Information -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Child Information
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Child Information
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('childrenInfo')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-emp-child-info *ngIf="visibleComponent === 'childrenInfo'" [empId]="empId" 
+                (close)="toggleComponent('childrenInfo')"></app-emp-child-info>
             </c-card-header>
             <c-card-body>
                 <table cTable bordered hover  *ngFor="let item of empChildInfo" class="mb-3">
@@ -206,8 +273,20 @@
 
         <!-- Employee Job Details Information -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Job Details
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Job Details Information
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('jobDetails')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-emp-job-details *ngIf="visibleComponent === 'jobDetails'" [empId]="empId" 
+                (close)="toggleComponent('jobDetails')"></app-emp-job-details>
             </c-card-header>
             <c-card-body>
                 <table cTable bordered hover>
@@ -262,8 +341,20 @@
 
         <!-- Employee Present Address Information -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Present/Mailing Address
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Present Address Information
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('presentAddress')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-emp-present-address *ngIf="visibleComponent === 'presentAddress'" [empId]="empId" 
+                (close)="toggleComponent('presentAddress')"></app-emp-present-address>
             </c-card-header>
             <c-card-body>
                 <table cTable bordered hover>
@@ -309,8 +400,20 @@
         
         <!-- Employee Permanent Address Information -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Permanent Address
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Permanent Address Information
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('permanentAddress')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-emp-permanent-address *ngIf="visibleComponent === 'permanentAddress'" [empId]="empId" 
+                (close)="toggleComponent('permanentAddress')"></app-emp-permanent-address>
             </c-card-header>
             <c-card-body>
                 <table cTable bordered hover>
@@ -356,8 +459,20 @@
         
         <!-- Employee Education Information -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Education Information
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Education Information
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('educationInfo')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-emp-education-info *ngIf="visibleComponent === 'educationInfo'" [empId]="empId" 
+                (close)="toggleComponent('educationInfo')"></app-emp-education-info>
             </c-card-header>
             <c-card-body>
                 <table cTable bordered hover  *ngFor="let item of empEducationInfo" class="mb-3">
@@ -392,8 +507,20 @@
         
         <!-- Employee Psi and Training Information -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Psi & Training Information
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Psi and Training Information
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('psiTrainingInfo')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-emp-psi-training-info *ngIf="visibleComponent === 'psiTrainingInfo'" [empId]="empId" 
+                (close)="toggleComponent('psiTrainingInfo')"></app-emp-psi-training-info>
             </c-card-header>
             <c-card-body>
                 <table cTable bordered hover  *ngFor="let item of empPsiTrainingInfo" class="mb-3">
@@ -422,8 +549,20 @@
         
         <!-- Employee Bank Information -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Bank Information
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Bank Information
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('bankInfo')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-emp-bank-info *ngIf="visibleComponent === 'bankInfo'" [empId]="empId" 
+                (close)="toggleComponent('bankInfo')"></app-emp-bank-info>
             </c-card-header>
             <c-card-body>
                 <table cTable bordered hover  *ngFor="let item of empBankInfo" class="mb-3">
@@ -458,8 +597,20 @@
 
         <!-- Employee Language Information -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Language Information
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Language Information
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('languageInfo')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-emp-language-info *ngIf="visibleComponent === 'languageInfo'" [empId]="empId" 
+                (close)="toggleComponent('languageInfo')"></app-emp-language-info>
             </c-card-header>
             <c-card-body>
                 <table cTable bordered hover  *ngFor="let item of empLanguageInfo" class="mb-3">
@@ -482,8 +633,20 @@
         
         <!-- Employee Foreign Tour Information -->
         <c-card class="shadow mb-4">
-            <c-card-header class="text-center">
-                Employee Foreign Tour Information
+            <c-card-header>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Employee Foreign Tour Information
+                    </div>
+                    <div class="edit-button">
+                        <button (click)="toggleComponent('foreignTour')">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <app-emp-foreign-tour-info *ngIf="visibleComponent === 'foreignTour'" [empId]="empId" 
+                (close)="toggleComponent('foreignTour')"></app-emp-foreign-tour-info>
             </c-card-header>
             <c-card-body>
                 <table cTable bordered hover  *ngFor="let item of empForeignTourInfo" class="mb-3">

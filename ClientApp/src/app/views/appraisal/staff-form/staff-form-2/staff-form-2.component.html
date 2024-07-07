@@ -40,97 +40,103 @@
                   <td>Intelligence and human activity</td>
                   <td>
                     <c-form-check inline>
-                      <label cFormCheckLabel for="radio1-1"></label>
-                      <input cFormCheckInput id="radio1-1" name="group1" type="radio" 
-                      [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio1"
-                    name="intelligenceAndHumanActivityRadio1" required
-                    #intelligenceAndHumanActivityRadio1="ngModel">
-                  </c-form-check>
-                  </td>
-                  <td>
-                    <c-form-check inline>
-                      <label cFormCheckLabel for="radio1-2"></label>
-                      <input cFormCheckInput id="radio1-2" name="group1" type="radio" 
-                      [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio2"
-                      name="intelligenceAndHumanActivityRadio2" required
-                      #intelligenceAndHumanActivityRadio2="ngModel">
+                      <input cFormCheckInput type="radio" value="5"
+                             [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio"
+                             name="intelligenceAndHumanActivityRadio"
+                             #intelligenceAndHumanActivityRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <label cFormCheckLabel for="radio1-3"></label>
-                      <input cFormCheckInput id="radio1-3" name="group1" type="radio" 
-                      [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio3"
-                      name="intelligenceAndHumanActivityRadio3" required
-                      #intelligenceAndHumanActivityRadio3="ngModel">
+                      <input cFormCheckInput type="radio" value="4"
+                             [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio"
+                             name="intelligenceAndHumanActivityRadio"
+                             #intelligenceAndHumanActivityRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <label cFormCheckLabel for="radio1-4"></label>
-                      <input cFormCheckInput id="radio1-4" name="group1" type="radio" 
-                      [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio4"
-                      name="intelligenceAndHumanActivityRadio4" required
-                      #intelligenceAndHumanActivityRadio4="ngModel">
+                      <input cFormCheckInput type="radio" value="3"
+                             [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio"
+                             name="intelligenceAndHumanActivityRadio"
+                             #intelligenceAndHumanActivityRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <label cFormCheckLabel for="radio1-5"></label>
-                      <input cFormCheckInput id="radio1-5" name="group1" type="radio" 
-                      [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio5"
-                      name="intelligenceAndHumanActivityRadio5" required
-                      #intelligenceAndHumanActivityRadio5="ngModel">
+                      <input cFormCheckInput type="radio" value="2"
+                             [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio"
+                             name="intelligenceAndHumanActivityRadio"
+                             #intelligenceAndHumanActivityRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
-                    <input type="text" cFormControl 
-                    [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivity"
-                    name="intelligenceAndHumanActivity" required
-                    #intelligenceAndHumanActivity="ngModel">
-                    @if(!intelligenceAndHumanActivity.valid && intelligenceAndHumanActivity.touched)
-                    {
-                      <div class="text-left text-danger">Intelligence and human activity is required </div>
-                    } 
+                    <c-form-check inline>
+                      <input cFormCheckInput type="radio" value="1"
+                             [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivityRadio"
+                             name="intelligenceAndHumanActivityRadio"
+                             #intelligenceAndHumanActivityRadio="ngModel">
+                    </c-form-check>
+                  </td>
+                  <td>
+                    <input type="text" cFormControl
+                           [(ngModel)]="staffForm2Service.staffForm2module.intelligenceAndHumanActivity"
+                           name="intelligenceAndHumanActivity" 
+                           #intelligenceAndHumanActivity="ngModel">
+                          @if (!intelligenceAndHumanActivity.valid && intelligenceAndHumanActivity.touched)
+                          {
+                            <div class="text-left text-danger">Intelligence and human activity is required</div>
+                          }
                   </td>
                 </tr>
+                
                 <tr>
                   <td>2</td>
                   <td>Professional Knowledge</td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio2-1" name="group2" type="radio" />
-                      <label cFormCheckLabel for="radio2-1"></label>
+                      <input cFormCheckInput  type="radio" value="5" 
+                      [(ngModel)]="staffForm2Service.staffForm2module.professionalKnowledgeRadio"
+                      name="professionalKnowledgeRadio"
+                      #professionalKnowledgeRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio2-2" name="group2" type="radio" />
-                      <label cFormCheckLabel for="radio2-2"></label>
+                      <input cFormCheckInput  type="radio" value="4" 
+                      [(ngModel)]="staffForm2Service.staffForm2module.professionalKnowledgeRadio"
+                      name="professionalKnowledgeRadio"
+                      #professionalKnowledgeRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio2-3" name="group2" type="radio" />
-                      <label cFormCheckLabel for="radio2-3"></label>
+                      <input cFormCheckInput  type="radio" value="3" 
+                      [(ngModel)]="staffForm2Service.staffForm2module.professionalKnowledgeRadio"
+                      name="professionalKnowledgeRadio"
+                      #professionalKnowledgeRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio2-4" name="group2" type="radio" />
-                      <label cFormCheckLabel for="radio2-4"></label>
+                      <input cFormCheckInput  type="radio" value="2" 
+                      [(ngModel)]="staffForm2Service.staffForm2module.professionalKnowledgeRadio"
+                      name="professionalKnowledgeRadio"
+                      #professionalKnowledgeRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio2-5" name="group2" type="radio" />
-                      <label cFormCheckLabel for="radio2-5"></label>
+                      <input cFormCheckInput  type="radio" value="1" 
+                      [(ngModel)]="staffForm2Service.staffForm2module.professionalKnowledgeRadio"
+                      name="professionalKnowledgeRadio"
+                      #professionalKnowledgeRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.professionalKnowledge"
-                    name="professionalKnowledge" required
+                    name="professionalKnowledge" 
                     #professionalKnowledge="ngModel">
                     @if(!professionalKnowledge.valid && professionalKnowledge.touched)
                     {
@@ -150,15 +156,40 @@
                 </tr>
                 <tr>
                   <td>&nbsp;&nbsp;&nbsp;A. Writing</td>
-                  <td><input cFormCheckInput id="radio3a-1" name="group3a" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio3a-2" name="group3a" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio3a-3" name="group3a" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio3a-4" name="group3a" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio3a-5" name="group3a" type="radio" /></td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="5"
+                    [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerWritingRadio"
+                    name="expressivePowerWritingRadio"
+                    #expressivePowerWritingRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="4"
+                    [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerWritingRadio"
+                    name="expressivePowerWritingRadio"
+                    #expressivePowerWritingRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="3"
+                    [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerWritingRadio"
+                    name="expressivePowerWritingRadio"
+                    #expressivePowerWritingRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="2"
+                    [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerWritingRadio"
+                    name="expressivePowerWritingRadio"
+                    #expressivePowerWritingRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="1"
+                    [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerWritingRadio"
+                    name="expressivePowerWritingRadio"
+                    #expressivePowerWritingRadio="ngModel">
+                  </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerWriting"
-                    name="expressivePowerWriting" required
+                    name="expressivePowerWriting" 
                     #expressivePowerWriting="ngModel">
                     @if(!expressivePowerWriting.valid && expressivePowerWriting.touched)
                     {
@@ -168,15 +199,40 @@
                 </tr>
                 <tr>
                   <td>&nbsp;&nbsp;&nbsp;B. Speaking</td>
-                  <td><input cFormCheckInput id="radio3b-1" name="group3b" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio3b-2" name="group3b" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio3b-3" name="group3b" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio3b-4" name="group3b" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio3b-5" name="group3b" type="radio" /></td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="5"
+                    [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerSpeakingRadio"
+                    name="expressivePowerSpeakingRadio"
+                    #expressivePowerSpeakingRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="4"
+                    [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerSpeakingRadio"
+                    name="expressivePowerSpeakingRadio"
+                    #expressivePowerSpeakingRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="3"
+                    [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerSpeakingRadio"
+                    name="expressivePowerSpeakingRadio"
+                    #expressivePowerSpeakingRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="2"
+                    [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerSpeakingRadio"
+                    name="expressivePowerSpeakingRadio"
+                    #expressivePowerSpeakingRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="1"
+                    [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerSpeakingRadio"
+                    name="expressivePowerSpeakingRadio"
+                    #expressivePowerSpeakingRadio="ngModel">
+                  </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.expressivePowerSpeaking"
-                    name="expressivePowerSpeaking" required
+                    name="expressivePowerSpeaking" 
                     #expressivePowerSpeaking="ngModel">
                     @if(!expressivePowerSpeaking.valid && expressivePowerSpeaking.touched)
                     {
@@ -187,15 +243,40 @@
                 <tr>
                   <td>4</td>
                   <td>Initiative</td>
-                  <td><input cFormCheckInput id="radio4-1" name="group4" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio4-2" name="group4" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio4-3" name="group4" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio4-4" name="group4" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio4-5" name="group4" type="radio" /></td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="5"
+                    [(ngModel)]="staffForm2Service.staffForm2module.initiativeRadio"
+                    name="initiativeRadio"
+                    #initiativeRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="4"
+                    [(ngModel)]="staffForm2Service.staffForm2module.initiativeRadio"
+                    name="initiativeRadio"
+                    #initiativeRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="3"
+                    [(ngModel)]="staffForm2Service.staffForm2module.initiativeRadio"
+                    name="initiativeRadio"
+                    #initiativeRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="2"
+                    [(ngModel)]="staffForm2Service.staffForm2module.initiativeRadio"
+                    name="initiativeRadio"
+                    #initiativeRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio" value="1"
+                    [(ngModel)]="staffForm2Service.staffForm2module.initiativeRadio"
+                    name="initiativeRadio"
+                    #initiativeRadio="ngModel">
+                  </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.initiative"
-                    name="initiative" required
+                    name="initiative" 
                     #initiative="ngModel">
                     @if(!initiative.valid && initiative.touched)
                     {
@@ -209,38 +290,48 @@
                   <td>Quality and Quantity of work</td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio5-1" name="group5" type="radio" />
-                      <label cFormCheckLabel for="radio5-1"></label>
+                      <input cFormCheckInput type="radio" value="5"
+                      [(ngModel)]="staffForm2Service.staffForm2module.qualityAndQuantityOfWorkRadio"
+                      name="qualityAndQuantityOfWorkRadio"
+                      #qualityAndQuantityOfWorkRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio5-2" name="group5" type="radio" />
-                      <label cFormCheckLabel for="radio5-2"></label>
+                      <input cFormCheckInput type="radio" value="4"
+                      [(ngModel)]="staffForm2Service.staffForm2module.qualityAndQuantityOfWorkRadio"
+                      name="qualityAndQuantityOfWorkRadio"
+                      #qualityAndQuantityOfWorkRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio5-3" name="group5" type="radio" />
-                      <label cFormCheckLabel for="radio5-3"></label>
+                      <input cFormCheckInput type="radio" value="3"
+                      [(ngModel)]="staffForm2Service.staffForm2module.qualityAndQuantityOfWorkRadio"
+                      name="qualityAndQuantityOfWorkRadio"
+                      #qualityAndQuantityOfWorkRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio5-4" name="group5" type="radio" />
-                      <label cFormCheckLabel for="radio5-4"></label>
+                      <input cFormCheckInput type="radio" value="2"
+                      [(ngModel)]="staffForm2Service.staffForm2module.qualityAndQuantityOfWorkRadio"
+                      name="qualityAndQuantityOfWorkRadio"
+                      #qualityAndQuantityOfWorkRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio5-5" name="group5" type="radio" />
-                      <label cFormCheckLabel for="radio5-5"></label>
+                      <input cFormCheckInput type="radio" value="1"
+                      [(ngModel)]="staffForm2Service.staffForm2module.qualityAndQuantityOfWorkRadio"
+                      name="qualityAndQuantityOfWorkRadio"
+                      #qualityAndQuantityOfWorkRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.qualityAndQuantityOfWork"
-                    name="qualityAndQuantityOfWork" required
+                    name="qualityAndQuantityOfWork" 
                     #qualityAndQuantityOfWork="ngModel">
                     @if(!qualityAndQuantityOfWork.valid && qualityAndQuantityOfWork.touched)
                     {
@@ -253,38 +344,48 @@
                   <td>Cooperation and prudence</td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio6-1" name="group6" type="radio" />
-                      <label cFormCheckLabel for="radio6-1"></label>
+                      <input cFormCheckInput type="radio" value="5"
+                      [(ngModel)]="staffForm2Service.staffForm2module.cooperationAndPrudenceRadio"
+                      name="cooperationAndPrudenceRadio"
+                      #cooperationAndPrudenceRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio6-2" name="group6" type="radio" />
-                      <label cFormCheckLabel for="radio6-2"></label>
+                      <input cFormCheckInput type="radio" value="4"
+                      [(ngModel)]="staffForm2Service.staffForm2module.cooperationAndPrudenceRadio"
+                      name="cooperationAndPrudenceRadio"
+                      #cooperationAndPrudenceRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio6-3" name="group6" type="radio" />
-                      <label cFormCheckLabel for="radio6-3"></label>
+                      <input cFormCheckInput type="radio" value="3"
+                      [(ngModel)]="staffForm2Service.staffForm2module.cooperationAndPrudenceRadio"
+                      name="cooperationAndPrudenceRadio"
+                      #cooperationAndPrudenceRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio6-4" name="group6" type="radio" />
-                      <label cFormCheckLabel for="radio6-4"></label>
+                      <input cFormCheckInput type="radio" value="2"
+                      [(ngModel)]="staffForm2Service.staffForm2module.cooperationAndPrudenceRadio"
+                      name="cooperationAndPrudenceRadio"
+                      #cooperationAndPrudenceRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio6-5" name="group6" type="radio" />
-                      <label cFormCheckLabel for="radio6-5"></label>
+                      <input cFormCheckInput type="radio" value="1"
+                      [(ngModel)]="staffForm2Service.staffForm2module.cooperationAndPrudenceRadio"
+                      name="cooperationAndPrudenceRadio"
+                      #cooperationAndPrudenceRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.cooperationAndPrudence"
-                    name="cooperationAndPrudence" required
+                    name="cooperationAndPrudence" 
                     #cooperationAndPrudence="ngModel">
                     @if(!cooperationAndPrudence.valid && cooperationAndPrudence.touched)
                     {
@@ -297,38 +398,48 @@
                   <td>Interest and hard work</td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio7-1" name="group7" type="radio" />
-                      <label cFormCheckLabel for="radio7-1"></label>
+                      <input cFormCheckInput type="radio" value="5"
+                      [(ngModel)]="staffForm2Service.staffForm2module.interestAndHardWorkRadio"
+                      name="interestAndHardWorkRadio"
+                      #interestAndHardWorkRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio7-2" name="group7" type="radio" />
-                      <label cFormCheckLabel for="radio7-2"></label>
+                      <input cFormCheckInput type="radio" value="4"
+                      [(ngModel)]="staffForm2Service.staffForm2module.interestAndHardWorkRadio"
+                      name="interestAndHardWorkRadio"
+                      #interestAndHardWorkRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio7-3" name="group7" type="radio" />
-                      <label cFormCheckLabel for="radio7-3"></label>
+                      <input cFormCheckInput type="radio" value="3"
+                      [(ngModel)]="staffForm2Service.staffForm2module.interestAndHardWorkRadio"
+                      name="interestAndHardWorkRadio"
+                      #interestAndHardWorkRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio7-4" name="group7" type="radio" />
-                      <label cFormCheckLabel for="radio7-4"></label>
+                      <input cFormCheckInput type="radio" value="2"
+                      [(ngModel)]="staffForm2Service.staffForm2module.interestAndHardWorkRadio"
+                      name="interestAndHardWorkRadio"
+                      #interestAndHardWorkRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio7-5" name="group7" type="radio" />
-                      <label cFormCheckLabel for="radio7-5"></label>
+                      <input cFormCheckInput type="radio" value="1"
+                      [(ngModel)]="staffForm2Service.staffForm2module.interestAndHardWorkRadio"
+                      name="interestAndHardWorkRadio"
+                      #interestAndHardWorkRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.interestAndHardWork"
-                    name="interestAndHardWork" required
+                    name="interestAndHardWork" 
                     #interestAndHardWork="ngModel">
                     @if(!interestAndHardWork.valid && interestAndHardWork.touched)
                     {
@@ -348,15 +459,40 @@
                 </tr>
                 <tr>
                   <td>&nbsp;&nbsp;&nbsp;A. General</td>
-                  <td><input cFormCheckInput id="radio8a-1" name="group8a" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio8a-2" name="group8a" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio8a-3" name="group8a" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio8a-4" name="group8a" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio8a-5" name="group8a" type="radio" /></td>
+                  <td>
+                    <input cFormCheckInput  type="radio"  value="5"
+                    [(ngModel)]="staffForm2Service.staffForm2module.responsibilityGeneralRadio"
+                      name="responsibilityGeneralRadio"
+                    #responsibilityGeneralRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio"  value="4"
+                    [(ngModel)]="staffForm2Service.staffForm2module.responsibilityGeneralRadio"
+                      name="responsibilityGeneralRadio"
+                    #responsibilityGeneralRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio"  value="3"
+                    [(ngModel)]="staffForm2Service.staffForm2module.responsibilityGeneralRadio"
+                      name="responsibilityGeneralRadio"
+                    #responsibilityGeneralRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio"  value="2"
+                    [(ngModel)]="staffForm2Service.staffForm2module.responsibilityGeneralRadio"
+                      name="responsibilityGeneralRadio"
+                    #responsibilityGeneralRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio"  value="1"
+                    [(ngModel)]="staffForm2Service.staffForm2module.responsibilityGeneralRadio"
+                      name="responsibilityGeneralRadio"
+                    #responsibilityGeneralRadio="ngModel">
+                  </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.responsibilityGeneral"
-                    name="responsibilityGeneral" required
+                    name="responsibilityGeneral" 
                     #responsibilityGeneral="ngModel">
                     @if(!responsibilityGeneral.valid && responsibilityGeneral.touched)
                     {
@@ -366,15 +502,40 @@
                 </tr>
                 <tr>
                   <td>&nbsp;&nbsp;&nbsp;B. Financial Matters</td>
-                  <td><input cFormCheckInput id="radio8b-1" name="group8b" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio8b-2" name="group8b" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio8b-3" name="group8b" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio8b-4" name="group8b" type="radio" /></td>
-                  <td><input cFormCheckInput id="radio8b-5" name="group8b" type="radio" /></td>
+                  <td>
+                    <input cFormCheckInput  type="radio"  value="5"
+                    [(ngModel)]="staffForm2Service.staffForm2module.responsibilityFinancialMattersRadio"
+                      name="responsibilityFinancialMattersRadio"
+                    #responsibilityFinancialMattersRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio"  value="4"
+                    [(ngModel)]="staffForm2Service.staffForm2module.responsibilityFinancialMattersRadio"
+                      name="responsibilityFinancialMattersRadio"
+                    #responsibilityFinancialMattersRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio"  value="3"
+                    [(ngModel)]="staffForm2Service.staffForm2module.responsibilityFinancialMattersRadio"
+                      name="responsibilityFinancialMattersRadio"
+                    #responsibilityFinancialMattersRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio"  value="2"
+                    [(ngModel)]="staffForm2Service.staffForm2module.responsibilityFinancialMattersRadio"
+                      name="responsibilityFinancialMattersRadio"
+                    #responsibilityFinancialMattersRadio="ngModel">
+                  </td>
+                  <td>
+                    <input cFormCheckInput  type="radio"  value="1"
+                    [(ngModel)]="staffForm2Service.staffForm2module.responsibilityFinancialMattersRadio"
+                      name="responsibilityFinancialMattersRadio"
+                    #responsibilityFinancialMattersRadio="ngModel">
+                  </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.responsibilityFinancialMatters"
-                    name="responsibilityFinancialMatters" required
+                    name="responsibilityFinancialMatters" 
                     #responsibilityFinancialMatters="ngModel">
                     @if(!responsibilityFinancialMatters.valid && responsibilityFinancialMatters.touched)
                     {
@@ -389,38 +550,48 @@
                   <td>Integrity and Reputation</td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio9-1" name="group9" type="radio" />
-                      <label cFormCheckLabel for="radio9-1"></label>
+                      <input cFormCheckInput type="radio" value="5"
+                      [(ngModel)]="staffForm2Service.staffForm2module.integrityAndReputationRadio"
+                      name="integrityAndReputationRadio"
+                      #integrityAndReputationRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio9-2" name="group9" type="radio" />
-                      <label cFormCheckLabel for="radio9-2"></label>
+                      <input cFormCheckInput type="radio" value="4"
+                      [(ngModel)]="staffForm2Service.staffForm2module.integrityAndReputationRadio"
+                      name="integrityAndReputationRadio"
+                      #integrityAndReputationRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio9-3" name="group9" type="radio" />
-                      <label cFormCheckLabel for="radio9-3"></label>
+                      <input cFormCheckInput type="radio" value="3"
+                      [(ngModel)]="staffForm2Service.staffForm2module.integrityAndReputationRadio"
+                      name="integrityAndReputationRadio"
+                      #integrityAndReputationRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio9-4" name="group9" type="radio" />
-                      <label cFormCheckLabel for="radio9-4"></label>
+                      <input cFormCheckInput type="radio" value="2"
+                      [(ngModel)]="staffForm2Service.staffForm2module.integrityAndReputationRadio"
+                      name="integrityAndReputationRadio"
+                      #integrityAndReputationRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio9-5" name="group9" type="radio" />
-                      <label cFormCheckLabel for="radio9-5"></label>
+                      <input cFormCheckInput type="radio" value="1"
+                      [(ngModel)]="staffForm2Service.staffForm2module.integrityAndReputationRadio"
+                      name="integrityAndReputationRadio"
+                      #integrityAndReputationRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.integrityAndReputation"
-                    name="integrityAndReputation" required
+                    name="integrityAndReputation" 
                     #integrityAndReputation="ngModel">
                     @if(!integrityAndReputation.valid && integrityAndReputation.touched)
                     {
@@ -433,38 +604,48 @@
                   <td>Personality and Character</td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio10-1" name="group10" type="radio" />
-                      <label cFormCheckLabel for="radio10-1"></label>
+                      <input cFormCheckInput type="radio" value="5"
+                      [(ngModel)]="staffForm2Service.staffForm2module.personalityAndCharacterRadio"
+                      name="personalityAndCharacterRadio"
+                      #personalityAndCharacterRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio10-2" name="group10" type="radio" />
-                      <label cFormCheckLabel for="radio10-2"></label>
+                      <input cFormCheckInput type="radio" value="4"
+                      [(ngModel)]="staffForm2Service.staffForm2module.personalityAndCharacterRadio"
+                      name="personalityAndCharacterRadio"
+                      #personalityAndCharacterRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio10-3" name="group10" type="radio" />
-                      <label cFormCheckLabel for="radio10-3"></label>
+                      <input cFormCheckInput type="radio" value="3"
+                      [(ngModel)]="staffForm2Service.staffForm2module.personalityAndCharacterRadio"
+                      name="personalityAndCharacterRadio"
+                      #personalityAndCharacterRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio10-4" name="group10" type="radio" />
-                      <label cFormCheckLabel for="radio10-4"></label>
+                      <input cFormCheckInput type="radio" value="2"
+                      [(ngModel)]="staffForm2Service.staffForm2module.personalityAndCharacterRadio"
+                      name="personalityAndCharacterRadio"
+                      #personalityAndCharacterRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio10-5" name="group10" type="radio" />
-                      <label cFormCheckLabel for="radio10-5"></label>
+                      <input cFormCheckInput type="radio" value="1"
+                      [(ngModel)]="staffForm2Service.staffForm2module.personalityAndCharacterRadio"
+                      name="personalityAndCharacterRadio"
+                      #personalityAndCharacterRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.personalityAndCharacter"
-                    name="personalityAndCharacter" required
+                    name="personalityAndCharacter" 
                     #personalityAndCharacter="ngModel">
                     @if(!personalityAndCharacter.valid && personalityAndCharacter.touched)
                     {
@@ -477,38 +658,48 @@
                   <td>Health</td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio11-1" name="group11" type="radio" />
-                      <label cFormCheckLabel for="radio11-1"></label>
+                      <input cFormCheckInput type="radio" value="5"
+                      [(ngModel)]="staffForm2Service.staffForm2module.healthRadio"
+                      name="healthRadio"
+                      #healthRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio11-2" name="group11" type="radio" />
-                      <label cFormCheckLabel for="radio11-2"></label>
+                      <input cFormCheckInput type="radio" value="4"
+                      [(ngModel)]="staffForm2Service.staffForm2module.healthRadio"
+                      name="healthRadio"
+                      #healthRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio11-3" name="group11" type="radio" />
-                      <label cFormCheckLabel for="radio11-3"></label>
+                      <input cFormCheckInput type="radio" value="3"
+                      [(ngModel)]="staffForm2Service.staffForm2module.healthRadio"
+                      name="healthRadio"
+                      #healthRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio11-4" name="group11" type="radio" />
-                      <label cFormCheckLabel for="radio11-4"></label>
+                      <input cFormCheckInput type="radio" value="2"
+                      [(ngModel)]="staffForm2Service.staffForm2module.healthRadio"
+                      name="healthRadio"
+                      #healthRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio11-5" name="group11" type="radio" />
-                      <label cFormCheckLabel for="radio11-5"></label>
+                      <input cFormCheckInput type="radio" value="1"
+                      [(ngModel)]="staffForm2Service.staffForm2module.healthRadio"
+                      name="healthRadio"
+                      #healthRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.health"
-                    name="health" required
+                    name="health" 
                     #health="ngModel">
                     @if(!health.valid && health.touched)
                     {
@@ -521,38 +712,48 @@
                   <td>Punctuality</td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio12-1" name="group12" type="radio" />
-                      <label cFormCheckLabel for="radio12-1"></label>
+                      <input cFormCheckInput type="radio" value="5"
+                      [(ngModel)]="staffForm2Service.staffForm2module.punctualityRadio"
+                      name="punctualityRadio"
+                      #punctualityRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio12-2" name="group12" type="radio" />
-                      <label cFormCheckLabel for="radio12-2"></label>
+                      <input cFormCheckInput type="radio" value="4"
+                      [(ngModel)]="staffForm2Service.staffForm2module.punctualityRadio"
+                      name="punctualityRadio"
+                      #punctualityRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio12-3" name="group12" type="radio" />
-                      <label cFormCheckLabel for="radio12-3"></label>
+                      <input cFormCheckInput type="radio" value="3"
+                      [(ngModel)]="staffForm2Service.staffForm2module.punctualityRadio"
+                      name="punctualityRadio"
+                      #punctualityRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio12-4" name="group12" type="radio" />
-                      <label cFormCheckLabel for="radio12-4"></label>
+                      <input cFormCheckInput type="radio" value="2"
+                      [(ngModel)]="staffForm2Service.staffForm2module.punctualityRadio"
+                      name="punctualityRadio"
+                      #punctualityRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio12-5" name="group12" type="radio" />
-                      <label cFormCheckLabel for="radio12-5"></label>
+                      <input cFormCheckInput type="radio" value="1"
+                      [(ngModel)]="staffForm2Service.staffForm2module.punctualityRadio"
+                      name="punctualityRadio"
+                      #punctualityRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.punctuality"
-                    name="punctuality" required
+                    name="punctuality" 
                     #punctuality="ngModel">
                     @if(!punctuality.valid && punctuality.touched)
                     {
@@ -565,38 +766,48 @@
                   <td>Sense of Discipline</td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio13-1" name="group13" type="radio" />
-                      <label cFormCheckLabel for="radio13-1"></label>
+                      <input cFormCheckInput type="radio" value="5"
+                      [(ngModel)]="staffForm2Service.staffForm2module.senseOfDisciplineRadio"
+                      name="senseOfDisciplineRadio"
+                      #senseOfDisciplineRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio13-2" name="group13" type="radio" />
-                      <label cFormCheckLabel for="radio13-2"></label>
+                      <input cFormCheckInput type="radio" value="4"
+                      [(ngModel)]="staffForm2Service.staffForm2module.senseOfDisciplineRadio"
+                      name="senseOfDisciplineRadio"
+                      #senseOfDisciplineRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio13-3" name="group13" type="radio" />
-                      <label cFormCheckLabel for="radio13-3"></label>
+                      <input cFormCheckInput type="radio" value="3"
+                      [(ngModel)]="staffForm2Service.staffForm2module.senseOfDisciplineRadio"
+                      name="senseOfDisciplineRadio"
+                      #senseOfDisciplineRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio13-4" name="group13" type="radio" />
-                      <label cFormCheckLabel for="radio13-4"></label>
+                      <input cFormCheckInput type="radio" value="2"
+                      [(ngModel)]="staffForm2Service.staffForm2module.senseOfDisciplineRadio"
+                      name="senseOfDisciplineRadio"
+                      #senseOfDisciplineRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <c-form-check inline>
-                      <input cFormCheckInput id="radio13-5" name="group13" type="radio" />
-                      <label cFormCheckLabel for="radio13-5"></label>
+                      <input cFormCheckInput type="radio" value="1"
+                      [(ngModel)]="staffForm2Service.staffForm2module.senseOfDisciplineRadio"
+                      name="senseOfDisciplineRadio"
+                      #senseOfDisciplineRadio="ngModel">
                     </c-form-check>
                   </td>
                   <td>
                     <input type="text" cFormControl
                     [(ngModel)]="staffForm2Service.staffForm2module.senseOfDiscipline"
-                    name="senseOfDiscipline" required
+                    name="senseOfDiscipline" 
                     #senseOfDiscipline="ngModel">
                     @if(!senseOfDiscipline.valid && senseOfDiscipline.touched)
                     {
@@ -609,8 +820,8 @@
           </div>
           <div class="text-end mt-3">
             <button cButton type="submit" [disabled]="!staffForm2.valid" [disabled]="loading">
-              Submit
               <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+              Submit         
             </button>
           </div>
         </form>

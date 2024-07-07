@@ -1,7 +1,4 @@
 import { StaffForm2ServiceService } from './../service/staff-form2-service.service';
-import { StaffForm3ServicesService } from '../service/staff-form3-services.service';
-import { StaffFormpart2Module } from './../model/staff-formpart2.module';
-import { StaffFormServiceService } from './../service/staff-form-service.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -35,19 +32,33 @@ initaialUser(form?: NgForm) {
     intelligenceAndHumanActivity: '',
     intelligenceAndHumanActivityRadio: 0,
     professionalKnowledge: '',
+    professionalKnowledgeRadio: 0,
     expressivePowerWriting: '',
+    expressivePowerWritingRadio: 0,
     expressivePowerSpeaking:  '',
+    expressivePowerSpeakingRadio: 0,
     initiative:  '',
+    initiativeRadio: 0,
     qualityAndQuantityOfWork:  '',
+    qualityAndQuantityOfWorkRadio: 0,
     cooperationAndPrudence:  '',
+    cooperationAndPrudenceRadio: 0,
     interestAndHardWork:  '',
+    interestAndHardWorkRadio: 0,
     responsibilityGeneral: '',
+    responsibilityGeneralRadio: 0,
     responsibilityFinancialMatters:  '',
+    responsibilityFinancialMattersRadio: 0,
     integrityAndReputation:  '',
+    integrityAndReputationRadio: 0,
     personalityAndCharacter:  '',
+    personalityAndCharacterRadio: 0,
     health:  '',
+    healthRadio: 0,
     punctuality:  '',
+    punctualityRadio: 0,
     senseOfDiscipline: '',
+    senseOfDisciplineRadio: 0,
   }
 }
 }

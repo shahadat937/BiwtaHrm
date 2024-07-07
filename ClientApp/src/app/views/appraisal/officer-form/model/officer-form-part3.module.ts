@@ -1,12 +1,91 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
-
-
-@NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
-})
-export class OfficerFormPart3Module { }
+export class OfficerFormPart3Module { 
+  professionalKnowledge1:string='';
+  professionalKnowledge2:string='';
+  professionalKnowledge3:string='';
+  professionalKnowledge4:string='';
+  professionalKnowledge5:string='';
+  professionalKnowledgeRadio:number=0;
+  qualityOfWork1 :string='';
+  qualityOfWork2 :string='';
+  qualityOfWork3 :string='';
+  qualityOfWork4 :string='';
+  qualityOfWork5 :string='';
+  qualityOfWorkRadio:number=0;
+  amountOfWork1 :string='';
+  amountOfWork2 :string='';
+  amountOfWork3 :string='';
+  amountOfWork4 :string='';
+  amountOfWork5 :string='';
+  amountOfWorkRadio:number=0;
+  punctuality1 :string='';
+  punctuality2 :string='';  
+  punctuality3 :string='';
+  punctuality4 :string='';
+  punctuality5 :string='';
+  punctualityRadio:number=0;
+  senceOfResponsibilityAndCommitment1 :string='';
+  senceOfResponsibilityAndCommitment2 :string='';
+  senceOfResponsibilityAndCommitment3 :string='';
+  senceOfResponsibilityAndCommitment4 :string='';
+  senceOfResponsibilityAndCommitment5 :string='';
+  senceOfResponsibilityAndCommitmentRadio:number=0;
+  promptnessTakingMeasuresAndFollowingOrders1 :string='';
+  promptnessTakingMeasuresAndFollowingOrders2 :string='';
+  promptnessTakingMeasuresAndFollowingOrders3 :string='';
+  promptnessTakingMeasuresAndFollowingOrders4 :string='';
+  promptnessTakingMeasuresAndFollowingOrders5 :string='';
+  promptnessTakingMeasuresAndFollowingOrdersRadio:number=0;
+  interestOfWork1 :string='';
+  interestOfWork2 :string='';
+  interestOfWork3 :string='';
+  interestOfWork4 :string='';
+  interestOfWork5 :string='';
+  interestOfWorkRadio:number=0;
+  superviseAndManage1 :string='';
+  superviseAndManage2 :string='';
+  superviseAndManage3 :string='';
+  superviseAndManage4 :string='';
+  superviseAndManage5 :string='';
+  superviseAndManageRadio:number=0;
+  relationWithColleagues1 :string='';
+  relationWithColleagues2 :string='';
+  relationWithColleagues3 :string='';
+  relationWithColleagues4 :string='';
+  relationWithColleagues5 :string='';
+  relationWithColleaguesRadio:number=0;
+  abilityImplementDecision1 :string='';
+  abilityImplementDecision2 :string='';
+  abilityImplementDecision3 :string='';
+  abilityImplementDecision4 :string='';
+  abilityImplementDecision5 :string='';
+  abilityImplementDecisionRadio:number=0;
+  expressivePowerWriting1 :string='';
+  expressivePowerWriting2 :string='';
+  expressivePowerWriting3 :string='';
+  expressivePowerWriting4 :string='';
+  expressivePowerWriting5 :string='';
+  expressivePowerWritingRadio:number=0;
+  expressivePowerSpeech1 :string='';
+  expressivePowerSpeech2 :string='';
+  expressivePowerSpeech3 :string='';
+  expressivePowerSpeech4 :string='';
+  expressivePowerSpeech5 :string='';
+  expressivePowerSpeechRadio:number=0;
+  overallAssessment1 :string='';
+  overallAssessment2 :string='';
+  overallAssessment3 :string='';
+  overallAssessment4 :string='';
+  overallAssessment5 :string='';
+  overallAssessment6 :string='';
+  overallAssessmentRadio:number=0;
+  totalMarks3rdPart :number=0;
+  totalMarksInWords3rdPart :number=0;
+  totalMarksSignature3rdPart  :string='';
+  totalMarksInWordsSignature3rdPart  :string='';
+  totalMarks2ndAnd3rdPart :number=0;
+  totalMarksInWordstotalMarks2ndAnd3rdPart  :number=0;
+  totalMarksSignaturetotalMarks2ndAnd3rdPart   :string='';
+  totalMarksInWordsSignaturetotalMarks2ndAnd3rdPart :string='';
+  signature :File | null = null;
+}

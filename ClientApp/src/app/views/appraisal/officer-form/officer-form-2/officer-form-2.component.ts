@@ -10,7 +10,6 @@ import { NgForm } from '@angular/forms';
 export class OfficerForm2Component  implements OnInit, OnDestroy{
 
   loading:boolean=false
-selectedValue: any;
 
   constructor(public officerForm2service :OfficerFormPart2ServiceService ){}
 

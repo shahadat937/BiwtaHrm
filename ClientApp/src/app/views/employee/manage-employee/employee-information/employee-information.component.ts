@@ -29,6 +29,7 @@ import { EmpEducationInfoModule } from '../../model/emp-education-info.module';
 import { EmpPsiTrainingInfoModule } from '../../model/emp-psi-training-info.module';
 import { EmpBankInfoModule } from '../../model/emp-bank-info.module';
 import { EmpLanguageInfoModule } from '../../model/emp-language-info.module';
+import { EmpForeignTourInfoModule } from '../../model/emp-foreign-tour-info.module';
 
 @Component({
   selector: 'app-employee-information',
@@ -50,6 +51,7 @@ export class EmployeeInformationComponent implements OnInit {
   empPsiTrainingInfo : EmpPsiTrainingInfoModule[] = [];
   empBankInfo : EmpBankInfoModule[] = [];
   empLanguageInfo : EmpLanguageInfoModule[] = [];
+  empForeignTourInfo : EmpForeignTourInfoModule[] = [];
   empPhoto : string = '';
   empSignature : string = '';
 
@@ -87,6 +89,7 @@ export class EmployeeInformationComponent implements OnInit {
       this.getEmpPsiTrainingInfoByEmpId(); 
       this.getEmpBankInfoByEmpId();
       this.getEmpLanguageInfoByEmpId();
+      this.getEmpForeignTourInfoByEmpId();
     }
   
     handleRouteParams() {
@@ -158,6 +161,12 @@ export class EmployeeInformationComponent implements OnInit {
     getEmpLanguageInfoByEmpId(){
       this.empLanguageInfoService.findByEmpId(this.employeeId).subscribe((res) => {
         this.empLanguageInfo = res;
+      });
+    }
+    
+    getEmpForeignTourInfoByEmpId(){
+      this.empForeignTourInfoService.findByEmpId(this.employeeId).subscribe((res) => {
+        this.empForeignTourInfo = res;
       });
     }
 

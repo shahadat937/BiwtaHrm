@@ -708,6 +708,21 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.CompetenceId);
             });
 
+
+            modelBuilder.Entity<EmpForeignTourInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpForeignTourInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Country)
+                    .WithMany(eb => eb.EmpForeignTourInfo)
+                    .HasForeignKey(e => e.CountryId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;

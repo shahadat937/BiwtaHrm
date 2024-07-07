@@ -479,6 +479,36 @@
                 </table>
             </c-card-body>
         </c-card>
+        
+        <!-- Employee Foreign Tour Information -->
+        <c-card class="shadow mb-4">
+            <c-card-header class="text-center">
+                Employee Foreign Tour Information
+            </c-card-header>
+            <c-card-body>
+                <table cTable bordered hover  *ngFor="let item of empForeignTourInfo" class="mb-3">
+                    <tbody>
+                        <tr>
+                            <th>Country Name</th>
+                            <td>{{item.countryName}}</td>
+                            <th>Purpose</th>
+                            <td>{{item.purpose}}</td>
+                        </tr>
+                        <tr>
+                            <th>From Date</th>
+                            <td>{{item.fromDate}}</td>
+                            <th>To Date</th>
+                            <td>{{item.toDate}}</td>
+                        </tr>
+                        <tr>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                            <th colspan="2"></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
 
         
         

@@ -399,6 +399,8 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpForeignTourInfo, EmpForeignTourInfoDto>().ReverseMap();
             CreateMap<EmpForeignTourInfo, CreateEmpForeignTourInfoDto>().ReverseMap();
+            CreateMap<EmpForeignTourInfo, EmpForeignTourInfoDto>()
+            .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.CountryName));
 
             CreateMap<EmpLanguageInfo, EmpLanguageInfoDto>().ReverseMap();
             CreateMap<EmpLanguageInfo, CreateEmpLanguageInfoDto>().ReverseMap();

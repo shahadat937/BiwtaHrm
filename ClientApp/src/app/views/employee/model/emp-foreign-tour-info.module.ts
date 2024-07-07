@@ -7,7 +7,9 @@ export class EmpForeignTourInfoModule {
   purpose: string;
   remark: string;
   menuPosition: number;
-  isActive: boolean
+  isActive: boolean;
+
+  countryName: string = '';
 
   constructor() {
     this.id= 0;

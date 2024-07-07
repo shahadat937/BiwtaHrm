@@ -19,6 +19,7 @@ namespace Hrm.Domain
         public virtual ICollection<EmpPersonalInfo>? EmpPersonalInfo { get; set; }
         public virtual ICollection<EmpPresentAddress>? EmpPresentAddress { get; set; }
         public virtual ICollection<EmpPermanentAddress>? EmpPermanentAddress { get; set; }
+        public virtual ICollection<EmpForeignTourInfo>? EmpForeignTourInfo { get; set; }
         // public virtual ICollection<Division> Divisions { get; set; }
     }
 }

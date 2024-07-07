@@ -204,6 +204,62 @@
             </c-card-body>
         </c-card>
 
+        <!-- Employee Job Details Information -->
+        <c-card class="shadow mb-4">
+            <c-card-header class="text-center">
+                Employee Job Details
+            </c-card-header>
+            <c-card-body>
+                <table cTable bordered hover>
+                    <tbody>
+                        <tr>
+                            <th>Office</th>
+                            <td>{{empJobDetails.officeName}}</td>
+                            <th>Joining Date</th>
+                            <td>{{empJobDetails.joiningDate}}</td>
+                        </tr>
+                        <tr>
+                            <th>Department</th>
+                            <td>{{empJobDetails.departmentName}}</td>
+                            <th>First Department</th>
+                            <td>{{empJobDetails.firstDepartmentName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Designation</th>
+                            <td>{{empJobDetails.designationName}}</td>
+                            <th>First Designation</th>
+                            <td>{{empJobDetails.firstDesignationName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Present Grade</th>
+                            <td>{{empJobDetails.presentGradeName}}</td>
+                            <th>First Grade</th>
+                            <td>{{empJobDetails.firstGradeName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Present Scale</th>
+                            <td>{{empJobDetails.presentScaleName}}</td>
+                            <th>First Scale</th>
+                            <td>{{empJobDetails.firstScaleName}}</td>
+                        </tr>
+                        <tr>
+                            <th>PRT Date</th>
+                            <td>{{empJobDetails.prlDate}}</td>
+                            <th>Retirment Date</th>
+                            <td>{{empJobDetails.retirementDate}}</td>
+                        </tr>
+                        <tr>
+                            <th>Service Status</th>
+                            <td *ngIf="empJobDetails.serviceStatus">On Service</td>
+                            <td *ngIf="!empJobDetails.serviceStatus">Out of Service</td>
+                            <th>Remark</th>
+                            <td>{{empJobDetails.remark}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
+
         <!-- Employee Present Address Information -->
         <c-card class="shadow mb-4">
             <c-card-header class="text-center">
@@ -298,61 +354,73 @@
             </c-card-body>
         </c-card>
         
-        <!-- Employee Job Details Information -->
+        <!-- Employee Education Information -->
         <c-card class="shadow mb-4">
             <c-card-header class="text-center">
-                Employee Job Details
+                Employee Education Information
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover>
+                <table cTable bordered hover  *ngFor="let item of empEducationInfo" class="mb-3 shadow">
                     <tbody>
                         <tr>
-                            <th>Office</th>
-                            <td>{{empJobDetails.officeName}}</td>
-                            <th>Joining Date</th>
-                            <td>{{empJobDetails.joiningDate}}</td>
+                            <th>Exam Type</th>
+                            <td>{{item.examTypeName}}</td>
+                            <th>Board</th>
+                            <td>{{item.boardName}}</td>
                         </tr>
                         <tr>
-                            <th>Department</th>
-                            <td>{{empJobDetails.departmentName}}</td>
-                            <th>First Department</th>
-                            <td>{{empJobDetails.firstDepartmentName}}</td>
+                            <th>Group</th>
+                            <td>{{item.subGroupName}}</td>
+                            <th>Result</th>
+                            <td>{{item.result}}</td>
                         </tr>
                         <tr>
-                            <th>Designation</th>
-                            <td>{{empJobDetails.designationName}}</td>
-                            <th>First Designation</th>
-                            <td>{{empJobDetails.firstDesignationName}}</td>
+                            <th>Duration</th>
+                            <td>{{item.courseDuration}}</td>
+                            <th>Passing Year</th>
+                            <td>{{item.passingYear}}</td>
                         </tr>
                         <tr>
-                            <th>Present Grade</th>
-                            <td>{{empJobDetails.presentGradeName}}</td>
-                            <th>First Grade</th>
-                            <td>{{empJobDetails.firstGradeName}}</td>
-                        </tr>
-                        <tr>
-                            <th>Present Scale</th>
-                            <td>{{empJobDetails.presentScaleName}}</td>
-                            <th>First Scale</th>
-                            <td>{{empJobDetails.firstScaleName}}</td>
-                        </tr>
-                        <tr>
-                            <th>PRT Date</th>
-                            <td>{{empJobDetails.prlDate}}</td>
-                            <th>Retirment Date</th>
-                            <td>{{empJobDetails.retirementDate}}</td>
-                        </tr>
-                        <tr>
-                            <th>Service Status</th>
-                            <td *ngIf="empJobDetails.serviceStatus">On Service</td>
-                            <td *ngIf="!empJobDetails.serviceStatus">Out of Service</td>
                             <th>Remark</th>
-                            <td>{{empJobDetails.remark}}</td>
+                            <td>{{item.remark}}</td>
                         </tr>
                     </tbody>
                 </table>
             </c-card-body>
         </c-card>
+        
+        <!-- Employee Psi and Training Information -->
+        <c-card class="shadow mb-4">
+            <c-card-header class="text-center">
+                Employee Psi & Training Information
+            </c-card-header>
+            <c-card-body>
+                <table cTable bordered hover  *ngFor="let item of empPsiTrainingInfo" class="mb-3 shadow">
+                    <tbody>
+                        <tr>
+                            <th>Training Name</th>
+                            <td>{{item.trainingName}}</td>
+                            <th>Work Purpose</th>
+                            <td>{{item.workPurpose}}</td>
+                        </tr>
+                        <tr>
+                            <th>From Date</th>
+                            <td>{{item.fromDate}}</td>
+                            <th>To Date</th>
+                            <td>{{item.toDate}}</td>
+                        </tr>
+                        <tr>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
+        
+
+
+        
         
     </c-card-body>
 </c-card>

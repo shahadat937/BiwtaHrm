@@ -655,6 +655,22 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.SubGroupId);
             });
 
+            modelBuilder.Entity<EmpPsiTrainingInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpPsiTrainingInfo)
+                    .HasForeignKey(e => e.EmpId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.TrainingName)
+                    .WithMany(eb => eb.EmpPsiTrainingInfo)
+                    .HasForeignKey(e => e.TrainingNameId)
+                    .OnDelete(DeleteBehavior.SetNull);
+            });
+
 
             base.OnModelCreating(modelBuilder);
         }

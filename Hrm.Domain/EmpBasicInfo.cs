@@ -38,6 +38,7 @@ namespace Hrm.Domain
         public virtual ICollection<EmpSpouseInfo>? EmpSpouseInfo { get; set; }
         public virtual ICollection<EmpChildInfo>? EmpChildInfo { get; set; }
         public virtual ICollection<EmpEducationInfo>? EmpEducationInfo { get; set; }
+        public virtual ICollection<EmpPsiTrainingInfo>? EmpPsiTrainingInfo { get; set; }
         public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
     }
 }

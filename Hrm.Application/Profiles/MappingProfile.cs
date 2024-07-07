@@ -386,6 +386,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpPsiTrainingInfo, EmpPsiTrainingInfoDto>().ReverseMap();
             CreateMap<EmpPsiTrainingInfo, CreateEmpPsiTrainingInfoDto>().ReverseMap();
+            CreateMap<EmpPsiTrainingInfo, EmpPsiTrainingInfoDto>()
+            .ForMember(dest => dest.TrainingName, opt => opt.MapFrom(src => 
+            src.TrainingName.TrainingNames));
 
             CreateMap<EmpBankInfo, EmpBankInfoDto>().ReverseMap();
             CreateMap<EmpBankInfo, CreateEmpBankInfoDto>().ReverseMap();

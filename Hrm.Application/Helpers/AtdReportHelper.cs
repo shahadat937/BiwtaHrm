@@ -1,5 +1,6 @@
 ﻿using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Enum;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Hrm.Application.Helpers
             DateTime datetimeTo = new DateTime(to.Year, to.Month, to.Day);
 
             TimeSpan timespan = datetimeTo.Subtract(datetimeFrom);
-            int totalDays = (int)timespan.TotalDays;
+            int totalDays = (int)timespan.TotalDays+1;
             int holidays = _HolidaysRepository.Where(hd => hd.IsActive && hd.HolidayDate >= from && hd.HolidayDate <= to).Count();
 
             return (totalDays - holidays);
@@ -29,7 +30,7 @@ namespace Hrm.Application.Helpers
         {
             int totalAbsent = 0;
             int totalWorkingdays = totalWorkingDay(from, to, _HolidaysRepository);
-            int totalEntry = _AttendanceRepository.Where(at => at.AttendanceDate >= from && at.AttendanceDate <= to && at.EmpId == EmpId).Count();
+            int totalEntry = _AttendanceRepository.Where(at => at.AttendanceDate >= from && at.AttendanceDate <= to && at.EmpId == EmpId && at.AttendanceStatusId !=(int) AttendanceStatusOption.Absent).Count();
             totalAbsent = totalWorkingdays - totalEntry;
 
             return totalAbsent;
@@ -40,6 +41,28 @@ namespace Hrm.Application.Helpers
         {
             int totalLate = _AttendanceRepository.Where(at => at.AttendanceDate >= from && at.AttendanceDate <= to && at.EmpId == EmpId && at.AttendanceStatusId == (int)AttendanceStatusOption.Late).Count();
             return totalLate;
+        }
+
+        public static int? totalOverTime(DateOnly from, DateOnly to, int EmpId,
+            IHrmRepository<Domain.Attendance> _AttendanceRepository)
+        {
+            int? overtimeSum = _AttendanceRepository.Where(at => at.AttendanceDate >= from && at.AttendanceDate <= to && at.EmpId == EmpId).Sum(at => at.OverTime);
+            return overtimeSum;
+        }
+
+        public static int? totalWorkingHour(DateOnly from, DateOnly to, int EmpId,
+            IHrmRepository<Domain.Attendance> _AttendanceRepository)
+        {
+            int? workingHour = _AttendanceRepository.Where(at => at.AttendanceDate >= from && at.AttendanceDate <= to && at.EmpId == EmpId).Sum(at => at.WorkHour);
+            return workingHour;
+        }
+
+        public static int totalSiteVisit(DateOnly from, DateOnly to, int EmpId,
+            IHrmRepository<Domain.Attendance> _AttendanceRepository)
+        {
+            int totalSiteVisit = _AttendanceRepository.Where(at => at.AttendanceDate >= from && at.AttendanceDate <= to && at.EmpId == EmpId && at.AttendanceStatusId == (int) AttendanceStatusOption.OnSiteVisit).Count();
+
+            return totalSiteVisit;
         }
 
     }

@@ -122,8 +122,8 @@
             </c-col>
             <div>
             <button cButton color="primary" type="submit" [disabled]="!officerFormPart4.valid" [disabled]="loading">
+                <c-spinner [hidden]="!loading" size="sm"></c-spinner>
                 Submit
-            <c-spinner [hidden]="!loading" size="sm"></c-spinner>
             </button>
             <button cButton color="dark" class="ms-3">Cancel</button>
             </div>

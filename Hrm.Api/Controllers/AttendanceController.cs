@@ -36,6 +36,15 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
+        [Route("get-AttendanceReportByFilter")]
+        public async Task<ActionResult> GetAttendanceReportByFilter([FromQuery] AttendanceReportFilterDto AttendanceReportFilterdto)
+        {
+            var command = new GetAttendanceReportByFilterRequest { AtdReportFilter = AttendanceReportFilterdto };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpGet]
         [Route("get-AttendanceById/{id}")]
         public async Task<ActionResult> GetById(int id)
         {

@@ -25,6 +25,26 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("get-AttendanceSummary")]
+        public async Task<ActionResult> GetAttendanceSummary([FromQuery] GetAttendanceSummaryDto GetAttendanceSummarydto)
+        {
+            var command = new GetAttendanceSummaryByEmpRequest { AtdSummaryDto = GetAttendanceSummarydto };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-AttendanceById/{id}")]
+        public async Task<ActionResult> GetById(int id)
+        {
+            var command = new GetAttendanceByIdRequest { AttendanceId = id };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
         [HttpPost]
         [Route("save-AttendanceFromDevice")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateAttendanceDto attendance)

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Attendance;
+using Hrm.Application.DTOs.Attendance.Validators;
 using Hrm.Application.DTOs.TaskName;
 using Hrm.Application.Features.Attendance.Requests.Queries;
+using Hrm.Application.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,6 +28,14 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
 
         public async Task<object> Handle(GetAttendanceReportByFilterRequest request, CancellationToken cancellationToken)
         {
+            var validator = new AttendanceReportFilterDtoValidator();
+            var validationResult = await validator.ValidateAsync(request.AtdReportFilter);
+
+            if(!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult);
+            }
+
             var Attendances = _AttendanceRepository.Where(at => at.AttendanceDate >= request.AtdReportFilter.From && at.AttendanceDate <= request.AtdReportFilter.To)
               .Include(at => at.EmpBasicInfo)
               .Include(at => at.AttendanceStatus)

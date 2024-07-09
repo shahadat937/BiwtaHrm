@@ -1,5 +1,6 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Attendance;
+using Hrm.Application.DTOs.Attendance.Validators;
 using Hrm.Application.Features.Attendance.Requests.Commands;
 using Hrm.Application.Features.Attendance.Requests.Queries;
 
@@ -81,6 +82,18 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
 
+        }
+
+        [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [Route("save-BulkAttendance")]
+        public async Task<ActionResult<BaseCommandResponse>> SaveBulkAttendance([FromForm] CreateBulkAttendanceDto createAtdDto)
+        {
+            var command = new CreateBulkAttendanceCommand { csvFile = createAtdDto.csvFile };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
     }

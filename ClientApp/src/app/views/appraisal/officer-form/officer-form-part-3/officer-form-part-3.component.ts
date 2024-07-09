@@ -11,6 +11,7 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
 
   loading:boolean=false
 
+  
   constructor(public officerForm3service :OfficerFormPart3ServiceService ){}
   ngOnInit(): void {
   }
@@ -22,98 +23,62 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
     console.log("Form Value: ", form.value)
   }
   
-  initaialUser(form?: NgForm) {
-  if (form != null) form.resetForm();
-  this.officerForm3service.officerForm3Module={
-  professionalKnowledge1:'',
-  professionalKnowledge2:'',
-  professionalKnowledge3:'',
-  professionalKnowledge4:'',
-  professionalKnowledge5:'',
-  professionalKnowledgeRadio : 0,
-  qualityOfWork1 :'',
-  qualityOfWork2 :'',
-  qualityOfWork3 :'',
-  qualityOfWork4 :'',
-  qualityOfWork5 :'',
-  qualityOfWorkRadio:0,
-  amountOfWork1 :'',
-  amountOfWork2 :'',
-  amountOfWork3 :'',
-  amountOfWork4 :'',
-  amountOfWork5 :'',
-  amountOfWorkRadio: 0,
-  punctuality1 :'',
-  punctuality2 :'', 
-  punctuality3 :'',
-  punctuality4 :'',
-  punctuality5 :'',
-  punctualityRadio: 0,
-  senceOfResponsibilityAndCommitment1 :'',
-  senceOfResponsibilityAndCommitment2 :'',
-  senceOfResponsibilityAndCommitment3 :'',
-  senceOfResponsibilityAndCommitment4 :'',
-  senceOfResponsibilityAndCommitment5 :'',
-  senceOfResponsibilityAndCommitmentRadio: 0,
-  promptnessTakingMeasuresAndFollowingOrders1 :'',
-  promptnessTakingMeasuresAndFollowingOrders2 :'',
-  promptnessTakingMeasuresAndFollowingOrders3 :'',
-  promptnessTakingMeasuresAndFollowingOrders4 :'',
-  promptnessTakingMeasuresAndFollowingOrders5 :'',
-  promptnessTakingMeasuresAndFollowingOrdersRadio: 0,
-  interestOfWork1 :'',
-  interestOfWork2 :'',
-  interestOfWork3 :'',
-  interestOfWork4 :'',
-  interestOfWork5 :'',
-  interestOfWorkRadio: 0,
-  superviseAndManage1 :'',
-  superviseAndManage2 :'',
-  superviseAndManage3 :'',
-  superviseAndManage4 :'',
-  superviseAndManage5 :'',
-  superviseAndManageRadio: 0,
-  relationWithColleagues1 :'',
-  relationWithColleagues2 :'',
-  relationWithColleagues3 :'',
-  relationWithColleagues4 :'',
-  relationWithColleagues5 :'',
-  relationWithColleaguesRadio: 0,
-  abilityImplementDecision1 :'',
-  abilityImplementDecision2 :'',
-  abilityImplementDecision3 :'',
-  abilityImplementDecision4 :'',
-  abilityImplementDecision5 :'',
-  abilityImplementDecisionRadio: 0,
-  expressivePowerWriting1 :'',
-  expressivePowerWriting2 :'',
-  expressivePowerWriting3 :'',
-  expressivePowerWriting4 :'',
-  expressivePowerWriting5 :'',
-  expressivePowerWritingRadio: 0,
-  expressivePowerSpeech1 :'',
-  expressivePowerSpeech2 :'',
-  expressivePowerSpeech3 :'',
-  expressivePowerSpeech4 :'',
-  expressivePowerSpeech5 :'',
-  expressivePowerSpeechRadio: 0,
-  overallAssessment1 :'',
-  overallAssessment2 :'',
-  overallAssessment3 :'',
-  overallAssessment4 :'',
-  overallAssessment5 :'',
-  overallAssessment6 :'',
-  overallAssessmentRadio: 0,
-  totalMarks3rdPart : 0,
-  totalMarksInWords3rdPart : 0,
-  totalMarksSignature3rdPart  :'',
-  totalMarksInWordsSignature3rdPart :'',
-  totalMarks2ndAnd3rdPart : 0,
-  totalMarksInWordstotalMarks2ndAnd3rdPart  : 0,
-  totalMarksSignaturetotalMarks2ndAnd3rdPart   :'', 
-  totalMarksInWordsSignaturetotalMarks2ndAnd3rdPart :'',
-  signature: null
+  formRows = [
+    { name: 'i) Significant Knowledge', evaluationValue: '5', professionalKnowledgeSignature: '', signatureEnabled: false },
+    { name: 'ii) Sufficient Knowledge', evaluationValue: '4', professionalKnowledgeSignature: '', signatureEnabled: false },
+    { name: 'iii) Fairly Good Knowledge', evaluationValue: '3', professionalKnowledgeSignature: '', signatureEnabled: false },
+    { name: 'iv) Insufficient', evaluationValue: '2', professionalKnowledgeSignature: '', signatureEnabled: false },
+    { name: 'v) Low Quality', evaluationValue: '1', professionalKnowledgeSignature: '', signatureEnabled: false },
+  ];
 
+  qualityOfWorkRows = [
+    { name: 'i) Accurate and Complete', evaluationValue: '5', qualityOfWorkSignature: '', signatureEnabled: false },
+    { name: 'ii) High Standard', evaluationValue: '4', qualityOfWorkSignature: '', signatureEnabled: false },
+    { name: 'iii) General', evaluationValue: '3', qualityOfWorkSignature: '', signatureEnabled: false },
+    { name: 'iv) Unequal Values', evaluationValue: '2', qualityOfWorkSignature: '', signatureEnabled: false },
+    { name: 'v) Low Quality', evaluationValue: '1', qualityOfWorkSignature: '', signatureEnabled: false },
+  ];
+  amountOfWorkRows = [
+    { name: 'i) Too Much', evaluationValue: '5', amountOfWorkSignature: '', signatureEnabled: false },
+    { name: 'ii) Sufficient', evaluationValue: '4', amountOfWorkSignature: '', signatureEnabled: false },
+    { name: 'iii) Satisfactory', evaluationValue: '3', amountOfWorkSignature: '', signatureEnabled: false },
+    { name: 'iv) Not as Expected', evaluationValue: '2', amountOfWorkSignature: '', signatureEnabled: false },
+    { name: 'v) Insufficient', evaluationValue: '1', amountOfWorkSignature: '', signatureEnabled: false },
+  ];
+
+  selectedRow: any; // Variable to store the selected row
+  selectedQualityRow: any; // Variable to store the selected row
+  selectedAmountRow:any;
+
+
+  toggleSignatureInput(index: number) {
+    // Reset all rows to disable signature input
+    this.formRows.forEach((row, i) => {
+      row.signatureEnabled = false;
+    });
+
+    // Enable signature input for the selected row
+    this.formRows[index].signatureEnabled = true;
+  }
+
+  toggleQualitySignatureInput(index: number) {
+    // Reset all rows to disable signature input
+    this.qualityOfWorkRows.forEach((row) => {
+      row.signatureEnabled = false;
+    });
+
+    // Enable signature input for the selected row
+    this.qualityOfWorkRows[index].signatureEnabled = true;
+  }
+
+    toggleAmountSignatureInput(index: number) {
+      // Reset all rows to disable signature input
+      this.amountOfWorkRows.forEach((row) => {
+        row.signatureEnabled = false;
+      });
+  
+      // Enable signature input for the selected row
+      this.amountOfWorkRows[index].signatureEnabled = true;
     }
   }
-}
+

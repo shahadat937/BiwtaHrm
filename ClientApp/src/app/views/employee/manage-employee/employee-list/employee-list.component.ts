@@ -16,9 +16,9 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
     'slNo', 
-    'pNo', 
+    'idNo', 
     'fullName', 
-    'fullNameBangla', 
+    // 'fullNameBangla', 
     // 'email', 
     // 'isActive', 
     'Action'];

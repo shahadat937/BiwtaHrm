@@ -43,17 +43,17 @@ namespace Hrm.Application.Features.Scales.Handlers.Commands
                 IQueryable<Hrm.Domain.Scale> Scale = _scaleRepository.Where(x => x.ScaleName.ToLower() == scaleName);
 
 
-                if (ScaleNameExists(request))
-                {
-                    response.Success = false;
-                    //response.Message = "Creation Failed Name already exists.";
-                    response.Message = $"Creation Failed '{request.ScaleDto.ScaleName}' already exists.";
+                //if (ScaleNameExists(request))
+                //{
+                //    response.Success = false;
+                //    //response.Message = "Creation Failed Name already exists.";
+                //    response.Message = $"Creation Failed '{request.ScaleDto.ScaleName}' already exists.";
 
-                    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+                //    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     var ScaleName = _mapper.Map<Hrm.Domain.Scale>(request.ScaleDto);
 
                     ScaleName = await _unitOfWork.Repository<Hrm.Domain.Scale>().Add(ScaleName);
@@ -63,7 +63,7 @@ namespace Hrm.Application.Features.Scales.Handlers.Commands
                     response.Success = true;
                     response.Message = "Creation Successful";
                     response.Id = ScaleName.ScaleId;
-                }
+                //}
             }
 
             return response;

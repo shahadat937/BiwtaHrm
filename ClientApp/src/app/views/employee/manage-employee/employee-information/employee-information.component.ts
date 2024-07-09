@@ -188,6 +188,7 @@ export class EmployeeInformationComponent implements OnInit {
 
     
   toggleComponent(component: string) {
+    console.log("Component : ",component)
     this.componentVisible = false;
     if (this.visibleComponent === component) {
       this.visibleComponent = null;

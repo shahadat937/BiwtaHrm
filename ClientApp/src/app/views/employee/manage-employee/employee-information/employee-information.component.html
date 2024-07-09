@@ -26,7 +26,7 @@
                 <app-emp-photo-sign *ngIf="visibleComponent === 'empPhotoSign'" [empId]="empId" [pNo]="pNo" (close)="toggleComponent('empPhotoSign')"></app-emp-photo-sign>
             </c-card-header>
             <c-card-body>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between"  *ngIf="empPhotoSign">
                     <div>
                         <p>Employee Photo</p>
                         <img src="{{empPhoto}}" style="max-width: auto; max-height: 150px;">
@@ -57,7 +57,7 @@
                     (close)="toggleComponent('empBasicInfo')"></app-basic-information>
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover>
+                <table cTable bordered hover *ngIf="empBasicInfo">
                     <tbody>
                         <tr>
                             <th>Employee Name</th>
@@ -100,7 +100,7 @@
                 (close)="toggleComponent('personalInfo')"></app-personal-information>
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover>
+                <table cTable bordered hover *ngIf="empPersonalInfo">
                     <tbody>
                         <tr>
                             <th>Gender</th>
@@ -191,28 +191,31 @@
                 (close)="toggleComponent('spouseInfo')"></app-emp-spouse-info>
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover  *ngFor="let item of empSpouseInfo" class="mb-3">
-                    <tbody>
-                        <tr>
-                            <th>Spouse Name</th>
-                            <td>{{item.spouseName}}</td>
-                            <th>Spouse Name Bangla</th>
-                            <td>{{item.spouseNameBangla}}</td>
-                        </tr>
-                        <tr>
-                            <th>Date of Birth</th>
-                            <td>{{item.dateOfBirth}}</td>
-                            <th>Birth Registration No</th>
-                            <td>{{item.birthRegNo}}</td>
-                        </tr>
-                        <tr>
-                            <th>Occupation</th>
-                            <td>{{item.occupationName}}</td>
-                            <th>Remark</th>
-                            <td>{{item.remark}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                @if(empSpouseInfo.length>0){
+                    <table cTable bordered hover  *ngFor="let item of empSpouseInfo" class="mb-3">
+                        <tbody>
+                            <tr>
+                                <th>Spouse Name</th>
+                                <td>{{item.spouseName}}</td>
+                                <th>Spouse Name Bangla</th>
+                                <td>{{item.spouseNameBangla}}</td>
+                            </tr>
+                            <tr>
+                                <th>Date of Birth</th>
+                                <td>{{item.dateOfBirth}}</td>
+                                <th>Birth Registration No</th>
+                                <td>{{item.birthRegNo}}</td>
+                            </tr>
+                            <tr>
+                                <th>Occupation</th>
+                                <td>{{item.occupationName}}</td>
+                                <th>Remark</th>
+                                <td>{{item.remark}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+                
             </c-card-body>
         </c-card>
         
@@ -234,40 +237,43 @@
                 (close)="toggleComponent('childrenInfo')"></app-emp-child-info>
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover  *ngFor="let item of empChildInfo" class="mb-3">
-                    <tbody>
-                        <tr>
-                            <th>Child Name</th>
-                            <td>{{item.childName}}</td>
-                            <th>Child Name Bangla</th>
-                            <td>{{item.childNameBangla}}</td>
-                        </tr>
-                        <tr>
-                            <th>Date of Birth</th>
-                            <td>{{item.dateOfBirth}}</td>
-                            <th>Birth Registration No</th>
-                            <td>{{item.birthRegNo}}</td>
-                        </tr>
-                        <tr>
-                            <th>Gender</th>
-                            <td>{{item.genderName}}</td>
-                            <th>Occupation</th>
-                            <td>{{item.occupationName}}</td>
-                        </tr>
-                        <tr>
-                            <th>NID</th>
-                            <td>{{item.nid}}</td>
-                            <th>Marital Status</th>
-                            <td>{{item.maritalStatusName}}</td>
-                        </tr>
-                        <tr>
-                            <th>Child Status</th>
-                            <td>{{item.childStatusName}}</td>
-                            <th>Remark</th>
-                            <td>{{item.remark}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                @if(empChildInfo.length>0){
+                    <table cTable bordered hover  *ngFor="let item of empChildInfo" class="mb-3">
+                        <tbody>
+                            <tr>
+                                <th>Child Name</th>
+                                <td>{{item.childName}}</td>
+                                <th>Child Name Bangla</th>
+                                <td>{{item.childNameBangla}}</td>
+                            </tr>
+                            <tr>
+                                <th>Date of Birth</th>
+                                <td>{{item.dateOfBirth}}</td>
+                                <th>Birth Registration No</th>
+                                <td>{{item.birthRegNo}}</td>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <td>{{item.genderName}}</td>
+                                <th>Occupation</th>
+                                <td>{{item.occupationName}}</td>
+                            </tr>
+                            <tr>
+                                <th>NID</th>
+                                <td>{{item.nid}}</td>
+                                <th>Marital Status</th>
+                                <td>{{item.maritalStatusName}}</td>
+                            </tr>
+                            <tr>
+                                <th>Child Status</th>
+                                <td>{{item.childStatusName}}</td>
+                                <th>Remark</th>
+                                <td>{{item.remark}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+                
             </c-card-body>
         </c-card>
 
@@ -289,7 +295,7 @@
                 (close)="toggleComponent('jobDetails')"></app-emp-job-details>
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover>
+                <table cTable bordered hover *ngIf="empJobDetails">
                     <tbody>
                         <tr>
                             <th>Office</th>
@@ -357,7 +363,7 @@
                 (close)="toggleComponent('presentAddress')"></app-emp-present-address>
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover>
+                <table cTable bordered hover *ngIf="empPresentAddress">
                     <tbody>
                         <tr>
                             <th>Country</th>
@@ -416,7 +422,7 @@
                 (close)="toggleComponent('permanentAddress')"></app-emp-permanent-address>
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover>
+                <table cTable bordered hover *ngIf="empPermanentAddress">
                     <tbody>
                         <tr>
                             <th>Country</th>
@@ -475,33 +481,36 @@
                 (close)="toggleComponent('educationInfo')"></app-emp-education-info>
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover  *ngFor="let item of empEducationInfo" class="mb-3">
-                    <tbody>
-                        <tr>
-                            <th>Exam Type</th>
-                            <td>{{item.examTypeName}}</td>
-                            <th>Board</th>
-                            <td>{{item.boardName}}</td>
-                        </tr>
-                        <tr>
-                            <th>Group</th>
-                            <td>{{item.subGroupName}}</td>
-                            <th>Result</th>
-                            <td>{{item.result}}</td>
-                        </tr>
-                        <tr>
-                            <th>Duration</th>
-                            <td>{{item.courseDuration}}</td>
-                            <th>Passing Year</th>
-                            <td>{{item.passingYear}}</td>
-                        </tr>
-                        <tr>
-                            <th>Remark</th>
-                            <td>{{item.remark}}</td>
-                            <th colspan="2"></th>
-                        </tr>
-                    </tbody>
-                </table>
+                @if(empEducationInfo.length>0){
+                    <table cTable bordered hover  *ngFor="let item of empEducationInfo" class="mb-3">
+                        <tbody>
+                            <tr>
+                                <th>Exam Type</th>
+                                <td>{{item.examTypeName}}</td>
+                                <th>Board</th>
+                                <td>{{item.boardName}}</td>
+                            </tr>
+                            <tr>
+                                <th>Group</th>
+                                <td>{{item.subGroupName}}</td>
+                                <th>Result</th>
+                                <td>{{item.result}}</td>
+                            </tr>
+                            <tr>
+                                <th>Duration</th>
+                                <td>{{item.courseDuration}}</td>
+                                <th>Passing Year</th>
+                                <td>{{item.passingYear}}</td>
+                            </tr>
+                            <tr>
+                                <th>Remark</th>
+                                <td>{{item.remark}}</td>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+                
             </c-card-body>
         </c-card>
         
@@ -523,27 +532,30 @@
                 (close)="toggleComponent('psiTrainingInfo')"></app-emp-psi-training-info>
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover  *ngFor="let item of empPsiTrainingInfo" class="mb-3">
-                    <tbody>
-                        <tr>
-                            <th>Training Name</th>
-                            <td>{{item.trainingName}}</td>
-                            <th>Work Purpose</th>
-                            <td>{{item.workPurpose}}</td>
-                        </tr>
-                        <tr>
-                            <th>From Date</th>
-                            <td>{{item.fromDate}}</td>
-                            <th>To Date</th>
-                            <td>{{item.toDate}}</td>
-                        </tr>
-                        <tr>
-                            <th>Remark</th>
-                            <td>{{item.remark}}</td>
-                            <th colspan="2"></th>
-                        </tr>
-                    </tbody>
-                </table>
+                @if(empPsiTrainingInfo.length>0){
+                    <table cTable bordered hover  *ngFor="let item of empPsiTrainingInfo" class="mb-3">
+                        <tbody>
+                            <tr>
+                                <th>Training Name</th>
+                                <td>{{item.trainingName}}</td>
+                                <th>Work Purpose</th>
+                                <td>{{item.workPurpose}}</td>
+                            </tr>
+                            <tr>
+                                <th>From Date</th>
+                                <td>{{item.fromDate}}</td>
+                                <th>To Date</th>
+                                <td>{{item.toDate}}</td>
+                            </tr>
+                            <tr>
+                                <th>Remark</th>
+                                <td>{{item.remark}}</td>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+                
             </c-card-body>
         </c-card>
         
@@ -565,33 +577,36 @@
                 (close)="toggleComponent('bankInfo')"></app-emp-bank-info>
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover  *ngFor="let item of empBankInfo" class="mb-3">
-                    <tbody>
-                        <tr>
-                            <th>Account Name</th>
-                            <td>{{item.accountName}}</td>
-                            <th>Account Number</th>
-                            <td>{{item.accountNumber}}</td>
-                        </tr>
-                        <tr>
-                            <th>Account Type</th>
-                            <td>{{item.accountTypeName}}</td>
-                            <th>Bank Name</th>
-                            <td>{{item.bankName}}</td>
-                        </tr>
-                        <tr>
-                            <th>Branch Name</th>
-                            <td>{{item.branchName}}</td>
-                            <th>Routing No</th>
-                            <td>{{item.routingNo}}</td>
-                        </tr>
-                        <tr>
-                            <th>Remark</th>
-                            <td>{{item.remark}}</td>
-                            <th colspan="2"></th>
-                        </tr>
-                    </tbody>
-                </table>
+                @if(empBankInfo.length>0){
+                    <table cTable bordered hover  *ngFor="let item of empBankInfo" class="mb-3">
+                        <tbody>
+                            <tr>
+                                <th>Account Name</th>
+                                <td>{{item.accountName}}</td>
+                                <th>Account Number</th>
+                                <td>{{item.accountNumber}}</td>
+                            </tr>
+                            <tr>
+                                <th>Account Type</th>
+                                <td>{{item.accountTypeName}}</td>
+                                <th>Bank Name</th>
+                                <td>{{item.bankName}}</td>
+                            </tr>
+                            <tr>
+                                <th>Branch Name</th>
+                                <td>{{item.branchName}}</td>
+                                <th>Routing No</th>
+                                <td>{{item.routingNo}}</td>
+                            </tr>
+                            <tr>
+                                <th>Remark</th>
+                                <td>{{item.remark}}</td>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+                
             </c-card-body>
         </c-card>
 
@@ -613,21 +628,24 @@
                 (close)="toggleComponent('languageInfo')"></app-emp-language-info>
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover  *ngFor="let item of empLanguageInfo" class="mb-3">
-                    <tbody>
-                        <tr>
-                            <th>Language Name</th>
-                            <td>{{item.languageName}}</td>
-                            <th>Competence</th>
-                            <td>{{item.competenceName}}</td>
-                        </tr>
-                        <tr>
-                            <th>Remark</th>
-                            <td>{{item.remark}}</td>
-                            <th colspan="2"></th>
-                        </tr>
-                    </tbody>
-                </table>
+                @if(empLanguageInfo.length>0){
+                    <table cTable bordered hover  *ngFor="let item of empLanguageInfo" class="mb-3">
+                        <tbody>
+                            <tr>
+                                <th>Language Name</th>
+                                <td>{{item.languageName}}</td>
+                                <th>Competence</th>
+                                <td>{{item.competenceName}}</td>
+                            </tr>
+                            <tr>
+                                <th>Remark</th>
+                                <td>{{item.remark}}</td>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+                
             </c-card-body>
         </c-card>
         
@@ -649,27 +667,30 @@
                 (close)="toggleComponent('foreignTour')"></app-emp-foreign-tour-info>
             </c-card-header>
             <c-card-body>
-                <table cTable bordered hover  *ngFor="let item of empForeignTourInfo" class="mb-3">
-                    <tbody>
-                        <tr>
-                            <th>Country Name</th>
-                            <td>{{item.countryName}}</td>
-                            <th>Purpose</th>
-                            <td>{{item.purpose}}</td>
-                        </tr>
-                        <tr>
-                            <th>From Date</th>
-                            <td>{{item.fromDate}}</td>
-                            <th>To Date</th>
-                            <td>{{item.toDate}}</td>
-                        </tr>
-                        <tr>
-                            <th>Remark</th>
-                            <td>{{item.remark}}</td>
-                            <th colspan="2"></th>
-                        </tr>
-                    </tbody>
-                </table>
+                @if(empForeignTourInfo.length>0){
+                    <table cTable bordered hover  *ngFor="let item of empForeignTourInfo" class="mb-3">
+                        <tbody>
+                            <tr>
+                                <th>Country Name</th>
+                                <td>{{item.countryName}}</td>
+                                <th>Purpose</th>
+                                <td>{{item.purpose}}</td>
+                            </tr>
+                            <tr>
+                                <th>From Date</th>
+                                <td>{{item.fromDate}}</td>
+                                <th>To Date</th>
+                                <td>{{item.toDate}}</td>
+                            </tr>
+                            <tr>
+                                <th>Remark</th>
+                                <td>{{item.remark}}</td>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+                
             </c-card-body>
         </c-card>
 

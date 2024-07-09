@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.Scale.Handlers.Queries
             ICollection<Hrm.Domain.Scale> Scales = await _ScaleRepository.FilterAsync(x => x.GradeId == request.GradeId);
             List<SelectedModel> selectModels = Scales.Select(x => new SelectedModel
             {
-                Name = x.ScaleName,
+                Name = x.ScaleName+" ("+ x.BasicPay + ")",
                 Id = x.ScaleId
             }).ToList();
             return selectModels;

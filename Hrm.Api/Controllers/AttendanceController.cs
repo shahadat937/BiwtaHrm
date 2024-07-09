@@ -55,6 +55,16 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("get-TotalPresentAbsentEmp")]
+        public async Task<ActionResult> GetTotalPresentAbsentEmp([FromQuery] AttendanceReportFilterDto AtdReportFilterDto)
+        {
+            var command = new GetAttendanceSummaryByOfficeDepartmentSectionRequest { AtdReportFilterDto = AtdReportFilterDto };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+
+        }
+
         [HttpPost]
         [Route("save-AttendanceFromDevice")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateAttendanceDto attendance)

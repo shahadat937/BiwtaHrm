@@ -65,7 +65,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
       aspNetUserId: null,
       userStatus: false,
       employeeTypeName: '',
-      idCardNo: null,
+      idCardNo: '',
     };
   }
 

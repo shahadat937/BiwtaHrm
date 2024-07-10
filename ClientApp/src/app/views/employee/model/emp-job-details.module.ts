@@ -7,7 +7,7 @@ export class EmpJobDetailsModule {
   sectionId: any;
   presentGradeId: any;
   presentScaleId: any;
-  basicPay: any;
+  basicPay: number;
   joiningDate:  Date | null;
   firstGradeId: any;
   firstScaleId: any;
@@ -40,7 +40,7 @@ export class EmpJobDetailsModule {
     this.sectionId= null;
     this.presentGradeId= null;
     this.presentScaleId= null;
-    this.basicPay = null;
+    this.basicPay = 0;
     this.joiningDate = null;
     this.firstGradeId= null;
     this.firstScaleId= null;

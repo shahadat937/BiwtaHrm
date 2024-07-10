@@ -19,7 +19,7 @@
           cFormControl
           id="idCardNo"
           required
-          type="number"
+          type="text"
         />
         @if(!idCardNo.valid&&idCardNo.touched){
         <div class="text-left text-danger">Id Card No is required</div>
@@ -59,7 +59,7 @@
       
       <c-col [md]="4">
         <label cLabel for="validationCustom02"
-        >Last Name<span class="text-danger">*</span></label
+        >Last Name<span class="text-danger"></span></label
       >
         <input
         [(ngModel)]="empBasicInfoService.basicInfo.lastName"
@@ -96,7 +96,7 @@
       
       <c-col [md]="4">
         <label cLabel for="validationCustom04"
-        >Last Name Bangla<span class="text-danger">*</span></label
+        >Last Name Bangla<span class="text-danger"></span></label
       >
         <input
           [(ngModel)]="empBasicInfoService.basicInfo.lastNameBangla"
@@ -105,7 +105,6 @@
           placeholder="Enter Last Name Bangla"
           cFormControl
           id="validationCustom04"
-          required
           type="text"
         />
         @if(!lastNameBangla.value&&lastNameBangla.touched){

@@ -1,5 +1,6 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.Attendance;
+using Hrm.Application.DTOs.Attendance.Validators;
 using Hrm.Application.Features.Attendance.Requests.Commands;
 using Hrm.Application.Features.Attendance.Requests.Queries;
 
@@ -23,6 +24,45 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
 
             return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-AttendanceSummary")]
+        public async Task<ActionResult> GetAttendanceSummary([FromQuery] GetAttendanceSummaryDto GetAttendanceSummarydto)
+        {
+            var command = new GetAttendanceSummaryByEmpRequest { AtdSummaryDto = GetAttendanceSummarydto };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-AttendanceReportByFilter")]
+        public async Task<ActionResult> GetAttendanceReportByFilter([FromQuery] AttendanceReportFilterDto AttendanceReportFilterdto)
+        {
+            var command = new GetAttendanceReportByFilterRequest { AtdReportFilter = AttendanceReportFilterdto };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-AttendanceById/{id}")]
+        public async Task<ActionResult> GetById(int id)
+        {
+            var command = new GetAttendanceByIdRequest { AttendanceId = id };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-TotalPresentAbsentEmp")]
+        public async Task<ActionResult> GetTotalPresentAbsentEmp([FromQuery] AttendanceReportFilterDto AtdReportFilterDto)
+        {
+            var command = new GetAttendanceSummaryByOfficeDepartmentSectionRequest { AtdReportFilterDto = AtdReportFilterDto };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+
         }
 
         [HttpPost]
@@ -52,6 +92,18 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
 
+        }
+
+        [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [Route("save-BulkAttendance")]
+        public async Task<ActionResult<BaseCommandResponse>> SaveBulkAttendance([FromForm] CreateBulkAttendanceDto createAtdDto)
+        {
+            var command = new CreateBulkAttendanceCommand { csvFile = createAtdDto.csvFile };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
     }

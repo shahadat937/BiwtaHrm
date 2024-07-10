@@ -22,6 +22,7 @@ namespace Hrm.Domain
         public bool IsActive { get; set; }
 
         public virtual Bank? Bank { get; set; }
+        public virtual ICollection<EmpBankInfo>? EmpBankInfo { get; set; }
 
     }
 }

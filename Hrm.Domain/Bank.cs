@@ -13,5 +13,7 @@ namespace Hrm.Domain
         public string BankName { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual ICollection<EmpBankInfo>? EmpBankInfo { get; set; }
     }
 }

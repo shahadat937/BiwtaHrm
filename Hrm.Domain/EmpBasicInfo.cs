@@ -11,6 +11,7 @@ namespace Hrm.Domain
     public class EmpBasicInfo : BaseDomainEntity
     {
         public int Id { get; set; }
+        public int IdCardNo { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? FirstNameBangla { get; set; }
@@ -38,6 +39,10 @@ namespace Hrm.Domain
         public virtual ICollection<EmpSpouseInfo>? EmpSpouseInfo { get; set; }
         public virtual ICollection<EmpChildInfo>? EmpChildInfo { get; set; }
         public virtual ICollection<EmpEducationInfo>? EmpEducationInfo { get; set; }
+        public virtual ICollection<EmpPsiTrainingInfo>? EmpPsiTrainingInfo { get; set; }
+        public virtual ICollection<EmpBankInfo>? EmpBankInfo { get; set; }
+        public virtual ICollection<EmpLanguageInfo>? EmpLanguageInfo { get; set; }
+        public virtual ICollection<EmpForeignTourInfo>? EmpForeignTourInfo { get; set; }
         public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
     }
 }

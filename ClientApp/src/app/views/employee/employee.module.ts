@@ -56,6 +56,8 @@ import { EmployeeInformationComponent } from './manage-employee/employee-informa
 import { ViewEmployeeComponent } from './add-employee/view-employee/view-employee.component';
 import { UpdateUserInfoComponent } from './add-employee/update-user-info/update-user-info.component';
 import { EmpNomineeInfoComponent } from './add-employee/employee-informations/emp-nominee-info/emp-nominee-info.component';
+import { EmpIdCardGenerateComponent } from './manage-employee/emp-id-card-generate/emp-id-card-generate.component';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -80,6 +82,7 @@ import { EmpNomineeInfoComponent } from './add-employee/employee-informations/em
     ViewEmployeeComponent,
     UpdateUserInfoComponent,
     EmpNomineeInfoComponent,
+    EmpIdCardGenerateComponent,
   ],
   imports: [
     CommonModule,
@@ -116,6 +119,7 @@ import { EmpNomineeInfoComponent } from './add-employee/employee-informations/em
     CollapseDirective,
     IconModule,
     TableModule,
+    MatCardModule
   ],
   providers:
   [

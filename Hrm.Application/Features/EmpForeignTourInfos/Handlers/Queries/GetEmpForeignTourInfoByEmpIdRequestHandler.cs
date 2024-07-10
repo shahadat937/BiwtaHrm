@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.DTOs.EmpForeignTourInfo;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.EmpForeignTourInfos.Handlers.Queries
 {
@@ -26,7 +27,14 @@ namespace Hrm.Application.Features.EmpForeignTourInfos.Handlers.Queries
 
         public async Task<List<EmpForeignTourInfoDto>> Handle(GetEmpForeignTourInfoByEmpIdRequest request, CancellationToken cancellationToken)
         {
-            ICollection<EmpForeignTourInfo> empForeignTourInfos = await _EmpForeignTourInfoRepository.FilterAsync(x => x.EmpId == request.Id);
+            List<EmpForeignTourInfo> empForeignTourInfos = await _EmpForeignTourInfoRepository.Where(x => x.EmpId == request.Id)
+                .Include(x => x.Country)
+                .ToListAsync(cancellationToken);
+
+            if (empForeignTourInfos == null)
+            {
+                return null;
+            }
 
             List<EmpForeignTourInfoDto> result = _mapper.Map<List<EmpForeignTourInfoDto>>(empForeignTourInfos);
 

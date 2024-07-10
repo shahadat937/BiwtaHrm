@@ -5,7 +5,10 @@ export class EmpLanguageInfoModule {
   competenceId: any;
   remark: string;
   menuPosition: number;
-  isActive: boolean
+  isActive: boolean;
+
+  languageName: string = '';
+  competenceName: string = '';
 
   constructor() {
     this.id= 0;

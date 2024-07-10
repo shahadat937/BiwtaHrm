@@ -17,5 +17,7 @@ namespace Hrm.Application.DTOs.EmpPsiTrainingInfo
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+
+        public string? TrainingName { get; set; }
     }
 }

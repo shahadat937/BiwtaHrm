@@ -7,7 +7,9 @@ export class EmpPsiTrainingInfoModule {
   toDate:  Date | null;
   remark: string;
   menuPosition: number;
-  isActive: boolean
+  isActive: boolean;
+
+  trainingName: string = '';
 
   constructor() {
     this.id= 0;

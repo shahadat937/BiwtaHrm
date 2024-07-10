@@ -62,6 +62,7 @@ namespace Hrm.Api.Controllers
             };
         }
 
+
         [HttpGet]
         [Route("get-organogramNamesOnly")]
         public async Task<ActionResult<IEnumerable<OrganogramOfficeNameDto>>> GetOfficeNames()
@@ -72,18 +73,24 @@ namespace Hrm.Api.Controllers
                 .Include(o => o.Departments)
                     .ThenInclude(d => d.Designations)
                 .Include(o => o.Designations) // Include direct designations
+                .ThenInclude(d => d.EmpJobDetail) // Include EmpJobDetail
+                .ThenInclude(ejd => ejd.EmpBasicInfo) // Include EmpBasicInfo
                 .ToListAsync();
 
             var result = offices.Select(o => new OrganogramOfficeNameDto
             {
-                Name = o.OfficeNameBangla,
+                Name = o.OfficeName,
                 Departments = o.Departments
                     .Where(d => d.UpperDepartmentId == null)
                     .Select(d => MapDepartmentName(d))
                     .ToList(),
                 DirectDesignations = o.Designations
                     .Where(d => d.DepartmentId == null)
-                    .Select(d => new OrganogramDesignationNameDto { Name = d.DesignationNameBangla })
+                    .Select(d => new OrganogramDesignationNameDto
+                    {
+                        Name = d.DesignationName,
+                        EmployeeName = d.EmpJobDetail?.FirstOrDefault()?.EmpBasicInfo != null ? $"{d.EmpJobDetail.FirstOrDefault().EmpBasicInfo.FirstName} {d.EmpJobDetail.FirstOrDefault().EmpBasicInfo.LastName}" : null
+                    })
                     .ToList()
             }).ToList();
 
@@ -94,15 +101,17 @@ namespace Hrm.Api.Controllers
         {
             var departmentNameDto = new OrganogramDepartmentNameDto
             {
-                Name = department.DepartmentNameBangla,
+                Name = department.DepartmentName,
                 Designations = department.Designations.Select(de => new OrganogramDesignationNameDto
                 {
-                    Name = de.DesignationNameBangla
+                    Name = de.DesignationName,
+                    EmployeeName = de.EmpJobDetail?.FirstOrDefault()?.EmpBasicInfo != null ? $"{de.EmpJobDetail.FirstOrDefault().EmpBasicInfo.FirstName} {de.EmpJobDetail.FirstOrDefault().EmpBasicInfo.LastName}" : null
                 }).ToList(),
                 SubDepartments = department.SubDepartments.Select(sd => MapDepartmentName(sd)).ToList()
             };
 
             return departmentNameDto;
         }
+
     }
 }

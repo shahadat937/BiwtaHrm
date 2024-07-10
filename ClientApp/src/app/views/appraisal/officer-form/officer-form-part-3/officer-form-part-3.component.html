@@ -57,14 +57,19 @@
                           <td>
                             <input type="text" cFormControl
                               [ngModel]="row.Signature"
-                              (ngModelChange)="row.Signature = $event"                              
+                              (ngModelChange)="row.Signature = $event"
+                              name="Signature{{i}}"                              
                               [disabled]="!row.signatureEnabled">
                             <div *ngIf="!row.Signature && row.signatureEnabled">
                               <div class="text-left text-danger">Professional Knowledge is required</div>
                             </div>
                           </td>
                           <td>
-                            <input type="text" cFormControl>
+                            <input type="text" cFormControl
+                            [ngModel]="row.professionalKnowledgeRemarks"
+                            (ngModelChange)="row.professionalKnowledgeRemarks = $event"
+                            name="professionalKnowledgeRemarks{{i}}"
+                            [disabled]="!row.remarksEnabled">
                           </td>
                         </tr>
                       </ng-container>
@@ -109,7 +114,11 @@
                             </div>
                           </td>
                           <td>
-                            <input type="text" cFormControl>
+                            <input type="text" cFormControl
+                            [ngModel]="row.qualityofworkRemarks"
+                            (ngModelChange)="row.qualityofworkRemarks = $event"
+                            name="qualityofworkRemarks{{i}}"
+                            [disabled]="!row.remarksEnabled">
                           </td>
                         </tr>
                       </ng-container>
@@ -153,7 +162,11 @@
                             </div>
                         </td>
                         <td>
-                          <input type="text" cFormControl>
+                          <input type="text" cFormControl
+                          [ngModel]="row.amountofWorkRemarks"
+                          (ngModelChange)="row.amountofWorkRemarks = $event"
+                          name="amountofWorkRemarks{{i}}"
+                          [disabled]="!row.remarksEnabled">
                         </td>
                       </tr>
                     </tbody>
@@ -193,9 +206,13 @@
                             <div *ngIf="!row.punctualitySignature && row.signatureEnabled">
                               <div class="text-left text-danger">Punctuality is required</div>
                             </div>
-                        <td>
-                          <input type="text" cFormControl>
-                        </td>
+                            <td>
+                              <input type="text" cFormControl
+                              [ngModel]="row.punctuilityRemarks"
+                              (ngModelChange)="row.punctuilityRemarks = $event"
+                              name="punctuilityRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
+                            </td>
                       </tr>
                     </tbody>
                   </table>
@@ -234,9 +251,13 @@
                             <div *ngIf="!row.senceOfResponsibilityAndCommitmentSignature && row.signatureEnabled">
                               <div class="text-left text-danger">Sense of Responsibility is required</div>
                             </div>
-                        <td>
-                          <input type="text" cFormControl>
-                        </td>
+                            <td>
+                              <input type="text" cFormControl
+                              [ngModel]="row.senseofResponsibilityRemarks"
+                              (ngModelChange)="row.senseofResponsibilityRemarks = $event"
+                              name="senseofResponsibilityRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
+                            </td>
                       </tr>
                     </tbody>
                   </table>
@@ -276,9 +297,13 @@
                             <div *ngIf="!row.promptnessTakingMeasuresAndFollowingOrdersSignature && row.signatureEnabled">
                               <div class="text-left text-danger">Promptness Taking Measure is required</div>
                             </div>
-                        <td>
-                          <input type="text" cFormControl>
-                        </td>
+                            <td>
+                              <input type="text" cFormControl
+                              [ngModel]="row.promptnessRemarks"
+                              (ngModelChange)="row.promptnessRemarks = $event"
+                              name="promptnessRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
+                            </td>
                       </tr>
                     </tbody>
                   </table>
@@ -317,9 +342,13 @@
                             <div *ngIf="!row.interestOfWorkSignature && row.signatureEnabled">
                               <div class="text-left text-danger">Interest of Work is required</div>
                             </div>
-                        <td>
-                          <input type="text" cFormControl>
-                        </td>
+                            <td>
+                              <input type="text" cFormControl
+                              [ngModel]="row.interestWorkRemarks"
+                              (ngModelChange)="row.interestWorkRemarks = $event"
+                              name="interestWorkRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
+                            </td>
                       </tr>
                     </tbody>
                   </table>
@@ -359,9 +388,13 @@
                             <div *ngIf="!row.superviseAndManageSignature && row.signatureEnabled">
                               <div class="text-left text-danger">Supervise and Measure is required</div>
                             </div>
-                        <td>
-                          <input type="text" cFormControl>
-                        </td>
+                            <td>
+                              <input type="text" cFormControl
+                              [ngModel]="row.serviceRemarks"
+                              (ngModelChange)="row.serviceRemarks = $event"
+                              name="serviceRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
+                            </td>
                       </tr>
                     </tbody>
                   </table>
@@ -400,9 +433,13 @@
                             <div *ngIf="!row.relationWithColleaguesSignature && row.signatureEnabled">
                               <div class="text-left text-danger">Relation With Colleague is required</div>
                             </div>
-                        <td>
-                          <input type="text" cFormControl>
-                        </td>
+                            <td>
+                              <input type="text" cFormControl
+                              [ngModel]="row.RelationshipRemarks"
+                              (ngModelChange)="row.RelationshipRemarks = $event"
+                              name="RelationshipRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
+                            </td>
                       </tr>
                     </tbody>
                   </table>
@@ -441,9 +478,13 @@
                             <div *ngIf="!row.abilityImplementDecisionSignature && row.signatureEnabled">
                               <div class="text-left text-danger">Ability to Implementation is required</div>
                             </div>
-                        <td>
-                          <input type="text" cFormControl>
-                        </td>
+                            <td>
+                              <input type="text" cFormControl
+                              [ngModel]="row.abilitytoImplentRemarks"
+                              (ngModelChange)="row.abilitytoImplentRemarks = $event"
+                              name="abilitytoImplentRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
+                            </td>
                       </tr>
                     </tbody>
                   </table>
@@ -482,9 +523,13 @@
                             <div *ngIf="!row.expressivePowerWritingSignature && row.signatureEnabled">
                               <div class="text-left text-danger">Expressive Power (writing) is required</div>
                             </div>
-                        <td>
-                          <input type="text" cFormControl>
-                        </td>
+                            <td>
+                              <input type="text" cFormControl
+                              [ngModel]="row.expressiveWritingRemarks"
+                              (ngModelChange)="row.expressiveWritingRemarks = $event"
+                              name="expressiveWritingRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
+                            </td>
                       </tr>
                     </tbody>
                   </table>
@@ -523,9 +568,13 @@
                             <div *ngIf="!row.expressivePowerSpeechSignature && row.signatureEnabled">
                               <div class="text-left text-danger">Expressive Power (Speech) is required</div>
                             </div>
-                        <td>
-                          <input type="text" cFormControl>
-                        </td>
+                            <td>
+                              <input type="text" cFormControl
+                              [ngModel]="row.expressiveSpeechRemarks"
+                              (ngModelChange)="row.expressiveSpeechRemarks = $event"
+                              name="expressiveSpeechRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
+                            </td>
                       </tr>
                     </tbody>
                   </table>
@@ -660,9 +709,13 @@
                                 <div *ngIf="!row.overallAssessmentSignature && row.signatureEnabled">
                                   <div class="text-left text-danger">Overall Assessment is required</div>
                                 </div>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
+                                <td>
+                                  <input type="text" cFormControl
+                                  [ngModel]="row.overallAssesmentRemarks"
+                                  (ngModelChange)="row.overallAssesmentRemarks = $event"
+                                  name="overallAssesmentRemarks{{i}}"
+                                  [disabled]="!row.remarksEnabled">
+                                </td>
                           </tr>
                         </tbody>
                       </table>

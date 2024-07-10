@@ -1,7 +1,4 @@
 import { StaffForm2ServiceService } from './../service/staff-form2-service.service';
-import { StaffForm3ServicesService } from '../service/staff-form3-services.service';
-import { StaffFormpart2Module } from './../model/staff-formpart2.module';
-import { StaffFormServiceService } from './../service/staff-form-service.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -32,22 +29,36 @@ export class StaffForm2Component implements OnInit, OnDestroy{
 initaialUser(form?: NgForm) {
   if (form != null) form.resetForm();
   this.staffForm2Service.staffForm2module = {
-    intelligenceAndHumanActivity: '',
-    intelligenceAndHumanActivityRadio: 0,
-    professionalKnowledge: '',
-    expressivePowerWriting: '',
-    expressivePowerSpeaking:  '',
-    initiative:  '',
-    qualityAndQuantityOfWork:  '',
-    cooperationAndPrudence:  '',
-    interestAndHardWork:  '',
-    responsibilityGeneral: '',
-    responsibilityFinancialMatters:  '',
-    integrityAndReputation:  '',
-    personalityAndCharacter:  '',
-    health:  '',
-    punctuality:  '',
-    senseOfDiscipline: '',
+    intelligenceAndHumanRemarks: '',
+    intelligenceAndHumanActivityValue: 0,
+    professionalKnowledgeRemarks: '',
+    professionalKnowledgeValue: 0,
+    expressivePowerWritingRemarks: '',
+    expressivePowerWritingValue: 0,
+    expressivePowerSpeakingRemarks: '',
+    expressivePowerSpeakingValue: 0,
+    initiativeRemarks: '',
+    initiativeValue: 0,
+    qualityAndQuantityOfWorkRemarks: '',
+    qualityAndQuantityOfWorkValue: 0,
+    cooperationAndPrudenceRemarks: '',
+    cooperationAndPrudenceValue: 0,
+    interestAndHardWorkRemarks: '',
+    interestAndHardWorkValue: 0,
+    responsibilityGeneralRemarks: '',
+    responsibilityGeneralValue: 0,
+    responsibilityFinancialMattersRemarks: '',
+    responsibilityFinancialMattersValue: 0,
+    integrityAndReputationRemarks: '',
+    integrityAndReputationValue: 0,
+    personalityAndCharacterRemarks: '',
+    personalityAndCharacterValue: 0,
+    healthRemarks: '',
+    healthValue: 0,
+    punctualityRemarks: '',
+    punctualityValue: 0,
+    senseOfDisciplineRemarks: '',
+    senseOfDisciplineValue: 0,
   }
 }
 }

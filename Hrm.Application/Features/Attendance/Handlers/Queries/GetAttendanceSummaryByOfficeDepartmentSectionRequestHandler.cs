@@ -38,13 +38,15 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
                 throw new ValidationException(validationResult);
             }
 
+
+            // Creating Queryable to filter according to user request
             IQueryable<Hrm.Domain.Attendance> AtdQueryable = _AttendanceRepository.Where(at => at.AttendanceDate >= request.AtdReportFilterDto.From && at.AttendanceDate <= request.AtdReportFilterDto.To && at.AttendanceStatusId != (int)AttendanceStatusOption.Absent)
               .Include(at => at.EmpBasicInfo).AsQueryable();
 
             IQueryable<Hrm.Domain.EmpJobDetail> JobDetailQueryable = _EmpJobDetailRepository.AsQueryable();
 
 
-
+            // Filtering the data according to different fields
             if (request.AtdReportFilterDto.OfficeId.HasValue)
             {
                 AtdQueryable = AtdQueryable.Where(at => at.OfficeId == request.AtdReportFilterDto.OfficeId);
@@ -73,8 +75,13 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
                 JobDetailQueryable = JobDetailQueryable.Where(jd => jd.DesignationId == request.AtdReportFilterDto.DesignationId);
             }
 
-            int totalEmployee = JobDetailQueryable.Select(jd => jd.EmpId).Distinct().Count();
 
+            // Calculating total number of Employee according to given filter
+            int totalEmployee = JobDetailQueryable.Select(jd => jd.EmpId).Distinct().Count();
+            
+
+
+            // Generating intermediate reports
             var reports = AtdQueryable.GroupBy(at => at.AttendanceDate).Select(
                     g => new TotalPresentAbsentEmpDto
                     {
@@ -85,12 +92,29 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
                 .ToList();
 
 
-            foreach (var report in reports)
+            // Generating all dates in a given date range and merging the reports for all dates
+            DateTime startDate = new DateTime(request.AtdReportFilterDto.From.Year, request.AtdReportFilterDto.From.Month, request.AtdReportFilterDto.From.Day);
+
+            DateTime endDate = new DateTime(request.AtdReportFilterDto.To.Year, request.AtdReportFilterDto.To.Month, request.AtdReportFilterDto.To.Day);
+
+            var allDates = Enumerable.Range(0, 1 + endDate.Subtract(startDate).Days)
+                .Select(offset => startDate.AddDays(offset))
+                .ToList();
+
+            var allReports = allDates.Select(dt => new TotalPresentAbsentEmpDto
             {
-                report.totalAbsentEmp = totalEmployee - report.totalPresentEmp;
+                Date = DateOnly.FromDateTime(dt),
+                totalPresentEmp = reports.FirstOrDefault(s => s.Date == DateOnly.FromDateTime(dt))?.totalPresentEmp ?? 0
+            }).OrderBy(dt=>dt.Date).ToList();
+
+
+            // Calculating total Absent Employees
+            foreach (var item in allReports)
+            {
+                item.totalAbsentEmp = totalEmployee - item.totalPresentEmp;
             }
 
-            return reports;
+            return allReports;
         }
     }
 }

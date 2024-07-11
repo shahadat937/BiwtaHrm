@@ -5,6 +5,27 @@
   </c-card-header>
   <c-card-body [visible]="visible" cCollapse>
     <form #BasicInfoForm="ngForm" (submit)="onSubmit(BasicInfoForm)" [gutter]="3" novalidate cForm cRow class="needs-validation">
+
+      
+      <c-col [md]="4">
+        <label cLabel for="idCardNo"
+        >Id Card No<span class="text-danger">*</span></label
+      >
+        <input
+          [(ngModel)]="empBasicInfoService.basicInfo.idCardNo"
+          name="idCardNo"
+          #idCardNo="ngModel"
+          placeholder="Enter Id Card"
+          cFormControl
+          id="idCardNo"
+          required
+          type="text"
+        />
+        @if(!idCardNo.valid&&idCardNo.touched){
+        <div class="text-left text-danger">Id Card No is required</div>
+        }
+      </c-col>
+
       <c-col [md]="4">
         
         <input
@@ -38,7 +59,7 @@
       
       <c-col [md]="4">
         <label cLabel for="validationCustom02"
-        >Last Name<span class="text-danger">*</span></label
+        >Last Name<span class="text-danger"></span></label
       >
         <input
         [(ngModel)]="empBasicInfoService.basicInfo.lastName"
@@ -75,7 +96,7 @@
       
       <c-col [md]="4">
         <label cLabel for="validationCustom04"
-        >Last Name Bangla<span class="text-danger">*</span></label
+        >Last Name Bangla<span class="text-danger"></span></label
       >
         <input
           [(ngModel)]="empBasicInfoService.basicInfo.lastNameBangla"
@@ -84,7 +105,6 @@
           placeholder="Enter Last Name Bangla"
           cFormControl
           id="validationCustom04"
-          required
           type="text"
         />
         @if(!lastNameBangla.value&&lastNameBangla.touched){

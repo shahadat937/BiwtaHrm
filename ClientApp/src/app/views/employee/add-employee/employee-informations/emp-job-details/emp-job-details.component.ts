@@ -30,6 +30,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   countris: SelectedModel[] = [];
   grades: SelectedModel[] = [];
   scales: SelectedModel[] = [];
+  sections: SelectedModel[] = [];
   empJobDetailsId: number = 0;
   subscription: Subscription = new Subscription();
   loading: boolean = false;
@@ -50,6 +51,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     this.loadOffice();
     this.SelectModelGrade();
     this.getAllDepartment();
+    this.getSelectedSection();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -63,20 +65,24 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   }
 
   getEmployeeByEmpId() {
+    this.initaialForm();
     this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
       if (res) {
         this.empJobDetailsId = res.id;
         this.onOfficeSelect(res.officeId);
-        if (res.departmentId != null) {
+        if (res.departmentId) {
           this.onDepartmentSelectGetDesignation(res.departmentId, res.id);
         }
         else {
           this.onOfficeSelectGetDesignation(res.officeId, res.id);
         }
         this.onChangeGradeGetScale(res.presentGradeId);
-        this.onChangeScaleGetBasicPay(res.presentScaleId);
-        this.onChangeFirstGradeGetFirstScale(res.firstGradeId);
-        this.getOldDesignationByDepartment(res.firstDepartmentId);
+        if(res.firstGradeId){
+          this.onChangeFirstGradeGetFirstScale(res.firstGradeId);
+        }
+        if(res.firstDepartmentId){
+          this.getOldDesignationByDepartment(res.firstDepartmentId);
+        }
         this.EmpJobDetailsForm?.form.patchValue(res);
         this.headerText = 'Update Job Details';
         this.btnText = 'Update';
@@ -100,7 +106,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       sectionId: null,
       presentGradeId: null,
       presentScaleId: null,
-      basicPay: null,
+      basicPay: 0,
       joiningDate: null,
       firstGradeId: null,
       firstScaleId: null,
@@ -136,7 +142,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       sectionId: null,
       presentGradeId: null,
       presentScaleId: null,
-      basicPay: null,
+      basicPay: 0,
       joiningDate: null,
       firstGradeId: null,
       firstScaleId: null,
@@ -154,6 +160,12 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   loadOffice() {
     this.subscription = this.officeService.selectGetoffice().subscribe((data) => {
       this.offices = data;
+    });
+  }
+
+  getSelectedSection(){
+    this.subscription = this.empJobDetailsService.getSelectedSection().subscribe((data) => {
+      this.sections = data;
     });
   }
 
@@ -223,6 +235,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
 
 
   onSubmit(form: NgForm): void {
+    console.log(form.value)
     this.loading = true;
     this.empJobDetailsService.cachedData = [];
     const id = form.value.id;

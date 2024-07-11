@@ -33,7 +33,7 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
 
             List<SelectedModel> selectModels = designations.Select(x => new SelectedModel
             {
-                Name = x.DesignationNameBangla,
+                Name = x.DesignationName,
                 Id = x.DesignationId
             }).ToList();
             return selectModels;

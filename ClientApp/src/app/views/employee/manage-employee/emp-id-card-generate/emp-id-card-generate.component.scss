@@ -1,0 +1,22 @@
+.front-id, .back-id{
+  height: 466.25px;
+  width: 306.25px;
+  margin: 0 auto;
+}
+.front-id {
+  background-image: url('/assets/id-card/front.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.back-id {
+  background-image: url('/assets/id-card/back.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.card-logo img {
+  height: auto;
+  width: 50px;
+}

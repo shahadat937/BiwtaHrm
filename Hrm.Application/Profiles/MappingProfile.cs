@@ -165,7 +165,8 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Designation, DesignationDto>()
             .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
-            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName));
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
+            .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().EmpBasicInfo.FirstName + " " + src.EmpJobDetail.FirstOrDefault().EmpBasicInfo.LastName));
 
             CreateMap<Department, DepartmentDto>()
             .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
@@ -386,15 +387,27 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpPsiTrainingInfo, EmpPsiTrainingInfoDto>().ReverseMap();
             CreateMap<EmpPsiTrainingInfo, CreateEmpPsiTrainingInfoDto>().ReverseMap();
+            CreateMap<EmpPsiTrainingInfo, EmpPsiTrainingInfoDto>()
+            .ForMember(dest => dest.TrainingName, opt => opt.MapFrom(src => 
+            src.TrainingName.TrainingNames));
 
             CreateMap<EmpBankInfo, EmpBankInfoDto>().ReverseMap();
             CreateMap<EmpBankInfo, CreateEmpBankInfoDto>().ReverseMap();
+            CreateMap<EmpBankInfo, EmpBankInfoDto>()
+            .ForMember(dest => dest.AccountTypeName, opt => opt.MapFrom(src => src.AccountType.BankAccountTypeName))
+            .ForMember(dest => dest.BankName, opt => opt.MapFrom(src => src.Bank.BankName))
+            .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.BankBranch.BankBranchName));
 
             CreateMap<EmpForeignTourInfo, EmpForeignTourInfoDto>().ReverseMap();
             CreateMap<EmpForeignTourInfo, CreateEmpForeignTourInfoDto>().ReverseMap();
+            CreateMap<EmpForeignTourInfo, EmpForeignTourInfoDto>()
+            .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.CountryName));
 
             CreateMap<EmpLanguageInfo, EmpLanguageInfoDto>().ReverseMap();
             CreateMap<EmpLanguageInfo, CreateEmpLanguageInfoDto>().ReverseMap();
+            CreateMap<EmpLanguageInfo, EmpLanguageInfoDto>()
+            .ForMember(dest => dest.LanguageName, opt => opt.MapFrom(src => src.Language.LanguageName))
+            .ForMember(dest => dest.CompetenceName, opt => opt.MapFrom(src => src.Competence.CompetenceName));
 
             CreateMap<EmpPhotoSign, EmpPhotoSignDto>().ReverseMap();
             CreateMap<EmpPhotoSign, CreateEmpPhotoSignDto>().ReverseMap();

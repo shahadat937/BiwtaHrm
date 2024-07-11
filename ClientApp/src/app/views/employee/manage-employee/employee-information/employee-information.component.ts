@@ -25,6 +25,11 @@ import { EmpPermanentAddressModule } from '../../model/emp-permanent-address.mod
 import { EmpJobDetailsModule } from '../../model/emp-job-details.module';
 import { EmpSpouseInfoModule } from '../../model/emp-spouse-info.module';
 import { EmpChildInfoModule } from '../../model/emp-child-info.module';
+import { EmpEducationInfoModule } from '../../model/emp-education-info.module';
+import { EmpPsiTrainingInfoModule } from '../../model/emp-psi-training-info.module';
+import { EmpBankInfoModule } from '../../model/emp-bank-info.module';
+import { EmpLanguageInfoModule } from '../../model/emp-language-info.module';
+import { EmpForeignTourInfoModule } from '../../model/emp-foreign-tour-info.module';
 
 @Component({
   selector: 'app-employee-information',
@@ -33,7 +38,6 @@ import { EmpChildInfoModule } from '../../model/emp-child-info.module';
 })
 export class EmployeeInformationComponent implements OnInit {
 
-  employeeId : any = null;
   empBasicInfo : BasicInfoModule = new BasicInfoModule;
   empPhotoSign : EmpPhotoSignModule = new EmpPhotoSignModule;
   empPersonalInfo : PersonalInfoModule = new PersonalInfoModule;
@@ -42,8 +46,19 @@ export class EmployeeInformationComponent implements OnInit {
   empJobDetails : EmpJobDetailsModule = new EmpJobDetailsModule;
   empSpouseInfo : EmpSpouseInfoModule[] = [];
   empChildInfo : EmpChildInfoModule[] = [];
+  empEducationInfo : EmpEducationInfoModule[] = [];
+  empPsiTrainingInfo : EmpPsiTrainingInfoModule[] = [];
+  empBankInfo : EmpBankInfoModule[] = [];
+  empLanguageInfo : EmpLanguageInfoModule[] = [];
+  empForeignTourInfo : EmpForeignTourInfoModule[] = [];
   empPhoto : string = '';
   empSignature : string = '';
+
+  visible : boolean = false;
+  componentVisible : boolean = false;
+  visibleComponent: string | null = null;
+  empId : any = null;
+  pNo: string = '';
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -67,6 +82,13 @@ export class EmployeeInformationComponent implements OnInit {
 
     ngOnInit(): void {
       this.handleRouteParams();
+    }
+  
+    handleRouteParams() {
+      this.route.paramMap.subscribe((params) => {
+        this.empId = Number(params.get('id'));
+      });
+      
       this.getEmpBasicInfoByEmpId();
       this.getEmpPhotoSign();
       this.getEmpPersonalInfoByEmpId();
@@ -75,62 +97,108 @@ export class EmployeeInformationComponent implements OnInit {
       this.getEmpJobDetailsByEmpId();
       this.getEmpSpouseInfoByEmpId();
       this.getEmpChildInfoByEmpId();
-    }
-  
-    handleRouteParams() {
-      this.route.paramMap.subscribe((params) => {
-        this.employeeId = Number(params.get('id'));
-      });
+      this.getEmpEducationInfoByEmpId();
+      this.getEmpPsiTrainingInfoByEmpId(); 
+      this.getEmpBankInfoByEmpId();
+      this.getEmpLanguageInfoByEmpId();
+      this.getEmpForeignTourInfoByEmpId();
     }
 
     getEmpBasicInfoByEmpId(){
-      this.manageEmployeeService.getEmpBasicInfoByEmpId(this.employeeId).subscribe((res) => {
+      this.manageEmployeeService.getEmpBasicInfoByEmpId(this.empId).subscribe((res) => {
         this.empBasicInfo = res;
+        this.pNo = res.personalFileNo;
       });
     }
     
     getEmpPersonalInfoByEmpId(){
-      this.empPersonalInfoService.findByEmpId(this.employeeId).subscribe((res) => {
+      this.empPersonalInfoService.findByEmpId(this.empId).subscribe((res) => {
         this.empPersonalInfo = res;
       });
     }
     
     getEmpPresentAddressByEmpId(){
-      this.empPresentAddressService.findByEmpId(this.employeeId).subscribe((res) => {
+      this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
         this.empPresentAddress = res;
       });
     }
     
     getEmpPermanentAddressByEmpId(){
-      this.empPermanentAddressService.findByEmpId(this.employeeId).subscribe((res) => {
+      this.empPermanentAddressService.findByEmpId(this.empId).subscribe((res) => {
         this.empPermanentAddress = res;
       });
     }
 
     getEmpJobDetailsByEmpId(){
-      this.empJobDetailsService.findByEmpId(this.employeeId).subscribe((res) => {
+      this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
         this.empJobDetails = res;
       });
     }
     
     getEmpSpouseInfoByEmpId(){
-      this.empSpouseInfoService.findByEmpId(this.employeeId).subscribe((res) => {
+      this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res) => {
         this.empSpouseInfo = res;
       });
     }
     
     getEmpChildInfoByEmpId(){
-      this.empChildInfoService.findByEmpId(this.employeeId).subscribe((res) => {
+      this.empChildInfoService.findByEmpId(this.empId).subscribe((res) => {
         this.empChildInfo = res;
+      });
+    }
+    
+    getEmpEducationInfoByEmpId(){
+      this.empEducationInfoService.findByEmpId(this.empId).subscribe((res) => {
+        this.empEducationInfo = res;
+      });
+    }
+    
+    getEmpPsiTrainingInfoByEmpId(){
+      this.empPsiTrainingInfoService.findByEmpId(this.empId).subscribe((res) => {
+        this.empPsiTrainingInfo = res;
+      });
+    }
+    
+    getEmpBankInfoByEmpId(){
+      this.empBankInfoService.findByEmpId(this.empId).subscribe((res) => {
+        this.empBankInfo = res;
+      });
+    }
+    
+    getEmpLanguageInfoByEmpId(){
+      this.empLanguageInfoService.findByEmpId(this.empId).subscribe((res) => {
+        this.empLanguageInfo = res;
+      });
+    }
+    
+    getEmpForeignTourInfoByEmpId(){
+      this.empForeignTourInfoService.findByEmpId(this.empId).subscribe((res) => {
+        this.empForeignTourInfo = res;
       });
     }
 
     getEmpPhotoSign(){
-      this.empPhotoSignService.findByEmpId(this.employeeId).subscribe((res) => {
+      this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
         this.empPhotoSign = res;
         this.empPhoto = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`;
         this.empSignature = `${this.empPhotoSignService.imageUrl}EmpSignature/${res.signatureUrl}`;
       });
     }
+
+
+    
+  toggleComponent(component: string) {
+    console.log("Component : ",component)
+    this.componentVisible = false;
+    if (this.visibleComponent === component) {
+      this.visibleComponent = null;
+      this.visible = false;
+      this.handleRouteParams();
+      } else {
+        this.visibleComponent = component;
+        this.visible = true;
+        this.componentVisible = true;
+    }
+  }
 
 }

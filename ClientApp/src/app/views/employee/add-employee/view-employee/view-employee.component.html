@@ -37,21 +37,21 @@
           </ng-container>
 
           <ng-container matColumnDef="pNo">
-            <th mat-header-cell *matHeaderCellDef>PNo.</th>
+            <th mat-header-cell *matHeaderCellDef>Id Card No</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.personalFileNo }}
+              {{ element.idCardNo }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="fullName">
-            <th mat-header-cell *matHeaderCellDef>Full Name</th>
+            <th mat-header-cell *matHeaderCellDef>Name</th>
             <td mat-cell *matCellDef="let element">
               {{ element.firstName }} {{element.lastName}}
             </td>
           </ng-container>
           
           <ng-container matColumnDef="fullNameBangla">
-            <th mat-header-cell *matHeaderCellDef>Full Name Bangla</th>
+            <th mat-header-cell *matHeaderCellDef>Name Bangla</th>
             <td mat-cell *matCellDef="let element">
                 {{ element.firstNameBangla }} {{element.lastNameBangla}}
             </td>

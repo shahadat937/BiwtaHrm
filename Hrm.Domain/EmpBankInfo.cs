@@ -21,9 +21,9 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
 
-        //public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
-        //public virtual AccountType? AccountType { get; set; }
-        //public virtual Bank? Bank { get; set; }
-        //public virtual BankBranch? BankBranch { get; set; }
+        public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
+        public virtual BankAccountType? AccountType { get; set; }
+        public virtual Bank? Bank { get; set; }
+        public virtual BankBranch? BankBranch { get; set; }
     }
 }

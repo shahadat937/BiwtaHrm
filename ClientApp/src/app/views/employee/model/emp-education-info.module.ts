@@ -9,7 +9,11 @@ export class EmpEducationInfoModule {
   passingYear: number | null;
   remark: string;
   menuPosition: number;
-  isActive: boolean
+  isActive: boolean;
+
+  examTypeName: string = '';
+  boardName: string = '';
+  subGroupName: string = '';
   
   constructor(){
     this.id= 0;

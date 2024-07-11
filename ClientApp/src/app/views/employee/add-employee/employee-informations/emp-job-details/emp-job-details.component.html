@@ -11,7 +11,7 @@
             <input type="hidden" [(ngModel)]="empJobDetailsService.empJobDetails.empId" name="empId" />
 
             
-            <c-col [md]="4">
+            <c-col [md]="3">
                 <label cLabel for="office">Office<span class="text-danger">*</span></label>
                 <div class="input-wrapper">
                 <select (change)="onOfficeSelect(empJobDetailsService.empJobDetails.officeId)" (change)="onOfficeSelectGetDesignation(empJobDetailsService.empJobDetails.officeId, empJobDetailsId)"
@@ -32,7 +32,7 @@
                 </div>
             </c-col>
             
-            <c-col [md]="4">
+            <c-col [md]="3">
                 <label cLabel for="Department">Department<span class="text-danger"></span></label>
                 <div class="input-wrapper">
                 <select (change)="onDepartmentSelectGetDesignation(empJobDetailsService.empJobDetails.departmentId, empJobDetailsId)"
@@ -52,7 +52,7 @@
                 </div>
             </c-col>
             
-            <c-col [md]="4">
+            <c-col [md]="3">
                 <label cLabel for="Designation">Designation<span class="text-danger"></span></label>
                 <div class="input-wrapper">
                 <select
@@ -68,6 +68,26 @@
                 </select>
                 @if(!designationId.valid && designationId.touched){
                 <div class="text-left text-danger">Designation is required</div>
+                }
+                </div>
+            </c-col>
+            
+            <c-col [md]="3">
+                <label cLabel for="sectionId">Section<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                <select
+                    [(ngModel)]="empJobDetailsService.empJobDetails.sectionId" name="sectionId" #sectionId="ngModel"
+                    cFormControl id="sectionId" aria-label="Default select example" cSelect>
+                    <option [ngValue]="null">Select Section</option>
+        
+                    @for(section of sections; track section.id;let index=$index) {
+                    <option [value]="section.id">
+                    {{ section.name }}
+                    </option>
+                    }
+                </select>
+                @if(!sectionId.valid && sectionId.touched){
+                <div class="text-left text-danger">Section is required</div>
                 }
                 </div>
             </c-col>
@@ -130,7 +150,6 @@
                 cFormControl
                 id="basicPay"
                 type="text"
-                readonly
                 />
             </c-col>
 

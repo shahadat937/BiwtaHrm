@@ -9,6 +9,7 @@ namespace Hrm.Application.DTOs.EmpBasicInfo
     public class CreateEmpBasicInfoDto : IEmpBasicInfoDto
     {
         public int Id { get; set; }
+        public string? IdCardNo { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? FirstNameBangla { get; set; }

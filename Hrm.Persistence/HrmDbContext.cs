@@ -655,6 +655,73 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.SubGroupId);
             });
 
+            modelBuilder.Entity<EmpPsiTrainingInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpPsiTrainingInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.TrainingName)
+                    .WithMany(eb => eb.EmpPsiTrainingInfo)
+                    .HasForeignKey(e => e.TrainingNameId);
+            });
+
+            modelBuilder.Entity<EmpBankInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpBankInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.AccountType)
+                    .WithMany(eb => eb.EmpBankInfo)
+                    .HasForeignKey(e => e.AccountTypeId);
+
+                entity.HasOne(e => e.Bank)
+                    .WithMany(eb => eb.EmpBankInfo)
+                    .HasForeignKey(e => e.BankId);
+
+                entity.HasOne(e => e.BankBranch)
+                    .WithMany(eb => eb.EmpBankInfo)
+                    .HasForeignKey(e => e.BranchId);
+            });
+
+            modelBuilder.Entity<EmpLanguageInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpLanguageInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Language)
+                    .WithMany(eb => eb.EmpLanguageInfo)
+                    .HasForeignKey(e => e.LanguageId);
+
+                entity.HasOne(e => e.Competence)
+                    .WithMany(eb => eb.EmpLanguageInfo)
+                    .HasForeignKey(e => e.CompetenceId);
+            });
+
+
+            modelBuilder.Entity<EmpForeignTourInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpForeignTourInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Country)
+                    .WithMany(eb => eb.EmpForeignTourInfo)
+                    .HasForeignKey(e => e.CountryId);
+            });
 
             base.OnModelCreating(modelBuilder);
         }

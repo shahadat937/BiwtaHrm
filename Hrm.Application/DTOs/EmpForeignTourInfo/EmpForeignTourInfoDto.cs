@@ -17,5 +17,7 @@ namespace Hrm.Application.DTOs.EmpForeignTourInfo
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+
+        public string? CountryName { get; set; }
     }
 }

@@ -45,6 +45,10 @@ export class EmpJobDetailsService {
     return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationByDepartmentId/' + id);
   }
   
+  getSelectedSection(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/section/get-selectedSection');
+  }
+  
   saveEmpJobDetails(model: any) {
     return this.http.post(this.baseUrl + '/empJobDetail/save-EmpJobDetails', model);
   }

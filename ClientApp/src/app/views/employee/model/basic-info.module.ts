@@ -11,6 +11,7 @@ export class BasicInfoModule {
   userStatus : boolean | null;
   employeeTypeId: any;
   employeeTypeName : string;
+  idCardNo: string = '';
 
   constructor() {
     this.id=0;

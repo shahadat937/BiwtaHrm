@@ -17,8 +17,8 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
 
-        //public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
-        //public virtual Language? Language { get; set; }
-        //public virtual Competence? Competence { get; set; }
+        public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
+        public virtual Language? Language { get; set; }
+        public virtual Competence? Competence { get; set; }
     }
 }

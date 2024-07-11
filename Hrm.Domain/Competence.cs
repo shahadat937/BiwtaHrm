@@ -13,5 +13,7 @@ namespace Hrm.Domain
         public string CompetenceName { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual ICollection<EmpLanguageInfo>? EmpLanguageInfo { get; set; }
     }
 }

@@ -55,7 +55,7 @@
                             </c-form-check>
                           </td>
                           <td>
-                            <input type="text" cFormControl
+                            <input type="file" cFormControl
                               [ngModel]="row.Signature"
                               (ngModelChange)="row.Signature = $event"
                               name="Signature{{i}}"                              
@@ -79,12 +79,6 @@
                   <table cTable  >
                     <thead>
                       <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Evaluation</th>
-                        <th scope="col" class="text-center">Signature</th>
-                        <th scope="col" class="text-center">Remarks</th>
-                      </tr>
-                      <tr>
                         <th colspan="3">
                           <p style="text-decoration: underline;">2. Quality Of Work</p>
                         </th>
@@ -104,7 +98,7 @@
                             </c-form-check>
                           </td>
                           <td>
-                            <input type="text" cFormControl
+                            <input type="file" cFormControl
                               [ngModel]="row.qualityOfWorkSignature"
                               (ngModelChange)="row.qualityOfWorkSignature = $event"
                               name="qualityOfWorkSignature{{i}}"
@@ -128,12 +122,6 @@
                   <table cTable >
                     <thead>
                       <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Evaluation</th>
-                        <th scope="col" class="text-center">Signature</th>
-                        <th scope="col" class="text-center">Remarks</th>
-                      </tr>
-                      <tr>
                         <th colspan="3">
                           <p style="text-decoration: underline;">3. Amount of Work</p>
                         </th>
@@ -146,13 +134,13 @@
                           <c-form-check inline>
                             <input cFormCheckInput type="radio" [value]="row"
                               [(ngModel)]="selectedAmountRow"
-                              name="qualityOfWorkEvaluation"
+                              name="amountOfWorkEvaluation"
                               (change)="toggleAmountSignatureInput(i)">
                             <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
                         <td>
-                          <input type="text" cFormControl
+                          <input type="file" cFormControl
                               [ngModel]="row.amountOfWorkSignature"
                               (ngModelChange)="row.amountOfWorkSignature = $event"
                               name="amountOfWorkSignature{{i}}"
@@ -175,12 +163,6 @@
                   <table cTable >
                     <thead>
                       <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Evaluation</th>
-                        <th scope="col" class="text-center">Signature</th>
-                        <th scope="col" class="text-center">Remarks</th>
-                      </tr>
-                      <tr>
                         <th colspan="3">
                           <p style="text-decoration: underline;">4. Punctuality</p>
                         </th>
@@ -198,14 +180,16 @@
                             <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
-                        <input type="text" cFormControl
-                              [ngModel]="row.punctualitySignature"
-                              (ngModelChange)="row.punctualitySignature = $event"
-                              name="punctualitySignature{{i}}"
-                              [disabled]="!row.signatureEnabled">
-                            <div *ngIf="!row.punctualitySignature && row.signatureEnabled">
-                              <div class="text-left text-danger">Punctuality is required</div>
-                            </div>
+                        <td>
+                          <input type="file" cFormControl
+                          [ngModel]="row.punctualitySignature"
+                          (ngModelChange)="row.punctualitySignature = $event"
+                          name="punctualitySignature{{i}}"
+                          [disabled]="!row.signatureEnabled">
+                        <div *ngIf="!row.punctualitySignature && row.signatureEnabled">
+                          <div class="text-left text-danger">Punctuality is required</div>
+                        </div>
+                        </td>
                             <td>
                               <input type="text" cFormControl
                               [ngModel]="row.punctuilityRemarks"
@@ -219,12 +203,6 @@
 
                   <table cTable >
                     <thead>
-                      <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Evaluation</th>
-                        <th scope="col" class="text-center">Signature</th>
-                        <th scope="col" class="text-center">Remarks</th>
-                      </tr>
                       <tr>
                         <th colspan="3">
                           <p style="text-decoration: underline;">5.Sense of Responsibility</p>
@@ -243,14 +221,16 @@
                             <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
-                        <input type="text" cFormControl
-                              [ngModel]="row.senceOfResponsibilityAndCommitmentSignature"
-                              (ngModelChange)="row.senceOfResponsibilityAndCommitmentSignature = $event"
-                              name="senceOfResponsibilityAndCommitmentSignature{{i}}"
-                              [disabled]="!row.signatureEnabled">
-                            <div *ngIf="!row.senceOfResponsibilityAndCommitmentSignature && row.signatureEnabled">
-                              <div class="text-left text-danger">Sense of Responsibility is required</div>
-                            </div>
+                        <td>
+                          <input type="file" cFormControl
+                          [ngModel]="row.senceOfResponsibilityAndCommitmentSignature"
+                          (ngModelChange)="row.senceOfResponsibilityAndCommitmentSignature = $event"
+                          name="senceOfResponsibilityAndCommitmentSignature{{i}}"
+                          [disabled]="!row.signatureEnabled">
+                        <div *ngIf="!row.senceOfResponsibilityAndCommitmentSignature && row.signatureEnabled">
+                          <div class="text-left text-danger">Sense of Responsibility is required</div>
+                        </div>
+                        </td>
                             <td>
                               <input type="text" cFormControl
                               [ngModel]="row.senseofResponsibilityRemarks"
@@ -265,12 +245,6 @@
 
                   <table cTable >
                     <thead>
-                      <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Evaluation</th>
-                        <th scope="col" class="text-center">Signature</th>
-                        <th scope="col" class="text-center">Remarks</th>
-                      </tr>
                       <tr>
                         <th colspan="3">
                           <p style="text-decoration: underline;">6.Promptness in taking measures and following orders</p>
@@ -289,14 +263,16 @@
                             <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
-                        <input type="text" cFormControl
-                              [ngModel]="row.promptnessTakingMeasuresAndFollowingOrdersSignature"
-                              (ngModelChange)="row.promptnessTakingMeasuresAndFollowingOrdersSignature = $event"
-                              name="promptnessTakingMeasuresAndFollowingOrdersSignature{{i}}"
-                              [disabled]="!row.signatureEnabled">
-                            <div *ngIf="!row.promptnessTakingMeasuresAndFollowingOrdersSignature && row.signatureEnabled">
-                              <div class="text-left text-danger">Promptness Taking Measure is required</div>
-                            </div>
+                        <td>
+                          <input type="file" cFormControl
+                          [ngModel]="row.promptnessTakingMeasuresAndFollowingOrdersSignature"
+                          (ngModelChange)="row.promptnessTakingMeasuresAndFollowingOrdersSignature = $event"
+                          name="promptnessTakingMeasuresAndFollowingOrdersSignature{{i}}"
+                          [disabled]="!row.signatureEnabled">
+                        <div *ngIf="!row.promptnessTakingMeasuresAndFollowingOrdersSignature && row.signatureEnabled">
+                          <div class="text-left text-danger">Promptness Taking Measure is required</div>
+                        </div>
+                        </td>                     
                             <td>
                               <input type="text" cFormControl
                               [ngModel]="row.promptnessRemarks"
@@ -310,12 +286,6 @@
 
                   <table cTable>
                     <thead>
-                      <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Evaluation</th>
-                        <th scope="col" class="text-center">Signature</th>
-                        <th scope="col" class="text-center">Remarks</th>
-                      </tr>
                       <tr>
                         <th colspan="3">
                           <p style="text-decoration: underline;">7.Interest Of Work</p>
@@ -334,14 +304,16 @@
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
-                        <input type="text" cFormControl
-                              [ngModel]="row.interestOfWorkSignature"
-                              (ngModelChange)="row.interestOfWorkSignature = $event"
-                              name="interestOfWorkSignature{{i}}"
-                              [disabled]="!row.signatureEnabled">
-                            <div *ngIf="!row.interestOfWorkSignature && row.signatureEnabled">
-                              <div class="text-left text-danger">Interest of Work is required</div>
-                            </div>
+                        <td>
+                          <input type="file" cFormControl
+                          [ngModel]="row.interestOfWorkSignature"
+                          (ngModelChange)="row.interestOfWorkSignature = $event"
+                          name="interestOfWorkSignature{{i}}"
+                          [disabled]="!row.signatureEnabled">
+                        <div *ngIf="!row.interestOfWorkSignature && row.signatureEnabled">
+                          <div class="text-left text-danger">Interest of Work is required</div>
+                        </div>
+                        </td>                    
                             <td>
                               <input type="text" cFormControl
                               [ngModel]="row.interestWorkRemarks"
@@ -356,12 +328,6 @@
                   
                   <table cTable >
                     <thead>
-                      <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Evaluation</th>
-                        <th scope="col" class="text-center">Signature</th>
-                        <th scope="col" class="text-center">Remarks</th>
-                      </tr>
                       <tr>
                         <th colspan="3">
                           <p style="text-decoration: underline;">8.Supervise And Measure</p>
@@ -380,14 +346,16 @@
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
-                        <input type="text" cFormControl
-                              [ngModel]="row.superviseAndManageSignature"
-                              (ngModelChange)="row.superviseAndManageSignature = $event"
-                              name="superviseAndManageSignature{{i}}"
-                              [disabled]="!row.signatureEnabled">
-                            <div *ngIf="!row.superviseAndManageSignature && row.signatureEnabled">
-                              <div class="text-left text-danger">Supervise and Measure is required</div>
-                            </div>
+                        <td>
+                          <input type="file" cFormControl
+                          [ngModel]="row.superviseAndManageSignature"
+                          (ngModelChange)="row.superviseAndManageSignature = $event"
+                          name="superviseAndManageSignature{{i}}"
+                          [disabled]="!row.signatureEnabled">
+                        <div *ngIf="!row.superviseAndManageSignature && row.signatureEnabled">
+                          <div class="text-left text-danger">Supervise and Measure is required</div>
+                        </div>
+                        </td>                       
                             <td>
                               <input type="text" cFormControl
                               [ngModel]="row.serviceRemarks"
@@ -401,12 +369,6 @@
 
                   <table cTable >
                     <thead>
-                      <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Evaluation</th>
-                        <th scope="col" class="text-center">Signature</th>
-                        <th scope="col" class="text-center">Remarks</th>
-                      </tr>
                       <tr>
                         <th colspan="3">
                           <p style="text-decoration: underline;">9.Relation With Colleagues</p>
@@ -425,14 +387,16 @@
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
-                        <input type="text" cFormControl
-                              [ngModel]="row.relationWithColleaguesSignature"
-                              (ngModelChange)="row.relationWithColleaguesSignature = $event"
-                              name="relationWithColleaguesSignature{{i}}"
-                              [disabled]="!row.signatureEnabled">
-                            <div *ngIf="!row.relationWithColleaguesSignature && row.signatureEnabled">
-                              <div class="text-left text-danger">Relation With Colleague is required</div>
-                            </div>
+                        <td>
+                          <input type="file" cFormControl
+                          [ngModel]="row.relationWithColleaguesSignature"
+                          (ngModelChange)="row.relationWithColleaguesSignature = $event"
+                          name="relationWithColleaguesSignature{{i}}"
+                          [disabled]="!row.signatureEnabled">
+                        <div *ngIf="!row.relationWithColleaguesSignature && row.signatureEnabled">
+                          <div class="text-left text-danger">Relation With Colleague is required</div>
+                        </div>
+                        </td>
                             <td>
                               <input type="text" cFormControl
                               [ngModel]="row.RelationshipRemarks"
@@ -446,12 +410,6 @@
                 
                   <table cTable >
                     <thead>
-                      <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Evaluation</th>
-                        <th scope="col" class="text-center">Signature</th>
-                        <th scope="col" class="text-center">Remarks</th>
-                      </tr>
                       <tr>
                         <th colspan="3">
                           <p style="text-decoration: underline;">10.Ability To Implementation</p>
@@ -470,14 +428,16 @@
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
-                        <input type="text" cFormControl
-                              [ngModel]="row.abilityImplementDecisionSignature"
-                              (ngModelChange)="row.abilityImplementDecisionSignature = $event"
-                              name="abilityImplementDecisionSignature{{i}}"
-                              [disabled]="!row.signatureEnabled">
-                            <div *ngIf="!row.abilityImplementDecisionSignature && row.signatureEnabled">
-                              <div class="text-left text-danger">Ability to Implementation is required</div>
-                            </div>
+                        <td>
+                          <input type="file" cFormControl
+                          [ngModel]="row.abilityImplementDecisionSignature"
+                          (ngModelChange)="row.abilityImplementDecisionSignature = $event"
+                          name="abilityImplementDecisionSignature{{i}}"
+                          [disabled]="!row.signatureEnabled">
+                        <div *ngIf="!row.abilityImplementDecisionSignature && row.signatureEnabled">
+                          <div class="text-left text-danger">Ability to Implementation is required</div>
+                        </div>
+                        </td>                       
                             <td>
                               <input type="text" cFormControl
                               [ngModel]="row.abilitytoImplentRemarks"
@@ -491,12 +451,6 @@
 
                   <table cTable >
                     <thead>
-                      <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Evaluation</th>
-                        <th scope="col" class="text-center">Signature</th>
-                        <th scope="col" class="text-center">Remarks</th>
-                      </tr>
                       <tr>
                         <th colspan="3">
                           <p style="text-decoration: underline;">11.Expressive Power (writing)</p>
@@ -515,14 +469,16 @@
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
-                        <input type="text" cFormControl
-                              [ngModel]="row.expressivePowerWritingSignature"
-                              (ngModelChange)="row.expressivePowerWritingSignature = $event"
-                              name="expressivePowerWritingSignature{{i}}"
-                              [disabled]="!row.signatureEnabled">
-                            <div *ngIf="!row.expressivePowerWritingSignature && row.signatureEnabled">
-                              <div class="text-left text-danger">Expressive Power (writing) is required</div>
-                            </div>
+                        <td>
+                          <input type="file" cFormControl
+                          [ngModel]="row.expressivePowerWritingSignature"
+                          (ngModelChange)="row.expressivePowerWritingSignature = $event"
+                          name="expressivePowerWritingSignature{{i}}"
+                          [disabled]="!row.signatureEnabled">
+                        <div *ngIf="!row.expressivePowerWritingSignature && row.signatureEnabled">
+                          <div class="text-left text-danger">Expressive Power (writing) is required</div>
+                        </div>
+                        </td>                      
                             <td>
                               <input type="text" cFormControl
                               [ngModel]="row.expressiveWritingRemarks"
@@ -537,14 +493,8 @@
                   <table cTable >
                     <thead>
                       <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Evaluation</th>
-                        <th scope="col" class="text-center">Signature</th>
-                        <th scope="col" class="text-center">Remarks</th>
-                      </tr>
-                      <tr>
                         <th colspan="3">
-                          <p style="text-decoration: underline;">11.Expressive Power (Speech)</p>
+                          <p style="text-decoration: underline;">12.Expressive Power (Speech)</p>
                         </th>
                       </tr>
                     </thead>
@@ -560,14 +510,16 @@
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
-                        <input type="text" cFormControl
-                              [ngModel]="row.expressivePowerSpeechSignature"
-                              (ngModelChange)="row.expressivePowerSpeechSignature = $event"
-                              name="expressivePowerSpeechSignature{{i}}"
-                              [disabled]="!row.signatureEnabled">
-                            <div *ngIf="!row.expressivePowerSpeechSignature && row.signatureEnabled">
-                              <div class="text-left text-danger">Expressive Power (Speech) is required</div>
-                            </div>
+                        <td>
+                          <input type="file" cFormControl
+                          [ngModel]="row.expressivePowerSpeechSignature"
+                          (ngModelChange)="row.expressivePowerSpeechSignature = $event"
+                          name="expressivePowerSpeechSignature{{i}}"
+                          [disabled]="!row.signatureEnabled">
+                        <div *ngIf="!row.expressivePowerSpeechSignature && row.signatureEnabled">
+                          <div class="text-left text-danger">Expressive Power (Speech) is required</div>
+                        </div>
+                        </td>                        
                             <td>
                               <input type="text" cFormControl
                               [ngModel]="row.expressiveSpeechRemarks"
@@ -678,12 +630,6 @@
                       <table cTable >
                         <thead>
                           <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Evaluation</th>
-                            <th scope="col" class="text-center">Signature</th>
-                            <th scope="col" class="text-center">Remarks</th>
-                          </tr>
-                          <tr>
                             <th colspan="3">
                               <p style="text-decoration: underline;">15.Overall Assessment</p>
                             </th>
@@ -701,14 +647,16 @@
                                        <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                               </c-form-check>
                             </td>
-                            <input type="text" cFormControl
-                                  [ngModel]="row.overallAssessmentSignature"
-                                  (ngModelChange)="row.overallAssessmentSignature = $event"
-                                  name="overallAssessmentSignature{{i}}"
-                                  [disabled]="!row.signatureEnabled">
-                                <div *ngIf="!row.overallAssessmentSignature && row.signatureEnabled">
-                                  <div class="text-left text-danger">Overall Assessment is required</div>
-                                </div>
+                            <td>
+                              <input type="file" cFormControl
+                              [ngModel]="row.overallAssessmentSignature"
+                              (ngModelChange)="row.overallAssessmentSignature = $event"
+                              name="overallAssessmentSignature{{i}}"
+                              [disabled]="!row.signatureEnabled">
+                            <div *ngIf="!row.overallAssessmentSignature && row.signatureEnabled">
+                              <div class="text-left text-danger">Overall Assessment is required</div>
+                            </div>
+                            </td>                          
                                 <td>
                                   <input type="text" cFormControl
                                   [ngModel]="row.overallAssesmentRemarks"
@@ -743,5 +691,13 @@
                 </c-col>
             </form>
         </c-card-body>
+    </c-card>
+    <c-card>      
+    <c-card-footer>
+      <div class="text-end">
+        <button cButton color="primary" [routerLink]="[
+        '/appraisal/officerFormPart4']">To be continue...</button>
+      </div>
+    </c-card-footer>
     </c-card>
 </div>

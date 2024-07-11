@@ -122,6 +122,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       officeName: '',
       departmentName: '',
       designationName: '',
+      designationNameBangla: '',
       sectionName: '',
       presentGradeName: '',
       presentScaleName: '',

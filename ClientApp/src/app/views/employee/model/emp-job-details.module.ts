@@ -23,6 +23,7 @@ export class EmpJobDetailsModule {
   officeName: string = '';
   departmentName: string = '';
   designationName: string = '';
+  designationNameBangla: string = '';
   sectionName: string = '';
   presentGradeName: string = '';
   presentScaleName: string = '';

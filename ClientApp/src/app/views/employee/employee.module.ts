@@ -58,6 +58,9 @@ import { UpdateUserInfoComponent } from './add-employee/update-user-info/update-
 import { EmpNomineeInfoComponent } from './add-employee/employee-informations/emp-nominee-info/emp-nominee-info.component';
 import { EmpIdCardGenerateComponent } from './manage-employee/emp-id-card-generate/emp-id-card-generate.component';
 import { MatCardModule } from '@angular/material/card';
+import { BengaliDigitPipe } from './manage-employee/emp-id-card-generate/bangali-digit.pipe';
+import { BengaliDatePipe } from './manage-employee/emp-id-card-generate/bengali-date.pipe';
+
 
 
 @NgModule({
@@ -83,6 +86,8 @@ import { MatCardModule } from '@angular/material/card';
     UpdateUserInfoComponent,
     EmpNomineeInfoComponent,
     EmpIdCardGenerateComponent,
+    BengaliDigitPipe,
+    BengaliDatePipe,
   ],
   imports: [
     CommonModule,

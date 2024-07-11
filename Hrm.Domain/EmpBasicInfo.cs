@@ -11,7 +11,7 @@ namespace Hrm.Domain
     public class EmpBasicInfo : BaseDomainEntity
     {
         public int Id { get; set; }
-        public int IdCardNo { get; set; }
+        public string? IdCardNo { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? FirstNameBangla { get; set; }

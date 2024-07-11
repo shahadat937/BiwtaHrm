@@ -30,7 +30,7 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Commands
         {
             var response = new BaseCommandResponse();
 
-            var FindPNo = await _EmpBasicInfoRepository.FindOneAsync(x => x.PersonalFileNo == request.EmpBasicInfoDto.PersonalFileNo);
+            var FindPNo = await _EmpBasicInfoRepository.FindOneAsync(x => x.PersonalFileNo == request.EmpBasicInfoDto.PersonalFileNo && x.Id != request.EmpBasicInfoDto.Id);
 
             if (FindPNo != null)
             {

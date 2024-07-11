@@ -42,4 +42,5 @@ export interface OrganogramDepartmentNameDto {
 
 export interface OrganogramDesignationNameDto {
   name: string;
+  employeeName: string;
 }

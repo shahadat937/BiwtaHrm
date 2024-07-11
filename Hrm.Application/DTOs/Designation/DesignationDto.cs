@@ -18,5 +18,6 @@ namespace Hrm.Application.DTOs.Designation
         public bool IsActive { get; set; }
         public string? OfficeName { get; set; }
         public string? DepartmentName { get; set; }
+        public string? EmployeeName { get; set; }
     }
 }

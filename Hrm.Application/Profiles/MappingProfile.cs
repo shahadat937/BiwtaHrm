@@ -165,7 +165,8 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Designation, DesignationDto>()
             .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
-            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName));
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
+            .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().EmpBasicInfo.FirstName + " " + src.EmpJobDetail.FirstOrDefault().EmpBasicInfo.LastName));
 
             CreateMap<Department, DepartmentDto>()
             .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))

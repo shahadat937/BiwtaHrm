@@ -20,1143 +20,399 @@
               novalidate
               >
                   <div class="table-responsive">
-                     <table cTable [striped]="true">
-                        <thead>
+                    <table cTable  >
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Evaluation</th>
+                          <th scope="col" class="text-center">Signature</th>
+                          <th scope="col" class="text-center">Remarks</th>
+                        </tr>
+                        <tr>
+                          <th colspan="3">
+                            <p style="text-decoration: underline;">1.Sense Of Discipline</p>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let row of SenseOfDisciplineRows; let i = index;">
                           <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Evaluation</th>
-                            <th scope="col" class="text-center">Signature</th>
-                            <th scope="col" class="text-center">Remarks</th>
-                          </tr>
-                          <tr>
-                            <th colspan="3">
-                              <p style="text-decoration: underline;">1 Sense Of Discipline</p>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>i) Extraordinary Standard</td>
+                            <td>{{ row.name }}</td>
                             <td>
                               <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="5 id='radio1"
-                                [(ngModel)]="officerForm2service.officerForm2Module.senseOfDisciplineEvaluation"
-                                name="senseOfDisciplineEvaluation"
-                                #senseOfDisciplineEvaluation="ngModel">
-                                <label cFormCheckLabel for="radio1">5</label>
+                                <input cFormCheckInput type="radio" [value]="row"
+                                  [(ngModel)]="selectedSenseOfDiscipllineRow"
+                                  name="senseOfDisciplineEvaluation"
+                                  (change)="toggleSenseofDisciplineSignatureInput(i)">
+                                <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                               </c-form-check>
                             </td>
                             <td>
                               <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.senseOfDisciplineSignature"
-                              name="senseOfDisciplineSignature" 
-                              #senseOfDisciplineSignature="ngModel" >
-                              @if(!senseOfDisciplineSignature.valid && senseOfDisciplineSignature.touched)
-                              {
-                                <div class="text-left text-danger">Sence of Discipline is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>ii) High Standard</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="4"
-                                [(ngModel)]="officerForm2service.officerForm2Module.senseOfDisciplineEvaluation"
-                                name="senseOfDisciplineEvaluation"
-                                #senseOfDisciplineEvaluation="ngModel" id="radio2">
-                                <label cFormCheckLabel for="radio2">4</label>
-                              </c-form-check>
+                                [ngModel]="row.senseOfDisciplineSignature"
+                                (ngModelChange)="row.senseOfDisciplineSignature = $event"
+                                name="senseOfDisciplineSignature{{i}}"
+                                [disabled]="!row.signatureEnabled">
+                              <div *ngIf="!row.senseOfDisciplineSignature && row.signatureEnabled">
+                                <div class="text-left text-danger">Sense Of Discipline is required</div>
+                              </div>
                             </td>
                             <td>
                               <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.senseOfDisciplineSignature"
-                              name="senseOfDisciplineSignature" 
-                              #senseOfDisciplineSignature="ngModel" >
-                              @if(!senseOfDisciplineSignature.valid && senseOfDisciplineSignature.touched)
-                              {
-                                <div class="text-left text-danger">Sence of Discipline is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
+                              [ngModel]="row.senseOfDisciplineRemarks"
+                              (ngModelChange)="row.senseOfDisciplineRemarks = $event"
+                              name="senseOfDisciplineRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
                             </td>
                           </tr>
-                          <tr>
-                            <td>iii) Intelligent</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="3"
-                                [(ngModel)]="officerForm2service.officerForm2Module.senseOfDisciplineEvaluation"
-                                name="senseOfDisciplineEvaluation"
-                                #senseOfDisciplineEvaluation="ngModel" >
-                                <label cFormCheckLabel for="radio3">3</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.senseOfDisciplineSignature"
-                              name="senseOfDisciplineSignature" 
-                              #senseOfDisciplineSignature="ngModel" >
-                              @if(!senseOfDisciplineSignature.valid && senseOfDisciplineSignature.touched)
-                              {
-                                <div class="text-left text-danger">Sence of Discipline is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>iv) Below Expected Value</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="2"
-                                [(ngModel)]="officerForm2service.officerForm2Module.senseOfDisciplineEvaluation"
-                                name="senseOfDisciplineEvaluation"
-                                #senseOfDisciplineEvaluation="ngModel" id="radio4">
-                                <label cFormCheckLabel for="radio4">2</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.senseOfDisciplineSignature"
-                              name="senseOfDisciplineSignature" 
-                              #senseOfDisciplineSignature="ngModel" >
-                              @if(!senseOfDisciplineSignature.valid && senseOfDisciplineSignature.touched)
-                              {
-                                <div class="text-left text-danger">Sence of Discipline is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          <tr>
-                            <td>v) Low Quality</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="1"
-                                [(ngModel)]="officerForm2service.officerForm2Module.senseOfDisciplineEvaluation"
-                                name="senseOfDisciplineEvaluation" 
-                                #senseOfDisciplineEvaluation="ngModel">
-                                <label cFormCheckLabel for="radio5">1</label>
-                              </c-form-check>
-                            </td>                         
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.senseOfDisciplineSignature"
-                              name="senseOfDisciplineSignature" 
-                              #senseOfDisciplineSignature="ngModel">
-                              @if(!senseOfDisciplineSignature.valid && senseOfDisciplineSignature.touched)
-                              {
-                                <div class="text-left text-danger">Sence of Discipline is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                        </tbody>                     
-                      </table>  
-                      <table cTable [striped]="true">
-                        <thead>
-                          <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Evaluation</th>
-                            <th scope="col" class="text-center">Signature</th>
-                            <th scope="col" class="text-center">Remarks</th>
-                          </tr>
-                          <tr>
-                            <th colspan="3">
-                              <p style="text-decoration: underline;">2 Intelegent & Judgment</p>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>i) Extraordinary Standard</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="5"
-                                [(ngModel)]="officerForm2service.officerForm2Module.intelegentAndJudgmentEvaluation"
-                                name="intelegentAndJudgmentEvaluation"
-                                #intelegentAndJudgmentEvaluation="ngModel">
-                                <label cFormCheckLabel>5</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.intelegentAndJudgmentSignature"
-                              name="intelegentAndJudgmentSignature" 
-                              #intelegentAndJudgmentSignature="ngModel">
-                              @if(!intelegentAndJudgmentSignature.valid && intelegentAndJudgmentSignature.touched)
-                              {
-                                <div class="text-left text-danger">Intelegent and Judgment is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>ii) High Standard</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="4"
-                                [(ngModel)]="officerForm2service.officerForm2Module.intelegentAndJudgmentEvaluation"
-                                name="intelegentAndJudgmentEvaluation"
-                                #intelegentAndJudgmentEvaluation="ngModel">
-                                <label cFormCheckLabel>4</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.intelegentAndJudgmentSignature"
-                              name="intelegentAndJudgmentSignature" 
-                              #intelegentAndJudgmentSignature="ngModel">
-                              @if(!intelegentAndJudgmentSignature.valid && intelegentAndJudgmentSignature.touched)
-                              {
-                                <div class="text-left text-danger">Intelegent and Judgment is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>iii) Reasonable</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="3"
-                                [(ngModel)]="officerForm2service.officerForm2Module.intelegentAndJudgmentEvaluation"
-                                name="intelegentAndJudgmentEvaluation"
-                                #intelegentAndJudgmentEvaluation="ngModel">
-                                <label cFormCheckLabel>3</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.intelegentAndJudgmentSignature"
-                              name="intelegentAndJudgmentSignature" 
-                              #intelegentAndJudgmentSignature="ngModel">
-                              @if(!intelegentAndJudgmentSignature.valid && intelegentAndJudgmentSignature.touched)
-                              {
-                                <div class="text-left text-danger">Intelegent and Judgment is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>iv) Flawed and Biased</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="2"
-                                [(ngModel)]="officerForm2service.officerForm2Module.intelegentAndJudgmentEvaluation"
-                                name="intelegentAndJudgmentEvaluation"
-                                #intelegentAndJudgmentEvaluation="ngModel">
-                                <label cFormCheckLabel>2</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.intelegentAndJudgmentSignature"
-                              name="intelegentAndJudgmentSignature" 
-                              #intelegentAndJudgmentSignature="ngModel">
-                              @if(!intelegentAndJudgmentSignature.valid && intelegentAndJudgmentSignature.touched)
-                              {
-                                <div class="text-left text-danger">Intelegent and Judgment is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>v) Low Quality</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="1"
-                                [(ngModel)]="officerForm2service.officerForm2Module.intelegentAndJudgmentEvaluation"
-                                name="intelegentAndJudgmentEvaluationv"
-                                #intelegentAndJudgmentEvaluation="ngModel">
-                                <label cFormCheckLabel>1</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.intelegentAndJudgmentSignature"
-                              name="intelegentAndJudgmentSignature" 
-                              #intelegentAndJudgmentSignature="ngModel">
-                              @if(!intelegentAndJudgmentSignature.valid && intelegentAndJudgmentSignature.touched)
-                              {
-                                <div class="text-left text-danger">Intelegent and Judgment is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                        </tbody>                     
-                      </table>    
-    
-                      <table cTable [striped]="true">
-                        <thead>
-                          <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Evaluation</th>
-                            <th scope="col" class="text-center">Signature</th>
-                            <th scope="col" class="text-center">Remarks</th>
-                          </tr>
-                          <tr>
-                            <th colspan="3">
-                              <p style="text-decoration: underline;">3 Intelegence</p>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>i) Great Strength</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="5"
-                                [(ngModel)]="officerForm2service.officerForm2Module.intelegenceEvaluation"
-                                name="intelegenceEvaluation"
-                                #intelegenceEvaluation="ngModel">
-                                <label cFormCheckLabel>5</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.intelegenceSignature"
-                              name="intelegenceSignature" 
-                              #intelegenceSignature="ngModel">
-                              @if(!intelegenceSignature.valid && intelegenceSignature.touched)
-                              {
-                                <div class="text-left text-danger">Intelegent and Judgment is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>ii) High Strength</td>
-                            <c-form-check inline>
-                              <input cFormCheckInput type="radio" value="4"
-                              [(ngModel)]="officerForm2service.officerForm2Module.intelegenceEvaluation"
-                              name="intelegenceEvaluation"
-                              #intelegenceEvaluation="ngModel">
-                              <label cFormCheckLabel>4</label>
-                            </c-form-check>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.intelegenceSignature"
-                              name="intelegenceSignature" 
-                              #intelegenceSignature="ngModel">
-                              @if(!intelegenceSignature.valid && intelegenceSignature.touched)
-                              {
-                                <div class="text-left text-danger">Intelegent and Judgment is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>iii) Intelligent</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="3"
-                                [(ngModel)]="officerForm2service.officerForm2Module.intelegenceEvaluation"
-                                name="intelegenceEvaluation"
-                                #intelegenceEvaluation="ngModel">
-                                <label cFormCheckLabel>3</label>
-                              </c-form-check>
-                            </td>                           
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.intelegenceSignature"
-                              name="intelegenceSignature" 
-                              #intelegenceSignature="ngModel">
-                              @if(!intelegenceSignature.valid && intelegenceSignature.touched)
-                              {
-                                <div class="text-left text-danger">Intelegent and Judgment is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>iv) Below Expected Value</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="2"
-                                [(ngModel)]="officerForm2service.officerForm2Module.intelegenceEvaluation"
-                                name="intelegenceEvaluation"
-                                #intelegenceEvaluation="ngModel">
-                                <label cFormCheckLabel>2</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.intelegenceSignature"
-                              name="intelegenceSignature" 
-                              #intelegenceSignature="ngModel">
-                              @if(!intelegenceSignature.valid && intelegenceSignature.touched)
-                              {
-                                <div class="text-left text-danger">Intelegent and Judgment is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>v) Low Quality</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="1"
-                                [(ngModel)]="officerForm2service.officerForm2Module.intelegenceEvaluation"
-                                name="intelegenceEvaluation"
-                                #intelegenceEvaluation="ngModel">
-                                <label cFormCheckLabel>1</label>
-                              </c-form-check>
-                            </td>  
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.intelegenceSignature"
-                              name="intelegenceSignature" 
-                              #intelegenceSignature="ngModel">
-                              @if(!intelegenceSignature.valid && intelegenceSignature.touched)
-                              {
-                                <div class="text-left text-danger">Intelegent and Judgment is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                        </tbody>                     
-                      </table> 
-    
-                    <table cTable [striped]="true">
-                        <thead>
-                          <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Evaluation</th>
-                            <th scope="col" class="text-center">Signature</th>
-                            <th scope="col" class="text-center">Remarks</th>
-                          </tr>
-                          <tr>
-                            <th colspan="3">
-                              <p style="text-decoration: underline;">4 Energy and Enthusisam</p>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>i) Extraordinary</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="5"
-                                [(ngModel)]="officerForm2service.officerForm2Module.energyAndEnthusisamEvaluation"
-                                name="energyAndEnthusisamEvaluation"
-                                #energyAndEnthusisamEvaluation="ngModel">
-                                <label cFormCheckLabel>5</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.energyAndEnthusisamSignature"
-                              name="energyAndEnthusisamSignature" 
-                              #energyAndEnthusisamSignature="ngModel">
-                              @if(!energyAndEnthusisamSignature.valid && energyAndEnthusisamSignature.touched)
-                              {
-                                <div class="text-left text-danger">Energy and Enthusisam is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>ii) Admirable</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="4"
-                                [(ngModel)]="officerForm2service.officerForm2Module.energyAndEnthusisamEvaluation"
-                                name="energyAndEnthusisamEvaluation"
-                                #energyAndEnthusisamEvaluation="ngModel">
-                                <label cFormCheckLabel>4</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.energyAndEnthusisamSignature"
-                              name="energyAndEnthusisamSignature" 
-                              #energyAndEnthusisamSignature="ngModel">
-                              @if(!energyAndEnthusisamSignature.valid && energyAndEnthusisamSignature.touched)
-                              {
-                                <div class="text-left text-danger">Energy and Enthusisam is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>iii) Enough</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="3"
-                                [(ngModel)]="officerForm2service.officerForm2Module.energyAndEnthusisamEvaluation"
-                                name="energyAndEnthusisamEvaluation"
-                                #energyAndEnthusisamEvaluation="ngModel">
-                                <label cFormCheckLabel>3</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.energyAndEnthusisamSignature"
-                              name="energyAndEnthusisamSignature" 
-                              #energyAndEnthusisamSignature="ngModel">
-                              @if(!energyAndEnthusisamSignature.valid && energyAndEnthusisamSignature.touched)
-                              {
-                                <div class="text-left text-danger">Energy and Enthusisam is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>iv) Awating Instruction<br> and require constant supervision</td>
-                            <c-form-check inline>
-                              <input cFormCheckInput type="radio" value="2"
-                              [(ngModel)]="officerForm2service.officerForm2Module.energyAndEnthusisamEvaluation"
-                              name="energyAndEnthusisamEvaluation"
-                              #energyAndEnthusisamEvaluation="ngModel">
-                              <label cFormCheckLabel>2</label>
-                            </c-form-check>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.energyAndEnthusisamSignature"
-                              name="energyAndEnthusisamSignature" 
-                              #energyAndEnthusisamSignature="ngModel">
-                              @if(!energyAndEnthusisamSignature.valid && energyAndEnthusisamSignature.touched)
-                              {
-                                <div class="text-left text-danger">Energy and Enthusisam is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>v)Shortage</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="1"
-                                [(ngModel)]="officerForm2service.officerForm2Module.energyAndEnthusisamEvaluation"
-                                name="energyAndEnthusisamEvaluation"
-                                #energyAndEnthusisamRadio="ngModel">
-                                <label cFormCheckLabel>1</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.energyAndEnthusisamSignature"
-                              name="energyAndEnthusisamSignature" 
-                              #energyAndEnthusisamSignature="ngModel">
-                              @if(!energyAndEnthusisamSignature.valid && energyAndEnthusisamSignature.touched)
-                              {
-                                <div class="text-left text-danger">Energy and Enthusisam is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                        </tbody>                     
-                      </table> 
-    
-                      <table cTable [striped]="true">
-                        <thead>
-                          <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Evaluation</th>
-                            <th scope="col" class="text-center">Signature</th>
-                            <th scope="col" class="text-center">Remarks</th>
-                          </tr>
-                          <tr>
-                            <th colspan="3">
-                              <p style="text-decoration: underline;">5 Public Relation</p>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>i) Extraordinary</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="5"
-                                [(ngModel)]="officerForm2service.officerForm2Module.publicRelationEvaluation"
-                                name="publicRelationEvaluation"
-                                #publicRelationEvaluation="ngModel">
-                                <label cFormCheckLabel>5</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.publicRelationSignature"
-                              name="publicRelationSignature" 
-                              #publicRelationSignature="ngModel">
-                              @if(!publicRelationSignature.valid && publicRelationSignature.touched)
-                              {
-                                <div class="text-left text-danger">Public Relation is required </div>
-                              } 
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>ii) Strong</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="4"
-                                [(ngModel)]="officerForm2service.officerForm2Module.publicRelationEvaluation"
-                                name="publicRelationEvaluation"
-                                #publicRelationEvaluation="ngModel">
-                                <label cFormCheckLabel>4</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.publicRelationSignature"
-                              name="publicRelationSignature" 
-                              #publicRelationSignature="ngModel">
-                              @if(!publicRelationSignature.valid && publicRelationSignature.touched)
-                              {
-                                <div class="text-left text-danger">Public Relation is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>iii)Save the opportunity</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="3"
-                                [(ngModel)]="officerForm2service.officerForm2Module.publicRelationEvaluation"
-                                name="publicRelationEvaluation"
-                                #publicRelationEvaluation="ngModel">
-                                <label cFormCheckLabel>3</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.publicRelationSignature"
-                              name="publicRelationSignature" 
-                              #publicRelationSignature="ngModel">
-                              @if(!publicRelationSignature.valid && publicRelationSignature.touched)
-                              {
-                                <div class="text-left text-danger">Public Relation is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>iv)Friendless</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="2"
-                                [(ngModel)]="officerForm2service.officerForm2Module.publicRelationEvaluation"
-                                name="publicRelationEvaluation"
-                                #publicRelationEvaluation="ngModel">
-                                <label cFormCheckLabel>2</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.publicRelationSignature"
-                              name="publicRelationSignature" 
-                              #publicRelationSignature="ngModel">
-                              @if(!publicRelationSignature.valid && publicRelationSignature.touched)
-                              {
-                                <div class="text-left text-danger">Public Relation is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>v)Low Quality</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="1"
-                                [(ngModel)]="officerForm2service.officerForm2Module.publicRelationEvaluation"
-                                name="publicRelationEvaluation"
-                                #publicRelationEvaluation="ngModel">
-                                <label cFormCheckLabel>1</label>
-                              </c-form-check>
-                            </td>                            
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.publicRelationSignature"
-                              name="publicRelationSignature" 
-                              #publicRelationSignature="ngModel">
-                              @if(!publicRelationSignature.valid && publicRelationSignature.touched)
-                              {
-                                <div class="text-left text-danger">Public Relation is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                        </tbody>                     
-                      </table> 
-    
-                      <table cTable [striped]="true">
-                        <thead>
-                          <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Evaluation</th>
-                            <th scope="col" class="text-center">Signature</th>
-                            <th scope="col" class="text-center">Remarks</th>
-                          </tr>
-                          <tr>
-                            <th colspan="3">
-                              <p style="text-decoration: underline;">6 Cooperation</p>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>i) Extraordinary</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="5"
-                                [(ngModel)]="officerForm2service.officerForm2Module.cooperationEvaluation"
-                                name="cooperationEvaluation"
-                                #cooperationEvaluation="ngModel">
-                                <label cFormCheckLabel>5</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.cooperationSignature"
-                              name="cooperationSignature" 
-                              #cooperationSignature="ngModel">
-                              @if(!cooperationSignature.valid && cooperationSignature.touched)
-                              {
-                                <div class="text-left text-danger">Cooperation is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>ii)High Standard</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="4"
-                                [(ngModel)]="officerForm2service.officerForm2Module.cooperationEvaluation"
-                                name="cooperationEvaluation"
-                                #cooperationEvaluation="ngModel">
-                                <label cFormCheckLabel>4</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.cooperationSignature"
-                              name="cooperationSignature" 
-                              #cooperationSignature="ngModel">
-                              @if(!cooperationSignature.valid && cooperationSignature.touched)
-                              {
-                                <div class="text-left text-danger">Cooperation is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>iii)General</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="3"
-                                [(ngModel)]="officerForm2service.officerForm2Module.cooperationEvaluation"
-                                name="cooperationEvaluation"
-                                #cooperationEvaluation="ngModel">
-                                <label cFormCheckLabel>3</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.cooperationSignature"
-                              name="cooperationSignature" 
-                              #cooperationSignature="ngModel">
-                              @if(!cooperationSignature.valid && cooperationSignature.touched)
-                              {
-                                <div class="text-left text-danger">Cooperation is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>iv)Sometimes</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="2"
-                                [(ngModel)]="officerForm2service.officerForm2Module.cooperationEvaluation"
-                                name="cooperationEvaluation"
-                                #cooperationEvaluation="ngModel">
-                                <label cFormCheckLabel>2</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.cooperationSignature"
-                              name="cooperationSignature" 
-                              #cooperationSignature="ngModel">
-                              @if(!cooperationSignature.valid && cooperationSignature.touched)
-                              {
-                                <div class="text-left text-danger">Cooperation is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>v)Rarely</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="1"
-                                [(ngModel)]="officerForm2service.officerForm2Module.cooperationEvaluation"
-                                name="cooperationEvaluation"
-                                #cooperationEvaluation="ngModel">
-                                <label cFormCheckLabel>1</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.cooperationSignature"
-                              name="cooperationSignature" 
-                              #cooperationSignature="ngModel">
-                              @if(!cooperationSignature.valid && cooperationSignature.touched)
-                              {
-                                <div class="text-left text-danger">Cooperation is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                        </tbody>                     
-                      </table> 
+                        </ng-container>
+                      </tbody>
+                    </table>
                       
-                      <table cTable [striped]="true">
-                        <thead>
+                    <table cTable  >
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Evaluation</th>
+                          <th scope="col" class="text-center">Signature</th>
+                          <th scope="col" class="text-center">Remarks</th>
+                        </tr>
+                        <tr>
+                          <th colspan="3">
+                            <p style="text-decoration: underline;">2.Intelegent and Judgment</p>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let row of intelegentAndJudgmentRows; let i = index;">
                           <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Evaluation</th>
-                            <th scope="col" class="text-center">Signature</th>
-                            <th scope="col" class="text-center">Remarks</th>
-                          </tr>
-                          <tr>
-                            <th colspan="3">
-                              <p style="text-decoration: underline;">7 Personality</p>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>i)Very Efficent</td>
+                            <td>{{ row.name }}</td>
                             <td>
                               <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="5"
-                                [(ngModel)]="officerForm2service.officerForm2Module.personalityEvaluation"
-                                name="personalityEvaluation"
-                                #personalityEvaluation="ngModel">
-                                <label cFormCheckLabel>5</label>
+                                <input cFormCheckInput type="radio" [value]="row"
+                                  [(ngModel)]="selectedIntelegentAndJudgment"
+                                  name="intelegentAndJudgmentEvaluation"
+                                  (change)="toggleIntelegentSignatureInput(i)">
+                                <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                               </c-form-check>
                             </td>
                             <td>
                               <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.personalitySignature"
-                              name="personalitySignature" 
-                              #personalitySignature="ngModel">
-                              @if(!personalitySignature.valid && personalitySignature.touched)
-                              {
-                                <div class="text-left text-danger">Personality is required </div>
-                              }
+                                [ngModel]="row.intelegentAndJudgmentSignature"
+                                (ngModelChange)="row.intelegentAndJudgmentSignature = $event"
+                                name="intelegentAndJudgmentSignature{{i}}"
+                                [disabled]="!row.signatureEnabled">
+                              <div *ngIf="!row.intelegentAndJudgmentSignature && row.signatureEnabled">
+                                <div class="text-left text-danger">Intelegent and Judgment is required</div>
+                              </div>
                             </td>
                             <td>
-                              <input type="text" cFormControl>
+                              <input type="text" cFormControl
+                              [ngModel]="row.intelegentandjudmentRemarks"
+                              (ngModelChange)="row.intelegentandjudmentRemarks = $event"
+                              name="intelegentandjudmentRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
                             </td>
                           </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+
+
+                    <table cTable  >
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Evaluation</th>
+                          <th scope="col" class="text-center">Signature</th>
+                          <th scope="col" class="text-center">Remarks</th>
+                        </tr>
+                        <tr>
+                          <th colspan="3">
+                            <p style="text-decoration: underline;">3.Intelegence</p>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let row of intelegenceRows; let i = index;">
                           <tr>
-                            <td>ii)Able to gain Lowality</td>
+                            <td>{{ row.name }}</td>
                             <td>
                               <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="4"
-                                [(ngModel)]="officerForm2service.officerForm2Module.personalityEvaluation"
-                                name="personalityEvaluation"
-                                #personalityEvaluation="ngModel">
-                                <label cFormCheckLabel>4</label>
+                                <input cFormCheckInput type="radio" [value]="row"
+                                  [(ngModel)]="selectedIntelegenceRow"
+                                  name="intelegenceEvaluation"
+                                  (change)="toggleIntelegenceSignatureInput(i)">
+                                <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                               </c-form-check>
                             </td>
                             <td>
                               <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.personalitySignature"
-                              name="personalitySignature" 
-                              #personalitySignature="ngModel">
-                              @if(!personalitySignature.valid && personalitySignature.touched)
-                              {
-                                <div class="text-left text-danger">Personality is required </div>
-                              }
+                                [ngModel]="row.intelegenceSignature"
+                                (ngModelChange)="row.intelegenceSignature = $event"
+                                name="intelegenceSignature{{i}}"
+                                [disabled]="!row.signatureEnabled">
+                              <div *ngIf="!row.intelegenceSignature && row.signatureEnabled">
+                                <div class="text-left text-danger">Intelegence is required</div>
+                              </div>
                             </td>
                             <td>
-                              <input type="text" cFormControl>
+                              <input type="text" cFormControl
+                              [ngModel]="row.intelegenceRemarks"
+                              (ngModelChange)="row.intelegenceRemarks = $event"
+                              name="intelegenceRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
                             </td>
                           </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                    <table cTable  >
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Evaluation</th>
+                          <th scope="col" class="text-center">Signature</th>
+                          <th scope="col" class="text-center">Remarks</th>
+                        </tr>
+                        <tr>
+                          <th colspan="3">
+                            <p style="text-decoration: underline;">4.Energy and Enthusisam</p>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let row of energyAndEnthuisamRows; let i = index;">
                           <tr>
-                            <td>iii)General</td>
+                            <td>{{ row.name }}</td>
                             <td>
                               <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="3"
-                                [(ngModel)]="officerForm2service.officerForm2Module.personalityEvaluation"
-                                name="personalityEvaluation"
-                                #personalityEvaluation="ngModel">
-                                <label cFormCheckLabel>3</label>
+                                <input cFormCheckInput type="radio" [value]="row"
+                                  [(ngModel)]="selectedEnergyEnthuisim"
+                                  name="energyAndEnthusisamEvaluation"
+                                  (change)="toggleEnergySignatureInput(i)">
+                                <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                               </c-form-check>
                             </td>
                             <td>
                               <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.personalitySignature"
-                              name="personalitySignature" 
-                              #personalitySignature="ngModel">
-                              @if(!personalitySignature.valid && personalitySignature.touched)
-                              {
-                                <div class="text-left text-danger">Personality is required </div>
-                              }
+                                [ngModel]="row.energyAndEnthusisamSignature"
+                                (ngModelChange)="row.energyAndEnthusisamSignature = $event"
+                                name="energyAndEnthusisamSignature{{i}}"
+                                [disabled]="!row.signatureEnabled">
+                              <div *ngIf="!row.energyAndEnthusisamSignature && row.signatureEnabled">
+                                <div class="text-left text-danger">Energy and Enthusisam is required</div>
+                              </div>
                             </td>
                             <td>
-                              <input type="text" cFormControl>
+                              <input type="text" cFormControl
+                              [ngModel]="row.energyandEntuismRemarks"
+                              (ngModelChange)="row.energyandEntuismRemarks = $event"
+                              name="energyandEntuismRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
                             </td>
                           </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                    
+                    <table cTable  >
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Evaluation</th>
+                          <th scope="col" class="text-center">Signature</th>
+                          <th scope="col" class="text-center">Remarks</th>
+                        </tr>
+                        <tr>
+                          <th colspan="3">
+                            <p style="text-decoration: underline;">5.Public Relation</p>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let row of publicRelationRows; let i = index;">
                           <tr>
-                            <td>iv)Partially Active</td>
+                            <td>{{ row.name }}</td>
                             <td>
                               <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="2"
-                                [(ngModel)]="officerForm2service.officerForm2Module.personalityEvaluation"
-                                name="personalityEvaluation"
-                                #personalityEvaluation="ngModel">
-                                <label cFormCheckLabel>2</label>
+                                <input cFormCheckInput type="radio" [value]="row"
+                                  [(ngModel)]="selectedPublicRelation"
+                                  name="publicRelationEvaluation"
+                                  (change)="togglePublicRelationSignatureInput(i)">
+                                <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                               </c-form-check>
                             </td>
                             <td>
                               <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.personalitySignature"
-                              name="personalitySignature" 
-                              #personalitySignature="ngModel">
-                              @if(!personalitySignature.valid && personalitySignature.touched)
-                              {
-                                <div class="text-left text-danger">Personality is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>v)Weak</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="1"
-                                [(ngModel)]="officerForm2service.officerForm2Module.personalityEvaluation"
-                                name="personalityEvaluation"
-                                #personalityEvaluation="ngModel">
-                                <label cFormCheckLabel>1</label>
-                              </c-form-check>
+                                [ngModel]="row.publicRelationSignature"
+                                (ngModelChange)="row.publicRelationSignature = $event"
+                                name="publicRelationSignature{{i}}"
+                                [disabled]="!row.signatureEnabled">
+                              <div *ngIf="!row.publicRelationSignature && row.signatureEnabled">
+                                <div class="text-left text-danger">Public Relation is required</div>
+                              </div>
                             </td>
                             <td>
                               <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.personalitySignature"
-                              name="personalitySignature" 
-                              #personalitySignature="ngModel">
-                              @if(!personalitySignature.valid && personalitySignature.touched)
-                              {
-                                <div class="text-left text-danger">Personality is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
+                              [ngModel]="row.publicReationRemarks"
+                              (ngModelChange)="row.publicReationRemarks = $event"
+                              name="publicReationRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
                             </td>
                           </tr>
-                        </tbody>                     
-                      </table>     
+                        </ng-container>
+                      </tbody>
+                    </table>
     
-                      <table cTable [striped]="true">
-                        <thead>
+                    <table cTable  >
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Evaluation</th>
+                          <th scope="col" class="text-center">Signature</th>
+                          <th scope="col" class="text-center">Remarks</th>
+                        </tr>
+                        <tr>
+                          <th colspan="3">
+                            <p style="text-decoration: underline;">6.Cooperation</p>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let row of CooperationRows; let i = index;">
                           <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Evaluation</th>
-                            <th scope="col" class="text-center">Signature</th>
-                            <th scope="col" class="text-center">Remarks</th>
-                          </tr>
-                          <tr>
-                            <th colspan="3">
-                              <p style="font-weight: bold; text-decoration: underline;">8 Security Awareness</p>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>i)Very Concious</td>
+                            <td>{{ row.name }}</td>
                             <td>
                               <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="5"
-                                [(ngModel)]="officerForm2service.officerForm2Module.securityAwarenessEvaluation"
-                                name="securityAwarenessEvaluation"
-                                #securityAwarenessEvaluation="ngModel">
-                                <label cFormCheckLabel>5</label>
+                                <input cFormCheckInput type="radio" [value]="row"
+                                  [(ngModel)]="cooperationRow"
+                                  name="cooperationEvaluation"
+                                  (change)="toggleCooperationSignatureInput(i)">
+                                <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                               </c-form-check>
                             </td>
                             <td>
                               <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.securityAwarenessSignature"
-                              name="securityAwarenessSignature" 
-                              #securityAwarenessSignature="ngModel">
-                              @if(!securityAwarenessSignature.valid && securityAwarenessSignature.touched)
-                              {
-                                <div class="text-left text-danger">Security Awareness is required </div>
-                              }
+                                [ngModel]="row.cooperationSignature"
+                                (ngModelChange)="row.cooperationSignature = $event"
+                                name="cooperationSignature{{i}}"
+                                [disabled]="!row.signatureEnabled">
+                              <div *ngIf="!row.cooperationSignature && row.signatureEnabled">
+                                <div class="text-left text-danger">Cooperation is required</div>
+                              </div>
                             </td>
                             <td>
-                              <input type="text" cFormControl>
+                              <input type="text" cFormControl
+                              [ngModel]="row.cooperationRemarks"
+                              (ngModelChange)="row.cooperationRemarks = $event"
+                              name="cooperationRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
                             </td>
                           </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                       
+                    
+                    <table cTable  >
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Evaluation</th>
+                          <th scope="col" class="text-center">Signature</th>
+                          <th scope="col" class="text-center">Remarks</th>
+                        </tr>
+                        <tr>
+                          <th colspan="3">
+                            <p style="text-decoration: underline;">7.Personality</p>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let row of PersonalityRows; let i = index;">
                           <tr>
-                            <td>ii)Very Aware</td>
+                            <td>{{ row.name }}</td>
                             <td>
                               <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="4"
-                                [(ngModel)]="officerForm2service.officerForm2Module.securityAwarenessEvaluation"
-                                name="securityAwarenessEvaluation"
-                                #securityAwarenessEvaluation="ngModel">
-                                <label cFormCheckLabel>4</label>
+                                <input cFormCheckInput type="radio" [value]="row"
+                                  [(ngModel)]="personalityRow"
+                                  name="personalityEvaluation"
+                                  (change)="togglePersonalitySignatureInput(i)">
+                                <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                               </c-form-check>
                             </td>
                             <td>
                               <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.securityAwarenessSignature"
-                              name="securityAwarenessSignature" 
-                              #securityAwarenessSignature="ngModel">
-                              @if(!securityAwarenessSignature.valid && securityAwarenessSignature.touched)
-                              {
-                                <div class="text-left text-danger">Security Awareness is required </div>
-                              }
+                                [ngModel]="row.personalitySignature"
+                                (ngModelChange)="row.personalitySignature = $event"
+                                name="personalitySignature{{i}}"
+                                [disabled]="!row.signatureEnabled">
+                              <div *ngIf="!row.personalitySignature && row.signatureEnabled">
+                                <div class="text-left text-danger">Personality is required</div>
+                              </div>
                             </td>
                             <td>
-                              <input type="text" cFormControl>
+                              <input type="text" cFormControl
+                              [ngModel]="row.personalityRemarks"
+                              (ngModelChange)="row.personalityRemarks = $event"
+                              name="personalityRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
                             </td>
                           </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  
+
+                    <table cTable  >
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Evaluation</th>
+                          <th scope="col" class="text-center">Signature</th>
+                          <th scope="col" class="text-center">Remarks</th>
+                        </tr>
+                        <tr>
+                          <th colspan="3">
+                            <p style="text-decoration: underline;">7.Security Awareness</p>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let row of securityRows; let i = index;">
                           <tr>
-                            <td>iii)General</td>
+                            <td>{{ row.name }}</td>
                             <td>
                               <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="3"
-                                [(ngModel)]="officerForm2service.officerForm2Module.securityAwarenessEvaluation"
-                                name="securityAwarenessEvaluation"
-                                #securityAwarenessEvaluation="ngModel">
-                                <label cFormCheckLabel>3</label>
+                                <input cFormCheckInput type="radio" [value]="row"
+                                  [(ngModel)]="securityRow"
+                                  name="securityAwarenessEvaluation"
+                                  (change)="toggleSecuritySignatureInput(i)">
+                                <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                               </c-form-check>
                             </td>
                             <td>
                               <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.securityAwarenessSignature"
-                              name="securityAwarenessSignature" 
-                              #securityAwarenessSignature="ngModel">
-                              @if(!securityAwarenessSignature.valid && securityAwarenessSignature.touched)
-                              {
-                                <div class="text-left text-danger">Security Awareness is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>iv)Not So Aware</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="2"
-                                [(ngModel)]="officerForm2service.officerForm2Module.securityAwarenessEvaluation"
-                                name="securityAwarenessEvaluation"
-                                #securityAwarenessEvaluation="ngModel">
-                                <label cFormCheckLabel>2</label>
-                              </c-form-check>
+                                [ngModel]="row.securityAwarenessSignature"
+                                (ngModelChange)="row.securityAwarenessSignature = $event"
+                                name="Signature{{i}}"
+                                [disabled]="!row.signatureEnabled">
+                              <div *ngIf="!row.securityAwarenessSignature && row.signatureEnabled">
+                                <div class="text-left text-danger">Security Awareness is required</div>
+                              </div>
                             </td>
                             <td>
                               <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.securityAwarenessSignature"
-                              name="securityAwarenessSignature" 
-                              #securityAwarenessSignature="ngModel">
-                              @if(!securityAwarenessSignature.valid && securityAwarenessSignature.touched)
-                              {
-                                <div class="text-left text-danger">Security Awareness is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
+                              [ngModel]="row.securityRemarks"
+                              (ngModelChange)="row.securityRemarks = $event"
+                              name="securityRemarks{{i}}"
+                              [disabled]="!row.remarksEnabled">
                             </td>
                           </tr>
-                          <tr>
-                            <td>v)Unaware of Rules and Regulation</td>
-                            <td>
-                              <c-form-check inline>
-                                <input cFormCheckInput type="radio" value="1"
-                                [(ngModel)]="officerForm2service.officerForm2Module.securityAwarenessEvaluation"
-                                name="securityAwarenessEvaluation"
-                                #securityAwarenessEvaluation="ngModel">
-                                <label cFormCheckLabel>1</label>
-                              </c-form-check>
-                            </td>
-                            <td>
-                              <input type="text" cFormControl
-                              [(ngModel)]="officerForm2service.officerForm2Module.securityAwarenessSignature"
-                              name="securityAwarenessSignature" 
-                              #securityAwarenessSignature="ngModel">
-                              @if(!securityAwarenessSignature.valid && securityAwarenessSignature.touched)
-                              {
-                                <div class="text-left text-danger">Security Awareness is required </div>
-                              }
-                            </td>
-                            <td>
-                              <input type="text" cFormControl>
-                            </td>
-                          </tr>
-                        </tbody>                     
-                      </table> 
+                        </ng-container>
+                      </tbody>
+                    </table>
     
                 <div class="container mt-4">
                     <div class="row justify-content-center">

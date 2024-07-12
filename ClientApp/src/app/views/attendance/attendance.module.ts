@@ -26,6 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { ToastrService } from 'ngx-toastr';
 import { ShiftService } from './services/shift.service';
+import { ManualAttendanceService } from './services/manual-attendance.service';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { ShiftService } from './services/shift.service';
   providers: [ 
     ToastrService,
     ShiftService,
+    ManualAttendanceService
   ],
 })
 export class AttendanceModule { }

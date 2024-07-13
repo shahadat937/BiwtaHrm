@@ -9,6 +9,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class OfficerFormPart3Component  implements OnInit, OnDestroy{
 
+  totalMarksIn3rdPart: number = 0;
+  totalMarksIn3rdPartInwords='';
+  totalMarks2ndAnd3rdPart: number=0;
+  totalMarksInWords2ndAnd3rdPart: string='';
   loading:boolean=false
 
   
@@ -17,6 +21,10 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
   }
   ngOnDestroy(): void {
   }
+  ngOnChanges() {
+    this.totalMarksIn3rdPartInwords = this.convertNumberToWords(this.totalMarksIn3rdPart);
+    this.totalMarksInWords2ndAnd3rdPart = this.convertNumberToWords(this.totalMarks2ndAnd3rdPart);
+  }
 
   onSubmit(form: NgForm): void {
     this.loading=true;
@@ -24,96 +32,96 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
   }
   
   professionalKnowledgeRows = [
-    { name: 'i) Significant Knowledge', evaluationValue: '5', Signature: '', professionalKnowledgeRemarks:'',  signatureEnabled: false ,remarksEnabled: false},
-    { name: 'ii) Sufficient Knowledge', evaluationValue: '4', Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
-    { name: 'iii) Fairly Good Knowledge', evaluationValue: '3', Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
-    { name: 'iv) Insufficient', evaluationValue: '2', Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
-    { name: 'v) Low Quality', evaluationValue: '1', Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
+    { name: 'i) Significant Knowledge', evaluationValue: 5, Signature: '', professionalKnowledgeRemarks:'',  signatureEnabled: false ,remarksEnabled: false},
+    { name: 'ii) Sufficient Knowledge', evaluationValue: 4, Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
+    { name: 'iii) Fairly Good Knowledge', evaluationValue: 3, Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
+    { name: 'iv) Insufficient', evaluationValue: 2, Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
+    { name: 'v) Low Quality', evaluationValue: 1, Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
   ];
 
   qualityOfWorkRows = [
-    { name: 'i) Accurate and Complete', evaluationValue: '5', qualityOfWorkSignature: '', qualityofworkRemarks:'',  signatureEnabled: false,remarksEnabled: false },
-    { name: 'ii) High Standard', evaluationValue: '4', qualityOfWorkSignature: '', qualityofworkRemarks:'',  signatureEnabled: false,remarksEnabled: false  },
-    { name: 'iii) General', evaluationValue: '3', qualityOfWorkSignature: '', qualityofworkRemarks:'', signatureEnabled: false ,remarksEnabled: false },
-    { name: 'iv) Unequal Values', evaluationValue: '2', qualityOfWorkSignature: '', qualityofworkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
-    { name: 'v) Low Quality', evaluationValue: '1', qualityOfWorkSignature: '', qualityofworkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
+    { name: 'i) Accurate and Complete', evaluationValue: 5, qualityOfWorkSignature: '', qualityofworkRemarks:'',  signatureEnabled: false,remarksEnabled: false },
+    { name: 'ii) High Standard', evaluationValue: 4, qualityOfWorkSignature: '', qualityofworkRemarks:'',  signatureEnabled: false,remarksEnabled: false  },
+    { name: 'iii) General', evaluationValue: 3, qualityOfWorkSignature: '', qualityofworkRemarks:'', signatureEnabled: false ,remarksEnabled: false },
+    { name: 'iv) Unequal Values', evaluationValue: 2, qualityOfWorkSignature: '', qualityofworkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
+    { name: 'v) Low Quality', evaluationValue: 1, qualityOfWorkSignature: '', qualityofworkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
   ];
   amountOfWorkRows = [
-    { name: 'i) Too Much', evaluationValue: '5', amountOfWorkSignature: '', amountofWorkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
-    { name: 'ii) Sufficient', evaluationValue: '4', amountOfWorkSignature: '', amountofWorkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
-    { name: 'iii) Satisfactory', evaluationValue: '3', amountOfWorkSignature: '', amountofWorkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
-    { name: 'iv) Not as Expected', evaluationValue: '2', amountOfWorkSignature: '', amountofWorkRemarks:'',signatureEnabled: false,remarksEnabled: false  },
-    { name: 'v) Insufficient', evaluationValue: '1', amountOfWorkSignature: '', amountofWorkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
+    { name: 'i) Too Much', evaluationValue: 5, amountOfWorkSignature: '', amountofWorkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
+    { name: 'ii) Sufficient', evaluationValue: 4, amountOfWorkSignature: '', amountofWorkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
+    { name: 'iii) Satisfactory', evaluationValue: 3, amountOfWorkSignature: '', amountofWorkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
+    { name: 'iv) Not as Expected', evaluationValue: 2, amountOfWorkSignature: '', amountofWorkRemarks:'',signatureEnabled: false,remarksEnabled: false  },
+    { name: 'v) Insufficient', evaluationValue: 1, amountOfWorkSignature: '', amountofWorkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
   ];
   punctualityRows = [
-    { name: 'i) Never Delay', evaluationValue: '5', punctualitySignature: '', punctuilityRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'ii) Rarely Late', evaluationValue: '4', punctualitySignature: '', punctuilityRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iii) Usually Punctual', evaluationValue: '3', punctualitySignature: '',  punctuilityRemarks:'',signatureEnabled: false ,remarksEnabled: false},
-    { name: 'iv) Sometimes Delay', evaluationValue: '2', punctualitySignature: '',  punctuilityRemarks:'',signatureEnabled: false,remarksEnabled: false },
-    { name: 'v) Habitually Late', evaluationValue: '1', punctualitySignature: '', punctuilityRemarks:'', signatureEnabled: false ,remarksEnabled: false},
+    { name: 'i) Never Delay', evaluationValue: 5, punctualitySignature: '', punctuilityRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'ii) Rarely Late', evaluationValue: 4, punctualitySignature: '', punctuilityRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iii) Usually Punctual', evaluationValue: 3, punctualitySignature: '',  punctuilityRemarks:'',signatureEnabled: false ,remarksEnabled: false},
+    { name: 'iv) Sometimes Delay', evaluationValue: 2, punctualitySignature: '',  punctuilityRemarks:'',signatureEnabled: false,remarksEnabled: false },
+    { name: 'v) Habitually Late', evaluationValue: 1, punctualitySignature: '', punctuilityRemarks:'', signatureEnabled: false ,remarksEnabled: false},
   ];
 
   SenceOfResponsibilityRows = [
-    { name: 'i) Always Ready to Perform duties', evaluationValue: '5', senceOfResponsibilityAndCommitmentSignature: '', senseofResponsibilityRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'ii) Very Wiling to take Responsibility', evaluationValue: '4', senceOfResponsibilityAndCommitmentSignature: '', senseofResponsibilityRemarks:'',  signatureEnabled: false ,remarksEnabled: false},
-    { name: 'iii) Traditional', evaluationValue: '3', senceOfResponsibilityAndCommitmentSignature: '', senseofResponsibilityRemarks:'',  signatureEnabled: false ,remarksEnabled: false},
-    { name: 'iv) Tendency submit  despite  decision-making power', evaluationValue: '2', senceOfResponsibilityAndCommitmentSignature: '', senseofResponsibilityRemarks:'',  signatureEnabled: false ,remarksEnabled: false},
-    { name: 'v) Avoid Responssibility', evaluationValue: '1', senceOfResponsibilityAndCommitmentSignature: '', senseofResponsibilityRemarks:'',  signatureEnabled: false ,remarksEnabled: false},
+    { name: 'i) Always Ready to Perform duties', evaluationValue: 5, senceOfResponsibilityAndCommitmentSignature: '', senseofResponsibilityRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'ii) Very Wiling to take Responsibility', evaluationValue: 4, senceOfResponsibilityAndCommitmentSignature: '', senseofResponsibilityRemarks:'',  signatureEnabled: false ,remarksEnabled: false},
+    { name: 'iii) Traditional', evaluationValue: 3, senceOfResponsibilityAndCommitmentSignature: '', senseofResponsibilityRemarks:'',  signatureEnabled: false ,remarksEnabled: false},
+    { name: 'iv) Tendency submit  despite  decision-making power', evaluationValue: 2, senceOfResponsibilityAndCommitmentSignature: '', senseofResponsibilityRemarks:'',  signatureEnabled: false ,remarksEnabled: false},
+    { name: 'v) Avoid Responssibility', evaluationValue: 1, senceOfResponsibilityAndCommitmentSignature: '', senseofResponsibilityRemarks:'',  signatureEnabled: false ,remarksEnabled: false},
   ];
 
   PromptnessTakingMeasuresRows = [
-    { name: 'i)Extraordinary', evaluationValue: '5', promptnessTakingMeasuresAndFollowingOrdersSignature: '', promptnessRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'ii) Very Active', evaluationValue: '4', promptnessTakingMeasuresAndFollowingOrdersSignature: '', promptnessRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iii)Activity Is Effortful', evaluationValue: '3', promptnessTakingMeasuresAndFollowingOrdersSignature: '', promptnessRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iv) Slow', evaluationValue: '2', promptnessTakingMeasuresAndFollowingOrdersSignature: '', promptnessRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'v) Careless', evaluationValue: '1', promptnessTakingMeasuresAndFollowingOrdersSignature: '', promptnessRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'i)Extraordinary', evaluationValue: 5, promptnessTakingMeasuresAndFollowingOrdersSignature: '', promptnessRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'ii) Very Active', evaluationValue: 4, promptnessTakingMeasuresAndFollowingOrdersSignature: '', promptnessRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iii)Activity Is Effortful', evaluationValue: 3, promptnessTakingMeasuresAndFollowingOrdersSignature: '', promptnessRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iv) Slow', evaluationValue: 2, promptnessTakingMeasuresAndFollowingOrdersSignature: '', promptnessRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'v) Careless', evaluationValue: 1, promptnessTakingMeasuresAndFollowingOrdersSignature: '', promptnessRemarks:'', signatureEnabled: false,remarksEnabled: false },
   ];
 
   interestOfWorkRows = [
-    { name: 'i)Extraordinary', evaluationValue: '5', interestOfWorkSignature: '', interestWorkRemarks:'', signatureEnabled: false,remarksEnabled: false},
-    { name: 'ii) Stedy', evaluationValue: '4', interestOfWorkSignature: '', interestWorkRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iii)Responsible', evaluationValue: '3', interestOfWorkSignature: '', interestWorkRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iv) Low', evaluationValue: '2', interestOfWorkSignature: '', interestWorkRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'v) Lack of Interest', evaluationValue: '1', interestOfWorkSignature: '', interestWorkRemarks:'',signatureEnabled: false ,remarksEnabled: false},
+    { name: 'i)Extraordinary', evaluationValue: 5, interestOfWorkSignature: '', interestWorkRemarks:'', signatureEnabled: false,remarksEnabled: false},
+    { name: 'ii) Stedy', evaluationValue: 4, interestOfWorkSignature: '', interestWorkRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iii)Responsible', evaluationValue: 3, interestOfWorkSignature: '', interestWorkRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iv) Low', evaluationValue: 2, interestOfWorkSignature: '', interestWorkRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'v) Lack of Interest', evaluationValue: 1, interestOfWorkSignature: '', interestWorkRemarks:'',signatureEnabled: false ,remarksEnabled: false},
   ];
 
   superviseandMeasureRows = [
-    { name: 'i)A Source of Motivation for subordinates', evaluationValue: '5', superviseAndManageSignature: '', serviceRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'ii)Good at Management', evaluationValue: '4', superviseAndManageSignature: '', serviceRemarks:'',signatureEnabled: false,remarksEnabled: false },
-    { name: 'iii)Assistant to Subordinate', evaluationValue: '3', superviseAndManageSignature: '', serviceRemarks:'',signatureEnabled: false,remarksEnabled: false },
-    { name: 'iv)Lack of Control', evaluationValue: '2', superviseAndManageSignature: '', serviceRemarks:'',signatureEnabled: false,remarksEnabled: false },
-    { name: 'v)Inferior', evaluationValue: '1', superviseAndManageSignature: '', serviceRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'i)A Source of Motivation for subordinates', evaluationValue: 5, superviseAndManageSignature: '', serviceRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'ii)Good at Management', evaluationValue: 4, superviseAndManageSignature: '', serviceRemarks:'',signatureEnabled: false,remarksEnabled: false },
+    { name: 'iii)Assistant to Subordinate', evaluationValue: 3, superviseAndManageSignature: '', serviceRemarks:'',signatureEnabled: false,remarksEnabled: false },
+    { name: 'iv)Lack of Control', evaluationValue: 2, superviseAndManageSignature: '', serviceRemarks:'',signatureEnabled: false,remarksEnabled: false },
+    { name: 'v)Inferior', evaluationValue: 1, superviseAndManageSignature: '', serviceRemarks:'', signatureEnabled: false,remarksEnabled: false },
   ];
 
   RelationWithColleaguesRows = [
-    { name: 'i)Extraordinary', evaluationValue: '5', relationWithColleaguesSignature: '', RelationshipRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'ii)Highly Respective and Preferred', evaluationValue: '4', relationWithColleaguesSignature: '', RelationshipRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iii)Sincere', evaluationValue: '3', relationWithColleaguesSignature: '', RelationshipRemarks:'',signatureEnabled: false ,remarksEnabled: false},
-    { name: 'iv)Avoidence Tendency', evaluationValue: '2', relationWithColleaguesSignature: '', RelationshipRemarks:'',signatureEnabled: false ,remarksEnabled: false},
-    { name: 'v)Behaviour is Consistent', evaluationValue: '1', relationWithColleaguesSignature: '',RelationshipRemarks:'', signatureEnabled: false ,remarksEnabled: false},
+    { name: 'i)Extraordinary', evaluationValue: 5, relationWithColleaguesSignature: '', RelationshipRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'ii)Highly Respective and Preferred', evaluationValue: 4, relationWithColleaguesSignature: '', RelationshipRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iii)Sincere', evaluationValue: 3, relationWithColleaguesSignature: '', RelationshipRemarks:'',signatureEnabled: false ,remarksEnabled: false},
+    { name: 'iv)Avoidence Tendency', evaluationValue: 2, relationWithColleaguesSignature: '', RelationshipRemarks:'',signatureEnabled: false ,remarksEnabled: false},
+    { name: 'v)Behaviour is Consistent', evaluationValue: 1, relationWithColleaguesSignature: '',RelationshipRemarks:'', signatureEnabled: false ,remarksEnabled: false},
   ];
 
   abilityToImplementRows = [
-    { name: 'i)Extraordinary', evaluationValue: '5', abilityImplementDecisionSignature: '', abilitytoImplentRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'ii)Highly Very Good', evaluationValue: '4', abilityImplementDecisionSignature: '', abilitytoImplentRemarks:'',signatureEnabled: false,remarksEnabled: false },
-    { name: 'iii)Good', evaluationValue: '3', abilityImplementDecisionSignature: '', abilitytoImplentRemarks:'',signatureEnabled: false,remarksEnabled: false },
-    { name: 'iv)Weak', evaluationValue: '2', abilityImplementDecisionSignature: '', abilitytoImplentRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'v)Weak', evaluationValue: '1', abilityImplementDecisionSignature: '', abilitytoImplentRemarks:'',  signatureEnabled: false,remarksEnabled: false },
+    { name: 'i)Extraordinary', evaluationValue: 5, abilityImplementDecisionSignature: '', abilitytoImplentRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'ii)Highly Very Good', evaluationValue: 4, abilityImplementDecisionSignature: '', abilitytoImplentRemarks:'',signatureEnabled: false,remarksEnabled: false },
+    { name: 'iii)Good', evaluationValue: 3, abilityImplementDecisionSignature: '', abilitytoImplentRemarks:'',signatureEnabled: false,remarksEnabled: false },
+    { name: 'iv)Weak', evaluationValue: 2, abilityImplementDecisionSignature: '', abilitytoImplentRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'v)Weak', evaluationValue: 1, abilityImplementDecisionSignature: '', abilitytoImplentRemarks:'',  signatureEnabled: false,remarksEnabled: false },
   ];
   expressivePowerWritingRows = [
-    { name: 'i)Extraordinary', evaluationValue: '5', expressivePowerWritingSignature: '', expressiveWritingRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'ii)Clear,Irrefutable,Orderly', evaluationValue: '4', expressivePowerWritingSignature: '', expressiveWritingRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iii)Generally clear and concise', evaluationValue: '3', expressivePowerWritingSignature: '', expressiveWritingRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iv)Not So Good', evaluationValue: '2', expressivePowerWritingSignature: '', expressiveWritingRemarks:'', signatureEnabled: false ,remarksEnabled: false},
-    { name: 'v)Not Clear', evaluationValue: '1', expressivePowerWritingSignature: '', expressiveWritingRemarks:'', signatureEnabled: false ,remarksEnabled: false},
+    { name: 'i)Extraordinary', evaluationValue: 5, expressivePowerWritingSignature: '', expressiveWritingRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'ii)Clear,Irrefutable,Orderly', evaluationValue: 4, expressivePowerWritingSignature: '', expressiveWritingRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iii)Generally clear and concise', evaluationValue: 3, expressivePowerWritingSignature: '', expressiveWritingRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iv)Not So Good', evaluationValue: 2, expressivePowerWritingSignature: '', expressiveWritingRemarks:'', signatureEnabled: false ,remarksEnabled: false},
+    { name: 'v)Not Clear', evaluationValue: 1, expressivePowerWritingSignature: '', expressiveWritingRemarks:'', signatureEnabled: false ,remarksEnabled: false},
   ];
 
   expressivePowerSpeechRows = [
-    { name: 'i)Extraordinary', evaluationValue: '5', expressivePowerSpeechSignature: '', expressiveSpeechRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'ii)Strong', evaluationValue: '4', expressivePowerSpeechSignature: '',  expressiveSpeechRemarks:'',signatureEnabled: false,remarksEnabled: false },
-    { name: 'iii)Much', evaluationValue: '3', expressivePowerSpeechSignature: '', expressiveSpeechRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iv)Not Clear', evaluationValue: '2', expressivePowerSpeechSignature: '', expressiveSpeechRemarks:'',signatureEnabled: false,remarksEnabled: false },
-    { name: 'v)Vegue and Ineffective', evaluationValue: '1', expressivePowerSpeechSignature: '', expressiveSpeechRemarks:'',signatureEnabled: false ,remarksEnabled: false},
+    { name: 'i)Extraordinary', evaluationValue: 5, expressivePowerSpeechSignature: '', expressiveSpeechRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'ii)Strong', evaluationValue: 4, expressivePowerSpeechSignature: '',  expressiveSpeechRemarks:'',signatureEnabled: false,remarksEnabled: false },
+    { name: 'iii)Much', evaluationValue: 3, expressivePowerSpeechSignature: '', expressiveSpeechRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iv)Not Clear', evaluationValue: 2, expressivePowerSpeechSignature: '', expressiveSpeechRemarks:'',signatureEnabled: false,remarksEnabled: false },
+    { name: 'v)Vegue and Ineffective', evaluationValue: 1, expressivePowerSpeechSignature: '', expressiveSpeechRemarks:'',signatureEnabled: false ,remarksEnabled: false},
   ];
 
   overallAssessmentRows = [
@@ -125,8 +133,31 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
     { name: 'v)Low Quality', evaluationValue: '20-30', overallAssessmentSignature: '', overallAssesmentRemarks:'', signatureEnabled: false ,remarksEnabled: false},
   ];
 
+  convertNumberToWords(num: number): string {
+    const a = [
+      '', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+      'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'
+    ];
+    const b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  
+    if (num === 0) return 'zero';
+    if (num < 20) return a[num];
+    if (num < 100) return b[Math.floor(num / 10)] + (num % 10 !== 0 ? '-' + a[num % 10] : '');
+  
+    return '';
+  }
+  convertNumberToWords2ndand3rdpart(amount: number): string {
+    const words = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", 
+                   "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+    const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+    if (amount < 20) return words[amount];
+    if (amount < 100) return tens[Math.floor(amount / 10)] + (amount % 10 > 0 ? "-" + words[amount % 10] : "");
+    // Add more cases for hundreds, thousands, etc.
+    return amount.toString(); // Placeholder for more complex logic
+  }
+
   selectedRow: any; // Variable to store the selected row
-  selectedQualityRow: any; // Variable to store the selected row
+  selectedQualityRow: any;
   selectedAmountRow:any;
   selectedPunctualityRow:any;
   selectedSenseofResponsibilityRow:any;
@@ -136,8 +167,50 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
   selectedRelationColleaguesRow:any;
   abilityWithImplementRow:any;
   exessivePowerWritingRow:any;
-  exessivePowerspeechRow:any;
+  exessivePowerSpeechRow:any;
   overallAssessmentRow:any;
+
+  calculateTotalMarksIn3rdpart(){
+    this.totalMarksIn3rdPart= 0;
+
+    if(this.selectedRow){
+      this.totalMarksIn3rdPart += this.selectedRow.evaluationValue;
+    }
+    if(this.selectedQualityRow){
+      this.totalMarksIn3rdPart += this.selectedQualityRow.evaluationValue;
+    }
+    if(this.selectedAmountRow){
+      this.totalMarksIn3rdPart += this.selectedAmountRow.evaluationValue;
+    }
+    if(this.selectedPunctualityRow){
+      this.totalMarksIn3rdPart += this.selectedPunctualityRow.evaluationValue;
+    }
+    if(this.selectedSenseofResponsibilityRow){
+      this.totalMarksIn3rdPart += this.selectedSenseofResponsibilityRow.evaluationValue;
+    }
+    if(this.selectedPromtnessTakingRow){
+      this.totalMarksIn3rdPart += this.selectedPromtnessTakingRow.evaluationValue;
+    }
+    if(this.selectedinterstofworkRow){
+      this.totalMarksIn3rdPart += this.selectedinterstofworkRow.evaluationValue;
+    }
+    if(this.selectedsuperviseAndMeasureRow){
+      this.totalMarksIn3rdPart += this.selectedsuperviseAndMeasureRow.evaluationValue;
+    }
+    if(this.selectedRelationColleaguesRow){
+      this.totalMarksIn3rdPart += this.selectedRelationColleaguesRow.evaluationValue;
+    }
+    if(this.abilityWithImplementRow){
+      this.totalMarksIn3rdPart += this.abilityWithImplementRow.evaluationValue;
+    }
+    if(this.exessivePowerWritingRow){
+      this.totalMarksIn3rdPart += this.exessivePowerWritingRow.evaluationValue;
+    }
+    if(this.exessivePowerSpeechRow){
+      this.totalMarksIn3rdPart += this.exessivePowerSpeechRow.evaluationValue;
+    }
+    this.totalMarksIn3rdPartInwords=this.convertNumberToWords(this.totalMarksIn3rdPart)
+}
 
   toggleSignatureInput(index: any) {
     // Reset all rows to disable signature input

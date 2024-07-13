@@ -1,6 +1,7 @@
-import { OfficerFormPart2ServiceService } from './../service/officer-form-part2-service.service';
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { SharedService } from '../service/shared.service';
 
 @Component({
   selector: 'app-officer-form-2',
@@ -8,12 +9,13 @@ import { NgForm } from '@angular/forms';
   styleUrl: './officer-form-2.component.scss'
 })
 export class OfficerForm2Component  implements OnInit, OnDestroy{
- 
+
+  formData: any = {};
   totalMarks: number = 0;
   totalMarksInWords: string = '';
   loading:boolean=false
 
-  constructor(public officerForm2service :OfficerFormPart2ServiceService ){}
+  constructor( private sharedservice :SharedService ){}
 
   ngOnInit(): void {
   }
@@ -21,8 +23,9 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
   }
 
   onSubmit(form: NgForm): void {
-    this.loading=true;
-    console.log("Form Value: ", form.value)
+    if(form.valid){
+      this.sharedservice.setFormData('Part-2',this.formData)
+    }
   }
 
   SenseOfDisciplineRows = [
@@ -98,7 +101,7 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
   
     return '';
   }
-
+  
   selectedSenseOfDiscipllineRow: any; 
   selectedIntelegentAndJudgment:any;
   selectedIntelegenceRow:any;

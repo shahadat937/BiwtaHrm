@@ -1,6 +1,6 @@
 import { NgForm } from '@angular/forms';
-import { OfficerFormPart3ServiceService } from './../service/officer-form-part3-service.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SharedService } from '../service/shared.service';
 
 @Component({
   selector: 'app-officer-form-part-3',
@@ -9,26 +9,23 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class OfficerFormPart3Component  implements OnInit, OnDestroy{
 
+  formData: any = {};
   totalMarksIn3rdPart: number = 0;
   totalMarksIn3rdPartInwords='';
   totalMarks2ndAnd3rdPart: number=0;
   totalMarksInWords2ndAnd3rdPart: string='';
   loading:boolean=false
 
-  
-  constructor(public officerForm3service :OfficerFormPart3ServiceService ){}
+  constructor( private sharedservice :SharedService ){}
   ngOnInit(): void {
   }
   ngOnDestroy(): void {
   }
-  ngOnChanges() {
-    this.totalMarksIn3rdPartInwords = this.convertNumberToWords(this.totalMarksIn3rdPart);
-    this.totalMarksInWords2ndAnd3rdPart = this.convertNumberToWords(this.totalMarks2ndAnd3rdPart);
-  }
-
-  onSubmit(form: NgForm): void {
-    this.loading=true;
-    console.log("Form Value: ", form.value)
+  
+   onSubmit(form: NgForm): void {
+    if(form.valid){
+      this.sharedservice.setFormData('Part-3',this.formData)
+    }
   }
   
   professionalKnowledgeRows = [

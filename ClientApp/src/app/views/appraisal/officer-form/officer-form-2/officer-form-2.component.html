@@ -13,9 +13,9 @@
       </c-button-group>
   </c-button-group>
   <c-card-body>   
-    <form cForm  
-    #OfficerForm2="ngForm"
-    (submit)="onSubmit(OfficerForm2)"
+    <form cForm
+    #officerForm="ngForm" 
+    (ngSubmit)="onSubmit(officerForm)" 
     novalidate>
       <div class="table-responsive">
         <table cTable  >
@@ -395,21 +395,15 @@
                 #totalMarksInWordsSignature="ngModel">
               <div class="text-end mt-3">
             </div>
-            <div class="text-end mt-3">
-              <button cButton type="submit" [disabled]="!OfficerForm2" [disabled]="loading">
-                <c-spinner [hidden]="!loading" size="sm"></c-spinner>
-                Submit 
-              </button>
-              <button cButton class="ms-3"> Cancel</button>
-          </div>
+            
             </c-col>
           </div>
             <c-card>
               <c-card-footer>
                 <div class="text-end">
                   <button cButton color="primary" [routerLink]="[
-                  '/appraisal/officerForm2']">To be continue...</button>
+                  '/appraisal/officerFormPart3']">To be continue...</button>
                 </div>
               </c-card-footer>
             </c-card>
-        </div>
+         </div>

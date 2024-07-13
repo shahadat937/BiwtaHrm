@@ -10,6 +10,7 @@ export class OfficerFormService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
   officerModels :OfficerFormModule;
+  setFormData: any;
   constructor(private http: HttpClient) {
     this.officerModels=new OfficerFormModule();
    }

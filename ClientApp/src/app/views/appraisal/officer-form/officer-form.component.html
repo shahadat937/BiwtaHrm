@@ -14,13 +14,13 @@
     </c-button-group>
       <c-card-body>
         <form cForm cRow  
-        #officerForm="ngForm"
-        (submit)="onSubmit(officerForm)"
+        #officerForm="ngForm" 
+        (ngSubmit)="onSubmit(officerForm)" 
         novalidate>
           <c-col [md]="4">
             <label cLabel for="division">Division</label>
             <input type="text" cFormControl id="division" placeholder="Division"
-            [(ngModel)]="officerservice.officerModels.division"
+            [(ngModel)]="formData.division"
             name="division" required
             #division="ngModel">
             @if(!division.valid && division.touched)
@@ -32,7 +32,7 @@
           <c-col [md]="4">
             <label cLabel for="fromdate">From Date</label>
             <input type="date" cFormControl id="fromdate" 
-            [(ngModel)]="officerservice.officerModels.yearStartDate"
+            [(ngModel)]="formData.fromdate"
             name="yearStartDate" required
             #yearStartDate="ngModel">
             @if(!yearStartDate.valid && yearStartDate.touched)
@@ -43,7 +43,7 @@
           <c-col [md]="4">
             <label cLabel for="todate">To Date</label>
             <input type="date" cFormControl id="todate"  
-            [(ngModel)]="officerservice.officerModels.yearEndDate"
+            [(ngModel)]="formData.yearEndDate"
             name="yearEndDate" required 
             #yearEndDate="ngModel">
             @if(!yearEndDate.valid && yearEndDate.touched)
@@ -57,7 +57,7 @@
               <c-row>
                 <c-col [md]="4">
                   <label cLabel for="empname">Employee Name</label>
-                  <input type="text" cFormControl id="empname" placeholder="Employee Name"  [(ngModel)]="officerservice.officerModels.employeeName"
+                  <input type="text" cFormControl id="empname" placeholder="Employee Name"  [(ngModel)]="formData.employeeName"
                   name="employeeName" required
                   #employeeName="ngModel">
                   @if(!employeeName.valid && employeeName.touched)
@@ -67,7 +67,7 @@
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="fatherName">Father's Name</label>
-                  <input type="text" cFormControl id="fatherName" placeholder="Father's Name" [(ngModel)]="officerservice.officerModels.fathersName"
+                  <input type="text" cFormControl id="fatherName" placeholder="Father's Name" [(ngModel)]="formData.fathersName"
                   name="fathersName" required
                   #fathersName="ngModel">
                   @if(!fathersName.valid && fathersName.touched)
@@ -77,7 +77,7 @@
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="mothername">Mother's Name</label>
-                  <input type="text" cFormControl id="mothername" placeholder="Mother's Name" [(ngModel)]="officerservice.officerModels.mothersName"
+                  <input type="text" cFormControl id="mothername" placeholder="Mother's Name" [(ngModel)]="formData.mothersName"
                   name="mothersName" required
                   #mothersName="ngModel">
                   @if(!mothersName.valid && mothersName.touched)
@@ -87,7 +87,7 @@
                 </c-col>
                 <c-col [md]="4">
                   <label cLabel for="brn">Birth Reg.no</label>
-                  <input type="number" cFormControl id="brn" placeholder="Birth Reg.no" [(ngModel)]="officerservice.officerModels.birthRegNo"
+                  <input type="number" cFormControl id="brn" placeholder="Birth Reg.no" [(ngModel)]="formData.birthRegNo"
                   name="birthRegNo" required
                   #birthRegNo="ngModel">
                   @if(!birthRegNo.valid && birthRegNo.touched)
@@ -98,7 +98,7 @@
                 <c-col [md]="4">
                   <label cLabel for="dob">Date of Birth</label>
                   <input type="date" cFormControl id="dob" 
-                  [(ngModel)]="officerservice.officerModels.dateofBirth"
+                  [(ngModel)]="formData.dateofBirth"
                   name="dateofBirth" required
                   #dateofBirth="ngModel">
                   @if(!dateofBirth.valid && dateofBirth.touched)
@@ -109,7 +109,7 @@
                 <c-col [md]="4">
                   <label cLabel for="des">Designation</label>
                   <input type="text" cFormControl id="des" placeholder="Designation" 
-                  [(ngModel)]="officerservice.officerModels.designation"
+                  [(ngModel)]="formData.designation"
                   name="designation" required
                   #designation="ngModel">
                   @if(!designation.valid && designation.touched)
@@ -120,7 +120,7 @@
                 <c-col [md]="4">
                   <label cLabel for="work">Workplace</label>
                   <input type="text" cFormControl id="work" placeholder="Workplace" 
-                  [(ngModel)]="officerservice.officerModels.workplace"
+                  [(ngModel)]="formData.workplace"
                   name="workplace" required
                   #workplace="ngModel">
                   @if(!workplace.valid && workplace.touched)
@@ -131,7 +131,7 @@
                 <c-col [md]="4">
                   <label cLabel for="jondate">Joining Date</label>
                   <input type="date" cFormControl id="jondate" 
-                  [(ngModel)]="officerservice.officerModels.joiningDate"
+                  [(ngModel)]="formData.joiningDate"
                   name="joiningDate" required
                   #joiningDate="ngModel">
                   @if(!joiningDate.valid && joiningDate.touched)
@@ -142,7 +142,7 @@
                 <c-col [md]="4">
                   <label cLabel for="pdjd">Present Designation Joining Date</label>
                   <input type="date" cFormControl id="pdjd" 
-                  [(ngModel)]="officerservice.officerModels.presentDesignationJoiningDate"
+                  [(ngModel)]="formData.presentDesignationJoiningDate"
                   name="presentDesignationJoiningDate" required
                   #presentDesignationJoiningDate="ngModel">
                   @if(!presentDesignationJoiningDate.valid && presentDesignationJoiningDate.touched)
@@ -153,7 +153,7 @@
                 <c-col [md]="4">
                   <label cLabel for="edu">Education</label>
                   <input type="text" cFormControl id="edu" placeholder="Education" 
-                  [(ngModel)]="officerservice.officerModels.education"
+                  [(ngModel)]="formData.education"
                   name="education" required
                   #education="ngModel">
                   @if(!education.valid && education.touched)
@@ -164,7 +164,7 @@
                 <c-col [md]="4">
                   <label cLabel for="training">Training/Special Training (If Any)</label>
                   <input type="text" cFormControl id="training" placeholder="Training/Special Training" 
-                  [(ngModel)]="officerservice.officerModels.trainingSpecialTraining"
+                  [(ngModel)]="formData.trainingSpecialTraining"
                   name="trainingSpecialTraining">
                 </c-col>
               </c-row>
@@ -176,7 +176,7 @@
                 <c-col [md]="3">
                   <label cLabel for="fromdate_reporting">From Date</label>
                   <input type="date" cFormControl id="fromdate_reporting" 
-                  [(ngModel)]="officerservice.officerModels.reportinFromDate"
+                  [(ngModel)]="formData.reportinFromDate"
                   name="reportinFromDate" required
                   #reportinFromDate="ngModel">
                   @if(!reportinFromDate.valid && reportinFromDate.touched)
@@ -187,7 +187,7 @@
                 <c-col [md]="3">
                   <label cLabel for="todate_reporting">To Date</label>
                   <input type="date" cFormControl id="todate_reporting" 
-                  [(ngModel)]="officerservice.officerModels.reportingEndDate"
+                  [(ngModel)]="formData.reportingEndDate"
                   name="reportingEndDate" required
                   #reportingEndDate="ngModel">
                   @if(!reportingEndDate.valid && reportingEndDate.touched)
@@ -209,14 +209,6 @@
               </table>
             </c-card-body>
           </c-card>
-          <div class="text-end mt-3">
-            <button cButton type="submit" [disabled]="!officerForm.valid" [disabled]="loading">
-              Submit
-              <c-spinner [hidden]="!loading" size="sm"></c-spinner>
-            </button>
-            
-            <button cButton class="ms-3">X Cancel</button>
-          </div>
         </form>
       </c-card-body>
     </c-card>

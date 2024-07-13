@@ -10,6 +10,14 @@ export const environment = {
   imageUrl: 'http://localhost:25971/assets/images/',
 };
 
+// export const environment = {
+//   production: false,
+//   apiUrl: 'http://118.179.158.165:8089/api/hrm',
+//   securityUrl: 'http://118.179.158.165:8089/api',
+//   fileUrl: 'http://118.179.158.165:8089/Content/',
+//   imageUrl: 'http://118.179.158.165:8089/assets/images/',
+// };
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

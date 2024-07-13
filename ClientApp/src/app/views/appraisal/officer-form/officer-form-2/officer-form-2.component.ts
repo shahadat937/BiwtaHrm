@@ -16,8 +16,6 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
   selectedSenseOfDiscipllineRow: any;
 
   formData: any = {};
-  totalMarks: number = 0;
-  totalMarksInWords: string = '';
   loading:boolean=false
 
   constructor( private sharedservice :SharedService ){}
@@ -120,7 +118,7 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
     return '';
   }
   
-  selectedSenseOfDiscipllineRow: any; 
+
 
  
 

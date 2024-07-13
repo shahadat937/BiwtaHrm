@@ -10,6 +10,10 @@ import { ButtonModule, CardModule, FormModule, GridModule, SpinnerModule } from 
 import { IconModule } from '@coreui/icons-angular';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { AuthService } from 'src/app/core/service/auth.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 
 @NgModule({
@@ -29,6 +33,11 @@ import { AuthService } from 'src/app/core/service/auth.service';
     FormModule,
     SharedCustomModule,
     SpinnerModule,
+    BrowserModule,
+    ReactiveFormsModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
+    NgxCaptchaModule,
   ],
   providers: [
     

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Role } from 'src/app/core/models/role';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
+import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,6 +22,8 @@ loading = false;
 error = '';
 hide = true;
 
+biwtaLogo: string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta-logo.png`;
+
 lastPublishDate:any;
 
 schoolId:any;
@@ -33,7 +36,8 @@ constructor(
   private router: Router,
   private authService: AuthService,
   private snackBar: MatSnackBar,
-  private toastr: ToastrService
+  private toastr: ToastrService,
+  public empPhotoSignService: EmpPhotoSignService,
 ) {
   super();
 }

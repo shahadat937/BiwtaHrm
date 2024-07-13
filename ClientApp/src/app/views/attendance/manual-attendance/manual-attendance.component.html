@@ -5,7 +5,7 @@
     </c-card-header>
 
     <c-card-body>
-        <form [gutter]="3" cForm #manualAtdform="ngForm">
+        <form [gutter]="3" cForm #manualAtdform="ngForm" (ngSubmit)="onSubmit(manualAtdForm)">
             <c-row [gutter]="3">
                 <c-col md="3">
                     <label for="Office">Office</label>
@@ -20,40 +20,62 @@
                 </c-col>
                 <c-col md="3">
                     <label for="Department">Department</label>
-                    <select name="departmentId" id="Department" cSelect>
+                    <select name="departmentId" id="Department" 
+                    cSelect
+                    [(ngModel)]="selectedDepartment">
                         @for (department of DepartmentOption; track $index) {
                             <option [value]="department.id">{{department.name}}</option>
                         }
                     </select>
                 </c-col>
                  <c-col md="3">
-                    <label for="Shifts">Shift</label>
-                    <select name="shiftId" id="Shifts" cSelect>
+                    <label for="Shifts">Shift<span class="text-danger">*</span></label>
+                    <select name="shiftId" id="Shifts" 
+                    cSelect
+                    required
+                    #Shift = "ngModel"
+                    [(ngModel)]="this.manualAtdService.attendances.shiftId">
                         @for (shift of ShiftOption; track $index) {
                             <option [value]="shift.id">{{shift.name}}</option>
                         }
                     </select>
+
+                    @if(Shift.invalid&&Shift.touched) {
+                        <div class="text-left text-danger">Shift is required</div>
+                    }
                 </c-col>
                 <c-col md="3">
-                    <label for="Employee">Employee</label>
-                    <select name="empId" id="Employee" cSelect required>
-                        @for (employee of EmployeeOption; track $index) {
-                            <option [value]="employee.id">{{employee.name}}</option>
+                    <label for="Employee">Employee<span class="text-danger">*</span></label>
+                    <select name="empId" id="Employee" 
+                    cSelect required
+                    #EmpId = "ngModel"
+                    [(ngModel)]="this.manualAtdService.attendances.empId">
+                        @for (employee of EmpOption; track $index) {
+                            <option [value]="employee.id">{{employee.name+"/"+employee.id}}</option>
                         }
                     </select>
+                    @if (EmpId.invalid&&EmpId.touched) {
+                        <div class="text-left text-danger">Employee is required</div>
+                    }
                 </c-col>
             </c-row>
             <hr>
 
             <c-row [gutter]="3">
                 <c-col md="4">
-                    <label for="AtdDate">Date</label>
+                    <label for="AtdDate">Date<span class="text-danger">*</span></label>
                     <input name="attendanceDate" 
                         placeholder="Enter a date" 
                         id="AtdDate" 
                         type="date"
                         required
-                        cFormControl>
+                        cFormControl
+                        #AtdDate = "ngModel"
+                        [(ngModel)]="this.manualAtdService.attendances.attendanceDate"
+                        >
+                        @if (AtdDate.invalid&&AtdDate.touched) {
+                            <div class="text-left text-danger">Attendance Date is required</div>
+                        }
                 </c-col>
                 <c-col md="4">
                     <label for="AtdInTime">In Time</label>
@@ -61,7 +83,8 @@
                         placeholder="Enter InTime" 
                         id="AtdInTime" 
                         type="time"
-                        cFormControl>
+                        cFormControl
+                        [(ngModel)]="this.manualAtdService.attendances.inTime">
                 </c-col>
                 <c-col md="4">
                     <label for="AtdOutTime">Out Time</label>
@@ -69,28 +92,33 @@
                         placeholder="Enter OutTime" 
                         id="AtdOutTime" 
                         type="time"
-                        cFormControl>
+                        cFormControl
+                        [(ngModel)]="this.manualAtdService.attendances.outTime">
                 </c-col>
 
                 <c-col md="4">
                     <label for="AtdStatus">Status</label>
-                    <select name="attendanceStatusId" id="AtdStatus" cSelect>
+                    <select name="attendanceStatusId" 
+                    id="AtdStatus" 
+                    cSelect
+                    [(ngModel)]="this.manualAtdService.attendances.attendanceStatusId">
                         @for (status of AtdStatusOption; track $index) {
-                            <option [value]="status.value">{{status.name}}</option>
+                            <option [value]="status.id">{{status.name}}</option>
                         }
                     </select>
                 </c-col>
 
                 <c-col md="4">
                     <label for="Remark">Remark</label>
-                    <input type="text" name="remark" id="Remark" cFormControl>
+                    <input type="text" name="remark" id="Remark" 
+                    cFormControl 
+                    [(ngModel)]="this.manualAtdService.attendances.remark">
                 </c-col>
                 <c-col [xs]="12">
                 <div class="d-flex justify-content-between">
                   <div>
                     <button
-                      [disabled]="loading"
-                      [disabled]="manualAtdform.invalid"
+                      [disabled]="loading==true||manualAtdForm.invalid"
                       cButton
                       class="me-1"
                       color="primary"
@@ -99,7 +127,7 @@
                       <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
                       Save
                       </button>
-                    <button cButton color="secondary">Reset</button>
+                    <button cButton color="secondary" (click)="ResetForm()">Reset</button>
                   </div>
                   <div>
                     <button [hidden]="btnText != 'Update'" cButton color="danger">Cancel</button>
@@ -109,4 +137,5 @@
             </c-row>
         </form>
     </c-card-body>
+
 </c-card>

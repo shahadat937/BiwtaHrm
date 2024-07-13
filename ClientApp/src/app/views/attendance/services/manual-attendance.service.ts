@@ -15,8 +15,17 @@ export class ManualAttendanceService {
     this.attendances = new Attendances();
   }
 
-  submit(model:any) {
-    this.http.post(this.baseUrl+"/attendance/save-ManualAttendance",model);
+  submit(model:Attendances) {
+    console.log(model);
+    if(model.inTime!=""&&model.inTime!=null) {
+      model.inTime = model.inTime+":00";
+    }
+
+    if(model.outTime!=""&&model.outTime!=null) {
+      model.outTime = model.outTime +":00";
+    }
+
+    return this.http.post(this.baseUrl+"/attendance/save-ManualAttendance",model);
   }
 
   getOfficeOption():Observable<any> {
@@ -33,5 +42,9 @@ export class ManualAttendanceService {
 
   getDepartmentOption(officeId:number):Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl+`/department/get-SelectedDepartmentByOfficeId/${officeId}`);
+  }
+
+  getEmpOption():Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl + "/empBasicInfo/get-SelectedEmpBasicInfo");
   }
 }

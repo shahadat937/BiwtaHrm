@@ -15,7 +15,9 @@ import {ManualAttendanceService} from '../services/manual-attendance.service'
 export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   loading = false;
+  loadingBulk = false;
   @ViewChild('manualAtdform', { static: true }) manualAtdForm!: NgForm;
+  @ViewChild('manualAtdBulkForm', { static: true }) manualAtdBulkForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumnName: string[] = ["Attendance Id", "Attendance Date", "Shift", "Employee Name","InTime","OutTime", "Attendance Type", "Attendance Status"];
   dataSource = new MatTableDataSource<any>();
@@ -31,6 +33,7 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   selectedShift:number;
   selectedDepartment:number;
   selectedEmp:number;
+  atdFile: File | null;
 
 
   constructor(
@@ -44,6 +47,7 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
       this.selectedDepartment=0;
       this.selectedShift = 0;
       this.selectedEmp = 0;
+      this.atdFile = null;
 
       this.HeaderText = "Manual Attendance ";
       this.OfficeOption = [{"value":1,"name":"Office1"},{"value":2,"name":"Office2"}]
@@ -79,13 +83,22 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   ResetForm() {
-    console.log("Reset Form Attempt");
+    //console.log("Reset Form Attempt");
     if(this.manualAtdForm?.form==null) {
       return;
     }
     this.manualAtdForm.reset();
-    console.log("Form Reset");
-    console.log(this.loading);
+    //console.log("Form Reset");
+    //console.log(this.loading);
+  }
+
+  ResetBulkForm() {
+    if(this.manualAtdBulkForm?.form==null) {
+      return;
+    } 
+
+    this.atdFile=null;
+    this.manualAtdBulkForm.reset();
   }
 
   onOfficeChange() {
@@ -117,6 +130,32 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
       this.loading = false;
 
     });
+  }
+
+  onSubmitBulk(form:NgForm) {
+
+    this.loadingBulk = true;
+    this.subscription = this.manualAtdService.submitBulk(this.atdFile).subscribe((response:any)=> {
+      if(response.success) {
+        this.ResetBulkForm();
+        this.loadingBulk=false;
+        this.toastr.success('',`${response.message}`,{
+          positionClass:'toast-top-right'
+        });
+      } else {
+        this.loadingBulk=false;
+        this.toastr.warning('',`${response.message}`, {
+          positionClass:'toast-top-right'
+        });
+      }
+
+      this.ResetBulkForm();
+      this.loadingBulk = false;
+    });
+  }
+
+  onAtdFileChange(event:any) {
+    this.atdFile = event.target.files[0];
   }
 
   ngOnDestroy(): void {

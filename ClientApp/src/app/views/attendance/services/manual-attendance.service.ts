@@ -16,7 +16,6 @@ export class ManualAttendanceService {
   }
 
   submit(model:Attendances) {
-    console.log(model);
     if(model.inTime!=""&&model.inTime!=null) {
       model.inTime = model.inTime+":00";
     }
@@ -26,6 +25,14 @@ export class ManualAttendanceService {
     }
 
     return this.http.post(this.baseUrl+"/attendance/save-ManualAttendance",model);
+  }
+
+  submitBulk(data:any) {
+    const formdata = new FormData();
+    formdata.append("csvFile",data);
+    
+
+    return this.http.post(this.baseUrl+"/attendance/save-BulkAttendance",formdata);
   }
 
   getOfficeOption():Observable<any> {

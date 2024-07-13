@@ -96,6 +96,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
 
             foreach(var attendance in attendancedtos)
             {
+                attendance.AttendanceTypeId = 1;
 
                 if (!attendance.DayTypeId.HasValue)
                 {
@@ -125,6 +126,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
 
             var response = new BaseCommandResponse();
             response.Success = true;
+            response.Message = "Attendances Added";
 
             return response;
             

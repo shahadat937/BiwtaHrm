@@ -135,7 +135,10 @@
                             <input cFormCheckInput type="radio" [value]="row"
                               [(ngModel)]="selectedAmountRow"
                               name="amountOfWorkEvaluation"
+
                               (change)="toggleAmountSignatureInput(i); calculateTotalMarksIn3rdpart()">
+
+
                             <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>

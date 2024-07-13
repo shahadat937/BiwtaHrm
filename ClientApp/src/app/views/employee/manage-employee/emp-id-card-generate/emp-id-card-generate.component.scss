@@ -1,22 +1,79 @@
 .front-id, .back-id{
-  height: 466.25px;
-  width: 306.25px;
-  margin: 0 auto;
+  height: 375px;
+  width: 235.5px;
+  border: 1px solid gray;
+  color: black;
+  padding: 10px 0 0 10px;
+  margin-bottom: 20px;
+  position: relative; 
 }
 .front-id {
-  background-image: url('/assets/id-card/front.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  float: left;
+  margin-right: 10px;
 }
 .back-id {
-  background-image: url('/assets/id-card/back.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  float: left; 
+  padding-top: 30px;
+}
+.front-image, .back-image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+.content-overlay {
+  position: relative;
+  z-index: 1;
 }
 
-.card-logo img {
-  height: auto;
-  width: 50px;
+.idNo{
+  font-weight: bold;
+  margin: 115px auto 0 auto;
+  font-size: 14px;
+  text-align: center;
 }
+.empPhoto img {
+  width: 80px;
+  height: auto;
+}
+
+.EmpInfo p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.EmpInfo .title {
+  width: 35%;
+  float: left;
+  font-weight: bold;
+}
+.EmpInfo .text {
+  width: 65%;
+  float: left;
+}
+
+.signature {
+  font-size: 4.5px;
+  float: inline-end;
+  margin: 36px 13px 0 0;
+}
+
+.back-id p {
+  margin: 0;
+  font-size: 12px;
+
+}
+.back-id .title {
+  width: 50%;
+  float: left;
+}
+.back-id .text {
+  width: 50%;
+  float: left;
+}
+
+
+

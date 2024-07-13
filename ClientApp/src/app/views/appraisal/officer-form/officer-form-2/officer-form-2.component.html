@@ -85,6 +85,9 @@
                       [(ngModel)]="selectedIntelegentAndJudgment"
                       name="intelegentAndJudgmentEvaluation"
                       (change)="toggleIntelegentSignatureInput(i); calculateTotalMarks()">
+
+                     
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -127,7 +130,11 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="selectedIntelegenceRow"
                       name="intelegenceEvaluation"
+
                       (change)="toggleIntelegenceSignatureInput(i); calculateTotalMarks()">
+
+                      
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -169,7 +176,11 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="selectedEnergyEnthuisim"
                       name="energyAndEnthusisamEvaluation"
+
                       (change)="toggleEnergySignatureInput(i); calculateTotalMarks()">
+
+                     
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -212,7 +223,11 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="selectedPublicRelation"
                       name="publicRelationEvaluation"
+
                       (change)="togglePublicRelationSignatureInput(i); calculateTotalMarks()">
+
+                  
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -255,7 +270,10 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="cooperationRow"
                       name="cooperationEvaluation"
+
                       (change)="toggleCooperationSignatureInput(i); calculateTotalMarks()">
+                    
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -297,7 +315,11 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="personalityRow"
                       name="personalityEvaluation"
+
                       (change)="togglePersonalitySignatureInput(i); calculateTotalMarks()">
+
+                     
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -340,7 +362,11 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="securityRow"
                       name="securityAwarenessEvaluation"
+
                       (change)="toggleSecuritySignatureInput(i); calculateTotalMarks()">
+
+                     
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -369,6 +395,7 @@
         <div class="container mt-4">
           <div class="row justify-content-center">
             <c-col [md]="6">
+
               <label cLabel >Total Marks obtaain out of 40</label>
             </c-col>
             <c-col [md]="3">
@@ -390,11 +417,16 @@
                 #totalMarksSignature="ngModel"> 
               <label cLabel>Signature</label>
               <input type="file" cFormControl
+
+        
+            
+
                 [(ngModel)]="totalMarksInWordsSignature"
                 name="totalMarksInWordsSignature"
                 #totalMarksInWordsSignature="ngModel">
               <div class="text-end mt-3">
             </div>
+
             
             </c-col>
           </div>
@@ -407,3 +439,6 @@
               </c-card-footer>
             </c-card>
          </div>
+
+            
+

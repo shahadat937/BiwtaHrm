@@ -1,1 +1,112 @@
-<p>manual-attendance works!</p>
+<c-card mt="3">
+    <c-card-header class="d-flex justify-content-between">
+       <div>{{HeaderText}}</div>
+      <div><button cButton color="primary" shape="rounded-pill"><svg cIcon name={{buttonIcon}}></svg> {{btnText}}</button></div>
+    </c-card-header>
+
+    <c-card-body>
+        <form [gutter]="3" cForm #manualAtdform="ngForm">
+            <c-row [gutter]="3">
+                <c-col md="3">
+                    <label for="Office">Office</label>
+                    <select name="Offices" id="Office" cSelect
+                    [(ngModel)]="selectedOffice"
+                    (change)="onOfficeChange()"
+                    >
+                        @for (Office of OfficeOption; track $index) {
+                            <option [value]="Office.id">{{Office.name}}</option>
+                        }
+                    </select>
+                </c-col>
+                <c-col md="3">
+                    <label for="Department">Department</label>
+                    <select name="departmentId" id="Department" cSelect>
+                        @for (department of DepartmentOption; track $index) {
+                            <option [value]="department.id">{{department.name}}</option>
+                        }
+                    </select>
+                </c-col>
+                 <c-col md="3">
+                    <label for="Shifts">Shift</label>
+                    <select name="shiftId" id="Shifts" cSelect>
+                        @for (shift of ShiftOption; track $index) {
+                            <option [value]="shift.id">{{shift.name}}</option>
+                        }
+                    </select>
+                </c-col>
+                <c-col md="3">
+                    <label for="Employee">Employee</label>
+                    <select name="empId" id="Employee" cSelect required>
+                        @for (employee of EmployeeOption; track $index) {
+                            <option [value]="employee.id">{{employee.name}}</option>
+                        }
+                    </select>
+                </c-col>
+            </c-row>
+            <hr>
+
+            <c-row [gutter]="3">
+                <c-col md="4">
+                    <label for="AtdDate">Date</label>
+                    <input name="attendanceDate" 
+                        placeholder="Enter a date" 
+                        id="AtdDate" 
+                        type="date"
+                        required
+                        cFormControl>
+                </c-col>
+                <c-col md="4">
+                    <label for="AtdInTime">In Time</label>
+                    <input name="inTime" 
+                        placeholder="Enter InTime" 
+                        id="AtdInTime" 
+                        type="time"
+                        cFormControl>
+                </c-col>
+                <c-col md="4">
+                    <label for="AtdOutTime">Out Time</label>
+                    <input name="outTime" 
+                        placeholder="Enter OutTime" 
+                        id="AtdOutTime" 
+                        type="time"
+                        cFormControl>
+                </c-col>
+
+                <c-col md="4">
+                    <label for="AtdStatus">Status</label>
+                    <select name="attendanceStatusId" id="AtdStatus" cSelect>
+                        @for (status of AtdStatusOption; track $index) {
+                            <option [value]="status.value">{{status.name}}</option>
+                        }
+                    </select>
+                </c-col>
+
+                <c-col md="4">
+                    <label for="Remark">Remark</label>
+                    <input type="text" name="remark" id="Remark" cFormControl>
+                </c-col>
+                <c-col [xs]="12">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <button
+                      [disabled]="loading"
+                      [disabled]="manualAtdform.invalid"
+                      cButton
+                      class="me-1"
+                      color="primary"
+                      type="submit"
+                    >
+                      <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                      Save
+                      </button>
+                    <button cButton color="secondary">Reset</button>
+                  </div>
+                  <div>
+                    <button [hidden]="btnText != 'Update'" cButton color="danger">Cancel</button>
+                  </div>
+                </div>
+              </c-col>
+            </c-row>
+        </form>
+    </c-card-body>
+</c-card>

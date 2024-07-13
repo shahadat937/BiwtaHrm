@@ -32,6 +32,7 @@ namespace Hrm.Application.DTOs.EmpJobDetail
         public string? OfficeName { get; set; }
         public string? DepartmentName { get; set; }
         public string? DesignationName { get; set; }
+        public string? DesignationNameBangla { get; set; }
         public string? SectionName { get; set; }
         public string? PresentGradeName { get; set; }
         public string? PresentScaleName { get; set; }

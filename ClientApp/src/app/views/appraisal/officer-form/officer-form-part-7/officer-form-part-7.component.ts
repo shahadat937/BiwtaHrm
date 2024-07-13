@@ -1,3 +1,4 @@
+import { SharedService } from './../service/shared.service';
 import { OfficerFormPart7ServiceService } from './../service/officer-form-part7-service.service';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -9,30 +10,25 @@ import { NgForm } from '@angular/forms';
 })
 export class OfficerFormPart7Component implements OnInit, OnDestroy{
 
+  allFormData: any;
+
   @ViewChild('officerFormPart7', { static: true }) OfficerFormPart7Module!: NgForm;
 
   loading:boolean=false
-  constructor(public OfficerFormPart7ServiceService: OfficerFormPart7ServiceService){
-  }
+
+  constructor( private sharedservice :SharedService ){}
+
   ngOnInit(): void {
+    this.allFormData = this.sharedservice.getAllFormData();
+    console.log(this.allFormData);
   }
   ngOnDestroy(): void {
   }
 
-  onSubmit(form: NgForm): void {
-    this.loading=true
-    console.log("Form Value: ",form.value)
-  }
-
-  initaialUser(form?: NgForm) {
-    if (form != null) form.resetForm();
-    this.OfficerFormPart7ServiceService.officerFormPart7 = {
-      reportingSignatorySubmissionDate:'',
-      counterSignatorySubmissionDate:'',
-      reportingSignatoryDelayCauses:'',
-      counterSignatoryDelayCauses:'',
-      applicationEditor:'',
-      signature: null
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      console.log(this.sharedservice.getAllFormData()); // Log all form data on submission
+      // Handle final submission
     }
   }
 }

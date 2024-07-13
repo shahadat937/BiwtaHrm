@@ -14,15 +14,15 @@
         </c-button-group>
         <c-card-body>
             <form cRow cForm 
-            #officerFormPart4="ngForm"
-            (submit)="onSubmit(officerFormPart4)"
+            #officerForm="ngForm" 
+            (ngSubmit)="onSubmit(officerForm)" 
             novalidate>
             <c-col [md]="6">
                 <label cLabel class="mt-4">1.Personal Characteristics</label>
             </c-col>
             <c-col [md]="6">
                 <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment" 
-            [(ngModel)]="officerform4service.officerFormpart4.personalCharacteristics"
+            [(ngModel)]="formData.personalCharacteristics"
             name="personalCharacteristics" required
             #personalCharacteristics="ngModel">
             @if(!personalCharacteristics.valid && personalCharacteristics.touched)
@@ -35,7 +35,7 @@
             </c-col>
             <c-col [md]="6">
                 <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
-            [(ngModel)]="officerform4service.officerFormpart4.professionalSkill"
+            [(ngModel)]="formData.professionalSkill"
             name="professionalSkill" required
             #professionalSkill="ngModel">
             @if(!professionalSkill.valid && professionalSkill.touched)
@@ -48,7 +48,7 @@
             </c-col>
             <c-col [md]="6">
                 <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment" 
-            [(ngModel)]="officerform4service.officerFormpart4.loyalityAndRelaiability"
+            [(ngModel)]="formData.loyalityAndRelaiability"
             name="loyalityAndRelaiability" required
             #loyalityAndRelaiability="ngModel">
             @if(!loyalityAndRelaiability.valid && loyalityAndRelaiability.touched)
@@ -60,7 +60,7 @@
                 <label cLabel class="mt-4">4.Other Matters</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment" [(ngModel)]="officerform4service.officerFormpart4.otherMatters"
+                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment" [(ngModel)]="formData.otherMatters"
                 name="otherMatters" required
                 #otherMatters="ngModel">
                 @if(!otherMatters.valid && otherMatters.touched)
@@ -73,7 +73,7 @@
             </c-col>
             <c-col [md]="6">
                 <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
-            [(ngModel)]="officerform4service.officerFormpart4.annualConfidentialReportWritingAndCountersigningActivates"
+            [(ngModel)]="formData.annualConfidentialReportWritingAndCountersigningActivates"
             name="annualConfidentialReportWritingAndCountersigningActivates" required
             #annualConfidentialReportWritingAndCountersigningActivates="ngModel">
             @if(!annualConfidentialReportWritingAndCountersigningActivates.valid && annualConfidentialReportWritingAndCountersigningActivates.touched)
@@ -86,7 +86,7 @@
             </c-col>
             <c-col [md]="6">
                 <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
-            [(ngModel)]="officerform4service.officerFormpart4.adviceToOfficers"
+            [(ngModel)]="formData.adviceToOfficers"
             name="adviceToOfficers" required
             #adviceToOfficers="ngModel">
             @if(!adviceToOfficers.valid && adviceToOfficers.touched)
@@ -99,7 +99,7 @@
             </c-col>
             <c-col [md]="6">
                 <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
-            [(ngModel)]="officerform4service.officerFormpart4.proficencyAndInterestBengaliLanguage"
+            [(ngModel)]="formData.proficencyAndInterestBengaliLanguage"
             name="proficencyAndInterestBengaliLanguage" required
             #proficencyAndInterestBengaliLanguage="ngModel">
             @if(!proficencyAndInterestBengaliLanguage.valid && proficencyAndInterestBengaliLanguage.touched)
@@ -110,7 +110,7 @@
             <c-col class="d-flex justify-content-end align-items-center mt-3">           
                 <div class="text-center">
                     <input type="file" cFormControl class="" 
-                    [(ngModel)]="officerform4service.officerFormpart4.signatureOfReportingOfficer"
+                    [(ngModel)]="formData.signatureOfReportingOfficer"
                     name="signatureOfReportingOfficer" required
                     #signatureOfReportingOfficer="ngModel">
                     @if(!signatureOfReportingOfficer.valid && signatureOfReportingOfficer.touched)
@@ -120,13 +120,6 @@
                     <div>Signature of Reporting Officer</div>
                 </div>
             </c-col>
-            <div>
-            <button cButton color="primary" type="submit" [disabled]="!officerFormPart4.valid" [disabled]="loading">
-                <c-spinner [hidden]="!loading" size="sm"></c-spinner>
-                Submit
-            </button>
-            <button cButton color="dark" class="ms-3">Cancel</button>
-            </div>
             </form>         
         </c-card-body>
     </c-card>

@@ -13,9 +13,9 @@
       </c-button-group>
   </c-button-group>
   <c-card-body>   
-    <form cForm  
-    #OfficerForm2="ngForm"
-    (submit)="onSubmit(OfficerForm2)"
+    <form cForm
+    #officerForm="ngForm" 
+    (ngSubmit)="onSubmit(officerForm)" 
     novalidate>
       <div class="table-responsive">
         <table cTable  >
@@ -41,7 +41,7 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="selectedSenseOfDiscipllineRow"
                       name="senseOfDisciplineEvaluation"
-                      (change)="toggleSenseofDisciplineSignatureInput(i)">
+                      (change)="toggleSenseofDisciplineSignatureInput(i); calculateTotalMarks()">
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -84,7 +84,10 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="selectedIntelegentAndJudgment"
                       name="intelegentAndJudgmentEvaluation"
-                      (change)="toggleIntelegentSignatureInput(i)">
+                      (change)="toggleIntelegentSignatureInput(i); calculateTotalMarks()">
+
+                     
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -127,7 +130,11 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="selectedIntelegenceRow"
                       name="intelegenceEvaluation"
-                      (change)="toggleIntelegenceSignatureInput(i)">
+
+                      (change)="toggleIntelegenceSignatureInput(i); calculateTotalMarks()">
+
+                      
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -169,7 +176,11 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="selectedEnergyEnthuisim"
                       name="energyAndEnthusisamEvaluation"
-                      (change)="toggleEnergySignatureInput(i)">
+
+                      (change)="toggleEnergySignatureInput(i); calculateTotalMarks()">
+
+                     
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -212,7 +223,11 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="selectedPublicRelation"
                       name="publicRelationEvaluation"
-                      (change)="togglePublicRelationSignatureInput(i)">
+
+                      (change)="togglePublicRelationSignatureInput(i); calculateTotalMarks()">
+
+                  
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -255,7 +270,10 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="cooperationRow"
                       name="cooperationEvaluation"
-                      (change)="toggleCooperationSignatureInput(i)">
+
+                      (change)="toggleCooperationSignatureInput(i); calculateTotalMarks()">
+                    
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -297,7 +315,11 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="personalityRow"
                       name="personalityEvaluation"
-                      (change)="togglePersonalitySignatureInput(i)">
+
+                      (change)="togglePersonalitySignatureInput(i); calculateTotalMarks()">
+
+                     
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -340,7 +362,11 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="securityRow"
                       name="securityAwarenessEvaluation"
-                      (change)="toggleSecuritySignatureInput(i)">
+
+                      (change)="toggleSecuritySignatureInput(i); calculateTotalMarks()">
+
+                     
+
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -369,52 +395,50 @@
         <div class="container mt-4">
           <div class="row justify-content-center">
             <c-col [md]="6">
-              <label cLabel class="mt-2">Total Marks obtaain out of 40</label>
+
+              <label cLabel >Total Marks obtaain out of 40</label>
             </c-col>
             <c-col [md]="3">
-              <label cLabel class="mt-2">In Mathematics</label>
-              <input type="text" cFormControl
+              <label cLabel >In Mathematics</label>
+              <input type="number" cFormControl
                 [(ngModel)]="totalMarks"
-                name="totalMarks"
-                #totalMarks="ngModel" value="row">
-              <div *ngIf="!totalMarks.valid && totalMarks.touched" class="text-left text-danger">
-                Total Marks is required
-              </div>
-              <label cLabel class="mt-2">In words</label>
-              <input type="text" class="mt-2" cFormControl
+                name="totalMarks" readonly>
+              <label cLabel>In words</label>
+              <input type="text"  cFormControl
                 [(ngModel)]="totalMarksInWords"
                 name="totalMarksInWords"
-                #totalMarksInWords="ngModel">
+                readonly>
             </c-col>
             <c-col [md]="3">
-              <label cLabel class="mt-2">Signature</label>
-              <input type="text" class="mt-2" cFormControl
+              <label cLabel>Signature</label>
+              <input type="file" cFormControl
                 [(ngModel)]="totalMarksSignature"
                 name="totalMarksSignature"
-                #totalMarksSignature="ngModel">
-              
-              <label cLabel class="mt-2">Signature</label>
-              <input type="text" class="mt-2" cFormControl
+                #totalMarksSignature="ngModel"> 
+              <label cLabel>Signature</label>
+              <input type="file" cFormControl
+
+        
+            
+
                 [(ngModel)]="totalMarksInWordsSignature"
                 name="totalMarksInWordsSignature"
                 #totalMarksInWordsSignature="ngModel">
               <div class="text-end mt-3">
             </div>
-            <div class="text-end mt-3">
-              <button cButton type="submit" [disabled]="!OfficerForm2" [disabled]="loading">
-                <c-spinner [hidden]="!loading" size="sm"></c-spinner>
-                Submit 
-              </button>
-              <button cButton class="ms-3"> Cancel</button>
-          </div>
+
+            
             </c-col>
-    </div>
-    <c-card>
-      <c-card-footer>
-        <div class="text-end">
-          <button cButton color="primary" [routerLink]="[
-          '/appraisal/officerForm2']">To be continue...</button>
-        </div>
-      </c-card-footer>
-    </c-card>
-</div>
+          </div>
+            <c-card>
+              <c-card-footer>
+                <div class="text-end">
+                  <button cButton color="primary" [routerLink]="[
+                  '/appraisal/officerFormPart3']">To be continue...</button>
+                </div>
+              </c-card-footer>
+            </c-card>
+         </div>
+
+            
+

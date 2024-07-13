@@ -23,9 +23,9 @@
           </c-button-group> 
         <c-card-body>
             <form cForm cRow
-              #OfficerForm3="ngForm"
-              (submit)="onSubmit(OfficerForm3)"
-              novalidate>
+            #officerForm="ngForm" 
+            (ngSubmit)="onSubmit(officerForm)"
+             novalidate>
                 <div class="table-responsive">
                   <table cTable >
                     <thead>
@@ -50,7 +50,7 @@
                               <input cFormCheckInput type="radio" [value]="row"
                                 [(ngModel)]="selectedRow"
                                 name="professionalKnowledgeEvaluation"
-                                (change)="toggleSignatureInput(i)">
+                                (change)="toggleSignatureInput(i); calculateTotalMarksIn3rdpart()">
                               <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                             </c-form-check>
                           </td>
@@ -93,7 +93,7 @@
                               <input cFormCheckInput type="radio" [value]="row"
                                 [(ngModel)]="selectedQualityRow"
                                 name="qualityOfWorkEvaluation"
-                                (change)="toggleQualitySignatureInput(i)">
+                                (change)="toggleQualitySignatureInput(i); calculateTotalMarksIn3rdpart()">
                               <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                             </c-form-check>
                           </td>
@@ -135,7 +135,10 @@
                             <input cFormCheckInput type="radio" [value]="row"
                               [(ngModel)]="selectedAmountRow"
                               name="amountOfWorkEvaluation"
-                              (change)="toggleAmountSignatureInput(i)">
+
+                              (change)="toggleAmountSignatureInput(i); calculateTotalMarksIn3rdpart()">
+
+
                             <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
@@ -176,7 +179,8 @@
                             <input cFormCheckInput type="radio" [value]="row"
                                   [(ngModel)]="selectedPunctualityRow"
                                    name="punctualityEvaluation"
-                                   (change)="togglePunctualitySignatureInput(i)">
+                                   (change)="togglePunctualitySignatureInput(i); 
+                                   calculateTotalMarksIn3rdpart()">
                             <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
@@ -217,7 +221,7 @@
                             <input cFormCheckInput type="radio" [value]="row"
                                    [(ngModel)]="selectedSenseofResponsibilityRow"
                                    name="  senceOfResponsibilityAndCommitmentEvaluation"
-                                   (change)="toggleSenseOfResponsibilitySignatureInput(i)">
+                                   (change)="toggleSenseOfResponsibilitySignatureInput(i); calculateTotalMarksIn3rdpart()">
                             <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
@@ -259,7 +263,7 @@
                             <input cFormCheckInput type="radio" [value]="row"
                                    [(ngModel)]="selectedPromtnessTakingRow"
                                    name="  promptnessTakingMeasuresAndFollowingOrdersEvaluation"
-                                   (change)="togglePromptnessSignatureInput(i)">
+                                   (change)="togglePromptnessSignatureInput(i);calculateTotalMarksIn3rdpart()">
                             <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
@@ -300,7 +304,7 @@
                             <input cFormCheckInput type="radio" [value]="row"
                                    [(ngModel)]="selectedinterstofworkRow"
                                    name="  interestOfWorkEvaluation"
-                                   (change)="toggleinterestofWorkSignatureInput(i)">
+                                   (change)="toggleinterestofWorkSignatureInput(i); calculateTotalMarksIn3rdpart()">
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
@@ -342,7 +346,7 @@
                             <input cFormCheckInput type="radio" [value]="row"
                                    [(ngModel)]="selectedsuperviseAndMeasureRow"
                                    name="  superviseAndManageEvaluation"
-                                   (change)="toggleSuperviseMeasureSignatureInput(i)">
+                                   (change)="toggleSuperviseMeasureSignatureInput(i); calculateTotalMarksIn3rdpart()">
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
@@ -383,7 +387,7 @@
                             <input cFormCheckInput type="radio" [value]="row"
                                    [(ngModel)]="selectedRelationColleaguesRow"
                                    name="  relationWithColleaguesEvaluation"
-                                   (change)="toggleRelationColleaguesignatureInput(i)">
+                                   (change)="toggleRelationColleaguesignatureInput(i); calculateTotalMarksIn3rdpart()">
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
@@ -424,7 +428,7 @@
                             <input cFormCheckInput type="radio" [value]="row"
                                    [(ngModel)]="abilityWithImplementRow"
                                    name="  abilityImplementDecisionEvaluation"
-                                   (change)="toggleAbilityWithImplementSignatureInput(i)">
+                                   (change)="toggleAbilityWithImplementSignatureInput(i); calculateTotalMarksIn3rdpart()">
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
@@ -465,7 +469,7 @@
                             <input cFormCheckInput type="radio" [value]="row"
                                    [(ngModel)]="exessivePowerWritingRow"
                                    name="  expressivePowerWritingEvaluation"
-                                   (change)="toggleExessivePowerWritingSignatureInput(i)">
+                                   (change)="toggleExessivePowerWritingSignatureInput(i); calculateTotalMarksIn3rdpart()">
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
@@ -504,9 +508,9 @@
                         <td>
                           <c-form-check inline>
                             <input cFormCheckInput type="radio" [value]="row"
-                                   [(ngModel)]="exessivePowerspeechRow"
+                                   [(ngModel)]="exessivePowerSpeechRow"
                                    name="  expressivePowerSpeechEvaluation"
-                                   (change)="toggleExessivePowerSpeechSignatureInput(i)">
+                                   (change)="toggleExessivePowerSpeechSignatureInput(i); calculateTotalMarksIn3rdpart()">
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                           </c-form-check>
                         </td>
@@ -534,33 +538,24 @@
 
                     <div class="container mt-4">
                         <div class="row justify-content-center">
-                          <c-col [md]="6">
+                          <c-col [md]="4">
                             <label cLabel class="mt-2">13.Total marks obtain in 3rd part out of 60</label>
                           </c-col>
-                          <c-col [md]="3">
+                          <c-col [md]="4">
                             <label cLabel class="mt-2">In Mathematices</label>
-                            <input type="text" cFormControl
-                              [(ngModel)]="officerForm3service.officerForm3Module.totalMarks3rdPart"
-                              name="totalMarks3rdPart" 
-                              #totalMarks3rdPart="ngModel" >
-                              @if(!totalMarks3rdPart.valid && totalMarks3rdPart.touched)
-                              {
-                                <div class="text-left text-danger">Total Marks of 3rd part is Required </div>
-                              }
+                            <input type="number" cFormControl
+                            [(ngModel)]="totalMarksIn3rdPart"
+                            name="totalMarksIn3rdPart" readonly>
+
                             <label cLabel class="mt-2">In Words</label>
                             <input type="text" cFormControl
-                              [(ngModel)]="officerForm3service.officerForm3Module.totalMarksInWords3rdPart"
-                              name="totalMarksInWords3rdPart" 
-                              #totalMarksInWords3rdPart="ngModel" >
-                              @if(!totalMarksInWords3rdPart.valid && totalMarksInWords3rdPart.touched)
-                              {
-                                <div class="text-left text-danger">Total Marks of 3rd part in word  is Required</div>
-                              }
+                            [(ngModel)]="totalMarksIn3rdPartInwords"
+                            name="totalMarksIn3rdPartInwords" readonly>
                           </c-col>
-                          <c-col [md]="3">
+                          <c-col [md]="4">
                             <label cLabel class="mt-2">Signature</label>
-                            <input type="text" cFormControl
-                              [(ngModel)]="officerForm3service.officerForm3Module.totalMarksSignature3rdPart"
+                            <input type="file" cFormControl
+                              [(ngModel)]="formData.totalMarksSignature3rdPart"
                               name="totalMarksSignature3rdPart" 
                               #totalMarksSignature3rdPart="ngModel" >
                               @if(!totalMarksSignature3rdPart.valid && totalMarksSignature3rdPart.touched)
@@ -568,8 +563,8 @@
                                 <div class="text-left text-danger">Signature is Required</div>
                               }
                             <label cLabel class="mt-2">Signature</label>                          
-                            <input type="text" cFormControl
-                              [(ngModel)]="officerForm3service.officerForm3Module.totalMarksInWordsSignature3rdPart"
+                            <input type="file" cFormControl
+                              [(ngModel)]="formData.totalMarksInWordsSignature3rdPart"
                               name="totalMarksInWordsSignature3rdPart" 
                               #totalMarksInWordsSignature3rdPart="ngModel" >
                               @if(!totalMarksInWordsSignature3rdPart.valid && totalMarksInWordsSignature3rdPart.touched)
@@ -581,13 +576,13 @@
                       </div>
                       <div class="container mt-4">
                         <div class="row justify-content-center">
-                          <c-col [md]="6">
+                          <c-col [md]="4">
                             <label cLabel class="mt-2">14.Total marks obtain in 2nd part and 3rd part out of 100</label>
                           </c-col>
-                          <c-col [md]="3">
+                          <c-col [md]="4">
                             <label cLabel class="mt-2">In Mathematices</label>
-                            <input type="text" cFormControl
-                              [(ngModel)]="officerForm3service.officerForm3Module.totalMarks2ndAnd3rdPart"
+                            <input type="number" cFormControl
+                              [(ngModel)]="formData.formDatalMarks2ndAnd3rdPart"
                               name="totalMarks2ndAnd3rdPart" 
                               #totalMarks2ndAnd3rdPart="ngModel" >
                               @if(!totalMarks2ndAnd3rdPart.valid && totalMarks2ndAnd3rdPart.touched)
@@ -595,8 +590,8 @@
                                 <div class="text-left text-danger">Total Marks of 2nd and 3rd part is Requiered</div>
                               }
                             <label cLabel class="mt-2">In words</label>
-                            <input type="text" cFormControl
-                              [(ngModel)]="officerForm3service.officerForm3Module.totalMarksInWordstotalMarks2ndAnd3rdPart"
+                            <input type="number" cFormControl
+                              [(ngModel)]="formData.totalMarksInWordstotalMarks2ndAnd3rdPart"
                               name="totalMarksInWordstotalMarks2ndAnd3rdPart" 
                               #totalMarksInWordstotalMarks2ndAnd3rdPart="ngModel" >
                               @if(!totalMarksInWordstotalMarks2ndAnd3rdPart.valid && totalMarksInWordstotalMarks2ndAnd3rdPart.touched)
@@ -604,10 +599,10 @@
                                 <div class="text-left text-danger">Total Marks of 2nd and 3rd part in words is Requiered</div>
                               }
                           </c-col>
-                          <c-col [md]="3">
+                          <c-col [md]="4">
                             <label cLabel class="mt-2">Signature</label>
-                            <input type="text" cFormControl
-                              [(ngModel)]="officerForm3service.officerForm3Module.totalMarksSignaturetotalMarks2ndAnd3rdPart"
+                            <input type="file" cFormControl
+                              [(ngModel)]="formData.totalMarksSignaturetotalMarks2ndAnd3rdPart"
                               name="totalMarksSignaturetotalMarks2ndAnd3rdPart" 
                               #totalMarksSignaturetotalMarks2ndAnd3rdPart="ngModel" >
                               @if(!totalMarksSignaturetotalMarks2ndAnd3rdPart.valid && totalMarksSignaturetotalMarks2ndAnd3rdPart.touched)
@@ -615,8 +610,8 @@
                                 <div class="text-left text-danger">Signature is Required</div>
                               }
                             <label cLabel class="mt-2">Signature</label>
-                            <input type="text" cFormControl
-                              [(ngModel)]="officerForm3service.officerForm3Module.totalMarksInWordsSignaturetotalMarks2ndAnd3rdPart"
+                            <input type="file" cFormControl
+                              [(ngModel)]="formData.totalMarksInWordsSignaturetotalMarks2ndAnd3rdPart"
                               name="totalMarksInWordsSignaturetotalMarks2ndAnd3rdPart" 
                               #totalMarksInWordsSignaturetotalMarks2ndAnd3rdPart="ngModel" >
                               @if(!totalMarksInWordsSignaturetotalMarks2ndAnd3rdPart.valid && totalMarksInWordsSignaturetotalMarks2ndAnd3rdPart.touched)
@@ -670,16 +665,9 @@
 
                 </div>
                 <c-col class="d-flex justify-content-between align-items-center mt-3">
-                  <div class="text-end mt-3">
-                    <button cButton type="submit" [disabled]="!OfficerForm3" [disabled]="loading">
-                      <c-spinner [hidden]="!loading" size="sm"></c-spinner>
-                      Submit 
-                    </button>
-                    <button cButton class="ms-3"> Cancel</button>
-                </div>
                     <div class="text-center">
                       <input type="file" cFormControl
-                      [(ngModel)]="officerForm3service.officerForm3Module.signature"
+                      [(ngModel)]="formData.signature"
                       name="signature" 
                       #signature="ngModel" >
                       @if(!signature.valid && signature.touched)

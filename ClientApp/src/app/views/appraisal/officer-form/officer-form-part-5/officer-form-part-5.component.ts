@@ -1,5 +1,4 @@
-import { OfficerFormPart5Module } from './../model/officer-form-part5.module';
-import { OfficerFormPart5ServiceService } from './../service/officer-form-part5-service.service';
+import { SharedService } from '../service/shared.service';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -9,13 +8,14 @@ import { NgForm } from '@angular/forms';
   styleUrl: './officer-form-part-5.component.scss'
 })
 export class OfficerFormPart5Component  implements OnInit, OnDestroy{
+
+  formData: any = {};
   
   @ViewChild('officerFormPart5', { static: true }) OfficerFormPart5Module!: NgForm;
 
   loading:boolean=false
-constructor(public OfficerFormPart5ServiceService: OfficerFormPart5ServiceService){
 
-}
+  constructor( private sharedservice :SharedService ){}
 
   ngOnInit(): void {
   }
@@ -23,23 +23,8 @@ constructor(public OfficerFormPart5ServiceService: OfficerFormPart5ServiceServic
   }
 
   onSubmit(form: NgForm): void {
-    this.loading=true;
-    console.log("Form Value: ",form.value)
-  }
-
-  initaialUser(form?: NgForm) {
-    if (form != null) form.resetForm();
-    this.OfficerFormPart5ServiceService.officerFormpart5 = {
-      setpeciality :'',
-      suitabilityForFurtherEmployment :'',
-      recommendMoreServiceTraning :'',
-      notEligableForFurtherPromotion :'',
-      fasterPromotionIsRecomended :null,
-      eligibleForPromotion :null,
-      recentlyPromotedNotDueForFurtherPromotion :null,
-      notyetEligableForPromotionButWillBeDueCourse :null,
-      notEligableForFurtherPromotionMaximumLimitReached :null,
-      signature:null
+    if(form.valid){
+      this.sharedservice.setFormData('Part-5',this.formData)
     }
   }
 }

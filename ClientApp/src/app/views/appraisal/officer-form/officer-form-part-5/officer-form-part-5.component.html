@@ -22,8 +22,8 @@
                   </c-button-group>
               </c-button-group> 
             <form cForm cRow 
-            #officerFormPart5="ngForm"
-            (submit)="onSubmit(officerFormPart5)"
+            #officerForm="ngForm" 
+            (ngSubmit)="onSubmit(officerForm)" 
             novalidate>
                 <h4>1 Brief Comment</h4>               
                     <c-col [md]="6">
@@ -32,7 +32,7 @@
                     </c-col>
                 <c-col [md]="6">
                     <input type="text" id="special" class="mt-2" cFormControl placeholder="Enter Your Comment"  
-                    [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.setpeciality"
+                    [(ngModel)]="formData.setpeciality"
                     name="setpeciality" required
                     #setpeciality="ngModel">
                     @if(!setpeciality.valid && setpeciality.touched)
@@ -45,7 +45,7 @@
                 </c-col>
                 <c-col [md]="6">
                     <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment"
-                    [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.suitabilityForFurtherEmployment"
+                    [(ngModel)]="formData.suitabilityForFurtherEmployment"
                     name="suitabilityForFurtherEmployment" required
                     #suitabilityForFurtherEmployment="ngModel">
                     @if(!suitabilityForFurtherEmployment.valid && suitabilityForFurtherEmployment.touched)
@@ -58,7 +58,7 @@
                 </c-col>
                 <c-col [md]="6">
                     <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment"
-                    [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.recommendMoreServiceTraning"
+                    [(ngModel)]="formData.recommendMoreServiceTraning"
                     name="recommendMoreServiceTraning" required
                     #recommendMoreServiceTraning="ngModel">
                     @if(!recommendMoreServiceTraning.valid && recommendMoreServiceTraning.touched)
@@ -71,7 +71,7 @@
                 </c-col>
                 <c-col [md]="6">
                     <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment"
-                    [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.notEligableForFurtherPromotion"
+                    [(ngModel)]="formData.notEligableForFurtherPromotion"
                     name="notEligableForFurtherPromotion" required
                     #notEligableForFurtherPromotion="ngModel">
                     @if(!notEligableForFurtherPromotion.valid && notEligableForFurtherPromotion.touched)
@@ -86,7 +86,7 @@
                     </c-col>
             <c-col [md]="6">
                 <input type="file" cFormControl class="mt-2" 
-                [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.fasterPromotionIsRecomended"
+                [(ngModel)]="formData.fasterPromotionIsRecomended"
                 name="fasterPromotionIsRecomended" 
                 #fasterPromotionIsRecomended="ngModel">
             </c-col>
@@ -95,7 +95,7 @@
             </c-col>
             <c-col [md]="6">
                 <input type="file" cFormControl class="mt-2"
-                [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.eligibleForPromotion"
+                [(ngModel)]="formData.eligibleForPromotion"
                 name="eligibleForPromotion" 
                 #eligibleForPromotion="ngModel">
             </c-col>
@@ -104,7 +104,7 @@
             </c-col>
             <c-col [md]="6">
                 <input type="file" cFormControl class="mt-2" 
-                [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.recentlyPromotedNotDueForFurtherPromotion"
+                [(ngModel)]="formData.recentlyPromotedNotDueForFurtherPromotion"
                 name="recentlyPromotedNotDueForFurtherPromotion" 
                 #recentlyPromotedNotDueForFurtherPromotion="ngModel">
             </c-col>
@@ -113,7 +113,7 @@
             </c-col>
             <c-col [md]="6">
                 <input type="file" cFormControl class="mt-2" 
-                [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.notyetEligableForPromotionButWillBeDueCourse"
+                [(ngModel)]="formData.notyetEligableForPromotionButWillBeDueCourse"
                 name="notyetEligableForPromotionButWillBeDueCourse" 
                 #notyetEligableForPromotionButWillBeDueCourse="ngModel">
             </c-col>
@@ -122,7 +122,7 @@
             </c-col>
             <c-col [md]="6">
                 <input type="file" cFormControl class="mt-2" 
-                [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.notEligableForFurtherPromotionMaximumLimitReached"
+                [(ngModel)]="formData.notEligableForFurtherPromotionMaximumLimitReached"
                 name="notEligableForFurtherPromotionMaximumLimitReached" 
                 #notEligableForFurtherPromotionMaximumLimitReached="ngModel">               
             </c-col>
@@ -130,7 +130,7 @@
             <c-col class="d-flex justify-content-end align-items-center mt-3">           
                 <div class="text-center">
                     <input type="file" cFormControl 
-                    [(ngModel)]="OfficerFormPart5ServiceService.officerFormpart5.signature"
+                    [(ngModel)]="formData.signature"
                     name="signature" 
                     #signature="ngModel" required>
                     @if(!signature.valid && signature.touched)
@@ -139,14 +139,7 @@
                     } 
                     <div>Signature of Reporting Officer</div>
                 </div>                                              
-            </c-col> 
-            <div>
-                    <button cButton color="primary" type="submit" [disabled]="!officerFormPart5.valid" [disabled]="loading">
-                        <c-spinner [hidden]="!loading" size="sm"></c-spinner>
-                        Submit 
-                    </button>
-                    <button cButton color="dark" class="ms-3">Cancel</button>
-            </div>                       
+            </c-col>                       
             </form>
         </c-card-body>
     </c-card>

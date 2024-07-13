@@ -17,7 +17,7 @@ import {
   SpinnerModule,
 } from '@coreui/angular';
 
-
+import { FormsModule }   from '@angular/forms';
 import { AppraisalRoutingModule } from './appraisal-routing.module';
 import { StaffFormComponent } from './staff-form/staff-form.component';
 import { ManageFormComponent } from './manage-form/manage-form.component';
@@ -28,10 +28,8 @@ import { OfficerFormPart4Component } from './officer-form/officer-form-part-4/of
 import { OfficerFormPart5Component } from './officer-form/officer-form-part-5/officer-form-part-5.component';
 import { OfficerFormPart6Component } from './officer-form/officer-form-part-6/officer-form-part-6.component';
 import { OfficerFormPart7Component } from './officer-form/officer-form-part-7/officer-form-part-7.component';
-
 import { StaffForm3Component } from './staff-form/staff-form-3/staff-form-3.component';
 import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.component';
-import { SharedCustomModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -50,7 +48,6 @@ import { SharedCustomModule } from 'src/app/shared/shared.module';
   ],
   imports: [
     CommonModule,
-    AppraisalRoutingModule,
     CardModule,
     FormModule,
     GridModule,
@@ -66,8 +63,9 @@ import { SharedCustomModule } from 'src/app/shared/shared.module';
     TableModule,
     UtilitiesModule,
     PaginationModule,
-    SharedCustomModule,
     SpinnerModule,
+    FormsModule,
+    AppraisalRoutingModule
   ]
 })
 export class AppraisalModule { }

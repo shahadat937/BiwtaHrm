@@ -27,6 +27,8 @@ import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { ToastrService } from 'ngx-toastr';
 import { ShiftService } from './services/shift.service';
 import { ManualAttendanceService } from './services/manual-attendance.service';
+import {AttendanceRecordService} from './services/attendance-record-service.service';
+import {TimeFormatPipe} from './pipes/time-format.pipe'
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { ManualAttendanceService } from './services/manual-attendance.service';
     AttendanceRecordComponent,
     ManualAttendanceComponent,
     SiteVisitComponent,
-    AttendanceReportComponent
+    AttendanceReportComponent,
+    TimeFormatPipe
   ],
   imports: [
     CommonModule,
@@ -62,7 +65,7 @@ import { ManualAttendanceService } from './services/manual-attendance.service';
   providers: [ 
     ToastrService,
     ShiftService,
-    ManualAttendanceService
+    ManualAttendanceService,
   ],
 })
 export class AttendanceModule { }

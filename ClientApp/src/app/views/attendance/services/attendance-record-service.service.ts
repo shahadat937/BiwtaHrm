@@ -3,17 +3,20 @@ import { AttendanceRecordModel } from '../models/attendance-record-model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
+import { UpdateAttendanceModel } from '../models/update-attendance-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AttendanceRecordService {
   cachedData: any[]=[];
-  AtdReportModel:AttendanceRecordModel;
+  AtdRecordModel:AttendanceRecordModel;
+  UpdateAtdModel: UpdateAttendanceModel;
   baseUrl:string;
 
   constructor(private http:HttpClient) { 
-    this.AtdReportModel = new AttendanceRecordModel();
+    this.AtdRecordModel = new AttendanceRecordModel();
+    this.UpdateAtdModel = new UpdateAttendanceModel();
     this.baseUrl = environment.apiUrl;  
   }
 
@@ -26,5 +29,17 @@ export class AttendanceRecordService {
 
   updateById(model:any) {
     return this.http.put(this.baseUrl+"/attendance/update-AttendanceById",model);
+  }
+
+  delete(attendanceId:number) {
+    return this.http.delete(this.baseUrl+`/attendance/delete-AttendanceById/${attendanceId}`);
+  }
+  getAttendanceStatusOption():Observable<any[]> {
+    console.log("Hello World");
+    return this.http.get<any[]>(this.baseUrl+"/attendanceStatus/get-SelectedAttendanceStatus")
+  }
+
+  getAttendance(id:number) {
+    console.log(id);
   }
 }

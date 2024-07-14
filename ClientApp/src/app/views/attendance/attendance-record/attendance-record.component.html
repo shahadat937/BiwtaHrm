@@ -1,120 +1,272 @@
 <c-card>
-    <c-card-header class="">
-        Attendance Record
-    </c-card-header>
-    <c-card-body>
-        <c-row>
+  <c-card-header class=""> {{headerText}} </c-card-header>
+  <c-card-body>
+    <c-card class="mt-3 shadow mb-3">
+      <c-card-body>
+        <form
+          [gutter]="3"
+          cForm
+          #manualAtdform="ngForm"
+        >
+
+          <c-row [gutter]="3">
             <c-col md="3">
-                <label for="selectOffice" cLabel>Office</label>
-                <select name="office" id="selectOffice" [(ngModel)]="selectedOffice" cSelect>
-                    @for (office of OfficeOption; track $index) {
-                        <option [value]="office.id">office.name</option>
-                    }
-                </select>
+              <label for="Employee"
+                >Employee<span class="text-danger">*</span></label
+              >
+              <select
+                name="empId"
+                id="Employee"
+                cSelect
+                required
+                disabled
+              >
+              <option selected [value]="selectedEmp.id">{{selectedEmp.name}}</option>
+              </select>
             </c-col>
+
             <c-col md="3">
-                <label for="selectDepartment" cLabel>Department</label>
-                <select name="department" id="selectDepartment" [(ngModel)]="selectedDepartment" cSelect>
-                    @for (department of DepartmentOption; track $index) {
-                        <option [value]="department.id">department.name</option>
-                    }
-                </select>
+              <label for="Shifts"
+                >Shift<span class="text-danger">*</span></label
+              >
+              <select
+                name="shiftId"
+                id="Shifts"
+                cSelect
+                disabled
+                required
+              >
+              <option [value]="selectedUpateShift.id">{{selectedUpateShift.name}}</option>
+              </select>
             </c-col>
-            <c-col md="3">
-                <label for="selectShift" cLabel>Shift</label>
-                <select name="shift" id="selectShift" [(ngModel)]="selectedShift" cSelect>
-                    @if (ShiftOption.length<=0) {
-                        <option value="" disabled>No Option Available</option>
-                    }
-                    @for (shift of ShiftOption; track $index) {
-                        <option [value]="shift.id">shift.name</option>
-                    }
-                </select>
+
+            <c-col md="4">
+              <label for="AtdDate"
+                >Date<span class="text-danger">*</span></label
+              >
+              <input
+                name="attendanceDate"
+                placeholder="Enter a date"
+                id="AtdDate"
+                type="date"
+                required
+                cFormControl
+              />
             </c-col>
-        </c-row>
-        <hr>
-        <c-row>
-            <div class="mat-elevation-z8">
-              <table mat-table [dataSource]="dataSource">
-                <ng-container matColumnDef="slNo">
-                  <th mat-header-cell *matHeaderCellDef>Serial No</th>
-                  <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-                </ng-container>
+            <c-col md="4">
+              <label for="AtdInTime">In Time</label>
+              <input
+                name="inTime"
+                placeholder="Enter InTime"
+                id="AtdInTime"
+                type="time"
+                cFormControl
+              />
+            </c-col>
+            <c-col md="4">
+              <label for="AtdOutTime">Out Time</label>
+              <input
+                name="outTime"
+                placeholder="Enter OutTime"
+                id="AtdOutTime"
+                type="time"
+                cFormControl
+              />
+            </c-col>
 
-                <ng-container matColumnDef="attendanceId">
-                  <th mat-header-cell *matHeaderCellDef>Attendance ID</th>
-                  <td mat-cell *matCellDef="let element">
-                    {{ element.attendanceId }}
-                  </td>
-                </ng-container>
+            <c-col md="4">
+              <label for="AtdStatus">Status</label>
+              <select
+                name="attendanceStatusId"
+                id="AtdStatus"
+                cSelect
+              >
+              @for (status of AtdStatusOption; track $index) {
 
-                <ng-container matColumnDef="empId">
-                  <th mat-header-cell *matHeaderCellDef>Employee ID</th>
-                  <td mat-cell *matCellDef="let element">
-                    {{ element.empId }}
-                  </td>
-                </ng-container>
-                
-                <ng-container matColumnDef="empFirstName">
-                  <th mat-header-cell *matHeaderCellDef>First Name</th>
-                  <td mat-cell *matCellDef="let element">
-                    {{ element.empFirstName }}
-                  </td>
-                </ng-container>
-                
-                <ng-container matColumnDef="empLastName">
-                  <th mat-header-cell *matHeaderCellDef>Last Name</th>
-                  <td mat-cell *matCellDef="let element">
-                    {{ element.empLastName }}
-                  </td>
-                </ng-container>
-                
-                <ng-container matColumnDef="inTime">
-                  <th mat-header-cell *matHeaderCellDef>In Time</th>
-                  <td mat-cell *matCellDef="let element">
-                    {{ element.inTime | timeFormat }}
-                  </td>
-                </ng-container>
+                @if(status.id==3) {
+                    <option [value]="status.id" selected>{{status.name}}</option>
+                } @else {
+                    <option [value]="status.id">{{status.name}}</option>
+                }
+              }
+              </select>
+            </c-col>
 
-                <ng-container matColumnDef="outTime">
-                  <th mat-header-cell *matHeaderCellDef>Out Time</th>
-                  <td mat-cell *matCellDef="let element">
-                    {{ element.outTime }}
-                  </td>
-                </ng-container>
+            <c-col md="4">
+              <label for="Remark">Remark</label>
+              <input
+                type="text"
+                name="remark"
+                id="Remark"
+                cFormControl
+              />
+            </c-col>
+            <c-col [xs]="12">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <button
+                    cButton
+                    class="me-1"
+                    color="primary"
+                    type="submit"
+                  >
+                    <c-spinner
+                      [hidden]="loading == false"
+                      size="sm"
+                    ></c-spinner>
+                    Update
+                  </button>
+                  <button cButton color="secondary">
+                    Reset
+                  </button>
+                </div>
+                <div>
+                  <button  cButton color="danger">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </c-col>
+          </c-row>
+        </form>
+      </c-card-body>
+    </c-card>
+    <c-row>
+      <c-col md="3">
+        <label for="selectOffice" cLabel>Office</label>
+        <select
+          name="office"
+          id="selectOffice"
+          [(ngModel)]="selectedOffice"
+          cSelect
+        >
+          @for (office of OfficeOption; track $index) {
+          <option [value]="office.id">office.name</option>
+          }
+        </select>
+      </c-col>
+      <c-col md="3">
+        <label for="selectDepartment" cLabel>Department</label>
+        <select
+          name="department"
+          id="selectDepartment"
+          [(ngModel)]="selectedDepartment"
+          cSelect
+        >
+          @for (department of DepartmentOption; track $index) {
+          <option [value]="department.id">department.name</option>
+          }
+        </select>
+      </c-col>
+      <c-col md="3">
+        <label for="selectShift" cLabel>Shift</label>
+        <select
+          name="shift"
+          id="selectShift"
+          [(ngModel)]="selectedShift"
+          cSelect
+        >
+          @if (ShiftOption.length<=0) {
+          <option value="" disabled>No Option Available</option>
+          } @for (shift of ShiftOption; track $index) {
+          <option [value]="shift.id">shift.name</option>
+          }
+        </select>
+      </c-col>
+    </c-row>
+    <hr />
+    <c-row>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="slNo">
+            <th mat-header-cell *matHeaderCellDef>Serial No</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              {{ i + 1 }}
+            </td>
+          </ng-container>
 
-                <ng-container matColumnDef="dayTypeName">
-                  <th mat-header-cell *matHeaderCellDef>Day Type</th>
-                  <td mat-cell *matCellDef="let element">
-                    {{ element.dayTypeName }}
-                  </td>
-                </ng-container>
+          <ng-container matColumnDef="attendanceId">
+            <th mat-header-cell *matHeaderCellDef>Attendance ID</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.attendanceId }}
+            </td>
+          </ng-container>
 
-                <ng-container matColumnDef="attendanceStatusName">
-                  <th mat-header-cell *matHeaderCellDef>Status</th>
-                  <td mat-cell *matCellDef="let element">
-                    {{ element.attendanceStatusName }}
-                  </td>
-                </ng-container>
-  
-                <ng-container matColumnDef="Action">
-                  <th mat-header-cell *matHeaderCellDef>Action</th>
-                  <td mat-cell *matCellDef="let element">
-                    <button
-                      class="custom-button"
-                    >
-                      <svg cIcon name="cilPencil"></svg>
-                    </button>
-                    <button class="custom-button">
-                      <svg cIcon name="cilTrash"></svg>
-                    </button>
-                  </td>
-                </ng-container>
-  
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-              </table>
-            </div>
-        </c-row>
-    </c-card-body>
+          <ng-container matColumnDef="empId">
+            <th mat-header-cell *matHeaderCellDef>Employee ID</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.empId }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="empFirstName">
+            <th mat-header-cell *matHeaderCellDef>First Name</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.empFirstName }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="empLastName">
+            <th mat-header-cell *matHeaderCellDef>Last Name</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.empLastName }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="inTime">
+            <th mat-header-cell *matHeaderCellDef>In Time</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.inTime | timeFormat }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="outTime">
+            <th mat-header-cell *matHeaderCellDef>Out Time</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.outTime | timeFormat }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="dayTypeName">
+            <th mat-header-cell *matHeaderCellDef>Day Type</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.dayTypeName }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="attendanceStatusName">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.attendanceStatusName }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let element">
+              <button class="custom-button" (click)="update(element.attendanceId)">
+                <svg cIcon name="cilPencil"></svg>
+              </button>
+              <button class="custom-button" (click)="delete(element)">
+                <svg cIcon name="cilTrash"></svg>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </c-row>
+  </c-card-body>
+  <c-card-footer class="text-medium-emphasis">
+    <mat-paginator
+      appBubblePagination
+      [length]="dataSource.data.length"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 50, 100]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </c-card-footer>
 </c-card>

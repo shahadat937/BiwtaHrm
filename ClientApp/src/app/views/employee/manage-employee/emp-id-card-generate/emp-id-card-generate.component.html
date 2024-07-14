@@ -14,7 +14,7 @@
         <div #fullIdCard class="fullIdCard">
             <div class="mb-4">
                 <div class="front-id">
-                    <img src="/assets/id-card/Card_Front.jpg" alt="Front Image" class="front-image">
+                    <img src="{{IdCardFront}}" alt="Front Image" class="front-image">
                     <div class="content-overlay">
                         <p class="idNo">ID: {{empBasicInfo.idCardNo}}</p>
                         <p class="empPhoto text-center"><img src="{{empPhoto}}"></p>
@@ -28,8 +28,8 @@
                             <div class="text">
                                 <p>: {{empBasicInfo.firstNameBangla}} {{empBasicInfo.lastNameBangla}}</p>
                                 <p class="mb-1">: {{empBasicInfo.firstName}} {{empBasicInfo.lastName}}</p>
-                                <p>: {{empJobDetails.designationNameBangla}}</p>
-                                <p>: {{empJobDetails.designationName}}</p>
+                                <p>: {{empJobDetails?.designationNameBangla}}</p>
+                                <p>: {{empJobDetails?.designationName}}</p>
                             </div>
                         </div>
                         <p class="signature">পরিচালক (প্রশাসন ও মানব সম্পদ)</p>
@@ -39,7 +39,7 @@
             </div>
             <div class="mb-4">
                 <div class="back-id">
-                    <img src="/assets/id-card/Card_Back.jpg" alt="Back Image" class="back-image">
+                    <img src="{{IdCardBack}}" alt="Back Image" class="back-image">
                     <div class="content-overlay">
                         <div class="title">
                             <p>জাতীয় পরিচয়পত্র নং</p>
@@ -47,9 +47,9 @@
                             <p>রক্তের গ্রুপ</p>
                         </div>
                         <div class="text">
-                            <p>: {{empBasicInfo.nid | bengaliDigit}}</p>
-                            <p>: {{empBasicInfo.dateOfBirth ? (empBasicInfo.dateOfBirth | bengaliDate) : ''}}</p>
-                            <p>: {{empPersonalInfo.bloodGroupName}}</p>
+                            <p>: {{empBasicInfo?.nid | bengaliDigit}}</p>
+                            <p>: {{empBasicInfo?.dateOfBirth ? (empBasicInfo.dateOfBirth | bengaliDate) : ''}}</p>
+                            <p>: {{empPersonalInfo?.bloodGroupName}}</p>
                         </div>
                     </div>
                     

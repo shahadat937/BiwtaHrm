@@ -82,7 +82,7 @@ export class ViewInformationListComponent implements OnInit {
         console.log("Employee Response", res)
         if(res){
           this.gettingStatus = true;
-          this.pNo = res.personalFileNo;
+          this.pNo = res.idCardNo;
           this.basicInfoEntryStatus=true;
           this.headerText = "Update Employee Information";
           this.getStatusOfPersonalInfo();

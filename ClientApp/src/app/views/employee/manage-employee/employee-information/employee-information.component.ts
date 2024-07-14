@@ -107,7 +107,7 @@ export class EmployeeInformationComponent implements OnInit {
     getEmpBasicInfoByEmpId(){
       this.manageEmployeeService.getEmpBasicInfoByEmpId(this.empId).subscribe((res) => {
         this.empBasicInfo = res;
-        this.pNo = res.personalFileNo;
+        this.pNo = res.idCardNo;
       });
     }
     

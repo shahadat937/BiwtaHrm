@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { navItems } from './_nav';
+import { EmpPhotoSignService } from 'src/app/views/employee/service/emp-photo-sign.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +10,10 @@ import { navItems } from './_nav';
 })
 export class DefaultLayoutComponent {
 
+  biwtaLogo : string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta.png`;
+
   public navItems = navItems;
 
-  constructor() {}
+  constructor(
+    public empPhotoSignService: EmpPhotoSignService,) {}
 }

@@ -28,6 +28,9 @@ export class EmpIdCardGenerateComponent implements OnInit  {
   empPhoto : string = '';
   empSignature : string = '';
 
+  IdCardFront : string = `${this.empPhotoSignService.imageUrl}TempleteImage/Card_Front.jpg`;
+  IdCardBack : string = `${this.empPhotoSignService.imageUrl}TempleteImage/Card_Back.jpg`;
+
   @ViewChild('fullIdCard', { static: false }) fullIdCard!: ElementRef;
 
   constructor(

@@ -17,11 +17,11 @@
           />
           
           <c-col [md]="3">
-            <label cLabel for="validationCustom03">Country<span class="text-danger">*</span></label>
+            <label cLabel for="validationCustom03">Country<span class="text-danger"></span></label>
             <div class="input-wrapper">
               <select (change)="onDivisionNamesChangeByCounterId(empPresentAddressService.empPresentAddress.countryId)"
                 [(ngModel)]="empPresentAddressService.empPresentAddress.countryId" name="countryId" #countryId="ngModel"
-                cFormControl id="validationCustom03" required aria-label="Default select example" cSelect>
+                cFormControl id="validationCustom03" aria-label="Default select example" cSelect>
                 <option [ngValue]="null">Select Country</option>
     
                 @for(country of countris; track country.id;let index=$index) {
@@ -38,12 +38,12 @@
           </c-col>
     
           <c-col [md]="3">
-            <label cLabel for="validationCustom04">Division<span class="text-danger">*</span></label>
+            <label cLabel for="validationCustom04">Division<span class="text-danger"></span></label>
             <div class="input-wrapper">
               <select (change)="onDistrictNamesChangeByDivisionId(empPresentAddressService.empPresentAddress.divisionId)"
     
                 [(ngModel)]="empPresentAddressService.empPresentAddress.divisionId" name="divisionId" #divisionId="ngModel"
-                cFormControl id="validationCustom04" required aria-label="Default select example" cSelect>
+                cFormControl id="validationCustom04" aria-label="Default select example" cSelect>
                 <option [ngValue]="null">Select Division</option>
                 @for(division of divisions; track division.id;let index=$index) {
                 <option [value]="division.id">
@@ -58,11 +58,11 @@
           </c-col>
     
           <c-col [md]="3">
-            <label cLabel for="validationCustom05">District<span class="text-danger">*</span></label>
+            <label cLabel for="validationCustom05">District<span class="text-danger"></span></label>
             <div class="input-wrapper">
               <select (change)="onUpazilaNamesChangeByDistrictId(empPresentAddressService.empPresentAddress.districtId)"
                 [(ngModel)]="empPresentAddressService.empPresentAddress.districtId" name="districtId" #districtId="ngModel"
-                cFormControl id="validationCustom05" required aria-label="Default select example" cSelect>
+                cFormControl id="validationCustom05" aria-label="Default select example" cSelect>
                 <option [ngValue]="null">Select District</option>
     
                 @for(district of districts; track district.id;let index=$index) {
@@ -214,9 +214,9 @@
               type="email"
               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
             />
-            @if(!Email.value&&Email.touched){
+            <!-- @if(!Email.value&&Email.touched){
             <div class="text-left text-danger">Email is required</div>
-            }
+            } -->
             @if(!Email.valid&&Email.touched&&Email.value){
               <div class="text-left text-danger">Email is not valid</div>
               }

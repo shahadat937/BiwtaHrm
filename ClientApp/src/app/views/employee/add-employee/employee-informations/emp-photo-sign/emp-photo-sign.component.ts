@@ -60,7 +60,6 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
       if (res) {
         this.EmpPhotoSignForm?.form.patchValue(res);
         this.photoPreviewUrl = res.photoUrl ? `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}` : null;
-        console.log("Photo  : ", this.photoPreviewUrl);
         this.signaturePreviewUrl = res.signatureUrl ? `${this.empPhotoSignService.imageUrl}EmpSignature/${res.signatureUrl}` : null;
         this.headerText = 'Update Employee Photo and Signature';
         this.btnText = 'Update';

@@ -20,16 +20,14 @@
           </c-button-group> 
         <c-card-body>
             <form cForm cRow 
-            #officerFormPart7="ngForm"
-            (submit)="onSubmit(officerFormPart7)"
-            novalidate>
+            #officerForm="ngForm" (ngSubmit)="onSubmit(officerForm)" novalidate>
                 <h4>1 Date of Recipt of filled form</h4>               
                     <c-col [md]="6">
                         <label cLabel class="mt-2" >a.Reporting signatory submission date</label>
                     </c-col>
                 <c-col [md]="6">
                     <input type="text"  class="mt-2" cFormControl placeholder="Enter Your Comment" 
-                    [(ngModel)]="OfficerFormPart7ServiceService.officerFormPart7.reportingSignatorySubmissionDate"
+                    [(ngModel)]="allFormData.reportingSignatorySubmissionDate"
                     name="reportingSignatorySubmissionDate" required
                     #reportingSignatorySubmissionDate="ngModel">
                     @if(!reportingSignatorySubmissionDate.valid && reportingSignatorySubmissionDate.touched)
@@ -42,7 +40,7 @@
                 </c-col>
                 <c-col [md]="6">
                     <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment"
-                    [(ngModel)]="OfficerFormPart7ServiceService.officerFormPart7.counterSignatorySubmissionDate"
+                    [(ngModel)]="allFormData.counterSignatorySubmissionDate"
                     name="counterSignatorySubmissionDate" required
                     #counterSignatorySubmissionDate="ngModel">
                     @if(!counterSignatorySubmissionDate.valid && counterSignatorySubmissionDate.touched)
@@ -56,7 +54,7 @@
                     </c-col>
                 <c-col [md]="6">
                     <input type="text"  class="mt-2" cFormControl placeholder="Enter Your Comment"
-                    [(ngModel)]="OfficerFormPart7ServiceService.officerFormPart7.reportingSignatoryDelayCauses"
+                    [(ngModel)]="allFormData.reportingSignatoryDelayCauses"
                     name="reportingSignatoryDelayCauses" required
                     #reportingSignatoryDelayCauses="ngModel" >
                     @if(!reportingSignatoryDelayCauses.valid && reportingSignatoryDelayCauses.touched)
@@ -69,7 +67,7 @@
                 </c-col>
                 <c-col [md]="6">
                     <input type="text" class="mt-2" cFormControl placeholder="Enter Your Comment"
-                    [(ngModel)]="OfficerFormPart7ServiceService.officerFormPart7.counterSignatoryDelayCauses"
+                    [(ngModel)]="allFormData.counterSignatoryDelayCauses"
                     name="counterSignatoryDelayCauses" required
                     #counterSignatoryDelayCauses="ngModel">
                     @if(!counterSignatoryDelayCauses.valid && counterSignatoryDelayCauses.touched)
@@ -83,14 +81,14 @@
                 </c-col>
             <c-col [md]="6">
                 <input type="text" id="special" class="mt-2" cFormControl placeholder="Enter Your Comment"
-                 [(ngModel)]="OfficerFormPart7ServiceService.officerFormPart7.applicationEditor"
+                 [(ngModel)]="allFormData.applicationEditor"
                     name="applicationEditor" required
                     #applicationEditor="ngModel">
             </c-col>
             <c-col class="d-flex justify-content-end align-items-center mt-3">           
                 <div class="text-center">
                     <input type="file" cFormControl class=""  
-                    [(ngModel)]="OfficerFormPart7ServiceService.officerFormPart7.signature"
+                    [(ngModel)]="allFormData.signature"
                     name="signature" required
                     #signature="ngModel">
                     @if(!signature.valid && signature.touched)
@@ -100,13 +98,13 @@
                     <div>Signature of Reporting Officer</div>
                 </div>
             </c-col>
-            <div class="d-flex justify-content-center">
-                <button cButton color="primary" type="submit" [disabled]="!officerFormPart7.valid" [disabled]="loading">
+            <div>
+                <button cButton color="primary" type="submit" [disabled]="!officerForm.valid" [disabled]="loading">
                     <c-spinner [hidden]="!loading" size="sm"></c-spinner>
                     Save & Download
                 </button>
                 <button cButton color="dark" class="ms-3">Cancel</button>
-            </div>           
+                </div>         
             </form>            
         </c-card-body>
     </c-card>

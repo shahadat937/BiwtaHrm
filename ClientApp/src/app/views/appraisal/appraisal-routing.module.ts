@@ -1,14 +1,15 @@
-import { OfficerFormPart5Component } from './officer-form/officer-form-part-5/officer-form-part-5.component';
-import { OfficerFormPart4Component } from './officer-form/officer-form-part-4/officer-form-part-4.component';
+
 import { ManageFormComponent } from './manage-form/manage-form.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StaffFormComponent } from './staff-form/staff-form.component';
-import { OfficerFormComponent } from './officer-form/officer-form.component';
 import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.component';
 import { StaffForm3Component } from './staff-form/staff-form-3/staff-form-3.component';
+import { OfficerFormComponent } from './officer-form/officer-form.component';
 import { OfficerForm2Component } from './officer-form/officer-form-2/officer-form-2.component';
 import { OfficerFormPart3Component } from './officer-form/officer-form-part-3/officer-form-part-3.component';
+import { OfficerFormPart5Component } from './officer-form/officer-form-part-5/officer-form-part-5.component';
+import { OfficerFormPart4Component } from './officer-form/officer-form-part-4/officer-form-part-4.component';
 import { OfficerFormPart6Component } from './officer-form/officer-form-part-6/officer-form-part-6.component';
 import { OfficerFormPart7Component } from './officer-form/officer-form-part-7/officer-form-part-7.component';
 

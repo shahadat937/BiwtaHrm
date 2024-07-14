@@ -44,6 +44,15 @@ namespace Hrm.Api.Controllers
             return Ok(EmpBasicInfo);
         }
 
+        [HttpGet]
+        [Route("get-SelectedEmpBasicInfo")]
+        public async Task<ActionResult> SelectedEmpBasicInfo()
+        {
+            var command = new GetSelectedEmpBasicInfoRequest { };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
 
         [HttpPost]
         [Route("save-EmpBasicInfos")]

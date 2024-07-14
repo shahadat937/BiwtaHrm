@@ -1,6 +1,7 @@
-import { OfficerFormPart2ServiceService } from './../service/officer-form-part2-service.service';
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { SharedService } from '../service/shared.service';
 
 @Component({
   selector: 'app-officer-form-2',
@@ -14,9 +15,10 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
   totalMarksInWordsSignature: string = '';
   selectedSenseOfDiscipllineRow: any;
 
+  formData: any = {};
   loading:boolean=false
 
-  constructor(public officerForm2service :OfficerFormPart2ServiceService ){}
+  constructor( private sharedservice :SharedService ){}
 
   ngOnInit(): void {
   }
@@ -24,8 +26,9 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
   }
 
   onSubmit(form: NgForm): void {
-    this.loading=true;
-    console.log("Form Value: ", form.value)
+    if(form.valid){
+      this.sharedservice.setFormData('Part-2',this.formData)
+    }
   }
 
   SenseOfDisciplineRowss = [
@@ -37,11 +40,15 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
   ];
 
   SenseOfDisciplineRows = [
-    { name: 'i) Extraordinary Standard', evaluationValue: 5, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false, remarksEnabled: false },
-    { name: 'ii) High Standard', evaluationValue: 4, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false, remarksEnabled: false },
-    { name: 'iii) Intelligent', evaluationValue: 3, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false, remarksEnabled: false },
-    { name: 'iv) Below Expected Value', evaluationValue: 2, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false, remarksEnabled: false },
-    { name: 'v) Low Quality',  evaluationValue: 1, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false, remarksEnabled: false },
+
+    { name: 'i) Extraordinary Standard', evaluationValue: 5, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '',  signatureEnabled: false,remarksEnabled: false },
+    { name: 'ii) High Standard', evaluationValue: 4, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iii) Intelligent', evaluationValue: 3, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iv) Below Expected Value', evaluationValue: 2, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
+    { name: 'v) Low Quality', evaluationValue: 1, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
+
+   
+
   ];
 
   intelegentAndJudgmentRows = [
@@ -95,7 +102,26 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
     { name: 'iv)Not So Aware', evaluationValue: 2, securityAwarenessSignature: '', securityRemarks:'', signatureEnabled: false,remarksEnabled: false },
     { name: 'v)Unaware of Rules and Regulation', evaluationValue: 1, securityAwarenessSignature: '', securityRemarks:'', signatureEnabled: false,remarksEnabled: false },
   ];
-  selectedSenseOfDiscipllineRows: any; 
+
+ 
+  convertNumberToWords(num: number): string {
+    const a = [
+      '', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+      'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'
+    ];
+    const b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  
+    if (num === 0) return 'zero';
+    if (num < 20) return a[num];
+    if (num < 100) return b[Math.floor(num / 10)] + (num % 10 !== 0 ? '-' + a[num % 10] : '');
+  
+    return '';
+  }
+  
+
+
+ 
+
   selectedIntelegentAndJudgment:any;
   selectedIntelegenceRow:any;
   selectedEnergyEnthuisim:any;
@@ -106,14 +132,46 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
   
   calculateTotalMarks() {
     this.totalMarks = 0;
+
+  
     if (this.selectedSenseOfDiscipllineRow) {
       this.totalMarks += this.selectedSenseOfDiscipllineRow.evaluationValue;
     }
-  }
+  
+    if (this.selectedIntelegentAndJudgment) {
+      this.totalMarks += this.selectedIntelegentAndJudgment.evaluationValue;
+    }
+  
+    if (this.selectedIntelegenceRow) {
+      this.totalMarks += this.selectedIntelegenceRow.evaluationValue;
+    }
+  
+    if (this.selectedEnergyEnthuisim) {
+      this.totalMarks += this.selectedEnergyEnthuisim.evaluationValue;
+    }
+  
+    if (this.selectedPublicRelation) {
+      this.totalMarks += this.selectedPublicRelation.evaluationValue;
+    }
+  
+    if (this.cooperationRow) {
+      this.totalMarks += this.cooperationRow.evaluationValue;
+    }
+  
+    if (this.personalityRow) {
+      this.totalMarks += this.personalityRow.evaluationValue;
+    }
+  
+    if (this.securityRow) {
+      this.totalMarks += this.securityRow.evaluationValue;
+    }
+    this.totalMarksInWords = this.convertNumberToWords(this.totalMarks);
+}
 
-  onRadioChange() {
-    this.calculateTotalMarks();
-  }
+
+
+   
+
 
   toggleSenseofDisciplineSignatureInput(index: any) {
     // Reset all rows to disable signature input

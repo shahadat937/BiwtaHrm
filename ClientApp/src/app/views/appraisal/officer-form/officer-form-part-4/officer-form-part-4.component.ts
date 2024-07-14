@@ -2,6 +2,7 @@
 import { OfficerFormpart4Service } from './../service/officer-formpart4.service';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { SharedService } from '../service/shared.service';
 
 @Component({
   selector: 'app-officer-form-part-4',
@@ -9,13 +10,14 @@ import { NgForm } from '@angular/forms';
   styleUrl: './officer-form-part-4.component.scss'
 })
 export class OfficerFormPart4Component  implements OnInit, OnDestroy{
+
+  formData: any = {};
   
   @ViewChild('officerFormPart4', { static: true }) OfficerFormModule!: NgForm;
 
   loading:boolean=false
   
-  constructor(public officerform4service:OfficerFormpart4Service){
-  }
+  constructor( private sharedservice :SharedService ){}
 
   ngOnInit(): void {
   }
@@ -23,20 +25,8 @@ export class OfficerFormPart4Component  implements OnInit, OnDestroy{
   }
 
   onSubmit(form: NgForm): void {
-  this.loading=true;
-    console.log("Form Value: ",form.value)
-  }
-  initaialUser(form?: NgForm) {
-    if (form != null) form.resetForm();
-    this.officerform4service.officerFormpart4 = {
-      personalCharacteristics :'',
-      professionalSkill:'',
-      loyalityAndRelaiability:'',
-      otherMatters:'',
-      annualConfidentialReportWritingAndCountersigningActivates:'',
-      adviceToOfficers:'',
-      proficencyAndInterestBengaliLanguage:'',
-      signatureOfReportingOfficer:null
+    if(form.valid){
+      this.sharedservice.setFormData('Part-4',this.formData)
     }
   }
 }

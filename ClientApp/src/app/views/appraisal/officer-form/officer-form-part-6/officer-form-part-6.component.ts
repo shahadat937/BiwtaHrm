@@ -1,6 +1,7 @@
-import { OfficerFormPart6ServiceService } from './../service/officer-form-part6-service.service';
+
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { SharedService } from '../service/shared.service';
 
 @Component({
   selector: 'app-officer-form-part-6',
@@ -9,11 +10,12 @@ import { NgForm } from '@angular/forms';
 })
 export class OfficerFormPart6Component implements OnInit, OnDestroy{
 
+  formData: any = {};
   @ViewChild('officerFormPart6', { static: true }) OfficerFormPart6Module!: NgForm;
 
   loading:boolean=false
-  constructor(public OfficerFormPart6ServiceService: OfficerFormPart6ServiceService){
-  }
+ 
+  constructor( private sharedservice :SharedService ){}
 
   ngOnInit(): void {
   }
@@ -21,19 +23,8 @@ export class OfficerFormPart6Component implements OnInit, OnDestroy{
   }
 
   onSubmit(form: NgForm): void {
-    this.loading=true
-    console.log("Form Value: ",form.value)
-  }
-
-  initaialUser(form?: NgForm) {
-    if (form != null) form.resetForm();
-    this.OfficerFormPart6ServiceService.officerFormPart6 = {
-      fromDate : new Date(),
-      toDate : new Date(),
-      additionalComment:'',
-      overallAssessment:'',
-      recommendation:'',
-      signature:null
+    if(form.valid){
+      this.sharedservice.setFormData('Part-6',this.formData)
     }
   }
 }

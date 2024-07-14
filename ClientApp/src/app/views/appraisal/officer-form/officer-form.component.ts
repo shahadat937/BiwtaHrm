@@ -1,5 +1,5 @@
+import { SharedService } from './service/shared.service';
 import { NgForm } from '@angular/forms';
-import { OfficerFormService } from './service/officer-form.service';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 @Component({
@@ -9,39 +9,21 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 })
 export class OfficerFormComponent implements OnInit, OnDestroy {
 
+  formData: any = {}; // Your form data model
+
   @ViewChild('officerForm', { static: true }) BloodGroupForm!: NgForm;
 
   loading :boolean=false;
 
-  constructor(public officerservice :OfficerFormService ){}
+  constructor(private sharedService  :SharedService ){}
 
   ngOnInit(): void {
   }
   ngOnDestroy(): void {
   }
   onSubmit(form: NgForm): void {
-    this.loading=true;
-    console.log("Form Value: ",form.value)
-  }
-  initaialUser(form?: NgForm) {
-    if (form != null) form.resetForm();
-    this.officerservice.officerModels = {
-      division : '',
-      yearStartDate : new Date(),
-      yearEndDate :new Date(),
-      employeeName :'',
-      fathersName :'',
-      mothersName:'',
-      birthRegNo:0,
-      dateofBirth:new Date(),
-      designation:'',
-      workplace:'',
-      joiningDate:new Date(),
-      presentDesignationJoiningDate:new Date(),
-      education:'',
-      trainingSpecialTraining:'',
-      reportinFromDate:new Date(),
-      reportingEndDate:new Date(),
-    };
+    if(form.valid){
+      this.sharedService.setFormData('Part-1',this.formData)
+    }
   }
 }

@@ -21,16 +21,14 @@
           </c-button-group>
         <c-card-body>
             <form cRow cForm 
-            #officerFormPart6="ngForm"
-            (submit)="onSubmit(officerFormPart6)"
-            novalidate>
+            #officerForm="ngForm" (ngSubmit)="onSubmit(officerForm)" novalidate>
                 <c-col [md]="6">
                     <label cLabel >1.Exact tenure of Employment Under you</label>
                 </c-col>
                 <c-col [md]="3">
                      <label cLabel for="fromdate">From Date</label>
                     <input type="date" cFormControl id="fromdate" 
-                    [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.fromDate"
+                    [(ngModel)]="formData.fromDate"
                     name="fromDate" required
                     #fromDate="ngModel">
                 @if(!fromDate.valid && fromDate.touched)
@@ -41,7 +39,7 @@
                 <c-col [md]="3">
                     <label cLabel for="todate">To Date</label>
                     <input type="date" cFormControl id="todate" 
-                    [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.toDate"
+                    [(ngModel)]="formData.toDate"
                     name="toDate" required
                     #toDate="ngModel">
                 @if(!toDate.valid && toDate.touched)
@@ -54,7 +52,7 @@
             </c-col>
             <c-col [md]="6">
                 <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
-            [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.additionalComment"
+            [(ngModel)]="formData.additionalComment"
             name="additionalComment" required
             #additionalComment="ngModel">
             @if(!additionalComment.valid && additionalComment.touched)
@@ -67,7 +65,7 @@
             </c-col>
             <c-col [md]="6">
                 <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
-                [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.overallAssessment"
+                [(ngModel)]="formData.overallAssessment"
                 name="overallAssessment" required
                 #overallAssessment="ngModel">
                 @if(!overallAssessment.valid && overallAssessment.touched)
@@ -80,7 +78,7 @@
             </c-col>
             <c-col [md]="6">
                 <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
-                [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.recommendation"
+                [(ngModel)]="formData.recommendation"
                 name="recommendation" required
                 #recommendation="ngModel">
                 @if(!recommendation.valid && recommendation.touched)
@@ -91,7 +89,7 @@
             <c-col class="d-flex justify-content-end align-items-center mt-3">           
                 <div class="text-center">
                     <input type="file" cFormControl class="" 
-                    [(ngModel)]="OfficerFormPart6ServiceService.officerFormPart6.signature"
+                    [(ngModel)]="formData.signature"
                     name="signature" required
                     #signature="ngModel">
                     @if(!signature.valid && signature.touched)
@@ -101,13 +99,6 @@
                     <div>Signature of Reporting Officer</div>
                 </div>
             </c-col>
-            <div>
-            <button cButton color="primary" type="submit" [disabled]="!officerFormPart6.valid" [disabled]="loading">
-                <c-spinner [hidden]="!loading" size="sm"></c-spinner>
-                Submit 
-            </button>
-            <button cButton color="dark" class="ms-3">Cancel</button>
-            </div>
             </form>         
         </c-card-body>
     </c-card>

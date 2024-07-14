@@ -38,6 +38,10 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
 
         public async Task<BaseCommandResponse> Handle(CreateManualAttendanceCommand request, CancellationToken cancellationToken)
         {
+            if(request.Attendancedto==null)
+            {
+                throw new BadRequestException("Bad Request");
+            }
             request.Attendancedto.AttendanceTypeId = 1; // Manual Attendance type should be set to 1 in database.
 
             var response = new BaseCommandResponse();

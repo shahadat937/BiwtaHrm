@@ -12,8 +12,6 @@ import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
-
 
 @NgModule({
   declarations: [

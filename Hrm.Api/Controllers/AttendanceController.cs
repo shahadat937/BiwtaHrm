@@ -84,7 +84,7 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("update-AttendanceById")]
         public async Task<ActionResult<BaseCommandResponse>> UpdateAttendanceById([FromBody] CreateAttendanceDto attendance)
         {
@@ -102,6 +102,17 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<BaseCommandResponse>> SaveBulkAttendance([FromForm] CreateBulkAttendanceDto createAtdDto)
         {
             var command = new CreateBulkAttendanceCommand { csvFile = createAtdDto.csvFile };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [Route("delete-AttendanceById/{id}")]
+        public async Task<ActionResult<BaseCommandResponse>> delete(int id)
+        {
+            var command = new DeleteAttendanceByIdRequest { AttendanceId = id };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

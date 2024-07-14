@@ -237,28 +237,28 @@
           <ng-container matColumnDef="startTime">
             <th mat-header-cell *matHeaderCellDef>Shift Start Time</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.startTime }}
+              {{ element.startTime|timeFormat }}
             </td>
           </ng-container>
           
           <ng-container matColumnDef="endTime">
             <th mat-header-cell *matHeaderCellDef>Shift End Time</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.endTime }}
+              {{ element.endTime|timeFormat}}
             </td>
           </ng-container>
           
           <ng-container matColumnDef="bufferTime">
             <th mat-header-cell *matHeaderCellDef>Buffer Time</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.bufferTime }}
+              {{ element.bufferTime|timeFormat }}
             </td>
           </ng-container>
           
           <ng-container matColumnDef="absentTime">
             <th mat-header-cell *matHeaderCellDef>Absent Time</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.absentTime }}
+              {{ element.absentTime|timeFormat }}
             </td>
           </ng-container>
   

@@ -13,7 +13,6 @@ import { AuthService } from 'src/app/core/service/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
-import { NgxCaptchaModule } from 'ngx-captcha';
 
 
 @NgModule({
@@ -37,7 +36,6 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     ReactiveFormsModule,
     RecaptchaModule,
     RecaptchaFormsModule,
-    NgxCaptchaModule,
   ],
   providers: [
     

@@ -8,7 +8,7 @@ import { EmpPhotoSignService } from 'src/app/views/employee/service/emp-photo-si
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss'],
 })
-export class DefaultLayoutComponent implements OnInit {
+export class DefaultLayoutComponent {
 
   biwtaLogo : string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta.png`;
 
@@ -16,9 +16,4 @@ export class DefaultLayoutComponent implements OnInit {
 
   constructor(
     public empPhotoSignService: EmpPhotoSignService,) {}
-  ngOnInit(): void {
-    console.log(this.biwtaLogo)
-  }
-
-
 }

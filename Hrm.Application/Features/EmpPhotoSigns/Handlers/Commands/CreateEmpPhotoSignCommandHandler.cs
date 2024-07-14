@@ -25,32 +25,39 @@ namespace Hrm.Application.Features.EmpPhotoSigns.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(CreateEmpPhotoSignCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
+            EmpPhotoSign empPhotoSigns = new EmpPhotoSign();
 
-            var photoName = Path.GetFileName(request.EmpPhotoSignDto.PhotoFile.FileName);
-            string uniqueImageName = request.EmpPhotoSignDto.PNo + "_Photo" + "_" + photoName;
-            var photoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\EmpPhoto", uniqueImageName);
-
-            var signName = Path.GetFileName(request.EmpPhotoSignDto.SignatureFile.FileName);
-            string uniqueSignName = request.EmpPhotoSignDto.PNo + "_Signature" + "_" + signName;
-            var signPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\EmpSignature", uniqueSignName);
-
-            using (var photoSteam = new FileStream(photoPath, FileMode.Create))
+            if (request.EmpPhotoSignDto.PhotoFile != null)
             {
-                await request.EmpPhotoSignDto.PhotoFile.CopyToAsync(photoSteam);
+                var photoName = Path.GetFileName(request.EmpPhotoSignDto.PhotoFile.FileName);
+                string uniqueImageName = request.EmpPhotoSignDto.PNo + "_Photo" + "_" + photoName;
+                var photoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\EmpPhoto", uniqueImageName);
+
+                using (var photoSteam = new FileStream(photoPath, FileMode.Create))
+                {
+                    await request.EmpPhotoSignDto.PhotoFile.CopyToAsync(photoSteam);
+                }
+
+                empPhotoSigns.PhotoUrl = uniqueImageName;
+
             }
-            using (var signStream = new FileStream(signPath, FileMode.Create))
+            if (request.EmpPhotoSignDto.SignatureFile != null)
             {
-                await request.EmpPhotoSignDto.SignatureFile.CopyToAsync(signStream);
+                var signName = Path.GetFileName(request.EmpPhotoSignDto.SignatureFile.FileName);
+                string uniqueSignName = request.EmpPhotoSignDto.PNo + "_Signature" + "_" + signName;
+                var signPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\EmpSignature", uniqueSignName);
+
+                using (var signStream = new FileStream(signPath, FileMode.Create))
+                {
+                    await request.EmpPhotoSignDto.SignatureFile.CopyToAsync(signStream);
+                }
+
+                empPhotoSigns.SignatureUrl = uniqueSignName;
             }
 
-            EmpPhotoSign empPhotoSigns = new EmpPhotoSign
-            {
-                EmpId = request.EmpPhotoSignDto.EmpId,
-                UniqueIdentity = request.EmpPhotoSignDto.UniqueIdentity,
-                Remark = request.EmpPhotoSignDto.Remark,
-                PhotoUrl = uniqueImageName,
-                SignatureUrl = uniqueSignName
-            };
+            empPhotoSigns.EmpId = request.EmpPhotoSignDto.EmpId;
+            empPhotoSigns.UniqueIdentity = request.EmpPhotoSignDto.UniqueIdentity;
+            empPhotoSigns.Remark = request.EmpPhotoSignDto.Remark;
 
 
             await _unitOfWork.Repository<EmpPhotoSign>().Add(empPhotoSigns);

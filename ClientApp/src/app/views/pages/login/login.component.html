@@ -9,7 +9,7 @@
                 <img src="{{biwtaLogo}}" alt="BIWTA Logo">
                 <h3 class="mt-3 mb-3">Bangladesh Inland Water Transport Authority</h3>
               </div>
-              <form cForm [formGroup]="authForm" >
+              <form cForm [formGroup]="authForm">
                 <h1>Login</h1>
                 <p class="text-medium-emphasis">Sign In to your account</p>
                 <c-input-group class="mb-3">
@@ -22,21 +22,27 @@
                   <span cInputGroupText>
                     <svg cIcon name="cilLockLocked"></svg>
                   </span>
-                  <input formControlName="password"
-                    autoComplete="current-password"
-                    cFormControl
-                    placeholder="Password"
-                    type="password"
-                  />
+                  <input formControlName="password" autoComplete="current-password" cFormControl placeholder="Password"
+                    type="password" />
                 </c-input-group>
 
-                
-                
+                <c-row class="mt-4">
+                  <c-col md="3" class="mb-4">
+                    <img [src]="captchaImage" alt="CAPTCHA" />
+                  </c-col>
+                  <c-col md="6" class="mb-4">
+                    <input formControlName="captcha" cFormControl placeholder="Enter the result" />
+                  </c-col>
+                  <c-col md="3" class="mb-4">
+                    <button cButton color="primary" (click)="verifyCaptcha()">Verify</button>
+                  </c-col>
+                </c-row>
+
                 <c-row>
                   <c-col xs="6">
-                    <button cButton class="px-4" color="primary" (click)="onSubmit()">
+                    <button cButton class="px-4" color="primary" (click)="onSubmit()" [disabled]="!isCaptchaVerified">
                       <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-          {{ btnText }}
+                      {{ btnText }}
                       Login
                     </button>
                   </c-col>
@@ -54,42 +60,25 @@
     </c-row>
   </c-container>
 </div>
-<!-- 
-  <div cRow class="FullLogin">
-    <c-col [md]="7" class="bg-info">
 
-    </c-col>
-    <c-col [md]="5">
-          <form cForm [formGroup]="authForm">
-            <h1>Login</h1>
-            <p class="text-medium-emphasis">Sign In to your account</p>
-            <c-input-group class="mb-3">
-              <span cInputGroupText>
-                <svg cIcon name="cilUser"></svg>
-              </span>
-              <input formControlName="email" autoComplete="username" cFormControl placeholder="Username" />
-            </c-input-group>
-            <c-input-group class="mb-4">
-              <span cInputGroupText>
-                <svg cIcon name="cilLockLocked"></svg>
-              </span>
-              <input formControlName="password" autoComplete="current-password" cFormControl placeholder="Password"
-                type="password" />
-            </c-input-group>
-            <c-row>
-              <c-col xs="6">
-                <button cButton class="px-4" color="primary" (click)="onSubmit()">
-                  <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-                  {{ btnText }}
-                  Login
-                </button>
-              </c-col>
-              <c-col class="text-right" xs="6">
-                <button cButton class="px-0" color="link">
-                  Forgot password?
-                </button>
-              </c-col>
-            </c-row>
-          </form>
-    </c-col>
-  </div> -->
+
+
+<!-- 
+          ***************** Simple Captcha ***************
+
+<div class="mb-4 text-center">
+  <img [src]="captchaImage" alt="CAPTCHA" />
+  <c-input-group class="mt-2">
+    <input formControlName="captcha" cFormControl placeholder="Enter the result" />
+  </c-input-group>
+  <button cButton color="primary" class="mt-2" (click)="verifyCaptcha()">Verify</button>
+</div>
+
+<c-row>
+  <c-col xs="6">
+    <button cButton class="px-4" color="primary" (click)="onSubmit()" [disabled]="!isCaptchaVerified">
+      <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+      {{ btnText }}
+      Login
+    </button>
+  </c-col> -->

@@ -34,8 +34,6 @@ import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
     SpinnerModule,
     BrowserModule,
     ReactiveFormsModule,
-    RecaptchaModule,
-    RecaptchaFormsModule,
   ],
   providers: [
     

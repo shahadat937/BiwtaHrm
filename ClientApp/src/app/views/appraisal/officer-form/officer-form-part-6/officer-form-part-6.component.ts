@@ -2,6 +2,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SharedService } from '../service/shared.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-officer-form-part-6',
@@ -15,16 +16,16 @@ export class OfficerFormPart6Component implements OnInit, OnDestroy{
 
   loading:boolean=false
  
-  constructor( private sharedservice :SharedService ){}
+  constructor( private sharedservice :SharedService,private router: Router ){}
 
   ngOnInit(): void {
+    this.formData=this.sharedservice.getFormData('Part-6')
   }
   ngOnDestroy(): void {
   }
 
   onSubmit(form: NgForm): void {
-    if(form.valid){
-      this.sharedservice.setFormData('Part-6',this.formData)
-    }
+    this.sharedservice.setFormData('part-6',this.formData)
+    this.router.navigate(['/appraisal/officerFormPart7']);
   }
 }

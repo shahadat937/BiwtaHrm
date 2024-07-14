@@ -20,7 +20,9 @@
           </c-button-group> 
         <c-card-body>
             <form cForm cRow 
-            #officerForm="ngForm" (ngSubmit)="onSubmit(officerForm)" novalidate>
+            #officerForm="ngForm" 
+            (ngSubmit)="onSubmit(officerForm)" 
+            novalidate>
                 <h4>1 Date of Recipt of filled form</h4>               
                     <c-col [md]="6">
                         <label cLabel class="mt-2" >a.Reporting signatory submission date</label>
@@ -105,7 +107,11 @@
                 </button>
                 <button cButton color="dark" class="ms-3">Cancel</button>
                 </div>         
-            </form>            
+            </form>  <div>
+                <h4>All Form Data</h4>
+                <pre>{{ allFormData | json }}</pre>
+              </div>
+
         </c-card-body>
     </c-card>
 </div>

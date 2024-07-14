@@ -7,7 +7,7 @@
                 <button cButton color="primary" [routerLink]="['/appraisal/officerForm2']">Part-2</button>
                 <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart3']">Part-3</button>
                 <button cButton color="primary" [active]="true">Part-4</button>
-                <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart5']">Part-5</button>
+                <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart5']" (click)="onSubmit(officerForm)">Part-5</button>
                 <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart6']">Part-6</button>
                 <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart7']">Part-7</button>
             </c-button-group>
@@ -21,7 +21,7 @@
                 <label cLabel class="mt-4">1.Personal Characteristics</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment" 
+            <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment" 
             [(ngModel)]="formData.personalCharacteristics"
             name="personalCharacteristics" required
             #personalCharacteristics="ngModel">
@@ -127,7 +127,7 @@
         <c-card-footer>
           <div class="text-end">
             <button cButton color="primary" [routerLink]="[
-            '/appraisal/officerFormPart5']">To be continue...</button>
+            '/appraisal/officerFormPart5']" (click)="onSubmit(officerForm)">To be continue...</button>
           </div>
         </c-card-footer>
         </c-card>

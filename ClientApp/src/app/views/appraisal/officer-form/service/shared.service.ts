@@ -10,7 +10,7 @@ export class SharedService {
     this.formData[part] = data;
   }
   getFormData(part: string) {
-    return this.formData[part];
+    return this.formData[part] || {};
   }
   getAllFormData() {
     return this.formData;

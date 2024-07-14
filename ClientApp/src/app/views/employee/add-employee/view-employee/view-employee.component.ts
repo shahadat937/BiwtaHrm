@@ -72,7 +72,7 @@ export class ViewEmployeeComponent implements OnInit {
     this.empBasicInfoService.findByEmpId(id).subscribe((res) => {
       this.userForm.firstName = res.firstName;
       this.userForm.lastName = res.lastName;
-      this.userForm.userName = res.personalFileNo;
+      this.userForm.userName = res.idCardNo;
       this.userForm.password = "Admin@123";
       this.userForm.empId = id;
       this.userService.submit(this.userForm).subscribe(((res: any) => {

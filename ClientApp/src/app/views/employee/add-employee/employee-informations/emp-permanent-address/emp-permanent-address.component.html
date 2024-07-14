@@ -23,11 +23,11 @@
           />
           
           <c-col [md]="3">
-            <label cLabel for="validationCustom03">Country<span class="text-danger">*</span></label>
+            <label cLabel for="validationCustom03">Country<span class="text-danger"></span></label>
             <div class="input-wrapper">
               <select (change)="onDivisionNamesChangeByCounterId(empPermanentAddressService.empPermanentAddress.countryId)"
                 [(ngModel)]="empPermanentAddressService.empPermanentAddress.countryId" name="countryId" #countryId="ngModel"
-                cFormControl id="validationCustom03" required aria-label="Default select example" cSelect [class.readonly-select]="sameAsPresentAddress">
+                cFormControl id="validationCustom03" aria-label="Default select example" cSelect [class.readonly-select]="sameAsPresentAddress">
                 <option [ngValue]="null">Select Country</option>
     
                 @for(country of countris; track country.id;let index=$index) {
@@ -44,12 +44,12 @@
           </c-col>
     
           <c-col [md]="3">
-            <label cLabel for="validationCustom04">Division<span class="text-danger">*</span></label>
+            <label cLabel for="validationCustom04">Division<span class="text-danger"></span></label>
             <div class="input-wrapper">
               <select (change)="onDistrictNamesChangeByDivisionId(empPermanentAddressService.empPermanentAddress.divisionId)"
     
                 [(ngModel)]="empPermanentAddressService.empPermanentAddress.divisionId" name="divisionId" #divisionId="ngModel"
-                cFormControl id="validationCustom04" required aria-label="Default select example" cSelect [class.readonly-select]="sameAsPresentAddress">
+                cFormControl id="validationCustom04" aria-label="Default select example" cSelect [class.readonly-select]="sameAsPresentAddress">
                 <option [ngValue]="null">Select Division</option>
                 @for(division of divisions; track division.id;let index=$index) {
                 <option [value]="division.id">
@@ -64,11 +64,11 @@
           </c-col>
     
           <c-col [md]="3">
-            <label cLabel for="validationCustom05">District<span class="text-danger">*</span></label>
+            <label cLabel for="validationCustom05">District<span class="text-danger"></span></label>
             <div class="input-wrapper">
               <select (change)="onUpazilaNamesChangeByDistrictId(empPermanentAddressService.empPermanentAddress.districtId)"
                 [(ngModel)]="empPermanentAddressService.empPermanentAddress.districtId" name="districtId" #districtId="ngModel"
-                cFormControl id="validationCustom05" required aria-label="Default select example" cSelect [class.readonly-select]="sameAsPresentAddress">
+                cFormControl id="validationCustom05" aria-label="Default select example" cSelect [class.readonly-select]="sameAsPresentAddress">
                 <option [ngValue]="null">Select District</option>
     
                 @for(district of districts; track district.id;let index=$index) {
@@ -223,9 +223,9 @@
               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
               [class.readonly-select]="sameAsPresentAddress"
             />
-            @if(!Email.value&&Email.touched){
+            <!-- @if(!Email.value&&Email.touched){
             <div class="text-left text-danger">Email is required</div>
-            }
+            } -->
             @if(!Email.valid&&Email.touched&&Email.value){
               <div class="text-left text-danger">Email is not valid</div>
               }

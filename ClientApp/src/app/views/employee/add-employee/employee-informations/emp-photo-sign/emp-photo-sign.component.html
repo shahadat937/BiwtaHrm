@@ -16,7 +16,7 @@
                 <div *ngIf="photoPreviewUrl">
                     <img [src]="photoPreviewUrl" alt="Employee Photo" style="max-width: 100px; max-height: 100px;"/>
                 </div>
-                <label cLabel for="photoFile">Photo<span class="text-danger">*</span></label>
+                <label cLabel for="photoFile">Photo<span class="text-danger"></span></label>
                 <input [(ngModel)]="empPhotoSignService.empPhotoSign.photoFile" name="photoFile" #photoFile="ngModel" cFormControl id="photoFile" type="file" (change)="onPhotoSelected($event)" />
                 @if(!photoFile.valid&&photoFile.touched){
                 <div class="text-left text-danger">Photo is required</div>
@@ -27,7 +27,7 @@
                 <div *ngIf="signaturePreviewUrl">
                     <img [src]="signaturePreviewUrl" alt="Employee Signature" style="max-width: 100px; max-height: 100px;"/>
                 </div>
-                <label cLabel for="signatureFile">Signature<span class="text-danger">*</span></label>
+                <label cLabel for="signatureFile">Signature<span class="text-danger"></span></label>
                 <input [(ngModel)]="empPhotoSignService.empPhotoSign.signatureFile" name="signatureFile" #signatureFile="ngModel" cFormControl id="signatureFile" type="file" (change)="onSignatureSelected($event)" />
                 @if(!signatureFile.valid&&signatureFile.touched){
                 <div class="text-left text-danger">Signature is required</div>

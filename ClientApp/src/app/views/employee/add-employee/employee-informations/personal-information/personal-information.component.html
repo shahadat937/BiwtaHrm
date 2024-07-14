@@ -219,9 +219,9 @@
             type="email"
             pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
           />
-          @if(!Email.value&&Email.touched){
+          <!-- @if(!Email.value&&Email.touched){
           <div class="text-left text-danger">Email is required</div>
-          }
+          } -->
           @if(!Email.valid&&Email.touched&&Email.value){
             <div class="text-left text-danger">Email is not valid</div>
             }
@@ -229,7 +229,7 @@
 
         <c-col [md]="4">
           <label cLabel for="validationCustom09"
-          >Birth Registration Number<span class="text-danger">*</span></label
+          >Birth Registration Number<span class="text-danger"></span></label
         >
         <input
           [(ngModel)]="empPersonalInfoService.personalInfo.birthRegNo"
@@ -238,7 +238,6 @@
           placeholder="Enter Birth Registration Number"
           cFormControl
           id="validationCustom09"
-          required
           type="text"
           pattern="[0-9]*"
           />
@@ -500,7 +499,7 @@
             id="validationCustom15"
             type="date"
           />
-          @if(!drivingLicenceDate.value&&drivingLicenceDate.touched){
+          @if(!drivingLicenceDate.valid&&drivingLicenceDate.touched){
           <div class="text-left text-danger">Driving License Expire Date is required</div>
           }
         </c-col>
@@ -535,7 +534,7 @@
             id="validationCustom16"
             type="date"
           />
-          @if(!passportExpireDate.value&&passportExpireDate.touched){
+          @if(!passportExpireDate.valid&&passportExpireDate.touched){
           <div class="text-left text-danger">Passport Expire Date is required</div>
           }
         </c-col>

@@ -94,10 +94,9 @@
             
             <c-col [md]="3">
                 <label cLabel for="presentGradeId"
-                >Present Grade<span class="text-danger">*</span></label
+                >Present Grade<span class="text-danger"></span></label
                 >
                 <select (change)="onChangeGradeGetScale(empJobDetailsService.empJobDetails.presentGradeId)"
-                required
                 [(ngModel)]="empJobDetailsService.empJobDetails.presentGradeId"
                 name="presentGradeId"
                 #presentGradeId="ngModel"
@@ -119,11 +118,11 @@
             </c-col>
             
             <c-col [md]="3">
-                <label cLabel for="presentScaleId">Present Scale<span class="text-danger">*</span></label>
+                <label cLabel for="presentScaleId">Present Scale<span class="text-danger"></span></label>
                 <div class="input-wrapper">
                 <select (change)="onChangeScaleGetBasicPay(empJobDetailsService.empJobDetails.presentScaleId)"
                 [(ngModel)]="empJobDetailsService.empJobDetails.presentScaleId" name="presentScaleId" #presentScaleId="ngModel"
-                    cFormControl id="presentScaleId" required aria-label="Default select example" cSelect>
+                    cFormControl id="presentScaleId" aria-label="Default select example" cSelect>
                     <option [ngValue]="null">Select Scale</option>
         
                     @for(scale of scales; track scale.id;let index=$index) {

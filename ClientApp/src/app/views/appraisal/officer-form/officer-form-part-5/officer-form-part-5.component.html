@@ -15,7 +15,7 @@
                     <button cButton color="primary" [active]="true">Part-5</button>
                     <button cButton color="primary" [routerLink]="[
                         '/appraisal/officerFormPart6'
-                    ]">Part-6</button>
+                    ]" (click)="onSubmit(officerForm)">Part-6</button>
                     <button cButton color="primary" [routerLink]="[
                         '/appraisal/officerFormPart7'
                     ]">Part-7</button>
@@ -147,7 +147,7 @@
         <c-card-footer>
           <div class="text-end">
             <button cButton color="primary" [routerLink]="[
-            '/appraisal/officerFormPart6']">To be continue...</button>
+            '/appraisal/officerFormPart6']" >To be continue...</button>
           </div>
         </c-card-footer>
     </c-card>

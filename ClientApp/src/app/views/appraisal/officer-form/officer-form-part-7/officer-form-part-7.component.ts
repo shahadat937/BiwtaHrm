@@ -24,11 +24,7 @@ export class OfficerFormPart7Component implements OnInit, OnDestroy{
   }
   ngOnDestroy(): void {
   }
-
   onSubmit(form: NgForm) {
-    if (form.valid) {
-      console.log(this.sharedservice.getAllFormData()); // Log all form data on submission
-      // Handle final submission
-    }
+
   }
 }

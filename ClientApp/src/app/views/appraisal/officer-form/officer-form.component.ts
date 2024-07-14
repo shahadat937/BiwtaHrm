@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { SharedService } from './service/shared.service';
 import { NgForm } from '@angular/forms';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -9,21 +10,37 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 })
 export class OfficerFormComponent implements OnInit, OnDestroy {
 
-  formData: any = {}; // Your form data model
+  formData: any = { 
+      division: '',
+      fromdate: '',
+      todate: '',
+      employeeName: '',
+      fathersName: '',
+      mothersName: '',
+      birthRegNo: '',
+      dateofBirth: '',
+      designation: '',
+      workplace: '',
+      joiningDate: '',
+      presentDesignationJoiningDate: '',
+      education: '',
+      trainingSpecialTraining: '',
+      reportinFromDate: '',
+      reportingEndDate: ''
+};
 
   @ViewChild('officerForm', { static: true }) BloodGroupForm!: NgForm;
 
-  loading :boolean=false;
-
-  constructor(private sharedService  :SharedService ){}
+  constructor(private sharedService  :SharedService,private router: Router ){}
 
   ngOnInit(): void {
+    this.formData=this.sharedService.getFormData('Part-1')
   }
   ngOnDestroy(): void {
   }
   onSubmit(form: NgForm): void {
-    if(form.valid){
-      this.sharedService.setFormData('Part-1',this.formData)
-    }
+    this.sharedService.setFormData('part-1',this.formData)
+    this.router.navigate(['/appraisal/officerForm2']);
+
   }
 }

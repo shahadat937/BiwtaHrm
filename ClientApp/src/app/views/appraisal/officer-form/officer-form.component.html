@@ -4,7 +4,7 @@
       <c-button-group aria-label="Basic example" role="group">
         <c-button-group aria-label="Basic example" role="group">
             <button cButton color="primary" [active]="true">Part-1</button>
-            <button cButton color="primary" [routerLink]="['/appraisal/officerForm2']">Part-2</button>
+            <button cButton color="primary" [routerLink]="['/appraisal/officerForm2']" (click)="onSubmit(officerForm)">Part-2</button>
             <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart3']">Part-3</button>
             <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart4']">Part-4</button>
             <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart5']">Part-5</button>
@@ -216,7 +216,7 @@
       <c-card-footer>
         <div class="text-end">
           <button cButton color="primary" [routerLink]="[
-          '/appraisal/officerForm2']">To be continue...</button>
+          '/appraisal/officerForm2']" (click)="onSubmit(officerForm)">To be continue...</button>
         </div>
       </c-card-footer>
   </c-card>

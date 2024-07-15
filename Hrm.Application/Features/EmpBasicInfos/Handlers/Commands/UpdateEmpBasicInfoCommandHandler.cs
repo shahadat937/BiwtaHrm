@@ -31,6 +31,7 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Commands
             var response = new BaseCommandResponse();
 
             var FindPNo = await _EmpBasicInfoRepository.FindOneAsync(x => x.PersonalFileNo == request.EmpBasicInfoDto.PersonalFileNo && x.Id != request.EmpBasicInfoDto.Id);
+            var IdCardNo = await _EmpBasicInfoRepository.FindOneAsync(x => x.IdCardNo == request.EmpBasicInfoDto.IdCardNo);
 
             if (FindPNo != null)
             {
@@ -38,6 +39,11 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Commands
                 response.Message = $"Creation Failed Personal File No '{request.EmpBasicInfoDto.PersonalFileNo}' already Exists";
             }
 
+            else if (IdCardNo != null)
+            {
+                response.Success = false;
+                response.Message = $"Creation Failed PMIS ID '{request.EmpBasicInfoDto.IdCardNo}' already Exists";
+            }
             else
             {
                 var EmpBasicInfo = await _unitOfWork.Repository<EmpBasicInfo>().Get(request.EmpBasicInfoDto.Id);

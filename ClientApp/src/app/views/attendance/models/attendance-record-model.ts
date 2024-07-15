@@ -5,8 +5,8 @@ export class AttendanceRecordModel {
     empId: number|null;
     empFirstName: string|null;
     empLastName: string|null;
-    InTime: Time|null;
-    OutTime: Time|null;
+    inTime: Time|null;
+    outTime: Time|null;
     shiftId: number | null;
     dayTypeId:number | null;
     attendanceTypeId: number|null;
@@ -21,8 +21,8 @@ export class AttendanceRecordModel {
         this.empId=null;
         this.empFirstName="";
         this.empLastName="";
-        this.InTime = null;
-        this.OutTime = null;
+        this.inTime = null;
+        this.outTime = null;
         this.shiftId=null;
         this.dayTypeId=null;
         this.attendanceTypeId=null;

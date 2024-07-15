@@ -27,7 +27,7 @@ export class AttendanceRecordService {
     return this.http.get<AttendanceRecordModel[]>(this.baseUrl+"/attendance/get-Attendance");
   }
 
-  updateById(model:any) {
+  update(model:any) {
     return this.http.put(this.baseUrl+"/attendance/update-AttendanceById",model);
   }
 
@@ -41,5 +41,9 @@ export class AttendanceRecordService {
 
   getAttendance(id:number) {
     console.log(id);
+  }
+
+  getAttendanceById(id:number):Observable<UpdateAttendanceModel> {
+    return this.http.get<UpdateAttendanceModel>(this.baseUrl+`/attendance/get-AttendanceById/${id}`);
   }
 }

@@ -1,55 +1,52 @@
-
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SharedService } from '../service/shared.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-officer-form-2',
   templateUrl: './officer-form-2.component.html',
-  styleUrl: './officer-form-2.component.scss'
+  styleUrls: ['./officer-form-2.component.scss']
 })
-export class OfficerForm2Component  implements OnInit, OnDestroy{
+export class OfficerForm2Component implements OnInit, OnDestroy {
   totalMarks: number = 0;
   totalMarksInWords: string = '';
-  totalMarksSignature: string = '';
-  totalMarksInWordsSignature: string = '';
-  selectedSenseOfDiscipllineRow: any;
+  formData: any = {
+    SenseOfDisciplineRow: [],
+    intelegentAndJudgmentRows: [],
+    intelegenceRows: [],
+    energyAndEnthuisamRows: [],
+    publicRelationRows: [],
+    CooperationRows: [],
+    PersonalityRows: [],
+    securityRows: [],
+    totalMarks: 0,
+    totalMarksInWords: ''
+  };
 
-  formData: any = {};
-  loading:boolean=false
+  loading: boolean = false;
 
-  constructor( private sharedservice :SharedService ){}
+  constructor(private sharedService: SharedService, private router: Router) {}
 
   ngOnInit(): void {
+    this.formData = this.sharedService.getFormData('Part-2')
   }
-  ngOnDestroy(): void {
-  }
+  
+  ngOnDestroy(): void {}
 
   onSubmit(form: NgForm): void {
-    if(form.valid){
-      this.sharedservice.setFormData('Part-2',this.formData)
-    }
+    this.sharedService.setFormData('Part-2', this.formData);
+    this.router.navigate(['/appraisal/officerFormPart3']);
   }
 
-  SenseOfDisciplineRowss = [
-    { name: 'i) Extraordinary Standard', evaluationValue: 5, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '',  signatureEnabled: false,remarksEnabled: false },
-    { name: 'ii) High Standard', evaluationValue: 4, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iii) Intelligent', evaluationValue: 3, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iv) Below Expected Value', evaluationValue: 2, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
-    { name: 'v) Low Quality', evaluationValue: 1, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
-  ];
-
   SenseOfDisciplineRows = [
-
     { name: 'i) Extraordinary Standard', evaluationValue: 5, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '',  signatureEnabled: false,remarksEnabled: false },
     { name: 'ii) High Standard', evaluationValue: 4, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
     { name: 'iii) Intelligent', evaluationValue: 3, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
     { name: 'iv) Below Expected Value', evaluationValue: 2, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
     { name: 'v) Low Quality', evaluationValue: 1, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
-
-   
-
   ];
+
 
   intelegentAndJudgmentRows = [
     { name: 'i) Extraordinary Standard', evaluationValue: 5, intelegentAndJudgmentSignature: '', intelegentandjudmentRemarks:'',  signatureEnabled: false,remarksEnabled: false},
@@ -103,75 +100,58 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
     { name: 'v)Unaware of Rules and Regulation', evaluationValue: 1, securityAwarenessSignature: '', securityRemarks:'', signatureEnabled: false,remarksEnabled: false },
   ];
 
- 
+
   convertNumberToWords(num: number): string {
     const a = [
       '', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
       'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'
     ];
     const b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
-  
     if (num === 0) return 'zero';
     if (num < 20) return a[num];
     if (num < 100) return b[Math.floor(num / 10)] + (num % 10 !== 0 ? '-' + a[num % 10] : '');
-  
     return '';
   }
-  
 
+  selectedSenseOfDiscipllineRow: any;
+  selectedIntelegentAndJudgment: any;
+  selectedIntelegenceRow: any;
+  selectedEnergyEnthuisim: any;
+  selectedPublicRelation: any;
+  cooperationRow: any;
+  personalityRow: any;
+  securityRow: any;
 
- 
-
-  selectedIntelegentAndJudgment:any;
-  selectedIntelegenceRow:any;
-  selectedEnergyEnthuisim:any;
-  selectedPublicRelation:any;
-  cooperationRow:any;
-  personalityRow:any;
-  securityRow:any;
-  
   calculateTotalMarks() {
     this.totalMarks = 0;
 
-  
     if (this.selectedSenseOfDiscipllineRow) {
       this.totalMarks += this.selectedSenseOfDiscipllineRow.evaluationValue;
     }
-  
     if (this.selectedIntelegentAndJudgment) {
       this.totalMarks += this.selectedIntelegentAndJudgment.evaluationValue;
     }
-  
     if (this.selectedIntelegenceRow) {
       this.totalMarks += this.selectedIntelegenceRow.evaluationValue;
     }
-  
     if (this.selectedEnergyEnthuisim) {
       this.totalMarks += this.selectedEnergyEnthuisim.evaluationValue;
     }
-  
     if (this.selectedPublicRelation) {
       this.totalMarks += this.selectedPublicRelation.evaluationValue;
     }
-  
     if (this.cooperationRow) {
       this.totalMarks += this.cooperationRow.evaluationValue;
     }
-  
     if (this.personalityRow) {
       this.totalMarks += this.personalityRow.evaluationValue;
     }
-  
     if (this.securityRow) {
       this.totalMarks += this.securityRow.evaluationValue;
     }
+
     this.totalMarksInWords = this.convertNumberToWords(this.totalMarks);
-}
-
-
-
-   
-
+  }
 
   toggleSenseofDisciplineSignatureInput(index: any) {
     // Reset all rows to disable signature input

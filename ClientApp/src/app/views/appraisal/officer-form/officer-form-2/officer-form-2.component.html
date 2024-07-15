@@ -5,7 +5,7 @@
       <c-button-group aria-label="Basic example" role="group">
           <button cButton color="primary" [routerLink]="['/appraisal/officerForm']">Part-1</button>
           <button cButton color="primary" [active]="true">Part-2</button>
-          <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart3']">Part-3</button>
+          <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart3']" (click)="onSubmit(officerForm)">Part-3</button>
           <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart4']">Part-4</button>
           <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart5']">Part-5</button>
           <button cButton color="primary" [routerLink]="['/appraisal/officerFormPart6']">Part-6</button>
@@ -85,9 +85,6 @@
                       [(ngModel)]="selectedIntelegentAndJudgment"
                       name="intelegentAndJudgmentEvaluation"
                       (change)="toggleIntelegentSignatureInput(i); calculateTotalMarks()">
-
-                     
-
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -132,9 +129,6 @@
                       name="intelegenceEvaluation"
 
                       (change)="toggleIntelegenceSignatureInput(i); calculateTotalMarks()">
-
-                      
-
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -178,9 +172,6 @@
                       name="energyAndEnthusisamEvaluation"
 
                       (change)="toggleEnergySignatureInput(i); calculateTotalMarks()">
-
-                     
-
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -223,11 +214,7 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="selectedPublicRelation"
                       name="publicRelationEvaluation"
-
                       (change)="togglePublicRelationSignatureInput(i); calculateTotalMarks()">
-
-                  
-
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -270,10 +257,7 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="cooperationRow"
                       name="cooperationEvaluation"
-
                       (change)="toggleCooperationSignatureInput(i); calculateTotalMarks()">
-                    
-
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -315,11 +299,7 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="personalityRow"
                       name="personalityEvaluation"
-
                       (change)="togglePersonalitySignatureInput(i); calculateTotalMarks()">
-
-                     
-
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -362,11 +342,7 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="securityRow"
                       name="securityAwarenessEvaluation"
-
-                      (change)="toggleSecuritySignatureInput(i); calculateTotalMarks()">
-
-                     
-
+                     (change)="toggleSecuritySignatureInput(i); calculateTotalMarks()">
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -417,28 +393,19 @@
                 #totalMarksSignature="ngModel"> 
               <label cLabel>Signature</label>
               <input type="file" cFormControl
-
-        
-            
-
                 [(ngModel)]="totalMarksInWordsSignature"
                 name="totalMarksInWordsSignature"
                 #totalMarksInWordsSignature="ngModel">
               <div class="text-end mt-3">
-            </div>
-
-            
+            </div>      
             </c-col>
           </div>
             <c-card>
               <c-card-footer>
                 <div class="text-end">
                   <button cButton color="primary" [routerLink]="[
-                  '/appraisal/officerFormPart3']">To be continue...</button>
+                  '/appraisal/officerFormPart3']"(click)="onSubmit(officerForm)">To be continue...</button>
                 </div>
               </c-card-footer>
             </c-card>
          </div>
-
-            
-

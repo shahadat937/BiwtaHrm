@@ -16,17 +16,19 @@
                 <button cButton color="primary" [active]="true">Part-6</button>
                 <button cButton color="primary" [routerLink]="[
                     '/appraisal/officerFormPart7'
-                ]">Part-7</button>
+                ]" (click)="onSubmit(officerForm)">Part-7</button>
               </c-button-group>
           </c-button-group>
         <c-card-body>
             <form cRow cForm 
-            #officerForm="ngForm" (ngSubmit)="onSubmit(officerForm)" novalidate>
+            #officerForm="ngForm" 
+            (ngSubmit)="onSubmit(officerForm)" 
+            novalidate>
                 <c-col [md]="6">
                     <label cLabel >1.Exact tenure of Employment Under you</label>
                 </c-col>
                 <c-col [md]="3">
-                     <label cLabel for="fromdate">From Date</label>
+                    <label cLabel for="fromdate">From Date</label>
                     <input type="date" cFormControl id="fromdate" 
                     [(ngModel)]="formData.fromDate"
                     name="fromDate" required
@@ -51,13 +53,13 @@
                 <label cLabel class="mt-4">2.Additional Comment</label>
             </c-col>
             <c-col [md]="6">
-                <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
+            <input type="text" class="mt-4" cFormControl placeholder="Enter Your Comment"
             [(ngModel)]="formData.additionalComment"
             name="additionalComment" required
             #additionalComment="ngModel">
             @if(!additionalComment.valid && additionalComment.touched)
             {
-            <div class="text-left text-danger"> To Date is required</div>
+            <div class="text-left text-danger"> Additional Comment is required</div>
             }
             </c-col>
             <c-col [md]="6">
@@ -106,7 +108,7 @@
         <c-card-footer>
           <div class="text-end">
             <button cButton color="primary" [routerLink]="[
-            '/appraisal/officerFormPart7']">To be continue...</button>
+            '/appraisal/officerFormPart7']" (click)="onSubmit(officerForm)">To be continue...</button>
           </div>
         </c-card-footer>
     </c-card>

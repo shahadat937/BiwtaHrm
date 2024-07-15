@@ -1,8 +1,8 @@
 
-import { OfficerFormpart4Service } from './../service/officer-formpart4.service';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SharedService } from '../service/shared.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-officer-form-part-4',
@@ -11,22 +11,31 @@ import { SharedService } from '../service/shared.service';
 })
 export class OfficerFormPart4Component  implements OnInit, OnDestroy{
 
-  formData: any = {};
+  formData: any = {
+  personalCharacteristics: '',
+  professionalSkill: '',
+  loyalityAndRelaiability:'' ,
+  otherMatters :'',
+  annualConfidentialReportWritingAndCountersigningActivates :'',
+  adviceToOfficers :'',
+  proficencyAndInterestBengaliLanguage :'',
+  signatureOfReportingOfficer : null,
+  };
   
   @ViewChild('officerFormPart4', { static: true }) OfficerFormModule!: NgForm;
 
   loading:boolean=false
   
-  constructor( private sharedservice :SharedService ){}
+  constructor( private sharedservice :SharedService,private router: Router ){}
 
   ngOnInit(): void {
+    this.formData=this.sharedservice.getFormData('Part-4')
   }
   ngOnDestroy(): void {
   }
 
   onSubmit(form: NgForm): void {
-    if(form.valid){
-      this.sharedservice.setFormData('Part-4',this.formData)
-    }
+    this.sharedservice.setFormData('part-4',this.formData)
+    this.router.navigate(['/appraisal/officerFormPart5']);
   }
 }

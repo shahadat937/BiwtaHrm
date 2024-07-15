@@ -53,6 +53,17 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("get-SelectedFilteredEmpBasicInfo")]
+        public async Task<ActionResult> SelectedFilteredEmpBasicInfo([FromQuery] EmpBasicInfoFilterDto filter)
+        {
+            var command = new GetSelectedFilteredEmpBasicInfoRequest { EmpFilterDto = filter };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+
+        }
+
 
         [HttpPost]
         [Route("save-EmpBasicInfos")]

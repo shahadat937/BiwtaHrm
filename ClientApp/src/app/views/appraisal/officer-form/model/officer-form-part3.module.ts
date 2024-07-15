@@ -1,6 +1,5 @@
 
 export class OfficerFormPart3Module { 
-  professionalKnowledgeSignature:string='';
   professionalKnowledgeEvaluation:number=0;
   qualityOfWorkSignature:string='';
   qualityOfWorkEvaluation:number=0;
@@ -27,7 +26,7 @@ export class OfficerFormPart3Module {
   overallAssessmentSignature:string='';
   overallAssessmentEvaluation:number=0;
   totalMarks3rdPart :number=0;
-  totalMarksInWords3rdPart :number=0;
+  totalMarksInWords3rdPart :string='';
   totalMarksSignature3rdPart  :string='';
   totalMarksInWordsSignature3rdPart  :string='';
   totalMarks2ndAnd3rdPart :number=0;
@@ -35,4 +34,17 @@ export class OfficerFormPart3Module {
   totalMarksSignaturetotalMarks2ndAnd3rdPart   :string='';
   totalMarksInWordsSignaturetotalMarks2ndAnd3rdPart :string='';
   signature :File | null = null;
+  selectedRow:number=0;
+  selectedQualityRow:number=0;
+  selectedAmountRow:number=0;
+  selectedPunctualityRow:number=0;
+  selectedSenseofResponsibilityRow:number=0;
+  selectedPromtnessTakingRow:number=0;
+  selectedinterstofworkRow:number=0;
+  selectedsuperviseAndMeasureRow:number=0;
+  selectedRelationColleaguesRow:number=0;
+  abilityWithImplementRow:number=0;
+  exessivePowerWritingRow:number=0;
+  exessivePowerSpeechRow:number=0;
+  overallAssessmentRow:number=0;
 }

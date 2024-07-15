@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class OfficerFormPart5Component  implements OnInit, OnDestroy{
 
   formData: any = {
-  setpeciality:'',
+  specitality:'',
   suitabilityForFurtherEmployment :'',
   recommendMoreServiceTraning:'',
   notEligableForFurtherPromotion:'',
@@ -25,8 +25,6 @@ export class OfficerFormPart5Component  implements OnInit, OnDestroy{
   
   @ViewChild('officerFormPart5', { static: true }) OfficerFormPart5Module!: NgForm;
 
-  loading:boolean=false
-
   constructor( private sharedservice :SharedService,private router: Router ){}
 
   ngOnInit(): void {
@@ -34,9 +32,9 @@ export class OfficerFormPart5Component  implements OnInit, OnDestroy{
   }
   ngOnDestroy(): void {
   }
-
+  
   onSubmit(form: NgForm): void {
-    this.sharedservice.setFormData('part-4',this.formData)
+    this.sharedservice.setFormData('part-5',this.formData)
     this.router.navigate(['/appraisal/officerFormPart6']);
   }
 }

@@ -9,7 +9,7 @@
                   '/appraisal/officerForm2']">Part-2</button>
                 <button cButton color="primary" [active]="true">Part-3</button>
                 <button cButton color="primary" [routerLink]="[
-                    '/appraisal/officerFormPart4']">Part-4</button> 
+                    '/appraisal/officerFormPart4']" (click)="onSubmit(officerForm)">Part-4</button> 
                 <button cButton color="primary" [routerLink]="[
                     '/appraisal/officerFormPart5'
                 ]">Part-5</button>
@@ -48,9 +48,11 @@
                           <td>
                             <c-form-check inline>
                               <input cFormCheckInput type="radio" [value]="row"
-                                [(ngModel)]="selectedRow"
+                                [(ngModel)]="formData.selectedRow"
                                 name="professionalKnowledgeEvaluation"
-                                (change)="toggleSignatureInput(i); calculateTotalMarksIn3rdpart()">
+                                (change)="toggleSignatureInput(i)"
+                                (change)="calculateTotalMarksIn3rdpart()"
+                                >
                               <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                             </c-form-check>
                           </td>
@@ -91,7 +93,7 @@
                           <td>
                             <c-form-check inline>
                               <input cFormCheckInput type="radio" [value]="row"
-                                [(ngModel)]="selectedQualityRow"
+                                [(ngModel)]="formData.selectedQualityRow"
                                 name="qualityOfWorkEvaluation"
                                 (change)="toggleQualitySignatureInput(i); calculateTotalMarksIn3rdpart()">
                               <label cFormCheckLabel>{{ row.evaluationValue }}</label>
@@ -133,7 +135,7 @@
                         <td>
                           <c-form-check inline>
                             <input cFormCheckInput type="radio" [value]="row"
-                              [(ngModel)]="selectedAmountRow"
+                              [(ngModel)]="formData.selectedAmountRow"
                               name="amountOfWorkEvaluation"
 
                               (change)="toggleAmountSignatureInput(i); calculateTotalMarksIn3rdpart()">
@@ -177,7 +179,7 @@
                         <td>
                           <c-form-check inline>
                             <input cFormCheckInput type="radio" [value]="row"
-                                  [(ngModel)]="selectedPunctualityRow"
+                                  [(ngModel)]="formData.selectedPunctualityRow"
                                    name="punctualityEvaluation"
                                    (change)="togglePunctualitySignatureInput(i); 
                                    calculateTotalMarksIn3rdpart()">
@@ -219,7 +221,7 @@
                         <td>
                           <c-form-check inline>
                             <input cFormCheckInput type="radio" [value]="row"
-                                   [(ngModel)]="selectedSenseofResponsibilityRow"
+                                   [(ngModel)]="formData.selectedSenseofResponsibilityRow"
                                    name="  senceOfResponsibilityAndCommitmentEvaluation"
                                    (change)="toggleSenseOfResponsibilitySignatureInput(i); calculateTotalMarksIn3rdpart()">
                             <label cFormCheckLabel>{{ row.evaluationValue }}</label>
@@ -261,7 +263,7 @@
                         <td>
                           <c-form-check inline>
                             <input cFormCheckInput type="radio" [value]="row"
-                                   [(ngModel)]="selectedPromtnessTakingRow"
+                                   [(ngModel)]="formData.selectedPromtnessTakingRow"
                                    name="  promptnessTakingMeasuresAndFollowingOrdersEvaluation"
                                    (change)="togglePromptnessSignatureInput(i);calculateTotalMarksIn3rdpart()">
                             <label cFormCheckLabel>{{ row.evaluationValue }}</label>
@@ -302,7 +304,7 @@
                         <td>
                           <c-form-check inline>
                             <input cFormCheckInput type="radio" [value]="row"
-                                   [(ngModel)]="selectedinterstofworkRow"
+                                   [(ngModel)]="formData.selectedinterstofworkRow"
                                    name="  interestOfWorkEvaluation"
                                    (change)="toggleinterestofWorkSignatureInput(i); calculateTotalMarksIn3rdpart()">
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
@@ -344,7 +346,7 @@
                         <td>
                           <c-form-check inline>
                             <input cFormCheckInput type="radio" [value]="row"
-                                   [(ngModel)]="selectedsuperviseAndMeasureRow"
+                                   [(ngModel)]="formData.selectedsuperviseAndMeasureRow"
                                    name="  superviseAndManageEvaluation"
                                    (change)="toggleSuperviseMeasureSignatureInput(i); calculateTotalMarksIn3rdpart()">
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
@@ -385,7 +387,7 @@
                         <td>
                           <c-form-check inline>
                             <input cFormCheckInput type="radio" [value]="row"
-                                   [(ngModel)]="selectedRelationColleaguesRow"
+                                   [(ngModel)]="formData.selectedRelationColleaguesRow"
                                    name="  relationWithColleaguesEvaluation"
                                    (change)="toggleRelationColleaguesignatureInput(i); calculateTotalMarksIn3rdpart()">
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
@@ -426,7 +428,7 @@
                         <td>
                           <c-form-check inline>
                             <input cFormCheckInput type="radio" [value]="row"
-                                   [(ngModel)]="abilityWithImplementRow"
+                                   [(ngModel)]="formData.abilityWithImplementRow"
                                    name="  abilityImplementDecisionEvaluation"
                                    (change)="toggleAbilityWithImplementSignatureInput(i); calculateTotalMarksIn3rdpart()">
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
@@ -467,7 +469,7 @@
                         <td>
                           <c-form-check inline>
                             <input cFormCheckInput type="radio" [value]="row"
-                                   [(ngModel)]="exessivePowerWritingRow"
+                                   [(ngModel)]="formData.exessivePowerWritingRow"
                                    name="  expressivePowerWritingEvaluation"
                                    (change)="toggleExessivePowerWritingSignatureInput(i); calculateTotalMarksIn3rdpart()">
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
@@ -508,7 +510,7 @@
                         <td>
                           <c-form-check inline>
                             <input cFormCheckInput type="radio" [value]="row"
-                                   [(ngModel)]="exessivePowerSpeechRow"
+                                   [(ngModel)]="formData.exessivePowerSpeechRow"
                                    name="  expressivePowerSpeechEvaluation"
                                    (change)="toggleExessivePowerSpeechSignatureInput(i); calculateTotalMarksIn3rdpart()">
                                    <label cFormCheckLabel>{{ row.evaluationValue }}</label>
@@ -636,7 +638,7 @@
                             <td>
                               <c-form-check inline>
                                 <input cFormCheckInput type="radio" [value]="row"
-                                       [(ngModel)]="overallAssessmentRow"
+                                       [(ngModel)]="formData.overallAssessmentRow"
                                        name="  overallAssessmentEvaluation"
                                        (change)="toggleOverallAssessmentSignatureInput(i)">
                                        <label cFormCheckLabel>{{ row.evaluationValue }}</label>
@@ -684,7 +686,7 @@
     <c-card-footer>
       <div class="text-end">
         <button cButton color="primary" [routerLink]="[
-        '/appraisal/officerFormPart4']">To be continue...</button>
+        '/appraisal/officerFormPart4']" (click)="onSubmit(officerForm)">To be continue...</button>
       </div>
     </c-card-footer>
     </c-card>

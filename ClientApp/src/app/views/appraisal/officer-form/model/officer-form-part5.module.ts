@@ -1,6 +1,6 @@
 
 export class OfficerFormPart5Module { 
-  setpeciality:string='';
+  specitality:string='';
   suitabilityForFurtherEmployment :string='';
   recommendMoreServiceTraning:string='';
   notEligableForFurtherPromotion:string='';

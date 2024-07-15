@@ -10,8 +10,9 @@ namespace Hrm.Application.Enum
     {
         // Need to set the number according to database entry
         Present = 1,
-        Late = 3,
-        Absent = 4,
-        OnSiteVisit
+        Late = 2,
+        Absent = 3,
+        OnSiteVisit = 4,
+        OnLeave = 5
     }
 }

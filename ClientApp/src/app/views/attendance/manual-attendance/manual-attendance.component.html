@@ -23,6 +23,7 @@
                     <label for="Department">Department</label>
                     <select name="departmentId" id="Department" 
                     cSelect
+                    (change)="onOfficeChange()"
                     [(ngModel)]="selectedDepartment">
                         @for (department of DepartmentOption; track $index) {
                             <option [value]="department.id">{{department.name}}</option>

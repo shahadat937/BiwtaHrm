@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import {ManualAttendanceService} from '../services/manual-attendance.service'
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-manual-attendance',
@@ -102,10 +103,26 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   onOfficeChange() {
-    console.log(this.selectedOffice);
+    //console.log(this.selectedDepartment);
     this.manualAtdService.getDepartmentOption(this.selectedOffice).subscribe(
       option => this.DepartmentOption = option,
     );
+
+    let params = new HttpParams();
+    if(this.selectedDepartment!=0) {
+      params = params.set('DepartmentId',this.selectedDepartment);
+    }
+    if(this.selectedOffice!=0) {
+      params = params.set("OfficeId",this.selectedOffice);
+    }
+
+
+    console.log(params.get('officeId'));
+
+    this.manualAtdService.getFilteredEmpOption(params).subscribe(response=> {
+      this.EmpOption = response;
+      console.log(response);
+    });
   }
 
   onSubmit(form:NgForm) {

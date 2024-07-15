@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Attendances } from '../models/attendances';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -53,5 +53,10 @@ export class ManualAttendanceService {
 
   getEmpOption():Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl + "/empBasicInfo/get-SelectedEmpBasicInfo");
+  }
+
+  getFilteredEmpOption(filter:any):Observable<any[]> {
+
+    return this.http.get<any[]>(this.baseUrl+"/empBasicInfo/get-SelectedFilteredEmpBasicInfo",{params:filter})
   }
 }

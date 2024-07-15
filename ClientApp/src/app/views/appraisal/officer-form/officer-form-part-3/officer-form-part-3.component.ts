@@ -1,6 +1,7 @@
 import { NgForm } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SharedService } from '../service/shared.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-officer-form-part-3',
@@ -9,27 +10,59 @@ import { SharedService } from '../service/shared.service';
 })
 export class OfficerFormPart3Component  implements OnInit, OnDestroy{
 
-  formData: any = {};
-  totalMarksIn3rdPart: number = 0;
-  totalMarksIn3rdPartInwords='';
-  totalMarks2ndAnd3rdPart: number=0;
-  totalMarksInWords2ndAnd3rdPart: string='';
-  loading:boolean=false
+  formData: any = {
+    professionalKnowledgeRows:[],
+    qualityOfWorkRows:[],
+    amountOfWorkRows:[],
+    punctualityRows:[],
+    SenceOfResponsibilityRows:[],
+    PromptnessTakingMeasuresRows:[],
+    interestOfWorkRows:[],
+    superviseandMeasureRows:[],
+    RelationWithColleaguesRows:[],
+    abilityToImplementRows:[],
+    expressivePowerWritingRows:[],
+    expressivePowerSpeechRows:[],
+    professionalKnowledgeEvaluation:0,
+    qualityOfWorkEvaluation:0,
+    amountOfWorkEvaluation:0,
+    punctualityEvaluation:0,
+    senceOfResponsibilityAndCommitmentEvaluation:0,
+    promptnessTakingMeasuresAndFollowingOrdersEvaluation:0,
+    interestOfWorkEvaluation:0,
+    superviseAndManageEvaluation:0,
+    relationWithColleaguesEvaluation:0,
+    abilityImplementDecisionEvaluation:0,
+    expressivePowerWritingEvaluation:0,
+    expressivePowerSpeechEvaluation:0,
+    overallAssessmentEvaluation:0,
+    totalMarksIn3rdPart :0,
+    totalMarksInWords3rdPart :'',
+    totalMarksSignature3rdPart  :'',
+    totalMarksInWordsSignature3rdPart:'',
+    totalMarks2ndAnd3rdPart :0,
+    totalMarksInWordstotalMarks2ndAnd3rdPart  :0,
+    totalMarksSignaturetotalMarks2ndAnd3rdPart   :'',
+    totalMarksInWordsSignaturetotalMarks2ndAnd3rdPart :'',
+    signature :null,
+  };
+ 
 
-  constructor( private sharedservice :SharedService ){}
+  constructor( private sharedservice :SharedService,private router: Router ){}
+
   ngOnInit(): void {
+    this.formData=this.sharedservice.getFormData('Part-3')
   }
   ngOnDestroy(): void {
+
   }
-  
    onSubmit(form: NgForm): void {
-    if(form.valid){
-      this.sharedservice.setFormData('Part-3',this.formData)
-    }
+    this.sharedservice.setFormData('part-3',this.formData)
+    this.router.navigate(['/appraisal/officerFormPart4']);
   }
   
   professionalKnowledgeRows = [
-    { name: 'i) Significant Knowledge', evaluationValue: 5, Signature: '', professionalKnowledgeRemarks:'',  signatureEnabled: false ,remarksEnabled: false},
+    { name: 'i) Significant Knowledge', evaluationValue: 5, Signature: '', professionalKnowledgeRemarks:'',   signatureEnabled: false ,remarksEnabled: false},
     { name: 'ii) Sufficient Knowledge', evaluationValue: 4, Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
     { name: 'iii) Fairly Good Knowledge', evaluationValue: 3, Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
     { name: 'iv) Insufficient', evaluationValue: 2, Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
@@ -143,15 +176,6 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
   
     return '';
   }
-  convertNumberToWords2ndand3rdpart(amount: number): string {
-    const words = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", 
-                   "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
-    const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
-    if (amount < 20) return words[amount];
-    if (amount < 100) return tens[Math.floor(amount / 10)] + (amount % 10 > 0 ? "-" + words[amount % 10] : "");
-    // Add more cases for hundreds, thousands, etc.
-    return amount.toString(); // Placeholder for more complex logic
-  }
 
   selectedRow: any; // Variable to store the selected row
   selectedQualityRow: any;
@@ -166,15 +190,20 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
   exessivePowerWritingRow:any;
   exessivePowerSpeechRow:any;
   overallAssessmentRow:any;
+  totalMarksIn3rdPart:number=0 ;
+  totalMarksIn3rdPartInwords='';
+  totalMarks2ndAnd3rdPart: number=0;
+  totalMarksInWords2ndAnd3rdPart: string='';
 
   calculateTotalMarksIn3rdpart(){
     this.totalMarksIn3rdPart= 0;
-
+    console.log('totalMarksIn3rdPart',this.selectedRow)
     if(this.selectedRow){
       this.totalMarksIn3rdPart += this.selectedRow.evaluationValue;
     }
     if(this.selectedQualityRow){
       this.totalMarksIn3rdPart += this.selectedQualityRow.evaluationValue;
+      console.log('totalMarksIn3rdPart',this.totalMarksIn3rdPart)
     }
     if(this.selectedAmountRow){
       this.totalMarksIn3rdPart += this.selectedAmountRow.evaluationValue;
@@ -353,13 +382,10 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
       
     }
     toggleOverallAssessmentSignatureInput(index: number) {
-      // Reset all rows to disable signature input
       this.overallAssessmentRows.forEach((row) => {
         row.signatureEnabled = false;
         row.remarksEnabled=false;
       });
-  
-      // Enable signature input for the selected row
       this.overallAssessmentRows[index].signatureEnabled = true;
       this.overallAssessmentRows[index].remarksEnabled = true;
       

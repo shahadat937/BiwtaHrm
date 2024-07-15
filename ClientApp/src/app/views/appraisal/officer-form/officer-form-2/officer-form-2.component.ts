@@ -1,52 +1,62 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+
+import { Component, OnDestroy, OnInit, OnChanges } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { SharedService } from '../service/shared.service';
 import { Router } from '@angular/router';
+import { SharedService } from '../service/shared.service';
 
 @Component({
   selector: 'app-officer-form-2',
   templateUrl: './officer-form-2.component.html',
-  styleUrls: ['./officer-form-2.component.scss']
+  styleUrl: './officer-form-2.component.scss'
 })
-export class OfficerForm2Component implements OnInit, OnDestroy {
-  totalMarks: number = 0;
-  totalMarksInWords: string = '';
+export class OfficerForm2Component  implements OnInit, OnDestroy{
+ 
+  loading:boolean=false
+
+  constructor( private sharedservice :SharedService,private router: Router ){}
+
   formData: any = {
-    SenseOfDisciplineRow: [],
-    intelegentAndJudgmentRows: [],
-    intelegenceRows: [],
-    energyAndEnthuisamRows: [],
-    publicRelationRows: [],
-    CooperationRows: [],
-    PersonalityRows: [],
-    securityRows: [],
-    totalMarks: 0,
-    totalMarksInWords: ''
-  };
+    SenseOfDisciplineRows:[],
+    intelegentAndJudgmentRows:[],
+    intelegenceRows:[],
+    energyAndEnthuisamRows:[],
+    publicRelationRows:[],
+    CooperationRows:[],
+    PersonalityRows:[],
+    securityRows:[],
+    intelegenceEvaluation :0,
+    energyAndEnthusisamEvaluation :0,
+    publicRelationEvaluation :0,
+    cooperationEvaluation :0,
+    personalityEvaluation :0,
+    securityAwarenessEvaluation :0,
+    totalMarks :0,
+    totalMarksInWords:0,
+    totalMarksSignature :'',
+    totalMarksInWordsSignature :'',
 
-  loading: boolean = false;
-
-  constructor(private sharedService: SharedService, private router: Router) {}
+  }
 
   ngOnInit(): void {
-    this.formData = this.sharedService.getFormData('Part-2')
+    this.formData=this.sharedservice.getFormData('Part-2')
   }
-  
-  ngOnDestroy(): void {}
+
+  ngOnDestroy(): void { 
+
+  }
 
   onSubmit(form: NgForm): void {
-    this.sharedService.setFormData('Part-2', this.formData);
+    this.sharedservice.setFormData('part-2',this.formData)
     this.router.navigate(['/appraisal/officerFormPart3']);
   }
 
   SenseOfDisciplineRows = [
     { name: 'i) Extraordinary Standard', evaluationValue: 5, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '',  signatureEnabled: false,remarksEnabled: false },
-    { name: 'ii) High Standard', evaluationValue: 4, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
+    { name: 'ii) High Standard', evaluationValue: 4, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false},
     { name: 'iii) Intelligent', evaluationValue: 3, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iv) Below Expected Value', evaluationValue: 2, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iv) Below Expected Value', evaluationValue: 2, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false},
     { name: 'v) Low Quality', evaluationValue: 1, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
   ];
-
 
   intelegentAndJudgmentRows = [
     { name: 'i) Extraordinary Standard', evaluationValue: 5, intelegentAndJudgmentSignature: '', intelegentandjudmentRemarks:'',  signatureEnabled: false,remarksEnabled: false},
@@ -59,9 +69,11 @@ export class OfficerForm2Component implements OnInit, OnDestroy {
   intelegenceRows = [
     { name: 'i) Great Strength', evaluationValue: 5, intelegenceSignature: '', intelegenceRemarks:'',  signatureEnabled: false ,remarksEnabled: false},
     { name: 'ii) High Strength', evaluationValue: 4, intelegenceSignature: '', intelegenceRemarks:'', signatureEnabled: false,remarksEnabled: false },
-    { name: 'iii) Intelligent', evaluationValue: 3, intelegenceSignature: '', intelegenceRemarks:'', signatureEnabled: false,remarksEnabled: false},
-    { name: 'iv) Below Expected Value', evaluationValue: 2, intelegenceSignature: '', signatureEnabled: false,remarksEnabled: false },
-    { name: 'v) Low Quality', evaluationValue: 1, intelegenceSignature: '', intelegenceRemarks:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'iii) Intelligent', evaluationValue: 3, intelegenceSignature: '',
+      intelegenceRemarks:'', signatureEnabled: false,remarksEnabled: false},
+    { name: 'iv) Below Expected Value', evaluationValue: 2, intelegenceSignature:'', signatureEnabled: false,remarksEnabled: false },
+    { name: 'v) Low Quality', evaluationValue: 1, intelegenceSignature: '', 
+      intelegenceRemarks:'', signatureEnabled: false,remarksEnabled: false },
   ];
 
   energyAndEnthuisamRows = [
@@ -99,68 +111,74 @@ export class OfficerForm2Component implements OnInit, OnDestroy {
     { name: 'iv)Not So Aware', evaluationValue: 2, securityAwarenessSignature: '', securityRemarks:'', signatureEnabled: false,remarksEnabled: false },
     { name: 'v)Unaware of Rules and Regulation', evaluationValue: 1, securityAwarenessSignature: '', securityRemarks:'', signatureEnabled: false,remarksEnabled: false },
   ];
-
-
+ 
   convertNumberToWords(num: number): string {
     const a = [
       '', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
       'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'
     ];
     const b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  
     if (num === 0) return 'zero';
     if (num < 20) return a[num];
     if (num < 100) return b[Math.floor(num / 10)] + (num % 10 !== 0 ? '-' + a[num % 10] : '');
+  
     return '';
   }
-
-  selectedSenseOfDiscipllineRow: any;
-  selectedIntelegentAndJudgment: any;
-  selectedIntelegenceRow: any;
-  selectedEnergyEnthuisim: any;
-  selectedPublicRelation: any;
-  cooperationRow: any;
-  personalityRow: any;
-  securityRow: any;
+  
+  selectedSenseOfDiscipllineRow: any; 
+  selectedIntelegentAndJudgment:any;
+  selectedIntelegenceRow:any;
+  selectedEnergyEnthuisim:any;
+  selectedPublicRelation:any;
+  cooperationRow:any;
+  personalityRow:any;
+  securityRow:any;
+  totalMarks: number = 0;
+  totalMarksInWords: string = '';
 
   calculateTotalMarks() {
     this.totalMarks = 0;
-
+  
     if (this.selectedSenseOfDiscipllineRow) {
       this.totalMarks += this.selectedSenseOfDiscipllineRow.evaluationValue;
     }
+  
     if (this.selectedIntelegentAndJudgment) {
       this.totalMarks += this.selectedIntelegentAndJudgment.evaluationValue;
     }
+  
     if (this.selectedIntelegenceRow) {
       this.totalMarks += this.selectedIntelegenceRow.evaluationValue;
     }
+  
     if (this.selectedEnergyEnthuisim) {
       this.totalMarks += this.selectedEnergyEnthuisim.evaluationValue;
     }
+  
     if (this.selectedPublicRelation) {
       this.totalMarks += this.selectedPublicRelation.evaluationValue;
     }
+  
     if (this.cooperationRow) {
       this.totalMarks += this.cooperationRow.evaluationValue;
     }
+  
     if (this.personalityRow) {
       this.totalMarks += this.personalityRow.evaluationValue;
     }
+  
     if (this.securityRow) {
       this.totalMarks += this.securityRow.evaluationValue;
     }
-
     this.totalMarksInWords = this.convertNumberToWords(this.totalMarks);
-  }
+}
 
   toggleSenseofDisciplineSignatureInput(index: any) {
-    // Reset all rows to disable signature input
     this.SenseOfDisciplineRows.forEach((row) => {
       row.signatureEnabled = false;
       row.remarksEnabled = false;
     });
-
-    // Enable signature input for the selected row
     this.SenseOfDisciplineRows[index].signatureEnabled = true;
     this.SenseOfDisciplineRows[index].remarksEnabled = true;
   }
@@ -170,19 +188,14 @@ export class OfficerForm2Component implements OnInit, OnDestroy {
       row.signatureEnabled = false;
       row.remarksEnabled=false;
     });
-
-    // Enable signature input for the selected row
     this.intelegentAndJudgmentRows[index].signatureEnabled = true;
     this.intelegentAndJudgmentRows[index].remarksEnabled=true;
   }
   toggleIntelegenceSignatureInput(index: any) {
-    // Reset all rows to disable signature input
     this.intelegenceRows.forEach((row) => {
       row.signatureEnabled = false;
       row.remarksEnabled=false;
     });
-
-    // Enable signature input for the selected row
     this.intelegenceRows[index].signatureEnabled = true;
     this.intelegenceRows[index].remarksEnabled=true;
   }
@@ -221,7 +234,6 @@ export class OfficerForm2Component implements OnInit, OnDestroy {
     this.CooperationRows[index].remarksEnabled = true;
   }
   togglePersonalitySignatureInput(index: any) {
-    // Reset all rows to disable signature input
     this.PersonalityRows.forEach((row) => {
       row.signatureEnabled = false;
       row.remarksEnabled=false;
@@ -231,7 +243,6 @@ export class OfficerForm2Component implements OnInit, OnDestroy {
   }
 
   toggleSecuritySignatureInput(index: any) {
-    // Reset all rows to disable signature input
     this.securityRows.forEach((row) => {
       row.signatureEnabled = false;
       row.remarksEnabled=false;

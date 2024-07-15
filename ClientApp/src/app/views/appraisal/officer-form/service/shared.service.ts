@@ -15,6 +15,5 @@ export class SharedService {
   getAllFormData() {
     return this.formData;
   }
-
   constructor() { }
 }

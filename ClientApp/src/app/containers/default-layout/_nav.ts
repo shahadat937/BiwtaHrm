@@ -330,43 +330,43 @@ export const navItems: INavData[] = [
       },
     ]
   },
-  {
-    title: true,
-    name: 'Transfer'
-  },
-  {
-    name: 'Transfer',
-    url: '/transfer',
-    iconComponent: { name: 'cil-paper-plane' },
-    children: [
-      {
-        name: 'Transfer&Posting Management',
-        url: '/transfer/postingOrderInfo'
-      },
-      {
-        name: 'Transfer Order List',
-        url: '/transfer/TransferOrderList'
-      },
-      {
-        name: 'Transfer Approved List',
-        url: '/transfer/transferApproveInfoList'
-      },
+  // {
+  //   title: true,
+  //   name: 'Transfer'
+  // },
+  // {
+  //   name: 'Transfer',
+  //   url: '/transfer',
+  //   iconComponent: { name: 'cil-paper-plane' },
+  //   children: [
+  //     {
+  //       name: 'Transfer&Posting Management',
+  //       url: '/transfer/postingOrderInfo'
+  //     },
+  //     {
+  //       name: 'Transfer Order List',
+  //       url: '/transfer/TransferOrderList'
+  //     },
+  //     {
+  //       name: 'Transfer Approved List',
+  //       url: '/transfer/transferApproveInfoList'
+  //     },
 
-      {
-        name: 'Departmetn Release List',
-        url: '/transfer/departmetnReleaseList'
-      },
-      {
-        name: 'Employee Transfer Join',
-        url: '/transfer/employePostingJoinList'
-      },
+  //     {
+  //       name: 'Departmetn Release List',
+  //       url: '/transfer/departmetnReleaseList'
+  //     },
+  //     {
+  //       name: 'Employee Transfer Join',
+  //       url: '/transfer/employePostingJoinList'
+  //     },
       
-      {
-        name: 'Transfer posting History',
-        url: '/transfer/'
-      }
-    ]
-  },
+  //     {
+  //       name: 'Transfer posting History',
+  //       url: '/transfer/'
+  //     }
+  //   ]
+  // },
 
   
   {
@@ -379,9 +379,13 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-paper-plane' },
     children: [
       {
+        name: 'New Order Application',
+        url: '/transferPosting/transferPostingApplication/'
+      },
+      {
         name: 'Transfer Posting List',
         url: '/transferPosting/transferPostingList/'
-      }
+      },
     ]
   },
   

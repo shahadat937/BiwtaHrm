@@ -367,6 +367,24 @@ export const navItems: INavData[] = [
       }
     ]
   },
+
+  
+  {
+    title: true,
+    name: 'Transfer and Posting'
+  },
+  {
+    name: 'Transfer',
+    url: '/transferPosting',
+    iconComponent: { name: 'cil-paper-plane' },
+    children: [
+      {
+        name: 'Transfer Posting List',
+        url: '/transferPosting/transferPostingList/'
+      }
+    ]
+  },
+  
   {
     title: true,
     name: 'Promotion Management'

@@ -14,6 +14,7 @@
                     [(ngModel)]="selectedOffice"
                     (change)="onOfficeChange()"
                     >
+                        <option [ngValue]="null" selected>Select Office</option>
                         @for (Office of OfficeOption; track $index) {
                             <option [value]="Office.id">{{Office.name}}</option>
                         }
@@ -25,6 +26,7 @@
                     cSelect
                     (change)="onOfficeChange()"
                     [(ngModel)]="selectedDepartment">
+                        <option [ngValue]="null" selected>Select Department</option>
                         @for (department of DepartmentOption; track $index) {
                             <option [value]="department.id">{{department.name}}</option>
                         }
@@ -37,6 +39,7 @@
                     required
                     #Shift = "ngModel"
                     [(ngModel)]="this.manualAtdService.attendances.shiftId">
+                        <option [ngValue]="null" >Select Shift</option>
                         @for (shift of ShiftOption; track $index) {
                             <option [value]="shift.id">{{shift.name}}</option>
                         }
@@ -52,6 +55,7 @@
                     cSelect required
                     #EmpId = "ngModel"
                     [(ngModel)]="this.manualAtdService.attendances.empId">
+                        <option [ngValue]="null" selected>Select Employee</option>
                         @for (employee of EmpOption; track $index) {
                             <option [value]="employee.id">{{employee.name+"/"+employee.id}}</option>
                         }

@@ -30,9 +30,9 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   ShiftOption: any;
   EmpOption:any;
   AtdStatusOption:any;
-  selectedOffice:number;
-  selectedShift:number;
-  selectedDepartment:number;
+  selectedOffice:number|null;
+  selectedShift:number|null;
+  selectedDepartment:number|null;
   selectedEmp:number;
   atdFile: File | null;
 
@@ -44,18 +44,18 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
     private confirmService: ConfirmService,
     private toastr: ToastrService
   ) {
-      this.selectedOffice = 0;
-      this.selectedDepartment=0;
-      this.selectedShift = 0;
+      this.selectedOffice = null;
+      this.selectedDepartment=null;
+      this.selectedShift = null;
       this.selectedEmp = 0;
       this.atdFile = null;
 
       this.HeaderText = "Manual Attendance ";
-      this.OfficeOption = [{"value":1,"name":"Office1"},{"value":2,"name":"Office2"}]
-      this.DepartmentOption = [{"value":1,"name":"Department1"},{"value":2,"name":"Department2"}]
-      this.ShiftOption = [{"value":1,"name":"Shift1"},{"value":2,"name":"Shift2"}]
-      this.EmpOption = [{"value":1,"name":"Emp1"},{"value":2,"name":"Emp2"}]
-      this.AtdStatusOption = [{"value":1,"name":"Status 1"},{"value":2,"name":"Status 2"}]
+      this.OfficeOption = []
+      this.DepartmentOption = []
+      this.ShiftOption = []
+      this.EmpOption = []
+      this.AtdStatusOption = []
   }
 
   ngOnInit(): void {
@@ -89,6 +89,10 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
       return;
     }
     this.manualAtdForm.reset();
+    this.manualAtdBulkForm.form.patchValue({
+      empId:null
+
+    })
     //console.log("Form Reset");
     //console.log(this.loading);
   }
@@ -104,16 +108,22 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
 
   onOfficeChange() {
     //console.log(this.selectedDepartment);
+
+    if(this.selectedOffice!=null)
     this.manualAtdService.getDepartmentOption(this.selectedOffice).subscribe(
       option => this.DepartmentOption = option,
     );
 
+    if(this.selectedOffice==null) {
+      this.DepartmentOption=[];
+    }
+
     let params = new HttpParams();
     if(this.selectedDepartment!=0) {
-      params = params.set('DepartmentId',this.selectedDepartment);
+      params = params.set('DepartmentId',this.selectedDepartment==null?"":this.selectedDepartment);
     }
     if(this.selectedOffice!=0) {
-      params = params.set("OfficeId",this.selectedOffice);
+      params = params.set("OfficeId",this.selectedOffice==null?"":this.selectedOffice);
     }
 
 

@@ -21,6 +21,9 @@ import {
   ProgressModule,
   SharedModule,
   SpinnerModule,
+  TabsModule,
+  TabContentComponent,
+  TabPaneComponent
 } from '@coreui/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
@@ -28,7 +31,9 @@ import { ToastrService } from 'ngx-toastr';
 import { ShiftService } from './services/shift.service';
 import { ManualAttendanceService } from './services/manual-attendance.service';
 import {AttendanceRecordService} from './services/attendance-record-service.service';
+import {AttendanceReportService} from './services/attendance-report.service'
 import {TimeFormatPipe} from './pipes/time-format.pipe'
+
 
 
 @NgModule({
@@ -61,11 +66,16 @@ import {TimeFormatPipe} from './pipes/time-format.pipe'
     ProgressModule,
     SpinnerModule,
     CollapseDirective,
+    TabsModule,
+    TabContentComponent,
+    TabPaneComponent
+    
   ],
   providers: [ 
     ToastrService,
     ShiftService,
     ManualAttendanceService,
+    AttendanceReportService
   ],
 })
 export class AttendanceModule { }

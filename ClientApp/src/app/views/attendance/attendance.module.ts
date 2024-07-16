@@ -31,6 +31,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ShiftService } from './services/shift.service';
 import { ManualAttendanceService } from './services/manual-attendance.service';
 import {AttendanceRecordService} from './services/attendance-record-service.service';
+import {AttendanceReportService} from './services/attendance-report.service'
 import {TimeFormatPipe} from './pipes/time-format.pipe'
 
 
@@ -74,6 +75,7 @@ import {TimeFormatPipe} from './pipes/time-format.pipe'
     ToastrService,
     ShiftService,
     ManualAttendanceService,
+    AttendanceReportService
   ],
 })
 export class AttendanceModule { }

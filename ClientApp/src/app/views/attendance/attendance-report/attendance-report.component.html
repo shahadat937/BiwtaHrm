@@ -1,1 +1,116 @@
 <p>attendance-report works!</p>
+<c-card>
+    <c-card-header>
+        <div class="d-flex justify-content-between">
+            <div>
+                EmployeeWise Summary
+            </div>
+            <div>
+                <button cButton class="primary">
+                    {{EmpSummaryButtonText}}
+                </button>
+            </div>
+        </div>
+    </c-card-header>
+    <c-card-body>
+        <c-row class="mt-3" >
+            <h5 cCardTitle>Select Employee</h5>
+            <c-col md="3">
+                <select name="Office" id="office" cSelect>
+                    <option [ngValue]="null" selected>Select Office</option>
+                    @for (office of OfficeOption; track $index) {
+                        <option [ngValue]="office.id">{{office.name}}</option>
+                    }
+                </select>
+            </c-col>
+            <c-col md="3">
+                <select name="Department" id="department" cSelect>
+                    <option [ngValue]="null" selected>Select Department</option>
+                    @for ( department of DepartmentOption; track $index) {
+                        <option [ngValue]="department.id">{{department.name}}</option>
+                    }
+                </select>
+            </c-col>
+            <c-col md="3">
+                <select name="Shift" id="shift" cSelect>
+                    <option [ngValue]="null" selected>Select Shift</option>
+                    @for ( shift of ShiftOption; track $index) {
+                        <option [ngValue]="shift.id">{{shift.name}}</option>
+                    }
+                </select>
+            </c-col>
+
+            <c-col md="3">
+                <select name="Employee" id="employee" cSelect>
+                    <option [ngValue]="null" selected>Select Employee</option>
+                    @for ( employee of EmpOption; track $index) {
+                        <option [ngValue]="employee.id">{{employee.name}}</option>
+                    }
+                </select>
+            </c-col>
+        </c-row>
+        <c-row class="mt-3">
+            <h5 cCardTitle>Date Range</h5>
+            <c-col md="3">
+                <label for="from" cLabel>From</label>
+                <input type="date" id="from" cFormControl>
+            </c-col>
+            <c-col md="3">
+                <label for="to" cLabel>To</label>
+                <input type="date" id="to" cFormControl>
+            </c-col>
+        </c-row>
+        <hr class="mt-3"/>
+        <c-row [gutter]="3">
+            <c-col md="4">
+                <c-card class="text-center p-3">
+                    <h5 cCardTitle>Present</h5>
+                    <c-card-body>
+                        <h3>{{PresentText}}</h3>
+                    </c-card-body>
+                </c-card>
+            </c-col>
+            <c-col md="4">
+                <c-card class="text-center p-3">
+                    <h5 cCardTitle>Absent</h5>
+                    <c-card-body>
+                        <h3>{{AbsentText}}</h3>
+                    </c-card-body>
+                </c-card>
+            </c-col>
+            <c-col md="4">
+                <c-card class="text-center p-3">
+                    <h5 cCardTitle>Late</h5>
+                    <c-card-body>
+                        <h3>{{LateText}}</h3>
+                    </c-card-body>
+                </c-card>
+            </c-col>
+            <c-col md="4">
+                <c-card class="text-center p-3">
+                    <h5 cCardTitle>Working Day</h5>
+                    <c-card-body>
+                        <h3>{{WorkingDayText}}</h3>
+                    </c-card-body>
+                </c-card>
+            </c-col>
+            <c-col md="4">
+                <c-card class="text-center p-3">
+                    <h5 cCardTitle>Site Visit</h5>
+                    <c-card-body>
+                        <h3>{{SiteVisitText}}</h3>
+                    </c-card-body>
+                </c-card>
+            </c-col>
+            <c-col md="4">
+                <c-card class="text-center p-3">
+                    <h5 cCardTitle>On Leave</h5>
+                    <c-card-body>
+                        <h3>{{OnLeaveText}}</h3>
+                    </c-card-body>
+                </c-card>
+            </c-col>
+        </c-row>
+    </c-card-body>
+
+</c-card>

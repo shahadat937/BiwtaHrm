@@ -179,9 +179,11 @@ export class EmployeeInformationComponent implements OnInit {
 
     getEmpPhotoSign(){
       this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
-        this.empPhotoSign = res;
-        this.empPhoto = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`;
-        this.empSignature = `${this.empPhotoSignService.imageUrl}EmpSignature/${res.signatureUrl}`;
+        if(res){
+          this.empPhotoSign = res;
+          this.empPhoto = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`;
+          this.empSignature = `${this.empPhotoSignService.imageUrl}EmpSignature/${res.signatureUrl}`;
+        }
       });
     }
 

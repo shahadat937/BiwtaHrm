@@ -112,6 +112,12 @@ const routes: Routes = [
       }
       ,
       {
+        path: 'transferPosting',
+        loadChildren: () =>
+          import('./views/transferPosting/transfer.module').then((m) => m.TransferPostingModule)
+      }
+      ,
+      {
         path: 'promotion',
         loadChildren: () =>
           import('./views/promotion/promotion.module').then((m) => m.PromotionModule)

@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 import { EmpPhotoSignService } from 'src/app/views/employee/service/emp-photo-sign.service';
+import { cilAccountLogout, cilPlus } from '@coreui/icons';
 @Component({
   selector: 'app-default-header',
   templateUrl: './default-header.component.html',
@@ -30,6 +31,9 @@ export class DefaultHeaderComponent extends HeaderComponent {
   ) {
     super();
   }
+
+  icons = {  cilAccountLogout };
+
   logout() {
     this.authService.logout().subscribe((res) => {
       if (!res.success) {

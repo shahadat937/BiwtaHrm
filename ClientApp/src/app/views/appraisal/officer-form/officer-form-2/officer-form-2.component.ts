@@ -34,7 +34,6 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
     totalMarksInWords:0,
     totalMarksSignature :'',
     totalMarksInWordsSignature :'',
-
   }
 
   ngOnInit(): void {
@@ -46,16 +45,16 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
   }
 
   onSubmit(form: NgForm): void {
-    this.sharedservice.setFormData('part-2',this.formData)
+    this.sharedservice.setFormData('part-2',this.formData.Value)
     this.router.navigate(['/appraisal/officerFormPart3']);
   }
 
   SenseOfDisciplineRows = [
-    { name: 'i) Extraordinary Standard', evaluationValue: 5, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '',  signatureEnabled: false,remarksEnabled: false },
+    { name: 'i) Extraordinary Standard', evaluationValue: 5, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '',totalMarks:0,  signatureEnabled: false,remarksEnabled: false },
     { name: 'ii) High Standard', evaluationValue: 4, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false},
     { name: 'iii) Intelligent', evaluationValue: 3, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
     { name: 'iv) Below Expected Value', evaluationValue: 2, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false},
-    { name: 'v) Low Quality', evaluationValue: 1, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '', signatureEnabled: false,remarksEnabled: false },
+    { name: 'v) Low Quality', evaluationValue: 1, senseOfDisciplineSignature: '', senseOfDisciplineRemarks: '',signatureEnabled: false,remarksEnabled: false },
   ];
 
   intelegentAndJudgmentRows = [
@@ -134,44 +133,51 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
   cooperationRow:any;
   personalityRow:any;
   securityRow:any;
-  totalMarks: number = 0;
+  Part2Marks: number = 0;
   totalMarksInWords: string = '';
 
   calculateTotalMarks() {
-    this.totalMarks = 0;
+    this. Part2Marks =0;
   
-    if (this.selectedSenseOfDiscipllineRow) {
-      this.totalMarks += this.selectedSenseOfDiscipllineRow.evaluationValue;
+    if (this.formData.selectedSenseOfDiscipllineRow) {
+      this.Part2Marks += this.formData.selectedSenseOfDiscipllineRow.evaluationValue;
     }
   
-    if (this.selectedIntelegentAndJudgment) {
-      this.totalMarks += this.selectedIntelegentAndJudgment.evaluationValue;
+    if (this.formData.selectedIntelegentAndJudgment) {
+      this.Part2Marks += this.formData.selectedIntelegentAndJudgment.evaluationValue;
     }
   
-    if (this.selectedIntelegenceRow) {
-      this.totalMarks += this.selectedIntelegenceRow.evaluationValue;
+    if (this.formData.selectedIntelegenceRow) {
+      this.Part2Marks += this.formData.selectedIntelegenceRow.evaluationValue;
     }
   
-    if (this.selectedEnergyEnthuisim) {
-      this.totalMarks += this.selectedEnergyEnthuisim.evaluationValue;
+    if (this.formData.selectedEnergyEnthuisim) {
+      this.Part2Marks += this.formData.selectedEnergyEnthuisim.evaluationValue;
     }
   
-    if (this.selectedPublicRelation) {
-      this.totalMarks += this.selectedPublicRelation.evaluationValue;
+    if (this.formData.selectedPublicRelation) {
+      this.Part2Marks += this.formData.selectedPublicRelation.evaluationValue;
     }
   
-    if (this.cooperationRow) {
-      this.totalMarks += this.cooperationRow.evaluationValue;
+    if (this.formData.cooperationRow) {
+      this.Part2Marks += this.formData.cooperationRow.evaluationValue;
     }
   
-    if (this.personalityRow) {
-      this.totalMarks += this.personalityRow.evaluationValue;
+    if (this.formData.personalityRow) {
+      this.Part2Marks += this.formData.personalityRow.evaluationValue;
     }
   
-    if (this.securityRow) {
-      this.totalMarks += this.securityRow.evaluationValue;
+    if (this.formData.securityRow) {
+      this.Part2Marks += this.formData.securityRow.evaluationValue;
     }
-    this.totalMarksInWords = this.convertNumberToWords(this.totalMarks);
+    this.formData.totalMarks =this.Part2Marks;
+
+    this.totalMarksInWords = this.convertNumberToWords(this.Part2Marks);
+
+    console.log('Total Marks:', this.Part2Marks);
+    console.log('Total Marks in Words:', this.totalMarksInWords);
+
+
 }
 
   toggleSenseofDisciplineSignatureInput(index: any) {
@@ -211,6 +217,7 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
     this.energyAndEnthuisamRows[index].signatureEnabled = true;
     this.energyAndEnthuisamRows[index].remarksEnabled = true;
   }
+
   togglePublicRelationSignatureInput(index: any) {
     // Reset all rows to disable signature input
     this.publicRelationRows.forEach((row) => {
@@ -222,17 +229,17 @@ export class OfficerForm2Component  implements OnInit, OnDestroy{
     this.publicRelationRows[index].signatureEnabled = true;
     this.publicRelationRows[index].remarksEnabled = true;
   }
+
   toggleCooperationSignatureInput(index: any) {
     // Reset all rows to disable signature input
     this.CooperationRows.forEach((row) => {
       row.signatureEnabled = false;
       row.remarksEnabled=false;
     });
-
-    // Enable signature input for the selected row
     this.CooperationRows[index].signatureEnabled = true;
     this.CooperationRows[index].remarksEnabled = true;
   }
+
   togglePersonalitySignatureInput(index: any) {
     this.PersonalityRows.forEach((row) => {
       row.signatureEnabled = false;

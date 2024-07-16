@@ -37,7 +37,7 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
     expressivePowerSpeechEvaluation:0,
     overallAssessmentEvaluation:0,
     totalMarksIn3rdPart :0,
-    totalMarksInWords3rdPart :'',
+    totalMarksIn3rdPartInwords :'',
     totalMarksSignature3rdPart  :'',
     totalMarksInWordsSignature3rdPart:'',
     totalMarks2ndAnd3rdPart :0,
@@ -50,8 +50,15 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
 
   constructor( private sharedservice :SharedService,private router: Router ){}
 
+  allFormData:any;
+
   ngOnInit(): void {
-    this.formData=this.sharedservice.getFormData('Part-3')
+    this.allFormData = this.sharedservice.getAllFormData();
+    console.log(this.allFormData);
+    
+    this.formData=this.sharedservice.getFormData('Part-3')       
+    const Part2Data=this.sharedservice.getFormData('Part-2')
+    this.formData.totalMarksin2ndPart=Part2Data.Part2Marks ; 
   }
   ngOnDestroy(): void {
 
@@ -60,14 +67,15 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
     this.sharedservice.setFormData('part-3',this.formData)
     this.router.navigate(['/appraisal/officerFormPart4']);
   }
-  
+
   professionalKnowledgeRows = [
-    { name: 'i) Significant Knowledge', evaluationValue: 5, Signature: '', professionalKnowledgeRemarks:'',   signatureEnabled: false ,remarksEnabled: false},
-    { name: 'ii) Sufficient Knowledge', evaluationValue: 4, Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
-    { name: 'iii) Fairly Good Knowledge', evaluationValue: 3, Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
-    { name: 'iv) Insufficient', evaluationValue: 2, Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
-    { name: 'v) Low Quality', evaluationValue: 1, Signature: '', professionalKnowledgeRemarks:'', signatureEnabled: false ,remarksEnabled: false},
+    { name: 'i) Significant Knowledge', evaluationValue: 5, Signature: '', professionalKnowledgeRemarks:'',signatureEnabled: false,remarksEnabled: false},
+    { name: 'ii) Sufficient Knowledge', evaluationValue: 4, Signature: '', professionalKnowledgeRemarks:'',signatureEnabled: false,remarksEnabled: false},
+    { name: 'iii) Fairly Good Knowledge', evaluationValue: 3, Signature: '', professionalKnowledgeRemarks:'',signatureEnabled: false,remarksEnabled: false},
+    { name: 'iv) Insufficient', evaluationValue: 2, Signature: '', professionalKnowledgeRemarks:'',signatureEnabled: false,remarksEnabled: false},
+    { name: 'v) Low Quality', evaluationValue: 1, Signature: '', professionalKnowledgeRemarks:'',signatureEnabled: false,remarksEnabled: false},
   ];
+
 
   qualityOfWorkRows = [
     { name: 'i) Accurate and Complete', evaluationValue: 5, qualityOfWorkSignature: '', qualityofworkRemarks:'',  signatureEnabled: false,remarksEnabled: false },
@@ -76,6 +84,8 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
     { name: 'iv) Unequal Values', evaluationValue: 2, qualityOfWorkSignature: '', qualityofworkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
     { name: 'v) Low Quality', evaluationValue: 1, qualityOfWorkSignature: '', qualityofworkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
   ];
+
+
   amountOfWorkRows = [
     { name: 'i) Too Much', evaluationValue: 5, amountOfWorkSignature: '', amountofWorkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
     { name: 'ii) Sufficient', evaluationValue: 4, amountOfWorkSignature: '', amountofWorkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
@@ -83,6 +93,8 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
     { name: 'iv) Not as Expected', evaluationValue: 2, amountOfWorkSignature: '', amountofWorkRemarks:'',signatureEnabled: false,remarksEnabled: false  },
     { name: 'v) Insufficient', evaluationValue: 1, amountOfWorkSignature: '', amountofWorkRemarks:'', signatureEnabled: false,remarksEnabled: false  },
   ];
+
+
   punctualityRows = [
     { name: 'i) Never Delay', evaluationValue: 5, punctualitySignature: '', punctuilityRemarks:'', signatureEnabled: false,remarksEnabled: false },
     { name: 'ii) Rarely Late', evaluationValue: 4, punctualitySignature: '', punctuilityRemarks:'', signatureEnabled: false,remarksEnabled: false },
@@ -194,93 +206,96 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
   totalMarksIn3rdPartInwords='';
   totalMarks2ndAnd3rdPart: number=0;
   totalMarksInWords2ndAnd3rdPart: string='';
+  totalMarksin2ndPart:number=0;
+  totalMarks:number=0;
 
   calculateTotalMarksIn3rdpart(){
     this.totalMarksIn3rdPart= 0;
-    console.log('totalMarksIn3rdPart',this.selectedRow)
-    if(this.selectedRow){
-      this.totalMarksIn3rdPart += this.selectedRow.evaluationValue;
+
+    if(this.formData.selectedRow){
+      this.totalMarksIn3rdPart += this.formData.selectedRow.evaluationValue;
     }
-    if(this.selectedQualityRow){
-      this.totalMarksIn3rdPart += this.selectedQualityRow.evaluationValue;
-      console.log('totalMarksIn3rdPart',this.totalMarksIn3rdPart)
+    if(this.formData.selectedQualityRow){
+      this.totalMarksIn3rdPart += this.formData.selectedQualityRow.evaluationValue;
     }
-    if(this.selectedAmountRow){
-      this.totalMarksIn3rdPart += this.selectedAmountRow.evaluationValue;
+    if(this.formData.selectedAmountRow){
+      this.totalMarksIn3rdPart += this.formData.selectedAmountRow.evaluationValue;
     }
-    if(this.selectedPunctualityRow){
-      this.totalMarksIn3rdPart += this.selectedPunctualityRow.evaluationValue;
+    if(this.formData.selectedPunctualityRow){
+      this.totalMarksIn3rdPart += this.formData.selectedPunctualityRow.evaluationValue;
     }
-    if(this.selectedSenseofResponsibilityRow){
-      this.totalMarksIn3rdPart += this.selectedSenseofResponsibilityRow.evaluationValue;
+    if(this.formData.selectedSenseofResponsibilityRow){
+      this.totalMarksIn3rdPart += this.formData.selectedSenseofResponsibilityRow.evaluationValue;
     }
-    if(this.selectedPromtnessTakingRow){
-      this.totalMarksIn3rdPart += this.selectedPromtnessTakingRow.evaluationValue;
+    if(this.formData.selectedPromtnessTakingRow){
+      this.totalMarksIn3rdPart += this.formData.selectedPromtnessTakingRow.evaluationValue;
     }
-    if(this.selectedinterstofworkRow){
-      this.totalMarksIn3rdPart += this.selectedinterstofworkRow.evaluationValue;
+    if(this.formData.selectedinterstofworkRow){
+      this.totalMarksIn3rdPart += this.formData.selectedinterstofworkRow.evaluationValue;
     }
     if(this.selectedsuperviseAndMeasureRow){
       this.totalMarksIn3rdPart += this.selectedsuperviseAndMeasureRow.evaluationValue;
     }
-    if(this.selectedRelationColleaguesRow){
-      this.totalMarksIn3rdPart += this.selectedRelationColleaguesRow.evaluationValue;
+    if(this.formData.selectedRelationColleaguesRow){
+      this.totalMarksIn3rdPart += this.formData.selectedRelationColleaguesRow.evaluationValue;
     }
-    if(this.abilityWithImplementRow){
-      this.totalMarksIn3rdPart += this.abilityWithImplementRow.evaluationValue;
+    if(this.formData.abilityWithImplementRow){
+      this.totalMarksIn3rdPart += this.formData.abilityWithImplementRow.evaluationValue;
     }
-    if(this.exessivePowerWritingRow){
-      this.totalMarksIn3rdPart += this.exessivePowerWritingRow.evaluationValue;
+    if(this.formData.exessivePowerWritingRow){
+      this.totalMarksIn3rdPart += this.formData.exessivePowerWritingRow.evaluationValue;
     }
-    if(this.exessivePowerSpeechRow){
-      this.totalMarksIn3rdPart += this.exessivePowerSpeechRow.evaluationValue;
+    if(this.formData.exessivePowerSpeechRow){
+      this.totalMarksIn3rdPart += this.formData.exessivePowerSpeechRow.evaluationValue;
     }
+    this.formData.totalMarksIn3rdPart=this.totalMarksIn3rdPart
     this.totalMarksIn3rdPartInwords=this.convertNumberToWords(this.totalMarksIn3rdPart)
+
+    //for adding 2nd part and 3rd part
+
+
+  console.log("Test",this.formData.totalMarksin2ndPart)
+  console.log("Test1",this.totalMarksIn3rdPart)
+    this.totalMarks = this.formData.totalMarksin2ndPart + this.totalMarksIn3rdPart;
+    console.log('totalMarks',this.totalMarks)
+
+    this.totalMarksInWords2ndAnd3rdPart = this.convertNumberToWords(this.totalMarks);
+
+    this.formData.totalMarks2ndAnd3rdPart = this.totalMarks;
+    this.formData.totalMarksInWords2ndAnd3rdPart = this.totalMarksInWords2ndAnd3rdPart;
 }
 
   toggleSignatureInput(index: any) {
-    // Reset all rows to disable signature input
     this.professionalKnowledgeRows.forEach((row) => {
       row.signatureEnabled = false;
       row.remarksEnabled=false;
     });
-
-    // Enable signature input for the selected row
     this.professionalKnowledgeRows[index].signatureEnabled = true;
     this.professionalKnowledgeRows[index].remarksEnabled = true;
   }
 
   toggleQualitySignatureInput(index: any) {
-    // Reset all rows to disable signature input
     this.qualityOfWorkRows.forEach((row) => {
       row.signatureEnabled = false;
       row.remarksEnabled=false;
     });
-
-    // Enable signature input for the selected row
     this.qualityOfWorkRows[index].signatureEnabled = true;
     this.qualityOfWorkRows[index].remarksEnabled = true;
   }
 
     toggleAmountSignatureInput(index: number) {
-      // Reset all rows to disable signature input
       this.amountOfWorkRows.forEach((row) => {
         row.signatureEnabled = false;
         row.remarksEnabled=false;
       });
-  
-      // Enable signature input for the selected row
       this.amountOfWorkRows[index].signatureEnabled = true;
       this.amountOfWorkRows[index].remarksEnabled = true;
     }
     togglePunctualitySignatureInput(index: number) {
-      // Reset all rows to disable signature input
       this.punctualityRows.forEach((row) => {
         row.signatureEnabled = false;
         row.remarksEnabled=false;
       });
-  
-      // Enable signature input for the selected row
       this.punctualityRows[index].signatureEnabled = true;
       this.punctualityRows[index].remarksEnabled = true;
       
@@ -307,80 +322,62 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
       // Enable signature input for the selected row
       this.PromptnessTakingMeasuresRows[index].signatureEnabled = true;
       this.PromptnessTakingMeasuresRows[index].remarksEnabled = true;
-      
     }
+
     toggleinterestofWorkSignatureInput(index: number) {
-      // Reset all rows to disable signature input
       this.interestOfWorkRows.forEach((row) => {
         row.signatureEnabled = false;
         row.remarksEnabled=false;
       });
-  
-      // Enable signature input for the selected row
       this.interestOfWorkRows[index].signatureEnabled = true;
       this.interestOfWorkRows[index].remarksEnabled = true;
-      
     }
+
     toggleSuperviseMeasureSignatureInput(index: number) {
-      // Reset all rows to disable signature input
       this.superviseandMeasureRows.forEach((row) => {
         row.signatureEnabled = false;
         row.remarksEnabled=false;
       });
-  
-      // Enable signature input for the selected row
       this.superviseandMeasureRows[index].signatureEnabled = true;
-      this.superviseandMeasureRows[index].remarksEnabled = true;
-      
+      this.superviseandMeasureRows[index].remarksEnabled = true; 
     }
+
     toggleRelationColleaguesignatureInput(index: number) {
-      // Reset all rows to disable signature input
       this.RelationWithColleaguesRows.forEach((row) => {
         row.signatureEnabled = false;
         row.remarksEnabled=false;
       });
-  
-      // Enable signature input for the selected row
       this.RelationWithColleaguesRows[index].signatureEnabled = true;
-      this.RelationWithColleaguesRows[index].remarksEnabled = true;
-      
+      this.RelationWithColleaguesRows[index].remarksEnabled = true; 
     }
+
     toggleAbilityWithImplementSignatureInput(index: number) {
-      // Reset all rows to disable signature input
       this.abilityToImplementRows.forEach((row) => {
         row.signatureEnabled = false;
         row.remarksEnabled=false;
       });
-  
-      // Enable signature input for the selected row
       this.abilityToImplementRows[index].signatureEnabled = true;
       this.abilityToImplementRows[index].remarksEnabled = true;
-      
     }
+
     toggleExessivePowerWritingSignatureInput(index: number) {
-      // Reset all rows to disable signature input
       this.expressivePowerWritingRows.forEach((row) => {
         row.signatureEnabled = false;
         row.remarksEnabled=false;
       });
-  
-      // Enable signature input for the selected row
       this.expressivePowerWritingRows[index].signatureEnabled = true;
       this.expressivePowerWritingRows[index].remarksEnabled = true;
-      
     }
+
     toggleExessivePowerSpeechSignatureInput(index: number) {
-      // Reset all rows to disable signature input
       this.expressivePowerSpeechRows.forEach((row) => {
         row.signatureEnabled = false;
         row.remarksEnabled=false;
       });
-  
-      // Enable signature input for the selected row
       this.expressivePowerSpeechRows[index].signatureEnabled = true;
       this.expressivePowerSpeechRows[index].remarksEnabled = true;
-      
     }
+
     toggleOverallAssessmentSignatureInput(index: number) {
       this.overallAssessmentRows.forEach((row) => {
         row.signatureEnabled = false;
@@ -388,7 +385,6 @@ export class OfficerFormPart3Component  implements OnInit, OnDestroy{
       });
       this.overallAssessmentRows[index].signatureEnabled = true;
       this.overallAssessmentRows[index].remarksEnabled = true;
-      
     }
   }
 

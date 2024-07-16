@@ -1,5 +1,4 @@
 import { SharedService } from './../service/shared.service';
-import { OfficerFormPart7ServiceService } from './../service/officer-form-part7-service.service';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -19,12 +18,10 @@ export class OfficerFormPart7Component implements OnInit, OnDestroy{
   constructor( private sharedservice :SharedService ){}
 
   ngOnInit(): void {
-    this.allFormData = this.sharedservice.getAllFormData();
-    console.log(this.allFormData);
+    
   }
   ngOnDestroy(): void {
   }
   onSubmit(form: NgForm) {
-
   }
 }

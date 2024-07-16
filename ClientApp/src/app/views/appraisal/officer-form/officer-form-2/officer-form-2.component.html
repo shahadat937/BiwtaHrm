@@ -40,9 +40,9 @@
                 <td>
                   <c-form-check inline>
                     <input cFormCheckInput type="radio" [value]="row"
-                      [(ngModel)]="selectedSenseOfDiscipllineRow"
-                      name="senseOfDisciplineEvaluation"
-                      (change)="toggleSenseofDisciplineSignatureInput(i); calculateTotalMarks()">
+                      [(ngModel)]="formData.selectedSenseOfDiscipllineRow"                     name="senseOfDisciplineEvaluation"
+                      (change)="toggleSenseofDisciplineSignatureInput(i)"
+                      (change)="calculateTotalMarks()">
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -85,7 +85,9 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="formData.selectedIntelegentAndJudgment"
                       name="intelegentAndJudgmentEvaluation"
-                      (change)="toggleIntelegentSignatureInput(i); calculateTotalMarks()">
+                      (change)="toggleIntelegentSignatureInput(i)"
+                      (change)="calculateTotalMarks()"
+                      >
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -128,7 +130,8 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="formData.selectedIntelegenceRow"
                       name="intelegenceEvaluation"
-                      (change)="toggleIntelegenceSignatureInput(i); calculateTotalMarks()">
+                      (change)="toggleIntelegenceSignatureInput(i)"
+                      (change)="calculateTotalMarks()">
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -170,7 +173,8 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="formData.selectedEnergyEnthuisim"
                       name="energyAndEnthusisamEvaluation"
-                      (change)="toggleEnergySignatureInput(i); calculateTotalMarks()">
+                      (change)="toggleEnergySignatureInput(i)"
+                      (change)="calculateTotalMarks()">
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -189,7 +193,7 @@
                   [ngModel]="row.energyandEntuismRemarks"
                   (ngModelChange)="row.energyandEntuismRemarks = $event"
                   name="energyandEntuismRemarks{{i}}"
-                  [disabled]="!formData.remarksEnabled">
+                  [disabled]="!row.remarksEnabled">
                 </td>
               </tr>
             </ng-container>
@@ -213,7 +217,8 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="formData.selectedPublicRelation"
                       name="publicRelationEvaluation"
-                      (change)="togglePublicRelationSignatureInput(i); calculateTotalMarks()">
+                      (change)="togglePublicRelationSignatureInput(i)"
+                      (change)="calculateTotalMarks()">
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -232,7 +237,7 @@
                   [ngModel]="row.publicReationRemarks"
                   (ngModelChange)="row.publicReationRemarks = $event"
                   name="publicReationRemarks{{i}}"
-                  [disabled]="!formData.remarksEnabled">
+                  [disabled]="!row.remarksEnabled">
                 </td>
               </tr>
             </ng-container>
@@ -256,7 +261,8 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="formData.cooperationRow"
                       name="cooperationEvaluation"
-                      (change)="toggleCooperationSignatureInput(i); calculateTotalMarks()">
+                      (change)="toggleCooperationSignatureInput(i)"
+                      (change)="calculateTotalMarks()">
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -298,7 +304,8 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="formData.personalityRow"
                       name="personalityEvaluation"
-                      (change)="togglePersonalitySignatureInput(i); calculateTotalMarks()">
+                      (change)="togglePersonalitySignatureInput(i)"
+                      (change)="calculateTotalMarks()">
                     <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -341,7 +348,8 @@
                     <input cFormCheckInput type="radio" [value]="row"
                       [(ngModel)]="formData.securityRow"
                       name="securityAwarenessEvaluation"
-                      (change)="toggleSecuritySignatureInput(i); calculateTotalMarks()">
+                      (change)="toggleSecuritySignatureInput(i)"
+                      (change)="calculateTotalMarks()">
                     <label cFormCheckLabel>{{ formData.evaluationValue }}</label>
                   </c-form-check>
                 </td>
@@ -375,23 +383,23 @@
             <c-col [md]="3">
               <label cLabel >In Mathematics</label>
               <input type="number" cFormControl
-                [(ngModel)]="formData.totalMarks"
+                [(ngModel)]="Part2Marks"
                 name="totalMarks" readonly>
               <label cLabel>In words</label>
               <input type="text" cFormControl
-                [(ngModel)]="formData.totalMarksInWords"
+                [(ngModel)]="totalMarksInWords"
                 name="totalMarksInWords"
                 readonly>
             </c-col>
             <c-col [md]="3">
               <label cLabel>Signature</label>
               <input type="file" cFormControl
-                [(ngModel)]="formData.totalMarksSignature"
+                [(ngModel)]="totalMarksSignature"
                 name="totalMarksSignature"
                 #totalMarksSignature="ngModel"> 
               <label cLabel>Signature</label>
               <input type="file" cFormControl
-                [(ngModel)]="formData.totalMarksInWordsSignature"
+                [(ngModel)]="totalMarksInWordsSignature"
                 name="totalMarksInWordsSignature"
                 #totalMarksInWordsSignature="ngModel">
               <div class="text-end mt-3">

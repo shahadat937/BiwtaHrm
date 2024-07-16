@@ -95,7 +95,10 @@
                               <input cFormCheckInput type="radio" [value]="row"
                                 [(ngModel)]="formData.selectedQualityRow"
                                 name="qualityOfWorkEvaluation"
-                                (change)="toggleQualitySignatureInput(i); calculateTotalMarksIn3rdpart()">
+                                (change)="toggleQualitySignatureInput(i)"
+                                (change)=" 
+                                calculateTotalMarksIn3rdpart()"
+                                >
                               <label cFormCheckLabel>{{ row.evaluationValue }}</label>
                             </c-form-check>
                           </td>
@@ -546,9 +549,8 @@
                           <c-col [md]="4">
                             <label cLabel class="mt-2">In Mathematices</label>
                             <input type="number" cFormControl
-                            [(ngModel)]="totalMarksIn3rdPart"
+                            [(ngModel)]="formData.totalMarksIn3rdPart"
                             name="totalMarksIn3rdPart" readonly>
-
                             <label cLabel class="mt-2">In Words</label>
                             <input type="text" cFormControl
                             [(ngModel)]="totalMarksIn3rdPartInwords"
@@ -584,22 +586,14 @@
                           <c-col [md]="4">
                             <label cLabel class="mt-2">In Mathematices</label>
                             <input type="number" cFormControl
-                              [(ngModel)]="formData.formDatalMarks2ndAnd3rdPart"
+                              [(ngModel)]="formData.totalMarks"
                               name="totalMarks2ndAnd3rdPart" 
-                              #totalMarks2ndAnd3rdPart="ngModel" >
-                              @if(!totalMarks2ndAnd3rdPart.valid && totalMarks2ndAnd3rdPart.touched)
-                              {
-                                <div class="text-left text-danger">Total Marks of 2nd and 3rd part is Requiered</div>
-                              }
+                              readonly >
                             <label cLabel class="mt-2">In words</label>
                             <input type="number" cFormControl
                               [(ngModel)]="formData.totalMarksInWordstotalMarks2ndAnd3rdPart"
                               name="totalMarksInWordstotalMarks2ndAnd3rdPart" 
                               #totalMarksInWordstotalMarks2ndAnd3rdPart="ngModel" >
-                              @if(!totalMarksInWordstotalMarks2ndAnd3rdPart.valid && totalMarksInWordstotalMarks2ndAnd3rdPart.touched)
-                              {
-                                <div class="text-left text-danger">Total Marks of 2nd and 3rd part in words is Requiered</div>
-                              }
                           </c-col>
                           <c-col [md]="4">
                             <label cLabel class="mt-2">Signature</label>

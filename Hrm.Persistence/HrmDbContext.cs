@@ -782,6 +782,7 @@ namespace Hrm.Persistence
         public virtual DbSet<SubDepartment> SubDepartment { get; set; } = null!;
         public virtual DbSet<ExamType> ExamType { get; set; } = null!;
         public virtual DbSet<Board> Board { get; set; } = null!;
+        public virtual DbSet<ReleaseType> ReleaseType { get; set; } = null!;
 
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; } = null!;
         public virtual DbSet<Section> Section { get; set; } = null!;
@@ -795,6 +796,8 @@ namespace Hrm.Persistence
         public virtual DbSet<Year> Year { get; set; } = null!;
         public virtual DbSet<Employees> Employees { get; set; } = null!;
 
+
+        //*****************Employees Information Table**************
         public virtual DbSet<EmpBasicInfo> EmpBasicInfo { get; set; } = null!;
         public virtual DbSet<EmpPersonalInfo> EmpPersonalInfo { get; set; } = null!;
         public virtual DbSet<EmpPresentAddress> EmpPresentAddress { get; set; } = null!;

@@ -92,6 +92,7 @@ using Hrm.Application.DTOs.DayType;
 using Hrm.Application.DTOs.AttendanceType;
 using Hrm.Application.DTOs.AttendanceStatus;
 using Hrm.Application.DTOs.Attendance;
+using Hrm.Application.DTOs.ReleaseType;
 
 
 
@@ -310,6 +311,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Employees, EmployeesDto>().ReverseMap();
             CreateMap<Employees, CreateEmployeesDto>().ReverseMap();
+
+            CreateMap<ReleaseType, ReleaseTypeDto>().ReverseMap();
+            CreateMap<ReleaseType, CreateReleaseTypeDto>().ReverseMap();
 
             CreateMap<EmpBasicInfo, EmpBasicInfoDto>().ReverseMap();
             CreateMap<EmpBasicInfo, CreateEmpBasicInfoDto>().ReverseMap();

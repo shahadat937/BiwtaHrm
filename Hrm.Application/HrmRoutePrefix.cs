@@ -79,6 +79,7 @@ namespace Hrm.Application
         public const string EmpTnsferPostingJoin = HRMRoutePrefixBase + "EmpTnsferPostingJoin";
         public const string Year = HRMRoutePrefixBase + "year";
         public const string Employee = HRMRoutePrefixBase + "employee";
+        public const string ReleaseType = HRMRoutePrefixBase + "releaseType";
 
         public const string EmpBasicInfo = HRMRoutePrefixBase + "empBasicInfo";
         public const string EmpPersonalInfo = HRMRoutePrefixBase + "empPersonalInfo";

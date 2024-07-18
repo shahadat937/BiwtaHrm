@@ -104,6 +104,7 @@ import { OrganogramService } from './service/organogram.service';
 import { OrganogramComponent } from './organogram/organogram.component';
 import { OrganogramDepartmentComponent } from './organogram/organogram-department/organogram-department.component';
 import { MatTreeModule } from '@angular/material/tree';
+import { ReleaseTypeComponent } from './release-type/release-type.component';
 
 
 @NgModule({
@@ -163,7 +164,8 @@ import { MatTreeModule } from '@angular/material/tree';
     YearSetupComponent,
     HolidayTypeComponent,
     OrganogramComponent,
-    OrganogramDepartmentComponent
+    OrganogramDepartmentComponent,
+    ReleaseTypeComponent
   ],
   imports: [
     CommonModule,

@@ -8,6 +8,7 @@ import { AttendanceRecordComponent } from './attendance-record/attendance-record
 import { ManualAttendanceComponent } from './manual-attendance/manual-attendance.component';
 import { SiteVisitComponent } from './site-visit/site-visit.component';
 import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
+import {AttendanceSummaryComponent} from './attendance-summary/attendance-summary.component'
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { ButtonModule as PButtonModule,ButtonDirective } from 'primeng/button';
 import {CalendarModule} from 'primeng/calendar';
@@ -35,7 +36,7 @@ import { ManualAttendanceService } from './services/manual-attendance.service';
 import {AttendanceRecordService} from './services/attendance-record-service.service';
 import {AttendanceReportService} from './services/attendance-report.service'
 import {TimeFormatPipe} from './pipes/time-format.pipe'
-
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import {TimeFormatPipe} from './pipes/time-format.pipe'
     ManualAttendanceComponent,
     SiteVisitComponent,
     AttendanceReportComponent,
+    AttendanceSummaryComponent,
     TimeFormatPipe
   ],
   imports: [
@@ -73,8 +75,8 @@ import {TimeFormatPipe} from './pipes/time-format.pipe'
     TabPaneComponent,
     PButtonModule,
     ButtonDirective,
-    CalendarModule
-    
+    CalendarModule,
+    TableModule 
   ],
   providers: [ 
     ToastrService,

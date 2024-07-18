@@ -6,6 +6,7 @@ import { WorkdaySettingComponent } from './workday-setting/workday-setting.compo
 import { ManageShiftComponent } from './manage-shift/manage-shift.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AttendanceSummaryComponent } from './attendance-summary/attendance-summary.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'attendanceReport',
     component: AttendanceReportComponent,
+  },
+  {
+    path: 'attendanceSummary',
+    component: AttendanceSummaryComponent
   }
 ];
 

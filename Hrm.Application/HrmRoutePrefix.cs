@@ -96,6 +96,8 @@ namespace Hrm.Application
         public const string EmpPhotoSign = HRMRoutePrefixBase + "empPhotoSign";
         public const string EmpNomineeInfo = HRMRoutePrefixBase + "empNomineeInfo";
 
+        public const string EmpTransferPosting = HRMRoutePrefixBase + "empTransferPosting";
+
         public const string SiteVisit = HRMRoutePrefixBase + "siteVisit";
         public const string Workday = HRMRoutePrefixBase + "workday";
         public const string Holidays = HRMRoutePrefixBase + "holidays";

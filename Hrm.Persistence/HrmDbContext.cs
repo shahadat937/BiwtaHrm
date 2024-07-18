@@ -814,6 +814,9 @@ namespace Hrm.Persistence
         public virtual DbSet<EmpNomineeInfo> EmpNomineeInfo { get; set; } = null!;
         public virtual DbSet<EmpTrainingInfo> EmpTrainingInfo { get; set; } = null!;
 
+        public virtual DbSet<EmpTransferPosting> EmpTransferPosting { get; set; } = null!;
+
+
         public virtual DbSet<SiteVisit> SiteVisit { get; set; } = null!;
         public virtual DbSet<Workday> Workday { get; set; } = null!;
         public virtual DbSet<Holidays> Holidays { get; set; } = null!;

@@ -1,0 +1,49 @@
+﻿using AutoMapper;
+using Hrm.Application.Contracts.Persistence;
+using Hrm.Application.DTOs.Shift.Validators;
+using Hrm.Application.Features.EmpTransferPostings.Requests.Commands;
+using Hrm.Application.Features.Shift.Requests.Commands;
+using Hrm.Application.Responses;
+using Hrm.Domain;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
+{
+    public class CreateEmpTransferPostingRequestHandler : IRequestHandler<CreateEmpTransferPostingRequest, BaseCommandResponse>
+    {
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+        public CreateEmpTransferPostingRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        {
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+        }
+        public async Task<BaseCommandResponse> Handle(CreateEmpTransferPostingRequest request, CancellationToken cancellationToken)
+        {
+            var response = new BaseCommandResponse();
+
+            var empTransferPostings = _mapper.Map<EmpTransferPosting>(request.EmpTransferPostingDto);
+
+            if (request.EmpTransferPostingDto.JoiningStatus == true || request.EmpTransferPostingDto.IsJoining == false)
+            {
+                empTransferPostings.ApplicationStatus = true;
+            }
+
+
+            await _unitOfWork.Repository<EmpTransferPosting>().Add(empTransferPostings);
+            await _unitOfWork.Save();
+
+
+            response.Success = true;
+            response.Message = "Creation Successful";
+
+            return response;
+        }
+
+    }
+}

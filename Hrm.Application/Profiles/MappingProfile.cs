@@ -93,6 +93,7 @@ using Hrm.Application.DTOs.AttendanceType;
 using Hrm.Application.DTOs.AttendanceStatus;
 using Hrm.Application.DTOs.Attendance;
 using Hrm.Application.DTOs.ReleaseType;
+using Hrm.Application.DTOs.EmpTransferPosting;
 
 
 
@@ -419,6 +420,10 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpNomineeInfo, EmpNomineeInfoDto>().ReverseMap();
             CreateMap<EmpNomineeInfo, CreateEmpNomineeInfoDto>().ReverseMap();
+
+
+            CreateMap<EmpTransferPosting, EmpTransferPostingDto>().ReverseMap();
+            CreateMap<EmpTransferPosting, CreateEmpTransferPostingDto>().ReverseMap();
 
             // Site Visit Dto Mapping Created By Joy
             CreateMap<SiteVisit, SiteVisitDto>().ReverseMap();

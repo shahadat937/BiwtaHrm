@@ -1,11 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { range, Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { AttendanceReportService } from '../services/attendance-report.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { DateRange } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-attendance-report',
@@ -37,6 +39,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy, AfterViewIn
   selectedOffice: number|null;
   fromDate: Date|null;
   toDate: Date | null;
+  rangeDates: Date[] = [];
 
   //For Department wise
   TotalPresentEmp:any="N/A";
@@ -46,7 +49,10 @@ export class AttendanceReportComponent implements OnInit, OnDestroy, AfterViewIn
   DepartmentOptionDw: any[] = [];
   OfficeOptionDw: any[] = [];
   dataSource: any = new MatTableDataSource();
-  displayedColumns = ["attendanceDate","totalPresent","totalAbsent"];
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+  displayedColumns = ["date","totalPresentEmp","totalAbsentEmp"];
+  rangeDatesDw:Date[] = [];
 
   // For Department wise
   selectedDepartmentDw : number | null;
@@ -95,7 +101,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy, AfterViewIn
 
   onEmpChange() {
     //console.log(this.toDate?.toString());
-    if(this.selectedEmp==null||this.toDate==null||this.fromDate==null) {
+    if(this.selectedEmp==null||this.rangeDates.length<2) {
         this.PresentText="N/A";
         this.AbsentText ="N/A";
         this.LateText = "N/A";
@@ -107,8 +113,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy, AfterViewIn
 
     let filter = new HttpParams();
     filter = filter.set("EmpId",this.selectedEmp);
-    filter = filter.set("From", this.fromDate.toString());
-    filter = filter.set("To", this.toDate.toString());
+    filter = filter.set("From", this.rangeDates[0].toISOString().split("T")[0]);
+    filter = filter.set("To", this.rangeDates[1].toISOString().split("T")[0]);
 
     console.log(this.selectedEmp);
 
@@ -154,7 +160,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy, AfterViewIn
 
   onChangeDw() {
     if(this.selectedOfficeDw!=null) {
-      this.AtdReportService.getDepartmentOption(this.selectedOfficeDw).subscribe(option=> {
+      this.subscription = this.AtdReportService.getDepartmentOption(this.selectedOfficeDw).subscribe(option=> {
         this.DepartmentOptionDw = option;
       })
     } else {
@@ -162,10 +168,33 @@ export class AttendanceReportComponent implements OnInit, OnDestroy, AfterViewIn
       this.selectedDepartmentDw = null;
     }
 
-    if(this.toDateDw==null||this.fromDateDw==null) {
+/*     if(this.toDateDw==null||this.fromDateDw==null) {
       // TO DO
       return;
+    } */
+
+    if(this.rangeDatesDw.length<2) {
+      return;
     }
+
+    
+
+    let params = new HttpParams();
+    params = params.set("From",this.rangeDatesDw[0].toISOString().split("T")[0]);
+    params = params.set("To", this.rangeDatesDw[1].toISOString().split("T")[0]);
+
+    if(this.selectedOfficeDw!=null) {
+      params = params.set("OfficeId",this.selectedOfficeDw);
+    }
+
+    if(this.selectedDepartmentDw!=null) {
+      params = params.set("DepartmentId",this.selectedDepartmentDw);
+    }
+
+    this.subscription = this.AtdReportService.getDepartmentWiseSummary(params).subscribe(item=> {
+      this.dataSource = new MatTableDataSource(item);
+      this.dataSource.paginator = this.paginator;
+    });
 
 
   }

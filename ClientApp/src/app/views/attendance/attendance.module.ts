@@ -9,6 +9,8 @@ import { ManualAttendanceComponent } from './manual-attendance/manual-attendance
 import { SiteVisitComponent } from './site-visit/site-visit.component';
 import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
+import { ButtonModule as PButtonModule,ButtonDirective } from 'primeng/button';
+import {CalendarModule} from 'primeng/calendar';
 import {
   ButtonGroupModule,
   ButtonModule,
@@ -68,7 +70,10 @@ import {TimeFormatPipe} from './pipes/time-format.pipe'
     CollapseDirective,
     TabsModule,
     TabContentComponent,
-    TabPaneComponent
+    TabPaneComponent,
+    PButtonModule,
+    ButtonDirective,
+    CalendarModule
     
   ],
   providers: [ 

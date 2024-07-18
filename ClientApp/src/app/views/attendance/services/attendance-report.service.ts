@@ -28,4 +28,8 @@ export class AttendanceReportService {
 
     return this.http.get<any[]>(this.baseUrl+"/empBasicInfo/get-SelectedFilteredEmpBasicInfo",{params:filter})
   }
+
+  getDepartmentWiseSummary(filter:HttpParams):Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl+"/attendance/get-TotalPresentAbsentEmp",{params:filter});
+  }
 }

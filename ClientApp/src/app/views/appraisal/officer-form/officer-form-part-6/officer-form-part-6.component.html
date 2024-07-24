@@ -20,7 +20,7 @@
               </c-button-group>
           </c-button-group>
         <c-card-body>
-            <form cRow cForm 
+        <form cRow cForm 
             #officerForm="ngForm" 
             (ngSubmit)="onSubmit(officerForm)" 
             novalidate>
@@ -75,6 +75,7 @@
                 <div class="text-left text-danger"> Overall Assessment is required</div>
                 }
             </c-col>
+
             <c-col [md]="6">
                 <label cLabel class="mt-4">4.Recommendation</label>
             </c-col>
@@ -88,6 +89,7 @@
                 <div class="text-left text-danger"> Recommendation required</div>
                 }
             </c-col>
+
             <c-col class="d-flex justify-content-end align-items-center mt-3">           
                 <div class="text-center">
                     <input type="file" cFormControl class="" 
@@ -101,7 +103,7 @@
                     <div>Signature of Reporting Officer</div>
                 </div>
             </c-col>
-            </form>         
+         </form>         
         </c-card-body>
     </c-card>
     <c-card>      

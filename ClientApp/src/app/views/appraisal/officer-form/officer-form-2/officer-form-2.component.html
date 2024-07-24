@@ -286,7 +286,8 @@
               </tr>
             </ng-container>
           </tbody>
-        </table>  
+        </table> 
+
         <table cTable  >
           <thead>
             <tr>
@@ -405,11 +406,13 @@
               <div class="text-end mt-3">
             </div>
             </c-col>
+
           </div>
             <c-card>
               <c-card-footer>
                 <div class="text-end">
-                  <button cButton color="primary" (click)="onSubmit(officerForm)">To be continue...</button>
+                  <button cButton color="primary" [routerLink]="[
+                  '/appraisal/officerFormPart3']" (click)="onSubmit(officerForm)">To be continue...</button>
                 </div>
               </c-card-footer>
             </c-card>

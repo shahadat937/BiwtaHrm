@@ -18,10 +18,11 @@ export class OfficerFormPart7Component implements OnInit, OnDestroy{
   constructor( private sharedservice :SharedService ){}
 
   ngOnInit(): void {
-    
+    this.allFormData=this.sharedservice.getFormData('Part-6')
   }
   ngOnDestroy(): void {
   }
   onSubmit(form: NgForm) {
+    this.sharedservice.setFormData('part-6',this.allFormData)
   }
 }

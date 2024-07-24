@@ -1,1 +1,31 @@
-<p>transfer-posting-application works!</p>
+<c-card class="mt-3 mb-3 shadow">
+    <c-card-header class="d-flex justify-content-center">
+        <div>{{headerText}}</div>
+        <!-- <button cButton color="danger" [routerLink]="['/employee/manageEmployee']" class="text-light">
+            <svg [cIcon]="icons.cilArrowLeft"></svg> Back
+        </button> -->
+    </c-card-header>
+    <c-card-body >
+        <form #EmpTransferPostingForm="ngForm" (submit)="onSubmit(EmpTransferPostingForm)" [gutter]="3" novalidate cForm cRow
+            class="needs-validation">
+            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.id" name="id" />
+            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.empId" name="empId" />
+
+            
+            
+            <c-col [xs]="12">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <button [disabled]="loading" [disabled]="EmpTransferPostingForm.invalid" cButton class="me-1"
+                            color="primary" type="submit">
+                            <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                            {{ btnText }}
+                        </button>
+                        <button cButton color="secondary" (click)="resetForm()">Reset</button>
+                    </div>
+                </div>
+            </c-col>
+
+        </form>
+    </c-card-body>
+</c-card>

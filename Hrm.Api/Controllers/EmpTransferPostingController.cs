@@ -25,10 +25,18 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
         [HttpGet]
-        [Route("get-EmpTransferPosting")]
+        [Route("get-allEmpTransferPosting")]
         public async Task<ActionResult> Get()
         {
             var EmpTransferPosting = await _mediator.Send(new GetAllEmpTransferPostingRequest { });
+            return Ok(EmpTransferPosting);
+        }
+
+        [HttpGet]
+        [Route("get-EmpTransferPostingById/{id}")]
+        public async Task<ActionResult> GetById(int id)
+        {
+            var EmpTransferPosting = await _mediator.Send(new GetEmpTransferPostingByEmpIdRequest { Id = id });
             return Ok(EmpTransferPosting);
         }
     }

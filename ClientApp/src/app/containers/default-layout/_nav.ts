@@ -586,6 +586,10 @@ export const navItems: INavData[] = [
         name: 'Holiday Type',
         url: '/bascisetup/holidaytype'
       },
+      {
+        name: 'Release Type',
+        url: '/bascisetup/releaseType'
+      },
     ]
   },
   {

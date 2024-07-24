@@ -36,7 +36,7 @@ namespace Hrm.Application.Features.ReleaseTypes.Handlers.Commands
             if (ReleaseType is null)
             {
                 response.Success = false;
-                response.Message = "Creation Failed";
+                response.Message = "Update Failed";
             }
 
             _mapper.Map(request.ReleaseTypeDto, ReleaseType);

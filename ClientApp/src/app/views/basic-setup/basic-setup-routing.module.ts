@@ -58,6 +58,7 @@ import { SubBranchComponent } from './sub-branch/sub-branch.component';
 import { YearSetupComponent } from './year-setup/year-setup.component';
 import { HolidayTypeComponent } from './holiday-type/holiday-type.component';
 import { OrganogramComponent } from './organogram/organogram.component';
+import { ReleaseTypeComponent } from './release-type/release-type.component';
 
 
 const routes: Routes = [
@@ -644,6 +645,20 @@ const routes: Routes = [
         component: SubjectComponent,
         data: {
           title: 'Update Subject',
+        },
+      },
+      {
+        path: 'releaseType',
+        component: ReleaseTypeComponent,
+        data: {
+          title: 'Release Type',
+        },
+      },
+      {
+        path: 'update-releaseType/:releaseTypeId',
+        component: ReleaseTypeComponent,
+        data: {
+          title: 'Update Release Type',
         },
       },
 

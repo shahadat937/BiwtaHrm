@@ -307,6 +307,10 @@ export const navItems: INavData[] = [
       {
         name: 'Attendance Report',
         url: '/attendance/attendanceReport'
+      },
+      {
+        name: "Attendance Summary",
+        url: '/attendance/attendanceSummary'
       }
 
     ]

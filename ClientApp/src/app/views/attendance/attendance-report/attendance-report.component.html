@@ -1,223 +1,114 @@
-<p>attendance-report works!</p>
 <c-card>
     <c-card-header>
-        <div class="d-flex justify-content-between">
-            <div>
-                Employee Wise Summary
-            </div>
-            <div>
-                <button cButton class="primary">
-                    {{EmpSummaryButtonText}}
-                </button>
-            </div>
-        </div>
+        Attendance Report
     </c-card-header>
     <c-card-body>
-        <c-row class="mt-3">
-            <h5 cCardTitle>Date Range</h5>
-            <c-col md="3">
-                <label for="from" cLabel>From</label>
-                <input type="date" id="from" 
-                cFormControl
-                [(ngModel)]="fromDate"
-                >
-            </c-col>
-            <c-col md="3">
-                <label for="to" cLabel>To</label>
-                <input type="date" id="to" 
-                cFormControl
-                [(ngModel)]="toDate"
-                >
-            </c-col>
-        </c-row>
-        <c-row class="mt-3"  >
-            <h5 cCardTitle>Select Employee</h5>
-            <c-col md="3">
-                <select name="Office" id="office"
-                cSelect 
-                [(ngModel)]="selectedOffice"
-                (change)="onChange()">
-                    <option [ngValue]="null" selected>Select Office</option>
-                    @for (office of OfficeOption; track $index) {
-                        <option [ngValue]="office.id">{{office.name}}</option>
-                    }
-                </select>
-            </c-col>
-            <c-col md="3">
-                <select name="Department" id="department" 
-                cSelect
-                [(ngModel)]="selectedDepartment"
-                (change)="onChange()"
-                >
-                    <option [ngValue]="null" selected>Select Department</option>
-                    @for ( department of DepartmentOption; track $index) {
-                        <option [ngValue]="department.id">{{department.name}}</option>
-                    }
-                </select>
-            </c-col>
-            <c-col md="3">
-                <select name="Shift" id="shift" cSelect>
-                    <option [ngValue]="null" selected>Select Shift</option>
-                    @for ( shift of ShiftOption; track $index) {
-                        <option [ngValue]="shift.id">{{shift.name}}</option>
-                    }
-                </select>
-            </c-col>
+        <c-card>
+            <c-card-body [gutter]="3">
+                <form action="" #filterform="ngForm">
+                <c-row>
+                    <c-col md="6">
+                        <div>
+                        <label for="dateRange" cLabel>Date Range</label>
+                        </div>
+                        <p-calendar 
+                        [style]="{height: '2.37rem'}"
+                        name="dateRange"
+                        [(ngModel)]="rangeDates" 
+                        [touchUI]="true"
+                        selectionMode="range"
+                        showIcon="true"
+                        />
+                    </c-col>
+                </c-row>
+                <c-row class="mt-3">
+                    <c-col md="2">
+                        <label for="office" cLabel>Office</label>
+                        <select name="officeId" id="office" cSelect [(ngModel)]="selectedOffice"
+                        (change)="onOfficeChange()"
+                        >
+                            <option [ngValue]="null" selected>Select Office</option>
 
-            <c-col md="3">
-                <select name="Employee" id="employee" 
-                cSelect
-                [(ngModel)]="selectedEmp"
-                (change)="onEmpChange()"
-                >
-                    <option [ngValue]="null" selected>Select Employee</option>
-                    @for ( employee of EmpOption; track $index) {
-                        <option [ngValue]="employee.id">{{employee.name}}</option>
-                    }
-                </select>
-            </c-col>
-        </c-row>
-        <hr class="mt-3"/>
-        <c-row [gutter]="3">
-            <c-col md="4">
-                <c-card class="text-center p-3">
-                    <h5 cCardTitle>Present</h5>
-                    <c-card-body>
-                        <h3>{{PresentText}}</h3>
-                    </c-card-body>
-                </c-card>
-            </c-col>
-            <c-col md="4">
-                <c-card class="text-center p-3">
-                    <h5 cCardTitle>Absent</h5>
-                    <c-card-body>
-                        <h3>{{AbsentText}}</h3>
-                    </c-card-body>
-                </c-card>
-            </c-col>
-            <c-col md="4">
-                <c-card class="text-center p-3">
-                    <h5 cCardTitle>Late</h5>
-                    <c-card-body>
-                        <h3>{{LateText}}</h3>
-                    </c-card-body>
-                </c-card>
-            </c-col>
-            <c-col md="4">
-                <c-card class="text-center p-3">
-                    <h5 cCardTitle>Working Day</h5>
-                    <c-card-body>
-                        <h3>{{WorkingDayText}}</h3>
-                    </c-card-body>
-                </c-card>
-            </c-col>
-            <c-col md="4">
-                <c-card class="text-center p-3">
-                    <h5 cCardTitle>Site Visit</h5>
-                    <c-card-body>
-                        <h3>{{SiteVisitText}}</h3>
-                    </c-card-body>
-                </c-card>
-            </c-col>
-            <c-col md="4">
-                <c-card class="text-center p-3">
-                    <h5 cCardTitle>On Leave</h5>
-                    <c-card-body>
-                        <h3>{{OnLeaveText}}</h3>
-                    </c-card-body>
-                </c-card>
-            </c-col>
-        </c-row>
-    </c-card-body>
+                            @for (office of OfficeOption; track $index) {
+                                <option [ngValue]="office.id" >{{office.name}}</option>
+                            }
+                        </select>
+                    </c-col>
+                    <c-col md="2">
+                        <label for="department" cLabel>Department</label>
+                        <select name="departmentId" id="department" cSelect [(ngModel)]="selectedDepartment"
+                        (change)="onDepartmentChange()"
+                        >
+                            <option [ngValue]="null" cDropdownItem>Select Department</option>
+                            @for (department of DepartmentOption; track $index) {
+                                <option [ngValue]="department.id">{{department.name}}</option>
+                            }
+                        </select>
+                    </c-col>
+                    <c-col md="2">
+                        <label for="designation" cLabel>Designation</label>
+                        <select name="designationId" id="designation" cSelect [(ngModel)]="selectedDesignation"
+                        (change)="onDesignationChange()"
+                        >
+                            <option [ngValue]="null" cDropdownItem selected>Select Designation</option>
+                            @for (designation of DesignationOption; track $index) {
+                                <option [ngValue]="designation.id">{{designation.name}}</option>
+                            }
+                        </select>
+                    </c-col>
+                    <c-col md="2">
+                        <label for="shift" cLabel>Shift</label>
+                        <select name="shiftId" id="shift" cSelect [(ngModel)]="selectedShift">
+                            <option [ngValue]="null" cDropdownItem selected>Select Shift</option>
+                            @for (shift of ShiftOption; track $index) {
+                                <option [ngValue]="shift.id">{{shift.name}}</option>
+                            }
+                        </select>
+                    </c-col>
+                    <c-col md="2">
+                        <label for="emp" cLabel>Employee</label>
+                        <select name="empId" id="emp" cSelect>
+                            <option [ngValue]="null" cDropdownItem>Select Employee</option>
+                            @for (employee of EmployeeOption; track $index) {
+                                <option [ngValue]="employee.id">{{employee.name}}</option>
+                            }
+                        </select>
+                    </c-col>
+                </c-row>
+                <c-row class="mt-3">
+                    <c-col md="3">
+                        <button type="submit" cButton class="btn btn-success"
+                        [disabled]="loading||rangeDates.length==0"
+                        >Show Report</button>
+                    </c-col>
+                </c-row>
+                </form>
+            </c-card-body>
+        </c-card>
+        <c-card class="mt-2">
+            <c-card-body>
+                <p-table [columns]="displayedColumns" [tableStyle]="{'min-width': '50rem' }">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>
+                                Action
+                            </th>
+                            @for (column of staticColumnsBefore; track $index) {
+                                <th>{{column.header}}</th>
+                            }
 
-</c-card>
-<c-card class="mt-3">
-    <c-card-header>
-        <div class="d-flex justify-content-between">
-            <div>
-                Department Wise Report
-            </div>
-        </div>
-    </c-card-header>
+                            @for (column of dynamicColumn; track $index) {
+                                <th>{{column.header}}</th>
+                            }
 
-    <c-card-body>
-        <c-row class="mt-3">
-            <h5 cCardTitle>Date Range</h5>
-            <c-col md="3">
-                <label for="from" cLabel>From</label>
-                <input type="date" id="from" 
-                cFormControl
-                [(ngModel)]="fromDateDw"
-                >
-            </c-col>
-            <c-col md="3">
-                <label for="to" cLabel>To</label>
-                <input type="date" id="to" 
-                cFormControl
-                [(ngModel)]="toDateDw"
-                >
-            </c-col>
-        </c-row>
-        <c-row class="mt-3"  >
-            <h5 cCardTitle>Filter</h5>
-            <c-col md="3">
-                <select name="Office" id="office"
-                cSelect 
-                [(ngModel)]="selectedOfficeDw"
-                (change)="onChangeDw()">
-                    <option [ngValue]="null" selected>Select Office</option>
-                    @for (office of OfficeOptionDw; track $index) {
-                        <option [ngValue]="office.id">{{office.name}}</option>
-                    }
-                </select>
-            </c-col>
-            <c-col md="3">
-                <select name="Department" id="department" 
-                cSelect
-                [(ngModel)]="selectedDepartmentDw"
-                (change)="onChangeDw()"
-                >
-                    <option [ngValue]="null" selected>Select Department</option>
-                    @for ( department of DepartmentOptionDw; track $index) {
-                        <option [ngValue]="department.id">{{department.name}}</option>
-                    }
-                </select>
-            </c-col>
-        </c-row>
-
-        <c-row>
-            <div class="mat-elevation-z8" class="mt-3">
-                <table mat-table [dataSource]="dataSource">
-                    <ng-container matColumnDef="slNo">
-                      <th mat-header-cell *matHeaderCellDef>Serial No</th>
-                      <td mat-cell *matCellDef="let element; let i = index">
-                        {{ i + 1 }}
-                      </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="attendanceDate">
-                      <th mat-header-cell *matHeaderCellDef>Attendance Date</th>
-                      <td mat-cell *matCellDef="let element">
-                        {{ element.attendanceDate }}
-                      </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="totalPresent">
-                      <th mat-header-cell *matHeaderCellDef>Total Present</th>
-                      <td mat-cell *matCellDef="let element">
-                        {{ element.totalPresent }}
-                      </td>
-                    </ng-container>
-                    <ng-container matColumnDef="totalAbsent">
-                        <th mat-header-cell *matHeaderCellDef>Total Absent</th>
-                        <td mat-cell *matCellDef="let element">
-                        {{ element.totalAbsent }}
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-                </table>
-            </div>
-        </c-row>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-product let-columns="columns">
+                        <tr>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </c-card-body>
+        </c-card>
     </c-card-body>
 </c-card>

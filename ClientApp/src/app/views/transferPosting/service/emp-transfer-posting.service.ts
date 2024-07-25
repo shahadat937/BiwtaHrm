@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EmpTransferPosting } from '../model/emp-transfer-posting';
 import { Observable, of, map } from 'rxjs';
+import { BasicInfoModule } from '../../employee/model/basic-info.module';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,9 @@ export class EmpTransferPostingService {
     return this.http.get<EmpTransferPosting>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingById/' + id);
   }
 
+  getEmpBasicInfoByIdCardNo(id: string){
+    return this.http.get<BasicInfoModule>(this.baseUrl + '/empBasicInfo/get-empBasicInfoByIdCardNo/' + id);
+  }
   
   saveEmpTransferPosting(model: any) {
     return this.http.post(this.baseUrl + '/empTransferPosting/save-EmpTransferPosting', model);

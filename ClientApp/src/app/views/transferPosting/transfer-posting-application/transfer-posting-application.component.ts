@@ -8,6 +8,7 @@ import { OfficeService } from '../../basic-setup/service/office.service';
 import { EmpTransferPostingService } from '../service/emp-transfer-posting.service';
 import { cilArrowLeft } from '@coreui/icons';
 import { ActivatedRoute } from '@angular/router';
+import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
 
 @Component({
   selector: 'app-transfer-posting-application',
@@ -25,18 +26,20 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   sections: SelectedModel[] = [];
   subscription: Subscription = new Subscription();
   loading: boolean = false;
+  isValidEmp: boolean = false;
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
 
   constructor(
     private toastr: ToastrService,
     public empTransferPostingService: EmpTransferPostingService,
+    public empJobDetailsService: EmpJobDetailsService,
     public officeService: OfficeService,
     public departmentService: DepartmentService,
     private route: ActivatedRoute,
   ) {
 
   }
-  
+
   icons = { cilArrowLeft };
 
   ngOnInit(): void {
@@ -55,7 +58,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
     });
-    this.empTransferPostingService.findByEmpId(this.id).subscribe((res) => {
+    this.subscription = this.empTransferPostingService.findByEmpId(this.id).subscribe((res) => {
       if (res) {
         console.log(res)
         this.EmpTransferPostingForm?.form.patchValue(res);
@@ -75,6 +78,13 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.empTransferPostingService.empTransferPosting = {
       id: null,
       empId: null,
+
+      idCardNo: null,
+      empName: null,
+      departmentName: null,
+      designationName: null,
+      sectionName: null,
+
       applicationById: null,
       currentOfficeId: null,
       currentDepartmentId: null,
@@ -118,6 +128,13 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.EmpTransferPostingForm.form.patchValue({
       id: null,
       empId: null,
+
+      idCardNo: null,
+      empName: null,
+      departmentName: null,
+      designationName: null,
+      sectionName: null,
+
       applicationById: null,
       currentOfficeId: null,
       currentDepartmentId: null,
@@ -154,6 +171,33 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       menuPosition: null,
       isActive: null,
     });
+  }
+
+  getEmpInfoByIdCardNo(idCardNo: string) {
+    this.subscription = this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
+      if (res) {
+        this.isValidEmp = true;
+        this.empTransferPostingService.empTransferPosting.empName = res.firstName + " " + res.lastName;
+        this.empTransferPostingService.empTransferPosting.empId = res.id;
+        this.getEmpJobDetailsByEmpId(res.id);
+      }
+      else {
+        this.isValidEmp = false;
+        this.toastr.warning('', 'Invalid Employee PMS No', {
+                positionClass: 'toast-top-right',
+        });
+      }
+    })
+  }
+
+  getEmpJobDetailsByEmpId(id: number){
+    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+      if(res){
+        this.empTransferPostingService.empTransferPosting.sectionName = res.sectionName;
+        this.empTransferPostingService.empTransferPosting.departmentName = res.departmentName;
+        this.empTransferPostingService.empTransferPosting.designationName = res.designationName;
+      }
+    })
   }
 
   loadOffice() {

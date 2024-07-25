@@ -1,22 +1,147 @@
-<c-card class="mt-3 mb-3 shadow">
+<c-card>
     <c-card-header class="d-flex justify-content-center">
         <div>{{headerText}}</div>
         <!-- <button cButton color="danger" [routerLink]="['/employee/manageEmployee']" class="text-light">
             <svg [cIcon]="icons.cilArrowLeft"></svg> Back
         </button> -->
     </c-card-header>
-    <c-card-body >
-        <form #EmpTransferPostingForm="ngForm" (submit)="onSubmit(EmpTransferPostingForm)" [gutter]="3" novalidate cForm cRow
-            class="needs-validation">
+    <c-card-body>
+        <form #EmpTransferPostingForm="ngForm" (submit)="onSubmit(EmpTransferPostingForm)" [gutter]="3" novalidate cForm
+            cRow class="needs-validation">
             <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.id" name="id" />
             <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.empId" name="empId" />
 
-            
-            
+            <!-- ************* Employee Information ************** -->
+            <c-card class="mt-3 mb-3 shadow">
+                <c-card-header class="text-center">
+                    <div>Employee Information</div>
+                </c-card-header>
+                <c-card-body cRow [gutter]="3">
+                    <c-col [md]="4">
+                        <label cLabel for="idCardNo">Employee PMS No<span class="text-danger">*</span></label>
+                        <c-input-group>
+                            <input aria-describedby="idCardNo" cFormControl [(ngModel)]="empTransferPostingService.empTransferPosting.idCardNo"
+                                name="idCardNo" #idCardNo="ngModel" required
+                                placeholder="Enter Employee PMS No" id="idCardNo" type="number" #idCardNoInput/>
+                            <button cButton color="primary" type="button" (click)="getEmpInfoByIdCardNo(idCardNoInput.value)">
+                                Select
+                            </button>
+                        </c-input-group>
+                        @if(!idCardNo.valid&&idCardNo.touched){
+                            <div class="text-left text-danger">PMS No is required</div>
+                        }
+                    </c-col>
+
+                    @if(isValidEmp) {
+                        <c-col [md]="4">
+                            <label cLabel for="empName"
+                            >Employee Name<span class="text-danger"></span></label
+                          >
+                            <input
+                            [(ngModel)]="empTransferPostingService.empTransferPosting.empName"
+                            name="empName"
+                            #empName="ngModel"
+                            cFormControl
+                            id="empName"
+                            readonly
+                            />
+                          </c-col>
+    
+                          @if(empTransferPostingService.empTransferPosting.sectionName) {
+                            <c-col [md]="4">
+                                <label cLabel for="sectionName"
+                                >Section<span class="text-danger"></span></label
+                              >
+                                <input
+                                [(ngModel)]="empTransferPostingService.empTransferPosting.sectionName"
+                                name="sectionName"
+                                #sectionName="ngModel"
+                                cFormControl
+                                id="sectionName"
+                                readonly
+                                />
+                              </c-col>
+                          }
+    
+                          <c-col [md]="4">
+                            <label cLabel for="departmentName"
+                            >Department<span class="text-danger"></span></label
+                          >
+                            <input
+                            [(ngModel)]="empTransferPostingService.empTransferPosting.departmentName"
+                            name="departmentName"
+                            #departmentName="ngModel"
+                            cFormControl
+                            id="departmentName"
+                            readonly
+                            />
+                          </c-col>
+    
+                          <c-col [md]="4">
+                            <label cLabel for="designationName"
+                            >Designation<span class="text-danger"></span></label
+                          >
+                            <input
+                            [(ngModel)]="empTransferPostingService.empTransferPosting.designationName"
+                            name="designationName"
+                            #designationName="ngModel"
+                            cFormControl
+                            id="designationName"
+                            readonly
+                            />
+                          </c-col>
+                    }
+                </c-card-body>
+            </c-card>
+
+
+            <!-- ************* Posting Order Information ************** -->
+            <c-card class="mt-3 mb-3 shadow">
+                <c-card-header class="text-center">
+                    <div>Posting Order Information</div>
+                </c-card-header>
+                <c-card-body>
+
+                </c-card-body>
+            </c-card>
+
+
+            <!-- ************* Transfer Approve Information ************** -->
+            <c-card class="mt-3 mb-3 shadow">
+                <c-card-header class="text-center">
+                    <div>Transfer Approve Information</div>
+                </c-card-header>
+                <c-card-body>
+
+                </c-card-body>
+            </c-card>
+
+
+            <!-- ************* Department Release Information ************** -->
+            <c-card class="mt-3 mb-3 shadow">
+                <c-card-header class="text-center">
+                    <div>Department Release Information</div>
+                </c-card-header>
+                <c-card-body>
+
+                </c-card-body>
+            </c-card>
+
+
+            <!-- ************* Transfer/Posting Information ************** -->
+            <c-card class="mt-3 mb-3 shadow">
+                <c-card-header class="text-center">
+                    <div>Transfer/Posting Information</div>
+                </c-card-header>
+                <c-card-body>
+
+                </c-card-body>
+            </c-card>
+
             <c-col [xs]="12">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <button [disabled]="loading" [disabled]="EmpTransferPostingForm.invalid" cButton class="me-1"
+                        <button [disabled]="loading" [disabled]="!isValidEmp" [disabled]="EmpTransferPostingForm.invalid" cButton class="me-1"
                             color="primary" type="submit">
                             <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
                             {{ btnText }}

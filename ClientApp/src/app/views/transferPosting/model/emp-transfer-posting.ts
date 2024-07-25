@@ -1,6 +1,13 @@
 export class EmpTransferPosting {
     id: number | null = null;
     empId: number | null = null;
+
+    idCardNo: number | null = null;
+    empName: string | null = null;
+    departmentName: string | null = null;
+    designationName: string | null = null;
+    sectionName: string | null = null;
+
     applicationById: number | null = null;
     currentOfficeId: number | null = null;
     currentDepartmentId: number | null = null;

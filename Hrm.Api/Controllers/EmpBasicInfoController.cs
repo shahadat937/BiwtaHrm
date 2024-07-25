@@ -92,5 +92,15 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+
+        [HttpGet]
+        [Route("get-empBasicInfoByIdCardNo/{id}")]
+        public async Task<ActionResult> GetEmpBasicInfoByIdCardNo(string id)
+        {
+            var command = new GetEmpBasicInfoByIdCardNoRequest { IdCardNo = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
     }
 }

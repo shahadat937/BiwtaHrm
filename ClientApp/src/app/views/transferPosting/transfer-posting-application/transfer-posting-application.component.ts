@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { DepartmentService } from '../../basic-setup/service/department.service';
 import { OfficeService } from '../../basic-setup/service/office.service';
@@ -24,9 +24,11 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   departments: SelectedModel[] = [];
   designations: SelectedModel[] = [];
   sections: SelectedModel[] = [];
+  releaseTypes: SelectedModel[] = [];
   subscription: Subscription = new Subscription();
   loading: boolean = false;
   isValidEmp: boolean = false;
+  isValidOrderByEmp: boolean = false;
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
 
   constructor(
@@ -45,8 +47,9 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getEmployeeByEmpId();
     this.loadOffice();
-    // this.getAllDepartment();
-    // this.getSelectedSection();
+    this.getAllDepartment();
+    this.getSelectedSection();
+    this.getSelectedReleaseType();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -78,13 +81,16 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.empTransferPostingService.empTransferPosting = {
       id: null,
       empId: null,
-
       idCardNo: null,
       empName: null,
       departmentName: null,
       designationName: null,
       sectionName: null,
-
+      orderByIdCardNo: null,
+      orderByEmpName: null,
+      orderByDepartmentName: null,
+      orderByDesignationName: null,
+      orderBySectionName: null,
       applicationById: null,
       currentOfficeId: null,
       currentDepartmentId: null,
@@ -128,13 +134,16 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.EmpTransferPostingForm.form.patchValue({
       id: null,
       empId: null,
-
       idCardNo: null,
       empName: null,
       departmentName: null,
       designationName: null,
       sectionName: null,
-
+      orderByIdCardNo: null,
+      orderByEmpName: null,
+      orderByDepartmentName: null,
+      orderByDesignationName: null,
+      orderBySectionName: null,
       applicationById: null,
       currentOfficeId: null,
       currentDepartmentId: null,
@@ -196,6 +205,37 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.empTransferPostingService.empTransferPosting.sectionName = res.sectionName;
         this.empTransferPostingService.empTransferPosting.departmentName = res.departmentName;
         this.empTransferPostingService.empTransferPosting.designationName = res.designationName;
+        this.empTransferPostingService.empTransferPosting.currentDepartmentId = res.departmentId;
+        this.empTransferPostingService.empTransferPosting.currentDesignationId = res.designationId;
+        this.empTransferPostingService.empTransferPosting.currentSectionId = res.sectionId;
+        this.empTransferPostingService.empTransferPosting.currentOfficeId = res.officeId;
+      }
+    })
+  }
+
+  getOrderByInfoByIdCardNo(idCardNo: string){
+    this.subscription = this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
+      if (res) {
+        this.isValidOrderByEmp = true;
+        this.empTransferPostingService.empTransferPosting.orderByEmpName = res.firstName + " " + res.lastName;
+        this.empTransferPostingService.empTransferPosting.orderOfficeById = res.id;
+        this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.id);
+      }
+      else {
+        this.isValidOrderByEmp = false;
+        this.toastr.warning('', 'Invalid Order By No', {
+                positionClass: 'toast-top-right',
+        });
+      }
+    })
+  }
+
+  getEmpJobDetailsByEmpIdOfOrderOfficeBy(id: number){
+    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+      if(res){
+        this.empTransferPostingService.empTransferPosting.orderByDepartmentName = res.departmentName;
+        this.empTransferPostingService.empTransferPosting.orderByDesignationName = res.designationName;
+        this.empTransferPostingService.empTransferPosting.orderBySectionName = res.sectionName;
       }
     })
   }
@@ -203,6 +243,30 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   loadOffice() {
     this.subscription = this.officeService.selectGetoffice().subscribe((data) => {
       this.offices = data;
+    });
+  }
+  
+  getAllDepartment() {
+    this.empJobDetailsService.getAllDepartment().subscribe((res) => {
+      this.departments = res;
+    });
+  }
+  getTransferDesignationByDepartment(departmentId: number | null ){
+    this.designations = [];
+    this.empTransferPostingService.empTransferPosting.transferDesignationId = null;
+    this.empTransferPostingService.getDesignationByDepartment(departmentId).subscribe((res) => {
+      this.designations = res;
+    });
+  }
+
+  getSelectedSection(){
+    this.subscription = this.empJobDetailsService.getSelectedSection().subscribe((data) => {
+      this.sections = data;
+    });
+  }
+  getSelectedReleaseType(){
+    this.subscription = this.empTransferPostingService.getSelectedReleaseType().subscribe((data) => {
+      this.releaseTypes = data;
     });
   }
 
@@ -248,6 +312,14 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   // }
 
   onSubmit(form: NgForm): void {
+    if(this.isValidEmp){
+      console.log(form.value)
+    }
+    else{
+      this.toastr.warning('', 'Select Valid Employee PMS No', {
+        positionClass: 'toast-top-right',
+      });
+    }
     // this.loading = true;
     // this.empTransferPostingService.cachedData = [];
     // const id = form.value.id;

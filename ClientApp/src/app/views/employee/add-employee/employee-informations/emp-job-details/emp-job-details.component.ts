@@ -177,6 +177,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     });
   }
   onOfficeSelectGetDesignation(officeId: number, empJobDetailsId: number) {
+    this.designations = [];
     this.empJobDetailsService.empJobDetails.designationId = null;
     this.empJobDetailsService.getDesignationByOfficeId(officeId, empJobDetailsId).subscribe((res) => {
       this.designations = res;
@@ -187,6 +188,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     if (departmentId == null) {
       this.onOfficeSelectGetDesignation(this.empJobDetailsService.empJobDetails.officeId, this.empJobDetailsId);
     }
+    this.designations = [];
     this.empJobDetailsService.empJobDetails.designationId = null;
     this.empJobDetailsService.getDesignationByDepartmentId(departmentId, empJobDetailsId).subscribe((res) => {
       this.designations = res;
@@ -199,6 +201,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     });
   }
   getOldDesignationByDepartment(departmentId: number) {
+    this.firstDesignations = [];
     this.empJobDetailsService.empJobDetails.firstDesignationId = null;
     this.empJobDetailsService.getOldDesignationByDepartment(departmentId).subscribe((res) => {
       this.firstDesignations = res;

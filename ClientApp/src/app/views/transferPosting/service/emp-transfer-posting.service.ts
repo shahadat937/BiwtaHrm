@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { EmpTransferPosting } from '../model/emp-transfer-posting';
 import { Observable, of, map } from 'rxjs';
 import { BasicInfoModule } from '../../employee/model/basic-info.module';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,14 @@ export class EmpTransferPostingService {
 
   getEmpBasicInfoByIdCardNo(id: string){
     return this.http.get<BasicInfoModule>(this.baseUrl + '/empBasicInfo/get-empBasicInfoByIdCardNo/' + id);
+  }
+
+  getDesignationByDepartment(id : number | null){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationByDepartmentId/' + id);
+  }
+  
+  getSelectedReleaseType(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/releaseType/get-selectedReleaseType');
   }
   
   saveEmpTransferPosting(model: any) {

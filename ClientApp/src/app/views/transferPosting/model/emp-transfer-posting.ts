@@ -7,6 +7,12 @@ export class EmpTransferPosting {
     departmentName: string | null = null;
     designationName: string | null = null;
     sectionName: string | null = null;
+    
+    orderByIdCardNo: number | null = null;
+    orderByEmpName: string | null = null;
+    orderByDepartmentName: string | null = null;
+    orderByDesignationName: string | null = null;
+    orderBySectionName: string | null = null;
 
     applicationById: number | null = null;
     currentOfficeId: number | null = null;

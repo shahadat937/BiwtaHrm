@@ -17,12 +17,16 @@
                     <div>Employee Information</div>
                 </c-card-header>
                 <c-card-body cRow [gutter]="3">
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentDepartmentId" name="currentDepartmentId" />
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentDesignationId" name="currentDesignationId" />
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentSectionId" name="currentSectionId" />
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentOfficeId" name="currentOfficeId" />
                     <c-col [md]="4">
                         <label cLabel for="idCardNo">Employee PMS No<span class="text-danger">*</span></label>
                         <c-input-group>
                             <input aria-describedby="idCardNo" cFormControl [(ngModel)]="empTransferPostingService.empTransferPosting.idCardNo"
                                 name="idCardNo" #idCardNo="ngModel" required
-                                placeholder="Enter Employee PMS No" id="idCardNo" type="number" #idCardNoInput/>
+                                placeholder="Enter Employee PMS No" id="idCardNo" type="text" #idCardNoInput/>
                             <button cButton color="primary" type="button" (click)="getEmpInfoByIdCardNo(idCardNoInput.value)">
                                 Select
                             </button>
@@ -100,8 +104,219 @@
                 <c-card-header class="text-center">
                     <div>Posting Order Information</div>
                 </c-card-header>
-                <c-card-body>
+                <c-card-body cRow [gutter]="3">
 
+                    <c-col [md]="4">
+                        <label cLabel for="officeOrderNo"
+                        >Office Order No.<span class="text-danger"></span></label
+                      >
+                        <input
+                        [(ngModel)]="empTransferPostingService.empTransferPosting.officeOrderNo"
+                        name="officeOrderNo"
+                        #officeOrderNo="ngModel"
+                        cFormControl
+                        id="officeOrderNo"
+                        placeholder="Enter Office Order No."
+                        type="text"
+                        />
+                        @if(!officeOrderNo.valid&&officeOrderNo.touched){
+                            <div class="text-left text-danger">Office Order No is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="officeOrderDate"
+                        >Office Order Date<span class="text-danger"></span></label
+                      >
+                        <input
+                        [(ngModel)]="empTransferPostingService.empTransferPosting.officeOrderDate"
+                        name="officeOrderDate"
+                        #officeOrderDate="ngModel"
+                        cFormControl
+                        id="officeOrderDate"
+                        type="date"
+                        />
+                        @if(!officeOrderDate.valid&&officeOrderDate.touched){
+                            <div class="text-left text-danger">Office Order No is required</div>
+                        }
+                    </c-col>
+
+                    <c-col [md]="4">
+                        <input [(ngModel)]="empTransferPostingService.empTransferPosting.orderOfficeById" name="orderOfficeById" type="hidden"/>
+                        <label cLabel for="orderByIdCardNo">Order By<span class="text-danger">*</span></label>
+                        <c-input-group>
+                            <input aria-describedby="orderByIdCardNo" cFormControl [(ngModel)]="empTransferPostingService.empTransferPosting.orderByIdCardNo"
+                                name="orderByIdCardNo" #orderByIdCardNo="ngModel" required
+                                placeholder="Enter Employee PMS No" id="orderByIdCardNo" type="text" #orderByIdCardNoInput/>
+                            <button cButton color="primary" type="button" (click)="getOrderByInfoByIdCardNo(orderByIdCardNoInput.value)">
+                                Select
+                            </button>
+                        </c-input-group>
+                        @if(!orderByIdCardNo.valid&&orderByIdCardNo.touched){
+                            <div class="text-left text-danger">Order By is required</div>
+                        }
+                    </c-col>
+
+                    @if(isValidOrderByEmp) {
+                        <c-col [md]="3">
+                            <label cLabel for="orderByEmpName"
+                            >Order By Name<span class="text-danger"></span></label
+                          >
+                            <input
+                            [(ngModel)]="empTransferPostingService.empTransferPosting.orderByEmpName"
+                            name="orderByEmpName"
+                            #orderByEmpName="ngModel"
+                            cFormControl
+                            id="orderByEmpName"
+                            readonly
+                            />
+                          </c-col>
+    
+                          @if(empTransferPostingService.empTransferPosting.orderBySectionName) {
+                            <c-col [md]="3">
+                                <label cLabel for="orderBySectionName"
+                                >Order By Section<span class="text-danger"></span></label
+                              >
+                                <input
+                                [(ngModel)]="empTransferPostingService.empTransferPosting.orderBySectionName"
+                                name="orderBySectionName"
+                                #orderBySectionName="ngModel"
+                                cFormControl
+                                id="orderBySectionName"
+                                readonly
+                                />
+                              </c-col>
+                          }
+    
+                          <c-col [md]="3">
+                            <label cLabel for="orderByDepartmentName"
+                            >Order By Department<span class="text-danger"></span></label
+                          >
+                            <input
+                            [(ngModel)]="empTransferPostingService.empTransferPosting.orderByDepartmentName"
+                            name="orderByDepartmentName"
+                            #orderByDepartmentName="ngModel"
+                            cFormControl
+                            id="orderByDepartmentName"
+                            readonly
+                            />
+                          </c-col>
+    
+                          <c-col [md]="3">
+                            <label cLabel for="orderByDesignationName"
+                            >Order By Designation<span class="text-danger"></span></label
+                          >
+                            <input
+                            [(ngModel)]="empTransferPostingService.empTransferPosting.orderByDesignationName"
+                            name="orderByDesignationName"
+                            #orderByDesignationName="ngModel"
+                            cFormControl
+                            id="orderByDesignationName"
+                            readonly
+                            />
+                          </c-col>
+                    }
+
+                    
+                    <c-col [md]="3">
+                        <label cLabel for="transferDepartmentId">Transfer Department<span class="text-danger">*</span></label>
+                        <div class="input-wrapper">
+                        <select 
+                            [(ngModel)]="empTransferPostingService.empTransferPosting.transferDepartmentId" name="transferDepartmentId" #transferDepartmentId="ngModel" required (change)="getTransferDesignationByDepartment(empTransferPostingService.empTransferPosting.transferDepartmentId)"
+                            cFormControl id="transferDepartmentId" aria-label="Default select example" cSelect>
+                            <option [ngValue]="null">Select Transfer Department</option>
+                
+                            @for(department of departments; track department.id;let index=$index) {
+                            <option [value]="department.id">
+                            {{ department.name }}
+                            </option>
+                            }
+                        </select>
+                        @if(!transferDepartmentId.valid && transferDepartmentId.touched){
+                        <div class="text-left text-danger">Transfer Department is required</div>
+                        }
+                        </div>
+                    </c-col>
+                    
+                    @if (empTransferPostingService.empTransferPosting.transferDepartmentId) {
+                        <c-col [md]="3">
+                            <label cLabel for="transferDesignationId">Transfer Designation<span class="text-danger"></span></label>
+                            <div class="input-wrapper">
+                            <select
+                                [(ngModel)]="empTransferPostingService.empTransferPosting.transferDesignationId" name="transferDesignationId" #transferDesignationId="ngModel"
+                                cFormControl id="transferDesignationId" aria-label="Default select example" cSelect>
+                                <option [ngValue]="null">Select Transfer Designation</option>
+                    
+                                @for(designation of designations; track designation.id;let index=$index) {
+                                <option [value]="designation.id">
+                                {{ designation.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!transferDesignationId.valid && transferDesignationId.touched){
+                            <div class="text-left text-danger">Designation is required</div>
+                            }
+                            </div>
+                        </c-col>
+                    }
+                    
+                    <c-col [md]="3">
+                        <label cLabel for="transferSectionId">Transfer Section<span class="text-danger"></span></label>
+                        <div class="input-wrapper">
+                        <select
+                            [(ngModel)]="empTransferPostingService.empTransferPosting.transferSectionId" name="transferSectionId" #transferSectionId="ngModel"
+                            cFormControl id="transferSectionId" aria-label="Default select example" cSelect>
+                            <option [ngValue]="null">Select Section</option>
+                
+                            @for(section of sections; track section.id;let index=$index) {
+                            <option [value]="section.id">
+                            {{ section.name }}
+                            </option>
+                            }
+                        </select>
+                        @if(!transferSectionId.valid && transferSectionId.touched){
+                        <div class="text-left text-danger">Section is required</div>
+                        }
+                        </div>
+                    </c-col>
+                    
+                    <c-col [md]="3">
+                        <label cLabel for="releaseTypeId">Release Type<span class="text-danger"></span></label>
+                        <div class="input-wrapper">
+                        <select
+                            [(ngModel)]="empTransferPostingService.empTransferPosting.releaseTypeId" name="releaseTypeId" #releaseTypeId="ngModel"
+                            cFormControl id="releaseTypeId" aria-label="Default select example" cSelect>
+                            <option [ngValue]="null">Select Release Type</option>
+                
+                            @for(releaseType of releaseTypes; track releaseType.id;let index=$index) {
+                            <option [value]="releaseType.id">
+                            {{ releaseType.name }}
+                            </option>
+                            }
+                        </select>
+                        @if(!releaseTypeId.valid && releaseTypeId.touched){
+                        <div class="text-left text-danger">Release Type is required</div>
+                        }
+                        </div>
+                    </c-col>
+                    
+                    <c-col [md]="3">
+                        <label cLabel for="remark"
+                        >Remark<span class="text-danger"></span></label
+                      >
+                        <input
+                        [(ngModel)]="empTransferPostingService.empTransferPosting.remark"
+                        name="remark"
+                        #remark="ngModel"
+                        cFormControl
+                        id="remark"
+                        placeholder="Enter Remark"
+                        type="text"
+                        />
+                        @if(!remark.valid&&remark.touched){
+                            <div class="text-left text-danger">Remark is required</div>
+                        }
+                    </c-col>
                 </c-card-body>
             </c-card>
 
@@ -141,7 +356,7 @@
             <c-col [xs]="12">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <button [disabled]="loading" [disabled]="!isValidEmp" [disabled]="EmpTransferPostingForm.invalid" cButton class="me-1"
+                        <button [disabled]="loading" [disabled]="EmpTransferPostingForm.invalid" cButton class="me-1"
                             color="primary" type="submit">
                             <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
                             {{ btnText }}

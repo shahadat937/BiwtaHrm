@@ -29,6 +29,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   isValidEmp: boolean = false;
   isValidOrderByEmp: boolean = false;
+  isApproveByEmp: boolean = false;
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
 
   constructor(
@@ -104,20 +105,28 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       transferDepartmentId: null,
       transferDesignationId: null,
       transferSectionId: null,
-      isTransferApprove: null,
+      isTransferApprove: true,
+      provideTransferApproveInfo: false,
       transferApproveById: null,
+      approveByIdCardNo: null,
+      approveByEmpName: null,
+      approveByDepartmentName: null,
+      approveByDesignationName: null,
+      approveBySectionName: null,
       transferApproveDate: null,
       approveRemark: null,
       transferApproveStatus: null,
-      isDepartmentApprove: null,
+      isDepartmentApprove: true,
+      provideDepartmentApproveInfo: false,
       deptReleaseTypeId: null,
       deptReleaseById: null,
       deptReleaseDate: null,
       referenceNo: null,
-      deptClearance: null,
+      deptClearance: true,
       deptRemark: null,
       deptApproveStatus: null,
-      isJoining: null,
+      isJoining: true,
+      provideJoiningInfo: false,
       joiningReportingById: null,
       joiningDate: null,
       joiningRemark: null,
@@ -157,20 +166,23 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       transferDepartmentId: null,
       transferDesignationId: null,
       transferSectionId: null,
-      isTransferApprove: null,
+      isTransferApprove: true,
+      provideTransferApproveInfo: false,
       transferApproveById: null,
       transferApproveDate: null,
       approveRemark: null,
       transferApproveStatus: null,
-      isDepartmentApprove: null,
+      isDepartmentApprove: true,
+      provideDepartmentApproveInfo: false,
       deptReleaseTypeId: null,
       deptReleaseById: null,
       deptReleaseDate: null,
       referenceNo: null,
-      deptClearance: null,
+      deptClearance: true,
       deptRemark: null,
       deptApproveStatus: null,
-      isJoining: null,
+      isJoining: true,
+      provideJoiningInfo: false,
       joiningReportingById: null,
       joiningDate: null,
       joiningRemark: null,
@@ -238,6 +250,82 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.empTransferPostingService.empTransferPosting.orderBySectionName = res.sectionName;
       }
     })
+  }
+
+  getApproveByInfoByIdCardNo(idCardNo: string){
+    this.subscription = this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
+      if (res) {
+        this.isApproveByEmp = true;
+        this.empTransferPostingService.empTransferPosting.approveByEmpName = res.firstName + " " + res.lastName;
+        this.empTransferPostingService.empTransferPosting.transferApproveById = res.id;
+        this.getEmpJobDetailsByEmpIdOfApproveBy(res.id);
+      }
+      else {
+        this.isApproveByEmp = false;
+        this.toastr.warning('', 'Invalid Approve By No', {
+                positionClass: 'toast-top-right',
+        });
+      }
+    })
+  }
+
+  getEmpJobDetailsByEmpIdOfApproveBy(id: number){
+    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+      if(res){
+        this.empTransferPostingService.empTransferPosting.approveByDepartmentName = res.departmentName;
+        this.empTransferPostingService.empTransferPosting.approveByDesignationName = res.designationName;
+        this.empTransferPostingService.empTransferPosting.approveBySectionName = res.sectionName;
+      }
+    })
+  }
+  isTransferApproveNeed(status: boolean){
+    if(!status){
+      this.empTransferPostingService.empTransferPosting.provideTransferApproveInfo = false;
+      this.provideTransferApproveInfo(false);
+    }
+  }
+  provideTransferApproveInfo(status: boolean){
+    if(!status){
+      this.empTransferPostingService.empTransferPosting.approveByEmpName = '';
+      this.empTransferPostingService.empTransferPosting.transferApproveById = null;
+      this.empTransferPostingService.empTransferPosting.approveByDepartmentName = '';
+      this.empTransferPostingService.empTransferPosting.approveByDesignationName = '';
+      this.empTransferPostingService.empTransferPosting.approveBySectionName = '';
+      this.empTransferPostingService.empTransferPosting.approveByIdCardNo = '';
+      this.empTransferPostingService.empTransferPosting.transferApproveStatus = null;
+      this.empTransferPostingService.empTransferPosting.transferApproveDate = null;
+      this.empTransferPostingService.empTransferPosting.approveRemark = '';
+      this.isApproveByEmp = false;
+    }
+  }
+  
+  isDeptApproveNeed(status: boolean){
+    if(!status){
+      this.empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo = false;
+      this.provideDeptApproveInfo(false);
+    }
+  }
+  provideDeptApproveInfo(status: boolean){
+    if(!status){
+      this.empTransferPostingService.empTransferPosting.deptReleaseTypeId = null;
+      this.empTransferPostingService.empTransferPosting.deptReleaseDate = null;
+      this.empTransferPostingService.empTransferPosting.deptClearance = true;
+      this.empTransferPostingService.empTransferPosting.referenceNo = '';
+      this.empTransferPostingService.empTransferPosting.deptRemark = '';
+    }
+  }
+  
+  isJoiningApproveNeed(status: boolean){
+    if(!status){
+      this.empTransferPostingService.empTransferPosting.provideJoiningInfo = false;
+      this.provideJoiningApproveInfo(false);
+    }
+  }
+  provideJoiningApproveInfo(status: boolean){
+    if(!status){
+      this.empTransferPostingService.empTransferPosting.joiningDate = null;
+      this.empTransferPostingService.empTransferPosting.joiningRemark = '';
+    }
   }
 
   loadOffice() {

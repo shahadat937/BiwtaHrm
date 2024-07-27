@@ -5,7 +5,7 @@
     <c-card-body>
         <c-card>
             <c-card-body [gutter]="3">
-                <form action="" #filterform="ngForm">
+                <form (ngSubmit)="onSubmit()" #filterform="ngForm">
                 <c-row>
                     <c-col md="6">
                         <div>
@@ -87,24 +87,32 @@
         </c-card>
         <c-card class="mt-2">
             <c-card-body>
-                <p-table [columns]="displayedColumns" [tableStyle]="{'min-width': '50rem' }">
+                <p-table [columns]="dynamicColumn" [value]="tableData" [tableStyle]="{'min-width': '50rem'}">
                     <ng-template pTemplate="header" let-columns>
                         <tr>
-                            <th>
-                                Action
-                            </th>
-                            @for (column of staticColumnsBefore; track $index) {
-                                <th>{{column.header}}</th>
+                            @for ( col of staticColumnsBefore; track $index) {
+                                <th>{{col.header}}</th>
                             }
-
-                            @for (column of dynamicColumn; track $index) {
+                            @for (column of columns; track $index) {
                                 <th>{{column.header}}</th>
                             }
 
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-product let-columns="columns">
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
                         <tr>
+                            @for(col of staticColumnsBefore; track $index) {
+                                <td>{{rowData[col.field]}}</td>
+                            }
+                            @for (col of columns; track $index) {
+                                <td>
+                                    @if (rowData[col.field]==null||rowData[col.field]=="Absent") {
+                                        <svg [cIcon]="icons.cibXPack" cTooltip="Hello World"></svg>
+                                    } @else {
+                                        <svg [cIcon]="icons.cibVerizon" cTooltip="Hello World"></svg><i class="cib-verizon"></i>
+                                    }
+                                </td>
+                            }
                         </tr>
                     </ng-template>
                 </p-table>

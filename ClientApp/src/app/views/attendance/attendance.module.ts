@@ -37,6 +37,8 @@ import {AttendanceRecordService} from './services/attendance-record-service.serv
 import {AttendanceReportService} from './services/attendance-report.service'
 import {TimeFormatPipe} from './pipes/time-format.pipe'
 import { TableModule } from 'primeng/table';
+import { TooltipModule } from '@coreui/angular';
+
 
 
 @NgModule({
@@ -76,7 +78,9 @@ import { TableModule } from 'primeng/table';
     PButtonModule,
     ButtonDirective,
     CalendarModule,
-    TableModule 
+    TableModule, 
+    TooltipModule
+
   ],
   providers: [ 
     ToastrService,

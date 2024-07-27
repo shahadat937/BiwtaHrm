@@ -12,6 +12,7 @@ namespace Hrm.Application.DTOs.Attendance
         public int? OfficeId {  get; set; }
         public int? DepartmentId {  get; set; }
         public int? DesignationId {  get; set; }
+        public int? ShiftId { get; set; }
         public int? SectionId {  get; set; }
         public DateOnly From {  get; set; }
         public DateOnly To {  get; set; }

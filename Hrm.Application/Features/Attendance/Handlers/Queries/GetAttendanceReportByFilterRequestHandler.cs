@@ -12,15 +12,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace Hrm.Application.Features.Attendance.Handlers.Queries
 {
     public class GetAttendanceReportByFilterRequestHandler: IRequestHandler<GetAttendanceReportByFilterRequest, object>
     {
-        private readonly IHrmRepository<Hrm.Domain.Attendance> _AttendanceRepository;
+        private readonly IHrmRepository<object> _AttendanceRepository;
         private readonly IMapper _mapper;
 
-        public GetAttendanceReportByFilterRequestHandler(IHrmRepository<Hrm.Domain.Attendance> AttendanceRepository, IMapper mapper)
+        public GetAttendanceReportByFilterRequestHandler(IHrmRepository<object> AttendanceRepository, IMapper mapper)
         {
             _AttendanceRepository = AttendanceRepository;
             _mapper = mapper;
@@ -36,57 +37,20 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
                 throw new ValidationException(validationResult);
             }
 
-            var Attendances = _AttendanceRepository.Where(at => at.AttendanceDate >= request.AtdReportFilter.From && at.AttendanceDate <= request.AtdReportFilter.To)
-              .Include(at => at.EmpBasicInfo)
-              .Include(at => at.AttendanceStatus)
-              .AsQueryable();
+            var officeId = request.AtdReportFilter.OfficeId == null ? "NULL" : request.AtdReportFilter.OfficeId.ToString();
 
-            if(request.AtdReportFilter.EmpId.HasValue)
-            {
-                Attendances = Attendances.Where(at => at.EmpId == request.AtdReportFilter.EmpId);
-            }
+            var departmentId = request.AtdReportFilter.DepartmentId == null ? "NULL" : request.AtdReportFilter.DepartmentId.ToString();
 
-            if(request.AtdReportFilter.OfficeId.HasValue)
-            {
-                Attendances = Attendances.Where(at => at.EmpBasicInfo.EmpJobDetail.Any() && at.EmpBasicInfo.EmpJobDetail.ToList()[0].OfficeId == request.AtdReportFilter.OfficeId);
-            }
+            var designationId = request.AtdReportFilter.DesignationId == null ? "NULL" : request.AtdReportFilter.DesignationId.ToString();
 
-            if(request.AtdReportFilter.DepartmentId.HasValue)
-            {
-                Attendances = Attendances.Where(at => at.EmpBasicInfo.EmpJobDetail.Any() && at.EmpBasicInfo.EmpJobDetail.ToList()[0].DepartmentId == request.AtdReportFilter.DepartmentId);
-            }
+            var sectionId = request.AtdReportFilter.SectionId == null ? "NULL" : request.AtdReportFilter.SectionId.ToString();
 
-            if(request.AtdReportFilter.SectionId.HasValue)
-            {
-                Attendances = Attendances.Where(at => at.EmpBasicInfo.EmpJobDetail.Any() && at.EmpBasicInfo.EmpJobDetail.ToList()[0].SectionId == request.AtdReportFilter.SectionId);
-            }
+            var empId = request.AtdReportFilter.EmpId == null ? "NULL" : request.AtdReportFilter.EmpId.ToString();
 
-            var AttendancesList = Attendances.OrderBy(at => at.EmpId).ThenBy(at => at.AttendanceDate).ToList();
+            string query = $"EXEC [dbo].[GetAttendanceReportRange] @startDate='{request.AtdReportFilter.From}', @endDate='{request.AtdReportFilter.To}', @officeId={officeId}, @departmentId={departmentId}, @designationId={designationId}, @sectionId={sectionId}, @empId={empId}";
 
-            List<AttendanceReportDto> AttendanceReportdtos = new List<AttendanceReportDto>();
 
-            int currentEmpId = -1;
-
-            foreach (var attendance in AttendancesList)
-            {
-                if(currentEmpId != attendance.EmpId)
-                {
-                    AttendanceReportDto dto = new AttendanceReportDto();
-                    dto.EmpId = attendance.EmpId;
-                    dto.EmpFirstName = attendance.EmpBasicInfo.FirstName;
-                    dto.EmpLastName = attendance.EmpBasicInfo.LastName;
-                    AttendanceReportdtos.Add(dto);
-
-                    currentEmpId = attendance.EmpId;
-                }
-
-                PresentDateDto presentDatedto = new PresentDateDto();
-                presentDatedto.AttendanceDate = attendance.AttendanceDate;
-                presentDatedto.AttendanceStatus = attendance.AttendanceStatus.AttendanceStatusName;
-                AttendanceReportdtos[AttendanceReportdtos.Count - 1].PresentDates.Add(presentDatedto);
-            }
-
-            return AttendanceReportdtos;
+            return _AttendanceRepository.ExecWithSqlQuery(query);
 
         }
     }

@@ -2,17 +2,23 @@ export class EmpTransferPosting {
     id: number | null = null;
     empId: number | null = null;
 
-    idCardNo: number | null = null;
+    idCardNo: string | null = null;
     empName: string | null = null;
     departmentName: string | null = null;
     designationName: string | null = null;
     sectionName: string | null = null;
     
-    orderByIdCardNo: number | null = null;
+    orderByIdCardNo: string | null = null;
     orderByEmpName: string | null = null;
     orderByDepartmentName: string | null = null;
     orderByDesignationName: string | null = null;
     orderBySectionName: string | null = null;
+
+    approveByIdCardNo: string | null = null;
+    approveByEmpName: string | null = null;
+    approveByDepartmentName: string | null = null;
+    approveByDesignationName: string | null = null;
+    approveBySectionName: string | null = null;
 
     applicationById: number | null = null;
     currentOfficeId: number | null = null;
@@ -27,20 +33,23 @@ export class EmpTransferPosting {
     transferDepartmentId: number | null = null;
     transferDesignationId: number | null = null;
     transferSectionId: number | null = null;
-    isTransferApprove: boolean | null = null;
+    isTransferApprove: boolean = true;
+    provideTransferApproveInfo: boolean = false;
     transferApproveById: number | null = null;
     transferApproveDate: Date | null = null;
     approveRemark: string | null = null;
     transferApproveStatus: boolean | null = null;
-    isDepartmentApprove: boolean | null = null;
+    isDepartmentApprove: boolean = true;
+    provideDepartmentApproveInfo: boolean = false;
     deptReleaseTypeId: number | null = null;
     deptReleaseById: number | null = null;
     deptReleaseDate: Date | null = null;
     referenceNo: string | null = null;
-    deptClearance: boolean | null = null;
+    deptClearance: boolean = true;
     deptRemark: string | null = null;
     deptApproveStatus: boolean | null = null;
-    isJoining: boolean | null = null;
+    isJoining: boolean = true;
+    provideJoiningInfo: boolean = false;
     joiningReportingById: number | null = null;
     joiningDate: Date | null = null;
     joiningRemark: string | null = null;

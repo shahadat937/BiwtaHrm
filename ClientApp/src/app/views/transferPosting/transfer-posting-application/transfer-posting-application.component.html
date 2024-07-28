@@ -258,6 +258,7 @@
                     <div>Transfer Approve Information</div>
                 </c-card-header>
                 <c-card-body>
+                 <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.transferApproveById" name="transferApproveById" />
                     <div class="mb-3">
                         <c-form-check [switch]="true">
                             <input cFormCheckInput type="checkbox" id="isTransferApprove" name="isTransferApprove"
@@ -369,6 +370,7 @@
                     <div>Department Release Information</div>
                 </c-card-header>
                 <c-card-body>
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseById" name="deptReleaseById" />
                     <div class="mb-3">
                         <c-form-check [switch]="true">
                             <input cFormCheckInput type="checkbox" id="isDepartmentApprove" name="isDepartmentApprove"
@@ -457,6 +459,7 @@
                 </c-card-header>
                 <c-card-body>
                     <div class="mb-3">
+                        <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.joiningReportingById" name="joiningReportingById" />
                         <c-form-check [switch]="true">
                             <input cFormCheckInput type="checkbox" id="isJoining" name="isJoining"
                                 [(ngModel)]="empTransferPostingService.empTransferPosting.isJoining" (change)="isJoiningApproveNeed(empTransferPostingService.empTransferPosting.isJoining)"/>

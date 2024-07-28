@@ -80,7 +80,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   initaialForm(form?: NgForm) {
     if (form != null) form.resetForm();
     this.empTransferPostingService.empTransferPosting = {
-      id: null,
+      id: 0,
       empId: null,
       idCardNo: null,
       empName: null,
@@ -141,7 +141,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   resetForm() {
     this.EmpTransferPostingForm.form.reset();
     this.EmpTransferPostingForm.form.patchValue({
-      id: null,
+      id: 0,
       empId: null,
       idCardNo: null,
       empName: null,
@@ -409,25 +409,25 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       });
     }
     // this.loading = true;
-    // this.empTransferPostingService.cachedData = [];
-    // const id = form.value.id;
-    // const action$ = id
-    //   ? this.empTransferPostingService.updateEmpTransferPosting(id, form.value)
-    //   : this.empTransferPostingService.saveEmpTransferPosting(form.value);
+    this.empTransferPostingService.cachedData = [];
+    const id = form.value.id;
+    const action$ = id
+      ? this.empTransferPostingService.updateEmpTransferPosting(id, form.value)
+      : this.empTransferPostingService.saveEmpTransferPosting(form.value);
 
-    // this.subscription = action$.subscribe((response: any) => {
-    //   if (response.success) {
-    //     this.toastr.success('', `${response.message}`, {
-    //       positionClass: 'toast-top-right',
-    //     });
-    //     this.loading = false;
-    //   } else {
-    //     this.toastr.warning('', `${response.message}`, {
-    //       positionClass: 'toast-top-right',
-    //     });
-    //     this.loading = false;
-    //   }
-    //   this.loading = false;
-    // });
+    this.subscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        this.toastr.success('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        // this.loading = false;
+      } else {
+        this.toastr.warning('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        // this.loading = false;
+      }
+      // this.loading = false;
+    });
   }
 }

@@ -1,5 +1,5 @@
 export class EmpTransferPosting {
-    id: number | null = null;
+    id: number = 0;
     empId: number | null = null;
 
     idCardNo: string | null = null;

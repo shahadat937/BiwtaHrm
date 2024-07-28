@@ -29,9 +29,13 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
 
             var empTransferPostings = _mapper.Map<EmpTransferPosting>(request.EmpTransferPostingDto);
 
-            if (request.EmpTransferPostingDto.JoiningStatus == true || request.EmpTransferPostingDto.IsJoining == false)
+            if ((request.EmpTransferPostingDto.JoiningStatus == true || request.EmpTransferPostingDto.JoiningDate != null) || request.EmpTransferPostingDto.IsJoining == false)
             {
                 empTransferPostings.ApplicationStatus = true;
+            }
+            if (request.EmpTransferPostingDto.TransferApproveStatus == false || request.EmpTransferPostingDto.DeptApproveStatus == false || (request.EmpTransferPostingDto.JoiningStatus == false && request.EmpTransferPostingDto.JoiningDate == null))
+            {
+                empTransferPostings.ApplicationStatus = false;
             }
 
 

@@ -723,7 +723,76 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.CountryId);
             });
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<EmpTransferPosting>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                .WithMany(eb => eb.EmpTransferPosting)
+                .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.ApplicationBy)
+               .WithMany(eb => eb.ApplicationTransfer)
+               .HasForeignKey(e => e.ApplicationById);
+
+                entity.HasOne(e => e.TransferApproveBy)
+                .WithMany(eb => eb.TransferApproveTransfer)
+                    .HasForeignKey(e => e.TransferApproveById);
+
+                entity.HasOne(e => e.OrderBy)
+                .WithMany(eb => eb.OrderOfficeTransfer)
+                    .HasForeignKey(e => e.OrderOfficeById);
+
+                entity.HasOne(e => e.DeptReleaseBy)
+                .WithMany(eb => eb.DeptReleaseTransfer)
+                    .HasForeignKey(e => e.DeptReleaseById);
+
+                entity.HasOne(e => e.JoiningReportingBy)
+                .WithMany(eb => eb.JoiningReportingTransfer)
+                    .HasForeignKey(e => e.JoiningReportingById);
+
+                entity.HasOne(e => e.CurrentOffice)
+                .WithMany(eb => eb.CurrentEmpTransferPosting)
+                    .HasForeignKey(e => e.CurrentOfficeId);
+
+                entity.HasOne(e => e.TransferOffice)
+                .WithMany(eb => eb.TransferEmpTransferPosting)
+                    .HasForeignKey(e => e.TransferOfficeId);
+
+                entity.HasOne(e => e.CurrentDepartment)
+                .WithMany(eb => eb.CurrentEmpTransferPosting)
+                    .HasForeignKey(e => e.CurrentDepartmentId);
+
+                entity.HasOne(e => e.TransferDepartment)
+                .WithMany(eb => eb.TransferEmpTransferPosting)
+                    .HasForeignKey(e => e.TransferDepartmentId);
+
+                entity.HasOne(e => e.CurrentDesignation)
+                .WithMany(eb => eb.CurrentEmpTransferPosting)
+                    .HasForeignKey(e => e.CurrentDesignationId);
+
+                entity.HasOne(e => e.TransferDesignation)
+                .WithMany(eb => eb.TransferEmpTransferPosting)
+                    .HasForeignKey(e => e.TransferDesignationId);
+
+                entity.HasOne(e => e.CurrentSection)
+                .WithMany(eb => eb.CurrentEmpTransferPosting)
+                    .HasForeignKey(e => e.CurrentSectionId);
+
+                entity.HasOne(e => e.TransferSection)
+                .WithMany(eb => eb.TransferEmpTransferPosting)
+                    .HasForeignKey(e => e.TransferSectionId);
+
+                entity.HasOne(e => e.ReleaseType)
+                .WithMany(eb => eb.EmpTransferPosting)
+                    .HasForeignKey(e => e.ReleaseTypeId);
+
+                entity.HasOne(e => e.DeptReleaseType)
+                .WithMany(eb => eb.DeptEmpTransferPosting)
+                    .HasForeignKey(e => e.DeptReleaseTypeId);
+            });
+
+                base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
 

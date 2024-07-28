@@ -425,6 +425,28 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpTransferPosting, EmpTransferPostingDto>().ReverseMap();
             CreateMap<EmpTransferPosting, CreateEmpTransferPostingDto>().ReverseMap();
 
+            //CreateMap<EmpTransferPosting, EmpTransferPostingDto>()
+            //.ForMember(dest => dest.IdCardNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
+            //.ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName + " " + src.EmpBasicInfo.LastName))
+            //.ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.CurrentDepartment.DepartmentName))
+            //.ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.CurrentDesignation.DesignationName))
+            //.ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.CurrentSection.SectionName))
+            //.ForMember(dest => dest.ApplicationByIdCardNo, opt => opt.MapFrom(src => src.ApplicationBy.IdCardNo))
+            //.ForMember(dest => dest.ApplicationByEmpName, opt => opt.MapFrom(src => src.ApplicationBy.FirstName + " " + src.ApplicationBy.LastName))
+            //.ForMember(dest => dest.OrderByIdCardNo, opt => opt.MapFrom(src => src.OrderBy.IdCardNo))
+            //.ForMember(dest => dest.OrderByEmpName, opt => opt.MapFrom(src => src.OrderBy.FirstName + " " + src.EmpBasicInfo.LastName))
+            //.ForMember(dest => dest.ReleaseTypeName, opt => opt.MapFrom(src => src.ReleaseType.ReleaseTypeName))
+            //.ForMember(dest => dest.TransferDepartmentName, opt => opt.MapFrom(src => src.TransferDepartment.DepartmentName))
+            //.ForMember(dest => dest.TransferDesignationName, opt => opt.MapFrom(src => src.TransferDesignation.DesignationName))
+            //.ForMember(dest => dest.TransferSectionName, opt => opt.MapFrom(src => src.TransferSection.SectionName))
+            //.ForMember(dest => dest.ApproveByIdCardNo, opt => opt.MapFrom(src => src.TransferApproveBy.IdCardNo))
+            //.ForMember(dest => dest.ApproveByEmpName, opt => opt.MapFrom(src => src.TransferApproveBy.FirstName + " " + src.TransferApproveBy.LastName))
+            //.ForMember(dest => dest.DeptReleaseByIdCardNo, opt => opt.MapFrom(src => src.DeptReleaseBy.IdCardNo))
+            //.ForMember(dest => dest.DeptReleaseByEmpName, opt => opt.MapFrom(src => src.DeptReleaseBy.FirstName + " " + src.DeptReleaseBy.LastName))
+            //.ForMember(dest => dest.JoiningReportingByIdCardNo, opt => opt.MapFrom(src => src.JoiningReportingBy.IdCardNo))
+            //.ForMember(dest => dest.JoiningReportingByEmpName, opt => opt.MapFrom(src => src.JoiningReportingBy.FirstName + " " + src.JoiningReportingBy.LastName))
+            //.ForMember(dest => dest.DeptReleaseTypeName, opt => opt.MapFrom(src => src.DeptReleaseType.ReleaseTypeName));
+
             // Site Visit Dto Mapping Created By Joy
             CreateMap<SiteVisit, SiteVisitDto>().ReverseMap();
             CreateMap<SiteVisit, CreateSiteVisitDto>().ReverseMap();

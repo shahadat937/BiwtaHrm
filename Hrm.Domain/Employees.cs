@@ -85,7 +85,6 @@ namespace Hrm.Domain
         public DateTime? LastModifiedDate { get; set; }
         public bool? IsActive { get; set; }
 
-        public ICollection<SiteVisit> SiteVisits { get; set; }
     }
 }
 

@@ -351,7 +351,7 @@ namespace Hrm.Persistence
                 .HasKey(y => y.YearId);
 
 
-            modelBuilder.Entity<Employees>(entity =>
+            modelBuilder.Entity<EmpBasicInfo>(entity =>
             {
                 entity.HasMany( s => s.SiteVisits)
                 .WithOne(e=>e.Employees)

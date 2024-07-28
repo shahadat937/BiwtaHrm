@@ -17,6 +17,6 @@ namespace Hrm.Domain
         public string VisitPurpose { get; set; }
         public string Remark { get; set; }
 
-        public Employees Employees { get; set; }
+        public EmpBasicInfo Employees { get; set; }
     }
 }

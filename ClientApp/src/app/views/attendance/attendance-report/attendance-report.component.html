@@ -87,14 +87,14 @@
         </c-card>
         <c-card class="mt-2">
             <c-card-body>
-                <p-table [columns]="dynamicColumn" [value]="tableData" [tableStyle]="{'min-width': '50rem'}">
+                <p-table styleClass="p-datatable-striped" [columns]="dynamicColumn" [value]="tableData" [tableStyle]="{'min-width': '50rem'}">
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                             @for ( col of staticColumnsBefore; track $index) {
                                 <th>{{col.header}}</th>
                             }
                             @for (column of columns; track $index) {
-                                <th>{{column.header}}</th>
+                                <th class="text-nowrap">{{column.header}}</th>
                             }
 
                         </tr>

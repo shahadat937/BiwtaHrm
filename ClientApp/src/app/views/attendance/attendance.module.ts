@@ -38,6 +38,8 @@ import {AttendanceReportService} from './services/attendance-report.service'
 import {TimeFormatPipe} from './pipes/time-format.pipe'
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from '@coreui/angular';
+import { BadgeModule } from '@coreui/angular';
+
 
 
 
@@ -79,7 +81,8 @@ import { TooltipModule } from '@coreui/angular';
     ButtonDirective,
     CalendarModule,
     TableModule, 
-    TooltipModule
+    TooltipModule,
+    BadgeModule
 
   ],
   providers: [ 

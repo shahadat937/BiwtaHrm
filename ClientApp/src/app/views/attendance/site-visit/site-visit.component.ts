@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {SiteVisitModel} from "../models/site-visit-model";
+import {SiteVisitService} from "../services/site-visit.service";
 import { cilList, cilShieldAlt } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { cilX,cilCheck,cilPencil,cilTrash } from '@coreui/icons';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { ConfirmService } from "../../../core/service/confirm.service";
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -11,93 +17,113 @@ import { cilX,cilCheck,cilPencil,cilTrash } from '@coreui/icons';
   templateUrl: './site-visit.component.html',
   styleUrl: './site-visit.component.scss'
 })
-export class SiteVisitComponent implements OnInit{
+export class SiteVisitComponent implements OnInit, OnDestroy{
 
+  
   icons = {cilX,cilTrash,cilCheck, cilPencil}
-  ngOnInit(): void {
+  subscription:Subscription = new Subscription();
+  EmpOption: any[] = [];
 
+  tableData: any[] = [];
+  btnText = "Add SiteVisit";
+  submitBtnText = "Submit"
+  isVisible: boolean = true;
+  loading=false;
+
+  constructor(
+    public siteVisitService : SiteVisitService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private confirmService: ConfirmService,
+    private toastr: ToastrService
+  ) {
+
+  }
+
+
+  ngOnInit(): void {
+    this.getSiteVisit();
+  }
+
+  ngOnDestroy(): void {
+    if(this.subscription!=null) {
+      this.subscription.unsubscribe();
+    }
   }
   getBadgeColor(status:string) {
     switch(status) {
-      case 'Completed':
+      case 'Approved':
         return "success";
       case 'Pending':
         return "warning";
-      case 'In Progress':
-        return "warning";
+      case 'Declined':
+        return "danger";
 
     }
 
     return "primary";
   }
 
-    tableData: SiteVisitModel[] = [
-    {
-        siteVisitId: 1,
-        empId: 101,
-        firstName: 'John',
-        lastName: 'Doe',
-        fromDate: '2024-07-01',
-        toDate: '2024-07-02',
-        visitPlace: 'Office',
-        visitPurpose: 'Meeting',
-        status: 'Completed',
-        remark: 'No issues encountered'
-    },
-    {
-        siteVisitId: 2,
-        empId: 102,
-        firstName: 'Jane',
-        lastName: 'Smith',
-        fromDate: '2024-07-05',
-        toDate: '2024-07-07',
-        visitPlace: 'Warehouse',
-        visitPurpose: 'Inspection',
-        status: 'In Progress',
-        remark: 'Initial findings were good'
-    },
-    {
-        siteVisitId: 3,
-        empId: 103,
-        firstName: 'Emily',
-        lastName: 'Johnson',
-        fromDate: '2024-07-10',
-        toDate: '2024-07-11',
-        visitPlace: 'Client Site',
-        visitPurpose: 'Consultation',
-        status: 'Pending',
-        remark: 'Awaiting client feedback'
-    },
-    {
-        siteVisitId: 4,
-        empId: 104,
-        firstName: 'Michael',
-        lastName: 'Brown',
-        fromDate: '2024-07-15',
-        toDate: '2024-07-16',
-        visitPlace: 'Factory',
-        visitPurpose: 'Audit',
-        status: 'Completed',
-        remark: 'Audit completed successfully'
-    },
-    {
-        siteVisitId: 5,
-        empId: 105,
-        firstName: 'Laura',
-        lastName: 'Wilson',
-        fromDate: '2024-07-20',
-        toDate: '2024-07-22',
-        visitPlace: 'Lab',
-        visitPurpose: 'Testing',
-        status: 'Cancelled',
-        remark: 'Testing was postponed'
-    }
-].map(data => {
-    const siteVisit = new SiteVisitModel();
-    Object.assign(siteVisit, data);
-    return siteVisit;
-});
+  getSiteVisit() {
+    this.subscription = this.siteVisitService.getSiteVisitAll().subscribe(data=> {
+      this.tableData=data;
+    }, error=> {
+      console.log(error);
+    })
+  }
+
   onApprove(siteVisitId:number) {
     console.log(siteVisitId);
+    this.siteVisitService.approveSiteVisit(siteVisitId).subscribe(response=> {
+      if(response.success==true) {
+        this.toastr.success('',`${response.message}`,{
+          positionClass: 'toast-top-right'
+        });
+
+        var index = this.tableData.findIndex(item=>item.siteVisitId===siteVisitId);
+        this.tableData[index].status = "Approved";
+      } else {
+        this.toastr.error('',`${response.message}`, {
+          positionClass: 'toast-top-right'
+        });
+      }
+    })
+  }
+
+  onDecline(siteVisitId:number) {
+    console.log(siteVisitId);
+    this.siteVisitService.declineSiteVisit(siteVisitId).subscribe(response=> {
+      if(response.success==true) {
+        this.toastr.success('',`${response.message}`,{
+          positionClass: 'toast-top-right'
+        });
+        var index = this.tableData.findIndex(item=>item.siteVisitId===siteVisitId);
+        this.tableData[index].status = "Declined";
+      } else {
+        this.toastr.error('',`${response.message}`, {
+          positionClass: 'toast-top-right'
+        });
+      }
+    })
+  }
+
+  onSubmit() {
+    console.log("Hello World");
+  }
+
+  toggleSubmit() {
+    this.isVisible=true;
+  }
+
+  toggleUpdate(element:any) {
+    
+  }
+
+  onDelete(siteVisitId:number) {
+
+  }
+
+  onCancel() {
+    this.isVisible = false;
   }
 }

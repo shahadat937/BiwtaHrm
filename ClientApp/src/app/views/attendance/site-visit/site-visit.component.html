@@ -2,11 +2,85 @@
     <c-card-header>
         <div class="d-flex justify-content-between">
             <h4>Site Visit</h4>
-            <button cButton>Add SiteVisit</button>
+            <button cButton
+             class="{{isVisible?'invisible':'visible'}}"
+             (click)="toggleSubmit()"
+             >{{btnText}}</button>
         </div>
     </c-card-header>
     <c-card-body>
+        <c-card class="mb-3" cCollapse [visible]="isVisible">
+            <c-card-body class="shadow">
+                <form cRow
+                    [gutter]="3"
+                    #siteVisitForm
+                    (ngSubmit)="onSubmit()"
+                >
+                    <c-col md="3">
+                        <label cLabel for="empId">Employee</label>
+                        <select name="empId" id="empId" cSelect
+                        required
+                        disabled
+                        >
+                            <option [value]="this.siteVisitService.model.empId" selected>{{this.siteVisitService.model.empId}}</option>
+                        </select>
+                    </c-col>
+                    <c-col md="3">
+                        <label cLabel for="fromDate">From</label>
+                        <input type="date" 
+                        [(ngModel)]="this.siteVisitService.model.fromDate"
+                        name="fromDate" 
+                        id="fromDate" 
+                        cFormControl>
+                    </c-col>
+                    <c-col md="3">
+                        <label for="toDate" cLabel>To</label>
+                        <input type="date" 
+                        [(ngModel)]="this.siteVisitService.model.toDate"
+                        name="toDate" 
+                        id="toDate" 
+                        cFormControl>
+                    </c-col>
+                    <c-col md="3">
+                        <label for="visitPlace" cLabel>Visiting Place</label>
+                        <input type="text" 
+                        cFormControl
+                        name="visitPlace"
+                        id="visitPlace"
+                        [(ngModel)]="this.siteVisitService.model.visitPlace">
+                    </c-col>
+                    <c-col md="3">
+                        <label for="visitPurpose" cLabel>Visiting Purpose</label>
+                        <input type="text" 
+                        cFormControl
+                        name="visitPurose"
+                        id="visitPurpose"
+                        [(ngModel)]="this.siteVisitService.model.visitPurpose">
+                    </c-col>
+                    <c-row class="mt-3">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button class="me-1" 
+                                type="submit"
+                                color="primary" 
+                                cButton>
+                                    <c-spinner
+                                      [hidden]="loading == false"
+                                      size="sm"
+                                    ></c-spinner>
+                                    {{submitBtnText}}</button>
+                                <button (click)="onSubmit()" color="secondary" cButton>Reset</button> 
+                            </div>
+                            <div>
+                                <button cButton (click)="onCancel()" color="danger">Cancel</button>
+                            </div>                                
+                        </div>
+                    </c-row>
+                 </form>
+            </c-card-body>
+        </c-card>
          <p-table
+         class="mt-3"
          #dt2
          [value]="tableData" 
          [paginator]="true"
@@ -25,29 +99,29 @@
                 <th>Action</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-tableData>
+        <ng-template pTemplate="body" let-data let-index="rowIndex">
             <tr>
-                <td>{{ tableData.siteVisitId }}</td>
-                <td>{{ tableData.firstName+" "+tableData.lastName }}</td>
-                <td>{{ tableData.fromDate }}</td>
-                <td>{{ tableData.toDate }}</td>
-                <td>{{ tableData.visitPlace }}</td>
-                <td>{{ tableData.visitPurpose }}</td>
+                <td>{{ data.siteVisitId }}</td>
+                <td>{{ data.firstName+" "+data.lastName }}</td>
+                <td>{{ data.fromDate }}</td>
+                <td>{{ data.toDate }}</td>
+                <td>{{ data.visitPlace }}</td>
+                <td>{{ data.visitPurpose }}</td>
                 <td>
-                    <c-badge color="{{getBadgeColor(tableData.status)}}">{{tableData.status}}</c-badge>
+                    <c-badge color="{{getBadgeColor(data.status)}}">{{data.status}}</c-badge>
                 </td>
                 <td>
                     <div>
-                        <button class="custom-button" (click)="onApprove(tableData.empId)">
+                        <button class="custom-button" (click)="onApprove(data.siteVisitId)">
                             <svg [cIcon]="icons.cilCheck" size="lg" title="Approve"></svg>
                         </button>
-                        <button class="custom-button" (click)="onApprove(tableData.empId)">
+                        <button class="custom-button" (click)="onDecline(data.siteVisitId)">
                             <svg [cIcon]="icons.cilX" size="lg" title="Declined"></svg>
                         </button>
-                        <button class="custom-button" (click)="onApprove(tableData.empId)">
+                        <button class="custom-button" (click)="toggleUpdate(data)">
                             <svg [cIcon]="icons.cilPencil" size="lg" title="Edit"></svg>
                         </button>
-                        <button class="custom-button" (click)="onApprove(tableData.empId)">
+                        <button class="custom-button" (click)="onDelete(data.siteVisitId)">
                             <svg [cIcon]="icons.cilTrash" size="lg" title="Edit"></svg>
                         </button>
                     </div>

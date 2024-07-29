@@ -47,21 +47,18 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
 
-        public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
-        public virtual EmpBasicInfo? ApplicationBy { get; set; }
-        public virtual EmpBasicInfo? OrderBy { get; set; }
-        public virtual EmpBasicInfo? TransferApproveBy { get; set; }
-        public virtual EmpBasicInfo? DeptReleaseBy { get; set; }
-        public virtual EmpBasicInfo? JoiningReportingBy { get; set; }
-        public virtual Office? CurrentOffice { get; set; }
-        public virtual Office? TransferOffice { get; set; }
-        public virtual Department? CurrentDepartment { get; set; }
-        public virtual Department? TransferDepartment { get; set; }
-        public virtual Designation? CurrentDesignation { get; set; }
-        public virtual Designation? TransferDesignation { get; set; }
-        public virtual Section? CurrentSection { get; set; }
-        public virtual Section? TransferSection { get; set; }
-        public virtual ReleaseType? ReleaseType { get; set; }
-        public virtual ReleaseType? DeptReleaseType { get; set; }
+        //public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
+        //public virtual EmpBasicInfo? ApplicationBy { get; set; }
+        //public virtual EmpBasicInfo? TransferApproveBy { get; set; }
+        //public virtual EmpBasicInfo? DeptReleaseBy { get; set; }
+        //public virtual EmpBasicInfo? JoiningReportingBy { get; set; }
+        //public virtual Office? CurrentOffice { get; set; }
+        //public virtual Office? TransferOffice { get; set; }
+        //public virtual Department? CurrentDepartment { get; set; }
+        //public virtual Department? TransferDepartment { get; set; }
+        //public virtual Designation? CurrentDesignation { get; set; }
+        //public virtual Designation? TransferDesignation { get; set; }
+        //public virtual Section? CurrentSection { get; set; }
+        //public virtual Section? TransferSection { get; set; }
     }
 }

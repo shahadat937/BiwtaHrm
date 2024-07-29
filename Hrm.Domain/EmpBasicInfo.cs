@@ -44,11 +44,5 @@ namespace Hrm.Domain
         public virtual ICollection<EmpLanguageInfo>? EmpLanguageInfo { get; set; }
         public virtual ICollection<EmpForeignTourInfo>? EmpForeignTourInfo { get; set; }
         public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
-        public virtual ICollection<EmpTransferPosting>? EmpTransferPosting { get; set; }
-        public virtual ICollection<EmpTransferPosting>? ApplicationTransfer { get; set; }
-        public virtual ICollection<EmpTransferPosting>? OrderOfficeTransfer { get; set; }
-        public virtual ICollection<EmpTransferPosting>? TransferApproveTransfer { get; set; }
-        public virtual ICollection<EmpTransferPosting>? DeptReleaseTransfer { get; set; }
-        public virtual ICollection<EmpTransferPosting>? JoiningReportingTransfer { get; set; }
     }
 }

@@ -15,11 +15,15 @@ import { FormsModule } from '@angular/forms';
 import { TransferPostingRoutingModule } from './transfer-routing.module';
 import { TrainsferPostingListComponent } from './trainsfer-posting-list/trainsfer-posting-list.component';
 import { TransferPostingApplicationComponent } from './transfer-posting-application/transfer-posting-application.component';
+import { TransferPostingApprovalComponent } from './approval/transfer-posting-approval/transfer-posting-approval.component';
+import { DepartmentApprovalComponent } from './approval/department-approval/department-approval.component';
 
 @NgModule({
   declarations: [
     TrainsferPostingListComponent,
     TransferPostingApplicationComponent,
+    TransferPostingApprovalComponent,
+    DepartmentApprovalComponent,
 
   ],
   imports: [

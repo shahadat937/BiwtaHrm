@@ -104,7 +104,7 @@ namespace Hrm.Application.Profiles
         public MappingProfile()
         {
             CreateMap<BloodGroup, BloodGroupDto>().ReverseMap();
-            CreateMap<BloodGroup, CreateBloodGroupDto> ().ReverseMap();
+            CreateMap<BloodGroup, CreateBloodGroupDto>().ReverseMap();
 
             CreateMap<EmployeeType, EmployeeTypeDto>().ReverseMap();
             CreateMap<EmployeeType, CreateEmployeeTypeDto>().ReverseMap();
@@ -132,7 +132,7 @@ namespace Hrm.Application.Profiles
             CreateMap<PromotionType, CreatePromotionTypeDto>().ReverseMap();
 
             CreateMap<ThanaDto, Thana>().ReverseMap();
-                
+
             CreateMap<Thana, CreateThanaDto>().ReverseMap();
 
             CreateMap<Upazila, UpazilaDto>().ReverseMap();
@@ -149,12 +149,12 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Ward, WardDto>().ReverseMap();
             CreateMap<Ward, CreateWardDto>().ReverseMap();
-            
+
             CreateMap<OfficeBranch, BranchDto>().ReverseMap();
             CreateMap<OfficeBranch, CreateBranchDto>().ReverseMap();
 
             CreateMap<appraisalFormType, appraisalFormTypeDto>().ReverseMap();
-            CreateMap<appraisalFormType,CreateappraisalFormTypeDto>().ReverseMap();
+            CreateMap<appraisalFormType, CreateappraisalFormTypeDto>().ReverseMap();
 
             CreateMap<Department, DepartmentDto>().ReverseMap();
             CreateMap<Department, CreateDepartmentDto>().ReverseMap();
@@ -192,7 +192,7 @@ namespace Hrm.Application.Profiles
             CreateMap<GradeClass, CreateGradeClassDto>().ReverseMap();
 
             CreateMap<GradeDto, Grade>().ReverseMap();
-              
+
             CreateMap<Grade, CreateGradeDto>().ReverseMap();
             CreateMap<SubGroup, GroupDto>().ReverseMap();
             CreateMap<SubGroup, CreateGroupDto>().ReverseMap();
@@ -217,34 +217,34 @@ namespace Hrm.Application.Profiles
 
             CreateMap<ScaleGradeView, ScaleGradeViewDto>().ReverseMap();
             CreateMap<ScaleGradeView, CreateScaleGradeViewDto>().ReverseMap();
-           
+
             CreateMap<Grade_cls_type_Vw, Grade_cls_type_VwDto>().ReverseMap();
             CreateMap<Grade_cls_type_Vw, CreateGrade_cls_type_VwDto>().ReverseMap();
 
 
             CreateMap<SubBranch, SubBranchDto>().ReverseMap();
             CreateMap<SubBranch, CreateSubBranchDto>().ReverseMap();
- 
+
 
             CreateMap<Relation, RelationDto>().ReverseMap();
             CreateMap<Relation, CreateRelationDto>().ReverseMap();
 
             CreateMap<Occupation, OccupationDto>().ReverseMap();
             CreateMap<Occupation, CreateOccupationDto>().ReverseMap();
- 
-            
+
+
             CreateMap<TrainingName, TrainingNameDto>().ReverseMap();
             CreateMap<TrainingName, CreateTrainingNameDto>().ReverseMap();
-             
+
             CreateMap<Office, OfficeDto>().ReverseMap();
             CreateMap<Office, CreateOfficeDto>().ReverseMap();
-            
+
             CreateMap<OfficeAddress, OfficeAddressDto>().ReverseMap();
             CreateMap<OfficeAddress, CreateOfficeAddressDto>().ReverseMap();
-            
+
             CreateMap<Competence, CompetenceDto>().ReverseMap();
             CreateMap<Competence, CreateCompetenceDto>().ReverseMap();
-            
+
             CreateMap<Language, LanguageDto>().ReverseMap();
             CreateMap<Language, CreateLanguageDto>().ReverseMap();
 
@@ -259,7 +259,7 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Institute, InstituteDto>().ReverseMap();
             CreateMap<Institute, CreateInstituteDto>().ReverseMap();
- 
+
 
             CreateMap<Relation, RelationDto>().ReverseMap();
             CreateMap<Relation, CreateRelationDto>().ReverseMap();
@@ -273,13 +273,13 @@ namespace Hrm.Application.Profiles
             CreateMap<EyesColor, EyesColorDto>().ReverseMap();
             CreateMap<EyesColor, CreateEyesColorDto>().ReverseMap();
 
- 
+
             CreateMap<Pool, PoolDto>().ReverseMap();
             CreateMap<Pool, CreatePoolDto>().ReverseMap();
 
             CreateMap<SubDepartment, SubDepartmentDto>().ReverseMap();
             CreateMap<SubDepartment, CreateSubDepartmentDto>().ReverseMap();
-            
+
             CreateMap<UserRole, UserRoleDto>().ReverseMap();
             CreateMap<UserRole, CreateUserRoleDto>().ReverseMap();
 
@@ -291,19 +291,19 @@ namespace Hrm.Application.Profiles
 
             CreateMap<AspNetUsers, AspNetUserDto>().ReverseMap();
             CreateMap<AspNetUsers, CreateAspNetUserDto>().ReverseMap();
-            
+
             CreateMap<Section, SectionDto>().ReverseMap();
             CreateMap<Section, CreateSectionDto>().ReverseMap();
 
             CreateMap<PostingOrderInfo, PostingOrderInfoDto>().ReverseMap();
             CreateMap<PostingOrderInfo, CreatePostingOrderInfoDto>().ReverseMap();
-            
+
             CreateMap<TransferApproveInfo, TransferApproveInfoDto>().ReverseMap();
             CreateMap<TransferApproveInfo, CreateTransferApproveInfoDto>().ReverseMap();
-            
+
             CreateMap<DepReleaseInfo, DepReleaseInfoDto>().ReverseMap();
             CreateMap<DepReleaseInfo, CreateDepReleaseInfoDto>().ReverseMap();
-            
+
             CreateMap<EmpTnsferPostingJoin, EmpTnsferPostingJoinDto>().ReverseMap();
             CreateMap<EmpTnsferPostingJoin, CreateEmpTnsferPostingJoinDto>().ReverseMap();
 
@@ -394,7 +394,7 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpPsiTrainingInfo, EmpPsiTrainingInfoDto>().ReverseMap();
             CreateMap<EmpPsiTrainingInfo, CreateEmpPsiTrainingInfoDto>().ReverseMap();
             CreateMap<EmpPsiTrainingInfo, EmpPsiTrainingInfoDto>()
-            .ForMember(dest => dest.TrainingName, opt => opt.MapFrom(src => 
+            .ForMember(dest => dest.TrainingName, opt => opt.MapFrom(src =>
             src.TrainingName.TrainingNames));
 
             CreateMap<EmpBankInfo, EmpBankInfoDto>().ReverseMap();
@@ -425,33 +425,11 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpTransferPosting, EmpTransferPostingDto>().ReverseMap();
             CreateMap<EmpTransferPosting, CreateEmpTransferPostingDto>().ReverseMap();
 
-            //CreateMap<EmpTransferPosting, EmpTransferPostingDto>()
-            //.ForMember(dest => dest.IdCardNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
-            //.ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName + " " + src.EmpBasicInfo.LastName))
-            //.ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.CurrentDepartment.DepartmentName))
-            //.ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.CurrentDesignation.DesignationName))
-            //.ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.CurrentSection.SectionName))
-            //.ForMember(dest => dest.ApplicationByIdCardNo, opt => opt.MapFrom(src => src.ApplicationBy.IdCardNo))
-            //.ForMember(dest => dest.ApplicationByEmpName, opt => opt.MapFrom(src => src.ApplicationBy.FirstName + " " + src.ApplicationBy.LastName))
-            //.ForMember(dest => dest.OrderByIdCardNo, opt => opt.MapFrom(src => src.OrderBy.IdCardNo))
-            //.ForMember(dest => dest.OrderByEmpName, opt => opt.MapFrom(src => src.OrderBy.FirstName + " " + src.EmpBasicInfo.LastName))
-            //.ForMember(dest => dest.ReleaseTypeName, opt => opt.MapFrom(src => src.ReleaseType.ReleaseTypeName))
-            //.ForMember(dest => dest.TransferDepartmentName, opt => opt.MapFrom(src => src.TransferDepartment.DepartmentName))
-            //.ForMember(dest => dest.TransferDesignationName, opt => opt.MapFrom(src => src.TransferDesignation.DesignationName))
-            //.ForMember(dest => dest.TransferSectionName, opt => opt.MapFrom(src => src.TransferSection.SectionName))
-            //.ForMember(dest => dest.ApproveByIdCardNo, opt => opt.MapFrom(src => src.TransferApproveBy.IdCardNo))
-            //.ForMember(dest => dest.ApproveByEmpName, opt => opt.MapFrom(src => src.TransferApproveBy.FirstName + " " + src.TransferApproveBy.LastName))
-            //.ForMember(dest => dest.DeptReleaseByIdCardNo, opt => opt.MapFrom(src => src.DeptReleaseBy.IdCardNo))
-            //.ForMember(dest => dest.DeptReleaseByEmpName, opt => opt.MapFrom(src => src.DeptReleaseBy.FirstName + " " + src.DeptReleaseBy.LastName))
-            //.ForMember(dest => dest.JoiningReportingByIdCardNo, opt => opt.MapFrom(src => src.JoiningReportingBy.IdCardNo))
-            //.ForMember(dest => dest.JoiningReportingByEmpName, opt => opt.MapFrom(src => src.JoiningReportingBy.FirstName + " " + src.JoiningReportingBy.LastName))
-            //.ForMember(dest => dest.DeptReleaseTypeName, opt => opt.MapFrom(src => src.DeptReleaseType.ReleaseTypeName));
-
             // Site Visit Dto Mapping Created By Joy
             CreateMap<SiteVisit, SiteVisitDto>().ReverseMap();
             CreateMap<SiteVisit, CreateSiteVisitDto>().ReverseMap();
             CreateMap<Workday, WorkdayDto>().ReverseMap();
-            CreateMap<Workday,  CreateWorkdayDto>().ReverseMap();
+            CreateMap<Workday, CreateWorkdayDto>().ReverseMap();
             CreateMap<Holidays, HolidayDto>().ReverseMap();
             CreateMap<Holidays, CreateHolidayDto>().ReverseMap();
             CreateMap<DayType, DayTypeDto>().ReverseMap();

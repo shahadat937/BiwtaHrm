@@ -17,5 +17,6 @@ namespace Hrm.Application.DTOs.SiteVisit
         public string? VisitPlace { get; set; }
         public string? VisitPurpose { get; set; }
         public string? Remark { get; set; }
+        public string? Status { get; set; }
     }
 }

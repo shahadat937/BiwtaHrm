@@ -38,6 +38,7 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
             }
             else
             {
+                request.SiteVisitDto.Status = "Pending";
                 var SiteVisit = _mapper.Map<Hrm.Domain.SiteVisit>(request.SiteVisitDto);
 
                 SiteVisit = await _unitOfWork.Repository<Hrm.Domain.SiteVisit>().Add(SiteVisit);

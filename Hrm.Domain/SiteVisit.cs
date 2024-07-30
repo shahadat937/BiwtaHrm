@@ -19,5 +19,6 @@ namespace Hrm.Domain
         public string? Status { get; set; }
 
         public EmpBasicInfo Employees { get; set; }
+        public ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
     }
 }

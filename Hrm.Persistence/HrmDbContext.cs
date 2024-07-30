@@ -723,6 +723,13 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.CountryId);
             });
 
+            modelBuilder.Entity<SiteVisit>(entity =>
+            {
+                entity.HasMany(sv => sv.Attendances)
+                .WithOne(at => at.SiteVisit)
+                .HasForeignKey(at => at.SiteVisitId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;

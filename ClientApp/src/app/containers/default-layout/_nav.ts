@@ -392,15 +392,15 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Approval List',
-        url: '/transferPosting/transferPostingList/'
+        url: '/transferPosting/transferPostingApprovalList/'
       },
       {
         name: 'Dept Approval List',
-        url: '/transferPosting/transferPostingList/'
+        url: '/transferPosting/departmentApprovalList/'
       },
       {
         name: 'Joining  List',
-        url: '/transferPosting/transferPostingList/'
+        url: '/transferPosting/joiningReportingList/'
       },
     ]
   },

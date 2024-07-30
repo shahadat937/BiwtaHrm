@@ -33,6 +33,10 @@ export class EmpTransferPostingService {
         );
     }
   }
+
+  getAllEmpTransferPostingApproveInfo(){
+    return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-AllEmpTransferPostingApproveInfo');
+  }
   
   findByEmpId(id: number) {
     return this.http.get<EmpTransferPosting>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingById/' + id);

@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.SiteVisit.Validators;
 using Hrm.Application.Features.appraisalFormType.Requests.Commands;
 using Hrm.Application.Features.EmpBasicInfos.Handlers.Queries;
 using Hrm.Application.Features.SiteVisit.Requests.Commands;
+using Hrm.Application.Helpers;
 using Hrm.Application.Responses;
 using MediatR;
 using System;
@@ -18,11 +19,13 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly SiteVisitAtdHelper _siteVisitAtdHelper;
 
         public UpdateSiteVisitCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _siteVisitAtdHelper = new SiteVisitAtdHelper(unitOfWork, mapper);
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateSiteVisitCommand request, CancellationToken cancellationToken)
@@ -40,7 +43,8 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
                 return response;
             }
 
-            var SiteVisit = await _unitOfWork.Repository<Hrm.Domain.SiteVisit>().Get(request.SiteVisitDto.SiteVisitId);
+
+            var SiteVisit = await _unitOfWork.Repository<Hrm.Domain.SiteVisit>().Get((int)request.SiteVisitDto.SiteVisitId);
 
             if(SiteVisit == null)
             {
@@ -48,6 +52,15 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
                 response.Message = "Creation Failed";
                 return response;
             }
+
+            
+            _siteVisitAtdHelper.siteVisitId = SiteVisit.SiteVisitId;
+
+            //await _siteVisitAtdHelper.deleteAttendance();
+            //await _siteVisitAtdHelper.saveAttendance((DateOnly)request.SiteVisitDto.FromDate,(DateOnly)request.SiteVisitDto.ToDate,request.SiteVisitDto.EmpId);
+            
+            
+            request.SiteVisitDto.Status = SiteVisit.Status;
 
             _mapper.Map(request.SiteVisitDto, SiteVisit);
 

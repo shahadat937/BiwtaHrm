@@ -447,7 +447,8 @@ namespace Hrm.Application.Profiles
             CreateMap<Attendance, CreateAttendanceDto>().ReverseMap();
 
             CreateMap<SiteVisit, SiteVisitDto>()
-            .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.Employees.EmpEngName));
+            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Employees.FirstName))
+            .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Employees.LastName));
 
             CreateMap<Workday, WorkdayDto>()
             .ForMember(dest => dest.YearName, opt => opt.MapFrom(src => src.year.YearName))

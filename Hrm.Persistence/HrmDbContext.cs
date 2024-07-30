@@ -351,7 +351,7 @@ namespace Hrm.Persistence
                 .HasKey(y => y.YearId);
 
 
-            modelBuilder.Entity<Employees>(entity =>
+            modelBuilder.Entity<EmpBasicInfo>(entity =>
             {
                 entity.HasMany( s => s.SiteVisits)
                 .WithOne(e=>e.Employees)
@@ -721,6 +721,13 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.Country)
                     .WithMany(eb => eb.EmpForeignTourInfo)
                     .HasForeignKey(e => e.CountryId);
+            });
+
+            modelBuilder.Entity<SiteVisit>(entity =>
+            {
+                entity.HasMany(sv => sv.Attendances)
+                .WithOne(at => at.SiteVisit)
+                .HasForeignKey(at => at.SiteVisitId);
             });
 
             modelBuilder.Entity<EmpTransferPosting>(entity =>

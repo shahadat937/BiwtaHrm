@@ -8,6 +8,7 @@ using Hrm.Application.Features.SiteVisit.Requests.Commands;
 using Hrm.Application.Features.Shift.Requests.Commands;
 using Hrm.Domain;
 using Hrm.Application.DTOs.Shift;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
 namespace Hrm.Api.Controllers
 {
@@ -68,6 +69,30 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteSiteVisitCommand { SiteVisitId = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesDefaultResponseType]
+        [Route("approve-SiteVisit/{id}")]
+        public async Task<ActionResult<BaseCommandResponse>> Approve(int id)
+        {
+            var command = new ApproveSiteVisitCommand { SiteVisitId = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesDefaultResponseType]
+        [Route("decline-SiteVisit/{id}")]
+        public async Task<ActionResult<BaseCommandResponse>> Decline(int id)
+        {
+            var command = new DeclineSiteVisitCommand { SiteVisitId = id };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

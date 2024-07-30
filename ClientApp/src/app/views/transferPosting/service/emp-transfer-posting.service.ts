@@ -51,7 +51,7 @@ export class EmpTransferPostingService {
   }
   
   saveEmpTransferPosting(model: any) {
-    return this.http.post(this.baseUrl + '/empTransferPosting/save-EmpTransferPosting', model);
+  return this.http.post(this.baseUrl + '/empTransferPosting/save-EmpTransferPosting', model);
   }
   updateEmpTransferPosting(id: number,model: any) {
     return this.http.put(this.baseUrl + '/empTransferPosting/update-EmpTransferPosting/'+id, model);

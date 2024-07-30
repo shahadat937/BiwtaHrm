@@ -86,7 +86,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.empTransferPostingService.empTransferPosting = {
       id: 0,
       empId: null,
-      idCardNo: null,
+      empIdCardNo: null,
       empName: null,
       departmentName: null,
       designationName: null,
@@ -147,7 +147,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.EmpTransferPostingForm.form.patchValue({
       id: 0,
       empId: null,
-      idCardNo: null,
+      empIdCardNo: null,
       empName: null,
       departmentName: null,
       designationName: null,

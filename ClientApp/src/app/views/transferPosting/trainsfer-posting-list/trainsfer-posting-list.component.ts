@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { cilArrowLeft } from '@coreui/icons';
+import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
 import { EmpTransferPostingService } from '../service/emp-transfer-posting.service';
 import { MatPaginator } from '@angular/material/paginator';
@@ -20,8 +20,9 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     'slNo',
     'PMS Id',
     'fullName',
-    'fullNameBangla',
-    'Action'];
+    'ApprovalStatus',
+    'DeptStatus',
+    'JoiningStatus'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -36,7 +37,7 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
 
   }
 
-  icons = { cilArrowLeft };
+  icons = { cilArrowLeft, cilPlus, cilBell };
 
 
   ngOnInit(): void {

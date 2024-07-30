@@ -424,6 +424,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpTransferPosting, EmpTransferPostingDto>().ReverseMap();
             CreateMap<EmpTransferPosting, CreateEmpTransferPostingDto>().ReverseMap();
+            CreateMap<EmpTransferPosting, EmpTransferPostingDto>()
+                .ForMember(dest => dest.EmpIdCardNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
+                .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName + " " + src.EmpBasicInfo.LastName));
 
             // Site Visit Dto Mapping Created By Joy
             CreateMap<SiteVisit, SiteVisitDto>().ReverseMap();

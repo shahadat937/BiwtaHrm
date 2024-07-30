@@ -2,7 +2,7 @@ export class EmpTransferPosting {
     id: number = 0;
     empId: number | null = null;
 
-    idCardNo: string | null = null;
+    empIdCardNo: string | null = null;
     empName: string | null = null;
     departmentName: string | null = null;
     designationName: string | null = null;

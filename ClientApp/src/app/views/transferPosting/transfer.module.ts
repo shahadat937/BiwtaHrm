@@ -17,6 +17,7 @@ import { TrainsferPostingListComponent } from './trainsfer-posting-list/trainsfe
 import { TransferPostingApplicationComponent } from './transfer-posting-application/transfer-posting-application.component';
 import { TransferPostingApprovalComponent } from './approval/transfer-posting-approval/transfer-posting-approval.component';
 import { DepartmentApprovalComponent } from './approval/department-approval/department-approval.component';
+import { IconModule } from '@coreui/icons-angular';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { DepartmentApprovalComponent } from './approval/department-approval/depa
     ModalComponent,
     ModalFooterComponent,
     ModalHeaderComponent,
+    IconModule,
   ],
   providers:[
 

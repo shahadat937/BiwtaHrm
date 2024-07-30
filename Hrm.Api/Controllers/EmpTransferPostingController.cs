@@ -40,5 +40,23 @@ namespace Hrm.Api.Controllers
             var EmpTransferPosting = await _mediator.Send(new GetEmpTransferPostingByEmpIdRequest { Id = id });
             return Ok(EmpTransferPosting);
         }
+
+        [HttpGet]
+        [Route("get-EmpTransferPostingDeptApprove")]
+        public async Task<ActionResult> EmpTransferPostingDeptApprove()
+        {
+            var command = new GetEmpTransferPostingDeptApprovalRequest { };
+            var EmpTransferPosting = await _mediator.Send(command);
+            return Ok(EmpTransferPosting);
+        }
+
+        [HttpGet]
+        [Route("get-EmpTransferPostingJoiningInfo")]
+        public async Task<ActionResult> EmpTransferPostingJoiningInfo()
+        {
+            var command = new GetEmpTransferPostingJoiningInfoRequest { };
+            var EmpTransferPosting = await _mediator.Send(command);
+            return Ok(EmpTransferPosting);
+        }
     }
 }

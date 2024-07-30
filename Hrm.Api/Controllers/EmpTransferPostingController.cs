@@ -28,7 +28,8 @@ namespace Hrm.Api.Controllers
         [Route("get-allEmpTransferPosting")]
         public async Task<ActionResult> Get()
         {
-            var EmpTransferPosting = await _mediator.Send(new GetAllEmpTransferPostingRequest { });
+            var command = new GetAllEmpTransferPostingRequest { };
+            var EmpTransferPosting = await _mediator.Send(command);
             return Ok(EmpTransferPosting);
         }
 

@@ -30,6 +30,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   isValidEmp: boolean = false;
   isValidOrderByEmp: boolean = false;
   isApproveByEmp: boolean = false;
+  loginEmpId: number = 0;
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
 
   constructor(
@@ -46,6 +47,9 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   icons = { cilArrowLeft };
 
   ngOnInit(): void {
+    const currentUserString = localStorage.getItem('currentUser');
+    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
+    this.loginEmpId = currentUserJSON.empId;
     this.getEmployeeByEmpId();
     this.loadOffice();
     this.getAllDepartment();
@@ -80,9 +84,9 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   initaialForm(form?: NgForm) {
     if (form != null) form.resetForm();
     this.empTransferPostingService.empTransferPosting = {
-      id: null,
+      id: 0,
       empId: null,
-      idCardNo: null,
+      empIdCardNo: null,
       empName: null,
       departmentName: null,
       designationName: null,
@@ -141,9 +145,9 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   resetForm() {
     this.EmpTransferPostingForm.form.reset();
     this.EmpTransferPostingForm.form.patchValue({
-      id: null,
+      id: 0,
       empId: null,
-      idCardNo: null,
+      empIdCardNo: null,
       empName: null,
       departmentName: null,
       designationName: null,
@@ -228,6 +232,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   getOrderByInfoByIdCardNo(idCardNo: string){
     this.subscription = this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
       if (res) {
+        this.empTransferPostingService.empTransferPosting.applicationById = this.loginEmpId;
         this.isValidOrderByEmp = true;
         this.empTransferPostingService.empTransferPosting.orderByEmpName = res.firstName + " " + res.lastName;
         this.empTransferPostingService.empTransferPosting.orderOfficeById = res.id;
@@ -281,8 +286,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   isTransferApproveNeed(status: boolean){
     if(!status){
       this.empTransferPostingService.empTransferPosting.provideTransferApproveInfo = false;
-      this.provideTransferApproveInfo(false);
     }
+    this.provideTransferApproveInfo(status);
   }
   provideTransferApproveInfo(status: boolean){
     if(!status){
@@ -295,15 +300,19 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       this.empTransferPostingService.empTransferPosting.transferApproveStatus = null;
       this.empTransferPostingService.empTransferPosting.transferApproveDate = null;
       this.empTransferPostingService.empTransferPosting.approveRemark = '';
+      this.empTransferPostingService.empTransferPosting.deptReleaseById = null;
       this.isApproveByEmp = false;
+    }
+    else{
+      this.empTransferPostingService.empTransferPosting.deptReleaseById = this.loginEmpId;
     }
   }
   
   isDeptApproveNeed(status: boolean){
     if(!status){
       this.empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo = false;
-      this.provideDeptApproveInfo(false);
     }
+    this.provideDeptApproveInfo(status);
   }
   provideDeptApproveInfo(status: boolean){
     if(!status){
@@ -312,6 +321,10 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       this.empTransferPostingService.empTransferPosting.deptClearance = true;
       this.empTransferPostingService.empTransferPosting.referenceNo = '';
       this.empTransferPostingService.empTransferPosting.deptRemark = '';
+      this.empTransferPostingService.empTransferPosting.joiningReportingById = null;
+    }
+    else {
+      this.empTransferPostingService.empTransferPosting.joiningReportingById = this.loginEmpId;
     }
   }
   
@@ -358,76 +371,27 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     });
   }
 
-  // getSelectedSection(){
-  //   this.subscription = this.empTransferPostingService.getSelectedSection().subscribe((data) => {
-  //     this.sections = data;
-  //   });
-  // }
-
-  // onOfficeSelect(officeId: number) {
-  //   this.empTransferPostingService.empTransferPosting.departmentId = null;
-  //   this.departmentService.getSelectedDepartmentByOfficeId(+officeId).subscribe((res) => {
-  //     this.departments = res;
-  //   });
-  // }
-  // onOfficeSelectGetDesignation(officeId: number, empTransferPostingId: number) {
-  //   this.empTransferPostingService.empTransferPosting.designationId = null;
-  //   this.empTransferPostingService.getDesignationByOfficeId(officeId, empTransferPostingId).subscribe((res) => {
-  //     this.designations = res;
-  //   });
-  // }
-
-  // onDepartmentSelectGetDesignation(departmentId: number, empTransferPostingId: number) {
-  //   if (departmentId == null) {
-  //     this.onOfficeSelectGetDesignation(this.empTransferPostingService.empTransferPosting.officeId, this.empTransferPostingId);
-  //   }
-  //   this.empTransferPostingService.empTransferPosting.designationId = null;
-  //   this.empTransferPostingService.getDesignationByDepartmentId(departmentId, empTransferPostingId).subscribe((res) => {
-  //     this.designations = res;
-  //   });
-  // }
-
-  // getAllDepartment() {
-  //   this.empTransferPostingService.getAllDepartment().subscribe((res) => {
-  //     this.firstDepartments = res;
-  //   });
-  // }
-  // getOldDesignationByDepartment(departmentId: number) {
-  //   this.empTransferPostingService.empTransferPosting.firstDesignationId = null;
-  //   this.empTransferPostingService.getOldDesignationByDepartment(departmentId).subscribe((res) => {
-  //     this.firstDesignations = res;
-  //   });
-  // }
-
   onSubmit(form: NgForm): void {
-    if(this.isValidEmp){
-      console.log(form.value)
-    }
-    else{
-      this.toastr.warning('', 'Select Valid Employee PMS No', {
-        positionClass: 'toast-top-right',
-      });
-    }
-    // this.loading = true;
-    // this.empTransferPostingService.cachedData = [];
-    // const id = form.value.id;
-    // const action$ = id
-    //   ? this.empTransferPostingService.updateEmpTransferPosting(id, form.value)
-    //   : this.empTransferPostingService.saveEmpTransferPosting(form.value);
+    this.loading = true;
+    this.empTransferPostingService.cachedData = [];
+    const id = form.value.id;
+    const action$ = id
+      ? this.empTransferPostingService.updateEmpTransferPosting(id, form.value)
+      : this.empTransferPostingService.saveEmpTransferPosting(form.value);
 
-    // this.subscription = action$.subscribe((response: any) => {
-    //   if (response.success) {
-    //     this.toastr.success('', `${response.message}`, {
-    //       positionClass: 'toast-top-right',
-    //     });
-    //     this.loading = false;
-    //   } else {
-    //     this.toastr.warning('', `${response.message}`, {
-    //       positionClass: 'toast-top-right',
-    //     });
-    //     this.loading = false;
-    //   }
-    //   this.loading = false;
-    // });
+    this.subscription = action$.subscribe((response: any) => {
+      if (response.success) {
+        this.toastr.success('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.loading = false;
+      } else {
+        this.toastr.warning('', `${response.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.loading = false;
+      }
+      this.loading = false;
+    });
   }
 }

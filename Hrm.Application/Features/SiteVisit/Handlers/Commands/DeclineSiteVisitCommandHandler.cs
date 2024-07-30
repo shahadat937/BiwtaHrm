@@ -34,13 +34,8 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
                 throw new NotFoundException(nameof(sitevisit), request.SiteVisitId);
             }
 
-            if(sitevisit.Status=="Approved")
-            {
-                throw new BadRequestException("Site Visit is already approved");
-            }
 
             sitevisit.Status = "Declined";
-
             await _unitOfWork.Repository<Hrm.Domain.SiteVisit>().Update(sitevisit);
             await _unitOfWork.Save();
 

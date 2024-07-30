@@ -40,7 +40,8 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
                 return response;
             }
 
-            var SiteVisit = await _unitOfWork.Repository<Hrm.Domain.SiteVisit>().Get(request.SiteVisitDto.SiteVisitId);
+
+            var SiteVisit = await _unitOfWork.Repository<Hrm.Domain.SiteVisit>().Get((int)request.SiteVisitDto.SiteVisitId);
 
             if(SiteVisit == null)
             {
@@ -48,6 +49,8 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
                 response.Message = "Creation Failed";
                 return response;
             }
+
+            request.SiteVisitDto.Status = SiteVisit.Status;
 
             _mapper.Map(request.SiteVisitDto, SiteVisit);
 

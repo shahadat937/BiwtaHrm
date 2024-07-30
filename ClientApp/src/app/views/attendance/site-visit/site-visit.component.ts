@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {SiteVisitModel} from "../models/site-visit-model";
 import {SiteVisitService} from "../services/site-visit.service";
 import { cilList, cilShieldAlt } from '@coreui/icons';
@@ -9,6 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ConfirmService } from "../../../core/service/confirm.service";
 import { ToastrService } from 'ngx-toastr';
+import { NgForm } from '@angular/forms';
+import { update } from 'lodash-es';
 
 
 
@@ -23,11 +25,12 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   icons = {cilX,cilTrash,cilCheck, cilPencil}
   subscription:Subscription = new Subscription();
   EmpOption: any[] = [];
-
+  @ViewChild('siteVisitForm', { static: true }) siteVisitForm!: NgForm;
   tableData: any[] = [];
   btnText = "Add SiteVisit";
   submitBtnText = "Submit"
-  isVisible: boolean = true;
+  isVisible: boolean = false;
+  isUpdate: boolean = false;
   loading=false;
 
   constructor(
@@ -43,6 +46,7 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.getSiteVisit();
+    this.getEmpOption();
   }
 
   ngOnDestroy(): void {
@@ -74,41 +78,57 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
 
   onApprove(siteVisitId:number) {
     console.log(siteVisitId);
-    this.siteVisitService.approveSiteVisit(siteVisitId).subscribe(response=> {
-      if(response.success==true) {
-        this.toastr.success('',`${response.message}`,{
-          positionClass: 'toast-top-right'
-        });
 
-        var index = this.tableData.findIndex(item=>item.siteVisitId===siteVisitId);
-        this.tableData[index].status = "Approved";
-      } else {
-        this.toastr.error('',`${response.message}`, {
-          positionClass: 'toast-top-right'
-        });
+    this.confirmService.confirm("Confirm Approval", "Are you sure?").subscribe((result)=> {
+      if(!result) {
+        return;
       }
+
+      this.siteVisitService.approveSiteVisit(siteVisitId).subscribe(response=> {
+        if(response.success==true) {
+          this.toastr.success('',`${response.message}`,{
+            positionClass: 'toast-top-right'
+          });
+
+          var index = this.tableData.findIndex(item=>item.siteVisitId===siteVisitId);
+          this.tableData[index].status = "Approved";
+        } else {
+          this.toastr.error('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          });
+        }
+      })
+
     })
+    
   }
 
   onDecline(siteVisitId:number) {
     console.log(siteVisitId);
-    this.siteVisitService.declineSiteVisit(siteVisitId).subscribe(response=> {
-      if(response.success==true) {
-        this.toastr.success('',`${response.message}`,{
-          positionClass: 'toast-top-right'
-        });
-        var index = this.tableData.findIndex(item=>item.siteVisitId===siteVisitId);
-        this.tableData[index].status = "Declined";
-      } else {
-        this.toastr.error('',`${response.message}`, {
-          positionClass: 'toast-top-right'
-        });
+
+    this.confirmService.confirm("Confirm Decline","Are you sure?").subscribe((result)=> {
+      if(!result) {
+        return;
       }
+      this.siteVisitService.declineSiteVisit(siteVisitId).subscribe(response=> {
+        if(response.success==true) {
+          this.toastr.success('',`${response.message}`,{
+            positionClass: 'toast-top-right'
+          });
+          var index = this.tableData.findIndex(item=>item.siteVisitId===siteVisitId);
+          this.tableData[index].status = "Declined";
+        } else {
+          this.toastr.error('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          });
+        }
+      })
     })
   }
 
-  onSubmit() {
-    console.log("Hello World");
+  onSubmit(form:NgForm) {
+    this.isUpdate?this.onSiteVisitUpdate(form):this.onSiteVisitCreate(form);
+    
   }
 
   toggleSubmit() {
@@ -116,14 +136,125 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   }
 
   toggleUpdate(element:any) {
-    
+    this.isUpdate = true;
+    this.isVisible = true;
+    this.siteVisitForm?.form.patchValue(element);
+    this.siteVisitService.model.empId = element.empId;
+
   }
 
   onDelete(siteVisitId:number) {
 
+    this.confirmService.confirm("Confirm Delete Message","Are you sure?").subscribe((result)=> {
+      if(!result) {
+        return;
+      }
+      this.siteVisitService.delete(siteVisitId).subscribe({
+        next: (response)=> {
+          if(response.success==true) {
+            this.toastr.success('',`${response.message}`,{
+              positionClass: 'toast-top-right'
+            })
+            var index = this.tableData.findIndex((item)=> item.siteVisitId === siteVisitId);
+            delete this.tableData[index];
+          } else {
+            this.toastr.error('', `${response.message}`, {
+              positionClass: 'toast-top-right'
+            })
+          }
+        },
+        error: (error)=> {
+          this.toastr.error('',error, {
+            positionClass: 'toast-top-right'
+          })
+        }
+      });
+
+    })
   }
 
   onCancel() {
     this.isVisible = false;
+    this.isUpdate = false;
+    this.siteVisitService.model = new SiteVisitModel();
+    this.siteVisitForm.reset();
+  }
+
+  getEmpOption() {
+    this.siteVisitService.getEmpOption().subscribe(option=> {
+      this.EmpOption= option;
+    })
+  }
+
+  onSiteVisitCreate(form:NgForm) {
+    this.loading = true;
+    console.log(form.value);
+    this.siteVisitService.submit(form.value).subscribe({
+      next: (result)=> {
+        if(result.success==true) {
+          this.toastr.success("",`${result.message}`, {
+            positionClass:'toast-top-right'
+          })
+          this.siteVisitService.cachedData = [];
+          this.getSiteVisit();
+          this.siteVisitForm.reset();
+        } else {
+          this.toastr.warning('',`${result.message}`, {
+            positionClass: 'toast-top-right'
+          })
+          
+        }
+      },
+      error: err=> {
+        this.toastr.error('',err,{
+          positionClass: 'toast-top-right'
+        })
+        this.loading = false;
+      },
+      complete: () => {
+        console.log("Hello World");
+        this.loading = false;
+      }
+    });
+  }
+
+  onSiteVisitUpdate(form:NgForm) {
+    this.loading = true;
+    let updateValue= form.value;
+    updateValue['empId'] = this.siteVisitService.model.empId;
+    this.siteVisitService.update(updateValue).subscribe({
+      next: (response)=> {
+        if(response.success==true) {
+          this.toastr.success('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+          
+          let index = this.tableData.findIndex(item=>item.siteVisitId == form.value.siteVisitId);
+          this.siteVisitService.getSiteVisitById(updateValue.siteVisitId).subscribe(data=> {
+            this.tableData[index].fromDate = data.fromDate;
+            this.tableData[index].toDate = data.toDate;
+            this.tableData[index].visitPlace = data.visitPlace;
+            this.tableData[index].visitPurpose = data.visitPurpose;
+            this.tableData[index].status = data.status;
+            this.tableData[index].remark = data.remark;
+          });
+
+          
+        } else {
+          this.toastr.warning('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        }
+      },
+      error: (err)=> {
+        this.toastr.error('',err, {
+          positionClass: 'toast-top-right'
+        })
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    })
   }
 }

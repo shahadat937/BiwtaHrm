@@ -11,6 +11,7 @@ export class SiteVisitService {
   baseUrl: string;
   cachedData: SiteVisitModel[] = [];
   model: SiteVisitModel;
+
   constructor(
     private http: HttpClient
   ) { 
@@ -32,6 +33,10 @@ export class SiteVisitService {
     }
   }
 
+  getSiteVisitById(id:number):Observable<SiteVisitModel> {
+    return this.http.get<SiteVisitModel>(this.baseUrl+`/siteVisit/get-sitevisitbyid/${id}`);
+  }
+
   approveSiteVisit(id:number):Observable<any> {
     return this.http.put<any>(this.baseUrl+`/siteVisit/approve-SiteVisit/${id}`,{});
   }
@@ -40,6 +45,19 @@ export class SiteVisitService {
     return this.http.put<any>(this.baseUrl+`/siteVisit/decline-SiteVisit/${id}`,{});
   }
 
+  delete(id:number):Observable<any> {
+    return this.http.delete<any>(this.baseUrl+`/siteVisit/delete-siteVisit/${id}`);
+  }
 
+  getEmpOption():Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl+"/empBasicInfo/get-SelectedEmpBasicInfo");
+  }
 
+  submit(model:any):Observable<any> {
+    return this.http.post<any>(this.baseUrl+"/siteVisit/save-SiteVisit",model);
+  }
+
+  update(model:any):Observable<any> {
+    return this.http.put<any>(this.baseUrl+`/siteVisit/update-SiteVisit/${model.siteVisitId}`,model);
+  }
 }

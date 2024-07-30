@@ -13,17 +13,32 @@
             <c-card-body class="shadow">
                 <form cRow
                     [gutter]="3"
-                    #siteVisitForm
-                    (ngSubmit)="onSubmit()"
+                    #siteVisitForm="ngForm"
+                    (ngSubmit)="onSubmit(siteVisitForm)"
                 >
+                    <input type="number"
+                    name="siteVisitId"
+                    id="siteVisitId" 
+                    class="invisible"
+                    [value]="0"
+                    [(ngModel)] = "this.siteVisitService.model.siteVisitId"
+                    >
                     <c-col md="3">
                         <label cLabel for="empId">Employee</label>
                         <select name="empId" id="empId" cSelect
                         required
-                        disabled
+                        [disabled]="isUpdate"
+                        [(ngModel)] = "this.siteVisitService.model.empId"
+                        #empId = "ngModel"
                         >
-                            <option [value]="this.siteVisitService.model.empId" selected>{{this.siteVisitService.model.empId}}</option>
+                            <option [ngValue]="null">Select Employee</option>
+                            @for (employee of EmpOption; track $index) {
+                                <option [value]="employee.id">{{employee.name}}</option>
+                            }
                         </select>
+                        @if(empId.invalid&&empId.touched) {
+                            <div class="text-left text-danger">Employee is required</div>
+                        }
                     </c-col>
                     <c-col md="3">
                         <label cLabel for="fromDate">From</label>
@@ -31,15 +46,25 @@
                         [(ngModel)]="this.siteVisitService.model.fromDate"
                         name="fromDate" 
                         id="fromDate" 
+                        required
+                        #fromDate = "ngModel"
                         cFormControl>
+                        @if(fromDate.invalid&&fromDate.touched) {
+                            <div class="text-left text-danger">From Date is required</div>
+                        }
                     </c-col>
                     <c-col md="3">
                         <label for="toDate" cLabel>To</label>
                         <input type="date" 
                         [(ngModel)]="this.siteVisitService.model.toDate"
                         name="toDate" 
+                        required
                         id="toDate" 
+                        #toDate = "ngModel" 
                         cFormControl>
+                        @if(toDate.invalid&&toDate.touched) {
+                            <div class="text-left text-danger">To Date is required</div>
+                        }
                     </c-col>
                     <c-col md="3">
                         <label for="visitPlace" cLabel>Visiting Place</label>
@@ -47,15 +72,35 @@
                         cFormControl
                         name="visitPlace"
                         id="visitPlace"
+                        required
+                        #visitPlace = "ngModel"
                         [(ngModel)]="this.siteVisitService.model.visitPlace">
+                        @if(visitPlace.invalid&&visitPlace.touched) {
+                            <div class="text-left text-danger">Visiting Place is required</div>
+                        }
                     </c-col>
                     <c-col md="3">
                         <label for="visitPurpose" cLabel>Visiting Purpose</label>
                         <input type="text" 
                         cFormControl
-                        name="visitPurose"
+                        name="visitPurpose"
                         id="visitPurpose"
+                        #visitPurpose = "ngModel"
+                        required
                         [(ngModel)]="this.siteVisitService.model.visitPurpose">
+                        @if(visitPurpose.invalid&&visitPurpose.touched) {
+                            <div class="text-left text-danger">Visiting Purpose is required</div>
+                        }                            
+                    </c-col>
+                    <c-col md="3">
+                        <label for="remark" cLabel>Remark</label>
+                        <input type="text" 
+                        name="remark" 
+                        id="remark"
+                        [(ngModel)] = "this.siteVisitService.model.remark"
+                        cFormControl
+                        #remark = "ngModel"
+                        >
                     </c-col>
                     <c-row class="mt-3">
                         <div class="d-flex justify-content-between">
@@ -63,13 +108,14 @@
                                 <button class="me-1" 
                                 type="submit"
                                 color="primary" 
+                                [disabled]="loading==true||siteVisitForm.invalid"
                                 cButton>
                                     <c-spinner
                                       [hidden]="loading == false"
                                       size="sm"
                                     ></c-spinner>
                                     {{submitBtnText}}</button>
-                                <button (click)="onSubmit()" color="secondary" cButton>Reset</button> 
+                                <button type="reset" color="secondary" cButton>Reset</button> 
                             </div>
                             <div>
                                 <button cButton (click)="onCancel()" color="danger">Cancel</button>
@@ -122,7 +168,7 @@
                             <svg [cIcon]="icons.cilPencil" size="lg" title="Edit"></svg>
                         </button>
                         <button class="custom-button" (click)="onDelete(data.siteVisitId)">
-                            <svg [cIcon]="icons.cilTrash" size="lg" title="Edit"></svg>
+                            <svg [cIcon]="icons.cilTrash" size="lg" title="delete"></svg>
                         </button>
                     </div>
                 </td>

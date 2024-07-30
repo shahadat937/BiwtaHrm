@@ -1,5 +1,5 @@
 export class SiteVisitModel {
-    siteVisitId: number|null;
+    siteVisitId: number;
     empId: number | null;
     firstName: string;
     lastName: string;
@@ -11,7 +11,7 @@ export class SiteVisitModel {
     remark: string;
 
     constructor() {
-        this.siteVisitId=null;
+        this.siteVisitId=0;
         this.empId = null;
         this.firstName="";
         this.lastName="";

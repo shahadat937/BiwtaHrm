@@ -8,7 +8,7 @@ namespace Hrm.Application.DTOs.SiteVisit
 {
     public class CreateSiteVisitDto
     {
-        public int SiteVisitId { get; set; }
+        public int? SiteVisitId { get; set; }
         public int EmpId { get; set; }
         public DateOnly? FromDate { get; set; }
         public DateOnly? ToDate { get; set; }

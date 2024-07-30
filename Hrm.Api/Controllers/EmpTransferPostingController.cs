@@ -1,5 +1,6 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.EmpTransferPosting;
+using Hrm.Application.Features.EmpTransferPostings.Handlers.Queries;
 using Hrm.Application.Features.EmpTransferPostings.Requests.Commands;
 using Hrm.Application.Features.EmpTransferPostings.Requests.Queries;
 using Microsoft.AspNetCore.Http;
@@ -38,6 +39,14 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> GetById(int id)
         {
             var EmpTransferPosting = await _mediator.Send(new GetEmpTransferPostingByEmpIdRequest { Id = id });
+            return Ok(EmpTransferPosting);
+        }
+
+        [HttpGet]
+        [Route("get-AllEmpTransferPostingApproveInfo")]
+        public async Task<ActionResult> GetAllEmpTransferPostingApproveInfo()
+        {
+            var EmpTransferPosting = await _mediator.Send(new GetEmpTransferPostingApprovalListRequest { });
             return Ok(EmpTransferPosting);
         }
     }

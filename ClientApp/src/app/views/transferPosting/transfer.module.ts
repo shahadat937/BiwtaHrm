@@ -18,6 +18,13 @@ import { TransferPostingApplicationComponent } from './transfer-posting-applicat
 import { TransferPostingApprovalComponent } from './approval/transfer-posting-approval/transfer-posting-approval.component';
 import { DepartmentApprovalComponent } from './approval/department-approval/department-approval.component';
 import { IconModule } from '@coreui/icons-angular';
+import { DepartmentApprovalListComponent } from './approval/department-approval-list/department-approval-list.component';
+import { TransferPostingApprovalListComponent } from './approval/transfer-posting-approval-list/transfer-posting-approval-list.component';
+import { JoiningReportingComponent } from './approval/joining-reporting/joining-reporting.component';
+import { JoiningReportingListComponent } from './approval/joining-reporting-list/joining-reporting-list.component';
+import { TransferPostingInfoComponent } from './transfer-posting-info/transfer-posting-info.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -25,6 +32,11 @@ import { IconModule } from '@coreui/icons-angular';
     TransferPostingApplicationComponent,
     TransferPostingApprovalComponent,
     DepartmentApprovalComponent,
+    DepartmentApprovalListComponent,
+    TransferPostingApprovalListComponent,
+    JoiningReportingComponent,
+    JoiningReportingListComponent,
+    TransferPostingInfoComponent,
 
   ],
   imports: [
@@ -53,6 +65,8 @@ import { IconModule } from '@coreui/icons-angular';
     ModalFooterComponent,
     ModalHeaderComponent,
     IconModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   providers:[
 

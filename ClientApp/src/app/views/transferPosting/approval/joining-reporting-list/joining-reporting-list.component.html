@@ -57,16 +57,16 @@
               <ng-container matColumnDef="Action">
                 <th mat-header-cell *matHeaderCellDef>Action</th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button class="text-success" *ngIf="element.joiningStatus == null">
+                    <button cTooltip="Approve" cTooltipPlacement="bottom" cPopoverPlacement="bottom" mat-icon-button class="text-success" *ngIf="element.joiningStatus == null">
                         <mat-icon>check</mat-icon>
                     </button>
-                    <button mat-icon-button color="warn" *ngIf="element.joiningStatus == null">
+                    <button cTooltip="Reject" cTooltipPlacement="bottom" cPopoverPlacement="bottom" mat-icon-button color="warn" *ngIf="element.joiningStatus == null">
                         <mat-icon>close</mat-icon>
                     </button>
-                    <button mat-icon-button class="text-info">
+                    <button cTooltip="View" cTooltipPlacement="bottom" cPopoverPlacement="bottom" mat-icon-button class="text-info" (click)="transferPostingInfo(element.id)">
                         <mat-icon>remove_red_eye</mat-icon>
                     </button>
-                    <button mat-icon-button color="primary" *ngIf="element.joiningStatus == true || element.joiningStatus == false">
+                    <button cTooltip="Edit" cTooltipPlacement="bottom" cPopoverPlacement="bottom" mat-icon-button color="primary" *ngIf="element.joiningStatus == true || element.joiningStatus == false">
                         <mat-icon>edit</mat-icon>
                     </button>
                 </td>

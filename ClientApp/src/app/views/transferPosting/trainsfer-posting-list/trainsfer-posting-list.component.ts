@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { cilArrowLeft, cilPlus, cilBell, cilViewModule } from '@coreui/icons';
+import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
 import { EmpTransferPostingService } from '../service/emp-transfer-posting.service';
 import { MatPaginator } from '@angular/material/paginator';
@@ -41,7 +41,7 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
 
   }
 
-  icons = { cilArrowLeft, cilPlus, cilBell, cilViewModule };
+  icons = { cilArrowLeft, cilPlus, cilBell };
 
 
   ngOnInit(): void {

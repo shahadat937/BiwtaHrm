@@ -9,4 +9,13 @@
   .shake {
     animation: shake 0.5s;
   }
+
+  .modal {
+    display: block;
+  }
+  
+  .scrollable-modal-body {
+    max-height: 70vh; /* Adjust the height as needed */
+    overflow-y: auto;
+  }
   

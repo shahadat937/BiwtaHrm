@@ -19,6 +19,21 @@ export class EmpTransferPosting {
     approveByDepartmentName: string | null = null;
     approveByDesignationName: string | null = null;
     approveBySectionName: string | null = null;
+    
+    deptReleaseByIdCardNo: string | null = null;
+    deptReleaseByEmpName: string | null = null;
+    deptReleaseByDepartmentName: string | null = null;
+    deptReleaseByDesignationName: string | null = null;
+    deptReleaseBySectionName: string | null = null;
+    
+    joiningReportingByIdCardNo: string | null = null;
+    joiningReportingByEmpName: string | null = null;
+    joiningReportingByDepartmentName: string | null = null;
+    joiningReportingByDesignationName: string | null = null;
+    joiningReportingBySectionName: string | null = null;
+
+    releaseTypeName: string | null = null;
+    deptReleaseTypeName: string | null = null;
 
     applicationById: number | null = null;
     currentOfficeId: number | null = null;
@@ -32,6 +47,9 @@ export class EmpTransferPosting {
     transferOfficeId: number | null = null;
     transferDepartmentId: number | null = null;
     transferDesignationId: number | null = null;
+    transferDepartmentName: string | null = null;
+    transferDesignationName: string | null = null;
+    transferSectionName: string | null = null;
     transferSectionId: number | null = null;
     isTransferApprove: boolean = true;
     provideTransferApproveInfo: boolean = false;

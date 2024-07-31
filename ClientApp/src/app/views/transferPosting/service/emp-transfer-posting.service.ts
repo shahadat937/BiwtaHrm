@@ -38,7 +38,15 @@ export class EmpTransferPostingService {
     return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-AllEmpTransferPostingApproveInfo');
   }
   
-  findByEmpId(id: number) {
+  getAllEmpTransferPostingDeptApproveInfo(){
+    return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingDeptApprove');
+  }
+  
+  getAllEmpTransferPostingJoiningInfo(){
+    return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingJoiningInfo');
+  }
+  
+  findById(id: number) {
     return this.http.get<EmpTransferPosting>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingById/' + id);
   }
 

@@ -66,9 +66,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
     });
-    this.subscription = this.empTransferPostingService.findByEmpId(this.id).subscribe((res) => {
+    this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if (res) {
-        console.log(res)
         this.EmpTransferPostingForm?.form.patchValue(res);
         this.headerText = 'Update Transfer and Posting Information';
         this.btnText = 'Update';

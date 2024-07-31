@@ -1,1 +1,41 @@
-<p>transfer-posting-info works!</p>
+<div class="modal fade show" tabindex="-1" style="display: block;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Transfer Posting Info</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <c-card class="mb-3">
+                    <c-card-header class="text-center">
+                        <div>Employee Information</div>
+                    </c-card-header>
+                    <c-card-body cRow [gutter]="3">
+                        <c-col [md]="6">
+                            <label><b>PMIS Id: </b>{{empTransferPosting.empIdCardNo}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Employee Name: </b>{{empTransferPosting.empName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Department: </b>{{empTransferPosting.departmentName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Designation: </b>{{empTransferPosting.designationName}}</label>
+                        </c-col>
+                        <c-col [md]="6" *ngIf="empTransferPosting.sectionName">
+                            <label><b>Section: </b>{{empTransferPosting.sectionName}}</label>
+                        </c-col>
+                    </c-card-body>
+                </c-card>
+            </div>
+            <div class="modal-footer">
+                <button mat-raised-button color="warn" (click)="closeModal()">
+                    <mat-icon>close</mat-icon> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

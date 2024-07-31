@@ -2,6 +2,7 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.EmpTransferPosting;
 using Hrm.Application.Features.EmpTransferPostings.Requests.Queries;
+using Hrm.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,9 +26,33 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
 
         public async Task<object> Handle(GetEmpTransferPostingByEmpIdRequest request, CancellationToken cancellationToken)
         {
-            var EmpTransferPostings = await _EmpTransferPostingRepository.FindOneAsync(x=> x.Id == request.Id);
+            var EmpTransferPostings = await _EmpTransferPostingRepository.Where(x=> x.Id == request.Id)
+                .Include(x => x.EmpBasicInfo)
+                .Include(x => x.ApplicationBy)
+                .Include(x => x.OrderBy)
+                .Include(x => x.TransferApproveBy)
+                .Include(x => x.DeptReleaseBy)
+                .Include(x => x.JoiningReportingBy)
+                .Include(x => x.CurrentOffice)
+                .Include(x => x.TransferOffice)
+                .Include(x => x.CurrentDepartment)
+                .Include(x => x.TransferDepartment)
+                .Include(x => x.CurrentDesignation)
+                .Include(x => x.TransferDesignation)
+                .Include(x => x.CurrentSection)
+                .Include(x => x.TransferSection)
+                .Include(x => x.ReleaseType)
+                .Include(x => x.DeptReleaseType)
+                .FirstOrDefaultAsync(cancellationToken); ;
 
-            return EmpTransferPostings;
+            if (EmpTransferPostings == null)
+            {
+                return null;
+            }
+
+            var EmpTransferPostingsDto = _mapper.Map<EmpTransferPostingDto>(EmpTransferPostings);
+
+            return EmpTransferPostingsDto;
         }
     }
 }

@@ -46,5 +46,10 @@ namespace Hrm.Domain
         public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
         public ICollection<SiteVisit> SiteVisits { get; set; }
         public virtual ICollection<EmpTransferPosting>? EmpTransferPosting { get; set; }
+        public virtual ICollection<EmpTransferPosting>? ApplicationTransfer { get; set; }
+        public virtual ICollection<EmpTransferPosting>? OrderOfficeTransfer { get; set; }
+        public virtual ICollection<EmpTransferPosting>? TransferApproveTransfer { get; set; }
+        public virtual ICollection<EmpTransferPosting>? DeptReleaseTransfer { get; set; }
+        public virtual ICollection<EmpTransferPosting>? JoiningReportingTransfer { get; set; }
     }
 }

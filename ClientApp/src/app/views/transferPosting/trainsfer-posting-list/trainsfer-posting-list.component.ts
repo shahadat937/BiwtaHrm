@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { MatSort } from '@angular/material/sort';
+import { TransferPostingInfoComponent } from '../transfer-posting-info/transfer-posting-info.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-trainsfer-posting-list',
@@ -34,6 +36,7 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     public empTransferPostingService: EmpTransferPostingService,
     private route: ActivatedRoute,
+    private modalService: BsModalService,
   ) {
 
   }
@@ -63,6 +66,13 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  transferPostingInfo(id: number) {
+    const initialState = {
+      id: id
+    };
+    const modalRef: BsModalRef = this.modalService.show(TransferPostingInfoComponent, { initialState, backdrop: 'static' });
   }
 
 }

@@ -17,5 +17,7 @@ namespace Hrm.Domain
         public Office Office { get; set; }
         public Department Department { get; set; }
         public virtual ICollection<EmpJobDetail>? EmpJobDetail { get; set; }
+        public virtual ICollection<EmpTransferPosting>? CurrentEmpTransferPosting { get; set; }
+        public virtual ICollection<EmpTransferPosting>? TransferEmpTransferPosting { get; set; }
     }
 }

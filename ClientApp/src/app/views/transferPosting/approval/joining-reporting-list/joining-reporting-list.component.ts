@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { cilArrowLeft, cilPlus, cilBell, cilViewModule } from '@coreui/icons';
+import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { EmpTransferPostingService } from '../../service/emp-transfer-posting.service';
@@ -36,7 +36,7 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
 
   }
 
-  icons = { cilArrowLeft, cilPlus, cilBell, cilViewModule };
+  icons = { cilArrowLeft, cilPlus, cilBell };
 
 
   ngOnInit(): void {

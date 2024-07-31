@@ -46,7 +46,7 @@ export class EmpTransferPostingService {
     return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingJoiningInfo');
   }
   
-  findByEmpId(id: number) {
+  findById(id: number) {
     return this.http.get<EmpTransferPosting>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingById/' + id);
   }
 

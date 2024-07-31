@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, SpinnerModule } from '@coreui/angular';
+import { ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, SpinnerModule, TableModule } from '@coreui/angular';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -67,6 +67,7 @@ import { MatButtonModule } from '@angular/material/button';
     IconModule,
     MatIconModule,
     MatButtonModule,
+    TableModule, 
   ],
   providers:[
 

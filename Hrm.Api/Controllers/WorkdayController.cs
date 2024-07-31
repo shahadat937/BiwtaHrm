@@ -37,6 +37,15 @@ namespace Hrm.Api.Controllers
             return Ok(workday);
         }
 
+        [HttpGet]
+        [Route("get-SelectedWorkdayByYear/{yearId}")]
+        public async Task<ActionResult> GetSelected(int yearId)
+        {
+            var command = new GetSelectedWorkdayByYearRequest { yearId = yearId };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
         [HttpPost]
         [Route("save-Workday")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateWorkdayDto Workdaydto)

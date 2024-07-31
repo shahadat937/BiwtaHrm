@@ -56,8 +56,12 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
             
             _siteVisitAtdHelper.siteVisitId = SiteVisit.SiteVisitId;
 
-            //await _siteVisitAtdHelper.deleteAttendance();
-            //await _siteVisitAtdHelper.saveAttendance((DateOnly)request.SiteVisitDto.FromDate,(DateOnly)request.SiteVisitDto.ToDate,request.SiteVisitDto.EmpId);
+
+            if(SiteVisit.Status=="Approved")
+            {
+                await _siteVisitAtdHelper.deleteAttendance();
+                await _siteVisitAtdHelper.saveAttendance((DateOnly)request.SiteVisitDto.FromDate, (DateOnly)request.SiteVisitDto.ToDate, request.SiteVisitDto.EmpId);
+            }
             
             
             request.SiteVisitDto.Status = SiteVisit.Status;
@@ -68,7 +72,7 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
             await _unitOfWork.Save();
 
             response.Success = true;
-            response.Message = "Update Successfull";
+            response.Message = "Update Successful";
             response.Id = SiteVisit.SiteVisitId;
 
             return response;

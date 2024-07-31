@@ -1,8 +1,69 @@
 <c-card>
     <c-card-header>
-        Holidays 
+        Workday 
     </c-card-header>
-    <c-card-body class="shadow">
+    <c-card-body [gutter]="3" class="shadow">
+       <c-row [gutter]="3">
+            <c-col md="3">
+                <select name="year" 
+                id="year" cSelect
+                [(ngModel)]="selectedYear"
+                (change)="getWorkday()"
+                >
+                    <option [ngValue]="null">Select Year</option>
+                    @for (year of YearOption; track $index) {
+                        <option [ngValue]="year.id">{{year.name}}</option>
+                    }
+                </select> 
+            </c-col>
+       </c-row> 
+       <hr>
+       <c-row [gutter]="2" class="d-flex">
+
+            @for ( item of Workday; track $index) {
+                <c-col md="3">
+                    <c-card>
+                        <c-card-body class="d-flex justify-content-between p-1 text-nowrap">
+                            <h5>{{item.name}}</h5>
+                            <div>
+                                <button cButtonClose size="sm" (click)="onWorkdayDelete(item.id)">
+                                </button>
+                            </div>
+                        </c-card-body>
+                    </c-card>
+                </c-col>
+            }
+            <c-col md="3" [hidden]="!this.showAddDay">
+                <select name="workday" 
+                    id="workday" 
+                    class="p-2" 
+                    [(ngModel)] = "this.selectedDayForAddition"
+                    (change)="this.onDayAddition()"
+                    cSelect>
+                    <option [ngValue]="null">Select Day</option>
+                    @for (day of DayOption; track $index) {
+                        <option [ngValue]="day.id">{{day.name}}</option>
+                    }
+                </select>
+            </c-col>
+            <c-col md="3" class="p-1">
+                <button (click)="togglePlusButton()" cButton size="sm" color="{{showAddDay?'danger':'success'}}" shape="rounded-pill">
+                    @if (!showAddDay) {
+                        <svg [cIcon]="icons.cilPlus" size="sm" title="delete"></svg>
+                    } @else {
+                        <svg [cIcon]="icons.cilX" size="sm" title="delete"></svg>
+                    }
+                </button>
+            </c-col>
+       </c-row>
+    </c-card-body>
+</c-card>
+
+<c-card class="mt-3 shadow">
+    <c-card-header>
+        Holiday
+    </c-card-header>
+    <c-card-body>
         
     </c-card-body>
 </c-card>

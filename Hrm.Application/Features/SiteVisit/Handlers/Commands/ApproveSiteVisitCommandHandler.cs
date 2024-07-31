@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hrm.Application.Helpers;
 
 namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
 {
@@ -16,11 +17,13 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly SiteVisitAtdHelper _siteVisitAtdHelper;
 
         public ApproveSiteVisitCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _siteVisitAtdHelper = new SiteVisitAtdHelper(unitOfWork, mapper);
         }
 
         public async Task<BaseCommandResponse> Handle(ApproveSiteVisitCommand request, CancellationToken cancellationToken)
@@ -38,6 +41,10 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
             }
 
             sitevisit.Status = "Approved";
+
+            _siteVisitAtdHelper.siteVisitId = request.SiteVisitId;
+
+            await _siteVisitAtdHelper.saveAttendance((DateOnly)sitevisit.FromDate,(DateOnly)sitevisit.ToDate,sitevisit.EmpId);
 
             await _unitOfWork.Repository<Hrm.Domain.SiteVisit>().Update(sitevisit);
             await _unitOfWork.Save();

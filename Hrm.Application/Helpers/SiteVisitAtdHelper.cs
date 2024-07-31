@@ -56,6 +56,8 @@ namespace Hrm.Application.Helpers
                     EmpId = empId,
                     AttendanceDate = curDate,
                     AttendanceStatusId = (int) AttendanceStatusOption.OnSiteVisit,
+                    SiteVisitId = siteVisitId
+                   
                 });
             }
 

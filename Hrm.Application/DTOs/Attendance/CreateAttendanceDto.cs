@@ -24,6 +24,7 @@ namespace Hrm.Application.DTOs.Attendance
         public int? OverTime { get; set; }
         public int? ShortTime { get; set; }
         public int? AttendanceStatusId { get; set; }
+        public int? SiteVisitId { get; set; }
         public int? Done { get; set; }
         public string? Remark { get; set; }
     }

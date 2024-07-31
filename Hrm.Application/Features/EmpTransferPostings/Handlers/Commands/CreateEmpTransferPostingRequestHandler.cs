@@ -34,13 +34,15 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                 empTransferPostings.ApplicationStatus = true;
                 empTransferPostings.JoiningStatus = true;
             }
+
+            if (request.EmpTransferPostingDto.TransferApproveDate != null || request.EmpTransferPostingDto.TransferApproveDate != null)
+            {
+                empTransferPostings.TransferApproveStatus = true;
+            }
+
             if ((request.EmpTransferPostingDto.DeptReleaseById != null || request.EmpTransferPostingDto.DeptReleaseDate != null) && request.EmpTransferPostingDto.DeptClearance == true)
             {
                 empTransferPostings.DeptApproveStatus = true;
-            }
-            else
-            {
-                empTransferPostings.DeptApproveStatus = false;
             }
 
             if (request.EmpTransferPostingDto.TransferApproveStatus == false || request.EmpTransferPostingDto.DeptApproveStatus == false || (request.EmpTransferPostingDto.JoiningStatus == false && request.EmpTransferPostingDto.JoiningDate == null))

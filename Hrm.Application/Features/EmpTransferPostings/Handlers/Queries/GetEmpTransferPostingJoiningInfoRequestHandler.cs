@@ -13,20 +13,20 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
 {
-    public class GetAllEmpTransferPostingRequestHandler : IRequestHandler<GetAllEmpTransferPostingRequest, object>
+    public class GetEmpTransferPostingJoiningInfoRequestHandler : IRequestHandler<GetEmpTransferPostingJoiningInfoRequest, object>
     {
 
         private readonly IHrmRepository<EmpTransferPosting> _EmpTransferPostingRepository;
         private readonly IMapper _mapper;
-        public GetAllEmpTransferPostingRequestHandler(IHrmRepository<Hrm.Domain.EmpTransferPosting> EmpTransferPostingRepository, IMapper mapper)
+        public GetEmpTransferPostingJoiningInfoRequestHandler(IHrmRepository<Hrm.Domain.EmpTransferPosting> EmpTransferPostingRepository, IMapper mapper)
         {
             _EmpTransferPostingRepository = EmpTransferPostingRepository;
             _mapper = mapper;
         }
 
-        public async Task<object> Handle(GetAllEmpTransferPostingRequest request, CancellationToken cancellationToken)
+        public async Task<object> Handle(GetEmpTransferPostingJoiningInfoRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<EmpTransferPosting> EmpTransferPostings = _EmpTransferPostingRepository.Where(x => true)
+            IQueryable<EmpTransferPosting> EmpTransferPostings = _EmpTransferPostingRepository.Where(x => x.DeptApproveStatus == true && x.IsJoining == true)
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.ApplicationBy)
                 .Include(x => x.OrderBy)
@@ -44,7 +44,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
                 .Include(x => x.ReleaseType)
                 .Include(x => x.DeptReleaseType);
 
-            EmpTransferPostings = EmpTransferPostings.OrderByDescending(x => x.Id);
+            EmpTransferPostings = EmpTransferPostings.OrderBy(x => x.DeptApproveStatus);
 
             var EmpTransferPostingDtos = _mapper.Map<List<EmpTransferPostingDto>>(EmpTransferPostings);
 

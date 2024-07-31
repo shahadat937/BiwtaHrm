@@ -1,21 +1,19 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { cilArrowLeft, cilPlus, cilBell, cilViewModule } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
-import { EmpTransferPostingService } from '../service/emp-transfer-posting.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { MatSort } from '@angular/material/sort';
-import { TransferPostingInfoComponent } from '../transfer-posting-info/transfer-posting-info.component';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { EmpTransferPostingService } from '../../service/emp-transfer-posting.service';
 
 @Component({
-  selector: 'app-trainsfer-posting-list',
-  templateUrl: './trainsfer-posting-list.component.html',
-  styleUrl: './trainsfer-posting-list.component.scss'
+  selector: 'app-transfer-posting-approval-list',
+  templateUrl: './transfer-posting-approval-list.component.html',
+  styleUrl: './transfer-posting-approval-list.component.scss'
 })
-export class TrainsferPostingListComponent implements OnInit, OnDestroy {
+export class TransferPostingApprovalListComponent  implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
@@ -23,8 +21,6 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     'PMS Id',
     'fullName',
     'ApprovalStatus',
-    'DeptStatus',
-    'JoiningStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -36,7 +32,6 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     public empTransferPostingService: EmpTransferPostingService,
     private route: ActivatedRoute,
-    private modalService: BsModalService,
   ) {
 
   }
@@ -45,11 +40,11 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.getAllTransferPostingInfo();
+    this.getAllEmpTransferPostingApproveInfo();
   }
 
-  getAllTransferPostingInfo() {
-    this.subscription = this.empTransferPostingService.getAll().subscribe((item) => {
+  getAllEmpTransferPostingApproveInfo() {
+    this.subscription = this.empTransferPostingService.getAllEmpTransferPostingApproveInfo().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -66,13 +61,6 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
-
-  transferPostingInfo(id: number) {
-    const initialState = {
-      id: id
-    };
-    const modalRef: BsModalRef = this.modalService.show(TransferPostingInfoComponent, { initialState, backdrop: 'static' });
   }
 
 }

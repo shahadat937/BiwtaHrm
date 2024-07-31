@@ -1,1 +1,37 @@
-<p>holiday-setup works!</p>
+<c-card class="mt-3 shadow">
+    <c-card-header>
+        Holiday
+    </c-card-header>
+    <c-card-body>
+        <c-card md="3" cCollapse [visible]="isVisible">
+           <c-card-body>
+                <form #holidayForm = "ngForm" cForm cRow [gutter]="3">
+                    <c-col md="3">
+                        <label for="holidayType" cLabel>Select Holiday Type</label>
+                        <select name="holidayType" id="holidayType" cSelect>
+                            <option [ngValue]="null">Select Holiday Type</option>
+                            @for (type of holidayTypeOption; track $index) {
+                                <option [ngValue]="type.id">{{type.name}}</option>
+                            }
+                        </select>
+                    </c-col>
+                    <c-col md="3">
+                        <label for="holidayName" cLabel=>Holiday Name</label>
+                        <input type="text" cFormControl name="holidayName" id="holidayName">
+                    </c-col>
+                    <c-col md="3">
+                        <label for="holidayName" cLabel=>Holiday Name</label>
+                        <input type="date" cFormControl name="holidayDate" id="holidayName">
+                    </c-col>
+                    <c-row class="mt-3">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button type="submit" cButton>Submit</button>
+                            </div>
+                        </div>
+                    </c-row>
+                </form>
+           </c-card-body> 
+        </c-card> 
+    </c-card-body>
+</c-card>

@@ -32,6 +32,24 @@
                         }
                     </c-col>
                     <c-col md="3">
+                        <label for="holidayYear" cLabel>Select Holiday Type</label>
+                        <select 
+                        required
+                        name="yearId" 
+                        id="holidayYear" 
+                        cSelect 
+                        #hYear="ngModel"
+                        [(ngModel)]="SelectedYear">
+                            <option [ngValue]="null">Select Year</option>
+                            @for (year of YearOption; track $index) {
+                                <option [ngValue]="year.id">{{year.name}}</option>
+                            }
+                        </select>
+                        @if (hYear.invalid&&hYear.touched) {
+                            <div class="text-left text-danger">Year is required</div>
+                        }
+                    </c-col>
+                    <c-col md="3">
                         <label for="holidayDate" cLabel=>Holiday Date </label>
                         <input type="date"
                         required 
@@ -61,24 +79,6 @@
                         </select>
                         @if (htypeId.invalid&&htypeId.touched) {
                             <div class="text-left text-danger">Holiday Type is required</div>
-                        }
-                    </c-col>
-                    <c-col md="3">
-                        <label for="holidayYear" cLabel>Select Holiday Type</label>
-                        <select 
-                        required
-                        name="yearId" 
-                        id="holidayYear" 
-                        cSelect 
-                        #hYear="ngModel"
-                        [(ngModel)]="SelectedYear">
-                            <option [ngValue]="null">Select Year</option>
-                            @for (year of YearOption; track $index) {
-                                <option [ngValue]="year.id">{{year.name}}</option>
-                            }
-                        </select>
-                        @if (hYear.invalid&&hYear.touched) {
-                            <div class="text-left text-danger">Year is required</div>
                         }
                     </c-col>
                     <c-col md="3">
@@ -136,9 +136,9 @@
             >
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Date</th>
+                        <th pSortableColumn="holidayId">Id <p-sortIcon field="holidayId"></p-sortIcon></th>
+                        <th pSortableColumn="holidayName">Name <p-sortIcon field="holidayName"></p-sortIcon></th>
+                        <th pSortableColumn="holidayDate">Date <p-sortIcon field="holidayDate"></p-sortIcon></th>
                         <th>Type</th>
                         <th>Active</th>
                         <th>Action</th>

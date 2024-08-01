@@ -7,6 +7,8 @@ import { cilArrowLeft, cilPlus, cilBell, cilViewModule } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { EmpTransferPostingService } from '../../service/emp-transfer-posting.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { TransferPostingInfoComponent } from '../../transfer-posting-info/transfer-posting-info.component';
 
 @Component({
   selector: 'app-department-approval-list',
@@ -32,6 +34,7 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     public empTransferPostingService: EmpTransferPostingService,
     private route: ActivatedRoute,
+    private modalService: BsModalService,
   ) {
 
   }
@@ -61,6 +64,14 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  
+  transferPostingInfo(id: number) {
+    const initialState = {
+      id: id
+    };
+    const modalRef: BsModalRef = this.modalService.show(TransferPostingInfoComponent, { initialState, backdrop: 'static' });
   }
 
 }

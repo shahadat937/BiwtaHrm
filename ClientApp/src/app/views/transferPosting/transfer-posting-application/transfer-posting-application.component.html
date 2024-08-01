@@ -260,6 +260,8 @@
                 </c-card-header>
                 <c-card-body>
                  <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.transferApproveById" name="transferApproveById" />
+                 <input [(ngModel)]="empTransferPostingService.empTransferPosting.transferApproveById"
+                 name="orderOfficeById" type="hidden" />
                     <div class="mb-3">
                         <c-form-check [switch]="true">
                             <input cFormCheckInput type="checkbox" id="isTransferApprove" name="isTransferApprove"
@@ -299,8 +301,6 @@
                         </c-col>
     
                         <c-col [md]="4">
-                            <input [(ngModel)]="empTransferPostingService.empTransferPosting.transferApproveById"
-                                name="orderOfficeById" type="hidden" />
                             <label cLabel for="approveByIdCardNo">Approve By<span class="text-danger">*</span></label>
                             <c-input-group>
                                 <input aria-describedby="approveByIdCardNo" cFormControl
@@ -372,6 +372,7 @@
                 </c-card-header>
                 <c-card-body>
                     <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseById" name="deptReleaseById" />
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptApproveStatus" name="deptApproveStatus" />
                     <div class="mb-3">
                         <c-form-check [switch]="true">
                             <input cFormCheckInput type="checkbox" id="isDepartmentApprove" name="isDepartmentApprove"
@@ -461,6 +462,7 @@
                 <c-card-body>
                     <div class="mb-3">
                         <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.joiningReportingById" name="joiningReportingById" />
+                        <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.joiningStatus" name="joiningStatus" />
                         <c-form-check [switch]="true">
                             <input cFormCheckInput type="checkbox" id="isJoining" name="isJoining"
                                 [(ngModel)]="empTransferPostingService.empTransferPosting.isJoining" (change)="isJoiningApproveNeed(empTransferPostingService.empTransferPosting.isJoining)"/>

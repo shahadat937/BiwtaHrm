@@ -1,4 +1,4 @@
-<div class="modal fade show" tabindex="-1" style="display: block;">
+<div class="modal fade show" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,12 +7,13 @@
                     <mat-icon>close</mat-icon>
                 </button>
             </div>
-            <div class="modal-body">
-                <c-card class="mb-3">
+            <div class="modal-body scrollable-modal-body">
+                <!-- ********** Employee Information *********** -->
+                <c-card class="mb-3 shadow">
                     <c-card-header class="text-center">
                         <div>Employee Information</div>
                     </c-card-header>
-                    <c-card-body cRow [gutter]="3">
+                    <c-card-body cRow>
                         <c-col [md]="6">
                             <label><b>PMIS Id: </b>{{empTransferPosting.empIdCardNo}}</label>
                         </c-col>
@@ -28,6 +29,177 @@
                         <c-col [md]="6" *ngIf="empTransferPosting.sectionName">
                             <label><b>Section: </b>{{empTransferPosting.sectionName}}</label>
                         </c-col>
+                    </c-card-body>
+                </c-card>
+
+                <!-- ********** Posting Order Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Posting Order Information</div>
+                    </c-card-header>
+                    <c-card-body cRow>
+                        <c-col [md]="6">
+                            <label><b>Office Order No: </b>{{empTransferPosting.officeOrderNo}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Office Order Date: </b>{{empTransferPosting.officeOrderDate}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Order By: </b>{{empTransferPosting.orderByEmpName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Department: </b>{{empTransferPosting.orderByDepartmentName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Designation: </b>{{empTransferPosting.orderByDesignationName}}</label>
+                        </c-col>
+                        <c-col [md]="6" *ngIf="empTransferPosting.orderBySectionName">
+                            <label><b>Section: </b>{{empTransferPosting.orderBySectionName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Transfer Department: </b>{{empTransferPosting.transferDepartmentName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Transfer Designation: </b>{{empTransferPosting.transferDesignationName}}</label>
+                        </c-col>
+                        <c-col [md]="6" *ngIf="empTransferPosting.transferSectionName">
+                            <label><b>Transfer Section: </b>{{empTransferPosting.transferSectionName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Release Type: </b>{{empTransferPosting.releaseTypeName}}</label>
+                        </c-col>
+                        <c-col [md]="6" *ngIf="empTransferPosting.remark">
+                            <label><b>Remark: </b>{{empTransferPosting.remark}}</label>
+                        </c-col>
+                    </c-card-body>
+                </c-card>
+                
+                <!-- ********** Transfer Approve Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Transfer Approve Information</div>
+                    </c-card-header>
+                    <c-card-body cRow [gutter]="3">
+                        <div class="mb-3">
+                            <b>Transfer Approve Status : </b>
+                            <button cButton color="warning" size="sm" *ngIf="empTransferPosting.transferApproveStatus == null">Pending</button> &nbsp;
+                            <button cButton color="info" size="sm" *ngIf="empTransferPosting.transferApproveStatus == null"><svg [cIcon]="icons.cilBell"></svg></button>
+                            <button cButton color="success" size="sm" *ngIf="empTransferPosting.transferApproveStatus == true">Approved</button>
+                            <button cButton color="danger" size="sm" *ngIf="empTransferPosting.transferApproveStatus == false">Reject</button>
+                        </div>
+                        <div *ngIf="!empTransferPosting.isTransferApprove">
+                            <c-alert class="text-center">Transfer Approve is not needed</c-alert>
+                        </div>
+                        <div *ngIf="empTransferPosting.transferApproveStatus != null && empTransferPosting.isTransferApprove" cRow>
+                            <c-col [md]="6">
+                                <label><b>Approve Date: </b>{{empTransferPosting.transferApproveDate}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Approve By: </b>{{empTransferPosting.approveByEmpName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Department: </b>{{empTransferPosting.approveByDepartmentName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Designation: </b>{{empTransferPosting.approveByDesignationName}}</label>
+                            </c-col>
+                            <c-col [md]="6" *ngIf="empTransferPosting.approveBySectionName">
+                                <label><b>Section: </b>{{empTransferPosting.approveBySectionName}}</label>
+                            </c-col>
+                            <c-col [md]="6" *ngIf="empTransferPosting.approveRemark">
+                                <label><b>Remark: </b>{{empTransferPosting.approveRemark}}</label>
+                            </c-col>
+                        </div>
+                    </c-card-body>
+                </c-card>
+                
+                <!-- ********** Department Release Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Department Release Information</div>
+                    </c-card-header>
+                    <c-card-body cRow [gutter]="3">
+                        <div class="mb-3">
+                            <b>Department Release Status : </b>
+                            <button cButton color="warning" size="sm" *ngIf="empTransferPosting.deptApproveStatus == null">Pending</button>  &nbsp;
+                            <button cButton color="info" size="sm" *ngIf="empTransferPosting.deptApproveStatus == null && empTransferPosting.transferApproveStatus == true"><svg [cIcon]="icons.cilBell"></svg></button>
+                            <button cButton color="success" size="sm" *ngIf="empTransferPosting.deptApproveStatus == true">Approved</button>
+                            <button cButton color="danger" size="sm" *ngIf="empTransferPosting.deptApproveStatus == false">Reject</button>
+                        </div>
+                        <div *ngIf="!empTransferPosting.isDepartmentApprove">
+                            <c-alert class="text-center">Department Release is not needed</c-alert>
+                        </div>
+                        <div *ngIf="empTransferPosting.deptApproveStatus != null && empTransferPosting.isDepartmentApprove" cRow>
+                            <c-col [md]="6">
+                                <label><b>Release Type: </b>{{empTransferPosting.deptReleaseTypeName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Release Date: </b>{{empTransferPosting.deptReleaseDate}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Reference No: </b>{{empTransferPosting.referenceNo}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Departmental Clearance: </b>
+                                    <label *ngIf="empTransferPosting.deptClearance">Yes</label>
+                                    <label *ngIf="!empTransferPosting.deptClearance">No</label>
+                                </label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Release By: </b>{{empTransferPosting.deptReleaseByEmpName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Department: </b>{{empTransferPosting.deptReleaseByDepartmentName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Designation: </b>{{empTransferPosting.deptReleaseByDesignationName}}</label>
+                            </c-col>
+                            <c-col [md]="6" *ngIf="empTransferPosting.deptReleaseBySectionName">
+                                <label><b>Section: </b>{{empTransferPosting.deptReleaseBySectionName}}</label>
+                            </c-col>
+                            <c-col [md]="6" *ngIf="empTransferPosting.deptRemark">
+                                <label><b>Remark: </b>{{empTransferPosting.deptRemark}}</label>
+                            </c-col>
+                        </div>
+                    </c-card-body>
+                </c-card>
+                
+                <!-- ********** Joining Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Joining Information</div>
+                    </c-card-header>
+                    <c-card-body cRow [gutter]="3">
+                        <div class="mb-3">
+                            <b>Joining Reporting Status : </b>
+                            <button cButton color="warning" size="sm" *ngIf="empTransferPosting.joiningStatus == null">Pending</button>  &nbsp;
+                            <button cButton color="info" size="sm" *ngIf="empTransferPosting.joiningStatus == null && empTransferPosting.deptApproveStatus == true"><svg [cIcon]="icons.cilBell"></svg></button>
+                            <button cButton color="success" size="sm" *ngIf="empTransferPosting.joiningStatus == true">Approved</button>
+                            <button cButton color="danger" size="sm" *ngIf="empTransferPosting.joiningStatus == false">Reject</button>
+                        </div>
+                        <div *ngIf="!empTransferPosting.isJoining">
+                            <c-alert class="text-center">Joining Information is not needed</c-alert>
+                        </div>
+                        <div *ngIf="empTransferPosting.joiningStatus != null && empTransferPosting.isJoining" cRow>
+                            <c-col [md]="6">
+                                <label><b>Joining Date: </b>{{empTransferPosting.joiningDate}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Reporting By: </b>{{empTransferPosting.joiningReportingByEmpName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Department: </b>{{empTransferPosting.joiningReportingByDepartmentName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Designation: </b>{{empTransferPosting.joiningReportingByDesignationName}}</label>
+                            </c-col>
+                            <c-col [md]="6" *ngIf="empTransferPosting.joiningReportingBySectionName">
+                                <label><b>Section: </b>{{empTransferPosting.joiningReportingBySectionName}}</label>
+                            </c-col>
+                            <c-col [md]="6" *ngIf="empTransferPosting.joiningRemark">
+                                <label><b>Remark: </b>{{empTransferPosting.joiningRemark}}</label>
+                            </c-col>
+                        </div>
                     </c-card-body>
                 </c-card>
             </div>

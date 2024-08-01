@@ -48,6 +48,13 @@ const routes: Routes = [
           title: 'Joining Reporting List',
         },
       },
+      {
+        path: 'update-transferPostingApplication/:id',
+        component: TransferPostingApplicationComponent,
+        data: {
+          title: 'Update Transfer and Posting Application',
+        },
+      },
     ]
   }
 ];

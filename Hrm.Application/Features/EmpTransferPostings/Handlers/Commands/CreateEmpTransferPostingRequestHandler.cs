@@ -29,20 +29,21 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
 
             var empTransferPostings = _mapper.Map<EmpTransferPosting>(request.EmpTransferPostingDto);
 
-            if ((request.EmpTransferPostingDto.JoiningStatus == true || request.EmpTransferPostingDto.JoiningDate != null) || request.EmpTransferPostingDto.IsJoining == false)
-            {
-                empTransferPostings.ApplicationStatus = true;
-                empTransferPostings.JoiningStatus = true;
-            }
 
-            if (request.EmpTransferPostingDto.TransferApproveDate != null || request.EmpTransferPostingDto.TransferApproveDate != null)
+            if (request.EmpTransferPostingDto.TransferApproveDate != null || request.EmpTransferPostingDto.IsTransferApprove == false)
             {
                 empTransferPostings.TransferApproveStatus = true;
             }
 
-            if ((request.EmpTransferPostingDto.DeptReleaseById != null || request.EmpTransferPostingDto.DeptReleaseDate != null) && request.EmpTransferPostingDto.DeptClearance == true)
+            if ((request.EmpTransferPostingDto.DeptReleaseById != null && request.EmpTransferPostingDto.DeptClearance == true) || request.EmpTransferPostingDto.IsDepartmentApprove == false)
             {
                 empTransferPostings.DeptApproveStatus = true;
+            }
+
+            if ((request.EmpTransferPostingDto.JoiningStatus == true || request.EmpTransferPostingDto.JoiningDate != null) || request.EmpTransferPostingDto.IsJoining == false)
+            {
+                empTransferPostings.ApplicationStatus = true;
+                empTransferPostings.JoiningStatus = true;
             }
 
             if (request.EmpTransferPostingDto.TransferApproveStatus == false || request.EmpTransferPostingDto.DeptApproveStatus == false || (request.EmpTransferPostingDto.JoiningStatus == false && request.EmpTransferPostingDto.JoiningDate == null))

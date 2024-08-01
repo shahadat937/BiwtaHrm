@@ -1,37 +1,167 @@
 <c-card class="mt-3 shadow">
     <c-card-header>
-        Holiday
+        <div class="d-flex justify-content-between">
+            <div class="p-1">
+                Holiday Setup
+            </div>
+            <div>
+                <button cButton 
+                color="primary" 
+                (click)="toggleAddHoliday()"
+                [disabled]="isVisible"
+                [hidden]="isVisible"
+                >Add Holiday</button>
+            </div>
+        </div>
     </c-card-header>
     <c-card-body>
         <c-card md="3" cCollapse [visible]="isVisible">
            <c-card-body>
-                <form #holidayForm = "ngForm" cForm cRow [gutter]="3">
+                <form #holidayForm = "ngForm" (ngSubmit)="onSubmit(holidayForm)" cForm cRow [gutter]="3">
+                    <c-col md="3">
+                        <label for="holidayName" cLabel=>Holiday Name</label>
+                        <input type="text" 
+                        required
+                        [(ngModel)]="this.holidayService.model.holidayName"
+                        #holidayName="ngModel"
+                        cFormControl 
+                        name="holidayName" 
+                        id="holidayName">
+                        @if(holidayName.invalid&&holidayName.touched) {
+                            <div class="text-left text-danger">Holiday Name is required</div>
+                        }
+                    </c-col>
+                    <c-col md="3">
+                        <label for="holidayDate" cLabel=>Holiday Date </label>
+                        <input type="date"
+                        required 
+                        cFormControl 
+                        [(ngModel)]="this.holidayService.model.holidayDate"
+                        #hDate = "ngModel"
+                        name="holidayDate" 
+                        id="holidayDate">
+
+                        @if (hDate.invalid&&hDate.touched) {
+                            <div class="text-left text-danger">Holiday Date is required</div>
+                        }
+                    </c-col>
                     <c-col md="3">
                         <label for="holidayType" cLabel>Select Holiday Type</label>
-                        <select name="holidayType" id="holidayType" cSelect>
+                        <select 
+                        name="holidayTypeId" 
+                        required
+                        id="holidayType" 
+                        [(ngModel)]="this.holidayService.model.holidayTypeId"
+                        #htypeId="ngModel"
+                        cSelect>
                             <option [ngValue]="null">Select Holiday Type</option>
                             @for (type of holidayTypeOption; track $index) {
                                 <option [ngValue]="type.id">{{type.name}}</option>
                             }
                         </select>
+                        @if (htypeId.invalid&&htypeId.touched) {
+                            <div class="text-left text-danger">Holiday Type is required</div>
+                        }
                     </c-col>
                     <c-col md="3">
-                        <label for="holidayName" cLabel=>Holiday Name</label>
-                        <input type="text" cFormControl name="holidayName" id="holidayName">
+                        <label for="holidayYear" cLabel>Select Holiday Type</label>
+                        <select 
+                        required
+                        name="yearId" 
+                        id="holidayYear" 
+                        cSelect 
+                        #hYear="ngModel"
+                        [(ngModel)]="SelectedYear">
+                            <option [ngValue]="null">Select Year</option>
+                            @for (year of YearOption; track $index) {
+                                <option [ngValue]="year.id">{{year.name}}</option>
+                            }
+                        </select>
+                        @if (hYear.invalid&&hYear.touched) {
+                            <div class="text-left text-danger">Year is required</div>
+                        }
                     </c-col>
                     <c-col md="3">
-                        <label for="holidayName" cLabel=>Holiday Name</label>
-                        <input type="date" cFormControl name="holidayDate" id="holidayName">
+                        <label for="holidayActive" cLabel>Active</label>
+                        <select name="isActive" 
+                        id="holidayActive"
+                        cSelect
+                        [(ngModel)]="this.holidayService.model.isActive"
+                        #hActive="ngModel"
+                        >
+                        <option value="true">Active</option>
+                        <option value="false">Deactive</option>
+                        </select>
+                    </c-col>
+                    <c-col md="3">
+                        <label for="remark" cLabel>Remark</label>
+                        <input type="text"
+                        [(ngModel)]="this.holidayService.model.remark"
+                        #hRemark = "ngModel"
+                        name="remark" 
+                        id="remark" 
+                        cFormControl>
                     </c-col>
                     <c-row class="mt-3">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <button type="submit" cButton>Submit</button>
+                                <button class="me-2" 
+                                type="submit" 
+                                color="primary" 
+                                [disabled]="holidayForm.invalid||loading"
+                                cButton>
+                                    <c-spinner
+                                      [hidden]="loading == false"
+                                      size="sm"
+                                    ></c-spinner>
+                                    {{isUpdate?'Update':'Submit'}}
+                                </button>
+                                <button cButton type="reset" color="secondary">Reset</button>
+                            </div>
+                            <div>
+                                <button cButton color="danger" (click)="toggleAddHoliday()">Cancel</button>
                             </div>
                         </div>
                     </c-row>
                 </form>
            </c-card-body> 
-        </c-card> 
+        </c-card>
+        <div class="mt-3">
+            <p-table
+            [tableStyle]="{'min-width':'50px'}"
+            [value]="Holidays"
+            [paginator]="true"
+            [rows]="5"
+            [rowsPerPageOptions]="[5,10,20,50]"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Active</th>
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-holiday>
+                    <tr [pSelectableRow]="holiday">
+                        <td>{{ holiday.holidayId}}</td>
+                        <td>{{ holiday.holidayName }}</td>
+                        <td>{{ holiday.holidayDate }}</td>
+                        <td>{{ holiday.holidayTypeName }}</td>
+                        <td>{{holiday.isActive}}</td>
+                        <td>
+                        <button class="custom-button me-1" (click)="toggleUpdate(holiday)" cTooltip="Update">
+                            <svg [cIcon]="icons.cilPencil" size="lg" title="Update"></svg>
+                        </button>
+                        <button class="custom-button me-1" (click)="onDelete(holiday.holidayId)" cTooltip="Delete">
+                            <svg [cIcon]="icons.cilTrash" size="lg" title="Update"></svg>
+                        </button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
     </c-card-body>
 </c-card>

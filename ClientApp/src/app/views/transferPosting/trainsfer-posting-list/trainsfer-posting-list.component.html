@@ -84,7 +84,10 @@
                   <button cTooltip="View" cTooltipPlacement="bottom" mat-icon-button class="text-info" (click)="transferPostingInfo(element.id)">
                       <mat-icon>remove_red_eye</mat-icon>
                   </button>
-                  <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary">
+                  <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary" [routerLink]="[
+                  '/transferPosting/update-transferPostingApplication/',
+                  element.id
+                ]">
                       <mat-icon>edit</mat-icon>
                   </button>
               </td>

@@ -47,6 +47,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   icons = { cilArrowLeft };
 
   ngOnInit(): void {
+    this.initaialForm();
     const currentUserString = localStorage.getItem('currentUser');
     const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
     this.loginEmpId = currentUserJSON.empId;
@@ -68,14 +69,46 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     });
     this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if (res) {
+        if(res.transferApproveStatus == true){
+          this.empTransferPostingService.empTransferPosting.provideTransferApproveInfo = true;
+          this.empTransferPostingService.empTransferPosting.transferApproveStatus = true;
+          this.empTransferPostingService.empTransferPosting.transferApproveDate = res.transferApproveDate;
+          this.empTransferPostingService.empTransferPosting.approveByIdCardNo = res.approveByIdCardNo;
+          this.empTransferPostingService.empTransferPosting.remark = res.remark;
+          this.getApproveByInfoByIdCardNo(res.approveByIdCardNo || '');
+        }
+        if(res.deptApproveStatus == true){
+          this.empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo = true;
+          this.empTransferPostingService.empTransferPosting.deptReleaseTypeId = res.deptReleaseTypeId;
+          this.empTransferPostingService.empTransferPosting.deptReleaseDate = res.deptReleaseDate;
+          this.empTransferPostingService.empTransferPosting.referenceNo = res.referenceNo;
+          this.empTransferPostingService.empTransferPosting.deptClearance = res.deptClearance;
+          this.empTransferPostingService.empTransferPosting.deptRemark = res.deptRemark;
+        }
+        if(res.joiningStatus == true){
+          this.empTransferPostingService.empTransferPosting.provideJoiningInfo = true;
+          this.empTransferPostingService.empTransferPosting.joiningDate = res.joiningDate;
+          this.empTransferPostingService.empTransferPosting.joiningRemark = res.joiningRemark;
+        }
         this.EmpTransferPostingForm?.form.patchValue(res);
         this.headerText = 'Update Transfer and Posting Information';
         this.btnText = 'Update';
+        if(res.empIdCardNo){
+          this.isValidEmp = true;
+          this.empTransferPostingService.empTransferPosting.empName = res.empName;
+          this.empTransferPostingService.empTransferPosting.departmentName = res.departmentName;
+          this.empTransferPostingService.empTransferPosting.designationName = res.designationName;
+          this.empTransferPostingService.empTransferPosting.sectionName = res.sectionName;
+        }
+        if(res.orderByIdCardNo){
+          this.getOrderByInfoByIdCardNo(res.orderByIdCardNo);
+        }
+        this.getTransferDesignationByDepartment(res.transferDepartmentId);
+        this.empTransferPostingService.empTransferPosting.transferDesignationId = res.transferDesignationId;
       }
       else {
         this.headerText = 'Add New Transfer and Posting Order';
         this.btnText = 'Submit';
-        this.initaialForm();
       }
     })
   }
@@ -246,8 +279,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   getOrderByInfoByIdCardNo(idCardNo: string){
     this.subscription = this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
       if (res) {
-        this.empTransferPostingService.empTransferPosting.applicationById = this.loginEmpId;
         this.isValidOrderByEmp = true;
+        this.empTransferPostingService.empTransferPosting.applicationById = this.loginEmpId;
         this.empTransferPostingService.empTransferPosting.orderByEmpName = res.firstName + " " + res.lastName;
         this.empTransferPostingService.empTransferPosting.orderOfficeById = res.id;
         this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.id);
@@ -314,14 +347,15 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       this.empTransferPostingService.empTransferPosting.transferApproveStatus = null;
       this.empTransferPostingService.empTransferPosting.transferApproveDate = null;
       this.empTransferPostingService.empTransferPosting.approveRemark = '';
-      this.empTransferPostingService.empTransferPosting.deptReleaseById = null;
       this.isApproveByEmp = false;
     }
     else{
-      this.empTransferPostingService.empTransferPosting.deptReleaseById = this.loginEmpId;
+      this.empTransferPostingService.empTransferPosting.transferApproveById = this.loginEmpId;
+      this.getEmployeeByEmpId();
     }
+    console.log(this.empTransferPostingService.empTransferPosting.transferApproveById)
   }
-  
+
   isDeptApproveNeed(status: boolean){
     if(!status){
       this.empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo = false;
@@ -335,23 +369,29 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       this.empTransferPostingService.empTransferPosting.deptClearance = true;
       this.empTransferPostingService.empTransferPosting.referenceNo = '';
       this.empTransferPostingService.empTransferPosting.deptRemark = '';
-      this.empTransferPostingService.empTransferPosting.joiningReportingById = null;
+      this.empTransferPostingService.empTransferPosting.deptReleaseById = null;
     }
     else {
-      this.empTransferPostingService.empTransferPosting.joiningReportingById = this.loginEmpId;
+      this.empTransferPostingService.empTransferPosting.deptReleaseById = this.loginEmpId;
+      this.getEmployeeByEmpId();
     }
   }
-  
+
   isJoiningApproveNeed(status: boolean){
     if(!status){
       this.empTransferPostingService.empTransferPosting.provideJoiningInfo = false;
-      this.provideJoiningApproveInfo(false);
     }
+    this.provideJoiningApproveInfo(status);
   }
   provideJoiningApproveInfo(status: boolean){
     if(!status){
       this.empTransferPostingService.empTransferPosting.joiningDate = null;
       this.empTransferPostingService.empTransferPosting.joiningRemark = '';
+      this.empTransferPostingService.empTransferPosting.joiningReportingById = null;
+    }
+    else {
+      this.empTransferPostingService.empTransferPosting.joiningReportingById = this.loginEmpId;
+      this.getEmployeeByEmpId();
     }
   }
 
@@ -360,7 +400,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       this.offices = data;
     });
   }
-  
+
   getAllDepartment() {
     this.empJobDetailsService.getAllDepartment().subscribe((res) => {
       this.departments = res;

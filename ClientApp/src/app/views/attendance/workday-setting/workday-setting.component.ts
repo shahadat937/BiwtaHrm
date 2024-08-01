@@ -21,6 +21,7 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
   selectedDay: number | null;
   selectedDayForAddition : number | null;
   showAddDay: boolean ;
+  yearLoaded : boolean;
   constructor(
     private workdayService: WorkdayService,
     private toastr : ToastrService,
@@ -30,7 +31,7 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
     this.selectedDay = null;
     this.selectedDayForAddition = null;
     this.showAddDay = false;
-    
+    this.yearLoaded = false;
   }
   ngOnInit(): void {
     this.getYear();
@@ -50,11 +51,15 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
         this.YearOption = option;
         this.setDefaultYear();
         this.getWorkday();
+        this.yearLoaded=true;
       },
       error: (err)=> {
         console.error("Got error while retriving Year Option for Selection");
+        this.yearLoaded=true;
       }
     })
+
+    this.yearLoaded=true;
   }
 
   getDay() {

@@ -53,6 +53,14 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Commands
                 throw new NotFoundException(nameof(SiteVisit), request.SiteVisitId);
             }
 
+            if(SiteVisit.Status=="Approved")
+            {
+                response.Success = false;
+                response.Message = "Approved Site Visit can't be deleted";
+                response.Id = SiteVisit.SiteVisitId;
+                return response;
+            }
+
             await _unitOfWork.Repository<Hrm.Domain.SiteVisit>().Delete(SiteVisit);
             await _unitOfWork.Save();
 

@@ -48,7 +48,7 @@ namespace Hrm.Application.Helpers
 
         public static bool IsWeekDay(DateOnly GivenDate, IHrmRepository<Hrm.Domain.Workday> _WorkdayRepository)
         {
-            var IsWeekDay = _WorkdayRepository.Where(x => x.weekDay.WeekDayName == GivenDate.DayOfWeek.ToString()).Any();
+            var IsWeekDay = _WorkdayRepository.Where(x => x.weekDay.WeekDayName == GivenDate.DayOfWeek.ToString() && x.year.YearName == GivenDate.Year).Any();
             return IsWeekDay;
         }
 

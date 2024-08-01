@@ -8,7 +8,8 @@ import { AttendanceRecordComponent } from './attendance-record/attendance-record
 import { ManualAttendanceComponent } from './manual-attendance/manual-attendance.component';
 import { SiteVisitComponent } from './site-visit/site-visit.component';
 import { AttendanceReportComponent } from './attendance-report/attendance-report.component';
-import {AttendanceSummaryComponent} from './attendance-summary/attendance-summary.component'
+import {AttendanceSummaryComponent} from './attendance-summary/attendance-summary.component';
+import {HolidaySetupComponent} from './workday-setting/holiday-setup/holiday-setup.component'
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { ButtonModule as PButtonModule,ButtonDirective } from 'primeng/button';
 import {CalendarModule} from 'primeng/calendar';
@@ -52,6 +53,7 @@ import { BadgeModule } from '@coreui/angular';
     SiteVisitComponent,
     AttendanceReportComponent,
     AttendanceSummaryComponent,
+    HolidaySetupComponent,
     TimeFormatPipe
   ],
   imports: [

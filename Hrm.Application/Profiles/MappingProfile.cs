@@ -491,7 +491,7 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.AttendanceStatusName, opt => opt.MapFrom(src => src.AttendanceStatus.AttendanceStatusName));
 
             CreateMap<LeaveType, LeaveTypeDto>().ReverseMap();
-            CreateMap<LeaveType, CreateLeaveDto>().ReverseMap();
+            CreateMap<LeaveType, CreateLeaveTypeDto>().ReverseMap();
 
         }
     }

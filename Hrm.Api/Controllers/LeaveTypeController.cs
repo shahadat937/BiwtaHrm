@@ -1,5 +1,7 @@
 ﻿using Hrm.Application;
 using Hrm.Application.Contracts.Identity;
+using Hrm.Application.DTOs.LeaveType;
+using Hrm.Application.Features.LeaveType.Requests.Commands;
 using Hrm.Application.Features.LeaveType.Requests.Queries;
 
 
@@ -42,6 +44,25 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> GetLeaveTypeById(int id)
         {
             var command = new GetLeaveTypeByIdRequest { LeaveTypeId = id };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("save-LeaveType")]
+        public async Task<ActionResult<BaseCommandResponse>> createLeaveType([FromBody] CreateLeaveTypeDto leaveTypeDto)
+        {
+            var command = new CreateLeaveTypeCommand { createLeaveTypeDto = leaveTypeDto };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        [Route("delete-LeaveType/{id}")]
+        public async Task<ActionResult<BaseCommandResponse>> deleteLeaveType(int id)
+        {
+            var command = new DeleteLeaveTypeCommand { LeaveTypeId = id };
             var response = await _mediator.Send(command);
 
             return Ok(response);

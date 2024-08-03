@@ -59,7 +59,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                 updateEmptransferPosting.DeptApproveStatus = false;
             }
 
-            if ((request.UpdateEmpTransferPostingDto.JoiningDate != null || request.UpdateEmpTransferPostingDto.IsJoining == false) && (request.UpdateEmpTransferPostingDto.JoiningStatus == null || request.UpdateEmpTransferPostingDto.JoiningStatus == true))
+            if (request.UpdateEmpTransferPostingDto.JoiningDate != null || request.UpdateEmpTransferPostingDto.IsJoining == false)
             {
                 updateEmptransferPosting.JoiningStatus = true;
             }

@@ -1,1 +1,93 @@
-<p>transfer-posting-approval works!</p>
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{heading}}</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                <!-- ********** Employee Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Employee Information</div>
+                    </c-card-header>
+                    <c-card-body cRow>
+                        <c-col [md]="6">
+                            <label><b>PMIS Id: </b>{{empTransferPosting.empIdCardNo}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Employee Name: </b>{{empTransferPosting.empName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Department: </b>{{empTransferPosting.departmentName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Designation: </b>{{empTransferPosting.designationName}}</label>
+                        </c-col>
+                        <c-col [md]="6" *ngIf="empTransferPosting.sectionName">
+                            <label><b>Section: </b>{{empTransferPosting.sectionName}}</label>
+                        </c-col>
+                    </c-card-body>
+                </c-card>
+
+                <!-- ********** Posting Order Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Posting Order Information</div>
+                    </c-card-header>
+                    <c-card-body cRow>
+                        <c-col [md]="6">
+                            <label><b>Office Order No: </b>{{empTransferPosting.officeOrderNo}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Office Order Date: </b>{{empTransferPosting.officeOrderDate}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Order By: </b>{{empTransferPosting.orderByEmpName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Department: </b>{{empTransferPosting.orderByDepartmentName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Designation: </b>{{empTransferPosting.orderByDesignationName}}</label>
+                        </c-col>
+                        <c-col [md]="6" *ngIf="empTransferPosting.orderBySectionName">
+                            <label><b>Section: </b>{{empTransferPosting.orderBySectionName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Transfer Department: </b>{{empTransferPosting.transferDepartmentName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Transfer Designation: </b>{{empTransferPosting.transferDesignationName}}</label>
+                        </c-col>
+                        <c-col [md]="6" *ngIf="empTransferPosting.transferSectionName">
+                            <label><b>Transfer Section: </b>{{empTransferPosting.transferSectionName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Release Type: </b>{{empTransferPosting.releaseTypeName}}</label>
+                        </c-col>
+                        <c-col [md]="6" *ngIf="empTransferPosting.remark">
+                            <label><b>Remark: </b>{{empTransferPosting.remark}}</label>
+                        </c-col>
+                    </c-card-body>
+                </c-card>
+            </div>
+            <div class="modal-footer">
+                <button mat-raised-button class="bg-secondary text-light" (click)="closeModal()">
+                    <mat-icon>cancel</mat-icon> Close
+                </button>
+                <button mat-raised-button class="bg-success text-light" (click)="closeModal()" *ngIf="clickedButton == 'Approve'">
+                    <mat-icon>check</mat-icon> Approve
+                </button>
+                <button mat-raised-button color="warn" (click)="closeModal()" *ngIf="clickedButton == 'Reject'">
+                    <mat-icon>close</mat-icon> Reject
+                </button>
+                <button mat-raised-button color="primary" (click)="closeModal()" *ngIf="clickedButton == 'Edit'">
+                    <mat-icon>update</mat-icon> Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

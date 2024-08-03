@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { EmpTransferPostingService } from '../../service/emp-transfer-posting.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TransferPostingInfoComponent } from '../../transfer-posting-info/transfer-posting-info.component';
+import { TransferPostingApprovalComponent } from '../transfer-posting-approval/transfer-posting-approval.component';
 
 @Component({
   selector: 'app-transfer-posting-approval-list',
@@ -71,6 +72,13 @@ export class TransferPostingApprovalListComponent  implements OnInit, OnDestroy 
       id: id
     };
     const modalRef: BsModalRef = this.modalService.show(TransferPostingInfoComponent, { initialState, backdrop: 'static' });
+  }
+  transferPostingApproval(id: number, clickedButton: string){
+    const initialState = {
+      id: id,
+      clickedButton: clickedButton
+    };
+    const modalRef: BsModalRef = this.modalService.show(TransferPostingApprovalComponent, { initialState, backdrop: 'static' });
   }
 
 }

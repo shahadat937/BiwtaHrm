@@ -901,5 +901,7 @@ namespace Hrm.Persistence
         public virtual DbSet<AttendanceStatus> AttendanceStatus { get; set; } = null!;
         public virtual DbSet<Attendance> Attendance { get; set; } = null!;
 
+        public virtual DbSet<LeaveType> LeaveType { get; set; } = null!;
+
     }
 }

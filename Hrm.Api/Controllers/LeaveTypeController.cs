@@ -1,0 +1,50 @@
+﻿using Hrm.Application;
+using Hrm.Application.Contracts.Identity;
+using Hrm.Application.Features.LeaveType.Requests.Queries;
+
+
+namespace Hrm.Api.Controllers
+{
+    [Route(HrmRoutePrefix.LeaveType)]
+    [ApiController]
+    public class LeaveTypeController: Controller
+    {
+        private readonly IAuthService _authenticationService;
+        private readonly IMediator _mediator;
+        public LeaveTypeController(IAuthService authenticationService, IMediator mediator)
+        {
+            _authenticationService = authenticationService;
+            _mediator = mediator;
+        }
+
+        [HttpGet]
+        [Route("get-LeaveType")]
+        public async Task<ActionResult> GetLeaveType()
+        {
+            var command = new GetLeaveTypeRequest { };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-SelectedLeaveType")]
+        public async Task<ActionResult> GetSelectedLeaveType()
+        {
+            var command = new GetSelectedLeaveTypeRequest { };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-LeaveTypeById/{id}")]
+        public async Task<ActionResult> GetLeaveTypeById(int id)
+        {
+            var command = new GetLeaveTypeByIdRequest { LeaveTypeId = id };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+    }
+}

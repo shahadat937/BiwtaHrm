@@ -94,6 +94,7 @@ using Hrm.Application.DTOs.AttendanceStatus;
 using Hrm.Application.DTOs.Attendance;
 using Hrm.Application.DTOs.ReleaseType;
 using Hrm.Application.DTOs.EmpTransferPosting;
+using Hrm.Application.DTOs.LeaveType;
 
 
 
@@ -488,6 +489,9 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.Shift.ShiftName))
             .ForMember(dest => dest.DayTypeName, opt => opt.MapFrom(src => src.DayType.DayTypeName))
             .ForMember(dest => dest.AttendanceStatusName, opt => opt.MapFrom(src => src.AttendanceStatus.AttendanceStatusName));
+
+            CreateMap<LeaveType, LeaveTypeDto>().ReverseMap();
+            CreateMap<LeaveType, CreateLeaveTypeDto>().ReverseMap();
 
         }
     }

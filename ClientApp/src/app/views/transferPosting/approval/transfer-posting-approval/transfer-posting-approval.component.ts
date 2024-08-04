@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { EmpJobDetailsService } from 'src/app/views/employee/service/emp-job-details.service';
 import { EmpTransferPosting } from '../../model/emp-transfer-posting';
 import { EmpTransferPostingService } from '../../service/emp-transfer-posting.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-transfer-posting-approval',
@@ -21,6 +22,9 @@ export class TransferPostingApprovalComponent implements OnInit, OnDestroy {
   clickedButton: string = '';
   heading: string = '';
   modalOpened: boolean = false;
+  loginEmpId : number = 0;
+
+  @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
 
   constructor(
     private toastr: ToastrService,
@@ -43,8 +47,9 @@ export class TransferPostingApprovalComponent implements OnInit, OnDestroy {
       this.modalOpened = true;
     }, 0);
 
-    console.log("Id : ", this.id);
-    console.log("clickedButton : ", this.clickedButton);
+    const currentUserString = localStorage.getItem('currentUser');
+    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
+    this.loginEmpId = currentUserJSON.empId;
   }
 
   handleText(){
@@ -58,6 +63,7 @@ export class TransferPostingApprovalComponent implements OnInit, OnDestroy {
       if(res){
         this.empTransferPosting = res;
         this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
+        this.EmpTransferPostingForm?.form.patchValue(res);
       }
     });
   }
@@ -99,7 +105,51 @@ export class TransferPostingApprovalComponent implements OnInit, OnDestroy {
       this.renderer.addClass(modalElement, 'shake');
       setTimeout(() => {
         this.renderer.removeClass(modalElement, 'shake');
-      }, 500); // duration of the shake animation
+      }, 500);
+    }
+  }
+
+  onSubmit(transferApproveStatus?: boolean){
+    if(this.empTransferPosting.deptApproveStatus!=null){
+      this.toastr.warning('', `Already Department Status Updated`, {
+        positionClass: 'toast-top-right',
+      });
+    }
+    else{
+      if(transferApproveStatus == true || transferApproveStatus == false){
+        this.empTransferPosting.transferApproveStatus = transferApproveStatus;
+      }
+      else{
+        this.empTransferPosting.transferApproveStatus = this.empTransferPostingService.empTransferPosting.transferApproveStatus;
+      }
+      this.empTransferPosting.transferApproveById = this.loginEmpId;
+      this.empTransferPosting.transferApproveDate = new Date().toISOString().split('T')[0] as any as Date;
+      this.empTransferPosting.approveRemark = this.empTransferPostingService.empTransferPosting.approveRemark;
+      console.log("Full Response : ", this.empTransferPosting);
+      this.subscription = this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, this.empTransferPosting).subscribe((response: any) => {
+        if (response.success) {
+          if(transferApproveStatus == true){
+            this.toastr.success('', `Application Approved Successfull`, {
+              positionClass: 'toast-top-right',
+            });
+          }
+          else if(transferApproveStatus == false){
+            this.toastr.error('', `Application Rejected Successfull`, {
+              positionClass: 'toast-top-right',
+            });
+          }
+          else{
+            this.toastr.success('', `${response.message}`, {
+              positionClass: 'toast-top-right',
+            });
+          }
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+        }
+        this.closeModal();
+      });
     }
   }
 }

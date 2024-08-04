@@ -69,4 +69,8 @@ export class EmpTransferPostingService {
     return this.http.put(this.baseUrl + '/empTransferPosting/update-EmpTransferPosting/'+id, model);
   }
   
+  updateEmpTransferPostingStatus(id: number,model: any) {
+    return this.http.put(this.baseUrl + '/empTransferPosting/update-EmpTransferPostingStatus/'+id, model);
+  }
+  
 }

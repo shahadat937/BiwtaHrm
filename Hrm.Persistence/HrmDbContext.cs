@@ -799,6 +799,16 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.DeptReleaseTypeId);
             });
 
+            modelBuilder.Entity<LeaveRules>(entity =>
+            {
+                entity.HasKey(e => e.RuleId)
+                .HasName("[[PK_LeaveRule]]");
+
+                entity.HasOne(e => e.LeaveType)
+                .WithMany(lt => lt.LeaveRules)
+                .HasForeignKey(e => e.LeaveTypeId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -902,6 +912,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Attendance> Attendance { get; set; } = null!;
 
         public virtual DbSet<LeaveType> LeaveType { get; set; } = null!;
+        public virtual DbSet<LeaveRules> LeaveRules { get; set; } = null!;
 
     }
 }

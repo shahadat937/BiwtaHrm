@@ -67,5 +67,15 @@ namespace Hrm.Api.Controllers
 
             return Ok(response);
         }
+
+        [HttpPut]
+        [Route("update-LeaveType")]
+        public async Task<ActionResult<BaseCommandResponse>> updateLeaveType([FromBody] CreateLeaveTypeDto leaveTypeDto)
+        {
+            var command = new UpdateLeaveTypeCommand { leaveTypeDto = leaveTypeDto };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
     }
 }

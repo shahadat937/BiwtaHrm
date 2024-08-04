@@ -95,6 +95,7 @@ using Hrm.Application.DTOs.Attendance;
 using Hrm.Application.DTOs.ReleaseType;
 using Hrm.Application.DTOs.EmpTransferPosting;
 using Hrm.Application.DTOs.LeaveType;
+using Hrm.Application.DTOs.LeaveRules;
 
 
 
@@ -492,6 +493,11 @@ namespace Hrm.Application.Profiles
 
             CreateMap<LeaveType, LeaveTypeDto>().ReverseMap();
             CreateMap<LeaveType, CreateLeaveTypeDto>().ReverseMap();
+            CreateMap<LeaveRules, LeaveRulesDto>().ReverseMap();
+            CreateMap<LeaveRules, CreateLeaveRulesDto>().ReverseMap();
+
+            CreateMap<LeaveRules, LeaveRulesDto>()
+            .ForMember(dest => dest.LeaveTypeName, opt => opt.MapFrom(src => src.LeaveType.LeaveTypeName));
 
         }
     }

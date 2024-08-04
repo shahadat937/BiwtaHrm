@@ -106,6 +106,7 @@ namespace Hrm.Application
         public const string AttendanceStatus = HRMRoutePrefixBase + "attendanceStatus";
         public const string Attendance = HRMRoutePrefixBase + "attendance";
         public const string LeaveType = HRMRoutePrefixBase + "leaveType";
+        public const string LeaveRules = HRMRoutePrefixBase + "leaveRules";
 
 
     }

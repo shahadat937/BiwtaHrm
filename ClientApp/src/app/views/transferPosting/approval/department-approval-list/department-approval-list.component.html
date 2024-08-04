@@ -49,7 +49,7 @@
                 <td mat-cell *matCellDef="let element">
                     <button cButton color="warning" size="sm" *ngIf="element.deptApproveStatus == null">Pending</button>
                     <button cButton color="success" size="sm" *ngIf="element.deptApproveStatus == true">Approved</button>
-                    <button cButton color="danger" size="sm" *ngIf="element.deptApproveStatus == false">Reject</button>
+                    <button cButton color="danger" size="sm" *ngIf="element.deptApproveStatus == false">Rejected</button>
                 </td>
               </ng-container>
               
@@ -57,16 +57,16 @@
               <ng-container matColumnDef="Action">
                 <th mat-header-cell *matHeaderCellDef>Action</th>
                 <td mat-cell *matCellDef="let element">
-                    <button cTooltip="Approve" cTooltipPlacement="bottom" mat-icon-button class="text-success" *ngIf="element.deptApproveStatus == null">
+                    <button cTooltip="Approve" cTooltipPlacement="bottom" mat-icon-button class="text-success" *ngIf="element.deptApproveStatus == null" (click)="transferPostingDeptApproval(element.id, 'Approve')">
                         <mat-icon>check</mat-icon>
                     </button>
-                    <button cTooltip="Reject" cTooltipPlacement="bottom" mat-icon-button color="warn" *ngIf="element.deptApproveStatus == null">
+                    <button cTooltip="Reject" cTooltipPlacement="bottom" mat-icon-button color="warn" *ngIf="element.deptApproveStatus == null" (click)="transferPostingDeptApproval(element.id, 'Reject')">
                         <mat-icon>close</mat-icon>
                     </button>
                     <button cTooltip="View" cTooltipPlacement="bottom" mat-icon-button class="text-info" (click)="transferPostingInfo(element.id)">
                         <mat-icon>remove_red_eye</mat-icon>
                     </button>
-                    <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary" *ngIf="element.deptApproveStatus == true || element.deptApproveStatus == false">
+                    <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary" *ngIf="element.deptApproveStatus == true || element.deptApproveStatus == false" (click)="transferPostingDeptApproval(element.id, 'Edit')">
                         <mat-icon>edit</mat-icon>
                     </button>
                 </td>

@@ -25,6 +25,7 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     'ApprovalStatus',
     'DeptStatus',
     'JoiningStatus',
+    'ApplicationStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)

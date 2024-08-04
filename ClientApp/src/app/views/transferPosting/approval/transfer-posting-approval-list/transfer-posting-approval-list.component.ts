@@ -46,7 +46,7 @@ export class TransferPostingApprovalListComponent  implements OnInit, OnDestroy 
   ngOnInit(): void {
     this.getAllEmpTransferPostingApproveInfo();
   }
-
+  
   getAllEmpTransferPostingApproveInfo() {
     this.subscription = this.empTransferPostingService.getAllEmpTransferPostingApproveInfo().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
@@ -79,6 +79,12 @@ export class TransferPostingApprovalListComponent  implements OnInit, OnDestroy 
       clickedButton: clickedButton
     };
     const modalRef: BsModalRef = this.modalService.show(TransferPostingApprovalComponent, { initialState, backdrop: 'static' });
+
+    if (modalRef.onHide) {
+      modalRef.onHide.subscribe(() => {
+        this.getAllEmpTransferPostingApproveInfo();
+      });
+    }
   }
 
 }

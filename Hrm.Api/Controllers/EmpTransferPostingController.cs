@@ -35,6 +35,15 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpPut]
+        [Route("update-EmpTransferPostingStatus/{id}")]
+        public async Task<ActionResult<BaseCommandResponse>> UpdateStatus([FromBody] CreateEmpTransferPostingDto EmpTransferPosting)
+        {
+            var command = new UpdateEmpTransferPostingStatusCommand { UpdateEmpTransferPostingDto = EmpTransferPosting };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
         [HttpGet]
         [Route("get-allEmpTransferPosting")]
         public async Task<ActionResult> Get()

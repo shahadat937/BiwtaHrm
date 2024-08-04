@@ -83,9 +83,9 @@
                         <div class="mb-3">
                             <b>Transfer Approve Status : </b>
                             <button cButton color="warning" size="sm" *ngIf="empTransferPosting.transferApproveStatus == null">Pending</button> &nbsp;
-                            <button cButton color="info" size="sm" *ngIf="empTransferPosting.transferApproveStatus == null"><svg [cIcon]="icons.cilBell"></svg></button>
+                            <button cButton color="info" size="sm" *ngIf="empTransferPosting.transferApproveStatus == null && empTransferPosting.isDepartmentApprove == true"><svg [cIcon]="icons.cilBell"></svg></button>
                             <button cButton color="success" size="sm" *ngIf="empTransferPosting.transferApproveStatus == true">Approved</button>
-                            <button cButton color="danger" size="sm" *ngIf="empTransferPosting.transferApproveStatus == false">Reject</button>
+                            <button cButton color="danger" size="sm" *ngIf="empTransferPosting.transferApproveStatus == false">Rejected</button>
                         </div>
                         <div *ngIf="!empTransferPosting.isTransferApprove">
                             <c-alert class="text-center">Transfer Approve is not needed</c-alert>
@@ -114,7 +114,7 @@
                 </c-card>
                 
                 <!-- ********** Department Release Information *********** -->
-                <c-card class="mb-3 shadow">
+                <c-card class="mb-3 shadow" *ngIf="empTransferPosting.transferApproveStatus != false">
                     <c-card-header class="text-center">
                         <div>Department Release Information</div>
                     </c-card-header>
@@ -122,9 +122,9 @@
                         <div class="mb-3">
                             <b>Department Release Status : </b>
                             <button cButton color="warning" size="sm" *ngIf="empTransferPosting.deptApproveStatus == null">Pending</button>  &nbsp;
-                            <button cButton color="info" size="sm" *ngIf="empTransferPosting.deptApproveStatus == null && empTransferPosting.transferApproveStatus == true"><svg [cIcon]="icons.cilBell"></svg></button>
+                            <button cButton color="info" size="sm" *ngIf="empTransferPosting.deptApproveStatus == null && empTransferPosting.transferApproveStatus == true && empTransferPosting.isDepartmentApprove == true"><svg [cIcon]="icons.cilBell"></svg></button>
                             <button cButton color="success" size="sm" *ngIf="empTransferPosting.deptApproveStatus == true">Approved</button>
-                            <button cButton color="danger" size="sm" *ngIf="empTransferPosting.deptApproveStatus == false">Reject</button>
+                            <button cButton color="danger" size="sm" *ngIf="empTransferPosting.deptApproveStatus == false">Rejected</button>
                         </div>
                         <div *ngIf="!empTransferPosting.isDepartmentApprove">
                             <c-alert class="text-center">Department Release is not needed</c-alert>
@@ -165,7 +165,7 @@
                 </c-card>
                 
                 <!-- ********** Joining Information *********** -->
-                <c-card class="mb-3 shadow">
+                <c-card class="mb-3 shadow" *ngIf="empTransferPosting.deptApproveStatus != false">
                     <c-card-header class="text-center">
                         <div>Joining Information</div>
                     </c-card-header>
@@ -173,9 +173,9 @@
                         <div class="mb-3">
                             <b>Joining Reporting Status : </b>
                             <button cButton color="warning" size="sm" *ngIf="empTransferPosting.joiningStatus == null">Pending</button>  &nbsp;
-                            <button cButton color="info" size="sm" *ngIf="empTransferPosting.joiningStatus == null && empTransferPosting.deptApproveStatus == true"><svg [cIcon]="icons.cilBell"></svg></button>
+                            <button cButton color="info" size="sm" *ngIf="empTransferPosting.joiningStatus == null && empTransferPosting.deptApproveStatus == true && empTransferPosting.isJoining == true"><svg [cIcon]="icons.cilBell"></svg></button>
                             <button cButton color="success" size="sm" *ngIf="empTransferPosting.joiningStatus == true">Approved</button>
-                            <button cButton color="danger" size="sm" *ngIf="empTransferPosting.joiningStatus == false">Reject</button>
+                            <button cButton color="danger" size="sm" *ngIf="empTransferPosting.joiningStatus == false">Rejected</button>
                         </div>
                         <div *ngIf="!empTransferPosting.isJoining">
                             <c-alert class="text-center">Joining Information is not needed</c-alert>

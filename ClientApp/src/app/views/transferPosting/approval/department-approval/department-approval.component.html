@@ -1,1 +1,209 @@
-<p>department-approval works!</p>
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{heading}}</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                <form #EmpTransferPostingForm="ngForm" novalidate cForm class="needs-validation">
+                <!-- ********** Employee Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Employee Information</div>
+                    </c-card-header>
+                    <c-card-body cRow>
+                        <c-col [md]="6">
+                            <label><b>PMIS Id: </b>{{empTransferPosting.empIdCardNo}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Employee Name: </b>{{empTransferPosting.empName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Department: </b>{{empTransferPosting.departmentName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Designation: </b>{{empTransferPosting.designationName}}</label>
+                        </c-col>
+                        <c-col [md]="6" *ngIf="empTransferPosting.sectionName">
+                            <label><b>Section: </b>{{empTransferPosting.sectionName}}</label>
+                        </c-col>
+                    </c-card-body>
+                </c-card>
+
+                <!-- ********** Posting Order Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Posting Order Information</div>
+                    </c-card-header>
+                    <c-card-body cRow>
+                        <c-col [md]="6">
+                            <label><b>Office Order No: </b>{{empTransferPosting.officeOrderNo}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Office Order Date: </b>{{empTransferPosting.officeOrderDate}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Order By: </b>{{empTransferPosting.orderByEmpName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Department: </b>{{empTransferPosting.orderByDepartmentName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Designation: </b>{{empTransferPosting.orderByDesignationName}}</label>
+                        </c-col>
+                        <c-col [md]="6" *ngIf="empTransferPosting.orderBySectionName">
+                            <label><b>Section: </b>{{empTransferPosting.orderBySectionName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Transfer Department: </b>{{empTransferPosting.transferDepartmentName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Transfer Designation: </b>{{empTransferPosting.transferDesignationName}}</label>
+                        </c-col>
+                        <c-col [md]="6" *ngIf="empTransferPosting.transferSectionName">
+                            <label><b>Transfer Section: </b>{{empTransferPosting.transferSectionName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Release Type: </b>{{empTransferPosting.releaseTypeName}}</label>
+                        </c-col>
+                        <c-col [md]="6" *ngIf="empTransferPosting.remark">
+                            <label><b>Remark: </b>{{empTransferPosting.remark}}</label>
+                        </c-col>
+                    </c-card-body>
+                </c-card>
+
+                <!-- ********** Transfer Approve Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Transfer Approve Information</div>
+                    </c-card-header>
+                    <c-card-body cRow [gutter]="3">
+                        <div class="mb-3">
+                            <b>Transfer Approve Status : </b>
+                            <button cButton color="warning" size="sm" *ngIf="empTransferPosting.transferApproveStatus == null">Pending</button> &nbsp;
+                            <button cButton color="info" size="sm" *ngIf="empTransferPosting.transferApproveStatus == null"><svg [cIcon]="icons.cilBell"></svg></button>
+                            <button cButton color="success" size="sm" *ngIf="empTransferPosting.transferApproveStatus == true">Approved</button>
+                            <button cButton color="danger" size="sm" *ngIf="empTransferPosting.transferApproveStatus == false">Reject</button>
+                        </div>
+                        <div *ngIf="!empTransferPosting.isTransferApprove">
+                            <c-alert class="text-center">Transfer Approve is not needed</c-alert>
+                        </div>
+                        <div *ngIf="empTransferPosting.transferApproveStatus != null && empTransferPosting.isTransferApprove" cRow>
+                            <c-col [md]="6">
+                                <label><b>Approve Date: </b>{{empTransferPosting.transferApproveDate}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Approve By: </b>{{empTransferPosting.approveByEmpName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Department: </b>{{empTransferPosting.approveByDepartmentName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Designation: </b>{{empTransferPosting.approveByDesignationName}}</label>
+                            </c-col>
+                            <c-col [md]="6" *ngIf="empTransferPosting.approveBySectionName">
+                                <label><b>Section: </b>{{empTransferPosting.approveBySectionName}}</label>
+                            </c-col>
+                            <c-col [md]="6" *ngIf="empTransferPosting.approveRemark">
+                                <label><b>Remark: </b>{{empTransferPosting.approveRemark}}</label>
+                            </c-col>
+                        </div>
+                    </c-card-body>
+                </c-card>
+                
+                <!-- ********** Department Approve Information *********** -->
+                <div cRow [gutter]="3">
+                    <c-col [md]="4">
+                        <label cLabel for="deptReleaseTypeId">Release Type<span class="text-danger"></span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeId"
+                                name="deptReleaseTypeId" #deptReleaseTypeId="ngModel" cFormControl id="deptReleaseTypeId"
+                                aria-label="Default select example" cSelect>
+                                <option [ngValue]="null">Select Release Type</option>
+    
+                                @for(releaseType of releaseTypes; track releaseType.id;let index=$index) {
+                                <option [value]="releaseType.id">
+                                    {{ releaseType.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!deptReleaseTypeId.valid && deptReleaseTypeId.touched){
+                            <div class="text-left text-danger">Release Type is required</div>
+                            }
+                        </div>
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="deptReleaseDate">Release Date<span class="text-danger"></span></label>
+                        <input [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseDate"
+                            name="deptReleaseDate" #deptReleaseDate="ngModel" cFormControl id="deptReleaseDate"
+                            type="date" />
+                        @if(!deptReleaseDate.valid&&deptReleaseDate.touched){
+                        <div class="text-left text-danger">Release Date is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="referenceNo">Reference No<span class="text-danger"></span></label>
+                        <input [(ngModel)]="empTransferPostingService.empTransferPosting.referenceNo"
+                            name="referenceNo" #referenceNo="ngModel" cFormControl id="referenceNo"
+                            type="text" placeholder="Enter Reference No"/>
+                        @if(!referenceNo.valid&&referenceNo.touched){
+                        <div class="text-left text-danger">Reference No is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="deptClearance">Departmental Clearance</label>
+                        <select [(ngModel)]="empTransferPostingService.empTransferPosting.deptClearance"
+                        name="deptClearance" #deptClearance="ngModel"
+                        cSelect id="deptClearance">
+                        <option value="null">Select</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                        </select>
+                    </c-col>
+                    
+                    <c-col [md]="4" *ngIf="clickedButton == 'Edit'">
+                        <label cLabel for="deptApproveStatus">Department Approve Status</label>
+                        <select [(ngModel)]="empTransferPostingService.empTransferPosting.deptApproveStatus"
+                        name="deptApproveStatus" #deptApproveStatus="ngModel"
+                        cSelect id="deptApproveStatus">
+                        <option value="true">Approve</option>
+                        <option value="false">Reject</option>
+                        </select>
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="deptRemark">Remark<span class="text-danger"></span></label>
+                        <input [(ngModel)]="empTransferPostingService.empTransferPosting.deptRemark" name="deptRemark"
+                            #deptRemark="ngModel" cFormControl id="deptRemark" placeholder="Enter Remark" type="text" />
+                        @if(!deptRemark.valid&&deptRemark.touched){
+                        <div class="text-left text-danger">Remark is required</div>
+                        }
+                    </c-col>
+                </div>
+                
+                
+            </form>
+            </div>
+            <div class="modal-footer">
+                <button mat-raised-button class="bg-secondary text-light" (click)="closeModal()">
+                    <mat-icon>cancel</mat-icon> Close
+                </button>
+                <button mat-raised-button class="bg-success text-light" (click)="onSubmit(true)" *ngIf="clickedButton == 'Approve'">
+                    <mat-icon>check</mat-icon> Approve
+                </button>
+                <button mat-raised-button color="warn" (click)="onSubmit(false)" *ngIf="clickedButton == 'Reject'">
+                    <mat-icon>close</mat-icon> Reject
+                </button>
+                <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="clickedButton == 'Edit'">
+                    <mat-icon>update</mat-icon> Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

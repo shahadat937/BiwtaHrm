@@ -158,7 +158,7 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
             var index = this.tableData.findIndex((item)=> item.siteVisitId === siteVisitId);
             delete this.tableData[index];
           } else {
-            this.toastr.error('', `${response.message}`, {
+            this.toastr.warning('', `${response.message}`, {
               positionClass: 'toast-top-right'
             })
           }

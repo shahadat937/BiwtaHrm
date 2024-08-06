@@ -16,5 +16,6 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
 
         public virtual ICollection<LeaveRules> LeaveRules { get; } = new List<LeaveRules>();
+        public virtual ICollection<LeaveRequest> LeaveRequests {get; } = new List<LeaveRequest>();
     }
 }

@@ -18,6 +18,7 @@ using Hrm.Application.DTOs.TrainingType;
 using Hrm.Application.DTOs.Union;
 using Hrm.Application.DTOs.Upazila;
 using Hrm.Application.DTOs.Ward;
+using Hrm.Application.DTOs.LeaveRequest;
 using Hrm.Domain;
 using System;
 using System.Collections.Generic;
@@ -495,9 +496,17 @@ namespace Hrm.Application.Profiles
             CreateMap<LeaveType, CreateLeaveTypeDto>().ReverseMap();
             CreateMap<LeaveRules, LeaveRulesDto>().ReverseMap();
             CreateMap<LeaveRules, CreateLeaveRulesDto>().ReverseMap();
+            CreateMap<LeaveRequest, LeaveRequestDto>().ReverseMap();
+            CreateMap<LeaveRequest, CreateLeaveRequestDto>().ReverseMap();
 
             CreateMap<LeaveRules, LeaveRulesDto>()
             .ForMember(dest => dest.LeaveTypeName, opt => opt.MapFrom(src => src.LeaveType.LeaveTypeName));
+
+            CreateMap<LeaveRequest, LeaveRequestDto>()
+             .ForMember(dest => dest.EmpFirstName, opt => opt.MapFrom(src => src.Employee.FirstName))
+             .ForMember(dest => dest.EmpLastName, opt => opt.MapFrom(src => src.Employee.LastName))
+             .ForMember(dest => dest.LeaveTypeName, opt => opt.MapFrom(src => src.LeaveType.LeaveTypeName))
+             .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.CountryName));
 
         }
     }

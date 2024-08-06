@@ -16,12 +16,15 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
 {
     public class CreateEmpTransferPostingRequestHandler : IRequestHandler<CreateEmpTransferPostingRequest, BaseCommandResponse>
     {
+        private readonly IHrmRepository<EmpJobDetail> _EmpEmpJobDetailsRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CreateEmpTransferPostingRequestHandler(IUnitOfWork unitOfWork, IMapper mapper)
+
+        public CreateEmpTransferPostingRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<EmpJobDetail> EmpEmpJobDetailsRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _EmpEmpJobDetailsRepository = EmpEmpJobDetailsRepository;
         }
         public async Task<BaseCommandResponse> Handle(CreateEmpTransferPostingRequest request, CancellationToken cancellationToken)
         {
@@ -29,6 +32,9 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
 
             var empTransferPostings = _mapper.Map<EmpTransferPosting>(request.EmpTransferPostingDto);
 
+
+            var empJobDetailsInfo = await _EmpEmpJobDetailsRepository.FindOneAsync(x => x.EmpId == request.EmpTransferPostingDto.EmpId);
+            var empJobDetails = await _unitOfWork.Repository<EmpTransferPosting>().Get(empJobDetailsInfo.Id);
 
             if (request.EmpTransferPostingDto.TransferApproveDate != null || request.EmpTransferPostingDto.IsTransferApprove == false)
             {
@@ -42,13 +48,21 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
 
             if ((request.EmpTransferPostingDto.JoiningStatus == true || request.EmpTransferPostingDto.JoiningDate != null) || request.EmpTransferPostingDto.IsJoining == false)
             {
-                empTransferPostings.ApplicationStatus = true;
                 empTransferPostings.JoiningStatus = true;
             }
 
-            if (request.EmpTransferPostingDto.TransferApproveStatus == false || request.EmpTransferPostingDto.DeptApproveStatus == false || (request.EmpTransferPostingDto.JoiningStatus == false && request.EmpTransferPostingDto.JoiningDate == null))
+            if (empTransferPostings.TransferApproveStatus == true && empTransferPostings.DeptApproveStatus == true && empTransferPostings.JoiningStatus == true)
+            {
+                empTransferPostings.ApplicationStatus = true;
+
+            }
+            else if (request.EmpTransferPostingDto.TransferApproveStatus == false || request.EmpTransferPostingDto.DeptApproveStatus == false || (request.EmpTransferPostingDto.JoiningStatus == false && request.EmpTransferPostingDto.JoiningDate == null))
             {
                 empTransferPostings.ApplicationStatus = false;
+            }
+            else
+            {
+                empTransferPostings.ApplicationStatus = null;
             }
 
 

@@ -9,6 +9,7 @@ import { EmpTransferPostingService } from '../service/emp-transfer-posting.servi
 import { cilArrowLeft } from '@coreui/icons';
 import { ActivatedRoute } from '@angular/router';
 import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
+import { EmpTransferPosting } from '../model/emp-transfer-posting';
 
 @Component({
   selector: 'app-transfer-posting-application',
@@ -31,6 +32,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   isValidOrderByEmp: boolean = false;
   isApproveByEmp: boolean = false;
   loginEmpId: number = 0;
+  empJobDetailsId: number = 0;
+  empTransferPosting: EmpTransferPosting = new EmpTransferPosting;
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
 
   constructor(
@@ -69,6 +72,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     });
     this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if (res) {
+        this.empTransferPosting = res;
+        this.getEmpJobDetailsInfo(res.empId, res.transferDepartmentId);
         if(res.transferApproveStatus == true){
           this.empTransferPostingService.empTransferPosting.provideTransferApproveInfo = true;
           this.empTransferPostingService.empTransferPosting.transferApproveStatus = true;
@@ -103,8 +108,6 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         if(res.orderByIdCardNo){
           this.getOrderByInfoByIdCardNo(res.orderByIdCardNo);
         }
-        this.getTransferDesignationByDepartment(res.transferDepartmentId);
-        this.empTransferPostingService.empTransferPosting.transferDesignationId = res.transferDesignationId;
       }
       else {
         this.headerText = 'Add New Transfer and Posting Order';
@@ -265,6 +268,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   getEmpJobDetailsByEmpId(id: number){
     this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
       if(res){
+        this.empJobDetailsId = res.id;
         this.empTransferPostingService.empTransferPosting.sectionName = res.sectionName;
         this.empTransferPostingService.empTransferPosting.departmentName = res.departmentName;
         this.empTransferPostingService.empTransferPosting.designationName = res.designationName;
@@ -272,6 +276,15 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.empTransferPostingService.empTransferPosting.currentDesignationId = res.designationId;
         this.empTransferPostingService.empTransferPosting.currentSectionId = res.sectionId;
         this.empTransferPostingService.empTransferPosting.currentOfficeId = res.officeId;
+      }
+    })
+  }
+
+  getEmpJobDetailsInfo(id: number | null, departmentId : number | null){
+    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+      if(res){
+        this.empJobDetailsId = res.id;
+        this.getTransferDesignationByDepartment(departmentId, res.id);
       }
     })
   }
@@ -406,10 +419,20 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       this.departments = res;
     });
   }
-  getTransferDesignationByDepartment(departmentId: number | null ){
+  
+  getTransferDesignationByDepartment(departmentId: number | null, empJobDetailsId: number) {
     this.designations = [];
     this.empTransferPostingService.empTransferPosting.transferDesignationId = null;
-    this.empTransferPostingService.getDesignationByDepartment(departmentId).subscribe((res) => {
+    this.empJobDetailsService.getDesignationByDepartmentId(departmentId, empJobDetailsId).subscribe((res) => {
+      this.designations = res;
+    });
+    this.empTransferPostingService.empTransferPosting.transferDesignationId = this.empTransferPosting.transferDesignationId;
+  }
+  
+  getTransferDesignationByDepartmentOnChange(departmentId: number | null, empJobDetailsId: number) {
+    this.designations = [];
+    this.empTransferPostingService.empTransferPosting.transferDesignationId = null;
+    this.empJobDetailsService.getDesignationByDepartmentId(departmentId, empJobDetailsId).subscribe((res) => {
       this.designations = res;
     });
   }

@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
 
         public async Task<object> Handle(GetEmpTransferPostingJoiningInfoRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<EmpTransferPosting> EmpTransferPostings = _EmpTransferPostingRepository.Where(x => x.DeptApproveStatus == true && x.IsJoining == true)
+            IQueryable<EmpTransferPosting> EmpTransferPostings = _EmpTransferPostingRepository.Where(x => (x.DeptApproveStatus == true || x.IsDepartmentApprove == false) && (x.TransferApproveStatus == true || x.IsTransferApprove == false) && x.IsJoining == true)
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.ApplicationBy)
                 .Include(x => x.OrderBy)

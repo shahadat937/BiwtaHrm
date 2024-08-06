@@ -18,11 +18,11 @@ export class EmpJobDetailsService {
     this.empJobDetails = new EmpJobDetailsModule();
   }
   
-  findByEmpId(id: number) {
+  findByEmpId(id: number | null) {
     return this.http.get<EmpJobDetailsModule>(this.baseUrl + '/empJobDetail/get-EmpJobDetailByEmpId/' + id);
   }
   
-  getDesignationByDepartmentId(departmentId: number, empJobDetailId: number,) {
+  getDesignationByDepartmentId(departmentId: number | null, empJobDetailId: number,) {
     return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationByDepartment?&departmentId=' + departmentId + '&empJobDetailId='+empJobDetailId);
   }
   

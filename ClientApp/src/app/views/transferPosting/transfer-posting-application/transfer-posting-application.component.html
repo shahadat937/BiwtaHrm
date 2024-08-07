@@ -162,7 +162,7 @@
                         <div class="input-wrapper">
                             <select [(ngModel)]="empTransferPostingService.empTransferPosting.transferDepartmentId"
                                 name="transferDepartmentId" #transferDepartmentId="ngModel" required
-                                (change)="getTransferDesignationByDepartment(empTransferPostingService.empTransferPosting.transferDepartmentId)"
+                                (change)="getTransferDesignationByDepartmentOnChange(empTransferPostingService.empTransferPosting.transferDepartmentId, empJobDetailsId)"
                                 cFormControl id="transferDepartmentId" aria-label="Default select example" cSelect>
                                 <option [ngValue]="null">Select Transfer Department</option>
 

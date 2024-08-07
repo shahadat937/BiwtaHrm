@@ -34,7 +34,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
 
 
             var empJobDetailsInfo = await _EmpEmpJobDetailsRepository.FindOneAsync(x => x.EmpId == request.EmpTransferPostingDto.EmpId);
-            var empJobDetails = await _unitOfWork.Repository<EmpTransferPosting>().Get(empJobDetailsInfo.Id);
+            var empJobDetails = await _unitOfWork.Repository<EmpJobDetail>().Get(empJobDetailsInfo.Id);
 
             if (request.EmpTransferPostingDto.TransferApproveDate != null || request.EmpTransferPostingDto.IsTransferApprove == false)
             {
@@ -55,10 +55,40 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
             {
                 empTransferPostings.ApplicationStatus = true;
 
+                //************ Update EmpJobDetails Info *************
+                if (empTransferPostings.TransferDepartmentId != null)
+                {
+                    empJobDetails.DepartmentId = empTransferPostings.TransferDepartmentId;
+                }
+                if (empTransferPostings.TransferDesignationId != null)
+                {
+                    empJobDetails.DesignationId = empTransferPostings.TransferDesignationId;
+                }
+                if (empTransferPostings.TransferSectionId != null)
+                {
+                    empJobDetails.SectionId = empTransferPostings.TransferSectionId;
+                }
+                await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
+
             }
             else if (request.EmpTransferPostingDto.TransferApproveStatus == false || request.EmpTransferPostingDto.DeptApproveStatus == false || (request.EmpTransferPostingDto.JoiningStatus == false && request.EmpTransferPostingDto.JoiningDate == null))
             {
                 empTransferPostings.ApplicationStatus = false;
+
+                //************ Revert EmpJobDetails Info *************
+                if (empJobDetails.DepartmentId != empTransferPostings.CurrentDepartmentId)
+                {
+                    empJobDetails.DepartmentId = empTransferPostings.CurrentDepartmentId;
+                }
+                if (empJobDetails.DesignationId != empTransferPostings.CurrentDesignationId)
+                {
+                    empJobDetails.DesignationId = empTransferPostings.CurrentDesignationId;
+                }
+                if (empJobDetails.SectionId != empTransferPostings.CurrentSectionId)
+                {
+                    empJobDetails.SectionId = empTransferPostings.CurrentSectionId;
+                }
+                await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
             }
             else
             {

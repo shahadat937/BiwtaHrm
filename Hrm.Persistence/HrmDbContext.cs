@@ -809,6 +809,23 @@ namespace Hrm.Persistence
                 .HasForeignKey(e => e.LeaveTypeId);
             });
 
+            modelBuilder.Entity<LeaveRequest>(entity => {
+                entity.HasKey(e => e.LeaveRequestId)
+                    .HasName("[[Pk_LeaveRequest]]");
+
+                entity.HasOne(e => e.Employee)
+                    .WithMany(em => em.LeaveRequests)
+                    .HasForeignKey(e => e.EmpId);
+                
+                entity.HasOne(e => e.Country)
+                    .WithMany(c => c.LeaveRequests)
+                    .HasForeignKey(e=> e.CountryId);
+                
+                entity.HasOne(e => e.LeaveType)
+                    .WithMany(lt => lt.LeaveRequests)
+                    .HasForeignKey(e => e.LeaveTypeId);        
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -913,6 +930,7 @@ namespace Hrm.Persistence
 
         public virtual DbSet<LeaveType> LeaveType { get; set; } = null!;
         public virtual DbSet<LeaveRules> LeaveRules { get; set; } = null!;
+        public virtual DbSet<LeaveRequest> LeaveRequest { get; set; } = null!;
 
     }
 }

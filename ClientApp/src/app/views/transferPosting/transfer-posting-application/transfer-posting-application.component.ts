@@ -364,9 +364,17 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     }
     else{
       this.empTransferPostingService.empTransferPosting.transferApproveById = this.loginEmpId;
-      this.getEmployeeByEmpId();
+      if(this.empTransferPosting.transferApproveById){
+        this.empTransferPostingService.empTransferPosting.approveByEmpName = this.empTransferPosting.approveByEmpName;
+        this.empTransferPostingService.empTransferPosting.transferApproveById = this.empTransferPosting.transferApproveById;
+        this.empTransferPostingService.empTransferPosting.approveByIdCardNo = this.empTransferPosting.approveByIdCardNo;
+        this.empTransferPostingService.empTransferPosting.transferApproveStatus = this.empTransferPosting.transferApproveStatus;
+        this.empTransferPostingService.empTransferPosting.transferApproveDate = null;
+        this.empTransferPostingService.empTransferPosting.approveRemark = this.empTransferPosting.approveRemark;
+        this.isApproveByEmp = true;
+        this.getApproveByInfoByIdCardNo(this.empTransferPosting.approveByIdCardNo || '');
+      }
     }
-    console.log(this.empTransferPostingService.empTransferPosting.transferApproveById)
   }
 
   isDeptApproveNeed(status: boolean){
@@ -386,7 +394,14 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     }
     else {
       this.empTransferPostingService.empTransferPosting.deptReleaseById = this.loginEmpId;
-      this.getEmployeeByEmpId();
+      if(this.empTransferPosting.deptReleaseById){
+        this.empTransferPostingService.empTransferPosting.deptReleaseTypeId = this.empTransferPosting.deptReleaseTypeId;
+        this.empTransferPostingService.empTransferPosting.deptReleaseDate = this.empTransferPosting.deptReleaseDate;
+        this.empTransferPostingService.empTransferPosting.deptClearance = this.empTransferPosting.deptClearance;
+        this.empTransferPostingService.empTransferPosting.referenceNo = this.empTransferPosting.referenceNo;
+        this.empTransferPostingService.empTransferPosting.deptRemark = this.empTransferPosting.deptRemark;
+        this.empTransferPostingService.empTransferPosting.deptReleaseById = this.empTransferPosting.deptReleaseById;
+      }
     }
   }
 
@@ -404,7 +419,11 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     }
     else {
       this.empTransferPostingService.empTransferPosting.joiningReportingById = this.loginEmpId;
-      this.getEmployeeByEmpId();
+      if(this.empTransferPosting.joiningReportingById){
+        this.empTransferPostingService.empTransferPosting.joiningDate = this.empTransferPosting.joiningDate;
+        this.empTransferPostingService.empTransferPosting.joiningRemark = this.empTransferPosting.joiningRemark;
+        this.empTransferPostingService.empTransferPosting.joiningReportingById = this.empTransferPosting.joiningReportingById;
+      }
     }
   }
 

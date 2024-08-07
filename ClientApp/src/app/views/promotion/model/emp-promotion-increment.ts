@@ -1,0 +1,36 @@
+export class EmpPromotionIncrement {
+    id : number | null = null;
+    empId : number | null = null;
+    empName : string | null = null;
+    empIdCardNo : string | null = null;
+    currentDepartmentId : number | null = null;
+    currentDesignationId : number | null = null;
+    currentGradeId : number | null = null;
+    currentScaleId : number | null = null;
+    currentDepartmentName : string | null = null;
+    currentDesignationName : string | null = null;
+    currentSectionName : string | null = null;
+    currentGradeName : string | null = null;
+    currentScaleName : string | null = null;
+    currentBasicPay : number | null = null;
+    updateDesignationName : string | null = null;
+    updateGradeName : string | null = null;
+    updateScaleName : string | null = null;
+    updateBasicPay : number | null = null;
+    promotionIncrementType : string | null = null;
+    orderById : number | null = null;
+    orderDate : Date | null = null;
+    effectiveDate : Date | null = null;
+    applicationById : number | null = null;
+    approveById : number | null = null;
+    approveByName : string | null = null;
+    approveByDepartmentName : string | null = null;
+    approveByDesignationName : string | null = null;
+    approveDate : Date | null = null;
+    approveStatus : boolean | null = null;
+    approveRemark : string | null = null;
+    applicationStatus : boolean | null = null;
+    remark : string | null = null;
+    menuPosition : number | null = null;
+    isActive : boolean = true;
+}

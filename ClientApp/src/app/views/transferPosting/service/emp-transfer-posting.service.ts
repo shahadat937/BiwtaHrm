@@ -49,6 +49,10 @@ export class EmpTransferPostingService {
   findById(id: number) {
     return this.http.get<EmpTransferPosting>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingById/' + id);
   }
+  
+  findByEmpId(id: number) {
+    return this.http.get<EmpTransferPosting>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingByEmpId/' + id);
+  }
 
   getEmpBasicInfoByIdCardNo(id: string){
     return this.http.get<BasicInfoModule>(this.baseUrl + '/empBasicInfo/get-empBasicInfoByIdCardNo/' + id);

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpTransferPostings.Requests.Queries
 {
-    public class GetEmpTransferPostingByEmpIdRequest : IRequest<object>
+    public class GetEmpTransferPostingByIdRequest : IRequest<object>
     {
         public int Id { get; set; }
     }

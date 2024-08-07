@@ -13,20 +13,20 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
 {
-    public class GetEmpTransferPostingJoiningInfoRequestHandler : IRequestHandler<GetEmpTransferPostingJoiningInfoRequest, object>
+    public class GetEmpTransferPostingByIdRequestHandler : IRequestHandler<GetEmpTransferPostingByIdRequest, object>
     {
 
-        private readonly IHrmRepository<EmpTransferPosting> _EmpTransferPostingRepository;
+        private readonly IHrmRepository<Hrm.Domain.EmpTransferPosting> _EmpTransferPostingRepository;
         private readonly IMapper _mapper;
-        public GetEmpTransferPostingJoiningInfoRequestHandler(IHrmRepository<Hrm.Domain.EmpTransferPosting> EmpTransferPostingRepository, IMapper mapper)
+        public GetEmpTransferPostingByIdRequestHandler(IHrmRepository<Hrm.Domain.EmpTransferPosting> EmpTransferPostingRepository, IMapper mapper)
         {
             _EmpTransferPostingRepository = EmpTransferPostingRepository;
             _mapper = mapper;
         }
 
-        public async Task<object> Handle(GetEmpTransferPostingJoiningInfoRequest request, CancellationToken cancellationToken)
+        public async Task<object> Handle(GetEmpTransferPostingByIdRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<EmpTransferPosting> EmpTransferPostings = _EmpTransferPostingRepository.Where(x => (x.DeptApproveStatus == true || x.IsDepartmentApprove == false) && (x.TransferApproveStatus == true || x.IsTransferApprove == false) && x.IsJoining == true)
+            var EmpTransferPostings = await _EmpTransferPostingRepository.Where(x=> x.Id == request.Id)
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.ApplicationBy)
                 .Include(x => x.OrderBy)
@@ -42,13 +42,18 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
                 .Include(x => x.CurrentSection)
                 .Include(x => x.TransferSection)
                 .Include(x => x.ReleaseType)
-                .Include(x => x.DeptReleaseType);
+                .Include(x => x.DeptReleaseType)
+                .FirstOrDefaultAsync(cancellationToken); ;
 
-            EmpTransferPostings = EmpTransferPostings.OrderBy(x => x.JoiningStatus);
+            if (EmpTransferPostings == null)
+            {
+                return null;
+            }
 
-            var EmpTransferPostingDtos = _mapper.Map<List<EmpTransferPostingDto>>(EmpTransferPostings);
+            var EmpTransferPostingsDto = _mapper.Map<EmpTransferPostingDto>(EmpTransferPostings);
 
-            return EmpTransferPostingDtos;
+            return EmpTransferPostingsDto;
         }
     }
 }
+

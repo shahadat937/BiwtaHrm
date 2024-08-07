@@ -57,6 +57,14 @@ namespace Hrm.Api.Controllers
         [Route("get-EmpTransferPostingById/{id}")]
         public async Task<ActionResult> GetById(int id)
         {
+            var EmpTransferPosting = await _mediator.Send(new GetEmpTransferPostingByIdRequest { Id = id });
+            return Ok(EmpTransferPosting);
+        }
+
+        [HttpGet]
+        [Route("get-EmpTransferPostingByEmpId/{id}")]
+        public async Task<ActionResult> GetByEmpId(int id)
+        {
             var EmpTransferPosting = await _mediator.Send(new GetEmpTransferPostingByEmpIdRequest { Id = id });
             return Ok(EmpTransferPosting);
         }

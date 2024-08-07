@@ -2,7 +2,6 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.EmpTransferPosting;
 using Hrm.Application.Features.EmpTransferPostings.Requests.Queries;
-using Hrm.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,7 +25,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
 
         public async Task<object> Handle(GetEmpTransferPostingByEmpIdRequest request, CancellationToken cancellationToken)
         {
-            var EmpTransferPostings = await _EmpTransferPostingRepository.Where(x=> x.Id == request.Id)
+            var EmpTransferPostings = await _EmpTransferPostingRepository.Where(x => x.EmpId == request.Id && x.ApplicationStatus == null)
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.ApplicationBy)
                 .Include(x => x.OrderBy)
@@ -56,4 +55,3 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
         }
     }
 }
-

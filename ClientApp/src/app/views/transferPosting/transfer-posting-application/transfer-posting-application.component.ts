@@ -251,10 +251,21 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   getEmpInfoByIdCardNo(idCardNo: string) {
     this.subscription = this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
       if (res) {
-        this.isValidEmp = true;
-        this.empTransferPostingService.empTransferPosting.empName = res.firstName + " " + res.lastName;
-        this.empTransferPostingService.empTransferPosting.empId = res.id;
-        this.getEmpJobDetailsByEmpId(res.id);
+        this.subscription = this.empTransferPostingService.findByEmpId(res.id).subscribe((response) => {
+          if(response){
+            console.log(response)
+            this.isValidEmp = false;
+            this.toastr.warning('', 'Employee have pending Application', {
+                    positionClass: 'toast-top-right',
+            });
+          }
+          else {
+            this.isValidEmp = true;
+            this.empTransferPostingService.empTransferPosting.empName = res.firstName + " " + res.lastName;
+            this.empTransferPostingService.empTransferPosting.empId = res.id;
+            this.getEmpJobDetailsByEmpId(res.id);
+          }
+        });
       }
       else {
         this.isValidEmp = false;

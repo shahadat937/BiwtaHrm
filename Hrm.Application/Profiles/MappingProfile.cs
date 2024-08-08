@@ -97,6 +97,7 @@ using Hrm.Application.DTOs.ReleaseType;
 using Hrm.Application.DTOs.EmpTransferPosting;
 using Hrm.Application.DTOs.LeaveType;
 using Hrm.Application.DTOs.LeaveRules;
+using Hrm.Application.DTOs.EmpPromotionIncrement;
 
 
 
@@ -448,6 +449,10 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.JoiningReportingByIdCardNo, opt => opt.MapFrom(src => src.JoiningReportingBy.IdCardNo))
             .ForMember(dest => dest.JoiningReportingByEmpName, opt => opt.MapFrom(src => src.JoiningReportingBy.FirstName + " " + src.JoiningReportingBy.LastName))
             .ForMember(dest => dest.DeptReleaseTypeName, opt => opt.MapFrom(src => src.DeptReleaseType.ReleaseTypeName));
+
+
+            CreateMap<EmpPromotionIncrement, EmpPromotionIncrementDto>().ReverseMap();
+            CreateMap<EmpPromotionIncrement, CreateEmpPromotionIncrementDto>().ReverseMap();
 
 
             // Site Visit Dto Mapping Created By Joy

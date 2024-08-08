@@ -931,6 +931,7 @@ namespace Hrm.Persistence
         public virtual DbSet<LeaveType> LeaveType { get; set; } = null!;
         public virtual DbSet<LeaveRules> LeaveRules { get; set; } = null!;
         public virtual DbSet<LeaveRequest> LeaveRequest { get; set; } = null!;
+        public virtual DbSet<EmpPromotionIncrement> EmpPromotionIncrement { get; set; } = null!;
 
     }
 }

@@ -24,6 +24,7 @@ namespace Hrm.Application.DTOs.EmpPromotionIncrement
         public DateOnly? OrderDate { get; set; }
         public DateOnly? EffectiveDate { get; set; }
         public int? ApplicationById { get; set; }
+        public bool? IsApproval { get; set; }
         public int? ApproveById { get; set; }
         public DateOnly? ApproveDate { get; set; }
         public bool? ApproveStatus { get; set; }

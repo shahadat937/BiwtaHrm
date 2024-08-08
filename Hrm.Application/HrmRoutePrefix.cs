@@ -97,6 +97,7 @@ namespace Hrm.Application
         public const string EmpNomineeInfo = HRMRoutePrefixBase + "empNomineeInfo";
 
         public const string EmpTransferPosting = HRMRoutePrefixBase + "empTransferPosting";
+        public const string EmpPromotionIncrement = HRMRoutePrefixBase + "empPromotionIncrement";
 
         public const string SiteVisit = HRMRoutePrefixBase + "siteVisit";
         public const string Workday = HRMRoutePrefixBase + "workday";

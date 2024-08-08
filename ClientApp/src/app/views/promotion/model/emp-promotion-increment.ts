@@ -1,5 +1,5 @@
 export class EmpPromotionIncrement {
-    id : number | null = null;
+    id : number = 0;
     empId : number | null = null;
     empName : string | null = null;
     empIdCardNo : string | null = null;
@@ -13,13 +13,18 @@ export class EmpPromotionIncrement {
     currentGradeName : string | null = null;
     currentScaleName : string | null = null;
     currentBasicPay : number | null = null;
+    updateDesignationId : number | null = null;
+    updateGradeId : number | null = null;
+    updateScaleId : number | null = null;
     updateDesignationName : string | null = null;
     updateGradeName : string | null = null;
     updateScaleName : string | null = null;
     updateBasicPay : number | null = null;
-    promotionIncrementType : string | null = null;
+    promotionIncrementType : string = 'Increment & Promotion';
     orderById : number | null = null;
     orderDate : Date | null = null;
+    isApproval  : boolean = true;
+    provideApprovalInfo : boolean = false;
     effectiveDate : Date | null = null;
     applicationById : number | null = null;
     approveById : number | null = null;

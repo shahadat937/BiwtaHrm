@@ -51,9 +51,9 @@ public class LeaveRequestController:Controller
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     [Route("get-LeaveAmount")]
-    public async Task<ActionResult> GetLeaveAmount([FromQuery] int EmpId, [FromQuery] int LeaveTypeId)
+    public async Task<ActionResult> GetLeaveAmount([FromQuery] LeaveAmountRequestDto requestDto)
     {
-        var command = new GetLeaveAmountRequest { EmpId = EmpId, LeaveTypeId = LeaveTypeId };
+        var command = new GetLeaveAmountRequest {leaveAmountRequestDto = requestDto};
         var response = await _mediator.Send(command);
         return Ok(response);
     }

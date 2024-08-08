@@ -5,6 +5,7 @@ import { cilTrash, cilPlus, cilX } from '@coreui/icons'
 import { get } from 'lodash-es';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { AuthService } from 'src/app/core/service/auth.service';
 
 @Component({
   selector: 'app-workday-setting',
@@ -25,7 +26,8 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
   constructor(
     private workdayService: WorkdayService,
     private toastr : ToastrService,
-    private confirmService: ConfirmService
+    private confirmService: ConfirmService,
+    private authService: AuthService        
   ) {
     this.selectedYear = 0;
     this.selectedDay = null;

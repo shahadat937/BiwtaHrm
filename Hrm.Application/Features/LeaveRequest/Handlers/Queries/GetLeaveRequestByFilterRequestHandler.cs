@@ -1,0 +1,67 @@
+﻿using AutoMapper;
+using Hrm.Application.Contracts.Persistence;
+using Hrm.Application.Features.LeaveRequest.Requests.Queries;
+using Hrm.Domain;
+using Hrm.Application.Exceptions;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Hrm.Application.DTOs.LeaveRequest;
+
+namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
+{
+    public class GetLeaveRequestByFilterRequestHandler: IRequestHandler<GetLeaveRequestByFilterRequest, object>
+    {
+        private readonly IHrmRepository<Hrm.Domain.LeaveRequest> _LeaveRequestRepository;
+        private readonly IMapper _mapper;
+
+        public GetLeaveRequestByFilterRequestHandler(IHrmRepository<Domain.LeaveRequest> leaveRequestRepository, IMapper mapper)
+        {
+            _LeaveRequestRepository = leaveRequestRepository;
+            _mapper = mapper;
+        }
+
+        public async Task<object> Handle(GetLeaveRequestByFilterRequest request, CancellationToken cancellationToken)
+        {
+            IQueryable<Hrm.Domain.LeaveRequest> leaveRequesQuery = _LeaveRequestRepository.Where(x => true)
+                .Include(l => l.Employee)
+                .Include(l => l.Country)
+                .Include(l => l.LeaveType)
+                .AsQueryable();
+
+            if(request.filterDto==null)
+            {
+                throw new BadRequestException("Query String should be given");
+            }
+
+            if(request.filterDto.LeaveTypeId.HasValue)
+            {
+                leaveRequesQuery = leaveRequesQuery.Where(x=> x.LeaveTypeId == request.filterDto.LeaveTypeId);
+            }
+
+            if(request.filterDto.LeaveRequestId.HasValue)
+            {
+                leaveRequesQuery = leaveRequesQuery.Where(x=> x.LeaveRequestId == request.filterDto.LeaveRequestId);
+            }
+
+            if(request.filterDto.FromDate.HasValue&&request.filterDto.ToDate.HasValue)
+            {
+                leaveRequesQuery = leaveRequesQuery.Where(x => x.FromDate == request.filterDto.FromDate && x.ToDate == request.filterDto.ToDate);
+            }
+
+            if(request.filterDto.EmpId.HasValue)
+            {
+                leaveRequesQuery = leaveRequesQuery.Where(x=>x.EmpId == request.filterDto.EmpId);
+            }
+
+            var LeaveRequests = await leaveRequesQuery.ToListAsync();
+            var leaveRequestdto = _mapper.Map<List<LeaveRequestDto>>(LeaveRequests);
+
+            return leaveRequestdto;
+        }
+    }
+}

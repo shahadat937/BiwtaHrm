@@ -29,6 +29,7 @@ namespace Hrm.Domain
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public int? SiteVisitId { get; set; }
+        public int? LeaveRequestId { get; set; }
 
         public AttendanceType AttendanceType { get; set; }
         public EmpBasicInfo EmpBasicInfo { get; set; }
@@ -38,5 +39,6 @@ namespace Hrm.Domain
         public DayType DayType { get; set; }
         public AttendanceStatus AttendanceStatus { get; set; }
         public SiteVisit SiteVisit { get; set; }
+        public LeaveRequest LeaveRequest { get; set; }
     }
 }

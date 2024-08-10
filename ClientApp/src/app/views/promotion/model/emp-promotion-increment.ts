@@ -28,6 +28,7 @@ export class EmpPromotionIncrement {
     effectiveDate : Date | null = null;
     applicationById : number | null = null;
     approveById : number | null = null;
+    approveByIdCardNo : string | null = null;
     approveByName : string | null = null;
     approveByDepartmentName : string | null = null;
     approveByDesignationName : string | null = null;

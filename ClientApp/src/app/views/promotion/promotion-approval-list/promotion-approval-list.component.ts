@@ -7,15 +7,16 @@ import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { EmpPromotionIncrementService } from '../service/emp-promotion-increment.service';
 import { PromotionIncrementInfoComponent } from '../promotion-increment-info/promotion-increment-info.component';
+import { EmpPromotionIncrementService } from '../service/emp-promotion-increment.service';
+import { IncrementAndPromotionApprovalComponent } from '../increment-and-promotion-approval/increment-and-promotion-approval.component';
 
 @Component({
-  selector: 'app-manage-promotion',
-  templateUrl: './manage-promotion.component.html',
-  styleUrl: './manage-promotion.component.scss'
+  selector: 'app-promotion-approval-list',
+  templateUrl: './promotion-approval-list.component.html',
+  styleUrl: './promotion-approval-list.component.scss'
 })
-export class ManagePromotionComponent implements OnInit, OnDestroy {
+export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
@@ -23,7 +24,6 @@ export class ManagePromotionComponent implements OnInit, OnDestroy {
     'PMS Id',
     'fullName',
     'ApprovalStatus',
-    'ApplicationStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -48,7 +48,7 @@ export class ManagePromotionComponent implements OnInit, OnDestroy {
   }
 
   getAllPromotionIncrementInfo() {
-    this.subscription = this.empPromotionIncrementService.getAll().subscribe((item) => {
+    this.subscription = this.empPromotionIncrementService.getAllEmpPromotionIncrementApproveInfo().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -72,5 +72,18 @@ export class ManagePromotionComponent implements OnInit, OnDestroy {
       id: id
     };
     const modalRef: BsModalRef = this.modalService.show(PromotionIncrementInfoComponent, { initialState, backdrop: 'static' });
+  }
+  promotionIncrementApproval(id: number, clickedButton: string){
+    const initialState = {
+      id: id,
+      clickedButton: clickedButton
+    };
+    const modalRef: BsModalRef = this.modalService.show(IncrementAndPromotionApprovalComponent, { initialState, backdrop: 'static' });
+
+    if (modalRef.onHide) {
+      modalRef.onHide.subscribe(() => {
+        this.getAllPromotionIncrementInfo();
+      });
+    }
   }
 }

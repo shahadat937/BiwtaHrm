@@ -14,19 +14,19 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
 {
-    public class CreateEmpTransferPostingRequestHandler : IRequestHandler<CreateEmpTransferPostingRequest, BaseCommandResponse>
+    public class CreateEmpTransferPostingCommandHandler : IRequestHandler<CreateEmpTransferPostingCommand, BaseCommandResponse>
     {
         private readonly IHrmRepository<EmpJobDetail> _EmpEmpJobDetailsRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CreateEmpTransferPostingRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<EmpJobDetail> EmpEmpJobDetailsRepository)
+        public CreateEmpTransferPostingCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<EmpJobDetail> EmpEmpJobDetailsRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _EmpEmpJobDetailsRepository = EmpEmpJobDetailsRepository;
         }
-        public async Task<BaseCommandResponse> Handle(CreateEmpTransferPostingRequest request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(CreateEmpTransferPostingCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
 

@@ -73,6 +73,15 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     });
     this.subscription = this.empPromotionIncrementService.findById(this.id).subscribe((res) => {
       if (res) {
+        console.log(res)
+        this.empPromotionIncrement = res;
+        this.patchEmpInfo();
+        this.getEmpJobDetailsByEmpId(res.empId || 0);
+        this.onChangeGradeGetScale(res.updateGradeId || 0);
+        if(res.approveDate){
+          this.empPromotionIncrementService.empPromotionIncrement.provideApprovalInfo = true;
+          this.pathApproveStatusInfo();
+        }
         this.EmpPromotionIncrementForm?.form.patchValue(res);
         this.headerText = 'Update Promotion and Increment Information';
         this.btnText = 'Update';
@@ -116,6 +125,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       applicationById : null,
       isApproval : true,
       provideApprovalInfo: false,
+      approveByIdCardNo: null,
       approveById : null,
       approveByName : null,
       approveByDepartmentName : null,
@@ -161,6 +171,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       applicationById : null,
       isApproval : true,
       provideApprovalInfo: false,
+      approveByIdCardNo: null,
       approveById : null,
       approveByName : null,
       approveByDepartmentName : null,
@@ -175,6 +186,19 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     });
   }
 
+  patchEmpInfo(){
+    this.isValidEmp = true;
+    this.empPromotionIncrementService.empPromotionIncrement.empName = this.empPromotionIncrement.empName;
+    this.empPromotionIncrementService.empPromotionIncrement.currentSectionName = this.empPromotionIncrement.currentSectionName;
+    this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentName = this.empPromotionIncrement.currentDepartmentName;
+    this.empPromotionIncrementService.empPromotionIncrement.currentDesignationName = this.empPromotionIncrement.currentDesignationName;
+  }
+  pathApproveStatusInfo(){
+    this.empPromotionIncrementService.empPromotionIncrement.approveById = this.empPromotionIncrement.approveById;
+    this.empPromotionIncrementService.empPromotionIncrement.approveStatus = this.empPromotionIncrement.approveStatus;
+    this.empPromotionIncrementService.empPromotionIncrement.approveDate = this.empPromotionIncrement.approveDate;
+    this.empPromotionIncrementService.empPromotionIncrement.approveRemark = this.empPromotionIncrement.approveRemark;
+  }
   
   getEmpInfoByIdCardNo(idCardNo: string) {
     this.subscription = this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
@@ -207,17 +231,19 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
       if(res){
         this.empJobDetailsId = res.id;
-        this.empPromotionIncrementService.empPromotionIncrement.currentSectionName = res.sectionName;
-        this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentName = res.departmentName;
-        this.empPromotionIncrementService.empPromotionIncrement.currentDesignationName = res.designationName;
-        this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentId = res.departmentId;
-        this.empPromotionIncrementService.empPromotionIncrement.currentDesignationId = res.designationId;
-        this.empPromotionIncrementService.empPromotionIncrement.currentGradeId = res.presentGradeId;
-        this.empPromotionIncrementService.empPromotionIncrement.currentGradeName = res.presentGradeName;
-        this.empPromotionIncrementService.empPromotionIncrement.currentScaleId = res.presentScaleId;
-        this.empPromotionIncrementService.empPromotionIncrement.currentScaleName = res.presentScaleName;
-        this.empPromotionIncrementService.empPromotionIncrement.currentBasicPay = res.basicPay;
         this.getDesignationByDepartmentId(res.departmentId, res.id);
+        if(!this.empPromotionIncrement.id){
+          this.empPromotionIncrementService.empPromotionIncrement.currentSectionName = res.sectionName;
+          this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentName = res.departmentName;
+          this.empPromotionIncrementService.empPromotionIncrement.currentDesignationName = res.designationName;
+          this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentId = res.departmentId;
+          this.empPromotionIncrementService.empPromotionIncrement.currentDesignationId = res.designationId;
+          this.empPromotionIncrementService.empPromotionIncrement.currentGradeId = res.presentGradeId;
+          this.empPromotionIncrementService.empPromotionIncrement.currentGradeName = res.presentGradeName;
+          this.empPromotionIncrementService.empPromotionIncrement.currentScaleId = res.presentScaleId;
+          this.empPromotionIncrementService.empPromotionIncrement.currentScaleName = res.presentScaleName;
+          this.empPromotionIncrementService.empPromotionIncrement.currentBasicPay = res.basicPay;
+        }
       }
     })
   }
@@ -255,6 +281,9 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     this.loading = true;
     if(form.value.provideApprovalInfo == true){
       form.value.approveById = this.loginEmpId;
+    }
+    if(form.value.approveStatus == 'null'){
+      form.value.approveStatus = null;
     }
     this.empPromotionIncrementService.cachedData = [];
     const id = form.value.id;

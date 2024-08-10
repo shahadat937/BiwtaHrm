@@ -14,19 +14,19 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Commands
 {
-    public class CreateEmpPromotionIncrementRequestHandler : IRequestHandler<CreateEmpPromotionIncrementRequest, BaseCommandResponse>
+    public class CreateEmpPromotionIncrementCommandHandler : IRequestHandler<CreateEmpPromotionIncrementCommand, BaseCommandResponse>
     {
         private readonly IHrmRepository<EmpJobDetail> _EmpEmpJobDetailsRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CreateEmpPromotionIncrementRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<EmpJobDetail> EmpEmpJobDetailsRepository)
+        public CreateEmpPromotionIncrementCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<EmpJobDetail> EmpEmpJobDetailsRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _EmpEmpJobDetailsRepository = EmpEmpJobDetailsRepository;
         }
-        public async Task<BaseCommandResponse> Handle(CreateEmpPromotionIncrementRequest request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(CreateEmpPromotionIncrementCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
 
@@ -45,17 +45,17 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Commands
                 {
                     empJobDetails.DesignationId = EmpPromotionIncrements.UpdateDesignationId;
                 }
-                if (EmpPromotionIncrements.CurrentGradeId != null)
+                if (EmpPromotionIncrements.UpdateGradeId != null)
                 {
-                    empJobDetails.PresentGradeId = EmpPromotionIncrements.CurrentGradeId;
+                    empJobDetails.PresentGradeId = EmpPromotionIncrements.UpdateGradeId;
                 }
-                if (EmpPromotionIncrements.CurrentScaleId != null)
+                if (EmpPromotionIncrements.UpdateScaleId != null)
                 {
-                    empJobDetails.PresentScaleId = EmpPromotionIncrements.CurrentScaleId;
+                    empJobDetails.PresentScaleId = EmpPromotionIncrements.UpdateScaleId;
                 }
-                if (EmpPromotionIncrements.CurrentBasicPay != null)
+                if (EmpPromotionIncrements.UpdateBasicPay != null)
                 {
-                    empJobDetails.BasicPay = EmpPromotionIncrements.CurrentBasicPay;
+                    empJobDetails.BasicPay = EmpPromotionIncrements.UpdateBasicPay;
                 }
                 await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
             }

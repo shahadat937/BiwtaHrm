@@ -26,7 +26,19 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
 
         public async Task<object> Handle(GetEmpPromotionIncrementByEmpIdRequest request, CancellationToken cancellationToken)
         {
-            var EmpPromotionIncrements = await _EmpPromotionIncrementRepository.FindOneAsync(x => x.EmpId == request.Id);
+            var EmpPromotionIncrements = await _EmpPromotionIncrementRepository.Where(x => x.EmpId == request.Id && x.ApplicationStatus == null)
+                .Include(x => x.EmpBasicInfo)
+                .Include(x => x.ApplicationBy)
+                .Include(x => x.OrderBy)
+                .Include(x => x.ApproveBy)
+                .Include(x => x.CurrentDepartment)
+                .Include(x => x.CurrentDesignation)
+                .Include(x => x.CurrentGrade)
+                .Include(x => x.CurrentScale)
+                .Include(x => x.UpdateDesignation)
+                .Include(x => x.UpdateGrade)
+                .Include(x => x.UpdateScale)
+                .FirstOrDefaultAsync(cancellationToken);
 
 
             var EmpPromotionIncrementDtos = _mapper.Map<EmpPromotionIncrementDto>(EmpPromotionIncrements);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpTransferPostings.Requests.Commands
 {
-    public class CreateEmpTransferPostingRequest : IRequest<BaseCommandResponse>
+    public class CreateEmpTransferPostingCommand : IRequest<BaseCommandResponse>
     {
         public CreateEmpTransferPostingDto EmpTransferPostingDto { get; set; }
     }

@@ -2,13 +2,12 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{heading}}</h5>
+                <h5 class="modal-title">Transfer Posting Info</h5>
                 <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
                     <mat-icon>close</mat-icon>
                 </button>
             </div>
             <div class="modal-body scrollable-modal-body">
-                <form #EmpTransferPostingForm="ngForm" novalidate cForm class="needs-validation">
                 <!-- ********** Employee Information *********** -->
                 <c-card class="mb-3 shadow">
                     <c-card-header class="text-center">
@@ -71,42 +70,46 @@
                         </c-col>
                     </c-card-body>
                 </c-card>
-
-                <div cRow [gutter]="3" >
-                    <c-col [md]="4" *ngIf="clickedButton == 'Edit'">
-                        <label cLabel for="approveStatus">Approve Status</label>
-                        <select [(ngModel)]="empTransferPostingService.empPromotionIncrement.approveStatus"
-                        name="approveStatus" #approveStatus="ngModel"
-                        cSelect id="approveStatus">
-                        <option value="">Pending</option>
-                        <option value="true">Approve</option>
-                        <option value="false">Reject</option>
-                        </select>
-                    </c-col>
-                    
-                    <c-col [md]="4">
-                        <label cLabel for="approveRemark">Remark<span class="text-danger"></span></label>
-                        <input [(ngModel)]="empTransferPostingService.empPromotionIncrement.approveRemark" name="approveRemark"
-                            #approveRemark="ngModel" cFormControl id="approveRemark" placeholder="Enter Remark" type="text" />
-                        @if(!approveRemark.valid&&approveRemark.touched){
-                        <div class="text-left text-danger">Remark is required</div>
-                        }
-                    </c-col>
-                </div>
-            </form>
+                
+                <!-- ********** Approve Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Approve Information</div>
+                    </c-card-header>
+                    <c-card-body cRow [gutter]="3">
+                        <div class="mb-3">
+                            <b>Transfer Approve Status : </b>
+                            <button cButton color="warning" size="sm" *ngIf="empPromotionIncrement.approveStatus == null">Pending</button> &nbsp;
+                            <button cButton color="info" size="sm" *ngIf="empPromotionIncrement.approveStatus == null && empPromotionIncrement.isApproval == true"><svg [cIcon]="icons.cilBell"></svg></button>
+                            <button cButton color="success" size="sm" *ngIf="empPromotionIncrement.approveStatus == true">Approved</button>
+                            <button cButton color="danger" size="sm" *ngIf="empPromotionIncrement.approveStatus == false">Rejected</button>
+                        </div>
+                        <div *ngIf="!empPromotionIncrement.isApproval">
+                            <c-alert class="text-center">Promotion Approval is not needed</c-alert>
+                        </div>
+                        <div *ngIf="empPromotionIncrement.approveStatus != null && empPromotionIncrement.isApproval" cRow>
+                            <c-col [md]="6">
+                                <label><b>Approve Date: </b>{{empPromotionIncrement.approveDate}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Approve By: </b>{{empPromotionIncrement.approveByName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Department: </b>{{empPromotionIncrement.approveByDepartmentName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Designation: </b>{{empPromotionIncrement.approveByDesignationName}}</label>
+                            </c-col>
+                            <c-col [md]="6" *ngIf="empPromotionIncrement.approveRemark">
+                                <label><b>Remark: </b>{{empPromotionIncrement.approveRemark}}</label>
+                            </c-col>
+                        </div>
+                    </c-card-body>
+                </c-card>
             </div>
             <div class="modal-footer">
                 <button mat-raised-button class="bg-secondary text-light" (click)="closeModal()">
                     <mat-icon>cancel</mat-icon> Close
-                </button>
-                <button mat-raised-button class="bg-success text-light" (click)="onSubmit(true)" *ngIf="clickedButton == 'Approve'">
-                    <mat-icon>check</mat-icon> Approve
-                </button>
-                <button mat-raised-button color="warn" (click)="onSubmit(false)" *ngIf="clickedButton == 'Reject'">
-                    <mat-icon>close</mat-icon> Reject
-                </button>
-                <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="clickedButton == 'Edit'">
-                    <mat-icon>update</mat-icon> Update
                 </button>
             </div>
         </div>

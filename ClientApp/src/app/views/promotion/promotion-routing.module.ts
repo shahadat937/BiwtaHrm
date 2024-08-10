@@ -1,8 +1,9 @@
-import { IncrementAndPromotionHistoryComponent } from './increment-and-promotion-history/increment-and-promotion-history.component';
 import { IncrementAndPromotionApprovalComponent } from './increment-and-promotion-approval/increment-and-promotion-approval.component';
 import { IncrementAndPromotionComponent } from './increment-and-promotion/increment-and-promotion.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ManagePromotionComponent } from './manage-promotion/manage-promotion.component';
+import { PromotionApprovalListComponent } from './promotion-approval-list/promotion-approval-list.component';
 
 
 const routes: Routes = [
@@ -11,12 +12,16 @@ const routes: Routes = [
     component:IncrementAndPromotionComponent
   },
   {
-    path:'incrementAndPromotionApproval',
-    component:IncrementAndPromotionApprovalComponent
+    path:'update-incrementAndPromotion/:id',
+    component:IncrementAndPromotionComponent
   },
   {
-    path:'incrementAndPromotionHistory',
-    component:IncrementAndPromotionHistoryComponent
+    path:'incrementAndPromotionApproval',
+    component:PromotionApprovalListComponent
+  },
+  {
+    path:'manage-incrementAndPromotion',
+    component:ManagePromotionComponent
   },
 ];
 

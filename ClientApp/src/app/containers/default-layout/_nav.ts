@@ -419,27 +419,13 @@ export const navItems: INavData[] = [
         url: '/promotion/incrementAndPromotion'
       },
       {
-        name: 'Incre.& Promo. Approval',
-        url: '/promotion/incrementAndPromotionApproval'
-      }
-      ,
-      {
-        name: 'Incr.& Promo. History',
-        url: '/promotion/incrementAndPromotionHistory'
-      }
-      ,
-      {
          name:'Manage Promotion',
-         url:'/promotion/managePromotion'
-      }
-    ]
-  },
-  {
-    name: 'PromotionType',
-    url: '/bascisetup',
-    iconComponent: { name: 'cil-puzzle' },
-    children: [
-
+         url:'/promotion/manage-incrementAndPromotion'
+      },
+      {
+        name: 'Incre. & Promo. Approval',
+        url: '/promotion/incrementAndPromotionApproval'
+      },
     ]
   },
   {

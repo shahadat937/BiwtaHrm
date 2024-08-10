@@ -799,6 +799,55 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.DeptReleaseTypeId);
             });
 
+            modelBuilder.Entity<EmpPromotionIncrement>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpPromotionIncrement)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.ApplicationBy)
+                    .WithMany(eb => eb.ApplicationByPromotionIncrement)
+                    .HasForeignKey(e => e.ApplicationById);
+
+                entity.HasOne(e => e.OrderBy)
+                    .WithMany(eb => eb.OrderByPromotionIncrement)
+                    .HasForeignKey(e => e.OrderById);
+
+                entity.HasOne(e => e.ApproveBy)
+                    .WithMany(eb => eb.ApproveByPromotionIncrement)
+                    .HasForeignKey(e => e.ApproveById);
+
+                entity.HasOne(e => e.CurrentDepartment)
+                    .WithMany(eb => eb.CurrentEmpPromotionIncrement)
+                    .HasForeignKey(e => e.CurrentDepartmentId);
+
+                entity.HasOne(e => e.CurrentDesignation)
+                    .WithMany(eb => eb.CurrentEmpPromotionIncrement)
+                    .HasForeignKey(e => e.CurrentDesignationId);
+
+                entity.HasOne(e => e.CurrentGrade)
+                    .WithMany(eb => eb.CurrentEmpPromotionIncrement)
+                    .HasForeignKey(e => e.CurrentGradeId);
+
+                entity.HasOne(e => e.CurrentScale)
+                    .WithMany(eb => eb.CurrentEmpPromotionIncrement)
+                    .HasForeignKey(e => e.CurrentScaleId);
+
+                entity.HasOne(e => e.UpdateDesignation)
+                    .WithMany(eb => eb.UpdateEmpPromotionIncrement)
+                    .HasForeignKey(e => e.UpdateDesignationId);
+
+                entity.HasOne(e => e.UpdateGrade)
+                    .WithMany(eb => eb.UpdateEmpPromotionIncrement)
+                    .HasForeignKey(e => e.UpdateGradeId);
+
+                entity.HasOne(e => e.UpdateScale)
+                    .WithMany(eb => eb.UpdateEmpPromotionIncrement)
+                    .HasForeignKey(e => e.UpdateScaleId);
+            });
+
             modelBuilder.Entity<LeaveRules>(entity =>
             {
                 entity.HasKey(e => e.RuleId)

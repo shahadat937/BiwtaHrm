@@ -21,7 +21,7 @@ namespace Hrm.Api.Controllers
         [Route("save-EmpTransferPosting")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateEmpTransferPostingDto EmpTransferPosting)
         {
-            var command = new CreateEmpTransferPostingRequest { EmpTransferPostingDto = EmpTransferPosting };
+            var command = new CreateEmpTransferPostingCommand { EmpTransferPostingDto = EmpTransferPosting };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

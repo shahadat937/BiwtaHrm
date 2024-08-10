@@ -33,5 +33,20 @@ namespace Hrm.Application.DTOs.EmpPromotionIncrement
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+
+        public string? EmpIdCardNo { get; set; }
+        public string? EmpName { get; set; }
+        public string? CurrentDepartmentName { get; set; }
+        public string? CurrentDesignationName { get; set; }
+        public string? CurrentSectionName { get; set; }
+        public string? CurrentGradeName { get; set; }
+        public string? CurrentScaleName { get; set; }
+        public string? UpdateDesignationName { get; set; }
+        public string? UpdateGradeName { get; set; }
+        public string? UpdateScaleName { get; set; }
+        public string? ApproveByIdCardNo { get; set; }
+        public string? ApproveByName { get; set; }
+        public string? ApproveByDepartmentName { get; set; }
+        public string? ApproveByDesignationName { get; set; }
     }
 }

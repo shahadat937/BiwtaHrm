@@ -59,9 +59,6 @@ export class EmpPromotionIncrementService {
     return this.http.put(this.baseUrl + '/empPromotionIncrement/update-EmpPromotionIncrement/'+id, model);
   }
   
-  // updateEmpPromotionIncrementStatus(id: number,model: any) {
-  //   return this.http.put(this.baseUrl + '/empPromotionIncrement/update-EmpPromotionIncrementStatus/'+id, model);
-  // }
   
 }
 

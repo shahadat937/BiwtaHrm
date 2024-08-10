@@ -51,6 +51,11 @@ namespace Hrm.Domain
         public virtual ICollection<EmpTransferPosting>? TransferApproveTransfer { get; set; }
         public virtual ICollection<EmpTransferPosting>? DeptReleaseTransfer { get; set; }
         public virtual ICollection<EmpTransferPosting>? JoiningReportingTransfer { get; set; }
+
+        public virtual ICollection<EmpPromotionIncrement>? EmpPromotionIncrement { get; set; }
+        public virtual ICollection<EmpPromotionIncrement>? ApplicationByPromotionIncrement { get; set; }
+        public virtual ICollection<EmpPromotionIncrement>? OrderByPromotionIncrement { get; set; }
+        public virtual ICollection<EmpPromotionIncrement>? ApproveByPromotionIncrement { get; set; }
         public virtual ICollection<LeaveRequest> LeaveRequests {get; } = new List<LeaveRequest>();
     }
 }

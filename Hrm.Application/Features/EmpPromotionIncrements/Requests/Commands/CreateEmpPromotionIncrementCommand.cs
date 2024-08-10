@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpPromotionIncrements.Requests.Commands
 {
-    public class CreateEmpPromotionIncrementRequest : IRequest<BaseCommandResponse>
+    public class CreateEmpPromotionIncrementCommand : IRequest<BaseCommandResponse>
     {
         public CreateEmpPromotionIncrementDto EmpPromotionIncrementDto { get; set; }
     }

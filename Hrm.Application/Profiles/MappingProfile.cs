@@ -453,6 +453,18 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpPromotionIncrement, EmpPromotionIncrementDto>().ReverseMap();
             CreateMap<EmpPromotionIncrement, CreateEmpPromotionIncrementDto>().ReverseMap();
+            CreateMap<EmpPromotionIncrement, EmpPromotionIncrementDto>()
+            .ForMember(dest => dest.EmpIdCardNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
+            .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName + " " + src.EmpBasicInfo.LastName))
+            .ForMember(dest => dest.CurrentDepartmentName, opt => opt.MapFrom(src => src.CurrentDepartment.DepartmentName))
+            .ForMember(dest => dest.CurrentDesignationName, opt => opt.MapFrom(src => src.CurrentDesignation.DesignationName))
+            .ForMember(dest => dest.CurrentGradeName, opt => opt.MapFrom(src => src.CurrentGrade.GradeName))
+            .ForMember(dest => dest.CurrentScaleName, opt => opt.MapFrom(src => src.CurrentScale.ScaleName))
+            .ForMember(dest => dest.ApproveByIdCardNo, opt => opt.MapFrom(src => src.ApproveBy.IdCardNo))
+            .ForMember(dest => dest.ApproveByName, opt => opt.MapFrom(src => src.ApproveBy.FirstName + " " + src.ApproveBy.LastName))
+            .ForMember(dest => dest.UpdateDesignationName, opt => opt.MapFrom(src => src.UpdateDesignation.DesignationName))
+            .ForMember(dest => dest.UpdateGradeName, opt => opt.MapFrom(src => src.UpdateGrade.GradeName))
+            .ForMember(dest => dest.UpdateScaleName, opt => opt.MapFrom(src => src.UpdateScale.ScaleName));
 
 
             // Site Visit Dto Mapping Created By Joy

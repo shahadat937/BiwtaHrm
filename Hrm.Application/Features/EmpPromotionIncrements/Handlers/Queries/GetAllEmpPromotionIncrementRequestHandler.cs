@@ -26,7 +26,18 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
 
         public async Task<object> Handle(GetAllEmpPromotionIncrementRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<EmpPromotionIncrement> EmpPromotionIncrements = _EmpPromotionIncrementRepository.Where(x => true);
+            IQueryable<EmpPromotionIncrement> EmpPromotionIncrements = _EmpPromotionIncrementRepository.Where(x => true)
+                .Include(x => x.EmpBasicInfo)
+                .Include(x => x.ApplicationBy)
+                .Include(x => x.OrderBy)
+                .Include(x => x.ApproveBy)
+                .Include(x => x.CurrentDepartment)
+                .Include(x => x.CurrentDesignation)
+                .Include(x => x.CurrentGrade)
+                .Include(x => x.CurrentScale)
+                .Include(x => x.UpdateDesignation)
+                .Include(x => x.UpdateGrade)
+                .Include(x => x.UpdateScale);
 
             EmpPromotionIncrements = EmpPromotionIncrements.OrderByDescending(x => x.Id);
 

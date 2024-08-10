@@ -6,7 +6,7 @@
       </button> -->
   </c-card-header>
   <c-card-body>
-      <form #EmpTransferPostingForm="ngForm" (submit)="onSubmit(EmpTransferPostingForm)" [gutter]="3" novalidate cForm class="needs-validation">
+      <form #EmpPromotionIncrementForm="ngForm" (submit)="onSubmit(EmpPromotionIncrementForm)" [gutter]="3" novalidate cForm class="needs-validation">
           <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.id" name="id" />
           <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.empId" name="empId" />
           <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.applicationById" name="applicationById" />
@@ -275,7 +275,7 @@
           <c-col [xs]="12">
               <div class="d-flex justify-content-between">
                   <div>
-                      <button [disabled]="loading" [disabled]="EmpTransferPostingForm.invalid" cButton class="me-1"
+                      <button [disabled]="loading" [disabled]="EmpPromotionIncrementForm.invalid" cButton class="me-1"
                           color="primary" type="submit">
                           <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
                           {{ btnText }}

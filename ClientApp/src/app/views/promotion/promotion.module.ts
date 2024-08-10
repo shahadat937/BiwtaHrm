@@ -5,7 +5,6 @@ import { PromotionComponent } from './promotion/promotion.component';
 import { ManagePromotionComponent } from './manage-promotion/manage-promotion.component';
 import { IncrementAndPromotionComponent } from './increment-and-promotion/increment-and-promotion.component';
 import { IncrementAndPromotionApprovalComponent } from './increment-and-promotion-approval/increment-and-promotion-approval.component';
-import { IncrementAndPromotionHistoryComponent } from './increment-and-promotion-history/increment-and-promotion-history.component';
 import {
   ButtonGroupModule,
   ButtonModule,
@@ -39,6 +38,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { IconModule } from '@coreui/icons-angular';
 import { TransferPostingRoutingModule } from '../transferPosting/transfer-routing.module';
+import { PromotionIncrementInfoComponent } from './promotion-increment-info/promotion-increment-info.component';
 
 
 @NgModule({
@@ -47,7 +47,7 @@ import { TransferPostingRoutingModule } from '../transferPosting/transfer-routin
     ManagePromotionComponent,
     IncrementAndPromotionComponent,
     IncrementAndPromotionApprovalComponent,
-    IncrementAndPromotionHistoryComponent
+    PromotionIncrementInfoComponent,
   ],
   imports: [
     CommonModule,

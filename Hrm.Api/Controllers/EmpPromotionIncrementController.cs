@@ -20,28 +20,20 @@ namespace Hrm.Api.Controllers
         [Route("save-EmpPromotionIncrement")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateEmpPromotionIncrementDto EmpPromotionIncrement)
         {
-            var command = new CreateEmpPromotionIncrementRequest { EmpPromotionIncrementDto = EmpPromotionIncrement };
+            var command = new CreateEmpPromotionIncrementCommand { EmpPromotionIncrementDto = EmpPromotionIncrement };
             var response = await _mediator.Send(command);
             return Ok(response);
         }
 
-        //[HttpPut]
-        //[Route("update-EmpPromotionIncrement/{id}")]
-        //public async Task<ActionResult<BaseCommandResponse>> Update([FromBody] CreateEmpPromotionIncrementDto EmpPromotionIncrement)
-        //{
-        //    var command = new UpdateEmpPromotionIncrementInfoCommand { UpdateEmpPromotionIncrementDto = EmpPromotionIncrement };
-        //    var response = await _mediator.Send(command);
-        //    return Ok(response);
-        //}
+        [HttpPut]
+        [Route("update-EmpPromotionIncrement/{id}")]
+        public async Task<ActionResult<BaseCommandResponse>> Update([FromBody] CreateEmpPromotionIncrementDto EmpPromotionIncrement)
+        {
+            var command = new UpdateEmpPromotionIncrementCommand { EmpPromotionIncrementDto = EmpPromotionIncrement };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
 
-        //[HttpPut]
-        //[Route("update-EmpPromotionIncrementStatus/{id}")]
-        //public async Task<ActionResult<BaseCommandResponse>> UpdateStatus([FromBody] CreateEmpPromotionIncrementDto EmpPromotionIncrement)
-        //{
-        //    var command = new UpdateEmpPromotionIncrementStatusCommand { UpdateEmpPromotionIncrementDto = EmpPromotionIncrement };
-        //    var response = await _mediator.Send(command);
-        //    return Ok(response);
-        //}
 
         [HttpGet]
         [Route("get-allEmpPromotionIncrement")]

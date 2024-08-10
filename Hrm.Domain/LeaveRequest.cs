@@ -28,6 +28,7 @@ namespace Hrm.Domain
         public EmpBasicInfo Employee {get; set;}
         public LeaveType LeaveType {get; set;}
         public Country Country {get; set;}
+        public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
         
     }
 }

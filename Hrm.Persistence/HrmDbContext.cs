@@ -823,7 +823,11 @@ namespace Hrm.Persistence
                 
                 entity.HasOne(e => e.LeaveType)
                     .WithMany(lt => lt.LeaveRequests)
-                    .HasForeignKey(e => e.LeaveTypeId);        
+                    .HasForeignKey(e => e.LeaveTypeId);
+
+                entity.HasMany(l => l.Attendances)
+                    .WithOne(at => at.LeaveRequest)
+                    .HasForeignKey(at => at.LeaveRequestId);
             });
 
             base.OnModelCreating(modelBuilder);

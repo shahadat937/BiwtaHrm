@@ -19,8 +19,26 @@ import {
   SharedModule,
   TableModule, 
   UtilitiesModule,
-  PaginationModule 
+  PaginationModule,
+  AlertComponent,
+  ModalBodyComponent,
+  ModalComponent,
+  ModalFooterComponent,
+  ModalHeaderComponent,
+  PopoverModule,
+  SpinnerModule,
+  TooltipModule,
 } from '@coreui/angular';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { IconModule } from '@coreui/icons-angular';
+import { TransferPostingRoutingModule } from '../transferPosting/transfer-routing.module';
 
 
 @NgModule({
@@ -49,7 +67,38 @@ import {
     CollapseDirective,
     TableModule,
     UtilitiesModule,
-    PaginationModule
+    PaginationModule,
+    MatCardModule,
+    SpinnerModule,
+    DropdownModule,
+    FormModule,
+    GridModule,
+    ListGroupModule,
+    ProgressModule,
+    SharedModule,
+    ButtonGroupModule,
+    ButtonModule,
+    CardModule,
+    CommonModule,
+    TransferPostingRoutingModule,
+    MatFormFieldModule,
+    MatTableModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatInputModule,
+    CollapseDirective,
+    ModalBodyComponent,
+    CommonModule,
+    ModalComponent,
+    ModalFooterComponent,
+    ModalHeaderComponent,
+    IconModule,
+    MatIconModule,
+    MatButtonModule,
+    TableModule,
+    PopoverModule,
+    AlertComponent,
+    TooltipModule,
   ]
 })
 export class PromotionModule { }

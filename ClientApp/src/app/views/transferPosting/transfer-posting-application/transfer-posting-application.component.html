@@ -6,8 +6,7 @@
         </button> -->
     </c-card-header>
     <c-card-body>
-        <form #EmpTransferPostingForm="ngForm" (submit)="onSubmit(EmpTransferPostingForm)" [gutter]="3" novalidate cForm
-            cRow class="needs-validation">
+        <form #EmpTransferPostingForm="ngForm" (submit)="onSubmit(EmpTransferPostingForm)" [gutter]="3" novalidate cForm class="needs-validation">
             <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.id" name="id" />
             <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.empId" name="empId" />
             <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.applicationById" name="applicationById" />

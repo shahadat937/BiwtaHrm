@@ -1,134 +1,290 @@
-<div class="container mt-4">
-    <c-card>
-      <c-card-header>Increment & Promotion Form</c-card-header>
-      <c-card-body>
-        <div class="mt-4">
-            <h5>Employee Information</h5></div>
-        <form cRow cForm>
+<c-card>
+  <c-card-header class="d-flex justify-content-center">
+      <div>{{headerText}}</div>
+      <!-- <button cButton color="danger" [routerLink]="['/employee/manageEmployee']" class="text-light">
+          <svg [cIcon]="icons.cilArrowLeft"></svg> Back
+      </button> -->
+  </c-card-header>
+  <c-card-body>
+      <form #EmpTransferPostingForm="ngForm" (submit)="onSubmit(EmpTransferPostingForm)" [gutter]="3" novalidate cForm class="needs-validation">
+          <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.id" name="id" />
+          <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.empId" name="empId" />
+          <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.applicationById" name="applicationById" />
+
+          <!-- ************* Employee Information ************** -->
+          <c-card class="mt-3 mb-3 shadow">
+              <c-card-header class="text-center">
+                  <div>Employee Information</div>
+              </c-card-header>
+              <c-card-body cRow [gutter]="3">
+                  <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDepartmentId"
+                      name="currentDepartmentId" />
+                  <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDesignationId"
+                      name="currentDesignationId" />
+                  <c-col [md]="4">
+                      <label cLabel for="idCardNo">Employee PMS No<span class="text-danger">*</span></label>
+                      <c-input-group>
+                          <input aria-describedby="idCardNo" cFormControl
+                              [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.empIdCardNo" name="empIdCardNo"
+                              #idCardNo="ngModel" required placeholder="Enter Employee PMS No" id="idCardNo"
+                              type="text" #idCardNoInput />
+                          <button cButton color="primary" type="button"
+                              (click)="getEmpInfoByIdCardNo(idCardNoInput.value)">
+                              Select
+                          </button>
+                      </c-input-group>
+                      @if(!idCardNo.valid&&idCardNo.touched){
+                      <div class="text-left text-danger">PMS No is required</div>
+                      }
+                  </c-col>
+
+                  @if(isValidEmp) {
+                  <c-col [md]="4">
+                      <label cLabel for="empName">Employee Name<span class="text-danger"></span></label>
+                      <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.empName" name="empName"
+                          #empName="ngModel" cFormControl id="empName" readonly />
+                  </c-col>
+
+                  <c-col [md]="4">
+                      <label cLabel for="currentDepartmentName">Department<span class="text-danger"></span></label>
+                      <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDepartmentName"
+                          name="currentDepartmentName" #currentDepartmentName="ngModel" cFormControl id="currentDepartmentName" readonly />
+                  </c-col>
+
+                  <c-col [md]="4">
+                      <label cLabel for="currentDesignationName">Designation<span class="text-danger"></span></label>
+                      <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDesignationName"
+                          name="currentDesignationName" #currentDesignationName="ngModel" cFormControl id="currentDesignationName"
+                          readonly />
+                  </c-col>
+                  @if(empPromotionIncrementService.empPromotionIncrement.currentSectionName){
+                    <c-col [md]="4">
+                      <label cLabel for="currentSectionName">Section<span class="text-danger"></span></label>
+                      <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentSectionName"
+                          name="currentSectionName" #currentSectionName="ngModel" cFormControl id="currentSectionName"
+                          readonly />
+                    </c-col>
+                  }
+                  }
+              </c-card-body>
+          </c-card>
+
           
-            <c-col [md]="3">
-              <label cLabel for="employeePMSNo">Employee PMS No</label>
-              <input type="text" cFormControl id="employeePMSNo" placeholder="Employee PMS No" />
-            </c-col>
-            <c-col [md]="3">
-              <label cLabel for="employeeName">Employee Name</label>
-              <input type="text" cFormControl id="employeeName" placeholder="Employee Name" />
-            </c-col>
-            <c-col [md]="3">
-              <label cLabel for="department">Department</label>
-              <input type="text" cFormControl id="department" placeholder="Department" />
-            </c-col>
-            <c-col [md]="3">
-              <label cLabel for="designation">Designation</label>
-              <input type="text" cFormControl id="designation" placeholder="Designation" />
-            </c-col>
+          <!-- ************* Disciplinary Action Information ************** -->
+          <!-- <c-card class="mt-3 mb-3 shadow">
+            <c-card-header class="text-center">
+                <div>Disciplinary Action Information</div>
+            </c-card-header>
+            <c-card-body cRow [gutter]="3">
+                
+            </c-card-body>
+          </c-card> -->
+
+          <!-- ************* Disciplinary Action Information ************** -->
+          <c-card class="mt-3 mb-3 shadow">
+            <c-card-header class="text-center">
+                <div>Current Pay Scale Information</div>
+            </c-card-header>
+            <c-card-body cRow [gutter]="3">
+              <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentGradeId" name="currentGradeId" />
+              <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentScaleId" name="currentScaleId" />
+              <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentBasicPay" name="currentBasicPay" />
+              
+              <c-col [md]="4">
+                <label cLabel for="currentGradeName">Grade<span class="text-danger"></span></label>
+                <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentGradeName"
+                    name="currentGradeName" #currentGradeName="ngModel" cFormControl id="currentGradeName" readonly />
+              </c-col>
+              <c-col [md]="4">
+                  <label cLabel for="currentScaleName">Pay Scale Lavel<span class="text-danger"></span></label>
+                  <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentScaleName"
+                      name="currentScaleName" #currentScaleName="ngModel" cFormControl id="currentScaleName"
+                      readonly />
+              </c-col>
+              <c-col [md]="4">
+                <label cLabel for="currentBasicPay">Basic<span class="text-danger"></span></label>
+                <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentBasicPay"
+                    name="currentBasicPay" #currentBasicPay="ngModel" cFormControl id="currentBasicPay"
+                    readonly />
+              </c-col>
+            </c-card-body>
+          </c-card>
+
+          
+          <!-- ************* Increment Promotion Type ************** -->
+          <c-card class="mt-3 mb-3 shadow">
+            <c-card-header>
+              <c-form-check inline>
+                <input cFormCheckInput checked id="radioinline1" name="promotionIncrementType" type="radio" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.promotionIncrementType" value="Increment & Promotion"/>
+                <label cFormCheckLabel for="radioinline1">Increment & Promotion</label>
+              </c-form-check>
+              <c-form-check inline>
+                <input cFormCheckInput id="radioinline2" name="promotionIncrementType" type="radio" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.promotionIncrementType" value="Promotion"/>
+                <label cFormCheckLabel for="radioinline2">Promotion</label>
+              </c-form-check>
+              <c-form-check inline>
+                <input cFormCheckInput id="radioinline3" name="promotionIncrementType" type="radio" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.promotionIncrementType" value="Increment"/>
+                <label cFormCheckLabel for="radioinline3">Increment</label>
+              </c-form-check>
+            </c-card-header>
+            <c-card-body cRow [gutter]="3">
+              @if(empPromotionIncrementService.empPromotionIncrement.promotionIncrementType == 'Increment & Promotion' || empPromotionIncrementService.empPromotionIncrement.promotionIncrementType == 'Promotion'){
+                <c-col [md]="4">
+                  <label cLabel for="updateDesignationId">Designation<span class="text-danger"></span></label>
+                  <div class="input-wrapper">
+                      <select [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.updateDesignationId"
+                          name="updateDesignationId" #updateDesignationId="ngModel" cFormControl
+                          id="updateDesignationId" aria-label="Default select example" cSelect>
+                          <option [ngValue]="null">Select Designation</option>
   
-          <div class="mt-4">
-            <h5>Disciplinary Action Information</h5>
-            <table bordered cTable>
-              <thead>
-                <tr>
-                  <th scope="col">Employee ID</th>
-                  <th scope="col">Incident Remarks</th>
-                  <th scope="col">Incident Date</th>
-                  <th scope="col">Letter Issue Date</th>
-                  <th scope="col">Letter Ref. No</th>
-                  <th scope="col">Only Showcase?</th>
-                  <th scope="col">Offence Type</th>
-                  <th scope="col">Punishment Type</th>
-                  <th scope="col">From Date</th>
-                  <th scope="col">To Date</th>
-                  <th scope="col">Punishment Provider</th>
-                </tr>
-              </thead>
-              <thead>
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-            </table>
-          </div>
+                          @for(designation of designations; track designation.id;let index=$index) {
+                          <option [value]="designation.id">
+                              {{ designation.name }}
+                          </option>
+                          }
+                      </select>
+                      @if(!updateDesignationId.valid && updateDesignationId.touched){
+                      <div class="text-left text-danger">Designation is required</div>
+                      }
+                  </div>
+                </c-col>
+              }
+
+              @if(empPromotionIncrementService.empPromotionIncrement.promotionIncrementType == 'Increment & Promotion' || empPromotionIncrementService.empPromotionIncrement.promotionIncrementType == 'Increment'){
+                <c-col [md]="4">
+                  <label cLabel for="updateGradeId"
+                  >Grade<span class="text-danger"></span></label
+                  >
+                  <select (change)="onChangeGradeGetScale(empPromotionIncrementService.empPromotionIncrement.updateGradeId || 0)"
+                  [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.updateGradeId"
+                  name="updateGradeId"
+                  #updateGradeId="ngModel"
+                  id="updateGradeId"
+                  aria-label="Default select example"
+                  cSelect
+                  >
+                  <option [ngValue]="null">Select Grade</option>
+                  @for(grade of grades; track grade.id;let index=$index) {
+                  <option [value]="grade.id">
+                      {{ grade.name }}
+                  </option>
+                  }
+                  </select>
   
-          <div class="mt-4">
-            <h5>Current Pay Scale Information</h5></div>
-            <c-col [md]="3">
-              <label cLabel for="payScaleLevel">Pay Scale Level</label>
-              <input type="text" cFormControl id="payScaleLevel" placeholder="Pay Scale Level" />
-            </c-col>
-            <c-col [md]="3">
-              <label cLabel for="basic">Basic</label>
-              <input type="text" cFormControl id="basic" placeholder="Basic" />
-            </c-col>
-  
-          <div class="mt-4">
-            <c-form-check [inline]="true">
-                <input cFormCheckInput id="inline1" name="action" type="radio" />
-                <label cFormCheckLabel for="inline1">Increment & Promotion</label>
-            </c-form-check>
-            <c-form-check inline>
-                <input cFormCheckInput id="inline2" name="action" type="radio" />
-                <label cFormCheckLabel for="inline2">Promotion</label>
-            </c-form-check>
-            <c-form-check inline>
-                <input cFormCheckInput id="inline3" name="action" type="radio" />
-                <label cFormCheckLabel for="inline3">Increment</label>
-            </c-form-check>
-        </div>
-            <c-col [md]="3">
-              <label cLabel for="designation2">Designation</label>
-              <input type="text" cFormControl id="designation2" placeholder="Designation" />
-            </c-col>
-            <c-col [md]="3">
-              <label cLabel for="payScaleCode">Pay Scale Code</label>
-              <select cSelect cFormControl id="payScaleCode">
-                <option></option>
-              </select>
-            </c-col>
-            <c-col [md]="3">
-              <label cLabel for="basic2">Basic</label>
-              <input type="text" cFormControl id="basic2" placeholder="Basic" />
-            </c-col>
-            <c-col [md]="3">
-              <label cLabel for="effectiveDate">Effective Date</label>
-              <input type="date" cFormControl id="effectiveDate" />
-            </c-col>
-            <c-col [md]="3">
-              <label cLabel for="payScaleLevel2">Pay Scale Level</label>
-              <input type="text" cFormControl id="payScaleLevel2" placeholder="Pay Scale Level" />
-            </c-col>
-            <c-col [md]="3">
-              <label cLabel for="orderDate">Order Date</label>
-              <input type="date" cFormControl id="orderDate" />
-            </c-col>
-            <c-col [md]="3">
-              <label cLabel for="comment">Comment</label>
-              <input type="text" cFormControl id="comment" placeholder="Comment" />
-            </c-col>
-            <c-col [md]="12" class="mt-3">
-              <div class="form-check">
-                <input type="checkbox" cFormCheckInput id="incrementPromotionApproveInfo" />
-                <label cFormCheckLabel for="incrementPromotionApproveInfo">Increment/Promotion Approve info</label>
+                  @if(!updateGradeId.valid && updateGradeId.touched){
+                  <div class="text-left text-danger">Grade Type is required</div>
+                  }
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="updateScaleId">Scale<span class="text-danger"></span></label>
+                    <div class="input-wrapper">
+                    <select (change)="onChangeScaleGetBasicPay(empPromotionIncrementService.empPromotionIncrement.updateScaleId || 0)"
+                    [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.updateScaleId" name="updateScaleId" #updateScaleId="ngModel"
+                        cFormControl id="updateScaleId" aria-label="Default select example" cSelect>
+                        <option [ngValue]="null">Select Scale</option>
+            
+                        @for(scale of scales; track scale.id;let index=$index) {
+                        <option [value]="scale.id">
+                        {{ scale.name }}
+                        </option>
+                        }
+                    </select>
+            
+                    @if(!updateScaleId.valid && updateScaleId.touched){
+                    <div class="text-left text-danger">Scale is required</div>
+                    }
+                    </div>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="updateBasicPay"
+                    >Basic Pay<span class="text-danger"></span></label>
+                    <input
+                    [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.updateBasicPay"
+                    name="updateBasicPay"
+                    #updateBasicPay="ngModel"
+                    placeholder="Basic Pay"
+                    cFormControl
+                    id="updateBasicPay"
+                    type="text"
+                    />
+                </c-col>
+              }
+
+            </c-card-body>
+          </c-card>
+
+          
+          <!-- ************* Approval Information ************** -->
+          <c-card class="mt-3 mb-3 shadow">
+            <c-card-header class="text-center">
+                <div>Approval Information</div>
+            </c-card-header>
+            <c-card-body>
+                <div class="mb-3">
+                    <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.approveById" name="approveById" />
+                    <c-form-check [switch]="true">
+                        <input cFormCheckInput type="checkbox" id="isApproval" name="isApproval"
+                            [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.isApproval"/>
+                        <label cFormCheckLabel for="isApproval">Approval Needed</label>
+                    </c-form-check>
+                </div>
+                <div class="mb-3" *ngIf="empPromotionIncrementService.empPromotionIncrement.isApproval">
+                    <c-form-check [switch]="true">
+                        <input cFormCheckInput type="checkbox" id="provideApprovalInfo" name="provideApprovalInfo"
+                        [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.provideApprovalInfo"/>
+                        <label cFormCheckLabel for="provideApprovalInfo">Provide Approval Info</label>
+                    </c-form-check>
+                </div>
+                <div cRow [gutter]="3">
+                    @if(empPromotionIncrementService.empPromotionIncrement.provideApprovalInfo){
+                        <c-col [md]="4">
+                            <label cLabel for="approveStatus">Approve Status</label>
+                            <select [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.approveStatus"
+                            name="approveStatus" #approveStatus="ngModel"
+                            cSelect id="approveStatus">
+                            <option value="null">Pending</option>
+                            <option value="true">Approve</option>
+                            <option value="false">Reject</option>
+                            </select>
+                        </c-col>
+                        <c-col [md]="4">
+                            <label cLabel for="approveDate">Approve Date<span class="text-danger"></span></label>
+                            <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.approveDate"
+                                name="approveDate" #approveDate="ngModel" cFormControl id="deptReleaseDate"
+                                type="date" />
+                            @if(!approveDate.valid&&approveDate.touched){
+                            <div class="text-left text-danger">Joining Date is required</div>
+                            }
+                        </c-col>
+                        
+                        <c-col [md]="4">
+                            <label cLabel for="approveRemark">Remark<span class="text-danger"></span></label>
+                            <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.approveRemark" name="approveRemark"
+                                #approveRemark="ngModel" cFormControl id="approveRemark" placeholder="Enter Remark" type="text" />
+                            @if(!approveRemark.valid&&approveRemark.touched){
+                            <div class="text-left text-danger">Remark is required</div>
+                            }
+                        </c-col>
+                    }
+                </div>
+            </c-card-body>
+        </c-card>
+
+          <c-col [xs]="12">
+              <div class="d-flex justify-content-between">
+                  <div>
+                      <button [disabled]="loading" [disabled]="EmpTransferPostingForm.invalid" cButton class="me-1"
+                          color="primary" type="submit">
+                          <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                          {{ btnText }}
+                      </button>
+                      <button cButton color="secondary" (click)="resetForm()">Reset</button>
+                  </div>
               </div>
-            </c-col>
-  
-            <c-col [md]="12" class="mt-4">
-              <div class="d-flex justify-content-end">
-                <button cButton color="primary" class="me-2">Submit</button>
-                <button cButton color="dark">Cancel</button>
-              </div>
-            </c-col>
-        </form>
-      </c-card-body>
-    </c-card>
-  </div>
-  
+          </c-col>
+
+      </form>
+  </c-card-body>
+</c-card>

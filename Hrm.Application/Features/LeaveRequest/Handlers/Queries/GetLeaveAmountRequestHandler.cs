@@ -1,6 +1,7 @@
 ﻿using Hrm.Application.Constants;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.TaskName;
+using Hrm.Application.Enum;
 using Hrm.Application.Features.LeaveRequest.Requests.Queries;
 using MediatR;
 using MediatR.Pipeline;
@@ -21,34 +22,58 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
         private readonly IHrmRepository<Hrm.Domain.LeaveRules> _LeaveRulesRepository;
         private readonly IHrmRepository<Hrm.Domain.Workday> _WorkdayRepository;
         private readonly IHrmRepository<Hrm.Domain.Year> _YearRepository;
+        private readonly IHrmRepository<Hrm.Domain.Holidays> _HolidaysRepository;
+        private readonly IHrmRepository<Hrm.Domain.Attendance> _AttendanceRepository;
 
-        public GetLeaveAmountRequestHandler(IHrmRepository<Domain.LeaveRequest> leaveRequestRepository, IHrmRepository<Domain.LeaveRules> leaveRulesRepository, IHrmRepository<Domain.Workday> WeekdayRepository,
-            IHrmRepository<Domain.Year> YearRepository)
+        public GetLeaveAmountRequestHandler(IHrmRepository<Domain.LeaveRequest> leaveRequestRepository, IHrmRepository<Domain.LeaveRules> leaveRulesRepository,
+            IHrmRepository<Domain.Attendance> AttendanceRepository)
         {
             _LeaveRequestRepository = leaveRequestRepository;
             _LeaveRulesRepository = leaveRulesRepository;
-            _WorkdayRepository = WeekdayRepository;
-            _YearRepository = YearRepository;
+            _AttendanceRepository = AttendanceRepository;
         }
 
         public async Task<object> Handle(GetLeaveAmountRequest request, CancellationToken cancellationToken)
         {
             var leaveRules = await _LeaveRulesRepository.Where(x => x.LeaveTypeId == request.leaveAmountRequestDto.LeaveTypeId).ToListAsync();
 
-            int totalLeave = 0;
+            int totalLeave = -1;
             int totalDue = 0;
+            int currentYear = (new DateTime()).Year;
+            int currentMonth = (new DateTime()).Month;
+
             if(leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysLifetime).Any())
             {
                 totalLeave = leaveRules.Where(x => x.RuleName == LeaveRule.MaxDaysLifetime).ToList()[0].RuleValue;
 
+                var totalLeaveTaken = _AttendanceRepository.Where(x => x.AttendanceStatus.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.EmpId == request.leaveAmountRequestDto.EmpId && x.DayTypeId == (int)DayTypeOption.Workday).Count();
+
+                totalDue = totalLeave - totalLeaveTaken;
+            } else if(leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysPerYear).Any())
+            {
+                totalLeave = leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysPerYear).ToList()[0].RuleValue;
+
+                var totalLeaveTaken = _AttendanceRepository.Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.AttendanceDate.Year == currentYear && x.DayTypeId == (int)DayTypeOption.Workday).Count();
+
+                totalDue = totalLeave - totalLeaveTaken;
+            } else if(leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysPerMonth).Any())
+            {
+                totalLeave = leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysPerMonth).ToList()[0].RuleValue;
+
+                var totalLeaveTaken = _AttendanceRepository.Where(x => x.AttendanceDate.Month == currentMonth && x.AttendanceDate.Year == currentYear && x.DayTypeId == (int)DayTypeOption.Workday).Count();
+
+                totalDue = totalLeave - totalLeaveTaken;
             }
 
-
+            if(totalLeave==-1)
+            {
+                totalDue = -1;
+            }
             return new {totalLeave = totalLeave, totalDue = totalDue};
             
         }
 
-        public List<DateTime> generateDate(DateTime startDate, DateTime endDate)
+        /*public List<DateTime> generateDate(DateTime startDate, DateTime endDate)
         {
             List<DateTime> result = new List<DateTime>();
 
@@ -58,9 +83,9 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
             }
 
             return result;
-        }
+        }*/
 
-        public List<DateTime> filterDates(DateTime startDate, DateTime endDate)
+        /*public List<DateTime> filterDates(DateTime startDate, DateTime endDate)
         {
 
             var dates = generateDate(startDate, endDate);
@@ -78,12 +103,13 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
 
             foreach(var day in days)
             {
-                listQuerable = listQuerable.Where(x => x.DayOfWeek.ToString() == day);
+                listQuerable = listQuerable.Where(x => x.DayOfWeek.ToString() != day);
             }
 
+            var holidaysDate = _HolidaysRepository.Where(x => x.Year.YearName == currentDates.Year).Select(x => new DateTime()).ToList();
 
 
             return listQuerable.ToList();
-        }
+        } */
     }
 }

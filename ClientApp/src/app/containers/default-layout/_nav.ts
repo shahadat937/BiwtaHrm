@@ -423,7 +423,7 @@ export const navItems: INavData[] = [
          url:'/promotion/manage-incrementAndPromotion'
       },
       {
-        name: 'Incre. & Promo. Approval',
+        name: 'Approval List',
         url: '/promotion/incrementAndPromotionApproval'
       },
     ]

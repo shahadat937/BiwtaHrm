@@ -39,7 +39,7 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
                 .Include(x => x.UpdateGrade)
                 .Include(x => x.UpdateScale);
 
-            EmpPromotionIncrements = EmpPromotionIncrements.OrderByDescending(x => x.Id);
+            EmpPromotionIncrements = EmpPromotionIncrements.OrderBy(x => x.ApproveStatus);
 
             var EmpPromotionIncrementDtos = _mapper.Map<List<EmpPromotionIncrementDto>>(EmpPromotionIncrements);
 

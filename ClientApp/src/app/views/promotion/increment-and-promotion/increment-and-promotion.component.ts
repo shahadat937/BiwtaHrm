@@ -232,7 +232,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       if(res){
         this.empJobDetailsId = res.id;
         this.getDesignationByDepartmentId(res.departmentId, res.id);
-        if(!this.empPromotionIncrement){
+        if(!this.empPromotionIncrement.id){
           this.empPromotionIncrementService.empPromotionIncrement.currentSectionName = res.sectionName;
           this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentName = res.departmentName;
           this.empPromotionIncrementService.empPromotionIncrement.currentDesignationName = res.designationName;
@@ -281,6 +281,9 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     this.loading = true;
     if(form.value.provideApprovalInfo == true){
       form.value.approveById = this.loginEmpId;
+    }
+    if(form.value.approveStatus == 'null'){
+      form.value.approveStatus = null;
     }
     this.empPromotionIncrementService.cachedData = [];
     const id = form.value.id;

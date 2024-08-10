@@ -39,6 +39,7 @@ import { MatTableModule } from '@angular/material/table';
 import { IconModule } from '@coreui/icons-angular';
 import { TransferPostingRoutingModule } from '../transferPosting/transfer-routing.module';
 import { PromotionIncrementInfoComponent } from './promotion-increment-info/promotion-increment-info.component';
+import { PromotionApprovalListComponent } from './promotion-approval-list/promotion-approval-list.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { PromotionIncrementInfoComponent } from './promotion-increment-info/prom
     IncrementAndPromotionComponent,
     IncrementAndPromotionApprovalComponent,
     PromotionIncrementInfoComponent,
+    PromotionApprovalListComponent,
   ],
   imports: [
     CommonModule,

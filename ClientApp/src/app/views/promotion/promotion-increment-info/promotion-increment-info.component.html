@@ -1,1 +1,117 @@
-<p>promotion-increment-info works!</p>
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Transfer Posting Info</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                <!-- ********** Employee Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Employee Information</div>
+                    </c-card-header>
+                    <c-card-body cRow>
+                        <c-col [md]="6">
+                            <label><b>PMIS Id: </b>{{empPromotionIncrement.empIdCardNo}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Employee Name: </b>{{empPromotionIncrement.empName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Department: </b>{{empPromotionIncrement.currentDepartmentName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Designation: </b>{{empPromotionIncrement.currentDesignationName}}</label>
+                        </c-col>
+                    </c-card-body>
+                </c-card>
+
+                <!-- ********** Current Pay Scale Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Current Pay Scale Information</div>
+                    </c-card-header>
+                    <c-card-body cRow>
+                        <c-col [md]="6">
+                            <label><b>Grade: </b>{{empPromotionIncrement.currentGradeName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Scale: </b>{{empPromotionIncrement.currentScaleName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Basic Pay: </b>{{empPromotionIncrement.currentBasicPay}}</label>
+                        </c-col>
+                    </c-card-body>
+                </c-card>
+                
+                <!-- ********** Increment and Promotion Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Increment and Promotion Information</div>
+                    </c-card-header>
+                    <c-card-body cRow>
+                        <c-col [md]="6">
+                            <label><b>Type: </b>{{empPromotionIncrement.promotionIncrementType}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Designation: </b>{{empPromotionIncrement.updateDesignationName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Grade: </b>{{empPromotionIncrement.updateGradeName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Scale: </b>{{empPromotionIncrement.updateScaleName}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Basic Pay: </b>{{empPromotionIncrement.updateBasicPay}}</label>
+                        </c-col>
+                    </c-card-body>
+                </c-card>
+                
+                <!-- ********** Approve Information *********** -->
+                <c-card class="mb-3 shadow">
+                    <c-card-header class="text-center">
+                        <div>Approve Information</div>
+                    </c-card-header>
+                    <c-card-body cRow [gutter]="3">
+                        <div class="mb-3">
+                            <b>Transfer Approve Status : </b>
+                            <button cButton color="warning" size="sm" *ngIf="empPromotionIncrement.approveStatus == null">Pending</button> &nbsp;
+                            <button cButton color="info" size="sm" *ngIf="empPromotionIncrement.approveStatus == null && empPromotionIncrement.isApproval == true"><svg [cIcon]="icons.cilBell"></svg></button>
+                            <button cButton color="success" size="sm" *ngIf="empPromotionIncrement.approveStatus == true">Approved</button>
+                            <button cButton color="danger" size="sm" *ngIf="empPromotionIncrement.approveStatus == false">Rejected</button>
+                        </div>
+                        <div *ngIf="!empPromotionIncrement.isApproval">
+                            <c-alert class="text-center">Promotion Approval is not needed</c-alert>
+                        </div>
+                        <div *ngIf="empPromotionIncrement.approveStatus != null && empPromotionIncrement.isApproval" cRow>
+                            <c-col [md]="6">
+                                <label><b>Approve Date: </b>{{empPromotionIncrement.approveDate}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Approve By: </b>{{empPromotionIncrement.approveByName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Department: </b>{{empPromotionIncrement.approveByDepartmentName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Designation: </b>{{empPromotionIncrement.approveByDesignationName}}</label>
+                            </c-col>
+                            <c-col [md]="6" *ngIf="empPromotionIncrement.approveRemark">
+                                <label><b>Remark: </b>{{empPromotionIncrement.approveRemark}}</label>
+                            </c-col>
+                        </div>
+                    </c-card-body>
+                </c-card>
+            </div>
+            <div class="modal-footer">
+                <button mat-raised-button class="bg-secondary text-light" (click)="closeModal()">
+                    <mat-icon>cancel</mat-icon> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

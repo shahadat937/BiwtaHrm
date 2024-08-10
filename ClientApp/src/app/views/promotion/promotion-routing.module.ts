@@ -3,6 +3,7 @@ import { IncrementAndPromotionComponent } from './increment-and-promotion/increm
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ManagePromotionComponent } from './manage-promotion/manage-promotion.component';
+import { PromotionApprovalListComponent } from './promotion-approval-list/promotion-approval-list.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,7 @@ const routes: Routes = [
   },
   {
     path:'incrementAndPromotionApproval',
-    component:IncrementAndPromotionApprovalComponent
+    component:PromotionApprovalListComponent
   },
   {
     path:'manage-incrementAndPromotion',

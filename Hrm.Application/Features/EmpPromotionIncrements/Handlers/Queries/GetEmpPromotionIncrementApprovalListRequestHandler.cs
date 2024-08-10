@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
 
         public async Task<object> Handle(GetEmpPromotionIncrementApprovalListRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<EmpPromotionIncrement> EmpPromotionIncrements = _EmpPromotionIncrementRepository.Where(x => true)
+            IQueryable<EmpPromotionIncrement> EmpPromotionIncrements = _EmpPromotionIncrementRepository.Where(x => x.IsApproval == true)
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.ApplicationBy)
                 .Include(x => x.OrderBy)

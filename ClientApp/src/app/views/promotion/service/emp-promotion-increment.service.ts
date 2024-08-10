@@ -35,13 +35,6 @@ export class EmpPromotionIncrementService {
     return this.http.get<EmpPromotionIncrement[]>(this.baseUrl + '/empPromotionIncrement/get-AllEmpPromotionIncrementApproveInfo');
   }
   
-  getAllEmpPromotionIncrementDeptApproveInfo(){
-    return this.http.get<EmpPromotionIncrement[]>(this.baseUrl + '/empPromotionIncrement/get-EmpPromotionIncrementDeptApprove');
-  }
-  
-  getAllEmpPromotionIncrementJoiningInfo(){
-    return this.http.get<EmpPromotionIncrement[]>(this.baseUrl + '/empPromotionIncrement/get-EmpPromotionIncrementJoiningInfo');
-  }
   
   findById(id: number) {
     return this.http.get<EmpPromotionIncrement>(this.baseUrl + '/empPromotionIncrement/get-EmpPromotionIncrementById/' + id);

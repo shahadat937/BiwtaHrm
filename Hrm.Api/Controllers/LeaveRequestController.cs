@@ -83,4 +83,52 @@ public class LeaveRequestController:Controller
         return Ok(response);
     }
 
+    [HttpPut]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    [Route("approve-LeaveRequestByReviewer/{leaveRequestId}")]
+    public async Task<ActionResult<BaseCommandResponse>> approveLeaveRequestReviewer(int leaveRequestId)
+    {
+        var command = new ApproveLeaveRequestReviewerCommand { LeaveRequestId =  leaveRequestId };
+        var response = await _mediator.Send(command);
+
+        return Ok(response);
+    }
+
+    [HttpPut]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    [Route("deny-LeaveRequestByReviewer/{leaveRequestId}")]
+    public async Task<ActionResult<BaseCommandResponse>> denyLeaveRequestReviewer(int leaveRequestId)
+    {
+        var command = new DenyLeaveRequestReviewerCommand { LeaveRequestId= leaveRequestId };
+        var response = await _mediator.Send(command);
+
+        return Ok(response);
+    }
+
+    [HttpPut]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    [Route("approve-LeaveRequestFinal/{leaveRequestId}")]
+    public async Task<ActionResult<BaseCommandResponse>> approveLeaveRequestFinal(int leaveRequestId)
+    {
+        var command = new ApproveLeaveRequestFinalCommand { LeaveRequestId = leaveRequestId };
+        var response = await _mediator.Send(command);
+
+        return Ok(response);
+    }
+
+    [HttpPut]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    [Route("deny-LeaveRequestFinal/{leaveRequestId}")]
+    public async Task<ActionResult<BaseCommandResponse>> denyLeaveRequestFinal(int leaveRequestId)
+    {
+        var command = new DenyLeaveRequestFinalCommand { LeaveRequestId = leaveRequestId };
+        var response = await _mediator.Send(command);
+
+        return Ok(response);
+    }
+
 }

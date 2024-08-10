@@ -113,7 +113,7 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Commands
 
 
             response.Success = true;
-            response.Message = "Creation Successful";
+            response.Message = "Update Successful";
 
             return response;
         }

@@ -9,6 +9,9 @@ using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Responses;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Application.Contracts.Identity;
+using Hrm.Application.Models.Identity;
+using Hrm.Application.DTOs.Role;
 namespace Hrm.Api.Controllers
 {
 
@@ -16,21 +19,34 @@ namespace Hrm.Api.Controllers
     [ApiController]
     public class UserRoleController : Controller
     {
+        private readonly IRoleService _authenticationService;
         private readonly IMediator _mediator;
-        public UserRoleController(IMediator mediator)
+        public UserRoleController(IRoleService authenticationService, IMediator mediator)
         {
+            _authenticationService = authenticationService;
             _mediator = mediator;
         }
+
+        //[HttpPost]
+        //[ProducesResponseType(200)]
+        //[ProducesResponseType(400)]
+        //[Route("save-userRole")]
+        //public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateUserRoleDto UserRole)
+        //{
+        //    var command = new CreateBloodCommand { UserRoleDto = UserRole };
+        //    var response = await _mediator.Send(command);
+        //    return Ok(response);
+        //}
+
+
         [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [Route("save-userRole")]
-        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateUserRoleDto UserRole)
+        [Route("save-role")]
+        public async Task<ActionResult<BaseCommandResponse>> RoleCreate(CreateRoleDto request)
         {
-            var command = new CreateBloodCommand { UserRoleDto = UserRole };
-            var response = await _mediator.Send(command);
-            return Ok(response);
+            return Ok(await _authenticationService.Save(null, request));
         }
+
+
 
         [HttpGet]
         [Route("get-userRole")]

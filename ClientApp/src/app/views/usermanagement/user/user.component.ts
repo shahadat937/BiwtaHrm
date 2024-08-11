@@ -201,6 +201,4 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
       });
     });
   }
-
-  delete(element: any){}
 }

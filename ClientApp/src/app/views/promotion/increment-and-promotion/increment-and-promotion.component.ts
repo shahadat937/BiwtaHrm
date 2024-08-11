@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { cilArrowLeft } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -47,6 +47,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     public officeService: OfficeService,
     public departmentService: DepartmentService,
     private route: ActivatedRoute,
+    private router: Router,
   ) {
 
   }
@@ -297,6 +298,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
+        this.router.navigate(['/promotion/manage-incrementAndPromotion']);
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',

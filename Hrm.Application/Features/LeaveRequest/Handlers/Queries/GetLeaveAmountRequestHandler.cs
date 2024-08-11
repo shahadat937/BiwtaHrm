@@ -3,6 +3,8 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.TaskName;
 using Hrm.Application.Enum;
 using Hrm.Application.Features.LeaveRequest.Requests.Queries;
+using Hrm.Application.Helpers;
+using Hrm.Application.Exceptions;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
@@ -20,47 +22,89 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
     {
         private readonly IHrmRepository<Hrm.Domain.LeaveRequest> _LeaveRequestRepository;
         private readonly IHrmRepository<Hrm.Domain.LeaveRules> _LeaveRulesRepository;
-        private readonly IHrmRepository<Hrm.Domain.Workday> _WorkdayRepository;
-        private readonly IHrmRepository<Hrm.Domain.Year> _YearRepository;
-        private readonly IHrmRepository<Hrm.Domain.Holidays> _HolidaysRepository;
         private readonly IHrmRepository<Hrm.Domain.Attendance> _AttendanceRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly LeaveAtdHelper leaveAtdHelper;
 
         public GetLeaveAmountRequestHandler(IHrmRepository<Domain.LeaveRequest> leaveRequestRepository, IHrmRepository<Domain.LeaveRules> leaveRulesRepository,
-            IHrmRepository<Domain.Attendance> AttendanceRepository)
+            IHrmRepository<Domain.Attendance> AttendanceRepository,
+            IUnitOfWork unitOfWork)
         {
             _LeaveRequestRepository = leaveRequestRepository;
             _LeaveRulesRepository = leaveRulesRepository;
             _AttendanceRepository = AttendanceRepository;
+            _unitOfWork = unitOfWork;
+            
         }
 
         public async Task<object> Handle(GetLeaveAmountRequest request, CancellationToken cancellationToken)
         {
             var leaveRules = await _LeaveRulesRepository.Where(x => x.LeaveTypeId == request.leaveAmountRequestDto.LeaveTypeId).ToListAsync();
 
+            DateOnly? joiningDate = null;
+
+            if(_unitOfWork.Repository<Domain.EmpJobDetail>().Where(x=>x.EmpId == request.leaveAmountRequestDto.EmpId).Any())
+            {
+                var temp = await _unitOfWork.Repository<Domain.EmpJobDetail>().Where(x => x.EmpId == request.leaveAmountRequestDto.EmpId).Select(x => x.JoiningDate).ToListAsync();
+
+                joiningDate = temp[0];
+            }
+
             int totalLeave = -1;
             int totalDue = 0;
-            int currentYear = (new DateTime()).Year;
-            int currentMonth = (new DateTime()).Month;
+            int currentYear = DateTime.Now.Year;
+            int currentMonth = DateTime.Now.Month;
+            int accuralTotalLeave = -1;
+            
+
+            if(leaveRules.Where(x=>x.RuleName == LeaveRule.AccrualRate).Any() && leaveRules.Where(x=>x.RuleName == LeaveRule.AccrualFrequency).Any())
+            {
+                if(joiningDate == null)
+                {
+                    throw new BadRequestException("Joining Date was not found in Employee Job Detail");
+                }
+
+                DateTime joiningDateDt = new DateTime(joiningDate.Value.Year, joiningDate.Value.Month, joiningDate.Value.Day);
+
+                int accuralRate = leaveRules.Where(x => x.RuleName == LeaveRule.AccrualRate).Select(x => x.RuleValue).ToList()[0];
+
+                int accuralFreq = leaveRules.Where(x=>x.RuleName == LeaveRule.AccrualFrequency).Select(x=>x.RuleValue).ToList()[0];
+
+                int totalWorkingDays = await AttendanceHelper.calculateWorkingDay(joiningDateDt, DateTime.Now, currentYear, _unitOfWork);
+
+                accuralTotalLeave = (totalWorkingDays % accuralFreq) * accuralRate;
+
+                var totalLeaveTaken = _AttendanceRepository.Where(x => x.AttendanceStatus.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.EmpId == request.leaveAmountRequestDto.EmpId && x.DayTypeId == (int)DayTypeOption.Workday && x.LeaveRequest.LeaveTypeId == request.leaveAmountRequestDto.LeaveTypeId).Count();
+
+                totalLeave = accuralTotalLeave;
+                totalDue = accuralTotalLeave - totalLeaveTaken;
+
+            }
+            
 
             if(leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysLifetime).Any())
             {
                 totalLeave = leaveRules.Where(x => x.RuleName == LeaveRule.MaxDaysLifetime).ToList()[0].RuleValue;
 
-                var totalLeaveTaken = _AttendanceRepository.Where(x => x.AttendanceStatus.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.EmpId == request.leaveAmountRequestDto.EmpId && x.DayTypeId == (int)DayTypeOption.Workday).Count();
+                var totalLeaveTaken = _AttendanceRepository.Where(x => x.AttendanceStatus.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.EmpId == request.leaveAmountRequestDto.EmpId && x.DayTypeId == (int)DayTypeOption.Workday && x.LeaveRequest.LeaveTypeId == request.leaveAmountRequestDto.LeaveTypeId).Count();
 
+                if(accuralTotalLeave!=-1)
+                totalDue = Math.Min(totalLeave,accuralTotalLeave) - totalLeaveTaken;
+                else
                 totalDue = totalLeave - totalLeaveTaken;
+
             } else if(leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysPerYear).Any())
             {
                 totalLeave = leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysPerYear).ToList()[0].RuleValue;
 
-                var totalLeaveTaken = _AttendanceRepository.Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.AttendanceDate.Year == currentYear && x.DayTypeId == (int)DayTypeOption.Workday).Count();
+                var totalLeaveTaken = _AttendanceRepository.Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.AttendanceDate.Year == currentYear && x.DayTypeId == (int)DayTypeOption.Workday && x.LeaveRequest.LeaveTypeId == request.leaveAmountRequestDto.LeaveTypeId).Count();
 
                 totalDue = totalLeave - totalLeaveTaken;
             } else if(leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysPerMonth).Any())
             {
                 totalLeave = leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysPerMonth).ToList()[0].RuleValue;
 
-                var totalLeaveTaken = _AttendanceRepository.Where(x => x.AttendanceDate.Month == currentMonth && x.AttendanceDate.Year == currentYear && x.DayTypeId == (int)DayTypeOption.Workday).Count();
+                var totalLeaveTaken = _AttendanceRepository.Where(x => x.AttendanceDate.Month == currentMonth && x.AttendanceDate.Year == currentYear && x.DayTypeId == (int)DayTypeOption.Workday && x.LeaveRequest.LeaveTypeId == request.leaveAmountRequestDto.LeaveTypeId).Count();
 
                 totalDue = totalLeave - totalLeaveTaken;
             }

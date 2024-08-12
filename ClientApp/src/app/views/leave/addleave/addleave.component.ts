@@ -64,12 +64,15 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
           console.log(response);
           if(response!=null) {
             this.employeeName = response.firstName + " "+response.lastName;
+            this.addLeaveService.addLeaveModel.empId = response.empId;
           } else {
             this.employeeName = "";
+            this.addLeaveService.addLeaveModel.empId = null;
           }
         },
         error: err=> {
-
+          this.employeeName = "";
+          this.addLeaveService.addLeaveModel.empId = null;
         },
         complete:()=> {
           console.log("Complete");

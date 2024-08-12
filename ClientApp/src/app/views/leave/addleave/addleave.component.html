@@ -4,7 +4,7 @@
         <form cForm>
           <div>
             <h5 class="mb-3">Leave</h5>
-            <form cRow action="" #addLeaveForm="ngForm">
+            <form cRow action="" #addLeaveForm="ngForm" [gutter]="3">
               <c-col [md]="4">
                 <label cLabel for="employeeId">Employee PMS</label>
                 <input type="text" name="empCardNo" [(ngModel)]="empCardNo" cFormControl id="employeeId" (input)="onEmpIdChange($event)"/>
@@ -15,8 +15,13 @@
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="leaveType">Leave Type</label>
-                <select cSelect cFormControl id="leaveType">
-                  <option [ngValue]="null">Select Leave Type</option>
+                <select 
+                name="leaveTypeId"
+                [(ngModel)]="this.addLeaveService.addLeaveModel.leaveTypeId"
+                #leavType = "ngModel"
+                cSelect 
+                cFormControl id="leaveType">
+                  <option [ngValue]="null" selected>Select Leave Type</option>
                   @for (leaveType of LeaveTypeOption; track $index) {
                     <option [ngValue]="leaveType.id">{{leaveType.name}}</option>
                   }
@@ -24,15 +29,21 @@
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="startDate">Start Date</label>
-                <input type="date" cFormControl id="startDate" />
+                <input type="date" 
+                name="fromDate"
+                [(ngModel)]="this.addLeaveService.addLeaveModel.fromDate"
+                cFormControl id="startDate" />
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="endDate">End Date</label>
-                <input type="date" cFormControl id="endDate" />
+                <input type="date" 
+                name="toDate"
+                [(ngModel)]="this.addLeaveService.addLeaveModel.toDate"
+                cFormControl id="endDate" />
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="totalLeaveDue">Total Leave Due</label>
-                <input type="text" cFormControl id="totalLeaveDue" />
+                <input name="totalLeave" type="text" cFormControl id="totalLeaveDue" />
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="totalLeaveDays">Total Leave Days</label>

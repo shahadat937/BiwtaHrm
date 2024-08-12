@@ -1,0 +1,151 @@
+<p>leave-rules works!</p>
+<c-card>
+    <c-card-header>
+        Leave Rule Setup
+    </c-card-header>
+    <c-card-body>
+        <c-card>
+            <c-card-body>
+                <form (ngSubmit)="onSubmit()" cForm cRow #leaveRuleForm = "ngForm" [gutter]="3">
+                    <c-col md="3">
+                        <label for="leaveTypeId" cLabel>
+                            Leave Type
+                        </label>
+                        <select name="leaveTypeId" 
+                        [(ngModel)] = "this.leaveRuleService.leaveRule.leaveTypeId"
+                        #leaveTypeId = "ngModel"
+                        id="leaveTypeId" cSelect required>
+                            <option [ngValue]="null">Select Leave Type</option>
+                            @for (leaveType of leaveTypeOption; track $index) {
+                                <option [ngValue]="leaveType.id">{{leaveType.name}}</option>
+                            }
+                        </select>
+                        @if(leaveTypeId.invalid&&leaveTypeId.touched) {
+                            <div class="text-left text-danger">Leave Type is required</div>
+                        }
+                    </c-col>
+                    <c-col md="3">
+                        <label for="ruleName" cLabel="">Rule Name</label>
+                        <select name="ruleName" 
+                        required
+                        [(ngModel)] = "this.leaveRuleService.leaveRule.ruleName"
+                        #ruleName = "ngModel"
+                        id="ruleName" cSelect>
+                            <option [ngValue]="null">Select Rule Name</option>
+                            @for (ruleName of RuleNameOption; track $index) {
+                                <option [ngValue]="ruleName.id">{{ruleName.name}}</option>
+                            }
+                        </select>
+                        @if (ruleName.invalid&&ruleName.touched) {
+                            <div class="text-left text-danger">
+                                Rule Name is required
+                            </div>
+                        }
+                    </c-col>
+                    <c-col md="3">
+                        <label for="ruleValue" cLabel>Rule Value</label>
+                        <input type="number" 
+                        required
+                        [(ngModel)] = "this.leaveRuleService.leaveRule.ruleValue"
+                        #ruleValue = "ngModel"
+                        name="ruleValue" 
+                        id="ruleValue" cFormControl placeholder="Enter Rule Value">
+                        @if (ruleValue.invalid&&ruleValue.touched) {
+                            <div class="text-left text-danger">Rule Value is required</div>
+                        }
+                    </c-col>
+                    <c-col md="3">
+                       <label for="isActive" cLabel>Status</label> 
+                       <select name="isActive" 
+                       required
+                       [(ngModel)]="this.leaveRuleService.leaveRule.isActive"
+                       #ruleStatus = "ngModel"
+                       cSelect
+                       id="isActive">
+                            <option [ngValue]="null">Select Status</option>
+                            <option value="true">Active</option>
+                            <option value="false">Deactive</option>
+                       </select>
+                       @if (ruleStatus.invalid&&ruleStatus.touched) {
+                            <div class="text-left text-danger">Status is required</div>
+                       }
+                    </c-col>
+                    <c-row class="mt-3">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button 
+                                class="me-3"
+                                cButton
+                                [disabled]="loading||leaveRuleForm.invalid"
+                                type="submit" 
+                                color="primary">
+                                    <c-spinner
+                                      [hidden]="loading == false"
+                                      size="sm"
+                                    ></c-spinner>
+                                    {{isUpdate?"Update":"Submit"}}</button>
+                                
+                                <button cButton color="secondary" (click)="onReset()">Reset</button>
+                            </div>
+                        </div>
+                    </c-row>
+                </form>
+            </c-card-body>
+        </c-card>
+        <c-card class="mt-3">
+            <c-card-body>
+
+                <c-row class="mb-3">
+                    <c-col md="3">
+                        <select 
+                        [(ngModel)] = "leaveTypeIdFilter"
+                        (change)="onLeaveTypeChange()"
+                        name="leaveTypeFilter" 
+                        id="leaveTypeFilter" 
+                        cSelect>
+                            <option [ngValue]="null">Select Leave Type</option> 
+                            @for (leaveType of leaveTypeOption; track $index) {
+                                <option [ngValue]="leaveType.id">{{leaveType.name}}</option>
+                            }
+                        </select>
+                    </c-col>
+                </c-row>
+                <h5>Leave Rule</h5>
+                <p-table
+                [value]="leaveRules"
+                [paginator]="true"
+                [rows]="5"
+                [tableStyle]="{ 'min-width': '50rem' }"
+                [rowsPerPageOptions]="[5, 10, 20, 50]"
+                
+                >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>RuleId</th>
+                            <th>Rule Name</th>
+                            <th>Rule Value</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-leaveRule let-i="rowIndex">
+                        <tr>
+                            <td>{{ leaveRule.ruleId}}</td>
+                            <td>{{ leaveRule.ruleName }}</td>
+                            <td>{{ leaveRule.ruleValue }}</td>
+                            <td>{{ leaveRule.isActive==true?"Active":"Deactive"}}</td>
+                            <td>
+                                <button class="custom-button" (click)="UpdateButtonAction(leaveRule,i)">
+                                    <svg [cIcon]="icons.cilPencil" size="lg" title="Edit"></svg>
+                                </button>
+                                <button class="custom-button" (click)="onDelete(leaveRule.ruleId,i)">
+                                    <svg [cIcon]="icons.cilTrash" size="lg" title="delete"></svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </c-card-body>
+        </c-card>
+    </c-card-body>
+</c-card>

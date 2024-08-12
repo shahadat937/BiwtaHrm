@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Domain
+namespace Hrm.Application.DTOs.AspNetUserRoles
 {
-    public class AspNetUserRoles
+    public interface IAspNetUserRolesDto
     {
         public string? UserId { get; set; }
         public string? RoleId { get; set; }

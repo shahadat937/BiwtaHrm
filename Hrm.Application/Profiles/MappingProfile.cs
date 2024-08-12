@@ -98,6 +98,7 @@ using Hrm.Application.DTOs.EmpTransferPosting;
 using Hrm.Application.DTOs.LeaveType;
 using Hrm.Application.DTOs.LeaveRules;
 using Hrm.Application.DTOs.EmpPromotionIncrement;
+using Hrm.Application.DTOs.AspNetUserRoles;
 
 
 
@@ -465,6 +466,9 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.UpdateDesignationName, opt => opt.MapFrom(src => src.UpdateDesignation.DesignationName))
             .ForMember(dest => dest.UpdateGradeName, opt => opt.MapFrom(src => src.UpdateGrade.GradeName))
             .ForMember(dest => dest.UpdateScaleName, opt => opt.MapFrom(src => src.UpdateScale.ScaleName));
+
+
+            CreateMap<AspNetUserRoles, AspNetUserRolesDto>().ReverseMap();
 
 
             // Site Visit Dto Mapping Created By Joy

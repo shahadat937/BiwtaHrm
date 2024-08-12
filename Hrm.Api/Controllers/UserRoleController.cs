@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.Contracts.Identity;
 using Hrm.Application.Models.Identity;
 using Hrm.Application.DTOs.Role;
+using Hrm.Application.DTOs.AspNetUserRoles;
 namespace Hrm.Api.Controllers
 {
 
@@ -55,32 +56,36 @@ namespace Hrm.Api.Controllers
             var UserRole = await _mediator.Send(new GetUserRoleRequest { });
             return Ok(UserRole);
         }
+
+
+        //*************** AspNetUserRole *****************
+
         [HttpGet]
         [Route("get-userRoleDetail/{id}")]
-        public async Task<ActionResult<UserRoleDto>> Get(int id)
+        public async Task<ActionResult<AspNetUserRolesDto>> Get(string id)
         {
-            var UserRoles = await _mediator.Send(new GetUserRoleDetailRequest { UserRoleId = id });
-            return Ok(UserRoles);
+            var UserRoles = await _mediator.Send(new GetUserRoleDetailRequest { UserId = id });
+            return UserRoles;
         }
         [HttpGet]
         [Route("get-selectedUserRoles")]
-        public async Task<ActionResult<List<SelectedModel>>> GetSelectedUserRole()
+        public async Task<ActionResult<List<SelectedStringModel>>> GetSelectedUserRole()
         {
             var UserRole = await _mediator.Send(new GetSelectedUserRoleRequest { });
-            return Ok(UserRole);
+            return UserRole;
         }
 
         [HttpPut]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
         [ProducesDefaultResponseType]
         [Route("update-userRole/{id}")]
-        public async Task<ActionResult> Put([FromBody] UserRoleDto UserRole)
+        public async Task<ActionResult> Put([FromBody] AspNetUserRolesDto UserRole)
         {
             var command = new UpdateUserRoleCommand { UserRoleDto = UserRole };
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+        //*************** AspNetUserRole *****************
 
 
         [HttpDelete]

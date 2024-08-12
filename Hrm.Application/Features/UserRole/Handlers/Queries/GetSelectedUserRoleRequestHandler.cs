@@ -1,5 +1,6 @@
 ﻿using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Features.UserRoles.Requests.Queries;
+using Hrm.Domain;
 using Hrm.Shared.Models;
 using MediatR;
 using System.Collections.Generic;
@@ -9,23 +10,23 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.UserRoles.Handlers.Queries
 { 
-    public class GetSelectedUserRoleRequestHandler : IRequestHandler<GetSelectedUserRoleRequest, List<SelectedModel>>
+    public class GetSelectedUserRoleRequestHandler : IRequestHandler<GetSelectedUserRoleRequest, List<SelectedStringModel>>
     {
-        private readonly IHrmRepository<Hrm.Domain.UserRole> _UserRoleRepository;
+        private readonly IHrmRepository<AspNetRoles> _UserRoleRepository;
 
 
-        public GetSelectedUserRoleRequestHandler(IHrmRepository<Hrm.Domain.UserRole> UserRoleRepository)
+        public GetSelectedUserRoleRequestHandler(IHrmRepository<AspNetRoles> UserRoleRepository)
         {
             _UserRoleRepository = UserRoleRepository;
         }
 
-        public async Task<List<SelectedModel>> Handle(GetSelectedUserRoleRequest request, CancellationToken cancellationToken)
+        public async Task<List<SelectedStringModel>> Handle(GetSelectedUserRoleRequest request, CancellationToken cancellationToken)
         {
-            ICollection<Hrm.Domain.UserRole> UserRoles = await _UserRoleRepository.FilterAsync(x => x.IsActive);
-            List<SelectedModel> selectModels = UserRoles.Select(x => new SelectedModel 
+            ICollection<AspNetRoles> UserRoles = await _UserRoleRepository.FilterAsync(x => true);
+            List<SelectedStringModel> selectModels = UserRoles.Select(x => new SelectedStringModel 
             {
-                Name = x.UserRoleName,
-                Id = x.UserRoleId
+                Name = x.Name,
+                Id = x.Id
             }).ToList();
             return selectModels;
         }

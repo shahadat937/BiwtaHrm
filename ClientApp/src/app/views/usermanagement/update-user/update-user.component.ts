@@ -42,6 +42,7 @@ export class UpdateUserComponent  implements OnInit, OnDestroy {
   icons = { cilArrowLeft, cilPlus, cilBell };
 
   ngOnInit(): void {
+    this.initaialUser();
     setTimeout(() => {
       this.modalOpened = true;
     }, 0);
@@ -70,6 +71,25 @@ export class UpdateUserComponent  implements OnInit, OnDestroy {
     });
   }
 
+  
+  initaialUser(form?: NgForm) {
+    if (form != null) form.resetForm();
+    this.userService.users = {
+      id: '',
+      userName: '',
+      oldPassword : '',
+      password: '',
+      rePassword: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber : '',
+      pNo : '',
+      empId: null,
+      menuPosition: 0,
+      isActive : true,
+    };
+  }
   
   closeModal(): void {
     this.bsModalRef.hide();

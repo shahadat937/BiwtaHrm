@@ -270,12 +270,12 @@ namespace Hrm.Identity.Services
                 if (result.Succeeded)
                 {
                     response.Success = true;
-                    response.Message = $"User information updated successfully.";
+                    response.Message = $"Password Changed successfully.";
                 }
                 else
                 {
                     response.Success = false;
-                    response.Message = $"Failed to update user information: {string.Join(", ", result.Errors)}";
+                    response.Message = $"Failed to Change: {string.Join(", ", result.Errors)}";
                 }
                 return response;
             }

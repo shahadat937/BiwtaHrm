@@ -71,10 +71,14 @@
                 <c-spinner *ngIf="loadingMap[element.id]" size="sm"></c-spinner>
                 <svg *ngIf="!loadingMap[element.id]" [cIcon]="icons.cilUserPlus"></svg> Create User
               </button>
-              <button class="btn btn-dark" *ngIf="element.userStatus" (click)="updateUser(element.id)">
+              <!-- <button class="btn btn-dark" *ngIf="element.userStatus" (click)="updateUser(element.id)">
                 <svg [cIcon]="icons.cilUser"></svg> Update User
-              </button> &nbsp;
+              </button> &nbsp; -->
               
+              <button class="btn btn-dark" *ngIf="element.userStatus">
+                <svg [cIcon]="icons.cilUser"></svg> User Created
+              </button> &nbsp;
+
               <button class="btn btn-dark" [routerLink]="['/employee/update-employee-information/', element.id]">
                 <svg [cIcon]="icons.cilCloudUpload"></svg> Update Information
               </button>

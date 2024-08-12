@@ -84,7 +84,7 @@ namespace Hrm.Identity.Services
                 if (result.Succeeded)
                 {
                     response.Success = true;
-                    response.Message = $"Register Successfull, UserName : '{request.RoleName}'.";
+                    response.Message = $"Register Successfull, RoleName : '{request.RoleName}'.";
                 }
                 else
                 {

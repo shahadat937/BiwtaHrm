@@ -1,0 +1,124 @@
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form #UserForm="ngForm" (submit)="onSubmit(UserForm)" novalidate cForm
+                class="needs-validation">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{heading}}</h5>
+                    <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+                <div class="modal-body scrollable-modal-body" cRow [gutter]="3" >
+
+                    <input type="hidden" [(ngModel)]="userService.users.id" name="id" />
+                    <input type="hidden" [(ngModel)]="userService.users.empId" name="empId" />
+
+                    @if(clickedButton == 'UpdateUser'){
+                        <c-col [md]="6">
+                            <label cLabel for="validationCustom01">User Name<span class="text-danger"></span></label>
+                            <input [(ngModel)]="userService.users.userName" name="userName" #UserName="ngModel"
+                                placeholder="Enter User Name" cFormControl id="validationCustom01" type="text" />
+                            @if(!UserName.value&&UserName.touched){
+                            <div class="text-left text-danger">User Name is required</div>
+                            }
+                            @if(!UserName.valid&&UserName.touched&&UserName.value){
+                            <div class="text-left text-danger">Invalid User Name (Min 6 Character)</div>
+                            }
+                        </c-col>
+
+                        <c-col [md]="6">
+                            <label cLabel for="validationCustom09">Active Status</label>
+                            <select [(ngModel)]="userService.users.isActive"
+                            name="isActive"
+                            cSelect
+                            id="validationCustom09">
+                            <option value="true">Active</option>
+                            <option value="false">De-Active</option>
+                            </select>
+                        </c-col>
+                    }
+
+                    @if(clickedButton == 'ChangePassword'){
+                        <c-col [md]="12" *ngIf="userService.users.id != ''">
+                            <label cLabel for="oldPassword"
+                            >Enter Old Password<span class="text-danger">*</span></label
+                          >
+                          <input
+                            [(ngModel)]="userService.users.oldPassword"
+                            name="oldPassword"
+                            #OldPassword="ngModel"
+                            placeholder="Enter Your Old Password"
+                            cFormControl
+                            id="oldPassword"
+                            required
+                            type="password"
+                            minlength="8"
+                            autocomplete="new-password" 
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                          />
+                          @if(!OldPassword.valid&&OldPassword.touched&&OldPassword.value){
+                            <div class="text-left text-danger">Password is not valid</div>
+                            <div class="text-left text-success">Password must contain (8 character, 1 uppercase, 1 lowercase, 1 number, 1 symbol)</div>
+                            }
+                        </c-col>
+            
+                        <c-col [md]="6">
+                            <label cLabel for="validationCustom07"
+                            >Enter New Password<span class="text-danger">*</span></label
+                        >
+                        <input
+                            [(ngModel)]="userService.users.password"
+                            name="password"
+                            #Password="ngModel"
+                            placeholder="Enter Your Password"
+                            cFormControl
+                            id="validationCustom07"
+                            required
+                            type="password"
+                            minlength="8"
+                            autocomplete="new-password" 
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                        />
+                        @if(!Password.value&&Password.touched){
+                        <div class="text-left text-danger">Password is required</div>
+                        }
+                        @if(!Password.valid&&Password.touched&&Password.value){
+                            <div class="text-left text-danger">Please is not valid</div>
+                            <div class="text-left text-success">Password must contain (8 character, 1 uppercase, 1 lowercase, 1 number, 1 symbol)</div>
+                            }
+                        </c-col>
+                        <c-col [md]="6">
+                            <label cLabel for="validationCustom08"
+                            >Re-Type Password<span class="text-danger">*</span></label
+                        >
+                        <input
+                            [(ngModel)]="userService.users.rePassword"
+                            name="rePassword"
+                            #RePassword="ngModel"
+                            placeholder="Re-Type Your Password"
+                            cFormControl
+                            id="validationCustom08"
+                            required
+                            type="password"
+                            autocomplete="new-password" 
+                        />
+                        @if(RePassword.touched && Password.value !== RePassword.value){
+                        <div class="text-left text-danger">Password Doesn't Match</div>
+                        }
+                        </c-col>
+                    }
+
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button class="bg-secondary text-light" (click)="closeModal()">
+                        <mat-icon>cancel</mat-icon> Close
+                    </button>
+                    <button mat-raised-button class="bg-success text-light" type="submit" [disabled]="UserForm.invalid">
+                        <mat-icon>update</mat-icon> Update
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

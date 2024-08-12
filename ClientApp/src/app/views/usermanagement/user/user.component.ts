@@ -14,6 +14,10 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { UserService } from '../service/user.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { IncrementAndPromotionApprovalComponent } from '../../promotion/increment-and-promotion-approval/increment-and-promotion-approval.component';
+import { UpdateRoleComponent } from '../update-role/update-role.component';
+import { UpdateUserComponent } from '../update-user/update-user.component';
 
 @Component({
   selector: 'app-user',
@@ -42,7 +46,8 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modalService: BsModalService,
   ) {
   }
 
@@ -162,11 +167,37 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
       this.dataSource.sort = this.matSort;
     });
   }
+
+  updateUserInformation(id: string, clickedButton: string){
+    const initialState = {
+      id: id,
+      clickedButton: clickedButton
+    };
+    const modalRef: BsModalRef = this.modalService.show(UpdateUserComponent, { initialState, backdrop: 'static' });
+
+    if (modalRef.onHide) {
+      modalRef.onHide.subscribe(() => {
+        this.getAllUsers();
+      });
+    }
+  }
+  
+  updateRole(id: number){
+    const initialState = {
+      id: id
+    };
+    const modalRef: BsModalRef = this.modalService.show(UpdateRoleComponent, { initialState, backdrop: 'static' });
+
+    if (modalRef.onHide) {
+      modalRef.onHide.subscribe(() => {
+        this.getAllUsers();
+      });
+    }
+  }
   
 
   onSubmit(form: NgForm): void{
     this.loading = true;
-    console.log("Form Value : ", form.value)
     this.userService.cachedData = [];
     this.route.paramMap.subscribe((params) => {
       const id = form.value.id;
@@ -176,14 +207,14 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     let action$;
 
       if (id && oldPassword && currentPassword) {
-        action$ = this.userService.updateAndChangePassword(id, form.value);
+        action$ = this.userService.updatePassword(id, form.value);
       } else if (id && !oldPassword && !currentPassword) {
         action$ = this.userService.update(id, form.value);
       } else {
         action$ = this.userService.submit(form.value);
       }
 
-      this.subscription =action$.subscribe((response: any)  => {
+      this.subscription = action$.subscribe((response: any)  => {
         if (response.success) {
           this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right',

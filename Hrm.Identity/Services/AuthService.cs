@@ -55,6 +55,12 @@ namespace Hrm.Identity.Services
 
             var result = await _signInManager.PasswordSignInAsync(user.UserName, request.Password, false, lockoutOnFailure: false);
 
+            if (user.IsActive == false)
+            {
+
+                throw new Exception("User is not Active");
+            }
+
             if (!result.Succeeded)
             {
                 throw new BadRequestException($"Credentials for '{request.Email} aren't valid'.");
@@ -223,11 +229,6 @@ namespace Hrm.Identity.Services
             {
                 // Update user properties
                 user.UserName = request.UserName;
-                user.FirstName = request.FirstName;
-                user.LastName = request.LastName;
-                user.Email = request.Email;
-                user.PhoneNumber = request.PhoneNumber;
-                user.EmpId = request.EmpId;
                 user.IsActive = request.IsActive;
 
 
@@ -261,26 +262,8 @@ namespace Hrm.Identity.Services
                 return response;
             }
 
-            IQueryable<Domain.AspNetUsers> existingUser = _aspNetUserRepository.Where(x => x.UserName.ToLower() == request.UserName.ToLower() && x.Id != request.Id);
-
-
-            if (existingUser.Any())
-            {
-                response.Success = false;
-                response.Message = $"Update Failed, UserName '{request.UserName}' already Exists.";
-            }
-
             else
             {
-                // Update user properties
-                user.UserName = request.UserName;
-                user.FirstName = request.FirstName;
-                user.LastName = request.LastName;
-                user.Email = request.Email;
-                user.PhoneNumber = request.PhoneNumber;
-                user.EmpId = request.EmpId;
-                user.IsActive = request.IsActive;
-
 
                 var result = await _userManager.ChangePasswordAsync(user, request.OldPassword,request.Password);
 
@@ -294,9 +277,9 @@ namespace Hrm.Identity.Services
                     response.Success = false;
                     response.Message = $"Failed to update user information: {string.Join(", ", result.Errors)}";
                 }
+                return response;
             }
 
-            return response;
         }
 
     }

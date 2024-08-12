@@ -21,11 +21,15 @@ import { UsermanagementRoutingModule } from './usermanagement-routing.module';
 import { UserComponent } from './user/user.component';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { UserService } from './service/user.service';
+import { UpdateUserComponent } from './update-user/update-user.component';
+import { UpdateRoleComponent } from './update-role/update-role.component';
 
 
 @NgModule({
   declarations: [
-    UserComponent
+    UserComponent,
+    UpdateUserComponent,
+    UpdateRoleComponent
   ],
   imports: [
     CommonModule,

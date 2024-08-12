@@ -44,11 +44,12 @@ export class UserService {
   submit(model: any) {
     return this.http.post(`${environment.securityUrl}/account/register`, model);
   }
+
   update(id: string,model: any){
     return this.http.put(this.baseUrl + '/users/update-user/'+id, model);
   }
 
-  updateAndChangePassword(id: string,model: any){
-    return this.http.put(this.baseUrl + '/users/update-userUserAndPassword/'+id, model);
+  updatePassword(id: string,model: any){
+    return this.http.put(this.baseUrl + '/users/update-password/'+id, model);
   }
 }

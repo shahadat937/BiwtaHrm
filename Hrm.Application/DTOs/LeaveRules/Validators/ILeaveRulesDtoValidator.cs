@@ -12,7 +12,7 @@ namespace Hrm.Application.DTOs.LeaveRules.Validators
         public ILeaveRulesDtoValidator() {
             RuleFor(e => e.RuleName).NotEmpty().WithMessage("{PropertyName} is required");
             RuleFor(e => e.RuleValue).NotEmpty().WithMessage("{PropertyName} is required");
-            RuleFor(e => e.IsActive).NotEmpty().WithMessage("{PropertyName} is required");
+            RuleFor(e => e.IsActive).NotNull().WithMessage("{PropertyName} is required");
         }
     }
 }

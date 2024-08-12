@@ -4,19 +4,22 @@
         <form cForm>
           <div>
             <h5 class="mb-3">Leave</h5>
-            <c-row>
+            <form cRow action="" #addLeaveForm="ngForm">
               <c-col [md]="4">
-                <label cLabel for="employeeId">Employee ID</label>
-                <input type="text" cFormControl id="employeeId" />
+                <label cLabel for="employeeId">Employee PMS</label>
+                <input type="text" name="empCardNo" [(ngModel)]="empCardNo" cFormControl id="employeeId" (input)="onEmpIdChange($event)"/>
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="employeeName">Employee Name</label>
-                <input type="text" cFormControl id="employeeName" />
+                <input type="text" readonly [(ngModel)]="employeeName" name="employeeName" cFormControl id="employeeName" />
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="leaveType">Leave Type</label>
                 <select cSelect cFormControl id="leaveType">
-                  <option value=""></option>
+                  <option [ngValue]="null">Select Leave Type</option>
+                  @for (leaveType of LeaveTypeOption; track $index) {
+                    <option [ngValue]="leaveType.id">{{leaveType.name}}</option>
+                  }
                 </select>
               </c-col>
               <c-col [md]="4">
@@ -43,7 +46,7 @@
                 <label cLabel for="remarks">Remarks</label>
                 <input type="text" cFormControl id="remarks" />
               </c-col>
-            </c-row>
+            </form>
           </div>
   
           <div class="mt-4">

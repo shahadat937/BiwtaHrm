@@ -19,6 +19,8 @@ import {
 import { LeaveRoutingModule } from './leave-routing.module';
 import { AddleaveComponent } from './addleave/addleave.component';
 import { ManageleaveComponent } from './manageleave/manageleave.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { SharedCustomModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,7 @@ import { ManageleaveComponent } from './manageleave/manageleave.component';
     TableModule,
     UtilitiesModule,
     PaginationModule,
-    
+    SharedCustomModule
   ]
 })
 export class LeaveModule { }

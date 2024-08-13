@@ -20,7 +20,6 @@ namespace Hrm.Application.DTOs.LeaveRequest
         public int? CountryId { get; set; }
         public string? ForeignLeavePurpose { get; set; }
         public string? AccompanyBy { get; set; }
-        public string? AssociatedFile { get; set; }
         public int? Status { get; set; }
         public bool? IsActive { get; set; }
         public string? Remark { get; set; }

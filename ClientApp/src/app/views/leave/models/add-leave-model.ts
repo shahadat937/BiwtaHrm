@@ -9,8 +9,8 @@ export class AddLeaveModel {
     countryId: number | null;
     foreignLeavePurpose: string | null;
     accompanyBy: string;
-    associatedFiles: string;
     isActive: boolean;
+    associatedFiles: File | null;
     remark: string;
 
 
@@ -26,8 +26,8 @@ export class AddLeaveModel {
         this.foreignLeavePurpose = null;
         this.accompanyBy = "";
         this.isActive = true;
-        this.associatedFiles = "";
         this.remark = "";
+        this.associatedFiles= null;
     }
 
 }

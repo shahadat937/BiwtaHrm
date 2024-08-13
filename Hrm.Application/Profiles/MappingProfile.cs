@@ -530,7 +530,8 @@ namespace Hrm.Application.Profiles
              .ForMember(dest => dest.EmpFirstName, opt => opt.MapFrom(src => src.Employee.FirstName))
              .ForMember(dest => dest.EmpLastName, opt => opt.MapFrom(src => src.Employee.LastName))
              .ForMember(dest => dest.LeaveTypeName, opt => opt.MapFrom(src => src.LeaveType.LeaveTypeName))
-             .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.CountryName));
+             .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.CountryName))
+             .ForMember(dest => dest.IdCardNo, opt => opt.MapFrom(src => src.Employee.IdCardNo));
 
         }
     }

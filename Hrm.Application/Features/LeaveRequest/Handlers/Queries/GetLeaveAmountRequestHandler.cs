@@ -72,7 +72,7 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
 
                 int totalWorkingDays = await AttendanceHelper.calculateWorkingDay(joiningDateDt, DateTime.Now, currentYear, _unitOfWork);
 
-                accuralTotalLeave = (totalWorkingDays % accuralFreq) * accuralRate;
+                accuralTotalLeave = (totalWorkingDays / accuralFreq) * accuralRate;
 
                 var totalLeaveTaken = _AttendanceRepository.Where(x => x.AttendanceStatus.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.EmpId == request.leaveAmountRequestDto.EmpId && x.DayTypeId == (int)DayTypeOption.Workday && x.LeaveRequest.LeaveTypeId == request.leaveAmountRequestDto.LeaveTypeId).Count();
 
@@ -88,9 +88,9 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
 
                 var totalLeaveTaken = _AttendanceRepository.Where(x => x.AttendanceStatus.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.EmpId == request.leaveAmountRequestDto.EmpId && x.DayTypeId == (int)DayTypeOption.Workday && x.LeaveRequest.LeaveTypeId == request.leaveAmountRequestDto.LeaveTypeId).Count();
 
-                if(accuralTotalLeave!=-1)
-                totalDue = Math.Min(totalLeave,accuralTotalLeave) - totalLeaveTaken;
-                else
+                if (accuralTotalLeave != -1)
+                    totalLeave = Math.Min(totalLeave, accuralTotalLeave);
+                
                 totalDue = totalLeave - totalLeaveTaken;
 
             } else if(leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysPerYear).Any())

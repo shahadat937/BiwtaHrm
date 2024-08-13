@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserModule } from '../model/user.module';
+import { UserRoles } from '../model/user-roles';
 import { environment } from 'src/environments/environment';
 import { Observable, map, of } from 'rxjs';
+import { SelectedStringModel } from 'src/app/core/models/selectedStringModel';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +13,10 @@ export class UserService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
   users: UserModule;
+  userRole: UserRoles;
   constructor(private http: HttpClient) {
     this.users = new UserModule();
+    this.userRole = new UserRoles();
    }
 
    
@@ -52,4 +56,17 @@ export class UserService {
   updatePassword(id: string,model: any){
     return this.http.put(this.baseUrl + '/users/update-password/'+id, model);
   }
+
+  getSelectedUserRoles(){
+    return this.http.get<SelectedStringModel[]>(this.baseUrl + '/userRole/get-selectedUserRoles/');
+  }
+
+  getUserRoleDetails(id: string){
+    return this.http.get<UserRoles>(this.baseUrl + '/userRole/get-userRoleDetail/' + id);
+  }
+  
+  updateUserRoles(id: string,model: any){
+    return this.http.put(this.baseUrl + '/userRole/update-userRole/'+id, model);
+  }
+
 }

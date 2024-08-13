@@ -459,7 +459,7 @@ export const navItems: INavData[] = [
     name: 'User Management'
   },
   {
-    name: 'Role',
+    name: 'Role Permission',
     url: '/base',
     iconComponent: { name: 'cil-user-follow' },
 

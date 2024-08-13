@@ -182,7 +182,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     }
   }
   
-  updateRole(id: number){
+  updateRole(id: string){
     const initialState = {
       id: id
     };

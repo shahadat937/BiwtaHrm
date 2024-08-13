@@ -1,6 +1,7 @@
 export class LeaveModel {
     leaveRequestId:number;
     empId: number;
+    idCardNo: string;
     leaveTypeId: number;
     fromDate: string;
     toDate: string;
@@ -21,6 +22,7 @@ export class LeaveModel {
     constructor() {
         this.leaveRequestId = 0;
         this.empId = 0;
+        this.idCardNo = "";
         this.leaveTypeId = 0;
         this.fromDate = "";
         this.toDate = "";

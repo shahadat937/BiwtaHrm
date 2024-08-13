@@ -879,6 +879,9 @@ namespace Hrm.Persistence
                     .HasForeignKey(at => at.LeaveRequestId);
             });
 
+            modelBuilder.Entity<AspNetUserRoles>()
+            .HasKey(ur => new { ur.UserId, ur.RoleId });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -947,7 +950,6 @@ namespace Hrm.Persistence
         public virtual DbSet<DepReleaseInfo> DepReleaseInfo { get; set; } = null!;
         public virtual DbSet<EmpTnsferPostingJoin> EmpTnsferPostingJoin { get; set; } = null!;
 
-        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; } = null!;
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; } = null!;
         public virtual DbSet<Year> Year { get; set; } = null!;
         public virtual DbSet<Employees> Employees { get; set; } = null!;
@@ -971,6 +973,7 @@ namespace Hrm.Persistence
         public virtual DbSet<EmpTrainingInfo> EmpTrainingInfo { get; set; } = null!;
 
         public virtual DbSet<EmpTransferPosting> EmpTransferPosting { get; set; } = null!;
+        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; } = null!;
 
 
         public virtual DbSet<SiteVisit> SiteVisit { get; set; } = null!;

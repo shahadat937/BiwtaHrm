@@ -88,7 +88,7 @@ export class UpdateUserInfoComponent implements OnInit, OnDestroy  {
     let action$;
 
       if (id && oldPassword && currentPassword) {
-        action$ = this.userService.updateAndChangePassword(id, form.value);
+        action$ = this.userService.updatePassword(id, form.value);
       } else if (id && !oldPassword && !currentPassword) {
         action$ = this.userService.update(id, form.value);
       } else {

@@ -7,7 +7,7 @@ import { DepartmentService } from '../../basic-setup/service/department.service'
 import { OfficeService } from '../../basic-setup/service/office.service';
 import { EmpTransferPostingService } from '../service/emp-transfer-posting.service';
 import { cilArrowLeft } from '@coreui/icons';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
 import { EmpTransferPosting } from '../model/emp-transfer-posting';
 
@@ -43,6 +43,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     public officeService: OfficeService,
     public departmentService: DepartmentService,
     private route: ActivatedRoute,
+    private router: Router,
   ) {
 
   }
@@ -492,6 +493,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
+        this.router.navigate(['/transferPosting/transferPostingList']);
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',

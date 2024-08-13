@@ -1,0 +1,51 @@
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form #UserRoleForm="ngForm" (submit)="onSubmit(UserRoleForm)" novalidate cForm
+                class="needs-validation">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update User Role</h5>
+                    <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+                <div class="modal-body scrollable-modal-body" cRow [gutter]="3" >
+
+                    <input type="hidden" [(ngModel)]="userService.userRole.userId" name="userId" />
+                    <input type="hidden" [(ngModel)]="userService.userRole.oldRoleId" name="oldRoleId" />
+                    <input type="hidden" [(ngModel)]="userService.userRole.newRoleId" name="newRoleId" />
+                    
+
+                    <c-col [md]="6">
+                        <label cLabel for="roleId">Role<span class="text-danger"></span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="userService.userRole.roleId"
+                                name="roleId" #roleId="ngModel" cFormControl id="roleId"
+                                aria-label="Default select example" cSelect>
+                                <option [ngValue]="null">Select Role</option>
+
+                                @for(selectedRole of selectedRoles; track selectedRole.id;let index=$index) {
+                                <option [value]="selectedRole.id">
+                                    {{ selectedRole.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!roleId.valid && roleId.touched){
+                            <div class="text-left text-danger">Role is required</div>
+                            }
+                        </div>
+                    </c-col>
+
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button class="bg-secondary text-light" type="button" (click)="closeModal()">
+                        <mat-icon>cancel</mat-icon> Close
+                    </button>
+                    <button mat-raised-button class="bg-success text-light" type="submit" [disabled]="UserRoleForm.invalid">
+                        <mat-icon>update</mat-icon> Update
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

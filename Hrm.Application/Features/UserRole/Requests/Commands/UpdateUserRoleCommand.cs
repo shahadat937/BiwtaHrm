@@ -1,4 +1,5 @@
-﻿using Hrm.Application.DTOs.UserRole;
+﻿using Hrm.Application.DTOs.AspNetUserRoles;
+using Hrm.Application.DTOs.UserRole;
 using Hrm.Application.DTOs.UserRole;
 using Hrm.Application.DTOs.UserRole;
 using Hrm.Application.DTOs.UserRole;
@@ -14,6 +15,6 @@ namespace Hrm.Application.Features.UserRole.Requests.Commands
 {
     public class UpdateUserRoleCommand : IRequest<BaseCommandResponse>
     {
-        public required UserRoleDto UserRoleDto { get; set; }
+        public AspNetUserRolesDto UserRoleDto { get; set; }
     }
 }

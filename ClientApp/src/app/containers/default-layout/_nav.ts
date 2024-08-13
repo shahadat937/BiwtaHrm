@@ -459,7 +459,7 @@ export const navItems: INavData[] = [
     name: 'User Management'
   },
   {
-    name: 'Role',
+    name: 'Role Permission',
     url: '/base',
     iconComponent: { name: 'cil-user-follow' },
 
@@ -690,8 +690,6 @@ export const navItems: INavData[] = [
         name: 'Account Type',
         url: '/bascisetup/bankAccountType'
       },
-
-
     ]
   },
   {
@@ -735,7 +733,26 @@ export const navItems: INavData[] = [
         name: 'Office Address',
         url: '/bascisetup/officeAddress'
       }
-
+    ]
+  },
+  
+  {
+    name: 'Navbar Setup',
+    url: '/navbarsetup',
+    iconComponent: { name: 'cil-menu' },
+    children: [
+      {
+        name: 'Module',
+        url: '/navbarsetup/module'
+      },
+      {
+        name: 'Feature',
+        url: '/navbarsetup/feature'
+      },
+      {
+        name: 'Role Feature',
+        url: '/navbarsetup/roleFeature'
+      },
     ]
   },
 ];

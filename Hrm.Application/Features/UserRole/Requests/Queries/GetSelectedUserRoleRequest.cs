@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Hrm.Application.Features.UserRoles.Requests.Queries
 {
-    public class GetSelectedUserRoleRequest : IRequest<List<SelectedModel>>
+    public class GetSelectedUserRoleRequest : IRequest<List<SelectedStringModel>>
     {
 
     }

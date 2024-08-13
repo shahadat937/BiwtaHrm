@@ -91,7 +91,7 @@
                         <ng-template pTemplate="header">
                             <tr>
                                 <th style="width:25%">Name</th>
-                                <th style="width:25%">IsActive</th>
+                                <th style="width:25%">Status</th>
                                 <th style="width:25%">Remark</th>
                                 <th style="width:25%">Action</th>
                             </tr>
@@ -99,7 +99,7 @@
                         <ng-template pTemplate="body" let-leaveType let-i="rowIndex">
                             <tr>
                                 <td>{{ leaveType.leaveTypeName }}</td>
-                                <td>{{ leaveType.isActive }}</td>
+                                <td>{{ leaveType.isActive?"Active":"Deactive" }}</td>
                                 <td>{{ leaveType.remark }}</td>
                                 <td>
                                     <button class="custom-button" (click)="updateButtonAction(leaveType,i)">

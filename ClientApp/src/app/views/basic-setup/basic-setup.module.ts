@@ -107,6 +107,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { ReleaseTypeComponent } from './release-type/release-type.component';
 import { LeaveTypeComponent } from './leave/leave-type/leave-type.component';
 import { TableModule } from 'primeng/table';
+import { LeaveRulesComponent } from './leave/leave-rules/leave-rules.component';
 
 
 
@@ -170,6 +171,7 @@ import { TableModule } from 'primeng/table';
     OrganogramDepartmentComponent,
     ReleaseTypeComponent,
     LeaveTypeComponent,
+    LeaveRulesComponent,
   ],
   imports: [
     CommonModule,

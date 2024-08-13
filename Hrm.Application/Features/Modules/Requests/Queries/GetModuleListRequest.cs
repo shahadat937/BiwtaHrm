@@ -5,8 +5,8 @@ using Hrm.Application.DTOs.Modules;
 
 namespace Hrm.Application.Features.Modules.Requests.Queries
 {
-    public class GetModuleListRequest : IRequest<PagedResult<ModuleDto>>
+    public class GetModuleListRequest : IRequest<object>
     {
-        public QueryParams QueryParams { get; set; }
+        
     }
 }

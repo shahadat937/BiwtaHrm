@@ -134,6 +134,12 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/appraisal/appraisal.module').then((m) => m.AppraisalModule)
       }
+      ,
+      {
+        path: 'navbarsetup',
+        loadChildren: () =>
+          import('./views/featureManagement/featureManagement.module').then((m) => m.FeatureManagementModule)
+      }
 
     ]
   },

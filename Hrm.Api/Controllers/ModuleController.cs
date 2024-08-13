@@ -10,7 +10,6 @@ using Hrm.Shared.Models;
 namespace Hrm.Api.Controllers;
 
 [Route(HrmRoutePrefix.Module)]
-[Route("api/[controller]")]
 [ApiController]
 public class ModuleController : ControllerBase
 {
@@ -23,9 +22,9 @@ public class ModuleController : ControllerBase
 
     [HttpGet]
     [Route("get-modules")]
-    public async Task<ActionResult<List<ModuleDto>>> Get([FromQuery] QueryParams queryParams)
+    public async Task<ActionResult<List<ModuleDto>>> Get()
     {
-        var Modules = await _mediator.Send(new GetModuleListRequest { QueryParams = queryParams });
+        var Modules = await _mediator.Send(new GetModuleListRequest { });
         return Ok(Modules);
     }
 

@@ -470,6 +470,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<AspNetUserRoles, AspNetUserRolesDto>().ReverseMap();
 
+            CreateMap<Domain.Module, ModuleDto>().ReverseMap();
+            CreateMap<Domain.Module, CreateModuleDto>().ReverseMap();
+
 
             // Site Visit Dto Mapping Created By Joy
             CreateMap<SiteVisit, SiteVisitDto>().ReverseMap();

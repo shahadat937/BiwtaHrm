@@ -58,11 +58,21 @@ public class LeaveRequestController:Controller
         return Ok(response);
     }
 
+    [HttpGet]
+    [ProducesResponseType(200)]
+    [Route("get-LeaveStatusOption")]
+    public async Task<ActionResult> GetLeaveStatusOption()
+    {
+        var command = new GetLeaveStatusOptionRequest { };
+        var response = await _mediator.Send(command);
+        return Ok(response);
+    }
+
     [HttpPost]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     [Route("save-leaveRequest")]
-    public async Task<ActionResult> SaveLeaveRequest([FromForm] CreateLeaveRequestDto leaveRequestDto, IFormFile AssociatedFiles)
+    public async Task<ActionResult> SaveLeaveRequest([FromForm] CreateLeaveRequestDto leaveRequestDto, IFormFile? AssociatedFiles)
     {
         var command = new CreateLeaveRequestCommand { createLeaveRequestDto = leaveRequestDto, AssociatedFiles = AssociatedFiles };
         var response = await _mediator.Send(command);

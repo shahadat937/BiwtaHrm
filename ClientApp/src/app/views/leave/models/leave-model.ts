@@ -11,7 +11,7 @@ export class LeaveModel {
     foreignLeavePurpose: string;
     accompanyBy: string;
     associatedFile: string;
-    status: number | null;
+    status: number;
     isActive: boolean | null;
     remark: string;
     empFirstName: string;
@@ -32,7 +32,7 @@ export class LeaveModel {
         this.foreignLeavePurpose = "";
         this.accompanyBy = "";
         this.associatedFile = "";
-        this.status = null;
+        this.status = 0;
         this.isActive = null;
         this.remark = "";
         this.empFirstName = "";

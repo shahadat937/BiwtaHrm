@@ -3,6 +3,8 @@ import {ManageLeaveService} from '../service/manage-leave.service'
 import { Subscription } from 'rxjs';
 import { deepObjectsMerge } from '@coreui/utils';
 import { LeaveModel } from '../models/leave-model';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { LeaveDetailViewComponent } from './leave-detail-view/leave-detail-view.component';
 @Component({
   selector: 'app-manageleave',
   templateUrl: './manageleave.component.html',
@@ -14,11 +16,12 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   selectedDepartment: number|null;
   leaves: any[] = [];
-  leaveOptions: any [] = [];
+  leaveStatusOptions: any [] = [];
   selectedLeave: LeaveModel;
 
   constructor(
-    public leaveService: ManageLeaveService
+    public leaveService: ManageLeaveService,
+    private modalService: BsModalService
   ) {
     this.loading = false;
     this.selectedDepartment = null;
@@ -32,7 +35,7 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
 
     this.leaveService.getLeaveStatusOption().subscribe( {
       next: option =>  {
-        this.leaveOptions = option;
+        this.leaveStatusOptions = option;
       }
     })
   }
@@ -65,5 +68,23 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
 
   selectLeave(leave:LeaveModel) {
     this.selectedLeave = leave;
+  }
+
+
+  onViewDetail(leaveRequestId:number) {
+
+    interface LeaveDetailViewModalConfig {
+      leaveRequestId: number;
+    }
+    const initialState:LeaveDetailViewModalConfig = {
+      leaveRequestId : leaveRequestId 
+    };
+    const modalRef: BsModalRef = this.modalService.show(LeaveDetailViewComponent, { initialState, backdrop: 'static' });
+
+    if (modalRef.onHide) {
+      modalRef.onHide.subscribe(() => {
+        this.getLeaves();
+      });
+    }
   }
 }

@@ -99,6 +99,7 @@ using Hrm.Application.DTOs.LeaveType;
 using Hrm.Application.DTOs.LeaveRules;
 using Hrm.Application.DTOs.EmpPromotionIncrement;
 using Hrm.Application.DTOs.AspNetUserRoles;
+using Hrm.Application.DTOs.Features;
 
 
 
@@ -472,6 +473,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Domain.Module, ModuleDto>().ReverseMap();
             CreateMap<Domain.Module, CreateModuleDto>().ReverseMap();
+
+            CreateMap<Domain.Feature, FeatureDto>().ReverseMap();
+            CreateMap<Domain.Feature, CreateFeatureDto>().ReverseMap();
 
 
             // Site Visit Dto Mapping Created By Joy

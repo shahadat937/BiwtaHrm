@@ -1,1 +1,80 @@
-<p>create-module works!</p>
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{heading}}</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                    <form #ModuleForm="ngForm" [gutter]="3" novalidate cForm cRow
+                        class="needs-validation">
+                    <c-col [md]="4">
+                        <input type="hidden" [(ngModel)]="featureManagementService.modules.moduleId" name="moduleId" />
+                        <label cLabel for="title">Module Title<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="featureManagementService.modules.title" name="title" #title="ngModel"
+                            placeholder="Enter Module Title" cFormControl id="title" required type="text"
+                            />
+
+                        @if(!title.valid&&title.touched){
+                        <div class="text-left text-danger">Module Title is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="moduleName">Module Name<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="featureManagementService.modules.moduleName" name="moduleName" #moduleName="ngModel"
+                            placeholder="Enter Module Title" cFormControl id="moduleName" required type="text"
+                            />
+
+                        @if(!moduleName.valid&&moduleName.touched){
+                        <div class="text-left text-danger">Module Name is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="iconName">Icon Name<span class="text-danger"></span></label>
+                        <input [(ngModel)]="featureManagementService.modules.iconName" name="iconName" #iconName="ngModel"
+                            placeholder="Enter Icon Name" cFormControl id="iconName" type="text"
+                            />
+
+                        @if(!iconName.valid&&iconName.touched){
+                        <div class="text-left text-danger">Icon Name is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="menuPosition">Menu Position<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="featureManagementService.modules.menuPosition" name="menuPosition" #menuPosition="ngModel"
+                            placeholder="Enter Menu Position" cFormControl id="menuPosition" required type="number"/>
+
+                        @if(!menuPosition.valid&&menuPosition.touched){
+                        <div class="text-left text-danger">Menu Position is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="isActive">Active Status</label>
+                        <select [(ngModel)]="featureManagementService.modules.isActive"
+                        name="isActive"
+                        cSelect
+                        id="isActive">
+                        <option value="true">Active</option>
+                        <option value="false">De-Active</option>
+                        </select>
+                    </c-col>
+
+            </form>
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button class="bg-secondary text-light" type="button" (click)="closeModal()">
+                        <mat-icon>cancel</mat-icon> Close
+                    </button>
+                    <button [disabled]="ModuleForm.invalid" mat-raised-button class="me-1" color="primary" type="submit" (click)="onSubmit(ModuleForm)">
+                        <mat-icon>{{btnIcon}}</mat-icon> {{ btnText }}
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>

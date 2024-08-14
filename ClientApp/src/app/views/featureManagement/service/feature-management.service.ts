@@ -17,8 +17,8 @@ export class FeatureManagementService {
    }
 
    
-  find(id: string) {
-    return this.http.get<Module>(this.baseUrl + '/module/get-moduleDetail/' + id);
+  find(id: number) {
+    return this.http.get<Module>(this.baseUrl + '/modules/get-moduleDetail/' + id);
   }
 
    getAll(): Observable<Module[]> {
@@ -28,7 +28,7 @@ export class FeatureManagementService {
     } else {
       // If data is not cached, make a server call to fetch it
       return this.http
-        .get<Module[]>(this.baseUrl + '/module/get-modules')
+        .get<Module[]>(this.baseUrl + '/modules/get-modules')
         .pipe(
           map((data) => {
             this.cachedData = data; // Cache the data
@@ -40,15 +40,19 @@ export class FeatureManagementService {
 
   
   submit(model: any) {
-    return this.http.post(this.baseUrl + '/module/save-module', model);
+    return this.http.post(this.baseUrl + '/modules/save-module', model);
   }
 
-  update(id: string,model: any){
-    return this.http.put(this.baseUrl + '/module/update-module/'+id, model);
+  update(id: number,model: any){
+    return this.http.put(this.baseUrl + '/modules/update-module/'+id, model);
+  }
+  
+  delete(id: number) {
+    return this.http.delete(this.baseUrl + '/modules/delete-module/' + id);
   }
 
   getSelectedModule() {
-    return this.http.get<SelectedModel[]>(this.baseUrl + '/module/get-selectedModules');
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/modules/get-selectedModules');
   }
 
 }

@@ -1,0 +1,120 @@
+<c-card class="mt-3">
+    <c-card-header>
+        Leave Type Setup
+    </c-card-header>
+    <c-card-body>
+        <c-card>
+            <c-card-body>
+                <form 
+                #leaveTypeForm = "ngForm"
+                (ngSubmit)="onSubmit()"
+                cForm cRow>
+                    <c-col md="4">
+                        <label for="leaveTypeName" cLabel>Leave Type</label>
+                        <input type="text" 
+                        [(ngModel)] = "this.leaveTypeService.leaveTypes.leaveTypeName"
+                        #leaveTypeName = "ngModel"
+                        name="leaveTypeName" 
+                        id="leaveTypeName"
+                        required 
+                        cFormControl>
+                        @if (leaveTypeName.invalid&&leaveTypeName.touched) {
+                            <div class="text-left text-danger">Leave Type Name is required</div>
+                        }
+                    </c-col>
+                    <c-col md="4">
+                        <label for="isActive" cLabel="">Status</label>
+                        <select name="isActive" 
+                        required
+                        [(ngModel)] = "this.leaveTypeService.leaveTypes.isActive"
+                        [value]="this.leaveTypeService.leaveTypes.isActive"
+                        id="isActive" 
+                        #isActive = "ngModel"
+                        cSelect>
+                            <option [ngValue]="null">Select Status</option>
+                            <option value="true">Active</option>
+                            <option value="false">Deactive</option>
+                        </select>
+                        @if (isActive.invalid&&isActive.touched) {
+                            <div class="text-left text-danger">Status is required</div>
+                        }
+                    </c-col>
+                    <c-col md="4">
+                        <label for="remark" 
+                        cLabel>Remark</label>
+                        <input type="text" 
+                        [(ngModel)]="this.leaveTypeService.leaveTypes.remark"
+                        #remark = "ngModel" 
+                        name="remark" 
+                        id="remark" cFormControl>
+                    </c-col>
+
+                    <c-row class="mt-3 d-flex justify-content-between">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button type="submit" 
+                                [disabled]="leaveTypeForm.invalid||loading"
+                                cButton color="primary" 
+                                class="me-1">
+                                    <c-spinner
+                                      [hidden]="loading == false"
+                                      size="sm"
+                                    ></c-spinner>
+                                    {{isUpdate?"Update":"Submit"}}
+                                    </button>
+                                <button (click)="onReset()" cButton color="secondary">Reset</button>
+                            </div>
+                            <button cButton color="danger">Cancel</button>
+                        </div>
+                    </c-row>
+                </form>
+            </c-card-body>
+        </c-card>
+        <c-card class="mt-2">
+            <c-card-body>
+                <h5>Leave Type List</h5>
+
+
+                @if (leaveTypes.length<=0) {
+                    <div class="d-flex justify-content-center">
+                        <p class="text-body-tertiary">No Data</p>
+                    </div>
+                } @else {
+                    <p-table
+                    [value]="leaveTypes"
+                    [paginator]="true"
+                    [rows]="5"
+                    [tableStyle]="{ 'min-width': '50rem' }"
+                    [rowsPerPageOptions]="[5, 10, 20, 50]"
+                
+                    >
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width:25%">Name</th>
+                                <th style="width:25%">Status</th>
+                                <th style="width:25%">Remark</th>
+                                <th style="width:25%">Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-leaveType let-i="rowIndex">
+                            <tr>
+                                <td>{{ leaveType.leaveTypeName }}</td>
+                                <td>{{ leaveType.isActive?"Active":"Deactive" }}</td>
+                                <td>{{ leaveType.remark }}</td>
+                                <td>
+                                    <button class="custom-button" (click)="updateButtonAction(leaveType,i)">
+                                        <svg [cIcon]="icons.cilPencil" size="lg" title="Edit"></svg>
+                                    </button>
+                                    <button class="custom-button" (click)="onDelete(leaveType.leaveTypeId)">
+                                        <svg [cIcon]="icons.cilTrash" size="lg" title="delete"></svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+
+                }
+            </c-card-body>
+        </c-card>
+    </c-card-body>
+</c-card>

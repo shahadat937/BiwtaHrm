@@ -12,8 +12,8 @@ namespace Hrm.Domain
         public int LeaveRequestId { get; set; }
         public int EmpId { get; set; }
         public int LeaveTypeId { get; set; }
-        public DateOnly FromDate { get; set; }
-        public DateOnly ToDate { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
         public string? LeavePurpose { get; set; }
         public bool IsForeignLeave { get; set; }
         public int? CountryId { get; set; }
@@ -28,6 +28,7 @@ namespace Hrm.Domain
         public EmpBasicInfo Employee {get; set;}
         public LeaveType LeaveType {get; set;}
         public Country Country {get; set;}
+        public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
         
     }
 }

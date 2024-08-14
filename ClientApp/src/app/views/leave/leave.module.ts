@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TableModule as TableModuleN } from 'primeng/table';
 import {
   ButtonGroupModule,
   ButtonModule,
@@ -13,12 +14,15 @@ import {
   SharedModule,
   TableModule,
   UtilitiesModule,
-  PaginationModule
+  PaginationModule,
+  SpinnerModule
 } from '@coreui/angular';
 
 import { LeaveRoutingModule } from './leave-routing.module';
 import { AddleaveComponent } from './addleave/addleave.component';
 import { ManageleaveComponent } from './manageleave/manageleave.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { SharedCustomModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +45,9 @@ import { ManageleaveComponent } from './manageleave/manageleave.component';
     TableModule,
     UtilitiesModule,
     PaginationModule,
-    
+    SharedCustomModule,
+    SpinnerModule,
+    TableModuleN
   ]
 })
 export class LeaveModule { }

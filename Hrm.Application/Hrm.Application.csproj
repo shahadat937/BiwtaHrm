@@ -53,8 +53,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features/LeaveRequest/Handlers/Commands/" />
-	  <Folder Include="Features/LeaveRequest/Requests/Commands/" />
 	  <Folder Include="Features\Organogram\Handlers\Commands\" />
 	  <Folder Include="Features\Organogram\Requests\Commands\" />
 	</ItemGroup>

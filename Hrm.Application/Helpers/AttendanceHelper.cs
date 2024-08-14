@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.Attendance;
 using Hrm.Application.Enum;
 using Hrm.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -123,6 +124,54 @@ namespace Hrm.Application.Helpers
             TimeSpan timespan = datetime2 - datetime1;
 
             return (int)timespan.TotalMinutes;
+        }
+
+        public static async Task<int> calculateWorkingDay(DateTime startDate, DateTime endDate, int curYear, IUnitOfWork _unitOfWork)
+        {
+
+            Dictionary<string, int> weekends = new Dictionary<string, int>
+            {
+                {"Saturday", 6 },
+                {"Sunday", 0 },
+                {"Monday", 1 },
+                {"Tuesday", 2 },
+                {"Wednesday", 3 },
+                {"Thursday", 4 },
+                {"Friday", 5 }
+            };
+
+            var workDays = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.IsActive == true && x.year.YearName == curYear).Select(x => x.weekDay.WeekDayName).ToListAsync();
+
+            foreach (var workday in workDays)
+            {
+                weekends.Remove(workday);
+            }
+
+            int totalWeekend = 0;
+            int totalWorkday = (int)endDate.Subtract(startDate).TotalDays + 1;
+
+            foreach (var weekend in weekends)
+            {
+                DateTime tempStartDate = startDate;
+                DateTime tempEndDate = endDate;
+
+                int extradays = (weekend.Value - (int)tempStartDate.DayOfWeek + 7) % 7;
+                int excludedays = ((int)tempEndDate.DayOfWeek - weekend.Value + 7) % 7;
+
+                tempStartDate = tempStartDate.AddDays(extradays);
+                tempEndDate = tempEndDate.AddDays(-excludedays);
+
+                if (tempStartDate > tempEndDate)
+                {
+                    TimeSpan totaldays = tempEndDate.Subtract(tempStartDate);
+                    totalWeekend += ((int)totaldays.TotalDays + 1) % 7;
+                }
+            }
+
+            int holidays = await _unitOfWork.Repository<Hrm.Domain.Holidays>().Where(x => x.HolidayDate >= DateOnly.FromDateTime(startDate) && x.HolidayDate <= DateOnly.FromDateTime(endDate) && x.IsActive).CountAsync();
+
+            return totalWorkday - totalWeekend - holidays;
+
         }
     }
 }

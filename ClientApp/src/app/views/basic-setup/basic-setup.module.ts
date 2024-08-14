@@ -105,6 +105,10 @@ import { OrganogramComponent } from './organogram/organogram.component';
 import { OrganogramDepartmentComponent } from './organogram/organogram-department/organogram-department.component';
 import { MatTreeModule } from '@angular/material/tree';
 import { ReleaseTypeComponent } from './release-type/release-type.component';
+import { LeaveTypeComponent } from './leave/leave-type/leave-type.component';
+import { TableModule } from 'primeng/table';
+import { LeaveRulesComponent } from './leave/leave-rules/leave-rules.component';
+
 
 
 @NgModule({
@@ -165,7 +169,9 @@ import { ReleaseTypeComponent } from './release-type/release-type.component';
     HolidayTypeComponent,
     OrganogramComponent,
     OrganogramDepartmentComponent,
-    ReleaseTypeComponent
+    ReleaseTypeComponent,
+    LeaveTypeComponent,
+    LeaveRulesComponent,
   ],
   imports: [
     CommonModule,
@@ -188,6 +194,8 @@ import { ReleaseTypeComponent } from './release-type/release-type.component';
     SpinnerModule,
     CollapseDirective,
     MatTreeModule,
+    TableModule
+
   ],
   providers: [
     SectionService,

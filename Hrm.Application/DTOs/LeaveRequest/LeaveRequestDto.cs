@@ -10,9 +10,10 @@ namespace Hrm.Application.DTOs.LeaveRequest
     {
         public int LeaveRequestId { get; set; }
         public int EmpId { get; set; }
+        public string IdCardNo { get; set; }
         public int LeaveTypeId { get; set; }
-        public DateOnly FromDate { get; set; }
-        public DateOnly ToDate { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
         public string? LeavePurpose { get; set; }
         public bool IsForeignLeave { get; set; }
         public int? CountryId { get; set; }

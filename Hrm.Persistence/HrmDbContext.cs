@@ -882,6 +882,16 @@ namespace Hrm.Persistence
             modelBuilder.Entity<AspNetUserRoles>()
             .HasKey(ur => new { ur.UserId, ur.RoleId });
 
+
+            modelBuilder.Entity<Feature>(entity =>
+            {
+                entity.HasKey(e => e.FeatureId);
+
+                entity.HasOne(e => e.Module)
+                .WithMany(lt => lt.Features)
+                .HasForeignKey(e => e.ModuleId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;

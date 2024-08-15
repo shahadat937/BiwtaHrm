@@ -52,11 +52,11 @@ public class ModuleController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     [Route("update-module/{id}")]
-    public async Task<ActionResult> Put([FromBody] ModuleDto Module)
+    public async Task<ActionResult> Put([FromBody] CreateModuleDto Module)
     {
         var command = new UpdateModuleCommand { ModuleDto = Module };
-        await _mediator.Send(command);
-        return NoContent();
+        var response = await _mediator.Send(command);
+        return Ok(response);
     }
 
     [HttpDelete]
@@ -67,8 +67,8 @@ public class ModuleController : ControllerBase
     public async Task<ActionResult> Delete(int id)
     {
         var command = new DeleteModuleCommand { Id = id };
-        await _mediator.Send(command);
-        return NoContent();
+        var response = await _mediator.Send(command);
+        return Ok(response);
     }
 
     [HttpGet]

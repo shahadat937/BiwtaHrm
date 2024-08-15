@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
+  AlertComponent,
   ButtonGroupModule,
   ButtonModule,
   CardModule,
@@ -10,9 +11,16 @@ import {
   FormModule,
   GridModule,
   ListGroupModule,
+  ModalBodyComponent,
+  ModalComponent,
+  ModalFooterComponent,
+  ModalHeaderComponent,
+  PopoverModule,
   ProgressModule,
   SharedModule,
   SpinnerModule,
+  TableModule,
+  TooltipModule,
 } from '@coreui/angular';
 import { ToastrService } from 'ngx-toastr';
 import { FeatureManagementRoutingModule } from './featureManagement-routing.module';
@@ -20,6 +28,13 @@ import { FeatureListComponent } from './feature-list/feature-list.component';
 import { ModuleListComponent } from './module-list/module-list.component';
 import { CreateModuleComponent } from './create-module/create-module.component';
 import { CreateFeatureComponent } from './create-feature/create-feature.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { IconModule } from '@coreui/icons-angular';
 
 
 @NgModule({
@@ -48,6 +63,24 @@ import { CreateFeatureComponent } from './create-feature/create-feature.componen
     ProgressModule,
     SpinnerModule,
     CollapseDirective,
+    MatFormFieldModule,
+    MatTableModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatInputModule,
+    CollapseDirective,
+    ModalBodyComponent,
+    CommonModule,
+    ModalComponent,
+    ModalFooterComponent,
+    ModalHeaderComponent,
+    IconModule,
+    MatIconModule,
+    MatButtonModule,
+    TableModule,
+    PopoverModule,
+    AlertComponent,
+    TooltipModule,
   ],
   providers: [ 
     ToastrService,

@@ -35,9 +35,10 @@ namespace Hrm.Application.Features.Modules.Handlers.Queries
 
             IQueryable<Module> Modules = _ModuleRepository.Where(x => x.IsActive == true);
 
+            Modules = Modules.OrderBy(x => x.MenuPosition);
+
             var ModulesDtos = _mapper.Map<List<ModuleDto>>(Modules);
 
-            ModulesDtos.OrderBy(x => x.MenuPosition);
 
             return ModulesDtos;
         }

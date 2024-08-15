@@ -1,11 +1,12 @@
 ﻿using Hrm.Application.DTOs.Modules;
+using Hrm.Application.Responses;
 using MediatR;
 
 
 namespace Hrm.Application.Features.Modules.Requests.Commands
 {
-    public class UpdateModuleCommand : IRequest<Unit>  
+    public class UpdateModuleCommand : IRequest<BaseCommandResponse>  
     {
-        public ModuleDto ModuleDto { get; set; }
+        public CreateModuleDto ModuleDto { get; set; }
     }
 }

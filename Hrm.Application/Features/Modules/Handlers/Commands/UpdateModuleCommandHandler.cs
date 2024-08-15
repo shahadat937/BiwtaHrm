@@ -3,6 +3,7 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Modules.Validators;
 using Hrm.Application.Exceptions;
 using Hrm.Application.Features.Modules.Requests.Commands;
+using Hrm.Application.Responses;
 using MediatR;
 
 using System.Threading;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Modules.Handlers.Commands
 {
-    public class UpdateModuleCommandHandler : IRequestHandler<UpdateModuleCommand, Unit>
+    public class UpdateModuleCommandHandler : IRequestHandler<UpdateModuleCommand, BaseCommandResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -21,13 +22,9 @@ namespace Hrm.Application.Features.Modules.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdateModuleCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateModuleCommand request, CancellationToken cancellationToken)
         {
-            var validator = new UpdateModuleDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.ModuleDto);
-
-            if (validationResult.IsValid == false)
-                throw new ValidationException(validationResult);
+            var response = new BaseCommandResponse();
 
             var Module = await _unitOfWork.Repository<Hrm.Domain.Module>().Get(request.ModuleDto.ModuleId);
 
@@ -39,7 +36,11 @@ namespace Hrm.Application.Features.Modules.Handlers.Commands
             await _unitOfWork.Repository<Hrm.Domain.Module>().Update(Module);
             await _unitOfWork.Save();
 
-            return Unit.Value;
+            response.Success = true;
+            response.Message = "Update Successful";
+            response.Id = Module.ModuleId;
+
+            return response;
         }
     }
 }

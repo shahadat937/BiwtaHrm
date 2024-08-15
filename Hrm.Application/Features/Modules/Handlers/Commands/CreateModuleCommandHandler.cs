@@ -23,25 +23,14 @@ namespace Hrm.Application.Features.Modules.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(CreateModuleCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
-            var validator = new CreateModuleDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.ModuleDto);
 
-            if (validationResult.IsValid == false)
-            {
-                response.Success = false;
-                response.Message = "Creation Failed";
-                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
-            }
-            else
-            {
-                var Module = _mapper.Map<Hrm.Domain.Module>(request.ModuleDto);
+            var Module = _mapper.Map<Hrm.Domain.Module>(request.ModuleDto);
 
-                Module = await _unitOfWork.Repository<Hrm.Domain.Module>().Add(Module);
-                await _unitOfWork.Save();
-                response.Success = true;
-                response.Message = "Creation Successful";
-                response.Id = Module.ModuleId;
-            }
+            Module = await _unitOfWork.Repository<Hrm.Domain.Module>().Add(Module);
+            await _unitOfWork.Save();
+            response.Success = true;
+            response.Message = "Creation Successful";
+            response.Id = Module.ModuleId;
 
             return response;
         }

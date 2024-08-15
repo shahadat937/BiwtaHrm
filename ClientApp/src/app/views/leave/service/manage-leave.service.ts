@@ -29,4 +29,24 @@ export class ManageLeaveService {
   getLeaveStatusOption():Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl+"/leaveRequest/get-LeaveStatusOption");
   }
+
+  getLeaveById(id:number) : Observable<LeaveModel> {
+    return this.http.get<LeaveModel>(this.baseUrl+`/leaveRequest/get-LeaveRequestById/${id}`)
+  }
+
+  approveLeaveRequestByReviewer(leaveRequestId:number): Observable<any> {
+    return this.http.put<any>(this.baseUrl + `/leaveRequest/approve-LeaveRequestByReviewer/${leaveRequestId}`,{});
+  }
+
+  denyLeaveRequestByReviewer(leaveRequestId:number): Observable<any> {
+    return this.http.put<any>(this.baseUrl+`/leaveRequest/deny-LeaveRequestByReviewer/${leaveRequestId}`,{});
+  }
+
+  approveFinalLeaveRequest(leaveRequestId:number) : Observable<any> {
+    return this.http.put<any>(this.baseUrl + `/leaveRequest/approve-LeaveRequestFinal/${leaveRequestId}`,{});
+  }
+
+  denyFinalLeaveRequest(leaveRequestId:number): Observable<any> {
+    return this.http.put<any>(this.baseUrl+`/leaveRequest/deny-LeaveRequestFinal/${leaveRequestId}`,{});
+  }
 }

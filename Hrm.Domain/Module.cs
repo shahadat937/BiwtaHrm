@@ -20,7 +20,7 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
 
-        public virtual ICollection<Feature> Features { get; set; }
+        public virtual ICollection<Feature>? Features { get; set; }
 
     }
 }

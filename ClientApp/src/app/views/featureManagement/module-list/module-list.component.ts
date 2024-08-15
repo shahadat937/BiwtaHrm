@@ -24,6 +24,7 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'slNo',
     'title',
+    'path',
     'icon',
     'menuPosition',
     'Action'];

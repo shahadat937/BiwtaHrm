@@ -1,1 +1,99 @@
-<p>create-feature works!</p>
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{heading}}</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                    <form #FeatureForm="ngForm" [gutter]="3" novalidate cForm cRow
+                        class="needs-validation">
+                        
+                    <c-col [md]="4">
+                        <label cLabel for="moduleId">Module Name<span class="text-danger">*</span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="featureManagementService.features.moduleId"
+                                name="moduleId" #moduleId="ngModel" cFormControl id="moduleId"
+                                aria-label="Default select example" required cSelect>
+                                <option [ngValue]="0">Select Module</option>
+
+                                @for(module of modules; track module.id;let index=$index) {
+                                <option [value]="module.id">
+                                    {{ module.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!moduleId.valid && moduleId.touched){
+                            <div class="text-left text-danger">Module is required</div>
+                            }
+                        </div>
+                    </c-col>
+                    <c-col [md]="4">
+                        <input type="hidden" [(ngModel)]="featureManagementService.features.featureId" name="featureId" />
+                        <label cLabel for="featureName">Feature Name<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="featureManagementService.features.featureName" name="featureName" #featureName="ngModel"
+                            placeholder="Enter Feature Name" cFormControl id="featureName" required type="text"
+                            />
+                        @if(!featureName.valid&&featureName.touched){
+                        <div class="text-left text-danger">Feature Name is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="path">Path<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="featureManagementService.features.path" name="path" #path="ngModel"
+                            placeholder="Enter Path" cFormControl id="path" required type="text"
+                            />
+
+                        @if(!path.valid&&path.touched){
+                        <div class="text-left text-danger">Path is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="iconName">Icon Name<span class="text-danger"></span></label>
+                        <input [(ngModel)]="featureManagementService.features.iconName" name="iconName" #iconName="ngModel"
+                            placeholder="Enter Icon Name" cFormControl id="iconName" type="text"
+                            />
+
+                        @if(!iconName.valid&&iconName.touched){
+                        <div class="text-left text-danger">Icon Name is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="orderNo">Order No<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="featureManagementService.features.orderNo" name="orderNo" #orderNo="ngModel"
+                            placeholder="Enter Order No" cFormControl id="orderNo" required type="number"/>
+
+                        @if(!orderNo.valid&&orderNo.touched){
+                        <div class="text-left text-danger">Order No is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="isActive">Active Status</label>
+                        <select [(ngModel)]="featureManagementService.features.isActive"
+                        name="isActive"
+                        cSelect
+                        id="isActive">
+                        <option value="true">Active</option>
+                        <option value="false">De-Active</option>
+                        </select>
+                    </c-col>
+
+            </form>
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button class="bg-secondary text-light" type="button" (click)="closeModal()">
+                        <mat-icon>cancel</mat-icon> Close
+                    </button>
+                    <button [disabled]="FeatureForm.invalid" mat-raised-button class="me-1" color="primary" type="submit" (click)="onSubmit(FeatureForm)">
+                        <mat-icon>{{btnIcon}}</mat-icon> {{ btnText }}
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>

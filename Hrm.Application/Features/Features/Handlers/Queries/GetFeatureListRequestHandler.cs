@@ -13,6 +13,7 @@ using Hrm.Application.DTOs.Features;
 using Hrm.Application.Models;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.Features.Handlers.Queries
 {
@@ -33,7 +34,8 @@ namespace Hrm.Application.Features.Features.Handlers.Queries
         {
             var validator = new QueryParamsValidator();
 
-            IQueryable<Feature> Features = _FeatureRepository.Where(x => x.IsActive == true);
+            IQueryable<Feature> Features = _FeatureRepository.Where(x => x.IsActive == true)
+                .Include(x => x.Module);
 
             Features = Features.OrderBy(x => x.OrderNo);
 

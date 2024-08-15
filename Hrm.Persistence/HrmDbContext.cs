@@ -931,6 +931,7 @@ namespace Hrm.Persistence
         public virtual DbSet<OverallEVPromotion> OverallEVPromotion { get; set; } = null!;
         public virtual DbSet<Domain.Module> Module { get; set; } = null!;
         public virtual DbSet<Feature> Feature { get; set; } = null!;
+        public virtual DbSet<RoleFeature> RoleFeature { get; set; } = null!;
         public virtual DbSet<Scale> Scale { get; set; } = null!;
         public virtual DbSet<ScaleGradeView> ScaleGradeView { get; set; } = null!;
         public virtual DbSet<Grade_cls_type_Vw> Grade_cls_type_Vw { get; set; } = null!;

@@ -329,7 +329,7 @@ export const navItems: INavData[] = [
         url: '/leave/addleave'
       },
       {
-        name: 'Manage leave',
+        name: 'Manage Leave',
         url: '/leave/manageleave'
       },
     ]
@@ -460,7 +460,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Role Permission',
-    url: '/base',
+    url: '/usermanagement/rolePermission',
     iconComponent: { name: 'cil-user-follow' },
 
   },

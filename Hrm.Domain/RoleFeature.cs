@@ -12,6 +12,9 @@ namespace Hrm.Domain
         public bool Update { get; set; }
         public bool Delete { get; set; }
         public bool Report { get; set; }
-      
+
+        //public virtual AspNetRoles Roles { get; set; } = null!;
+        //public virtual Feature Features { get; set; } = null!;
+
     }
 }

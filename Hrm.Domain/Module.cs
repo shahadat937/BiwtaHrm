@@ -4,10 +4,6 @@ namespace Hrm.Domain
 {
     public class Module : BaseDomainEntity
     {
-        public Module()
-        {
-            Features = new HashSet<Feature>();
-        }
 
         public int ModuleId { get; set; }
         public string? Title { get; set; }

@@ -55,5 +55,7 @@
 	<ItemGroup>
 	  <Folder Include="Features\Organogram\Handlers\Commands\" />
 	  <Folder Include="Features\Organogram\Requests\Commands\" />
+	  <Folder Include="Features\RoleFeatures\Handlers\Commands\" />
+	  <Folder Include="Features\RoleFeatures\Requests\Commands\" />
 	</ItemGroup>
 </Project>

@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.DTOs.LeaveRequest.Validators;
 using Hrm.Application.Enum;
+using Hrm.Application.Helpers;
 
 namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
 {
@@ -40,6 +41,21 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
             {
                 throw new ValidationException(validationResult);
             }
+
+
+            // Validating the Leave Request If it's acceptable
+            var leaveValidator = new LeaveRequestValidator(_unitOfWork);
+
+            bool leaveValidationResult = await leaveValidator.Validate(request.createLeaveRequestDto.FromDate, request.createLeaveRequestDto.ToDate, request.createLeaveRequestDto.EmpId, request.createLeaveRequestDto.LeaveTypeId);
+
+            if(!leaveValidationResult)
+            {
+                response.Success = false;
+                response.Message = "Leave amount is not enough";
+
+                return response;
+            }
+
 
 
             request.createLeaveRequestDto.Status = (int) LeaveStatusOption.Pending;

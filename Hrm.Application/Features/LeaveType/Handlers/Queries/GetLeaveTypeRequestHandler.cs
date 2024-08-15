@@ -27,7 +27,7 @@ namespace Hrm.Application.Features.LeaveType.Handlers.Queries
 
         public async Task<object> Handle(GetLeaveTypeRequest request, CancellationToken cancellationToken)
         {
-            var leaveTypes = await _LeaveTypeRepository.GetAll();
+            var leaveTypes = await _LeaveTypeRepository.Where(x=>x.IsActive==true).ToListAsync();
 
             var leaveTypeDtos = _mapper.Map<List<LeaveTypeDto>>(leaveTypes);
 

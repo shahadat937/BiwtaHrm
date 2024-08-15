@@ -25,7 +25,7 @@ namespace Hrm.Application.Features.LeaveType.Handlers.Queries
 
         public async Task<object> Handle(GetSelectedLeaveTypeRequest request, CancellationToken cancellationToken)
         {
-            var leaveTypeSelected = await _LeaveTypeRepository.Where(x => true).Select(x => new SelectedModel
+            var leaveTypeSelected = await _LeaveTypeRepository.Where(x => x.IsActive == true).Select(x => new SelectedModel
             {
                 Id = x.LeaveTypeId,
                 Name = x.LeaveTypeName

@@ -110,6 +110,7 @@ namespace Hrm.Application
         public const string LeaveType = HRMRoutePrefixBase + "leaveType";
         public const string LeaveRules = HRMRoutePrefixBase + "leaveRules";
         public const string LeaveRequest = HRMRoutePrefixBase + "leaveRequest";
+        public const string Form = HRMRoutePrefixBase + "form";
 
     }
 }

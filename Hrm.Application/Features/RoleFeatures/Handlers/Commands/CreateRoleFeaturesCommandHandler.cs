@@ -47,13 +47,21 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Commands
                         Report = item.Report,
                     };
 
-                    RoleFeaturesInfo = await _unitOfWork.Repository<RoleFeature>().Add(RoleFeaturesInfo);
+                    await _unitOfWork.Repository<RoleFeature>().Add(RoleFeaturesInfo);
                 }
                 else
                 {
                     var RoleFeaturesInfo = await _unitOfWork.Repository<RoleFeature>().Get(item.RoleFeatureId);
 
-                    _mapper.Map(item, RoleFeaturesInfo);
+                    
+                    RoleFeaturesInfo.RoleFeatureId = item.RoleFeatureId;
+                    RoleFeaturesInfo.RoleId = item.RoleId;
+                    RoleFeaturesInfo.FeatureKey = item.FeatureKey;
+                    RoleFeaturesInfo.ViewStatus = item.ViewStatus;
+                    RoleFeaturesInfo.Add = item.Add;
+                    RoleFeaturesInfo.Update = item.Update;
+                    RoleFeaturesInfo.Delete = item.Delete;
+                    RoleFeaturesInfo.Report = item.Report;
 
                     await _unitOfWork.Repository<RoleFeature>().Update(RoleFeaturesInfo);
                 }

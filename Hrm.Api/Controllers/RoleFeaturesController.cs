@@ -1,4 +1,5 @@
-﻿using Azure.Core;
+﻿using AutoMapper;
+using Azure.Core;
 using Hrm.Application;
 using Hrm.Application.DTOs.Features;
 using Hrm.Application.DTOs.RoleFeatures;
@@ -16,11 +17,13 @@ namespace Hrm.Api.Controllers
     {
         private readonly IMediator _mediator;
         private readonly HrmDbContext _context;
+        private readonly IMapper _mapper;
 
-        public RoleFeaturesController(IMediator mediator, HrmDbContext context)
+        public RoleFeaturesController(IMediator mediator, HrmDbContext context, IMapper mapper)
         {
             _mediator = mediator;
             _context = context;
+            _mapper = mapper;
         }
 
 
@@ -40,7 +43,9 @@ namespace Hrm.Api.Controllers
                 var roleFeature = roleFeatures.FirstOrDefault(rf => rf.FeatureKey == f.FeatureId);
                 return new RoleFeatureDto
                 {
-                    FeatureId = f.FeatureId,
+                    RoleFeatureId = roleFeature?.RoleFeatureId ?? 0,
+                    RoleId = roleFeature?.RoleId ?? roleId,
+                    FeatureKey = f.FeatureId,
                     FeatureName = f.FeatureName,
                     ViewStatus = roleFeature?.ViewStatus ?? false, // Set to false if not found
                     Add = roleFeature?.Add ?? false,
@@ -48,6 +53,7 @@ namespace Hrm.Api.Controllers
                     Delete = roleFeature?.Delete ?? false
                 };
             }).ToList();
+
 
             return Ok(result);
         }

@@ -1,6 +1,6 @@
 export class RoleFeature {
     roleFeatureId : number = 0;
-    roleId : string | null = null;
+    roleId : string = '';
     featureKey : number | null = null;
     featureName : string | null = null;
     viewStatus : boolean = false;

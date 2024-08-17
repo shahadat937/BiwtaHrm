@@ -22,8 +22,8 @@ export class FeatureListComponent  implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
     'slNo',
-    'Feature Name',
     'Module Name',
+    'Feature Name',
     'Path',
     'icon',
     'orderNo',

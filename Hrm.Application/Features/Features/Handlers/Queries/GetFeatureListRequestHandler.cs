@@ -37,7 +37,7 @@ namespace Hrm.Application.Features.Features.Handlers.Queries
             IQueryable<Feature> Features = _FeatureRepository.Where(x => x.IsActive == true)
                 .Include(x => x.Module);
 
-            Features = Features.OrderBy(x => x.OrderNo);
+            //Features = Features.OrderBy(x => x.OrderNo);
 
             var FeaturesDtos = _mapper.Map<List<FeatureDto>>(Features);
 

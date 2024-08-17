@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Azure.Core;
 using Hrm.Application;
+using Hrm.Application.DTOs.EmpSpouseInfo;
 using Hrm.Application.DTOs.Features;
 using Hrm.Application.DTOs.RoleFeatures;
+using Hrm.Application.Features.EmpSpouseInfos.Requests.Commands;
+using Hrm.Application.Features.RoleFeatures.Requests.Commands;
 using Hrm.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +59,15 @@ namespace Hrm.Api.Controllers
 
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("save-roleFeatures")]
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] List<CreateRoleFeatureDto> roleFeatureDto)
+        {
+            var command = new CreateRoleFeaturesCommand { RoleFeatureDtos = roleFeatureDto };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

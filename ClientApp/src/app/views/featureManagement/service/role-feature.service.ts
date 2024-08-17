@@ -27,4 +27,8 @@ export class RoleFeatureService {
   getFeaturesByRoleId(roleId: string) {
     return this.http.get<RoleFeature[]>(this.baseUrl + '/roleFeatures/get-features-by-role/' + roleId);
   }
+
+  saveRoleFeatures(model: FormData){
+    return this.http.post(this.baseUrl + '/roleFeatures/save-roleFeatures', model);
+  }
 }

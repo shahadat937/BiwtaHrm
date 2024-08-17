@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RoleFeature } from '../model/role-feature';
 import { SelectedStringModel } from 'src/app/core/models/selectedStringModel';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-role-feature',
@@ -19,7 +20,8 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
 
   constructor(
     public roleFeatureService: RoleFeatureService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService,
   ) {
     this.RoleFeaturesForm = this.fb.group({
       featuresList: this.fb.array([])
@@ -85,6 +87,17 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
 
   submitFeature() {
     console.log("Form Value: ", this.RoleFeaturesForm.get("featuresList")?.value);
+    this.roleFeatureService.saveRoleFeatures(this.RoleFeaturesForm.get("featuresList")?.value).subscribe(((res: any) => {
+      if (res.success) {
+        this.toastr.success('', `${res.message}`, {
+          positionClass: 'toast-top-right',
+        });
+      } else {
+        this.toastr.warning('', `${res.message}`, {
+          positionClass: 'toast-top-right',
+        });
+      }
+    }));
   }
 
 }

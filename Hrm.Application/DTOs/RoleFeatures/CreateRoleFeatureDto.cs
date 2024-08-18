@@ -1,8 +1,12 @@
-﻿using Hrm.Domain.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Hrm.Domain
+namespace Hrm.Application.DTOs.RoleFeatures
 {
-    public class RoleFeature 
+    public class CreateRoleFeatureDto
     {
         public int RoleFeatureId { get; set; }
         public string? RoleId { get; set; }
@@ -11,10 +15,6 @@ namespace Hrm.Domain
         public bool? Add { get; set; }
         public bool? Update { get; set; }
         public bool? Delete { get; set; }
-        public bool? Report { get; set; }
-
-        //public virtual AspNetRoles Roles { get; set; } = null!;
-        //public virtual Feature Features { get; set; } = null!;
-
+        public bool? Report { get; set; } = true;
     }
 }

@@ -30,7 +30,7 @@ const routes: Routes = [
         path: 'manageEmployee',
         component: EmployeeListComponent,
         data: {
-          title: 'Employee List',
+          title: 'Manage Employee',
         },
       },
       {

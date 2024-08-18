@@ -35,6 +35,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { IconModule } from '@coreui/icons-angular';
+import { RoleFeatureComponent } from './role-feature/role-feature.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { IconModule } from '@coreui/icons-angular';
     FeatureListComponent,
     ModuleListComponent,
     CreateModuleComponent,
-    CreateFeatureComponent
+    CreateFeatureComponent,
+    RoleFeatureComponent
   ],
   imports: [
     CommonModule,

@@ -19,5 +19,6 @@ namespace Hrm.Domain
         public bool IsReport { get; set; }
 
         public virtual Module Module { get; set; } = null!;
+        //public virtual ICollection<RoleFeature>? RoleFeature { get; set; }
     }
 }

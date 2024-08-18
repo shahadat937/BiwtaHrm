@@ -2,6 +2,7 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Form;
 using Hrm.Application.Features.Form.Requests.Queries;
+using Hrm.Application.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Form.Handlers.Queries
 {
-    public class GetFormByIdRequestHandler: IRequestHandler<GetFormByIdRequest, List<FormDto>>
+    public class GetFormByIdRequestHandler: IRequestHandler<GetFormByIdRequest, FormDto>
     {
         private readonly IHrmRepository<Domain.Form> _FormRepository;
         private readonly IMapper _mapper;
@@ -23,10 +24,14 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
             _mapper = mapper;
         }
 
-        public async Task<List<FormDto>> Handle(GetFormByIdRequest request, CancellationToken cancellationToken)
+        public async Task<FormDto> Handle(GetFormByIdRequest request, CancellationToken cancellationToken)
         {
-            var forms = await _FormRepository.Where(x => x.FormId == request.FormId).ToListAsync();
-            var formDtos = _mapper.Map<List<FormDto>>(forms);
+            var forms = await _FormRepository.Get(request.FormId);
+            if(forms == null)
+            {
+                throw new NotFoundException(nameof(forms), request.FormId);
+            }
+            var formDtos = _mapper.Map<FormDto>(forms);
             return formDtos;
         }
     }

@@ -3,6 +3,7 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Form;
 using Hrm.Application.Features.Form.Requests.Queries;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,8 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
 
         public async Task<List<FormDto>> Handle(GetFormRequest request, CancellationToken cancellationToken)
         {
-            var forms = await _FormRepository.GetAll();
+            //IQueryable<Hrm.Domain.Form> 
+            var forms = await _FormRepository.Where(x => true).ToListAsync();
             var formList = _mapper.Map<List<FormDto>>(forms);
 
             return formList;

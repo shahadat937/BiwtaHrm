@@ -18,7 +18,25 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> GetForm()
         {
             var command = new GetFormRequest();
-            var response = _mediator.Send(command);
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-FormById/{id}")]
+        public async Task<ActionResult> GetFormBy(int id)
+        {
+            var command = new GetFormByIdRequest { FormId = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-SelectedForm")]
+        public async Task<ActionResult> GetSelectedForm()
+        {
+            var command = new GetSelectedFormRequest { };
+            var response = await _mediator.Send(command);
             return Ok(response);
         }
     }

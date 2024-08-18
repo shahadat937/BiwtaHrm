@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Form.Requests.Queries
 {
-    public class GetFormByIdRequest: IRequest<List<FormDto>>
+    public class GetFormByIdRequest: IRequest<FormDto>
     {
         public int FormId { get; set; }
     }

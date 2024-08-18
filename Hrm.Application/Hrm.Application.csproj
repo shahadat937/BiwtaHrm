@@ -53,8 +53,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features\Form\Handlers\Commands\" />
-	  <Folder Include="Features\Form\Requests\Commands\" />
 	  <Folder Include="Features\Organogram\Handlers\Commands\" />
 	  <Folder Include="Features\Organogram\Requests\Commands\" />
 	</ItemGroup>

@@ -911,7 +911,7 @@ namespace Hrm.Persistence
 
                 entity.HasOne(e => e.FieldType)
                 .WithMany(e => e.FormFields)
-                .HasForeignKey(e => e.FieldId);
+                .HasForeignKey(e => e.FieldTypeId);
             });
 
             modelBuilder.Entity<FormRecord>(entity =>
@@ -1077,12 +1077,12 @@ namespace Hrm.Persistence
         public virtual DbSet<LeaveRequest> LeaveRequest { get; set; } = null!;
         public virtual DbSet<EmpPromotionIncrement> EmpPromotionIncrement { get; set; } = null!;
         public virtual DbSet<Form> Form { get; set; } = null!;
-        /*public virtual DbSet<FormFieldType> FormFieldType { get; set; } = null!;
+        public virtual DbSet<FormFieldType> FormFieldType { get; set; } = null!;
         public virtual DbSet<FormField> FormField { get; set; } = null!;
         public virtual DbSet<FormRecord> FormRecord { get; set; } = null!;
         public virtual DbSet<FieldRecord> FieldRecord { get; set; } = null!;
         public virtual DbSet<FormSchema> FormSchema { get; set; } = null!;
-        public virtual DbSet<SelectableOption> SelectableOption { get; set; } = null!;*/
+        public virtual DbSet<SelectableOption> SelectableOption { get; set; } = null!;
 
     }
 }

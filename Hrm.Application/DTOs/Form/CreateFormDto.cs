@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.DTOs.Form
 {
-    public class CreateFormDto
+    public class CreateFormDto : IFormDto
     {
         public int FormId { get; set; }
         public string FormName { get; set; }

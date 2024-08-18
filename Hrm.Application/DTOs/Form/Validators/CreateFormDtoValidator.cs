@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.DTOs.Form.Validators
 {
-    public class FormDtoValidator: AbstractValidator<FormDto>
+    public class CreateFormDtoValidator: AbstractValidator<CreateFormDto>
     {
-        public FormDtoValidator() {
+        public CreateFormDtoValidator()
+        {
             Include(new IFormDtoValidator());
             RuleFor(x => x.IsActive).NotEmpty().WithMessage("{PropertyName} is required");
         }

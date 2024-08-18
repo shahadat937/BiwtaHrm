@@ -898,7 +898,7 @@ namespace Hrm.Persistence
                 .HasName("[[PK_Form]]");
             });
 
-           /* modelBuilder.Entity<FormFieldType>(entity =>
+            modelBuilder.Entity<FormFieldType>(entity =>
             {
                 entity.HasKey(e => e.FieldTypeId)
                 .HasName("[[PK_FormFieldType]]");
@@ -912,23 +912,23 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.FieldType)
                 .WithMany(e => e.FormFields)
                 .HasForeignKey(e => e.FieldId);
-            });*/
+            });
 
             modelBuilder.Entity<FormRecord>(entity =>
             {
                 entity.HasKey(e => e.RecordId)
                 .HasName("[[PK_FormRecord]]");
 
-               /* entity.HasOne(e => e.Form)
+                entity.HasOne(e => e.Form)
                 .WithMany(e => e.FormRecords)
                 .HasForeignKey(e => e.FormId);
 
                 entity.HasOne(e => e.Employee)
                 .WithMany(e => e.FormRecords)
-                .HasForeignKey(e => e.EmpId);*/
+                .HasForeignKey(e => e.EmpId);
             });
 
-            /*modelBuilder.Entity<FieldRecord>(entity =>
+            modelBuilder.Entity<FieldRecord>(entity =>
             {
                 entity.HasKey(e => e.FieldRecordId)
                 .HasName("[[PK_FieldRecordId]]");
@@ -966,7 +966,7 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.FormField)
                 .WithMany(e => e.SelectableOptions)
                 .HasForeignKey(e => e.FieldId);
-            });*/
+            });
 
 
             base.OnModelCreating(modelBuilder);

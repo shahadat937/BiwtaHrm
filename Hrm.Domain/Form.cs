@@ -17,7 +17,7 @@ namespace Hrm.Domain
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
 
-        //public virtual ICollection<FormRecord> FormRecords { get; } = new List<FormRecord>();
-        //public virtual ICollection<FormSchema> FormSchemas { get; set; }
+        public virtual ICollection<FormRecord> FormRecords { get; } = new List<FormRecord>();
+        public virtual ICollection<FormSchema> FormSchemas { get; set; }
     }
 }

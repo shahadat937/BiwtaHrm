@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Domain
 {
-    public class SelectableOption: BaseDomainEntity
+    public class SelectableOption : BaseDomainEntity
     {
         public int OptionId { get; set; }
         public int FieldId { get; set; }

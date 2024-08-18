@@ -23,8 +23,8 @@ namespace Hrm.Domain
 
         public FormFieldType FieldType { get; set; }
 
-        //public virtual ICollection<FieldRecord> FieldRecords { get; } = new List<FieldRecord>();
-        //public virtual ICollection<FormSchema> FormSchemas { get; } = new List<FormSchema>();
-        //public virtual ICollection<SelectableOption> SelectableOptions { get; } = new List<SelectableOption>();
+        public virtual ICollection<FieldRecord> FieldRecords { get; } = new List<FieldRecord>();
+        public virtual ICollection<FormSchema> FormSchemas { get; } = new List<FormSchema>();
+        public virtual ICollection<SelectableOption> SelectableOptions { get; } = new List<SelectableOption>();
     }
 }

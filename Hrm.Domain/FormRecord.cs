@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Domain
 {
-    public class FormRecord: BaseDomainEntity
+    public class FormRecord : BaseDomainEntity
     {
         public int RecordId { get; set; }
         public int FormId { get; set; }
@@ -15,9 +15,9 @@ namespace Hrm.Domain
         public bool IsActive { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
-        
-        //public Form Form { get; set; }
-        //public EmpBasicInfo Employee {  get; set; }
-        //public virtual ICollection<FieldRecord> FieldRecords { get; } = new List<FieldRecord>();
+
+        public Form Form { get; set; }
+        public EmpBasicInfo Employee {  get; set; }
+        public virtual ICollection<FieldRecord> FieldRecords { get; } = new List<FieldRecord>();
     }
 }

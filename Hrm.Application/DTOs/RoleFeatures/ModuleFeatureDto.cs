@@ -6,17 +6,21 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.DTOs.RoleFeatures
 {
-    public class RoleFeatureDto
+    public class ModuleFeatureDto
     {
-        public int RoleFeatureId { get; set; }
-        public string? RoleId { get; set; }
+        public string? ModuleName { get; set; }
+        public string? ModuleLink { get; set; }
+        public List<ModuleFeaturesGroupDto> Features { get; set; }
+    }
+
+    public class ModuleFeaturesGroupDto
+    {
         public string? RoleName { get; set; }
-        public int FeatureKey { get; set; }
         public string? FeatureName { get; set; }
+        public string? FeatureLink { get; set; }
         public bool ViewStatus { get; set; }
         public bool Add { get; set; }
         public bool Update { get; set; }
         public bool Delete { get; set; }
     }
-
 }

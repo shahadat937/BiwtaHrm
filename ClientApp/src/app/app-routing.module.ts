@@ -17,9 +17,6 @@ const routes: Routes = [
   {
     path: '',
     component: DefaultLayoutComponent,
-    data: {
-      title: 'Home'
-    },
     canActivate: [AuthGuard],
     children: [
       {

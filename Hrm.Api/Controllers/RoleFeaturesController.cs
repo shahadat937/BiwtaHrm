@@ -4,8 +4,12 @@ using Hrm.Application;
 using Hrm.Application.DTOs.EmpSpouseInfo;
 using Hrm.Application.DTOs.Features;
 using Hrm.Application.DTOs.RoleFeatures;
+using Hrm.Application.Features.EmpJobDetails.Requests.Queries;
 using Hrm.Application.Features.EmpSpouseInfos.Requests.Commands;
+using Hrm.Application.Features.Result.Requests.Queries;
 using Hrm.Application.Features.RoleFeatures.Requests.Commands;
+using Hrm.Application.Features.RoleFeatures.Requests.Queries;
+using Hrm.Application.Features.UserRoles.Requests.Queries;
 using Hrm.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,34 +35,10 @@ namespace Hrm.Api.Controllers
 
 
         [HttpGet("get-features-by-role/{roleId}")]
-        public async Task<ActionResult<List<RoleFeatureDto>>> GetFeaturesByRole(string roleId)
+        public async Task<ActionResult> GetFeaturesByRole(string roleId)
         {
-            var allFeatures = await _context.Feature.ToListAsync();
-
-            // Retrieve role features for the given roleId
-            var roleFeatures = await _context.RoleFeature
-                .Where(rf => rf.RoleId == roleId)
-                .ToListAsync();
-
-            // Combine data
-            var result = allFeatures.Select(f =>
-            {
-                var roleFeature = roleFeatures.FirstOrDefault(rf => rf.FeatureKey == f.FeatureId);
-                return new RoleFeatureDto
-                {
-                    RoleFeatureId = roleFeature?.RoleFeatureId ?? 0,
-                    RoleId = roleFeature?.RoleId ?? roleId,
-                    FeatureKey = f.FeatureId,
-                    FeatureName = f.FeatureName,
-                    ViewStatus = roleFeature?.ViewStatus ?? false, // Set to false if not found
-                    Add = roleFeature?.Add ?? false,
-                    Update = roleFeature?.Update ?? false,
-                    Delete = roleFeature?.Delete ?? false
-                };
-            }).ToList();
-
-
-            return Ok(result);
+            var roleFeatures = await _mediator.Send(new GetRoleFeaturesByRoleIdRequest { RoleId = roleId });
+            return Ok(roleFeatures);
         }
 
         [HttpPost]
@@ -68,6 +48,14 @@ namespace Hrm.Api.Controllers
             var command = new CreateRoleFeaturesCommand { RoleFeatureDtos = roleFeatureDto };
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+
+        [HttpGet("get-Modulefeatures-by-role/{roleName}")]
+        public async Task<ActionResult> GetModuleFeaturesByRole(string roleName)
+        {
+            var roleFeatures = await _mediator.Send(new GetModuleFeaturesByRoleIdRequest { RoleName = roleName });
+            return Ok(roleFeatures);
         }
     }
 }

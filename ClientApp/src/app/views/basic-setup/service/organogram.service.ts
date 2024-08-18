@@ -12,20 +12,24 @@ export class OrganogramService {
   baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
-  getOrganogramNamesOnly(): Observable<OrganogramOfficeNameDto[]> {
-    if (this.cachedData.length > 0) {
-      return of(this.cachedData);
-    } else {
-      return this.http
-        .get<OrganogramOfficeNameDto[]>(this.baseUrl + '/organogram/get-organogramNamesOnly')
-        .pipe(
-          map((data) => {
-            this.cachedData = data; 
-            return data;
-          })
-        );
+  // getOrganogramNamesOnly(): Observable<OrganogramOfficeNameDto[]> {
+  //   if (this.cachedData.length > 0) {
+  //     return of(this.cachedData);
+  //   } else {
+  //     return this.http
+  //       .get<OrganogramOfficeNameDto[]>(this.baseUrl + '/organogram/get-organogramNamesOnly')
+  //       .pipe(
+  //         map((data) => {
+  //           this.cachedData = data; 
+  //           return data;
+  //         })
+  //       );
+  //   }
+  // }
+
+  getOrganogramNamesOnly(): Observable<OrganogramOfficeNameDto[]>{
+        return this.http.get<OrganogramOfficeNameDto[]>(this.baseUrl + '/organogram/get-organogramNamesOnly');
     }
-  }
 }
 
 export interface OrganogramOfficeNameDto {

@@ -45,6 +45,8 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Commands
                         Update = item.Update,
                         Delete = item.Delete,
                         Report = item.Report,
+                        RoleName = item.RoleName,
+                        FeatureName = item.FeatureName,
                     };
 
                     await _unitOfWork.Repository<RoleFeature>().Add(RoleFeaturesInfo);
@@ -62,6 +64,8 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Commands
                     RoleFeaturesInfo.Update = item.Update;
                     RoleFeaturesInfo.Delete = item.Delete;
                     RoleFeaturesInfo.Report = item.Report;
+                    RoleFeaturesInfo.RoleName = item.RoleName;
+                    RoleFeaturesInfo.FeatureName = item.FeatureName;
 
                     await _unitOfWork.Repository<RoleFeature>().Update(RoleFeaturesInfo);
                 }

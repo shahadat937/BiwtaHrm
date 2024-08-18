@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.RoleFeatures.Requests.Queries
 {
-    public class GetFeaturesByRoleIdRequest : IRequest<List<RoleFeatureDto>>
+    public class GetRoleFeaturesByRoleIdRequest : IRequest<List<RoleFeatureDto>>
     {
-        public string RoleId { get; }
+        public string RoleId { get; set; }
     }
 
 }

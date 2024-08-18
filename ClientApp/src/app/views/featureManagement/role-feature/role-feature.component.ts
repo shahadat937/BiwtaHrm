@@ -17,6 +17,7 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
   roles: SelectedStringModel[] = [];
   features: RoleFeature[] = [];
   RoleFeaturesForm: FormGroup;
+  loading: boolean = false;
 
   constructor(
     public roleFeatureService: RoleFeatureService,
@@ -71,8 +72,10 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
       control.push(this.fb.group({
         roleFeatureId: [featureInfo.roleFeatureId],
         roleId: [featureInfo.roleId],
+        roleName: [featureInfo.roleName],
         featureKey: [featureInfo.featureKey],
         featureName: [featureInfo.featureName],
+        selectAll: [featureInfo.selectAll === true],
         viewStatus: [featureInfo.viewStatus === true],
         add: [featureInfo.add === true],
         update: [featureInfo.update === true],
@@ -84,18 +87,43 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
     this.RoleFeaturesForm.markAsDirty();
 }
 
+toggleAllSelection(event: any) {
+  const isChecked = event.target.checked;
+  this.FeaturesListArray.controls.forEach(control => {
+    control.patchValue({
+      viewStatus: isChecked,
+      add: isChecked,
+      update: isChecked,
+      delete: isChecked,
+      selectAll: isChecked
+    });
+  });
+}
+
+toggleRowSelection(index: number) {
+  const control = this.FeaturesListArray.controls[index];
+  const isChecked = control.get('selectAll')?.value;
+  control.patchValue({
+    viewStatus: isChecked,
+    add: isChecked,
+    update: isChecked,
+    delete: isChecked
+  });
+}
 
   submitFeature() {
-    console.log("Form Value: ", this.RoleFeaturesForm.get("featuresList")?.value);
+    this.loading = true;
     this.roleFeatureService.saveRoleFeatures(this.RoleFeaturesForm.get("featuresList")?.value).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
         });
+        this.loading = false;
       } else {
         this.toastr.warning('', `${res.message}`, {
           positionClass: 'toast-top-right',
         });
+        this.loading = false;
       }
     }));
   }

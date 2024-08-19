@@ -25,7 +25,7 @@ export class FeatureListComponent  implements OnInit, OnDestroy {
     'Module Name',
     'Feature Name',
     'Path',
-    'icon',
+    // 'icon',
     'orderNo',
     'Action'];
   dataSource = new MatTableDataSource<any>();

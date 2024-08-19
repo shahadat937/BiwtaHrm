@@ -8,19 +8,19 @@ namespace Hrm.Application.DTOs.RoleFeatures
 {
     public class ModuleFeatureDto
     {
-        public string? ModuleName { get; set; }
-        public string? ModuleLink { get; set; }
-        public List<ModuleFeaturesGroupDto> Features { get; set; }
+        public string? Name { get; set; }
+        public string? Url { get; set; }
+        public IconComponentDto IconComponent { get; set; }
+        public List<ModuleFeaturesGroupDto> Children { get; set; }
     }
 
     public class ModuleFeaturesGroupDto
     {
-        public string? RoleName { get; set; }
-        public string? FeatureName { get; set; }
-        public string? FeatureLink { get; set; }
-        public bool ViewStatus { get; set; }
-        public bool Add { get; set; }
-        public bool Update { get; set; }
-        public bool Delete { get; set; }
+        public string? Name { get; set; }
+        public string? Url { get; set; }
+    }
+    public class IconComponentDto
+    {
+        public string? Name { get; set; }
     }
 }

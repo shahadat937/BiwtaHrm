@@ -34,9 +34,19 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
 
         public async Task<List<ModuleFeatureDto>> Handle(GetModuleFeaturesByRoleIdRequest request, CancellationToken cancellationToken)
         {
+            var dashboardModule = new ModuleFeatureDto
+            {
+                Name = "Dashboard",
+                Url = "/dashboard",
+                IconComponent = new IconComponentDto
+                {
+                    Name = "cil-speedometer"
+                }
+            };
+
             var allRoleFeatures = await _RoleFeaturesRepository.Where(x => x.RoleName == request.RoleName && x.ViewStatus == true).ToListAsync();
 
-            var result = allRoleFeatures
+            var dynamicModules = allRoleFeatures
                 .GroupBy(rf =>
                 {
                     var feature = _FeaturesRepository.FindOne(x => x.FeatureId == rf.FeatureKey);
@@ -44,34 +54,38 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
 
                     return new
                     {
-                        ModuleName = module.Title,
-                        ModuleLink = module.ModuleName
+                        Name = module.Title,
+                        Url = module.ModuleName,
+                        Icon = module.IconName,
                     };
                 })
                 .Select(group => new ModuleFeatureDto
                 {
-                    ModuleName = group.Key.ModuleName,
-                    ModuleLink = group.Key.ModuleLink,
-                    Features = group.Select(rf =>
+                    Name = group.Key.Name,
+                    Url = "/" + group.Key.Url,
+                    IconComponent = new IconComponentDto
+                    {
+                        Name = group.Key.Icon
+                    },
+                    Children = group.Select(rf =>
                     {
                         var feature = _FeaturesRepository.FindOne(x => x.FeatureId == rf.FeatureKey);
 
                         return new ModuleFeaturesGroupDto
                         {
-                            RoleName = rf.RoleName,
-                            FeatureName = rf.FeatureName,
-                            ViewStatus = rf?.ViewStatus ?? false,
-                            Add = rf?.Add ?? false,
-                            Update = rf?.Update ?? false,
-                            Delete = rf?.Delete ?? false,
-                            FeatureLink = feature.Path,
+                            Name = rf.FeatureName,
+                            Url = "/" + group.Key.Url + "/" + feature.Path,
                         };
                     }).ToList()
                 })
                 .ToList();
 
+            var result = new List<ModuleFeatureDto> { dashboardModule };
+            result.AddRange(dynamicModules);
+
             return result;
         }
+
     }
 
 }

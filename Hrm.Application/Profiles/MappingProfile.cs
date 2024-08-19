@@ -105,6 +105,7 @@ using Hrm.Application.DTOs.FormFieldType;
 using Hrm.Application.DTOs.FormField;
 using Hrm.Application.DTOs.SelectableOption;
 using Hrm.Application.DTOs.FormSchema;
+using Hrm.Application.DTOs.FormRecord;
 
 
 
@@ -555,6 +556,8 @@ namespace Hrm.Application.Profiles
             CreateMap<SelectableOption, SelectableOptionDto>().ReverseMap();
             CreateMap<FormSchema, FormSchemaDto>().ReverseMap();
             CreateMap<FormSchema, CreateFormSchemaDto>().ReverseMap();
+            CreateMap<FormRecord, FormRecordDto>().ReverseMap();
+            CreateMap<FormRecord, CreateFormRecordDto>().ReverseMap();
 
             CreateMap<FormField, FormFieldDto>()
                 .ForMember(dest => dest.FieldTypeName, opt => opt.MapFrom(src => src.FieldType.FieldTypeName));
@@ -565,6 +568,10 @@ namespace Hrm.Application.Profiles
             CreateMap<FormSchema, FormSchemaDto>()
                 .ForMember(dest => dest.FormName, opt => opt.MapFrom(src => src.Form.FormName))
                 .ForMember(dest => dest.FieldName, opt => opt.MapFrom(src => src.FormField.FieldName));
+
+            CreateMap<FormRecord, FormRecordDto>()
+                .ForMember(dest => dest.EmpFirstName, opt => opt.MapFrom(src => src.Employee.FirstName))
+                .ForMember(dest => dest.EmpLastName, opt => opt.MapFrom(src => src.Employee.LastName));
 
         }
     }

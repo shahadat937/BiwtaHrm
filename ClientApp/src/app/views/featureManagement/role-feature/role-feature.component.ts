@@ -75,6 +75,7 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
         roleName: [featureInfo.roleName],
         featureKey: [featureInfo.featureKey],
         featureName: [featureInfo.featureName],
+        featurePath: [featureInfo.featurePath],
         selectAll: [featureInfo.selectAll === true],
         viewStatus: [featureInfo.viewStatus === true],
         add: [featureInfo.add === true],
@@ -83,7 +84,6 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
       }));
     });
 
-    // Ensure Angular change detection picks up the update
     this.RoleFeaturesForm.markAsDirty();
 }
 

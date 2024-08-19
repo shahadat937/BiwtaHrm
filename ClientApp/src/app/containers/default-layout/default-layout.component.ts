@@ -32,7 +32,6 @@ export class DefaultLayoutComponent implements OnInit{
   getMenuList(){
     this.roleFeatureService.getModuleFeaturesByRole(this.roleName).subscribe((item) => {
       this.navItems = item;
-      console.log(item)
     });
   }
 }

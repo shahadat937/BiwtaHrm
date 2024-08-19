@@ -48,6 +48,7 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
                     RoleName = roleName.Name,
                     FeatureKey = f.FeatureId,
                     FeatureName = f.FeatureName,
+                    FeaturePath = f.Path,
                     ViewStatus = roleFeature?.ViewStatus ?? false,
                     Add = roleFeature?.Add ?? false,
                     Update = roleFeature?.Update ?? false,

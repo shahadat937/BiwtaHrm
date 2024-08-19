@@ -4,6 +4,7 @@ export class RoleFeature {
     roleName : string = '';
     featureKey : number | null = null;
     featureName : string | null = null;
+    featurePath : string | null = null;
     viewStatus : boolean = false;
     selectAll : boolean = false;
     add : boolean = false;

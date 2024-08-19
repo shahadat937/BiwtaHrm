@@ -4,6 +4,7 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { environment } from 'src/environments/environment';
 import { RoleFeature } from '../model/role-feature';
 import { ModuleFeatureByRole } from '../model/module-feature-by-role';
+import { FeaturePermission } from '../model/feature-permission';
 import { SelectedStringModel } from 'src/app/core/models/selectedStringModel';
 import { Observable } from 'rxjs';
 
@@ -36,6 +37,11 @@ export class RoleFeatureService {
   
   getModuleFeaturesByRole(roleName: string): Observable<ModuleFeatureByRole[]>{
     return this.http.get<ModuleFeatureByRole[]>(this.baseUrl + '/roleFeatures/get-Modulefeatures-by-role/' + roleName);
+  }
+
+  
+  getFeaturePermission(roleName: string, featurePath: string): Observable<FeaturePermission>{
+    return this.http.get<FeaturePermission>(this.baseUrl + '/roleFeatures/get-featurePermission?roleName=' + roleName + '&featurePath=' + featurePath);
   }
 }
 

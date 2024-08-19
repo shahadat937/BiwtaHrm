@@ -51,11 +51,21 @@ namespace Hrm.Api.Controllers
         }
 
 
-        [HttpGet("get-Modulefeatures-by-role/{roleName}")]
+        [HttpGet]
+        [Route(("get-Modulefeatures-by-role/{roleName}"))]
         public async Task<ActionResult> GetModuleFeaturesByRole(string roleName)
         {
             var roleFeatures = await _mediator.Send(new GetModuleFeaturesByRoleNameRequest { RoleName = roleName });
             return Ok(roleFeatures);
+        }
+
+
+        [HttpGet]
+        [Route(("get-featurePermission"))]
+        public async Task<ActionResult> GetPermissionFeature(string roleName, string featurePath)
+        {
+            var featurePermission = await _mediator.Send(new GetPermissionByRoleFeatureRequest { RoleName = roleName , FeaturePath = featurePath });
+            return Ok(featurePermission);
         }
     }
 }

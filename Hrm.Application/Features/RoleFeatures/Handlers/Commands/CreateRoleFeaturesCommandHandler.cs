@@ -47,6 +47,7 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Commands
                         Report = item.Report,
                         RoleName = item.RoleName,
                         FeatureName = item.FeatureName,
+                        FeaturePath = item.FeaturePath
                     };
 
                     await _unitOfWork.Repository<RoleFeature>().Add(RoleFeaturesInfo);
@@ -66,6 +67,7 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Commands
                     RoleFeaturesInfo.Report = item.Report;
                     RoleFeaturesInfo.RoleName = item.RoleName;
                     RoleFeaturesInfo.FeatureName = item.FeatureName;
+                    RoleFeaturesInfo.FeaturePath = item.FeaturePath;
 
                     await _unitOfWork.Repository<RoleFeature>().Update(RoleFeaturesInfo);
                 }

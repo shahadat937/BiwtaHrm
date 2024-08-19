@@ -100,6 +100,9 @@ using Hrm.Application.DTOs.LeaveRules;
 using Hrm.Application.DTOs.EmpPromotionIncrement;
 using Hrm.Application.DTOs.AspNetUserRoles;
 using Hrm.Application.DTOs.Features;
+using Hrm.Application.DTOs.Form;
+using Hrm.Application.DTOs.FormFieldType;
+using Hrm.Application.DTOs.FormField;
 
 
 
@@ -538,6 +541,17 @@ namespace Hrm.Application.Profiles
              .ForMember(dest => dest.LeaveTypeName, opt => opt.MapFrom(src => src.LeaveType.LeaveTypeName))
              .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.CountryName))
              .ForMember(dest => dest.IdCardNo, opt => opt.MapFrom(src => src.Employee.IdCardNo));
+
+
+            CreateMap<Form, FormDto>().ReverseMap();
+            CreateMap<Form, CreateFormDto>().ReverseMap();
+            CreateMap<FormFieldType, FormFieldTypeDto>().ReverseMap();
+            CreateMap<FormFieldType, CreateFormFieldTypeDto>().ReverseMap();
+            CreateMap<FormField, FormFieldTypeDto>().ReverseMap();
+            CreateMap<FormField, CreateFormFieldDto>().ReverseMap();
+
+            CreateMap<FormField, FormFieldDto>()
+                .ForMember(dest => dest.FieldTypeName, opt => opt.MapFrom(src => src.FieldType.FieldTypeName));
 
         }
     }

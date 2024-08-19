@@ -3,62 +3,6 @@
         <div class="text-center">User Role Assignment</div>
     </c-card-header>
     <c-card-body>
-        <!-- <form #FeatureForm="ngForm" [gutter]="3" novalidate cForm cRow class="needs-validation">
-            <c-col [md]="12">
-                <label cLabel for="roleId">Role Name<span class="text-danger">*</span></label>
-                <div class="input-wrapper">
-                    <select [(ngModel)]="roleFeatureService.roleFeature.roleId" (change)="onRoleChange()"
-                        name="roleId" #roleId="ngModel" cFormControl id="roleId"
-                        aria-label="Default select example" cSelect>
-                        <option [ngValue]="null">Select Role</option>
-
-                        @for(role of roles; track role.id;let index=$index) {
-                        <option [value]="role.id">
-                            {{ role.name }}
-                        </option>
-                        }
-                    </select>
-                    @if(!roleId.valid && roleId.touched){
-                    <div class="text-left text-danger">Module is required</div>
-                    }
-                </div>
-            </c-col>
-            <c-card>
-                <c-card-body>
-                    <table borderless cTable hover>
-                        <thead>
-                            <tr>
-                                <th scope="col">Feature Name</th>
-                                <th scope="col">Can View</th>
-                                <th scope="col">Can Add</th>
-                                <th scope="col">Can Edit</th>
-                                <th scope="col">Can Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let feature of features">
-                              <td>
-                                {{ feature.featureName }}
-                                <input type="hidden" [(ngModel)]="feature.featureKey" name="featureKey">
-                              </td>
-                              <td>
-                                <input type="checkbox" [(ngModel)]="feature.viewStatus"  name="viewStatus">
-                              </td>
-                              <td>
-                                <input type="checkbox" [(ngModel)]="feature.add" name="add">
-                              </td>
-                              <td>
-                                <input type="checkbox" [(ngModel)]="feature.update" name="update">
-                              </td>
-                              <td>
-                                <input type="checkbox" [(ngModel)]="feature.delete" name="delete">
-                              </td>
-                            </tr>
-                          </tbody>
-                      </table>
-                </c-card-body>
-            </c-card>
-        </form> -->
         <c-col [md]="12">
             <label cLabel for="roleId">Role Name<span class="text-danger">*</span></label>
             <div class="input-wrapper">
@@ -87,6 +31,9 @@
                             <table borderless cTable hover>
                                 <thead>
                                     <tr>
+                                        <th scope="col">
+                                            <input type="checkbox" class="form-check-input" (change)="toggleAllSelection($event)" />
+                                        </th>
                                         <th scope="col">Feature Name</th>
                                         <th scope="col">Can View</th>
                                         <th scope="col">Can Add</th>
@@ -96,6 +43,9 @@
                                 </thead>
                                 <tbody formArrayName="featuresList">
                                     <tr *ngFor="let p of FeaturesListArray.controls; let i=index" [formGroupName]="i">
+                                        <td>
+                                            <input type="checkbox" formControlName="selectAll" class="form-check-input" (change)="toggleRowSelection(i)" />
+                                        </td>
                                         <td>{{ p.get('featureName')?.value }}</td>
                                         <td>
                                             <input type="checkbox" formControlName="viewStatus" class="form-check-input" />
@@ -112,7 +62,12 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <button cButton class="me-1" color="primary" type="submit">Save</button>
+                            <div class="text-center">
+                                <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+                                    <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+                                    <mat-icon [hidden]="loading" >update</mat-icon> Update
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </c-card-body>

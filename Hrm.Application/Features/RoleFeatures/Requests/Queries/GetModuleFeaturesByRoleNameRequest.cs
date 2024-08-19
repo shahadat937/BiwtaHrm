@@ -1,5 +1,4 @@
-﻿using Hrm.Application.DTOs.Features;
-using Hrm.Application.DTOs.RoleFeatures;
+﻿using Hrm.Application.DTOs.RoleFeatures;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.RoleFeatures.Requests.Queries
 {
-    public class GetFeaturesByRoleIdRequest : IRequest<List<RoleFeatureDto>>
+    public class GetModuleFeaturesByRoleNameRequest : IRequest<List<ModuleFeatureDto>>
     {
-        public string RoleId { get; }
+        public string RoleName { get; set; }
     }
-
 }

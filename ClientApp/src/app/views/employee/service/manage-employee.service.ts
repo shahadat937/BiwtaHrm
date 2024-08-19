@@ -16,20 +16,24 @@ export class ManageEmployeeService {
     this.basicInfoModule = new BasicInfoModule();
    }
 
-   getAll(): Observable<BasicInfoModule[]> {
-    if (this.cachedData.length > 0) {
-      return of (this.cachedData);
-    } else {
-      return this.http
-        .get<BasicInfoModule[]>(this.baseUrl + '/empBasicInfo/get-allEmpBasicInfo')
-        .pipe(
-          map((data) => {
-            this.cachedData = data;
-            return data;
-          })
-        );
+  //  getAll(): Observable<BasicInfoModule[]> {
+  //   if (this.cachedData.length > 0) {
+  //     return of (this.cachedData);
+  //   } else {
+  //     return this.http
+  //       .get<BasicInfoModule[]>(this.baseUrl + '/empBasicInfo/get-allEmpBasicInfo')
+  //       .pipe(
+  //         map((data) => {
+  //           this.cachedData = data;
+  //           return data;
+  //         })
+  //       );
+  //   }
+  // }
+
+  getAll(): Observable<BasicInfoModule[]> {
+        return this.http.get<BasicInfoModule[]>(this.baseUrl + '/empBasicInfo/get-allEmpBasicInfo');
     }
-  }
 
   getEmpBasicInfoByEmpId(id: number) {
     return this.http.get<BasicInfoModule>(this.baseUrl + '/empBasicInfo/get-EmpBasicInfosById/' + id);

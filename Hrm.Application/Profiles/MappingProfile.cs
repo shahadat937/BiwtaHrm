@@ -103,6 +103,7 @@ using Hrm.Application.DTOs.Features;
 using Hrm.Application.DTOs.Form;
 using Hrm.Application.DTOs.FormFieldType;
 using Hrm.Application.DTOs.FormField;
+using Hrm.Application.DTOs.SelectableOption;
 
 
 
@@ -549,9 +550,14 @@ namespace Hrm.Application.Profiles
             CreateMap<FormFieldType, CreateFormFieldTypeDto>().ReverseMap();
             CreateMap<FormField, FormFieldTypeDto>().ReverseMap();
             CreateMap<FormField, CreateFormFieldDto>().ReverseMap();
+            CreateMap<SelectableOption, CreateSelectableOptionDto>().ReverseMap();
+            CreateMap<SelectableOption, SelectableOptionDto>().ReverseMap();
 
             CreateMap<FormField, FormFieldDto>()
                 .ForMember(dest => dest.FieldTypeName, opt => opt.MapFrom(src => src.FieldType.FieldTypeName));
+
+            CreateMap<SelectableOption, SelectableOptionDto>()
+                .ForMember(dest => dest.FieldName, opt => opt.MapFrom(src => src.FormField.FieldName));
 
         }
     }

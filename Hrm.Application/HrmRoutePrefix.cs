@@ -115,6 +115,7 @@ namespace Hrm.Application
         public const string Form = HRMRoutePrefixBase + "form";
         public const string FormFieldType = HRMRoutePrefixBase + "formFieldType";
         public const string FormField = HRMRoutePrefixBase + "formField";
+        public const string SelectableOption = HRMRoutePrefixBase + "selectableOption";
 
     }
 }

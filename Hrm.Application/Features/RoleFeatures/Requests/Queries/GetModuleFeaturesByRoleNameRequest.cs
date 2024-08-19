@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.RoleFeatures.Requests.Queries
 {
-    public class GetModuleFeaturesByRoleIdRequest : IRequest<List<ModuleFeatureDto>>
+    public class GetModuleFeaturesByRoleNameRequest : IRequest<List<ModuleFeatureDto>>
     {
         public string RoleName { get; set; }
     }

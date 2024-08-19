@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
 {
-    public class GetModuleFeaturesByRoleIdRequestHandler : IRequestHandler<GetModuleFeaturesByRoleIdRequest, List<ModuleFeatureDto>>
+    public class GetModuleFeaturesByRoleNameRequestHandler : IRequestHandler<GetModuleFeaturesByRoleNameRequest, List<ModuleFeatureDto>>
     {
         private readonly IHrmRepository<RoleFeature> _RoleFeaturesRepository;
         private readonly IHrmRepository<Feature> _FeaturesRepository;
@@ -22,7 +22,7 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
         private readonly IHrmRepository<Module> _ModuleRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public GetModuleFeaturesByRoleIdRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<RoleFeature> RoleFeaturesRepository, IHrmRepository<Feature> featuresRepository, IHrmRepository<AspNetRoles> aspNetRolesRepository, IHrmRepository<Module> moduleRepository)
+        public GetModuleFeaturesByRoleNameRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<RoleFeature> RoleFeaturesRepository, IHrmRepository<Feature> featuresRepository, IHrmRepository<AspNetRoles> aspNetRolesRepository, IHrmRepository<Module> moduleRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -32,7 +32,7 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
             _ModuleRepository = moduleRepository;
         }
 
-        public async Task<List<ModuleFeatureDto>> Handle(GetModuleFeaturesByRoleIdRequest request, CancellationToken cancellationToken)
+        public async Task<List<ModuleFeatureDto>> Handle(GetModuleFeaturesByRoleNameRequest request, CancellationToken cancellationToken)
         {
             var dashboardModule = new ModuleFeatureDto
             {
@@ -57,8 +57,10 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
                         Name = module.Title,
                         Url = module.ModuleName,
                         Icon = module.IconName,
+                        MenuPosition = module.MenuPosition
                     };
                 })
+                .OrderBy(group => group.Key.MenuPosition)
                 .Select(group => new ModuleFeatureDto
                 {
                     Name = group.Key.Name,
@@ -75,8 +77,10 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
                         {
                             Name = rf.FeatureName,
                             Url = "/" + group.Key.Url + "/" + feature.Path,
+                            OrderNo = feature.OrderNo
                         };
-                    }).ToList()
+                    })
+                    .OrderBy(child => child.OrderNo).ToList()
                 })
                 .ToList();
 

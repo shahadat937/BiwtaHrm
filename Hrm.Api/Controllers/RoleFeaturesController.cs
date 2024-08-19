@@ -54,7 +54,7 @@ namespace Hrm.Api.Controllers
         [HttpGet("get-Modulefeatures-by-role/{roleName}")]
         public async Task<ActionResult> GetModuleFeaturesByRole(string roleName)
         {
-            var roleFeatures = await _mediator.Send(new GetModuleFeaturesByRoleIdRequest { RoleName = roleName });
+            var roleFeatures = await _mediator.Send(new GetModuleFeaturesByRoleNameRequest { RoleName = roleName });
             return Ok(roleFeatures);
         }
     }

@@ -18,6 +18,7 @@ namespace Hrm.Application.DTOs.RoleFeatures
     {
         public string? Name { get; set; }
         public string? Url { get; set; }
+        public int? OrderNo { get; set; }
     }
     public class IconComponentDto
     {

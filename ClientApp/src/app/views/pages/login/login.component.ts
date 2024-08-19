@@ -101,9 +101,7 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
         (res) => {
           if (res) {
             const role = this.authService.currentUserValue.role;
-            if (role === Role.MasterAdmin) {
-              this.router.navigate(['/dashboard']);
-            }
+            this.router.navigate(['/dashboard']);
             this.loading = false;
             this.toastr.success('', `login successful`, {
               positionClass: 'toast-top-right',

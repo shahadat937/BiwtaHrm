@@ -13,6 +13,7 @@ namespace Hrm.Domain
         public string FieldTypeName { get; set; }
         public string? HTMLTagName { get; set; }
         public string? HTMLInputType { get; set; }
+        public string? ValidationRegex { get; set; }
         public bool IsActive { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }

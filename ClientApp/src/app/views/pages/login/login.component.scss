@@ -3,6 +3,16 @@
     margin: 0;
 }
 .biwtaLogo img {
-    max-width: 20%;
+    max-width: 15%;
     height: auto;
+}
+
+.borderround {
+    border-radius: 3%;
+}
+
+.particles-js-canvas-el {
+    position: fixed;
+    top: 0;
+    z-index: -1;
 }

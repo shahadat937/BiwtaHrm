@@ -24,19 +24,23 @@ export class EmployeeService {
    }
 
    
-   getAll(): Observable<EmployeesModule[]> {
-    if (this.cachedData.length > 0) {
-      return of (this.cachedData);
-    } else {
-      return this.http
-        .get<EmployeesModule[]>(this.baseUrl + '/employee/get-allEmployee')
-        .pipe(
-          map((data) => {
-            this.cachedData = data; 
-            return data;
-          })
-        );
-    }
+  //  getAll(): Observable<EmployeesModule[]> {
+  //   if (this.cachedData.length > 0) {
+  //     return of (this.cachedData);
+  //   } else {
+  //     return this.http
+  //       .get<EmployeesModule[]>(this.baseUrl + '/employee/get-allEmployee')
+  //       .pipe(
+  //         map((data) => {
+  //           this.cachedData = data; 
+  //           return data;
+  //         })
+  //       );
+  //   }
+  // }
+  
+  getAll(): Observable<EmployeesModule[]> {
+      return this.http.get<EmployeesModule[]>(this.baseUrl + '/employee/get-allEmployee');
   }
 
   

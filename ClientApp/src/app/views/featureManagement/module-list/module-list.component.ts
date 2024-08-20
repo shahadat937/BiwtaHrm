@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -12,6 +12,8 @@ import { PromotionIncrementInfoComponent } from '../../promotion/promotion-incre
 import { FeatureManagementService } from '../service/feature-management.service';
 import { CreateModuleComponent } from '../create-module/create-module.component';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { RoleFeatureService } from '../service/role-feature.service';
+import { FeaturePermission } from '../model/feature-permission';
 
 @Component({
   selector: 'app-module-list',
@@ -33,13 +35,16 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+  featurePermission : FeaturePermission = new FeaturePermission;
   
   constructor(
     private toastr: ToastrService,
     public featureManagementService: FeatureManagementService,
+    public roleFeatureService: RoleFeatureService,
     private route: ActivatedRoute,
     private modalService: BsModalService,
     private confirmService: ConfirmService,
+    private router: Router,
   ) {
 
   }
@@ -48,7 +53,7 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.getAllModule();
+    this.getPermission();
   }
 
   getAllModule() {
@@ -71,22 +76,51 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
     }
   }
 
-  editModuleInfo(id: number, clickedButton: string){
-    const initialState = {
-      id: id,
-      clickedButton: clickedButton
-    };
-    const modalRef: BsModalRef = this.modalService.show(CreateModuleComponent, { initialState, backdrop: 'static' });
 
-    if (modalRef.onHide) {
-      modalRef.onHide.subscribe(() => {
+  getPermission(){
+    const currentUserString = localStorage.getItem('currentUser');
+    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
+    var roleName = currentUserJSON.role;
+
+    this.roleFeatureService.getFeaturePermission(roleName, 'module').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
         this.getAllModule();
+      }
+      else{
+        this.toastr.warning('Permission Not Allowed', ` `, {
+          positionClass: 'toast-top-right',
+        });
+        this.router.navigate(['/dashboard']);
+      }
+    });
+  }
+
+
+  editModuleInfo(id: number, clickedButton: string){
+    if(clickedButton == "Create" && this.featurePermission.add == true || clickedButton == "Edit" && this.featurePermission.update == true){
+      const initialState = {
+        id: id,
+        clickedButton: clickedButton
+      };
+      const modalRef: BsModalRef = this.modalService.show(CreateModuleComponent, { initialState, backdrop: 'static' });
+  
+      if (modalRef.onHide) {
+        modalRef.onHide.subscribe(() => {
+          this.getAllModule();
+        });
+      }
+    }
+    else {
+      this.toastr.warning('Permission Not Allowed', ` `, {
+        positionClass: 'toast-top-right',
       });
     }
   }
 
   delete(element: any) {
-    this.confirmService
+    if(this.featurePermission.delete == true){
+      this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
@@ -109,6 +143,12 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
           );
         }
       });
+    }
+    else {
+      this.toastr.warning('Permission Not Allowed', ` `, {
+        positionClass: 'toast-top-right',
+      });
+    }
   }
 
 }

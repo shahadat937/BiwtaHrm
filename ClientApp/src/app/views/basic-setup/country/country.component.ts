@@ -87,8 +87,6 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
   resetForm() {
-    console.log(this.CountryForm?.form.value);
-
     this.btnText = 'Submit';
     if (this.CountryForm?.form != null) {
       this.CountryForm.form.reset();

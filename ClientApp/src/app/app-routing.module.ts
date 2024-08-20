@@ -17,18 +17,15 @@ const routes: Routes = [
   {
     path: '',
     component: DefaultLayoutComponent,
-    data: {
-      title: 'Home'
-    },
     canActivate: [AuthGuard],
     children: [
       {
         
         path: 'dashboard',
        canActivate: [AuthGuard],
-        data: {
-          role: [Role.MasterAdmin]
-        },
+        // data: {
+        //   role: [Role.MasterAdmin]
+        // },
         loadChildren: () =>
           import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
@@ -78,7 +75,43 @@ const routes: Routes = [
           import('./views/pages/pages.module').then((m) => m.PagesModule)
       },
       {
-        path: 'bascisetup',
+        path: 'personalInfoSetup',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./views/basic-setup/basic-setup.module').then((m) => m.BasicSetupModule)
+      },
+      {
+        path: 'addressSetup',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./views/basic-setup/basic-setup.module').then((m) => m.BasicSetupModule)
+      },
+      {
+        path: 'educationSetup',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./views/basic-setup/basic-setup.module').then((m) => m.BasicSetupModule)
+      },
+      {
+        path: 'trainingSetup',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./views/basic-setup/basic-setup.module').then((m) => m.BasicSetupModule)
+      },
+      {
+        path: 'bankInfoSetup',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./views/basic-setup/basic-setup.module').then((m) => m.BasicSetupModule)
+      },
+      {
+        path: 'languageSetup',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./views/basic-setup/basic-setup.module').then((m) => m.BasicSetupModule)
+      },
+      {
+        path: 'officeSetup',
         canActivate: [AuthGuard],
         loadChildren: () =>
           import('./views/basic-setup/basic-setup.module').then((m) => m.BasicSetupModule)

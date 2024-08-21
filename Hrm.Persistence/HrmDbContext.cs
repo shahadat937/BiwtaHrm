@@ -949,7 +949,7 @@ namespace Hrm.Persistence
 
                 entity.HasOne(e => e.Form)
                 .WithMany(e => e.FormSchemas)
-                .HasForeignKey(e => e.SchemaId);
+                .HasForeignKey(e => e.FormId);
 
                 entity.HasOne(e => e.FormField)
                 .WithMany(e => e.FormSchemas)

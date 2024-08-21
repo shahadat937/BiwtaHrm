@@ -1,7 +1,9 @@
+<ngx-particles
+  [id]="id"
+  [options]="particlesOptions"
+  (particlesLoaded)="particlesLoaded($event)"
+></ngx-particles>
 <div class="min-vh-100 d-flex flex-row align-items-center" id="tsparticles">
-  <video autoplay muted loop playsinline class="position-absolute w-100 h-100" style="object-fit: cover; z-index: -1;">
-    <source src="{{backgroundImage}}" type="video/mp4">
-  </video>
   <c-container>
     <c-row class="justify-content-center">
       <c-col md="5">

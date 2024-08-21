@@ -75,7 +75,7 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
 
                         return new ModuleFeaturesGroupDto
                         {
-                            Name = rf.FeatureName,
+                            Name = feature.FeatureName,
                             Url = "/" + group.Key.Url + "/" + feature.Path,
                             OrderNo = feature.OrderNo
                         };

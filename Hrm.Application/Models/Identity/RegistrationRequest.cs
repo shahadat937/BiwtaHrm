@@ -7,7 +7,7 @@ namespace Hrm.Application.Models.Identity
         [Required] 
         public string FirstName { get; set; }
 
-        [Required]
+        //[Required]
         public string LastName { get; set; }
 
         //[Required]

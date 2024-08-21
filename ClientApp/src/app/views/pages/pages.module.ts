@@ -12,6 +12,8 @@ import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatIconModule } from '@angular/material/icon';
+import { NgxParticlesModule } from '@tsparticles/angular';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { BrowserModule } from '@angular/platform-browser';
     SpinnerModule,
     BrowserModule,
     ReactiveFormsModule,
+    MatIconModule,
+    NgxParticlesModule 
   ],
   providers: [
     

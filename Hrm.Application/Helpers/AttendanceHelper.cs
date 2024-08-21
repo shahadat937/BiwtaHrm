@@ -161,14 +161,14 @@ namespace Hrm.Application.Helpers
                 tempStartDate = tempStartDate.AddDays(extradays);
                 tempEndDate = tempEndDate.AddDays(-excludedays);
 
-                if (tempStartDate > tempEndDate)
+                if (tempStartDate <= tempEndDate)
                 {
                     TimeSpan totaldays = tempEndDate.Subtract(tempStartDate);
                     totalWeekend += ((int)totaldays.TotalDays + 1) % 7;
                 }
             }
 
-            int holidays = await _unitOfWork.Repository<Hrm.Domain.Holidays>().Where(x => x.HolidayDate >= DateOnly.FromDateTime(startDate) && x.HolidayDate <= DateOnly.FromDateTime(endDate) && x.IsActive).CountAsync();
+            int holidays = await _unitOfWork.Repository<Hrm.Domain.Holidays>().Where(x => x.HolidayDate >= DateOnly.FromDateTime(startDate) && x.HolidayDate <= DateOnly.FromDateTime(endDate) && x.IsActive && x.IsWeekend == false).CountAsync();
 
             return totalWorkday - totalWeekend - holidays;
 

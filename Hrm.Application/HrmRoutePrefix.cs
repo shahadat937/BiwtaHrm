@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.VisualBasic;
 using static Hrm.Shared.Constant.Constants;
 
 namespace Hrm.Application
@@ -111,6 +112,12 @@ namespace Hrm.Application
         public const string LeaveType = HRMRoutePrefixBase + "leaveType";
         public const string LeaveRules = HRMRoutePrefixBase + "leaveRules";
         public const string LeaveRequest = HRMRoutePrefixBase + "leaveRequest";
-
+        public const string Form = HRMRoutePrefixBase + "form";
+        public const string FormFieldType = HRMRoutePrefixBase + "formFieldType";
+        public const string FormField = HRMRoutePrefixBase + "formField";
+        public const string SelectableOption = HRMRoutePrefixBase + "selectableOption";
+        public const string FormSchema = HRMRoutePrefixBase + "formSchema";
+        public const string FormRecord = HRMRoutePrefixBase + "formRecord";
+        public const string FieldRecord = HRMRoutePrefixBase + "fieldRecord";
     }
 }

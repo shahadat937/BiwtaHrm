@@ -896,6 +896,83 @@ namespace Hrm.Persistence
                 .HasForeignKey(e => e.ModuleId);
             });
 
+            modelBuilder.Entity<Form>(entity =>
+            {
+                entity.HasKey(e => e.FormId)
+                .HasName("[[PK_Form]]");
+            });
+
+            modelBuilder.Entity<FormFieldType>(entity =>
+            {
+                entity.HasKey(e => e.FieldTypeId)
+                .HasName("[[PK_FormFieldType]]");
+            });
+
+            modelBuilder.Entity<FormField>(entity =>
+            {
+                entity.HasKey(e => e.FieldId)
+                .HasName("[[PK_FormField]]");
+
+                entity.HasOne(e => e.FieldType)
+                .WithMany(e => e.FormFields)
+                .HasForeignKey(e => e.FieldTypeId);
+            });
+
+            modelBuilder.Entity<FormRecord>(entity =>
+            {
+                entity.HasKey(e => e.RecordId)
+                .HasName("[[PK_FormRecord]]");
+
+                entity.HasOne(e => e.Form)
+                .WithMany(e => e.FormRecords)
+                .HasForeignKey(e => e.FormId);
+
+                entity.HasOne(e => e.Employee)
+                .WithMany(e => e.FormRecords)
+                .HasForeignKey(e => e.EmpId);
+            });
+
+            modelBuilder.Entity<FieldRecord>(entity =>
+            {
+                entity.HasKey(e => e.FieldRecordId)
+                .HasName("[[PK_FieldRecordId]]");
+
+                entity.HasOne(e => e.FormRecord)
+                .WithMany(e => e.FieldRecords)
+                .HasForeignKey(e => e.FormRecordId);
+
+                entity.HasOne(e => e.FormField)
+                .WithMany(e => e.FieldRecords)
+                .HasForeignKey(e => e.FieldId);
+            });
+
+            modelBuilder.Entity<FormSchema>(entity =>
+            {
+                entity.HasKey(e => e.SchemaId)
+                .HasName("[[PK_FormSchema]]");
+
+                entity.HasOne(e => e.Form)
+                .WithMany(e => e.FormSchemas)
+                .HasForeignKey(e => e.FormId);
+
+                entity.HasOne(e => e.FormField)
+                .WithMany(e => e.FormSchemas)
+                .HasForeignKey(e => e.FieldId);
+                
+            });
+
+
+            modelBuilder.Entity<SelectableOption>(entity =>
+            {
+                entity.HasKey(e => e.OptionId)
+                .HasName("[[PK_SelectableOption]]");
+
+                entity.HasOne(e => e.FormField)
+                .WithMany(e => e.SelectableOptions)
+                .HasForeignKey(e => e.FieldId);
+            });
+
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -1003,6 +1080,13 @@ namespace Hrm.Persistence
         public virtual DbSet<LeaveRules> LeaveRules { get; set; } = null!;
         public virtual DbSet<LeaveRequest> LeaveRequest { get; set; } = null!;
         public virtual DbSet<EmpPromotionIncrement> EmpPromotionIncrement { get; set; } = null!;
+        public virtual DbSet<Form> Form { get; set; } = null!;
+        public virtual DbSet<FormFieldType> FormFieldType { get; set; } = null!;
+        public virtual DbSet<FormField> FormField { get; set; } = null!;
+        public virtual DbSet<FormRecord> FormRecord { get; set; } = null!;
+        public virtual DbSet<FieldRecord> FieldRecord { get; set; } = null!;
+        public virtual DbSet<FormSchema> FormSchema { get; set; } = null!;
+        public virtual DbSet<SelectableOption> SelectableOption { get; set; } = null!;
 
     }
 }

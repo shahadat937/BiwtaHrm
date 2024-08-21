@@ -23,11 +23,13 @@ import { AddleaveComponent } from './addleave/addleave.component';
 import { ManageleaveComponent } from './manageleave/manageleave.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
+import { LeaveDetailViewComponent } from './manageleave/leave-detail-view/leave-detail-view.component';
 
 @NgModule({
   declarations: [
     AddleaveComponent,
-    ManageleaveComponent
+    ManageleaveComponent,
+    LeaveDetailViewComponent
   ],
   imports: [
     CommonModule,

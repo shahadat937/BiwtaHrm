@@ -57,5 +57,6 @@ namespace Hrm.Domain
         public virtual ICollection<EmpPromotionIncrement>? OrderByPromotionIncrement { get; set; }
         public virtual ICollection<EmpPromotionIncrement>? ApproveByPromotionIncrement { get; set; }
         public virtual ICollection<LeaveRequest> LeaveRequests {get; } = new List<LeaveRequest>();
+        public virtual ICollection<FormRecord> FormRecords { get; } = new List<FormRecord>();
     }
 }

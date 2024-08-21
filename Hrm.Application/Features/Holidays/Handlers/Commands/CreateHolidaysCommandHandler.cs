@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.Holidays.Validators;
 using Hrm.Application.Features.Holidays.Requests.Commands;
 using Hrm.Application.Responses;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,9 @@ namespace Hrm.Application.Features.Holidays.Handlers.Commands
 
             var Holidays = _mapper.Map<Hrm.Domain.Holidays>(request.HolidayDto);
 
+            bool IsWorkday = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.weekDay.WeekDayName == Holidays.HolidayDate.Value.DayOfWeek.ToString() && x.YearId == Holidays.YearId).AnyAsync();
+
+            Holidays.IsWeekend = !IsWorkday;
             Holidays = await _unitOfWork.Repository<Hrm.Domain.Holidays>().Add(Holidays);
             await _unitOfWork.Save();
 

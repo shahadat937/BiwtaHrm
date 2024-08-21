@@ -108,6 +108,10 @@ import { ReleaseTypeComponent } from './release-type/release-type.component';
 import { LeaveTypeComponent } from './leave/leave-type/leave-type.component';
 import { TableModule } from 'primeng/table';
 import { LeaveRulesComponent } from './leave/leave-rules/leave-rules.component';
+import { TabsModule } from '@coreui/angular';
+import { TabViewModule } from 'primeng/tabview';
+
+
 
 
 
@@ -194,7 +198,9 @@ import { LeaveRulesComponent } from './leave/leave-rules/leave-rules.component';
     SpinnerModule,
     CollapseDirective,
     MatTreeModule,
-    TableModule
+    TableModule,
+    TabsModule,
+    TabViewModule
 
   ],
   providers: [

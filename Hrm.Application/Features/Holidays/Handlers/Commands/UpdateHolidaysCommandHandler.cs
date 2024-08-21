@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.DTOs.Holidays.Validators;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.Holidays.Handlers.Commands
 {
@@ -42,6 +43,11 @@ namespace Hrm.Application.Features.Holidays.Handlers.Commands
             }
 
             _mapper.Map(request.HolidayDto, holiday);
+
+            bool IsWorkday = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.weekDay.WeekDayName == holiday.HolidayDate.Value.DayOfWeek.ToString() && x.YearId == holiday.YearId).AnyAsync();
+
+            holiday.IsWeekend = !IsWorkday;
+
 
             await _unitOfWork.Repository<Hrm.Domain.Holidays>().Update(holiday);
             await _unitOfWork.Save();

@@ -18,12 +18,19 @@ public class GetLeaveRequestByIdRequestHandler: IRequestHandler<GetLeaveRequestB
     }
     public async Task<LeaveRequestDto> Handle(GetLeaveRequestByIdRequest request, CancellationToken cancellationToken)
     {
-        var leaveRequest = await _LeaveRequestRepository.Get(request.LeaveRequestId);
-        if(leaveRequest==null) {
-            throw new NotFoundException(nameof(leaveRequest), request.LeaveRequestId);
+        var leaveRequest = await _LeaveRequestRepository.Where(x => x.LeaveRequestId == request.LeaveRequestId)
+            .Include(x => x.LeaveType)
+            .Include(x => x.Country)
+            .Include(x => x.Employee).ToListAsync();
+
+        if (leaveRequest.Count()<=0)
+        {
+            throw new NotFoundException(nameof(leaveRequest),request.LeaveRequestId);
         }
+
+        var leaveRequestDo = leaveRequest[0];
         
-        var leaveRequestDto = _mapper.Map<LeaveRequestDto>(leaveRequest);
+        var leaveRequestDto = _mapper.Map<LeaveRequestDto>(leaveRequestDo);
 
         return leaveRequestDto;
     }

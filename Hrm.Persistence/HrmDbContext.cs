@@ -428,6 +428,10 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.EmployeeType)
                     .WithMany(eb => eb.EmpBasicInfo)
                     .HasForeignKey(e => e.EmployeeTypeId);
+
+                entity.HasMany(e => e.EmpJobDetail)
+                    .WithOne(eb => eb.EmpBasicInfo)
+                    .HasForeignKey(eb => eb.EmpId);
             });
 
 

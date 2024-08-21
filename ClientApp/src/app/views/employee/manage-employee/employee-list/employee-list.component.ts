@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { ManageEmployeeService } from '../../service/manage-employee.service';
 import { cilZoom, cilPlus } from '@coreui/icons';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EmployeeInformationComponent } from '../employee-information/employee-information.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -18,6 +20,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     'slNo', 
     'idNo', 
     'fullName', 
+    'department', 
+    'designation', 
     // 'fullNameBangla', 
     // 'email', 
     // 'isActive', 
@@ -30,6 +34,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   constructor(
     public manageEmployeeService: ManageEmployeeService,
+    private modalService: BsModalService,
   ) {
   }
 
@@ -57,6 +62,13 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
+  }
+
+  viewEmployeeInformation(id: number){
+    const initialState = {
+      id: id
+    };
+    const modalRef: BsModalRef = this.modalService.show(EmployeeInformationComponent, { initialState, backdrop: 'static' });
   }
 
 }

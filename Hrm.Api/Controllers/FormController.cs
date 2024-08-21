@@ -42,6 +42,15 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("get-formAllInfoById/{id}")]
+        public async Task<ActionResult> GetFormAllInfoById(int id)
+        {
+            var command = new GetFormAllInfoByIdRequest { FormId = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

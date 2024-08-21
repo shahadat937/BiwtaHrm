@@ -16,6 +16,7 @@ using System.Data;
 using Hrm.Application.Features.BankAccountType.Requests.Commands;
 using Hrm.Application.Features.FieldRecord.Requests.Queries;
 using Microsoft.AspNetCore.Hosting;
+using Hrm.Application.Helpers;
 
 namespace Hrm.Application.Features.FieldRecord.Handlers.Commands
 {
@@ -23,11 +24,13 @@ namespace Hrm.Application.Features.FieldRecord.Handlers.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly FormHelper _formHelper;
 
         public CreateFieldRecordCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _formHelper = new FormHelper(unitOfWork);
         }
 
         public async Task<BaseCommandResponse> Handle(CreateFieldRecordCommand request, CancellationToken cancellationToken)
@@ -47,13 +50,13 @@ namespace Hrm.Application.Features.FieldRecord.Handlers.Commands
 
             var formId = formRecord.FormId;
 
-            if(!await CheckValidField(formId, request.FieldRecordDto.FieldId))
+            if(!await _formHelper.CheckValidField(formId, request.FieldRecordDto.FieldId))
             {
                 throw new BadRequestException("Invalid Field");
             }
 
 
-            if(await CheckDataType(request.FieldRecordDto.FieldValue,request.FieldRecordDto.FieldId)==false)
+            if(await _formHelper.CheckDataType(request.FieldRecordDto.FieldValue,request.FieldRecordDto.FieldId)==false)
             {
                 throw new BadRequestException("Data type is invalid");
             }
@@ -64,25 +67,16 @@ namespace Hrm.Application.Features.FieldRecord.Handlers.Commands
 
             var formField = await _unitOfWork.Repository<Hrm.Domain.FormField>().Get(request.FieldRecordDto.FieldId);
 
-            if(formField!=null&&(formField.HasMultipleValue==null||formField.HasMultipleValue==false))
+            if(await _formHelper.CheckMultipleValue(request.FieldRecordDto.FormRecordId, request.FieldRecordDto.FieldId))
             {
-                var check = await _unitOfWork.Repository<Hrm.Domain.FieldRecord>().Where(x => x.FormRecordId == request.FieldRecordDto.FormRecordId && x.FieldId == request.FieldRecordDto.FieldId).AnyAsync();
-
-                if(check)
-                {
-                    throw new BadRequestException("Multiple value for this field is not allowed");
-                }
+                throw new BadRequestException("Multiple value for this field is not allowed");
             }
 
             // Check If It Has selectable option, then the values from selectable option are allowed
-            if(formField!=null&&formField.HasSelectable!=null&&formField.HasSelectable==true)
-            {
-                var check = await _unitOfWork.Repository<Hrm.Domain.SelectableOption>().Where(x => x.OptionValue == request.FieldRecordDto.FieldValue && x.FieldId == request.FieldRecordDto.FieldId).AnyAsync();
 
-                if(!check)
-                {
-                    throw new BadRequestException("Invalid Option Selected");
-                }
+            if(!await _formHelper.IsValidSelectable(request.FieldRecordDto.FieldValue, request.FieldRecordDto.FieldId))
+            {
+                throw new BadRequestException("Invalid Option Selected");
             }
 
             await _unitOfWork.Repository<Hrm.Domain.FieldRecord>().Add(fieldRecord);

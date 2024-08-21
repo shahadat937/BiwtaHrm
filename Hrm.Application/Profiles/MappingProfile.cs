@@ -563,7 +563,9 @@ namespace Hrm.Application.Profiles
             CreateMap<FieldRecord, CreateFieldRecordDto>().ReverseMap();
 
             CreateMap<FormField, FormFieldDto>()
-                .ForMember(dest => dest.FieldTypeName, opt => opt.MapFrom(src => src.FieldType.FieldTypeName));
+                .ForMember(dest => dest.FieldTypeName, opt => opt.MapFrom(src => src.FieldType.FieldTypeName))
+                .ForMember(dest => dest.HTMLTagName, opt => opt.MapFrom(src => src.FieldType.HTMLTagName))
+                .ForMember(dest => dest.HTMLInputType, opt => opt.MapFrom(src => src.FieldType.HTMLInputType));
 
             CreateMap<SelectableOption, SelectableOptionDto>()
                 .ForMember(dest => dest.FieldName, opt => opt.MapFrom(src => src.FormField.FieldName));

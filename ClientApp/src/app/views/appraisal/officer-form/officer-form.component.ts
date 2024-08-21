@@ -3,6 +3,10 @@ import { Router } from '@angular/router';
 import { SharedService } from './service/shared.service';
 import { NgForm } from '@angular/forms';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {OfficerFormService} from './service/officer-form.service'
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-officer-form',
@@ -11,37 +15,46 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 })
 export class OfficerFormComponent implements OnInit, OnDestroy {
 
-  formData: any = { 
-      division: '',
-      fromdate: '',
-      todate: '',
-      employeeName: '',
-      fathersName: '',
-      mothersName: '',
-      birthRegNo: '',
-      dateofBirth: '',
-      designation: '',
-      workplace: '',
-      joiningDate: '',
-      presentDesignationJoiningDate: '',
-      education: '',
-      trainingSpecialTraining: '',
-      reportinFromDate: '',
-      reportingEndDate: ''
-};
-
-  @ViewChild('officerForm', { static: true }) BloodGroupForm!: NgForm;
-
-  constructor(private sharedService  :SharedService,private router: Router ){}
+  formId:number = 1;
+  loading: boolean;
+  formData: any;
+  subscription: Subscription = new Subscription();
+  currentSection:number ;
+  
+  constructor(
+    public officerFormService: OfficerFormService,
+    private toastr: ToastrService,
+    private confirmService: ConfirmService
+  ) {
+    this.loading = false;
+    this.currentSection = 0;
+  }
 
   ngOnInit(): void {
-    this.formData=this.sharedService.getFormData('Part-1')
+    this.getFormInfo(); 
   }
-  ngOnDestroy(): void {
-  }
-  onSubmit(form: NgForm): void {
-    this.sharedService.setFormData('part-1',this.formData)
-    this.router.navigate(['/appraisal/officerForm2']);
 
+
+  ngOnDestroy(): void {
+    if(this.subscription) {
+      this.subscription.unsubscribe();
+    } 
+  }
+
+  getFormInfo() {
+    this.loading = true;
+    this.officerFormService.getFormInfo(this.formId).subscribe({
+      next: response => {
+        this.formData = response;
+        console.log(this.formData);
+      },
+      error: err => {
+        console.log(err);
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false
+      }
+    });
   }
 }

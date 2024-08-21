@@ -58,6 +58,12 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
     },
     fpsLimit: 120,
     interactivity: {
+      events: {
+          onClick: {
+            enable: true,
+            mode: "push",
+          }
+      },
       modes: {
         push: {
           quantity: 4,

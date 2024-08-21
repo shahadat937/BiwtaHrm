@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TabViewModule } from 'primeng/tabview';
 import {
   ButtonGroupModule,
   ButtonModule,
@@ -47,6 +48,7 @@ import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.comp
     OfficerFormPart7Component
   ],
   imports: [
+    TabViewModule,
     CommonModule,
     CardModule,
     FormModule,
@@ -65,7 +67,8 @@ import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.comp
     PaginationModule,
     SpinnerModule,
     FormsModule,
-    AppraisalRoutingModule
+    AppraisalRoutingModule,
+
   ]
 })
 export class AppraisalModule { }

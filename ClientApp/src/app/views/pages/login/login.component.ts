@@ -17,6 +17,7 @@ import {
 
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 import { NgParticlesService } from "@tsparticles/angular";
+import { cilEyedropper, cilLowVision } from '@coreui/icons';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,6 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
   loading = false;
   error = '';
   hide = true;
-
   biwtaLogo: string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta-logo.png`;
   backgroundImage: string = `${this.empPhotoSignService.imageUrl}TempleteImage/login_bg6.mp4`;
 

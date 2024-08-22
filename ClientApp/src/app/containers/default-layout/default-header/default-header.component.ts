@@ -8,9 +8,13 @@ import { AuthService } from 'src/app/core/service/auth.service';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 import { EmpPhotoSignService } from 'src/app/views/employee/service/emp-photo-sign.service';
 import { cilAccountLogout, cilPlus } from '@coreui/icons';
+import { BasicInfoModule } from 'src/app/views/employee/model/basic-info.module';
+import { EmpBasicInfoService } from 'src/app/views/employee/service/emp-basic-info.service';
+import { EmpJobDetailsService } from 'src/app/views/employee/service/emp-job-details.service';
 @Component({
   selector: 'app-default-header',
   templateUrl: './default-header.component.html',
+  styleUrls: ['./default-header.component.scss'],
 })
 export class DefaultHeaderComponent extends HeaderComponent {
 
@@ -22,12 +26,16 @@ export class DefaultHeaderComponent extends HeaderComponent {
   empId: any;
   photoPreviewUrl: string | ArrayBuffer | null = null;
   subscription: Subscription = new Subscription();
+  empBasicInfo: BasicInfoModule = new BasicInfoModule;
+  designationName : string = "";
 
   constructor(
     private classToggler: ClassToggleService,
     private authService: AuthService,
     private router: Router,
     public empPhotoSignService: EmpPhotoSignService,
+    public empBasicInfoService: EmpBasicInfoService,
+    public empJobDetailsService: EmpJobDetailsService,
   ) {
     super();
   }
@@ -53,8 +61,14 @@ export class DefaultHeaderComponent extends HeaderComponent {
   getEmployeeByEmpId() {
     if(this.empId){
       this.subscription = this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
-          this.photoPreviewUrl = res.photoUrl ? `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}` : null;
+          this.photoPreviewUrl = res.photoUrl ? `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}` : `${this.empPhotoSignService.imageUrl}/EmpPhoto/default.jpg`;
       })
+      this.subscription = this.empBasicInfoService.findByEmpId(this.empId).subscribe((res) => {
+        this.empBasicInfo = res;
+      });
+      this.subscription = this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
+        this.designationName = res.designationName;
+      });
     }
     else {
       this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default.jpg`

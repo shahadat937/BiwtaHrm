@@ -98,7 +98,7 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
           enable: true,
           area: 800,
         },
-        value: 80,
+        value: 120,
       },
       opacity: {
         value: 0.5,
@@ -139,19 +139,12 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
     this.pathRememberValue();
 
     this.ngParticlesService.init(async (engine) => {
-      console.log(engine);
-
-      // Starting from 1.19.0 you can add custom presets or shape here, using the current tsParticles instance (main)
-      // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-      // starting from v2 you can add only the features you need reducing the bundle size
-      //await loadFull(engine);
       await loadSlim(engine);
     });
 
   }
 
   particlesLoaded(container: Container): void {
-    console.log(container);
   }
 
 

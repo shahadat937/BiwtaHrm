@@ -19,14 +19,14 @@
           Dashboard
         </a>
       </c-nav-item>
-      <c-nav-item>
+      <!-- <c-nav-item>
         <a cNavLink routerLink="/users" routerLinkActive="active">Users</a>
       </c-nav-item>
       <c-nav-item>
         <a cNavLink routerLink="/settings" routerLinkActive="active">
           Settings
         </a>
-      </c-nav-item>
+      </c-nav-item> -->
     </c-header-nav>
 
     <c-header-nav class="d-none d-lg-flex">
@@ -81,7 +81,7 @@
         <h6 cDropdownHeader class="bg-light fw-semibold py-2">Account</h6>
       </li>
       <li>
-        <a cDropdownItem>
+        <a cDropdownItem >
           <svg cIcon class="me-2" name="cilBell"></svg>
           Updates
           <c-badge class="ms-2 float-end" color="info">
@@ -98,12 +98,13 @@
           </c-badge>
         </a>
       </li> -->
-      <li [routerLink]="['/profile']">
-        <a cDropdownItem>
+      <li>
+        <a cDropdownItem [cOffcanvasToggle]="offcanvasNoBackdrop.id">
           <svg cIcon class="me-2" name="cilUser"></svg>
           Profile
         </a>
       </li>
+      
       <!-- <li>
         <a cDropdownItem>
           <svg cIcon class="me-2" name="cilSettings"></svg>
@@ -122,4 +123,34 @@
     </ul>
   </c-dropdown>
 </ng-template>
+
+
+
+<c-offcanvas
+  id="OffcanvasNoBackdrop"
+  [backdrop]="false"
+  [scroll]="false"
+  placement="end"
+  #offcanvasNoBackdrop
+>
+  <c-offcanvas-header>
+    <h5 cOffcanvasTitle>Profile</h5>
+    <button mat-mini-fab color="warn" class="close" aria-label="Close" [cOffcanvasToggle]="offcanvasNoBackdrop.id">
+      <mat-icon>close</mat-icon>
+  </button>
+  </c-offcanvas-header>
+  <c-offcanvas-body class="canvas-body">
+    <div cRow class="text-center profile-info">
+      <c-col md="12">
+        <img src="{{photoPreviewUrl}}">
+      </c-col>
+      <c-col md="12">
+        <h5>{{empBasicInfo.firstName}} {{empBasicInfo.lastName}}</h5>
+      </c-col>
+      <c-col md="12">
+        <h6 class="text-primary">{{designationName}}</h6>
+      </c-col>
+    </div>
+  </c-offcanvas-body>
+</c-offcanvas>
 

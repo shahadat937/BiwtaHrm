@@ -44,7 +44,9 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
                 }
             };
 
-            var allRoleFeatures = await _RoleFeaturesRepository.Where(x => x.RoleName == request.RoleName && x.ViewStatus == true).ToListAsync();
+            var roleId = await _AspNetRolesRepository.FindOneAsync(x => x.Name == request.RoleName);
+
+            var allRoleFeatures = await _RoleFeaturesRepository.Where(x => x.RoleId == roleId.Id && x.ViewStatus == true).ToListAsync();
 
             var dynamicModules = allRoleFeatures
                 .GroupBy(rf =>

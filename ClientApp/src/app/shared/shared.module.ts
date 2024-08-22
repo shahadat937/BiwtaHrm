@@ -10,7 +10,7 @@ import { IconModule } from '@coreui/icons-angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxSpinnerModule } from 'ngx-spinner';
-//import { MaterialModule } from './material.module';
+import { MaterialModule } from './material.module';
 
 import { ToastModule } from '@coreui/angular';
 @NgModule({
@@ -31,12 +31,14 @@ import { ToastModule } from '@coreui/angular';
     RouterModule,
     NgbModule,
     NgxSpinnerModule,
+    MaterialModule,
     MatTableModule,
     MatPaginatorModule,
     MatIconModule,
     IconModule,
     MatSelectModule,
     ToastModule,
+
   ],
 })
 export class SharedCustomModule {}

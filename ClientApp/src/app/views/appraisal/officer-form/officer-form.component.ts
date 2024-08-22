@@ -7,6 +7,7 @@ import {OfficerFormService} from './service/officer-form.service'
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { Subscription } from 'rxjs';
+import { FieldComponent } from '../field/field.component';
 
 @Component({
   selector: 'app-officer-form',
@@ -56,5 +57,13 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
         this.loading = false
       }
     });
+  }
+
+  onChange() {
+    console.log(this.formData);
+  }
+
+  onSubmit() {
+    console.log("Hello World");
   }
 }

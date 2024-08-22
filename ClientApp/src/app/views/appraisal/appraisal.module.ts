@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TabViewModule } from 'primeng/tabview';
+import { StepperModule } from 'primeng/stepper';
 import {
   ButtonGroupModule,
   ButtonModule,
@@ -31,6 +32,7 @@ import { OfficerFormPart6Component } from './officer-form/officer-form-part-6/of
 import { OfficerFormPart7Component } from './officer-form/officer-form-part-7/officer-form-part-7.component';
 import { StaffForm3Component } from './staff-form/staff-form-3/staff-form-3.component';
 import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.component';
+import { FieldComponent } from './field/field.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.comp
     OfficerFormPart4Component,
     OfficerFormPart5Component,
     OfficerFormPart6Component,
-    OfficerFormPart7Component
+    OfficerFormPart7Component,
+    FieldComponent
   ],
   imports: [
     TabViewModule,
@@ -68,6 +71,7 @@ import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.comp
     SpinnerModule,
     FormsModule,
     AppraisalRoutingModule,
+    StepperModule
 
   ]
 })

@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Hrm.Application.DTOs.Form;
 using Microsoft.EntityFrameworkCore;
 using Hrm.Application.DTOs.FormField;
+using Hrm.Application.DTOs.SelectableOption;
+using System.Net.Http.Headers;
 
 namespace Hrm.Application.Features.Form.Handlers.Queries
 {
@@ -61,13 +63,48 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                     x.HTMLInputType,
                     x.HasMultipleValue,
                     x.HasSelectable,
-                    FieldValue = "",
+                    FieldValue = ""
                 }).ToList();
+
+
+                // Add Selectable Option If any
+                List<object> fieldInfoWithOption = new List<object>();
+                foreach(var field in fieldInfoDto)
+                {
+                    List<SelectableOptionDto> options = new List<SelectableOptionDto>();
+                    if(field.HasSelectable==true)
+                    {
+                        var selectableOption = await _unitOfWork.Repository<Hrm.Domain.SelectableOption>().Where(x => x.FieldId == field.FieldId && x.IsActive == true).ToListAsync();
+
+                        var selectableOptionDto = _mapper.Map<List<SelectableOptionDto>>(selectableOption);
+
+                        var fieldWithSelectable = new
+                        {
+                            field.FieldId,
+                            field.FieldName,
+                            field.Description,
+                            field.IsRequired,
+                            field.FieldTypeId,
+                            field.FieldTypeName,
+                            field.HTMLTagName,
+                            field.HTMLInputType,
+                            field.HasMultipleValue,
+                            field.HasSelectable,
+                            FieldValue = "",
+                            Options = selectableOptionDto
+                        };
+
+                        fieldInfoWithOption.Add(fieldWithSelectable);
+                    } else
+                    {
+                        fieldInfoWithOption.Add(field);
+                    }
+                }
 
                 sectionsWithField.Add(new
                 {
                     SectionId = section,
-                    Fields = fieldInfoDto
+                    Fields = fieldInfoWithOption
                 });
             }
             

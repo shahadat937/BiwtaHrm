@@ -62,6 +62,18 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [Route("save-FormData")]
+        public async Task<ActionResult<BaseCommandResponse>> SaveFormData([FromBody] object formData)
+        {
+            var command = new CreateFormDataCommand { formData = formData };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
 
         [HttpPut]
         [ProducesResponseType(200)]

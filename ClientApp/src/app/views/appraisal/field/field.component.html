@@ -1,0 +1,54 @@
+@if (fieldData.htmlTagName=="input") {
+    
+    @if (fieldData.hasSelectable&&fieldData.hasMultipleValue==false) {
+        <c-row class="mt-2" [gutter]="3">
+            <c-col md="5">
+                <label cLabel>{{fieldData.fieldName}}</label>     
+            </c-col>
+            <c-col md="3">
+                <input 
+                type="text" 
+                placeholder="Remark"
+                cFormControl 
+                [name]="fieldUniqueName+'remark'" 
+                id="fieldUniqueName+'remark'">
+            </c-col>
+                    
+            @for (option of fieldData.options; track $index) {
+                <c-row class="ms-2" [gutter]="1">
+                    <c-col md="3">
+                        <label cLabel>{{$index+1}}. {{option.optionName}}</label>
+                    </c-col>
+                    <c-col>
+                    <c-form-check>
+                        <input cFormCheckInput type="radio" 
+                        [(ngModel)]="field"
+                        [required]="fieldData.isRequired"
+                        [name]="fieldUniqueName"
+                        [value]="option.optionValue"
+                         />
+                    </c-form-check>
+                    </c-col>
+                </c-row>
+            }
+        </c-row>
+    } @else {
+        <c-row class="mt-2"  [gutter]="3">
+            <c-col md="3">
+                <label for="{{fieldUniqueName}}" cLabel>{{fieldData.fieldName}}:</label>
+            </c-col>
+            <c-col>
+                <input [name]="fieldUniqueName" 
+                [id]="fieldUniqueName"
+                [(ngModel)]="this.field"
+                (change)="onFieldChange($event)"
+                [type]="fieldData.htmlInputType" 
+                [required]="fieldData.isRequired" cFormControl>
+            </c-col>
+            <c-col>
+                
+            </c-col>
+        </c-row>
+    }
+
+} 

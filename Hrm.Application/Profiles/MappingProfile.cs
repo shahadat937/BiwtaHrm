@@ -333,7 +333,9 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpBasicInfo, CreateEmpBasicInfoDto>().ReverseMap();
 
             CreateMap<EmpBasicInfo, EmpBasicInfoDto>()
-            .ForMember(dest => dest.EmployeeTypeName, opt => opt.MapFrom(src => src.EmployeeType.EmployeeTypeName));
+            .ForMember(dest => dest.EmployeeTypeName, opt => opt.MapFrom(src => src.EmployeeType.EmployeeTypeName))
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().Department.DepartmentName))
+            .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().Designation.DesignationName));
 
             CreateMap<EmpPersonalInfo, EmpPersonalInfoDto>().ReverseMap();
             CreateMap<EmpPersonalInfo, CreateEmpPersonalInfoDto>().ReverseMap();

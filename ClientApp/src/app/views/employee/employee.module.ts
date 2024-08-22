@@ -15,6 +15,7 @@ import {
   SharedModule,
   SpinnerModule,
   TableModule,
+  TooltipModule,
 } from '@coreui/angular';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { ToastrService } from 'ngx-toastr';
@@ -124,7 +125,8 @@ import { BengaliDatePipe } from './manage-employee/emp-id-card-generate/bengali-
     CollapseDirective,
     IconModule,
     TableModule,
-    MatCardModule
+    MatCardModule,
+    TooltipModule,
   ],
   providers:
   [

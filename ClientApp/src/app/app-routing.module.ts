@@ -30,6 +30,12 @@ const routes: Routes = [
           import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
       {
+        path: 'profile',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./views/profile/profile.module').then((m) => m.ProfileModule)
+      },
+      {
         path: 'theme',
         loadChildren: () =>
           import('./views/theme/theme.module').then((m) => m.ThemeModule)

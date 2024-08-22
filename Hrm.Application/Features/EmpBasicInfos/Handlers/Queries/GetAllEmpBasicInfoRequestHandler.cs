@@ -29,7 +29,11 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
         public async Task<object> Handle(GetAllEmpBasicInfoRequest request, CancellationToken cancellationToken)
         {
             IQueryable<EmpBasicInfo> EmpBasicInfo = _EmpBasicInfoRepository.Where(x => true)
-                .Include(x => x.EmployeeType); ;
+                .Include(x => x.EmployeeType)
+                .Include(x => x.EmpJobDetail)
+                    .ThenInclude(ejd => ejd.Department)
+                .Include(x => x.EmpJobDetail)
+                    .ThenInclude(ejd => ejd.Designation);
 
             EmpBasicInfo = EmpBasicInfo.OrderByDescending(x => x.Id);
 

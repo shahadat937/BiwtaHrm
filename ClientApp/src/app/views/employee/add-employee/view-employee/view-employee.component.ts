@@ -23,7 +23,9 @@ export class ViewEmployeeComponent implements OnInit {
     'slNo',
     'pNo',
     'fullName',
-    'fullNameBangla',
+    'department',
+    'designation',
+    // 'fullNameBangla',
     // 'email', 
     'Action'];
   dataSource = new MatTableDataSource<any>();

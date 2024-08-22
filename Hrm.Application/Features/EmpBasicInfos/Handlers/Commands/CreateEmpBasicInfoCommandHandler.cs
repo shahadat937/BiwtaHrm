@@ -31,7 +31,7 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Commands
             var FindPNo = await _EmpBasicInfoRepository.FindOneAsync(x=>x.PersonalFileNo == request.EmpBasicInfoDto.PersonalFileNo);
             var IdCardNo = await _EmpBasicInfoRepository.FindOneAsync(x => x.IdCardNo == request.EmpBasicInfoDto.IdCardNo);
 
-            if (FindPNo != null)
+            if (FindPNo != null && request.EmpBasicInfoDto.PersonalFileNo != null)
             {
                 response.Success = false;
                 response.Message = $"Creation Failed Personal File No '{request.EmpBasicInfoDto.PersonalFileNo}' already Exists";

@@ -1,15 +1,29 @@
-.custom-button {
-    border: none;
-    background-color: transparent;
-    color: inherit;
-    cursor: pointer;
-    padding: 0;
-    font: inherit;
-  }
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
 
-.edit-button button {
-  color: black;
-  background-color: aqua;
-  border: none;
-  border-radius: 50%;
+.shake {
+  animation: shake 0.5s;
+}
+
+.modal {
+  display: block;
+}
+
+.scrollable-modal-body {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+c-card-header {
+  background-color:cadetblue;
+}
+
+c-card-header h5 {
+  margin: 0;
+  color: white;
 }

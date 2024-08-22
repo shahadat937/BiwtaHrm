@@ -15,8 +15,6 @@ import {
   Container,
 } from "@tsparticles/engine";
 
-
-import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 import { NgParticlesService } from "@tsparticles/angular";
 
@@ -47,7 +45,7 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
   id = "tsparticles";
 
   /* Starting from 1.19.0 you can use a remote url (AJAX request) to a JSON with the configuration */
-  particlesUrl = "http://foo.bar/particles.json";
+
 
   /* or the classic JavaScript object */
   particlesOptions = {
@@ -59,11 +57,11 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
     fpsLimit: 120,
     interactivity: {
       events: {
-          onClick: {
-            enable: true,
-            mode: "push",
-          }
-      },
+        onClick: {
+          enable: true,
+          mode: "push",
+        }
+    },
       modes: {
         push: {
           quantity: 4,

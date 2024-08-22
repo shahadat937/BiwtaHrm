@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: 'api/sms',
+  apiUrl: 'api/hrm',
   securityUrl: 'api',
   fileUrl: 'Content/',
+  imageUrl: 'assets/images/',
 };

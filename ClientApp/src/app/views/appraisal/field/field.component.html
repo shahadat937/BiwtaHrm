@@ -7,8 +7,9 @@
             </c-col>
             <c-col md="3">
                 <input 
-                type="text" 
+                type="text"
                 placeholder="Remark"
+                [(ngModel)] = "fieldData.remark"
                 cFormControl 
                 [name]="fieldUniqueName+'remark'" 
                 id="fieldUniqueName+'remark'">
@@ -41,9 +42,14 @@
                 <input [name]="fieldUniqueName" 
                 [id]="fieldUniqueName"
                 [(ngModel)]="this.field"
+                #fieldRef = "ngModel"
                 (change)="onFieldChange($event)"
                 [type]="fieldData.htmlInputType" 
                 [required]="fieldData.isRequired" cFormControl>
+                
+                @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired){
+                    <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
+                }
             </c-col>
             <c-col>
                 

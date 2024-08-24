@@ -63,7 +63,8 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                     x.HTMLInputType,
                     x.HasMultipleValue,
                     x.HasSelectable,
-                    FieldValue = ""
+                    FieldValue = "",
+                    Remark = ""
                 }).ToList();
 
 
@@ -91,6 +92,7 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                             field.HasMultipleValue,
                             field.HasSelectable,
                             FieldValue = "",
+                            Remark = "",
                             Options = selectableOptionDto
                         };
 
@@ -114,6 +116,7 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                 FormId = request.FormId,
                 FormName = form.FormName,
                 Description = form.Description,
+                EmpId = 0,
                 Sections = sectionsWithField
             };
 

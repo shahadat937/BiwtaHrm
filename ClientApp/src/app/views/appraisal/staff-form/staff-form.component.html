@@ -1,1 +1,77 @@
-<p>Staff Form Works</p>
+<c-card>
+  @if (loading==true) {
+    <div class="d-flex justify-content-center">Loading...</div>
+  } @else {
+    <c-card-header>
+      <h5>{{ formData.formName }}</h5>
+    </c-card-header>
+    <c-card-body>
+      <form 
+      #officerForm="ngForm"
+      (submit)="saveFormData()">
+        <p-stepper>
+            @for (item of formData.sections; track $index) {
+              <p-stepperPanel >
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback" let-ind="index">
+                  <c-card>
+                    <c-card-body [gutter]="3">
+                      <div class="d-flex justify-content-center">
+                        <h5>Part {{item.sectionId}}</h5>
+                      </div>
+                      <hr>
+                      @if (ind==0) {
+                        <c-col md="3">
+                          <label for="empId" cLabel>EmployeeId</label>
+                          <input type="number" 
+                          name="empId" 
+                          [(ngModel)]="formData.empId"
+                          id="empId" cFormControl>
+                        </c-col>
+                      }
+                      @for (field of item.fields; track $index) {
+                        <app-field
+                        [(field)]="field.fieldValue"
+                        (change) = "onChange()"
+                        [fieldData]="field" 
+                        [fieldUniqueName]="field.fieldName+item.sectionId+field.fieldId"></app-field>
+                      }
+
+                      <hr>
+                      <div class="d-flex justify-content-end mt-3">
+                        <button cButton type="submit" class="me-3" [disabled]="submitLoading||!officerForm.valid">
+                          @if (submitLoading==true) {
+                            <c-spinner size="sm"></c-spinner>
+                          }
+                          Submit</button>
+                        <button type="reset" color="secondary" (click)="onReset()" cButton>Reset</button>
+                      </div>
+                    </c-card-body> 
+                    <c-card-footer>
+                      @if (ind==0) {
+                        <div class="d-flex justify-content-end">
+                          <button cButton (click)="nextCallback.emit()" color="primary">Next</button>
+                        </div>
+                      }
+                      @if (ind==formData.sections.length-1){
+                        <div class="d-flex justify-content-start">
+                          <button cButton (click)="prevCallback.emit()" color="primary">Previous</button>
+                        </div>
+                      }
+
+                      @if (ind>0&&ind<formData.sections.length-1) {
+                        <div class="d-flex justify-content-between">
+                          <button cButton (click)="prevCallback.emit()" color="primary">Previous</button>
+                          <button cButton (click)="nextCallback.emit()" color="primary">Next</button>
+                        </div>
+                      }
+                    </c-card-footer>
+                  </c-card>
+                 
+                </ng-template>
+              </p-stepperPanel>
+            }
+        </p-stepper>
+      </form>
+    </c-card-body>
+  }
+</c-card>

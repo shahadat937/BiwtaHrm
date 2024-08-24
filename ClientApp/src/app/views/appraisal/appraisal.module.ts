@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TabViewModule } from 'primeng/tabview';
 import { StepperModule } from 'primeng/stepper';
+import { IconDirective } from '@coreui/icons-angular';
+import { TableModule as TableModulePN } from 'primeng/table';
 import {
   ButtonGroupModule,
   ButtonModule,
@@ -13,7 +15,7 @@ import {
   ListGroupModule,
   ProgressModule,
   SharedModule,
-  TableModule, 
+  TableModule,
   UtilitiesModule,
   PaginationModule,
   SpinnerModule,
@@ -30,8 +32,6 @@ import { OfficerFormPart4Component } from './officer-form/officer-form-part-4/of
 import { OfficerFormPart5Component } from './officer-form/officer-form-part-5/officer-form-part-5.component';
 import { OfficerFormPart6Component } from './officer-form/officer-form-part-6/officer-form-part-6.component';
 import { OfficerFormPart7Component } from './officer-form/officer-form-part-7/officer-form-part-7.component';
-import { StaffForm3Component } from './staff-form/staff-form-3/staff-form-3.component';
-import { StaffForm2Component } from './staff-form/staff-form-2/staff-form-2.component';
 import { FieldComponent } from './field/field.component';
 
 @NgModule({
@@ -40,8 +40,6 @@ import { FieldComponent } from './field/field.component';
     ManageFormComponent,
     OfficerFormComponent,
     OfficerForm2Component,
-    StaffForm2Component,
-    StaffForm3Component,
     OfficerForm2Component,
     OfficerFormPart3Component,
     OfficerFormPart4Component,
@@ -71,7 +69,9 @@ import { FieldComponent } from './field/field.component';
     SpinnerModule,
     FormsModule,
     AppraisalRoutingModule,
-    StepperModule
+    StepperModule,
+    TableModulePN,
+    IconDirective
 
   ]
 })

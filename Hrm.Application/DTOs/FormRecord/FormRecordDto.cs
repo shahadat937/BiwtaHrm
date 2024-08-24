@@ -14,6 +14,7 @@ namespace Hrm.Application.DTOs.FormRecord
         public string IdCardNo { get; set; }
         public string EmpFirstName { get; set; }
         public string EmpLastName { get; set; }
+        public string? Department {  get; set; }
         public bool IsActive { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }

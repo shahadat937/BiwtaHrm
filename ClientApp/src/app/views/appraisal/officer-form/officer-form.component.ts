@@ -18,6 +18,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   formId:number = 1;
   loading: boolean;
+  submitLoading: boolean;
   formData: any;
   subscription: Subscription = new Subscription();
   currentSection:number ;
@@ -27,11 +28,14 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private confirmService: ConfirmService
   ) {
+    
     this.loading = false;
+    this.submitLoading = false;
     this.currentSection = 0;
   }
 
   ngOnInit(): void {
+    this.loading=true;
     this.getFormInfo(); 
   }
 
@@ -43,9 +47,9 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   }
 
   getFormInfo() {
-    this.loading = true;
     this.officerFormService.getFormInfo(this.formId).subscribe({
       next: response => {
+        this.formData=null;
         this.formData = response;
         console.log(this.formData);
       },
@@ -65,5 +69,33 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log("Hello World");
+  }
+
+  onReset() {
+    this.getFormInfo();
+  }
+
+  saveFormData() {
+    this.submitLoading=true;
+    this.officerFormService.saveFormData(this.formData).subscribe({
+      next: (response)=> {
+        if(response.success) {
+          this.toastr.success('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        } else {
+          this.toastr.warning('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          });
+        }
+      },
+      error: (err)=> {
+        this.submitLoading=false;
+      },
+      complete: ()=> {
+        this.submitLoading=false;
+        console.log("complete");
+      }
+    })
   }
 }

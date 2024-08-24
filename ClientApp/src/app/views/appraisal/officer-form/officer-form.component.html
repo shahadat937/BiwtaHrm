@@ -6,7 +6,9 @@
       <h5>{{ formData.formName }}</h5>
     </c-card-header>
     <c-card-body>
-      <form onsubmit="">
+      <form 
+      #officerForm="ngForm"
+      (submit)="saveFormData()">
         <p-stepper>
             @for (item of formData.sections; track $index) {
               <p-stepperPanel >
@@ -17,6 +19,15 @@
                         <h5>Part {{item.sectionId}}</h5>
                       </div>
                       <hr>
+                      @if (ind==0) {
+                        <c-col md="3">
+                          <label for="empId" cLabel>EmployeeId</label>
+                          <input type="number" 
+                          name="empId" 
+                          [(ngModel)]="formData.empId"
+                          id="empId" cFormControl>
+                        </c-col>
+                      }
                       @for (field of item.fields; track $index) {
                         <app-field
                         [(field)]="field.fieldValue"
@@ -24,6 +35,16 @@
                         [fieldData]="field" 
                         [fieldUniqueName]="field.fieldName+item.sectionId+field.fieldId"></app-field>
                       }
+
+                      <hr>
+                      <div class="d-flex justify-content-end mt-3">
+                        <button cButton type="submit" class="me-3" [disabled]="submitLoading||!officerForm.valid">
+                          @if (submitLoading==true) {
+                            <c-spinner size="sm"></c-spinner>
+                          }
+                          Submit</button>
+                        <button type="reset" color="secondary" (click)="onReset()" cButton>Reset</button>
+                      </div>
                     </c-card-body> 
                     <c-card-footer>
                       @if (ind==0) {

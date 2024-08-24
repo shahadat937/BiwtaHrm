@@ -99,6 +99,7 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    this.router.navigate(['/addressSetup/union']);
   }
 
   loadthanas() {
@@ -178,7 +179,7 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllUnions();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/union']);
+          this.router.navigate(['/addressSetup/union']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {

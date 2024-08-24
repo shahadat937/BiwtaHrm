@@ -119,7 +119,7 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/division']);
+    this.router.navigate(['/addressSetup/division']);
   }
   getALlDivisions() {
     this.subscription = this.devisionService.getAll().subscribe((item) => {
@@ -178,7 +178,7 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlDivisions();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/division']);
+          this.router.navigate(['/addressSetup/division']);
         }
         this.loading = false;
       } else {

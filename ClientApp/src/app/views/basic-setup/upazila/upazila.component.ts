@@ -113,6 +113,7 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    this.router.navigate(['/addressSetup/upazila']);
   }
 
   loaddistrict() {
@@ -192,7 +193,7 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlUpazilas();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/upazila']);
+          this.router.navigate(['/addressSetup/upazila']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {

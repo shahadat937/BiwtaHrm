@@ -12,6 +12,9 @@ export class UserModule {
   empId : number | null;
   menuPosition: number;
   isActive : boolean;
+  canEditProfile : boolean = false;
+  departmentName : string = '';
+  designationName : string = '';
   
   constructor() {
     this.id = '';

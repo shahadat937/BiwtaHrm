@@ -64,9 +64,10 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     });
   }
 
-  viewEmployeeInformation(id: number){
+  viewEmployeeInformation(id: number, clickedButton: string){
     const initialState = {
-      id: id
+      id: id,
+      clickedButton: clickedButton
     };
     const modalRef: BsModalRef = this.modalService.show(EmployeeInformationComponent, { initialState, backdrop: 'static' });
   }

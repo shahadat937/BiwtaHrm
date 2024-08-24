@@ -19,7 +19,6 @@ import {
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
-import { ProfileComponent } from './profile.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ChangeProfileComponent } from './change-profile/change-profile.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -53,7 +52,7 @@ import { MatIconModule } from '@angular/material/icon';
     SharedModule,
     MatIconModule,
   ],
-  declarations: [ProfileComponent, ChangeProfileComponent]
+  declarations: [ChangeProfileComponent]
 })
 export class ProfileModule {
 }

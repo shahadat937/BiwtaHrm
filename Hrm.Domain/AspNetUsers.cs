@@ -25,5 +25,8 @@ namespace Hrm.Domain
         public int AccessFailedCount { get; set; } = 0;
         public int? EmpId { get; set; }
         public bool IsActive { get; set; }
+        public bool? CanEditProfile { get; set; }
+
+        public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
     }
 }

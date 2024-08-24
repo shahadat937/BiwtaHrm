@@ -972,6 +972,13 @@ namespace Hrm.Persistence
                 .HasForeignKey(e => e.FieldId);
             });
 
+            modelBuilder.Entity<AspNetUsers>(entity =>
+            {
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(e => e.AspNetUsers)
+                    .HasForeignKey(e => e.EmpId);
+            });
 
             base.OnModelCreating(modelBuilder);
         }

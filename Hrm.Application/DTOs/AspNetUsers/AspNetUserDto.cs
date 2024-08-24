@@ -25,5 +25,9 @@ namespace Hrm.Application.DTOs.AspNetUsers
         public int AccessFailedCount { get; set; }
         public int? EmpId { get; set; }
         public bool IsActive { get; set; }
+        public bool? CanEditProfile { get; set; }
+
+        public string? DepartmentName { get; set; }
+        public string? DesignationName { get; set; }
     }
 }

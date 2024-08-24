@@ -103,7 +103,8 @@ namespace Hrm.Identity.Services
                 PhoneNumber = request.PhoneNumber,
                 EmpId = request.EmpId,
                 IsActive = request.IsActive,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                CanEditProfile = false
             };
 
             var existingUser = await _userManager.FindByNameAsync(request.UserName);
@@ -230,6 +231,7 @@ namespace Hrm.Identity.Services
                 // Update user properties
                 user.UserName = request.UserName;
                 user.IsActive = request.IsActive;
+                user.CanEditProfile = request.CanEditProfile;
 
 
                 var result = await _userManager.UpdateAsync(user);

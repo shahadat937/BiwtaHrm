@@ -15,6 +15,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { UpdateUserComponent } from 'src/app/views/usermanagement/update-user/update-user.component';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { ChangeProfileComponent } from 'src/app/views/profile/change-profile/change-profile.component';
+import { EmployeeInformationComponent } from 'src/app/views/employee/manage-employee/employee-information/employee-information.component';
 @Component({
   selector: 'app-default-header',
   templateUrl: './default-header.component.html',
@@ -102,7 +103,6 @@ export class DefaultHeaderComponent extends HeaderComponent {
       });
     }
   }
-  
   updatePhotoSign(id: number, clickedButton: string){
     const initialState = {
       id: id,
@@ -116,5 +116,12 @@ export class DefaultHeaderComponent extends HeaderComponent {
       });
     }
   }
-  
+    
+  viewUserProfile(id: number, clickedButton: string){
+    const initialState = {
+      id: id,
+      clickedButton: clickedButton
+    };
+    const modalRef: BsModalRef = this.modalService.show(EmployeeInformationComponent, { initialState, backdrop: 'static' });
+  }
 }

@@ -30,7 +30,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   @ViewChild('UserForm', { static: true }) UserForm!: NgForm;
   loading = false;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'fullName', 'userName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'fullName', 'userName', 'department', 'designation','isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -136,6 +136,9 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
       empId: null,
       menuPosition: 0,
       isActive : true,
+      canEditProfile : false,
+      departmentName: '',
+      designationName: '',
     };
   }
 
@@ -156,6 +159,9 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         empId : null,
         menuPosition: 0,
         isActive : true,
+        canEditProfile : false,
+        departmentName: '',
+        designationName: '',
       });
     }
     // this.router.navigate(['/usermanagement/user']);

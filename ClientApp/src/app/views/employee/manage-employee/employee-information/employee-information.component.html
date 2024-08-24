@@ -17,7 +17,7 @@
                                 <h5>Employee Photo and Signature</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('empPhotoSign')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('empPhotoSign')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
@@ -48,7 +48,7 @@
                                 <h5>Employee Basic Information</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('empBasicInfo')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('empBasicInfo')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
@@ -93,7 +93,7 @@
                                 <h5>Employee Personal Information</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('personalInfo')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('personalInfo')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
@@ -184,7 +184,7 @@
                                 <h5>Employee Spouse Information</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('spouseInfo')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('spouseInfo')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
@@ -230,7 +230,7 @@
                                 <h5>Employee Child Information</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('childrenInfo')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('childrenInfo')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
@@ -288,7 +288,7 @@
                                 <h5>Employee Job Details Information</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('jobDetails')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('jobDetails')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
@@ -356,7 +356,7 @@
                                 <h5>Employee Present Address Information</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('presentAddress')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('presentAddress')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
@@ -415,7 +415,7 @@
                                 <h5>Employee Permanent Address Information</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('permanentAddress')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('permanentAddress')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
@@ -474,7 +474,7 @@
                                 <h5>Employee Education Information</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('educationInfo')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('educationInfo')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
@@ -525,7 +525,7 @@
                                 <h5>Employee Psi and Training Information</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('psiTrainingInfo')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('psiTrainingInfo')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
@@ -570,7 +570,7 @@
                                 <h5>Employee Bank Information</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('bankInfo')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('bankInfo')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
@@ -621,7 +621,7 @@
                                 <h5>Employee Language Information</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('languageInfo')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('languageInfo')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>
@@ -660,7 +660,7 @@
                                 <h5>Employee Foreign Tour Information</h5>
                             </div>
                             <div>
-                                <button mat-mini-fab color="primary" (click)="toggleComponent('foreignTour')" cTooltip="Edit" cTooltipPlacement="bottom">
+                                <button mat-mini-fab color="primary" (click)="toggleComponent('foreignTour')" cTooltip="Edit" cTooltipPlacement="bottom" [hidden]="clickedButton == 'viewProfile' && canEditProfile != true">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </div>

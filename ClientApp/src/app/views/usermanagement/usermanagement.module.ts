@@ -13,6 +13,7 @@ import {
   ProgressModule,
   SharedModule,
   SpinnerModule,
+  TooltipModule,
 } from '@coreui/angular';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { ToastrService } from 'ngx-toastr';
@@ -51,6 +52,7 @@ import { UpdateRoleComponent } from './update-role/update-role.component';
     ProgressModule,
     SpinnerModule,
     CollapseDirective,
+    TooltipModule,
   ],
   providers: [ 
     ToastrService,

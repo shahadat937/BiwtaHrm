@@ -113,6 +113,7 @@ export class InstituteComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    this.router.navigate(['/trainingSetup/institute']);
   }
 
   getALlInstitutes() {
@@ -184,7 +185,7 @@ export class InstituteComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlInstitutes();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/institute']);
+          this.router.navigate(['/trainingSetup/institute']);
         }
         this.loading = false;
 

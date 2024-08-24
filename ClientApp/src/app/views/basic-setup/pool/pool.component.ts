@@ -92,7 +92,7 @@ export class PoolComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/pool']);
+    this.router.navigate(['/officeSetup/pool']);
   }
 
   getALlPools() {
@@ -120,7 +120,7 @@ export class PoolComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlPools();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/pool']);
+          this.router.navigate(['/officeSetup/pool']);
         }
         this.loading = false;
       } else {

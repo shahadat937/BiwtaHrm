@@ -126,7 +126,7 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/grade']);
+    this.router.navigate(['/officeSetup/grade']);
   }
   getALlGrades() {
     this.subscription = this.gradeService.getAll().subscribe((item) => {
@@ -153,7 +153,7 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlGrades();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/grade']);
+          this.router.navigate(['/officeSetup/grade']);
         }
         this.loading = false;
       } else {

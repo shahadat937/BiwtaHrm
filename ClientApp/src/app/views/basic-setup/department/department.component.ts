@@ -147,7 +147,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
 
   cancelUpdate() {
     this.resetForm();
-    this.router.navigate(['/bascisetup/department']);
+    this.router.navigate(['/officeSetup/department']);
   }
 
   initaialDepartment(form?: NgForm) {
@@ -170,6 +170,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
       officeName: "",
       upperDepartmentName: "",
     };
+    
   }
   resetForm() {
     if (this.DepartmentForm?.form != null) {
@@ -191,6 +192,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    // this.router.navigate(['/officeSetup/department']);
   }
 
   getALlDepartments() {
@@ -248,7 +250,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.getALlDepartments();
         this.resetForm();
-        this.router.navigate(['/bascisetup/department']);
+        this.router.navigate(['/officeSetup/department']);
         this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {

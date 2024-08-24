@@ -92,7 +92,7 @@ export class BankAccountTypeComponent implements OnInit, OnDestroy, AfterViewIni
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/bankAccountType']);
+    this.router.navigate(['/bankInfoSetup/bankAccountType']);
   }
 
   getBankAccountTypes() {
@@ -119,7 +119,7 @@ export class BankAccountTypeComponent implements OnInit, OnDestroy, AfterViewIni
         this.getBankAccountTypes();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/bankAccountType']);
+          this.router.navigate(['/bankInfoSetup/bankAccountType']);
         }
         this.loading = false;
       } else {

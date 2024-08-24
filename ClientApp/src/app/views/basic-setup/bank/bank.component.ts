@@ -90,7 +90,7 @@ export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/bank']);
+    this.router.navigate(['/bankInfoSetup/bank']);
   }
 
   getAllBanks() {
@@ -117,7 +117,7 @@ export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllBanks();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/bank']);
+          this.router.navigate(['/bankInfoSetup/bank']);
         }
         this.loading = false;
       } else {

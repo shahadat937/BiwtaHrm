@@ -95,7 +95,7 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/section']);
+    this.router.navigate(['/officeSetup/section']);
   }
   getAllSections() {
     this.subscription = this.sectionService.getAll().subscribe((item) => {
@@ -123,7 +123,7 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllSections();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/section']);
+          this.router.navigate(['/officeSetup/section']);
         }
         this.loading = false;
       } else {

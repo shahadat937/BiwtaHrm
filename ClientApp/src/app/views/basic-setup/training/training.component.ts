@@ -112,6 +112,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    this.router.navigate(['/trainingSetup/trainingType']);
   }
 
   getALlTrainingTypes() {
@@ -134,7 +135,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
             });
             this.getALlTrainingTypes();
             this.resetForm();
-            this.router.navigate(['/bascisetup/trainingType']);
+            this.router.navigate(['/trainingSetup/trainingType']);
           } else {
             this.toastr.warning('', `${response.message}`, {
               positionClass: 'toast-top-right',

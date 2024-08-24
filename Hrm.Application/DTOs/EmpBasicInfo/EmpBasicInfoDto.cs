@@ -30,5 +30,7 @@ namespace Hrm.Application.DTOs.EmpBasicInfo
         public bool? IsActive { get; set; }
 
         public string? EmployeeTypeName { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? DesignationName { get; set; }
     }
 }

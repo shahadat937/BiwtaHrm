@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { EmpBankInfoService } from '../../service/emp-bank-info.service';
 import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
@@ -54,10 +54,13 @@ export class EmployeeInformationComponent implements OnInit {
   empPhoto : string = '';
   empSignature : string = '';
 
+  id: number = 0;
+  modalOpened: boolean = false;
+
   visible : boolean = false;
   componentVisible : boolean = false;
   visibleComponent: string | null = null;
-  empId : any = null;
+  empId: number = 0;
   pNo: string = '';
 
   constructor(public dialog: MatDialog,
@@ -78,17 +81,20 @@ export class EmployeeInformationComponent implements OnInit {
     public empForeignTourInfoService: EmpForeignTourInfoService,
     public empPhotoSignService: EmpPhotoSignService,
     public manageEmployeeService: ManageEmployeeService,
+    private bsModalRef: BsModalRef,
+    private el: ElementRef, 
+    private renderer: Renderer2
   ) { }
 
     ngOnInit(): void {
       this.handleRouteParams();
+      setTimeout(() => {
+        this.modalOpened = true;
+      }, 0);
+      this.empId = this.id;
     }
   
     handleRouteParams() {
-      this.route.paramMap.subscribe((params) => {
-        this.empId = Number(params.get('id'));
-      });
-      
       this.getEmpBasicInfoByEmpId();
       this.getEmpPhotoSign();
       this.getEmpPersonalInfoByEmpId();
@@ -105,80 +111,80 @@ export class EmployeeInformationComponent implements OnInit {
     }
 
     getEmpBasicInfoByEmpId(){
-      this.manageEmployeeService.getEmpBasicInfoByEmpId(this.empId).subscribe((res) => {
+      this.manageEmployeeService.getEmpBasicInfoByEmpId(this.id).subscribe((res) => {
         this.empBasicInfo = res;
         this.pNo = res.idCardNo;
       });
     }
     
     getEmpPersonalInfoByEmpId(){
-      this.empPersonalInfoService.findByEmpId(this.empId).subscribe((res) => {
+      this.empPersonalInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empPersonalInfo = res;
       });
     }
     
     getEmpPresentAddressByEmpId(){
-      this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
+      this.empPresentAddressService.findByEmpId(this.id).subscribe((res) => {
         this.empPresentAddress = res;
       });
     }
     
     getEmpPermanentAddressByEmpId(){
-      this.empPermanentAddressService.findByEmpId(this.empId).subscribe((res) => {
+      this.empPermanentAddressService.findByEmpId(this.id).subscribe((res) => {
         this.empPermanentAddress = res;
       });
     }
 
     getEmpJobDetailsByEmpId(){
-      this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
+      this.empJobDetailsService.findByEmpId(this.id).subscribe((res) => {
         this.empJobDetails = res;
       });
     }
     
     getEmpSpouseInfoByEmpId(){
-      this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res) => {
+      this.empSpouseInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empSpouseInfo = res;
       });
     }
     
     getEmpChildInfoByEmpId(){
-      this.empChildInfoService.findByEmpId(this.empId).subscribe((res) => {
+      this.empChildInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empChildInfo = res;
       });
     }
     
     getEmpEducationInfoByEmpId(){
-      this.empEducationInfoService.findByEmpId(this.empId).subscribe((res) => {
+      this.empEducationInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empEducationInfo = res;
       });
     }
     
     getEmpPsiTrainingInfoByEmpId(){
-      this.empPsiTrainingInfoService.findByEmpId(this.empId).subscribe((res) => {
+      this.empPsiTrainingInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empPsiTrainingInfo = res;
       });
     }
     
     getEmpBankInfoByEmpId(){
-      this.empBankInfoService.findByEmpId(this.empId).subscribe((res) => {
+      this.empBankInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empBankInfo = res;
       });
     }
     
     getEmpLanguageInfoByEmpId(){
-      this.empLanguageInfoService.findByEmpId(this.empId).subscribe((res) => {
+      this.empLanguageInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empLanguageInfo = res;
       });
     }
     
     getEmpForeignTourInfoByEmpId(){
-      this.empForeignTourInfoService.findByEmpId(this.empId).subscribe((res) => {
+      this.empForeignTourInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empForeignTourInfo = res;
       });
     }
 
     getEmpPhotoSign(){
-      this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
+      this.empPhotoSignService.findByEmpId(this.id).subscribe((res) => {
         if(res){
           this.empPhotoSign = res;
           this.empPhoto = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`;
@@ -187,6 +193,29 @@ export class EmployeeInformationComponent implements OnInit {
       });
     }
 
+    closeModal(): void {
+      this.bsModalRef.hide();
+    }
+  
+    @HostListener('document:click', ['$event'])
+    onClickOutside(event: MouseEvent): void {
+      if (this.modalOpened) {
+        const modalElement = this.el.nativeElement.querySelector('.modal-content');
+        if (modalElement && !modalElement.contains(event.target as Node)) {
+          this.shakeModal();
+        }
+      }
+    }
+  
+    shakeModal(): void {
+      const modalElement = this.el.nativeElement.querySelector('.modal-content');
+      if (modalElement) {
+        this.renderer.addClass(modalElement, 'shake');
+        setTimeout(() => {
+          this.renderer.removeClass(modalElement, 'shake');
+        }, 500); // duration of the shake animation
+      }
+    }
 
     
   toggleComponent(component: string) {

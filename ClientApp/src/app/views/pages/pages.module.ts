@@ -20,7 +20,7 @@ import { NgxParticlesModule } from '@tsparticles/angular';
     LoginComponent,
     RegisterComponent,
     Page404Component,
-    Page500Component
+    Page500Component,
   ],
   imports: [
     CommonModule,
@@ -28,14 +28,13 @@ import { NgxParticlesModule } from '@tsparticles/angular';
     CardModule,
     ButtonModule,
     GridModule,
-    IconModule,
-    FormModule,
     SharedCustomModule,
+    FormModule,
+    IconModule,
     SpinnerModule,
     BrowserModule,
     ReactiveFormsModule,
-    MatIconModule,
-    NgxParticlesModule
+    NgxParticlesModule 
   ],
   providers: [
     

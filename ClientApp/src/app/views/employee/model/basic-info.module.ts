@@ -12,6 +12,9 @@ export class BasicInfoModule {
   employeeTypeId: any;
   employeeTypeName : string;
   idCardNo: string = '';
+  
+  departmentName : string = '';
+  designationName : string = '';
 
   constructor() {
     this.id=0;

@@ -66,6 +66,8 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
       userStatus: false,
       employeeTypeName: '',
       idCardNo: '',
+      departmentName: '',
+      designationName: '',
     };
   }
 
@@ -84,6 +86,8 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
         aspNetUserId: null,
         userStatus: false,
         idCardNo: null,
+        departmentName: '',
+        designationName: '',
       });
   }
   

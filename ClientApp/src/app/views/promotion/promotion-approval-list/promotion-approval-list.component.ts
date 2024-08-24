@@ -73,6 +73,7 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
     };
     const modalRef: BsModalRef = this.modalService.show(PromotionIncrementInfoComponent, { initialState, backdrop: 'static' });
   }
+  
   promotionIncrementApproval(id: number, clickedButton: string){
     const initialState = {
       id: id,

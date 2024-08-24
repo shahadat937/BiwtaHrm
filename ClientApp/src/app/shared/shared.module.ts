@@ -22,7 +22,7 @@ import { ToastModule } from '@coreui/angular';
     RouterModule,
     NgbModule,
     NgxSpinnerModule,
-    ModalModule.forRoot(),
+    ModalModule.forRoot()
   ],
   exports: [
     CommonModule,
@@ -38,6 +38,7 @@ import { ToastModule } from '@coreui/angular';
     IconModule,
     MatSelectModule,
     ToastModule,
+
   ],
 })
 export class SharedCustomModule {}

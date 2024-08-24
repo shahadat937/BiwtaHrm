@@ -9,6 +9,7 @@ namespace Hrm.Application.DTOs.Form
     public class FormDataDto
     {
         public int FormId { get; set; }
+        public int? RecordId { get; set; }
         public string FormName { get; set; }
         public string Description { get; set; }
         public int? EmpId { get; set; }

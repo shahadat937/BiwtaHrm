@@ -87,6 +87,17 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [Route("update-FormData")]
+        public async Task<ActionResult<BaseCommandResponse>> UpdateFormData([FromBody] FormDataDto formData)
+        {
+            var command = new UpdateFormDataCommand { formData = formData };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
         [HttpDelete]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

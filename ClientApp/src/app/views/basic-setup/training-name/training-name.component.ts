@@ -95,6 +95,7 @@ export class TrainingNameComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    this.router.navigate(['/trainingSetup/trainingName']);
   }
 
   getALlTrainingNames() {
@@ -123,7 +124,7 @@ export class TrainingNameComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlTrainingNames();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/trainingName']);
+          this.router.navigate(['/trainingSetup/trainingName']);
         }
     this.loading = false;
       } else {

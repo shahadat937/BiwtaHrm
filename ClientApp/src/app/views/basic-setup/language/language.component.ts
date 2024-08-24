@@ -86,7 +86,7 @@ export class LanguageComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/language']);
+    this.router.navigate(['/languageSetup/language']);
   }
 
   getALlLanguages() {
@@ -114,7 +114,7 @@ export class LanguageComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlLanguages();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/language']);
+          this.router.navigate(['/languageSetup/language']);
         }
     this.loading = false;
       } else {

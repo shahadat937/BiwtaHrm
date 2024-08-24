@@ -91,7 +91,7 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/result']);
+    this.router.navigate(['/educationSetup/result']);
   }
 
   getALlResults() {
@@ -162,7 +162,7 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlResults();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/result']);
+          this.router.navigate(['/educationSetup/result']);
         }
         this.loading = false;
       } else {

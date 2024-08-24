@@ -90,7 +90,7 @@ export class GradeClassComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/grade-class']);
+    this.router.navigate(['/officeSetup/grade-class']);
   }
 
   getALlGradeClasses() {
@@ -161,7 +161,7 @@ export class GradeClassComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlGradeClasses();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/grade-class']);
+          this.router.navigate(['/officeSetup/grade-class']);
         }
         this.loading = false;
       } else {

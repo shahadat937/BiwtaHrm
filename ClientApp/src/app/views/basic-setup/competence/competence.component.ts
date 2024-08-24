@@ -117,6 +117,7 @@ export class CompetenceComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    this.router.navigate(['/languageSetup/competence']);
   }
 
   getALlCompetences() {
@@ -188,7 +189,7 @@ export class CompetenceComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlCompetences();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/competence']);
+          this.router.navigate(['/languageSetup/competence']);
         }
         this.loading = false;
 

@@ -136,7 +136,7 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/bankBranch']);
+    this.router.navigate(['/bankInfoSetup/bankBranch']);
   }
   getAlBankBranchs() {
     this.subscription = this.bankBranchService.getAll().subscribe((item) => {
@@ -164,7 +164,7 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAlBankBranchs();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/bankBranch']);
+          this.router.navigate(['/bankInfoSetup/bankBranch']);
         }
         this.loading = false;
       } else {

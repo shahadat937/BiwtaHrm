@@ -61,6 +61,7 @@ import { EmpIdCardGenerateComponent } from './manage-employee/emp-id-card-genera
 import { MatCardModule } from '@angular/material/card';
 import { BengaliDigitPipe } from './manage-employee/emp-id-card-generate/bangali-digit.pipe';
 import { BengaliDatePipe } from './manage-employee/emp-id-card-generate/bengali-date.pipe';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 
@@ -127,6 +128,7 @@ import { BengaliDatePipe } from './manage-employee/emp-id-card-generate/bengali-
     TableModule,
     MatCardModule,
     TooltipModule,
+    MatTabsModule,
   ],
   providers:
   [

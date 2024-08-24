@@ -9,7 +9,115 @@
     </c-card-header>
     <c-card-body>
 
-        <c-card>
+        <mat-tab-group>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Basic Information
+                </ng-template>
+                <app-basic-information [empId]="empId"></app-basic-information>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Personal Information
+                </ng-template>
+                <app-personal-information [empId]="empId"></app-personal-information>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Spouse Information
+                </ng-template>
+                <app-emp-spouse-info [empId]="empId"></app-emp-spouse-info>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Children Information
+                </ng-template>
+                <app-emp-child-info [empId]="empId"></app-emp-child-info>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Present Address
+                </ng-template>
+                <app-emp-present-address [empId]="empId"></app-emp-present-address>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Permanent Address
+                </ng-template>
+                <app-emp-permanent-address [empId]="empId"></app-emp-permanent-address>
+            </mat-tab>
+            
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Job Details
+                </ng-template>
+                <app-emp-job-details [empId]="empId"></app-emp-job-details>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Education Information
+                </ng-template>
+                <app-emp-education-info [empId]="empId"></app-emp-education-info>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Training Information
+                </ng-template>
+                Left
+            </mat-tab>
+            
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    PSI &Training History
+                </ng-template>
+                <app-emp-psi-training-info [empId]="empId"></app-emp-psi-training-info>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Bank Information
+                </ng-template>
+                <app-emp-bank-info [empId]="empId"></app-emp-bank-info>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Nominee Information
+                </ng-template>
+                <app-emp-nominee-info [empId]="empId" [pNo]="pNo"></app-emp-nominee-info>
+            </mat-tab>
+            
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Language Details
+                </ng-template>
+                <app-emp-language-info [empId]="empId"></app-emp-language-info>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Foreign Trip
+                </ng-template>
+                <app-emp-foreign-tour-info [empId]="empId"></app-emp-foreign-tour-info>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Photo & Signature
+                </ng-template>
+                <app-emp-photo-sign [empId]="empId" [pNo]="pNo"></app-emp-photo-sign>
+            </mat-tab>
+        </mat-tab-group>
+
+
+        <!-- <c-card>
             <c-card-header [visible]="visible" cCollapse>
                 <app-basic-information *ngIf="visibleComponent === 'basicInfo'" [empId]="empId" 
                     (close)="toggleComponent('basicInfo')"></app-basic-information>
@@ -150,6 +258,6 @@
 
                 </div>
             </c-card-body>
-        </c-card>
+        </c-card> -->
     </c-card-body>
 </c-card>

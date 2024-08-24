@@ -26,6 +26,9 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
 
   empPhoto: File = null!;
   empSignature: File = null!;
+  
+  photoInvalid: boolean = false;
+  signatureInvalid: boolean = false;
 
   photoPreviewUrl: string | ArrayBuffer | null = null;
   signaturePreviewUrl: string | ArrayBuffer | null = null;
@@ -56,6 +59,7 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
   }
 
   getEmployeeByEmpId() {
+    this.initaialForm();
     this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
       if (res) {
         this.EmpPhotoSignForm?.form.patchValue(res);
@@ -67,7 +71,6 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
       else {
         this.headerText = 'Add Employee Photo and Signature';
         this.btnText = 'Submit';
-        this.initaialForm();
       }
     })
   }
@@ -91,16 +94,43 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
   onPhotoSelected(event: any) {
     this.empPhoto = event.target.files[0];
     const reader = new FileReader();
-    reader.onload = () => {
-      this.photoPreviewUrl = reader.result;
+    const img = new Image();
+
+    reader.onload = (e: any) => {
+      img.src = e.target.result;
+      img.onload = () => {
+        const width = img.width;
+        const height = img.height;
+        if (width !== 300 || height !== 300) {
+          this.photoInvalid = true;
+          this.photoPreviewUrl = null;
+        } else {
+          this.photoInvalid = false;
+          this.photoPreviewUrl = e.target.result;
+        }
+      };
     };
     reader.readAsDataURL(this.empPhoto);
   }
+
   onSignatureSelected(event: any) {
     this.empSignature = event.target.files[0];
     const reader = new FileReader();
-    reader.onload = () => {
-      this.signaturePreviewUrl = reader.result;
+    const img = new Image();
+
+    reader.onload = (e: any) => {
+      img.src = e.target.result;
+      img.onload = () => {
+        const width = img.width;
+        const height = img.height;
+        if (width !== 300 || height !== 80) {
+          this.signatureInvalid = true;
+          this.signaturePreviewUrl = null;
+        } else {
+          this.signatureInvalid = false;
+          this.signaturePreviewUrl = e.target.result;
+        }
+      };
     };
     reader.readAsDataURL(this.empSignature);
   }

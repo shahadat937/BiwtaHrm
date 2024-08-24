@@ -186,7 +186,6 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-      console.log(item)
     });
   }
 

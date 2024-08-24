@@ -80,8 +80,6 @@ export class BankAccountTypeComponent implements OnInit, OnDestroy, AfterViewIni
     };
   }
   resetForm() {
-    console.log(this.BankAccountTypeForm?.form.value);
-
     this.btnText = 'Submit';
     if (this.BankAccountTypeForm?.form != null) {
       this.BankAccountTypeForm.form.reset();

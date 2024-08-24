@@ -95,7 +95,6 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getAllEyesColors() {
     this.subscription = this.eyesColorService.getAll().subscribe((item) => {
-      //console.log(item);
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;

@@ -81,7 +81,7 @@ export class ReligionComponent implements OnInit, OnDestroy {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/religion']);
+    this.router.navigate(['/personalInfoSetup/religion']);
   }
 
   getALlReligions() {
@@ -111,7 +111,7 @@ export class ReligionComponent implements OnInit, OnDestroy {
         this.getALlReligions();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/religion']);
+          this.router.navigate(['/personalInfoSetup/religion']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {

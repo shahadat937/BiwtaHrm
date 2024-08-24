@@ -87,7 +87,7 @@ export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/occupation']);
+    this.router.navigate(['/personalInfoSetup/occupation']);
 
   }
 
@@ -116,7 +116,7 @@ export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllOccupations();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/occupation']);
+          this.router.navigate(['/personalInfoSetup/occupation']);
         }
         this.loading = false;
       } else {

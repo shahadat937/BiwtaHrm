@@ -94,6 +94,7 @@ export class EmployeeTypeComponent {
         isActive: true,
       });
     }
+    this.router.navigate(['/personalInfoSetup/employee-type']);
   }
 
   getEmployeeTypes() {
@@ -153,7 +154,7 @@ export class EmployeeTypeComponent {
         this.getEmployeeTypes();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/employee-type']);
+          this.router.navigate(['/personalInfoSetup/employee-type']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {

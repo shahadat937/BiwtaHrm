@@ -92,7 +92,7 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/releaseType']);
+    this.router.navigate(['/personalInfoSetup/releaseType']);
   }
 
   getALlReleaseTypes() {
@@ -117,7 +117,7 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.getALlReleaseTypes();
         this.resetForm();
-        this.router.navigate(['/bascisetup/releaseType']);
+        this.router.navigate(['/personalInfoSetup/releaseType']);
       this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {

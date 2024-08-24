@@ -90,7 +90,7 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/eyesColor']);
+    this.router.navigate(['/personalInfoSetup/eyesColor']);
   }
 
   getAllEyesColors() {
@@ -119,7 +119,7 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllEyesColors();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/eyesColor']);
+          this.router.navigate(['/personalInfoSetup/eyesColor']);
         }
         this.loading = false;
       } else {

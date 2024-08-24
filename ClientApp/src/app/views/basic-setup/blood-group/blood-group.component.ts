@@ -96,7 +96,7 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/blood-group']);
+    this.router.navigate(['/personalInfoSetup/blood-group']);
   }
 
   getALlBloodGroups() {
@@ -167,7 +167,7 @@ export class BloodGroupComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlBloodGroups();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/blood-group']);
+          this.router.navigate(['/personalInfoSetup/blood-group']);
         }
     this.loading = false;
       } else {

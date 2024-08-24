@@ -86,7 +86,7 @@ export class LeaveComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/leave']);
+    this.router.navigate(['/personalInfoSetup/leave']);
 
   }
 
@@ -114,7 +114,7 @@ export class LeaveComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllLeaves();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/leave']);
+          this.router.navigate(['/personalInfoSetup/leave']);
         }
         this.loading = false;
       } else {

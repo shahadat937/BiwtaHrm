@@ -104,7 +104,7 @@ export class YearSetupComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/yearsetup']);
+    this.router.navigate(['/personalInfoSetup/yearsetup']);
   }
 
 
@@ -125,7 +125,7 @@ export class YearSetupComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlYears();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/yearsetup']);
+          this.router.navigate(['/personalInfoSetup/yearsetup']);
         }
     this.loading = false;
       } else {

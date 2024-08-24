@@ -100,7 +100,7 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/child-status']);
+    this.router.navigate(['/personalInfoSetup/child-status']);
   }
 
   getALlChildStatus() {
@@ -126,7 +126,7 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlChildStatus();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/child-status']);
+          this.router.navigate(['/personalInfoSetup/child-status']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {

@@ -121,7 +121,7 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   cancelUpdate(){
     this.resetForm();
-    this.router.navigate(['/bascisetup/officeBranch']);
+    this.router.navigate(['/bankInfoSetup/officeBranch']);
   }
 
   initaialBranch(form?: NgForm) {
@@ -163,6 +163,7 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    this.router.navigate(['/bankInfoSetup/officeBranch']);
   }
 
 
@@ -209,7 +210,7 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.getALlBranchs();
         this.resetForm();
-        this.router.navigate(['/bascisetup/officeBranch']);
+        this.router.navigate(['/bankInfoSetup/officeBranch']);
         this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {

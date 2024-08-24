@@ -90,12 +90,11 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/eyesColor']);
+    this.router.navigate(['/personalInfoSetup/eyesColor']);
   }
 
   getAllEyesColors() {
     this.subscription = this.eyesColorService.getAll().subscribe((item) => {
-      //console.log(item);
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -119,7 +118,7 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllEyesColors();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/eyesColor']);
+          this.router.navigate(['/personalInfoSetup/eyesColor']);
         }
         this.loading = false;
       } else {

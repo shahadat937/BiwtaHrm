@@ -100,6 +100,7 @@ export class MaritalStatusComponent
         isActive: true,
       });
     }
+    this.router.navigate(['/personalInfoSetup/marital-status']);
   }
 
   getMaritalStatuses() {
@@ -159,7 +160,7 @@ export class MaritalStatusComponent
         this.getMaritalStatuses();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/marital-status']);
+          this.router.navigate(['/personalInfoSetup/marital-status']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {

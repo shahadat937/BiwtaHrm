@@ -48,8 +48,7 @@ export class DistrictComponent implements OnInit, OnDestroy {
       if (id) {
         this.btnText = 'Update';
         this.headerText = 'Update District';
-        this.districtService.find(+id).subscribe((res) => {
-          console.log(res);
+        this.districtService.find(+id).subscribe((res) => {        
           this.DistrictForm?.form.patchValue(res);
         });
       } else {
@@ -102,6 +101,7 @@ export class DistrictComponent implements OnInit, OnDestroy {
         isActive: true,
       });
     }
+    this.router.navigate(['/addressSetup/district']);
   }
 
   loaddivisions() {
@@ -182,7 +182,7 @@ export class DistrictComponent implements OnInit, OnDestroy {
         this.getALlDistricts();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/district']);
+          this.router.navigate(['/addressSetup/district']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {

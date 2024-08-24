@@ -105,7 +105,7 @@ export class HolidayTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/holidaytype']);
+    this.router.navigate(['/personalInfoSetup/holidaytype']);
   }
 
 
@@ -126,7 +126,7 @@ export class HolidayTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlYears();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/holidaytype']);
+          this.router.navigate(['/personalInfoSetup/holidaytype']);
         }
     this.loading = false;
       } else {

@@ -80,7 +80,7 @@ export class GenderComponent implements OnInit, OnDestroy {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/gender']);
+    this.router.navigate(['/personalInfoSetup/gender']);
   }
 
   getALlGender() {
@@ -146,7 +146,7 @@ export class GenderComponent implements OnInit, OnDestroy {
         this.getALlGender();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/gender']);
+          this.router.navigate(['/personalInfoSetup/gender']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {

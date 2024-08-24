@@ -116,6 +116,7 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    this.router.navigate(['/addressSetup/ward']);
   }
 
   loadunions() {
@@ -149,7 +150,8 @@ export class WardComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlWards();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/ward']);
+          
+          this.router.navigate(['/addressSetup/ward']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {

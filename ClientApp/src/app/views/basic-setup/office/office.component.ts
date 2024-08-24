@@ -176,6 +176,7 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive:  true
       });
     }
+    this.router.navigate(['/officeSetup/office']);
   }
 
   getALlOffices() {
@@ -288,7 +289,7 @@ onUnionNamesChangeByThanaId(thanaId:number){
         this.loading = false;
         this.getALlOffices();
         this.resetForm();
-        this.router.navigate(['/bascisetup/office']);
+        this.router.navigate(['/officeSetup/office']);
 
       } else {
         this.toastr.warning('', `${response.message}`, {

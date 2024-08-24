@@ -147,7 +147,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   cancelUpdate() {
     this.resetForm();
-    this.router.navigate(['/bascisetup/designation']);
+    this.router.navigate(['/officeSetup/designation']);
   }
   initaialDesignation(form?: NgForm) {
     if (form != null) form.resetForm();
@@ -186,7 +186,6 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-      console.log(item)
     });
   }
 
@@ -248,7 +247,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.getALlDesignations();
         this.resetForm();
-        this.router.navigate(['/bascisetup/designation']);
+        this.router.navigate(['/officeSetup/designation']);
         this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {

@@ -86,7 +86,7 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/hairColor']);
+    this.router.navigate(['/personalInfoSetup/hairColor']);
   }
 
   getAllHairColors() {
@@ -115,7 +115,7 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllHairColors();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/hairColor']);
+          this.router.navigate(['/personalInfoSetup/hairColor']);
         }
         this.loading = false;
       } else {

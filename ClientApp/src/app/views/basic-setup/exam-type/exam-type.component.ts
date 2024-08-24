@@ -90,7 +90,7 @@ export class ExamTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/examType']);
+    this.router.navigate(['/educationSetup/examType']);
   }
 
   getAllExamTypes() {
@@ -118,7 +118,7 @@ export class ExamTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllExamTypes();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/examType']);
+          this.router.navigate(['/educationSetup/examType']);
         }
     this.loading = false;
       } else {

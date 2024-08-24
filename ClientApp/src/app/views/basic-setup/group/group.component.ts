@@ -114,7 +114,7 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/group']);
+    this.router.navigate(['/educationSetup/group']);
   }
 
   loadsubjects() {
@@ -149,7 +149,7 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlGroups();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/group']);
+          this.router.navigate(['/educationSetup/group']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {

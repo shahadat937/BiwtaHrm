@@ -78,13 +78,11 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   GetModelGradeClass() {
     this.gradeServiceClass.getSelectedGradeClass().subscribe((res) => {
-      console.log(res);
       this.gradeClass = res;
     });
   }
   GetModelGradeType() {
     this.gradeTypeService.getSelectGradeType().subscribe((res) => {
-      console.log(res);
       this.gradeType = res;
     });
   }
@@ -126,11 +124,10 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/grade']);
+    this.router.navigate(['/officeSetup/grade']);
   }
   getALlGrades() {
     this.subscription = this.gradeService.getAll().subscribe((item) => {
-      console.log(item);
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -153,7 +150,7 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlGrades();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/grade']);
+          this.router.navigate(['/officeSetup/grade']);
         }
         this.loading = false;
       } else {

@@ -90,7 +90,7 @@ export class BoardComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/board']);
+    this.router.navigate(['/educationSetup/board']);
   }
 
   getAllBoards() {
@@ -118,7 +118,7 @@ export class BoardComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllBoards();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/board']);
+          this.router.navigate(['/educationSetup/board']);
         }
     this.loading = false;
       } else {

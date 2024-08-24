@@ -114,6 +114,7 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
+    this.router.navigate(['/addressSetup/thana']);
   }
 
   loadupazila() {
@@ -192,7 +193,7 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlThanas();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/thana']);
+          this.router.navigate(['/addressSetup/thana']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {

@@ -35,7 +35,6 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log("Hello World");
     this.leaveTypeService.getLeaveTypes().subscribe({
       next: data => {
         this.leaveTypes = data;

@@ -97,7 +97,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/country']);
+   this.router.navigate(['/addressSetup/country']);
   }
 
   getALcountries() {
@@ -168,7 +168,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALcountries();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/country']);
+          this.router.navigate(['/addressSetup/country']);
         }
         this.loading = false;
       } else {

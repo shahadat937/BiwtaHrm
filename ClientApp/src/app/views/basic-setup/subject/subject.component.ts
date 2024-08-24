@@ -109,7 +109,7 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/subject']);
+    this.router.navigate(['/educationSetup/subject']);
   }
 
   getALlSubjects() {
@@ -137,7 +137,7 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlSubjects();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/subject']);
+          this.router.navigate(['/educationSetup/subject']);
         }
       } else {
         this.toastr.warning('', `${response.message}`, {

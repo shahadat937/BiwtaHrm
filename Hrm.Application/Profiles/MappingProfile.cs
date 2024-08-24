@@ -553,7 +553,7 @@ namespace Hrm.Application.Profiles
             CreateMap<Form, CreateFormDto>().ReverseMap();
             CreateMap<FormFieldType, FormFieldTypeDto>().ReverseMap();
             CreateMap<FormFieldType, CreateFormFieldTypeDto>().ReverseMap();
-            CreateMap<FormField, FormFieldTypeDto>().ReverseMap();
+            CreateMap<FormField, FormFieldDto>().ReverseMap();
             CreateMap<FormField, CreateFormFieldDto>().ReverseMap();
             CreateMap<SelectableOption, CreateSelectableOptionDto>().ReverseMap();
             CreateMap<SelectableOption, SelectableOptionDto>().ReverseMap();
@@ -563,9 +563,13 @@ namespace Hrm.Application.Profiles
             CreateMap<FormRecord, CreateFormRecordDto>().ReverseMap();
             CreateMap<FieldRecord, FieldRecordDto>().ReverseMap();
             CreateMap<FieldRecord, CreateFieldRecordDto>().ReverseMap();
+            CreateMap<SelectableOption, SelectableOptionDto>().ReverseMap();
+            CreateMap<SelectableOption, CreateSelectableOptionDto>().ReverseMap();
 
             CreateMap<FormField, FormFieldDto>()
-                .ForMember(dest => dest.FieldTypeName, opt => opt.MapFrom(src => src.FieldType.FieldTypeName));
+                .ForMember(dest => dest.FieldTypeName, opt => opt.MapFrom(src => src.FieldType.FieldTypeName))
+                .ForMember(dest => dest.HTMLTagName, opt => opt.MapFrom(src => src.FieldType.HTMLTagName))
+                .ForMember(dest => dest.HTMLInputType, opt => opt.MapFrom(src => src.FieldType.HTMLInputType));
 
             CreateMap<SelectableOption, SelectableOptionDto>()
                 .ForMember(dest => dest.FieldName, opt => opt.MapFrom(src => src.FormField.FieldName));
@@ -580,6 +584,9 @@ namespace Hrm.Application.Profiles
                 .ForMember(dest => dest.IdCardNo, opt => opt.MapFrom(src => src.Employee.IdCardNo));
 
             CreateMap<FieldRecord, FieldRecordDto>()
+                .ForMember(dest => dest.FieldName, opt => opt.MapFrom(src => src.FormField.FieldName));
+
+            CreateMap<SelectableOption, SelectableOptionDto>()
                 .ForMember(dest => dest.FieldName, opt => opt.MapFrom(src => src.FormField.FieldName));
 
         }

@@ -1,1 +1,39 @@
-<p>manage-form works!</p>
+<c-card>
+  <c-card-header> Manage Form </c-card-header>
+  <c-card-body>
+    <h5>Form Record</h5>
+    <div [gutter]="3">
+      <p-table
+        [value]="formRecord"
+        [columns]="formRecordHeader"
+        styleClass="p-datatable-striped p-datatable-gridlines"
+        [tableStyle]="{ 'min-width': '50rem' }"
+      >
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            @for (column of columns; track $index) {
+                <th>{{column.header}}</th>
+            }
+            <th>Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-formRecord let-columns="columns" let-index="rowIndex">
+          <tr>
+            @for (column of columns; track $index) {
+                <td>{{formRecord[column.field]}}</td>
+            }
+
+            <td>
+                <button class="custom-button me-1" title="Edit The Record">
+                     <svg [cIcon]="icons.cilPencil" size="lg" title="Edit"></svg>
+                </button>
+                <button class="custom-button me-1" title="Delete The Record" (click)="onDelete(formRecord.recordId, index)">
+                     <svg [cIcon]="icons.cilTrash" size="lg" title="Edit"></svg>
+                </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </c-card-body>
+</c-card>

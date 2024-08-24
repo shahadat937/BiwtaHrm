@@ -86,7 +86,7 @@ export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/relation']);
+    this.router.navigate(['/personalInfoSetup/relation']);
 
   }
 
@@ -115,7 +115,7 @@ export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllRelations();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/relation']);
+          this.router.navigate(['/personalInfoSetup/relation']);
         }
     this.loading = false;
       } else {

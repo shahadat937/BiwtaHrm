@@ -1,0 +1,55 @@
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form #EmpPhotoSignForm="ngForm" (submit)="onSubmit(EmpPhotoSignForm)" novalidate cForm class="needs-validation">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{headerText}}</h5>
+                    <button mat-mini-fab color="warn" class="close" aria-label="Close"  type="button" (click)="closeModal()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+                <div class="modal-body scrollable-modal-body" cRow [gutter]="3" >
+                    
+                    <input type="hidden" [(ngModel)]="empPhotoSignService.empPhotoSign.id" name="id" />
+                    <input type="hidden" [(ngModel)]="empPhotoSignService.empPhotoSign.empId" name="empId" />
+                    <input type="hidden" [(ngModel)]="empPhotoSignService.empPhotoSign.uniqueIdentity" name="uniqueIdentity" />
+                    <input type="hidden" [(ngModel)]="empPhotoSignService.empPhotoSign.remark" name="remark" />
+
+                    @if(clickedButton == "ChangeProfile"){
+                    <c-col [md]="12">
+                        <div *ngIf="photoPreviewUrl">
+                            <img [src]="photoPreviewUrl" alt="Employee Photo" style="max-width: 100px; max-height: 100px;"/>
+                        </div>
+                        <label cLabel for="photoFile">Photo<span class="text-danger"> (300*300)</span></label>
+                        <input [(ngModel)]="empPhotoSignService.empPhotoSign.photoFile" name="photoFile" #photoFile="ngModel" required cFormControl id="photoFile" type="file" (change)="onPhotoSelected($event)" />
+                        <div *ngIf="photoInvalid" class="text-left text-danger">Photo Size must be 300*300</div>
+                    </c-col>
+                    }
+
+                    @if(clickedButton == "ChangeSignature"){
+                        <c-col [md]="12">
+                            <div *ngIf="signaturePreviewUrl">
+                                <img [src]="signaturePreviewUrl" alt="Employee Signature" style="max-width: 100px; max-height: 100px;"/>
+                            </div>
+                            <label cLabel for="signatureFile">Signature<span class="text-danger"> (300*80)</span></label>
+                            <input [(ngModel)]="empPhotoSignService.empPhotoSign.signatureFile" name="signatureFile" required #signatureFile="ngModel" cFormControl id="signatureFile" type="file" (change)="onSignatureSelected($event)" />
+                            <div *ngIf="signatureInvalid" class="text-left text-danger">Signature Size must be 300*80</div>
+                        </c-col>
+                    }
+
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button class="bg-secondary text-light" type="button" (click)="closeModal()">
+                        <mat-icon>cancel</mat-icon> Close
+                    </button>
+                    <button [disabled]="loading || photoInvalid || signatureInvalid" [disabled]="EmpPhotoSignForm.invalid" mat-raised-button class="me-1" color="primary" type="submit">
+                        <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                        <mat-icon [hidden]="loading">update</mat-icon>Update
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

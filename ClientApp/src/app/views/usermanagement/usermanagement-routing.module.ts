@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'User Management',
+      title: $localize`User Management`
     },
     children: [
       {

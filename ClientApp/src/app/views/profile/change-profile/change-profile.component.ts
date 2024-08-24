@@ -1,32 +1,31 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { SelectedModel } from 'src/app/core/models/selectedModel';
-import { EmpPhotoSignService } from '../../../service/emp-photo-sign.service';
-import { UserService } from 'src/app/views/usermanagement/service/user.service';
-import { EmpPersonalInfoService } from '../../../service/emp-personal-info.service';
+import { EmpPersonalInfoService } from '../../employee/service/emp-personal-info.service';
+import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
+import { UserService } from '../../usermanagement/service/user.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
 
 @Component({
-  selector: 'app-emp-photo-sign',
-  templateUrl: './emp-photo-sign.component.html',
-  styleUrl: './emp-photo-sign.component.scss'
+  selector: 'app-change-profile',
+  templateUrl: './change-profile.component.html',
+  styleUrl: './change-profile.component.scss'
 })
-export class EmpPhotoSignComponent implements OnInit, OnDestroy {
 
-  @Input() empId!: number;
-  @Input() pNo!: string;
-  @Output() close = new EventEmitter<void>();
-  visible: boolean = true;
-  headerText: string = '';
-  headerBtnText: string = 'Hide From';
-  btnText: string = '';
+export class ChangeProfileComponent implements OnInit, OnDestroy {
+
+  id: number = 0;
+  clickedButton: string = '';
   subscription: Subscription = new Subscription();
   loading: boolean = false;
-
+  pNo: string = '';
+  headerText: string = '';
+  modalOpened: boolean = false;
   empPhoto: File = null!;
   empSignature: File = null!;
-  
+
   photoInvalid: boolean = false;
   signatureInvalid: boolean = false;
 
@@ -35,17 +34,25 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
 
   @ViewChild('EmpPhotoSignForm', { static: true }) EmpPhotoSignForm!: NgForm;
 
-
   constructor(
     public empPhotoSignService: EmpPhotoSignService,
     public empPersonalInfoService: EmpPersonalInfoService,
     public userService: UserService,
-    private toastr: ToastrService,) {
+    public empBasicInfoService: EmpBasicInfoService,
+    private toastr: ToastrService,
+    private bsModalRef: BsModalRef,
+    private el: ElementRef,
+    private renderer: Renderer2) {
 
   }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.modalOpened = true;
+    }, 0);
     this.getEmployeeByEmpId();
+    this.headerText = this.clickedButton == 'ChangeProfile' ? 'Change Profile Picture' :
+      this.clickedButton == 'ChangeSignature' ? 'Change Signature' : '';
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -53,24 +60,16 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
     }
   }
 
-  UserFormView(): void {
-    this.visible = !this.visible;
-    this.headerBtnText = this.visible ? 'Hide Form' : 'Show Form';
-  }
-
   getEmployeeByEmpId() {
     this.initaialForm();
-    this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription = this.empBasicInfoService.findByEmpId(this.id).subscribe((res) => {
+      this.pNo = res.idCardNo;
+    })
+    this.empPhotoSignService.findByEmpId(this.id).subscribe((res) => {
       if (res) {
         this.EmpPhotoSignForm?.form.patchValue(res);
         this.photoPreviewUrl = res.photoUrl ? `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}` : null;
         this.signaturePreviewUrl = res.signatureUrl ? `${this.empPhotoSignService.imageUrl}EmpSignature/${res.signatureUrl}` : null;
-        this.headerText = 'Update Employee Photo and Signature';
-        this.btnText = 'Update';
-      }
-      else {
-        this.headerText = 'Add Employee Photo and Signature';
-        this.btnText = 'Submit';
       }
     })
   }
@@ -78,7 +77,7 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
     if (form != null) form.resetForm();
     this.empPhotoSignService.empPhotoSign = {
       id: 0,
-      empId: this.empId,
+      empId: this.id,
       pNo: this.pNo,
       photoUrl: '',
       signatureUrl: '',
@@ -135,9 +134,30 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
     reader.readAsDataURL(this.empSignature);
   }
 
-  cancel() {
-    this.close.emit();
+  closeModal(): void {
+    this.bsModalRef.hide();
   }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent): void {
+    if (this.modalOpened) {
+      const modalElement = this.el.nativeElement.querySelector('.modal-content');
+      if (modalElement && !modalElement.contains(event.target as Node)) {
+        this.shakeModal();
+      }
+    }
+  }
+
+  shakeModal(): void {
+    const modalElement = this.el.nativeElement.querySelector('.modal-content');
+    if (modalElement) {
+      this.renderer.addClass(modalElement, 'shake');
+      setTimeout(() => {
+        this.renderer.removeClass(modalElement, 'shake');
+      }, 500);
+    }
+  }
+
 
   onSubmit(form: NgForm): void {
     this.loading = true;
@@ -149,14 +169,14 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
     const action$ = id
       ? this.empPhotoSignService.updateEmpPhotoSignInfo(id, form.value)
       : this.empPhotoSignService.saveEmpPhotoSignInfo(form.value);
-  
+
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
-        this.cancel();
+        this.closeModal();
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -166,6 +186,6 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
       this.loading = false;
     });
   }
-  
+
 
 }

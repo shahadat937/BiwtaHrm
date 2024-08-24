@@ -230,7 +230,7 @@
           </ng-container>
 
           <ng-container matColumnDef="fullName">
-            <th mat-header-cell *matHeaderCellDef>Full Name</th>
+            <th mat-header-cell *matHeaderCellDef>Name</th>
             <td mat-cell *matCellDef="let element">
               {{ element.firstName }} {{element.lastName}}
             </td>
@@ -243,12 +243,30 @@
             </td>
           </ng-container>
           
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef>Department</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.departmentName }}
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="designation">
+            <th mat-header-cell *matHeaderCellDef>Designation</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.designationName }}
+            </td>
+          </ng-container>
+          
   
           <ng-container matColumnDef="isActive">
-            <th mat-header-cell *matHeaderCellDef>Is Active</th>
+            <th mat-header-cell *matHeaderCellDef>Status</th>
             <td mat-cell *matCellDef="let element">
-              <button cButton color="success" class="statusButton " size="sm" *ngIf="element.isActive">Active</button>
-              <button cButton color="warning" class="statusButton " size="sm" *ngIf="!element.isActive">Inactive</button>
+              <button cTooltip="Active" cTooltipPlacement="bottom" mat-icon-button color="primary" class="statusButton" *ngIf="element.isActive">
+                <mat-icon>check</mat-icon>
+              </button>
+              <button cTooltip="De-Active" cTooltipPlacement="bottom" mat-icon-button color="warn" class="statusButton" *ngIf="!element.isActive">
+                <mat-icon>close</mat-icon>
+              </button>
             </td>
           </ng-container>
   
@@ -266,9 +284,15 @@
                 <svg cIcon name="cilPencil"></svg>
               </button> -->
               <div class="d-grid gap-2 d-md-flex">
-                <button mat-flat-button color="primary" size="sm" (click)="updateUserInformation(element.id, 'UpdateUser')">Update User</button>
-                <button mat-flat-button color="primary" size="sm" (click)="updateRole(element.id)">Update Role</button>
-                <button mat-flat-button color="primary" size="sm" (click)="updateUserInformation(element.id, 'ChangePassword')">Change Password</button>
+                <button cTooltip="Update User" cTooltipPlacement="bottom" mat-icon-button color="primary" (click)="updateUserInformation(element.id, 'UpdateUser')">
+                  <mat-icon>update</mat-icon>
+                </button>
+                <button cTooltip="Update Role" cTooltipPlacement="bottom" mat-icon-button color="primary" (click)="updateRole(element.id)">
+                  <mat-icon>account_circle</mat-icon>
+                </button>
+                <button cTooltip="Change Password" cTooltipPlacement="bottom" mat-icon-button color="primary" (click)="updateUserInformation(element.id, 'ChangePassword')">
+                  <mat-icon>lock</mat-icon>
+                </button>
               </div>
             </td>
           </ng-container>

@@ -10,7 +10,8 @@ namespace Hrm.Identity.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string? RoleName { get; set; }  
+        public string? RoleName { get; set; }
+        public bool? CanEditProfile { get; set; }
         public int? EmpId { get; set; }
         public string? BranchId { get; set; }
         public bool IsActive { get; set; }

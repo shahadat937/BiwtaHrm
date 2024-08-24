@@ -26,6 +26,17 @@
                             <div class="text-left text-danger">Invalid User Name (Min 6 Character)</div>
                             }
                         </c-col>
+                        
+                        <c-col [md]="6">
+                            <label cLabel for="canEditProfile">Can Edit Profile</label>
+                            <select [(ngModel)]="userService.users.canEditProfile"
+                            name="canEditProfile"
+                            cSelect
+                            id="canEditProfile">
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                            </select>
+                        </c-col>
 
                         <c-col [md]="6">
                             <label cLabel for="validationCustom09">Active Status</label>
@@ -40,7 +51,7 @@
                     }
 
                     @if(clickedButton == 'ChangePassword'){
-                        <c-col [md]="12" *ngIf="userService.users.id != ''">
+                        <c-col [md]="12">
                             <label cLabel for="oldPassword"
                             >Enter Old Password<span class="text-danger">*</span></label
                           >

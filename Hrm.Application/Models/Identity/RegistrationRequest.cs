@@ -30,5 +30,7 @@ namespace Hrm.Application.Models.Identity
         [Required]
         [MinLength(6)]
         public string Password { get; set; }
+
+        public bool CanEditProfile { get; set; }
     }
 }

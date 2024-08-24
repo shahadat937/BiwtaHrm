@@ -5,6 +5,7 @@ using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.Features.AspNetUsers.Requests.Queries;
 using Hrm.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,15 @@ namespace Hrm.Application.Features.AspNetUsers.Handlers.Queries
 
         public async Task<object> Handle(GetUserListRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Domain.AspNetUsers> aspNetUsers = _aspNetUserRepository.Where(x => true);
+            IQueryable<Domain.AspNetUsers> aspNetUsers = _aspNetUserRepository.Where(x => true)
+                .Include(x => x.EmpBasicInfo)
+                .ThenInclude(ebi => ebi.EmpJobDetail)
+                .ThenInclude(ejd => ejd.Department)
+                .Include(x => x.EmpBasicInfo)
+                .ThenInclude(ebi => ebi.EmpJobDetail)
+                .ThenInclude(ejd => ejd.Designation);
 
-            aspNetUsers = aspNetUsers.OrderByDescending(x => x.LastModifiedDate);
+            aspNetUsers = aspNetUsers.OrderByDescending(x => x.DateCreated);
 
             var UsersDtos = _mapper.Map<List<AspNetUserDto>>(aspNetUsers.ToList());
 

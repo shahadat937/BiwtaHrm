@@ -55,6 +55,8 @@ export class EmployeeInformationComponent implements OnInit {
   empSignature : string = '';
 
   id: number = 0;
+  clickedButton: string = '';
+  canEditProfile: boolean = false;
   modalOpened: boolean = false;
 
   visible : boolean = false;
@@ -95,6 +97,9 @@ export class EmployeeInformationComponent implements OnInit {
     }
   
     handleRouteParams() {
+      if(this.clickedButton == 'viewProfile'){
+        this.getCanEditProfileStatusByEmpId();
+      }
       this.getEmpBasicInfoByEmpId();
       this.getEmpPhotoSign();
       this.getEmpPersonalInfoByEmpId();
@@ -108,6 +113,12 @@ export class EmployeeInformationComponent implements OnInit {
       this.getEmpBankInfoByEmpId();
       this.getEmpLanguageInfoByEmpId();
       this.getEmpForeignTourInfoByEmpId();
+    }
+
+    getCanEditProfileStatusByEmpId(){
+      this.userService.getInfoByEmpId(this.id).subscribe((res) => {
+        this.canEditProfile = res.canEditProfile;
+      })
     }
 
     getEmpBasicInfoByEmpId(){

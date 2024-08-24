@@ -8,21 +8,41 @@ import { PromotionApprovalListComponent } from './promotion-approval-list/promot
 
 const routes: Routes = [
   {
-    path:'incrementAndPromotion',
-    component:IncrementAndPromotionComponent
-  },
-  {
-    path:'update-incrementAndPromotion/:id',
-    component:IncrementAndPromotionComponent
-  },
-  {
-    path:'incrementAndPromotionApproval',
-    component:PromotionApprovalListComponent
-  },
-  {
-    path:'manage-incrementAndPromotion',
-    component:ManagePromotionComponent
-  },
+    path: '',
+    data: {
+      title: 'Increment and Promotion',
+    },
+    children: [
+      {
+        path:'incrementAndPromotion',
+        component:IncrementAndPromotionComponent,
+        data: {
+          title: 'Increment and Promotion Application',
+        },
+      },
+      {
+        path:'update-incrementAndPromotion/:id',
+        component:IncrementAndPromotionComponent,
+        data: {
+          title: 'Update Increment and Promotion',
+        },
+      },
+      {
+        path:'incrementAndPromotionApproval',
+        component:PromotionApprovalListComponent,
+        data: {
+          title: 'Increment and Promotion Approval',
+        },
+      },
+      {
+        path:'manage-incrementAndPromotion',
+        component:ManagePromotionComponent,
+        data: {
+          title: 'Manage Increment and Promotion',
+        },
+      },
+    ]
+  }
 ];
 
 @NgModule({

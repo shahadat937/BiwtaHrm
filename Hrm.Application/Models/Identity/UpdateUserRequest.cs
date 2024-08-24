@@ -29,5 +29,7 @@ namespace Hrm.Application.Models.Identity
 
         //[MinLength(6)]
         public string? Password { get; set; }
+
+        public bool? CanEditProfile { get; set; }
     }
 }

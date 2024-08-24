@@ -140,16 +140,24 @@
   </button>
   </c-offcanvas-header>
   <c-offcanvas-body class="canvas-body">
-    <div cRow class="text-center profile-info">
-      <c-col md="12">
+    <div class="text-center">
+      <div>
         <img src="{{photoPreviewUrl}}">
-      </c-col>
-      <c-col md="12">
+      </div>
+      <div>
         <h5>{{empBasicInfo.firstName}} {{empBasicInfo.lastName}}</h5>
-      </c-col>
-      <c-col md="12">
-        <h6 class="text-primary">{{designationName}}</h6>
-      </c-col>
+      </div>
+      <div>
+        <h6 class="text-primary mb-4">{{designationName}}</h6>
+      </div>
+    </div>
+    <div>
+      <c-button-group [vertical]="true" aria-label="Vertical button group" role="group" class="d-flex">
+        <button cButton color="dark" shape="rounded-0" class="profile_button">Profile Information</button>
+        <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="updatePhotoSign(empId, 'ChangeProfile')">Change Profile Picture</button>
+        <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="updatePhotoSign(empId, 'ChangeSignature')">Change Signature</button>
+        <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="updateUserInformation(userId, 'ChangePassword')">Change Password</button>
+      </c-button-group>
     </div>
   </c-offcanvas-body>
 </c-offcanvas>

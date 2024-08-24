@@ -106,6 +106,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
       this.userHeaderText = "User List";
       this.visible = false;
     }
+    this.initaialUser();
   }
 
   toggleCollapse(){

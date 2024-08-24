@@ -207,7 +207,6 @@ export class CompetenceComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          console.log('competence id ' + element.competenceId);
           this.competenceService.delete(element.competenceId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);

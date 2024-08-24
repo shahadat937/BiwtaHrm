@@ -78,13 +78,11 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   GetModelGradeClass() {
     this.gradeServiceClass.getSelectedGradeClass().subscribe((res) => {
-      console.log(res);
       this.gradeClass = res;
     });
   }
   GetModelGradeType() {
     this.gradeTypeService.getSelectGradeType().subscribe((res) => {
-      console.log(res);
       this.gradeType = res;
     });
   }
@@ -130,7 +128,6 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getALlGrades() {
     this.subscription = this.gradeService.getAll().subscribe((item) => {
-      console.log(item);
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;

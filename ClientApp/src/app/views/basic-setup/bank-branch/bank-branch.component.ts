@@ -49,8 +49,6 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //this.loaddivisions();
     this.handleRouteParams();
-
-    console.log("Value : ", this.BankBranchForm.value)
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {

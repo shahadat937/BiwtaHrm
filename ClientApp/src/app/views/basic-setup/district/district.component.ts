@@ -48,8 +48,7 @@ export class DistrictComponent implements OnInit, OnDestroy {
       if (id) {
         this.btnText = 'Update';
         this.headerText = 'Update District';
-        this.districtService.find(+id).subscribe((res) => {
-          console.log(res);
+        this.districtService.find(+id).subscribe((res) => {        
           this.DistrictForm?.form.patchValue(res);
         });
       } else {

@@ -38,23 +38,37 @@
                 </ng-container>
             </mat-tab>
         
-            <mat-tab>
+            <!-- <mat-tab>
                 <ng-template mat-tab-label>Address Information</ng-template>
                 <ng-container *ngIf="selectedTabIndex === 4">
                     <app-emp-address [empId]="empId"></app-emp-address>
+                </ng-container>
+            </mat-tab> -->
+
+            <mat-tab>
+                <ng-template mat-tab-label>Present Address</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 4">
+                    <app-emp-present-address [empId]="empId"></app-emp-present-address>
+                </ng-container>
+            </mat-tab>
+            
+            <mat-tab>
+                <ng-template mat-tab-label>Permanent Address</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 5">
+                    <app-emp-permanent-address [empId]="empId"></app-emp-permanent-address>
                 </ng-container>
             </mat-tab>
         
             <mat-tab>
                 <ng-template mat-tab-label>Job Details</ng-template>
-                <ng-container *ngIf="selectedTabIndex === 5">
+                <ng-container *ngIf="selectedTabIndex === 6">
                     <app-emp-job-details [empId]="empId"></app-emp-job-details>
                 </ng-container>
             </mat-tab>
         
             <mat-tab>
                 <ng-template mat-tab-label>Education Information</ng-template>
-                <ng-container *ngIf="selectedTabIndex === 6">
+                <ng-container *ngIf="selectedTabIndex === 7">
                     <app-emp-education-info [empId]="empId"></app-emp-education-info>
                 </ng-container>
             </mat-tab>

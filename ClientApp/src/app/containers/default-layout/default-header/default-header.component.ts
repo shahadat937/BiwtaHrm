@@ -76,7 +76,12 @@ export class DefaultHeaderComponent extends HeaderComponent {
   getEmployeeByEmpId() {
     if(this.empId){
       this.subscription = this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
-          this.photoPreviewUrl = res.photoUrl ? `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}` : `${this.empPhotoSignService.imageUrl}/EmpPhoto/default.jpg`;
+        if(res){
+          this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`
+        }
+        else {
+          this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default.jpg`
+        }
       })
       this.subscription = this.empBasicInfoService.findByEmpId(this.empId).subscribe((res) => {
         this.empBasicInfo = res;

@@ -33,6 +33,8 @@ import { OfficerFormPart5Component } from './officer-form/officer-form-part-5/of
 import { OfficerFormPart6Component } from './officer-form/officer-form-part-6/officer-form-part-6.component';
 import { OfficerFormPart7Component } from './officer-form/officer-form-part-7/officer-form-part-7.component';
 import { FieldComponent } from './field/field.component';
+import { UpdateFormComponent } from './update-form/update-form.component';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { FieldComponent } from './field/field.component';
     OfficerFormPart5Component,
     OfficerFormPart6Component,
     OfficerFormPart7Component,
-    FieldComponent
+    FieldComponent,
+    UpdateFormComponent
   ],
   imports: [
     TabViewModule,
@@ -71,7 +74,8 @@ import { FieldComponent } from './field/field.component';
     AppraisalRoutingModule,
     StepperModule,
     TableModulePN,
-    IconDirective
+    IconDirective,
+    MatIconModule
 
   ]
 })

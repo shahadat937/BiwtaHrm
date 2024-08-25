@@ -9,6 +9,8 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { Subscription } from 'rxjs';
 import { FieldComponent } from '../field/field.component';
 import { FormRecordService } from '../services/form-record.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { UpdateFormComponent } from '../update-form/update-form.component';
 
 @Component({
   selector: 'app-officer-form',
@@ -28,7 +30,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     private formRecordService: FormRecordService,
     public officerFormService: OfficerFormService,
     private toastr: ToastrService,
-    private confirmService: ConfirmService
+    private confirmService: ConfirmService,
+    private modalService: BsModalService
   ) {
     
     this.loading = false;
@@ -100,5 +103,13 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
         console.log("complete");
       }
     })
+  }
+
+  onUpdate(formRecordId:number) {
+    const initialState = {
+      formRecordId : formRecordId
+    } 
+
+    this.modalService.show(UpdateFormComponent,{initialState:initialState});
   }
 }

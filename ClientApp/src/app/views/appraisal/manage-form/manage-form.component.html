@@ -53,7 +53,7 @@
             }
 
             <td>
-              <button class="custom-button me-1" title="Edit The Record">
+              <button class="custom-button me-1" (click)="onUpdate(formRecord.recordId)" title="Edit The Record">
                 <svg [cIcon]="icons.cilPencil" size="lg" title="Edit"></svg>
               </button>
               <button

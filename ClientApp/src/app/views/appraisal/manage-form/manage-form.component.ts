@@ -6,6 +6,8 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import {FormRecordService} from '../services/form-record.service'
 import { FormRecordModel } from '../models/form-record-model';
 import { cilPencil, cilTrash, cibZoom, cilZoom } from '@coreui/icons';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { UpdateFormComponent } from '../update-form/update-form.component';
 
 @Component({
   selector: 'app-manage-form',
@@ -26,6 +28,7 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     private officerService: OfficerFormService,
     private toastr: ToastrService,
     private confirmService: ConfirmService,
+    private modalService: BsModalService
   ) {
     this.loading = false;
     this.formRecordHeader = [{header:"Record Id",field:"recordId"}, {header:"PMS No.", field:"idCardNo"}, {header:"Name",field:"fullName"}, {header:"Department", field:"department"}]
@@ -82,4 +85,13 @@ export class ManageFormComponent implements OnInit, OnDestroy {
       }
     })
   }
+
+  onUpdate(formRecordId:number) {
+    const initialState = {
+      formRecordId : formRecordId
+    } 
+
+    this.modalService.show(UpdateFormComponent,{initialState:initialState});
+  }
+
 }

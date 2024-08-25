@@ -71,6 +71,7 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
                     fieldDto.FieldName = field.FieldName;
                     fieldDto.FieldRecordId = field.FieldRecordId;
                     fieldDto.FieldValue = field.FieldValue;
+                    fieldDto.FormRecordId = formRecord.RecordId;
                     fieldDto.Remark = field.Remark;
 
                     var fieldRecord = await _unitOfWork.Repository<Hrm.Domain.FieldRecord>().Get(fieldDto.FieldRecordId);

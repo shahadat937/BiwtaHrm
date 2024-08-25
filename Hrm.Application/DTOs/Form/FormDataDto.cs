@@ -12,6 +12,8 @@ namespace Hrm.Application.DTOs.Form
         public int? RecordId { get; set; }
         public string FormName { get; set; }
         public string Description { get; set; }
+        public DateTime? ReportFrom { get; set; }
+        public DateTime? ReportTo { get; set; }
         public int? EmpId { get; set; }
         public List<FormSectionDto> Sections { get; set; } = new List<FormSectionDto>();
     }

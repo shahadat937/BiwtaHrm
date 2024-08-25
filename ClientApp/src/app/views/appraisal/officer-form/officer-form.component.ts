@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { Subscription } from 'rxjs';
 import { FieldComponent } from '../field/field.component';
+import { FormRecordService } from '../services/form-record.service';
 
 @Component({
   selector: 'app-officer-form',
@@ -24,6 +25,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   currentSection:number ;
   
   constructor(
+    private formRecordService: FormRecordService,
     public officerFormService: OfficerFormService,
     private toastr: ToastrService,
     private confirmService: ConfirmService
@@ -82,6 +84,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
           this.toastr.success('',`${response.message}`, {
             positionClass: 'toast-top-right'
           })
+
+          this.formRecordService.cachedData = [];
         } else {
           this.toastr.warning('',`${response.message}`, {
             positionClass: 'toast-top-right'

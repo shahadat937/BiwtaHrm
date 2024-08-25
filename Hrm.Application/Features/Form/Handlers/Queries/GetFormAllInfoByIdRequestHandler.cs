@@ -41,7 +41,7 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
 
             var sections = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == formDto.FormId).Select(x => x.Section).Distinct().ToListAsync();
 
-            List<object> sectionsWithField = new List<object>();
+            List<FormSectionDto> sectionsWithField = new List<FormSectionDto>();
 
             foreach (var section in sections)
             {
@@ -51,25 +51,24 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                     .Include(x=>x.FieldType)
                     .ToListAsync();
 
-                var fieldInfoDto = _mapper.Map<List<FormFieldDto>>(fieldInfo).Select(x => new
+                var fieldInfoDto = _mapper.Map<List<FormFieldDto>>(fieldInfo).Select(x => new FormFieldValDto
                 {
-                    x.FieldId,
-                    x.FieldName,
-                    x.Description,
-                    x.IsRequired,
-                    x.FieldTypeId,
-                    x.FieldTypeName,
-                    x.HTMLTagName,
-                    x.HTMLInputType,
-                    x.HasMultipleValue,
-                    x.HasSelectable,
+                    FieldId = x.FieldId,
+                    FieldName = x.FieldName,
+                    Description = x.Description,
+                    IsRequired = (bool)x.IsRequired,
+                    FieldTypeId = x.FieldTypeId,
+                    FieldTypeName = x.FieldTypeName,
+                    HTMLTagName = x.HTMLTagName,
+                    HTMLInputType = x.HTMLInputType,
+                    HasMultipleValue=(bool)x.HasMultipleValue,
+                    HasSelectable=(bool)x.HasSelectable,
                     FieldValue = "",
                     Remark = ""
                 }).ToList();
 
 
                 // Add Selectable Option If any
-                List<object> fieldInfoWithOption = new List<object>();
                 foreach(var field in fieldInfoDto)
                 {
                     List<SelectableOptionDto> options = new List<SelectableOptionDto>();
@@ -78,46 +77,25 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                         var selectableOption = await _unitOfWork.Repository<Hrm.Domain.SelectableOption>().Where(x => x.FieldId == field.FieldId && x.IsActive == true).ToListAsync();
 
                         var selectableOptionDto = _mapper.Map<List<SelectableOptionDto>>(selectableOption);
-
-                        var fieldWithSelectable = new
-                        {
-                            field.FieldId,
-                            field.FieldName,
-                            field.Description,
-                            field.IsRequired,
-                            field.FieldTypeId,
-                            field.FieldTypeName,
-                            field.HTMLTagName,
-                            field.HTMLInputType,
-                            field.HasMultipleValue,
-                            field.HasSelectable,
-                            FieldValue = "",
-                            Remark = "",
-                            Options = selectableOptionDto
-                        };
-
-                        fieldInfoWithOption.Add(fieldWithSelectable);
-                    } else
-                    {
-                        fieldInfoWithOption.Add(field);
+                        field.Options = selectableOptionDto;
                     }
                 }
 
-                sectionsWithField.Add(new
+                sectionsWithField.Add(new FormSectionDto
                 {
-                    SectionId = section,
-                    Fields = fieldInfoWithOption
+                    SectionId = (int) section,
+                    Fields = fieldInfoDto
                 });
             }
             
 
-            var formDetail = new
+            var formDetail = new FormDataDto
             {
                 FormId = request.FormId,
                 FormName = form.FormName,
                 Description = form.Description,
                 EmpId = 0,
-                Sections = sectionsWithField
+                Sections =  sectionsWithField
             };
 
             return formDetail;

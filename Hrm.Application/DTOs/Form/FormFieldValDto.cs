@@ -15,8 +15,8 @@ namespace Hrm.Application.DTOs.Form
         public bool IsRequired { get; set; }
         public int FieldTypeId { get; set; }
         public string FieldTypeName { get; set; }
-        public string HtmlTagName { get; set; }
-        public string HtmlInputType { get; set; }
+        public string HTMLTagName { get; set; }
+        public string HTMLInputType { get; set; }
         public bool HasMultipleValue { get; set; }
         public bool HasSelectable { get; set; }
         public int FieldRecordId { get; set; }

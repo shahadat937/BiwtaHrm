@@ -11,6 +11,8 @@ namespace Hrm.Application.DTOs.FormRecord
         public int RecordId { get; set; }
         public int FormId { get; set; }
         public int EmpId { get; set; }
+        public DateTime? ReportFrom {  get; set; }
+        public DateTime? ReportTo { get; set; }
         public string IdCardNo { get; set; }
         public string EmpFirstName { get; set; }
         public string EmpLastName { get; set; }

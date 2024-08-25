@@ -51,7 +51,6 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       next: response => {
         this.formData=null;
         this.formData = response;
-        console.log(this.formData);
       },
       error: err => {
         console.log(err);

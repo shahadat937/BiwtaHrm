@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import {FormRecordService} from '../services/form-record.service'
 import { FormRecordModel } from '../models/form-record-model';
-import { cilPencil, cilTrash } from '@coreui/icons';
+import { cilPencil, cilTrash, cibZoom, cilZoom } from '@coreui/icons';
 
 @Component({
   selector: 'app-manage-form',
@@ -17,7 +17,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   formRecord: FormRecordModel[] = [];
   formRecordHeader: any[] ;
-  icons = {cilPencil, cilTrash}
+  icons = {cilPencil, cilTrash, cilZoom}
+  globalFilter:string;
 
 
   constructor(
@@ -28,6 +29,7 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   ) {
     this.loading = false;
     this.formRecordHeader = [{header:"Record Id",field:"recordId"}, {header:"PMS No.", field:"idCardNo"}, {header:"Name",field:"fullName"}, {header:"Department", field:"department"}]
+    this.globalFilter="";
   }
 
   ngOnInit(): void {

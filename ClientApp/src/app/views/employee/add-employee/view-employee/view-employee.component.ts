@@ -10,6 +10,8 @@ import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { cilPlus, cilCloudUpload, cilUser, cilUserPlus } from '@coreui/icons';
 import { UserModule } from 'src/app/views/usermanagement/model/user.module';
+import { RoleFeatureService } from 'src/app/views/featureManagement/service/role-feature.service';
+import { FeaturePermission } from 'src/app/views/featureManagement/model/feature-permission';
 
 @Component({
   selector: 'app-view-employee',
@@ -38,6 +40,7 @@ export class ViewEmployeeComponent implements OnInit {
   userForm : UserModule;
   selectedEmpId!: number;
   showUpdateUserInfo: boolean = false;
+  featurePermission : FeaturePermission = new FeaturePermission;
 
   constructor(
     public userService: UserService,
@@ -46,13 +49,36 @@ export class ViewEmployeeComponent implements OnInit {
     private confirmService: ConfirmService,
     private toastr: ToastrService,
     public empBasicInfoService: EmpBasicInfoService,
+    public roleFeatureService: RoleFeatureService,
   ) {
     this.userForm = new UserModule;
   }
   icons = { cilPlus, cilCloudUpload,cilUser,cilUserPlus };
 
   ngOnInit(): void {
-    this.getAllEmpBasicInfo();
+    this.getPermission();
+  }
+  
+  getPermission(){
+    const currentUserString = localStorage.getItem('currentUser');
+    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
+    var roleName = currentUserJSON.role;
+
+    this.roleFeatureService.getFeaturePermission(roleName, 'employeeList').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        this.getAllEmpBasicInfo();
+      }
+      else{
+        this.unauthorizeAccress()
+        this.router.navigate(['/dashboard']);
+      }
+    });
+  }
+  unauthorizeAccress(){
+    this.toastr.warning('Unauthorized Access', ` `, {
+      positionClass: 'toast-top-right',
+    });
   }
 
   getAllEmpBasicInfo() {
@@ -69,35 +95,59 @@ export class ViewEmployeeComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
+  addNewEmployee(){
+    if(this.featurePermission.add == true){
+      this.router.navigate(['/employee/create-new-employee']);
+    }
+    else{
+      this.unauthorizeAccress();
+    }
+  }
+
+  updateEmployee(id: number){
+    if(this.featurePermission.update == true){
+      this.router.navigate(['/employee/update-employee-information/', id]);
+    }
+    else{
+      this.unauthorizeAccress();
+    }
+  }
+
   createUser(id : number){
-    this.loadingMap[id] = true;
-    this.empBasicInfoService.findByEmpId(id).subscribe((res) => {
-      this.userForm.firstName = res.firstName;
-      this.userForm.lastName = res.lastName;
-      this.userForm.userName = res.idCardNo;
-      this.userForm.password = "Admin@123";
-      this.userForm.empId = id;
-      this.userService.submit(this.userForm).subscribe(((res: any) => {
-        if (res.success) {
-          this.toastr.success('', `${res.message}`, {
-            positionClass: 'toast-top-right',
-          });
-          this.empBasicInfoService.updateUserStatus(id).subscribe((res) =>{
-              if(res){
-                this.getAllEmpBasicInfo();
-              }
-          });
+    if(this.featurePermission.add == true){
+      this.loadingMap[id] = true;
+      this.empBasicInfoService.findByEmpId(id).subscribe((res) => {
+        this.userForm.firstName = res.firstName;
+        this.userForm.lastName = res.lastName;
+        this.userForm.userName = res.idCardNo;
+        this.userForm.password = "Admin@123";
+        this.userForm.empId = id;
+        this.userService.submit(this.userForm).subscribe(((res: any) => {
+          if (res.success) {
+            this.toastr.success('', `${res.message}`, {
+              positionClass: 'toast-top-right',
+            });
+            this.empBasicInfoService.updateUserStatus(id).subscribe((res) =>{
+                if(res){
+                  this.getAllEmpBasicInfo();
+                }
+            });
+            this.loadingMap[id] = false;
+          } else {
+            this.toastr.warning('', `${res.message}`, {
+              positionClass: 'toast-top-right',
+            });
+            this.loadingMap[id] = false;
+          }
           this.loadingMap[id] = false;
-        } else {
-          this.toastr.warning('', `${res.message}`, {
-            positionClass: 'toast-top-right',
-          });
-          this.loadingMap[id] = false;
-        }
-        this.loadingMap[id] = false;
+        })
+        )
       })
-      )
-    })
+    }
+    else{
+      this.unauthorizeAccress();
+    }
+    
   }
 
   updateUser(id : number){

@@ -265,14 +265,13 @@
         
         <c-col [md]="4">
           <label cLabel for="fatherName"
-          >Father Name<span class="text-danger">*</span></label>
+          >Father Name<span class="text-danger"></span></label>
           <input
             [(ngModel)]="empPersonalInfoService.personalInfo.fatherName"
             name="fatherName"
             #fatherName="ngModel"
             placeholder="Enter Father Name"
             cFormControl
-            required
             id="fatherName"
             type="text"
           />
@@ -300,14 +299,13 @@
         
         <c-col [md]="4">
           <label cLabel for="motherName"
-          >Mother Name<span class="text-danger">*</span></label>
+          >Mother Name<span class="text-danger"></span></label>
           <input
             [(ngModel)]="empPersonalInfoService.personalInfo.motherName"
             name="motherName"
             #motherName="ngModel"
             placeholder="Enter Mother Name"
             cFormControl
-            required
             id="motherName"
             type="text"
           />

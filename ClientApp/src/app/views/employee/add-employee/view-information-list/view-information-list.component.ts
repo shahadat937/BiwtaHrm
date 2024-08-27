@@ -4,7 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PersonalInformationComponent } from '../employee-informations/personal-information/personal-information.component';
 import { config } from 'rxjs';
 import { BasicInformationComponent } from '../employee-informations/basic-information/basic-information.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { EmpPersonalInfoService } from '../../service/emp-personal-info.service';
 import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
@@ -19,6 +19,9 @@ import { EmpBankInfoService } from '../../service/emp-bank-info.service';
 import { EmpLanguageInfoService } from '../../service/emp-language-info.service';
 import { EmpForeignTourInfoService } from '../../service/emp-foreign-tour-info.service';
 import { EmpPhotoSignService } from '../../service/emp-photo-sign.service';
+import { FeaturePermission } from 'src/app/views/featureManagement/model/feature-permission';
+import { RoleFeatureService } from 'src/app/views/featureManagement/service/role-feature.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -53,6 +56,7 @@ export class ViewInformationListComponent implements OnInit {
   pNo: string = '';
   headerText: string = '';
   selectedTabIndex = 0;
+  featurePermission : FeaturePermission = new FeaturePermission;
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -70,10 +74,35 @@ export class ViewInformationListComponent implements OnInit {
     public empBankInfoService: EmpBankInfoService,
     public empLanguageInfoService: EmpLanguageInfoService,
     public empForeignTourInfoService: EmpForeignTourInfoService,
-    public empPhotoSignService: EmpPhotoSignService,) { }
+    public empPhotoSignService: EmpPhotoSignService,
+    public roleFeatureService: RoleFeatureService,
+    private router: Router,
+    private toastr: ToastrService,) { }
 
     ngOnInit(): void {
-      this.handleRouteParams();
+      this.getPermission();
+    }
+
+    getPermission(){
+      const currentUserString = localStorage.getItem('currentUser');
+      const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
+      var roleName = currentUserJSON.role;
+  
+      this.roleFeatureService.getFeaturePermission(roleName, 'employeeList').subscribe((item) => {
+        this.featurePermission = item;
+        if(item.viewStatus == true && ( item.add == true || item.update == true)){
+          this.handleRouteParams();
+        }
+        else{
+          this.unauthorizeAccress()
+          this.router.navigate(['/dashboard']);
+        }
+      });
+    }
+    unauthorizeAccress(){
+      this.toastr.warning('Unauthorized Access', ` `, {
+        positionClass: 'toast-top-right',
+      });
     }
 
   handleRouteParams() {

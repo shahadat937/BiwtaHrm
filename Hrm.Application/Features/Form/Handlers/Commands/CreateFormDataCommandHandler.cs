@@ -44,6 +44,9 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
             FormRecordDto formRecordDto = new FormRecordDto();
             formRecordDto.RecordId = 0;
             formRecordDto.FormId = request.formData.FormId;
+            formRecordDto.ReportFrom = request.formData.ReportFrom;
+            formRecordDto.ReportTo = request.formData.ReportTo;
+            
             formRecordDto.EmpId = (int)request.formData.EmpId;
             formRecordDto.IsActive = true;
 

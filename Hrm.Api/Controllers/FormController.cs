@@ -3,6 +3,7 @@ using Hrm.Application.DTOs.Form;
 using Hrm.Application.Features.Form.Requests.Commands;
 using Hrm.Application.Features.Form.Requests.Queries;
 using System.Dynamic;
+using System.Runtime.InteropServices;
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Form)]
@@ -48,6 +49,24 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> GetFormAllInfoById(int id)
         {
             var command = new GetFormAllInfoByIdRequest { FormId = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-formDataById/{formRecordId}")]
+        public async Task<ActionResult> GetFormData(int formRecordId)
+        {
+            var command = new GetAllFormDataRequest { FormRecordId = formRecordId };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-EmployeeInfoForForm")]
+        public async Task<ActionResult> GetEmployeeInfoForForm([FromQuery] string? IdCardNo)
+        {
+            var command = new GetEmployeeInfoRequest { IdCardNo = IdCardNo };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

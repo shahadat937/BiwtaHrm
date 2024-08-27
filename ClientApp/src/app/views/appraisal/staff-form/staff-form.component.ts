@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { OfficerFormService } from '../officer-form/service/officer-form.service';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { FormRecordService } from '../services/form-record.service';
 
 @Component({
   selector: 'app-staff-form',
@@ -21,6 +22,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   currentSection:number ;
   
   constructor(
+    private formRecordService: FormRecordService,
     public officerFormService: OfficerFormService,
     private toastr: ToastrService,
     private confirmService: ConfirmService
@@ -48,7 +50,6 @@ export class StaffFormComponent implements OnInit, OnDestroy {
       next: response => {
         this.formData=null;
         this.formData = response;
-        console.log(this.formData);
       },
       error: err => {
         console.log(err);
@@ -80,6 +81,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
           this.toastr.success('',`${response.message}`, {
             positionClass: 'toast-top-right'
           })
+          this.formRecordService.cachedData=[];
         } else {
           this.toastr.warning('',`${response.message}`, {
             positionClass: 'toast-top-right'

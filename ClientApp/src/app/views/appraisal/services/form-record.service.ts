@@ -36,4 +36,13 @@ export class FormRecordService {
   deleteRecordById(recordId:number):Observable<any> {
     return this.http.delete<any>(this.baseUrl+`/formRecord/delete-FormRecord/${recordId}`);
   }
+
+  getFormData(formRecordId:number): Observable<any> {
+    return this.http.get<any>(this.baseUrl+`/form/get-FormDataById/${formRecordId}`);
+  }
+
+
+  updateFormData(formData:any): Observable<any> {
+    return this.http.put<any>(this.baseUrl+'/form/update-FormData', formData);
+  }
 }

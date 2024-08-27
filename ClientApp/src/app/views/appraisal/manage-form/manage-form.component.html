@@ -4,32 +4,65 @@
     <h5>Form Record</h5>
     <div [gutter]="3">
       <p-table
+        #dt2
+        [paginator]="true"
+        [rows]="5"
+        [rowsPerPageOptions]="[5, 10, 20, 50]"
         [value]="formRecord"
         [columns]="formRecordHeader"
         styleClass="p-datatable-striped p-datatable-gridlines"
         [tableStyle]="{ 'min-width': '50rem' }"
       >
+        <ng-template pTemplate="caption">
+          <c-row>
+            <c-col md="3">
+              <c-input-group>
+                <span cInputGroupText class="bg-white">
+                  <svg [cIcon]="icons.cilZoom" size="lg"></svg>
+                </span>
+                <input
+                  class="border-start-0 ps-0 shadow-none"
+                  cFormControl
+                  type="text"
+                  [(ngModel)]="globalFilter"
+                  (input)="dt2.filterGlobal(globalFilter,'contains')"
+                  placeholder="Search keyword"
+                />
+              </c-input-group>
+
+            </c-col>
+          </c-row>
+        </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr>
             @for (column of columns; track $index) {
-                <th>{{column.header}}</th>
+            <th>{{ column.header }}</th>
             }
             <th>Action</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-formRecord let-columns="columns" let-index="rowIndex">
+        <ng-template
+          pTemplate="body"
+          let-formRecord
+          let-columns="columns"
+          let-index="rowIndex"
+        >
           <tr>
             @for (column of columns; track $index) {
-                <td>{{formRecord[column.field]}}</td>
+            <td>{{ formRecord[column.field] }}</td>
             }
 
             <td>
-                <button class="custom-button me-1" title="Edit The Record">
-                     <svg [cIcon]="icons.cilPencil" size="lg" title="Edit"></svg>
-                </button>
-                <button class="custom-button me-1" title="Delete The Record" (click)="onDelete(formRecord.recordId, index)">
-                     <svg [cIcon]="icons.cilTrash" size="lg" title="Edit"></svg>
-                </button>
+              <button class="custom-button me-1" (click)="onUpdate(formRecord.recordId)" title="Edit The Record">
+                <svg [cIcon]="icons.cilPencil" size="lg" title="Edit"></svg>
+              </button>
+              <button
+                class="custom-button me-1"
+                title="Delete The Record"
+                (click)="onDelete(formRecord.recordId, index)"
+              >
+                <svg [cIcon]="icons.cilTrash" size="lg" title="Edit"></svg>
+              </button>
             </td>
           </tr>
         </ng-template>

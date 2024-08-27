@@ -34,7 +34,7 @@ namespace Hrm.Application.Features.Features.Handlers.Queries
         {
             var validator = new QueryParamsValidator();
 
-            IQueryable<Feature> Features = _FeatureRepository.Where(x => x.IsActive == true)
+            IQueryable<Feature> Features = _FeatureRepository.Where(x => true)
                 .Include(x => x.Module);
 
             Features = Features.OrderBy(x => x.ModuleId).ThenBy(x => x.OrderNo);

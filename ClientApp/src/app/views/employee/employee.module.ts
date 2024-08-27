@@ -62,6 +62,7 @@ import { MatCardModule } from '@angular/material/card';
 import { BengaliDigitPipe } from './manage-employee/emp-id-card-generate/bangali-digit.pipe';
 import { BengaliDatePipe } from './manage-employee/emp-id-card-generate/bengali-date.pipe';
 import {MatTabsModule} from '@angular/material/tabs';
+import { EmpAddressComponent } from './add-employee/employee-informations/emp-address/emp-address.component';
 
 
 
@@ -90,6 +91,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     EmpIdCardGenerateComponent,
     BengaliDigitPipe,
     BengaliDatePipe,
+    EmpAddressComponent,
   ],
   imports: [
     CommonModule,

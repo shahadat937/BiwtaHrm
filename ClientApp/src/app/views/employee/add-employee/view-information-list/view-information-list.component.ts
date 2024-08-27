@@ -52,6 +52,7 @@ export class ViewInformationListComponent implements OnInit {
   userInfo:any;
   pNo: string = '';
   headerText: string = '';
+  selectedTabIndex = 0;
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,

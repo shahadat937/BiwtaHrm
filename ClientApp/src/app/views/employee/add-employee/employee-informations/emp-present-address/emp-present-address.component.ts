@@ -67,12 +67,12 @@ export class EmpPresentAddressComponent implements OnInit, OnDestroy {
   getEmployeeByEmpId() {
     this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
       if (res) {
-        this.onDivisionNamesChangeByCounterId(res.countryId);
-        this.onDistrictNamesChangeByDivisionId(res.divisionId);
-        this.onUpazilaNamesChangeByDistrictId(res.districtId);
-        this.onThanaNamesChangeByUpazilaId(res.upazilaId);
-        this.onUnionNamesChangeByThanaId(res.thanaId);
-        this.onWardNamesChangeByUnionId(res.unionId);
+        res.countryId ? this.onDivisionNamesChangeByCounterId(res.countryId) : null;
+        res.divisionId ? this.onDistrictNamesChangeByDivisionId(res.divisionId) : null;
+        res.districtId ? this.onUpazilaNamesChangeByDistrictId(res.districtId) : null;
+        res.upazilaId ? this.onThanaNamesChangeByUpazilaId(res.upazilaId) : null;
+        res.thanaId ? this.onUnionNamesChangeByThanaId(res.thanaId) : null;
+        res.unionId ? this.onWardNamesChangeByUnionId(res.unionId) : null;
         this.EmpPresentAddressForm?.form.patchValue(res);
         this.headerText = 'Update Present Address';
         this.btnText = 'Update';

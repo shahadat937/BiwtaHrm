@@ -9,112 +9,120 @@
     </c-card-header>
     <c-card-body>
 
-        <mat-tab-group>
+        <mat-tab-group [(selectedIndex)]="selectedTabIndex">
             <mat-tab>
-                <ng-template mat-tab-label>
-                    Basic Information
-                </ng-template>
-                <app-basic-information [empId]="empId"></app-basic-information>
+                <ng-template mat-tab-label>Basic Information</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 0">
+                    <app-basic-information [empId]="empId"></app-basic-information>
+                </ng-container>
             </mat-tab>
+        
+            <mat-tab>
+                <ng-template mat-tab-label>Personal Information</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 1">
+                    <app-personal-information [empId]="empId"></app-personal-information>
+                </ng-container>
+            </mat-tab>
+        
+            <mat-tab>
+                <ng-template mat-tab-label>Spouse Information</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 2">
+                    <app-emp-spouse-info [empId]="empId"></app-emp-spouse-info>
+                </ng-container>
+            </mat-tab>
+        
+            <mat-tab>
+                <ng-template mat-tab-label>Children Information</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 3">
+                    <app-emp-child-info [empId]="empId"></app-emp-child-info>
+                </ng-container>
+            </mat-tab>
+        
+            <!-- <mat-tab>
+                <ng-template mat-tab-label>Address Information</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 4">
+                    <app-emp-address [empId]="empId"></app-emp-address>
+                </ng-container>
+            </mat-tab> -->
 
             <mat-tab>
-                <ng-template mat-tab-label>
-                    Personal Information
-                </ng-template>
-                <app-personal-information [empId]="empId"></app-personal-information>
-            </mat-tab>
-
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    Spouse Information
-                </ng-template>
-                <app-emp-spouse-info [empId]="empId"></app-emp-spouse-info>
-            </mat-tab>
-
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    Children Information
-                </ng-template>
-                <app-emp-child-info [empId]="empId"></app-emp-child-info>
-            </mat-tab>
-
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    Present Address
-                </ng-template>
-                <app-emp-present-address [empId]="empId"></app-emp-present-address>
-            </mat-tab>
-
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    Permanent Address
-                </ng-template>
-                <app-emp-permanent-address [empId]="empId"></app-emp-permanent-address>
+                <ng-template mat-tab-label>Present Address</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 4">
+                    <app-emp-present-address [empId]="empId"></app-emp-present-address>
+                </ng-container>
             </mat-tab>
             
             <mat-tab>
-                <ng-template mat-tab-label>
-                    Job Details
-                </ng-template>
-                <app-emp-job-details [empId]="empId"></app-emp-job-details>
+                <ng-template mat-tab-label>Permanent Address</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 5">
+                    <app-emp-permanent-address [empId]="empId"></app-emp-permanent-address>
+                </ng-container>
             </mat-tab>
-
+        
             <mat-tab>
-                <ng-template mat-tab-label>
-                    Education Information
-                </ng-template>
-                <app-emp-education-info [empId]="empId"></app-emp-education-info>
+                <ng-template mat-tab-label>Job Details</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 6">
+                    <app-emp-job-details [empId]="empId"></app-emp-job-details>
+                </ng-container>
             </mat-tab>
-
+        
             <mat-tab>
-                <ng-template mat-tab-label>
-                    Training Information
-                </ng-template>
-                Left
+                <ng-template mat-tab-label>Education Information</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 7">
+                    <app-emp-education-info [empId]="empId"></app-emp-education-info>
+                </ng-container>
             </mat-tab>
-            
+        
             <mat-tab>
-                <ng-template mat-tab-label>
-                    PSI &Training History
-                </ng-template>
-                <app-emp-psi-training-info [empId]="empId"></app-emp-psi-training-info>
+                <ng-template mat-tab-label>Training Information</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 7">
+                    Left
+                </ng-container>
             </mat-tab>
-
+        
             <mat-tab>
-                <ng-template mat-tab-label>
-                    Bank Information
-                </ng-template>
-                <app-emp-bank-info [empId]="empId"></app-emp-bank-info>
+                <ng-template mat-tab-label>PSI & Training History</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 8">
+                    <app-emp-psi-training-info [empId]="empId"></app-emp-psi-training-info>
+                </ng-container>
             </mat-tab>
-
+        
             <mat-tab>
-                <ng-template mat-tab-label>
-                    Nominee Information
-                </ng-template>
-                <app-emp-nominee-info [empId]="empId" [pNo]="pNo"></app-emp-nominee-info>
+                <ng-template mat-tab-label>Bank Information</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 9">
+                    <app-emp-bank-info [empId]="empId"></app-emp-bank-info>
+                </ng-container>
             </mat-tab>
-            
+        
             <mat-tab>
-                <ng-template mat-tab-label>
-                    Language Details
-                </ng-template>
-                <app-emp-language-info [empId]="empId"></app-emp-language-info>
+                <ng-template mat-tab-label>Nominee Information</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 10">
+                    <app-emp-nominee-info [empId]="empId" [pNo]="pNo"></app-emp-nominee-info>
+                </ng-container>
             </mat-tab>
-
+        
             <mat-tab>
-                <ng-template mat-tab-label>
-                    Foreign Trip
-                </ng-template>
-                <app-emp-foreign-tour-info [empId]="empId"></app-emp-foreign-tour-info>
+                <ng-template mat-tab-label>Language Details</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 11">
+                    <app-emp-language-info [empId]="empId"></app-emp-language-info>
+                </ng-container>
             </mat-tab>
-
+        
             <mat-tab>
-                <ng-template mat-tab-label>
-                    Photo & Signature
-                </ng-template>
-                <app-emp-photo-sign [empId]="empId" [pNo]="pNo"></app-emp-photo-sign>
+                <ng-template mat-tab-label>Foreign Trip</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 12">
+                    <app-emp-foreign-tour-info [empId]="empId"></app-emp-foreign-tour-info>
+                </ng-container>
+            </mat-tab>
+        
+            <mat-tab>
+                <ng-template mat-tab-label>Photo & Signature</ng-template>
+                <ng-container *ngIf="selectedTabIndex === 13">
+                    <app-emp-photo-sign [empId]="empId" [pNo]="pNo"></app-emp-photo-sign>
+                </ng-container>
             </mat-tab>
         </mat-tab-group>
+        
 
 
         <!-- <c-card>

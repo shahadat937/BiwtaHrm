@@ -40,7 +40,6 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
   @ViewChild('EmpPermanentAddressForm', { static: true }) EmpPermanentAddressForm!: NgForm;
 
   constructor(
-    public empPermanentAddressService: EmpPermanentAddressService,
     public countryService: CountryService,
     public districtService: DistrictService,
     public uapzilaService: UapzilaService,
@@ -49,6 +48,7 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
     public wardService: WardService,
     public divisionService: DivisionService,
     private toastr: ToastrService,
+    public empPermanentAddressService: EmpPermanentAddressService,
     public empPresentAddressService: EmpPresentAddressService,) {
 
   }
@@ -214,6 +214,7 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm): void {
+    console.log(form.value)
     this.loading = true;
     this.empPermanentAddressService.cachedData = [];
     const id = form.value.id;

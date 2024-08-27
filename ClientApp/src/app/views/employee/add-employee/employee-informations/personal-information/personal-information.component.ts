@@ -74,21 +74,21 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
         this.headerText = 'Add Personal Information';
         this.btnText = 'Submit';
         this.initaialForm();
-        this.getUserDetails();
+        // this.getUserDetails();
       }
     });
   }
 
-  getUserDetails(){
-    this.empPersonalInfoService.findBasicInfoByEmpId(this.empId).subscribe((res) => {
-      this.userService.find(res.aspNetUserId).subscribe((response) =>{
-        this.PersonalInfoForm.form.patchValue({
-          mobileNumber: response.phoneNumber,
-          email: response.email,
-        });
-      })
-    })
-  }
+  // getUserDetails(){
+  //   this.empPersonalInfoService.findBasicInfoByEmpId(this.empId).subscribe((res) => {
+  //     this.userService.find(res.aspNetUserId).subscribe((response) =>{
+  //       this.PersonalInfoForm.form.patchValue({
+  //         mobileNumber: response.phoneNumber,
+  //         email: response.email,
+  //       });
+  //     })
+  //   })
+  // }
 
   initaialForm(form?: NgForm) {
     if (form != null) form.resetForm();

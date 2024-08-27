@@ -284,5 +284,40 @@ namespace Hrm.Identity.Services
 
         }
 
+
+        public async Task<BaseCommandResponse> ResetPassword(UpdateUserRequest request)
+        {
+            var response = new BaseCommandResponse();
+
+            var user = await _userManager.FindByIdAsync(request.Id);
+
+            if (user == null)
+            {
+                response.Success = false;
+                response.Message = $"User with ID '{request.Id}' not found.";
+                return response;
+            }
+
+            else
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                var result = await _userManager.ResetPasswordAsync(user, token, request.Password);
+
+                if (result.Succeeded)
+                {
+                    response.Success = true;
+                    response.Message = $"Password Reset successfully.";
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Message = $"Failed to Reset: {string.Join(", ", result.Errors)}";
+                }
+                return response;
+            }
+
+        }
+
     }
 }

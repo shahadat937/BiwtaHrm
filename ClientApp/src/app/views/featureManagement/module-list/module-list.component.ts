@@ -88,11 +88,14 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
         this.getAllModule();
       }
       else{
-        this.toastr.warning('Permission Not Allowed', ` `, {
-          positionClass: 'toast-top-right',
-        });
+        this.unauthorizeAccress()
         this.router.navigate(['/dashboard']);
       }
+    });
+  }
+  unauthorizeAccress(){
+    this.toastr.warning('Unauthorized Access', ` `, {
+      positionClass: 'toast-top-right',
     });
   }
 
@@ -112,9 +115,7 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
       }
     }
     else {
-      this.toastr.warning('Permission Not Allowed', ` `, {
-        positionClass: 'toast-top-right',
-      });
+      this.unauthorizeAccress()
     }
   }
 
@@ -145,9 +146,7 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
       });
     }
     else {
-      this.toastr.warning('Permission Not Allowed', ` `, {
-        positionClass: 'toast-top-right',
-      });
+      this.unauthorizeAccress()
     }
   }
 

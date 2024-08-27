@@ -2,8 +2,7 @@
     <c-card-header class="d-flex justify-content-between">
             <div>Employee List</div>
             <div><button cButton color="primary" shape="rounded-pill" 
-                [routerLink]="[
-                  '/employee/create-new-employee']"><svg [cIcon]="icons.cilPlus"></svg> Add New Employee</button></div>
+                (click)="addNewEmployee()"><svg [cIcon]="icons.cilPlus"></svg> Add New Employee</button></div>
     </c-card-header>
     <c-card-body>
       <div class="example-header">
@@ -86,7 +85,7 @@
                 <svg *ngIf="!loadingMap[element.id]" [cIcon]="icons.cilUserPlus"></svg> Create User
               </button> -->
               
-              <button [routerLink]="['/employee/update-employee-information/', element.id]" cTooltip="Update Information" cTooltipPlacement="bottom" mat-icon-button color="primary">
+              <button (click)="updateEmployee(element.id)" cTooltip="Update Information" cTooltipPlacement="bottom" mat-icon-button color="primary">
                 <mat-icon>update</mat-icon>
               </button>
 

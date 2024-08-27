@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
+  AlertComponent,
   ButtonGroupModule,
   ButtonModule,
   CardModule,
@@ -10,9 +11,15 @@ import {
   FormModule,
   GridModule,
   ListGroupModule,
+  ModalBodyComponent,
+  ModalComponent,
+  ModalFooterComponent,
+  ModalHeaderComponent,
+  PopoverModule,
   ProgressModule,
   SharedModule,
   SpinnerModule,
+  TableModule,
   TooltipModule,
 } from '@coreui/angular';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
@@ -24,13 +31,22 @@ import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { UserService } from './service/user.service';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { UpdateRoleComponent } from './update-role/update-role.component';
+import { RoleFeatureComponent } from './role-feature/role-feature.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { IconModule } from '@coreui/icons-angular';
 
 
 @NgModule({
   declarations: [
     UserComponent,
     UpdateUserComponent,
-    UpdateRoleComponent
+    UpdateRoleComponent,
+    RoleFeatureComponent
   ],
   imports: [
     CommonModule,
@@ -53,6 +69,23 @@ import { UpdateRoleComponent } from './update-role/update-role.component';
     SpinnerModule,
     CollapseDirective,
     TooltipModule,
+    FormModule,
+    ReactiveFormsModule,
+    FormModule,
+    MatFormFieldModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatInputModule,
+    ModalBodyComponent,
+    ModalComponent,
+    ModalFooterComponent,
+    ModalHeaderComponent,
+    IconModule,
+    MatIconModule,
+    MatButtonModule,
+    TableModule,
+    PopoverModule,
+    AlertComponent,
   ],
   providers: [ 
     ToastrService,

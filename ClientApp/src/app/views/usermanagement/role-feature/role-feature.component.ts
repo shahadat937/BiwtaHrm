@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { RoleFeatureService } from '../service/role-feature.service';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 import { Subscription } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RoleFeature } from '../model/role-feature';
+import { RoleFeature } from '../../featureManagement/model/role-feature';
 import { SelectedStringModel } from 'src/app/core/models/selectedStringModel';
 import { ToastrService } from 'ngx-toastr';
 
@@ -30,6 +30,7 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.roleFeatureService.roleFeature.roleId = '';
     this.getSelectedRoles();
   }
 

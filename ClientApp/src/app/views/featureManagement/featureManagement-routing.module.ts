@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ModuleListComponent } from './module-list/module-list.component';
 import { FeatureListComponent } from './feature-list/feature-list.component';
-import { RoleFeatureComponent } from './role-feature/role-feature.component';
 
 const routes: Routes = [
   {
@@ -28,13 +27,6 @@ const routes: Routes = [
         component: FeatureListComponent,
         data: {
           title: 'Feature List',
-        },
-      },
-      {
-        path: 'roleFeature',
-        component: RoleFeatureComponent,
-        data: {
-          title: 'Role Feature',
         },
       },
     ]

@@ -68,9 +68,11 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
 
   getUserId(){
-    this.subscription = this.userService.getInfoByEmpId(this.empId).subscribe((res) => {
-      this.userId = res.id;
-    })
+    if(this.empId){
+      this.subscription = this.userService.getInfoByEmpId(this.empId).subscribe((res) => {
+        this.userId = res.id;
+      })
+    }
   }
   
   getEmployeeByEmpId() {

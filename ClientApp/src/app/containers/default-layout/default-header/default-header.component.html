@@ -153,9 +153,9 @@
     </div>
     <div>
       <c-button-group [vertical]="true" aria-label="Vertical button group" role="group" class="d-flex">
-        <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="viewUserProfile(empId, 'viewProfile')">Profile Information</button>
-        <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="updatePhotoSign(empId, 'ChangeProfile')">Change Profile Picture</button>
-        <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="updatePhotoSign(empId, 'ChangeSignature')">Change Signature</button>
+        <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="viewUserProfile(empId, 'viewProfile')" *ngIf="empId">Profile Information</button>
+        <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="updatePhotoSign(empId, 'ChangeProfile')" *ngIf="empId">Change Profile Picture</button>
+        <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="updatePhotoSign(empId, 'ChangeSignature')" *ngIf="empId">Change Signature</button>
         <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="updateUserInformation(userId, 'ChangePassword')">Change Password</button>
       </c-button-group>
     </div>

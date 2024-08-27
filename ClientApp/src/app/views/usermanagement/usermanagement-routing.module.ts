@@ -1,6 +1,7 @@
 import { UserComponent } from './user/user.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RoleFeatureComponent } from './role-feature/role-feature.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,13 @@ const routes: Routes = [
         component: UserComponent,
         data: {
           title: 'Update User',
+        },
+      },
+      {
+        path: 'rolePermission',
+        component: RoleFeatureComponent,
+        data: {
+          title: 'User',
         },
       },
     ]

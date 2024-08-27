@@ -3,7 +3,7 @@
     @if (fieldData.hasSelectable&&fieldData.hasMultipleValue==false) {
         <c-row class="mt-2" [gutter]="3">
             <c-col md="5">
-                <label cLabel>{{fieldData.fieldName}}</label>     
+                <label cLabel class="font-weight-bold"><strong>{{fieldData.fieldName}}</strong></label> 
             </c-col>
             <c-col md="3">
                 <input 
@@ -18,7 +18,7 @@
             @for (option of fieldData.options; track $index) {
                 <c-row class="ms-2" [gutter]="1">
                     <c-col md="3">
-                        <label cLabel>{{$index+1}}. {{option.optionName}}</label>
+                        <label cLabel class="font-weight-bold"><strong>{{$index+1}}. {{option.optionName}}</strong></label>
                     </c-col>
                     <c-col>
                     <c-form-check>
@@ -36,7 +36,7 @@
     } @else {
         <c-row class="mt-2"  [gutter]="3">
             <c-col md="3">
-                <label for="{{fieldUniqueName}}" cLabel>{{fieldData.fieldName}}:</label>
+                <label for="{{fieldUniqueName}}" class="font-weight-bold" cLabel><strong>{{fieldData.fieldName}}:</strong></label>
             </c-col>
             <c-col>
                 <input [name]="fieldUniqueName" 

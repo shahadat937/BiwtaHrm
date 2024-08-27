@@ -22,9 +22,10 @@
                       @if (ind==0) {
                         <c-col md="3">
                           <label for="empId" cLabel>EmployeeId</label>
-                          <input type="number" 
+                          <input type="text" 
                           name="empId" 
-                          [(ngModel)]="formData.empId"
+                          (input)="getEmpInfo()"
+                          [(ngModel)]="IdCardNo"
                           id="empId" cFormControl>
                         </c-col>
                       }

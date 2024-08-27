@@ -48,7 +48,6 @@ export class UpdateFormComponent implements OnInit, OnDestroy {
     this.formRecordService.getFormData(this.formRecordId).subscribe({
       next: (response)=> {
         this.formData = response;
-        console.log(response);
         this.loading=false;
       },
       error: (err)=> {

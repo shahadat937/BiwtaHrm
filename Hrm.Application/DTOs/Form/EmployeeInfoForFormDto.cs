@@ -8,6 +8,7 @@ namespace Hrm.Application.DTOs.Form
 {
     public class EmployeeInfoForFormDto
     {
+        public bool success {  get; set; }
         public int EmpId { get; set; }
         public string? IdCardNo { get; set; }
         public string? FirstName { get; set; }

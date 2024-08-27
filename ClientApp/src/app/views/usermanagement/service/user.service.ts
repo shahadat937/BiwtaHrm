@@ -69,4 +69,8 @@ export class UserService {
     return this.http.put(this.baseUrl + '/userRole/update-userRole/'+id, model);
   }
 
+  resetUserPassword(id: string,model: any){
+    return this.http.put(this.baseUrl + '/users/reset-password/'+id, model);
+  }
+
 }

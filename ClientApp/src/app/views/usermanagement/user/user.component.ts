@@ -18,6 +18,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { IncrementAndPromotionApprovalComponent } from '../../promotion/increment-and-promotion-approval/increment-and-promotion-approval.component';
 import { UpdateRoleComponent } from '../update-role/update-role.component';
 import { UpdateUserComponent } from '../update-user/update-user.component';
+import { UserModule } from '../model/user.module';
 
 @Component({
   selector: 'app-user',
@@ -40,6 +41,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   userHeaderText : string | undefined;
   buttonIcon : string = '';
   visible : boolean | undefined;
+  resetPasswordUser : UserModule = new UserModule;
 
   constructor(
     public userService: UserService,
@@ -200,6 +202,31 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.getAllUsers();
       });
     }
+  }
+
+  resetPassword(id: string){
+    this.confirmService
+    .confirm('Confirm Reset Password', 'Are You Sure Reset Password')
+    .subscribe((result) => {
+      if (result) {
+        this.resetPasswordUser.id = id;
+        this.resetPasswordUser.password = "Admin@123"
+        this.userService.resetUserPassword(id, this.resetPasswordUser).subscribe(
+          (res: any) => {
+            if(res.success){
+              this.toastr.success('', `${res.message}`, {
+                positionClass: 'toast-top-right',
+              });
+            }
+            else {
+              this.toastr.error('', `${res.message}`, {
+                positionClass: 'toast-top-right',
+              });
+            }
+          }
+        );
+      }
+    });
   }
   
 

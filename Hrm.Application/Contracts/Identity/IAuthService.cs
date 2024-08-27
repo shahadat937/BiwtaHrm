@@ -13,6 +13,7 @@ namespace Hrm.Application.Contracts.Identity
         Task<BaseCommandResponse> Register(RegistrationRequest request);
         Task<BaseCommandResponse> UpdateUser(UpdateUserRequest request);
         Task<BaseCommandResponse> UpdateUserAndChangePassword(UpdateUserRequest request);
+        Task<BaseCommandResponse> ResetPassword(UpdateUserRequest request);
 
 
     }

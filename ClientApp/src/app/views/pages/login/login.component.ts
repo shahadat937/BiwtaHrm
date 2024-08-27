@@ -51,7 +51,7 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
   particlesOptions = {
     background: {
       color: {
-        value: "#FFFFFF",
+        value: "#5f9fc0",
       },
     },
     fpsLimit: 120,
@@ -74,10 +74,10 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
     },
     particles: {
       color: {
-        value: "#000",
+        value: "#FFF",
       },
       links: {
-        color: "#000",
+        color: "#FFF",
         distance: 150,
         enable: true,
         opacity: 0.5,
@@ -90,7 +90,7 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
           default: OutMode.bounce,
         },
         random: false,
-        speed: 6,
+        speed: 4,
         straight: false,
       },
       number: {
@@ -101,7 +101,7 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
         value: 120,
       },
       opacity: {
-        value: 0.5,
+        value: 0.6,
       },
       shape: {
         type: "circle",

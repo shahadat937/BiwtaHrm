@@ -2,7 +2,7 @@ import { Division } from './../../basic-setup/model/division';
 import { Router } from '@angular/router';
 import { SharedService } from './service/shared.service';
 import { NgForm } from '@angular/forms';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {OfficerFormService} from './service/officer-form.service'
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
@@ -35,6 +35,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     {fieldName: "Birthdate", MapTo: "birthDate", Transform: "DateFormat"},
     {fieldName: "Joining Date Of Current Designation", MapTo: "currentDesignationJoiningDate", Transform: "DateFormat"}
   ]
+
+  reportDates:string[]= [];
   
   constructor(
     private formRecordService: FormRecordService,
@@ -92,6 +94,14 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   saveFormData() {
     this.submitLoading=true;
+    if(this.reportDates.length<2) {
+      this.toastr.warning('',"Report Duration is required", {
+        positionClass: 'toast-top-right'
+      });
+      return;
+    }
+    this.formData.reportFrom = this.reportDates[0];
+    this.formData.reportTo = this.reportDates[1];
     this.officerFormService.saveFormData(this.formData).subscribe({
       next: (response)=> {
         if(response.success) {

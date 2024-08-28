@@ -3,10 +3,11 @@
     @if (fieldData.hasSelectable&&fieldData.hasMultipleValue==false) {
         <c-row class="mt-2" [gutter]="3">
             <c-col md="5">
-                <label cLabel class="font-weight-bold"><strong>{{fieldData.fieldName}}</strong></label> 
+                <label cLabel class="font-weight-bold"><strong>{{Index+fieldData.fieldName}}</strong></label> 
             </c-col>
             <c-col md="3">
-                <input 
+                <input
+                [readOnly]="IsReadonly"
                 type="text"
                 placeholder="Remark"
                 [(ngModel)] = "fieldData.remark"
@@ -16,19 +17,25 @@
             </c-col>
                     
             @for (option of fieldData.options; track $index) {
-                <c-row class="ms-2" [gutter]="1">
-                    <c-col md="3">
+                <c-row class="ms-2 mt-3" [gutter]="1" id="radioButton">
+                    <c-col md="4">
                         <label cLabel class="font-weight-bold"><strong>{{$index+1}}. {{option.optionName}}</strong></label>
                     </c-col>
                     <c-col>
-                    <c-form-check>
-                        <input cFormCheckInput type="radio" 
+                        <input type="radio" 
+                        [readOnly]="IsReadonly"
                         [(ngModel)]="field"
                         [required]="fieldData.isRequired"
                         [name]="fieldUniqueName"
                         [value]="option.optionValue"
+                        style="display: none;"
+                        [id]="fieldUniqueName+option.optionValue"
                          />
-                    </c-form-check>
+                    <label for="{{fieldUniqueName+option.optionValue}}">
+                        <div style="width: 60px; height: 35px;" class="text-center flex border border-2 border-secondary justify-content-center">
+                            {{option.optionValue}}
+                        </div>
+                    </label>
                     </c-col>
                 </c-row>
             }
@@ -36,10 +43,12 @@
     } @else {
         <c-row class="mt-2"  [gutter]="3">
             <c-col md="3">
-                <label for="{{fieldUniqueName}}" class="font-weight-bold" cLabel><strong>{{fieldData.fieldName}}:</strong></label>
+                <label class="font-weight-bold" cLabel><strong>{{Index+fieldData.fieldName}}:</strong></label>
             </c-col>
             <c-col>
+
                 <input [name]="fieldUniqueName" 
+                [readOnly]="IsReadonly"
                 [id]="fieldUniqueName"
                 [(ngModel)]="this.field"
                 #fieldRef = "ngModel"

@@ -1,0 +1,21 @@
+.modal {
+    display: block;
+}
+  
+.scrollable-modal-body {
+    max-height: 70vh; /* Adjust the height as needed */
+    overflow-y: auto;
+  }
+
+.card-custom {
+    width: 100%;
+    border: 1px solid rgb(95, 93, 93);
+    border-radius: 10px;
+}
+
+.card-header-custom {
+    padding: 10px;
+    color: white;
+    background-color: aqua;
+    border-radius: 10px;
+}

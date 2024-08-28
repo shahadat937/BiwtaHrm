@@ -20,6 +20,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   formData: any;
   subscription: Subscription = new Subscription();
   currentSection:number ;
+  reportDates: any[] = [];
   
   constructor(
     private formRecordService: FormRecordService,
@@ -75,6 +76,14 @@ export class StaffFormComponent implements OnInit, OnDestroy {
 
   saveFormData() {
     this.submitLoading=true;
+    if(this.reportDates.length<2) {
+      this.toastr.warning('',"Report Duration is required", {
+        positionClass: 'toast-top-right'
+      });
+      return;
+    }
+    this.formData.reportFrom = this.reportDates[0];
+    this.formData.reportTo = this.reportDates[1];
     this.officerFormService.saveFormData(this.formData).subscribe({
       next: (response)=> {
         if(response.success) {

@@ -53,15 +53,18 @@
             }
 
             <td>
+              <button class="custom-button me-1" (click)="onView(formRecord.recordId)" title="View the record">
+                <mat-icon fontIcon="visibility"></mat-icon>
+              </button>
               <button class="custom-button me-1" (click)="onUpdate(formRecord.recordId)" title="Edit The Record">
-                <svg [cIcon]="icons.cilPencil" size="lg" title="Edit"></svg>
+                <mat-icon fontIcon="edit"></mat-icon>
               </button>
               <button
                 class="custom-button me-1"
                 title="Delete The Record"
                 (click)="onDelete(formRecord.recordId, index)"
               >
-                <svg [cIcon]="icons.cilTrash" size="lg" title="Edit"></svg>
+                <mat-icon fontIcon="delete"></mat-icon>
               </button>
             </td>
           </tr>

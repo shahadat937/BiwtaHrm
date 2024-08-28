@@ -5,9 +5,10 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import {FormRecordService} from '../services/form-record.service'
 import { FormRecordModel } from '../models/form-record-model';
-import { cilPencil, cilTrash, cibZoom, cilZoom } from '@coreui/icons';
+import { cilPencil, cilTrash, cibZoom, cilZoom, cilEyedropper } from '@coreui/icons';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { UpdateFormComponent } from '../update-form/update-form.component';
+import {ViewFormRecordComponent} from './view-form-record/view-form-record.component'
 
 @Component({
   selector: 'app-manage-form',
@@ -19,7 +20,7 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   formRecord: FormRecordModel[] = [];
   formRecordHeader: any[] ;
-  icons = {cilPencil, cilTrash, cilZoom}
+  icons = {cilPencil, cilTrash, cilZoom, cilEyedropper}
   globalFilter:string;
 
 
@@ -92,6 +93,16 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     } 
 
     this.modalService.show(UpdateFormComponent,{initialState:initialState});
+  }
+
+
+  onView(formRecordId:number) {
+    console.log(formRecordId);
+    const initialState = {
+      formRecordId: formRecordId
+    }
+
+    this.modalService.show(ViewFormRecordComponent, {initialState: initialState});
   }
 
 }

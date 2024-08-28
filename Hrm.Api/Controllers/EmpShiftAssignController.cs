@@ -27,7 +27,7 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-EmpShiftAssignByEmpId/{id}")]
+        [Route("get-EmpShiftAssignById/{id}")]
         public async Task<ActionResult<EmpShiftAssignDto>> GetEmpShiftAssignsById(int id)
         {
             var EmpShiftAssigns = await _mediator.Send(new GetEmpShiftAssignByIdRequest { Id = id });

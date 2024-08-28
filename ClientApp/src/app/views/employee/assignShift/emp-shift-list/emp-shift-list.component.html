@@ -1,0 +1,115 @@
+<c-card class="mt-3">
+    <c-card-header class="d-flex justify-content-between">
+      <div>Shift Assigned List</div>
+    </c-card-header>
+    <c-card-body>
+      <div class="example-header">
+        <mat-form-field>
+          <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here.." />
+          <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
+            (click)="filter.value = ''; applyFilter('')"></button>
+        </mat-form-field>
+      </div>
+      <div class="mat-elevation-z8 table-responsive">
+        <table mat-table [dataSource]="dataSource">
+          <!-- Position Column -->
+          <ng-container matColumnDef="slNo">
+            <th mat-header-cell *matHeaderCellDef>SL</th>
+            <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="idNo">
+            <th mat-header-cell *matHeaderCellDef>PMIS ID</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.pmisNo }}
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.empName }}
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="fullNameBangla">
+            <th mat-header-cell *matHeaderCellDef>Full Name Bangla</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.firstNameBangla }} {{ element.lastNameBangla }}
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.email }}
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef>Department</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.departmentName }}
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="designation">
+            <th mat-header-cell *matHeaderCellDef>Designation</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.designationName }}
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="shift">
+            <th mat-header-cell *matHeaderCellDef>Shift</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.shiftName }}
+            </td>
+          </ng-container>
+  
+          <!-- Name Column -->
+          <ng-container matColumnDef="isActive">
+            <th mat-header-cell *matHeaderCellDef>Is Active</th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.isActive">Active</span>
+              <span *ngIf="!element.isActive">De-Active</span>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let element">
+              <!-- <button
+                  class="btn btn-dark"
+                  [routerLink]="[
+                    '/employee/employee-id-card/',
+                    element.id
+                  ]"
+                >
+                  <svg [cIcon]="icons.cilPlus"></svg> Generate ID Card
+                </button>&nbsp; -->
+  
+  
+              <button (click)="updateEmpShift(element.id)" cTooltip="Update Shift" cTooltipPlacement="bottom" mat-icon-button color="primary">
+                <mat-icon>update</mat-icon>
+              </button>
+  
+              <!-- <button class="btn btn-dark" [routerLink]="[
+                    '/employee/employee-information/',
+                    element.id
+                  ]">
+                <svg [cIcon]="icons.cilZoom"></svg> View Information
+              </button> -->
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </c-card-body>
+    <c-card-footer class="text-medium-emphasis">
+      <mat-paginator appBubblePagination [length]="dataSource.data.length" [pageSize]="10" aria-label="Select page">
+      </mat-paginator>
+    </c-card-footer>
+  </c-card>

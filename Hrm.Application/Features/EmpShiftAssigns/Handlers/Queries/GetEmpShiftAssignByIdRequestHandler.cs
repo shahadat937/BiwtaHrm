@@ -27,24 +27,10 @@ namespace Hrm.Application.Features.EmpShiftAssigns.Handlers.Queries
 
         public async Task<object> Handle(GetEmpShiftAssignByIdRequest request, CancellationToken cancellationToken)
         {
-            var EmpShiftAssign = _EmpShiftAssignRepository.Where(x => x.EmpId == request.Id)
-                .Include(x => x.EmpBasicInfo)
-                    .ThenInclude(ebi => ebi.EmpJobDetail)
-                    .ThenInclude(ejd => ejd.Department)
-                .Include(x => x.EmpBasicInfo)
-                    .ThenInclude(ebi => ebi.EmpJobDetail)
-                    .ThenInclude(ejd => ejd.Designation)
-                .Include(x => x.Shift)
-                .FirstOrDefaultAsync(cancellationToken);
+            var EmpShiftAssign = await _EmpShiftAssignRepository.FindOneAsync(x => x.Id == request.Id);
 
-            if (EmpShiftAssign == null)
-            {
-                return null;
-            }
 
-            var EmpShiftAssignDto = _mapper.Map<EmpShiftAssignDto>(EmpShiftAssign);
-
-            return EmpShiftAssignDto;
+            return EmpShiftAssign;
         }
     }
 }

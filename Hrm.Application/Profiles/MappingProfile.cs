@@ -107,6 +107,7 @@ using Hrm.Application.DTOs.SelectableOption;
 using Hrm.Application.DTOs.FormSchema;
 using Hrm.Application.DTOs.FormRecord;
 using Hrm.Application.DTOs.FieldRecord;
+using Hrm.Application.DTOs.EmpShiftAssign;
 
 
 
@@ -592,6 +593,16 @@ namespace Hrm.Application.Profiles
 
             CreateMap<SelectableOption, SelectableOptionDto>()
                 .ForMember(dest => dest.FieldName, opt => opt.MapFrom(src => src.FormField.FieldName));
+
+
+            CreateMap<EmpShiftAssign, EmpShiftAssignDto>().ReverseMap();
+            CreateMap<EmpShiftAssign, CreateEmpShiftAssignDto>().ReverseMap();
+            CreateMap<EmpShiftAssign, EmpShiftAssignDto>()
+            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.Shift.ShiftName))
+            .ForMember(dest => dest.PMISNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
+            .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName + " " + src.EmpBasicInfo.LastName))
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.EmpBasicInfo.EmpJobDetail.FirstOrDefault().Department.DepartmentName))
+            .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.EmpBasicInfo.EmpJobDetail.FirstOrDefault().Designation.DesignationName));
 
         }
     }

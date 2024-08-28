@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ShiftModule } from '../models/shift.module';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +48,9 @@ export class ShiftService {
   }
   delete(id:number){
     return this.http.delete(this.baseUrl + '/Shift/delete-Shift/'+id);
+  }
+  
+  getSelectedShift() {
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/Shift/get-selectedshift');
   }
 }

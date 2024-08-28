@@ -22,5 +22,6 @@ namespace Hrm.Domain
         public bool IsActive { get; set; }
 
         public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
+        public virtual ICollection<EmpShiftAssign>? EmpShiftAssign { get; set; }
     }
 }

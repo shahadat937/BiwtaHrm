@@ -11,6 +11,6 @@ namespace Hrm.Application.Features.Shift.Requests.Commands
 {
     public class UpdateShiftCommand : IRequest<BaseCommandResponse>
     {
-        public ShiftDto ShiftDto { get; set; }
+        public CreateShiftDto ShiftDto { get; set; }
     }
 }

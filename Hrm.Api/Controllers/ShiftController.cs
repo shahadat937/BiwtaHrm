@@ -50,11 +50,11 @@ namespace Hrm.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         [Route("update-Shift/{id}")]
-        public async Task<ActionResult> Put([FromBody] ShiftDto Shift)
+        public async Task<ActionResult> Put([FromBody] CreateShiftDto Shift)
         {
             var command = new UpdateShiftCommand { ShiftDto = Shift };
-            await _mediator.Send(command);
-            return NoContent();
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HttpDelete]
@@ -65,8 +65,8 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteShiftCommand { ShiftId = id };
-            await _mediator.Send(command);
-            return NoContent();
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HttpGet]

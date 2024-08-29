@@ -32,7 +32,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     private modalService: BsModalService
   ) {
     this.loading = false;
-    this.formRecordHeader = [{header:"Record Id",field:"recordId"}, {header:"PMS No.", field:"idCardNo"}, {header:"Name",field:"fullName"}, {header:"Department", field:"department"}]
+    this.formRecordHeader = [{header:"PMS No.", field:"idCardNo"}, {header:"Name",field:"fullName"}, {header:"Department", field:"department"}, 
+      {header: "From", field:"reportFrom", IsDate: true}, {header:"To", field:"reportTo", IsDate:true}]
     this.globalFilter="";
   }
 

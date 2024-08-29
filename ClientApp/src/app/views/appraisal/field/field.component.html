@@ -17,7 +17,7 @@
             </c-col>
                     
             @for (option of fieldData.options; track $index) {
-                <c-row class="ms-2 mt-3" [gutter]="1" id="radioButton">
+                <c-row class="ms-5 mt-3" [gutter]="1" id="radioButton">
                     <c-col md="4">
                         <label cLabel class="font-weight-bold"><strong>{{$index+1}}. {{option.optionName}}</strong></label>
                     </c-col>

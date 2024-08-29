@@ -94,7 +94,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   saveFormData() {
     this.submitLoading=true;
-    if(this.reportDates.length<2) {
+    console.log(this.reportDates);
+    if(this.reportDates.length<2||this.reportDates[0]==null||this.reportDates[1]==null) {
       this.toastr.warning('',"Report Duration is required", {
         positionClass: 'toast-top-right'
       });

@@ -42,7 +42,7 @@
         </c-row>
     } @else {
         <c-row class="mt-2"  [gutter]="3">
-            <c-col md="3">
+            <c-col md="4">
                 <label class="font-weight-bold" cLabel><strong>{{Index+fieldData.fieldName}}:</strong></label>
             </c-col>
             <c-col>
@@ -66,4 +66,23 @@
         </c-row>
     }
 
+} @else if(fieldData.htmlTagName=="textarea") {
+    <c-row class="mt-2" [gutter]="3">
+        <c-col md="4">
+            <label cLabel><strong>{{fieldData.fieldName}}: </strong></label>
+        </c-col>
+        <c-col>
+            <textarea [name]="fieldUniqueName" 
+            [readOnly]="IsReadonly"
+            [id]="fieldUniqueName"
+            [(ngModel)]="this.field"
+            #fieldRef = "ngModel"
+            [required] = "fieldData.isRequired"
+            cFormControl
+            ></textarea>
+            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired) {
+                <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
+            }
+        </c-col>
+    </c-row>
 } 

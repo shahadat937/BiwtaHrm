@@ -1109,6 +1109,9 @@ namespace Hrm.Persistence
         public virtual DbSet<FormSchema> FormSchema { get; set; } = null!;
         public virtual DbSet<SelectableOption> SelectableOption { get; set; } = null!;
         public virtual DbSet<EmpShiftAssign> EmpShiftAssign { get; set; } = null!;
+        public virtual DbSet<RewardPunishmentType> RewardPunishmentType { get; set; } = null!;
+        public virtual DbSet<RewardPunishmentPriority> RewardPunishmentPriority { get; set; } = null!;
+        public virtual DbSet<EmpRewardPunishment> EmpRewardPunishment { get; set; } = null!;
 
     }
 }

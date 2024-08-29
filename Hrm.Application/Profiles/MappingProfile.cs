@@ -108,6 +108,8 @@ using Hrm.Application.DTOs.FormSchema;
 using Hrm.Application.DTOs.FormRecord;
 using Hrm.Application.DTOs.FieldRecord;
 using Hrm.Application.DTOs.EmpShiftAssign;
+using Hrm.Application.DTOs.RewardPunishmentType;
+using Hrm.Application.DTOs.RewardPunishmentPriority;
 
 
 
@@ -603,6 +605,14 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName + " " + src.EmpBasicInfo.LastName))
             .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.EmpBasicInfo.EmpJobDetail.FirstOrDefault().Department.DepartmentName))
             .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.EmpBasicInfo.EmpJobDetail.FirstOrDefault().Designation.DesignationName));
+
+
+
+            CreateMap<RewardPunishmentType, RewardPunishmentTypeDto>().ReverseMap();
+            CreateMap<RewardPunishmentType, CreateRewardPunishmentTypeDto>().ReverseMap();
+
+            CreateMap<RewardPunishmentPriority, RewardPunishmentPriorityDto>().ReverseMap();
+            CreateMap<RewardPunishmentPriority, CreateRewardPunishmentPriorityDto>().ReverseMap();
 
         }
     }

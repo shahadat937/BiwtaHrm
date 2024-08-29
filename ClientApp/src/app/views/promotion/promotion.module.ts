@@ -40,6 +40,8 @@ import { IconModule } from '@coreui/icons-angular';
 import { TransferPostingRoutingModule } from '../transferPosting/transfer-routing.module';
 import { PromotionIncrementInfoComponent } from './promotion-increment-info/promotion-increment-info.component';
 import { PromotionApprovalListComponent } from './promotion-approval-list/promotion-approval-list.component';
+import { RewardPunishmentListComponent } from './reward-punishment-list/reward-punishment-list.component';
+import { RewardPunishmentComponent } from './reward-punishment/reward-punishment.component';
 
 
 @NgModule({
@@ -50,6 +52,8 @@ import { PromotionApprovalListComponent } from './promotion-approval-list/promot
     IncrementAndPromotionApprovalComponent,
     PromotionIncrementInfoComponent,
     PromotionApprovalListComponent,
+    RewardPunishmentListComponent,
+    RewardPunishmentComponent,
   ],
   imports: [
     CommonModule,

@@ -23,7 +23,7 @@
                     </c-col>
                     <c-col>
                         <input type="radio" 
-                        [readOnly]="IsReadonly"
+                        [disabled]="IsReadonly"
                         [(ngModel)]="field"
                         [required]="fieldData.isRequired"
                         [name]="fieldUniqueName"

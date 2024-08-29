@@ -98,8 +98,11 @@ export class ManageFormComponent implements OnInit, OnDestroy {
 
   onView(formRecordId:number) {
     console.log(formRecordId);
+    const department = this.formRecord.find(x=>x.recordId == formRecordId)?.department;
+    console.log(department);
     const initialState = {
-      formRecordId: formRecordId
+      formRecordId: formRecordId,
+      department: department
     }
 
     this.modalService.show(ViewFormRecordComponent, {initialState: initialState});

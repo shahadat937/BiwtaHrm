@@ -13,6 +13,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class ViewFormRecordComponent implements OnInit, OnDestroy{
   loading: boolean;
   @Input() formRecordId: number;
+  @Input() department: string;
   subscription: Subscription = new Subscription();
   formData: any;
   companyTitle :string = "Bangladesh Inland Water Transport Authority"
@@ -28,6 +29,7 @@ export class ViewFormRecordComponent implements OnInit, OnDestroy{
   ) {
     this.loading = false;
     this.formRecordId = 0;
+    this.department = "";
   }
 
   ngOnInit(): void {

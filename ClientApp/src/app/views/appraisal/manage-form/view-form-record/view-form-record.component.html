@@ -12,7 +12,7 @@
             <div>
                 <button cButton (click)="printRecordDetail()">Print</button>
             </div>
-            <div #recordDetail>
+            <div>
                 <c-card>
                     <c-card-body>
                         <div class="d-flex justify-content-end">
@@ -37,7 +37,7 @@
                             </c-col>
                             <c-col md="2">
                                 <div style="font-size:1.2rem" class="border-bottom border-secondary">
-                                    Hello
+                                    {{department}}
                                 </div> 
                             </c-col>
                         </c-row>
@@ -77,6 +77,7 @@
                                             [fieldData]="field"
                                             [IsReadonly]="true"
                                             [fieldUniqueName]="field.fieldName+field.fieldId+section.sectionId"
+                                            [Index]="$index+1+'. '"
                                             >
                                             </app-field>
                                         }
@@ -88,7 +89,7 @@
                 </c-card>
             </div>
 
-            <div #formRecord>
+            <div #recordDetail style="display: none;">
                 <div class="d-flex justify-content-end">
                     <p style="text-decoration: underline;"><strong>Confidential</strong></p>
                 </div>
@@ -105,15 +106,68 @@
                 <div class="mt-3 d-flex justify-content-center">
                     <h2 style="color: #014878">{{formName}}</h2>
                 </div>
-                <div class="card-custom">
-                    <div class="card-header-custom">
-                        <div class="d-flex justify-content-center">
-                            Hello World
+
+                <div class="formDivision">
+                    <h5><strong>Division: </strong></h5>
+                    <div>{{department}}</div>
+                </div>
+                <div class="formDuration">
+                    <div>{{formData.reportFrom.split('T')[0]}}</div>
+                    <h5 style="flex-grow: 1; padding-right: 10px;">To</h5>
+                    <div>{{formData.reportTo.split('T')[0]}}</div>
+                    <p style="flex-grow:2;">Annual/Special Report</p>
+                </div>
+
+                @for (section of formData.sections; track $index) {
+                    <div class="card-custom mt-3">
+                        <div class="card-header-custom">
+                            <div class="d-flex justify-content-center">
+                                <h5>Part {{section.sectionId}}</h5>
+                            </div>
+                        </div>
+
+                        <div class="card-body-custom">
+                            @for (field of section.fields; track $index) {
+                                @if (field.hasSelectable==true) {
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <strong>{{$index+1}}. {{field.fieldName}}</strong>
+                                        </div>
+                                        @for (option of field.options; track $index) {
+                                            <div class="row ms-3">
+                                                <div class="col-5">
+                                                {{$index+1}}. {{option.optionName}}
+                                                </div>
+                                                <div class="col-3 mt-1">
+                                                    @if (option.optionValue==field.fieldValue) {
+                                                        <div style="width: 60px; height: 25px;background: #32a9f8;" class="text-center flex border border-2 border-secondary justify-content-center">
+                                                            {{option.optionValue}}
+                                                        </div>
+
+                                                    } @else {
+                                                        <div style="width: 60px; height: 25px;" class="text-center flex border border-2 border-secondary justify-content-center">
+                                                            {{option.optionValue}}
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                } @else {
+                                    <div class="row mt-3 align-items-end">
+                                        <div class="col-5">
+                                            <strong>{{$index+1}}. {{field.fieldName}}: </strong>
+                                        </div>
+                                        <div class="col-3">
+                                            {{field.fieldValue}}
+                                        </div>
+                                    </div>
+                                }
+                            }
                         </div>
                     </div>
-                </div>
+                }
             </div>
-
         }
       </div>
     </div>

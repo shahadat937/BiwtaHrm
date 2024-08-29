@@ -85,7 +85,7 @@
           id="validationCustom03"
           type="text"
         />
-        @if(!firstNameBangla.value&&firstNameBangla.touched){
+        @if(!firstNameBangla.valid&&firstNameBangla.touched){
         <div class="text-left text-danger">First Name Bangla is required</div>
         }
         @if(firstNameBangla.value&&lastNameBangla.value&&firstNameBangla.value==lastNameBangla.value){
@@ -106,7 +106,7 @@
           id="validationCustom04"
           type="text"
         />
-        @if(!lastNameBangla.value&&lastNameBangla.touched){
+        @if(!lastNameBangla.valid&&lastNameBangla.touched){
         <div class="text-left text-danger">Last Name Bangla is required</div>
         }
         @if(firstNameBangla.value&&lastNameBangla.value&&firstNameBangla.value==lastNameBangla.value){
@@ -126,7 +126,7 @@
             id="validationCustom05"
             type="date"
           />
-          @if(!DateOfBirth.value&&DateOfBirth.touched){
+          @if(!DateOfBirth.valid&&DateOfBirth.touched){
           <div class="text-left text-danger">Date of Birth is required</div>
           }
         </c-col>
@@ -145,7 +145,7 @@
             type="text"
             pattern="[0-9]*"
           />
-          @if(!NID.value&&NID.touched){
+          @if(!NID.valid&&NID.touched){
           <div class="text-left text-danger">NID Number is required</div>
           }
           @if(!NID.valid&&NID.touched&&NID.value){

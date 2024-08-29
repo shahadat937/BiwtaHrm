@@ -690,9 +690,9 @@ namespace Hrm.Persistence
                     .WithMany(eb => eb.EmpBankInfo)
                     .HasForeignKey(e => e.BankId);
 
-                entity.HasOne(e => e.BankBranch)
-                    .WithMany(eb => eb.EmpBankInfo)
-                    .HasForeignKey(e => e.BranchId);
+                //entity.HasOne(e => e.BankBranch)
+                //    .WithMany(eb => eb.EmpBankInfo)
+                //    .HasForeignKey(e => e.BranchId);
             });
 
             modelBuilder.Entity<EmpLanguageInfo>(entity =>

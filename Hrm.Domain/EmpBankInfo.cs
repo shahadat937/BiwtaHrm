@@ -15,7 +15,7 @@ namespace Hrm.Domain
         public string? AccountNumber { get; set; }
         public int? AccountTypeId { get; set; }
         public int? BankId { get; set; }
-        public int? BranchId { get; set; }
+        public string? BranchName { get; set; }
         public string? RoutingNo { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
@@ -24,6 +24,5 @@ namespace Hrm.Domain
         public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
         public virtual BankAccountType? AccountType { get; set; }
         public virtual Bank? Bank { get; set; }
-        public virtual BankBranch? BankBranch { get; set; }
     }
 }

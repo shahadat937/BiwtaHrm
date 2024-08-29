@@ -10,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { UserModule } from 'src/app/views/usermanagement/model/user.module';
 import { ShiftService } from 'src/app/views/attendance/services/shift.service';
+import { EmpShiftAssign } from '../../../model/emp-shift-assign';
+import { EmpShiftAssignService } from '../../../service/emp-shift-assign.service';
 
 @Component({
   selector: 'app-basic-information',
@@ -29,6 +31,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   subscription: Subscription = new Subscription();
   loading: boolean = false;
   userForm : UserModule = new UserModule;
+  empShiftForm : EmpShiftAssign = new EmpShiftAssign;
   @ViewChild('BasicInfoForm', { static: true }) BasicInfoForm!: NgForm;
   
   constructor(
@@ -39,6 +42,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
     private confirmService: ConfirmService,
     private toastr: ToastrService,
     public shiftService: ShiftService,
+    public empShiftAssignService: EmpShiftAssignService,
   ){}
 
   ngOnInit(): void {
@@ -182,7 +186,11 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
             if(res.success){
               this.empBasicInfoService.updateUserStatus(response.id).subscribe((res) =>{})
             }
-          }))
+          }));
+          this.empShiftAssignService.cachedData = []
+          this.empShiftForm.empId = response.id;
+          this.empShiftForm.shiftId = form.value.shiftId;
+          this.empShiftAssignService.saveEmpShiftAssign(this.empShiftForm).subscribe((res) =>{});
         }
           this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right',

@@ -63,6 +63,8 @@ import { BengaliDigitPipe } from './manage-employee/emp-id-card-generate/bangali
 import { BengaliDatePipe } from './manage-employee/emp-id-card-generate/bengali-date.pipe';
 import {MatTabsModule} from '@angular/material/tabs';
 import { EmpAddressComponent } from './add-employee/employee-informations/emp-address/emp-address.component';
+import { EmpShiftListComponent } from './assignShift/emp-shift-list/emp-shift-list.component';
+import { UpdateEmpShiftComponent } from './assignShift/update-emp-shift/update-emp-shift.component';
 
 
 
@@ -92,6 +94,8 @@ import { EmpAddressComponent } from './add-employee/employee-informations/emp-ad
     BengaliDigitPipe,
     BengaliDatePipe,
     EmpAddressComponent,
+    EmpShiftListComponent,
+    UpdateEmpShiftComponent,
   ],
   imports: [
     CommonModule,

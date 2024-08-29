@@ -10,6 +10,7 @@ export class BasicInfoModule {
   aspNetUserId: any;
   userStatus : boolean | null;
   employeeTypeId: any;
+  shiftId: any = null;
   employeeTypeName : string;
   idCardNo: string = '';
   

@@ -30,7 +30,7 @@ namespace Hrm.Application.Features.EmpBankInfos.Handlers.Queries
             List<EmpBankInfo> empBankInfos = await _EmpBankInfoRepository.Where(x => x.EmpId == request.Id)
                 .Include(x => x.AccountType)
                 .Include(x => x.Bank)
-                .Include(x => x.BankBranch)
+                //.Include(x => x.BankBranch)
                 .ToListAsync(cancellationToken);
 
             if (empBankInfos == null)

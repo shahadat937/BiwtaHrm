@@ -173,6 +173,7 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
         : this.shiftService.submit(form.value);
   
         this.subscription =action$.subscribe((response: any)  => {
+          console.log(response)
           if (response.success) {
             this.toastr.success('', `${response.message}`, {
               positionClass: 'toast-top-right',
@@ -185,6 +186,7 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
             this.toastr.warning('', `${response.message}`, {
               positionClass: 'toast-top-right',
             });
+            this.loading = false;
           }
           this.loading = false;
         });

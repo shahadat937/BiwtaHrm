@@ -6,6 +6,7 @@ import { EmployeeListComponent } from './manage-employee/employee-list/employee-
 import { EmployeeInformationComponent } from './manage-employee/employee-information/employee-information.component';
 import { ViewEmployeeComponent } from './add-employee/view-employee/view-employee.component';
 import { EmpIdCardGenerateComponent } from './manage-employee/emp-id-card-generate/emp-id-card-generate.component';
+import { EmpShiftListComponent } from './assignShift/emp-shift-list/emp-shift-list.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,13 @@ const routes: Routes = [
         component: EmpIdCardGenerateComponent,
         data: {
           title: 'Employee ID Card',
+        },
+      },
+      {
+        path: 'shiftAssign',
+        component: EmpShiftListComponent,
+        data: {
+          title: 'Employee Assigned Shift',
         },
       },
     ]

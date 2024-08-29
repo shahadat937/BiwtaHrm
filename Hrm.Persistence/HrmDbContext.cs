@@ -690,9 +690,9 @@ namespace Hrm.Persistence
                     .WithMany(eb => eb.EmpBankInfo)
                     .HasForeignKey(e => e.BankId);
 
-                entity.HasOne(e => e.BankBranch)
-                    .WithMany(eb => eb.EmpBankInfo)
-                    .HasForeignKey(e => e.BranchId);
+                //entity.HasOne(e => e.BankBranch)
+                //    .WithMany(eb => eb.EmpBankInfo)
+                //    .HasForeignKey(e => e.BranchId);
             });
 
             modelBuilder.Entity<EmpLanguageInfo>(entity =>
@@ -980,6 +980,20 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.EmpId);
             });
 
+            modelBuilder.Entity<EmpShiftAssign>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                .HasName("[[PK_EmpShiftAssign]]");
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(e => e.EmpShiftAssign)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Shift)
+                    .WithMany(e => e.EmpShiftAssign)
+                    .HasForeignKey(e => e.ShiftId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -1094,6 +1108,7 @@ namespace Hrm.Persistence
         public virtual DbSet<FieldRecord> FieldRecord { get; set; } = null!;
         public virtual DbSet<FormSchema> FormSchema { get; set; } = null!;
         public virtual DbSet<SelectableOption> SelectableOption { get; set; } = null!;
+        public virtual DbSet<EmpShiftAssign> EmpShiftAssign { get; set; } = null!;
 
     }
 }

@@ -55,7 +55,7 @@ export class ViewInformationListComponent implements OnInit {
   userInfo:any;
   pNo: string = '';
   headerText: string = '';
-  selectedTabIndex = 0;
+  selectedTabIndex: number | null = null;
   featurePermission : FeaturePermission = new FeaturePermission;
 
   constructor(public dialog: MatDialog,
@@ -108,8 +108,8 @@ export class ViewInformationListComponent implements OnInit {
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
       this.empId = Number(params.get('id'));
+      this.selectedTabIndex = 0;
       this.empBasicInfoService.findByEmpId(this.empId).subscribe((res) => {
-        console.log("Employee Response", res)
         if(res){
           this.gettingStatus = true;
           this.pNo = res.idCardNo;

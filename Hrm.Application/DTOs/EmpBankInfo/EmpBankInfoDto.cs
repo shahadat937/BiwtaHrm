@@ -14,7 +14,7 @@ namespace Hrm.Application.DTOs.EmpBankInfo
         public string? AccountNumber { get; set; }
         public int? AccountTypeId { get; set; }
         public int? BankId { get; set; }
-        public int? BranchId { get; set; }
+        public string? BranchName { get; set; }
         public string? RoutingNo { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
@@ -22,6 +22,5 @@ namespace Hrm.Application.DTOs.EmpBankInfo
 
         public string? AccountTypeName { get; set; }
         public string? BankName { get; set; }
-        public string? BranchName { get; set; }
     }
 }

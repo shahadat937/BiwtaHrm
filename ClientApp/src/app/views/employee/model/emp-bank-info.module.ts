@@ -5,7 +5,7 @@ export class EmpBankInfoModule {
   accountNumber: string;
   accountTypeId: any;
   bankId: any;
-  branchId: any;
+  branchName: string;
   routingNo: string;
   remark: string;
   menuPosition: number;
@@ -13,7 +13,6 @@ export class EmpBankInfoModule {
 
   accountTypeName: string = '';
   bankName: string = '';
-  branchName: string = '';
 
   constructor() {
     this.id= 0;
@@ -22,7 +21,7 @@ export class EmpBankInfoModule {
     this.accountNumber= "";
     this.accountTypeId= null;
     this.bankId= null;
-    this.branchId= null;
+    this.branchName= "";
     this.routingNo= "";
     this.remark= '';
     this.menuPosition= 0;

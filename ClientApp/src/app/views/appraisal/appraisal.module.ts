@@ -4,6 +4,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { StepperModule } from 'primeng/stepper';
 import { IconDirective } from '@coreui/icons-angular';
 import { TableModule as TableModulePN } from 'primeng/table';
+import {CalendarModule} from 'primeng/calendar'
 import {
   ButtonGroupModule,
   ButtonModule,
@@ -29,6 +30,7 @@ import { OfficerFormComponent } from './officer-form/officer-form.component';
 import { FieldComponent } from './field/field.component';
 import { UpdateFormComponent } from './update-form/update-form.component';
 import {MatIconModule} from '@angular/material/icon';
+import { ViewFormRecordComponent } from './manage-form/view-form-record/view-form-record.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import {MatIconModule} from '@angular/material/icon';
     ManageFormComponent,
     OfficerFormComponent,
     FieldComponent,
-    UpdateFormComponent
+    UpdateFormComponent,
+    ViewFormRecordComponent
   ],
   imports: [
     TabViewModule,
@@ -62,7 +65,8 @@ import {MatIconModule} from '@angular/material/icon';
     StepperModule,
     TableModulePN,
     IconDirective,
-    MatIconModule
+    MatIconModule,
+    CalendarModule
 
   ]
 })

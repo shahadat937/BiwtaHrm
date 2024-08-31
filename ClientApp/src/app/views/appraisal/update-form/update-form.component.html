@@ -25,10 +25,17 @@
                       </div>
                       <hr>
                       @if (ind==0) {
-                      <c-col md="3">
-                        <label for="empId" cLabel>EmployeeId</label>
-                        <input type="number" name="empId" [(ngModel)]="formData.empId" id="empId" cFormControl>
-                      </c-col>
+                        <c-row class="mt-3" [gutter]="3">
+                          <label><strong>Report Duration:</strong></label>
+                          <p-calendar 
+                          [style]="{height: '2.37rem'}"
+                          name="dateRange"
+                          [(ngModel)] ="reportDates"
+                          selectionMode="range"
+                          showIcon="true"
+                          [touchUI]="true"
+                          />
+                        </c-row>
                       }
                       @for (field of item.fields; track $index) {
                       <app-field [(field)]="field.fieldValue" [fieldData]="field"

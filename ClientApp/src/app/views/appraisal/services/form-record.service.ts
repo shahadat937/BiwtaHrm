@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormRecordModel } from '../models/form-record-model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map, Observable, of } from 'rxjs';
 
@@ -44,5 +44,12 @@ export class FormRecordService {
 
   updateFormData(formData:any): Observable<any> {
     return this.http.put<any>(this.baseUrl+'/form/update-FormData', formData);
+  }
+
+  empInfo(IdCardNo:string): Observable<any> {
+    let param = new HttpParams();
+    param = param.set('IdCardNo',IdCardNo);
+
+    return this.http.get<any>(this.baseUrl+'/form/get-EmployeeInfoForForm',{params:param});
   }
 }

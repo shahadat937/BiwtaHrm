@@ -23,15 +23,18 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
         {
             var employee = await _unitOfWork.Repository<Hrm.Domain.EmpBasicInfo>().Where(x => x.IdCardNo == request.IdCardNo).FirstOrDefaultAsync();
 
+            var employeeInfo = new EmployeeInfoForFormDto();
             if(employee == null)
             {
-                throw new BadRequestException("Employee is not found for the given PMS");
+                employeeInfo.success = false;
+                return employeeInfo;
             }
 
-            var employeeInfo = new EmployeeInfoForFormDto();
+            employeeInfo.success = true;
             var empPersonalInfo = await _unitOfWork.Repository<Hrm.Domain.EmpPersonalInfo>().Where(x=>x.EmpId == employee.Id).FirstOrDefaultAsync();
             var empJobDetail = await _unitOfWork.Repository<Hrm.Domain.EmpJobDetail>().Where(x=>x.EmpId == employee.Id).FirstOrDefaultAsync();
             var designation = await _unitOfWork.Repository<Hrm.Domain.Designation>().Get((int)empJobDetail.DesignationId);
+
 
             employeeInfo.EmpId = employee.Id;
             employeeInfo.FirstName = employee.FirstName;
@@ -54,7 +57,17 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
             if (designation != null)
             {
                 employeeInfo.Designation = designation.DesignationName;
+
+                var empPromotionInc = await _unitOfWork.Repository<Hrm.Domain.EmpPromotionIncrement>().Where(x => x.EmpId == employee.Id && x.UpdateDesignationId == designation.DesignationId && x.ApplicationStatus == true).OrderByDescending(x => x.ApproveDate).FirstOrDefaultAsync();
+                if(empPromotionInc!=null)
+                {
+                    employeeInfo.CurrentDesignationJoiningDate = new DateTime(empPromotionInc.ApproveDate.Value.Year, empPromotionInc.ApproveDate.Value.Month, empPromotionInc.ApproveDate.Value.Day);
+                } else
+                {
+                    employeeInfo.CurrentDesignationJoiningDate = employeeInfo.JoiningDate;
+                }
             }
+
 
             return employeeInfo;
         }

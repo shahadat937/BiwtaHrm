@@ -16,6 +16,7 @@ export class UpdateFormComponent implements OnInit, OnDestroy {
   updateLoading:boolean
   subscription: Subscription = new Subscription();
   formData:any;
+  reportDates:any[] = [];
 
   constructor(
     public formRecordService: FormRecordService,
@@ -48,7 +49,11 @@ export class UpdateFormComponent implements OnInit, OnDestroy {
     this.formRecordService.getFormData(this.formRecordId).subscribe({
       next: (response)=> {
         this.formData = response;
-        console.log(response);
+        let datefrom = new Date(this.formData.reportFrom);
+        let dateto = new Date(this.formData.reportTo);
+        this.reportDates.push(datefrom);
+        this.reportDates.push(dateto);
+        console.log(this.reportDates);
         this.loading=false;
       },
       error: (err)=> {
@@ -64,6 +69,16 @@ export class UpdateFormComponent implements OnInit, OnDestroy {
 
   updateFormData() {
     this.updateLoading=true;
+    if(this.reportDates.length<2) {
+      this.toastr.warning('',"Report Duration is required", {
+        positionClass: 'toast-top-right'
+      });
+      return;
+    }
+
+    this.formData.reportFrom = this.reportDates[0];
+    this.formData.reportTo = this.reportDates[1];
+    
     this.formRecordService.updateFormData(this.formData).subscribe({
       next: response=> {
         if(response.success) {

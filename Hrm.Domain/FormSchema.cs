@@ -14,6 +14,7 @@ namespace Hrm.Domain
         public int FieldId { get; set; }
         public int? Section { get; set; }
         public bool IsActive { get; set; }
+        public int? OrderNo { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
 

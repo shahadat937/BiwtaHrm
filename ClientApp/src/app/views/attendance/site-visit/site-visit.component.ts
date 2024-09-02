@@ -11,6 +11,7 @@ import { ConfirmService } from "../../../core/service/confirm.service";
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import { update } from 'lodash-es';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 
 
 
@@ -38,7 +39,9 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public roleFeatureService: RoleFeatureService,
+
   ) {
 
   }
@@ -132,7 +135,12 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   }
 
   toggleSubmit() {
-    this.isVisible=true;
+    if(this.roleFeatureService.featurePermission.add == true){
+      this.isVisible=true;
+    }
+    else{
+      this.roleFeatureService.unauthorizeAccress();
+    }
   }
 
   toggleUpdate(element:any) {

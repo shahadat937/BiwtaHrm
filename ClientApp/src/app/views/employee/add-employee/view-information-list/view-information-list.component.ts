@@ -84,11 +84,7 @@ export class ViewInformationListComponent implements OnInit {
     }
 
     getPermission(){
-      const currentUserString = localStorage.getItem('currentUser');
-      const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-      var roleName = currentUserJSON.role;
-  
-      this.roleFeatureService.getFeaturePermission(roleName, 'employeeList').subscribe((item) => {
+      this.roleFeatureService.getFeaturePermission('employeeList').subscribe((item) => {
         this.featurePermission = item;
         if(item.viewStatus == true && ( item.add == true || item.update == true)){
           this.handleRouteParams();

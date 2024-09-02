@@ -89,7 +89,7 @@ namespace Hrm.Application.Helpers
             if(leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysPerYear).Any())
             {
                 haveMaxDaysPerYear = true;
-                maxDaysPerMonth = leaveRules.Where(x=> x.RuleName == LeaveRule.MaxDaysPerYear).Select(x=>x.RuleValue).ToList()[0];
+                maxDaysPerYear = leaveRules.Where(x=> x.RuleName == LeaveRule.MaxDaysPerYear).Select(x=>x.RuleValue).ToList()[0];
             }
 
             if(leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysLifetime).Any())
@@ -142,7 +142,7 @@ namespace Hrm.Application.Helpers
                     totalLeave = Math.Min(totalLeave, maxDaysLifeTime);
                 }
 
-                return Math.Max(0, takenLeave - totalLeave);
+                return Math.Max(0, totalLeave - takenLeave);
             }
 
             if(haveMaxDaysLifeTime)
@@ -158,6 +158,15 @@ namespace Hrm.Application.Helpers
 
                 return Math.Max(0, totalLeave - takenLeave);
             }
+
+            if(haveAccuralRule)
+            {
+                int takenLeave = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == LeaveTypeId).CountAsync();
+
+                return accuralLeave - takenLeave;
+            }
+
+
 
 
             return -1;            

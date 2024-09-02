@@ -53,7 +53,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   onEmpIdChange(event:any) {
     const source$ = of (this.empCardNo);
     const delay$ = source$.pipe(
-      delay(700)
+      delay(500)
     );
 
     if(this.empSubs) {

@@ -2,7 +2,7 @@ import { StaffFormServiceService } from './service/staff-form-service.service';
 
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { delay, of, Subscription } from 'rxjs';
 import { OfficerFormService } from '../officer-form/service/officer-form.service';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
@@ -20,6 +20,17 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   formData: any;
   subscription: Subscription = new Subscription();
   currentSection:number ;
+  reportDates: any[] = [];
+  IdCardNo: string;
+  empSubs: Subscription = new Subscription();
+  empReqSub: Subscription = new Subscription();
+  autoSetFields: any = [{fieldName:"Name",MapTo:"firstName"}, {fieldName: "Father Name",MapTo:"fatherName"},
+    {fieldName: "Mother Name", MapTo:"motherName"},
+    {fieldName: "Joining Date", MapTo: "joiningDate", Transform:"DateFormat"},
+    {fieldName: "Designation", MapTo: "designation"},
+    {fieldName: "Birthdate", MapTo: "birthDate", Transform: "DateFormat"},
+    {fieldName: "Joining Date Of Current Designation", MapTo: "currentDesignationJoiningDate", Transform: "DateFormat"}
+  ]
   
   constructor(
     private formRecordService: FormRecordService,
@@ -31,6 +42,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     this.loading = false;
     this.submitLoading = false;
     this.currentSection = 0;
+    this.IdCardNo = "";
   }
 
   ngOnInit(): void {
@@ -75,6 +87,15 @@ export class StaffFormComponent implements OnInit, OnDestroy {
 
   saveFormData() {
     this.submitLoading=true;
+    if(this.reportDates.length<2||this.reportDates[0]==null||this.reportDates[1]==null) {
+      this.toastr.warning('',"Report Duration is required", {
+        positionClass: 'toast-top-right'
+      });
+      this.submitLoading=false;
+      return;
+    }
+    this.formData.reportFrom = this.reportDates[0];
+    this.formData.reportTo = this.reportDates[1];
     this.officerFormService.saveFormData(this.formData).subscribe({
       next: (response)=> {
         if(response.success) {
@@ -98,29 +119,65 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     })
   }
 
+  getEmpInfo() {
+    const source$ = of (this.IdCardNo);
+    const delay$ = source$.pipe(
+      delay(700)
+    );
 
+    if(this.empSubs) {
+      this.empSubs.unsubscribe();
+    }
 
-  initaialUser(form?: NgForm) {
-    if (form != null) form.resetForm();
-    let abc = {
-      division: '',
-      yearStartDate: new Date(),
-      yearEndDate: new Date(),
-      name: '',
-      employeeCode: 0,
-      fathersName: '',
-      mothersName: '',
-      dateofBirth: new Date(),
-      designation: '',
-      presentSalary: 0,
-      scaleOfpay: '',
-      joiningDate: new Date(),
-      presentDesignationJoiningDate: new Date(),
-      education: '',
-      lingutstics: '',
-      trainingSpecialTraining: '',
-      reportinFromDate: new Date(),
-      reportingEndDate: new Date(),
-    };
+    if(this.empReqSub) {
+      this.empReqSub.unsubscribe();
+    }
+
+    if(this.IdCardNo.trim()=="") {
+      return;
+    }
+
+    this.empSubs = delay$.subscribe(data=> {
+      this.empReqSub = this.formRecordService.empInfo(data).subscribe({
+        next: response=> {
+          console.log(response);
+          if(response.success==true) {
+            this.processEmpInfo(response);
+          } else {
+            this.formData.empId = 0;
+          }
+        },
+        error: (err)=> {
+          this.formData.empId = 0;
+        }
+      })
+    })
+
   }
+
+
+  processEmpInfo(empInfo:any) {
+    this.formData.empId = empInfo.empId;
+
+    function findField(fieldName:string) {
+      const compare = (data:any)=> {
+        return data.fieldName == fieldName; 
+      }
+
+      return compare;
+    }
+
+    this.autoSetFields.forEach((field:any) => { 
+      const result = this.formData.sections[0].fields.find(findField(field.fieldName));
+      
+      if(result!=undefined) {
+        let fieldValue = empInfo[field.MapTo];
+        if(field.Transform!=undefined&&field.Transform=="DateFormat") {
+          fieldValue = fieldValue.split('T')[0];
+        }
+        result.fieldValue = fieldValue;
+      }
+    });
+  }
+
 }

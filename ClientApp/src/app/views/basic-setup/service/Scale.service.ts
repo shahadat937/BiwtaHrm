@@ -28,7 +28,7 @@ export class ScaleService {
     } else {
       // If data is not cached, make a server call to fetch it
       return this.http
-        .get<Scale[]>(this.baseUrl + '/scaleGradeView/get-scaleGradeView')
+        .get<Scale[]>(this.baseUrl + '/scale/get-scale')
         .pipe(
           map((data) => {
             this.cachedData = data; // Cache the data

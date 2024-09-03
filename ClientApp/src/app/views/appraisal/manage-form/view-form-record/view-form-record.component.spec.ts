@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OfficerForm2Component } from './officer-form-2.component';
+import { ViewFormRecordComponent } from './view-form-record.component';
 
-describe('OfficerForm2Component', () => {
-  let component: OfficerForm2Component;
-  let fixture: ComponentFixture<OfficerForm2Component>;
+describe('ViewFormRecordComponent', () => {
+  let component: ViewFormRecordComponent;
+  let fixture: ComponentFixture<ViewFormRecordComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [OfficerForm2Component]
+      declarations: [ViewFormRecordComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(OfficerForm2Component);
+    fixture = TestBed.createComponent(ViewFormRecordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -8,6 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { EmployeeTypeService } from '../service/employee-type.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { FeatureManagementService } from '../../featureManagement/service/feature-management.service';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 
 @Component({
   selector: 'app-employee-type',
@@ -17,6 +20,7 @@ import { EmployeeTypeService } from '../service/employee-type.service';
 export class EmployeeTypeComponent {
   btnText: string | undefined;
   headerText: string | undefined;
+  featurePermission : FeaturePermission = new FeaturePermission;
   @ViewChild('employeeTypeForm', { static: true }) employeeTypeForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
@@ -35,13 +39,14 @@ export class EmployeeTypeComponent {
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public featureManagementService: FeatureManagementService,
+    public roleFeatureService: RoleFeatureService,
   ) {
     //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
   }
   ngOnInit(): void {
-    this.getEmployeeTypes();
-    this.handleRouteParams();
+   this. getPermission()
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
@@ -73,7 +78,28 @@ export class EmployeeTypeComponent {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
+  getPermission(){
+    const currentUserString = localStorage.getItem('currentUser');
+    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
+    var roleName = currentUserJSON.role;
 
+    this.roleFeatureService.getFeaturePermission(roleName, 'employee-type').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        this.getEmployeeTypes();
+        this.handleRouteParams();
+      }
+      else{
+        this.unauthorizeAccress()
+        this.router.navigate(['/dashboard']);
+      }
+    });
+  }
+  unauthorizeAccress(){
+    this.toastr.warning('Unauthorized Access', ` `, {
+      positionClass: 'toast-top-right',
+    });
+  }
   initaialBloodGroup(form?: NgForm) {
     if (form != null) form.resetForm();
     this.employeeTypeService.employeeType = {
@@ -139,7 +165,8 @@ export class EmployeeTypeComponent {
 
   // }
   onSubmit(form: NgForm): void {
-    this.employeeTypeService.cachedData = [];
+    if(this.featurePermission.add == true && !form.value.employeeTypeId || this.featurePermission.update == true && form.value.employeeTypeId){
+      this.employeeTypeService.cachedData = [];
     const id = form.value.employeeTypeId;
     const action$ = id
       ? this.employeeTypeService.update(id, form.value)
@@ -162,9 +189,14 @@ export class EmployeeTypeComponent {
         });
       }
     });
+    }
+    else {
+      this.unauthorizeAccress();
+    }
   }
   delete(element: any) {
-    this.confirmService
+    if(this.featurePermission.delete == true){
+      this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
@@ -185,5 +217,9 @@ export class EmployeeTypeComponent {
           );
         }
       });
+    }
+    else {
+      this.unauthorizeAccress();
+    }
   }
 }

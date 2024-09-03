@@ -8,6 +8,8 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 export class FieldComponent implements OnInit, OnDestroy {
   @Input() fieldData:any;
   @Input() fieldUniqueName: string;
+  @Input() Index:any;
+  @Input() IsReadonly: boolean
 
   fieldValue: string = "";
   @Output() fieldChange = new EventEmitter();
@@ -30,6 +32,8 @@ export class FieldComponent implements OnInit, OnDestroy {
 
   constructor() {
     this.fieldUniqueName = "default";
+    this.Index = "";
+    this.IsReadonly = false;
   }
 
   ngOnInit(): void {

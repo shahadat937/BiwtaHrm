@@ -112,7 +112,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/trainingSetup/trainingType']);
+    this.router.navigate(['/trainingSetup/training']);
   }
 
   getALlTrainingTypes() {

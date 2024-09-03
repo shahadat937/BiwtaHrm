@@ -36,7 +36,7 @@
         <div class="text-left text-danger">Gender Name is required</div>
         }
       </c-col>
-      <c-col [md]="6">
+      <!-- <c-col [md]="6">
         <label cLabel for="validationCustom02">Is Active </label>
         <input
           [(ngModel)]="genderService.gender.isActive"
@@ -47,6 +47,16 @@
           value="Otto"
         />
         <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
+      </c-col> -->
+      <c-col [md]="6">
+        <label cLabel for="activeStatus">Active Status</label>
+        <select [(ngModel)]="genderService.gender.isActive"
+        name="isActive"
+        cSelect
+        id="activeStatus">
+          <option value="true">Active</option>
+          <option value="false">De-Active</option>
+        </select>
       </c-col>
       <c-col [xs]="12">
         <button
@@ -97,9 +107,16 @@
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="isActive">
+        <!-- <ng-container matColumnDef="isActive">
           <th mat-header-cell *matHeaderCellDef>Is Active</th>
           <td mat-cell *matCellDef="let element">{{ element.isActive }}</td>
+        </ng-container> -->
+        <ng-container matColumnDef="isActive">
+          <th mat-header-cell *matHeaderCellDef>Is Active</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.isActive">Active</span>
+            <span *ngIf="!element.isActive">De-Active</span>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="Action">

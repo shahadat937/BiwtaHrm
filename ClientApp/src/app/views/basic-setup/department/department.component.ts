@@ -25,9 +25,9 @@ import { OfficeService } from '../service/office.service';
   styleUrl: './department.component.scss',
 })
 export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
-  position = 'top-end';
+  // position = 'top-end';
   visible = false;
-  percentage = 0;
+  // percentage = 0;
   BtnText: string | undefined;
   btnText: string | undefined;
   headerText: string | undefined;
@@ -192,7 +192,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    // this.router.navigate(['/officeSetup/department']);
+    this.router.navigate(['/officeSetup/department']);
   }
 
   getALlDepartments() {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Section.Requests.Commands
 {
-    public class UpdateExamTypeCommand : IRequest<BaseCommandResponse>
+    public class UpdateSectionCommand : IRequest<BaseCommandResponse>
     {
         public SectionDto SectionDto { get; set; }
     }

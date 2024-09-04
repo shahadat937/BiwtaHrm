@@ -4,9 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Scale } from '../model/Scale';
 import { Observable, map, of } from 'rxjs';
 import { GradeService } from './Grade.service';
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ScaleService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
@@ -28,7 +26,7 @@ export class ScaleService {
     } else {
       // If data is not cached, make a server call to fetch it
       return this.http
-        .get<Scale[]>(this.baseUrl + '/scaleGradeView/get-scaleGradeView')
+        .get<Scale[]>(this.baseUrl + '/scale/get-scale')
         .pipe(
           map((data) => {
             this.cachedData = data; // Cache the data

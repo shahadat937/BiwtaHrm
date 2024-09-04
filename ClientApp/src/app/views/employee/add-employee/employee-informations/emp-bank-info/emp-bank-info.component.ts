@@ -77,7 +77,7 @@ export class EmpBankInfoComponent implements OnInit, OnDestroy {
         accountNumber: [bankInfo.accountNumber, Validators.required],
         accountTypeId: [bankInfo.accountTypeId],
         bankId: [bankInfo.bankId, Validators.required],
-        branchId: [bankInfo.branchId, Validators.required],
+        branchName: [bankInfo.branchName, Validators.required],
         routingNo: [bankInfo.routingNo, Validators.pattern],
         remark: [bankInfo.remark],
       }));
@@ -99,7 +99,7 @@ export class EmpBankInfoComponent implements OnInit, OnDestroy {
       accountNumber: new FormControl(undefined, Validators.required),
       accountTypeId: new FormControl(undefined),
       bankId: new FormControl(undefined, Validators.required),
-      branchId: new FormControl(undefined, Validators.required),
+      branchName: new FormControl(undefined, Validators.required),
       routingNo: new FormControl(undefined),
       remark: new FormControl(undefined),
     }));

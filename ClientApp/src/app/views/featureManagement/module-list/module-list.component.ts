@@ -78,24 +78,15 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
 
 
   getPermission(){
-    const currentUserString = localStorage.getItem('currentUser');
-    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-    var roleName = currentUserJSON.role;
-
-    this.roleFeatureService.getFeaturePermission(roleName, 'module').subscribe((item) => {
+    this.roleFeatureService.getFeaturePermission('module').subscribe((item) => {
       this.featurePermission = item;
       if(item.viewStatus == true){
         this.getAllModule();
       }
       else{
-        this.unauthorizeAccress()
+        this.roleFeatureService.unauthorizeAccress();
         this.router.navigate(['/dashboard']);
       }
-    });
-  }
-  unauthorizeAccress(){
-    this.toastr.warning('Unauthorized Access', ` `, {
-      positionClass: 'toast-top-right',
     });
   }
 
@@ -115,7 +106,7 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
       }
     }
     else {
-      this.unauthorizeAccress()
+      this.roleFeatureService.unauthorizeAccress();
     }
   }
 
@@ -146,7 +137,7 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
       });
     }
     else {
-      this.unauthorizeAccress()
+      this.roleFeatureService.unauthorizeAccress();
     }
   }
 

@@ -19,6 +19,7 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   expandedOffices: { [key: string]: boolean } = {};
   expandedDesignations: { [key: string]: boolean } = {};
   expandedDepartments: { [key: string]: boolean } = {};
+  expandedSections: { [key: string]: boolean } = {};
 
   constructor(
     public organogramService: OrganogramService,
@@ -42,7 +43,6 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     this.subscription=this.organogramService.getOrganogramNamesOnly().subscribe((data: OrganogramOfficeNameDto[]) => { 
       this.organograms = data;
       this.offices = data;
-      console.log(this.offices)
     });
   }
   
@@ -68,6 +68,15 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
 
   isDepartmentExpanded(officeName: string): boolean {
     return this.expandedDepartments[officeName];
+  }
+  
+
+  toggleSectionExpand(officeName: string): void {
+    this.expandedSections[officeName] = !this.expandedSections[officeName];
+  }
+
+  isSectionExpanded(officeName: string): boolean {
+    return this.expandedSections[officeName];
   }
   
 }

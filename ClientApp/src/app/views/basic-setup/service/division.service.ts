@@ -5,9 +5,7 @@ import { Observable, map, of } from 'rxjs';
 import { Division } from '../model/division';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DivisionService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

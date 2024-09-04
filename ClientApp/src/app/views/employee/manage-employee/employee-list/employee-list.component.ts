@@ -17,8 +17,9 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
-    'slNo', 
-    'idNo', 
+    'slNo',
+    'idNo',
+
     'fullName', 
     'department', 
     'designation', 
@@ -73,3 +74,4 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
 
 }
+

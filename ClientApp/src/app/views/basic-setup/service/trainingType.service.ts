@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { TrainingType } from './../model/trainingType';
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class TrainingTypeService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

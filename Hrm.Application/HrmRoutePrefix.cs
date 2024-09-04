@@ -119,5 +119,9 @@ namespace Hrm.Application
         public const string FormSchema = HRMRoutePrefixBase + "formSchema";
         public const string FormRecord = HRMRoutePrefixBase + "formRecord";
         public const string FieldRecord = HRMRoutePrefixBase + "fieldRecord";
+
+        public const string EmpShiftAssign = HRMRoutePrefixBase + "empShiftAssign";
+        public const string RewardPunishmentType = HRMRoutePrefixBase + "rewardPunishmentType";
+        public const string RewardPunishmentPriority = HRMRoutePrefixBase + "rewardPunishmentPriority";
     }
 }

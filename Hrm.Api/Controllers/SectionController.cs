@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Shared.Models;
 using Hrm.Domain;
+using Hrm.Application.DTOs.Designation;
+using Hrm.Application.Features.Designation.Requests.Queries;
 
 namespace Hrm.Api.Controllers
 {
@@ -56,27 +58,30 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesDefaultResponseType]
         [Route("update-Section/{id}")]
         public async Task<ActionResult> Put([FromBody] SectionDto Section)
         {
-            var command = new UpdateExamTypeCommand { SectionDto = Section };
+            var command = new UpdateSectionCommand { SectionDto = Section };
             var response = await _mediator.Send(command);
             return Ok(response);
         }
 
         [HttpDelete]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesDefaultResponseType]
         [Route("delete-Section/{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteSectionCommand { SectionId = id };
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("get-sectionByOfficeIdAndDepartmentId")]
+        public async Task<ActionResult<DesignationDto>> GetSectionByOfficeIdAndDepartmentId(int officeId, int departmentId)
+        {
+            var Designations = await _mediator.Send(new GetSelectedSectionByOfficeDepartmentRequest { OfficeId = officeId, DepartmentId = departmentId });
+            return Ok(Designations);
         }
     }
 }

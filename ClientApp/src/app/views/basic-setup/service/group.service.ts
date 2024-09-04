@@ -4,9 +4,7 @@ import { Observable, map, of } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { environment } from '../../../../environments/environment';
 import { Group } from './../model/group';
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class GroupService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

@@ -76,7 +76,7 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
     this.leaveService.getLeaveByFilter(params).subscribe({
       next: response=> {
         this.leaves = response;
-        console.log(response);
+      
       },
       error: error=> {
         console.log(error);

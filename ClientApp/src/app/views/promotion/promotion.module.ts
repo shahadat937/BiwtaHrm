@@ -40,6 +40,11 @@ import { IconModule } from '@coreui/icons-angular';
 import { TransferPostingRoutingModule } from '../transferPosting/transfer-routing.module';
 import { PromotionIncrementInfoComponent } from './promotion-increment-info/promotion-increment-info.component';
 import { PromotionApprovalListComponent } from './promotion-approval-list/promotion-approval-list.component';
+import { RewardPunishmentListComponent } from './reward-punishment-list/reward-punishment-list.component';
+import { RewardPunishmentComponent } from './reward-punishment/reward-punishment.component';
+import { GradeService } from '../basic-setup/service/Grade.service';
+import { OfficeService } from '../basic-setup/service/office.service';
+import { DepartmentService } from '../basic-setup/service/department.service';
 
 
 @NgModule({
@@ -50,6 +55,8 @@ import { PromotionApprovalListComponent } from './promotion-approval-list/promot
     IncrementAndPromotionApprovalComponent,
     PromotionIncrementInfoComponent,
     PromotionApprovalListComponent,
+    RewardPunishmentListComponent,
+    RewardPunishmentComponent,
   ],
   imports: [
     CommonModule,
@@ -101,6 +108,11 @@ import { PromotionApprovalListComponent } from './promotion-approval-list/promot
     PopoverModule,
     AlertComponent,
     TooltipModule,
+  ],
+  providers:[
+    GradeService,
+    OfficeService,
+    DepartmentService
   ]
 })
 export class PromotionModule { }

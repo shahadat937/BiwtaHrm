@@ -5,9 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { Observable, map, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BankService {
 
   cachedData: any[] = [];

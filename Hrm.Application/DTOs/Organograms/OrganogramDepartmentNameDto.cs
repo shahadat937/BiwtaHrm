@@ -10,6 +10,7 @@ namespace Hrm.Application.DTOs.Organograms
     {
         public string Name { get; set; }
         public List<OrganogramDesignationNameDto> Designations { get; set; }
+        public List<OrganogramSectionNameDto> Sections { get; set; }
         public List<OrganogramDepartmentNameDto> SubDepartments { get; set; }
     }
 }

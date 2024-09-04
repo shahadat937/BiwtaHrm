@@ -4,9 +4,7 @@ import { YearSetup } from '../model/yearsetup';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, map } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class YearSetupService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

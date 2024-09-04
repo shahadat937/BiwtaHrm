@@ -1,0 +1,40 @@
+<li class="tree">
+    <div class="department-header">
+      <label (click)="toggleExpand()">
+        &nbsp;&nbsp;<span class="toggle-icon">{{ isExpanded ? '-' : '+' }}</span>
+        <span class="department-text">&nbsp;{{ section.name }}</span>
+      </label>
+    </div>
+    <ul *ngIf="isExpanded">
+      <li *ngIf="section.designations.length">
+        <div class="designation-header">
+          <label (click)="toggleDesignationExpand()">
+            &nbsp;&nbsp;<span class="toggle-icon">{{ isDesignationExpanded ? '-' : '+' }}</span>
+            &nbsp;<span>Designation</span>
+          </label>
+        </div>
+        <ul *ngIf="isDesignationExpanded">
+          <li *ngFor="let designation of section.designations" class="designation-text">
+            {{ designation.name }}
+            <ul>
+              <li class="employeeName">{{designation.employeeName}}</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <div *ngIf="section.subSections.length">
+        <li>
+          <div class="sub-department-header">
+            <label (click)="toggleSectionExpand()">
+              &nbsp;&nbsp;<span class="toggle-icon">{{ isSectionExpanded ? '-' : '+' }}</span>
+              &nbsp;<span class="sub-department-text">Section</span>
+            </label>
+          </div>
+          <ul *ngIf="isSectionExpanded">
+            <app-organogram-section *ngFor="let subSection of section.subSections"
+              [section]="subSection"></app-organogram-section>
+          </ul>
+        </li>
+      </div>
+    </ul>
+  </li>

@@ -46,12 +46,9 @@
                                     </c-col>
                                     
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="branchId{{i}}">Branch Name</label>
-                                        <select formControlName="branchId" class="form-select" id="branchId">
-                                            <option value="null" disabled>Select Branch Name</option>
-                                            <option *ngFor="let item of bankBranches" value="{{item.id}}">{{item.name}}
-                                            </option>
-                                        </select>
+                                        <label class="col-form-label" for="branchName{{i}}">Branch Name</label>
+                                        <input type="text" formControlName="branchName" class="form-control"
+                                            id="branchName{{i}}" placeholder="Enter Branch Name" />
                                     </c-col>
                                     
                                     <c-col [md]="4">

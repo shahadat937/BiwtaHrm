@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ShiftService } from '../services/shift.service';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 
 @Component({
   selector: 'app-manage-shift',
@@ -42,16 +43,32 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public roleFeatureService: RoleFeatureService,
   ) {
   }
 
 
   ngOnInit(): void {
-    this.buttonIcon = "cilPencil";
-    this.handleRouteParams();
-    this.getAllUsers();
+    this.getPermission();
   }
+
+
+  
+  getPermission(){
+    this.roleFeatureService.getFeaturePermission('manageShift').subscribe((item) => {
+      if(item.viewStatus == true){
+        this.buttonIcon = "cilPencil";
+        this.handleRouteParams();
+        this.getAllUsers();
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    });
+  }
+
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('shiftId');
@@ -133,19 +150,28 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  UserFormView(){
-    if(this.BtnText == " Add Shift"){
-      this.BtnText = " Hide Form";
-      this.buttonIcon = "cilTrash";
-      this.HeaderText = "Add New Shift";
-      this.visible = true;
+  
+  addButton(){
+    if(this.roleFeatureService.featurePermission.add == true){
+      this.UserFormView();
     }
     else {
-      this.BtnText = " Add Shift";
-      this.buttonIcon = "cilPencil";
-      this.HeaderText = "Shift List";
-      this.visible = false;
+      this.roleFeatureService.unauthorizeAccress();
     }
+  }
+  UserFormView(){
+      if(this.BtnText == " Add Shift"){
+        this.BtnText = " Hide Form";
+        this.buttonIcon = "cilTrash";
+        this.HeaderText = "Add New Shift";
+        this.visible = true;
+      }
+      else {
+        this.BtnText = " Add Shift";
+        this.buttonIcon = "cilPencil";
+        this.HeaderText = "Shift List";
+        this.visible = false;
+      }
   }
 
   toggleCollapse(){
@@ -157,6 +183,16 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
   cancelUpdate(){
     this.router.navigate(['/attendance/manageShift']);
     this.resetForm();
+  }
+
+  updateFunction(id: number){
+    if(this.roleFeatureService.featurePermission.update == true){
+      this.router.navigate(['/attendance/update-shift/', id]);
+      this.toggleCollapse();
+    }
+    else{
+      this.roleFeatureService.unauthorizeAccress();
+    }
   }
   
 
@@ -173,6 +209,7 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
         : this.shiftService.submit(form.value);
   
         this.subscription =action$.subscribe((response: any)  => {
+          console.log(response)
           if (response.success) {
             this.toastr.success('', `${response.message}`, {
               positionClass: 'toast-top-right',
@@ -185,6 +222,7 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
             this.toastr.warning('', `${response.message}`, {
               positionClass: 'toast-top-right',
             });
+            this.loading = false;
           }
           this.loading = false;
         });
@@ -192,7 +230,8 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     delete(element: any){
-      this.confirmService
+      if(this.roleFeatureService.featurePermission.delete == true){
+        this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
@@ -215,5 +254,9 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
           );
         }
       });
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+      }
   }
 }

@@ -29,22 +29,30 @@ export class OrganogramService {
 
   getOrganogramNamesOnly(): Observable<OrganogramOfficeNameDto[]>{
         return this.http.get<OrganogramOfficeNameDto[]>(this.baseUrl + '/organogram/get-organogramNamesOnly');
-    }
+  }
 }
 
 export interface OrganogramOfficeNameDto {
   name: string;
   directDesignations: OrganogramDesignationNameDto[];
   departments: OrganogramDepartmentNameDto[];
+  sections: OrganogramSectionNameDto[];
 }
 
 export interface OrganogramDepartmentNameDto {
   name: string;
   designations: OrganogramDesignationNameDto[];
   subDepartments: OrganogramDepartmentNameDto[];
+  sections: OrganogramSectionNameDto[];
 }
 
 export interface OrganogramDesignationNameDto {
   name: string;
   employeeName: string;
+}
+
+export interface OrganogramSectionNameDto {
+  name: string;
+  designations: OrganogramDesignationNameDto[];
+  subSections: OrganogramSectionNameDto[];
 }

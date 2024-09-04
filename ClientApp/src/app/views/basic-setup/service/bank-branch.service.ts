@@ -4,9 +4,7 @@ import { BankBranch } from '../model/bank-branch';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BankBranchService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

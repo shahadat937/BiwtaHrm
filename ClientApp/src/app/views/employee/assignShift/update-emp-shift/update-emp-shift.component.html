@@ -1,0 +1,49 @@
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form #EmpShiftAssignForm="ngForm" (submit)="onSubmit(EmpShiftAssignForm)" novalidate cForm
+                class="needs-validation">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Employeee Shift</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()" type="button">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body" cRow [gutter]="3">
+                <input type="hidden" [(ngModel)]="empShiftAssignService.empShiftAssign.id" name="id" />
+                <input type="hidden" [(ngModel)]="empShiftAssignService.empShiftAssign.empId" name="empId" />
+                <input type="hidden" [(ngModel)]="empShiftAssignService.empShiftAssign.isActive" name="isActive" />
+                
+
+                <c-col [md]="6">
+                    <label cLabel for="shiftId">Shift<span class="text-danger"></span></label>
+                    <div class="input-wrapper">
+                        <select [(ngModel)]="empShiftAssignService.empShiftAssign.shiftId"
+                            name="shiftId" #shiftId="ngModel" cFormControl id="shiftId"
+                            aria-label="Default select example" cSelect>
+
+                            @for(shift of shifts; track shift.id;let index=$index) {
+                            <option [value]="shift.id">
+                                {{ shift.name }}
+                            </option>
+                            }
+                        </select>
+                        @if(!shiftId.valid && shiftId.touched){
+                        <div class="text-left text-danger">Shift is required</div>
+                        }
+                    </div>
+                </c-col>
+            </div>
+            <div class="modal-footer">
+                <button mat-raised-button color="warn" (click)="closeModal()" type="button">
+                    <mat-icon>cancel</mat-icon> Close
+                </button>
+                <button mat-raised-button color="primary" type="submit">
+                    <mat-icon>update</mat-icon> Update
+                </button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+

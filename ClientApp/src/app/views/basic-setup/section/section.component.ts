@@ -36,10 +36,10 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
     'slNo', 
-    'officeName',
-    'upperDepartmentName',
-    'departmentName', 
-    // 'departmentNameBangla',
+    'office',
+    'department',
+    'upperSection', 
+    'section',
     'isActive', 
     'Action'];
   dataSource = new MatTableDataSource<any>();

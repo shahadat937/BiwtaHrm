@@ -46,6 +46,19 @@
                                     [department]="department"></app-organogram-department>
                             </ul>
                         </li>
+                        
+                        <li *ngIf="office.sections.length">
+                            <div class="designation-header">
+                                <label (click)="toggleSectionExpand(office.name)">
+                                    &nbsp;&nbsp;<span class="toggle-icon">{{ isSectionExpanded(office.name) ? '-' : '+' }}</span>
+                                    &nbsp;<span>Section</span>
+                                </label>
+                            </div>
+                            <ul *ngIf="isSectionExpanded(office.name)">
+                                <app-organogram-section *ngFor="let section of office.sections"
+                                    [section]="section"></app-organogram-section>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             </ul>

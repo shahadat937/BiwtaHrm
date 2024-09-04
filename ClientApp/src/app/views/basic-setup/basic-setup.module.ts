@@ -110,6 +110,7 @@ import { LeaveRulesComponent } from './leave/leave-rules/leave-rules.component';
 import { TabsModule } from '@coreui/angular';
 import { TabViewModule } from 'primeng/tabview';
 import { CountryService } from './service/country.service';
+import { OrganogramSectionComponent } from './organogram/organogram-section/organogram-section.component';
 import { HairColorService } from './service/hair-color.service';
 import { LeaveTypeService } from './service/leave-type.service';
 import { LeaveRuleService } from './service/leave-rule.service';
@@ -134,6 +135,7 @@ import { GradeClassService } from './service/GradeClass.service';
 import { GradeService } from './service/Grade.service';
 import { ScaleService } from './service/Scale.service';
 import { DesignationService } from './service/designation.service';
+
 
 
 
@@ -200,6 +202,7 @@ import { DesignationService } from './service/designation.service';
     ReleaseTypeComponent,
     LeaveTypeComponent,
     LeaveRulesComponent,
+    OrganogramSectionComponent,
   ],
   imports: [
     CommonModule,

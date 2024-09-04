@@ -1,0 +1,44 @@
+ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.toggle-icon {
+    font-weight: bold;
+    border: 1px solid black;
+    padding: 0 5px;
+}
+
+li {
+    margin-bottom: 5px;
+    list-style-type: none;
+}
+
+.department-text {
+    font-weight: bold;
+    color: #2da000;
+}
+
+
+.tree ul ul {
+    margin-left: 1em;
+    padding-left: 1em;
+    border-left: 1px dashed #929292;
+}
+
+.tree ul {
+    margin-left: 1em;
+    padding-left: 1em;
+    border-left: 1px dashed #929292;
+}
+
+.designation-text {
+    color: #8d6000;
+}
+
+li span {
+    cursor: pointer;
+}
+.employeeName {
+  color: #9C27B0;
+}

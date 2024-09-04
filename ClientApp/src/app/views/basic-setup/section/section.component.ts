@@ -15,7 +15,7 @@ import { OfficeService } from '../service/office.service';
 
 @Component({
   selector: 'app-section',
-  templateUrl: './section.component.html',
+  templateUrl:'./section.component.html',
   styleUrl: './section.component.scss'
 })
 export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {

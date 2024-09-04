@@ -47,7 +47,7 @@
                             </ul>
                         </li>
                         
-                        <li *ngIf="office.sections.length">
+                        <li *ngIf="office.sections?.length">
                             <div class="designation-header">
                                 <label (click)="toggleSectionExpand(office.name)">
                                     &nbsp;&nbsp;<span class="toggle-icon">{{ isSectionExpanded(office.name) ? '-' : '+' }}</span>

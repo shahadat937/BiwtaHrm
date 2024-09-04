@@ -13,5 +13,8 @@ namespace Hrm.Application.DTOs.LeaveRequest
         public DateTime? ToDate { get; set; }
         public int? EmpId { get; set; }
         public int? LeaveTypeId { get; set;}
+        public int? ReviewedBy { get; set; }
+        public int? ApprovedBy { get; set; }
+        public List<int>? Status { get; set; }
     }
 }

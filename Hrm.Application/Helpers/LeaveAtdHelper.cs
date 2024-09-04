@@ -84,15 +84,13 @@ namespace Hrm.Application.Helpers
 
         public bool IsHoliday(DateOnly GivenDate)
         {
-            int curYear = (new DateTime()).Year;
-            var IsHoliday = _unitOfWork.Repository<Hrm.Domain.Holidays>().Where(x => x.Year.YearName == curYear && x.IsActive == true && x.HolidayDate == GivenDate).Any();
+            var IsHoliday = _unitOfWork.Repository<Hrm.Domain.Holidays>().Where(x => x.Year.YearName == GivenDate.Year && x.IsActive == true && x.HolidayDate == GivenDate).Any();
             return IsHoliday;
         }
 
         public bool IsWorkkDay(DateOnly GivenDate)
         {
-            int curYear = (new DateTime()).Year;
-            var IsWeekDay = _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.IsActive == true && x.weekDay.WeekDayName == GivenDate.DayOfWeek.ToString() && x.year.YearName == curYear).Any();
+            var IsWeekDay = _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.IsActive == true && x.weekDay.WeekDayName == GivenDate.DayOfWeek.ToString() && x.year.YearName == GivenDate.Year).Any();
             return IsWeekDay;
         }
 

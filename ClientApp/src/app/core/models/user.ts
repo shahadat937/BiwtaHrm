@@ -2,6 +2,7 @@ import { Role } from './role';
 
 export class User {
   id: number;
+  empId: string
   img: string;
   username: string;
   password: string;
@@ -20,6 +21,7 @@ export class User {
     this.firstName = '';
     this.lastName = '';
     this.branchId = '';
+    this.empId = '';
     this.traineeId = '';
     this.role = Role.All; // You need to replace 'Role.Default' with the default role value
     // this.token = ''; // Optionally initialize token if it's not always provided

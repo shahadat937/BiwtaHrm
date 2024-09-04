@@ -98,7 +98,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <div class="mt-3">
+        <div *ngIf="CanApprove==true" class="mt-3">
           <button cButton 
           color="success" 
           [disabled]="loading"

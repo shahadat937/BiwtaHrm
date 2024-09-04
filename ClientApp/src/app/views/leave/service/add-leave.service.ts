@@ -36,4 +36,8 @@ export class AddLeaveService {
   createLeaveRequest(formData: FormData):Observable<any> {
     return this.http.post<any>(this.baseUrl+"/leaveRequest/save-LeaveRequest",formData);
   }
+
+  getEmpById(EmpId:number): Observable<any> {
+    return this.http.get<any>(this.baseUrl+`/empBasicInfo/get-EmpBasicInfosById/${EmpId}`);
+  }
 }

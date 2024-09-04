@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AttendanceReportEmpService {
   cachedData: any[] = [];
   cachedFilter: HttpParams| null;

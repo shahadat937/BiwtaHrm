@@ -24,6 +24,9 @@ import { ManageleaveComponent } from './manageleave/manageleave.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { LeaveDetailViewComponent } from './manageleave/leave-detail-view/leave-detail-view.component';
+import { ManageLeaveService } from './service/manage-leave.service';
+import { LeaveService } from './service/leave.service';
+import { AddLeaveService } from './service/add-leave.service';
 
 @NgModule({
   declarations: [
@@ -50,6 +53,10 @@ import { LeaveDetailViewComponent } from './manageleave/leave-detail-view/leave-
     SharedCustomModule,
     SpinnerModule,
     TableModuleN
+  ],providers:[
+    ManageLeaveService,
+    LeaveService,
+    AddLeaveService
   ]
 })
 export class LeaveModule { }

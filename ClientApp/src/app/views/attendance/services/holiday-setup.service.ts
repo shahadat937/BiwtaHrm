@@ -4,9 +4,7 @@ import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HolidayModel } from '../models/holiday-model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class HolidaySetupService {
   baseUrl: string;
   cachedData: HolidayModel[] = [];

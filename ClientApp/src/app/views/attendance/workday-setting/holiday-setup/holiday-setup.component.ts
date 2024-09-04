@@ -41,7 +41,6 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
     this.getHolidayType();
     this.getYear();
     this.getHolidays();
-    console.log(this.Holidays);
   }
 
   ngOnDestroy(): void {
@@ -56,7 +55,6 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
       this.isVisible=this.isVisible?false:true;
       this.holidayService.model = new HolidayModel();
       this.holidayForm.reset();
-      console.log("Hello World");
     }
     else{
       this.roleFeatureService.unauthorizeAccress();

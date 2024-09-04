@@ -28,8 +28,20 @@
                             <div class="text">
                                 <p>: {{empBasicInfo.firstNameBangla}} {{empBasicInfo.lastNameBangla}}</p>
                                 <p class="mb-1">: {{empBasicInfo.firstName}} {{empBasicInfo.lastName}}</p>
-                                <p>: {{empJobDetails?.designationNameBangla}}</p>
-                                <p>: {{empJobDetails?.designationName}}</p>
+                                <p *ngIf="empJobDetails?.designationNameBangla; else emptyText">
+                                    : {{ empJobDetails.designationNameBangla }}
+                                  </p>
+                                  <ng-template #emptyText>
+                                    <p></p>
+                                  </ng-template>
+                                <!-- <p>: {{empJobDetails.designationNameBangla==null?'':empJobDetails.designationNameBangla}}</p> -->
+                                               <!-- <p>: {{empJobDetails.designationName}}</p> -->
+                                               <p *ngIf="empJobDetails?.designationName; else emptyDesignation">
+                                                : {{ empJobDetails.designationName }}
+                                              </p>
+                                              <ng-template #emptyDesignation>
+                                                <p></p>
+                                              </ng-template>
                             </div>
                         </div>
                         <p class="signature">পরিচালক (প্রশাসন ও মানব সম্পদ)</p>
@@ -47,9 +59,27 @@
                             <p>রক্তের গ্রুপ</p>
                         </div>
                         <div class="text">
-                            <p>: {{empBasicInfo?.nid | bengaliDigit}}</p>
-                            <p>: {{empBasicInfo?.dateOfBirth ? (empBasicInfo.dateOfBirth | bengaliDate) : ''}}</p>
-                            <p>: {{empPersonalInfo?.bloodGroupName}}</p>
+                            <!-- <p>: {{empBasicInfo.nid | bengaliDigit}}</p> -->
+                            <p *ngIf="empBasicInfo?.nid; else emptyNID">
+                                : {{ empBasicInfo.nid | bengaliDigit }}
+                              </p>
+                              <ng-template #emptyNID>
+                                <p></p>
+                              </ng-template>
+                            <!-- <p>: {{empBasicInfo.dateOfBirth ? (empBasicInfo.dateOfBirth | bengaliDate) : ''}}</p> -->
+                            <p *ngIf="empBasicInfo?.dateOfBirth; else emptyDOB">
+                                : {{ empBasicInfo.dateOfBirth | bengaliDate }}
+                              </p>
+                              <ng-template #emptyDOB>
+                                <p></p>
+                              </ng-template>
+                            <!-- <p>: {{empPersonalInfo.bloodGroupName}}</p> -->
+                            <p *ngIf="empPersonalInfo?.bloodGroupName; else emptyBloodGroup">
+                                : {{ empPersonalInfo.bloodGroupName }}
+                              </p>
+                              <ng-template #emptyBloodGroup>
+                                <p></p>
+                              </ng-template>
                         </div>
                     </div>
                     

@@ -54,6 +54,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       this.addLeaveService.getEmpById(parseInt(this.authService.currentUserValue.empId)).subscribe({
         next: response => {
           this.empCardNo = response.idCardNo;
+          this.addLeaveService.addLeaveModel.empId = parseInt(this.authService.currentUserValue.empId);
           this.employeeName = response.firstName + " "+response.lastName;
         }
       })
@@ -120,6 +121,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     if(this.empSubs) {
       this.empReqSub.unsubscribe();
     }
+    this.addLeaveService.addLeaveModel = new AddLeaveModel();
   }
 
   getLeaveAmount() {
@@ -179,9 +181,9 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       },
       error: (error)=> {
         this.loading=false;
-        this.toastr.warning('',`${error}`,{
+        /*this.toastr.warning('',`${error}`,{
           positionClass: 'toast-top-right'
-        })
+        })*/
       },
       complete: ()=> {
         this.loading=false;

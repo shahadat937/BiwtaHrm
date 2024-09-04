@@ -24,12 +24,16 @@ import { ManageleaveComponent } from './manageleave/manageleave.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { LeaveDetailViewComponent } from './manageleave/leave-detail-view/leave-detail-view.component';
+import { ReviewLeaveComponent } from './review-leave/review-leave.component';
+import { FinalApprovalComponent } from './final-approval/final-approval.component';
 
 @NgModule({
   declarations: [
     AddleaveComponent,
     ManageleaveComponent,
-    LeaveDetailViewComponent
+    LeaveDetailViewComponent,
+    ReviewLeaveComponent,
+    FinalApprovalComponent
   ],
   imports: [
     CommonModule,

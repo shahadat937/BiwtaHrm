@@ -126,7 +126,7 @@
         ></button>
       </mat-form-field>
     </div>
-    <div class="mat-elevation-z8">
+    <div class="mat-elevation-z8 table-responsive">
       <table mat-table [dataSource]="dataSource">
         <!-- Position Column -->
         <ng-container matColumnDef="slNo">
@@ -176,13 +176,15 @@
     </div>
   </c-card-body>
   <c-card-footer class="text-medium-emphasis">
-    <mat-paginator
-      appBubblePagination
-      [length]="dataSource.data.length"
-      [pageSize]="10"
-      aria-label="Select page"
-    >
-    </mat-paginator>
+    <mat-paginator 
+appBubblePagination
+		[length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              [showFirstLastButtons]="true"
+              aria-label="Select page">
+</mat-paginator>
+
   </c-card-footer>
 </c-card>
 

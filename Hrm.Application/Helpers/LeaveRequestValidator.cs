@@ -30,14 +30,116 @@ namespace Hrm.Application.Helpers
                 return true;
             }
 
+            bool haveMinAge = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.LeaveTypeId == leaveTypeId && x.RuleName == LeaveRule.MinimumAge).AnyAsync();
+
+            await IsExceedMaxRequest(empId, leaveTypeId);
+            await IsCorrectGender(empId, leaveTypeId);
+            await HaveMinimumAge(empId, leaveTypeId);
+
             var totalLeaveDays =await AttendanceHelper.calculateWorkingDay(startDate, endDate, startDate.Year, _unitOfWork);
 
             int leaveDue = await this.CalculateLeaveAmount(empId, leaveTypeId, startDate, endDate, startDate.Year);
 
+            if (leaveDue == -1)
+            {
+                return true;
+            }
 
             return (bool)(totalLeaveDays <= leaveDue);
 
             
+        }
+
+        public async Task<bool> IsCorrectGender(int empId, int leaveTypeId)
+        {
+            var GenderRule = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.LeaveTypeId == leaveTypeId && x.RuleName == LeaveRule.Gender).FirstOrDefaultAsync();
+
+            if(GenderRule == null)
+            {
+                return true;
+            }
+
+
+            var empPersonalInfo = await _unitOfWork.Repository<Hrm.Domain.EmpPersonalInfo>().Where(x => x.EmpId == empId).FirstOrDefaultAsync();
+
+            if(empPersonalInfo == null)
+            {
+                throw new BadRequestException("Employee Personal Info is not found");
+            }
+
+            if(empPersonalInfo.GenderId == null)
+            {
+                throw new BadRequestException("Employee Gender Information is not found");
+            }
+
+            if(GenderRule.RuleValue != empPersonalInfo.GenderId)
+            {
+                throw new BadRequestException("Leave type is not available for this particular gender");
+            }
+
+            return true;
+
+        }
+
+
+        public async Task HaveMinimumAge(int empId, int leaveTypeId)
+        {
+            var haveMinAgeRule = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.LeaveTypeId == leaveTypeId && x.RuleName == LeaveRule.MinimumAge).FirstOrDefaultAsync();
+
+            if (haveMinAgeRule == null)
+            {
+                return;
+            }
+
+            var empInfo = await _unitOfWork.Repository<Hrm.Domain.EmpBasicInfo>().Get(empId);
+
+            if(empInfo.DateOfBirth == null)
+            {
+                throw new BadRequestException("The birthdate of employee is not found");
+            }
+
+            int age = CalculateAge((DateOnly)empInfo.DateOfBirth);
+
+            if(age < haveMinAgeRule.RuleValue)
+            {
+                throw new BadRequestException($"Employee age must be {haveMinAgeRule.RuleValue}");
+            }
+
+        }
+
+        private int CalculateAge(DateOnly birthdate)
+        {
+            DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+
+            int age = today.Year - birthdate.Year;
+
+            // Adjust age if the birthday hasn't occurred yet this year
+            if (today < birthdate.AddYears(age))
+            {
+                age--;
+            }
+
+            return age;
+        }
+
+        public async Task IsExceedMaxRequest(int empId, int leaveTypeId)
+        {
+            var haveMaxRequestLifeTime = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.LeaveTypeId == leaveTypeId && x.RuleName == LeaveRule.MaxRequestLifeTime).FirstOrDefaultAsync();
+
+            if (haveMaxRequestLifeTime == null)
+            {
+                return;
+            }
+
+            var totalApprovedRequest = await _unitOfWork.Repository<Hrm.Domain.LeaveRequest>().Where(x => x.EmpId == empId && x.LeaveTypeId == leaveTypeId && x.Status == (int)LeaveStatusOption.FinalApproved).CountAsync();
+
+            int maxRequest = haveMaxRequestLifeTime.RuleValue;
+
+            if(maxRequest<=totalApprovedRequest)
+            {
+                throw new BadRequestException("Maximum Request is exceed");
+            }
+
         }
 
 

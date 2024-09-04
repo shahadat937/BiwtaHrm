@@ -68,7 +68,6 @@ import { LeaveService } from './service/Leave.service';
 import { OccupationService } from './service/Occupation.service';
 import { Overall_EV_PromotionService } from './service/Overall_EV_Promotion.service';
 import { BankAccountTypeService } from './service/bank-account-type.service';
-import { CountryService } from './service/country.service';
 import { EyesColorService } from './service/eyes-color.service';
 import { LanguageService } from './service/language.service';
 import { PoolService } from './service/pool.service';
@@ -110,6 +109,7 @@ import { TableModule } from 'primeng/table';
 import { LeaveRulesComponent } from './leave/leave-rules/leave-rules.component';
 import { TabsModule } from '@coreui/angular';
 import { TabViewModule } from 'primeng/tabview';
+import { CountryService } from './service/country.service';
 import { OrganogramSectionComponent } from './organogram/organogram-section/organogram-section.component';
 
 

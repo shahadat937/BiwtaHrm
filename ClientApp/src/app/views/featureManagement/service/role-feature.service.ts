@@ -6,7 +6,8 @@ import { RoleFeature } from '../model/role-feature';
 import { ModuleFeatureByRole } from '../model/module-feature-by-role';
 import { FeaturePermission } from '../model/feature-permission';
 import { SelectedStringModel } from 'src/app/core/models/selectedStringModel';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,13 @@ export class RoleFeatureService {
 
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
+  featurePermission : FeaturePermission = new FeaturePermission;
   
   roleFeature: RoleFeature;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private toastr: ToastrService,) {
     this.roleFeature = new RoleFeature();
-   }
+  }
 
   
   getSelectedModule() {
@@ -40,9 +43,24 @@ export class RoleFeatureService {
   }
 
   
-  getFeaturePermission(roleName: string, featurePath: string): Observable<FeaturePermission>{
-    return this.http.get<FeaturePermission>(this.baseUrl + '/roleFeatures/get-featurePermission?roleName=' + roleName + '&featurePath=' + featurePath);
+  getFeaturePermission(featurePath: string): Observable<FeaturePermission>{
+    const currentUserString = localStorage.getItem('currentUser');
+    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
+    var roleName = currentUserJSON.role;
+    return this.http.get<FeaturePermission>(this.baseUrl + '/roleFeatures/get-featurePermission?roleName=' + roleName + '&featurePath=' + featurePath).pipe(
+      map((data) => {
+        this.featurePermission = data; // Cache the data
+        return data;
+      })
+    );;
   }
+
+  unauthorizeAccress(){
+    this.toastr.warning('Unauthorized Access', ` `, {
+      positionClass: 'toast-top-right',
+    });
+  }
+
 }
 
 

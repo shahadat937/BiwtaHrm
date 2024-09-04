@@ -4,9 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {LeaveModel} from '../models/leave-model'
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ManageLeaveService {
   cachedData: any[] = []
   baseUrl: string;

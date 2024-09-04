@@ -107,6 +107,7 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
   }
 
   onDayAddition() {
+    
     console.log(this.selectedYear)
     console.log(this.selectedDayForAddition);
 
@@ -156,6 +157,9 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
           }
         })
 
+      }
+      else{
+        
       }
     })
   }

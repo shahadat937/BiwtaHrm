@@ -145,12 +145,6 @@ const routes: Routes = [
       }
       ,
       {
-        path: 'transfer',
-        loadChildren: () =>
-          import('./views/transfer/transfer.module').then((m) => m.TransferModule)
-      }
-      ,
-      {
         path: 'transferPosting',
         loadChildren: () =>
           import('./views/transferPosting/transfer.module').then((m) => m.TransferPostingModule)

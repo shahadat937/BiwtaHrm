@@ -5,9 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { SelectedModel } from '../../../core/models/selectedModel';
 import { Country } from '../model/Country';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CountryService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

@@ -4,9 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError, map, Observable, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SiteVisitService {
   baseUrl: string;
   cachedData: SiteVisitModel[] = [];

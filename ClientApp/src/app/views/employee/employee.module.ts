@@ -65,7 +65,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { EmpAddressComponent } from './add-employee/employee-informations/emp-address/emp-address.component';
 import { EmpShiftListComponent } from './assignShift/emp-shift-list/emp-shift-list.component';
 import { UpdateEmpShiftComponent } from './assignShift/update-emp-shift/update-emp-shift.component';
-
+import { ShiftService } from '../attendance/services/shift.service';
+import { WardService } from '../basic-setup/service/ward.service';
+import { UnionService } from '../basic-setup/service/union.service';
 
 
 @NgModule({
@@ -139,6 +141,9 @@ import { UpdateEmpShiftComponent } from './assignShift/update-emp-shift/update-e
   providers:
   [
     CountryService,
+    ShiftService,
+    WardService,
+    UnionService
   ],
 })
 export class EmployeeModule { }

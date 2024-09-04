@@ -4,9 +4,7 @@ import { Observable, map, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Branch } from './../model/branch';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class BranchService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

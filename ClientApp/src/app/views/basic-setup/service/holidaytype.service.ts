@@ -4,9 +4,7 @@ import { HolidayType } from '../model/holidaytype';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, map } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 
 export class HolidaytypeService {
   cachedData: any[] = [];

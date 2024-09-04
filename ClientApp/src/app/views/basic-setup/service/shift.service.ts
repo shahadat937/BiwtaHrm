@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Shift } from './../model/shift';
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ShiftService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

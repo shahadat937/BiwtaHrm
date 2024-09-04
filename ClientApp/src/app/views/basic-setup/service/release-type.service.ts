@@ -4,9 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ReleaseTypeService {
 
   cachedData: any[] = [];

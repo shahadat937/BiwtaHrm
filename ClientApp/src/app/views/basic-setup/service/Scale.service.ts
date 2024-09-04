@@ -4,9 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Scale } from '../model/Scale';
 import { Observable, map, of } from 'rxjs';
 import { GradeService } from './Grade.service';
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ScaleService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

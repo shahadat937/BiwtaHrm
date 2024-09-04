@@ -49,7 +49,7 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       } else {
         this.resetForm();
-        this.headerText = 'Add Blood Group';
+        this.headerText = 'Add Release Type';
         this.btnText = 'Submit';
         this.initaialReleaseType();
       }

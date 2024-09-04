@@ -5,9 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, map, of } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SubDepartmentService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

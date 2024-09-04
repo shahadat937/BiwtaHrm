@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Subject } from './../model/subject';
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SubjectService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

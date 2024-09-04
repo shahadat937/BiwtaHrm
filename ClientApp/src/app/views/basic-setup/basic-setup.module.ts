@@ -110,6 +110,30 @@ import { LeaveRulesComponent } from './leave/leave-rules/leave-rules.component';
 import { TabsModule } from '@coreui/angular';
 import { TabViewModule } from 'primeng/tabview';
 import { CountryService } from './service/country.service';
+import { HairColorService } from './service/hair-color.service';
+import { LeaveTypeService } from './service/leave-type.service';
+import { LeaveRuleService } from './service/leave-rule.service';
+import { ReleaseTypeService } from './service/release-type.service';
+import { DivisionService } from './service/division.service';
+import { DistrictService } from './service/district.service';
+import { UapzilaService } from './service/uapzila.service';
+import { ThanaService } from './service/thana.service';
+import { UnionService } from './service/union.service';
+import { WardService } from './service/ward.service';
+import { GroupService } from './service/group.service';
+import { ResultService } from './service/result.service';
+import { SubjectService } from './service/subject.service';
+import { TrainingTypeService } from './service/trainingType.service';
+import { TrainingNameService } from './service/trainingName.service';
+import { InstituteService } from './service/institute.service';
+import { CompetenceService } from './service/competence.service';
+import { DepartmentService } from './service/department.service';
+import { OfficeService } from './service/office.service';
+import { GradeTypeService } from './service/GradeType.service';
+import { GradeClassService } from './service/GradeClass.service';
+import { GradeService } from './service/Grade.service';
+import { ScaleService } from './service/Scale.service';
+import { DesignationService } from './service/designation.service';
 
 
 
@@ -232,6 +256,30 @@ import { CountryService } from './service/country.service';
     YearSetupService,
     HolidaytypeService,
     OrganogramService,
+    HairColorService,
+    LeaveTypeService,
+    LeaveRuleService,
+    ReleaseTypeService,
+    DivisionService,
+    DistrictService,
+    UapzilaService,
+    ThanaService,
+    UnionService,
+    WardService,
+    GroupService,
+    ResultService,
+    SubjectService,
+    TrainingTypeService,
+    TrainingNameService,
+    InstituteService,
+    CompetenceService,
+    DepartmentService,
+    OfficeService,
+    GradeTypeService,
+    GradeClassService,
+    GradeService,
+    ScaleService,
+    DesignationService
   ],
 })
 export class BasicSetupModule {}

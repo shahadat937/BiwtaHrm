@@ -5,9 +5,7 @@ import {District}  from  './../model/district'
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { Observable, map, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DistrictService  {
 baseUrl = environment.apiUrl;
 districts: District;

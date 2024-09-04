@@ -42,7 +42,6 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     this.subscription=this.organogramService.getOrganogramNamesOnly().subscribe((data: OrganogramOfficeNameDto[]) => { 
       this.organograms = data;
       this.offices = data;
-      console.log(this.offices)
     });
   }
   

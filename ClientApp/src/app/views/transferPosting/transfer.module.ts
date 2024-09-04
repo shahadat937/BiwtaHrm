@@ -25,6 +25,9 @@ import { JoiningReportingListComponent } from './approval/joining-reporting-list
 import { TransferPostingInfoComponent } from './transfer-posting-info/transfer-posting-info.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { OfficeService } from '../basic-setup/service/office.service';
+import { DepartmentService } from '../basic-setup/service/department.service';
+import { GradeService } from '../basic-setup/service/Grade.service';
 
 @NgModule({
   declarations: [
@@ -73,7 +76,9 @@ import { MatButtonModule } from '@angular/material/button';
     TooltipModule,
   ],
   providers:[
-
+    OfficeService,
+    DepartmentService,
+    GradeService
   ],
   bootstrap: []
 })

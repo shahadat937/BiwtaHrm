@@ -79,11 +79,7 @@ export class EmployeeTypeComponent {
     this.dataSource.filter = filterValue;
   }
   getPermission(){
-    const currentUserString = localStorage.getItem('currentUser');
-    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-    var roleName = currentUserJSON.role;
-
-    this.roleFeatureService.getFeaturePermission(roleName, 'employee-type').subscribe((item) => {
+    this.roleFeatureService.getFeaturePermission('employee-type').subscribe((item) => {
       this.featurePermission = item;
       if(item.viewStatus == true){
         this.getEmployeeTypes();

@@ -40,7 +40,6 @@ export class ViewEmployeeComponent implements OnInit {
   userForm : UserModule;
   selectedEmpId!: number;
   showUpdateUserInfo: boolean = false;
-  featurePermission : FeaturePermission = new FeaturePermission;
 
   constructor(
     public userService: UserService,
@@ -50,6 +49,8 @@ export class ViewEmployeeComponent implements OnInit {
     private toastr: ToastrService,
     public empBasicInfoService: EmpBasicInfoService,
     public roleFeatureService: RoleFeatureService,
+    
+
   ) {
     this.userForm = new UserModule;
   }
@@ -60,12 +61,8 @@ export class ViewEmployeeComponent implements OnInit {
   }
   
   getPermission(){
-    const currentUserString = localStorage.getItem('currentUser');
-    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-    var roleName = currentUserJSON.role;
-
-    this.roleFeatureService.getFeaturePermission(roleName, 'employeeList').subscribe((item) => {
-      this.featurePermission = item;
+    this.roleFeatureService.getFeaturePermission('employeeList').subscribe((item) => {
+      this.roleFeatureService.featurePermission.add == true;
       if(item.viewStatus == true){
         this.getAllEmpBasicInfo();
       }
@@ -96,16 +93,16 @@ export class ViewEmployeeComponent implements OnInit {
   }
 
   addNewEmployee(){
-    if(this.featurePermission.add == true){
+    if(this.roleFeatureService.featurePermission.add == true){
       this.router.navigate(['/employee/create-new-employee']);
     }
     else{
-      this.unauthorizeAccress();
+      this.roleFeatureService.unauthorizeAccress();
     }
   }
 
   updateEmployee(id: number){
-    if(this.featurePermission.update == true){
+    if(this.roleFeatureService.featurePermission.add == true){
       this.router.navigate(['/employee/update-employee-information/', id]);
     }
     else{
@@ -114,7 +111,7 @@ export class ViewEmployeeComponent implements OnInit {
   }
 
   createUser(id : number){
-    if(this.featurePermission.add == true){
+    if(this.roleFeatureService.featurePermission.add == true){
       this.loadingMap[id] = true;
       this.empBasicInfoService.findByEmpId(id).subscribe((res) => {
         this.userForm.firstName = res.firstName;

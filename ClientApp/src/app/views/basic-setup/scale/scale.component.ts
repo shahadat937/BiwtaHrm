@@ -114,7 +114,7 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/scale']);
+    this.router.navigate(['/officeSetup/scale']);
   }
   getALlScales() {
     this.subscription = this.ScaleService.getAll().subscribe((item) => {
@@ -173,7 +173,7 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getALlScales();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/bascisetup/scale']);
+          this.router.navigate(['/officeSetup/scale']);
         }
         this.loading = false;
       } else {

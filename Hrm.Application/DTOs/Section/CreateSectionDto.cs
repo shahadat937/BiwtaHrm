@@ -1,13 +1,12 @@
-﻿using Hrm.Domain.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Domain
+namespace Hrm.Application.DTOs.Section
 {
-    public class Section : BaseDomainEntity
+    public class CreateSectionDto:ISectionDto
     {
         public int SectionId { get; set; }
         public string? SectionName { get; set; }
@@ -24,14 +23,5 @@ namespace Hrm.Domain
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
-
-        public virtual ICollection<EmpJobDetail>? EmpJobDetail { get; set; }
-        public Office Office { get; set; }
-        public Department Department { get; set; }
-        public Section UpperSection { get; set; }
-        public ICollection<Section>? SubSections { get; set; }
-        public ICollection<Designation>? Designations { get; set; }
-        public virtual ICollection<EmpTransferPosting>? CurrentEmpTransferPosting { get; set; }
-        public virtual ICollection<EmpTransferPosting>? TransferEmpTransferPosting { get; set; }
     }
 }

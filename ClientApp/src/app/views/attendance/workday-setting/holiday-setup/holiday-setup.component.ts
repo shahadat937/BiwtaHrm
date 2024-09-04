@@ -6,6 +6,7 @@ import {HolidaySetupService} from '../../services/holiday-setup.service'
 import {HolidayModel} from '../../models/holiday-model'
 import { NgForm } from '@angular/forms';
 import {cilPen, cilPencil, cilTrash} from '@coreui/icons'
+import { RoleFeatureService } from 'src/app/views/featureManagement/service/role-feature.service';
 
 @Component({
   selector: 'app-holiday-setup',
@@ -24,10 +25,12 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   @ViewChild('holidayForm', {static:true}) holidayForm!:NgForm
 
+
   constructor(
     private toastr: ToastrService,
     private confirmService: ConfirmService,
-    public holidayService: HolidaySetupService
+    public holidayService: HolidaySetupService,
+    public roleFeatureService: RoleFeatureService
   ) {
     this.isVisible=false;
     this.isUpdate = false;
@@ -48,11 +51,17 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
   }
 
   toggleAddHoliday() {
-    this.isUpdate = false;
-    this.isVisible=this.isVisible?false:true;
-    this.holidayService.model = new HolidayModel();
-    this.holidayForm.reset();
-    console.log("Hello World");
+    if(this.roleFeatureService.featurePermission.add == true){
+      this.isUpdate = false;
+      this.isVisible=this.isVisible?false:true;
+      this.holidayService.model = new HolidayModel();
+      this.holidayForm.reset();
+      console.log("Hello World");
+    }
+    else{
+      this.roleFeatureService.unauthorizeAccress();
+    }
+   
   }
 
   getHolidayType() {

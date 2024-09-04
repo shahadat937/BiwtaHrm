@@ -1,100 +1,394 @@
-<c-card>
-    <c-card-header>Section </c-card-header>
+<c-card class="mt-3">
+    <c-card-header class="d-flex justify-content-between">
+      <div>{{headerText}}</div>
+      <div><button cButton color="primary" shape="rounded-pill" (click)="UserFormView()"><svg cIcon name={{buttonIcon}}></svg> {{BtnText}}</button></div>
+    </c-card-header>
     <c-card-body>
-        <form #SectionForm="ngForm" (submit)="onSubmit(SectionForm)" [gutter]="3" novalidate cForm cRow
-            class="needs-validation">
-            <c-col [md]="6">
-                <input type="hidden" [(ngModel)]="sectionService.sections.sectionId" name="sectionId" />
-                <label cLabel for="validationCustom01">Section Name<span class="text-danger">*</span></label>
-                <input [(ngModel)]="sectionService.sections.sectionName" name="sectionName" #SectionName="ngModel"
-                    placeholder="Enter Section Name" cFormControl id="validationCustom01" required type="text"
-                    value="Mark" />
-                @if(!SectionName.valid&&SectionName.touched){
+    <!-- user form start from here -->
+    <c-card class="mt-3 shadow">
+        <c-card-body [visible]="visible" cCollapse  class="shadow">
+            <form
+              #SectionForm="ngForm"
+              (submit)="onSubmit(SectionForm)"
+              [gutter]="3"
+              novalidate
+              cForm
+              cRow
+              class="needs-validation"
+            >
+            <c-col [md]="4">
+              <label cLabel for="office">Office<span class="text-danger">*</span></label>
+              <div class="input-wrapper">
+                <select (change)="onOfficeSelect(sectionService.sections.officeId)" 
+                    (change)="onOfficeAndDepartmentSelect(sectionService.sections.officeId, 0)"
+                  [(ngModel)]="sectionService.sections.officeId" name="officeId" #officeId="ngModel"
+                  cFormControl id="office" required aria-label="Default select example" cSelect>
+                  <option [ngValue]="null">Select Office</option>
+      
+                  @for(office of offices; track office.id;let index=$index) {
+                  <option [value]="office.id">
+                    {{ office.name }}
+                  </option>
+                  }
+                </select>
+      
+                @if(!officeId.valid && officeId.touched){
+                <div class="text-left text-danger">Office is required</div>
+                }
+              </div>
+            </c-col>
+            
+            @if(departmentView){
+                <c-col [md]="4">
+                    <label cLabel for="departmentId">Department<span class="text-danger"></span></label>
+                    <div class="input-wrapper">
+                      <select (change)="onOfficeAndDepartmentSelect(sectionService.sections.officeId, sectionService.sections.departmentId)"
+                        [(ngModel)]="sectionService.sections.departmentId" name="departmentId" #departmentId="ngModel"
+                        cFormControl id="departmentId" aria-label="Default select example" cSelect>
+                        <option [ngValue]="null">Select Department</option>
+            
+                        @for(department of departments; track department.id;let index=$index) {
+                        <option [value]="department.id">
+                          {{ department.name }}
+                        </option>
+                        }
+                      </select>
+    <!--         
+                      @if(departmentId.value && departmentId.value == DepartmentId.value){
+                      <div class="text-left text-danger">Department and Upper Department Can't be same</div>
+                      } -->
+                    </div>
+                </c-col>
+            }
+              
+            @if(upperSectionView){
+                <c-col [md]="4">
+                    <label cLabel for="upperSectionId">Upper Section<span class="text-danger"></span></label>
+                    <div class="input-wrapper">
+                      <select 
+                        [(ngModel)]="sectionService.sections.upperSectionId" name="upperSectionId" #upperSectionId="ngModel"
+                        cFormControl id="upperSectionId" aria-label="Default select example" cSelect>
+                        <option [ngValue]="null">Select Upper Section</option>
+            
+                        @for(upperSection of upperSections; track upperSection.id;let index=$index) {
+                        <option [value]="upperSection.id">
+                          {{ upperSection.name }}
+                        </option>
+                        }
+                      </select>
+            
+                      <!-- @if(upperDepartment.value && upperDepartment.value == DepartmentId.value){
+                      <div class="text-left text-danger">Department and Upper Department Can't be same</div>
+                      } -->
+                    </div>
+                  </c-col>
+            }
+
+              <c-col [md]="4">
+                <input
+                  type="hidden"
+                  [(ngModel)]="sectionService.sections.sectionId"
+                  name="sectionId" #DepartmentId="ngModel"
+                />
+                <label cLabel for="sectionName"
+                  >Section Name<span class="text-danger">*</span></label
+                >
+                <input
+                  [(ngModel)]="sectionService.sections.sectionName"
+                  name="sectionName" 
+                  #sectionName="ngModel"
+                  placeholder="Enter Section Name"
+                  cFormControl
+                  id="sectionName"
+                  required
+                  type="text"
+                />
+                @if(!sectionName.valid&&sectionName.touched){
                 <div class="text-left text-danger">Section Name is required</div>
                 }
+              </c-col>
+            
+            <c-col [md]="4">
+                <label cLabel for="sectionNameBangla"
+                >Section Name in Bangla<span class="text-danger"></span></label>
+              <input
+                [(ngModel)]="sectionService.sections.sectionNameBangla"
+                name="sectionNameBangla" 
+                #sectionNameBangla="ngModel"
+                placeholder="Enter Section Name in Bangla"
+                cFormControl
+                id="sectionNameBangla"
+                type="text"
+              />
+              @if(!sectionNameBangla.valid&&sectionNameBangla.touched){
+              <div class="text-left text-danger">Section Name in Bangla is required</div>
+              }
             </c-col>
-            <!-- <c-col [md]="6">
-                <label cLabel for="validationCustom02">Is Active </label>
-                <input [(ngModel)]="sectionService.sections.isActive" name="isActive" cFormControl id="validationCustom02"
-                    type="text" value="Otto" />
-                <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
-            </c-col> -->
-            <c-col [md]="6">
-                <label cLabel for="activeStatus">Active Status</label>
+            <c-col [md]="4">
+              <label cLabel for="sectionCode"
+              >Section Code<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="sectionService.sections.sectionCode"
+              name="sectionCode" 
+              #sectionCode="ngModel"
+              placeholder="Enter Section Code"
+              cFormControl
+              id="sectionCode"
+              type="text"
+            />
+            @if(!sectionCode.valid&&sectionCode.touched){
+            <div class="text-left text-danger">Section Code is required</div>
+            }
+          </c-col>
+          <c-col [md]="4">
+            <label cLabel for="validationCustom04"
+            >Phone<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="sectionService.sections.phone"
+              name="phone" 
+              #Phone="ngModel"
+              placeholder="Enter Phone Number"
+              cFormControl
+              id="validationCustom04"
+              type="text"
+              pattern="^[0-9]*$"
+            />
+            <!-- @if(!Phone.valid&&Phone.touched){
+            <div class="text-left text-danger">Phone Number is required</div>
+            } -->
+            @if(Phone.value&&!Phone.valid){
+              <div class="text-left text-danger">Phone is not valid</div>
+              }
+          </c-col>
+            <c-col [md]="4">
+              <label cLabel for="validationCustom05">Mobile<span class="text-danger"></span></label>
+              <input
+                [(ngModel)]="sectionService.sections.mobile"
+                name="mobile" 
+                #Mobile="ngModel"
+                placeholder="Enter Mobile Number"
+                cFormControl
+                id="validationCustom05"
+                type="text"
+                pattern="^[0-9]*$"
+              />
+              <!-- @if(!Mobile.valid&&Mobile.touched){
+              <div class="text-left text-danger">Mobile Number is required</div>
+              } -->
+              @if(Mobile.value&&!Mobile.valid){
+                <div class="text-left text-danger">Mobile is not valid</div>
+                }
+            </c-col>
+          <c-col [md]="4">
+            <label cLabel for="validationCustom13"
+            >Email<span class="text-danger"></span></label>
+              <input
+                [(ngModel)]="sectionService.sections.email"
+                name="email"
+                #Email="ngModel"
+                placeholder="Enter Email Address"
+                cFormControl
+                id="validationCustom13"
+                type="email"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+              />
+              @if(!Email.value&&Email.touched){
+              <div class="text-left text-danger">Email is required</div>
+              }
+              @if(!Email.valid&&Email.touched&&Email.value){
+                <div class="text-left text-danger">Email is not valid</div>
+                }
+            </c-col>
+            
+          <c-col [md]="4">
+            <label cLabel for="validationCustom06"
+            >Fax<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="sectionService.sections.fax"
+              name="fax" 
+              #Fax="ngModel"
+              placeholder="Enter Fax"
+              cFormControl
+              id="validationCustom06"
+              type="text"
+            />
+            @if(!Fax.valid&&Fax.touched){
+            <div class="text-left text-danger">Fax is required</div>
+            }
+          </c-col>
+            <c-col [md]="4">
+              <label cLabel for="validationCustom07"
+              >Sqeuence<span class="text-danger"></span></label>
+              <input
+                [(ngModel)]="sectionService.sections.sequence"
+                name="sequence" 
+                #Sequence="ngModel"
+                placeholder="Enter Sqeuence"
+                cFormControl
+                id="validationCustom07"
+                type="number"
+              />
+              @if(!Sequence.valid&&Sequence.touched){
+              <div class="text-left text-danger">Sequence is required</div>
+              }
+            </c-col>
+            
+            <c-col [md]="4">
+              <label cLabel for="validationCustom17"
+              >Remark<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="sectionService.sections.remark"
+              name="remark" 
+              #Remark="ngModel"
+              placeholder="Remark"
+              cFormControl
+              id="validationCustom17"
+              type="text"
+            />
+          </c-col>
+              
+      
+              <c-col [md]="4">
+                <label cLabel for="validationCustom18">Active Status</label>
                 <select [(ngModel)]="sectionService.sections.isActive"
                 name="isActive"
                 cSelect
-                id="activeStatus">
+                id="validationCustom18">
                   <option value="true">Active</option>
                   <option value="false">De-Active</option>
                 </select>
               </c-col>
-            <c-col [xs]="12">
-                <button [disabled]="loading" [disabled]="SectionForm.invalid" cButton class="me-1" color="primary"
-                    type="submit">
-                    <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-                    {{ btnText }}
-                </button>
-                <button cButton color="secondary" (click)="resetForm()">Reset</button>
-            </c-col>
-        </form>
-    </c-card-body>
-</c-card>
-
-<c-card class="mt-3">
-    <c-card-header>Bank List</c-card-header>
-    <c-card-body>
-        <div class="example-header">
+      
+              <c-col [xs]="12">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <button
+                      [disabled]="loading"
+                      [disabled]="SectionForm.invalid"
+                      cButton
+                      class="me-1"
+                      color="primary"
+                      type="submit"
+                    >
+                      <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                      {{ btnText }}
+                      </button>
+                      <button cButton color="secondary" (click)="resetForm()">Reset</button>
+                  </div>
+                  <div>
+                    <button [hidden]="btnText != 'Update'" cButton color="danger" (click)="cancelUpdate()">Cancel</button>
+                  </div>
+                </div>
+              </c-col>
+            </form>
+        </c-card-body>
+      </c-card>
+      <!-- user form end here -->
+      
+      <br/>
+      <div class="example-header" cRow>
+        <c-col>
             <mat-form-field>
-                <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here.." />
-                <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
-                    (click)="filter.value = ''; applyFilter('')"></button>
+              <input
+                matInput
+                #filter
+                (keyup)="applyFilter(filter.value)"
+                placeholder="Search Here.."
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                aria-label="clear"
+                *ngIf="filter.value"
+                (click)="filter.value = ''; applyFilter('')"
+              ></button>
             </mat-form-field>
-        </div>
-        <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource">
-                <!-- Position Column -->
-                <ng-container matColumnDef="slNo">
-                    <th mat-header-cell *matHeaderCellDef>Serial No</th>
-                    <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-                </ng-container>
-                <ng-container matColumnDef="sectionName">
-                    <th mat-header-cell *matHeaderCellDef>Section Name</th>
-                    <td mat-cell *matCellDef="let element">{{ element.sectionName }}</td>
-                </ng-container>
+          </c-col>
+        <c-col [md]="4">
+            <div class="input-wrapper">
+                <select (change)="onOfficeSelect(sectionService.sections.officeId)" (change)="onOfficeSelectGetDepartment(sectionService.sections.officeId)"
+                [(ngModel)]="sectionService.sections.officeId" name="officeId" #officeId="ngModel"
+                cFormControl id="office" aria-label="Default select example" cSelect>
+                <option [ngValue]="null">Select Office</option>
 
-                <!-- Name Column -->
-                <!-- <ng-container matColumnDef="isActive">
-                    <th mat-header-cell *matHeaderCellDef>Is Active</th>
-                    <td mat-cell *matCellDef="let element">{{ element.isActive }}</td>
-                </ng-container> -->
-                <ng-container matColumnDef="isActive">
-                    <th mat-header-cell *matHeaderCellDef>Is Active</th>
-                    <td mat-cell *matCellDef="let element">
-                      <span *ngIf="element.isActive">Active</span>
-                      <span *ngIf="!element.isActive">De-Active</span>
-                    </td>
-                  </ng-container>
-
-                <ng-container matColumnDef="Action">
-                    <th mat-header-cell *matHeaderCellDef>Action</th>
-                    <td mat-cell *matCellDef="let element">
-                        <button class="custom-button" [routerLink]="['/officeSetup/update-section', element.sectionId]">
-                            <svg cIcon name="cilPencil"></svg>
-                        </button>
-                        <button class="custom-button" (click)="delete(element)">
-                            <svg cIcon name="cilTrash"></svg>
-                        </button>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
-        </div>
+                @for(office of offices; track office.id;let index=$index) {
+                <option [value]="office.id">
+                    {{ office.name }}
+                </option>
+                }
+                </select>
+            </div>
+        </c-col>
+        
+      </div>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="slNo">
+            <th mat-header-cell *matHeaderCellDef>Serial No</th>
+            <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="officeName">
+            <th mat-header-cell *matHeaderCellDef>Office Name</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.officeName }}
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="upperDepartmentName">
+            <th mat-header-cell *matHeaderCellDef>Upper Department Name</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.upperDepartmentName }}
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="departmentName">
+            <th mat-header-cell *matHeaderCellDef>Department Name</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.departmentName }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="departmentNameBangla">
+            <th mat-header-cell *matHeaderCellDef>Department Name Bangla</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.departmentNameBangla }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="isActive">
+            <th mat-header-cell *matHeaderCellDef>Is Active</th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.isActive">Active</span>
+              <span *ngIf="!element.isActive">De-Active</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                class="custom-button" [routerLink]="[
+                  '/officeSetup/update-section',
+                  element.sectionId
+                ]"
+              >
+                <svg cIcon name="cilPencil"></svg>
+              </button>
+              <button class="custom-button" (click)="delete(element)">
+                <svg cIcon name="cilTrash"></svg>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
     </c-card-body>
     <c-card-footer class="text-medium-emphasis">
-        <mat-paginator appBubblePagination [length]="dataSource.data.length" [pageSize]="10" aria-label="Select page">
-        </mat-paginator>
+      <mat-paginator
+        appBubblePagination
+        [length]="dataSource.data.length"
+        [pageSize]="10"
+        aria-label="Select page"
+      >
+      </mat-paginator>
     </c-card-footer>
-</c-card>
+  </c-card>

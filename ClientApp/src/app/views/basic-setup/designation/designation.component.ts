@@ -245,7 +245,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
 
   
   onOfficeAndDepartmentSelect(officeId : number, departmentId : number){
-    this.sectionService.sections.upperSectionId = null;
+    this.designationService.designation.sectionId = null;
     this.sectionService.getSectionByOfficeDepartment(+officeId,+departmentId).subscribe((res) => {
       this.sections = res;
       if(res.length>0){

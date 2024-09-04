@@ -38,8 +38,7 @@
               </div>
             </c-col>
             
-            @if(departmentView){
-                <c-col [md]="4">
+                <c-col [md]="4" [hidden]="departmentView == false">
                     <label cLabel for="departmentId">Department<span class="text-danger"></span></label>
                     <div class="input-wrapper">
                       <select (change)="onOfficeAndDepartmentSelect(sectionService.sections.officeId, sectionService.sections.departmentId)"
@@ -59,10 +58,8 @@
                       } -->
                     </div>
                 </c-col>
-            }
               
-            @if(upperSectionView){
-                <c-col [md]="4">
+                <c-col [md]="4" [hidden]="upperSectionView == false">
                     <label cLabel for="upperSectionId">Upper Section<span class="text-danger"></span></label>
                     <div class="input-wrapper">
                       <select 
@@ -82,7 +79,6 @@
                       } -->
                     </div>
                   </c-col>
-            }
 
               <c-col [md]="4">
                 <input
@@ -328,30 +324,30 @@
             <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
           </ng-container>
   
-          <ng-container matColumnDef="officeName">
-            <th mat-header-cell *matHeaderCellDef>Office Name</th>
+          <ng-container matColumnDef="office">
+            <th mat-header-cell *matHeaderCellDef>Office</th>
             <td mat-cell *matCellDef="let element">
               {{ element.officeName }}
             </td>
           </ng-container>
   
-          <ng-container matColumnDef="upperDepartmentName">
-            <th mat-header-cell *matHeaderCellDef>Upper Department Name</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.upperDepartmentName }}
-            </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="departmentName">
-            <th mat-header-cell *matHeaderCellDef>Department Name</th>
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef>Department</th>
             <td mat-cell *matCellDef="let element">
               {{ element.departmentName }}
             </td>
           </ng-container>
-          <ng-container matColumnDef="departmentNameBangla">
-            <th mat-header-cell *matHeaderCellDef>Department Name Bangla</th>
+  
+          <ng-container matColumnDef="upperSection">
+            <th mat-header-cell *matHeaderCellDef>Upper Section</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.departmentNameBangla }}
+              {{ element.upperSectionName }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="section">
+            <th mat-header-cell *matHeaderCellDef>Section</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.sectionName }}
             </td>
           </ng-container>
           <ng-container matColumnDef="isActive">

@@ -18,6 +18,7 @@ import { DesignationService } from '../service/designation.service';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { OfficeService } from '../service/office.service';
 import { DepartmentService } from '../service/department.service';
+import { SectionService } from '../service/section.service';
 @Component({
   selector: 'app-designation',
   templateUrl: './designation.component.html',
@@ -33,7 +34,9 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
   buttonIcon: string | undefined;
   offices: SelectedModel[] = [];
   departments: SelectedModel[] = [];
+  sections: SelectedModel[] = [];
   upperDepartmentView = false;
+  sectionView = false;
   loading = false;
   @ViewChild('DesignationForm', { static: true }) DesignationForm!: NgForm;
   subscription: Subscription = new Subscription();
@@ -41,6 +44,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     'slNo',
     'officeName',
     'departmentName',
+    'sectionName',
     'designationName',
     // 'designationNameBangla',
     'isActive',
@@ -61,6 +65,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     private toastr: ToastrService,
     public officeService:OfficeService,
     public departmentService:DepartmentService,
+    public sectionService : SectionService,
   ) {
     //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
   }
@@ -79,7 +84,8 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         this.BtnText = " Hide Form";
         this.buttonIcon = "cilTrash";
         this.designationService.find(+id).subscribe((res) => {
-          this.onOfficeSelect(res.officeId)
+          this.onOfficeSelect(res.officeId);
+          this.onOfficeAndDepartmentSelect(res.officeId, res.departmentId);
           this.DesignationForm?.form.patchValue(res);
         });
       } else {
@@ -157,11 +163,13 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       designationNameBangla: '',
       officeId: null,
       departmentId: null,
+      sectionId: null,
       remark: '',
       menuPosition: 0,
       isActive: true,
       officeName: "",
       departmentName: "",
+      sectionName: "",
     };
   }
   resetForm() {
@@ -173,11 +181,13 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         designationNameBangla: '',
         officeId: null,
         departmentId: null,
+        sectionId: null,
         remark: '',
         menuPosition: 0,
         isActive: true,
         officeName: "",
         departmentName: "",
+        sectionName: "",
       });
     }
   }
@@ -232,6 +242,21 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
   }
+
+  
+  onOfficeAndDepartmentSelect(officeId : number, departmentId : number){
+    this.sectionService.sections.upperSectionId = null;
+    this.sectionService.getSectionByOfficeDepartment(+officeId,+departmentId).subscribe((res) => {
+      this.sections = res;
+      if(res.length>0){
+        this.sectionView = true;
+      }
+      else{
+        this.sectionView = false;
+      }
+    });
+  }
+
   onSubmit(form: NgForm): void {
     this.loading = true;
     this.designationService.cachedData = [];

@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.DTOs.Organograms
 {
-    public class OrganogramDepartmentNameDto
+    public class OrganogramSectionNameDto
     {
         public string Name { get; set; }
         public List<OrganogramDesignationNameDto> Designations { get; set; }
-        public List<OrganogramSectionNameDto> Sections { get; set; }
-        public List<OrganogramDepartmentNameDto> SubDepartments { get; set; }
+        public List<OrganogramSectionNameDto> SubSections { get; set; }
     }
 }

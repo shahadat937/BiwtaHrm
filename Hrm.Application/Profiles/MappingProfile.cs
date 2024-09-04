@@ -181,10 +181,6 @@ namespace Hrm.Application.Profiles
             CreateMap<Designation, DesignationDto>().ReverseMap();
             CreateMap<Designation, CreateDesignationDto>().ReverseMap();
 
-            CreateMap<Designation, DesignationDto>()
-            .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
-            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
-            .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().EmpBasicInfo.FirstName + " " + src.EmpJobDetail.FirstOrDefault().EmpBasicInfo.LastName));
 
             CreateMap<Department, DepartmentDto>()
             .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
@@ -258,6 +254,19 @@ namespace Hrm.Application.Profiles
             CreateMap<OfficeAddress, OfficeAddressDto>().ReverseMap();
             CreateMap<OfficeAddress, CreateOfficeAddressDto>().ReverseMap();
 
+            CreateMap<Section, SectionDto>().ReverseMap();
+            CreateMap<Section, CreateSectionDto>().ReverseMap();
+            CreateMap<Section, SectionDto>()
+                .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
+                .ForMember(dest => dest.UpperSectionName, opt => opt.MapFrom(src => src.UpperSection.SectionName));
+
+            CreateMap<Designation, DesignationDto>()
+            .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
+            .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Section.SectionName))
+            .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().EmpBasicInfo.FirstName + " " + src.EmpJobDetail.FirstOrDefault().EmpBasicInfo.LastName));
+
             CreateMap<Competence, CompetenceDto>().ReverseMap();
             CreateMap<Competence, CreateCompetenceDto>().ReverseMap();
 
@@ -312,8 +321,6 @@ namespace Hrm.Application.Profiles
                 .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.EmpBasicInfo.EmpJobDetail.FirstOrDefault().Designation.DesignationName))
                 .ReverseMap();
 
-            CreateMap<Section, SectionDto>().ReverseMap();
-            CreateMap<Section, CreateSectionDto>().ReverseMap();
 
             CreateMap<PostingOrderInfo, PostingOrderInfoDto>().ReverseMap();
             CreateMap<PostingOrderInfo, CreatePostingOrderInfoDto>().ReverseMap();

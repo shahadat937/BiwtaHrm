@@ -34,6 +34,11 @@ namespace Hrm.Persistence
                 .WithOne(d => d.Department)
                 .HasForeignKey(d => d.DepartmentId);
 
+            modelBuilder.Entity<Section>()
+                .HasMany(d => d.Designations)
+                .WithOne(d => d.Section)
+                .HasForeignKey(d => d.SectionId);
+
             modelBuilder.Entity<Office>()
             .HasMany(o => o.Designations)
             .WithOne(d => d.Office)
@@ -49,6 +54,11 @@ namespace Hrm.Persistence
                 .HasOne(d => d.Department)
                 .WithMany(dp => dp.Designations)
                 .HasForeignKey(d => d.DepartmentId);
+
+            modelBuilder.Entity<Designation>()
+                .HasOne(d => d.Section)
+                .WithMany(dp => dp.Designations)
+                .HasForeignKey(d => d.SectionId);
 
 
             modelBuilder.Entity<OfficeBranch>(entity =>

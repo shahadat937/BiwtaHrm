@@ -20,6 +20,7 @@
             <label cLabel for="office">Office<span class="text-danger">*</span></label>
             <div class="input-wrapper">
               <select (change)="onOfficeSelect(designationService.designation.officeId)"
+              (change)="onOfficeAndDepartmentSelect(designationService.designation.officeId, 0)"
                 [(ngModel)]="designationService.designation.officeId" name="officeId" #officeId="ngModel"
                 cFormControl id="office" required aria-label="Default select example" cSelect>
                 <option [ngValue]="null">Select Office</option>
@@ -36,25 +37,49 @@
               }
             </div>
           </c-col>
-          <c-col [md]="4" [hidden]="upperDepartmentView == false">
-            <label cLabel for="Department">Department<span class="text-danger"></span></label>
-            <div class="input-wrapper">
-              <select 
-                [(ngModel)]="designationService.designation.departmentId" name="departmentId" #Department="ngModel"
-                cFormControl id="Department" aria-label="Default select example" cSelect>
-                <option [ngValue]="null">Select Department</option>
-    
-                @for(department of departments; track department.id;let index=$index) {
-                <option [value]="department.id">
-                  {{ department.name }}
-                </option>
+
+            <c-col [md]="4" [hidden]="upperDepartmentView == false">
+              <label cLabel for="Department">Department<span class="text-danger"></span></label>
+              <div class="input-wrapper">
+                <select (change)="onOfficeAndDepartmentSelect(designationService.designation.officeId, designationService.designation.departmentId)"
+                  [(ngModel)]="designationService.designation.departmentId" name="departmentId" #Department="ngModel"
+                  cFormControl id="Department" aria-label="Default select example" cSelect>
+                  <option [ngValue]="null">Select Department</option>
+      
+                  @for(department of departments; track department.id;let index=$index) {
+                  <option [value]="department.id">
+                    {{ department.name }}
+                  </option>
+                  }
+                </select>
+                @if(!Department.valid && Department.touched){
+                <div class="text-left text-danger">Department is required</div>
                 }
-              </select>
-              @if(!Department.valid && Department.touched){
-              <div class="text-left text-danger">Department is required</div>
-              }
-            </div>
-          </c-col>
+              </div>
+            </c-col>
+
+          
+            <c-col [md]="4" [hidden]="sectionView == false">
+                <label cLabel for="sectionId">Section<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                  <select 
+                    [(ngModel)]="designationService.designation.sectionId" name="sectionId" #sectionId="ngModel"
+                    cFormControl id="sectionId" aria-label="Default select example" cSelect>
+                    <option [ngValue]="null">Select Section</option>
+        
+                    @for(section of sections; track section.id;let index=$index) {
+                    <option [value]="section.id">
+                      {{ section.name }}
+                    </option>
+                    }
+                  </select>
+        
+                  <!-- @if(upperDepartment.value && upperDepartment.value == DepartmentId.value){
+                  <div class="text-left text-danger">Department and Upper Department Can't be same</div>
+                  } -->
+                </div>
+              </c-col>
+
             <c-col [md]="4">
               <input
                 type="hidden"
@@ -81,7 +106,7 @@
           
           <c-col [md]="4">
               <label cLabel for="validationCustom02"
-              >Designation Name in Bangla<span class="text-danger">*</span></label>
+              >Designation Name in Bangla<span class="text-danger"></span></label>
             <input
               [(ngModel)]="designationService.designation.designationNameBangla"
               name="designationNameBangla"
@@ -89,7 +114,6 @@
               placeholder="Enter Designation Name in Bangla"
               cFormControl
               id="validationCustom02"
-              required
               type="text"
             />
             @if(!DesignationNameBangla.valid&&DesignationNameBangla.touched){
@@ -199,7 +223,7 @@
         </div>
       </c-col>
   </div>
-    <div class="mat-elevation-z8">
+    <div class="mat-elevation-z8 table-responsive">
       <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="slNo">
           <th mat-header-cell *matHeaderCellDef>Serial No</th>
@@ -207,21 +231,29 @@
         </ng-container>
 
         <ng-container matColumnDef="officeName">
-          <th mat-header-cell *matHeaderCellDef>Office Name</th>
+          <th mat-header-cell *matHeaderCellDef>Office</th>
           <td mat-cell *matCellDef="let element">
             {{ element.officeName }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="departmentName">
-          <th mat-header-cell *matHeaderCellDef>Department Name</th>
+          <th mat-header-cell *matHeaderCellDef>Department</th>
           <td mat-cell *matCellDef="let element">
             {{ element.departmentName }}
           </td>
         </ng-container>
+        
+        <ng-container matColumnDef="sectionName">
+          <th mat-header-cell *matHeaderCellDef>Section</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.sectionName }}
+          </td>
+        </ng-container>
+        
 
         <ng-container matColumnDef="designationName">
-          <th mat-header-cell *matHeaderCellDef>Designation Name</th>
+          <th mat-header-cell *matHeaderCellDef>Designation</th>
           <td mat-cell *matCellDef="let element">
             {{ element.designationName }}
           </td>

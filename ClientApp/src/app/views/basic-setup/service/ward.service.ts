@@ -4,9 +4,7 @@ import { Observable, map, of } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { environment } from '../../../../environments/environment';
 import { Ward } from './../model/ward';
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class WardService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

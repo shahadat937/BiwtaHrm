@@ -4,9 +4,7 @@ import { BankAccountType } from '../model/bank-account-type';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BankAccountTypeService {
 
   cachedData: any[] = [];

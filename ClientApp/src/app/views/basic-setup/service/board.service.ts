@@ -5,9 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 import { Border } from '@coreui/angular/lib/utilities/border.type';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BoardService {
 
   cachedData: any[] = [];

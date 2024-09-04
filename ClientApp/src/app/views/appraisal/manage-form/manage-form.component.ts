@@ -48,7 +48,6 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   getFormRecord() {
     this.formRecordService.getFormRecord().subscribe({
       next: (response)=> {
-        console.log(response);
         this.formRecord = response;
         this.formRecord.forEach(item=> {
           item.fullName = `${item.empFirstName} ${item.empLastName}`;

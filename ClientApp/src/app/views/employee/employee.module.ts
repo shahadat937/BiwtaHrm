@@ -68,6 +68,13 @@ import { UpdateEmpShiftComponent } from './assignShift/update-emp-shift/update-e
 import { ShiftService } from '../attendance/services/shift.service';
 import { WardService } from '../basic-setup/service/ward.service';
 import { UnionService } from '../basic-setup/service/union.service';
+import { DepartmentService } from '../basic-setup/service/department.service';
+import { UapzilaService } from '../basic-setup/service/uapzila.service';
+import { DistrictService } from '../basic-setup/service/district.service';
+import { ThanaService } from '../basic-setup/service/thana.service';
+import { DivisionService } from '../basic-setup/service/division.service';
+import { OfficeService } from '../basic-setup/service/office.service';
+import { GradeService } from '../basic-setup/service/Grade.service';
 
 
 @NgModule({
@@ -143,7 +150,14 @@ import { UnionService } from '../basic-setup/service/union.service';
     CountryService,
     ShiftService,
     WardService,
-    UnionService
+    UnionService,
+    DepartmentService,
+    UapzilaService,
+    DistrictService,
+    ThanaService,
+    DivisionService,
+    OfficeService,
+    GradeService
   ],
 })
 export class EmployeeModule { }

@@ -58,7 +58,7 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
     this.leaveService.getLeaves().subscribe({
       next: response=> {
         this.leaves = response;
-        console.log(response);
+      
       },
       error: error=> {
         console.log(error);

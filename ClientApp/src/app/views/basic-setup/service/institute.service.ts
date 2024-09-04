@@ -4,9 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Institute } from '../model/institute';
 import { Observable, map, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class InstituteService {
 
   cachedData: any[] = [];

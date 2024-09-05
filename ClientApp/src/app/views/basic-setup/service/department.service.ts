@@ -12,10 +12,6 @@ export class DepartmentService {
   constructor(private http: HttpClient) {
     this.departments = new Department();
   }
-
-
-  
-  
   getSelectDepartments(){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/department/get-selecteddepartment');
   }

@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.Enum;
+using System.Reflection.Metadata.Ecma335;
+using CsvHelper.Configuration.Attributes;
 
 namespace Hrm.Application.Helpers
 {
@@ -38,16 +40,34 @@ namespace Hrm.Application.Helpers
 
             var totalLeaveDays =await AttendanceHelper.calculateWorkingDay(startDate, endDate, startDate.Year, _unitOfWork);
 
-            int leaveDue = await this.CalculateLeaveAmount(empId, leaveTypeId, startDate, endDate, startDate.Year);
+            if(await IsTotalDayExceedPerRequest(empId, leaveTypeId, totalLeaveDays))
+            {
+                throw new BadRequestException("Total Leave Days is exceed per request");
+            }
 
-            if (leaveDue == -1)
+            List<int> leaveDue = await this.CalculateLeaveAmount(empId, leaveTypeId, startDate, endDate, startDate.Year);
+
+            if (leaveDue[1] == -1)
             {
                 return true;
             }
 
-            return (bool)(totalLeaveDays <= leaveDue);
+            return (bool)(totalLeaveDays <= leaveDue[1]);
 
             
+        }
+
+        public async Task<bool> IsTotalDayExceedPerRequest(int empId, int leaveTypeId, int totalLeave)
+        {
+            var leaveRule = await _unitOfWork.Repository<Domain.LeaveRules>().Where(x=>x.LeaveTypeId == leaveTypeId && x.RuleName==LeaveRule.MaxDaysPerRequest).FirstOrDefaultAsync();
+
+            if(leaveRule == null)
+            {
+                return false;
+            }
+
+            return totalLeave > leaveRule.RuleValue;
+
         }
 
         public async Task<bool> IsCorrectGender(int empId, int leaveTypeId)
@@ -143,11 +163,11 @@ namespace Hrm.Application.Helpers
         }
 
 
-        public async Task<int> CalculateLeaveAmount(int empId, int LeaveTypeId, DateTime startDate, DateTime endYear, int curYear)
+        public async Task<List<int>> CalculateLeaveAmount(int empId, int LeaveTypeId, DateTime startDate, DateTime endYear, int curYear)
         {
             var leaveRules = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.LeaveTypeId == LeaveTypeId).ToListAsync();
 
-
+            List<int> leaveAmountDue = new List<int>(2);
             
             bool haveAccuralRule = false;
             bool haveMaxDaysPerMonth = false;
@@ -203,7 +223,7 @@ namespace Hrm.Application.Helpers
 
             if (haveMaxDaysPerMonth)
             {
-                int takenLeave = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == LeaveTypeId && x.AttendanceDate.Month == startDate.Month && x.AttendanceDate.Year == startDate.Year).CountAsync();
+                int takenLeave = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.EmpId==empId && x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == LeaveTypeId && x.AttendanceDate.Month == startDate.Month && x.AttendanceDate.Year == startDate.Year).CountAsync();
 
                 int totalLeave = maxDaysPerMonth;
 
@@ -211,7 +231,6 @@ namespace Hrm.Application.Helpers
                 {
                     totalLeave = Math.Min(totalLeave, accuralLeave);
 
-                    return Math.Max(0, totalLeave);
                 }
                 
                 if(haveMaxDaysPerYear)
@@ -224,13 +243,15 @@ namespace Hrm.Application.Helpers
                     totalLeave = Math.Min(totalLeave, maxDaysLifeTime);
                 }
 
-                return Math.Max(0, totalLeave - takenLeave);
+                leaveAmountDue.Add(totalLeave);
+                leaveAmountDue.Add(Math.Max(0, totalLeave - takenLeave));
+                return leaveAmountDue;
 
             }
 
             if(haveMaxDaysPerYear)
             {
-                int takenLeave = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == LeaveTypeId && x.AttendanceDate.Year == startDate.Year).CountAsync();
+                int takenLeave = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.EmpId==empId && x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == LeaveTypeId && x.AttendanceDate.Year == startDate.Year).CountAsync();
 
                 int totalLeave = maxDaysPerYear;
 
@@ -244,12 +265,14 @@ namespace Hrm.Application.Helpers
                     totalLeave = Math.Min(totalLeave, maxDaysLifeTime);
                 }
 
-                return Math.Max(0, totalLeave - takenLeave);
+                leaveAmountDue.Add(totalLeave);
+                leaveAmountDue.Add(Math.Max(0, totalLeave - takenLeave));
+                return leaveAmountDue;
             }
 
             if(haveMaxDaysLifeTime)
             {
-                int takenLeave = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == LeaveTypeId).CountAsync();
+                int takenLeave = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.EmpId==empId && x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == LeaveTypeId).CountAsync();
                 
                 int totalLeave = maxDaysLifeTime;
 
@@ -258,20 +281,25 @@ namespace Hrm.Application.Helpers
                     Math.Min(totalLeave, accuralLeave);
                 }
 
-                return Math.Max(0, totalLeave - takenLeave);
+                leaveAmountDue.Add(totalLeave);
+                leaveAmountDue.Add(Math.Max(0, totalLeave - takenLeave));
+                return leaveAmountDue;
             }
 
             if(haveAccuralRule)
             {
-                int takenLeave = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == LeaveTypeId).CountAsync();
+                int takenLeave = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.EmpId==empId && x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == LeaveTypeId).CountAsync();
 
-                return accuralLeave - takenLeave;
+                leaveAmountDue.Add(accuralLeave);
+                leaveAmountDue.Add(Math.Max(0, accuralLeave - takenLeave));
+
+                return leaveAmountDue;
             }
 
 
-
-
-            return -1;            
+            leaveAmountDue.Add(-1);
+            leaveAmountDue.Add(-1);
+            return leaveAmountDue;
 
         }
     }

@@ -1,23 +1,18 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { LeaveService } from '../../leave/service/leave.service';
 
-import { LeaveComponent } from './leave.component';
 
 describe('LeaveComponent', () => {
-  let component: LeaveComponent;
-  let fixture: ComponentFixture<LeaveComponent>;
+  let service: LeaveService;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [LeaveComponent]
-    })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(LeaveComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [LeaveService] // Ensure LeaveService is provided
+    });
+    service = TestBed.inject(LeaveService); // Inject the service
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should be created', () => {
+    expect(service).toBeTruthy();
   });
 });

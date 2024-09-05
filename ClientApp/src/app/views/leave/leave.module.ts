@@ -42,6 +42,7 @@ import { LeaveBalanceComponent } from './leave-balance/leave-balance.component';
     FinalApprovalComponent,
     PersonalLeaveComponent,
     LeaveBalanceComponent
+    LeaveDetailViewComponent
   ],
   imports: [
     CommonModule,

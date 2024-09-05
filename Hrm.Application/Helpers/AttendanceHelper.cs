@@ -164,7 +164,7 @@ namespace Hrm.Application.Helpers
                 if (tempStartDate <= tempEndDate)
                 {
                     TimeSpan totaldays = tempEndDate.Subtract(tempStartDate);
-                    totalWeekend += ((int)totaldays.TotalDays + 7) / 7;
+                    totalWeekend += ((int)totaldays.TotalDays + 1) % 7;
                 }
             }
 

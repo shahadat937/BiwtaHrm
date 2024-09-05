@@ -18,8 +18,6 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
 
   loading: boolean = false;
   @Input() leaveRequestId: number = 0;
-  @Input() CanApprove: boolean = false;
-  @Input() Role : string = "Reviewer";
   subscription: Subscription = new Subscription();
   leaveData : LeaveModel = new LeaveModel();
   leaveStatusOption: string [] = [];
@@ -48,9 +46,7 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    if(this.subscription) {
-      this.subscription.unsubscribe();
-    } 
+    
   }
 
   getLeaveRequestById() {
@@ -65,7 +61,7 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
   }
 
   getLeaveStatusOption() {
-    this.subscription = this.leaveService.getLeaveStatusOption().subscribe({
+    this.leaveService.getLeaveStatusOption().subscribe({
       next: option=> {
         this.leaveStatusOption = option;
       },
@@ -82,8 +78,8 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
 
   approveLeaveRequest() {
     this.loading = true;
-    if(this.Role=='Approver') {
-      this.subscription = this.leaveService.approveFinalLeaveRequest(this.leaveRequestId).subscribe({
+    if(this.authService.currentUserValue.role=='Admin') {
+      this.leaveService.approveFinalLeaveRequest(this.leaveRequestId).subscribe({
         next: response=> {
           if(response.success == true) {
             this.toastr.success('',`${response.message}`, {
@@ -103,7 +99,7 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
           this.loading = false;
         }
       })
-    } else if(this.Role=="Reviewer"){
+    } else {
       this.leaveService.approveLeaveRequestByReviewer(this.leaveRequestId).subscribe({
         next: response=> {
           if(response.success == true) {
@@ -124,38 +120,12 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
           this.loading = false;
         }
       })
-    } else {
-      this.toastr.warning('',"Invalid Role", {
-        positionClass: 'toast-top-right'
-      });
     }
   }
-  
   denyLeaveRequest() {
     this.loading = true;
-    if(this.Role=='Approver') {
-      this.subscription = this.leaveService.denyFinalLeaveRequest(this.leaveRequestId).subscribe({
-        next: response=> {
-          if(response.success == true) {
-            this.toastr.success('',`${response.message}`, {
-              positionClass: 'toast-top-right'
-            })
-            this.getLeaveRequestById();
-          } else {
-            this.toastr.warning('',`${response.message}`, {
-              positionClass: 'toast-top-right'
-            })
-          }
-        },
-        error: error=> {
-          this.loading = false;
-        },
-        complete: ()=> {
-          this.loading = false;
-        }
-      })
-    } else if (this.Role == "Reviewer"){
-      this.subscription = this.leaveService.denyLeaveRequestByReviewer(this.leaveRequestId).subscribe({
+    if(this.authService.currentUserValue.role=='Admin') {
+      this.leaveService.denyFinalLeaveRequest(this.leaveRequestId).subscribe({
         next: response=> {
           if(response.success == true) {
             this.toastr.success('',`${response.message}`, {
@@ -176,7 +146,26 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
         }
       })
     } else {
-      this.toastr.warning('',"Invalid Role");
+      this.leaveService.denyLeaveRequestByReviewer(this.leaveRequestId).subscribe({
+        next: response=> {
+          if(response.success == true) {
+            this.toastr.success('',`${response.message}`, {
+              positionClass: 'toast-top-right'
+            })
+            this.getLeaveRequestById();
+          } else {
+            this.toastr.warning('',`${response.message}`, {
+              positionClass: 'toast-top-right'
+            })
+          }
+        },
+        error: error=> {
+          this.loading = false;
+        },
+        complete: ()=> {
+          this.loading = false;
+        }
+      })
     }
   }
 }

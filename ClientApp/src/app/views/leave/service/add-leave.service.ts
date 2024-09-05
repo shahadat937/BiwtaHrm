@@ -40,4 +40,8 @@ export class AddLeaveService {
   getEmpById(EmpId:number): Observable<any> {
     return this.http.get<any>(this.baseUrl+`/empBasicInfo/get-EmpBasicInfosById/${EmpId}`);
   }
+
+  getWorkingDays(params: HttpParams): Observable<any> {
+    return this.http.get<any>(this.baseUrl+"/attendance/get-WorkingDays", {params: params});
+  }
 }

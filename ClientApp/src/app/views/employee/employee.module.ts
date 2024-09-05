@@ -75,8 +75,6 @@ import { ThanaService } from '../basic-setup/service/thana.service';
 import { DivisionService } from '../basic-setup/service/division.service';
 import { OfficeService } from '../basic-setup/service/office.service';
 import { GradeService } from '../basic-setup/service/Grade.service';
-
-
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -157,7 +155,8 @@ import { GradeService } from '../basic-setup/service/Grade.service';
     ThanaService,
     DivisionService,
     OfficeService,
-    GradeService
+    GradeService,
+    
   ],
 })
 export class EmployeeModule { }

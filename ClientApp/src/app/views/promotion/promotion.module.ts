@@ -27,6 +27,7 @@ import {
   PopoverModule,
   SpinnerModule,
   TooltipModule,
+  ToasterService,
 } from '@coreui/angular';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -112,7 +113,8 @@ import { DepartmentService } from '../basic-setup/service/department.service';
   providers:[
     GradeService,
     OfficeService,
-    DepartmentService
+    DepartmentService,
+    ToasterService
   ]
 })
 export class PromotionModule { }

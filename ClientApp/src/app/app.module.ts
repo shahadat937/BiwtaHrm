@@ -51,6 +51,8 @@ import { ErrorInterceptor } from './core/interceptor/error.interceptor';
 import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
 import { AuthService } from './core/service/auth.service';
 import { SharedCustomModule } from './shared/shared.module';
+import { FormRecordService } from './views/appraisal/services/form-record.service';
+import { YearSetupService } from './views/basic-setup/service/year-setup.service';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
@@ -106,6 +108,8 @@ const APP_CONTAINERS = [
     IconSetService,
     Title,
     AuthService,
+    FormRecordService ,
+    YearSetupService
   ],
   bootstrap: [AppComponent],
 })

@@ -27,16 +27,12 @@ import { LeaveDetailViewComponent } from './manageleave/leave-detail-view/leave-
 import { ManageLeaveService } from './service/manage-leave.service';
 import { LeaveService } from './service/leave.service';
 import { AddLeaveService } from './service/add-leave.service';
-import { ReviewLeaveComponent } from './review-leave/review-leave.component';
-import { FinalApprovalComponent } from './final-approval/final-approval.component';
 
 @NgModule({
   declarations: [
     AddleaveComponent,
     ManageleaveComponent,
-    LeaveDetailViewComponent,
-    ReviewLeaveComponent,
-    FinalApprovalComponent
+    LeaveDetailViewComponent
   ],
   imports: [
     CommonModule,

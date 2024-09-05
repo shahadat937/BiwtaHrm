@@ -21,7 +21,6 @@ export class LeaveRulesComponent implements OnInit, OnDestroy {
   leaveTypeIdFilter: number|null;
   leaveTypeOption: any[] = [];
   RuleNameOption: any[] = [];
-  GenderOption: any[] = [];
 
   constructor(
     public leaveRuleService: LeaveRuleService,
@@ -39,13 +38,12 @@ export class LeaveRulesComponent implements OnInit, OnDestroy {
         this.leaveTypeOption = option;
       }
     });
-    
+
     this.leaveRuleService.getSelectedRuleName().subscribe({
       next: (option)=> {
         this.RuleNameOption = option;
       }
     });
-    this.GetSelectedGender();
   }
 
   getAllLeaveRule() {
@@ -171,14 +169,6 @@ export class LeaveRulesComponent implements OnInit, OnDestroy {
         this.leaveRules = data;
       }
     });
-  }
-
-  GetSelectedGender() {
-    this.leaveRuleService.getSelectedGender().subscribe({
-      next: response=> {
-        this.GenderOption = response;
-      }
-    })
   }
 
 }

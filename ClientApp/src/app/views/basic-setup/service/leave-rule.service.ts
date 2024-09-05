@@ -41,8 +41,4 @@ export class LeaveRuleService {
   getLeaveRuleById(id:number):Observable<any> {
     return this.http.get<any>(this.baseUrl+"/leaveRules/get-leave")
   }
-
-  getSelectedGender(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl+"/gender/get-selectedGenders");
-  }
 }

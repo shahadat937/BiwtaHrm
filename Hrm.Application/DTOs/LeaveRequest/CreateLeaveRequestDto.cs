@@ -22,8 +22,6 @@ namespace Hrm.Application.DTOs.LeaveRequest
         public string? AccompanyBy { get; set; }
         public int? Status { get; set; }
         public bool? IsActive { get; set; }
-        public int? ReviewedBy { get; set; }
-        public int? ApprovedBy { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
     }

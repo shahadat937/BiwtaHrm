@@ -58,11 +58,6 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
                 leaveRequesQuery = leaveRequesQuery.Where(x=>x.EmpId == request.filterDto.EmpId);
             }
 
-            if(request.filterDto.Status!=null&&request.filterDto.Status.Count>0)
-            {
-                leaveRequesQuery = leaveRequesQuery.Where(x => request.filterDto.Status.Contains((int)x.Status));
-            }
-
             var LeaveRequests = await leaveRequesQuery.ToListAsync();
             var leaveRequestdto = _mapper.Map<List<LeaveRequestDto>>(LeaveRequests);
 

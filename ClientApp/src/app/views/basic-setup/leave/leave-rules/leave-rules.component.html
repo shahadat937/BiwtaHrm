@@ -41,7 +41,7 @@
                             </div>
                         }
                     </c-col>
-                    <c-col *ngIf="leaveRuleService.leaveRule.ruleName!='Gender'" md="3">
+                    <c-col md="3">
                         <label for="ruleValue" cLabel>Rule Value</label>
                         <input type="number" 
                         required
@@ -49,25 +49,6 @@
                         #ruleValue = "ngModel"
                         name="ruleValue" 
                         id="ruleValue" cFormControl placeholder="Enter Rule Value">
-                        @if (ruleValue.invalid&&ruleValue.touched) {
-                            <div class="text-left text-danger">Rule Value is required</div>
-                        }
-                    </c-col>
-                    <c-col *ngIf="this.leaveRuleService.leaveRule.ruleName=='Gender'" md="3">
-                        <label for="ruleValue" cLabel>Rule Value</label>
-                        <select 
-                        cSelect
-                        required
-                        [(ngModel)] = "this.leaveRuleService.leaveRule.ruleValue"
-                        #ruleValue = "ngModel"
-                        name="ruleValue" 
-                        id="ruleValue">
-                            <option [ngValue]="null">Select Gender</option>
-                            @for (gender of GenderOption; track $index) {
-                                <option [ngValue]="gender.id">{{gender.name}}</option>
-                            }
-                        </select>
-
                         @if (ruleValue.invalid&&ruleValue.touched) {
                             <div class="text-left text-danger">Rule Value is required</div>
                         }

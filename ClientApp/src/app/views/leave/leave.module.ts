@@ -27,8 +27,11 @@ import { LeaveDetailViewComponent } from './manageleave/leave-detail-view/leave-
 import { ManageLeaveService } from './service/manage-leave.service';
 import { LeaveService } from './service/leave.service';
 import { AddLeaveService } from './service/add-leave.service';
+import {LeaveBalanceService} from './service/leave-balance.service'
 import { ReviewLeaveComponent } from './review-leave/review-leave.component';
 import { FinalApprovalComponent } from './final-approval/final-approval.component';
+import { PersonalLeaveComponent } from './personal-leave/personal-leave.component';
+import { LeaveBalanceComponent } from './leave-balance/leave-balance.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,9 @@ import { FinalApprovalComponent } from './final-approval/final-approval.componen
     ManageleaveComponent,
     LeaveDetailViewComponent,
     ReviewLeaveComponent,
-    FinalApprovalComponent
+    FinalApprovalComponent,
+    PersonalLeaveComponent,
+    LeaveBalanceComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +65,8 @@ import { FinalApprovalComponent } from './final-approval/final-approval.componen
   ],providers:[
     ManageLeaveService,
     LeaveService,
-    AddLeaveService
+    AddLeaveService,
+    LeaveBalanceService
   ]
 })
 export class LeaveModule { }

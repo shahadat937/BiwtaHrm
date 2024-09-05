@@ -25,6 +25,7 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
         private readonly IHrmRepository<Hrm.Domain.Attendance> _AttendanceRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly LeaveAtdHelper leaveAtdHelper;
+        private readonly LeaveRequestValidator leaveRequestValidator;
 
         public GetLeaveAmountRequestHandler(IHrmRepository<Domain.LeaveRequest> leaveRequestRepository, IHrmRepository<Domain.LeaveRules> leaveRulesRepository,
             IHrmRepository<Domain.Attendance> AttendanceRepository,
@@ -34,12 +35,19 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
             _LeaveRulesRepository = leaveRulesRepository;
             _AttendanceRepository = AttendanceRepository;
             _unitOfWork = unitOfWork;
+            leaveRequestValidator = new LeaveRequestValidator(unitOfWork);
             
         }
 
         public async Task<object> Handle(GetLeaveAmountRequest request, CancellationToken cancellationToken)
         {
+
+
             var leaveRules = await _LeaveRulesRepository.Where(x => x.LeaveTypeId == request.leaveAmountRequestDto.LeaveTypeId).ToListAsync();
+
+            List<int> leaveAmount = await leaveRequestValidator.CalculateLeaveAmount(request.leaveAmountRequestDto.EmpId, request.leaveAmountRequestDto.LeaveTypeId, DateTime.Now, DateTime.Now, DateTime.Now.Year);
+
+            return new { totalLeave = leaveAmount[0], totalDue = leaveAmount[1]};
 
             DateOnly? joiningDate = null;
 

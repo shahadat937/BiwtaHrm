@@ -6,7 +6,7 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { EmpPersonalInfoService } from '../../../service/emp-personal-info.service';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { ToastrService } from 'ngx-toastr';
-import { CountryService } from 'src/app/views/basic-setup/service/country.service';
+import { CountryService } from 'src/app/views/basic-setup/service/Country.service';
 
 @Component({
   selector: 'app-personal-information',

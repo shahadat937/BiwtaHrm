@@ -7,7 +7,7 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { EmpForeignTourInfoModule } from '../../../model/emp-foreign-tour-info.module';
 import { EmpForeignTourInfoService } from '../../../service/emp-foreign-tour-info.service';
-import { CountryService } from 'src/app/views/basic-setup/service/country.service';
+import { CountryService } from 'src/app/views/basic-setup/service/Country.service';
 
 @Component({
   selector: 'app-emp-foreign-tour-info',

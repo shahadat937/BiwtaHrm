@@ -109,7 +109,7 @@ import { TableModule } from 'primeng/table';
 import { LeaveRulesComponent } from './leave/leave-rules/leave-rules.component';
 import { TabsModule } from '@coreui/angular';
 import { TabViewModule } from 'primeng/tabview';
-import { CountryService } from './service/country.service';
+import { CountryService } from './service/Country.service';
 import { OrganogramSectionComponent } from './organogram/organogram-section/organogram-section.component';
 import { HairColorService } from './service/hair-color.service';
 import { LeaveTypeService } from './service/leave-type.service';

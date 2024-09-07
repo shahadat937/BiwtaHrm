@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { CountryService } from '../service/country.service';
+import { CountryService } from '../service/Country.service';
 import { DivisionService } from './../service/division.service';
 
 @Component({

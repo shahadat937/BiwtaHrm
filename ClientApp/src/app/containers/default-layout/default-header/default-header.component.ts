@@ -89,7 +89,9 @@ export class DefaultHeaderComponent extends HeaderComponent {
         this.empBasicInfo = res;
       });
       this.subscription = this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
-        this.designationName = res.designationName;
+        if(res){
+          this.designationName = res.designationName;
+        }
       });
     }
     else {

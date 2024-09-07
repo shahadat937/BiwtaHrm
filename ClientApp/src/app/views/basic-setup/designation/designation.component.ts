@@ -42,7 +42,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
     'slNo',
-    'officeName',
+    // 'officeName',
     'departmentName',
     'sectionName',
     'designationName',
@@ -73,6 +73,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getALlDesignations();
     this.handleRouteParams();
     this.loadOffice();
+    this.getAllSelectedDepartments();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
@@ -84,8 +85,8 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         this.BtnText = " Hide Form";
         this.buttonIcon = "cilTrash";
         this.designationService.find(+id).subscribe((res) => {
-          this.onOfficeSelect(res.officeId);
-          this.onOfficeAndDepartmentSelect(res.officeId, res.departmentId);
+          // this.onOfficeSelect(res.officeId);
+          this.onOfficeAndDepartmentSelect(res.departmentId);
           this.DesignationForm?.form.patchValue(res);
         });
       } else {
@@ -204,6 +205,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       this.offices = data;
     });
   }
+  
   onOfficeSelect(officeId : number){
     this.designationService.designation.departmentId = null;
     this.departmentService.getSelectedDepartmentByOfficeId(+officeId).subscribe((res) => {
@@ -230,6 +232,12 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   
+  getAllSelectedDepartments(){
+    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+        this.departments = res;
+    });
+  }
+  
   onDepartmentSelectGetDesignation(officeId : number, departmentId : number){
     if(departmentId == null){
       this.onOfficeSelectGetDesignation(officeId);
@@ -244,9 +252,9 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   
-  onOfficeAndDepartmentSelect(officeId : number, departmentId : number){
+  onOfficeAndDepartmentSelect(departmentId : number){
     this.designationService.designation.sectionId = null;
-    this.sectionService.getSectionByOfficeDepartment(+officeId,+departmentId).subscribe((res) => {
+    this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
       this.sections = res;
       if(res.length>0){
         this.sectionView = true;

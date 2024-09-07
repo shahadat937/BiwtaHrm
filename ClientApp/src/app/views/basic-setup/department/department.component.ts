@@ -40,9 +40,9 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
     'slNo', 
-    'officeName',
-    'upperDepartmentName',
+    // 'officeName',
     'departmentName', 
+    'upperDepartmentName',
     // 'departmentNameBangla',
     'isActive', 
     'Action'];
@@ -65,6 +65,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getALlDepartments();
     this.handleRouteParams();
     this.loadOffice();
+    this.getAllSelectedDepartments();
   }
 
   handleRouteParams() {
@@ -77,7 +78,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
         this.BtnText = " Hide Form";
         this.buttonIcon = "cilTrash";
         this.departmentService.getById(+id).subscribe((res) => {
-          this.onOfficeSelect(res.officeId);
+          // this.onOfficeSelect(res.officeId);
           this.DepartmentForm?.form.patchValue(res);
         });
       } else {
@@ -209,18 +210,25 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  onOfficeSelect(officeId : number){
-    this.departmentService.departments.upperDepartmentId = null;
-    this.departmentService.getSelectedDepartmentByOfficeId(+officeId).subscribe((res) => {
-      this.departments = res;
-      if(res.length>0){
-        this.upperDepartmentView = true;
-      }
-      else{
-        this.upperDepartmentView = false;
-      }
+  // onOfficeSelect(officeId : number){
+  //   this.departmentService.departments.upperDepartmentId = null;
+  //   this.departmentService.getSelectedDepartmentByOfficeId(+officeId).subscribe((res) => {
+  //     this.departments = res;
+  //     if(res.length>0){
+  //       this.upperDepartmentView = true;
+  //     }
+  //     else{
+  //       this.upperDepartmentView = false;
+  //     }
+  //   });
+  // }
+
+  getAllSelectedDepartments(){
+    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+          this.departments = res;
     });
   }
+
   onOfficeSelectGetDepartment(officeId : number){
     if(officeId == null){
       this.getALlDepartments();
@@ -250,6 +258,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.getALlDepartments();
         this.resetForm();
+        this.getAllSelectedDepartments();
         this.router.navigate(['/officeSetup/department']);
         this.loading = false;
       } else {

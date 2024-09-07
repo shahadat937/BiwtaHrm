@@ -27,8 +27,8 @@ export class OrganogramService {
   //   }
   // }
 
-  getOrganogramNamesOnly(): Observable<OrganogramOfficeNameDto[]>{
-        return this.http.get<OrganogramOfficeNameDto[]>(this.baseUrl + '/organogram/get-organogramNamesOnly');
+  getOrganogramNamesOnly(): Observable<OrganogramDepartmentNameDto[]>{
+        return this.http.get<OrganogramDepartmentNameDto[]>(this.baseUrl + '/organogram/get-organogramNamesOnly');
   }
 }
 

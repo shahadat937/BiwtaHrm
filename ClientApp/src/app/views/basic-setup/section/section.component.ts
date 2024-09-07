@@ -36,10 +36,10 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
     'slNo', 
-    'office',
+    // 'office',
     'department',
-    'upperSection', 
     'section',
+    'upperSection', 
     'isActive', 
     'Action'];
   dataSource = new MatTableDataSource<any>();
@@ -62,6 +62,7 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getAllSection();
     this.handleRouteParams();
     this.loadOffice();
+    this.getAllSelectedDepartments();
   }
 
   handleRouteParams() {
@@ -75,6 +76,7 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
         this.buttonIcon = "cilTrash";
         this.sectionService.find(+id).subscribe((res) => {
           this.onOfficeSelect(res.officeId);
+          this.onOfficeAndDepartmentSelect(res.departmentId);
           this.SectionForm?.form.patchValue(res);
         });
       } else {
@@ -224,9 +226,15 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   
-  onOfficeAndDepartmentSelect(officeId : number, departmentId : number){
+  getAllSelectedDepartments(){
+    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+          this.departments = res;
+    });
+  }
+  
+  onOfficeAndDepartmentSelect(departmentId : number){
     this.sectionService.sections.upperSectionId = null;
-    this.sectionService.getSectionByOfficeDepartment(+officeId,+departmentId).subscribe((res) => {
+    this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
       this.upperSections = res;
       if(res.length>0){
         this.upperSectionView = true;

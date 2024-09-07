@@ -16,7 +16,7 @@
               cRow
               class="needs-validation"
             >
-            <c-col [md]="4">
+            <!-- <c-col [md]="4">
               <label cLabel for="office">Office<span class="text-danger">*</span></label>
               <div class="input-wrapper">
                 <select (change)="onOfficeSelect(sectionService.sections.officeId)" 
@@ -36,12 +36,12 @@
                 <div class="text-left text-danger">Office is required</div>
                 }
               </div>
-            </c-col>
+            </c-col> -->
             
-                <c-col [md]="4" [hidden]="departmentView == false">
+                <c-col [md]="4">
                     <label cLabel for="departmentId">Department<span class="text-danger"></span></label>
                     <div class="input-wrapper">
-                      <select (change)="onOfficeAndDepartmentSelect(sectionService.sections.officeId, sectionService.sections.departmentId)"
+                      <select (change)="onOfficeAndDepartmentSelect(sectionService.sections.departmentId)"
                         [(ngModel)]="sectionService.sections.departmentId" name="departmentId" #departmentId="ngModel"
                         cFormControl id="departmentId" aria-label="Default select example" cSelect>
                         <option [ngValue]="null">Select Department</option>
@@ -300,7 +300,7 @@
               ></button>
             </mat-form-field>
           </c-col>
-        <c-col [md]="4">
+        <!-- <c-col [md]="4">
             <div class="input-wrapper">
                 <select (change)="onOfficeSelect(sectionService.sections.officeId)" (change)="onOfficeSelectGetDepartment(sectionService.sections.officeId)"
                 [(ngModel)]="sectionService.sections.officeId" name="officeId" #officeId="ngModel"
@@ -314,13 +314,13 @@
                 }
                 </select>
             </div>
-        </c-col>
+        </c-col> -->
         
       </div>
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="slNo">
-            <th mat-header-cell *matHeaderCellDef>Serial No</th>
+            <th mat-header-cell *matHeaderCellDef>SL No</th>
             <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
           </ng-container>
   

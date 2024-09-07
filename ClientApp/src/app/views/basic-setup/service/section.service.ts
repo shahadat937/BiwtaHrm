@@ -52,7 +52,7 @@ export class SectionService {
     return this.http.delete(this.baseUrl + '/section/delete-Section/' + id);
   }
 
-  getSectionByOfficeDepartment(officeId: number, departmentId: number) {
-    return this.http.get<SelectedModel[]>(this.baseUrl + '/section/get-sectionByOfficeIdAndDepartmentId?&officeId=' + officeId + '&departmentId='+departmentId);
+  getSectionByOfficeDepartment(departmentId: number) {
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/section/get-sectionByOfficeIdAndDepartmentId?&departmentId='+departmentId);
   }
 }

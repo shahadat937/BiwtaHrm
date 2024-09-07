@@ -78,9 +78,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-sectionByOfficeIdAndDepartmentId")]
-        public async Task<ActionResult<DesignationDto>> GetSectionByOfficeIdAndDepartmentId(int officeId, int departmentId)
+        public async Task<ActionResult<DesignationDto>> GetSectionByOfficeIdAndDepartmentId(int departmentId)
         {
-            var Designations = await _mediator.Send(new GetSelectedSectionByOfficeDepartmentRequest { OfficeId = officeId, DepartmentId = departmentId });
+            var Designations = await _mediator.Send(new GetSelectedSectionByOfficeDepartmentRequest { DepartmentId = departmentId });
             return Ok(Designations);
         }
     }

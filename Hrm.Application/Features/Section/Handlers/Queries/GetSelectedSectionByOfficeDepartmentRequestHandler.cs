@@ -23,26 +23,26 @@ namespace Hrm.Application.Features.Section.Handlers.Queries
         public async Task<List<SelectedModel>> Handle(GetSelectedSectionByOfficeDepartmentRequest request, CancellationToken cancellationToken)
         {
 
-            if (request.OfficeId != 0 && request.DepartmentId != 0)
-            {
-                ICollection<Hrm.Domain.Section> Sections = await _SectionRepository.FilterAsync(x => x.OfficeId == request.OfficeId && x.DepartmentId == request.DepartmentId);
+            //if (request.OfficeId != 0 && request.DepartmentId != 0)
+            //{
+                ICollection<Hrm.Domain.Section> Sections = await _SectionRepository.FilterAsync(x => x.DepartmentId == request.DepartmentId);
                 List<SelectedModel> selectModels = Sections.Select(x => new SelectedModel
                 {
                     Name = x.SectionName,
                     Id = x.SectionId
                 }).ToList();
                 return selectModels;
-            }
-            else
-            {
-                ICollection<Hrm.Domain.Section> Sections = await _SectionRepository.FilterAsync(x => x.OfficeId == request.OfficeId && x.DepartmentId == null);
-                List<SelectedModel> selectModels = Sections.Select(x => new SelectedModel
-                {
-                    Name = x.SectionName,
-                    Id = x.SectionId
-                }).ToList();
-                return selectModels;
-            }
+            //}
+            //else
+            //{
+            //    ICollection<Hrm.Domain.Section> Sections = await _SectionRepository.FilterAsync(x => x.OfficeId == request.OfficeId && x.DepartmentId == null);
+            //    List<SelectedModel> selectModels = Sections.Select(x => new SelectedModel
+            //    {
+            //        Name = x.SectionName,
+            //        Id = x.SectionId
+            //    }).ToList();
+            //    return selectModels;
+            //}
             
         }
     }

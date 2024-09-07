@@ -59,4 +59,7 @@ export class DepartmentService {
   onOfficeSelectGetDepartment(id:number){
     return this.http.get<Department[]>(this.baseUrl + '/Department/get-DepartmentsByOfficeId/' + id);
   }
+  getSelectedAllDepartment(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/Department/get-selecteddepartment');
+  }
 }

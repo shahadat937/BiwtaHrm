@@ -84,6 +84,10 @@ export const navItems: INavData[] = [
         name: 'Manage Leave',
         url: '/leave/manageleave'
       },
+      {
+        name: 'Review Leave',
+        url: '/leave/reviewleave'
+      }
     ]
   },
   // {

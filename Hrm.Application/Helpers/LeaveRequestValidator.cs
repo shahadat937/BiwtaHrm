@@ -32,6 +32,12 @@ namespace Hrm.Application.Helpers
                 return true;
             }
 
+            bool haveMinAge = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.LeaveTypeId == leaveTypeId && x.RuleName == LeaveRule.MinimumAge).AnyAsync();
+
+            await IsExceedMaxRequest(empId, leaveTypeId);
+            await IsCorrectGender(empId, leaveTypeId);
+            await HaveMinimumAge(empId, leaveTypeId);
+
             var totalLeaveDays =await AttendanceHelper.calculateWorkingDay(startDate, endDate, startDate.Year, _unitOfWork);
 
             if(await IsTotalDayExceedPerRequest(empId, leaveTypeId, totalLeaveDays))
@@ -205,7 +211,7 @@ namespace Hrm.Application.Helpers
             if(leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysPerYear).Any())
             {
                 haveMaxDaysPerYear = true;
-                maxDaysPerMonth = leaveRules.Where(x=> x.RuleName == LeaveRule.MaxDaysPerYear).Select(x=>x.RuleValue).ToList()[0];
+                maxDaysPerYear = leaveRules.Where(x=> x.RuleName == LeaveRule.MaxDaysPerYear).Select(x=>x.RuleValue).ToList()[0];
             }
 
             if(leaveRules.Where(x=>x.RuleName == LeaveRule.MaxDaysLifetime).Any())
@@ -262,7 +268,6 @@ namespace Hrm.Application.Helpers
                 leaveAmountDue.Add(totalLeave);
                 leaveAmountDue.Add(Math.Max(0, totalLeave - takenLeave));
                 return leaveAmountDue;
-                return Math.Max(0, takenLeave - totalLeave);
             }
 
             if(haveMaxDaysLifeTime)

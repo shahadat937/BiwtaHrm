@@ -24,6 +24,8 @@ namespace Hrm.Domain
         public bool IsActive { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
+        public int? ReviewedBy { get; set; }
+        public int? ApprovedBy { get; set; }
 
         public EmpBasicInfo Employee {get; set;}
         public LeaveType LeaveType {get; set;}

@@ -46,7 +46,9 @@ export class OfficeService {
     );
   }
 
-
+  getOneOffice(){
+    return this.http.get<Office>(this.baseUrl + '/Office/get-oneOffice');
+  }
 
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/Office/update-office/'+id, model);

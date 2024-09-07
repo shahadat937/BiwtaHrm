@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { OrganogramOfficeNameDto, OrganogramService } from '../service/organogram.service';
+import { OrganogramDepartmentNameDto, OrganogramOfficeNameDto, OrganogramService } from '../service/organogram.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,6 +16,7 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   subscription: Subscription = new Subscription();
   organograms:any[] = [];
   offices: OrganogramOfficeNameDto[] = [];
+  departments: OrganogramDepartmentNameDto[] = [];
   expandedOffices: { [key: string]: boolean } = {};
   expandedDesignations: { [key: string]: boolean } = {};
   expandedDepartments: { [key: string]: boolean } = {};
@@ -40,9 +41,9 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   }
 
   getOrganogram(){
-    this.subscription=this.organogramService.getOrganogramNamesOnly().subscribe((data: OrganogramOfficeNameDto[]) => { 
+    this.subscription=this.organogramService.getOrganogramNamesOnly().subscribe((data: OrganogramDepartmentNameDto[]) => { 
       this.organograms = data;
-      this.offices = data;
+      this.departments = data;
     });
   }
   

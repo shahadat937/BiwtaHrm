@@ -79,9 +79,27 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
   ngOnInit(): void {
     this.getALlOffices();
-    this.handleRouteParams();
+    // this.handleRouteParams();
     this.loadcountris();
+    this.getOneOfficeInfo();
   }
+
+  getOneOfficeInfo(){
+    this.subscription = this.officeService.getOneOffice().subscribe((res) =>{
+      if(res){
+        this.btnText = 'Update';
+        this.HeaderText = "Update Office";
+        this.visible = true;
+        this.OfficeForm?.form.patchValue(res);
+      }
+      else{
+        this.btnText = 'Submit';
+        this.HeaderText = "Add Office";
+        this.visible = true;
+      }
+    })
+  }
+
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('officeId');
@@ -103,7 +121,7 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         this.btnText = 'Submit';
         this.visible = false;
-        this.HeaderText = "Office List"
+        this.HeaderText = "Add Office"
         this.buttonIcon = "cilPencil";
         this.BtnText = " Add Office";
       }
@@ -288,9 +306,9 @@ onUnionNamesChangeByThanaId(thanaId:number){
         });
         this.loading = false;
         this.getALlOffices();
-        this.resetForm();
-        this.router.navigate(['/officeSetup/office']);
-
+        // this.resetForm();
+        // this.router.navigate(['/officeSetup/office']);
+        this.getOneOfficeInfo();
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',

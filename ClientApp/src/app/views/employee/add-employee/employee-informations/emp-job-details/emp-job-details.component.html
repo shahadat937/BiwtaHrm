@@ -11,7 +11,7 @@
             <input type="hidden" [(ngModel)]="empJobDetailsService.empJobDetails.empId" name="empId" />
 
             
-            <c-col [md]="3">
+            <!-- <c-col [md]="3">
                 <label cLabel for="office">Office<span class="text-danger">*</span></label>
                 <div class="input-wrapper">
                 <select (change)="onOfficeSelect(empJobDetailsService.empJobDetails.officeId)" (change)="onOfficeSelectGetDesignation(empJobDetailsService.empJobDetails.officeId, empJobDetailsId)"
@@ -31,13 +31,13 @@
                 <div class="text-left text-danger">Office is required</div>
                 }
                 </div>
-            </c-col>
+            </c-col> -->
             
             <c-col [md]="3">
                 <label cLabel for="Department">Department<span class="text-danger"></span></label>
                 <div class="input-wrapper">
                 <select (change)="onDepartmentSelectGetDesignation(empJobDetailsService.empJobDetails.departmentId, empJobDetailsId)"
-                (change)="onOfficeAndDepartmentSelect(empJobDetailsService.empJobDetails.officeId, empJobDetailsService.empJobDetails.departmentId)"
+                (change)="onOfficeAndDepartmentSelect(empJobDetailsService.empJobDetails.departmentId)"
                     [(ngModel)]="empJobDetailsService.empJobDetails.departmentId" name="departmentId" #Department="ngModel"
                     cFormControl id="Department" aria-label="Default select example" cSelect>
                     <option [ngValue]="null">Select Department</option>

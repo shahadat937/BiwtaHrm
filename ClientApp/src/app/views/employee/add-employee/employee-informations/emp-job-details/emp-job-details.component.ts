@@ -54,6 +54,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     this.loadOffice();
     this.SelectModelGrade();
     this.getAllDepartment();
+    this.getAllSelectedDepartments();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -88,7 +89,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
         if(res.firstDepartmentId){
           this.getOldDesignationByDepartment(res.firstDepartmentId);
         }
-        this.onOfficeAndDepartmentSelect(res.officeId, res.departmentId);
+        this.onOfficeAndDepartmentSelect(res.departmentId);
         this.EmpJobDetailsForm?.form.patchValue(res);
         this.headerText = 'Update Job Details';
         this.btnText = 'Update';
@@ -171,9 +172,9 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   }
 
   
-  onOfficeAndDepartmentSelect(officeId : number, departmentId : number){
+  onOfficeAndDepartmentSelect(departmentId : number){
     this.empJobDetailsService.empJobDetails.sectionId = null;
-    this.sectionService.getSectionByOfficeDepartment(+officeId,+departmentId).subscribe((res) => {
+    this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
       this.sections = res;
       if(res.length>0){
         this.sectionView = true;
@@ -181,6 +182,13 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       else{
         this.sectionView = false;
       }
+    });
+  }
+
+  
+  getAllSelectedDepartments(){
+    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+          this.departments = res;
     });
   }
 

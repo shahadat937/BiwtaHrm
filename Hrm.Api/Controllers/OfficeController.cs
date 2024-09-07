@@ -38,6 +38,15 @@ namespace Hrm.Api.Controllers
             return Ok(Office);
         }
 
+
+        [HttpGet]
+        [Route("get-oneOffice")]
+        public async Task<ActionResult> GetOneOffice()
+        {
+            var Office = await _mediator.Send(new GetOneOfficeRequest { });
+            return Ok(Office);
+        }
+
         [HttpGet]
         [Route("get-officebyid/{id}")]
         public async Task<ActionResult<OfficeDto>> Get(int id)

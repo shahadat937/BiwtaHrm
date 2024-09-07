@@ -10,7 +10,6 @@ namespace Hrm.Application.Features.Section.Requests.Queries
 {
     public class GetSelectedSectionByOfficeDepartmentRequest : IRequest<List<SelectedModel>>
     {
-        public int? OfficeId { get; set; }
         public int? DepartmentId { get; set; }
     }
 }

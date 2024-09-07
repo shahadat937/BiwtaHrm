@@ -68,6 +68,15 @@ public class LeaveRequestController:Controller
         return Ok(response);
     }
 
+    [HttpGet]
+    [Route("get-LeaveAmountForAllLeaveTypeByEmp/{empId}")]
+    public async Task<ActionResult> GetLeaveAmountForAllLeaveType(int empId)
+    {
+        var command = new GetAllLeaveTypeAmountByEmpIdRequest { EmpId = empId };
+        var response = await _mediator.Send(command);
+        return Ok(response);
+    }
+
     [HttpPost]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]

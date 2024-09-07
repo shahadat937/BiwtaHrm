@@ -110,12 +110,16 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     }
   }
 
+  onDateChange() {
+    this.getLeaveAmount();
+    this.getWorkingDays();
+  }
+
   getLeaveAmount() {
     console.log(this.addLeaveService.addLeaveModel);
     if(this.addLeaveService.addLeaveModel.empId==null||this.addLeaveService.addLeaveModel.leaveTypeId==null||this.addLeaveService.addLeaveModel.fromDate==null||this.addLeaveService.addLeaveModel.toDate==null) {
       console.log("Hello World");
       this.totalDue = null;
-      this.totalLeave = null;
       return;
     }
 
@@ -128,19 +132,35 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.subcription = this.addLeaveService.getLeaveAmount(params).subscribe({
       next: response=> {
         this.totalDue = response.totalDue;
-        this.totalLeave = response.totalLeave;
       },
       error: err=> {
         this.totalDue =null;
-        this.totalLeave = null;
       }
     })
+
+    this.getWorkingDays();
   }
 
   getCountry() {
     this.subcription = this.addLeaveService.getSelectedCountry().subscribe({
       next: response=> {
         this.CountryOption = response;
+      }
+    })
+  }
+
+  getWorkingDays() {
+
+    if(this.addLeaveService.addLeaveModel.fromDate==null||this.addLeaveService.addLeaveModel.toDate==null) {
+      return;
+      this.totalLeave = null;
+    }
+    let params = new HttpParams();
+    params = params.set("From", this.addLeaveService.addLeaveModel.fromDate);
+    params = params.set("To", this.addLeaveService.addLeaveModel.toDate);
+    this.subcription = this.addLeaveService.getWorkingDays(params).subscribe({
+      next: response => {
+        this.totalLeave = response;
       }
     })
   }

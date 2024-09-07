@@ -41,7 +41,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { EmpPresentAddressComponent } from './add-employee/employee-informations/emp-present-address/emp-present-address.component';
 import { EmpPermanentAddressComponent } from './add-employee/employee-informations/emp-permanent-address/emp-permanent-address.component';
-import { CountryService } from '../basic-setup/service/country.service';
+import { CountryService } from '../basic-setup/service/Country.service';
 import { EmpJobDetailsComponent } from './add-employee/employee-informations/emp-job-details/emp-job-details.component';
 import { EmpSpouseInfoComponent } from './add-employee/employee-informations/emp-spouse-info/emp-spouse-info.component';
 import { EmpChildInfoComponent } from './add-employee/employee-informations/emp-child-info/emp-child-info.component';

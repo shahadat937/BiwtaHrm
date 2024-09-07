@@ -25,6 +25,7 @@ export class LeaveComponent implements OnInit, OnDestroy, AfterViewInit {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+  activeTabIndex:number;
   constructor(
     public leaveService: LeaveService,
     private route: ActivatedRoute,
@@ -33,6 +34,7 @@ export class LeaveComponent implements OnInit, OnDestroy, AfterViewInit {
     private toastr: ToastrService
   ) {
     //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
+    this.activeTabIndex = 0;
   }
   ngOnInit(): void {
     this.getAllLeaves();
@@ -51,6 +53,12 @@ export class LeaveComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
+
+  onTabChange(event:any) {
+    console.log(event);
+    this.activeTabIndex = event;
+  }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.matSort;

@@ -54,6 +54,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       this.addLeaveService.getEmpById(parseInt(this.authService.currentUserValue.empId)).subscribe({
         next: response => {
           this.empCardNo = response.idCardNo;
+          this.isValidPMS = true;
           this.addLeaveService.addLeaveModel.empId = parseInt(this.authService.currentUserValue.empId);
           this.employeeName = response.firstName + " "+response.lastName;
         }

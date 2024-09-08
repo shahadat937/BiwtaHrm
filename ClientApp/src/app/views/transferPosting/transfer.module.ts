@@ -28,6 +28,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { OfficeService } from '../basic-setup/service/office.service';
 import { DepartmentService } from '../basic-setup/service/department.service';
 import { GradeService } from '../basic-setup/service/Grade.service';
+import { SectionService } from '../basic-setup/service/section.service';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { GradeService } from '../basic-setup/service/Grade.service';
   providers:[
     OfficeService,
     DepartmentService,
-    GradeService
+    GradeService,
+    SectionService
   ],
   bootstrap: []
 })

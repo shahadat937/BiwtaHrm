@@ -38,6 +38,15 @@ namespace Hrm.Api.Controllers
             return Ok(SiteVisit);
         }
 
+        [HttpGet]
+        [Route("get-SiteVisitByFilter")]
+        public async Task<ActionResult> GetSiteVisitByFilter([FromQuery] SiteVisitFilterDto filter)
+        {
+            var command = new GetSiteVisitByFilterRequest { filters = filter };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

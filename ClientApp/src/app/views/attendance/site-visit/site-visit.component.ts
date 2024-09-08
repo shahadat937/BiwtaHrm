@@ -50,6 +50,9 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.getSiteVisit();
     this.getEmpOption();
+
+    this.roleFeatureService.getFeaturePermission("siteVisit").subscribe(response=> {
+    })
   }
 
   ngOnDestroy(): void {
@@ -107,7 +110,6 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   }
 
   onDecline(siteVisitId:number) {
-    console.log(siteVisitId);
 
     this.confirmService.confirm("Confirm Decline","Are you sure?").subscribe((result)=> {
       if(!result) {

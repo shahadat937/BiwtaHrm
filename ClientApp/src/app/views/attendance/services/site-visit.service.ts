@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SiteVisitModel } from '../models/site-visit-model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError, map, Observable, of } from 'rxjs';
 
@@ -33,6 +33,10 @@ export class SiteVisitService {
 
   getSiteVisitById(id:number):Observable<SiteVisitModel> {
     return this.http.get<SiteVisitModel>(this.baseUrl+`/siteVisit/get-sitevisitbyid/${id}`);
+  }
+
+  getSiteVisitByFilter(params: HttpParams): Observable<SiteVisitModel[]> {
+    return this.http.get<SiteVisitModel[]>(this.baseUrl+"/siteVisit/get-SiteVisitByFilter", {params: params});
   }
 
   approveSiteVisit(id:number):Observable<any> {

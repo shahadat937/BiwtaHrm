@@ -8,6 +8,7 @@ import { LeaveModel } from '../../models/leave-model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AuthService } from 'src/app/core/service/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-leave-detail-view',
@@ -24,6 +25,7 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
   leaveData : LeaveModel = new LeaveModel();
   leaveStatusOption: string [] = [];
   modalOpened: boolean = false;
+  baseImageUrl: string;
   constructor (
     public leaveService: ManageLeaveService,
     private route: ActivatedRoute,
@@ -36,6 +38,7 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
     private el: ElementRef, 
     private renderer: Renderer2
   ) {
+    this.baseImageUrl = environment.imageUrl;
   }
 
   ngOnInit(): void {

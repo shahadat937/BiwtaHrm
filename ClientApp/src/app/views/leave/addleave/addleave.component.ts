@@ -54,6 +54,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       this.addLeaveService.getEmpById(parseInt(this.authService.currentUserValue.empId)).subscribe({
         next: response => {
           this.empCardNo = response.idCardNo;
+          this.isValidPMS = true;
           this.addLeaveService.addLeaveModel.empId = parseInt(this.authService.currentUserValue.empId);
           this.employeeName = response.firstName + " "+response.lastName;
         }
@@ -130,9 +131,9 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   }
 
   getLeaveAmount() {
+    this.IsForeignLeave();
     console.log(this.addLeaveService.addLeaveModel);
     if(this.addLeaveService.addLeaveModel.empId==null||this.addLeaveService.addLeaveModel.leaveTypeId==null||this.addLeaveService.addLeaveModel.fromDate==null||this.addLeaveService.addLeaveModel.toDate==null) {
-      console.log("Hello World");
       this.totalDue = null;
       return;
     }
@@ -251,4 +252,20 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   handleFile(event:any) {
     this.addLeaveService.addLeaveModel.associatedFiles = event.target.files[0];
   }
+
+  IsForeignLeave() {
+
+    let leaveName = this.LeaveTypeOption.find(x=>x.id == this.addLeaveService.addLeaveModel.leaveTypeId);
+    if(leaveName == undefined) {
+      this.addLeaveService.addLeaveModel.isForeignLeave = false;
+      return;
+    }
+
+    if(leaveName.name.toLocaleLowerCase().includes("foreign")) {
+      this.addLeaveService.addLeaveModel.isForeignLeave = true;
+    } else {
+      this.addLeaveService.addLeaveModel.isForeignLeave = false;
+    }
+  }
+
 }

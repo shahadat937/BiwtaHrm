@@ -7,6 +7,8 @@ import {HolidayModel} from '../../models/holiday-model'
 import { NgForm } from '@angular/forms';
 import {cilPen, cilPencil, cilTrash} from '@coreui/icons'
 import { RoleFeatureService } from 'src/app/views/featureManagement/service/role-feature.service';
+import { FeaturePermission } from 'src/app/views/featureManagement/model/feature-permission';
+import { Feature } from 'src/app/views/featureManagement/model/feature';
 
 @Component({
   selector: 'app-holiday-setup',
@@ -23,8 +25,7 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
   holidayTypeOption : any[] = [];
   Holidays: HolidayModel [];
   subscription: Subscription = new Subscription();
-  @ViewChild('holidayForm', {static:true}) holidayForm!:NgForm
-
+  @ViewChild('holidayForm', {static:true}) holidayForm!:NgForm;
 
   constructor(
     private toastr: ToastrService,
@@ -41,6 +42,9 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
     this.getHolidayType();
     this.getYear();
     this.getHolidays();
+    this.roleFeatureService.getFeaturePermission("workdaySetting").subscribe(data=> {
+
+    });
   }
 
   ngOnDestroy(): void {

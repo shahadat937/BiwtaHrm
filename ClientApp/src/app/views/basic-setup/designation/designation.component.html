@@ -124,17 +124,31 @@
           <c-col [md]="4">
             <label cLabel for="validationCustom03"
             >Remark<span class="text-danger"></span></label>
-          <input
-            [(ngModel)]="designationService.designation.remark"
-            name="remark" 
-            #Remark="ngModel"
-            placeholder="Remark"
-            cFormControl
-            id="validationCustom03"
-            type="text"
-          />
-        </c-col>
-            
+            <input
+              [(ngModel)]="designationService.designation.remark"
+              name="remark" 
+              #Remark="ngModel"
+              placeholder="Remark"
+              cFormControl
+              id="validationCustom03"
+              type="text"
+            />
+          </c-col>
+
+        
+          <c-col [md]="4">
+            <label cLabel for="menuPosition"
+            >Position<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="designationService.designation.menuPosition"
+              name="menuPosition" 
+              #menuPosition="ngModel"
+              placeholder="Position"
+              cFormControl
+              id="menuPosition"
+              type="number"
+            />
+          </c-col>
     
             <c-col [md]="4">
               <label cLabel for="validationCustom04">Active Status</label>
@@ -263,6 +277,12 @@
           <th mat-header-cell *matHeaderCellDef>Designation Name Bangla</th>
           <td mat-cell *matCellDef="let element">
             {{ element.designationNameBangla }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="menuPosition">
+          <th mat-header-cell *matHeaderCellDef>Position</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.menuPosition }}
           </td>
         </ng-container>
         <ng-container matColumnDef="isActive">

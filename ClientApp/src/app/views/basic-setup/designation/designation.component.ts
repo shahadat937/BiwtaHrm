@@ -47,7 +47,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     'sectionName',
     'designationName',
     // 'designationNameBangla',
-    'isActive',
+    'menuPosition',
     'Action',
   ];
 
@@ -70,6 +70,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     //  const id = this.route.snapshot.paramMap.get('bloodGroupId');
   }
   ngOnInit(): void {
+    this.initaialDesignation();
     this.getALlDesignations();
     this.handleRouteParams();
     this.loadOffice();

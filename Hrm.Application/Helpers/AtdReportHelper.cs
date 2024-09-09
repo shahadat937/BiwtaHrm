@@ -71,7 +71,9 @@ namespace Hrm.Application.Helpers
 
             int holidays = await _unitOfWork.Repository<Hrm.Domain.Holidays>().Where(x => x.HolidayDate >= DateOnly.FromDateTime(startDate) && x.HolidayDate <= DateOnly.FromDateTime(endDate) && x.IsActive && x.IsWeekend == false).CountAsync();
 
-            return totalWorkday - totalWeekend - holidays;
+            int cancelledWeekend = await _unitOfWork.Repository<Hrm.Domain.CancelledWeekend>().Where(x => x.CancelDate >= startDate && x.CancelDate <= endDate && x.IsActive == true).CountAsync();
+
+            return totalWorkday - totalWeekend - holidays + cancelledWeekend;
 
         }
 

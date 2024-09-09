@@ -7,6 +7,7 @@ import { ManageShiftComponent } from './manage-shift/manage-shift.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AttendanceSummaryComponent } from './attendance-summary/attendance-summary.component';
+import {ManageSiteVisitComponent} from './manage-site-visit/manage-site-visit.component'
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'siteVisit',
     component: SiteVisitComponent,
+  },
+  {
+    path: 'manageSiteVisit',
+    component: ManageSiteVisitComponent
   },
   {
     path: 'attendanceReport',

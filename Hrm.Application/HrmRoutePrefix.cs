@@ -123,5 +123,7 @@ namespace Hrm.Application
         public const string EmpShiftAssign = HRMRoutePrefixBase + "empShiftAssign";
         public const string RewardPunishmentType = HRMRoutePrefixBase + "rewardPunishmentType";
         public const string RewardPunishmentPriority = HRMRoutePrefixBase + "rewardPunishmentPriority";
+
+        public const string Widgets = HRMRoutePrefixBase + "widgets";
     }
 }

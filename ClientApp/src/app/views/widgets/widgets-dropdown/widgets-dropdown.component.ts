@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { getStyle } from '@coreui/utils';
 import { ChartjsComponent } from '@coreui/angular-chartjs';
+import { WidgetsService } from '../service/widgets.service';
 
 @Component({
   selector: 'app-widgets-dropdown',
@@ -19,7 +20,8 @@ import { ChartjsComponent } from '@coreui/angular-chartjs';
 export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
 
   constructor(
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    public widgetService: WidgetsService,
   ) {}
 
   data: any[] = [];
@@ -116,12 +118,35 @@ export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
   };
 
   ngOnInit(): void {
-    this.setData();
+    // this.setData();
+    this.getAllWidgetsInfo();
   }
 
   ngAfterContentInit(): void {
     this.changeDetectorRef.detectChanges();
+  }
 
+  getAllWidgetsInfo(){
+    this.widgetService.getAllWidgetsInfo().subscribe((item) => {
+      this.processWidgetData(item);
+    })
+  }
+
+
+  processWidgetData(items: any[]) {
+    this.data = items.map(item => ({
+      labels: item.labels,
+      datasets: [{
+        label: item.label,
+      backgroundColor: 'rgba(255,255,255,.2)',
+      borderColor: 'rgba(255,255,255,.55)',
+      pointBackgroundColor: getStyle('--cui-light'),
+      pointHoverBorderColor: getStyle('--cui-light'),
+        data: item.data
+      }]
+    }));
+
+    this.setOptions();
   }
 
   setData() {

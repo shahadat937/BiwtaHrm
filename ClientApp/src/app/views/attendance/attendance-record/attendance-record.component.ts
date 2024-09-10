@@ -32,7 +32,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   selectedShift:number|null;
   selectedUpdateShift: any|null;
   selectedEmp:any|null;
-  displayedColumns = ["attendanceId","empId","fullName","attendanceDate","inTime","outTime","dayTypeName","attendanceStatusName","Action"]
+  displayedColumns = ["attendanceId","idCardNo","fullName","attendanceDate","inTime","outTime","dayTypeName","attendanceStatusName","Action"]
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   updateWindowVisible:boolean = false;

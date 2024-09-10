@@ -14,7 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 // Import app component
 import { AppComponent } from './app.component';
-import { OffcanvasModule, SpinnerModule } from '@coreui/angular';
+import { OffcanvasModule, SpinnerModule, ToasterService } from '@coreui/angular';
 
 // Import containers
 import {
@@ -46,7 +46,7 @@ import {
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ErrorInterceptor } from './core/interceptor/error.interceptor';
 import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
 import { AuthService } from './core/service/auth.service';
@@ -109,7 +109,8 @@ const APP_CONTAINERS = [
     Title,
     AuthService,
     FormRecordService ,
-    YearSetupService
+    YearSetupService,
+    ToastrService
   ],
   bootstrap: [AppComponent],
 })

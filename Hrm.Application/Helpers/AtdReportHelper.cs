@@ -119,5 +119,12 @@ namespace Hrm.Application.Helpers
             return totalSiteVisit;
         }
 
+        public static async Task<int> totalOnLeave(DateOnly from, DateOnly to, int EmpId, IHrmRepository<Domain.Attendance> _AttendanceRepository)
+        {
+            int totalOnLeave = await _AttendanceRepository.Where(at => at.AttendanceDate >= from && at.AttendanceDate <= to && at.EmpId == EmpId && at.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave).CountAsync();
+
+            return totalOnLeave;
+        }
+
     }
 }

@@ -30,7 +30,7 @@ namespace Hrm.Application.Helpers
             var startDate = new DateTime(startDateOnly.Year, startDateOnly.Month, startDateOnly.Day);
             var endDate = new DateTime(endDateOnly.Year, endDateOnly.Month, endDateOnly.Day);
 
-            Dictionary<string, int> weekends = new Dictionary<string, int>
+            Dictionary<string, int> dayOfWeek = new Dictionary<string, int>
             {
                 {"Saturday", 6 },
                 {"Sunday", 0 },
@@ -41,11 +41,13 @@ namespace Hrm.Application.Helpers
                 {"Friday", 5 }
             };
 
-            var workDays = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.IsActive == true && x.year.YearName == curYear).Select(x => x.weekDay.WeekDayName).ToListAsync();
+            Dictionary<string, int> weekends = new Dictionary<string, int>();
 
-            foreach (var workday in workDays)
+            var weekendDays = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.IsActive == true && x.year.YearName == curYear).Select(x => x.weekDay.WeekDayName).ToListAsync();
+
+            foreach (var weekend in weekendDays)
             {
-                weekends.Remove(workday);
+                weekends.Add(weekend, dayOfWeek[weekend]);
             }
 
             int totalWeekend = 0;

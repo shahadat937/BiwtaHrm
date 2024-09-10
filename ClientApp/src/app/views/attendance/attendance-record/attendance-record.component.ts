@@ -32,7 +32,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   selectedShift:number|null;
   selectedUpdateShift: any|null;
   selectedEmp:any|null;
-  displayedColumns = ["attendanceId","empId","empFirstName","empLastName","inTime","outTime","dayTypeName","attendanceStatusName","Action"]
+  displayedColumns = ["attendanceId","empId","fullName","attendanceDate","inTime","outTime","dayTypeName","attendanceStatusName","Action"]
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   updateWindowVisible:boolean = false;
@@ -69,7 +69,10 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
 
   getAllAttendance() {
     this.subscription = this.AtdRecordService.getAll().subscribe(item=> {
-      this.dataSource = new MatTableDataSource(item);
+      this.dataSource = new MatTableDataSource(item.map(x=>({
+        ...x,
+        fullName: `${x.empFirstName} ${x.empLastName}`
+      })));
       this.dataSource.paginator = this.paginator;
     })
   }

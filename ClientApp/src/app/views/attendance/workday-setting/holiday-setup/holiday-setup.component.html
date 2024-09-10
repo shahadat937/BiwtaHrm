@@ -148,7 +148,7 @@
                     <tr [pSelectableRow]="holiday">
                         <td>{{ holiday.holidayId}}</td>
                         <td>{{ holiday.holidayName }}</td>
-                        <td>{{ holiday.holidayDate }}</td>
+                        <td>{{ holiday.holidayDate|date }}</td>
                         <td>{{ holiday.holidayTypeName }}</td>
                         <td>{{holiday.isActive}}</td>
                         <td>

@@ -1,4 +1,4 @@
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { DATE_PIPE_DEFAULT_OPTIONS, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -105,6 +105,8 @@ const APP_CONTAINERS = [
     },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: {dateFormat:"mediumDate"}},
+    //{provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: {dateFormat:"dd/MM/YYYY"}},
     IconSetService,
     Title,
     AuthService,

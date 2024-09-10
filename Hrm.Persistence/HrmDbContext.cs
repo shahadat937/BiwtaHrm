@@ -1026,6 +1026,16 @@ namespace Hrm.Persistence
 
             });
 
+            modelBuilder.Entity<CancelledWeekend>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                .HasName("[[PK_CancelledWeekend]]");
+
+                entity.HasOne(cw => cw.Employee)
+                .WithMany(e => e.CancelledWeekends)
+                .HasForeignKey(cw => cw.CancelledBy);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -1144,6 +1154,7 @@ namespace Hrm.Persistence
         public virtual DbSet<RewardPunishmentType> RewardPunishmentType { get; set; } = null!;
         public virtual DbSet<RewardPunishmentPriority> RewardPunishmentPriority { get; set; } = null!;
         public virtual DbSet<EmpRewardPunishment> EmpRewardPunishment { get; set; } = null!;
+        public virtual DbSet<CancelledWeekend> CancelledWeekend { get; set; } = null!;
 
     }
 }

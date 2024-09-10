@@ -125,5 +125,6 @@ namespace Hrm.Application
         public const string RewardPunishmentPriority = HRMRoutePrefixBase + "rewardPunishmentPriority";
 
         public const string Widgets = HRMRoutePrefixBase + "widgets";
+        public const string CancelledWeekend = HRMRoutePrefixBase + "cancelledWeekend";
     }
 }

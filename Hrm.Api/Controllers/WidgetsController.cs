@@ -26,5 +26,14 @@ namespace Hrm.Api.Controllers
             var widgets = await _mediator.Send(new GetDashboardWidgetsRequest { });
             return Ok(widgets);
         }
+
+
+        [HttpGet]
+        [Route("get-userWidgets")]
+        public async Task<ActionResult> GetUserWidgets()
+        {
+            var widgets = await _mediator.Send(new GetDahsboardUserInfoRequest { });
+            return Ok(widgets);
+        }
     }
 }

@@ -59,6 +59,7 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
   }
   ngOnInit(): void {
+    this.initaialSectionForm();
     this.getAllSection();
     this.handleRouteParams();
     this.loadOffice();

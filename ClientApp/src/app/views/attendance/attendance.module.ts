@@ -44,6 +44,7 @@ import { AttendanceReportEmpService } from './services/attendance-report-emp.ser
 import { HolidaySetupService } from './services/holiday-setup.service';
 import { SiteVisitService } from './services/site-visit.service';
 import { WorkdayService } from './services/workday.service';
+import { ManageSiteVisitComponent } from './manage-site-visit/manage-site-visit.component';
 
 
 
@@ -58,7 +59,8 @@ import { WorkdayService } from './services/workday.service';
     AttendanceReportComponent,
     AttendanceSummaryComponent,
     HolidaySetupComponent,
-    TimeFormatPipe
+    TimeFormatPipe,
+    ManageSiteVisitComponent
   ],
   imports: [
     CommonModule,

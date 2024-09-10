@@ -6,6 +6,7 @@ import { get } from 'lodash-es';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { AuthService } from 'src/app/core/service/auth.service';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 
 @Component({
   selector: 'app-workday-setting',
@@ -27,7 +28,8 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
     private workdayService: WorkdayService,
     private toastr : ToastrService,
     private confirmService: ConfirmService,
-    private authService: AuthService        
+    private authService: AuthService,        
+    public roleFeatureService: RoleFeatureService
   ) {
     this.selectedYear = 0;
     this.selectedDay = null;
@@ -102,6 +104,12 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
   }
 
   togglePlusButton() {
+    if(this.showAddDay==false&&this.roleFeatureService.featurePermission.add==false) {
+      this.toastr.warning("", "Unauthorized Access", {
+        positionClass: 'toast-top-right'
+      });
+      return;
+    }
     this.selectedDayForAddition = null;
     this.showAddDay = this.showAddDay?false:true;
   }
@@ -135,6 +143,13 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
   }
 
   onWorkdayDelete(workdayId:number) {
+    console.log(this.roleFeatureService.featurePermission);
+    if(this.roleFeatureService.featurePermission.delete==false) {
+      this.toastr.warning("", "Unauthorized Access", {
+        positionClass: 'toast-top-right'
+      });
+      return; 
+    }
     this.confirmService.confirm('Confirm Deletion',"Are you sure?").subscribe(response=> {
       if(response) {
         this.workdayService.deleteWorkday(workdayId).subscribe({

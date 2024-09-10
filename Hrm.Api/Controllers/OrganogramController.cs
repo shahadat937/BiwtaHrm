@@ -127,7 +127,10 @@ namespace Hrm.Api.Controllers
             var departmentNameDto = new OrganogramDepartmentNameDto
             {
                 Name = department.DepartmentName,
-                Designations = department.Designations.Select(de => new OrganogramDesignationNameDto
+                Designations = department.Designations
+                    .Where(x => x.SectionId == null)
+                    .OrderBy(x => x.MenuPosition)
+                    .Select(de => new OrganogramDesignationNameDto
                 {
                     Name = de.DesignationName,
                     EmployeeName = de.EmpJobDetail?.FirstOrDefault()?.EmpBasicInfo != null
@@ -152,7 +155,9 @@ namespace Hrm.Api.Controllers
             var sectionNameDto = new OrganogramSectionNameDto
             {
                 Name = section.SectionName,
-                Designations = section.Designations.Select(se => new OrganogramDesignationNameDto
+                Designations = section.Designations
+                    .OrderBy(x => x.MenuPosition)
+                    .Select(se => new OrganogramDesignationNameDto
                 {
                     Name = se.DesignationName,
                     EmployeeName = se.EmpJobDetail?.FirstOrDefault()?.EmpBasicInfo != null

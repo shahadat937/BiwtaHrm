@@ -62,6 +62,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
   }
   ngOnInit(): void {
+    this.initaialDepartment();
     this.getALlDepartments();
     this.handleRouteParams();
     this.loadOffice();

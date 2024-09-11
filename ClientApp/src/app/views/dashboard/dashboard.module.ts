@@ -34,6 +34,7 @@ import { TransferWidgetsComponent } from './DashboardWidgets/transfer-widgets/tr
 import { RouterLink } from '@angular/router';
 import { UsersWidgetsComponent } from './DashboardWidgets/users-widgets/users-widgets.component';
 import { PromotionWidgetsComponent } from './DashboardWidgets/promotion-widgets/promotion-widgets.component';
+import { ChartWidgetsComponent } from './DashboardWidgets/chart-widgets/chart-widgets.component';
 
 @NgModule({
   imports: [
@@ -68,7 +69,7 @@ import { PromotionWidgetsComponent } from './DashboardWidgets/promotion-widgets/
     DropdownItemDirective,
     RouterLink,
   ],
-  declarations: [DashboardComponent, TransferWidgetsComponent, UsersWidgetsComponent, PromotionWidgetsComponent]
+  declarations: [DashboardComponent, TransferWidgetsComponent, UsersWidgetsComponent, PromotionWidgetsComponent, ChartWidgetsComponent]
 })
 export class DashboardModule {
 }

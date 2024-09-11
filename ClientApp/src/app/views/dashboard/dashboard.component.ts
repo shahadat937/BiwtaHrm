@@ -22,29 +22,7 @@ interface IUser {
   templateUrl: 'dashboard.component.html',
   styleUrls: ['dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent{
 
-  gendersInfo: any;
-  fieldUnfield: any;
-
-  constructor(public widgetsService: WidgetsService) {
-  }
-
-  ngOnInit(): void {
-    this.getAllGenderChatInfo();
-    this.getAllFieldUnfieldChatInfo();
-  }
-
-  getAllGenderChatInfo(){
-    this.widgetsService.getAllGendersWidgetsInfo().subscribe((item) => {
-      this.gendersInfo = item;
-    })
-  }
-  
-  getAllFieldUnfieldChatInfo(){
-    this.widgetsService.getAllFieldUnfieldWidgetsInfo().subscribe((item) => {
-      this.fieldUnfield = item;
-    })
-  }
 
 }

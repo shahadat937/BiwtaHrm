@@ -61,4 +61,10 @@ export class DesignationService {
   getDesignationByDepartmentId(id:number){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationByDepartmentId/' + id);
   }
+
+  
+  getDesignationPosition(departmentId:number, sectionId:number){
+    return this.http.get<any>(this.baseUrl + '/designation/get-designationPosition?&departmentId=' + departmentId + '&sectionId='+sectionId);
+  }
+
 }

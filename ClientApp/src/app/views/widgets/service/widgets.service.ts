@@ -16,5 +16,17 @@ export class WidgetsService {
   getAllWidgetsInfo(){
     return this.http.get<any[]>(this.baseUrl + '/widgets/get-widgets');
   }
+  
+  getAllUsersWidgetsInfo(){
+    return this.http.get<any[]>(this.baseUrl + '/widgets/get-userWidgets');
+  }
+  
+  getAllGendersWidgetsInfo(){
+    return this.http.get<any[]>(this.baseUrl + '/widgets/get-gendersChart');
+  }
+  
+  getAllFieldUnfieldWidgetsInfo(){
+    return this.http.get<any[]>(this.baseUrl + '/widgets/get-fieldUnfieldChart');
+  }
 
 }

@@ -29,13 +29,16 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
             var empJobDetailDesignationIds = empJobDetails.Select(e => e.DesignationId).ToHashSet();
 
 
-            ICollection<Hrm.Domain.Designation> designations = await _DesignationRepository.FilterAsync(x => x.DepartmentId == request.DepartmentId && !empJobDetailDesignationIds.Contains(x.DesignationId));
+            ICollection<Hrm.Domain.Designation> designations = await _DesignationRepository.FilterAsync(x => x.DepartmentId == request.DepartmentId && x.SectionId == null && !empJobDetailDesignationIds.Contains(x.DesignationId));
 
-            List<SelectedModel> selectModels = designations.Select(x => new SelectedModel
-            {
-                Name = x.DesignationName,
-                Id = x.DesignationId
-            }).ToList();
+            List<SelectedModel> selectModels = designations
+                .GroupBy(x => x.DesignationName)
+                .Select(x => x.FirstOrDefault())
+                .Select(x => new SelectedModel
+                {
+                    Name = x.DesignationName,
+                    Id = x.DesignationId
+                }).ToList();
             return selectModels;
         }
     }

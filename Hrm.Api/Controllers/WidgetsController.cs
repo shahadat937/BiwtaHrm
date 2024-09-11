@@ -52,5 +52,21 @@ namespace Hrm.Api.Controllers
             var widgets = await _mediator.Send(new GetDashboardFieldUnfieldInfoRequest { });
             return Ok(widgets);
         }
+
+        [HttpGet]
+        [Route("get-transferWidgets")]
+        public async Task<ActionResult> GetTransferWidgets()
+        {
+            var widgets = await _mediator.Send(new GetDashboardTransferInfoRequest { });
+            return Ok(widgets);
+        }
+
+        [HttpGet]
+        [Route("get-promotionWidgets")]
+        public async Task<ActionResult> GetPromotionWidgets()
+        {
+            var widgets = await _mediator.Send(new GetDashboardPromotionInfoRequest { });
+            return Ok(widgets);
+        }
     }
 }

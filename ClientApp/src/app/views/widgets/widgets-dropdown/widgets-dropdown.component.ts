@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { getStyle } from '@coreui/utils';
 import { ChartjsComponent } from '@coreui/angular-chartjs';
-import { WidgetsService } from '../service/widgets.service';
 
 @Component({
   selector: 'app-widgets-dropdown',
@@ -21,7 +20,6 @@ export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
-    public widgetService: WidgetsService,
   ) {}
 
   widgetsData: any[] = [];
@@ -74,27 +72,27 @@ export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
   };
 
   ngOnInit(): void {
-    // this.setData();
-    this.getAllWidgetsInfo();
-    this.getAllUserWidgetsInfo();
+    this.setData();
+    // this.getAllWidgetsInfo();
+    // this.getAllUserWidgetsInfo();
   }
 
   ngAfterContentInit(): void {
     this.changeDetectorRef.detectChanges();
   }
 
-  getAllWidgetsInfo(){
-    this.widgetService.getAllWidgetsInfo().subscribe((item) => {
-      this.processWidgetData(item);
-      this.widgetsData = item;
-    })
-  }
+  // getAllWidgetsInfo(){
+  //   this.widgetService.getAllWidgetsInfo().subscribe((item) => {
+  //     this.processWidgetData(item);
+  //     this.widgetsData = item;
+  //   })
+  // }
 
-  getAllUserWidgetsInfo(){
-    this.widgetService.getAllUsersWidgetsInfo().subscribe((item) => {
-      this.usersWidgets = item;
-    })
-  }
+  // getAllUserWidgetsInfo(){
+  //   this.widgetService.getAllUsersWidgetsInfo().subscribe((item) => {
+  //     this.usersWidgets = item;
+  //   })
+  // }
 
 
   processWidgetData(items: any[]) {

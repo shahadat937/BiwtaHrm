@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
-import { WidgetsService } from '../widgets/service/widgets.service';
+import { WidgetsService } from './DashboardWidgets/service/widgets.service';
 
 interface IUser {
   name: string;

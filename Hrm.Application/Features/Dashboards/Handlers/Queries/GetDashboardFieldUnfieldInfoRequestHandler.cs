@@ -50,7 +50,7 @@ namespace Hrm.Application.Features.Dashboards.Handlers.Queries
                     new ChartWidgetsDataSets
                     {
                         Data = new List<int> { fieldCount, unfieldCount },
-                        BackgroundColor = new List<string> { "#41B883", "#DD1B16" } // Example colors
+                        BackgroundColor = new List<string> { "#41B883", "#f9b115" } // Example colors
                     }
                 }
             };

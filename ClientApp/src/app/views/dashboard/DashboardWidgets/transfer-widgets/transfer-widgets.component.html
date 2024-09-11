@@ -1,0 +1,54 @@
+<c-card class="mb-4">
+  <c-card-body>
+    <h4 class="text-center">Transfer and Posting Information</h4>
+    <c-row>
+      <c-col sm="6" xl="3">
+        <c-widget-stat-a
+          class="mb-4 mt-4 pb-5"
+          color="info"
+          [title]="transferData[0]?.label"
+        >
+          <ng-template cTemplateId="widgetValueTemplate" ngPreserveWhitespaces>
+            {{transferData[0]?.data}}
+          </ng-template>
+        </c-widget-stat-a>
+      </c-col>
+      
+      <c-col sm="6" xl="3">
+        <c-widget-stat-a
+          class="mb-4 mt-4 pb-5"
+          color="warning"
+          [title]="transferData[1]?.label"
+        >
+          <ng-template cTemplateId="widgetValueTemplate" ngPreserveWhitespaces>
+            {{transferData[1]?.data}}
+          </ng-template>
+        </c-widget-stat-a>
+      </c-col>
+      
+      <c-col sm="6" xl="3">
+        <c-widget-stat-a
+          class="mb-4 mt-4 pb-5"
+          color="success"
+          [title]="transferData[2]?.label"
+        >
+          <ng-template cTemplateId="widgetValueTemplate" ngPreserveWhitespaces>
+            {{transferData[2]?.data}}
+          </ng-template>
+        </c-widget-stat-a>
+      </c-col>
+      
+      <c-col sm="6" xl="3">
+        <c-widget-stat-a
+          class="mb-4 mt-4 pb-5"
+          color="danger"
+          [title]="transferData[3]?.label"
+        >
+          <ng-template cTemplateId="widgetValueTemplate" ngPreserveWhitespaces>
+            {{transferData[3]?.data}}
+          </ng-template>
+        </c-widget-stat-a>
+      </c-col>
+  </c-row>
+  </c-card-body>
+</c-card>

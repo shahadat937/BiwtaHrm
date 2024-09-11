@@ -29,4 +29,12 @@ export class WidgetsService {
     return this.http.get<any[]>(this.baseUrl + '/widgets/get-fieldUnfieldChart');
   }
 
+  getAllTransferWidgetsInfo(){
+    return this.http.get<any[]>(this.baseUrl + '/widgets/get-transferWidgets');
+  }
+  
+  getAllPromotionWidgetsInfo(){
+    return this.http.get<any[]>(this.baseUrl + '/widgets/get-promotionWidgets');
+  }
+
 }

@@ -42,6 +42,7 @@
               <label cLabel for="Department">Department<span class="text-danger"></span></label>
               <div class="input-wrapper">
                 <select (change)="onOfficeAndDepartmentSelect(designationService.designation.departmentId)"
+                  (change)="getDesignationPosition(designationService.designation.departmentId, 0)"
                   [(ngModel)]="designationService.designation.departmentId" name="departmentId" #Department="ngModel"
                   cFormControl id="Department" aria-label="Default select example" cSelect>
                   <option [ngValue]="null">Select Department</option>
@@ -63,6 +64,7 @@
                 <label cLabel for="sectionId">Section<span class="text-danger"></span></label>
                 <div class="input-wrapper">
                   <select 
+                  (change)="getDesignationPosition(0, designationService.designation.sectionId)"
                     [(ngModel)]="designationService.designation.sectionId" name="sectionId" #sectionId="ngModel"
                     cFormControl id="sectionId" aria-label="Default select example" cSelect>
                     <option [ngValue]="null">Select Section</option>

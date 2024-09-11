@@ -124,7 +124,7 @@ namespace Hrm.Application.Features.Dashboards.Handlers.Queries
                 result.Add(new WidgetsDto
                 {
                     WidgetName = widgetName,
-                    Lebel = label,
+                    Label = label,
                     Labels = labels,
                     Data = data,
                     TotalPercentage = data.Sum()

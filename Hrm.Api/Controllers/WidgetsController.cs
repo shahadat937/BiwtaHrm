@@ -26,5 +26,31 @@ namespace Hrm.Api.Controllers
             var widgets = await _mediator.Send(new GetDashboardWidgetsRequest { });
             return Ok(widgets);
         }
+
+
+        [HttpGet]
+        [Route("get-userWidgets")]
+        public async Task<ActionResult> GetUserWidgets()
+        {
+            var widgets = await _mediator.Send(new GetDahsboardUserInfoRequest { });
+            return Ok(widgets);
+        }
+
+
+        [HttpGet]
+        [Route("get-gendersChart")]
+        public async Task<ActionResult> GetGendersChart()
+        {
+            var widgets = await _mediator.Send(new GetDashboardGenderInfoRequest { });
+            return Ok(widgets);
+        }
+
+        [HttpGet]
+        [Route("get-fieldUnfieldChart")]
+        public async Task<ActionResult> GetFieldUnfieldChart()
+        {
+            var widgets = await _mediator.Send(new GetDashboardFieldUnfieldInfoRequest { });
+            return Ok(widgets);
+        }
     }
 }

@@ -25,6 +25,7 @@ export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
   ) {}
 
   widgetsData: any[] = [];
+  usersWidgets: any[] = [];
   data: any[] = [];
   options: any[] = [];
   labels = [];
@@ -75,6 +76,7 @@ export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
   ngOnInit(): void {
     // this.setData();
     this.getAllWidgetsInfo();
+    this.getAllUserWidgetsInfo();
   }
 
   ngAfterContentInit(): void {
@@ -85,6 +87,12 @@ export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
     this.widgetService.getAllWidgetsInfo().subscribe((item) => {
       this.processWidgetData(item);
       this.widgetsData = item;
+    })
+  }
+
+  getAllUserWidgetsInfo(){
+    this.widgetService.getAllUsersWidgetsInfo().subscribe((item) => {
+      this.usersWidgets = item;
     })
   }
 

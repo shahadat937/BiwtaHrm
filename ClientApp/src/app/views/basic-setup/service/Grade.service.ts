@@ -9,9 +9,7 @@ import { Observable, map, of } from 'rxjs';
 import { Grade } from '../model/Grade';
 import { GradeViewModel } from '../model/GradeViewModel';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GradeService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

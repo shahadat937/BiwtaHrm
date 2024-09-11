@@ -1,12 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {LeaveModel} from '../models/leave-model'
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ManageLeaveService {
   cachedData: any[] = []
   baseUrl: string;
@@ -48,5 +46,9 @@ export class ManageLeaveService {
 
   denyFinalLeaveRequest(leaveRequestId:number): Observable<any> {
     return this.http.put<any>(this.baseUrl+`/leaveRequest/deny-LeaveRequestFinal/${leaveRequestId}`,{});
+  }
+
+  getLeaveByFilter(params: HttpParams): Observable<LeaveModel[]> {
+    return this.http.get<LeaveModel[]>(this.baseUrl+"/leaveRequest/get-LeaveRequestByFilter", {params:params});
   }
 }

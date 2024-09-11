@@ -29,6 +29,7 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
         {
             var EmpBasicInfo = await _EmpBasicInfoRepository.Where(x => x.Id == request.Id)
                                                             .Include(x => x.EmployeeType)
+                                                            .Include(x => x.EmpJobDetail)
                                                             .FirstOrDefaultAsync(cancellationToken);
 
             if (EmpBasicInfo == null)

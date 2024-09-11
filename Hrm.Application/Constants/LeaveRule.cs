@@ -14,5 +14,8 @@ namespace Hrm.Application.Constants
         public static readonly string MaxDaysLifetime = "MaxDaysLifetime";
         public static readonly string AccrualRate = "AccrualRate";
         public static readonly string AccrualFrequency = "AccrualFrequency";
+        public static readonly string MaxRequestLifeTime = "MaxRequestLifeTime";
+        public static readonly string MinimumAge = "MinimumAge";
+        public static readonly string Gender = "Gender";
     }
 }

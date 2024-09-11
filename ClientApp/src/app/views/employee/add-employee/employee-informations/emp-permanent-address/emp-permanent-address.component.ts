@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } 
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
-import { CountryService } from 'src/app/views/basic-setup/service/country.service';
+import { CountryService } from 'src/app/views/basic-setup/service/Country.service';
 import { DistrictService } from 'src/app/views/basic-setup/service/district.service';
 import { DivisionService } from 'src/app/views/basic-setup/service/division.service';
 import { ThanaService } from 'src/app/views/basic-setup/service/thana.service';

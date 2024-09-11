@@ -41,7 +41,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { EmpPresentAddressComponent } from './add-employee/employee-informations/emp-present-address/emp-present-address.component';
 import { EmpPermanentAddressComponent } from './add-employee/employee-informations/emp-permanent-address/emp-permanent-address.component';
-import { CountryService } from '../basic-setup/service/country.service';
+import { CountryService } from '../basic-setup/service/Country.service';
 import { EmpJobDetailsComponent } from './add-employee/employee-informations/emp-job-details/emp-job-details.component';
 import { EmpSpouseInfoComponent } from './add-employee/employee-informations/emp-spouse-info/emp-spouse-info.component';
 import { EmpChildInfoComponent } from './add-employee/employee-informations/emp-child-info/emp-child-info.component';
@@ -65,9 +65,17 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { EmpAddressComponent } from './add-employee/employee-informations/emp-address/emp-address.component';
 import { EmpShiftListComponent } from './assignShift/emp-shift-list/emp-shift-list.component';
 import { UpdateEmpShiftComponent } from './assignShift/update-emp-shift/update-emp-shift.component';
-
-
-
+import { ShiftService } from '../attendance/services/shift.service';
+import { WardService } from '../basic-setup/service/ward.service';
+import { UnionService } from '../basic-setup/service/union.service';
+import { DepartmentService } from '../basic-setup/service/department.service';
+import { UapzilaService } from '../basic-setup/service/uapzila.service';
+import { DistrictService } from '../basic-setup/service/district.service';
+import { ThanaService } from '../basic-setup/service/thana.service';
+import { DivisionService } from '../basic-setup/service/division.service';
+import { OfficeService } from '../basic-setup/service/office.service';
+import { GradeService } from '../basic-setup/service/Grade.service';
+import { SectionService } from '../basic-setup/service/section.service';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -139,6 +147,17 @@ import { UpdateEmpShiftComponent } from './assignShift/update-emp-shift/update-e
   providers:
   [
     CountryService,
+    ShiftService,
+    WardService,
+    UnionService,
+    DepartmentService,
+    UapzilaService,
+    DistrictService,
+    ThanaService,
+    DivisionService,
+    OfficeService,
+    GradeService,
+    SectionService
   ],
 })
 export class EmployeeModule { }

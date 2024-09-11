@@ -11,5 +11,6 @@ namespace Hrm.Application.DTOs.Organograms
         public string Name { get; set; }
         public List<OrganogramDesignationNameDto> DirectDesignations { get; set; }
         public List<OrganogramDepartmentNameDto> Departments { get; set; }
+        public List<OrganogramSectionNameDto> Sections { get; set; }
     }
 }

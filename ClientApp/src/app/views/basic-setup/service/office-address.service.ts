@@ -4,9 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { OfficeAddress } from '../model/office-address';
 import { Observable, map, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class OfficeAddressService {
 
   cachedData: any[] = [];

@@ -34,6 +34,11 @@ namespace Hrm.Persistence
                 .WithOne(d => d.Department)
                 .HasForeignKey(d => d.DepartmentId);
 
+            modelBuilder.Entity<Section>()
+                .HasMany(d => d.Designations)
+                .WithOne(d => d.Section)
+                .HasForeignKey(d => d.SectionId);
+
             modelBuilder.Entity<Office>()
             .HasMany(o => o.Designations)
             .WithOne(d => d.Office)
@@ -50,44 +55,56 @@ namespace Hrm.Persistence
                 .WithMany(dp => dp.Designations)
                 .HasForeignKey(d => d.DepartmentId);
 
+            modelBuilder.Entity<Designation>()
+                .HasOne(d => d.Section)
+                .WithMany(dp => dp.Designations)
+                .HasForeignKey(d => d.SectionId);
 
-            modelBuilder.Entity<OfficeBranch>(entity => {
+
+            modelBuilder.Entity<OfficeBranch>(entity =>
+            {
 
                 entity.HasKey(e => e.BranchId)
                     .HasName("PK_OfficeBranch");
 
             });
-            modelBuilder.Entity<BloodGroup>(entity => {
+            modelBuilder.Entity<BloodGroup>(entity =>
+            {
 
                 entity.HasKey(e => e.BloodGroupId)
                     .HasName("PK_BloodGroupId");
 
             });
-            modelBuilder.Entity<EmployeeType>(entity => {
+            modelBuilder.Entity<EmployeeType>(entity =>
+            {
 
                 entity.HasKey(e => e.EmployeeTypeId)
                     .HasName("PK_EmployeeTypeId");
 
             });
-            modelBuilder.Entity<Gender>(entity => {
+            modelBuilder.Entity<Gender>(entity =>
+            {
 
                 entity.HasKey(e => e.GenderId)
                     .HasName("PK_GenderId");
 
             });
-            modelBuilder.Entity<Religion>(entity => {
+            modelBuilder.Entity<Religion>(entity =>
+            {
 
                 entity.HasKey(e => e.ReligionId)
                     .HasName("PK_ReligionId");
 
             });
-            modelBuilder.Entity<ChildStatus>(entity => {
+            modelBuilder.Entity<ChildStatus>(entity =>
+            {
 
                 entity.HasKey(e => e.ChildStatusId)
                     .HasName("PK_ChildStatusId");
 
             });
-            modelBuilder.Entity<Division>(entity => {
+            modelBuilder.Entity<Division>(entity =>
+            {
                 entity.HasKey(e => e.DivisionId)
                     .HasName("PK__Division__20EFC6A8D5104B78");
 
@@ -99,7 +116,8 @@ namespace Hrm.Persistence
                 .HasName("PK__Country__10D1609FC64BEAA1");
             });
 
-            modelBuilder.Entity<Thana>(entity => {
+            modelBuilder.Entity<Thana>(entity =>
+            {
                 entity.HasOne(d => d.Upazila)
                 .WithMany(p => p.Thanas)
                 .HasForeignKey(d => d.UpazilaId)
@@ -109,7 +127,8 @@ namespace Hrm.Persistence
                     .HasName("PK__Thana__438130B46C389C43");
 
             });
-            modelBuilder.Entity<Upazila>(entity => {
+            modelBuilder.Entity<Upazila>(entity =>
+            {
 
                 entity.HasKey(e => e.UpazilaId)
                     .HasName("PK__Upazila__FE787458879EB561");
@@ -291,11 +310,6 @@ namespace Hrm.Persistence
                 entity.HasKey(e => e.BoardId)
                 .HasName("[BoardId]");
             });
-            modelBuilder.Entity<Section>(entity =>
-            {
-                entity.HasKey(e => e.SectionId)
-                .HasName("[SectionId]");
-            });
             modelBuilder.Entity<PostingOrderInfo>(entity =>
             {
                 entity.HasKey(e => e.PostingOrderInfoId)
@@ -353,9 +367,9 @@ namespace Hrm.Persistence
 
             modelBuilder.Entity<EmpBasicInfo>(entity =>
             {
-                entity.HasMany( s => s.SiteVisits)
-                .WithOne(e=>e.Employees)
-                .HasForeignKey(e=>e.EmpId);
+                entity.HasMany(s => s.SiteVisits)
+                .WithOne(e => e.Employees)
+                .HasForeignKey(e => e.EmpId);
             });
 
             modelBuilder.Entity<Holidays>(entity =>
@@ -583,7 +597,7 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.ChildStatus)
                     .WithMany(eb => eb.EmpChildInfo)
                     .HasForeignKey(e => e.ChildStatusId);
-            });            modelBuilder.Entity<Attendance>(entity =>
+            }); modelBuilder.Entity<Attendance>(entity =>
             {
                 entity.HasKey(at => at.AttendanceId)
                 .HasName("[[PK_Attendance]]");
@@ -862,18 +876,19 @@ namespace Hrm.Persistence
                 .HasForeignKey(e => e.LeaveTypeId);
             });
 
-            modelBuilder.Entity<LeaveRequest>(entity => {
+            modelBuilder.Entity<LeaveRequest>(entity =>
+            {
                 entity.HasKey(e => e.LeaveRequestId)
                     .HasName("[[Pk_LeaveRequest]]");
 
                 entity.HasOne(e => e.Employee)
                     .WithMany(em => em.LeaveRequests)
                     .HasForeignKey(e => e.EmpId);
-                
+
                 entity.HasOne(e => e.Country)
                     .WithMany(c => c.LeaveRequests)
-                    .HasForeignKey(e=> e.CountryId);
-                
+                    .HasForeignKey(e => e.CountryId);
+
                 entity.HasOne(e => e.LeaveType)
                     .WithMany(lt => lt.LeaveRequests)
                     .HasForeignKey(e => e.LeaveTypeId);
@@ -958,7 +973,7 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.FormField)
                 .WithMany(e => e.FormSchemas)
                 .HasForeignKey(e => e.FieldId);
-                
+
             });
 
 
@@ -992,6 +1007,33 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.Shift)
                     .WithMany(e => e.EmpShiftAssign)
                     .HasForeignKey(e => e.ShiftId);
+            });
+
+            modelBuilder.Entity<Section>(entity =>
+            {
+
+                entity.HasOne(e => e.Office)
+                    .WithMany(e => e.Sections)
+                    .HasForeignKey(e => e.OfficeId);
+
+                entity.HasOne(e => e.Department)
+                    .WithMany(e => e.Section)
+                    .HasForeignKey(e => e.DepartmentId);
+
+                entity.HasOne(e => e.UpperSection)
+                    .WithMany(e => e.SubSections)
+                    .HasForeignKey(e => e.UpperSectionId);
+
+            });
+
+            modelBuilder.Entity<CancelledWeekend>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                .HasName("[[PK_CancelledWeekend]]");
+
+                entity.HasOne(cw => cw.Employee)
+                .WithMany(e => e.CancelledWeekends)
+                .HasForeignKey(cw => cw.CancelledBy);
             });
 
             base.OnModelCreating(modelBuilder);
@@ -1112,6 +1154,7 @@ namespace Hrm.Persistence
         public virtual DbSet<RewardPunishmentType> RewardPunishmentType { get; set; } = null!;
         public virtual DbSet<RewardPunishmentPriority> RewardPunishmentPriority { get; set; } = null!;
         public virtual DbSet<EmpRewardPunishment> EmpRewardPunishment { get; set; } = null!;
+        public virtual DbSet<CancelledWeekend> CancelledWeekend { get; set; } = null!;
 
     }
 }

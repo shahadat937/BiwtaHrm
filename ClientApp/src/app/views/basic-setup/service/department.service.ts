@@ -4,9 +4,7 @@ import { Observable, map, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Department } from './../model/department';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class DepartmentService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
@@ -14,10 +12,6 @@ export class DepartmentService {
   constructor(private http: HttpClient) {
     this.departments = new Department();
   }
-
-
-  
-  
   getSelectDepartments(){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/department/get-selecteddepartment');
   }
@@ -64,5 +58,8 @@ export class DepartmentService {
   
   onOfficeSelectGetDepartment(id:number){
     return this.http.get<Department[]>(this.baseUrl + '/Department/get-DepartmentsByOfficeId/' + id);
+  }
+  getSelectedAllDepartment(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/Department/get-selecteddepartment');
   }
 }

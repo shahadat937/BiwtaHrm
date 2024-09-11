@@ -11,6 +11,7 @@ export class OrganogramDepartmentComponent {
   isExpanded: boolean = false;
   isDesignationExpanded: boolean = false;
   isDepartmentExpanded: boolean = false;
+  isSectionExpanded: boolean = false;
 
   toggleExpand(): void {
     this.isExpanded = !this.isExpanded;
@@ -22,5 +23,9 @@ export class OrganogramDepartmentComponent {
   
   toggleDepartmentExpand(): void {
     this.isDepartmentExpanded = !this.isDepartmentExpanded;
+  }
+  
+  toggleSectionExpand(): void {
+    this.isSectionExpanded = !this.isSectionExpanded;
   }
 }

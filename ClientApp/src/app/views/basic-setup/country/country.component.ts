@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { CountryService } from '../service/country.service';
+import { CountryService } from '../service/Country.service';
 
 @Component({
   selector: 'app-country',

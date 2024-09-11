@@ -19,17 +19,19 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
         private readonly IHrmRepository<Hrm.Domain.Attendance> _AttendanceRepository;
         private readonly IHrmRepository<Hrm.Domain.Holidays> _HolidayRepository;
         private readonly IHrmRepository<Hrm.Domain.EmpBasicInfo> _EmpBasicInfoRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public GetAttendanceSummaryByEmpRequestHandler(IHrmRepository<Hrm.Domain.Attendance> AttendanceRepository, 
             IHrmRepository<Hrm.Domain.Holidays> HolidaysRepository,
             IHrmRepository<Hrm.Domain.EmpBasicInfo> EmpBasicInfoRepository,
-            IMapper mapper)
+            IMapper mapper, IUnitOfWork unitOfWork)
         {
             _AttendanceRepository = AttendanceRepository;
             _HolidayRepository = HolidaysRepository;
             _EmpBasicInfoRepository = EmpBasicInfoRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<object> Handle(GetAttendanceSummaryByEmpRequest request, CancellationToken cancellationToken)
@@ -54,9 +56,9 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
 
             AtdSummary.TotalOverTime = AtdReportHelper.totalOverTime(request.AtdSummaryDto.From, request.AtdSummaryDto.To, request.AtdSummaryDto.EmpId, _AttendanceRepository);
 
-            AtdSummary.TotalAbsent = AtdReportHelper.totalAbsent(request.AtdSummaryDto.From, request.AtdSummaryDto.To, request.AtdSummaryDto.EmpId, _AttendanceRepository, _HolidayRepository);
+            AtdSummary.TotalAbsent = await AtdReportHelper.totalAbsent(request.AtdSummaryDto.From, request.AtdSummaryDto.To, request.AtdSummaryDto.EmpId, _AttendanceRepository, _HolidayRepository, _unitOfWork);
 
-            AtdSummary.TotalWorkingDay = AtdReportHelper.totalWorkingDay(request.AtdSummaryDto.From, request.AtdSummaryDto.To, _HolidayRepository);
+            AtdSummary.TotalWorkingDay = await AtdReportHelper.calculateWorkingDay(request.AtdSummaryDto.From, request.AtdSummaryDto.To, request.AtdSummaryDto.From.Year, _unitOfWork);
 
             AtdSummary.TotalPresent =(int) AtdSummary.TotalWorkingDay - AtdSummary.TotalAbsent;
 

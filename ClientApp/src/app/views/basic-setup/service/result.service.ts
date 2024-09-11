@@ -6,9 +6,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable, map, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ResultService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

@@ -27,6 +27,7 @@ import {
   PopoverModule,
   SpinnerModule,
   TooltipModule,
+  ToasterService,
 } from '@coreui/angular';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -42,6 +43,9 @@ import { PromotionIncrementInfoComponent } from './promotion-increment-info/prom
 import { PromotionApprovalListComponent } from './promotion-approval-list/promotion-approval-list.component';
 import { RewardPunishmentListComponent } from './reward-punishment-list/reward-punishment-list.component';
 import { RewardPunishmentComponent } from './reward-punishment/reward-punishment.component';
+import { GradeService } from '../basic-setup/service/Grade.service';
+import { OfficeService } from '../basic-setup/service/office.service';
+import { DepartmentService } from '../basic-setup/service/department.service';
 
 
 @NgModule({
@@ -105,6 +109,12 @@ import { RewardPunishmentComponent } from './reward-punishment/reward-punishment
     PopoverModule,
     AlertComponent,
     TooltipModule,
+  ],
+  providers:[
+    GradeService,
+    OfficeService,
+    DepartmentService,
+    ToasterService
   ]
 })
 export class PromotionModule { }

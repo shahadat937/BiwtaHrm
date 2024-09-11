@@ -162,6 +162,7 @@
                             <select [(ngModel)]="empTransferPostingService.empTransferPosting.transferDepartmentId"
                                 name="transferDepartmentId" #transferDepartmentId="ngModel" required
                                 (change)="getTransferDesignationByDepartmentOnChange(empTransferPostingService.empTransferPosting.transferDepartmentId, empJobDetailsId)"
+                                (change)="onOfficeAndDepartmentSelect(empTransferPostingService.empTransferPosting.transferDepartmentId)"
                                 cFormControl id="transferDepartmentId" aria-label="Default select example" cSelect>
                                 <option [ngValue]="null">Select Transfer Department</option>
 
@@ -177,7 +178,27 @@
                         </div>
                     </c-col>
 
-                    @if (empTransferPostingService.empTransferPosting.transferDepartmentId) {
+                    
+                    <c-col [md]="3">
+                        <label cLabel for="transferSectionId">Transfer Section<span class="text-danger"></span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.transferSectionId" (change)="onSectionSelectGetDesignation(empTransferPostingService.empTransferPosting.transferSectionId, empJobDetailsId)"
+                                name="transferSectionId" #transferSectionId="ngModel" cFormControl
+                                id="transferSectionId" aria-label="Default select example" cSelect>
+                                <option [ngValue]="null">Select Section</option>
+
+                                @for(section of sections; track section.id;let index=$index) {
+                                <option [value]="section.id">
+                                    {{ section.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!transferSectionId.valid && transferSectionId.touched){
+                            <div class="text-left text-danger">Section is required</div>
+                            }
+                        </div>
+                    </c-col>
+                    
                     <c-col [md]="3">
                         <label cLabel for="transferDesignationId">Transfer Designation<span
                                 class="text-danger"></span></label>
@@ -198,27 +219,7 @@
                             }
                         </div>
                     </c-col>
-                    }
 
-                    <c-col [md]="3">
-                        <label cLabel for="transferSectionId">Transfer Section<span class="text-danger"></span></label>
-                        <div class="input-wrapper">
-                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.transferSectionId"
-                                name="transferSectionId" #transferSectionId="ngModel" cFormControl
-                                id="transferSectionId" aria-label="Default select example" cSelect>
-                                <option [ngValue]="null">Select Section</option>
-
-                                @for(section of sections; track section.id;let index=$index) {
-                                <option [value]="section.id">
-                                    {{ section.name }}
-                                </option>
-                                }
-                            </select>
-                            @if(!transferSectionId.valid && transferSectionId.touched){
-                            <div class="text-left text-danger">Section is required</div>
-                            }
-                        </div>
-                    </c-col>
 
                     <c-col [md]="3">
                         <label cLabel for="releaseTypeId">Release Type<span class="text-danger"></span></label>

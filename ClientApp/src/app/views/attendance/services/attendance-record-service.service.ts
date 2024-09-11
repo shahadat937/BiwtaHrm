@@ -5,9 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { UpdateAttendanceModel } from '../models/update-attendance-model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AttendanceRecordService {
   cachedData: any[]=[];
   AtdRecordModel:AttendanceRecordModel;
@@ -35,7 +33,6 @@ export class AttendanceRecordService {
     return this.http.delete(this.baseUrl+`/attendance/delete-AttendanceById/${attendanceId}`);
   }
   getAttendanceStatusOption():Observable<any[]> {
-    console.log("Hello World");
     return this.http.get<any[]>(this.baseUrl+"/attendanceStatus/get-SelectedAttendanceStatus")
   }
 

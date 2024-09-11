@@ -9,8 +9,8 @@ namespace Hrm.Application.Enum
     public enum LeaveStatusOption
     {
         Pending,
-        ReviewerApproved,
         ReviewerDenied,
+        ReviewerApproved,
         FinalApproved,
         FinalDenied
     }

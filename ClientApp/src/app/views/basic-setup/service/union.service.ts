@@ -4,9 +4,7 @@ import { Observable, map, of } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { environment } from '../../../../environments/environment';
 import { Union } from './../model/union';
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class UnionService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

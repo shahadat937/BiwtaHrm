@@ -9,56 +9,87 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { DepartmentService } from '../service/department.service';
+import { OfficeService } from '../service/office.service';
 
 @Component({
   selector: 'app-section',
-  templateUrl: './section.component.html',
+  templateUrl:'./section.component.html',
   styleUrl: './section.component.scss'
 })
 export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
-  //grades: any[] = [];
-  editMode: boolean = false;
-  banks: any[] = [];
-
+  // position = 'top-end';
+  visible = false;
+  // percentage = 0;
+  BtnText: string | undefined;
   btnText: string | undefined;
+  headerText: string | undefined;
+  buttonIcon: string | undefined;
+  offices: SelectedModel[] = [];
+  departments: SelectedModel[] = [];
+  upperSections: SelectedModel[] = [];
+  departmentView = false;
+  upperSectionView = false;
   loading = false;
   @ViewChild('SectionForm', { static: true }) SectionForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'sectionName',  'isActive', 'Action'];
+  displayedColumns: string[] = [
+    'slNo', 
+    // 'office',
+    'department',
+    'section',
+    'upperSection', 
+    'isActive', 
+    'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
   constructor(
-    public sectionService: SectionService,
+    public departmentService: DepartmentService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
-    private toastr: ToastrService
-
-  ) { }
-  ngOnInit(): void {
-    this.getAllSections();
-    this.handleRouteParams();
+    private toastr: ToastrService,
+    public officeService : OfficeService,
+    public sectionService : SectionService,
+  ) {
   }
+  ngOnInit(): void {
+    this.initaialSectionForm();
+    this.getAllSection();
+    this.handleRouteParams();
+    this.loadOffice();
+    this.getAllSelectedDepartments();
+  }
+
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-
       const id = params.get('sectionId');
-
       if (id) {
+        this.visible = true;
         this.btnText = 'Update';
+        this.headerText = "Update Section";
+        this.BtnText = " Hide Form";
+        this.buttonIcon = "cilTrash";
         this.sectionService.find(+id).subscribe((res) => {
+          this.onOfficeSelect(res.officeId);
+          this.onOfficeAndDepartmentSelect(res.departmentId);
           this.SectionForm?.form.patchValue(res);
         });
       } else {
+        this.resetForm();
         this.btnText = 'Submit';
+        this.visible = false;
+        this.headerText = "Section List"
+        this.buttonIcon = "cilPencil";
+        this.BtnText = " Add Section";
       }
     });
   }
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.matSort;
@@ -73,16 +104,72 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
+  
+  UserFormView() {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('sectionId');
+      if(id){
+        if (this.BtnText == " View Form") {
+          this.BtnText = " Hide Form";
+          this.buttonIcon = "cilTrash";
+          this.headerText = "Update Section";
+          this.visible = true;
+        }
+        else {
+          this.BtnText = " View Form";
+          this.buttonIcon = "cilPencil";
+          this.headerText = "Section List";
+          this.visible = false;
+        }
+      }
+      else {
+        if (this.BtnText == " Add Section") {
+          this.BtnText = " Hide Form";
+          this.buttonIcon = "cilTrash";
+          this.headerText = "Add New Section";
+          this.visible = true;
+        }
+        else {
+          this.BtnText = " Add Section";
+          this.buttonIcon = "cilPencil";
+          this.headerText = "Section List";
+          this.visible = false;
+        }
+      }
+    });
+  }
 
+  toggleCollapse() {
+    this.handleRouteParams();
+    this.visible = true;
+  }
 
-  initaialBankBranch(form?: NgForm) {
+  cancelUpdate() {
+    this.resetForm();
+    this.router.navigate(['/officeSetup/section']);
+  }
 
+  initaialSectionForm(form?: NgForm) {
     if (form != null) form.resetForm();
     this.sectionService.sections = {
       sectionId: 0,
-        sectionName: '',
+      sectionName: "",
+      sectionNameBangla: "", 
+      sectionCode: "", 
+      officeId: null,
+      departmentId: null,
+      upperSectionId: null,
+      phone: "", 
+      mobile: "", 
+      fax: "", 
+      email: "", 
+      sequence: null,
+      remark: "", 
       menuPosition: 0,
       isActive: true,
+      officeName: "", 
+      departmentName: "", 
+      upperSectionName: "", 
     };
   }
   resetForm() {
@@ -90,19 +177,86 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
       this.SectionForm.form.reset();
       this.SectionForm.form.patchValue({
         sectionId: 0,
-        sectionName: '',
+        sectionName: "",
+        sectionNameBangla: "", 
+        sectionCode: "", 
+        officeId: null,
+        departmentId: null,
+        upperSectionId: null,
+        phone: "", 
+        mobile: "", 
+        fax: "", 
+        email: "", 
+        sequence: null,
+        remark: "", 
         menuPosition: 0,
         isActive: true,
+        officeName: "", 
+        departmentName: "", 
+        upperSectionName: "", 
       });
     }
     this.router.navigate(['/officeSetup/section']);
   }
-  getAllSections() {
+
+  getAllSection() {
     this.subscription = this.sectionService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     });
+  }
+  
+  loadOffice() { 
+    this.subscription=this.officeService.selectGetoffice().subscribe((data) => { 
+      this.offices = data;
+    });
+  }
+
+  onOfficeSelect(officeId : number){
+    this.departmentService.departments.upperDepartmentId = null;
+    this.departmentService.getSelectedDepartmentByOfficeId(+officeId).subscribe((res) => {
+      this.departments = res;
+      if(res.length>0){
+        this.departmentView = true;
+      }
+      else{
+        this.departmentView = false;
+      }
+    });
+  }
+
+  
+  getAllSelectedDepartments(){
+    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+          this.departments = res;
+    });
+  }
+  
+  onOfficeAndDepartmentSelect(departmentId : number){
+    this.sectionService.sections.upperSectionId = null;
+    this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
+      this.upperSections = res;
+      if(res.length>0){
+        this.upperSectionView = true;
+      }
+      else{
+        this.upperSectionView = false;
+      }
+    });
+  }
+
+  onOfficeSelectGetDepartment(officeId : number){
+    if(officeId == null){
+      this.getAllSection();
+    }
+    else {
+      this.departmentService.onOfficeSelectGetDepartment(+officeId).subscribe((res) => {
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.matSort;
+      });
+    }
   }
 
   onSubmit(form: NgForm): void {
@@ -114,17 +268,14 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
       : this.sectionService.submit(form.value);
 
     this.subscription = action$.subscribe((response: any) => {
-
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getAllSections();
+        this.getAllSection();
         this.resetForm();
-        if (!id) {
-          this.router.navigate(['/officeSetup/section']);
-        }
+        this.router.navigate(['/officeSetup/section']);
         this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
@@ -146,15 +297,18 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.dataSource.data.splice(index, 1);
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
+              this.toastr.success('Delete sucessfully ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
             },
             (err) => {
               this.toastr.error('Somethig Wrong ! ', ` `, {
                 positionClass: 'toast-top-right',
               });
-              console.log(err);
             }
           );
         }
       });
   }
 }
+

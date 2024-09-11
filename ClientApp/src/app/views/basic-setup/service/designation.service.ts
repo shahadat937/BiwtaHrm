@@ -5,9 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 import { Designation } from '../model/Designation';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DesignationService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;

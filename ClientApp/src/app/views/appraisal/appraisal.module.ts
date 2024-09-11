@@ -31,6 +31,7 @@ import { FieldComponent } from './field/field.component';
 import { UpdateFormComponent } from './update-form/update-form.component';
 import {MatIconModule} from '@angular/material/icon';
 import { ViewFormRecordComponent } from './manage-form/view-form-record/view-form-record.component';
+import { FormRecordService } from './services/form-record.service';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,8 @@ import { ViewFormRecordComponent } from './manage-form/view-form-record/view-for
     MatIconModule,
     CalendarModule
 
+  ],providers:[
+    FormRecordService
   ]
 })
 export class AppraisalModule { }

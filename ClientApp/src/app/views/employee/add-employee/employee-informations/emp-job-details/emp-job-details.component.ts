@@ -7,6 +7,7 @@ import { EmpJobDetailsService } from '../../../service/emp-job-details.service';
 import { OfficeService } from 'src/app/views/basic-setup/service/office.service';
 import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
 import { GradeService } from 'src/app/views/basic-setup/service/Grade.service';
+import { SectionService } from 'src/app/views/basic-setup/service/section.service';
 
 @Component({
   selector: 'app-emp-job-details',
@@ -32,6 +33,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   scales: SelectedModel[] = [];
   sections: SelectedModel[] = [];
   empJobDetailsId: number = 0;
+  sectionView: boolean = false;
   subscription: Subscription = new Subscription();
   loading: boolean = false;
   @ViewChild('EmpJobDetailsForm', { static: true }) EmpJobDetailsForm!: NgForm;
@@ -42,6 +44,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     public officeService: OfficeService,
     public departmentService: DepartmentService,
     private gradeService: GradeService,
+    public sectionService : SectionService,
   ) {
 
   }
@@ -51,7 +54,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     this.loadOffice();
     this.SelectModelGrade();
     this.getAllDepartment();
-    this.getSelectedSection();
+    this.getAllSelectedDepartments();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -70,7 +73,10 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       if (res) {
         this.empJobDetailsId = res.id;
         this.onOfficeSelect(res.officeId);
-        if (res.departmentId) {
+        if(res.sectionId){
+          this.onSectionSelectGetDesignation(res.sectionId, res.id);
+        }
+        else if (res.departmentId) {
           this.onDepartmentSelectGetDesignation(res.departmentId, res.id);
         }
         else {
@@ -83,6 +89,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
         if(res.firstDepartmentId){
           this.getOldDesignationByDepartment(res.firstDepartmentId);
         }
+        this.onOfficeAndDepartmentSelect(res.departmentId);
         this.EmpJobDetailsForm?.form.patchValue(res);
         this.headerText = 'Update Job Details';
         this.btnText = 'Update';
@@ -164,9 +171,24 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  getSelectedSection(){
-    this.subscription = this.empJobDetailsService.getSelectedSection().subscribe((data) => {
-      this.sections = data;
+  
+  onOfficeAndDepartmentSelect(departmentId : number){
+    this.empJobDetailsService.empJobDetails.sectionId = null;
+    this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
+      this.sections = res;
+      if(res.length>0){
+        this.sectionView = true;
+      }
+      else{
+        this.sectionView = false;
+      }
+    });
+  }
+
+  
+  getAllSelectedDepartments(){
+    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+          this.departments = res;
     });
   }
 
@@ -185,14 +207,29 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDepartmentSelectGetDesignation(departmentId: number, empJobDetailsId: number) {
+    this.designations = [];
+    this.empJobDetailsService.empJobDetails.designationId = null;
     if (departmentId == null) {
       this.onOfficeSelectGetDesignation(this.empJobDetailsService.empJobDetails.officeId, this.empJobDetailsId);
     }
+    else{
+      this.empJobDetailsService.getDesignationByDepartmentId(departmentId, empJobDetailsId).subscribe((res) => {
+        this.designations = res;
+      });
+    }
+  }
+  
+  onSectionSelectGetDesignation(sectionId: number, empJobDetailsId: number) {
     this.designations = [];
     this.empJobDetailsService.empJobDetails.designationId = null;
-    this.empJobDetailsService.getDesignationByDepartmentId(departmentId, empJobDetailsId).subscribe((res) => {
+    if (sectionId == null) {
+      this.onOfficeSelectGetDesignation(this.empJobDetailsService.empJobDetails.departmentId, this.empJobDetailsId);
+    }
+    else {
+      this.empJobDetailsService.getDesignationBySectionId(+sectionId, +empJobDetailsId).subscribe((res) => {
       this.designations = res;
     });
+    }
   }
 
   getAllDepartment() {

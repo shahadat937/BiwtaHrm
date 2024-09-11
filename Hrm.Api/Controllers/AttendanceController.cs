@@ -65,6 +65,16 @@ namespace Hrm.Api.Controllers
 
         }
 
+        [HttpGet]
+        [Route("get-WorkingDays")]
+        public async Task<ActionResult> GetWorkingDays([FromQuery] DateTime From, [FromQuery] DateTime To)
+        {
+            var commnad = new GetWorkingDaysRequest { From = From, To = To };
+            var response = await _mediator.Send(commnad);
+
+            return Ok(response);
+        }
+
         [HttpPost]
         [Route("save-AttendanceFromDevice")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateAttendanceDto attendance)

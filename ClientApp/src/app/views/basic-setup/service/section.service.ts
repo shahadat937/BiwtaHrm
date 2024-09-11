@@ -3,10 +3,9 @@ import { environment } from 'src/environments/environment';
 import { Section } from '../model/section';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SectionService {
 
   cachedData: any[] = [];
@@ -51,5 +50,9 @@ export class SectionService {
 
   delete(id: number) {
     return this.http.delete(this.baseUrl + '/section/delete-Section/' + id);
+  }
+
+  getSectionByOfficeDepartment(departmentId: number) {
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/section/get-sectionByOfficeIdAndDepartmentId?&departmentId='+departmentId);
   }
 }

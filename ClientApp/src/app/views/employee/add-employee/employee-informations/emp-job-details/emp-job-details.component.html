@@ -11,10 +11,11 @@
             <input type="hidden" [(ngModel)]="empJobDetailsService.empJobDetails.empId" name="empId" />
 
             
-            <c-col [md]="3">
+            <!-- <c-col [md]="3">
                 <label cLabel for="office">Office<span class="text-danger">*</span></label>
                 <div class="input-wrapper">
                 <select (change)="onOfficeSelect(empJobDetailsService.empJobDetails.officeId)" (change)="onOfficeSelectGetDesignation(empJobDetailsService.empJobDetails.officeId, empJobDetailsId)"
+                (change)="onOfficeAndDepartmentSelect(empJobDetailsService.empJobDetails.officeId, 0)"
                     [(ngModel)]="empJobDetailsService.empJobDetails.officeId" name="officeId" #officeId="ngModel"
                     cFormControl id="office" required aria-label="Default select example" cSelect>
                     <option [ngValue]="null">Select Office</option>
@@ -30,12 +31,13 @@
                 <div class="text-left text-danger">Office is required</div>
                 }
                 </div>
-            </c-col>
+            </c-col> -->
             
             <c-col [md]="3">
                 <label cLabel for="Department">Department<span class="text-danger"></span></label>
                 <div class="input-wrapper">
                 <select (change)="onDepartmentSelectGetDesignation(empJobDetailsService.empJobDetails.departmentId, empJobDetailsId)"
+                (change)="onOfficeAndDepartmentSelect(empJobDetailsService.empJobDetails.departmentId)"
                     [(ngModel)]="empJobDetailsService.empJobDetails.departmentId" name="departmentId" #Department="ngModel"
                     cFormControl id="Department" aria-label="Default select example" cSelect>
                     <option [ngValue]="null">Select Department</option>
@@ -48,6 +50,26 @@
                 </select>
                 @if(!Department.valid && Department.touched){
                 <div class="text-left text-danger">Department is required</div>
+                }
+                </div>
+            </c-col>
+            
+            <c-col [md]="3" [hidden]="sectionView == false">
+                <label cLabel for="sectionId">Section<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                <select (change)="onSectionSelectGetDesignation(empJobDetailsService.empJobDetails.sectionId, empJobDetailsId)"
+                    [(ngModel)]="empJobDetailsService.empJobDetails.sectionId" name="sectionId" #sectionId="ngModel"
+                    cFormControl id="sectionId" aria-label="Default select example" cSelect>
+                    <option [ngValue]="null">Select Section</option>
+        
+                    @for(section of sections; track section.id;let index=$index) {
+                    <option [value]="section.id">
+                    {{ section.name }}
+                    </option>
+                    }
+                </select>
+                @if(!sectionId.valid && sectionId.touched){
+                <div class="text-left text-danger">Section is required</div>
                 }
                 </div>
             </c-col>
@@ -72,25 +94,6 @@
                 </div>
             </c-col>
             
-            <c-col [md]="3">
-                <label cLabel for="sectionId">Section<span class="text-danger"></span></label>
-                <div class="input-wrapper">
-                <select
-                    [(ngModel)]="empJobDetailsService.empJobDetails.sectionId" name="sectionId" #sectionId="ngModel"
-                    cFormControl id="sectionId" aria-label="Default select example" cSelect>
-                    <option [ngValue]="null">Select Section</option>
-        
-                    @for(section of sections; track section.id;let index=$index) {
-                    <option [value]="section.id">
-                    {{ section.name }}
-                    </option>
-                    }
-                </select>
-                @if(!sectionId.valid && sectionId.touched){
-                <div class="text-left text-danger">Section is required</div>
-                }
-                </div>
-            </c-col>
             
             <c-col [md]="3">
                 <label cLabel for="presentGradeId"

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
-import { WidgetsService } from '../widgets/service/widgets.service';
+import { WidgetsService } from './DashboardWidgets/service/widgets.service';
 
 interface IUser {
   name: string;
@@ -22,29 +22,7 @@ interface IUser {
   templateUrl: 'dashboard.component.html',
   styleUrls: ['dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent{
 
-  gendersInfo: any;
-  fieldUnfield: any;
-
-  constructor(public widgetsService: WidgetsService) {
-  }
-
-  ngOnInit(): void {
-    this.getAllGenderChatInfo();
-    this.getAllFieldUnfieldChatInfo();
-  }
-
-  getAllGenderChatInfo(){
-    this.widgetsService.getAllGendersWidgetsInfo().subscribe((item) => {
-      this.gendersInfo = item;
-    })
-  }
-  
-  getAllFieldUnfieldChatInfo(){
-    this.widgetsService.getAllFieldUnfieldWidgetsInfo().subscribe((item) => {
-      this.fieldUnfield = item;
-    })
-  }
 
 }

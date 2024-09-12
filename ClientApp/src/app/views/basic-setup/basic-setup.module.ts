@@ -135,6 +135,10 @@ import { GradeClassService } from './service/GradeClass.service';
 import { GradeService } from './service/Grade.service';
 import { ScaleService } from './service/Scale.service';
 import { DesignationService } from './service/designation.service';
+import { RewardPunishmentSetupComponent } from './reward-punishment-setup/reward-punishment-setup.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { RewardPunishmentTypeComponent } from './reward-punishment-type/reward-punishment-type.component';
+import { RewardPunishmentPriorityComponent } from './reward-punishment-priority/reward-punishment-priority.component';
 
 
 
@@ -203,6 +207,9 @@ import { DesignationService } from './service/designation.service';
     LeaveTypeComponent,
     LeaveRulesComponent,
     OrganogramSectionComponent,
+    RewardPunishmentSetupComponent,
+    RewardPunishmentTypeComponent,
+    RewardPunishmentPriorityComponent,
   ],
   imports: [
     CommonModule,
@@ -227,8 +234,8 @@ import { DesignationService } from './service/designation.service';
     MatTreeModule,
     TableModule,
     TabsModule,
-    TabViewModule
-
+    TabViewModule,
+    MatTabsModule
   ],
   providers: [
     SectionService,

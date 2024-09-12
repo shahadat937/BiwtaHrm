@@ -67,7 +67,6 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       this.PersonalInfoForm?.form.patchValue(res);
       if (res) {
         this.headerText = 'Update Personal Information';
-        console.log(res)
         this.btnText = 'Update';
       }
       else {
@@ -227,6 +226,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
         });
         this.loading = false;
         this.cancel();
+        this.getEmployeeByEmpId();
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',

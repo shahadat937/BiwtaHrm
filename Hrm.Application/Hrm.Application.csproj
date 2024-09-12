@@ -54,6 +54,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Features\EmpRewardPunishments\" />
 	  <Folder Include="Features\Organogram\Handlers\Commands\" />
 	  <Folder Include="Features\Organogram\Requests\Commands\" />
 	</ItemGroup>

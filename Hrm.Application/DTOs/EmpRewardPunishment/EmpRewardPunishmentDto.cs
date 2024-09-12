@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.DTOs.EmpRewardPunishment
 {
-    internal class EmpRewardPunishmentDto : IEmpRewardPunishmentDto
+    public class EmpRewardPunishmentDto : IEmpRewardPunishmentDto
     {
         public int Id { get; set; }
         public int? EmpId { get; set; }

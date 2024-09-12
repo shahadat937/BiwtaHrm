@@ -98,6 +98,11 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
 
                 bool IsCancelledWeekend = _unitOfWork.Repository<Hrm.Domain.CancelledWeekend>().Where(x => DateOnly.FromDateTime(x.CancelDate) == attendance.AttendanceDate).Any();
 
+                if(attendance.InTime.HasValue==false && attendance.OutTime.HasValue==false)
+                {
+                    return false;
+                }
+
                 return !(!IsCancelledWeekend & IsWeekend);
             }).ToList();
 

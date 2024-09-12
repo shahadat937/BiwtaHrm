@@ -267,7 +267,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getDesignationPosition(departmentId : any, sectionId : any){
-    if(this.btnText = 'Submit'){
+    if(this.btnText == 'Submit'){
       this.designationService.getDesignationPosition(+departmentId, +sectionId).subscribe((res) => {
         this.designationService.designation.menuPosition = res;
       })

@@ -1,0 +1,24 @@
+<c-card>
+    <c-card-header>
+        <h4 class="text-center">Reward/Punishment Setup</h4>
+    </c-card-header>
+    <c-card-body>
+        <mat-tab-group>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                Reward/Punishment Type
+              </ng-template>
+              <ng-container >
+                    <app-reward-punishment-type></app-reward-punishment-type>
+              </ng-container>
+            </mat-tab>
+          
+            <mat-tab>
+              <ng-template mat-tab-label>
+                Reward/Punishment Priority
+              </ng-template>
+              <app-reward-punishment-priority></app-reward-punishment-priority>
+            </mat-tab>
+          </mat-tab-group>          
+    </c-card-body>
+</c-card>

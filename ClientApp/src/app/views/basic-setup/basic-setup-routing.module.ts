@@ -58,6 +58,7 @@ import { YearSetupComponent } from './year-setup/year-setup.component';
 import { HolidayTypeComponent } from './holiday-type/holiday-type.component';
 import { OrganogramComponent } from './organogram/organogram.component';
 import { ReleaseTypeComponent } from './release-type/release-type.component';
+import { RewardPunishmentSetupComponent } from './reward-punishment-setup/reward-punishment-setup.component';
 
 
 const routes: Routes = [
@@ -870,6 +871,13 @@ const routes: Routes = [
         component: OfficeAddressComponent,
         data: {
           title: 'Update Office Address',
+        },
+      },
+      {
+        path: 'rewardPunishment-setup',
+        component: RewardPunishmentSetupComponent,
+        data: {
+          title: 'Office Address',
         },
       },
 

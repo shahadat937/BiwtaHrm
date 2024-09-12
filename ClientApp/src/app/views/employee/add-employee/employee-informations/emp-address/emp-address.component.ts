@@ -296,6 +296,7 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
+        this.getAddressInformation();
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',

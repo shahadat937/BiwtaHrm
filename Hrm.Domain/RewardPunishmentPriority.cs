@@ -15,7 +15,7 @@ namespace Hrm.Domain
         public string? Remark { get; set; }
         public bool IsActive { get; set; }
 
-        public virtual ICollection<EmpRewardPunishment> EmpRewardPunishments { get; set; }
+        public virtual ICollection<EmpRewardPunishment>? EmpRewardPunishments { get; set; }
     }
 
 }

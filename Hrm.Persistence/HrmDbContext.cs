@@ -1036,6 +1036,12 @@ namespace Hrm.Persistence
                 .HasForeignKey(cw => cw.CancelledBy);
             });
 
+            modelBuilder.Entity<RewardPunishmentType>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                .HasName("[[PK_RewardPunishmentType]]");
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;

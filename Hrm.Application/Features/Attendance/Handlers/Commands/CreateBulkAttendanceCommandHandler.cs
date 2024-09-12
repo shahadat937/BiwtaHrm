@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using Hrm.Application.DTOs.Attendance.Validators;
 using System.Runtime.InteropServices;
 using Hrm.Application.DTOs.Attendance;
+using Microsoft.EntityFrameworkCore;
+using Hrm.Domain;
 
 namespace Hrm.Application.Features.Attendance.Handlers.Commands
 {
@@ -63,9 +65,14 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
                 try
                 {
                     attendancedtos = await CsvFileHelper.GetRecords(tempFilePath);
-                } catch (Exception ex)
+                }
+                catch(FormatException ex)
                 {
-                    throw new BadRequestException(ex.Message);
+                    throw new BadRequestException("Date Format is not correct");
+                }
+                catch (Exception ex)
+                {
+                    throw new BadRequestException("Got error gettting data from csv. Make sure all data format and header name are correct");
                     //Console.WriteLine(ex);
                 } finally
                 {
@@ -84,8 +91,21 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
             }
 
 
+            // Filter the list to exclude the weekend entry
+            attendancedtos = attendancedtos.Where((attendance) =>
+            {
+                bool IsWeekend = _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.weekDay.WeekDayName == attendance.AttendanceDate.DayOfWeek.ToString() && x.year.YearName == attendance.AttendanceDate.Year).Any();
+
+                bool IsCancelledWeekend = _unitOfWork.Repository<Hrm.Domain.CancelledWeekend>().Where(x => DateOnly.FromDateTime(x.CancelDate) == attendance.AttendanceDate).Any();
+
+                return !(!IsCancelledWeekend & IsWeekend);
+            }).ToList();
+
+
+            // Validate the attendance dto
             foreach( var attendance in attendancedtos)
             {
+
                 var validationResult = await validator.ValidateAsync(attendance);
 
                 if(!validationResult.IsValid)
@@ -94,9 +114,20 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
                 }
             }
 
+
+            // set other attendance related field
             foreach(var attendance in attendancedtos)
             {
                 attendance.AttendanceTypeId = 1;
+
+                var employee = await _unitOfWork.Repository<Hrm.Domain.EmpBasicInfo>().Where(x => x.IdCardNo == attendance.EmpId.ToString()).FirstOrDefaultAsync();
+
+                if(employee == null)
+                {
+                    throw new NotFoundException("Employee",attendance.EmpId);
+                }
+
+                attendance.EmpId = employee.Id;
 
                 if (!attendance.DayTypeId.HasValue)
                 {

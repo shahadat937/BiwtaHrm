@@ -4,12 +4,12 @@
         <c-col [md]="4">
             <input type="hidden" [(ngModel)]="rewardPunishmentSetupService.rewardPunishmentPriority.id" name="id" />
             <input type="hidden" [(ngModel)]="rewardPunishmentSetupService.rewardPunishmentPriority.menuPosition" name="menuPosition" />
-            <label cLabel for="validationCustom01">Type Name<span class="text-danger">*</span></label>
+            <label cLabel for="validationCustom01">Priority Name<span class="text-danger">*</span></label>
             <input [(ngModel)]="rewardPunishmentSetupService.rewardPunishmentPriority.name" name="name" #name="ngModel"
                 placeholder="Enter Result Name" cFormControl id="validationCustom01" required type="text" value="Mark" />
     
             @if(!name.valid&&name.touched){
-            <div class="text-left text-danger">Type Name is required</div>
+            <div class="text-left text-danger">Priority Name is required</div>
             }
         </c-col>
         
@@ -40,7 +40,7 @@
     </form>
 
     <c-card class="mt-3">
-        <c-card-header>Reward/Punishment Type List</c-card-header>
+        <c-card-header>Reward/Punishment Priority List</c-card-header>
         <c-card-body>
           <div class="example-header">
             <mat-form-field>

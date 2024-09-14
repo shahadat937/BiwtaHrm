@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { cilZoom } from '@coreui/icons';
 
 @Component({
   selector: 'app-workday-setting',
@@ -15,15 +16,19 @@ import { RoleFeatureService } from '../../featureManagement/service/role-feature
 })
 export class WorkdaySettingComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
-  icons = {cilTrash, cilPlus, cilX};
+  icons = {cilZoom,cilTrash, cilPlus, cilX};
   YearOption: any[] = [];
   DayOption: any[] = [];
-  Workday: any[] = []
+  Workday: any[] = [];
+  weekendData: any[] = [];
+  weekendColumns: any[] = [{header: "Date", field: "date"},{header:'Day', field:'dayName'}, {header: "Status", field: "isActive"}];
   selectedYear:number|null;
   selectedDay: number | null;
   selectedDayForAddition : number | null;
   showAddDay: boolean ;
   yearLoaded : boolean;
+  filterForWeekend:string = "";
+  loading: boolean = false;
   constructor(
     private workdayService: WorkdayService,
     private toastr : ToastrService,
@@ -55,6 +60,7 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
         this.YearOption = option;
         this.setDefaultYear();
         this.getWorkday();
+        this.getWeekend();
         this.yearLoaded=true;
       },
       error: (err)=> {
@@ -77,6 +83,72 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
     })
   }
 
+
+  getWeekend() {
+    if(this.selectedYear==null) {
+      return;
+    }
+
+    this.subscription = this.workdayService.getWeekend(this.selectedYear).subscribe({
+      next: response=> {
+        this.weekendData = response;
+        console.log(this.weekendData);
+      }
+    })
+  }
+
+
+  toggleWeekendStatus(weekend:any) {
+    let empId : number = parseInt(this.authService.currentUserValue.empId);
+    this.loading = true;
+    if(weekend.isActive) {
+      this.subscription = this.workdayService.addCancelledWeekend(weekend.date,empId).subscribe({
+        next: response => {
+          if(response.success) {
+            this.toastr.success('',"Deactivated", {
+              positionClass: 'toast-top-right'
+            })
+            weekend.isActive = false;
+            weekend.cancelId = {id:response.id};
+          } else {
+            this.toastr.warning('', `${response.message}`, {
+              positionClass: 'toast-top-right'
+            })
+          }
+        },
+        error: err => {
+          this.loading = false;
+        },
+        complete: ()=> {
+          this.loading = false;
+        }
+      })
+    } else {
+        this.subscription=this.workdayService.deleteCancelledWeekend(weekend.cancelId.id).subscribe({
+          next: response => {
+            if(response.success) {
+              this.toastr.success('', "Activated", {
+                positionClass: 'toast-top-right'
+              })
+
+              weekend.isActive = true;
+              weekend.cancelId = null;
+            } else {
+              this.toastr.warning('',`${response.message}`, {
+                positionClass: 'toast-top-right'
+              })
+            }
+          },
+          error: err=> {
+            this.loading = false;
+          },
+
+          complete: () => {
+            this.loading = false;
+          }
+        })      
+    }
+  }
 
   getWorkday() {
     if(this.selectedYear==null) {

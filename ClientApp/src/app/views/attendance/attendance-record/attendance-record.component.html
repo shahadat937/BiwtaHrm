@@ -86,6 +86,8 @@
                 [(ngModel)] = "this.AtdRecordService.UpdateAtdModel.attendanceStatusId"
                 cSelect
               >
+
+              <option [ngValue]="null">Set Automatically</option>
               @for (status of AtdStatusOption; track $index) {
 
                 @if(status.id==this.AtdRecordService.UpdateAtdModel.attendanceStatusId) {

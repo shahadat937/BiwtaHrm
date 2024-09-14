@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { CommonModule  } from '@angular/common';
 import { AttendanceRoutingModule } from './attendance-routing.module';
 import { ManageShiftComponent } from './manage-shift/manage-shift.component';
 import { WorkdaySettingComponent } from './workday-setting/workday-setting.component';
@@ -102,7 +101,7 @@ import { ManageSiteVisitComponent } from './manage-site-visit/manage-site-visit.
     AttendanceReportEmpService,
     HolidaySetupService,
     SiteVisitService,
-    WorkdayService
+    WorkdayService,
   ],
 })
 export class AttendanceModule { }

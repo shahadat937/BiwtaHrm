@@ -541,6 +541,7 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.AttendanceTypeName, opt => opt.MapFrom(src => src.AttendanceType.AttendanceTypeName))
             .ForMember(dest => dest.EmpFirstName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName))
             .ForMember(dest => dest.EmpLastName, opt => opt.MapFrom(src => src.EmpBasicInfo.LastName))
+            .ForMember(dest => dest.IdCardNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
             .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
             .ForMember(dest => dest.OfficeBranchName, opt => opt.MapFrom(src => src.OfficeBranch.BranchName))
             .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.Shift.ShiftName))

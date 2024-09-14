@@ -55,8 +55,13 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     this.getSiteVisit();
     this.getEmpOption();
 
-    this.roleFeatureService.getFeaturePermission("siteVisit").subscribe(response=> {
-    })
+    if(this.IsUser) {
+      this.roleFeatureService.getFeaturePermission("manageSiteVisit").subscribe(response=> {
+      })
+    } else {
+      this.roleFeatureService.getFeaturePermission("siteVisit").subscribe(response=> {
+      })
+    }
   }
 
   ngOnDestroy(): void {

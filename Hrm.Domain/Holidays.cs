@@ -21,6 +21,7 @@ namespace Hrm.Domain
         public string? Remark { get; set; }
         public bool IsActive { get; set; }
         public bool? IsWeekend { get; set; }
+        public int? GroupId { get; set; }
 
         public Year Year { get; set; }
         public HolidayType HolidayType { get; set; }

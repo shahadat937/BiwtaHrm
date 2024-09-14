@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, model } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -39,7 +39,15 @@ export class HolidaySetupService {
    }
 
    createHoliday(element:any):Observable<any> {
-    return this.http.post<any>(this.baseUrl+"/holidays/save-Holidays",element);
+
+    let params = new HttpParams();
+    params = params.set('holidayFrom', element.holidayFrom);
+    params = params.set('holidayTo', element.holidayTo);
+    
+    delete element['holidayFrom'];
+    delete element['holidayTo'];
+
+    return this.http.post<any>(this.baseUrl+"/holidays/save-Holidays",element, {params:params});
    }
 
    updateHoliday(element:any):Observable<any> {
@@ -58,5 +66,9 @@ export class HolidaySetupService {
 
    deleteHoliday(id:number): Observable<any> {
     return this.http.delete<any>(this.baseUrl+`/holidays/delete-Holidays/${id}`);
+   }
+
+   deleteHolidayByGroupId(groupId:number):Observable<any> {
+    return this.http.delete<any>(this.baseUrl+`/holidays/delete-HolidaysByGroupId/${groupId}`);
    }
 }

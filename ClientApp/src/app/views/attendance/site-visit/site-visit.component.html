@@ -150,8 +150,8 @@
             <tr>
                 <td>{{ data.siteVisitId }}</td>
                 <td>{{ data.firstName+" "+data.lastName }}</td>
-                <td>{{ data.fromDate }}</td>
-                <td>{{ data.toDate }}</td>
+                <td>{{ data.fromDate|date }}</td>
+                <td>{{ data.toDate|date }}</td>
                 <td>{{ data.visitPlace }}</td>
                 <td>{{ data.visitPurpose }}</td>
                 <td>

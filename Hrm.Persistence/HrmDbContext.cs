@@ -1036,10 +1036,34 @@ namespace Hrm.Persistence
                 .HasForeignKey(cw => cw.CancelledBy);
             });
 
-            modelBuilder.Entity<RewardPunishmentType>(entity =>
+            modelBuilder.Entity<EmpRewardPunishment>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                .HasName("[[PK_RewardPunishmentType]]");
+                .HasName("[[PK_EmpRewardPunishment]]");
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(e => e.EmpRewardPunishmentEmp)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.OrderByNavigation)
+                    .WithMany(e => e.EmpRewardPunishmentOrderBy)
+                    .HasForeignKey(e => e.OrderBy);
+
+                entity.HasOne(e => e.ApplicationByNavigation)
+                    .WithMany(e => e.EmpRewardPunishmentApplicationBy)
+                    .HasForeignKey(e => e.ApplicationBy);
+
+                entity.HasOne(e => e.ApproveByNavigation)
+                    .WithMany(e => e.EmpRewardPunishmentApproveBy)
+                    .HasForeignKey(e => e.ApproveById);
+
+                entity.HasOne(e => e.RewardPunishmentType)
+                    .WithMany(e => e.EmpRewardPunishments)
+                    .HasForeignKey(e => e.RewardPunishmentTypeId);
+
+                entity.HasOne(e => e.RewardPunishmentPriority)
+                    .WithMany(e => e.EmpRewardPunishments)
+                    .HasForeignKey(e => e.RewardPunishmentPriorityId);
             });
 
             base.OnModelCreating(modelBuilder);

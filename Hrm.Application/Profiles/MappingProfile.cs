@@ -111,6 +111,7 @@ using Hrm.Application.DTOs.EmpShiftAssign;
 using Hrm.Application.DTOs.RewardPunishmentType;
 using Hrm.Application.DTOs.RewardPunishmentPriority;
 using Hrm.Application.DTOs.CancelledWeekend;
+using Hrm.Application.DTOs.EmpRewardPunishment;
 
 
 
@@ -628,6 +629,10 @@ namespace Hrm.Application.Profiles
             CreateMap<CancelledWeekend, CancelledWeekendDto>()
                 .ForMember(dest => dest.CancelledByEmpFirstName, opt => opt.MapFrom(src => src.Employee.FirstName))
                 .ForMember(dest => dest.CancelledByEmpLastName, opt => opt.MapFrom(src => src.Employee.LastName));
+
+
+            CreateMap<EmpRewardPunishment, EmpRewardPunishmentDto>().ReverseMap();
+            CreateMap<EmpRewardPunishment, CreateEmpRewardPunishmentDto>().ReverseMap();
 
         }
     }

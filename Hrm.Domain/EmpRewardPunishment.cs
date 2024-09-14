@@ -30,12 +30,12 @@ namespace Hrm.Domain
         public bool? IsActive { get; set; }
 
         // Navigation Properties
-        public virtual EmpBasicInfo EmpBasicInfo { get; set; }
-        public virtual RewardPunishmentType RewardPunishmentType { get; set; }
-        public virtual RewardPunishmentPriority RewardPunishmentPriority { get; set; }
-        public virtual EmpBasicInfo OrderByNavigation { get; set; }
-        public virtual EmpBasicInfo ApplicationByNavigation { get; set; }
-        public virtual EmpBasicInfo ApproveByNavigation { get; set; }
+        public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
+        public virtual RewardPunishmentType? RewardPunishmentType { get; set; }
+        public virtual RewardPunishmentPriority? RewardPunishmentPriority { get; set; }
+        public virtual EmpBasicInfo? OrderByNavigation { get; set; }
+        public virtual EmpBasicInfo? ApplicationByNavigation { get; set; }
+        public virtual EmpBasicInfo? ApproveByNavigation { get; set; }
     }
 
 }

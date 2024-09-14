@@ -123,7 +123,7 @@ namespace Hrm.Application.Features.Dashboards.Handlers.Queries
                 // Add the DTO to the result list
                 result.Add(new WidgetsDto
                 {
-                    WidgetName = widgetName,
+                    WidgetName = widgetName + " Today",
                     Label = label,
                     Labels = labels,
                     Data = data,

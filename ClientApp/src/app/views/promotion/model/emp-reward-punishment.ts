@@ -1,21 +1,27 @@
 export class EmpRewardPunishment {
-    Id : number = 0;
-    EmpId : number | null = null;
-    RewardPunishmentTypeId : number | null = null;
-    RewardPunishmentPriorityId : number | null = null;
-    RewardPunishmentDate : Date | null = null;
-    StartDate : Date | null = null;
-    EndDate : Date | null = null;
-    Description : string = '';
-    OrderNo : string = '';
-    WithdrawStatus : boolean | null = null;
-    WithdrawDate : Date | null = null;
-    OrderBy : number | null = null;
-    ApplicationBy : number | null = null;
-    ApproveById : number | null = null;
-    ApproveDate : Date | null = null;
-    ApproveStatus : boolean | null = null;
-    MenuPosition : number = 0;
-    Remark : string = '';
-    IsActive : boolean = true;
+    id : number = 0;
+    empId : number | null = null;
+    rewardPunishmentTypeId : number | null = null;
+    rewardPunishmentPriorityId : number | null = null;
+    rewardPunishmentDate : Date | null = null;
+    startDate : Date | null = null;
+    endDate : Date | null = null;
+    description : string = '';
+    orderNo : string = '';
+    orderDate : Date | null = null;
+    withdrawStatus : boolean = false;
+    withdrawDate : Date | null = null;
+    orderBy : number | null = null;
+    applicationBy : number | null = null;
+    approveById : number | null = null;
+    approveDate : Date | null = null;
+    approveStatus : boolean | null = null;
+    menuPosition : number = 0;
+    remark : string = '';
+    isActive : boolean = true;
+
+    empIdCardNo : string = '';
+    empName : string = '';
+    departmentName : string = '';
+    designationName : string = '';
 }

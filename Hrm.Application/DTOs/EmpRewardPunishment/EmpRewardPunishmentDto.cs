@@ -17,6 +17,7 @@ namespace Hrm.Application.DTOs.EmpRewardPunishment
         public DateOnly? EndDate { get; set; }
         public string? Description { get; set; }
         public string? OrderNo { get; set; }
+        public DateOnly? OrderDate { get; set; }
         public bool? WithdrawStatus { get; set; }
         public DateOnly? WithdrawDate { get; set; }
         public int? OrderBy { get; set; }
@@ -27,5 +28,7 @@ namespace Hrm.Application.DTOs.EmpRewardPunishment
         public int? MenuPosition { get; set; }
         public string? Remark { get; set; }
         public bool? IsActive { get; set; }
+
+
     }
 }

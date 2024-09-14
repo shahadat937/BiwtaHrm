@@ -3,12 +3,14 @@ using Hrm.Application.Contracts.Identity;
 using Hrm.Application.DTOs.LeaveType;
 using Hrm.Application.Features.LeaveType.Requests.Commands;
 using Hrm.Application.Features.LeaveType.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.LeaveType)]
     [ApiController]
+    [Authorize]
     public class LeaveTypeController: Controller
     {
         private readonly IAuthService _authenticationService;

@@ -5,6 +5,7 @@ using Hrm.Application.DTOs.Office;
 using Hrm.Application.DTOs.Organograms;
 using Hrm.Domain;
 using Hrm.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Organogram)]
     [ApiController]
+    [Authorize]
     public class OrganogramController : ControllerBase
     {
         private readonly HrmDbContext _context;

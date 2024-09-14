@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.Employee;
 using Hrm.Application.Features.EmpBasicInfos.Requests.Commands;
 using Hrm.Application.Features.EmpBasicInfos.Requests.Queries;
 using Hrm.Application.Features.Employee.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpBasicInfo)]
     [ApiController]
+    [Authorize]
     public class EmpBasicInfoController : ControllerBase
     {
         private readonly IMediator _mediator;

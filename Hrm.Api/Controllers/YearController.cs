@@ -4,6 +4,7 @@ using Hrm.Application.Features.Year.Requests.Commands;
 using Hrm.Application.Features.Year.Requests.Commands;
 using Hrm.Application.Features.Year.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Year)]
     [ApiController]
+    [Authorize]
     public class YearController : ControllerBase
     {
         private readonly IMediator _mediator;

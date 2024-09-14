@@ -13,11 +13,13 @@ using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Shared.Models;
 using Hrm.Application.Features.WeekDay.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.WeekDay)]
     [ApiController]
+    [Authorize]
     public class WeekDayController : Controller
     {
         private readonly IMediator _mediator;

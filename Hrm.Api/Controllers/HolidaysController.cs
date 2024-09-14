@@ -6,12 +6,15 @@ using Hrm.Application.Features.Holidays.Requests.Queries;
 using Hrm.Application.Features.HolidayType.Requests.Commands;
 using Hrm.Application.Features.HolidayType.Requests.Queries;
 using Hrm.Persistence.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.Diagnostics;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Holidays)]
+    [ApiController]
+    [Authorize]
     public class HolidaysController: Controller
     {
         private readonly IMediator _mediator;

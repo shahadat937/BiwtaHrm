@@ -13,11 +13,13 @@ using Hrm.Application.Features.EmpTnsferPostingJoin.Requests.Queries;
 using Hrm.Application.Features.EmpTnsferPostingJoin.Handlers.Queries;
 using Microsoft.EntityFrameworkCore;
 using Hrm.Persistence;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.EmpTnsferPostingJoin)]
     [ApiController]
+    [Authorize]
     public class EmpTnsferPostingJoinController : Controller
     {
         private readonly IMediator _mediator;

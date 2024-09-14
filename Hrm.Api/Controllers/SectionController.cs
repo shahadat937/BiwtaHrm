@@ -10,11 +10,13 @@ using Hrm.Shared.Models;
 using Hrm.Domain;
 using Hrm.Application.DTOs.Designation;
 using Hrm.Application.Features.Designation.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Section)]
     [ApiController]
+    [Authorize]
     public class Section : Controller
     {
         private readonly IMediator _mediator;

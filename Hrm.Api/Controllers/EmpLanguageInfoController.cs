@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpLanguageInfo;
 using Hrm.Application.Features.EmpLanguageInfos.Requests.Commands;
 using Hrm.Application.Features.EmpLanguageInfos.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpLanguageInfo)]
     [ApiController]
+    [Authorize]
     public class EmpLanguageInfoController : ControllerBase
     {
         private readonly IMediator _mediator;

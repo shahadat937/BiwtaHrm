@@ -9,11 +9,13 @@ using Hrm.Application.Responses;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Hrm.Domain;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.PostingOrderInfo)]
     [ApiController]
+    [Authorize]
     public class PostingOrderInfoController : Controller
     {
         private readonly IMediator _mediator;

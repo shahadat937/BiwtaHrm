@@ -6,11 +6,13 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Shared.Models;
 using Hrm.Application.DTOs.SubDepartment;
 using Hrm.Application.Features.SubDepartment.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.SubDepartment)]
     [ApiController]
+    [Authorize]
     public class SubDepartmentController : Controller
     {
         private readonly IMediator _mediator;

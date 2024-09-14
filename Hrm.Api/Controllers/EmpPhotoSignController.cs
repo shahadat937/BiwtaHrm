@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpPhotoSign;
 using Hrm.Application.Features.EmpPhotoSigns.Requests.Commands;
 using Hrm.Application.Features.EmpPhotoSigns.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpPhotoSign)]
     [ApiController]
+    [Authorize]
     public class EmpPhotoSignController : ControllerBase
     {
         private readonly IMediator _mediator;

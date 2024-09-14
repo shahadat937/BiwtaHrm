@@ -12,11 +12,13 @@ using Hrm.Domain;
 using Hrm.Application.Features.PostingOrderInfo.Requests.Queries;
 using Hrm.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.TransferApproveInfo)]
     [ApiController]
+    [Authorize]
     public class TransferApproveInfoController : Controller
     {
         private readonly IMediator _mediator;

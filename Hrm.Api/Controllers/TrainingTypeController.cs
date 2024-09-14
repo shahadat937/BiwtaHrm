@@ -9,11 +9,13 @@ using Hrm.Application.Features.TrainingType.Requests.Queries;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.TrainingType)]
     [ApiController]
+    [Authorize]
     public class TrainingTypeController : ControllerBase
     {
         private readonly IMediator _mediator;

@@ -8,6 +8,7 @@ using Hrm.Application.Features.ChildStatus.Requests.Queries;
 using Hrm.Application.Features.MaritalStatus.Requests.Commands;
 using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.MaritalStatus)]
     [ApiController]
+    [Authorize]
     public class MaritalStatusController : ControllerBase
     {
         private readonly IMediator _mediator;

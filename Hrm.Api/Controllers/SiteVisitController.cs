@@ -9,11 +9,13 @@ using Hrm.Application.Features.Shift.Requests.Commands;
 using Hrm.Domain;
 using Hrm.Application.DTOs.Shift;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.SiteVisit)]
     [ApiController]
+    [Authorize]
     public class SiteVisitController : Controller
     {
         private readonly IMediator _mediator;

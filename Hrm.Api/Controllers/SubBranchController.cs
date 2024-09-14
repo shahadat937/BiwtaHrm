@@ -12,11 +12,13 @@ using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.DTOs.SubBranch;
 using Hrm.Application.Features.SubBranch.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.SubBranch)]
     [ApiController]
+    [Authorize]
     public class SubBranchController : Controller
     {
         private readonly IMediator _mediator;

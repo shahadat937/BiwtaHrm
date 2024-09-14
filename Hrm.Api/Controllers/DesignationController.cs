@@ -9,11 +9,13 @@ using Hrm.Domain;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.Features.OfficeBranch.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.Designation)]
     [ApiController]
+    [Authorize]
     public class DesignationController : Controller
     {
         private readonly IMediator _mediator;

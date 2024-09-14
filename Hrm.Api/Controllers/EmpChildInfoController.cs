@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpChildInfo;
 using Hrm.Application.Features.EmpChildInfos.Requests.Commands;
 using Hrm.Application.Features.EmpChildInfos.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpChildInfo)]
     [ApiController]
+    [Authorize]
     public class EmpChildInfoController : ControllerBase
     {
         private readonly IMediator _mediator;

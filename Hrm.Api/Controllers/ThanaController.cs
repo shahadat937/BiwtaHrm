@@ -15,11 +15,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.DTOs.District;
 using Hrm.Application.Features.District.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Thana)]
     [ApiController]
+    [Authorize]
     public class ThanaController : ControllerBase
     {
         private readonly IMediator _mediator;

@@ -5,6 +5,7 @@ using Hrm.Application.Features.EmpPersonalInfos.Requests.Commands;
 using Hrm.Application.Features.EmpPersonalInfos.Requests.Queries;
 using Hrm.Application.Features.EmpPresentAddresses.Requests.Commands;
 using Hrm.Application.Features.EmpPresentAddresses.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpPresentAddress)]
     [ApiController]
+    [Authorize]
     public class EmpPresentAddressController : ControllerBase
     {
         private readonly IMediator _mediator;

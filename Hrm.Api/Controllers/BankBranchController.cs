@@ -8,11 +8,13 @@ using Hrm.Application.Responses;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.Features.Stores.Requests.Commands;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.BankBranch)]
     [ApiController]
+    [Authorize]
     public class BankBranchController : Controller
     {
         private readonly IMediator _mediator;

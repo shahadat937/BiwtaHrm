@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpJobDetail;
 using Hrm.Application.DTOs.EmpRewardPunishment;
 using Hrm.Application.Features.EmpRewardPunishments.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpRewardPunishment)]
     [ApiController]
+    [Authorize]
     public class EmpRewardPunishmentController : ControllerBase
     {
         private readonly IMediator _mediator;

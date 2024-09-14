@@ -4,11 +4,13 @@ using Hrm.Application.DTOs.LeaveRules;
 using Hrm.Application.Features.Leave.Requests.Commands;
 using Hrm.Application.Features.LeaveRules.Requests.Commands;
 using Hrm.Application.Features.LeaveRules.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.LeaveRules)]
     [ApiController]
+    [Authorize]
     public class LeaveRulesController: Controller
     {
         private readonly IMediator _mediator;

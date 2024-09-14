@@ -11,6 +11,7 @@ using Hrm.Application.Features.RoleFeatures.Requests.Commands;
 using Hrm.Application.Features.RoleFeatures.Requests.Queries;
 using Hrm.Application.Features.UserRoles.Requests.Queries;
 using Hrm.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.RoleFeatures)]
     [ApiController]
+    [Authorize]
     public class RoleFeaturesController : ControllerBase
     {
         private readonly IMediator _mediator;

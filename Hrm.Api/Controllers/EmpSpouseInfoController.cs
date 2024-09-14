@@ -3,6 +3,7 @@ using Hrm.Application.DTOs.EmpSpouseInfo;
 using Hrm.Application.Features.EmpSpouseInfos.Requests.Commands;
 using Hrm.Application.Features.EmpSpouseInfos.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpSpouseInfo)]
     [ApiController]
+    [Authorize]
     public class EmpSpouseInfoController : ControllerBase
     {
         private readonly IMediator _mediator;

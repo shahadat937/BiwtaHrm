@@ -250,4 +250,9 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
       }
     })
   }
+
+  onYearChange() {
+    this.getWorkday();
+    this.getWeekend();
+  }
 }

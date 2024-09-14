@@ -8,7 +8,7 @@
                 <select name="year" 
                 id="year" cSelect
                 [(ngModel)]="selectedYear"
-                (change)="getWorkday()"
+                (change)="onYearChange()"
                 >
                     <option [ngValue]="null">Select Year</option>
                     @for (year of YearOption; track $index) {

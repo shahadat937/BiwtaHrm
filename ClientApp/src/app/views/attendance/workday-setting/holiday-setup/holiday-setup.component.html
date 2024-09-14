@@ -164,7 +164,10 @@
                         <td>{{ holiday.holidayFrom|date }}</td>
                         <td>{{ holiday.holidayTo|date }}</td>
                         <td>{{ holiday.holidayTypeName }}</td>
-                        <td>{{holiday.isActive}}</td>
+                        <td>
+                            <c-badge *ngIf="holiday.isActive" color="success">Active</c-badge>
+                            <c-badge *ngIf="!holiday.isActive" color="danger">Deactive</c-badge>
+                        </td>
                         <td>
                         <button class="custom-button me-1" (click)="toggleUpdate(holiday)" cTooltip="Update">
                             <svg [cIcon]="icons.cilPencil" size="lg" title="Update"></svg>

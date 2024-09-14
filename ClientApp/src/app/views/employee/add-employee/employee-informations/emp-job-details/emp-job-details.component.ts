@@ -72,7 +72,6 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
       if (res) {
         this.empJobDetailsId = res.id;
-        this.onOfficeSelect(res.officeId);
         if(res.sectionId){
           this.onSectionSelectGetDesignation(res.sectionId, res.id);
         }
@@ -93,6 +92,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
         this.EmpJobDetailsForm?.form.patchValue(res);
         this.headerText = 'Update Job Details';
         this.btnText = 'Update';
+        this.getAllSelectedDepartments();
       }
       else {
         this.headerText = 'Add Job Details';

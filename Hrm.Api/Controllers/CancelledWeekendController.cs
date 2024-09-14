@@ -2,10 +2,12 @@
 using Hrm.Application.DTOs.CancelledWeekend;
 using Hrm.Application.Features.CancelledWeekend.Requests.Commands;
 using Hrm.Application.Features.CancelledWeekend.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.CancelledWeekend)]
     [ApiController]
+    [Authorize]
     public class CancelledWeekendController: Controller
     {
         private readonly IMediator _mediator;

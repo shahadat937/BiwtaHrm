@@ -3,11 +3,14 @@ using Hrm.Application.DTOs.DayType;
 using Hrm.Application.Features.DayType.Requests.Commands;
 using Hrm.Application.Features.DayType.Requests.Queries;
 using Hrm.Application.Features.Overall_EV_Promotion.Requests.Commands;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Identity.Client;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.DayType)]
+    [ApiController]
+    [Authorize]
     public class DayTypeController:Controller
     {
         private readonly IMediator _mediator;

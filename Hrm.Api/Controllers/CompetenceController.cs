@@ -4,11 +4,13 @@ using Hrm.Application.Features.Competence.Requests.Commands;
 using Hrm.Application.Features.Competence.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Competence)]
     [ApiController]
+    [Authorize]
     public class Competence : Controller
     {
         private readonly IMediator _mediator;

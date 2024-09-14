@@ -9,12 +9,14 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.Reward)]
     [ApiController]
+    [Authorize]
     public class RewardController : Controller
     {
         private readonly IMediator _mediator;

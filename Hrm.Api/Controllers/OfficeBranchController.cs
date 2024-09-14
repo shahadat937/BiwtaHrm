@@ -12,12 +12,14 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.OfficeBranch)]
     [ApiController]
+    [Authorize]
     public class OfficeBranchController : Controller
     {
         private readonly IMediator _mediator;

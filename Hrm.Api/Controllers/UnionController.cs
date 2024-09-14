@@ -13,6 +13,7 @@ using Hrm.Application.Features.Union.Requests.Commands;
 using Hrm.Application.Features.Union.Requests.Queries;
 using Hrm.Domain;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Union)]
     [ApiController]
+    [Authorize]
     public class UnionController : ControllerBase
     {
         private readonly IMediator _mediator;

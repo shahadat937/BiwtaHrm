@@ -2,10 +2,12 @@
 using Hrm.Application.DTOs.FormSchema;
 using Hrm.Application.Features.FormSchema.Requests.Commands;
 using Hrm.Application.Features.FormSchema.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.FormSchema)]
     [ApiController]
+    [Authorize]
     public class FormSchemaController: Controller
     {
         private readonly IMediator _mediator;

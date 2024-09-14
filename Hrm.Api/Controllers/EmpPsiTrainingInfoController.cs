@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpPsiTrainingInfo;
 using Hrm.Application.Features.EmpPsiTrainingInfos.Requests.Commands;
 using Hrm.Application.Features.EmpPsiTrainingInfos.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpPsiTrainingInfo)]
     [ApiController]
+    [Authorize]
     public class EmpPsiTrainingInfoController : ControllerBase
     {
         private readonly IMediator _mediator;

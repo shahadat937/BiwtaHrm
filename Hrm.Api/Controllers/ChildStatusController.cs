@@ -11,6 +11,7 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hrm.Api.Controllers
@@ -18,6 +19,7 @@ namespace Hrm.Api.Controllers
 
     [Route(HrmRoutePrefix.ChildStatus)]
     [ApiController]
+    [Authorize]
     public class ChildStatusController : Controller
     {
         private readonly IMediator _mediator;

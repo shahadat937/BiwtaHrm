@@ -2,10 +2,12 @@
 using Hrm.Application.DTOs.FieldRecord;
 using Hrm.Application.Features.FieldRecord.Requests.Commands;
 using Hrm.Application.Features.FieldRecord.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.FieldRecord)]
     [ApiController]
+    [Authorize]
     public class FieldRecordController: Controller
     {
         private readonly IMediator _mediator;

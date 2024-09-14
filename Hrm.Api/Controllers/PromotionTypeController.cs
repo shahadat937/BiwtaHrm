@@ -9,6 +9,7 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Features.TrainingType.Requests.Commands;
 using Hrm.Application.Features.TrainingType.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace Hrm.Api.Controllers
 
     [Route(HrmRoutePrefix.PromotionType)]
     [ApiController]
+    [Authorize]
     public class PromotionTypeController : Controller
     {
         private readonly IMediator _mediator;

@@ -13,11 +13,13 @@ using Hrm.Application.Contracts.Identity;
 using Hrm.Application.Models.Identity;
 using Hrm.Application.DTOs.Role;
 using Hrm.Application.DTOs.AspNetUserRoles;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.UserRole)]
     [ApiController]
+    [Authorize]
     public class UserRoleController : Controller
     {
         private readonly IRoleService _authenticationService;

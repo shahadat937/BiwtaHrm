@@ -2,10 +2,12 @@
 using Hrm.Application.DTOs.FormField;
 using Hrm.Application.Features.FormField.Requests.Commands;
 using Hrm.Application.Features.FormField.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.FormField)]
     [ApiController]
+    [Authorize]
     public class FormFieldController: Controller
     {
         private readonly IMediator _mediator;

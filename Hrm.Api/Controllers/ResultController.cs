@@ -14,12 +14,14 @@ using Hrm.Application.Features.Result.Requests.Commands;
 using Hrm.Application.Features.Result.Requests.Queries;
 using Hrm.Application.Features.Results.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
 
     [Route(HrmRoutePrefix.Result)]
     [ApiController]
+    [Authorize]
     public class ResultController : Controller
     {
         private readonly IMediator _mediator;

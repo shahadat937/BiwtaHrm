@@ -3,10 +3,13 @@ using Hrm.Application.DTOs.Attendance;
 using Hrm.Application.DTOs.Attendance.Validators;
 using Hrm.Application.Features.Attendance.Requests.Commands;
 using Hrm.Application.Features.Attendance.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Attendance)]
+    [ApiController]
+    [Authorize]
     public class AttendanceController:Controller
     {
         private readonly IMediator _mediator;

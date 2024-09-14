@@ -5,6 +5,7 @@ using Hrm.Application.Features.AspNetUsers.Requests.Commands;
 using Hrm.Application.Features.AspNetUsers.Requests.Queries;
 using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Application.Models.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.AspNetUsers)]
     [ApiController]
+    [Authorize]
     public class AspNetUsersController : ControllerBase
     {
         private readonly IMediator _mediator;

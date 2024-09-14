@@ -4,6 +4,7 @@ using Hrm.Application.Features.ScaleGradeView.Requests.Queries;
 using Hrm.Application.Features.Scales.Requests.Commands;
 using Hrm.Application.Features.Scales.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.ScaleGradeView)]
     [ApiController]
+    [Authorize]
     public class ScaleGradeViewController : Controller
     {
         private readonly IMediator _mediator;

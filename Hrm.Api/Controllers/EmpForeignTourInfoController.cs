@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpForeignTourInfo;
 using Hrm.Application.Features.EmpForeignTourInfos.Requests.Commands;
 using Hrm.Application.Features.EmpForeignTourInfos.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpForeigTourInfo)]
     [ApiController]
+    [Authorize]
     public class EmpForeignTourInfoController : ControllerBase
     {
         private readonly IMediator _mediator;

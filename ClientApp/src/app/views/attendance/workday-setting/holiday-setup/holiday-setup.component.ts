@@ -225,7 +225,7 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
 
   onUpdate() {
     this.loading = true;
-    this.holidayService.updateHoliday(this.holidayService.model).subscribe({
+    this.holidayService.updateHolidayGroup(this.holidayService.model).subscribe({
       next: (response)=> {
         if(response.success==true) {
           this.toastr.success('',`${response.message}`,{

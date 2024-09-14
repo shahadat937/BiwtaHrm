@@ -64,6 +64,26 @@ export class HolidaySetupService {
     return this.http.put<any>(this.baseUrl+"/holidays/update-Holidays",element);
    }
 
+   updateHolidayGroup(element:any) :Observable<any> {
+    delete element['yearName'];
+    delete element['holidayTypeName'];
+    delete element['officeId'];
+    delete element['officeName'];
+    delete element['officeBranchName'];
+    delete element['officeBranchId'];
+    delete element['menuPosition'];
+
+    let params = new HttpParams();
+    params = params.set('GroupId', element['groupId']);
+    params = params.set('From', element['holidayFrom']);
+    params = params.set('To', element['holidayTo']);
+
+    console.log(element);
+
+    return this.http.put(this.baseUrl+"/holidays/update-HolidaysByGroupId",element,{params:params});
+    
+   }
+
    deleteHoliday(id:number): Observable<any> {
     return this.http.delete<any>(this.baseUrl+`/holidays/delete-Holidays/${id}`);
    }

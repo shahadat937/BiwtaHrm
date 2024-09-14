@@ -91,7 +91,7 @@ namespace Hrm.Application.Helpers
         public bool IsWorkkDay(DateOnly GivenDate)
         {
             var IsWeekDay = _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.IsActive == true && x.weekDay.WeekDayName == GivenDate.DayOfWeek.ToString() && x.year.YearName == GivenDate.Year).Any();
-            return IsWeekDay;
+            return !IsWeekDay;
         }
 
     }

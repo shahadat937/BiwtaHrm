@@ -3,6 +3,7 @@ import { Time } from "@angular/common";
 export class AttendanceRecordModel {
     attendanceId:number|null;
     empId: number|null;
+    idCardNo: string;
     empFirstName: string|null;
     empLastName: string|null;
     inTime: Time|null;
@@ -19,6 +20,7 @@ export class AttendanceRecordModel {
     constructor() {
         this.attendanceId=null;
         this.empId=null;
+        this.idCardNo = "";
         this.empFirstName="";
         this.empLastName="";
         this.inTime = null;

@@ -124,6 +124,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
       this.LateText = response.totalLate;
       this.WorkingDayText = response.totalWorkingDay;
       this.SiteVisitText = response.totalSiteVisit;
+      this.OnLeaveText = response.totalOnLeave;
     });
   }
 

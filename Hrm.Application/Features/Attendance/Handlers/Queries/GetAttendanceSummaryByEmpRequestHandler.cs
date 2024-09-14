@@ -64,6 +64,8 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
 
             AtdSummary.TotalSiteVisit = AtdReportHelper.totalSiteVisit(request.AtdSummaryDto.From, request.AtdSummaryDto.To, request.AtdSummaryDto.EmpId, _AttendanceRepository);
 
+            AtdSummary.TotalOnLeave = await AtdReportHelper.totalOnLeave(request.AtdSummaryDto.From, request.AtdSummaryDto.To, request.AtdSummaryDto.EmpId, _AttendanceRepository);
+
 
             return AtdSummary;
 

@@ -38,12 +38,12 @@ namespace Hrm.Application.Features.CancelledWeekend.Handlers.Commands
             }
 
             // check if weekend
-            var workdays = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.year.YearName == request.CancelledWeekend.CancelDate.Year)
+            var weekends = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.year.YearName == request.CancelledWeekend.CancelDate.Year)
                 .Include(x => x.year)
                 .Include(x => x.weekDay)
                 .ToListAsync();
 
-            if(workdays.Any(w=> w.weekDay.WeekDayName == request.CancelledWeekend.CancelDate.DayOfWeek.ToString()))
+            if(weekends.Any(w=> w.weekDay.WeekDayName == request.CancelledWeekend.CancelDate.DayOfWeek.ToString())==false)
             {
                 response.Success = false;
                 response.Message = "Given date is not weekend";

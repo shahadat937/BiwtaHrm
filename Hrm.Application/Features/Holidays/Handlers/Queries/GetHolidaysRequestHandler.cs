@@ -30,7 +30,7 @@ namespace Hrm.Application.Features.Holidays.Handlers.Queries
                 .Include(hd => hd.HolidayType)
                 .Include(hd => hd.Office)
                 .Include(hd => hd.OfficeBranch)
-                .OrderByDescending(x => x.HolidayId);
+                .OrderBy(x => x.GroupId);
 
             var HolidaysDto = _mapper.Map<List<HolidayDto>>(holidays);
 

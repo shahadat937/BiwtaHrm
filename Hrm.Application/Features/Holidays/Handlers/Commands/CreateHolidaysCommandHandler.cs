@@ -37,18 +37,33 @@ namespace Hrm.Application.Features.Holidays.Handlers.Commands
                 throw new Hrm.Application.Exceptions.ValidationException(validationResult);
             }
 
-            var Holidays = _mapper.Map<Hrm.Domain.Holidays>(request.HolidayDto);
+            int groupId = 0;
 
-            bool IsWorkday = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.weekDay.WeekDayName == Holidays.HolidayDate.Value.DayOfWeek.ToString() && x.YearId == Holidays.YearId).AnyAsync();
+            if(await _unitOfWork.Repository<Hrm.Domain.Holidays>().Where(x=>true).CountAsync()>0)
+            {
+                groupId = (int)await _unitOfWork.Repository<Hrm.Domain.Holidays>().Where(x => true).Select(x => x.GroupId).MaxAsync() + 1;
+            }
 
-            Holidays.IsWeekend = !IsWorkday;
-            Holidays = await _unitOfWork.Repository<Hrm.Domain.Holidays>().Add(Holidays);
+            for (DateOnly curdate = request.DateFrom; curdate <= request.DateTo; curdate= curdate.AddDays(1))
+            {
+                request.HolidayDto.HolidayDate = curdate;
+                var holiday = _mapper.Map<Hrm.Domain.Holidays>(request.HolidayDto);
+
+                bool IsWeekend = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.weekDay.WeekDayName == holiday.HolidayDate.Value.DayOfWeek.ToString() && x.YearId == holiday.YearId).AnyAsync();
+
+                bool IsCancelled = await _unitOfWork.Repository<Hrm.Domain.CancelledWeekend>().Where(x => DateOnly.FromDateTime(x.CancelDate) == curdate).AnyAsync();
+
+                holiday.IsWeekend = IsWeekend&(!IsCancelled);
+
+                holiday.GroupId = groupId;
+
+                await _unitOfWork.Repository<Hrm.Domain.Holidays>().Add(holiday);
+            }
             await _unitOfWork.Save();
 
 
             response.Success = true;
             response.Message = "Creation Successful";
-            response.Id = Holidays.HolidayId;
 
             return response;
         }

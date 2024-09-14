@@ -44,12 +44,12 @@ namespace Hrm.Application.Features.CancelledWeekend.Handlers.Commands
                 throw new NotFoundException(nameof(cancelledWeekend), request.cancelledWeekend.Id);
             }
 
-            var workdays = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.year.YearName == request.cancelledWeekend.CancelDate.Year)
+            var weekends = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.year.YearName == request.cancelledWeekend.CancelDate.Year)
                 .Include(x => x.year)
                 .Include(x => x.weekDay)
                 .ToListAsync();
 
-            if (workdays.Any(w => w.weekDay.WeekDayName == request.cancelledWeekend.CancelDate.DayOfWeek.ToString()))
+            if (weekends.Any(w => w.weekDay.WeekDayName == request.cancelledWeekend.CancelDate.DayOfWeek.ToString())==false)
             {
                 response.Success = false;
                 response.Message = "Given date is not weekend";

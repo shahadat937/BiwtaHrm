@@ -26,6 +26,7 @@ namespace Hrm.Application.DTOs.Attendance
         public int TotalAbsent { get; set; }
         public int TotalLate { get; set; }
         public int TotalSiteVisit { get; set; }
+        public int TotalOnLeave { get; set; }
         
     }
 }

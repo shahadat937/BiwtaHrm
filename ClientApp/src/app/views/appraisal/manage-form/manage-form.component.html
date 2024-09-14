@@ -50,7 +50,7 @@
           <tr>
             @for (column of columns; track $index) {
             @if (column.IsDate) {
-              <td>{{formRecord[column.field].split('T')[0]}}</td>
+              <td>{{formRecord[column.field] | date}}</td>
             } @else {
               <td>{{ formRecord[column.field] }}</td>
             }

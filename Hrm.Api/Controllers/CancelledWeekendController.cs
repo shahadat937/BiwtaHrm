@@ -24,6 +24,15 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("get-WeekendListByYearId/{YearId}")]
+        public async Task<ActionResult> GetWeekendByYearId(int YearId)
+        {
+            var command = new GetWeekendListRequest { YearId = YearId };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

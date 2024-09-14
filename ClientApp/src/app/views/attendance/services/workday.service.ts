@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ObjectDestructuringAssignment } from 'typescript';
 
 @Injectable()
 export class WorkdayService {
@@ -30,5 +31,19 @@ export class WorkdayService {
 
    deleteWorkday(id:number): Observable<any> {
     return this.http.delete<any>(this.baseUrl+`/workday/delete-Workday/${id}`);
+   }
+
+   getWeekend(YearId:number): Observable<any> {
+    return this.http.get(this.baseUrl+`/cancelledWeekend/get-WeekendListByYearId/${YearId}`);
+   }
+
+   addCancelledWeekend(date:Date,userId:number|null):Observable<any> {
+    let data = {cancelDate:date, cancelledBy:userId,isActive:true};
+
+    return this.http.post<any>(this.baseUrl+"/cancelledWeekend/save-CancelledWeekend",data);
+   }
+
+   deleteCancelledWeekend(Id:number): Observable<any> {
+    return this.http.delete<any>(this.baseUrl+`/cancelledWeekend/delete-CancelledWeekend/${Id}`);
    }
 }

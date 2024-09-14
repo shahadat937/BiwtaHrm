@@ -67,7 +67,7 @@
                     </c-col>
                     <c-col md="2">
                         <label for="emp" cLabel>Employee</label>
-                        <select name="empId" id="emp" cSelect>
+                        <select name="empId" id="emp" [(ngModel)]="selectedEmp" cSelect>
                             <option [ngValue]="null" cDropdownItem>Select Employee</option>
                             @for (employee of EmployeeOption; track $index) {
                                 <option [ngValue]="employee.id">{{employee.name}}</option>

@@ -61,6 +61,12 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.subscription = this.AtdReportService.getOfficeOption().subscribe(option=> {
       this.OfficeOption = option;
     });
+
+    this.AtdReportService.getEmpOption().subscribe({
+      next: response => {
+        this.EmployeeOption = response;
+      }
+    });
   }
 
 
@@ -146,8 +152,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.selectedDesignation = null;
     this.ShiftOption = [];
     this.selectedShift = null;
-    this.EmployeeOption = [];
-    this.selectedEmp = null;
+    //this.EmployeeOption = [];
+    //this.selectedEmp = null;
   }
 
   ngOnDestroy(): void {

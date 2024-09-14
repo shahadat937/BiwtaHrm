@@ -98,13 +98,13 @@ namespace Hrm.Application.Features.Dashboards.Handlers.Queries
                 }
                 else if (statusOption == AttendanceStatusOption.Present)
                 {
-                    // Calculate "Present" count which includes Present, Absent, and OnSiteVisit
+                    // Calculate "Present" count which includes Present, Late, and OnSiteVisit
                     foreach (var date in last7Days)
                     {
                         var presentCount = attendanceRecords
                             .Where(a => a.AttendanceDate == date &&
                                         (a.AttendanceStatusId == (int)AttendanceStatusOption.Present ||
-                                         a.AttendanceStatusId == (int)AttendanceStatusOption.Absent ||
+                                         a.AttendanceStatusId == (int)AttendanceStatusOption.Late ||
                                          a.AttendanceStatusId == (int)AttendanceStatusOption.OnSiteVisit))
                             .Count();
 

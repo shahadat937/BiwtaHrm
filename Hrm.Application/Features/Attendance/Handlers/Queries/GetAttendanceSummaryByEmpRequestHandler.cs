@@ -66,6 +66,8 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
 
             AtdSummary.TotalOnLeave = await AtdReportHelper.totalOnLeave(request.AtdSummaryDto.From, request.AtdSummaryDto.To, request.AtdSummaryDto.EmpId, _AttendanceRepository);
 
+            AtdSummary.TotalLate = await AtdReportHelper.totalLate(request.AtdSummaryDto.From, request.AtdSummaryDto.To, request.AtdSummaryDto.EmpId, _AttendanceRepository);
+
 
             return AtdSummary;
 

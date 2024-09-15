@@ -15,10 +15,22 @@ namespace Hrm.Application.Helpers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly AttendanceHelper _attendanceHelper;
+        private readonly IHrmRepository<Hrm.Domain.Workday> _WorkdayRepo;
+        private readonly IHrmRepository<Hrm.Domain.CancelledWeekend> _cancelledWeekendRepo;
+        private readonly IHrmRepository<Hrm.Domain.Holidays> _HolidaysRepo;
         public int siteVisitId {get; set; }
-        public SiteVisitAtdHelper(IUnitOfWork unitOfWork, IMapper mapper) { 
+        public SiteVisitAtdHelper(IUnitOfWork unitOfWork, 
+            //IHrmRepository<Hrm.Domain.Workday> WorkdayRepo,
+            //IHrmRepository<Hrm.Domain.Holidays> HolidaysRepo,
+            //IHrmRepository<Hrm.Domain.CancelledWeekend> cancelledWeekendRepo,
+            IMapper mapper) { 
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _attendanceHelper = new AttendanceHelper();
+            _cancelledWeekendRepo = _unitOfWork.Repository<Hrm.Domain.CancelledWeekend>();
+            _WorkdayRepo = _unitOfWork.Repository<Hrm.Domain.Workday>();
+            _HolidaysRepo = _unitOfWork.Repository<Hrm.Domain.Holidays>();
         }
 
         public List<Hrm.Domain.Attendance> getAttendance()
@@ -59,6 +71,9 @@ namespace Hrm.Application.Helpers
                     SiteVisitId = siteVisitId
                    
                 });
+
+                int dayTypeId = AttendanceHelper.SetDayTypeId(list[^1], _WorkdayRepo, _HolidaysRepo, _cancelledWeekendRepo);
+                list[^1].DayTypeId = dayTypeId;
             }
 
             var attendances = _mapper.Map<List<Hrm.Domain.Attendance>>(list);

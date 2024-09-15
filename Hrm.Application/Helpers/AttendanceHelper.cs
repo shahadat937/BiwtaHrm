@@ -47,10 +47,12 @@ namespace Hrm.Application.Helpers
             return IsHoliday;
         }
 
-        public static bool IsWeekDay(DateOnly GivenDate, IHrmRepository<Hrm.Domain.Workday> _WorkdayRepository)
+        public static bool IsWeekDay(DateOnly GivenDate, IHrmRepository<Hrm.Domain.Workday> _WorkdayRepository, IHrmRepository<Hrm.Domain.CancelledWeekend> cancelledWeekendRepo)
         {
-            var IsWeekDay = _WorkdayRepository.Where(x => x.weekDay.WeekDayName == GivenDate.DayOfWeek.ToString() && x.year.YearName == GivenDate.Year).Any();
-            return !IsWeekDay;
+            var IsWeekend = _WorkdayRepository.Where(x => x.weekDay.WeekDayName == GivenDate.DayOfWeek.ToString() && x.year.YearName == GivenDate.Year).Any();
+
+            var IsCancelledWeekend =  cancelledWeekendRepo.Where(x => DateOnly.FromDateTime(x.CancelDate) == GivenDate).Any();
+            return !IsWeekend|IsCancelledWeekend;
         }
 
         public static int? SetWorkHour(CreateAttendanceDto dto)
@@ -75,9 +77,9 @@ namespace Hrm.Application.Helpers
 
         }
 
-        public static int SetDayTypeId(CreateAttendanceDto dto, IHrmRepository<Workday> _WorkdayRepo, IHrmRepository<Holidays> _HolidaysRepo)
+        public static int SetDayTypeId(CreateAttendanceDto dto, IHrmRepository<Workday> _WorkdayRepo, IHrmRepository<Holidays> _HolidaysRepo, IHrmRepository<Hrm.Domain.CancelledWeekend> _cancelledWeekendRepo)
         {
-            bool weekday = IsWeekDay(dto.AttendanceDate, _WorkdayRepo);
+            bool weekday = IsWeekDay(dto.AttendanceDate, _WorkdayRepo, _cancelledWeekendRepo);
             bool holiday = IsHoliday(dto.AttendanceDate, _HolidaysRepo);
 
             int daytype = (int)DayTypeOption.Workday;

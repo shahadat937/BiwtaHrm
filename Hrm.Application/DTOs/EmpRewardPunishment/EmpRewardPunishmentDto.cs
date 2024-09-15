@@ -19,6 +19,7 @@ namespace Hrm.Application.DTOs.EmpRewardPunishment
         public string? OrderNo { get; set; }
         public DateOnly? OrderDate { get; set; }
         public bool? WithdrawStatus { get; set; }
+        public string? WithdrawOrderNo { get; set; }
         public DateOnly? WithdrawDate { get; set; }
         public int? OrderBy { get; set; }
         public int? ApplicationBy { get; set; }
@@ -29,6 +30,9 @@ namespace Hrm.Application.DTOs.EmpRewardPunishment
         public string? Remark { get; set; }
         public bool? IsActive { get; set; }
 
-
+        public string? EmpIdCardNo { get; set; }
+        public string? EmpName { get; set; }
+        public string? RewardPunishmentTypeName { get; set; }
+        public string? RewardPunishmentPriorityName { get; set; }
     }
 }

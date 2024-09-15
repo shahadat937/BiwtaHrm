@@ -16,6 +16,8 @@ export class BasicInfoModule {
   
   departmentName : string = '';
   designationName : string = '';
+  empPhotoName : string = '';
+  empGenderName : string = '';
 
   constructor() {
     this.id=0;

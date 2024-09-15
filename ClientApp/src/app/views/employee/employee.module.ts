@@ -17,6 +17,7 @@ import {
   TableModule,
   TooltipModule,
 } from '@coreui/angular';
+import { TagModule } from 'primeng/tag';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { ToastrService } from 'ngx-toastr';
 
@@ -76,6 +77,12 @@ import { DivisionService } from '../basic-setup/service/division.service';
 import { OfficeService } from '../basic-setup/service/office.service';
 import { GradeService } from '../basic-setup/service/Grade.service';
 import { SectionService } from '../basic-setup/service/section.service';
+import { ViewEmployeePrimeNgComponent } from './add-employee/view-employee-prime-ng/view-employee-prime-ng.component';
+import { HttpClientModule } from '@angular/common/http';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { MultiSelectModule } from 'primeng/multiselect';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -104,6 +111,7 @@ import { SectionService } from '../basic-setup/service/section.service';
     EmpAddressComponent,
     EmpShiftListComponent,
     UpdateEmpShiftComponent,
+    ViewEmployeePrimeNgComponent,
   ],
   imports: [
     CommonModule,
@@ -143,6 +151,12 @@ import { SectionService } from '../basic-setup/service/section.service';
     MatCardModule,
     TooltipModule,
     MatTabsModule,
+    TagModule, 
+    IconFieldModule, 
+    InputTextModule, 
+    InputIconModule, 
+    MultiSelectModule, 
+    HttpClientModule, 
   ],
   providers:
   [

@@ -351,7 +351,9 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpBasicInfo, EmpBasicInfoDto>()
             .ForMember(dest => dest.EmployeeTypeName, opt => opt.MapFrom(src => src.EmployeeType.EmployeeTypeName))
             .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().Department.DepartmentName))
-            .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().Designation.DesignationName));
+            .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().Designation.DesignationName))
+            .ForMember(dest => dest.EmpPhotoName, opt => opt.MapFrom(src => src.EmpPhotoSign.FirstOrDefault().PhotoUrl))
+            .ForMember(dest => dest.EmpGenderName, opt => opt.MapFrom(src => src.EmpPersonalInfo.FirstOrDefault().Gender.GenderName));
 
             CreateMap<EmpPersonalInfo, EmpPersonalInfoDto>().ReverseMap();
             CreateMap<EmpPersonalInfo, CreateEmpPersonalInfoDto>().ReverseMap();
@@ -634,6 +636,11 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpRewardPunishment, EmpRewardPunishmentDto>().ReverseMap();
             CreateMap<EmpRewardPunishment, CreateEmpRewardPunishmentDto>().ReverseMap();
+            CreateMap<EmpRewardPunishment, EmpRewardPunishmentDto>()
+                .ForMember(dest => dest.EmpIdCardNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
+                .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName + " " + src.EmpBasicInfo.LastName))
+                .ForMember(dest => dest.RewardPunishmentTypeName, opt => opt.MapFrom(src => src.RewardPunishmentType.Name))
+                .ForMember(dest => dest.RewardPunishmentPriorityName, opt => opt.MapFrom(src => src.RewardPunishmentPriority.Name)).ReverseMap();
 
         }
     }

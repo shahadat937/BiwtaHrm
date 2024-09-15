@@ -23,10 +23,10 @@ export class RewardPunishmentListComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
     'slNo',
-    'title',
-    'path',
-    'icon',
-    'menuPosition',
+    'pmsId',
+    'name',
+    'rewardPunishmentTypeName',
+    'withdrawStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -114,7 +114,7 @@ export class RewardPunishmentListComponent implements OnInit, OnDestroy {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.empRewardPunishmentService.deleteEmpRewardPunishment(element.moduleId).subscribe(
+          this.empRewardPunishmentService.deleteEmpRewardPunishment(element.id).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               this.toastr.warning('Delete Successfull', ` `, {

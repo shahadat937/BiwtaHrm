@@ -33,7 +33,10 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
                 .Include(x => x.EmpJobDetail)
                     .ThenInclude(ejd => ejd.Department)
                 .Include(x => x.EmpJobDetail)
-                    .ThenInclude(ejd => ejd.Designation);
+                    .ThenInclude(ejd => ejd.Designation)
+                .Include(x => x.EmpPhotoSign)
+                .Include(x => x.EmpPersonalInfo)
+                    .ThenInclude(x => x.Gender);
 
             EmpBasicInfo = EmpBasicInfo.OrderByDescending(x => x.Id);
 

@@ -7,6 +7,7 @@ import { EmployeeInformationComponent } from './manage-employee/employee-informa
 import { ViewEmployeeComponent } from './add-employee/view-employee/view-employee.component';
 import { EmpIdCardGenerateComponent } from './manage-employee/emp-id-card-generate/emp-id-card-generate.component';
 import { EmpShiftListComponent } from './assignShift/emp-shift-list/emp-shift-list.component';
+import { ViewEmployeePrimeNgComponent } from './add-employee/view-employee-prime-ng/view-employee-prime-ng.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,13 @@ const routes: Routes = [
       {
         path: 'employeeList',
         component: ViewEmployeeComponent,
+        data: {
+          title: 'Employee List',
+        },
+      },
+      {
+        path: 'allEmployeeList',
+        component: ViewEmployeePrimeNgComponent,
         data: {
           title: 'Employee List',
         },

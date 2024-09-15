@@ -19,6 +19,7 @@ namespace Hrm.Application.DTOs.EmpRewardPunishment
         public string? OrderNo { get; set; }
         public DateOnly? OrderDate { get; set; }
         public bool? WithdrawStatus { get; set; }
+        public string? WithdrawOrderNo { get; set; }
         public DateOnly? WithdrawDate { get; set; }
         public int? OrderBy { get; set; }
         public int? ApplicationBy { get; set; }

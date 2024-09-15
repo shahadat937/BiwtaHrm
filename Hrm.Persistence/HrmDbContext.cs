@@ -448,8 +448,17 @@ namespace Hrm.Persistence
                     .HasForeignKey(eb => eb.EmpId);
             });
 
+            modelBuilder.Entity<EmpPhotoSign>(entity =>
+            {
+                entity.HasKey(e => e.Id);
 
-            modelBuilder.Entity<EmpPresentAddress>(entity =>
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(eb => eb.EmpPhotoSign)
+                    .HasForeignKey(e => e.EmpId);
+            });
+
+                modelBuilder.Entity<EmpPresentAddress>(entity =>
             {
                 entity.HasKey(e => e.Id);
 

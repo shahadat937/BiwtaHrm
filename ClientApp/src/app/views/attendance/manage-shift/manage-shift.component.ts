@@ -27,7 +27,7 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('ShiftForm', { static: true }) ShiftForm!: NgForm;
   loading = false;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'shiftName', 'startTime', 'endTime', 'bufferTime', 'absentTime', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'shiftId', 'shiftName', 'startTime', 'endTime', 'bufferTime', 'absentTime', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;

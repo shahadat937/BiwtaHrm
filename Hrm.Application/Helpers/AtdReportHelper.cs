@@ -92,10 +92,10 @@ namespace Hrm.Application.Helpers
             return totalAbsent;
         }
 
-        public static int totalLate(DateOnly from, DateOnly to, int EmpId, 
+        public static async Task<int> totalLate(DateOnly from, DateOnly to, int EmpId, 
             IHrmRepository<Domain.Attendance> _AttendanceRepository)
         {
-            int totalLate = _AttendanceRepository.Where(at => at.AttendanceDate >= from && at.AttendanceDate <= to && at.EmpId == EmpId && at.AttendanceStatusId == (int)AttendanceStatusOption.Late).Count();
+            int totalLate = await _AttendanceRepository.Where(at => at.AttendanceDate >= from && at.AttendanceDate <= to && at.EmpId == EmpId && at.AttendanceStatusId == (int)AttendanceStatusOption.Late).CountAsync();
             return totalLate;
         }
 

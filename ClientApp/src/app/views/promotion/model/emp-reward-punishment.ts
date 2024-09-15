@@ -24,4 +24,6 @@ export class EmpRewardPunishment {
     empName : string = '';
     departmentName : string = '';
     designationName : string = '';
+    rewardPunishmentTypeName : string = '';
+    rewardPunishmentPriorityName : string = '';
 }

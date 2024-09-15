@@ -5,6 +5,7 @@ using Hrm.Application.DTOs.Institute;
 using Hrm.Application.Features.EmpRewardPunishments.Requests.Queries;
 using Hrm.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,10 @@ namespace Hrm.Application.Features.EmpRewardPunishments.Handlers.Queries
 
         public async Task<object> Handle(GetEmpRewardPunishmentByEmpIdRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<EmpRewardPunishment> empRewardPunishment = _EmpRewardPunishmentRepository.Where(x => x.EmpId == request.EmpId);
+            IQueryable<EmpRewardPunishment> empRewardPunishment = _EmpRewardPunishmentRepository.Where(x => x.EmpId == request.EmpId)
+                .Include(x => x.EmpBasicInfo)
+                .Include(x => x.RewardPunishmentPriority)
+                .Include(x => x.RewardPunishmentType);
 
             var result = await Task.Run(() => _mapper.Map<List<EmpRewardPunishmentDto>>(empRewardPunishment));
 

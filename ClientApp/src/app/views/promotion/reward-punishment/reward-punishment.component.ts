@@ -30,7 +30,7 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   isValidEmp: boolean = false;
   empJobDetailsId: number = 0;
 
-  @ViewChild('ModuleForm', { static: true }) ModuleForm!: NgForm;
+  @ViewChild('EmpRewardPunishmentFrom', { static: true }) EmpRewardPunishmentFrom!: NgForm;
 
   constructor(
     private toastr: ToastrService,
@@ -49,6 +49,7 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   icons = { cilArrowLeft, cilPlus, cilBell };
 
   ngOnInit(): void {
+    console.log(this.id)
     this.initaialRewardPunishment();
     this.handleText();
     this.getRewardPunishmentInfo();
@@ -68,7 +69,9 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   getRewardPunishmentInfo() {
     this.subscription = this.empRewardPunishmentService.findById(this.id).subscribe((res) => {
       if(res){
-        this.ModuleForm?.form.patchValue(res);
+        console.log(res)
+        this.getEmpInfoByIdCardNo(res.empIdCardNo);
+        this.EmpRewardPunishmentFrom?.form.patchValue(res);
       }
     });
   }
@@ -135,6 +138,8 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
       empName : '',
       departmentName : '',
       designationName : '',
+      rewardPunishmentTypeName : '',
+      rewardPunishmentPriorityName : '',
     };
   }
 
@@ -175,7 +180,7 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm): void {
     this.empRewardPunishmentService.cachedData = [];
-    const id = form.value.moduleId;
+    const id = form.value.id;
     const action$ = id
       ? this.empRewardPunishmentService.updateEmpRewardPunishment(id, form.value)
       : this.empRewardPunishmentService.saveEmpRewardPunishment(form.value);

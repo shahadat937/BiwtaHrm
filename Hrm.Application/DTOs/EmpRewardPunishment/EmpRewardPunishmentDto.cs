@@ -29,6 +29,9 @@ namespace Hrm.Application.DTOs.EmpRewardPunishment
         public string? Remark { get; set; }
         public bool? IsActive { get; set; }
 
-
+        public string? EmpIdCardNo { get; set; }
+        public string? EmpName { get; set; }
+        public string? RewardPunishmentTypeName { get; set; }
+        public string? RewardPunishmentPriorityName { get; set; }
     }
 }

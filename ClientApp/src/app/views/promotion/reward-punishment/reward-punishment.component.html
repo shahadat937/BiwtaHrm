@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body scrollable-modal-body">
-                <form #ModuleForm="ngForm" novalidate cForm class="needs-validation">
+                <form #EmpRewardPunishmentFrom="ngForm" novalidate cForm class="needs-validation">
                     <input type="hidden" [(ngModel)]="empRewardPunishmentService.empRewardPunishment.id" name="id" />
                     <input type="hidden" [(ngModel)]="empRewardPunishmentService.empRewardPunishment.empId"
                         name="empId" />
@@ -151,7 +151,7 @@
                                     </div>
                                 </c-col>
 
-                                <c-col [md]="4" *ngIf="empRewardPunishmentService.empRewardPunishment.withdrawStatus">
+                                <c-col [md]="4">
                                     <label cLabel for="withdrawDate">Withdraw Date<span
                                             class="text-danger"></span></label>
                                     <input
@@ -175,11 +175,11 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button mat-raised-button class="bg-secondary text-light" type="button" (click)="closeModal()">
+                <button mat-raised-button color="warn" type="button" (click)="closeModal()">
                     <mat-icon>cancel</mat-icon> Close
                 </button>
-                <button [disabled]="ModuleForm.invalid" mat-raised-button class="me-1" color="primary" type="submit"
-                    (click)="onSubmit(ModuleForm)">
+                <button [disabled]="EmpRewardPunishmentFrom.invalid" mat-raised-button class="me-1" color="primary" type="submit"
+                    (click)="onSubmit(EmpRewardPunishmentFrom)">
                     <mat-icon>{{btnIcon}}</mat-icon> {{ btnText }}
                 </button>
             </div>

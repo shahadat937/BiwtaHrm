@@ -31,31 +31,32 @@
               <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
             </ng-container>
   
-            <ng-container matColumnDef="title">
-              <th mat-header-cell *matHeaderCellDef>Title</th>
+            <ng-container matColumnDef="pmsId">
+              <th mat-header-cell *matHeaderCellDef>PMIS ID</th>
               <td mat-cell *matCellDef="let element">
-                {{ element.title }}
+                {{ element.empIdCardNo }}
               </td>
             </ng-container>
             
-            <ng-container matColumnDef="path">
-              <th mat-header-cell *matHeaderCellDef>Path</th>
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
               <td mat-cell *matCellDef="let element">
-                {{ element.moduleName }}
+                {{ element.empName }}
               </td>
             </ng-container>
   
-            <ng-container matColumnDef="icon">
-              <th mat-header-cell *matHeaderCellDef>Icon</th>
+            <ng-container matColumnDef="rewardPunishmentTypeName">
+              <th mat-header-cell *matHeaderCellDef>Type</th>
               <td mat-cell *matCellDef="let element">
-                <svg cIcon name="{{element.iconName}}"></svg>
+                {{element.rewardPunishmentTypeName}}
               </td>
             </ng-container>
             
-            <ng-container matColumnDef="menuPosition">
-                <th mat-header-cell *matHeaderCellDef>Menu Position</th>
+            <ng-container matColumnDef="withdrawStatus">
+                <th mat-header-cell *matHeaderCellDef>Withdraw Status</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ element.menuPosition }}
+                  <span *ngIf="element.element">Yes</span>
+                  <span *ngIf="!element.element">No</span>
                 </td>
             </ng-container>
             
@@ -63,7 +64,7 @@
             <ng-container matColumnDef="Action">
               <th mat-header-cell *matHeaderCellDef>Action</th>
               <td mat-cell *matCellDef="let element">
-                <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary" (click)="editInfo(element.moduleId, 'Edit')">
+                <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary" (click)="editInfo(element.id, 'Edit')">
                     <mat-icon>edit</mat-icon>
                 </button>
                 <button cTooltip="Delete" cTooltipPlacement="bottom" mat-icon-button color="warn" (click)="delete(element)">

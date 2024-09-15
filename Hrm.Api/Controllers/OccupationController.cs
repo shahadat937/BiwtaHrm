@@ -9,11 +9,13 @@ using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Responses;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.Occupation)]
     [ApiController]
+    [Authorize]
     public class OccupationController : Controller
     {
         private readonly IMediator _mediator;

@@ -12,11 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.DTOs.Shift;
 using Hrm.Application.Features.Shift.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.Shift)]
     [ApiController]
+    [Authorize]
     public class ShiftController : Controller
     {
         private readonly IMediator _mediator;

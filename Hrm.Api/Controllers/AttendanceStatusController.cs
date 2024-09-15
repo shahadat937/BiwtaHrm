@@ -2,9 +2,12 @@
 using Hrm.Application.DTOs.AttendanceStatus;
 using Hrm.Application.Features.AttendanceStatus.Requests.Commands;
 using Hrm.Application.Features.AttendanceStatus.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.AttendanceStatus)]
+    [ApiController]
+    [Authorize]
     public class AttendanceStatusController:Controller
     {
         private readonly IMediator _mediator;

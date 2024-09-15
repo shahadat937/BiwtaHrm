@@ -4,6 +4,7 @@ using Hrm.Application.Enum;
 using Hrm.Application.Features.Features.Requests.Commands;
 using Hrm.Application.Features.Features.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Feature)]
     [ApiController]
+    [Authorize]
     public class FeaturesController : ControllerBase
     {
         private readonly IMediator _mediator;

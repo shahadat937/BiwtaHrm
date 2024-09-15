@@ -63,6 +63,7 @@ namespace Hrm.Application.Features.Holidays.Handlers.Commands
                 holiday.IsWeekend = IsWeekend & (!IsCancelled);
                 holiday.GroupId = request.GroupId;
 
+                holiday.HolidayId = 0;
                 await _unitOfWork.Repository<Hrm.Domain.Holidays>().Add(holiday);
             }
 

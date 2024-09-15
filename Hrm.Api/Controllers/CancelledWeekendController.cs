@@ -2,10 +2,12 @@
 using Hrm.Application.DTOs.CancelledWeekend;
 using Hrm.Application.Features.CancelledWeekend.Requests.Commands;
 using Hrm.Application.Features.CancelledWeekend.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.CancelledWeekend)]
     [ApiController]
+    [Authorize]
     public class CancelledWeekendController: Controller
     {
         private readonly IMediator _mediator;
@@ -20,6 +22,15 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> GetCancelledWeekendByFilter([FromQuery] GetCancelledWeekendFilterDto filters)
         {
             var command = new GetCancelledWeekendByFilterRequest { filters = filters };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-WeekendListByYearId/{YearId}")]
+        public async Task<ActionResult> GetWeekendByYearId(int YearId)
+        {
+            var command = new GetWeekendListRequest { YearId = YearId };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

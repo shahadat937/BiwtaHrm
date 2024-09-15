@@ -12,12 +12,14 @@ using Hrm.Application.Responses;
 using Hrm.Domain;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.SubGroup)]
     [ApiController]
+    [Authorize]
     public class SubGroupController : Controller
     {
         private readonly IMediator _mediator;

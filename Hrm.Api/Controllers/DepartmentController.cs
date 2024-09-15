@@ -10,12 +10,14 @@ using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.OfficeBranch.Requests.Queries;
 using Hrm.Application.Responses;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.Department)]
     [ApiController]
+    [Authorize]
     public class DepartmentController : Controller
     {
         private readonly IMediator _mediator;

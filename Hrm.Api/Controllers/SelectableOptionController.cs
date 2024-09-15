@@ -2,10 +2,12 @@
 using Hrm.Application.DTOs.SelectableOption;
 using Hrm.Application.Features.SelectableOption.Requests.Commands;
 using Hrm.Application.Features.SelectableOption.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.SelectableOption)]
     [ApiController]
+    [Authorize]
     public class SelectableOptionController: Controller
     {
         private readonly IMediator _mediator;

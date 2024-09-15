@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpPermanentAddress;
 using Hrm.Application.Features.EmpPermanentAddresses.Requests.Commands;
 using Hrm.Application.Features.EmpPermanentAddresses.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpPermanentAddress)]
     [ApiController]
+    [Authorize]
     public class EmpPermanentAddressController : ControllerBase
     {
         private readonly IMediator _mediator;

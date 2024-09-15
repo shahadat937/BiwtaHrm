@@ -11,11 +11,13 @@ using Microsoft.AspNetCore.Mvc;
 using Hrm.Domain;
 using Microsoft.EntityFrameworkCore;
 using Hrm.Persistence;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.DepReleaseInfo)]
     [ApiController]
+    [Authorize]
     public class DepReleaseInfoController : Controller
     {
         private readonly HrmDbContext _dbContext;

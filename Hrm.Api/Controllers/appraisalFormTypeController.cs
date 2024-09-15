@@ -9,11 +9,13 @@ using Hrm.Application.Features.appraisalFormType.Requests.Queries;
 using Hrm.Application.DTOs.appraisalFormType;
 using Hrm.Application.Features.appraisalFormType.Requests.Commands;
 using Hrm.Application.Features.Stores.Requests.Commands;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.appraisalFormType)]
     [ApiController]
+    [Authorize]
     public class appraisalFormTypeController : ControllerBase
     {
         private readonly IMediator _mediator;

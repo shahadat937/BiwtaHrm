@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpEducationInfo;
 using Hrm.Application.Features.EmpEducationInfos.Requests.Commands;
 using Hrm.Application.Features.EmpEducationInfos.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpEducationInfo)]
     [ApiController]
+    [Authorize]
     public class EmpEducationInfoController : ControllerBase
     {
         private readonly IMediator _mediator;

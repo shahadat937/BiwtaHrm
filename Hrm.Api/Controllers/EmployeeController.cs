@@ -6,6 +6,7 @@ using Hrm.Application.Features.Employee.Requests.Queries;
 using Hrm.Application.Features.EmployeeType.Handlers.Queries;
 using Hrm.Application.Features.EmployeeType.Requests.Commands;
 using Hrm.Application.Features.EmployeeType.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Employee)]
     [ApiController]
+    [Authorize]
     public class EmployeeController : ControllerBase
     {
         private readonly IMediator _mediator;

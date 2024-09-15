@@ -4,6 +4,7 @@ using Hrm.Application.Features.ReleaseTypes.Requests.Commands;
 using Hrm.Application.Features.ReleaseTypes.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.ReleaseType)]
     [ApiController]
+    [Authorize]
     public class ReleaseTypeController : ControllerBase
     {
         private readonly IMediator _mediator;

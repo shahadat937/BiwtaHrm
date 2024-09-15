@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpShiftAssign;
 using Hrm.Application.Features.EmpShiftAssigns.Requests.Commands;
 using Hrm.Application.Features.EmpShiftAssigns.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpShiftAssign)]
     [ApiController]
+    [Authorize]
     public class EmpShiftAssignController : ControllerBase
     {
         private readonly IMediator _mediator;

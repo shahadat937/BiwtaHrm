@@ -3,6 +3,7 @@ using Hrm.Application.DTOs.RewardPunishmentType;
 using Hrm.Application.Features.RewardPunishmentTypes.Requests.Commands;
 using Hrm.Application.Features.RewardPunishmentTypes.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.RewardPunishmentType)]
     [ApiController]
+    [Authorize]
     public class RewardPunishmentTypeController : ControllerBase
     {
         private readonly IMediator _mediator;

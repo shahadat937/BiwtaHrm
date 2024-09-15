@@ -2,12 +2,14 @@
 using Hrm.Application.DTOs.Form;
 using Hrm.Application.Features.Form.Requests.Commands;
 using Hrm.Application.Features.Form.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using System.Dynamic;
 using System.Runtime.InteropServices;
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Form)]
     [ApiController]
+    [Authorize]
     public class FormController:Controller
     {
         private readonly IMediator _mediator;

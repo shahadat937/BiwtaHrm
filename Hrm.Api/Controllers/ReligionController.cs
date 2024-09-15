@@ -13,11 +13,13 @@ using Hrm.Application.DTOs.ChildStatus;
 using Hrm.Application.Features.ChildStatus.Requests.Queries;
 using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.Religion)]
     [ApiController]
+    [Authorize]
     public class ReligionController : Controller
     {
         private readonly IMediator _mediator;

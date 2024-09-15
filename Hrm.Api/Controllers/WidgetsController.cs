@@ -1,6 +1,7 @@
 ﻿using Hrm.Application;
 using Hrm.Application.Features.Dashboards.Requests.Queries;
 using Hrm.Application.Features.Year.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Widgets)]
     [ApiController]
+    [Authorize]
     public class WidgetsController : ControllerBase
     {
 

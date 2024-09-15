@@ -1,132 +1,87 @@
 <c-card class="mt-3">
-    <c-card-header class="d-flex justify-content-between">
-            <div>Employee List</div>
-            <div><button cButton color="primary" shape="rounded-pill" 
-                (click)="addNewEmployee()"><svg [cIcon]="icons.cilPlus"></svg> Add New Employee</button></div>
-    </c-card-header>
-    <c-card-body>
-      <div class="example-header">
+  <c-card-header class="d-flex justify-content-between">
+    <div>Employee List Prime Ng</div>
+    <div><button cButton color="primary" shape="rounded-pill" (click)="addNewEmployee()"><svg
+          [cIcon]="icons.cilPlus"></svg> Add New Employee</button></div>
+  </c-card-header>
+  <c-card-body>
+    <div class="example-header">
 
-        <ng-container *ngIf="showUpdateUserInfo">
-          <app-update-user-info [empId]="selectedEmpId" (cancel)="handleCancel()"></app-update-user-info>
-        </ng-container>
+      <ng-container *ngIf="showUpdateUserInfo">
+        <app-update-user-info [empId]="selectedEmpId" (cancel)="handleCancel()"></app-update-user-info>
+      </ng-container>
 
-        <mat-form-field>
-          <input
-            matInput
-            #filter
-            (keyup)="applyFilter(filter.value)"
-            placeholder="Search Here.."
-          />
-          <button
-            mat-icon-button
-            matSuffix
-            aria-label="clear"
-            *ngIf="filter.value"
-            (click)="filter.value = ''; applyFilter('')"
-          ></button>
-        </mat-form-field>
-      </div>
-      <div class="mat-elevation-z8 table-responsive">
-        <table mat-table [dataSource]="dataSource">
-          <!-- Position Column -->
-          <ng-container matColumnDef="slNo">
-            <th mat-header-cell *matHeaderCellDef>SL</th>
-            <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="pNo">
-            <th mat-header-cell *matHeaderCellDef>PMIS ID</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.idCardNo }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="fullName">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.firstName }} {{element.lastName}}
-            </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="fullNameBangla">
-            <th mat-header-cell *matHeaderCellDef>Name Bangla</th>
-            <td mat-cell *matCellDef="let element">
-                {{ element.firstNameBangla }} {{element.lastNameBangla}}
-            </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef>Email</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.email }}
-            </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="department">
-            <th mat-header-cell *matHeaderCellDef>Department</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.departmentName }}
-            </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="designation">
-            <th mat-header-cell *matHeaderCellDef>Designation</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.designationName }}
-            </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="Action">
-            <th mat-header-cell *matHeaderCellDef>Action</th>
-            <td mat-cell *matCellDef="let element">
-              <!-- <button [disabled]="loadingMap[element.id]" class="btn btn-dark" *ngIf="!element.userStatus" (click)="createUser(element.id)">
-                <c-spinner *ngIf="loadingMap[element.id]" size="sm"></c-spinner>
-                <svg *ngIf="!loadingMap[element.id]" [cIcon]="icons.cilUserPlus"></svg> Create User
-              </button> -->
-              
-              <button (click)="updateEmployee(element.id)" cTooltip="Update Information" cTooltipPlacement="bottom" mat-icon-button color="primary">
+      <div class="card">
+        <p-table
+          #dt
+          [value]="employees"
+          dataKey="id"
+          [rows]="10"
+          [paginator]="true"
+          [rowsPerPageOptions]="[5, 10, 25, 50]"
+          [loading]="loading"
+          [globalFilterFields]="['firstName', 'lastName', 'idCardNo', 'departmentName', 'designationName']"
+        >
+          <!-- Search Input -->
+          <ng-template pTemplate="caption">
+            <div class="flex">
+              <p-iconField iconPosition="right" class="ml-auto">
+                <p-inputIcon>
+                  <mat-icon>search</mat-icon>
+                </p-inputIcon>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="onGlobalFilter($event)"
+                  placeholder="Search Here.."
+                />
+              </p-iconField>
+            </div>
+          </ng-template>
+      
+          <!-- Table Headers -->
+          <ng-template pTemplate="header">
+            <tr>
+              <th>SL</th>
+              <th pSortableColumn="idCardNo">PMIS ID</th>
+              <th pSortableColumn="firstName">Name</th>
+              <th pSortableColumn="departmentName">Department</th>
+              <th pSortableColumn="designationName">Designation</th>
+              <th>Action</th>
+            </tr>
+          </ng-template>
+      
+          <!-- Table Rows -->
+          <ng-template pTemplate="body" let-emp let-i="rowIndex">
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ emp.idCardNo }}</td>
+              <td>{{ emp.firstName }} {{emp.lastName}}</td>
+              <td>{{ emp.departmentName }}</td>
+              <td>{{ emp.designationName }}</td>
+              <td>
+                
+              <button (click)="updateEmployee(emp.id)" cTooltip="Update Information" cTooltipPlacement="bottom" mat-icon-button color="primary">
                 <mat-icon>update</mat-icon>
               </button>
 
-              <button [disabled]="loadingMap[element.id]"  *ngIf="!element.userStatus" (click)="createUser(element.id)" cTooltip="Create User" cTooltipPlacement="bottom" mat-icon-button color="primary">
-                <c-spinner *ngIf="loadingMap[element.id]" size="sm"></c-spinner>
-                <mat-icon  *ngIf="!loadingMap[element.id]">person_add</mat-icon>
+              <button [disabled]="loadingMap[emp.id]"  *ngIf="!emp.userStatus" (click)="createUser(emp.id)" cTooltip="Create User" cTooltipPlacement="bottom" mat-icon-button color="primary">
+                <c-spinner *ngIf="loadingMap[emp.id]" size="sm"></c-spinner>
+                <mat-icon  *ngIf="!loadingMap[emp.id]">person_add</mat-icon>
               </button>
-              
-              <!-- <button class="btn btn-dark" *ngIf="element.userStatus" (click)="updateUser(element.id)">
-                <svg [cIcon]="icons.cilUser"></svg> Update User
-              </button> &nbsp; -->
-              
-              <!-- <button class="btn btn-dark" *ngIf="element.userStatus">
-                <svg [cIcon]="icons.cilUser"></svg> User Created
-              </button> -->
-              
-              <!-- <button *ngIf="element.userStatus" cTooltip="Create User" cTooltipPlacement="bottom" mat-icon-button color="primary">
-                <mat-icon>person</mat-icon>
-              </button> -->
+              </td>
+            </tr>
+          </ng-template>
+      
+          <!-- Empty Message -->
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6">No employees found.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>      
 
-              <!-- <button class="btn btn-dark" [routerLink]="['/employee/update-employee-information/', element.id]">
-                <svg [cIcon]="icons.cilCloudUpload"></svg> Update Information
-              </button> -->
-
-            </td>
-          </ng-container>
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </div>
-    </c-card-body>
-    <c-card-footer class="text-medium-emphasis">
-      <mat-paginator 
-              appBubblePagination
-		          [length]="100"
-              [pageSize]="10"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              [showFirstLastButtons]="true"
-              aria-label="Select page">
-</mat-paginator>
-
-    </c-card-footer>
-  </c-card>
+    </div>
+  </c-card-body>
+</c-card>

@@ -124,6 +124,7 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
       orderNo : '',
       orderDate : null,
       withdrawStatus : false,
+      withdrawOrderNo : '',
       withdrawDate : null,
       orderBy : null,
       applicationBy : null,

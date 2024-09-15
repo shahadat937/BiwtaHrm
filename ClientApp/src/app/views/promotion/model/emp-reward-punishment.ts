@@ -10,6 +10,7 @@ export class EmpRewardPunishment {
     orderNo : string = '';
     orderDate : Date | null = null;
     withdrawStatus : boolean = false;
+    withdrawOrderNo : string = '';
     withdrawDate : Date | null = null;
     orderBy : number | null = null;
     applicationBy : number | null = null;

@@ -13,7 +13,7 @@ namespace Hrm.Application.DTOs.EmpEducationInfo
         public int? ExamTypeId { get; set; }
         public int? BoardId { get; set; }
         public int? SubGroupId { get; set; }
-        public decimal? Result { get; set; }
+        public string? Result { get; set; }
         public string? CourseDuration { get; set; }
         public int? PassingYear { get; set; }
         public string? Remark { get; set; }

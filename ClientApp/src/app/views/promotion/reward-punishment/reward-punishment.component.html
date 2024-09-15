@@ -150,6 +150,15 @@
                                         }
                                     </div>
                                 </c-col>
+                                
+                                <c-col [md]="4">
+                                    <label cLabel for="withdrawOrderNo">Withdraw Order No<span
+                                            class="text-danger"></span></label>
+                                    <input
+                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.withdrawOrderNo"
+                                        name="withdrawOrderNo" #withdrawOrderNo="ngModel" cFormControl placeholder="Withdraw Order No"
+                                        id="withdrawOrderNo" type="text" />
+                                </c-col>
 
                                 <c-col [md]="4">
                                     <label cLabel for="withdrawDate">Withdraw Date<span

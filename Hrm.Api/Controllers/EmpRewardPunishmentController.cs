@@ -37,7 +37,7 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-empRewardPunishmentByEmpId/{id}")]
-        public async Task<ActionResult<EmpRewardPunishmentDto>> GetEmpRewardPunishmentByEmpId(int id)
+        public async Task<ActionResult> GetEmpRewardPunishmentByEmpId(int id)
         {
             var EmpRewardPunishment = await _mediator.Send(new GetEmpRewardPunishmentByEmpIdRequest { EmpId = id });
             return Ok(EmpRewardPunishment);

@@ -36,7 +36,7 @@ export class EmpRewardPunishmentService {
   }
   
   findByEmpId(id: number) {
-    return this.http.get<EmpRewardPunishment>(this.baseUrl + '/empRewardPunishment/get-empRewardPunishmentByEmpId/' + id);
+    return this.http.get<EmpRewardPunishment[]>(this.baseUrl + '/empRewardPunishment/get-empRewardPunishmentByEmpId/' + id);
   }
 
   

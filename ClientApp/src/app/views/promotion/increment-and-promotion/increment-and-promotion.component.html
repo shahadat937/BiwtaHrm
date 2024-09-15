@@ -71,16 +71,38 @@
 
           
           <!-- ************* Disciplinary Action Information ************** -->
-          <!-- <c-card class="mt-3 mb-3 shadow">
+          <c-card class="mt-3 mb-3 shadow">
             <c-card-header class="text-center">
                 <div>Disciplinary Action Information</div>
             </c-card-header>
             <c-card-body cRow [gutter]="3">
-                
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Order Date</th>
+                            <th>Type</th>
+                            <th>Priority</th>
+                            <th>Withdraw Status</th>
+                            <th>Withdraw Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of empRewardPunishments">
+                            <td>{{item.empName}}</td>
+                            <td>{{item.orderDate}}</td>
+                            <td>{{item.rewardPunishmentTypeName}}</td>
+                            <td>{{item.rewardPunishmentPriorityName}}</td>
+                            <td><span *ngIf="item.withdrawStatus">Yes</span><span *ngIf="!item.withdrawStatus">No</span></td>
+                            <td>{{item.withdrawDate}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </c-card-body>
-          </c-card> -->
+          </c-card>
 
           <!-- ************* Disciplinary Action Information ************** -->
+           
           <c-card class="mt-3 mb-3 shadow">
             <c-card-header class="text-center">
                 <div>Current Pay Scale Information</div>

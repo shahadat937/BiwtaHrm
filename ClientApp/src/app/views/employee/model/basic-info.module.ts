@@ -16,6 +16,7 @@ export class BasicInfoModule {
   
   departmentName : string = '';
   designationName : string = '';
+  sectionName : string = '';
   empPhotoName : string = '';
   empGenderName : string = '';
 

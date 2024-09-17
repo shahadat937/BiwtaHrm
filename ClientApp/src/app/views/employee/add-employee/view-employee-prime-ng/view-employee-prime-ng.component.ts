@@ -13,6 +13,7 @@ import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 import { BasicInfoModule } from '../../model/basic-info.module';
 import { Table } from 'primeng/table';
+import { EmpPhotoSignService } from '../../service/emp-photo-sign.service';
 
 @Component({
   selector: 'app-view-employee-prime-ng',
@@ -23,7 +24,13 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
 
   subscription: Subscription = new Subscription();
 
-  employees: any[] = [];
+  employees: BasicInfoModule[] = [];
+  departments: any[] = [];
+  sections!: any[];
+  imageLinkUrl: any;
+  defaultImage: any;
+  maleImage: any;
+  femaleImage: any;
   loading: boolean = true;
   totalRecords: number = 0;
   dataSource = new MatTableDataSource<any>();
@@ -46,7 +53,7 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
     private toastr: ToastrService,
     public empBasicInfoService: EmpBasicInfoService,
     public roleFeatureService: RoleFeatureService,
-    
+    public empPhotoSign: EmpPhotoSignService,
 
   ) {
     this.userForm = new UserModule;
@@ -79,7 +86,22 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
       this.employees = employees;
       this.totalRecords = employees.length;
       this.loading = false;
+
+      this.departments = [...new Set(employees
+        .map(emp => emp.departmentName)
+        .filter(departmentName => departmentName !== null && departmentName.trim() !== '')
+      )].map(department => ({ name: department }));
+      
+      this.sections = [...new Set(employees
+        .map(emp => emp.sectionName)
+        .filter(sectionName => sectionName !== null && sectionName.trim() !== '')
+      )].map(section => ({ name: section }));
     });
+
+    this.imageLinkUrl = this.empPhotoSign.imageUrl + '/EmpPhoto';
+    this.defaultImage = this.empPhotoSign.imageUrl + '/EmpPhoto/default.jpg';
+    this.maleImage = this.empPhotoSign.imageUrl + '/EmpPhoto/default_Male.jpg';
+    this.femaleImage = this.empPhotoSign.imageUrl + '/EmpPhoto/default_Female.jpg';
   }
 
   applyFilter(filterValue: string) {
@@ -89,8 +111,16 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
   }
 
   onGlobalFilter(event: Event) {
+    console.log(event)
     const inputValue = (event.target as HTMLInputElement).value;
     this.dt!.filterGlobal(inputValue, 'contains');
+  }
+  onSelect(selectedValue: string | null) {
+    if (!selectedValue) {
+      this.dt!.filterGlobal('', 'contains');
+    } else {
+      this.dt!.filterGlobal(selectedValue, 'contains');
+    }
   }
 
   addNewEmployee(){

@@ -6,7 +6,6 @@ import {
   ButtonModule,
   CardModule,
   CollapseDirective,
-  DropdownModule,
   FormModule,
   GridModule,
   ListGroupModule,
@@ -83,6 +82,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { Table, TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -157,6 +157,7 @@ import { Table, TableModule } from 'primeng/table';
     InputIconModule, 
     MultiSelectModule, 
     HttpClientModule, 
+    DropdownModule
   ],
   providers:
   [

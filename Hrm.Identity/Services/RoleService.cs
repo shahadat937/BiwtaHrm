@@ -60,7 +60,7 @@ namespace Hrm.Identity.Services
             throw new NotImplementedException();
         }
 
-        public async Task<BaseCommandResponse> Save(string roleId, CreateRoleDto request)
+        public async Task<BaseCommandResponse> Save(CreateRoleDto request)
         {
             var response = new BaseCommandResponse();
 
@@ -84,18 +84,117 @@ namespace Hrm.Identity.Services
                 if (result.Succeeded)
                 {
                     response.Success = true;
-                    response.Message = $"Register Successfull, RoleName : '{request.RoleName}'.";
+                    response.Message = $"Creation Successfull, RoleName : '{request.RoleName}'.";
                 }
                 else
                 {
                     response.Success = false;
-                    response.Message = $"Register Failed! '{result.Errors}'";
+                    response.Message = $"Creation Failed! '{result.Errors}'";
                 }
             }
 
             return response;
             //throw new NotImplementedException();
 
+        }
+
+        public async Task<BaseCommandResponse> Update(AspNetRolesDto request)
+        {
+            var response = new BaseCommandResponse();
+
+            var role = new ApplicationRole
+            {
+                Id = request.Id,
+                Name = request.Name
+            };
+
+            var roles = _roleManager.FindByIdAsync(request.Id);
+
+            if (role == null)
+            {
+                response.Success = false;
+                response.Message = $"Update Failed, Role Not Found.";
+            }
+
+            var findRoles = _aspNetRolesRepository.Where(x => x.Name == request.Name && x.Id != request.Id);
+
+            if (findRoles.Any())
+            {
+                response.Success = false;
+                response.Message = $"Update Failed, RoleName '{request.Name}' already Exists.";
+            }
+
+            else
+            {
+                var result = await _roleManager.UpdateAsync(role);
+
+
+                if (result.Succeeded)
+                {
+                    response.Success = true;
+                    response.Message = $"Update Successfull, RoleName : '{request.Name}'.";
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Message = $"Update Failed! '{result.Errors}'";
+                }
+            }
+
+            return response;
+        }
+        public async Task<BaseCommandResponse> Delete(string id)
+        {
+            var response = new BaseCommandResponse();
+
+            var role = new ApplicationRole
+            {
+                Id = id
+            };
+
+
+            var existingRole = await _roleManager.FindByIdAsync(id);
+
+            if (existingRole == null)
+            {
+                response.Success = false;
+                response.Message = $"Delete Failed, Role Not Found.";
+            }
+
+            else
+            {
+                var result = await _roleManager.DeleteAsync(existingRole);
+
+
+                if (result.Succeeded)
+                {
+                    response.Success = true;
+                    response.Message = $"Delete Successfull.";
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Message = $"Delete Failed! '{result.Errors}'";
+                }
+            }
+
+            return response;
+        }
+
+
+
+        public async Task<object> Get()
+        {
+            var result = _aspNetRolesRepository.Where(x => true);
+
+            return result;
+        }
+
+        public async Task<object> GetById(string Id)
+        {
+            var roles = await _roleManager.FindByIdAsync(Id);
+
+            return roles;
         }
     }
 }

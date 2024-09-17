@@ -84,7 +84,7 @@ export class ViewInformationListComponent implements OnInit {
     }
 
     getPermission(){
-      this.roleFeatureService.getFeaturePermission('employeeList').subscribe((item) => {
+      this.roleFeatureService.getFeaturePermission('allEmployeeList').subscribe((item) => {
         this.featurePermission = item;
         if(item.viewStatus == true && ( item.add == true || item.update == true)){
           this.handleRouteParams();

@@ -14,7 +14,6 @@ import {
   ProgressModule,
   SharedModule,
   SpinnerModule,
-  TableModule,
   TooltipModule,
 } from '@coreui/angular';
 import { TagModule } from 'primeng/tag';
@@ -83,6 +82,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { Table, TableModule } from 'primeng/table';
 @NgModule({
   declarations: [
     ViewUsersComponent,

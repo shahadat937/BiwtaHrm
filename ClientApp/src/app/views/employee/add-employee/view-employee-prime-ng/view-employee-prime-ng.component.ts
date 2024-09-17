@@ -11,6 +11,8 @@ import { RoleFeatureService } from 'src/app/views/featureManagement/service/role
 import { UserModule } from 'src/app/views/usermanagement/model/user.module';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
+import { BasicInfoModule } from '../../model/basic-info.module';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-view-employee-prime-ng',
@@ -20,17 +22,13 @@ import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 export class ViewEmployeePrimeNgComponent implements OnInit {
 
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = [
-    'slNo',
-    'pNo',
-    'fullName',
-    'department',
-    'designation',
-    // 'fullNameBangla',
-    // 'email', 
-    'Action'];
+
+  employees: any[] = [];
+  loading: boolean = true;
+  totalRecords: number = 0;
   dataSource = new MatTableDataSource<any>();
-  @ViewChild(MatPaginator)
+  // @ViewChild(MatPaginator);
+  @ViewChild('dt') dt: Table | undefined;
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
@@ -60,7 +58,7 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
   }
   
   getPermission(){
-    this.roleFeatureService.getFeaturePermission('employeeList').subscribe((item) => {
+    this.roleFeatureService.getFeaturePermission('allEmployeeList').subscribe((item) => {
       this.roleFeatureService.featurePermission.add == true;
       if(item.viewStatus == true){
         this.getAllEmpBasicInfo();
@@ -76,12 +74,11 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
       positionClass: 'toast-top-right',
     });
   }
-
   getAllEmpBasicInfo() {
-    this.subscription = this.empBasicInfoService.getAll().subscribe((item) => {
-      this.dataSource = new MatTableDataSource(item);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.matSort;
+    this.subscription = this.empBasicInfoService.getAll().subscribe((employees) => {
+      this.employees = employees;
+      this.totalRecords = employees.length;
+      this.loading = false;
     });
   }
 
@@ -89,6 +86,11 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
+  }
+
+  onGlobalFilter(event: Event) {
+    const inputValue = (event.target as HTMLInputElement).value;
+    this.dt!.filterGlobal(inputValue, 'contains');
   }
 
   addNewEmployee(){

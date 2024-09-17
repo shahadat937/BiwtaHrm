@@ -26,11 +26,13 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
         private readonly IHrmRepository<Hrm.Domain.Workday> _workdayRepository;
         private readonly IHrmRepository<Hrm.Domain.Holidays> _holidayRepository;
         private readonly IHrmRepository<Hrm.Domain.Shift> _shiftRepository;
+        private readonly IHrmRepository<Hrm.Domain.CancelledWeekend> _cancelledWeekendRepository;
 
-        public CreateBulkAttendanceCommandHandler(IUnitOfWork unitOfWork, 
-           IHrmRepository<Hrm.Domain.Workday> workdayRepository, 
-           IHrmRepository<Hrm.Domain.Holidays> holidayRepository, 
+        public CreateBulkAttendanceCommandHandler(IUnitOfWork unitOfWork,
+           IHrmRepository<Hrm.Domain.Workday> workdayRepository,
+           IHrmRepository<Hrm.Domain.Holidays> holidayRepository,
            IHrmRepository<Hrm.Domain.Shift> shiftRepository,
+           IHrmRepository<Hrm.Domain.CancelledWeekend> cancelledWeekendRepository,
            IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -38,6 +40,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
             _workdayRepository = workdayRepository;
             _holidayRepository = holidayRepository;
             _shiftRepository = shiftRepository;
+            _cancelledWeekendRepository = cancelledWeekendRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(CreateBulkAttendanceCommand request, CancellationToken cancellationToken)
@@ -136,7 +139,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
 
                 if (!attendance.DayTypeId.HasValue)
                 {
-                    attendance.DayTypeId = AttendanceHelper.SetDayTypeId(attendance, _workdayRepository, _holidayRepository);
+                    attendance.DayTypeId = AttendanceHelper.SetDayTypeId(attendance, _workdayRepository, _holidayRepository, _cancelledWeekendRepository);
                 }
 
                 if (!attendance.AttendanceStatusId.HasValue)

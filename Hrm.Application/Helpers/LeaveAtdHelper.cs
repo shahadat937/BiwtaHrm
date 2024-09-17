@@ -73,6 +73,8 @@ namespace Hrm.Application.Helpers
                     LeaveRequestId = leaveRequestId
 
                 });
+
+                list[^1].DayTypeId = AttendanceHelper.SetDayTypeId(list[^1],_unitOfWork.Repository<Domain.Workday>(),_unitOfWork.Repository<Domain.Holidays>(),_unitOfWork.Repository<Domain.CancelledWeekend>());
             }
 
             var attendances = _mapper.Map<List<Hrm.Domain.Attendance>>(list);

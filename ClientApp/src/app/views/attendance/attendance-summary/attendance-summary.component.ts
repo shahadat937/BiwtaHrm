@@ -77,6 +77,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   ngOnInit(): void {
+    this.getAllEmp();
     this.getAllOffice();
   }
 
@@ -217,5 +218,14 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
  
     EntryDate =dObj[2]+'-'+month+'-'+day;
     return EntryDate;
+  }
+
+  getAllEmp() {
+    let params = new HttpParams();
+    this.AtdReportService.getFilteredEmpOption(params).subscribe({
+      next: response => {
+        this.EmpOption = response;
+      }
+    })
   }
 }

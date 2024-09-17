@@ -28,7 +28,7 @@ namespace Hrm.Api.Controllers
 
         [HttpPost]
         [Route("save-role")]
-        public async Task<ActionResult<BaseCommandResponse>> RoleCreate(CreateRoleDto request)
+        public async Task<ActionResult<BaseCommandResponse>> RoleCreate(AspNetRolesDto request)
         {
             return Ok(await _authenticationService.Save(request));
         }
@@ -49,7 +49,7 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-RoleById")]
+        [Route("get-roleById/{id}")]
         public async Task<ActionResult<BaseCommandResponse>> GetById(string id)
         {
             return Ok(await _authenticationService.GetById(id));

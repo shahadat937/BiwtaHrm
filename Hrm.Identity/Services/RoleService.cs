@@ -60,21 +60,21 @@ namespace Hrm.Identity.Services
             throw new NotImplementedException();
         }
 
-        public async Task<BaseCommandResponse> Save(CreateRoleDto request)
+        public async Task<BaseCommandResponse> Save(AspNetRolesDto request)
         {
             var response = new BaseCommandResponse();
 
             var role = new ApplicationRole
             {
-                Name = request.RoleName
+                Name = request.Name
             };
 
-            var existingRole = await _roleManager.FindByNameAsync(request.RoleName);
+            var existingRole = await _roleManager.FindByNameAsync(request.Name);
 
             if (existingRole != null)
             {
                 response.Success = false;
-                response.Message = $"Creation Failed, RoleName '{request.RoleName}' already Exists.";
+                response.Message = $"Creation Failed, RoleName '{request.Name}' already Exists.";
             }
 
             else
@@ -84,7 +84,7 @@ namespace Hrm.Identity.Services
                 if (result.Succeeded)
                 {
                     response.Success = true;
-                    response.Message = $"Creation Successfull, RoleName : '{request.RoleName}'.";
+                    response.Message = $"Creation Successfull, RoleName : '{request.Name}'.";
                 }
                 else
                 {
@@ -102,15 +102,9 @@ namespace Hrm.Identity.Services
         {
             var response = new BaseCommandResponse();
 
-            var role = new ApplicationRole
-            {
-                Id = request.Id,
-                Name = request.Name
-            };
+            var roles = await _roleManager.FindByIdAsync(request.Id);
 
-            var roles = _roleManager.FindByIdAsync(request.Id);
-
-            if (role == null)
+            if (roles == null)
             {
                 response.Success = false;
                 response.Message = $"Update Failed, Role Not Found.";
@@ -126,7 +120,9 @@ namespace Hrm.Identity.Services
 
             else
             {
-                var result = await _roleManager.UpdateAsync(role);
+                roles.Name = request.Name;
+
+                var result = await _roleManager.UpdateAsync(roles);
 
 
                 if (result.Succeeded)

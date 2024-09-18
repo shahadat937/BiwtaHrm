@@ -10,7 +10,11 @@ namespace Hrm.Application.Contracts.Identity
         //Task<Employee> GetEmployee(string userId);
         //Task<PagedResult<UserDto>> GetUsers(QueryParams queryParams);
         //Task<BaseCommandResponse> Save(CreateUserDto user);
-        Task<BaseCommandResponse> Save(string roleId, CreateRoleDto model);
+        Task<BaseCommandResponse> Save(AspNetRolesDto model);
+        Task<BaseCommandResponse> Update(AspNetRolesDto model);
+        Task<BaseCommandResponse> Delete(string Id);
+        Task<object> Get();
+        Task<object> GetById(string Id);
         Task<List<SelectedModel>> GetSelectedRoleList();
         Task<List<SelectedModel>> GetSelectedAllRoleList();
         Task<List<SelectedModel>> GetSelectedRoleForTraineeList();

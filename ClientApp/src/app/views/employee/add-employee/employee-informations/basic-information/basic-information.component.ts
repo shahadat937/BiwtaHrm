@@ -78,6 +78,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
       idCardNo: '',
       departmentName: '',
       designationName: '',
+      sectionName: '',
       shiftId: 1,
       empPhotoName : '',
       empGenderName : '',

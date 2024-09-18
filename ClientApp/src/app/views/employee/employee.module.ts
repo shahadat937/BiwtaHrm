@@ -6,7 +6,6 @@ import {
   ButtonModule,
   CardModule,
   CollapseDirective,
-  DropdownModule,
   FormModule,
   GridModule,
   ListGroupModule,
@@ -14,7 +13,6 @@ import {
   ProgressModule,
   SharedModule,
   SpinnerModule,
-  TableModule,
   TooltipModule,
 } from '@coreui/angular';
 import { TagModule } from 'primeng/tag';
@@ -83,6 +81,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { Table, TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -157,6 +157,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     InputIconModule, 
     MultiSelectModule, 
     HttpClientModule, 
+    DropdownModule
   ],
   providers:
   [

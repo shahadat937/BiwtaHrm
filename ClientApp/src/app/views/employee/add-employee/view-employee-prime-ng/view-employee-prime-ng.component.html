@@ -1,8 +1,19 @@
 <c-card class="mt-3">
-  <c-card-header class="d-flex justify-content-between">
-    <div>Employee List</div>
-    <div><button cButton color="primary" shape="rounded-pill" (click)="addNewEmployee()"><svg
-          [cIcon]="icons.cilPlus"></svg> Add New Employee</button></div>
+  <c-card-header>
+    <h4 class="text-center mb-3">Employee List</h4>
+    <div class="text-end">
+      <div>
+        <button mat-raised-button class="bg-info text-light mb-2" (click)="downloadExcelFile()">
+          <mat-icon>download</mat-icon> Download Excel File
+        </button>
+        <button mat-raised-button class="bg-success text-light ms-2 mb-2" (click)="uploadExcelFile()">
+          <mat-icon>upload</mat-icon> Upload Excel File
+        </button>
+        <button mat-raised-button color="primary" class="ms-2 mb-2" (click)="addNewEmployee()">
+          <mat-icon>add</mat-icon> Add Employee
+        </button>
+      </div>
+    </div>
   </c-card-header>
   <c-card-body>
     <div class="example-header">
@@ -29,7 +40,7 @@
           <!-- Search Input -->
           <ng-template pTemplate="caption">
             <div class="row">
-              <p-iconField iconPosition="right" class="ml-auto col-xl-4 pb-2">
+              <p-iconField iconPosition="right" class="ml-auto col-xl pb-2">
                 <p-inputIcon>
                   <mat-icon>search</mat-icon>
                 </p-inputIcon>
@@ -41,7 +52,7 @@
                 />
               </p-iconField>
               <p-dropdown
-                class="col-xl-4 pb-2"
+                class="col-xl pb-2"
                 [options]="departments" 
                 optionLabel="name" 
                 placeholder="Select Departments"
@@ -50,7 +61,7 @@
                 (onChange)="onSelect($event.value ? $event.value.name : null)" />
 
               <p-dropdown
-                class="col-xl-4 pb-2"
+                class="col-xl pb-2"
                 [options]="sections"
                 optionLabel="name" 
                 placeholder="Select Section"

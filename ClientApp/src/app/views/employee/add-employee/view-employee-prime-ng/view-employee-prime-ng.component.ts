@@ -14,6 +14,8 @@ import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 import { BasicInfoModule } from '../../model/basic-info.module';
 import { Table } from 'primeng/table';
 import { EmpPhotoSignService } from '../../service/emp-photo-sign.service';
+import { UploadEmpBasicInfoComponent } from '../upload-emp-basic-info/upload-emp-basic-info.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-view-employee-prime-ng',
@@ -54,6 +56,7 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
     public empBasicInfoService: EmpBasicInfoService,
     public roleFeatureService: RoleFeatureService,
     public empPhotoSign: EmpPhotoSignService,
+    private modalService: BsModalService,
 
   ) {
     this.userForm = new UserModule;
@@ -138,6 +141,25 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
     }
     else{
       this.unauthorizeAccress();
+    }
+  }
+
+  downloadExcelFile(){
+    const url = this.empPhotoSign.imageUrl + '/Files/EmpBasicInfo.xlsx';
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'EmpBasicInfo.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  uploadExcelFile(){
+    const modalRef: BsModalRef = this.modalService.show(UploadEmpBasicInfoComponent, { backdrop: 'static' });
+
+    if (modalRef.onHide) {
+      modalRef.onHide.subscribe(() => {
+        this.getAllEmpBasicInfo();
+      });
     }
   }
 

@@ -69,12 +69,17 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
     const file = fileInput.files[0];
     if(file){
       this.uploadedFile = true;
-      this.headingText = "Check Provided Informations"
+      this.headingText = "Check Provided Informations";
+
+      const reader = new FileReader();
+      reader.onload - (event: any) => {
+        const workbook = XLSX.read()
+      }
     }
   }
 
   patchEmpBasicInfoInfo(EmpBasicInfoList: any[]) {
-    const control = <FormArray>this.EmpBasicInfoForm.controls['empBasicInfoList'];
+    const control = <FormArray>this.EmpBasicInfoForm.controls['empBasicList'];
     control.clear();
 
     EmpBasicInfoList.forEach(basicInfo => {
@@ -95,11 +100,11 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
   }
   
   EmpBasicInfoForm: FormGroup = new FormGroup({
-    empChildList: new FormArray([])
+    empBasicList: new FormArray([])
   });
 
   get empBasicInfoListArray() {
-    return this.EmpBasicInfoForm.controls["empBasicInfoList"] as FormArray;
+    return this.EmpBasicInfoForm.controls["empBasicList"] as FormArray;
   }
 
   addEmpBasicInfo() {

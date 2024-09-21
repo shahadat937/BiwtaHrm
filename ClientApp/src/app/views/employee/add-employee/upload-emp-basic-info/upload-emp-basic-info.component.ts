@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 import { ShiftService } from 'src/app/views/attendance/services/shift.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-upload-emp-basic-info',
@@ -21,7 +22,7 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
   @ViewChild('formFile') formFileInput!: ElementRef;
   uploadedFile: boolean = false;
   headingText: string = "Upload Employee Basic Information";
-  employeeType: SelectedModel[] = [];
+  employeeTypes: SelectedModel[] = [];
   shifts: SelectedModel[] = [];
   loading: boolean = false;
   fileSelected = false;
@@ -55,7 +56,7 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
 
   getSelectedEmployeeType(){
     this.subscription = this.empBasicInfoService.getSelectedEmployeeType().subscribe((data) => { 
-      this.employeeType = data;
+      this.employeeTypes = data;
     });
   }
   getSelectedShift(){
@@ -64,17 +65,72 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
     });
   }
 
-  uploadFile(){
+  uploadFile() {
     const fileInput = this.formFileInput.nativeElement;
     const file = fileInput.files[0];
-    if(file){
-      this.uploadedFile = true;
-      this.headingText = "Check Provided Informations"
+  
+    if (file) {
+      const reader = new FileReader();
+  
+      reader.onload = (event: any) => {
+        const binaryStr = event.target.result;
+        const workbook = XLSX.read(binaryStr, { type: 'binary' });
+  
+        // Assuming the data is in the first sheet
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+  
+        // Parse the Excel data into JSON format
+        const excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+  
+        // Remove header row, filter out empty rows, and format the data
+        const employeeData = excelData.slice(1)
+          .filter((row: any) => row[1] && row[2]) // Filter rows where idCardNo (row[1]) and firstName (row[2]) are not empty
+          .map((row: any) => ({
+            idCardNo: row[1],         // PMIS No
+            firstName: row[2],        // First Name
+            lastName: row[3],         // Last Name
+            firstNameBangla: row[4],  // First Name Bangla
+            lastNameBangla: row[5],   // Last Name Bangla
+            dateOfBirth: this.parseExcelDate(row[6]), // Date of Birth in DD/MM/YYYY
+            nid: row[7],              // NID Number
+            personalFileNo: row[8],   // Personal File No.
+          }));
+  
+        // Patch the data to the form array
+        this.patchEmpBasicInfoInfo(employeeData);
+  
+        this.uploadedFile = true;
+        this.headingText = "Check Provided Information";
+      };
+  
+      reader.readAsBinaryString(file);
     }
   }
+  
+  // Helper function to parse Excel date in DD/MM/YYYY format
+  parseExcelDate(excelDate: string): string | null {
+    if (!excelDate) return null;
+  
+    // Check for DD/MM/YYYY format with or without leading zeros
+    const dateRegex = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[0-2])\/(\d{4})$/;
+    const match = excelDate.match(dateRegex);
+  
+    if (match) {
+      const day = match[1].padStart(2, '0');   // Ensure day is two digits
+      const month = match[2].padStart(2, '0'); // Ensure month is two digits
+      const year = match[3];                    // Full year
+  
+      // Return the date in YYYY-MM-DD format
+      return `${year}-${month}-${day}`;
+    }
+  
+    return null; // Return null if the date doesn't match the expected format
+  }
+  
 
   patchEmpBasicInfoInfo(EmpBasicInfoList: any[]) {
-    const control = <FormArray>this.EmpBasicInfoForm.controls['empBasicInfoList'];
+    const control = <FormArray>this.EmpBasicInfoForm.controls['empBasicList'];
     control.clear();
 
     EmpBasicInfoList.forEach(basicInfo => {
@@ -87,7 +143,7 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
         lastNameBangla: [basicInfo.lastName],
         dateOfBirth: [basicInfo.dateOfBirth],
         nid: [basicInfo.nid],
-        personalFileNo: [basicInfo.occupationId],
+        personalFileNo: [basicInfo.personalFileNo],
         employeeTypeId: [1, Validators.required],
         shiftId: [1, Validators.required],
       }));
@@ -95,11 +151,11 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
   }
   
   EmpBasicInfoForm: FormGroup = new FormGroup({
-    empChildList: new FormArray([])
+    empBasicList: new FormArray([])
   });
 
   get empBasicInfoListArray() {
-    return this.EmpBasicInfoForm.controls["empBasicInfoList"] as FormArray;
+    return this.EmpBasicInfoForm.controls["empBasicList"] as FormArray;
   }
 
   addEmpBasicInfo() {
@@ -145,5 +201,26 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
         this.renderer.removeClass(modalElement, 'shake');
       }, 500);
     }
+  }
+
+  saveEmployeeBasicInfo(){
+    this.loading = true;
+    console.log(this.EmpBasicInfoForm.get("empBasicList")?.value);
+    this.empBasicInfoService.saveImportedEmployeeBasicInfo(this.EmpBasicInfoForm.get("empBasicList")?.value).subscribe(((res: any) => {
+      if (res.success) {
+        this.toastr.success('', `${res.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.loading = false;
+        this.closeModal();
+      } else {
+        this.toastr.warning('', `${res.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.loading = false;
+      }
+      this.loading = false;
+    })
+    )
   }
 }

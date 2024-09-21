@@ -44,9 +44,9 @@ namespace Hrm.Api.Controllers
 
         [HttpPost]
         [Route("save-role")]
-        public async Task<ActionResult<BaseCommandResponse>> RoleCreate(CreateRoleDto request)
+        public async Task<ActionResult<BaseCommandResponse>> RoleCreate(AspNetRolesDto request)
         {
-            return Ok(await _authenticationService.Save(null, request));
+            return Ok(await _authenticationService.Save(request));
         }
 
 

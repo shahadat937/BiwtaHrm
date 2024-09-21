@@ -6,7 +6,6 @@ import {
   ButtonModule,
   CardModule,
   CollapseDirective,
-  DropdownModule,
   FormModule,
   GridModule,
   ListGroupModule,
@@ -14,7 +13,6 @@ import {
   ProgressModule,
   SharedModule,
   SpinnerModule,
-  TableModule,
   TooltipModule,
 } from '@coreui/angular';
 import { TagModule } from 'primeng/tag';
@@ -83,6 +81,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { Table, TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import { UploadEmpBasicInfoComponent } from './add-employee/upload-emp-basic-info/upload-emp-basic-info.component';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -112,6 +113,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     EmpShiftListComponent,
     UpdateEmpShiftComponent,
     ViewEmployeePrimeNgComponent,
+    UploadEmpBasicInfoComponent,
   ],
   imports: [
     CommonModule,
@@ -157,6 +159,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     InputIconModule, 
     MultiSelectModule, 
     HttpClientModule, 
+    DropdownModule
   ],
   providers:
   [

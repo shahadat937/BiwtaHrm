@@ -76,6 +76,15 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpPost]
+        [Route("save-ImportedEmpBasicInfos")]
+        public async Task<ActionResult<BaseCommandResponse>> PostImportedEmpBasicInfo([FromBody] List<CreateEmpBasicInfoDto> EmpBasicInfos)
+        {
+            var command = new CreateImportedEmpBasicInfoCommand { EmpBasicInfoDtos = EmpBasicInfos };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
 
         [HttpPut]
         [Route("update-EmpBasicInfos/{id}")]

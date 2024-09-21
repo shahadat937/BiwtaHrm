@@ -45,4 +45,8 @@ export class EmpBasicInfoService {
     return this.http.get<any>(this.baseUrl + '/empBasicInfo/update-userStatus/' + id);
   }
 
+  saveImportedEmployeeBasicInfo(model: FormData) {
+    return this.http.post(this.baseUrl + '/empBasicInfo/save-ImportedEmpBasicInfos', model);
+  }
+
 }

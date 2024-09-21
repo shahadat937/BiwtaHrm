@@ -73,6 +73,26 @@
                                                     <input type="text" formControlName="personalFileNo" class="form-control"
                                                         id="personalFileNo{{i}}" placeholder="Enter Personal File No" />
                                                 </c-col>
+
+                                                
+                                                <c-col [md]="4">
+                                                    <label class="col-form-label" for="employeeTypeId{{i}}">Employee Type</label>
+                                                    <select formControlName="employeeTypeId" class="form-select">
+                                                        <option value="null" disabled>Select Employee Type</option>
+                                                        <option *ngFor="let item of employeeTypes" value="{{item.id}}">{{item.name}}
+                                                        </option>
+                                                    </select>
+                                                </c-col>
+
+<!--                                                 
+                                                <c-col [md]="4">
+                                                    <label class="col-form-label" for="shiftId{{i}}">Shift</label>
+                                                    <select formControlName="shiftId" class="form-select">
+                                                        <option value="null" disabled>Select Shift</option>
+                                                        <option *ngFor="let item of shifts" value="{{item.id}}">{{item.name}}
+                                                        </option>
+                                                    </select>
+                                                </c-col> -->
             
                                                 <c-col [md]="12" class="d-flex justify-content-end">
                                                     <button mat-mini-fab color="warn" type="button"
@@ -98,9 +118,9 @@
                 <button [disabled]="!fileSelected" *ngIf="!uploadedFile" mat-raised-button class="me-1" color="primary" type="button" (click)="uploadFile()">
                     <mat-icon>upload</mat-icon> Upload
                 </button>
-                <button [disabled]="loading" [disabled]="EmpBasicInfoForm.invalid" *ngIf="uploadedFile" mat-raised-button class="me-1 bg-success text-light" type="submit">
+                <button [disabled]="loading" [disabled]="EmpBasicInfoForm.invalid" *ngIf="uploadedFile" mat-raised-button class="me-1 bg-success text-light" type="button" (click)="saveEmployeeBasicInfo()">
                     <c-spinner [hidden]="!loading" size="sm"></c-spinner>
-                    <mat-icon [hidden]="loading">save</mat-icon> Save
+                    <mat-icon [hidden]="loading">save</mat-icon> Import
                 </button>
             </div>
         </div>

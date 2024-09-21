@@ -137,7 +137,7 @@ namespace Hrm.Identity.Services
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "Admin");
+                    await _userManager.AddToRoleAsync(user, "User");
                     response.Success = true;
                     response.Message = $"Register Successfull, UserName : '{request.UserName}'.";
                 }

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';  // Import HttpClientModule
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';  // Import HttpClientModule
 import { LeaveService } from './leave.service';          // Import the LeaveService
 
 describe('LeaveService', () => {
@@ -7,9 +7,9 @@ describe('LeaveService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],    // Import HttpClientModule to make HttpClient available
-      providers: [LeaveService]       // Provide LeaveService for injection
-    });
+    imports: [],
+    providers: [LeaveService, provideHttpClient(withInterceptorsFromDi())] // Provide LeaveService for injection
+});
     service = TestBed.inject(LeaveService); // Inject LeaveService into the test
   });
 

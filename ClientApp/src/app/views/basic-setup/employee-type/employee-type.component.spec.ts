@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EmployeeTypeComponent } from './employee-type.component';
 import { EmployeeTypeService } from '../service/employee-type.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { SpinnerModule } from '@coreui/angular';
@@ -15,25 +15,23 @@ describe('EmployeeTypeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EmployeeTypeComponent],
-      imports: [
-        HttpClientModule,
-        FormsModule,
+    declarations: [EmployeeTypeComponent],
+    imports: [FormsModule,
         MatIconModule,
         SpinnerModule,
-        ToastrModule.forRoot()
-      ],
-      providers: [
+        ToastrModule.forRoot()],
+    providers: [
         EmployeeTypeService,
-        { 
-          provide: ActivatedRoute, 
-          useValue: {
-            snapshot: { paramMap: { get: () => 'some-value' } },
-            params: of({ id: '123' })
-          }
-        }
-      ]
-    })
+        {
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: { paramMap: { get: () => 'some-value' } },
+                params: of({ id: '123' })
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+})
     .compileComponents();
     
     fixture = TestBed.createComponent(EmployeeTypeComponent);

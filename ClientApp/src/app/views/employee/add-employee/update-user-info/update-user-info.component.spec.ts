@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UpdateUserInfoComponent } from './update-user-info.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -32,8 +32,10 @@ describe('UpdateUserInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [UpdateUserInfoComponent],
-    imports: [CommonModule,
+      declarations: [UpdateUserInfoComponent],
+      imports: [
+        CommonModule,
+        HttpClientModule,
         FormsModule,
         MatIconModule,
         SpinnerModule,
@@ -51,19 +53,19 @@ describe('UpdateUserInfoComponent', () => {
         ProgressModule,
         ButtonGroupModule,
         ButtonModule,
-        TooltipModule],
-    providers: [
+        TooltipModule,
+      ],
+      providers: [
         UserService,
-        {
-            provide: ActivatedRoute,
-            useValue: {
-                snapshot: { paramMap: { get: () => 'some-value' } },
-                params: of({ id: '123' })
-            }
-        },
-        provideHttpClient(withInterceptorsFromDi())
-    ]
-})
+        { 
+          provide: ActivatedRoute, 
+          useValue: {
+            snapshot: { paramMap: { get: () => 'some-value' } },
+            params: of({ id: '123' })
+          }
+        }
+      ]
+    })
     .compileComponents();
     
     fixture = TestBed.createComponent(UpdateUserInfoComponent);

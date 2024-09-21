@@ -1,6 +1,6 @@
 import { Component, Directive } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ChangeProfileComponent } from './change-profile.component';
@@ -20,16 +20,19 @@ describe('ChangeProfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [
-        ChangeProfileComponent,
-        MockGutterDirective // Declare the mock directive
-    ],
-    imports: [FormsModule,
+      imports: [
+        HttpClientModule,
+        FormsModule,
         MatIconModule,
         SpinnerModule,
-        ToastrModule.forRoot()],
-    providers: [EmpPhotoSignService, provideHttpClient(withInterceptorsFromDi())]
-})
+        ToastrModule.forRoot()
+      ],
+      declarations: [
+        ChangeProfileComponent,
+        MockGutterDirective  // Declare the mock directive
+      ],
+      providers: [EmpPhotoSignService]
+    })
     .compileComponents();
     
     fixture = TestBed.createComponent(ChangeProfileComponent);

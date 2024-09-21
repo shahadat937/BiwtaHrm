@@ -71,10 +71,10 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
       this.uploadedFile = true;
       this.headingText = "Check Provided Informations";
 
-      // const reader = new FileReader();
-      // reader.onload - (event: any) => {
-      //   const workbook = XLSX.read()
-      // }
+      const reader = new FileReader();
+      reader.onload - (event: any) => {
+        const workbook = XLSX.read()
+      }
     }
   }
 

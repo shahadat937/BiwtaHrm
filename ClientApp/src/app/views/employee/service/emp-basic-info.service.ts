@@ -49,4 +49,13 @@ export class EmpBasicInfoService {
     return this.http.post(this.baseUrl + '/empBasicInfo/save-ImportedEmpBasicInfos', model);
   }
 
+  
+  getFirstEmpTypeId(){
+    return this.http.get<number>(this.baseUrl + '/employee-type/get-firstEmployeeTypeId');
+  }
+  
+  getFirstShiftId(){
+    return this.http.get<number>(this.baseUrl + '/shift/get-firstShiftId');
+  }
+
 }

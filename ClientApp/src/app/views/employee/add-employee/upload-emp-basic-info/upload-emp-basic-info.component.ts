@@ -26,6 +26,8 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
   shifts: SelectedModel[] = [];
   loading: boolean = false;
   fileSelected = false;
+  empTypeId : any;
+  empShiftId : any;
   
   constructor(
     private toastr: ToastrService,
@@ -55,11 +57,17 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
   }
 
   getSelectedEmployeeType(){
+    this.subscription = this.empBasicInfoService.getFirstEmpTypeId().subscribe((res) => {
+      this.empTypeId = res;
+    })
     this.subscription = this.empBasicInfoService.getSelectedEmployeeType().subscribe((data) => { 
       this.employeeTypes = data;
     });
   }
   getSelectedShift(){
+    this.subscription = this.empBasicInfoService.getFirstShiftId().subscribe((res) => {
+      this.empShiftId = res;
+    })
     this.subscription = this.shiftService.getSelectedShift().subscribe((data) => { 
       this.shifts = data;
     });
@@ -144,8 +152,8 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
         dateOfBirth: [basicInfo.dateOfBirth],
         nid: [basicInfo.nid],
         personalFileNo: [basicInfo.personalFileNo],
-        employeeTypeId: [1, Validators.required],
-        shiftId: [1, Validators.required],
+        employeeTypeId: [this.empTypeId, Validators.required],
+        shiftId: [this.empShiftId, Validators.required],
       }));
     });
   }
@@ -169,8 +177,8 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
       dateOfBirth: new FormControl(undefined),
       nid: new FormControl(undefined),
       personalFileNo: new FormControl(undefined),
-      employeeTypeId: new FormControl(1, Validators.required),
-      shiftId: new FormControl(1, Validators.required),
+      employeeTypeId: new FormControl(this.empTypeId, Validators.required),
+      shiftId: new FormControl(this.empShiftId, Validators.required),
     }));
   }
   

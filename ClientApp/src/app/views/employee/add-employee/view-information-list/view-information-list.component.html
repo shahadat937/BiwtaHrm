@@ -41,14 +41,14 @@
                 </ng-container>
             </mat-tab>
         
-            <!-- <mat-tab>
+            <mat-tab>
                 <ng-template mat-tab-label>Address Information</ng-template>
                 <ng-container *ngIf="selectedTabIndex === 4">
                     <app-emp-address [empId]="empId"></app-emp-address>
                 </ng-container>
-            </mat-tab> -->
+            </mat-tab>
 
-            <mat-tab>
+            <!-- <mat-tab>
                 <ng-template mat-tab-label>Present Address</ng-template>
                 <ng-container *ngIf="selectedTabIndex === 4">
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
@@ -62,11 +62,11 @@
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
                     <app-emp-permanent-address [empId]="empId" *ngIf="empId"></app-emp-permanent-address>
                 </ng-container>
-            </mat-tab>
+            </mat-tab> -->
         
             <mat-tab>
                 <ng-template mat-tab-label>Job Details</ng-template>
-                <ng-container *ngIf="selectedTabIndex === 6">
+                <ng-container *ngIf="selectedTabIndex === 5">
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
                     <app-emp-job-details [empId]="empId" *ngIf="empId"></app-emp-job-details>
                 </ng-container>
@@ -74,7 +74,7 @@
         
             <mat-tab>
                 <ng-template mat-tab-label>Education Information</ng-template>
-                <ng-container *ngIf="selectedTabIndex === 7">
+                <ng-container *ngIf="selectedTabIndex === 6">
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
                     <app-emp-education-info [empId]="empId" *ngIf="empId"></app-emp-education-info>
                 </ng-container>
@@ -82,7 +82,7 @@
         
             <mat-tab>
                 <ng-template mat-tab-label>Training Information</ng-template>
-                <ng-container *ngIf="selectedTabIndex === 8">
+                <ng-container *ngIf="selectedTabIndex === 7">
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
                     Left
                 </ng-container>
@@ -90,7 +90,7 @@
         
             <mat-tab>
                 <ng-template mat-tab-label>PSI & Training History</ng-template>
-                <ng-container *ngIf="selectedTabIndex === 9">
+                <ng-container *ngIf="selectedTabIndex === 8">
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
                     <app-emp-psi-training-info [empId]="empId" *ngIf="empId"></app-emp-psi-training-info>
                 </ng-container>
@@ -98,7 +98,7 @@
         
             <mat-tab>
                 <ng-template mat-tab-label>Bank Information</ng-template>
-                <ng-container *ngIf="selectedTabIndex === 10">
+                <ng-container *ngIf="selectedTabIndex === 9">
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
                     <app-emp-bank-info [empId]="empId" *ngIf="empId"></app-emp-bank-info>
                 </ng-container>
@@ -106,7 +106,7 @@
         
             <mat-tab>
                 <ng-template mat-tab-label>Nominee Information</ng-template>
-                <ng-container *ngIf="selectedTabIndex === 11">
+                <ng-container *ngIf="selectedTabIndex === 10">
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
                     <app-emp-nominee-info [empId]="empId" [pNo]="pNo" *ngIf="empId"></app-emp-nominee-info>
                 </ng-container>
@@ -114,7 +114,7 @@
         
             <mat-tab>
                 <ng-template mat-tab-label>Language Details</ng-template>
-                <ng-container *ngIf="selectedTabIndex === 12">
+                <ng-container *ngIf="selectedTabIndex === 11">
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
                     <app-emp-language-info [empId]="empId" *ngIf="empId"></app-emp-language-info>
                 </ng-container>
@@ -122,7 +122,7 @@
         
             <mat-tab>
                 <ng-template mat-tab-label>Foreign Trip</ng-template>
-                <ng-container *ngIf="selectedTabIndex === 13">
+                <ng-container *ngIf="selectedTabIndex === 12">
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
                     <app-emp-foreign-tour-info [empId]="empId" *ngIf="empId"></app-emp-foreign-tour-info>
                 </ng-container>
@@ -130,7 +130,7 @@
         
             <mat-tab>
                 <ng-template mat-tab-label>Photo & Signature</ng-template>
-                <ng-container *ngIf="selectedTabIndex === 14">
+                <ng-container *ngIf="selectedTabIndex === 13">
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
                     <app-emp-photo-sign [empId]="empId" [pNo]="pNo" *ngIf="empId"></app-emp-photo-sign>
                 </ng-container>

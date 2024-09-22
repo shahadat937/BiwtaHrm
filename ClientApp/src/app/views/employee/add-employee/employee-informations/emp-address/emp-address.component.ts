@@ -79,7 +79,6 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
   getAddressInformation() {
     this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
       if (res) {
-        console.log("present: ", res)
         res.countryId ? this.onPresentAddressDivisionNamesChangeByCounterId(res.countryId) : null;
         res.divisionId ? this.onPresentAddressDistrictNamesChangeByDivisionId(res.divisionId) : null;
         res.districtId ? this.onPresentAddressUpazilaNamesChangeByDistrictId(res.districtId) : null;
@@ -99,7 +98,6 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
     this.empPermanentAddressService.findByEmpId(this.empId).subscribe((res) => {
       this.presentAddressStatus = res ? false : true;
       if(res){
-        console.log("permanent: ", res)
         res.countryId ? this.onPermanentAddressDivisionNamesChangeByCounterId(res.countryId) : null;
         res.divisionId ? this.onPermanentAddressDistrictNamesChangeByDivisionId(res.divisionId) : null;
         res.districtId ? this.onPermanentAddressUpazilaNamesChangeByDistrictId(res.districtId) : null;
@@ -200,7 +198,7 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
       this.EmpPermanentAddressForm.form.patchValue(formData);
     } else {
       this.sameAsPresentAddress = false;
-      this.EmpPermanentAddressForm.form.reset();
+      this.resetPermanentAddressForm();
     }
   }
 
@@ -282,13 +280,13 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
       ? this.empPresentAddressService.updateEmpPresentInfo(presentAddressid, EmpPresentAddressForm.value)
       : this.empPresentAddressService.saveEmpPresentInfo(EmpPresentAddressForm.value);
       
-      this.empPermanentAddressService.cachedData = [];
-      const permanentAddressid = EmpPermanentAddressForm.value.id;
-      console.log("Present Address : ", EmpPresentAddressForm.value)
-      console.log("Permanent Address : ", EmpPermanentAddressForm.value)
-      const permanentAddressaction$ = permanentAddressid
-        ? this.empPermanentAddressService.updateEmpPermanentInfo(permanentAddressid, EmpPermanentAddressForm.value)
-        : this.empPermanentAddressService.saveEmpPermanentInfo(EmpPermanentAddressForm.value);
+    this.empPermanentAddressService.cachedData = [];
+    const permanentAddressid = EmpPermanentAddressForm.value.id;
+    const permanentAddressaction$ = permanentAddressid
+      ? this.empPermanentAddressService.updateEmpPermanentInfo(permanentAddressid, EmpPermanentAddressForm.value)
+      : this.empPermanentAddressService.saveEmpPermanentInfo(EmpPermanentAddressForm.value);
+
+    this.subscription = permanentAddressaction$.subscribe((response: any) => {});
 
     this.subscription = presentAddressaction$.subscribe((response: any) => {
       if (response.success) {
@@ -296,6 +294,7 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
+        this.sameAsPresentAddress = false;
         this.getAddressInformation();
       } else {
         this.toastr.warning('', `${response.message}`, {

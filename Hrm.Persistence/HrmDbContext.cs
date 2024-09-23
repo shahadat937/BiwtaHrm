@@ -487,13 +487,13 @@ namespace Hrm.Persistence
                     .WithMany(eb => eb.EmpPresentAddress)
                     .HasForeignKey(e => e.ThanaId);
 
-                entity.HasOne(e => e.Union)
-                    .WithMany(eb => eb.EmpPresentAddress)
-                    .HasForeignKey(e => e.UnionId);
+                //entity.HasOne(e => e.Union)
+                //    .WithMany(eb => eb.EmpPresentAddress)
+                //    .HasForeignKey(e => e.UnionId);
 
-                entity.HasOne(e => e.Ward)
-                    .WithMany(eb => eb.EmpPresentAddress)
-                    .HasForeignKey(e => e.WardId);
+                //entity.HasOne(e => e.Ward)
+                //    .WithMany(eb => eb.EmpPresentAddress)
+                //    .HasForeignKey(e => e.WardId);
 
             });
 
@@ -526,13 +526,13 @@ namespace Hrm.Persistence
                     .WithMany(eb => eb.EmpPermanentAddress)
                     .HasForeignKey(e => e.ThanaId);
 
-                entity.HasOne(e => e.Union)
-                    .WithMany(eb => eb.EmpPermanentAddress)
-                    .HasForeignKey(e => e.UnionId);
+                //entity.HasOne(e => e.Union)
+                //    .WithMany(eb => eb.EmpPermanentAddress)
+                //    .HasForeignKey(e => e.UnionId);
 
-                entity.HasOne(e => e.Ward)
-                    .WithMany(eb => eb.EmpPermanentAddress)
-                    .HasForeignKey(e => e.WardId);
+                //entity.HasOne(e => e.Ward)
+                //    .WithMany(eb => eb.EmpPermanentAddress)
+                //    .HasForeignKey(e => e.WardId);
 
             });
 

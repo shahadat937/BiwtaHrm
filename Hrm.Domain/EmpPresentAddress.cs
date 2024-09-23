@@ -16,8 +16,8 @@ namespace Hrm.Domain
         public int? DistrictId { get; set; }
         public int? UpazilaId { get; set; }
         public int? ThanaId { get; set; }
-        public int? UnionId { get; set; }
-        public int? WardId { get; set; }
+        public string? UnionName { get; set; }
+        public string? WardName { get; set; }
         public int? ZipCode { get; set; }
         public string? Address { get; set; }
         public string? Email { get; set; }
@@ -31,7 +31,7 @@ namespace Hrm.Domain
         public virtual District? District { get; set; }
         public virtual Upazila? Upazila { get; set; }
         public virtual Thana? Thana { get; set; }
-        public virtual Union? Union { get; set; }
-        public virtual Ward? Ward { get; set; }
+        //public virtual Union? Union { get; set; }
+        //public virtual Ward? Ward { get; set; }
     }
 }

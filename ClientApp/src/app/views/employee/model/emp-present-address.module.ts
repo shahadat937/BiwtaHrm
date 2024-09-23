@@ -6,8 +6,8 @@ export class EmpPresentAddressModule {
     districtId: any = null;
     upazilaId: any = null;
     thanaId: any = null;
-    unionId: any = null;
-    wardId: any = null;
+    // unionId: any = null;
+    // wardId: any = null;
     zipCode: any = null;
     address: string = "";
     email: string = "";

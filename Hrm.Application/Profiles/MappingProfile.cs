@@ -375,9 +375,9 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.DivisionName, opt => opt.MapFrom(src => src.Division.DivisionName))
             .ForMember(dest => dest.DistrictName, opt => opt.MapFrom(src => src.District.DistrictName))
             .ForMember(dest => dest.UpazilaName, opt => opt.MapFrom(src => src.Upazila.UpazilaName))
-            .ForMember(dest => dest.ThanaName, opt => opt.MapFrom(src => src.Thana.ThanaName))
-            .ForMember(dest => dest.UnionName, opt => opt.MapFrom(src => src.Union.UnionName))
-            .ForMember(dest => dest.WardName, opt => opt.MapFrom(src => src.Ward.WardName));
+            .ForMember(dest => dest.ThanaName, opt => opt.MapFrom(src => src.Thana.ThanaName));
+            //.ForMember(dest => dest.UnionName, opt => opt.MapFrom(src => src.Union.UnionName))
+            //.ForMember(dest => dest.WardName, opt => opt.MapFrom(src => src.Ward.WardName));
 
             CreateMap<EmpPermanentAddress, EmpPermanentAddressDto>().ReverseMap();
             CreateMap<EmpPermanentAddress, CreateEmpPermanentAddressDto>().ReverseMap();
@@ -386,9 +386,9 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.DivisionName, opt => opt.MapFrom(src => src.Division.DivisionName))
             .ForMember(dest => dest.DistrictName, opt => opt.MapFrom(src => src.District.DistrictName))
             .ForMember(dest => dest.UpazilaName, opt => opt.MapFrom(src => src.Upazila.UpazilaName))
-            .ForMember(dest => dest.ThanaName, opt => opt.MapFrom(src => src.Thana.ThanaName))
-            .ForMember(dest => dest.UnionName, opt => opt.MapFrom(src => src.Union.UnionName))
-            .ForMember(dest => dest.WardName, opt => opt.MapFrom(src => src.Ward.WardName));
+            .ForMember(dest => dest.ThanaName, opt => opt.MapFrom(src => src.Thana.ThanaName));
+            //.ForMember(dest => dest.UnionName, opt => opt.MapFrom(src => src.Union.UnionName))
+            //.ForMember(dest => dest.WardName, opt => opt.MapFrom(src => src.Ward.WardName));
 
             CreateMap<EmpJobDetail, EmpJobDetailDto>().ReverseMap();
             CreateMap<EmpJobDetail, CreateEmpJobDetailDto>().ReverseMap();

@@ -1,1 +1,523 @@
-<p>emp-profile works!</p>
+<c-card>
+    <c-card-header>
+        <h4 class="text-center text-light">Employee Profile</h4>
+    </c-card-header>
+    <c-card-body>
+        <div cRow>
+            <c-col [lg]="3">
+                <img src="{{photoPreviewUrl}}" style="max-width: auto; max-height: 150px;">
+            </c-col>
+            <c-col [lg]="4">
+                <table class="table borderless" *ngIf="empBasicInfo">
+                    <tbody>
+                        <tr class="pb-3">
+                            <th>Employee Name</th>
+                            <td>{{empBasicInfo.firstName}} {{empBasicInfo.lastName}}</td>
+                        </tr>
+                        <tr>
+                            <th>PMIS ID</th>
+                            <td>{{empBasicInfo.idCardNo}}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{empPersonalInfo.email}}</td>
+                        </tr>
+                        <tr>
+                            <th>Mobile</th>
+                            <td>{{empPersonalInfo.mobileNumber}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-col>
+
+            <c-col [lg]="4" class="border-left">
+                <div>
+                    <p><b>Current Position</b></p>
+                    <hr/>
+                    <p class="mb-0">{{empJobDetails.designationName}}</p>
+                    <p class="mb-0">{{empJobDetails.departmentName}}</p>
+                </div>
+            </c-col>
+        </div>
+
+        <!-- Employee Personal Information -->
+        <c-card class="shadow mb-4 mt-3" *ngIf="empPersonalInfo">
+            <c-card-header>
+                <h5 class="text-center text-light">Employee Personal Information</h5>
+            </c-card-header>
+            <c-card-body>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Gender</th>
+                            <td>{{empPersonalInfo.genderName}}</td>
+                            <th>Father Name</th>
+                            <td>{{empPersonalInfo.fatherName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Marital Status</th>
+                            <td>{{empPersonalInfo.maritalStatusName}}</td>
+                            <th>Mother Name</th>
+                            <td>{{empPersonalInfo.motherName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Blood Group</th>
+                            <td>{{empPersonalInfo.bloodGroupName}}</td>
+                            <th>Guardian Name</th>
+                            <td>{{empPersonalInfo.gurdianName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Nationality</th>
+                            <td>{{empPersonalInfo.nationalityName}}</td>
+                            <th>Mother Name</th>
+                            <td>{{empPersonalInfo.religionName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Mobile Number</th>
+                            <td>{{empPersonalInfo.mobileNumber}}</td>
+                            <th>Height</th>
+                            <td>{{empPersonalInfo.height}}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{empPersonalInfo.email}}</td>
+                            <th>Weight</th>
+                            <td>{{empPersonalInfo.weight}}</td>
+                        </tr>
+                        <tr>
+                            <th>Birth Reg. No.</th>
+                            <td>{{empPersonalInfo.birthRegNo}}</td>
+                            <th>Hair Color</th>
+                            <td>{{empPersonalInfo.hairColorName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Place of Birth</th>
+                            <td>{{empPersonalInfo.placeOfBirth}}</td>
+                            <th>Eyes Color</th>
+                            <td>{{empPersonalInfo.eyesColorName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Religion</th>
+                            <td>{{empPersonalInfo.religionName}}</td>
+                            <th>TIN Number</th>
+                            <td>{{empPersonalInfo.tinNo}}</td>
+                        </tr>
+                        <tr>
+                            <th>Driving License No</th>
+                            <td>{{empPersonalInfo.drivingLicenceNo}}</td>
+                            <th>Driving License Expire Date</th>
+                            <td>{{empPersonalInfo.drivingLicenceDate}}</td>
+                        </tr>
+                        <tr>
+                            <th>Passport Number</th>
+                            <td>{{empPersonalInfo.passportNo}}</td>
+                            <th>Passport Expire Date</th>
+                            <td>{{empPersonalInfo.passportExpireDate}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
+
+        <!-- Employee Job Details Information -->
+        <c-card class="shadow mb-4" *ngIf="empJobDetails">
+            <c-card-header>
+                <h5 class="text-center text-light">Employee Job Details</h5>
+            </c-card-header>
+            <c-card-body>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Office</th>
+                            <td>{{empJobDetails.officeName}}</td>
+                            <th>Joining Date</th>
+                            <td>{{empJobDetails.joiningDate}}</td>
+                        </tr>
+                        <tr>
+                            <th>Department</th>
+                            <td>{{empJobDetails.departmentName}}</td>
+                            <th>First Department</th>
+                            <td>{{empJobDetails.firstDepartmentName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Designation</th>
+                            <td>{{empJobDetails.designationName}}</td>
+                            <th>First Designation</th>
+                            <td>{{empJobDetails.firstDesignationName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Present Grade</th>
+                            <td>{{empJobDetails.presentGradeName}}</td>
+                            <th>First Grade</th>
+                            <td>{{empJobDetails.firstGradeName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Present Scale</th>
+                            <td>{{empJobDetails.presentScaleName}}</td>
+                            <th>First Scale</th>
+                            <td>{{empJobDetails.firstScaleName}}</td>
+                        </tr>
+                        <tr>
+                            <th>PRT Date</th>
+                            <td>{{empJobDetails.prlDate}}</td>
+                            <th>Retirment Date</th>
+                            <td>{{empJobDetails.retirementDate}}</td>
+                        </tr>
+                        <tr>
+                            <th>Service Status</th>
+                            <td *ngIf="empJobDetails.serviceStatus">On Service</td>
+                            <td *ngIf="!empJobDetails.serviceStatus">Out of Service</td>
+                            <th>Remark</th>
+                            <td>{{empJobDetails.remark}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
+
+        <!-- Employee Present Address Information -->
+        <c-card class="shadow mb-4" *ngIf="empPresentAddress">
+            <c-card-header>
+                <h5 class="text-center text-light">Employee Present Address Information</h5>
+            </c-card-header>
+            <c-card-body>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Country</th>
+                            <td>{{empPresentAddress.countryName}}</td>
+                            <th>Division</th>
+                            <td>{{empPresentAddress.divisionName}}</td>
+                        </tr>
+                        <tr>
+                            <th>District</th>
+                            <td>{{empPresentAddress.districtName}}</td>
+                            <th>Upazila</th>
+                            <td>{{empPresentAddress.upazilaName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Thana</th>
+                            <td>{{empPresentAddress.thanaName}}</td>
+                            <th>Union</th>
+                            <td>{{empPresentAddress.unionName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Ward</th>
+                            <td>{{empPresentAddress.wardName}}</td>
+                            <th>Zip Code</th>
+                            <td>{{empPresentAddress.zipCode}}</td>
+                        </tr>
+                        <tr>
+                            <th>Road No/Hose No</th>
+                            <td>{{empPresentAddress.address}}</td>
+                            <th>Email</th>
+                            <td>{{empPresentAddress.email}}</td>
+                        </tr>
+                        <tr>
+                            <th>Remark</th>
+                            <td>{{empPresentAddress.remark}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
+
+        <!-- Employee Permanent Address Information -->
+        <c-card class="shadow mb-4" *ngIf="empPermanentAddress">
+            <c-card-header>
+                <h5 class="text-center text-light">Employee Permanent Address Information</h5>
+            </c-card-header>
+            <c-card-body>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Country</th>
+                            <td>{{empPermanentAddress.countryName}}</td>
+                            <th>Division</th>
+                            <td>{{empPermanentAddress.divisionName}}</td>
+                        </tr>
+                        <tr>
+                            <th>District</th>
+                            <td>{{empPermanentAddress.districtName}}</td>
+                            <th>Upazila</th>
+                            <td>{{empPermanentAddress.upazilaName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Thana</th>
+                            <td>{{empPermanentAddress.thanaName}}</td>
+                            <th>Union</th>
+                            <td>{{empPermanentAddress.unionName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Ward</th>
+                            <td>{{empPermanentAddress.wardName}}</td>
+                            <th>Zip Code</th>
+                            <td>{{empPermanentAddress.zipCode}}</td>
+                        </tr>
+                        <tr>
+                            <th>Road No/Hose No</th>
+                            <td>{{empPermanentAddress.address}}</td>
+                            <th>Email</th>
+                            <td>{{empPermanentAddress.email}}</td>
+                        </tr>
+                        <tr>
+                            <th>Remark</th>
+                            <td>{{empPermanentAddress.remark}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
+
+        <!-- Employee Education Information -->
+        @if(empEducationInfo.length>0){
+        <c-card class="shadow mb-4">
+            <c-card-header>
+                <h5 class="text-center text-light">Employee Education Information</h5>
+            </c-card-header>
+            <c-card-body>
+                <table class="table" *ngFor="let item of empEducationInfo" class="mb-3">
+                    <tbody>
+                        <tr>
+                            <th>Exam Type</th>
+                            <td>{{item.examTypeName}}</td>
+                            <th>Board</th>
+                            <td>{{item.boardName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Group</th>
+                            <td>{{item.subGroupName}}</td>
+                            <th>Result</th>
+                            <td>{{item.result}}</td>
+                        </tr>
+                        <tr>
+                            <th>Duration</th>
+                            <td>{{item.courseDuration}}</td>
+                            <th>Passing Year</th>
+                            <td>{{item.passingYear}}</td>
+                        </tr>
+                        <tr>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                            <th colspan="2"></th>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </c-card-body>
+        </c-card>
+        }
+
+        <!-- Employee Spouse Information -->
+        @if(empSpouseInfo.length>0){
+        <c-card class="shadow mb-4">
+            <c-card-header>
+                <h5 class="text-center text-light">Employee Spouse Information</h5>
+            </c-card-header>
+            <c-card-body>
+                <table class="table" *ngFor="let item of empSpouseInfo" class="mb-3">
+                    <tbody>
+                        <tr>
+                            <th>Spouse Name</th>
+                            <td>{{item.spouseName}}</td>
+                            <th>Spouse Name Bangla</th>
+                            <td>{{item.spouseNameBangla}}</td>
+                        </tr>
+                        <tr>
+                            <th>Date of Birth</th>
+                            <td>{{item.dateOfBirth}}</td>
+                            <th>Birth Registration No</th>
+                            <td>{{item.birthRegNo}}</td>
+                        </tr>
+                        <tr>
+                            <th>Occupation</th>
+                            <td>{{item.occupationName}}</td>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </c-card-body>
+        </c-card>
+        }
+
+        <!-- Employee Child Information -->
+        @if(empChildInfo.length>0){
+        <c-card class="shadow mb-4">
+            <c-card-header>
+                <h5 class="text-center text-light">Employee Child Information</h5>
+            </c-card-header>
+            <c-card-body>
+                <table class="table" *ngFor="let item of empChildInfo" class="mb-3">
+                    <tbody>
+                        <tr>
+                            <th>Child Name</th>
+                            <td>{{item.childName}}</td>
+                            <th>Child Name Bangla</th>
+                            <td>{{item.childNameBangla}}</td>
+                        </tr>
+                        <tr>
+                            <th>Date of Birth</th>
+                            <td>{{item.dateOfBirth}}</td>
+                            <th>Birth Registration No</th>
+                            <td>{{item.birthRegNo}}</td>
+                        </tr>
+                        <tr>
+                            <th>Gender</th>
+                            <td>{{item.genderName}}</td>
+                            <th>Occupation</th>
+                            <td>{{item.occupationName}}</td>
+                        </tr>
+                        <tr>
+                            <th>NID</th>
+                            <td>{{item.nid}}</td>
+                            <th>Marital Status</th>
+                            <td>{{item.maritalStatusName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Child Status</th>
+                            <td>{{item.childStatusName}}</td>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </c-card-body>
+        </c-card>
+        }
+
+        <!-- Employee Psi and Training Information -->
+        @if(empPsiTrainingInfo.length>0){
+        <c-card class="shadow mb-4">
+            <c-card-header>
+                <h5 class="text-center text-light">Employee Psi and Training Information</h5>
+            </c-card-header>
+            <c-card-body>
+                <table class="table" *ngFor="let item of empPsiTrainingInfo" class="mb-3">
+                    <tbody>
+                        <tr>
+                            <th>Training Name</th>
+                            <td>{{item.trainingName}}</td>
+                            <th>Work Purpose</th>
+                            <td>{{item.workPurpose}}</td>
+                        </tr>
+                        <tr>
+                            <th>From Date</th>
+                            <td>{{item.fromDate}}</td>
+                            <th>To Date</th>
+                            <td>{{item.toDate}}</td>
+                        </tr>
+                        <tr>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                            <th colspan="2"></th>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </c-card-body>
+        </c-card>
+        }
+
+        <!-- Employee Bank Information -->
+        @if(empBankInfo.length>0){
+        <c-card class="shadow mb-4">
+            <c-card-header>
+                <h5 class="text-center text-light">Employee Bank Information</h5>
+            </c-card-header>
+            <c-card-body>
+                <table class="table" *ngFor="let item of empBankInfo" class="mb-3">
+                    <tbody>
+                        <tr>
+                            <th>Account Name</th>
+                            <td>{{item.accountName}}</td>
+                            <th>Account Number</th>
+                            <td>{{item.accountNumber}}</td>
+                        </tr>
+                        <tr>
+                            <th>Account Type</th>
+                            <td>{{item.accountTypeName}}</td>
+                            <th>Bank Name</th>
+                            <td>{{item.bankName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Branch Name</th>
+                            <td>{{item.branchName}}</td>
+                            <th>Routing No</th>
+                            <td>{{item.routingNo}}</td>
+                        </tr>
+                        <tr>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                            <th colspan="2"></th>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </c-card-body>
+        </c-card>
+        }
+
+        <!-- Employee Language Information -->
+        @if(empLanguageInfo.length>0){
+        <c-card class="shadow mb-4">
+            <c-card-header>
+                <h5 class="text-center text-light">Employee Language Information</h5>
+            </c-card-header>
+            <c-card-body>
+                <table class="table" *ngFor="let item of empLanguageInfo" class="mb-3">
+                    <tbody>
+                        <tr>
+                            <th>Language Name</th>
+                            <td>{{item.languageName}}</td>
+                            <th>Competence</th>
+                            <td>{{item.competenceName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                            <th colspan="2"></th>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </c-card-body>
+        </c-card>
+        }
+
+        <!-- Employee Foreign Tour Information -->
+        @if(empForeignTourInfo.length>0){
+        <c-card class="shadow mb-4">
+            <c-card-header>
+                <h5 class="text-center text-light">Employee Foreign Tour Information</h5>
+            </c-card-header>
+            <c-card-body>
+                <table class="table" *ngFor="let item of empForeignTourInfo" class="mb-3">
+                    <tbody>
+                        <tr>
+                            <th>Country Name</th>
+                            <td>{{item.countryName}}</td>
+                            <th>Purpose</th>
+                            <td>{{item.purpose}}</td>
+                        </tr>
+                        <tr>
+                            <th>From Date</th>
+                            <td>{{item.fromDate}}</td>
+                            <th>To Date</th>
+                            <td>{{item.toDate}}</td>
+                        </tr>
+                        <tr>
+                            <th>Remark</th>
+                            <td>{{item.remark}}</td>
+                            <th colspan="2"></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </c-card-body>
+        </c-card>
+        }
+
+    </c-card-body>
+</c-card>

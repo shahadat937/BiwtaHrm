@@ -129,49 +129,37 @@
                     </c-col>
 
                     <c-col [md]="3">
-                        <label cLabel for="validationCustom08">Union<span class="text-danger"></span></label>
-                        <div class="input-wrapper">
-                            <select
-                                (change)="onPresentAddressWardNamesChangeByUnionId(empPresentAddressService.empPresentAddress.unionId)"
-                                [(ngModel)]="empPresentAddressService.empPresentAddress.unionId" name="unionId"
-                                #unionId="ngModel" cFormControl id="validationCustom08"
-                                aria-label="Default select example" cSelect>
-                                <option [ngValue]="null">Select Union</option>
-
-                                @for(union of presentAddressunions; track union.id;let index=$index) {
-                                <option [value]="union.id">
-                                    {{ union.name }}
-                                </option>
-                                }
-                            </select>
-
-                            @if(!unionId.valid && unionId.touched){
-                            <div class="text-left text-danger">Union is required</div>
-                            }
-                        </div>
+                        <label cLabel for="unionName"
+                        >Union<span class="text-danger"></span></label>
+                        <input
+                          [(ngModel)]="empPresentAddressService.empPresentAddress.unionName"
+                          name="unionName"
+                          #unionName="ngModel"
+                          placeholder="Enter Union Name"
+                          cFormControl
+                          id="unionName"
+                          type="text"
+                        />
+                        @if(!unionName.valid&&unionName.touched&&unionName.value){
+                        <div class="text-left text-danger">Union Name Required</div>
+                        }
                     </c-col>
-
-
-
+                    
                     <c-col [md]="3">
-                        <label cLabel for="validationCustom09">Ward<span class="text-danger"></span></label>
-                        <div class="input-wrapper">
-                            <select [(ngModel)]="empPresentAddressService.empPresentAddress.wardId" name="wardId"
-                                #wardId="ngModel" cFormControl id="validationCustom09"
-                                aria-label="Default select example" cSelect>
-                                <option [ngValue]="null">Select Ward</option>
-
-                                @for(ward of presentAddresswards; track ward.id;let index=$index) {
-                                <option [value]="ward.id">
-                                    {{ ward.name }}
-                                </option>
-                                }
-                            </select>
-
-                            @if(!wardId.valid && wardId.touched){
-                            <div class="text-left text-danger">Ward is required</div>
-                            }
-                        </div>
+                    <label cLabel for="wardName"
+                    >Ward<span class="text-danger"></span></label>
+                    <input
+                        [(ngModel)]="empPresentAddressService.empPresentAddress.wardName"
+                        name="wardName"
+                        #wardName="ngModel"
+                        placeholder="Enter Ward Name"
+                        cFormControl
+                        id="wardName"
+                        type="text"
+                    />
+                    @if(!wardName.valid&&wardName.touched&&wardName.value){
+                    <div class="text-left text-danger">Ward Name Required</div>
+                    }
                     </c-col>
 
                     <c-col [md]="3">
@@ -359,6 +347,27 @@
                     </c-col>
 
                     <c-col [md]="3">
+                        <label cLabel for="unionName">Union<span class="text-danger"></span></label>
+                        <input [(ngModel)]="empPermanentAddressService.empPermanentAddress.unionName" name="unionName" #unionName="ngModel"
+                          placeholder="Enter Union Name" cFormControl id="unionName" type="text" 
+                          [class.readonly-select]="sameAsPresentAddress" />
+                        @if(!unionName.valid&&unionName.touched&&unionName.value){
+                          <div class="text-left text-danger">Ward Name Required</div>
+                        }
+                      </c-col>
+                
+                      
+                      <c-col [md]="3">
+                        <label cLabel for="wardName">Ward<span class="text-danger"></span></label>
+                        <input [(ngModel)]="empPermanentAddressService.empPermanentAddress.wardName" name="wardName" #wardName="ngModel"
+                          placeholder="Enter Ward Name" cFormControl id="wardName" type="text" pattern="[0-9]*"
+                          [class.readonly-select]="sameAsPresentAddress" />
+                        @if(!wardName.valid&&wardName.touched&&wardName.value){
+                          <div class="text-left text-danger">Ward Name Required</div>
+                        }
+                      </c-col>
+
+                    <!-- <c-col [md]="3">
                         <label cLabel for="validationCustom08">Union<span class="text-danger"></span></label>
                         <div class="input-wrapper">
                             <select
@@ -404,7 +413,7 @@
                             <div class="text-left text-danger">Ward is required</div>
                             }
                         </div>
-                    </c-col>
+                    </c-col> -->
 
                     <c-col [md]="3">
                         <label cLabel for="zipCode">Zip Code<span class="text-danger"></span></label>

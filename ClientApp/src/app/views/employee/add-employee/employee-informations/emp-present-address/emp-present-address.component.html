@@ -119,8 +119,42 @@
               }
             </div>
           </c-col>
-    
+
           <c-col [md]="3">
+            <label cLabel for="unionName"
+            >Union<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="empPresentAddressService.empPresentAddress.unionName"
+              name="unionName"
+              #unionName="ngModel"
+              placeholder="Enter Union Name"
+              cFormControl
+              id="unionName"
+              type="text"
+            />
+            @if(!unionName.valid&&unionName.touched&&unionName.value){
+            <div class="text-left text-danger">Union Name Required</div>
+            }
+          </c-col>
+          
+          <c-col [md]="3">
+            <label cLabel for="wardName"
+            >Ward<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="empPresentAddressService.empPresentAddress.wardName"
+              name="wardName"
+              #wardName="ngModel"
+              placeholder="Enter Ward Name"
+              cFormControl
+              id="wardName"
+              type="text"
+            />
+            @if(!wardName.valid&&wardName.touched&&wardName.value){
+            <div class="text-left text-danger">Ward Name Required</div>
+            }
+          </c-col>
+    
+          <!-- <c-col [md]="3">
             <label cLabel for="validationCustom08">Union<span class="text-danger"></span></label>
             <div class="input-wrapper">
               <select (change)="onWardNamesChangeByUnionId(empPresentAddressService.empPresentAddress.unionId)"
@@ -161,7 +195,7 @@
               <div class="text-left text-danger">Ward is required</div>
               }
             </div>
-          </c-col>
+          </c-col> -->
   
           <c-col [md]="3">
             <label cLabel for="zipCode"

@@ -83,8 +83,8 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
         res.divisionId ? this.onPresentAddressDistrictNamesChangeByDivisionId(res.divisionId) : null;
         res.districtId ? this.onPresentAddressUpazilaNamesChangeByDistrictId(res.districtId) : null;
         res.upazilaId ? this.onPresentAddressThanaNamesChangeByUpazilaId(res.upazilaId) : null;
-        res.thanaId ? this.onPresentAddressUnionNamesChangeByThanaId(res.thanaId) : null;
-        res.unionId ? this.onPresentAddressWardNamesChangeByUnionId(res.unionId) : null;
+        // res.thanaId ? this.onPresentAddressUnionNamesChangeByThanaId(res.thanaId) : null;
+        // res.unionId ? this.onPresentAddressWardNamesChangeByUnionId(res.unionId) : null;
         this.EmpPresentAddressForm?.form.patchValue(res);
         this.headerText = 'Update Present Address';
         this.btnText = 'Update';
@@ -102,8 +102,8 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
         res.divisionId ? this.onPermanentAddressDistrictNamesChangeByDivisionId(res.divisionId) : null;
         res.districtId ? this.onPermanentAddressUpazilaNamesChangeByDistrictId(res.districtId) : null;
         res.upazilaId ? this.onPermanentAddressThanaNamesChangeByUpazilaId(res.upazilaId) : null;
-        res.thanaId ? this.onPermanentAddressUnionNamesChangeByThanaId(res.thanaId) : null;
-        res.unionId ? this.onPermanentAddressWardNamesChangeByUnionId(res.unionId) : null;
+        // res.thanaId ? this.onPermanentAddressUnionNamesChangeByThanaId(res.thanaId) : null;
+        // res.unionId ? this.onPermanentAddressWardNamesChangeByUnionId(res.unionId) : null;
         this.EmpPermanentAddressForm?.form.patchValue(res);
       }
       else {
@@ -121,8 +121,8 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
       districtId: null,
       upazilaId: null,
       thanaId: null,
-      unionId: null,
-      wardId: null,
+      // unionId: null,
+      // wardId: null,
       zipCode: null,
       address: "",
       email: "",
@@ -148,8 +148,6 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
       districtId: null,
       upazilaId: null,
       thanaId: null,
-      unionId: null,
-      wardId: null,
       zipCode: null,
       address: "",
       email: "",
@@ -188,12 +186,12 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
       if(this.EmpPresentAddressForm.form.value.upazilaId){
         this.onPermanentAddressThanaNamesChangeByUpazilaId(this.EmpPresentAddressForm.form.value.upazilaId);
       }
-      if(this.EmpPresentAddressForm.form.value.thanaId){
-        this.onPermanentAddressUnionNamesChangeByThanaId(this.EmpPresentAddressForm.form.value.thanaId);
-      }
-      if(this.EmpPresentAddressForm.form.value.unionId){
-        this.onPermanentAddressWardNamesChangeByUnionId(this.EmpPresentAddressForm.form.value.unionId);
-      }
+      // if(this.EmpPresentAddressForm.form.value.thanaId){
+      //   this.onPermanentAddressUnionNamesChangeByThanaId(this.EmpPresentAddressForm.form.value.thanaId);
+      // }
+      // if(this.EmpPresentAddressForm.form.value.unionId){
+      //   this.onPermanentAddressWardNamesChangeByUnionId(this.EmpPresentAddressForm.form.value.unionId);
+      // }
       
       this.EmpPermanentAddressForm.form.patchValue(formData);
     } else {

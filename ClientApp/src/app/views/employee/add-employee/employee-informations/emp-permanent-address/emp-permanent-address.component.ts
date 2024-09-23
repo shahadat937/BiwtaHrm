@@ -70,14 +70,13 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
 
   getEmployeeByEmpId() {
     this.empPermanentAddressService.findByEmpId(this.empId).subscribe((res) => {
-      console.log(res)
       if (res) {
         this.onDivisionNamesChangeByCounterId(res.countryId);
         this.onDistrictNamesChangeByDivisionId(res.divisionId);
         this.onUpazilaNamesChangeByDistrictId(res.districtId);
         this.onThanaNamesChangeByUpazilaId(res.upazilaId);
-        this.onUnionNamesChangeByThanaId(res.thanaId);
-        this.onWardNamesChangeByUnionId(res.unionId);
+        // this.onUnionNamesChangeByThanaId(res.thanaId);
+        // this.onWardNamesChangeByUnionId(res.unionId);
         this.EmpPermanentAddressForm?.form.patchValue(res);
         this.headerText = 'Update Permanent Address';
         this.btnText = 'Update';
@@ -101,8 +100,8 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
       districtId: null,
       upazilaId: null,
       thanaId: null,
-      unionId: null,
-      wardId: null,
+      // unionId: null,
+      // wardId: null,
       zipCode: null,
       address: "",
       email: "",
@@ -148,8 +147,8 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
         this.onDistrictNamesChangeByDivisionId(formData.divisionId);
         this.onUpazilaNamesChangeByDistrictId(formData.districtId);
         this.onThanaNamesChangeByUpazilaId(formData.upazilaId);
-        this.onUnionNamesChangeByThanaId(formData.thanaId);
-        this.onWardNamesChangeByUnionId(formData.unionId);
+        // this.onUnionNamesChangeByThanaId(formData.thanaId);
+        // this.onWardNamesChangeByUnionId(formData.unionId);
         this.EmpPermanentAddressForm?.form.patchValue(formData);
       }
     })

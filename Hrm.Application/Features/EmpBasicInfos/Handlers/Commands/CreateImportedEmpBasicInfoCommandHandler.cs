@@ -64,7 +64,7 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Commands
                     {
                         Id = 0,
                         EmpId = EmpBasicInfoDto.Id,
-                        ShiftId = 1,
+                        ShiftId = item.ShiftId,
                         IsActive = true
                     };
                     var empShiftAssigned = _mapper.Map<EmpShiftAssign>(empShiftAssignDto);

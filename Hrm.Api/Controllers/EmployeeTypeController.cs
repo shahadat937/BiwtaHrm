@@ -35,6 +35,15 @@ namespace Hrm.Api.Controllers
             var EmployeeType = await _mediator.Send(new GetEmployeeTypeRequest { });
             return Ok(EmployeeType);
         }
+
+        [HttpGet]
+        [Route("get-firstEmployeeTypeId")]
+        public async Task<ActionResult> GetFirstEmployeeTypeId()
+        {
+            var EmployeeType = await _mediator.Send(new GetFirstEmployeeTypeIdRequest { });
+            return Ok(EmployeeType);
+        }
+
         [HttpGet]
         [Route("get-employeeTypeById/{id}")]
         public async Task<ActionResult<EmployeeTypeDto>> Get(int id)

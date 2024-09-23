@@ -84,6 +84,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { Table, TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { UploadEmpBasicInfoComponent } from './add-employee/upload-emp-basic-info/upload-emp-basic-info.component';
+import { EmpProfileComponent } from './manage-employee/emp-profile/emp-profile.component';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -114,6 +115,7 @@ import { UploadEmpBasicInfoComponent } from './add-employee/upload-emp-basic-inf
     UpdateEmpShiftComponent,
     ViewEmployeePrimeNgComponent,
     UploadEmpBasicInfoComponent,
+    EmpProfileComponent,
   ],
   imports: [
     CommonModule,

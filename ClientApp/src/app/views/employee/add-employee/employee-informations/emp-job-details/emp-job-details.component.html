@@ -176,7 +176,9 @@
                 <label cLabel for="firstDepartmentId">First Department<span class="text-danger"></span></label>
                 <div class="input-wrapper">
                 <select 
-                    [(ngModel)]="empJobDetailsService.empJobDetails.firstDepartmentId" name="firstDepartmentId" #firstDepartmentId="ngModel" (change)="getOldDesignationByDepartment(empJobDetailsService.empJobDetails.firstDepartmentId)"
+                    [(ngModel)]="empJobDetailsService.empJobDetails.firstDepartmentId" name="firstDepartmentId" #firstDepartmentId="ngModel"
+                    (change)="onOfficeAndDepartmentSelectFirstSection(empJobDetailsService.empJobDetails.firstDepartmentId)"
+                    (change)="getOldDesignationByDepartment(empJobDetailsService.empJobDetails.firstDepartmentId)"
                     cFormControl id="firstDepartmentId" aria-label="Default select example" cSelect>
                     <option [ngValue]="null">Select First Department</option>
         
@@ -188,6 +190,26 @@
                 </select>
                 @if(!firstDepartmentId.valid && firstDepartmentId.touched){
                 <div class="text-left text-danger">First Department is required</div>
+                }
+                </div>
+            </c-col>
+
+            <c-col [md]="3" [hidden]="firstSectionView == false">
+                <label cLabel for="firstSectionId">First Section<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                <select (change)="getOldDesignationBySection(empJobDetailsService.empJobDetails.firstSectionId)"
+                    [(ngModel)]="empJobDetailsService.empJobDetails.firstSectionId" name="firstSectionId" #firstSectionId="ngModel"
+                    cFormControl id="firstSectionId" aria-label="Default select example" cSelect>
+                    <option [ngValue]="null">Select First Section</option>
+        
+                    @for(section of firstSections; track section.id;let index=$index) {
+                    <option [value]="section.id">
+                    {{ section.name }}
+                    </option>
+                    }
+                </select>
+                @if(!firstSectionId.valid && firstSectionId.touched){
+                <div class="text-left text-danger">Section is required</div>
                 }
                 </div>
             </c-col>

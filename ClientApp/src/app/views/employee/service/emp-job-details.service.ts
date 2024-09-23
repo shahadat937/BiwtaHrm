@@ -48,6 +48,9 @@ export class EmpJobDetailsService {
   getOldDesignationByDepartment(id : number){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationByDepartmentId/' + id);
   }
+  getOldDesignationBySection(id : number){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationBySectionId/' + id);
+  }
   
   getSelectedSection(){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/section/get-selectedSection');

@@ -568,6 +568,27 @@ namespace Hrm.Persistence
                     .WithMany(eb => eb.EmpJobDetail)
                     .HasForeignKey(e => e.PresentScaleId);
 
+
+                entity.HasOne(e => e.FirstDepartment)
+                    .WithMany(eb => eb.FirstEmpJobDetail)
+                    .HasForeignKey(e => e.FirstDepartmentId);
+
+                entity.HasOne(e => e.FirstDesignation)
+                    .WithMany(eb => eb.FirstEmpJobDetail)
+                    .HasForeignKey(e => e.FirstDesignationId);
+
+                entity.HasOne(e => e.FirstSection)
+                    .WithMany(eb => eb.FirstEmpJobDetail)
+                    .HasForeignKey(e => e.FirstSectionId);
+
+                entity.HasOne(e => e.FirstGrade)
+                    .WithMany(eb => eb.FirstEmpJobDetail)
+                    .HasForeignKey(e => e.FirstGradeId);
+
+                entity.HasOne(e => e.FirstScale)
+                    .WithMany(eb => eb.FirstEmpJobDetail)
+                    .HasForeignKey(e => e.FirstScaleId);
+
             });
 
             modelBuilder.Entity<EmpSpouseInfo>(entity =>

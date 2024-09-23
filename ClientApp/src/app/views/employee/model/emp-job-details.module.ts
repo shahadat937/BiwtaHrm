@@ -12,6 +12,7 @@ export class EmpJobDetailsModule {
   firstGradeId: any;
   firstScaleId: any;
   firstDepartmentId: any;
+  firstSectionId: any;
   firstDesignationId: any;
   prlDate:  Date | null;
   retirementDate:  Date | null;
@@ -28,6 +29,7 @@ export class EmpJobDetailsModule {
   presentGradeName: string = '';
   presentScaleName: string = '';
   firstDepartmentName: string = '';
+  firstSectionName: string = '';
   firstDesignationName: string = '';
   firstGradeName: string = '';
   firstScaleName: string = '';
@@ -46,6 +48,7 @@ export class EmpJobDetailsModule {
     this.firstGradeId= null;
     this.firstScaleId= null;
     this.firstDepartmentId= null;
+    this.firstSectionId= null;
     this.firstDesignationId= null;
     this.prlDate = null;
     this.retirementDate = null;

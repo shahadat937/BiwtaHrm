@@ -21,6 +21,7 @@ namespace Hrm.Application.DTOs.EmpJobDetail
         public int? FirstGradeId { get; set; }
         public int? FirstScaleId { get; set; }
         public int? FirstDepartmentId { get; set; }
+        public int? FirstSectionId { get; set; }
         public int? FirstDesignationId { get; set; }
         public DateOnly? PRLDate { get; set; }
         public DateOnly? RetirementDate { get; set; }

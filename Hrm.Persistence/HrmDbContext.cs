@@ -1240,6 +1240,7 @@ namespace Hrm.Persistence
         public virtual DbSet<RewardPunishmentPriority> RewardPunishmentPriority { get; set; } = null!;
         public virtual DbSet<EmpRewardPunishment> EmpRewardPunishment { get; set; } = null!;
         public virtual DbSet<CancelledWeekend> CancelledWeekend { get; set; } = null!;
+        public virtual DbSet<ResponsibilityType> ResponsibilityType { get; set; } = null!;
 
     }
 }

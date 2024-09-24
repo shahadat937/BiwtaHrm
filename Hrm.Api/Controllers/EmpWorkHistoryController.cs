@@ -10,7 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpWorkHistory)]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class EmpWorkHistoryController : ControllerBase
     {
         private readonly IMediator _mediator;

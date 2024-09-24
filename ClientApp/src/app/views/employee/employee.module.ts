@@ -85,6 +85,7 @@ import { Table, TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { UploadEmpBasicInfoComponent } from './add-employee/upload-emp-basic-info/upload-emp-basic-info.component';
 import { EmpProfileComponent } from './manage-employee/emp-profile/emp-profile.component';
+import { EmpWorkHistoryComponent } from './add-employee/employee-informations/emp-work-history/emp-work-history.component';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -116,6 +117,7 @@ import { EmpProfileComponent } from './manage-employee/emp-profile/emp-profile.c
     ViewEmployeePrimeNgComponent,
     UploadEmpBasicInfoComponent,
     EmpProfileComponent,
+    EmpWorkHistoryComponent,
   ],
   imports: [
     CommonModule,

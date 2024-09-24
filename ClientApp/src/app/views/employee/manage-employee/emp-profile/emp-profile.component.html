@@ -24,7 +24,7 @@
                             <tr>
                                 <th>Email</th>
                                 <td *ngIf="empPersonalInfo?.email; else emptyText">
-                                    : {{ empPersonalInfo.email }}
+                                    {{ empPersonalInfo.email }}
                                 </td>
                                 <ng-template #emptyText>
                                     <td></td>
@@ -33,7 +33,7 @@
                             <tr>
                                 <th>Mobile</th>
                                 <td *ngIf="empPersonalInfo?.mobileNumber; else emptyText">
-                                    : {{ empPersonalInfo.mobileNumber }}
+                                    {{ empPersonalInfo.mobileNumber }}
                                 </td>
                                 <ng-template #emptyText>
                                     <td></td>
@@ -48,13 +48,13 @@
                         <p><b>Current Position</b></p>
                         <hr/>
                         <p *ngIf="empJobDetails?.designationName; else emptyText">
-                            : {{ empJobDetails.designationName }}
+                            {{ empJobDetails.designationName }}
                           </p>
                         <ng-template #emptyText>
                             <p></p>
                         </ng-template>
                         <p *ngIf="empJobDetails?.departmentName; else emptyText">
-                            : {{ empJobDetails.departmentName }}
+                            {{ empJobDetails.departmentName }}
                           </p>
                         <ng-template #emptyText>
                         <p></p>

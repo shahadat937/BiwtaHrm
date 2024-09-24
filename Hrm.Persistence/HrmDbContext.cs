@@ -1096,6 +1096,31 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.RewardPunishmentPriorityId);
             });
 
+            modelBuilder.Entity<EmpWorkHistory>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(e => e.EmpWorkHistory)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.Office)
+                    .WithMany(e => e.EmpWorkHistory)
+                    .HasForeignKey(e => e.OfficeId);
+
+                entity.HasOne(e => e.Department)
+                    .WithMany(e => e.EmpWorkHistory)
+                    .HasForeignKey(e => e.DepartmentId);
+
+                entity.HasOne(e => e.Section)
+                    .WithMany(e => e.EmpWorkHistory)
+                    .HasForeignKey(e => e.SectionId);
+
+                entity.HasOne(e => e.Designation)
+                    .WithMany(e => e.EmpWorkHistory)
+                    .HasForeignKey(e => e.DesignationId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;

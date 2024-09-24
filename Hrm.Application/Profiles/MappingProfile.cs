@@ -113,6 +113,7 @@ using Hrm.Application.DTOs.RewardPunishmentPriority;
 using Hrm.Application.DTOs.CancelledWeekend;
 using Hrm.Application.DTOs.EmpRewardPunishment;
 using Hrm.Application.DTOs.EmpWorkHistory;
+using Hrm.Application.DTOs.ResponsibilityType;
 
 
 
@@ -647,6 +648,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpWorkHistory, EmpWorkHistoryDto>().ReverseMap();
             CreateMap<EmpWorkHistory, CreateEmpWorkHistoryDto>().ReverseMap();
+
+            CreateMap<ResponsibilityType, ResponsibilityTypeDto>().ReverseMap();
+            CreateMap<ResponsibilityType, CreateResponsibilityTypeDto>().ReverseMap();
 
         }
     }

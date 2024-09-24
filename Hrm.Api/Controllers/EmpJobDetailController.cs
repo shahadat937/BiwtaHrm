@@ -10,7 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpJobDetail)]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class EmpJobDetailController : ControllerBase
     {
         private readonly IMediator _mediator;

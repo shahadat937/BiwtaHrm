@@ -22,6 +22,7 @@ namespace Hrm.Domain
         public int? FirstGradeId { get; set; }
         public int? FirstScaleId { get; set; }
         public int? FirstDepartmentId { get; set; }
+        public int? FirstSectionId { get; set; }
         public int? FirstDesignationId { get; set; }
         public DateOnly? PRLDate { get; set; }
         public DateOnly? RetirementDate { get; set; }
@@ -38,6 +39,7 @@ namespace Hrm.Domain
         public virtual Grade? PresentGrade { get; set; }
         public virtual Scale? PresentScale { get; set; }
         public virtual Department? FirstDepartment { get; set; }
+        public virtual Section? FirstSection { get; set; }
         public virtual Designation? FirstDesignation { get; set; }
         public virtual Grade? FirstGrade { get; set; }
         public virtual Scale? FirstScale { get; set; }

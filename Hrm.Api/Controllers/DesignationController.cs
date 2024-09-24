@@ -92,6 +92,15 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
+        [Route("get-selectedDesignationBySectionId/{id}")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedDesignationBySectionId(int id)
+        {
+            var branch = await _mediator.Send(new GetDesignationBySectionIdRequest { SectionId = id });
+            return Ok(branch);
+
+        }
+
+        [HttpGet]
         [Route("get-designationByOfficeId/{id}")]
         public async Task<ActionResult<DesignationDto>> GetDesignationByOfficeId(int id)
         {

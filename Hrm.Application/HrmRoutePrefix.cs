@@ -129,5 +129,6 @@ namespace Hrm.Application
         public const string CancelledWeekend = HRMRoutePrefixBase + "cancelledWeekend";
 
         public const string EmpRewardPunishment = HRMRoutePrefixBase + "empRewardPunishment";
+        public const string EmpWorkHistory = HRMRoutePrefixBase + "empWorkHistory";
     }
 }

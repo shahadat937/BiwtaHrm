@@ -84,7 +84,7 @@ export class EmpProfileComponent  implements OnInit {
       const currentUserString = localStorage.getItem('currentUser');
       const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
       this.id = currentUserJSON.empId;
-      if(currentUserJSON.empId) {
+      if(this.id != null) {
         this.handleRouteParams();
       }
       else {

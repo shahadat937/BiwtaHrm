@@ -26,6 +26,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   departments: SelectedModel[] = [];
   designations: SelectedModel[] = [];
   firstDepartments: SelectedModel[] = [];
+  firstSections: SelectedModel[] = [];
   firstDesignations: SelectedModel[] = [];
   firstScale: SelectedModel[] = [];
   countris: SelectedModel[] = [];
@@ -34,6 +35,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   sections: SelectedModel[] = [];
   empJobDetailsId: number = 0;
   sectionView: boolean = false;
+  firstSectionView: boolean = false;
   subscription: Subscription = new Subscription();
   loading: boolean = false;
   @ViewChild('EmpJobDetailsForm', { static: true }) EmpJobDetailsForm!: NgForm;
@@ -85,10 +87,14 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
         if(res.firstGradeId){
           this.onChangeFirstGradeGetFirstScale(res.firstGradeId);
         }
-        if(res.firstDepartmentId){
+        if(res.firstSectionId){
+          this.getOldDesignationBySection(res.firstSectionId);
+        }
+        else if(res.firstDepartmentId){
           this.getOldDesignationByDepartment(res.firstDepartmentId);
         }
         this.onOfficeAndDepartmentSelect(res.departmentId);
+        this.onOfficeAndDepartmentSelectFirstSection(res.firstDepartmentId);
         this.EmpJobDetailsForm?.form.patchValue(res);
         this.headerText = 'Update Job Details';
         this.btnText = 'Update';
@@ -118,6 +124,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       firstGradeId: null,
       firstScaleId: null,
       firstDepartmentId: null,
+      firstSectionId: null,
       firstDesignationId: null,
       prlDate: null,
       retirementDate: null,
@@ -134,6 +141,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       presentGradeName: '',
       presentScaleName: '',
       firstDepartmentName: '',
+      firstSectionName: '',
       firstDesignationName: '',
       firstGradeName: '',
       firstScaleName: '',
@@ -155,6 +163,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       firstGradeId: null,
       firstScaleId: null,
       firstDepartmentId: null,
+      firstSectionId: null,
       firstDesignationId: null,
       prlDate: null,
       retirementDate: null,
@@ -181,6 +190,19 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       }
       else{
         this.sectionView = false;
+      }
+    });
+  }
+  
+  onOfficeAndDepartmentSelectFirstSection(departmentId : number){
+    this.empJobDetailsService.empJobDetails.sectionId = null;
+    this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
+      this.firstSections = res;
+      if(res.length>0){
+        this.firstSectionView = true;
+      }
+      else{
+        this.firstSectionView = false;
       }
     });
   }
@@ -240,7 +262,15 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   getOldDesignationByDepartment(departmentId: number) {
     this.firstDesignations = [];
     this.empJobDetailsService.empJobDetails.firstDesignationId = null;
+    this.empJobDetailsService.empJobDetails.firstSectionId = null;
     this.empJobDetailsService.getOldDesignationByDepartment(departmentId).subscribe((res) => {
+      this.firstDesignations = res;
+    });
+  }
+  getOldDesignationBySection(sectionId: number){
+    this.firstDesignations = [];
+    this.empJobDetailsService.empJobDetails.firstDesignationId = null;
+    this.empJobDetailsService.getOldDesignationBySection(sectionId).subscribe((res) => {
       this.firstDesignations = res;
     });
   }

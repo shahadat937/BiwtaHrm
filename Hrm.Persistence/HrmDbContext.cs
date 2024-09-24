@@ -1121,6 +1121,35 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.DesignationId);
             });
 
+            modelBuilder.Entity<EmpOtherResponsibility>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(e => e.EmpOtherResponsibility)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.ResponsibilityType)
+                    .WithMany(e => e.EmpOtherResponsibility)
+                    .HasForeignKey(e => e.EmpOtherResponsibilityId);
+
+                entity.HasOne(e => e.Office)
+                    .WithMany(e => e.EmpOtherResponsibility)
+                    .HasForeignKey(e => e.OfficeId);
+
+                entity.HasOne(e => e.Department)
+                    .WithMany(e => e.EmpOtherResponsibility)
+                    .HasForeignKey(e => e.DepartmentId);
+
+                entity.HasOne(e => e.Section)
+                    .WithMany(e => e.EmpOtherResponsibility)
+                    .HasForeignKey(e => e.SectionId);
+
+                entity.HasOne(e => e.Designation)
+                    .WithMany(e => e.EmpOtherResponsibility)
+                    .HasForeignKey(e => e.DesignationId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -1241,6 +1270,7 @@ namespace Hrm.Persistence
         public virtual DbSet<EmpRewardPunishment> EmpRewardPunishment { get; set; } = null!;
         public virtual DbSet<CancelledWeekend> CancelledWeekend { get; set; } = null!;
         public virtual DbSet<ResponsibilityType> ResponsibilityType { get; set; } = null!;
+        public virtual DbSet<EmpOtherResponsibility> EmpOtherResponsibility { get; set; } = null!;
 
     }
 }

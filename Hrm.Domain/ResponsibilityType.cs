@@ -14,5 +14,6 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public string? Remark { get; set; }
         public bool IsActive { get; set; }
+        public virtual ICollection<EmpOtherResponsibility>? EmpOtherResponsibility { get; set; }
     }
 }

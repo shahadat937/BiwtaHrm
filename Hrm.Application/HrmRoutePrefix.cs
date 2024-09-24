@@ -131,5 +131,6 @@ namespace Hrm.Application
         public const string EmpRewardPunishment = HRMRoutePrefixBase + "empRewardPunishment";
         public const string EmpWorkHistory = HRMRoutePrefixBase + "empWorkHistory";
         public const string ResponsibilityType = HRMRoutePrefixBase + "responsibilityType";
+        public const string EmpOtherResponsibility = HRMRoutePrefixBase + "empOtherResponsibility";
     }
 }

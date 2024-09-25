@@ -7,6 +7,7 @@ import { ManageEmployeeService } from '../../service/manage-employee.service';
 import { cilZoom, cilPlus } from '@coreui/icons';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EmployeeInformationComponent } from '../employee-information/employee-information.component';
+import { EmpProfileComponent } from '../emp-profile/emp-profile.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -71,6 +72,13 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       clickedButton: clickedButton
     };
     const modalRef: BsModalRef = this.modalService.show(EmployeeInformationComponent, { initialState, backdrop: 'static' });
+  }
+  
+  viewEmployeeProfile(id: number){
+    const initialState = {
+      id: id
+    };
+    const modalRef: BsModalRef = this.modalService.show(EmpProfileComponent, { initialState, class: 'modal-lg' });
   }
 
 }

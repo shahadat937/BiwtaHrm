@@ -160,7 +160,7 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
 
                 if (this.empWorkHistoryListArray.controls.length > 0)
                   this.empWorkHistoryListArray.removeAt(index);
-                this.getEmployeeWorkHistoryInfoByEmpId();
+                // this.getEmployeeWorkHistoryInfoByEmpId();
               },
               (err) => {
                 this.toastr.error('Somethig Wrong ! ', ` `, {
@@ -197,6 +197,9 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
   onDepartmentSelect(event: Event, index: number) {
     const selectElement = event.target as HTMLSelectElement;
     const departmentId = selectElement?.value ? +selectElement.value : null;
+
+    this.empWorkHistoryListArray.at(index).get('sectionId')?.setValue(null);
+    this.empWorkHistoryListArray.at(index).get('designationId')?.setValue(null);
   
     if (departmentId) {
       this.designationOptions[index] = [];
@@ -215,6 +218,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
   onSectionSelect(event: Event, index: number) {
     const selectElement = event.target as HTMLSelectElement;
     const sectionId = selectElement?.value ? +selectElement.value : null;
+    
+    this.empWorkHistoryListArray.at(index).get('designationId')?.setValue(null);
   
     if (sectionId) {
       this.empJobDetailsService.getOldDesignationBySection(sectionId).subscribe((res) => {
@@ -235,7 +240,7 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
         });
         this.loading = false;
         // this.cancel();
-        this.getEmployeeWorkHistoryInfoByEmpId();
+        // this.getEmployeeWorkHistoryInfoByEmpId();
       } else {
         this.toastr.warning('', `${res.message}`, {
           positionClass: 'toast-top-right',

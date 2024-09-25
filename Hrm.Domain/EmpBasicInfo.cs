@@ -67,6 +67,7 @@ namespace Hrm.Domain
         public virtual ICollection<FormRecord> FormRecords { get; } = new List<FormRecord>();
         public virtual ICollection<EmpShiftAssign>? EmpShiftAssign { get; set; }
         public virtual ICollection<EmpWorkHistory>? EmpWorkHistory { get; set; }
+        public virtual ICollection<EmpOtherResponsibility>? EmpOtherResponsibility { get; set; }
         public virtual ICollection<CancelledWeekend> CancelledWeekends { get; } = new List<CancelledWeekend>();
     }
 }

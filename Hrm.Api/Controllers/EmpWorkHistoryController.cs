@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hrm.Api.Controllers
 {
-    [Route(HrmRoutePrefix.EmpWorkHistory)]
+    [Route(HrmRoutePrefix.EmpOtherResponsibility)]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class EmpWorkHistoryController : ControllerBase
     {
         private readonly IMediator _mediator;

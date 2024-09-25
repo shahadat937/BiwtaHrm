@@ -38,5 +38,6 @@ namespace Hrm.Domain
         public virtual ICollection<EmpTransferPosting>? CurrentEmpTransferPosting { get; set; }
         public virtual ICollection<EmpTransferPosting>? TransferEmpTransferPosting { get; set; }
         public virtual ICollection<EmpWorkHistory>? EmpWorkHistory { get; set; }
+        public virtual ICollection<EmpOtherResponsibility>? EmpOtherResponsibility { get; set; }
     }
 }

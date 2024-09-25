@@ -59,6 +59,7 @@ import { HolidayTypeComponent } from './holiday-type/holiday-type.component';
 import { OrganogramComponent } from './organogram/organogram.component';
 import { ReleaseTypeComponent } from './release-type/release-type.component';
 import { RewardPunishmentSetupComponent } from './reward-punishment-setup/reward-punishment-setup.component';
+import { ResponsibilityTypeComponent } from './responsibility-type/responsibility-type.component';
 
 
 const routes: Routes = [
@@ -445,6 +446,13 @@ const routes: Routes = [
         component: HolidayTypeComponent,
         data: {
           title: 'Update Holiday Type',
+        },
+      },
+      {
+        path: 'responsibilityType',
+        component: ResponsibilityTypeComponent,
+        data: {
+          title: 'Responsibility Type',
         },
       },
 

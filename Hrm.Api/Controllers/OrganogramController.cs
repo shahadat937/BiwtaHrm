@@ -172,30 +172,26 @@ namespace Hrm.Api.Controllers
         }
         private string GetEmployeeName(Designation designation)
         {
-            // Try to get the name from EmpJobDetail
             var empJobDetail = designation.EmpJobDetail?.FirstOrDefault(x => x.ServiceStatus == true)?.EmpBasicInfo;
             if (empJobDetail != null)
             {
                 return $"{empJobDetail.FirstName} {empJobDetail.LastName}";
             }
 
-            // If not found in EmpJobDetail, try EmpOtherResponsibility
             var empOtherResponsibility = designation.EmpOtherResponsibility?.FirstOrDefault(x => x.ServiceStatus == true);
             if (empOtherResponsibility != null)
             {
                 var empBasicInfo = empOtherResponsibility.EmpBasicInfo;
-                var responsibilityTypeName = empOtherResponsibility.ResponsibilityType?.Name;
+                var responsibilityTypeName = _context.ResponsibilityType.FirstOrDefault(x => x.Id == empOtherResponsibility.ResponsibilityTypeId).Name;
 
                 if (empBasicInfo != null)
                 {
-                    // Return EmployeeName along with ResponsibilityTypeName
                     return responsibilityTypeName != null
                         ? $"{empBasicInfo.FirstName} {empBasicInfo.LastName} ({responsibilityTypeName})"
                         : $"{empBasicInfo.FirstName} {empBasicInfo.LastName}";
                 }
             }
 
-            // Return null if no name found
             return null;
         }
 

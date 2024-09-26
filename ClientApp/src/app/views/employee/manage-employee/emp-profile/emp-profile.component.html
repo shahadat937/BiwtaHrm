@@ -46,32 +46,32 @@
                 <c-col [lg]="4" class="border-left">
                     <div>
                         <p><b>Current Position</b></p>
+                        <hr/>
+                        <p *ngIf="empJobDetails?.departmentName; else emptyText" class="mb-0">
+                            {{ empJobDetails.departmentName }}
+                        </p>
+                        <ng-template #emptyText>
+                            <p></p>
+                        </ng-template>
+                        <p *ngIf="empJobDetails?.designationName; else emptyText" class="mb-0">
+                            {{ empJobDetails.designationName }}
+                        </p>
+                        <ng-template #emptyText>
+                            <p></p>
+                        </ng-template>
                         @if(empOtherResponsibility.length>0){
                             <hr/>
                             <div *ngFor="let item of empOtherResponsibility">
                                 @if(item.serviceStatus){
-                                    <p class="mb-0">{{item.responsibilityName}} {{item.designationName}}</p>
                                     <p class="mb-0">{{item.departmentName}}<span *ngIf="item?.sectionName; else emptyText">, {{item.sectionName}}</span>
                                         <ng-template #emptyText>
                                             <span></span>
                                         </ng-template>
                                     </p>
+                                    <p class="mb-0">{{item.responsibilityName}} {{item.designationName}}</p>
                                 }
                             </div>
                         }
-                        <hr/>
-                        <p *ngIf="empJobDetails?.designationName; else emptyText" class="mb-0">
-                            {{ empJobDetails.designationName }}
-                          </p>
-                        <ng-template #emptyText>
-                            <p></p>
-                        </ng-template>
-                        <p *ngIf="empJobDetails?.departmentName; else emptyText" class="mb-0">
-                            {{ empJobDetails.departmentName }}
-                          </p>
-                        <ng-template #emptyText>
-                        <p></p>
-                        </ng-template>
                     </div>
                 </c-col>
             </div>
@@ -351,13 +351,14 @@
             }
 
             <!-- Employee Work History -->
-            @if(empWorkHistory.length>0){
+            @if(empWorkHistory.length>0 || empOtherResponsibility.length>0){
                 <c-card class="shadow mb-4">
                     <c-card-header>
                         <h5 class="text-center text-light">Employee Work History</h5>
                     </c-card-header>
                     <c-card-body>
                         <table class="table">
+                        @if(empWorkHistory.length>0){
                             <tbody *ngFor="let item of empWorkHistory" class="mb-3">
                                 <tr>
                                     <th>Department</th>
@@ -378,6 +379,7 @@
                                     <td>{{item.remark}}</td>
                                 </tr>
                             </tbody>
+                        }
                         @if(empOtherResponsibility.length>0){
                             <tbody *ngFor="let item of empOtherResponsibility">
                                 <tr>

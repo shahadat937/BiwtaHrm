@@ -10,7 +10,7 @@ namespace Hrm.Application.DTOs.EmpOtherResponsibility
     {
         public int Id { get; set; }
         public int? EmpId { get; set; }
-        public int? EmpOtherResponsibilityId { get; set; }
+        public int? ResponsibilityTypeId { get; set; }
         public int? OfficeId { get; set; }
         public int? DepartmentId { get; set; }
         public int? SectionId { get; set; }

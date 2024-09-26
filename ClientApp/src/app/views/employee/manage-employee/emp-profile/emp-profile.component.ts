@@ -204,7 +204,7 @@ export class EmpProfileComponent  implements OnInit {
     }
     
     getEmpOtherResponsibility(){
-      this.empOtherResponsibilityService.findByEmpId(this.id).subscribe((res) => {
+      this.empOtherResponsibilityService.findAllByEmpId(this.id).subscribe((res) => {
         this.empOtherResponsibility = res;
       });
     }

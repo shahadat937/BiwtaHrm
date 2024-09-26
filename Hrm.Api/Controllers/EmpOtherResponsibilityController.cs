@@ -38,6 +38,14 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
+        [Route("get-allEmpOtherResponsibilityByEmpId/{id}")]
+        public async Task<ActionResult<EmpOtherResponsibilityDto>> GetAll(int id)
+        {
+            var EmpOtherResponsibilities = await _mediator.Send(new GetAllEmpOtherResponsibilityByEmpIdRequest { Id = id });
+            return Ok(EmpOtherResponsibilities);
+        }
+
+        [HttpGet]
         [Route("update-EmpOtherResponsibilityStatusByEmpId/{id}")]
         public async Task<ActionResult<EmpOtherResponsibilityDto>> Update(int id)
         {

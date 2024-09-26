@@ -93,7 +93,7 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
       control.push(this.fb.group({
         id: [OtherResponsibilityInfo.id],
         empId: [OtherResponsibilityInfo.empId],
-        empOtherResponsibilityId: [OtherResponsibilityInfo.empOtherResponsibilityId],
+        responsibilityTypeId: [OtherResponsibilityInfo.responsibilityTypeId],
         departmentId: [OtherResponsibilityInfo.departmentId],
         sectionId: [OtherResponsibilityInfo.sectionId],
         designationId: [OtherResponsibilityInfo.designationId],
@@ -140,7 +140,7 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
     const formGroup = new FormGroup({
       id: new FormControl(0),
       empId: new FormControl(this.empId),
-      empOtherResponsibilityId: new FormControl(null),
+      responsibilityTypeId: new FormControl(null),
       departmentId: new FormControl(null),
       sectionId: new FormControl(null),
       designationId: new FormControl(null),

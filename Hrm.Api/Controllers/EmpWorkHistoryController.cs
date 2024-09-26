@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hrm.Api.Controllers
 {
-    [Route(HrmRoutePrefix.EmpOtherResponsibility)]
+    [Route(HrmRoutePrefix.EmpWorkHistory)]
     [ApiController]
     [Authorize]
     public class EmpWorkHistoryController : ControllerBase

@@ -195,8 +195,8 @@
                     </c-card-header>
                     <c-card-body>
                         @if(empSpouseInfo.length>0){
-                        <table class="table table-bordered table-hover" *ngFor="let item of empSpouseInfo" class="mb-3">
-                            <tbody>
+                        <table class="table table-bordered table-hover">
+                            <tbody *ngFor="let item of empSpouseInfo">
                                 <tr>
                                     <th>Spouse Name</th>
                                     <td>{{item.spouseName}}</td>
@@ -209,7 +209,7 @@
                                     <th>Birth Registration No</th>
                                     <td>{{item.birthRegNo}}</td>
                                 </tr>
-                                <tr>
+                                <tr class="table_mergin_bottom">
                                     <th>Occupation</th>
                                     <td>{{item.occupationName}}</td>
                                     <th>Remark</th>
@@ -241,8 +241,8 @@
                     </c-card-header>
                     <c-card-body>
                         @if(empChildInfo.length>0){
-                        <table class="table table-bordered table-hover" *ngFor="let item of empChildInfo" class="mb-3">
-                            <tbody>
+                        <table class="table table-bordered table-hover">
+                            <tbody *ngFor="let item of empChildInfo">
                                 <tr>
                                     <th>Child Name</th>
                                     <td>{{item.childName}}</td>
@@ -267,7 +267,7 @@
                                     <th>Marital Status</th>
                                     <td>{{item.maritalStatusName}}</td>
                                 </tr>
-                                <tr>
+                                <tr class="table_mergin_bottom">
                                     <th>Child Status</th>
                                     <td>{{item.childStatusName}}</td>
                                     <th>Remark</th>
@@ -491,8 +491,8 @@
                     </c-card-header>
                     <c-card-body>
                         @if(empEducationInfo.length>0){
-                        <table class="table table-bordered table-hover" *ngFor="let item of empEducationInfo" class="mb-3">
-                            <tbody>
+                        <table class="table table-bordered table-hover">
+                            <tbody *ngFor="let item of empEducationInfo">
                                 <tr>
                                     <th>Exam Type</th>
                                     <td>{{item.examTypeName}}</td>
@@ -511,7 +511,7 @@
                                     <th>Passing Year</th>
                                     <td>{{item.passingYear}}</td>
                                 </tr>
-                                <tr>
+                                <tr class="table_mergin_bottom">
                                     <th>Remark</th>
                                     <td>{{item.remark}}</td>
                                     <th colspan="2"></th>
@@ -542,8 +542,8 @@
                     </c-card-header>
                     <c-card-body>
                         @if(empPsiTrainingInfo.length>0){
-                        <table class="table table-bordered table-hover" *ngFor="let item of empPsiTrainingInfo" class="mb-3">
-                            <tbody>
+                        <table class="table table-bordered table-hover">
+                            <tbody *ngFor="let item of empPsiTrainingInfo">
                                 <tr>
                                     <th>Training Name</th>
                                     <td>{{item.trainingName}}</td>
@@ -556,7 +556,7 @@
                                     <th>To Date</th>
                                     <td>{{item.toDate}}</td>
                                 </tr>
-                                <tr>
+                                <tr class="table_mergin_bottom">
                                     <th>Remark</th>
                                     <td>{{item.remark}}</td>
                                     <th colspan="2"></th>
@@ -587,8 +587,8 @@
                     </c-card-header>
                     <c-card-body>
                         @if(empBankInfo.length>0){
-                        <table class="table table-bordered table-hover" *ngFor="let item of empBankInfo" class="mb-3">
-                            <tbody>
+                        <table class="table table-bordered table-hover">
+                            <tbody *ngFor="let item of empBankInfo">
                                 <tr>
                                     <th>Account Name</th>
                                     <td>{{item.accountName}}</td>
@@ -607,7 +607,7 @@
                                     <th>Routing No</th>
                                     <td>{{item.routingNo}}</td>
                                 </tr>
-                                <tr>
+                                <tr class="table_mergin_bottom">
                                     <th>Remark</th>
                                     <td>{{item.remark}}</td>
                                     <th colspan="2"></th>
@@ -638,15 +638,15 @@
                     </c-card-header>
                     <c-card-body>
                         @if(empLanguageInfo.length>0){
-                        <table class="table table-bordered table-hover" *ngFor="let item of empLanguageInfo" class="mb-3">
-                            <tbody>
+                        <table class="table table-bordered table-hover">
+                            <tbody *ngFor="let item of empLanguageInfo">
                                 <tr>
                                     <th>Language Name</th>
                                     <td>{{item.languageName}}</td>
                                     <th>Competence</th>
                                     <td>{{item.competenceName}}</td>
                                 </tr>
-                                <tr>
+                                <tr class="table_mergin_bottom">
                                     <th>Remark</th>
                                     <td>{{item.remark}}</td>
                                     <th colspan="2"></th>
@@ -677,8 +677,8 @@
                     </c-card-header>
                     <c-card-body>
                         @if(empForeignTourInfo.length>0){
-                        <table class="table table-bordered table-hover" *ngFor="let item of empForeignTourInfo" class="mb-3">
-                            <tbody>
+                        <table class="table table-bordered table-hover">
+                            <tbody *ngFor="let item of empForeignTourInfo">
                                 <tr>
                                     <th>Country Name</th>
                                     <td>{{item.countryName}}</td>
@@ -691,7 +691,7 @@
                                     <th>To Date</th>
                                     <td>{{item.toDate}}</td>
                                 </tr>
-                                <tr>
+                                <tr class="table_mergin_bottom">
                                     <th>Remark</th>
                                     <td>{{item.remark}}</td>
                                     <th colspan="2"></th>

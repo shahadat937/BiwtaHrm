@@ -15,10 +15,16 @@ namespace Hrm.Application.DTOs.EmpOtherResponsibility
         public int? DepartmentId { get; set; }
         public int? SectionId { get; set; }
         public int? DesignationId { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public DateOnly? StartDate { get; set; }
+        public DateOnly? EndDate { get; set; }
         public bool ServiceStatus { get; set; }
         public string? Remark { get; set; }
         public bool? IsActive { get; set; }
+
+        public string? ResponsibilityName { get; set; }
+        public string? OfficeName { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? SectionName { get; set; }
+        public string? DesignationName { get; set; }
     }
 }

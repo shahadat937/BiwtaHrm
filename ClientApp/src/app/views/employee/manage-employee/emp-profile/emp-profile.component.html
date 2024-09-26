@@ -46,14 +46,27 @@
                 <c-col [lg]="4" class="border-left">
                     <div>
                         <p><b>Current Position</b></p>
+                        @if(empOtherResponsibility.length>0){
+                            <hr/>
+                            <div *ngFor="let item of empOtherResponsibility">
+                                @if(item.serviceStatus){
+                                    <p class="mb-0">{{item.responsibilityName}} {{item.designationName}}</p>
+                                    <p class="mb-0">{{item.departmentName}}<span *ngIf="item?.sectionName; else emptyText">, {{item.sectionName}}</span>
+                                        <ng-template #emptyText>
+                                            <span></span>
+                                        </ng-template>
+                                    </p>
+                                }
+                            </div>
+                        }
                         <hr/>
-                        <p *ngIf="empJobDetails?.designationName; else emptyText">
+                        <p *ngIf="empJobDetails?.designationName; else emptyText" class="mb-0">
                             {{ empJobDetails.designationName }}
                           </p>
                         <ng-template #emptyText>
                             <p></p>
                         </ng-template>
-                        <p *ngIf="empJobDetails?.departmentName; else emptyText">
+                        <p *ngIf="empJobDetails?.departmentName; else emptyText" class="mb-0">
                             {{ empJobDetails.departmentName }}
                           </p>
                         <ng-template #emptyText>
@@ -305,8 +318,8 @@
                     <h5 class="text-center text-light">Employee Education Information</h5>
                 </c-card-header>
                 <c-card-body>
-                    <table class="table" *ngFor="let item of empEducationInfo" class="mb-3">
-                        <tbody>
+                    <table class="table">
+                        <tbody *ngFor="let item of empEducationInfo" class="mb-3">
                             <tr>
                                 <th>Exam Type</th>
                                 <td>{{item.examTypeName}}</td>
@@ -325,7 +338,7 @@
                                 <th>Passing Year</th>
                                 <td>{{item.passingYear}}</td>
                             </tr>
-                            <tr>
+                            <tr class="table_mergin_bottom">
                                 <th>Remark</th>
                                 <td>{{item.remark}}</td>
                                 <th colspan="2"></th>
@@ -336,6 +349,61 @@
                 </c-card-body>
             </c-card>
             }
+
+            <!-- Employee Work History -->
+            @if(empWorkHistory.length>0){
+                <c-card class="shadow mb-4">
+                    <c-card-header>
+                        <h5 class="text-center text-light">Employee Work History</h5>
+                    </c-card-header>
+                    <c-card-body>
+                        <table class="table">
+                            <tbody *ngFor="let item of empWorkHistory" class="mb-3">
+                                <tr>
+                                    <th>Department</th>
+                                    <td>{{item.departmentName}}</td>
+                                    <th>Section</th>
+                                    <td>{{item.sectionName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Designation</th>
+                                    <td>{{item.designationName}}</td>
+                                    <th>Joining Date</th>
+                                    <td>{{item.joiningDate}}</td>
+                                </tr>
+                                <tr class="table_mergin_bottom">
+                                    <th>Release Date</th>
+                                    <td>{{item.releaseDate}}</td>
+                                    <th>Remark</th>
+                                    <td>{{item.remark}}</td>
+                                </tr>
+                            </tbody>
+                        @if(empOtherResponsibility.length>0){
+                            <tbody *ngFor="let item of empOtherResponsibility">
+                                <tr>
+                                    <th>Department</th>
+                                    <td>{{item.departmentName}}</td>
+                                    <th>Section</th>
+                                    <td>{{item.sectionName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Designation</th>
+                                    <td>{{item.responsibilityName}} {{item.designationName}}</td>
+                                    <th>Joining Date</th>
+                                    <td>{{item.startDate}}</td>
+                                </tr>
+                                <tr class="table_mergin_bottom">
+                                    <th>Release Date</th>
+                                    <td>{{item.endDate}}</td>
+                                    <th>Remark</th>
+                                    <td>{{item.remark}}</td>
+                                </tr>
+                            </tbody>
+                        }
+                        </table>
+                    </c-card-body>
+                </c-card>
+            }
     
             <!-- Employee Spouse Information -->
             @if(empSpouseInfo.length>0){
@@ -344,8 +412,8 @@
                     <h5 class="text-center text-light">Employee Spouse Information</h5>
                 </c-card-header>
                 <c-card-body>
-                    <table class="table" *ngFor="let item of empSpouseInfo" class="mb-3">
-                        <tbody>
+                    <table class="table">
+                        <tbody *ngFor="let item of empSpouseInfo" class="mb-3">
                             <tr>
                                 <th>Spouse Name</th>
                                 <td>{{item.spouseName}}</td>
@@ -358,7 +426,7 @@
                                 <th>Birth Registration No</th>
                                 <td>{{item.birthRegNo}}</td>
                             </tr>
-                            <tr>
+                            <tr class="table_mergin_bottom">
                                 <th>Occupation</th>
                                 <td>{{item.occupationName}}</td>
                                 <th>Remark</th>
@@ -378,8 +446,8 @@
                     <h5 class="text-center text-light">Employee Child Information</h5>
                 </c-card-header>
                 <c-card-body>
-                    <table class="table" *ngFor="let item of empChildInfo" class="mb-3">
-                        <tbody>
+                    <table class="table">
+                        <tbody *ngFor="let item of empChildInfo" class="mb-3">
                             <tr>
                                 <th>Child Name</th>
                                 <td>{{item.childName}}</td>
@@ -404,7 +472,7 @@
                                 <th>Marital Status</th>
                                 <td>{{item.maritalStatusName}}</td>
                             </tr>
-                            <tr>
+                            <tr class="table_mergin_bottom">
                                 <th>Child Status</th>
                                 <td>{{item.childStatusName}}</td>
                                 <th>Remark</th>
@@ -424,8 +492,8 @@
                     <h5 class="text-center text-light">Employee Psi and Training Information</h5>
                 </c-card-header>
                 <c-card-body>
-                    <table class="table" *ngFor="let item of empPsiTrainingInfo" class="mb-3">
-                        <tbody>
+                    <table class="table">
+                        <tbody *ngFor="let item of empPsiTrainingInfo" class="mb-3">
                             <tr>
                                 <th>Training Name</th>
                                 <td>{{item.trainingName}}</td>
@@ -438,7 +506,7 @@
                                 <th>To Date</th>
                                 <td>{{item.toDate}}</td>
                             </tr>
-                            <tr>
+                            <tr class="table_mergin_bottom">
                                 <th>Remark</th>
                                 <td>{{item.remark}}</td>
                                 <th colspan="2"></th>
@@ -457,8 +525,8 @@
                     <h5 class="text-center text-light">Employee Bank Information</h5>
                 </c-card-header>
                 <c-card-body>
-                    <table class="table" *ngFor="let item of empBankInfo" class="mb-3">
-                        <tbody>
+                    <table class="table">
+                        <tbody *ngFor="let item of empBankInfo" class="mb-3">
                             <tr>
                                 <th>Account Name</th>
                                 <td>{{item.accountName}}</td>
@@ -477,7 +545,7 @@
                                 <th>Routing No</th>
                                 <td>{{item.routingNo}}</td>
                             </tr>
-                            <tr>
+                            <tr class="table_mergin_bottom">
                                 <th>Remark</th>
                                 <td>{{item.remark}}</td>
                                 <th colspan="2"></th>
@@ -496,15 +564,15 @@
                     <h5 class="text-center text-light">Employee Language Information</h5>
                 </c-card-header>
                 <c-card-body>
-                    <table class="table" *ngFor="let item of empLanguageInfo" class="mb-3">
-                        <tbody>
+                    <table class="table">
+                        <tbody *ngFor="let item of empLanguageInfo" class="mb-3">
                             <tr>
                                 <th>Language Name</th>
                                 <td>{{item.languageName}}</td>
                                 <th>Competence</th>
                                 <td>{{item.competenceName}}</td>
                             </tr>
-                            <tr>
+                            <tr class="table_mergin_bottom">
                                 <th>Remark</th>
                                 <td>{{item.remark}}</td>
                                 <th colspan="2"></th>
@@ -523,8 +591,8 @@
                     <h5 class="text-center text-light">Employee Foreign Tour Information</h5>
                 </c-card-header>
                 <c-card-body>
-                    <table class="table" *ngFor="let item of empForeignTourInfo" class="mb-3">
-                        <tbody>
+                    <table class="table">
+                        <tbody *ngFor="let item of empForeignTourInfo" class="mb-3">
                             <tr>
                                 <th>Country Name</th>
                                 <td>{{item.countryName}}</td>
@@ -537,7 +605,7 @@
                                 <th>To Date</th>
                                 <td>{{item.toDate}}</td>
                             </tr>
-                            <tr>
+                            <tr class="table_mergin_bottom">
                                 <th>Remark</th>
                                 <td>{{item.remark}}</td>
                                 <th colspan="2"></th>

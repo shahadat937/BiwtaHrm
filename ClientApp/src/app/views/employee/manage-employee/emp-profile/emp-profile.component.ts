@@ -30,6 +30,10 @@ import { EmpPresentAddressService } from '../../service/emp-present-address.serv
 import { EmpPsiTrainingInfoService } from '../../service/emp-psi-training-info.service';
 import { EmpSpouseInfoService } from '../../service/emp-spouse-info.service';
 import { ManageEmployeeService } from '../../service/manage-employee.service';
+import { EmpWorkHistoryService } from '../../service/emp-work-history.service';
+import { EmpOtherResponsibilityService } from '../../service/emp-other-responsibility.service';
+import { EmpWorkHistory } from '../../model/emp-work-history';
+import { EmpOtherResponsibility } from '../../model/emp-other-responsibility';
 
 @Component({
   selector: 'app-emp-profile',
@@ -51,11 +55,14 @@ export class EmpProfileComponent  implements OnInit {
   empBankInfo : EmpBankInfoModule[] = [];
   empLanguageInfo : EmpLanguageInfoModule[] = [];
   empForeignTourInfo : EmpForeignTourInfoModule[] = [];
+  empOtherResponsibility : EmpOtherResponsibility[] = [];
+  empWorkHistory : EmpWorkHistory[] = [];
   photoPreviewUrl: string | ArrayBuffer | null = null;
   empProfileView = true;
 
   pNo: string = '';
   id : number = 0;
+  clickedButton: any;
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -75,20 +82,28 @@ export class EmpProfileComponent  implements OnInit {
     public empForeignTourInfoService: EmpForeignTourInfoService,
     public empPhotoSignService: EmpPhotoSignService,
     public manageEmployeeService: ManageEmployeeService,
+    public empOtherResponsibilityService: EmpOtherResponsibilityService,
+    public empWorkHistoryService: EmpWorkHistoryService,
     private bsModalRef: BsModalRef,
     private el: ElementRef, 
     private renderer: Renderer2
   ) { }
 
     ngOnInit(): void {
-      const currentUserString = localStorage.getItem('currentUser');
-      const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-      this.id = currentUserJSON.empId;
-      if(this.id != null) {
-        this.handleRouteParams();
+      if(this.id == 0){
+        const currentUserString = localStorage.getItem('currentUser');
+        const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
+        this.id = currentUserJSON.empId;
+        
+        if(this.id != null) {
+          this.handleRouteParams();
+        }
+        else {
+          this.empProfileView = false;
+        }
       }
       else {
-        this.empProfileView = false;
+        this.handleRouteParams();
       }
     }
   
@@ -105,6 +120,8 @@ export class EmpProfileComponent  implements OnInit {
       this.getEmpBankInfoByEmpId();
       this.getEmpLanguageInfoByEmpId();
       this.getEmpForeignTourInfoByEmpId();
+      this.getEmpWorkHistory();
+      this.getEmpOtherResponsibility();
     }
 
     getEmpBasicInfoByEmpId(){
@@ -183,6 +200,18 @@ export class EmpProfileComponent  implements OnInit {
     getEmpForeignTourInfoByEmpId(){
       this.empForeignTourInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empForeignTourInfo = res;
+      });
+    }
+    
+    getEmpOtherResponsibility(){
+      this.empOtherResponsibilityService.findByEmpId(this.id).subscribe((res) => {
+        this.empOtherResponsibility = res;
+      });
+    }
+    
+    getEmpWorkHistory(){
+      this.empWorkHistoryService.findByEmpId(this.id).subscribe((res) => {
+        this.empWorkHistory = res;
       });
     }
 

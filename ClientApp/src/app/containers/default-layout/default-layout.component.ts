@@ -13,6 +13,7 @@ import { ModuleFeatureByRole } from 'src/app/views/featureManagement/model/modul
 export class DefaultLayoutComponent implements OnInit{
 
   biwtaLogo : string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta.png`;
+  logo : string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta-logo.png`;
 
   navItems: ModuleFeatureByRole[] = [];
   roleName: string = '';

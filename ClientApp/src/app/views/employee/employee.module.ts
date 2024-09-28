@@ -87,6 +87,7 @@ import { UploadEmpBasicInfoComponent } from './add-employee/upload-emp-basic-inf
 import { EmpProfileComponent } from './manage-employee/emp-profile/emp-profile.component';
 import { EmpWorkHistoryComponent } from './add-employee/employee-informations/emp-work-history/emp-work-history.component';
 import { EmpOtherResponsibilityComponent } from './add-employee/employee-informations/emp-other-responsibility/emp-other-responsibility.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -165,7 +166,8 @@ import { EmpOtherResponsibilityComponent } from './add-employee/employee-informa
     InputIconModule, 
     MultiSelectModule, 
     HttpClientModule, 
-    DropdownModule
+    DropdownModule,
+    ScrollingModule,
   ],
   providers:
   [

@@ -35,6 +35,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { IconModule } from '@coreui/icons-angular';
+import { SiteSettingComponent } from './site-setting/site-setting.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { IconModule } from '@coreui/icons-angular';
     ModuleListComponent,
     CreateModuleComponent,
     CreateFeatureComponent,
+    SiteSettingComponent,
   ],
   imports: [
     CommonModule,

@@ -19,6 +19,9 @@ export class EmpOtherResponsibilityService {
   findByEmpId(id: number) {
     return this.http.get<EmpOtherResponsibility[]>(this.baseUrl + '/empOtherResponsibility/get-EmpOtherResponsibilityByEmpId/' + id);
   }
+  findAllByEmpId(id: number) {
+    return this.http.get<EmpOtherResponsibility[]>(this.baseUrl + '/empOtherResponsibility/get-allEmpOtherResponsibilityByEmpId/' + id);
+  }
 
   saveEmpOtherResponsibility(model: FormData) {
     return this.http.post(this.baseUrl + '/empOtherResponsibility/save-EmpOtherResponsibility', model);

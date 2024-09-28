@@ -110,6 +110,9 @@ namespace Hrm.Api.Controllers
                 .Include(d => d.Designations) // Include Designations under Departments
                     .ThenInclude(de => de.EmpJobDetail)
                     .ThenInclude(ejd => ejd.EmpBasicInfo)
+                .Include(d => d.Designations) // Include EmpOtherResponsibility
+                    .ThenInclude(de => de.EmpOtherResponsibility)
+                    .ThenInclude(eor => eor.EmpBasicInfo)
                 .Include(d => d.Section) // Include Sections under Departments
                     .ThenInclude(s => s.SubSections) // Include SubSections under Sections
                 .Include(d => d.Section)
@@ -135,10 +138,8 @@ namespace Hrm.Api.Controllers
                     .Select(de => new OrganogramDesignationNameDto
                 {
                     Name = de.DesignationName,
-                    EmployeeName = de.EmpJobDetail?.FirstOrDefault()?.EmpBasicInfo != null
-                        ? $"{de.EmpJobDetail.FirstOrDefault().EmpBasicInfo.FirstName} {de.EmpJobDetail.FirstOrDefault().EmpBasicInfo.LastName}"
-                        : null
-                }).ToList(),
+                    EmployeeName = GetEmployeeName(de)
+                    }).ToList(),
                 Sections = department.Section != null
                     ? department.Section
                         .Where(s => s.UpperSectionId == null)
@@ -162,14 +163,36 @@ namespace Hrm.Api.Controllers
                     .Select(se => new OrganogramDesignationNameDto
                 {
                     Name = se.DesignationName,
-                    EmployeeName = se.EmpJobDetail?.FirstOrDefault()?.EmpBasicInfo != null
-                        ? $"{se.EmpJobDetail.FirstOrDefault().EmpBasicInfo.FirstName} {se.EmpJobDetail.FirstOrDefault().EmpBasicInfo.LastName}"
-                        : null
-                }).ToList(),
+                    EmployeeName = GetEmployeeName(se)
+                    }).ToList(),
                 SubSections = section.SubSections.Select(ss => MapSectionName(ss)).ToList()
             };
 
             return sectionNameDto;
+        }
+        private string GetEmployeeName(Designation designation)
+        {
+            var empJobDetail = designation.EmpJobDetail?.FirstOrDefault(x => x.ServiceStatus == true)?.EmpBasicInfo;
+            if (empJobDetail != null)
+            {
+                return $"{empJobDetail.FirstName} {empJobDetail.LastName}";
+            }
+
+            var empOtherResponsibility = designation.EmpOtherResponsibility?.FirstOrDefault(x => x.ServiceStatus == true);
+            if (empOtherResponsibility != null)
+            {
+                var empBasicInfo = empOtherResponsibility.EmpBasicInfo;
+                var responsibilityTypeName = _context.ResponsibilityType.FirstOrDefault(x => x.Id == empOtherResponsibility.ResponsibilityTypeId).Name;
+
+                if (empBasicInfo != null)
+                {
+                    return responsibilityTypeName != null
+                        ? $"{empBasicInfo.FirstName} {empBasicInfo.LastName} ({responsibilityTypeName})"
+                        : $"{empBasicInfo.FirstName} {empBasicInfo.LastName}";
+                }
+            }
+
+            return null;
         }
 
     }

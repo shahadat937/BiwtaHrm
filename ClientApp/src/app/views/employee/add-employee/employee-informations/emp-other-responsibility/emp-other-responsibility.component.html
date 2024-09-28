@@ -16,8 +16,8 @@
                                     <input type="hidden" formControlName="empId" />
 
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="empOtherResponsibilityId{{i}}">Select Responsibility</label>
-                                        <select formControlName="empOtherResponsibilityId" class="form-select">
+                                        <label class="col-form-label" for="responsibilityTypeId{{i}}">Select Responsibility</label>
+                                        <select formControlName="responsibilityTypeId" class="form-select">
                                             <option value="null" disabled>Select Responsibility</option>
                                             <option *ngFor="let item of responsibilities" value="{{item.id}}">{{item.name}}
                                             </option>

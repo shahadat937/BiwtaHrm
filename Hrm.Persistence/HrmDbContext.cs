@@ -1096,6 +1096,11 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.RewardPunishmentPriorityId);
             });
 
+            modelBuilder.Entity<ResponsibilityType>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+            });
+
             modelBuilder.Entity<EmpWorkHistory>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -1131,7 +1136,7 @@ namespace Hrm.Persistence
 
                 entity.HasOne(e => e.ResponsibilityType)
                     .WithMany(e => e.EmpOtherResponsibility)
-                    .HasForeignKey(e => e.EmpOtherResponsibilityId);
+                    .HasForeignKey(e => e.ResponsibilityTypeId);
 
                 entity.HasOne(e => e.Office)
                     .WithMany(e => e.EmpOtherResponsibility)

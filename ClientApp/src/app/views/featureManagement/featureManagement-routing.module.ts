@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ModuleListComponent } from './module-list/module-list.component';
 import { FeatureListComponent } from './feature-list/feature-list.component';
+import { SiteSettingComponent } from './site-setting/site-setting.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,13 @@ const routes: Routes = [
         component: FeatureListComponent,
         data: {
           title: 'Feature List',
+        },
+      },
+      {
+        path: 'siteSetting',
+        component: SiteSettingComponent,
+        data: {
+          title: 'Site Setting',
         },
       },
     ]

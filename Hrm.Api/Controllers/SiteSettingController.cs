@@ -12,7 +12,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.SiteSetting)]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class SiteSettingController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -31,6 +31,14 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
+        [Route("get-ActiveSiteSettings")]
+        public async Task<ActionResult<SiteSettingDto>> GetActive()
+        {
+            var SiteSettings = await _mediator.Send(new GetActiveSiteSettingRequest { });
+            return Ok(SiteSettings);
+        }
+
+        [HttpGet]
         [Route("get-SiteSettingDetail/{id}")]
         public async Task<ActionResult<SiteSettingDto>> Get(int id)
         {
@@ -39,10 +47,8 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
         [Route("save-SiteSetting")]
-        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateSiteSettingDto SiteSetting)
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromForm] CreateSiteSettingDto SiteSetting)
         {
             var command = new CreateSiteSettingCommand { SiteSettingDto = SiteSetting };
             var response = await _mediator.Send(command);
@@ -50,11 +56,9 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         [Route("update-SiteSetting/{id}")]
-        public async Task<ActionResult> Put([FromBody] CreateSiteSettingDto SiteSetting)
+        public async Task<ActionResult> Put([FromForm] CreateSiteSettingDto SiteSetting)
         {
             var command = new UpdateSiteSettingCommand { SiteSettingDto = SiteSetting };
             var response = await _mediator.Send(command);

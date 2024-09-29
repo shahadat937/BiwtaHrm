@@ -115,6 +115,7 @@ using Hrm.Application.DTOs.EmpRewardPunishment;
 using Hrm.Application.DTOs.EmpWorkHistory;
 using Hrm.Application.DTOs.ResponsibilityType;
 using Hrm.Application.DTOs.EmpOtherResponsibility;
+using Hrm.Application.DTOs.SiteSetting;
 
 
 
@@ -666,6 +667,10 @@ namespace Hrm.Application.Profiles
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
                 .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Section.SectionName))
                 .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.Designation.DesignationName));
+
+            CreateMap<SiteSetting, SiteSettingDto>().ReverseMap();
+            //CreateMap<SiteSetting, CreateSiteSettingDto>().ReverseMap();
+
 
         }
     }

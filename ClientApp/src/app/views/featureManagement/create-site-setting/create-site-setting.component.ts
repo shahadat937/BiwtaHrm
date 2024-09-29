@@ -75,7 +75,7 @@ export class CreateSiteSettingComponent implements OnInit, OnDestroy {
       siteName :  '',
       siteTitle: '',
       siteLogo :  '',
-      footerTitle :  'Copyright &copy; 2024 BIWTA',
+      footerTitle :  '',
       remark :  '',
       siteLogoFile: null,
       isActive :  true,

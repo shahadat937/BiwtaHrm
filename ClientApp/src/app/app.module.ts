@@ -96,7 +96,7 @@ const APP_CONTAINERS = [
     ToastrModule.forRoot(),
     CommonModule,
     SpinnerModule,
-    OffcanvasModule
+    OffcanvasModule,
   ],
   providers: [
     {

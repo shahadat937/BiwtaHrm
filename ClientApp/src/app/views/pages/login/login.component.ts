@@ -152,7 +152,7 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
 
   getSiteSetting(){
     this.siteSettingService.getActive().subscribe((item) => {
-      this.siteLogo = this.empPhotoSignService.imageUrl + '/TempleteImage/' + item.siteLogo;
+      this.siteLogo = this.empPhotoSignService.imageUrl + 'TempleteImage/' + item.siteLogo;
       this.siteName = item.siteName;
     });
   }

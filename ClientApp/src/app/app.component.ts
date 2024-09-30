@@ -14,7 +14,7 @@ import { EmpPhotoSignService } from './views/employee/service/emp-photo-sign.ser
 export class AppComponent implements OnInit {
   
   siteLogo: string = '';
-  // title = '';
+  title = '';
 
   constructor(
     private router: Router,
@@ -33,6 +33,9 @@ export class AppComponent implements OnInit {
         return;
       }
     });
+      // this.titleService.setTitle(this.title);
+      // // iconSet singleton
+      this.iconSetService.icons = { ...iconSubset };
   }
 
   getSiteSetting(){
@@ -42,7 +45,7 @@ export class AppComponent implements OnInit {
       this.siteLogo = this.empPhotoSignService.imageUrl + 'TempleteImage/' + item.siteLogo;
       this.updateFavicon(this.siteLogo);
       // iconSet singleton
-      this.iconSetService.icons = { ...iconSubset };
+      // this.iconSetService.icons = { ...iconSubset };
     });
   }
   updateFavicon(logoUrl: string) {

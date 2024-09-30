@@ -2,6 +2,7 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Features.SiteSettings.Requests.Commands;
 using Hrm.Application.Responses;
+using Hrm.Domain;
 using MediatR;
 using System.Linq;
 using System.Threading;
@@ -22,14 +23,44 @@ namespace Hrm.Application.Features.SiteSettings.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(CreateSiteSettingCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
+            SiteSetting siteSetting = new SiteSetting();
 
-            var SiteSetting = _mapper.Map<Hrm.Domain.SiteSetting>(request.SiteSettingDto);
+            if (request.SiteSettingDto.SiteLogoFile != null)
+            {
+                var siteLogo = Path.GetFileName(request.SiteSettingDto.SiteLogoFile.FileName);
+                string uniqueImageName = Guid.NewGuid().ToString() + "_" + siteLogo;
+                var photoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\TempleteImage", uniqueImageName);
 
-            SiteSetting = await _unitOfWork.Repository<Hrm.Domain.SiteSetting>().Add(SiteSetting);
+                using (var photoSteam = new FileStream(photoPath, FileMode.Create))
+                {
+                    await request.SiteSettingDto.SiteLogoFile.CopyToAsync(photoSteam);
+                }
+
+                siteSetting.SiteLogo = uniqueImageName;
+
+            }
+
+            var findActive = await _unitOfWork.Repository<SiteSetting>().FindOneAsync(x => x.IsActive == true);
+            if (findActive != null && request.SiteSettingDto.IsActive == true)
+            {
+                findActive.IsActive = false;
+                await _unitOfWork.Repository<Hrm.Domain.SiteSetting>().Update(findActive);
+            }
+
+            siteSetting.SiteName = request.SiteSettingDto.SiteName;
+            siteSetting.SiteTitle = request.SiteSettingDto.SiteTitle;
+            siteSetting.FooterTitle = request.SiteSettingDto.FooterTitle;
+            siteSetting.Remark = request.SiteSettingDto.Remark ?? "";
+            siteSetting.IsActive= request.SiteSettingDto.IsActive;
+
+
+            await _unitOfWork.Repository<SiteSetting>().Add(siteSetting);
             await _unitOfWork.Save();
+
+
             response.Success = true;
             response.Message = "Creation Successful";
-            response.Id = SiteSetting.Id;
+            response.Id = siteSetting.Id;
 
             return response;
         }

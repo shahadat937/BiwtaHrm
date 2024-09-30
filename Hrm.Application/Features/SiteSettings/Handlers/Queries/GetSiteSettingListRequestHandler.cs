@@ -33,9 +33,9 @@ namespace Hrm.Application.Features.SiteSettings.Handlers.Queries
         {
             var validator = new QueryParamsValidator();
 
-            IQueryable<SiteSetting> SiteSettings = _SiteSettingRepository.Where(x => x.IsActive == true);
+            IQueryable<SiteSetting> SiteSettings = _SiteSettingRepository.Where(x => true);
 
-            SiteSettings = SiteSettings.OrderBy(x => x.Id);
+            SiteSettings = SiteSettings.OrderByDescending(x => x.IsActive).ThenByDescending(x => x.Id);
 
             var SiteSettingsDtos = _mapper.Map<List<SiteSettingDto>>(SiteSettings);
 

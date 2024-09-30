@@ -1,0 +1,95 @@
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{heading}}</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                    <form #SiteSettingForm="ngForm" [gutter]="3" novalidate cForm cRow
+                        class="needs-validation">
+                    <c-col [md]="4">
+                        <input type="hidden" [(ngModel)]="siteSettingService.siteSetting.id" name="id" />
+                        <label cLabel for="siteName">Site Name<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="siteSettingService.siteSetting.siteName" name="siteName" #siteName="ngModel"
+                            placeholder="Enter Site Name" cFormControl id="siteName" required type="text"
+                            />
+
+                        @if(!siteName.valid&&siteName.touched){
+                        <div class="text-left text-danger">Site Name is required</div>
+                        }
+                    </c-col>
+
+                    <c-col [md]="4">
+                        <label cLabel for="siteTitle">Site Title<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="siteSettingService.siteSetting.siteTitle" name="siteTitle" #siteTitle="ngModel"
+                            placeholder="Enter Site Title" cFormControl id="siteTitle" required type="text"
+                            />
+
+                        @if(!siteTitle.valid&&siteTitle.touched){
+                        <div class="text-left text-danger">Site Title is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <div *ngIf="logoPreviewUrl">
+                            <img [src]="logoPreviewUrl" alt="Site Photo" style="max-width: 100px; max-height: 100px;"/>
+                        </div>
+                        <label cLabel for="siteLogoFile">Site Logo<span class="text-danger"></span></label>
+                        <input [(ngModel)]="siteSettingService.siteSetting.siteLogoFile" name="siteLogoFile" #siteLogoFile="ngModel"
+                             cFormControl id="siteLogoFile" type="file" (change)="onPhotoSelected($event)"
+                            />
+
+                        @if(!siteLogoFile.valid&&siteLogoFile.touched){
+                        <div class="text-left text-danger">Site Logo is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="footerTitle">Footer Title<span class="text-danger"></span></label>
+                        <input [(ngModel)]="siteSettingService.siteSetting.footerTitle" name="footerTitle" #footerTitle="ngModel"
+                            placeholder="Enter Footer Title" cFormControl id="footerTitle" type="text"
+                            />
+
+                        @if(!footerTitle.valid&&footerTitle.touched){
+                        <div class="text-left text-danger">Footer Title is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="remark">Remark<span class="text-danger"></span></label>
+                        <input [(ngModel)]="siteSettingService.siteSetting.remark" name="remark" #remark="ngModel"
+                            placeholder="Enter Site Name" cFormControl id="remark" type="text"
+                            />
+
+                        @if(!remark.valid&&remark.touched){
+                        <div class="text-left text-danger">Remark is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="isActive">Active Status</label>
+                        <select [(ngModel)]="siteSettingService.siteSetting.isActive"
+                        name="isActive"
+                        cSelect
+                        id="isActive">
+                        <option value="true">Active</option>
+                        <option value="false">De-Active</option>
+                        </select>
+                    </c-col>
+
+            </form>
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button color="warn" type="button" (click)="closeModal()">
+                        <mat-icon>cancel</mat-icon> Close
+                    </button>
+                    <button [disabled]="SiteSettingForm.invalid" mat-raised-button class="me-1" color="primary" type="submit" (click)="onSubmit(SiteSettingForm)">
+                        <mat-icon>{{btnIcon}}</mat-icon> {{ btnText }}
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>

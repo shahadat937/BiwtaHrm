@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AlertComponent,
+  BadgeModule,
   ButtonGroupModule,
   ButtonModule,
   CardModule,
@@ -36,6 +37,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { IconModule } from '@coreui/icons-angular';
 import { SiteSettingComponent } from './site-setting/site-setting.component';
+import { CreateSiteSettingComponent } from './create-site-setting/create-site-setting.component';
 
 
 @NgModule({
@@ -45,6 +47,7 @@ import { SiteSettingComponent } from './site-setting/site-setting.component';
     CreateModuleComponent,
     CreateFeatureComponent,
     SiteSettingComponent,
+    CreateSiteSettingComponent,
   ],
   imports: [
     CommonModule,
@@ -83,6 +86,7 @@ import { SiteSettingComponent } from './site-setting/site-setting.component';
     PopoverModule,
     AlertComponent,
     TooltipModule,
+    BadgeModule
   ],
   providers: [ 
     ToastrService,

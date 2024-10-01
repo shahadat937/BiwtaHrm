@@ -47,14 +47,14 @@
                     <div>
                         <p><b>Current Position</b></p>
                         <hr/>
-                        <p *ngIf="empJobDetails?.departmentName; else emptyText" class="mb-0">
-                            {{ empJobDetails.departmentName }}
+                        <p *ngIf="empJobDetails?.designationName; else emptyText" class="mb-0">
+                            {{ empJobDetails.designationName }}
                         </p>
                         <ng-template #emptyText>
                             <p></p>
                         </ng-template>
-                        <p *ngIf="empJobDetails?.designationName; else emptyText" class="mb-0">
-                            {{ empJobDetails.designationName }}
+                        <p *ngIf="empJobDetails?.departmentName; else emptyText" class="mb-0">
+                            {{ empJobDetails.departmentName }}
                         </p>
                         <ng-template #emptyText>
                             <p></p>
@@ -63,12 +63,12 @@
                             <hr/>
                             <div *ngFor="let item of empOtherResponsibility">
                                 @if(item.serviceStatus){
+                                    <p class="mb-0">{{item.responsibilityName}} {{item.designationName}}</p>
                                     <p class="mb-0">{{item.departmentName}}<span *ngIf="item?.sectionName; else emptyText">, {{item.sectionName}}</span>
                                         <ng-template #emptyText>
                                             <span></span>
                                         </ng-template>
                                     </p>
-                                    <p class="mb-0">{{item.responsibilityName}} {{item.designationName}}</p>
                                 }
                             </div>
                         }
@@ -77,7 +77,8 @@
             </div>
     
             <!-- Employee Personal Information -->
-            <c-card class="shadow mb-4 mt-3" *ngIf="empPersonalInfo">
+            <c-card class="shadow mb-4 mt-3">
+            <!-- <c-card class="shadow mb-4 mt-3" *ngIf="empPersonalInfo"> -->
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Personal Information</h5>
                 </c-card-header>
@@ -85,58 +86,58 @@
                     <table class="table">
                         <tbody>
                             <tr>
-                                <th>Gender</th>
-                                <td>{{empPersonalInfo.genderName}}</td>
-                                <th>Father Name</th>
-                                <td>{{empPersonalInfo.fatherName}}</td>
+                                <th>Employee Name Bangla</th>
+                                <td>{{empBasicInfo.firstNameBangla ? empBasicInfo.firstNameBangla : ''}} {{empBasicInfo.lastNameBangla ? empBasicInfo.lastNameBangla : ''}}</td>
+                                <th>NID Number</th>
+                                <td>{{empBasicInfo.nid ? empBasicInfo.nid : ''}}</td>
                             </tr>
                             <tr>
+                                <th>Birth Reg. No</th>
+                                <td>{{empPersonalInfo.birthRegNo ? empPersonalInfo.birthRegNo : '' }}</td>
+                                <th>Nationality</th>
+                                <td>{{empPersonalInfo.nationalityName ? empPersonalInfo.nationalityName : ''}}</td>
+                            </tr>
+                            <tr>
+                                <th>Date of Birth</th>
+                                <td>{{empBasicInfo.dateOfBirth ? empBasicInfo.dateOfBirth : ''}}</td>
+                                <th>Place of Birth</th>
+                                <td>{{empPersonalInfo.placeOfBirth ? empPersonalInfo.placeOfBirth : ''}}</td>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <td>{{empPersonalInfo.genderName ? empPersonalInfo.genderName : ''}}</td>
                                 <th>Marital Status</th>
-                                <td>{{empPersonalInfo.maritalStatusName}}</td>
-                                <th>Mother Name</th>
-                                <td>{{empPersonalInfo.motherName}}</td>
+                                <td>{{empPersonalInfo.maritalStatusName ? empPersonalInfo.maritalStatusName : ''}}</td>
                             </tr>
                             <tr>
                                 <th>Blood Group</th>
-                                <td>{{empPersonalInfo.bloodGroupName}}</td>
-                                <th>Guardian Name</th>
-                                <td>{{empPersonalInfo.gurdianName}}</td>
-                            </tr>
-                            <tr>
-                                <th>Nationality</th>
-                                <td>{{empPersonalInfo.nationalityName}}</td>
-                                <th>Mother Name</th>
-                                <td>{{empPersonalInfo.religionName}}</td>
-                            </tr>
-                            <tr>
-                                <th>Mobile Number</th>
-                                <td>{{empPersonalInfo.mobileNumber}}</td>
-                                <th>Height</th>
-                                <td>{{empPersonalInfo.height}}</td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>{{empPersonalInfo.email}}</td>
-                                <th>Weight</th>
-                                <td>{{empPersonalInfo.weight}}</td>
-                            </tr>
-                            <tr>
-                                <th>Birth Reg. No.</th>
-                                <td>{{empPersonalInfo.birthRegNo}}</td>
-                                <th>Hair Color</th>
-                                <td>{{empPersonalInfo.hairColorName}}</td>
-                            </tr>
-                            <tr>
-                                <th>Place of Birth</th>
-                                <td>{{empPersonalInfo.placeOfBirth}}</td>
-                                <th>Eyes Color</th>
-                                <td>{{empPersonalInfo.eyesColorName}}</td>
-                            </tr>
-                            <tr>
+                                <td>{{empPersonalInfo.bloodGroupName ? empPersonalInfo.bloodGroupName : ''}}</td>
                                 <th>Religion</th>
-                                <td>{{empPersonalInfo.religionName}}</td>
+                                <td>{{empPersonalInfo.religionName ? empPersonalInfo.religionName : ''}}</td>
+                            </tr>
+                            <tr>
+                                <th>Father Name</th>
+                                <td>{{empPersonalInfo.fatherName ? empPersonalInfo.fatherName : ''}}</td>
+                                <th>Mother Name</th>
+                                <td>{{empPersonalInfo.motherName ? empPersonalInfo.motherName : ''}}</td>
+                            </tr>
+                            <tr>
+                                <th>Guardian Name</th>
+                                <td>{{empPersonalInfo.gurdianName ? empPersonalInfo.gurdianName : ''}}</td>
+                                <th>Height</th>
+                                <td>{{empPersonalInfo.height ? empPersonalInfo.height : ''}}</td>
+                            </tr>
+                            <tr>
+                                <th>Weight</th>
+                                <td>{{empPersonalInfo.weight ? empPersonalInfo.weight : ''}}</td>
+                                <th>Hair Color</th>
+                                <td>{{empPersonalInfo.hairColorName ? empPersonalInfo.hairColorName : ''}}</td>
+                            </tr>
+                            <tr>
+                                <th>Eyes Color</th>
+                                <td>{{empPersonalInfo.eyesColorName ? empPersonalInfo.eyesColorName : ''}}</td>
                                 <th>TIN Number</th>
-                                <td>{{empPersonalInfo.tinNo}}</td>
+                                <td>{{empPersonalInfo.tinNo ? empPersonalInfo.tinNo : ''}}</td>
                             </tr>
                             <tr>
                                 <th>Driving License No</th>
@@ -157,6 +158,7 @@
     
             <!-- Employee Job Details Information -->
             <c-card class="shadow mb-4" *ngIf="empJobDetails">
+            <!-- <c-card class="shadow mb-4" *ngIf="empJobDetails"> -->
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Job Details</h5>
                 </c-card-header>

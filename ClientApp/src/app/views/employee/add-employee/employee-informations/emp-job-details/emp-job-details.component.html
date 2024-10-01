@@ -154,6 +154,20 @@
                 type="text"
                 />
             </c-col>
+            
+            <c-col [md]="3">
+                <label cLabel for="codeNo"
+                >Code No<span class="text-danger"></span></label>
+                <input
+                [(ngModel)]="empJobDetailsService.empJobDetails.codeNo"
+                name="codeNo"
+                #codeNo="ngModel"
+                placeholder="Code No"
+                cFormControl
+                id="codeNo"
+                type="text"
+                />
+            </c-col>
 
             <c-col [md]="3">
                 <label cLabel for="joiningDate"
@@ -169,6 +183,23 @@
             />
             @if(!joiningDate.valid&&joiningDate.touched){
             <div class="text-left text-danger">Joining Date is required</div>
+            }
+            </c-col>
+
+            <c-col [md]="3">
+                <label cLabel for="confirmationDate"
+                >Confirmation Date<span class="text-danger"></span></label
+            >
+            <input
+                [(ngModel)]="empJobDetailsService.empJobDetails.confirmationDate"
+                name="confirmationDate"
+                #confirmationDate="ngModel"
+                cFormControl
+                id="confirmationDate"
+                type="date"
+            />
+            @if(!confirmationDate.valid&&confirmationDate.touched){
+            <div class="text-left text-danger">Confirmation Date is required</div>
             }
             </c-col>
 

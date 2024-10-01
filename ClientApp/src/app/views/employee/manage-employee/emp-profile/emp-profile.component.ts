@@ -175,7 +175,12 @@ export class EmpProfileComponent  implements OnInit {
     
     getEmpEducationInfoByEmpId(){
       this.empEducationInfoService.findByEmpId(this.id).subscribe((res) => {
-        this.empEducationInfo = res;
+        if(res) {
+          this.empEducationInfo = res;
+        } else {
+          this.empEducationInfo = [new EmpEducationInfoModule()];
+        }
+        console.log(this.empEducationInfo)
       });
     }
     

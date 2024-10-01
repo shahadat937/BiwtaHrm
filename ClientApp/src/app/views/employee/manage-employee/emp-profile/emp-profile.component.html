@@ -87,77 +87,93 @@
                         <tbody>
                             <tr>
                                 <th>Employee Name Bangla</th>
-                                <td>{{empBasicInfo.firstNameBangla ? empBasicInfo.firstNameBangla : ''}} {{empBasicInfo.lastNameBangla ? empBasicInfo.lastNameBangla : ''}}</td>
+                                <td *ngIf="empBasicInfo?.firstNameBangla || empBasicInfo?.lastNameBangla; else emptyTd">
+                                    {{empBasicInfo.firstNameBangla}} {{empBasicInfo.lastNameBangla}}
+                                </td>
+                                <ng-template #emptyTd>
+                                    <td></td>
+                                </ng-template>
                                 <th>NID Number</th>
-                                <td>{{empBasicInfo.nid ? empBasicInfo.nid : ''}}</td>
+                                <td *ngIf="empBasicInfo?.nid; else emptyTd"></td>
                             </tr>
+                            
                             <tr>
                                 <th>Birth Reg. No</th>
-                                <td>{{empPersonalInfo.birthRegNo ? empPersonalInfo.birthRegNo : '' }}</td>
+                                <td *ngIf="empPersonalInfo?.birthRegNo; else emptyTd">{{empPersonalInfo.birthRegNo}}</td>
                                 <th>Nationality</th>
-                                <td>{{empPersonalInfo.nationalityName ? empPersonalInfo.nationalityName : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.nationalityName; else emptyTd">{{empPersonalInfo.nationalityName}}</td>
                             </tr>
+                            
                             <tr>
                                 <th>Date of Birth</th>
-                                <td>{{empBasicInfo.dateOfBirth ? empBasicInfo.dateOfBirth : ''}}</td>
+                                <td *ngIf="empBasicInfo?.dateOfBirth; else emptyTd">{{empBasicInfo.dateOfBirth}}</td>
                                 <th>Place of Birth</th>
-                                <td>{{empPersonalInfo.placeOfBirth ? empPersonalInfo.placeOfBirth : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.placeOfBirth; else emptyTd">{{empPersonalInfo.placeOfBirth}}</td>
                             </tr>
+                            
                             <tr>
                                 <th>Gender</th>
-                                <td>{{empPersonalInfo.genderName ? empPersonalInfo.genderName : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.genderName; else emptyTd">{{empPersonalInfo.genderName}}</td>
                                 <th>Marital Status</th>
-                                <td>{{empPersonalInfo.maritalStatusName ? empPersonalInfo.maritalStatusName : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.maritalStatusName; else emptyTd">{{empPersonalInfo.maritalStatusName}}</td>
                             </tr>
+                            
                             <tr>
                                 <th>Blood Group</th>
-                                <td>{{empPersonalInfo.bloodGroupName ? empPersonalInfo.bloodGroupName : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.bloodGroupName; else emptyTd">{{empPersonalInfo.bloodGroupName}}</td>
                                 <th>Religion</th>
-                                <td>{{empPersonalInfo.religionName ? empPersonalInfo.religionName : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.religionName; else emptyTd">{{empPersonalInfo.religionName}}</td>
                             </tr>
+                            
                             <tr>
                                 <th>Father Name</th>
-                                <td>{{empPersonalInfo.fatherName ? empPersonalInfo.fatherName : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.fatherName; else emptyTd">{{empPersonalInfo.fatherName}}</td>
                                 <th>Mother Name</th>
-                                <td>{{empPersonalInfo.motherName ? empPersonalInfo.motherName : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.motherName; else emptyTd">{{empPersonalInfo.motherName}}</td>
                             </tr>
+                            
                             <tr>
                                 <th>Guardian Name</th>
-                                <td>{{empPersonalInfo.gurdianName ? empPersonalInfo.gurdianName : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.gurdianName; else emptyTd">{{empPersonalInfo.gurdianName}}</td>
                                 <th>Height</th>
-                                <td>{{empPersonalInfo.height ? empPersonalInfo.height : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.height; else emptyTd">{{empPersonalInfo.height}}</td>
                             </tr>
+                            
                             <tr>
                                 <th>Weight</th>
-                                <td>{{empPersonalInfo.weight ? empPersonalInfo.weight : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.weight; else emptyTd">{{empPersonalInfo.weight}}</td>
                                 <th>Hair Color</th>
-                                <td>{{empPersonalInfo.hairColorName ? empPersonalInfo.hairColorName : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.hairColorName; else emptyTd">{{empPersonalInfo.hairColorName}}</td>
                             </tr>
+                            
                             <tr>
                                 <th>Eyes Color</th>
-                                <td>{{empPersonalInfo.eyesColorName ? empPersonalInfo.eyesColorName : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.eyesColorName; else emptyTd">{{empPersonalInfo.eyesColorName}}</td>
                                 <th>TIN Number</th>
-                                <td>{{empPersonalInfo.tinNo ? empPersonalInfo.tinNo : ''}}</td>
+                                <td *ngIf="empPersonalInfo?.tinNo; else emptyTd">{{empPersonalInfo.tinNo}}</td>
                             </tr>
+                            
                             <tr>
                                 <th>Driving License No</th>
-                                <td>{{empPersonalInfo.drivingLicenceNo}}</td>
+                                <td *ngIf="empPersonalInfo?.drivingLicenceNo; else emptyTd">{{empPersonalInfo.drivingLicenceNo}}</td>
                                 <th>Driving License Expire Date</th>
-                                <td>{{empPersonalInfo.drivingLicenceDate}}</td>
+                                <td *ngIf="empPersonalInfo?.drivingLicenceDate; else emptyTd">{{empPersonalInfo.drivingLicenceDate}}</td>
                             </tr>
+                            
                             <tr>
                                 <th>Passport Number</th>
-                                <td>{{empPersonalInfo.passportNo}}</td>
+                                <td *ngIf="empPersonalInfo?.passportNo; else emptyTd">{{empPersonalInfo.passportNo}}</td>
                                 <th>Passport Expire Date</th>
-                                <td>{{empPersonalInfo.passportExpireDate}}</td>
+                                <td *ngIf="empPersonalInfo?.passportExpireDate; else emptyTd">{{empPersonalInfo.passportExpireDate}}</td>
                             </tr>
+                            
                         </tbody>
                     </table>
                 </c-card-body>
             </c-card>
     
             <!-- Employee Job Details Information -->
-            <c-card class="shadow mb-4" *ngIf="empJobDetails">
+            <c-card class="shadow mb-4">
             <!-- <c-card class="shadow mb-4" *ngIf="empJobDetails"> -->
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Job Details</h5>
@@ -166,61 +182,76 @@
                     <table class="table">
                         <tbody>
                             <tr>
-                                <th>Office</th>
-                                <td>{{empJobDetails.officeName}}</td>
-                                <th>Joining Date</th>
-                                <td>{{empJobDetails.joiningDate}}</td>
+                                <th>Personal File No</th>
+                                <td *ngIf="empBasicInfo?.personalFileNo; else emptyTd">{{empBasicInfo.personalFileNo}}</td>
+                                <ng-template #emptyTd><td></td></ng-template>
+                                <th>Code No</th>
+                                <td *ngIf="empJobDetails?.codeNo; else emptyTd">{{empJobDetails.codeNo}}</td>
                             </tr>
                             <tr>
-                                <th>Department</th>
-                                <td>{{empJobDetails.departmentName}}</td>
-                                <th>First Department</th>
-                                <td>{{empJobDetails.firstDepartmentName}}</td>
+                                <th>Joining Date</th>
+                                <td *ngIf="empJobDetails?.joiningDate; else emptyTd">{{empJobDetails.joiningDate}}</td>
+                                <th>Confirmation Date</th>
+                                <td *ngIf="empJobDetails?.confirmationDate; else emptyTd">{{empJobDetails.confirmationDate}}</td>
+                            </tr>
+                            <tr>
+                                <th>Employee Type</th>
+                                <td *ngIf="empBasicInfo?.employeeTypeName; else emptyTd">{{empBasicInfo.employeeTypeName}}</td>
+                                <th>Designation</th>
+                                <td *ngIf="empJobDetails?.designationName; else emptyTd">{{empJobDetails.designationName}}</td>
                             </tr>
                             <tr>
                                 <th>Section</th>
-                                <td>{{empJobDetails.sectionName}}</td>
-                                <th>First Section</th>
-                                <td>{{empJobDetails.firstSectionName}}</td>
+                                <td *ngIf="empBasicInfo?.sectionName; else emptyTd">{{empBasicInfo.sectionName}}</td>
+                                <th>Department</th>
+                                <td *ngIf="empJobDetails?.departmentName; else emptyTd">{{empJobDetails.departmentName}}</td>
                             </tr>
                             <tr>
-                                <th>Designation</th>
-                                <td>{{empJobDetails.designationName}}</td>
                                 <th>First Designation</th>
-                                <td>{{empJobDetails.firstDesignationName}}</td>
+                                <td *ngIf="empJobDetails?.firstDesignationName; else emptyTd">{{empJobDetails.firstDesignationName}}</td>
+                                <th>First Section</th>
+                                <td *ngIf="empJobDetails?.firstSectionName; else emptyTd">{{empJobDetails.firstSectionName}}</td>
                             </tr>
                             <tr>
+                                <th>First Department</th>
+                                <td *ngIf="empJobDetails?.firstDepartmentName; else emptyTd">{{empJobDetails.firstDepartmentName}}</td>
                                 <th>Present Grade</th>
-                                <td>{{empJobDetails.presentGradeName}}</td>
+                                <td *ngIf="empJobDetails?.presentGradeName; else emptyTd">{{empJobDetails.presentGradeName}}</td>
+                            </tr>
+                            <tr>
+                                <th>Present Scale Level</th>
+                                <td *ngIf="empJobDetails?.presentScaleName; else emptyTd">{{empJobDetails.presentScaleName}}</td>
                                 <th>First Grade</th>
-                                <td>{{empJobDetails.firstGradeName}}</td>
+                                <td *ngIf="empJobDetails?.firstGradeName; else emptyTd">{{empJobDetails.firstGradeName}}</td>
                             </tr>
                             <tr>
-                                <th>Present Scale</th>
-                                <td>{{empJobDetails.presentScaleName}}</td>
-                                <th>First Scale</th>
-                                <td>{{empJobDetails.firstScaleName}}</td>
-                            </tr>
-                            <tr>
-                                <th>PRT Date</th>
-                                <td>{{empJobDetails.prlDate}}</td>
-                                <th>Retirment Date</th>
-                                <td>{{empJobDetails.retirementDate}}</td>
+                                <th>First Scale Level</th>
+                                <td *ngIf="empJobDetails?.firstScaleName; else emptyTd">{{empJobDetails.firstScaleName}}</td>
+                                <th>Basic Pay</th>
+                                <td *ngIf="empJobDetails?.basicPay; else emptyTd">{{empJobDetails.basicPay}}</td>
                             </tr>
                             <tr>
                                 <th>Service Status</th>
-                                <td *ngIf="empJobDetails.serviceStatus">On Service</td>
-                                <td *ngIf="!empJobDetails.serviceStatus">Out of Service</td>
-                                <th>Remark</th>
-                                <td>{{empJobDetails.remark}}</td>
+                                <td *ngIf="empJobDetails?.serviceStatus !== null; else emptyTd">
+                                    {{ empJobDetails.serviceStatus === true ? 'In Service' : 'Out of Service' }}
+                                </td>
+                                <th>PRL Date</th>
+                                <td *ngIf="empJobDetails?.prlDate; else emptyTd">{{empJobDetails.prlDate}}</td>
                             </tr>
-                        </tbody>
+                            <tr>
+                                <th>Retirement Date</th>
+                                <td *ngIf="empJobDetails?.retirementDate; else emptyTd">{{empJobDetails.retirementDate}}</td>
+                                <th>Remark</th>
+                                <td *ngIf="empJobDetails?.remark; else emptyTd">{{empJobDetails.remark}}</td>
+                            </tr>
+                        </tbody>                        
                     </table>
                 </c-card-body>
             </c-card>
     
             <!-- Employee Present Address Information -->
-            <c-card class="shadow mb-4" *ngIf="empPresentAddress">
+            <c-card class="shadow mb-4">
+            <!-- <c-card class="shadow mb-4" *ngIf="empPresentAddress"> -->
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Present Address Information</h5>
                 </c-card-header>
@@ -229,45 +260,48 @@
                         <tbody>
                             <tr>
                                 <th>Country</th>
-                                <td>{{empPresentAddress.countryName}}</td>
+                                <td *ngIf="empPresentAddress?.countryName; else emptyTd">{{empPresentAddress.countryName}}</td>
+                                <ng-template #emptyTd><td></td></ng-template>
                                 <th>Division</th>
-                                <td>{{empPresentAddress.divisionName}}</td>
+                                <td *ngIf="empPresentAddress?.divisionName; else emptyTd">{{empPresentAddress.divisionName}}</td>
                             </tr>
                             <tr>
                                 <th>District</th>
-                                <td>{{empPresentAddress.districtName}}</td>
+                                <td *ngIf="empPresentAddress?.districtName; else emptyTd">{{empPresentAddress.districtName}}</td>
                                 <th>Upazila</th>
-                                <td>{{empPresentAddress.upazilaName}}</td>
+                                <td *ngIf="empPresentAddress?.upazilaName; else emptyTd">{{empPresentAddress.upazilaName}}</td>
                             </tr>
                             <tr>
                                 <th>Thana</th>
-                                <td>{{empPresentAddress.thanaName}}</td>
+                                <td *ngIf="empPresentAddress?.thanaName; else emptyTd">{{empPresentAddress.thanaName}}</td>
                                 <th>Union</th>
-                                <td>{{empPresentAddress.unionName}}</td>
+                                <td *ngIf="empPresentAddress?.unionName; else emptyTd">{{empPresentAddress.unionName}}</td>
                             </tr>
                             <tr>
                                 <th>Ward</th>
-                                <td>{{empPresentAddress.wardName}}</td>
+                                <td *ngIf="empPresentAddress?.wardName; else emptyTd">{{empPresentAddress.wardName}}</td>
                                 <th>Zip Code</th>
-                                <td>{{empPresentAddress.zipCode}}</td>
+                                <td *ngIf="empPresentAddress?.zipCode; else emptyTd">{{empPresentAddress.zipCode}}</td>
                             </tr>
                             <tr>
-                                <th>Road No/Hose No</th>
-                                <td>{{empPresentAddress.address}}</td>
+                                <th>Road No/House No</th>
+                                <td *ngIf="empPresentAddress?.address; else emptyTd">{{empPresentAddress.address}}</td>
                                 <th>Email</th>
-                                <td>{{empPresentAddress.email}}</td>
+                                <td *ngIf="empPresentAddress?.email; else emptyTd">{{empPresentAddress.email}}</td>
                             </tr>
                             <tr>
                                 <th>Remark</th>
-                                <td>{{empPresentAddress.remark}}</td>
+                                <td *ngIf="empPresentAddress?.remark; else emptyTd">{{empPresentAddress.remark}}</td>
                             </tr>
                         </tbody>
+                        
                     </table>
                 </c-card-body>
             </c-card>
     
             <!-- Employee Permanent Address Information -->
-            <c-card class="shadow mb-4" *ngIf="empPermanentAddress">
+            <c-card class="shadow mb-4">
+            <!-- <c-card class="shadow mb-4" *ngIf="empPermanentAddress"> -->
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Permanent Address Information</h5>
                 </c-card-header>
@@ -276,45 +310,46 @@
                         <tbody>
                             <tr>
                                 <th>Country</th>
-                                <td>{{empPermanentAddress.countryName}}</td>
+                                <td *ngIf="empPermanentAddress?.countryName; else emptyTd">{{empPermanentAddress.countryName}}</td>
+                                <ng-template #emptyTd><td></td></ng-template>
                                 <th>Division</th>
-                                <td>{{empPermanentAddress.divisionName}}</td>
+                                <td *ngIf="empPermanentAddress?.divisionName; else emptyTd">{{empPermanentAddress.divisionName}}</td>
                             </tr>
                             <tr>
                                 <th>District</th>
-                                <td>{{empPermanentAddress.districtName}}</td>
+                                <td *ngIf="empPermanentAddress?.districtName; else emptyTd">{{empPermanentAddress.districtName}}</td>
                                 <th>Upazila</th>
-                                <td>{{empPermanentAddress.upazilaName}}</td>
+                                <td *ngIf="empPermanentAddress?.upazilaName; else emptyTd">{{empPermanentAddress.upazilaName}}</td>
                             </tr>
                             <tr>
                                 <th>Thana</th>
-                                <td>{{empPermanentAddress.thanaName}}</td>
+                                <td *ngIf="empPermanentAddress?.thanaName; else emptyTd">{{empPermanentAddress.thanaName}}</td>
                                 <th>Union</th>
-                                <td>{{empPermanentAddress.unionName}}</td>
+                                <td *ngIf="empPermanentAddress?.unionName; else emptyTd">{{empPermanentAddress.unionName}}</td>
                             </tr>
                             <tr>
                                 <th>Ward</th>
-                                <td>{{empPermanentAddress.wardName}}</td>
+                                <td *ngIf="empPermanentAddress?.wardName; else emptyTd">{{empPermanentAddress.wardName}}</td>
                                 <th>Zip Code</th>
-                                <td>{{empPermanentAddress.zipCode}}</td>
+                                <td *ngIf="empPermanentAddress?.zipCode; else emptyTd">{{empPermanentAddress.zipCode}}</td>
                             </tr>
                             <tr>
-                                <th>Road No/Hose No</th>
-                                <td>{{empPermanentAddress.address}}</td>
+                                <th>Road No/House No</th>
+                                <td *ngIf="empPermanentAddress?.address; else emptyTd">{{empPermanentAddress.address}}</td>
                                 <th>Email</th>
-                                <td>{{empPermanentAddress.email}}</td>
+                                <td *ngIf="empPermanentAddress?.email; else emptyTd">{{empPermanentAddress.email}}</td>
                             </tr>
                             <tr>
                                 <th>Remark</th>
-                                <td>{{empPermanentAddress.remark}}</td>
+                                <td *ngIf="empPermanentAddress?.remark; else emptyTd">{{empPermanentAddress.remark}}</td>
                             </tr>
-                        </tbody>
+                        </tbody>                        
                     </table>
                 </c-card-body>
             </c-card>
     
             <!-- Employee Education Information -->
-            @if(empEducationInfo.length>0){
+            <!-- @if(empEducationInfo.length>0){ -->
             <c-card class="shadow mb-4">
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Education Information</h5>
@@ -324,33 +359,35 @@
                         <tbody *ngFor="let item of empEducationInfo" class="mb-3">
                             <tr>
                                 <th>Exam Type</th>
-                                <td>{{item.examTypeName}}</td>
+                                <td *ngIf="item.examTypeName; else emptyTd">{{item.examTypeName}}</td>
+                                <ng-template #emptyTd><td></td></ng-template>
                                 <th>Board</th>
-                                <td>{{item.boardName}}</td>
+                                <td *ngIf="item.boardName; else emptyTd">{{item.boardName}}</td>
                             </tr>
                             <tr>
                                 <th>Group</th>
-                                <td>{{item.subGroupName}}</td>
+                                <td *ngIf="item.subGroupName; else emptyTd">{{item.subGroupName}}</td>
                                 <th>Result</th>
-                                <td>{{item.result}}</td>
+                                <td *ngIf="item.result; else emptyTd">{{item.result}}</td>
                             </tr>
                             <tr>
                                 <th>Duration</th>
-                                <td>{{item.courseDuration}}</td>
+                                <td *ngIf="item.courseDuration; else emptyTd">{{item.courseDuration}}</td>
                                 <th>Passing Year</th>
-                                <td>{{item.passingYear}}</td>
+                                <td *ngIf="item.passingYear; else emptyTd">{{item.passingYear}}</td>
                             </tr>
                             <tr class="table_mergin_bottom">
                                 <th>Remark</th>
-                                <td>{{item.remark}}</td>
+                                <td *ngIf="item.remark; else emptyTd">{{item.remark}}</td>
+                                <ng-template #emptyTd><td></td></ng-template>
                                 <th colspan="2"></th>
                             </tr>
-                        </tbody>
+                        </tbody>                        
                     </table>
                     
                 </c-card-body>
             </c-card>
-            }
+            <!-- } -->
 
             <!-- Employee Work History -->
             @if(empWorkHistory.length>0 || empOtherResponsibility.length>0){

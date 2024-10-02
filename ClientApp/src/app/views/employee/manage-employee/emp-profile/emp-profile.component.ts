@@ -163,24 +163,33 @@ export class EmpProfileComponent  implements OnInit {
     
     getEmpSpouseInfoByEmpId(){
       this.empSpouseInfoService.findByEmpId(this.id).subscribe((res) => {
-        this.empSpouseInfo = res;
+        if(res && res.length > 0){
+          this.empSpouseInfo = res;
+        }
+        else {
+          this.empSpouseInfo = [new EmpSpouseInfoModule()];
+        }
       });
     }
     
     getEmpChildInfoByEmpId(){
       this.empChildInfoService.findByEmpId(this.id).subscribe((res) => {
-        this.empChildInfo = res;
+        if(res && res.length > 0){
+          this.empChildInfo = res;
+        }
+        else {
+          this.empChildInfo = [new EmpChildInfoModule()];
+        }
       });
     }
     
     getEmpEducationInfoByEmpId(){
       this.empEducationInfoService.findByEmpId(this.id).subscribe((res) => {
-        if(res) {
+        if(res && res.length > 0) {
           this.empEducationInfo = res;
         } else {
           this.empEducationInfo = [new EmpEducationInfoModule()];
         }
-        console.log(this.empEducationInfo)
       });
     }
     
@@ -192,13 +201,23 @@ export class EmpProfileComponent  implements OnInit {
     
     getEmpBankInfoByEmpId(){
       this.empBankInfoService.findByEmpId(this.id).subscribe((res) => {
-        this.empBankInfo = res;
+        if(res && res.length > 0){
+          this.empBankInfo = res;
+        }
+        else {
+          this.empBankInfo = [new EmpBankInfoModule()];
+        }
       });
     }
     
     getEmpLanguageInfoByEmpId(){
       this.empLanguageInfoService.findByEmpId(this.id).subscribe((res) => {
-        this.empLanguageInfo = res;
+        if(res && res.length > 0){
+          this.empLanguageInfo = res;
+        }
+        else {
+          this.empLanguageInfo = [new EmpLanguageInfoModule()];
+        }
       });
     }
     
@@ -216,7 +235,12 @@ export class EmpProfileComponent  implements OnInit {
     
     getEmpWorkHistory(){
       this.empWorkHistoryService.findByEmpId(this.id).subscribe((res) => {
-        this.empWorkHistory = res;
+        if(res && res.length > 0){
+          this.empWorkHistory = res;
+        }
+        else {
+          this.empWorkHistory = [new EmpWorkHistory()];
+        }
       });
     }
 

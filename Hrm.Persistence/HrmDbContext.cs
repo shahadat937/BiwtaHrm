@@ -1277,6 +1277,7 @@ namespace Hrm.Persistence
         public virtual DbSet<ResponsibilityType> ResponsibilityType { get; set; } = null!;
         public virtual DbSet<EmpOtherResponsibility> EmpOtherResponsibility { get; set; } = null!;
         public virtual DbSet<SiteSetting> SiteSetting { get; set; } = null!;
+        public virtual DbSet<CourseDuration> CourseDuration { get; set; } = null!;
 
     }
 }

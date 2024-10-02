@@ -116,6 +116,7 @@ using Hrm.Application.DTOs.EmpWorkHistory;
 using Hrm.Application.DTOs.ResponsibilityType;
 using Hrm.Application.DTOs.EmpOtherResponsibility;
 using Hrm.Application.DTOs.SiteSetting;
+using Hrm.Application.DTOs.CourseDuration;
 
 
 
@@ -670,6 +671,10 @@ namespace Hrm.Application.Profiles
 
             CreateMap<SiteSetting, SiteSettingDto>().ReverseMap();
             //CreateMap<SiteSetting, CreateSiteSettingDto>().ReverseMap();
+
+
+            CreateMap<CourseDuration, CourseDurationDto>().ReverseMap();
+            CreateMap<CourseDuration, CreateCourseDurationDto>().ReverseMap();
 
 
         }

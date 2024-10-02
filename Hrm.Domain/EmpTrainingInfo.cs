@@ -16,7 +16,7 @@ namespace Hrm.Domain
         public int? InstituteId { get; set; }
         public DateOnly? FromDate { get; set; }
         public DateOnly? ToDate { get; set; }
-        public string? TrainingDuration { get; set; }
+        public string? TrainingDurationId { get; set; }
         public string? FileUrl { get; set; }
         public int? CountryId { get; set; }
         public string? Remark { get; set; }

@@ -11,5 +11,6 @@ namespace Hrm.Application.Features.Scale.Requests.Queries
     public class GetSelectScaleRequest : IRequest<List<SelectedModel>>
     {
         public int GradeId { get; set; }
+       
     }
 }

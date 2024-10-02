@@ -173,6 +173,9 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.dataSource.data.splice(index, 1);
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
+              this.toastr.success('Delete sucessfully ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
             },
             (err) => {
               this.toastr.error('Somethig Wrong ! ', ` `, {

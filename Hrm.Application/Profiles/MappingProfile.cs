@@ -231,8 +231,12 @@ namespace Hrm.Application.Profiles
             CreateMap<Scale, ScaleDto>().ReverseMap();
             CreateMap<Scale, CreateScaleDto>().ReverseMap();
 
+            CreateMap<Scale, ScaleDto>()
+                .ForMember(dest => dest.GradeName, opt => opt.MapFrom(src => src.Grade.GradeName));
+
             CreateMap<ScaleGradeView, ScaleGradeViewDto>().ReverseMap();
             CreateMap<ScaleGradeView, CreateScaleGradeViewDto>().ReverseMap();
+
 
             CreateMap<Grade_cls_type_Vw, Grade_cls_type_VwDto>().ReverseMap();
             CreateMap<Grade_cls_type_Vw, CreateGrade_cls_type_VwDto>().ReverseMap();

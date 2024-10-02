@@ -13,12 +13,15 @@ namespace Hrm.Domain
         public string? ScaleName { get; set; }
         public int BasicPay { get; set; }
         public int GradeId { get; set; }
+
+        
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
 
         public virtual ICollection<EmpJobDetail>? EmpJobDetail { get; set; }
         public virtual ICollection<EmpPromotionIncrement>? CurrentEmpPromotionIncrement { get; set; }
         public virtual ICollection<EmpPromotionIncrement>? UpdateEmpPromotionIncrement { get; set; }
+        public virtual Grade Grade { get; set; }
 
     }
 }

@@ -359,27 +359,26 @@
                         <tbody *ngFor="let item of empEducationInfo" class="mb-3">
                             <tr>
                                 <th>Exam Type</th>
-                                <td *ngIf="item.examTypeName; else emptyTd">{{item.examTypeName}}</td>
+                                <td *ngIf="item?.examTypeName; else emptyTd">{{item.examTypeName}}</td>
                                 <ng-template #emptyTd><td></td></ng-template>
-                                <th>Board</th>
-                                <td *ngIf="item.boardName; else emptyTd">{{item.boardName}}</td>
+                                <th>Board/University</th>
+                                <td *ngIf="item?.boardName; else emptyTd">{{item.boardName}}</td>
                             </tr>
                             <tr>
-                                <th>Group</th>
-                                <td *ngIf="item.subGroupName; else emptyTd">{{item.subGroupName}}</td>
+                                <th>Subject/Group</th>
+                                <td *ngIf="item?.subGroupName; else emptyTd">{{item.subGroupName}}</td>
                                 <th>Result</th>
-                                <td *ngIf="item.result; else emptyTd">{{item.result}}</td>
+                                <td *ngIf="item?.result; else emptyTd">{{item.result}}</td>
                             </tr>
                             <tr>
-                                <th>Duration</th>
-                                <td *ngIf="item.courseDuration; else emptyTd">{{item.courseDuration}}</td>
+                                <th>Course Duration</th>
+                                <td *ngIf="item?.courseDuration; else emptyTd">{{item.courseDuration}}</td>
                                 <th>Passing Year</th>
-                                <td *ngIf="item.passingYear; else emptyTd">{{item.passingYear}}</td>
+                                <td *ngIf="item?.passingYear; else emptyTd">{{item.passingYear}}</td>
                             </tr>
                             <tr class="table_mergin_bottom">
                                 <th>Remark</th>
-                                <td *ngIf="item.remark; else emptyTd">{{item.remark}}</td>
-                                <ng-template #emptyTd><td></td></ng-template>
+                                <td *ngIf="item?.remark; else emptyTd">{{item.remark}}</td>
                                 <th colspan="2"></th>
                             </tr>
                         </tbody>                        

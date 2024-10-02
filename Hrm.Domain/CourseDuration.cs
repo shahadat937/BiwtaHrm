@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace Hrm.Domain
 {
-    public class Institute : BaseDomainEntity
+    public class CourseDuration : BaseDomainEntity
     {
-        public int InstituteId { get; set; }
-        public string InstituteName { get; set; }
-        public int? MenuPosition { get; set; }
+        public int Id { get; set; }
+        public string Duration { get; set; }
+        public int? Remark { get; set; }
         public bool IsActive { get; set; }
+
         public virtual ICollection<EmpTrainingInfo>? EmpTrainingInfo { get; set; }
+
     }
 }

@@ -133,5 +133,7 @@ namespace Hrm.Application
         public const string ResponsibilityType = HRMRoutePrefixBase + "responsibilityType";
         public const string EmpOtherResponsibility = HRMRoutePrefixBase + "empOtherResponsibility";
         public const string SiteSetting = HRMRoutePrefixBase + "siteSetting";
+        public const string CourseDuration = HRMRoutePrefixBase + "courseDuration";
+        public const string EmpTrainingInfo = HRMRoutePrefixBase + "empTrainingInfo";
     }
 }

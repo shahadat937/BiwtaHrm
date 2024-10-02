@@ -1155,6 +1155,35 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.DesignationId);
             });
 
+            modelBuilder.Entity<EmpTrainingInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(e => e.EmpTrainingInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.TrainingType)
+                    .WithMany(e => e.EmpTrainingInfo)
+                    .HasForeignKey(e => e.TrainingTypeId);
+
+                entity.HasOne(e => e.TrainingName)
+                    .WithMany(e => e.EmpTrainingInfo)
+                    .HasForeignKey(e => e.TrainingNameId);
+
+                entity.HasOne(e => e.Institute)
+                    .WithMany(e => e.EmpTrainingInfo)
+                    .HasForeignKey(e => e.InstituteId);
+
+                entity.HasOne(e => e.CourseDuration)
+                    .WithMany(e => e.EmpTrainingInfo)
+                    .HasForeignKey(e => e.TrainingDurationId);
+
+                entity.HasOne(e => e.Country)
+                    .WithMany(e => e.EmpTrainingInfo)
+                    .HasForeignKey(e => e.CountryId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -1277,6 +1306,7 @@ namespace Hrm.Persistence
         public virtual DbSet<ResponsibilityType> ResponsibilityType { get; set; } = null!;
         public virtual DbSet<EmpOtherResponsibility> EmpOtherResponsibility { get; set; } = null!;
         public virtual DbSet<SiteSetting> SiteSetting { get; set; } = null!;
+        public virtual DbSet<CourseDuration> CourseDuration { get; set; } = null!;
 
     }
 }

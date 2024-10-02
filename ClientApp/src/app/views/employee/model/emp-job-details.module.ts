@@ -9,6 +9,8 @@ export class EmpJobDetailsModule {
   presentScaleId: any;
   basicPay: number;
   joiningDate:  Date | null;
+  confirmationDate:  Date | null = null;
+  codeNo: string = '';
   firstGradeId: any;
   firstScaleId: any;
   firstDepartmentId: any;

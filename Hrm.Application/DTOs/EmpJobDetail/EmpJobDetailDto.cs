@@ -18,6 +18,8 @@ namespace Hrm.Application.DTOs.EmpJobDetail
         public int? PresentScaleId { get; set; }
         public int? BasicPay { get; set; }
         public DateOnly? JoiningDate { get; set; }
+        public string? CodeNo { get; set; }
+        public DateOnly? ConfirmationDate { get; set; }
         public int? FirstGradeId { get; set; }
         public int? FirstScaleId { get; set; }
         public int? FirstDepartmentId { get; set; }

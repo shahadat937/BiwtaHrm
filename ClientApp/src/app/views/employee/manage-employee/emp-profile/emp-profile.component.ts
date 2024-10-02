@@ -116,7 +116,7 @@ export class EmpProfileComponent  implements OnInit {
       this.getEmpSpouseInfoByEmpId();
       this.getEmpChildInfoByEmpId();
       this.getEmpEducationInfoByEmpId();
-      this.getEmpPsiTrainingInfoByEmpId(); 
+      // this.getEmpPsiTrainingInfoByEmpId(); 
       this.getEmpBankInfoByEmpId();
       this.getEmpLanguageInfoByEmpId();
       this.getEmpForeignTourInfoByEmpId();
@@ -193,11 +193,11 @@ export class EmpProfileComponent  implements OnInit {
       });
     }
     
-    getEmpPsiTrainingInfoByEmpId(){
-      this.empPsiTrainingInfoService.findByEmpId(this.id).subscribe((res) => {
-        this.empPsiTrainingInfo = res;
-      });
-    }
+    // getEmpPsiTrainingInfoByEmpId(){
+    //   this.empPsiTrainingInfoService.findByEmpId(this.id).subscribe((res) => {
+    //     this.empPsiTrainingInfo = res;
+    //   });
+    // }
     
     getEmpBankInfoByEmpId(){
       this.empBankInfoService.findByEmpId(this.id).subscribe((res) => {

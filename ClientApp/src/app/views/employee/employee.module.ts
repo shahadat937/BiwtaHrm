@@ -88,6 +88,7 @@ import { EmpProfileComponent } from './manage-employee/emp-profile/emp-profile.c
 import { EmpWorkHistoryComponent } from './add-employee/employee-informations/emp-work-history/emp-work-history.component';
 import { EmpOtherResponsibilityComponent } from './add-employee/employee-informations/emp-other-responsibility/emp-other-responsibility.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { EmpTrainingInfoComponent } from './add-employee/employee-informations/emp-training-info/emp-training-info.component';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -121,6 +122,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     EmpProfileComponent,
     EmpWorkHistoryComponent,
     EmpOtherResponsibilityComponent,
+    EmpTrainingInfoComponent,
   ],
   imports: [
     CommonModule,

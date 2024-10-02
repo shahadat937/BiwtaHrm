@@ -140,6 +140,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RewardPunishmentTypeComponent } from './reward-punishment-type/reward-punishment-type.component';
 import { RewardPunishmentPriorityComponent } from './reward-punishment-priority/reward-punishment-priority.component';
 import { ResponsibilityTypeComponent } from './responsibility-type/responsibility-type.component';
+import { CourseDurationComponent } from './course-duration/course-duration.component';
 
 
 
@@ -212,6 +213,7 @@ import { ResponsibilityTypeComponent } from './responsibility-type/responsibilit
     RewardPunishmentTypeComponent,
     RewardPunishmentPriorityComponent,
     ResponsibilityTypeComponent,
+    CourseDurationComponent,
   ],
   imports: [
     CommonModule,

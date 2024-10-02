@@ -60,6 +60,7 @@ import { OrganogramComponent } from './organogram/organogram.component';
 import { ReleaseTypeComponent } from './release-type/release-type.component';
 import { RewardPunishmentSetupComponent } from './reward-punishment-setup/reward-punishment-setup.component';
 import { ResponsibilityTypeComponent } from './responsibility-type/responsibility-type.component';
+import { CourseDurationComponent } from './course-duration/course-duration.component';
 
 
 const routes: Routes = [
@@ -668,7 +669,13 @@ const routes: Routes = [
           title: 'Update Release Type',
         },
       },
-
+      {
+        path: 'courseDuration',
+        component: CourseDurationComponent,
+        data: {
+          title: 'Course Duration',
+        },
+      },
     ]
   },
   {

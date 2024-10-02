@@ -10,8 +10,8 @@ namespace Hrm.Domain
     public class CourseDuration : BaseDomainEntity
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int? MenuPosition { get; set; }
+        public string Duration { get; set; }
+        public int? Remark { get; set; }
         public bool IsActive { get; set; }
 
 

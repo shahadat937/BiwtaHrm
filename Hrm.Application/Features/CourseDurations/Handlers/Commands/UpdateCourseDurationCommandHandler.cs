@@ -32,14 +32,14 @@ namespace Hrm.Application.Features.CourseDuration.Handlers.Commands
             var response = new BaseCommandResponse();
 
 
-            IQueryable<Hrm.Domain.CourseDuration> CourseDurations = _CourseDurationRepository.Where(x => x.Name == request.CourseDurationDto.Name && x.Id != request.CourseDurationDto.Id);
+            IQueryable<Hrm.Domain.CourseDuration> CourseDurations = _CourseDurationRepository.Where(x => x.Duration == request.CourseDurationDto.Duration && x.Id != request.CourseDurationDto.Id);
 
 
 
             if (CourseDurations.Any())
             {
                 response.Success = false;
-                response.Message = $"Update Failed '{request.CourseDurationDto.Name}' already exists.";
+                response.Message = $"Update Failed '{request.CourseDurationDto.Duration}' already exists.";
             }
 
             else

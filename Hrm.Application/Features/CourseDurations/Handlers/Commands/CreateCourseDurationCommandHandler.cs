@@ -23,7 +23,7 @@ namespace Hrm.Application.Features.CourseDuration.Handlers.Commands
         {
             var response = new BaseCommandResponse();
 
-            if (request.CourseDurationDto.Name == null)
+            if (request.CourseDurationDto.Duration == null)
             {
                 response.Success = false;
                 response.Message = "Creation Failed! CourseDuration Name is Requires";
@@ -33,7 +33,7 @@ namespace Hrm.Application.Features.CourseDuration.Handlers.Commands
                 if (CourseDurationNameExists(request))
                 {
                     response.Success = false;
-                    response.Message = $"Creation Failed '{request.CourseDurationDto.Name}' already exists.";
+                    response.Message = $"Creation Failed '{request.CourseDurationDto.Duration}' already exists.";
                     
                 }
                 else
@@ -55,7 +55,7 @@ namespace Hrm.Application.Features.CourseDuration.Handlers.Commands
         private bool CourseDurationNameExists(CreateCourseDurationCommand request)
         {
 
-            IQueryable<Domain.CourseDuration> CourseDurations = _CourseDurationRepository.Where(x => x.Name == request.CourseDurationDto.Name);
+            IQueryable<Domain.CourseDuration> CourseDurations = _CourseDurationRepository.Where(x => x.Duration == request.CourseDurationDto.Duration);
 
              return CourseDurations.Any();
         }

@@ -24,7 +24,7 @@ namespace Hrm.Application.Features.CourseDurations.Handlers.Queries
             ICollection<Hrm.Domain.CourseDuration> CourseDurations = await _CourseDurationRepository.FilterAsync(x => x.IsActive);
             List<SelectedModel> selectModels = CourseDurations.Select(x => new SelectedModel 
             {
-                Name = x.Name.ToString(),
+                Name = x.Duration.ToString(),
                 Id = x.Id
             }).ToList();
             return selectModels;

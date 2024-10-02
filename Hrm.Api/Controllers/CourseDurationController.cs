@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
 
-    [Route(HrmRoutePrefix.RewardPunishmentType)]
+    [Route(HrmRoutePrefix.CourseDuration)]
     [ApiController]
     [Authorize]
     public class CourseDurationController : ControllerBase

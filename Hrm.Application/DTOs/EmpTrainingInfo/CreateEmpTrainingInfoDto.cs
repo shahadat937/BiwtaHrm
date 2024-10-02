@@ -16,9 +16,8 @@ namespace Hrm.Application.DTOs.EmpTrainingInfo
         public int? InstituteId { get; set; }
         public DateOnly? FromDate { get; set; }
         public DateOnly? ToDate { get; set; }
-        public string? TrainingDuration { get; set; }
+        public int? TrainingDurationId { get; set; }
         public string? FileUrl { get; set; }
-        public IFormFile? File { get; set; }
         public int? CountryId { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }

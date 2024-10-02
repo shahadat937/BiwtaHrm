@@ -14,6 +14,7 @@ namespace Hrm.Domain
         public int? Remark { get; set; }
         public bool IsActive { get; set; }
 
+        public virtual ICollection<EmpTrainingInfo>? EmpTrainingInfo { get; set; }
 
     }
 }

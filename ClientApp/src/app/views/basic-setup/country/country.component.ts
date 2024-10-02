@@ -49,6 +49,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('countryId');
+      
       if (id) {
         this.btnText = 'Update';
         this.headerText = 'Update Country';
@@ -155,6 +156,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loading = true;
     this.countryServices.cachedData = [];
     const id = form.value.countryId;
+  
     const action$ = id
       ? this.countryServices.update(id, form.value)
       : this.countryServices.submit(form.value);

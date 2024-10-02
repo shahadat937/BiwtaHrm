@@ -20,6 +20,7 @@ namespace Hrm.Domain
         public virtual ICollection<EmpJobDetail>? FirstEmpJobDetail { get; set; }
         public virtual ICollection<EmpPromotionIncrement>? CurrentEmpPromotionIncrement { get; set; }
         public virtual ICollection<EmpPromotionIncrement>? UpdateEmpPromotionIncrement { get; set; }
+        public virtual ICollection<Scale>? Scales { get; set; }
 
     }
 }

@@ -3,7 +3,9 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Scale;
 using Hrm.Application.Features.Scales.Requests.Queries;
 using Hrm.Application.Features.Scales.Requests.Queries;
+using Hrm.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,10 @@ namespace Hrm.Application.Features.Scales.Handlers.Queries
 
         public async Task<object> Handle(GetScaleRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Hrm.Domain.Scale> Scale = _scaleRepository.Where(x => true);
+            var Scale = await _scaleRepository.Where(x => true)
+                .Include(x => x.Grade)
+                .ToListAsync(cancellationToken);
+
 
             var BloodGroupDtos = _mapper.Map<List<ScaleDto>>(Scale);
 

@@ -19,6 +19,7 @@ namespace Hrm.Domain
         public bool IsActive { get; set; }
 
         public virtual ICollection<EmpJobDetail>? EmpJobDetail { get; set; }
+        public virtual ICollection<EmpJobDetail>? FirstEmpJobDetail { get; set; }
         public virtual ICollection<EmpPromotionIncrement>? CurrentEmpPromotionIncrement { get; set; }
         public virtual ICollection<EmpPromotionIncrement>? UpdateEmpPromotionIncrement { get; set; }
         public virtual Grade Grade { get; set; }

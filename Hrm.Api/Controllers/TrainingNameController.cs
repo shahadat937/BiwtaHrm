@@ -13,11 +13,13 @@ using Hrm.Domain;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.TrainingName)]
     [ApiController]
+    [Authorize]
     public class TrainingNameController : ControllerBase
     {
         private readonly IMediator _mediator;

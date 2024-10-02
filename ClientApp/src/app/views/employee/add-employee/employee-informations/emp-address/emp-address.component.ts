@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
-import { CountryService } from 'src/app/views/basic-setup/service/country.service';
+import { CountryService } from 'src/app/views/basic-setup/service/Country.service';
 import { DistrictService } from 'src/app/views/basic-setup/service/district.service';
 import { DivisionService } from 'src/app/views/basic-setup/service/division.service';
 import { ThanaService } from 'src/app/views/basic-setup/service/thana.service';
@@ -79,13 +79,12 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
   getAddressInformation() {
     this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
       if (res) {
-        console.log("present: ", res)
         res.countryId ? this.onPresentAddressDivisionNamesChangeByCounterId(res.countryId) : null;
         res.divisionId ? this.onPresentAddressDistrictNamesChangeByDivisionId(res.divisionId) : null;
         res.districtId ? this.onPresentAddressUpazilaNamesChangeByDistrictId(res.districtId) : null;
         res.upazilaId ? this.onPresentAddressThanaNamesChangeByUpazilaId(res.upazilaId) : null;
-        res.thanaId ? this.onPresentAddressUnionNamesChangeByThanaId(res.thanaId) : null;
-        res.unionId ? this.onPresentAddressWardNamesChangeByUnionId(res.unionId) : null;
+        // res.thanaId ? this.onPresentAddressUnionNamesChangeByThanaId(res.thanaId) : null;
+        // res.unionId ? this.onPresentAddressWardNamesChangeByUnionId(res.unionId) : null;
         this.EmpPresentAddressForm?.form.patchValue(res);
         this.headerText = 'Update Present Address';
         this.btnText = 'Update';
@@ -99,13 +98,12 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
     this.empPermanentAddressService.findByEmpId(this.empId).subscribe((res) => {
       this.presentAddressStatus = res ? false : true;
       if(res){
-        console.log("permanent: ", res)
         res.countryId ? this.onPermanentAddressDivisionNamesChangeByCounterId(res.countryId) : null;
         res.divisionId ? this.onPermanentAddressDistrictNamesChangeByDivisionId(res.divisionId) : null;
         res.districtId ? this.onPermanentAddressUpazilaNamesChangeByDistrictId(res.districtId) : null;
         res.upazilaId ? this.onPermanentAddressThanaNamesChangeByUpazilaId(res.upazilaId) : null;
-        res.thanaId ? this.onPermanentAddressUnionNamesChangeByThanaId(res.thanaId) : null;
-        res.unionId ? this.onPermanentAddressWardNamesChangeByUnionId(res.unionId) : null;
+        // res.thanaId ? this.onPermanentAddressUnionNamesChangeByThanaId(res.thanaId) : null;
+        // res.unionId ? this.onPermanentAddressWardNamesChangeByUnionId(res.unionId) : null;
         this.EmpPermanentAddressForm?.form.patchValue(res);
       }
       else {
@@ -123,8 +121,8 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
       districtId: null,
       upazilaId: null,
       thanaId: null,
-      unionId: null,
-      wardId: null,
+      // unionId: null,
+      // wardId: null,
       zipCode: null,
       address: "",
       email: "",
@@ -150,8 +148,6 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
       districtId: null,
       upazilaId: null,
       thanaId: null,
-      unionId: null,
-      wardId: null,
       zipCode: null,
       address: "",
       email: "",
@@ -190,17 +186,17 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
       if(this.EmpPresentAddressForm.form.value.upazilaId){
         this.onPermanentAddressThanaNamesChangeByUpazilaId(this.EmpPresentAddressForm.form.value.upazilaId);
       }
-      if(this.EmpPresentAddressForm.form.value.thanaId){
-        this.onPermanentAddressUnionNamesChangeByThanaId(this.EmpPresentAddressForm.form.value.thanaId);
-      }
-      if(this.EmpPresentAddressForm.form.value.unionId){
-        this.onPermanentAddressWardNamesChangeByUnionId(this.EmpPresentAddressForm.form.value.unionId);
-      }
+      // if(this.EmpPresentAddressForm.form.value.thanaId){
+      //   this.onPermanentAddressUnionNamesChangeByThanaId(this.EmpPresentAddressForm.form.value.thanaId);
+      // }
+      // if(this.EmpPresentAddressForm.form.value.unionId){
+      //   this.onPermanentAddressWardNamesChangeByUnionId(this.EmpPresentAddressForm.form.value.unionId);
+      // }
       
       this.EmpPermanentAddressForm.form.patchValue(formData);
     } else {
       this.sameAsPresentAddress = false;
-      this.EmpPermanentAddressForm.form.reset();
+      this.resetPermanentAddressForm();
     }
   }
 
@@ -282,13 +278,13 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
       ? this.empPresentAddressService.updateEmpPresentInfo(presentAddressid, EmpPresentAddressForm.value)
       : this.empPresentAddressService.saveEmpPresentInfo(EmpPresentAddressForm.value);
       
-      this.empPermanentAddressService.cachedData = [];
-      const permanentAddressid = EmpPermanentAddressForm.value.id;
-      console.log("Present Address : ", EmpPresentAddressForm.value)
-      console.log("Permanent Address : ", EmpPermanentAddressForm.value)
-      const permanentAddressaction$ = permanentAddressid
-        ? this.empPermanentAddressService.updateEmpPermanentInfo(permanentAddressid, EmpPermanentAddressForm.value)
-        : this.empPermanentAddressService.saveEmpPermanentInfo(EmpPermanentAddressForm.value);
+    this.empPermanentAddressService.cachedData = [];
+    const permanentAddressid = EmpPermanentAddressForm.value.id;
+    const permanentAddressaction$ = permanentAddressid
+      ? this.empPermanentAddressService.updateEmpPermanentInfo(permanentAddressid, EmpPermanentAddressForm.value)
+      : this.empPermanentAddressService.saveEmpPermanentInfo(EmpPermanentAddressForm.value);
+
+    this.subscription = permanentAddressaction$.subscribe((response: any) => {});
 
     this.subscription = presentAddressaction$.subscribe((response: any) => {
       if (response.success) {
@@ -296,6 +292,8 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
+        this.sameAsPresentAddress = false;
+        this.getAddressInformation();
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',

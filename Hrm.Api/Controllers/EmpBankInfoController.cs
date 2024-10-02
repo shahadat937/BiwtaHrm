@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpBankInfo;
 using Hrm.Application.Features.EmpBankInfos.Requests.Commands;
 using Hrm.Application.Features.EmpBankInfos.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpBankInfo)]
     [ApiController]
+    [Authorize]
     public class EmpBankInfoController : ControllerBase
     {
         private readonly IMediator _mediator;

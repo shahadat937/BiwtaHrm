@@ -47,7 +47,7 @@
                 <input type="date" 
                 required
                 #startDate = "ngModel"
-                (change)="getLeaveAmount()"
+                (change)="onDateChange()"
                 name="fromDate"
                 [(ngModel)]="this.addLeaveService.addLeaveModel.fromDate"
                 cFormControl id="startDate" />
@@ -59,7 +59,7 @@
                 <label cLabel for="endDate">End Date</label>
                 <input type="date" 
                 required
-                (change)="getLeaveAmount()"
+                (change)="onDateChange()"
                 name="toDate"
                 #endDate = "ngModel"
                 [(ngModel)]="this.addLeaveService.addLeaveModel.toDate"
@@ -70,21 +70,21 @@
                 }
               </c-col>
               <c-col [md]="4">
-                <label cLabel for="totalLeaveDue">Total Leave Due</label>
+                <label cLabel for="totalLeaveDays">Total Leave</label>
+                <input type="text" 
+                readonly
+                [(ngModel)] = "totalLeave"
+                name="totalLeaveDays" 
+                cFormControl id="totalLeaveDays" />
+              </c-col>
+              <c-col [md]="4">
+                <label cLabel for="totalLeaveDue">Leave Due</label>
                 <input 
                 name="totalLeaveDue" 
                 [(ngModel)]="totalDue"
                 type="text" 
                 readonly
                 cFormControl id="totalLeaveDue" />
-              </c-col>
-              <c-col [md]="4">
-                <label cLabel for="totalLeaveDays">Total Leave Days</label>
-                <input type="text" 
-                readonly
-                [(ngModel)] = "totalLeave"
-                name="totalLeaveDays" 
-                cFormControl id="totalLeaveDays" />
               </c-col>
               <c-col [md]="4">
                 <label cLabel for="leavePurpose">Leave Purpose</label>
@@ -110,7 +110,7 @@
             
           </div>
   
-          <div class="mt-4">
+          <div class="mt-4" cCollapse [visible]="addLeaveService.addLeaveModel.isForeignLeave">
             <h5 class="mb-3">Foreign Leave</h5>
             <c-row>
               <c-col [md]="4">

@@ -6,11 +6,13 @@ using Hrm.Application;
 using Hrm.Application.Features.Workday.Requests.Queries;
 using Hrm.Application.Features.Workday.Requests.Commands;
 using Hrm.Application.Contracts.Persistence;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Workday)]
     [ApiController]
+    [Authorize]
     public class WorkdayController : Controller
     {
         private readonly IMediator _mediator;

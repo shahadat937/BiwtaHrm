@@ -170,7 +170,8 @@ export class EmpBankInfoComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
-        this.cancel();
+        // this.cancel();
+        this.getEmployeeBankInfoByEmpId();
       } else {
         this.toastr.warning('', `${res.message}`, {
           positionClass: 'toast-top-right',

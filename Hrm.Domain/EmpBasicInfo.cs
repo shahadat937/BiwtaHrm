@@ -40,6 +40,7 @@ namespace Hrm.Domain
         public virtual ICollection<EmpSpouseInfo>? EmpSpouseInfo { get; set; }
         public virtual ICollection<EmpChildInfo>? EmpChildInfo { get; set; }
         public virtual ICollection<EmpEducationInfo>? EmpEducationInfo { get; set; }
+        public virtual ICollection<EmpPhotoSign>? EmpPhotoSign { get; set; }
         public virtual ICollection<EmpPsiTrainingInfo>? EmpPsiTrainingInfo { get; set; }
         public virtual ICollection<EmpBankInfo>? EmpBankInfo { get; set; }
         public virtual ICollection<EmpLanguageInfo>? EmpLanguageInfo { get; set; }
@@ -52,6 +53,11 @@ namespace Hrm.Domain
         public virtual ICollection<EmpTransferPosting>? TransferApproveTransfer { get; set; }
         public virtual ICollection<EmpTransferPosting>? DeptReleaseTransfer { get; set; }
         public virtual ICollection<EmpTransferPosting>? JoiningReportingTransfer { get; set; }
+        
+        public virtual ICollection<EmpRewardPunishment>? EmpRewardPunishmentEmp { get; set; }
+        public virtual ICollection<EmpRewardPunishment>? EmpRewardPunishmentOrderBy { get; set; }
+        public virtual ICollection<EmpRewardPunishment>? EmpRewardPunishmentApplicationBy { get; set; }
+        public virtual ICollection<EmpRewardPunishment>? EmpRewardPunishmentApproveBy { get; set; }
 
         public virtual ICollection<EmpPromotionIncrement>? EmpPromotionIncrement { get; set; }
         public virtual ICollection<EmpPromotionIncrement>? ApplicationByPromotionIncrement { get; set; }
@@ -60,5 +66,8 @@ namespace Hrm.Domain
         public virtual ICollection<LeaveRequest> LeaveRequests {get; } = new List<LeaveRequest>();
         public virtual ICollection<FormRecord> FormRecords { get; } = new List<FormRecord>();
         public virtual ICollection<EmpShiftAssign>? EmpShiftAssign { get; set; }
+        public virtual ICollection<EmpWorkHistory>? EmpWorkHistory { get; set; }
+        public virtual ICollection<EmpOtherResponsibility>? EmpOtherResponsibility { get; set; }
+        public virtual ICollection<CancelledWeekend> CancelledWeekends { get; } = new List<CancelledWeekend>();
     }
 }

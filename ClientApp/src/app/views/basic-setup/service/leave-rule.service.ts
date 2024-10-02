@@ -4,9 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {LeaveRulesModel} from "../model/leave-rules-model"
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class LeaveRuleService {
   cachedData: any[] = [];
   baseUrl: string ;
@@ -42,5 +40,9 @@ export class LeaveRuleService {
 
   getLeaveRuleById(id:number):Observable<any> {
     return this.http.get<any>(this.baseUrl+"/leaveRules/get-leave")
+  }
+
+  getSelectedGender(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl+"/gender/get-selectedGenders");
   }
 }

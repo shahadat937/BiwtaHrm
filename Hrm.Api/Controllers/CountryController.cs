@@ -13,12 +13,14 @@ using Hrm.Application.Features.Ward.Request.Queries;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.Country)]
     [ApiController]
+    [Authorize]
     public class CountryController : Controller
     {
         private readonly IMediator _mediator;

@@ -6,11 +6,13 @@ using Hrm.Application.Enum;
 using Hrm.Application.Features.Modules.Requests.Commands;
 using Hrm.Application.Features.Modules.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers;
 
 [Route(HrmRoutePrefix.Module)]
 [ApiController]
+[Authorize]
 public class ModuleController : ControllerBase
 {
     private readonly IMediator _mediator;

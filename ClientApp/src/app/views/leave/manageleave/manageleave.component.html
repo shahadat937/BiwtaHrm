@@ -67,8 +67,8 @@
               <td>{{ leave.idCardNo }}</td>
               <td>{{ leave.empFirstName + " " + leave.empLastName }}</td>
               <td>{{ leave.leaveTypeName }}</td>
-              <td>{{ leave.fromDate.split("T")[0] }}</td>
-              <td>{{ leave.toDate.split("T")[0] }}</td>
+              <td>{{ leave.fromDate | date }}</td>
+              <td>{{ leave.toDate | date }}</td>
               <td>{{ leaveStatusOptions[leave.status] }}</td>
               <td>
                 <button

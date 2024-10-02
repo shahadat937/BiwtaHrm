@@ -18,9 +18,12 @@ namespace Hrm.Application.DTOs.EmpJobDetail
         public int? PresentScaleId { get; set; }
         public int? BasicPay { get; set; }
         public DateOnly? JoiningDate { get; set; }
+        public string? CodeNo { get; set; }
+        public DateOnly? ConfirmationDate { get; set; }
         public int? FirstGradeId { get; set; }
         public int? FirstScaleId { get; set; }
         public int? FirstDepartmentId { get; set; }
+        public int? FirstSectionId { get; set; }
         public int? FirstDesignationId { get; set; }
         public DateOnly? PRLDate { get; set; }
         public DateOnly? RetirementDate { get; set; }
@@ -37,6 +40,7 @@ namespace Hrm.Application.DTOs.EmpJobDetail
         public string? PresentGradeName { get; set; }
         public string? PresentScaleName { get; set; }
         public string? FirstDepartmentName { get; set; }
+        public string? FirstSectionName{ get; set; }
         public string? FirstDesignationName { get; set; }
         public string? FirstGradeName { get; set; }
         public string? FirstScaleName { get; set; }

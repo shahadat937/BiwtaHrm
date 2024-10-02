@@ -77,6 +77,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   ngOnInit(): void {
+    this.getAllEmp();
     this.getAllOffice();
   }
 
@@ -113,8 +114,8 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
 
     let filter = new HttpParams();
     filter = filter.set("EmpId",this.selectedEmp);
-    filter = filter.set("From", this.rangeDates[0].toISOString().split("T")[0]);
-    filter = filter.set("To", this.rangeDates[1].toISOString().split("T")[0]);
+    filter = filter.set("From", this.hrmdateResize(this.rangeDates[0]));
+    filter = filter.set("To", this.hrmdateResize(this.rangeDates[1]));
 
     console.log(this.selectedEmp);
 
@@ -124,6 +125,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
       this.LateText = response.totalLate;
       this.WorkingDayText = response.totalWorkingDay;
       this.SiteVisitText = response.totalSiteVisit;
+      this.OnLeaveText = response.totalOnLeave;
     });
   }
 
@@ -180,8 +182,8 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     
 
     let params = new HttpParams();
-    params = params.set("From",this.rangeDatesDw[0].toISOString().split("T")[0]);
-    params = params.set("To", this.rangeDatesDw[1].toISOString().split("T")[0]);
+    params = params.set("From", this.hrmdateResize(this.rangeDatesDw[0]));
+    params = params.set("To", this.hrmdateResize(this.rangeDatesDw[1]));
 
     if(this.selectedOfficeDw!=null) {
       params = params.set("OfficeId",this.selectedOfficeDw);
@@ -197,5 +199,33 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     });
 
 
+  }
+
+  hrmdateResize(formDateValue:any){
+    let EntryDate="";
+    var month;
+    var day;
+    var dateObj = new Date(formDateValue);
+    var dObj=dateObj.toLocaleDateString().split('/');
+    month=parseInt(dObj[0]);
+    day=parseInt(dObj[1]);
+    if(month<10){
+      month='0'+month;
+    }
+    if(day<10){
+      day='0'+day;
+    }
+ 
+    EntryDate =dObj[2]+'-'+month+'-'+day;
+    return EntryDate;
+  }
+
+  getAllEmp() {
+    let params = new HttpParams();
+    this.AtdReportService.getFilteredEmpOption(params).subscribe({
+      next: response => {
+        this.EmpOption = response;
+      }
+    })
   }
 }

@@ -31,6 +31,7 @@
                         [(ngModel)] = "this.siteVisitService.model.empId"
                         #empId = "ngModel"
                         >
+                            <input type="text">
                             <option [ngValue]="null">Select Employee</option>
                             @for (employee of EmpOption; track $index) {
                                 <option [value]="employee.id">{{employee.name}}</option>
@@ -149,8 +150,8 @@
             <tr>
                 <td>{{ data.siteVisitId }}</td>
                 <td>{{ data.firstName+" "+data.lastName }}</td>
-                <td>{{ data.fromDate }}</td>
-                <td>{{ data.toDate }}</td>
+                <td>{{ data.fromDate|date }}</td>
+                <td>{{ data.toDate|date }}</td>
                 <td>{{ data.visitPlace }}</td>
                 <td>{{ data.visitPurpose }}</td>
                 <td>
@@ -158,16 +159,16 @@
                 </td>
                 <td>
                     <div>
-                        <button class="custom-button" (click)="onApprove(data.siteVisitId)">
+                        <button *ngIf="IsUser==false&&roleFeatureService.featurePermission.add" class="custom-button" (click)="onApprove(data.siteVisitId)">
                             <svg [cIcon]="icons.cilCheck" size="lg" title="Approve"></svg>
                         </button>
-                        <button class="custom-button" (click)="onDecline(data.siteVisitId)">
+                        <button *ngIf="IsUser==false&&roleFeatureService.featurePermission.delete" class="custom-button" (click)="onDecline(data.siteVisitId)">
                             <svg [cIcon]="icons.cilX" size="lg" title="Declined"></svg>
                         </button>
-                        <button class="custom-button" (click)="toggleUpdate(data)">
+                        <button *ngIf="roleFeatureService.featurePermission.update&&data.status=='Pending'" class="custom-button" (click)="toggleUpdate(data)">
                             <svg [cIcon]="icons.cilPencil" size="lg" title="Edit"></svg>
                         </button>
-                        <button class="custom-button" (click)="onDelete(data.siteVisitId)">
+                        <button *ngIf="roleFeatureService.featurePermission.delete&&data.status=='Pending'" class="custom-button" (click)="onDelete(data.siteVisitId)">
                             <svg [cIcon]="icons.cilTrash" size="lg" title="delete"></svg>
                         </button>
                     </div>

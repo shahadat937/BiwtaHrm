@@ -4,9 +4,11 @@ export class Designation {
     designationNameBangla: string="";
     officeId: any = null;
     departmentId: any = null;
+    sectionId: any = null;
     remark: string="";
     menuPosition: number=0;
     isActive:boolean= true;
     officeName: string = "";
     departmentName: string = "";
+    sectionName: string = "";
 }

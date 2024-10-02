@@ -1,6 +1,7 @@
 ﻿using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Features.Designation.Requests.Queries;
 using Hrm.Application.Features.Designations.Requests.Queries;
+using Hrm.Domain;
 using Hrm.Shared.Models;
 using MediatR;
 using System;
@@ -15,28 +16,64 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
     {
         private readonly IHrmRepository<Hrm.Domain.Designation> _DesignationRepository;
         private readonly IHrmRepository<Hrm.Domain.EmpJobDetail> _EmpJobDetailRepository;
+        private readonly IHrmRepository<EmpOtherResponsibility> _EmpOtherResponsibilityRepository;
 
 
-        public GetSelectedDesignationByDepartmentIdRequestHandler(IHrmRepository<Hrm.Domain.Designation> DesignationRepository, IHrmRepository<Domain.EmpJobDetail> empJobDetailRepository)
+        public GetSelectedDesignationByDepartmentIdRequestHandler(IHrmRepository<Hrm.Domain.Designation> DesignationRepository, IHrmRepository<Domain.EmpJobDetail> empJobDetailRepository, IHrmRepository<EmpOtherResponsibility> EmpOtherResponsibilityRepository)
         {
             _DesignationRepository = DesignationRepository;
             _EmpJobDetailRepository = empJobDetailRepository;
+            _EmpOtherResponsibilityRepository = EmpOtherResponsibilityRepository;
         }
 
         public async Task<List<SelectedModel>> Handle(GetSelectedDesignationByDepartmentIdRequest request, CancellationToken cancellationToken)
         {
+            var empId = await _EmpJobDetailRepository.FindOneAsync(x => x.Id == request.EmpJobDetailId);
+
             ICollection<Hrm.Domain.EmpJobDetail> empJobDetails = await _EmpJobDetailRepository.FilterAsync(x => x.Id != request.EmpJobDetailId && x.ServiceStatus == true);
+
             var empJobDetailDesignationIds = empJobDetails.Select(e => e.DesignationId).ToHashSet();
 
 
-            ICollection<Hrm.Domain.Designation> designations = await _DesignationRepository.FilterAsync(x => x.DepartmentId == request.DepartmentId && !empJobDetailDesignationIds.Contains(x.DesignationId));
-
-            List<SelectedModel> selectModels = designations.Select(x => new SelectedModel
+            if (empId != null)
             {
-                Name = x.DesignationName,
-                Id = x.DesignationId
-            }).ToList();
-            return selectModels;
+                ICollection<EmpOtherResponsibility> otherResponsibilities = await _EmpOtherResponsibilityRepository.FilterAsync(x => x.EmpId != empId.EmpId && x.ServiceStatus == true);
+                var empOtherResponsibilityDesignationIds = otherResponsibilities.Select(x => x.DesignationId).ToHashSet();
+
+                ICollection<Hrm.Domain.Designation> designations = await _DesignationRepository.FilterAsync(x => x.DepartmentId == request.DepartmentId && x.SectionId == null && !empJobDetailDesignationIds.Contains(x.DesignationId) && !empOtherResponsibilityDesignationIds.Contains(x.DesignationId));
+
+                List<SelectedModel> selectModels = designations
+                    .GroupBy(x => x.DesignationName)
+                    .Select(x => x.FirstOrDefault())
+                    .Select(x => new SelectedModel
+                    {
+                        Name = x.DesignationName,
+                        Id = x.DesignationId
+                    }).ToList();
+
+                return selectModels;
+            }
+
+            else
+            {
+                ICollection<Hrm.Domain.Designation> designations = await _DesignationRepository.FilterAsync(x => x.DepartmentId == request.DepartmentId && x.SectionId == null && !empJobDetailDesignationIds.Contains(x.DesignationId));
+
+                List<SelectedModel> selectModels = designations
+                    .GroupBy(x => x.DesignationName)
+                    .Select(x => x.FirstOrDefault())
+                    .Select(x => new SelectedModel
+                    {
+                        Name = x.DesignationName,
+                        Id = x.DesignationId
+                    }).ToList();
+
+                return selectModels;
+            }
+
+
+            
+
+
         }
     }
 }

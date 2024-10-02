@@ -32,9 +32,12 @@ namespace Hrm.Domain
 
         public ICollection<Department> Departments { get; set; }
         public ICollection<Designation> Designations { get; set; }
+        public ICollection<Section> Sections { get; set; }
         public virtual ICollection<EmpJobDetail>? EmpJobDetail { get; set; }
         public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
         public virtual ICollection<EmpTransferPosting>? CurrentEmpTransferPosting { get; set; }
         public virtual ICollection<EmpTransferPosting>? TransferEmpTransferPosting { get; set; }
+        public virtual ICollection<EmpWorkHistory>? EmpWorkHistory { get; set; }
+        public virtual ICollection<EmpOtherResponsibility>? EmpOtherResponsibility { get; set; }
     }
 }

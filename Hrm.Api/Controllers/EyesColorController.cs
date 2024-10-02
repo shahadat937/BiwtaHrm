@@ -9,12 +9,14 @@ using Hrm.Application.Features.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.EyesColor)]
     [ApiController]
+    [Authorize]
     public class EyesColorController : Controller
     {
         private readonly IMediator _mediator;

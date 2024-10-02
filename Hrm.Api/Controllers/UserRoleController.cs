@@ -13,11 +13,13 @@ using Hrm.Application.Contracts.Identity;
 using Hrm.Application.Models.Identity;
 using Hrm.Application.DTOs.Role;
 using Hrm.Application.DTOs.AspNetUserRoles;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.UserRole)]
     [ApiController]
+    [Authorize]
     public class UserRoleController : Controller
     {
         private readonly IRoleService _authenticationService;
@@ -42,9 +44,9 @@ namespace Hrm.Api.Controllers
 
         [HttpPost]
         [Route("save-role")]
-        public async Task<ActionResult<BaseCommandResponse>> RoleCreate(CreateRoleDto request)
+        public async Task<ActionResult<BaseCommandResponse>> RoleCreate(AspNetRolesDto request)
         {
-            return Ok(await _authenticationService.Save(null, request));
+            return Ok(await _authenticationService.Save(request));
         }
 
 

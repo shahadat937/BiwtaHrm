@@ -4,9 +4,7 @@ import { ExamType } from '../model/exam-type';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ExamTypeService {
 
   cachedData: any[] = [];

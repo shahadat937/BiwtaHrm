@@ -14,12 +14,14 @@ using Hrm.Application.Features.Punishment.Requests.Commands;
 using Hrm.Application.Features.Punishment.Requests.Queries;
 using Hrm.Application.Features.Punishments.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.Punishment)]
     [ApiController]
+    [Authorize]
     public class PunishmentController : Controller
     {
         private readonly IMediator _mediator;

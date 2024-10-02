@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } 
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
-import { CountryService } from 'src/app/views/basic-setup/service/country.service';
+import { CountryService } from 'src/app/views/basic-setup/service/Country.service';
 import { DistrictService } from 'src/app/views/basic-setup/service/district.service';
 import { DivisionService } from 'src/app/views/basic-setup/service/division.service';
 import { ThanaService } from 'src/app/views/basic-setup/service/thana.service';
@@ -70,14 +70,13 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
 
   getEmployeeByEmpId() {
     this.empPermanentAddressService.findByEmpId(this.empId).subscribe((res) => {
-      console.log(res)
       if (res) {
         this.onDivisionNamesChangeByCounterId(res.countryId);
         this.onDistrictNamesChangeByDivisionId(res.divisionId);
         this.onUpazilaNamesChangeByDistrictId(res.districtId);
         this.onThanaNamesChangeByUpazilaId(res.upazilaId);
-        this.onUnionNamesChangeByThanaId(res.thanaId);
-        this.onWardNamesChangeByUnionId(res.unionId);
+        // this.onUnionNamesChangeByThanaId(res.thanaId);
+        // this.onWardNamesChangeByUnionId(res.unionId);
         this.EmpPermanentAddressForm?.form.patchValue(res);
         this.headerText = 'Update Permanent Address';
         this.btnText = 'Update';
@@ -101,8 +100,8 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
       districtId: null,
       upazilaId: null,
       thanaId: null,
-      unionId: null,
-      wardId: null,
+      // unionId: null,
+      // wardId: null,
       zipCode: null,
       address: "",
       email: "",
@@ -148,8 +147,8 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
         this.onDistrictNamesChangeByDivisionId(formData.divisionId);
         this.onUpazilaNamesChangeByDistrictId(formData.districtId);
         this.onThanaNamesChangeByUpazilaId(formData.upazilaId);
-        this.onUnionNamesChangeByThanaId(formData.thanaId);
-        this.onWardNamesChangeByUnionId(formData.unionId);
+        // this.onUnionNamesChangeByThanaId(formData.thanaId);
+        // this.onWardNamesChangeByUnionId(formData.unionId);
         this.EmpPermanentAddressForm?.form.patchValue(formData);
       }
     })
@@ -228,7 +227,8 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
-        this.cancel();
+        // this.cancel();
+        this.getEmployeeByEmpId();
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',

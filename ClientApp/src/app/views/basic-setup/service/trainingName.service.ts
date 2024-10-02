@@ -4,9 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { TrainingName } from '../model/trainingName';
 import { Observable, map, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 
 export class TrainingNameService {
 

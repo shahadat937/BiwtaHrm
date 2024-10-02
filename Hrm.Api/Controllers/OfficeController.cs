@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Shared.Models;
 using Hrm.Domain;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Office)]
     [ApiController]
+    [Authorize]
     public class Office : Controller
     {
         private readonly IMediator _mediator;
@@ -35,6 +37,15 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> Get()
         {
             var Office = await _mediator.Send(new GetOfficeRequest { });
+            return Ok(Office);
+        }
+
+
+        [HttpGet]
+        [Route("get-oneOffice")]
+        public async Task<ActionResult> GetOneOffice()
+        {
+            var Office = await _mediator.Send(new GetOneOfficeRequest { });
             return Ok(Office);
         }
 

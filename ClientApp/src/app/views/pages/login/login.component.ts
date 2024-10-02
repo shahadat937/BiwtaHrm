@@ -18,6 +18,7 @@ import {
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 import { NgParticlesService } from "@tsparticles/angular";
 import { cilEyedropper, cilLowVision } from '@coreui/icons';
+import { SiteSettingService } from '../../featureManagement/service/site-setting.service';
 
 @Component({
   selector: 'app-login',
@@ -31,8 +32,8 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
   loading = false;
   error = '';
   hide = true;
-  biwtaLogo: string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta-logo.png`;
-  backgroundImage: string = `${this.empPhotoSignService.imageUrl}TempleteImage/login_bg6.mp4`;
+  siteLogo: string = '';
+  siteName: string = '';
 
   lastPublishDate: any;
   schoolId: any;
@@ -121,7 +122,8 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
     private snackBar: MatSnackBar,
     private toastr: ToastrService,
     public empPhotoSignService: EmpPhotoSignService,
-    private readonly ngParticlesService: NgParticlesService
+    private readonly ngParticlesService: NgParticlesService,
+    public siteSettingService: SiteSettingService,
   ) {
     super();
   }
@@ -137,6 +139,7 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
     this.schoolId = 20;
     this.generateCaptcha();
     this.pathRememberValue();
+    this.getSiteSetting();
 
     this.ngParticlesService.init(async (engine) => {
       await loadSlim(engine);
@@ -147,6 +150,12 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
   particlesLoaded(container: Container): void {
   }
 
+  getSiteSetting(){
+    this.siteSettingService.getActive().subscribe((item) => {
+      this.siteLogo = this.empPhotoSignService.imageUrl + 'TempleteImage/' + item.siteLogo;
+      this.siteName = item.siteName;
+    });
+  }
 
   pathRememberValue(){
     const savedEmail = localStorage.getItem('rememberedEmail');

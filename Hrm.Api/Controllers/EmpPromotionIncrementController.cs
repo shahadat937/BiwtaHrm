@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpPromotionIncrement;
 using Hrm.Application.Features.EmpPromotionIncrements.Requests.Commands;
 using Hrm.Application.Features.EmpPromotionIncrements.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpPromotionIncrement)]
     [ApiController]
+    [Authorize]
     public class EmpPromotionIncrementController : ControllerBase
     {
         private readonly IMediator _mediator;

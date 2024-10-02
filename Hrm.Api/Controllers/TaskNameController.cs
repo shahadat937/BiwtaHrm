@@ -3,6 +3,7 @@ using Hrm.Application.DTOs.TaskName;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Features.TaskName.Requests.Commands;
 using Hrm.Application.Features.TaskName.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace Hrm.Api.Controllers
     [Route(HrmRoutePrefix.TaskName)]
 
     [ApiController]
+    [Authorize]
     public class TaskNameController : ControllerBase
     {
         private readonly IMediator _mediator;

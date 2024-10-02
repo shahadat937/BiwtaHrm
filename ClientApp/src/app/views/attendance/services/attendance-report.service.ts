@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AttendanceReportService {
   baseUrl:string;
   constructor(private http:HttpClient) { 

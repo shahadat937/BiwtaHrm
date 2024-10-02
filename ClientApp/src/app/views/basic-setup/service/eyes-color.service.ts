@@ -4,9 +4,7 @@ import { EyesColor } from '../model/eyes-color';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class EyesColorService  {
   cachedData: any[] = [];
 baseUrl = environment.apiUrl;

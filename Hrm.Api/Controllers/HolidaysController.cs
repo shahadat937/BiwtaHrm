@@ -6,11 +6,15 @@ using Hrm.Application.Features.Holidays.Requests.Queries;
 using Hrm.Application.Features.HolidayType.Requests.Commands;
 using Hrm.Application.Features.HolidayType.Requests.Queries;
 using Hrm.Persistence.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Diagnostics;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Holidays)]
+    [ApiController]
+    [Authorize]
     public class HolidaysController: Controller
     {
         private readonly IMediator _mediator;
@@ -22,9 +26,9 @@ namespace Hrm.Api.Controllers
 
         [HttpPost]
         [Route("save-Holidays")]
-        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateHolidayDto holidayDto)
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateHolidayDto holidayDto, [FromQuery] DateOnly HolidayFrom, [FromQuery] DateOnly HolidayTo)
         {
-            var command = new CreateHolidaysCommand { HolidayDto = holidayDto };
+            var command = new CreateHolidaysCommand { HolidayDto = holidayDto, DateFrom = HolidayFrom, DateTo = HolidayTo };
             var response = await _mediator.Send(command);
 
             return Ok(response);
@@ -73,6 +77,17 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpDelete]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [Route("delete-HolidaysByGroupId/{GroupId}")]
+        public async Task<ActionResult<BaseCommandResponse>> DeleteByGroupId(int GroupId)
+        {
+            var command = new DeleteHolidaysByGroupIdCommand { GroupId = GroupId };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
         [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -81,6 +96,18 @@ namespace Hrm.Api.Controllers
         {
             var command = new UpdateHolidaysCommand { HolidayDto = holidayDto };
             var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [Route("update-HolidaysByGroupId")]
+        public async Task<ActionResult<BaseCommandResponse>> UpdateByGroupId([FromQuery] int GroupId, [FromQuery] DateOnly From, [FromQuery] DateOnly To, [FromBody] CreateHolidayDto holidayDto)
+        {
+            var command = new UpdateHolidaysByGroupIdCommand { From = From, To = To, GroupId = GroupId, HolidayDto = holidayDto };
+            var response = await _mediator.Send(command);
+
             return Ok(response);
         }
 

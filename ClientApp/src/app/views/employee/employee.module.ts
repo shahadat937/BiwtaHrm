@@ -6,7 +6,6 @@ import {
   ButtonModule,
   CardModule,
   CollapseDirective,
-  DropdownModule,
   FormModule,
   GridModule,
   ListGroupModule,
@@ -14,9 +13,9 @@ import {
   ProgressModule,
   SharedModule,
   SpinnerModule,
-  TableModule,
   TooltipModule,
 } from '@coreui/angular';
+import { TagModule } from 'primeng/tag';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { ToastrService } from 'ngx-toastr';
 
@@ -41,7 +40,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { EmpPresentAddressComponent } from './add-employee/employee-informations/emp-present-address/emp-present-address.component';
 import { EmpPermanentAddressComponent } from './add-employee/employee-informations/emp-permanent-address/emp-permanent-address.component';
-import { CountryService } from '../basic-setup/service/country.service';
+import { CountryService } from '../basic-setup/service/Country.service';
 import { EmpJobDetailsComponent } from './add-employee/employee-informations/emp-job-details/emp-job-details.component';
 import { EmpSpouseInfoComponent } from './add-employee/employee-informations/emp-spouse-info/emp-spouse-info.component';
 import { EmpChildInfoComponent } from './add-employee/employee-informations/emp-child-info/emp-child-info.component';
@@ -65,9 +64,30 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { EmpAddressComponent } from './add-employee/employee-informations/emp-address/emp-address.component';
 import { EmpShiftListComponent } from './assignShift/emp-shift-list/emp-shift-list.component';
 import { UpdateEmpShiftComponent } from './assignShift/update-emp-shift/update-emp-shift.component';
-
-
-
+import { ShiftService } from '../attendance/services/shift.service';
+import { WardService } from '../basic-setup/service/ward.service';
+import { UnionService } from '../basic-setup/service/union.service';
+import { DepartmentService } from '../basic-setup/service/department.service';
+import { UapzilaService } from '../basic-setup/service/uapzila.service';
+import { DistrictService } from '../basic-setup/service/district.service';
+import { ThanaService } from '../basic-setup/service/thana.service';
+import { DivisionService } from '../basic-setup/service/division.service';
+import { OfficeService } from '../basic-setup/service/office.service';
+import { GradeService } from '../basic-setup/service/Grade.service';
+import { SectionService } from '../basic-setup/service/section.service';
+import { ViewEmployeePrimeNgComponent } from './add-employee/view-employee-prime-ng/view-employee-prime-ng.component';
+import { HttpClientModule } from '@angular/common/http';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { Table, TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import { UploadEmpBasicInfoComponent } from './add-employee/upload-emp-basic-info/upload-emp-basic-info.component';
+import { EmpProfileComponent } from './manage-employee/emp-profile/emp-profile.component';
+import { EmpWorkHistoryComponent } from './add-employee/employee-informations/emp-work-history/emp-work-history.component';
+import { EmpOtherResponsibilityComponent } from './add-employee/employee-informations/emp-other-responsibility/emp-other-responsibility.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -96,6 +116,11 @@ import { UpdateEmpShiftComponent } from './assignShift/update-emp-shift/update-e
     EmpAddressComponent,
     EmpShiftListComponent,
     UpdateEmpShiftComponent,
+    ViewEmployeePrimeNgComponent,
+    UploadEmpBasicInfoComponent,
+    EmpProfileComponent,
+    EmpWorkHistoryComponent,
+    EmpOtherResponsibilityComponent,
   ],
   imports: [
     CommonModule,
@@ -135,10 +160,29 @@ import { UpdateEmpShiftComponent } from './assignShift/update-emp-shift/update-e
     MatCardModule,
     TooltipModule,
     MatTabsModule,
+    TagModule, 
+    IconFieldModule, 
+    InputTextModule, 
+    InputIconModule, 
+    MultiSelectModule, 
+    HttpClientModule, 
+    DropdownModule,
+    ScrollingModule,
   ],
   providers:
   [
     CountryService,
+    ShiftService,
+    WardService,
+    UnionService,
+    DepartmentService,
+    UapzilaService,
+    DistrictService,
+    ThanaService,
+    DivisionService,
+    OfficeService,
+    GradeService,
+    SectionService
   ],
 })
 export class EmployeeModule { }

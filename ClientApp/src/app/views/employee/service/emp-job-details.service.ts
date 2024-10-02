@@ -26,6 +26,10 @@ export class EmpJobDetailsService {
     return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationByDepartment?&departmentId=' + departmentId + '&empJobDetailId='+empJobDetailId);
   }
   
+  getDesignationBySectionId(sectionId: number, empJobDetailId: number) {
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationBySection?&sectionId=' + sectionId + '&empJobDetailId='+empJobDetailId);
+  }
+  
   getDesignationByOfficeId(officeId: number, empJobDetailId: number,) {
     return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationByOffice?&officeId=' + officeId + '&empJobDetailId='+empJobDetailId);
   }
@@ -43,6 +47,9 @@ export class EmpJobDetailsService {
   }
   getOldDesignationByDepartment(id : number){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationByDepartmentId/' + id);
+  }
+  getOldDesignationBySection(id : number){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationBySectionId/' + id);
   }
   
   getSelectedSection(){

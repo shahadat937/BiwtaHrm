@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.Employee;
 using Hrm.Application.Features.EmpBasicInfos.Requests.Commands;
 using Hrm.Application.Features.EmpBasicInfos.Requests.Queries;
 using Hrm.Application.Features.Employee.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpBasicInfo)]
     [ApiController]
+    [Authorize]
     public class EmpBasicInfoController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -70,6 +72,15 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateEmpBasicInfoDto EmpBasicInfos)
         {
             var command = new CreateEmpBasicInfoCommand { EmpBasicInfoDto = EmpBasicInfos };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("save-ImportedEmpBasicInfos")]
+        public async Task<ActionResult<BaseCommandResponse>> PostImportedEmpBasicInfo([FromBody] List<CreateEmpBasicInfoDto> EmpBasicInfos)
+        {
+            var command = new CreateImportedEmpBasicInfoCommand { EmpBasicInfoDtos = EmpBasicInfos };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

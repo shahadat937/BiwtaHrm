@@ -12,11 +12,13 @@ using Hrm.Shared.Models;
 using Hrm.Domain;
 using Hrm.Application.DTOs.Division;
 using Hrm.Application.Features.Division.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.District)]
     [ApiController]
+    [Authorize]
     public class DistrictController : Controller
     {
         private readonly IMediator _mediator;

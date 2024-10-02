@@ -2,11 +2,12 @@
 using Hrm.Application.DTOs.LeaveRequest;
 using Hrm.Application.Features.LeaveRequest.Requests.Commands;
 using Hrm.Application.Features.LeaveRequest.Requests.Queries;
-
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api;
 
 [Route(HrmRoutePrefix.LeaveRequest)]
 [ApiController]
+[Authorize]
 public class LeaveRequestController:Controller
 {
     private readonly IMediator _mediator;
@@ -64,6 +65,15 @@ public class LeaveRequestController:Controller
     public async Task<ActionResult> GetLeaveStatusOption()
     {
         var command = new GetLeaveStatusOptionRequest { };
+        var response = await _mediator.Send(command);
+        return Ok(response);
+    }
+
+    [HttpGet]
+    [Route("get-LeaveAmountForAllLeaveTypeByEmp/{empId}")]
+    public async Task<ActionResult> GetLeaveAmountForAllLeaveType(int empId)
+    {
+        var command = new GetAllLeaveTypeAmountByEmpIdRequest { EmpId = empId };
         var response = await _mediator.Send(command);
         return Ok(response);
     }

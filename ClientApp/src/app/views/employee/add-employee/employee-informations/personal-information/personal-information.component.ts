@@ -6,7 +6,7 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { EmpPersonalInfoService } from '../../../service/emp-personal-info.service';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { ToastrService } from 'ngx-toastr';
-import { CountryService } from 'src/app/views/basic-setup/service/country.service';
+import { CountryService } from 'src/app/views/basic-setup/service/Country.service';
 
 @Component({
   selector: 'app-personal-information',
@@ -67,7 +67,6 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       this.PersonalInfoForm?.form.patchValue(res);
       if (res) {
         this.headerText = 'Update Personal Information';
-        console.log(res)
         this.btnText = 'Update';
       }
       else {
@@ -227,6 +226,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
         });
         this.loading = false;
         this.cancel();
+        this.getEmployeeByEmpId();
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',

@@ -9,11 +9,13 @@ using Hrm.Domain;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.Features.OfficeBranch.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.Designation)]
     [ApiController]
+    [Authorize]
     public class DesignationController : Controller
     {
         private readonly IMediator _mediator;
@@ -90,6 +92,15 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
+        [Route("get-selectedDesignationBySectionId/{id}")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedDesignationBySectionId(int id)
+        {
+            var branch = await _mediator.Send(new GetDesignationBySectionIdRequest { SectionId = id });
+            return Ok(branch);
+
+        }
+
+        [HttpGet]
         [Route("get-designationByOfficeId/{id}")]
         public async Task<ActionResult<DesignationDto>> GetDesignationByOfficeId(int id)
         {
@@ -106,6 +117,14 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
+        [Route("get-selectedDesignationBySection")]
+        public async Task<ActionResult<DesignationDto>> GetDesignationBySectionId(int sectionId, int empJobDetailId)
+        {
+            var Designations = await _mediator.Send(new GetSelectedDesignationBySectionIdRequest { SectionId = sectionId, EmpJobDetailId = empJobDetailId });
+            return Ok(Designations);
+        }
+
+        [HttpGet]
         [Route("get-selectedDesignationByOffice")]
         public async Task<ActionResult<DesignationDto>> GetDesignationByOfficeId(int officeId, int empJobDetailId)
         {
@@ -118,6 +137,15 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<DesignationDto>> GetDesignationByOfficeIdAndDepartmentId(int officeId, int departmentId)
         {
             var Designations = await _mediator.Send(new GetDesignationByOfficeIdAndDepartmentIdRequest { OfficeId = officeId, DepartmentId = departmentId });
+            return Ok(Designations);
+        }
+
+
+        [HttpGet]
+        [Route("get-designationPosition")]
+        public async Task<ActionResult<DesignationDto>> GetDesignationPosition(int departmentId, int sectionId)
+        {
+            var Designations = await _mediator.Send(new GetDesignationLastPositionRequest { DepartmentId = departmentId, SectionId = sectionId });
             return Ok(Designations);
         }
     }

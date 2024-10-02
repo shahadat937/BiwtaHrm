@@ -5,9 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 import { Designation } from '../model/Designation';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DesignationService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
@@ -63,4 +61,10 @@ export class DesignationService {
   getDesignationByDepartmentId(id:number){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationByDepartmentId/' + id);
   }
+
+  
+  getDesignationPosition(departmentId:number, sectionId:number){
+    return this.http.get<any>(this.baseUrl + '/designation/get-designationPosition?&departmentId=' + departmentId + '&sectionId='+sectionId);
+  }
+
 }

@@ -34,6 +34,7 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
             .Where(x => true)
             .Include(d => d.Office)
             .Include(d => d.Department)
+            .Include(d => d.Section)
             .OrderByDescending(x => x.DesignationId);
 
             var designationDtos = _mapper.Map<List<DesignationDto>>(await designations.ToListAsync(cancellationToken));

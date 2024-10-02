@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { CommonModule  } from '@angular/common';
 import { AttendanceRoutingModule } from './attendance-routing.module';
 import { ManageShiftComponent } from './manage-shift/manage-shift.component';
 import { WorkdaySettingComponent } from './workday-setting/workday-setting.component';
@@ -40,6 +39,11 @@ import {TimeFormatPipe} from './pipes/time-format.pipe'
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from '@coreui/angular';
 import { BadgeModule } from '@coreui/angular';
+import { AttendanceReportEmpService } from './services/attendance-report-emp.service';
+import { HolidaySetupService } from './services/holiday-setup.service';
+import { SiteVisitService } from './services/site-visit.service';
+import { WorkdayService } from './services/workday.service';
+import { ManageSiteVisitComponent } from './manage-site-visit/manage-site-visit.component';
 
 
 
@@ -54,7 +58,8 @@ import { BadgeModule } from '@coreui/angular';
     AttendanceReportComponent,
     AttendanceSummaryComponent,
     HolidaySetupComponent,
-    TimeFormatPipe
+    TimeFormatPipe,
+    ManageSiteVisitComponent
   ],
   imports: [
     CommonModule,
@@ -91,7 +96,12 @@ import { BadgeModule } from '@coreui/angular';
     ToastrService,
     ShiftService,
     ManualAttendanceService,
-    AttendanceReportService
+    AttendanceReportService,
+    AttendanceRecordService,
+    AttendanceReportEmpService,
+    HolidaySetupService,
+    SiteVisitService,
+    WorkdayService,
   ],
 })
 export class AttendanceModule { }

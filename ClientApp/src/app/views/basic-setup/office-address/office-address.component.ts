@@ -20,7 +20,7 @@ import { UnionService } from './../service/union.service';
 import { ThanaService } from './../service/thana.service';
 import { UapzilaService } from './../service/uapzila.service';
 import { DistrictService } from './../service/district.service';
-import { CountryService } from '../service/country.service';
+import { CountryService } from '../service/Country.service';
 import { WardService } from './../service/ward.service';
 import { OfficeService} from './../service/office.service';
 

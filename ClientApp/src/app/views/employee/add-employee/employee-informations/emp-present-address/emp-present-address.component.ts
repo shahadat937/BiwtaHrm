@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } 
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
-import { CountryService } from 'src/app/views/basic-setup/service/country.service';
 import { DistrictService } from 'src/app/views/basic-setup/service/district.service';
 import { DivisionService } from 'src/app/views/basic-setup/service/division.service';
 import { ThanaService } from 'src/app/views/basic-setup/service/thana.service';
@@ -11,6 +10,7 @@ import { UnionService } from 'src/app/views/basic-setup/service/union.service';
 import { WardService } from 'src/app/views/basic-setup/service/ward.service';
 import { EmpPresentAddressService } from '../../../service/emp-present-address.service';
 import { ToastrService } from 'ngx-toastr';
+import { CountryService } from 'src/app/views/basic-setup/service/Country.service';
 
 @Component({
   selector: 'app-emp-present-address',
@@ -71,8 +71,8 @@ export class EmpPresentAddressComponent implements OnInit, OnDestroy {
         res.divisionId ? this.onDistrictNamesChangeByDivisionId(res.divisionId) : null;
         res.districtId ? this.onUpazilaNamesChangeByDistrictId(res.districtId) : null;
         res.upazilaId ? this.onThanaNamesChangeByUpazilaId(res.upazilaId) : null;
-        res.thanaId ? this.onUnionNamesChangeByThanaId(res.thanaId) : null;
-        res.unionId ? this.onWardNamesChangeByUnionId(res.unionId) : null;
+        // res.thanaId ? this.onUnionNamesChangeByThanaId(res.thanaId) : null;
+        // res.unionId ? this.onWardNamesChangeByUnionId(res.unionId) : null;
         this.EmpPresentAddressForm?.form.patchValue(res);
         this.headerText = 'Update Present Address';
         this.btnText = 'Update';
@@ -95,8 +95,8 @@ export class EmpPresentAddressComponent implements OnInit, OnDestroy {
       districtId: null,
       upazilaId: null,
       thanaId: null,
-      unionId: null,
-      wardId: null,
+      // unionId: null,
+      // wardId: null,
       zipCode: null,
       address: "",
       email: "",
@@ -123,8 +123,8 @@ export class EmpPresentAddressComponent implements OnInit, OnDestroy {
       districtId: null,
       upazilaId: null,
       thanaId: null,
-      unionId: null,
-      wardId: null,
+      // unionId: null,
+      // wardId: null,
       zipCode: null,
       address: "",
       email: "",
@@ -192,7 +192,8 @@ export class EmpPresentAddressComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
-        this.cancel();
+        // this.cancel();
+        this.getEmployeeByEmpId();
       } else {
         this.toastr.warning('', `${response.message}`, {
           positionClass: 'toast-top-right',

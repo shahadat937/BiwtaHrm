@@ -10,11 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Shared.Models;
 using Hrm.Domain;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.OfficeAddress)]
     [ApiController]
+    [Authorize]
     public class OfficeAddress : Controller
     {
         private readonly IMediator _mediator;

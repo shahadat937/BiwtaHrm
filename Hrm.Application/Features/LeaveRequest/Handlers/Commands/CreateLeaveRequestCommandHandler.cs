@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Hrm.Application.DTOs.LeaveRequest.Validators;
 using Hrm.Application.Enum;
 using Hrm.Application.Helpers;
+using Hrm.Domain;
 
 namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
 {
@@ -58,8 +59,26 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
 
 
 
+
+
             request.createLeaveRequestDto.Status = (int) LeaveStatusOption.Pending;
             var leaveRequest = _mapper.Map<Hrm.Domain.LeaveRequest>(request.createLeaveRequestDto);
+
+            if (request.AssociatedFiles != null)
+            {
+                string uniqueFileName = GenerateUniqueFileName(Path.GetExtension(request.AssociatedFiles.FileName));
+
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\leaveFile", uniqueFileName);
+
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                using (var signStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await request.AssociatedFiles.CopyToAsync(signStream);
+                }
+                leaveRequest.AssociatedFile = uniqueFileName;
+
+            }
 
 
             await _unitOfWork.Repository<Hrm.Domain.LeaveRequest>().Add(leaveRequest);
@@ -70,6 +89,13 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
             response.Id = leaveRequest.LeaveRequestId;
 
             return response;
+        }
+
+        private string GenerateUniqueFileName(string extension)
+        {
+            var timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            var uniqueFileName = $"{timestamp}_{Guid.NewGuid().ToString()}{extension}";
+            return uniqueFileName;
         }
     }
 }

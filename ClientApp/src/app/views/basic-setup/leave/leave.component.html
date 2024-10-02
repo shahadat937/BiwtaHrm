@@ -1,10 +1,10 @@
 <div class="card">
-    <p-tabView>
+    <p-tabView [(activeIndex)]="activeTabIndex" (activeIndexChange)="onTabChange($event)">
         <p-tabPanel header="Leave Type">
-          <app-leave-type></app-leave-type>
+          <app-leave-type *ngIf="activeTabIndex==0"></app-leave-type>
         </p-tabPanel>
         <p-tabPanel header="Leave Rule">
-          <app-leave-rules></app-leave-rules>
+          <app-leave-rules *ngIf="activeTabIndex==1"></app-leave-rules>
         </p-tabPanel>
     </p-tabView>
 </div>

@@ -4,9 +4,7 @@ import { Attendances } from '../models/attendances';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ManualAttendanceService {
   cachedData: any[] =[];
   baseUrl = environment.apiUrl;

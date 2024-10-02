@@ -1,0 +1,11 @@
+td {
+    padding: 10px 16px;
+}
+p-table {
+    table-layout: auto; /* Allow the table to adjust column widths based on content */
+}
+  
+th, td {
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden;    /* Hide overflow text */
+}

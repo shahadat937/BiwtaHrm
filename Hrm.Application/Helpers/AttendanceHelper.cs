@@ -47,10 +47,12 @@ namespace Hrm.Application.Helpers
             return IsHoliday;
         }
 
-        public static bool IsWeekDay(DateOnly GivenDate, IHrmRepository<Hrm.Domain.Workday> _WorkdayRepository)
+        public static bool IsWeekDay(DateOnly GivenDate, IHrmRepository<Hrm.Domain.Workday> _WorkdayRepository, IHrmRepository<Hrm.Domain.CancelledWeekend> cancelledWeekendRepo)
         {
-            var IsWeekDay = _WorkdayRepository.Where(x => x.weekDay.WeekDayName == GivenDate.DayOfWeek.ToString() && x.year.YearName == GivenDate.Year).Any();
-            return IsWeekDay;
+            var IsWeekend = _WorkdayRepository.Where(x => x.weekDay.WeekDayName == GivenDate.DayOfWeek.ToString() && x.year.YearName == GivenDate.Year).Any();
+
+            var IsCancelledWeekend =  cancelledWeekendRepo.Where(x => DateOnly.FromDateTime(x.CancelDate) == GivenDate).Any();
+            return !IsWeekend|IsCancelledWeekend;
         }
 
         public static int? SetWorkHour(CreateAttendanceDto dto)
@@ -75,9 +77,9 @@ namespace Hrm.Application.Helpers
 
         }
 
-        public static int SetDayTypeId(CreateAttendanceDto dto, IHrmRepository<Workday> _WorkdayRepo, IHrmRepository<Holidays> _HolidaysRepo)
+        public static int SetDayTypeId(CreateAttendanceDto dto, IHrmRepository<Workday> _WorkdayRepo, IHrmRepository<Holidays> _HolidaysRepo, IHrmRepository<Hrm.Domain.CancelledWeekend> _cancelledWeekendRepo)
         {
-            bool weekday = IsWeekDay(dto.AttendanceDate, _WorkdayRepo);
+            bool weekday = IsWeekDay(dto.AttendanceDate, _WorkdayRepo, _cancelledWeekendRepo);
             bool holiday = IsHoliday(dto.AttendanceDate, _HolidaysRepo);
 
             int daytype = (int)DayTypeOption.Workday;
@@ -129,7 +131,7 @@ namespace Hrm.Application.Helpers
         public static async Task<int> calculateWorkingDay(DateTime startDate, DateTime endDate, int curYear, IUnitOfWork _unitOfWork)
         {
 
-            Dictionary<string, int> weekends = new Dictionary<string, int>
+            Dictionary<string, int> dayOfWeek = new Dictionary<string, int>
             {
                 {"Saturday", 6 },
                 {"Sunday", 0 },
@@ -140,11 +142,13 @@ namespace Hrm.Application.Helpers
                 {"Friday", 5 }
             };
 
-            var workDays = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.IsActive == true && x.year.YearName == curYear).Select(x => x.weekDay.WeekDayName).ToListAsync();
+            Dictionary<string, int> weekends = new Dictionary<string, int>();
 
-            foreach (var workday in workDays)
+            var weekendDays = await _unitOfWork.Repository<Hrm.Domain.Workday>().Where(x => x.IsActive == true && x.year.YearName == curYear).Select(x => x.weekDay.WeekDayName).ToListAsync();
+
+            foreach (var weekend in weekendDays)
             {
-                weekends.Remove(workday);
+                weekends.Add(weekend, dayOfWeek[weekend]);
             }
 
             int totalWeekend = 0;
@@ -164,13 +168,15 @@ namespace Hrm.Application.Helpers
                 if (tempStartDate <= tempEndDate)
                 {
                     TimeSpan totaldays = tempEndDate.Subtract(tempStartDate);
-                    totalWeekend += ((int)totaldays.TotalDays + 1) % 7;
+                    totalWeekend += ((int)totaldays.TotalDays + 7) / 7;
                 }
             }
 
             int holidays = await _unitOfWork.Repository<Hrm.Domain.Holidays>().Where(x => x.HolidayDate >= DateOnly.FromDateTime(startDate) && x.HolidayDate <= DateOnly.FromDateTime(endDate) && x.IsActive && x.IsWeekend == false).CountAsync();
 
-            return totalWorkday - totalWeekend - holidays;
+            int cancelledWeekend = await _unitOfWork.Repository<Hrm.Domain.CancelledWeekend>().Where(x => x.CancelDate >= startDate && x.CancelDate <= endDate && x.IsActive == true).CountAsync();
+
+            return totalWorkday - totalWeekend - holidays + cancelledWeekend;
 
         }
     }

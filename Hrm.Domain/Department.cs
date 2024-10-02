@@ -26,12 +26,16 @@ namespace Hrm.Domain
 
         public Office Office { get; set; }
         public Department UpperDepartment { get; set; }
-        public ICollection<Department> SubDepartments { get; set; }
-        public ICollection<Designation> Designations { get; set; }
+        public ICollection<Department>? SubDepartments { get; set; }
+        public ICollection<Designation>? Designations { get; set; }
+        public ICollection<Section>? Section { get; set; }
         public virtual ICollection<EmpJobDetail>? EmpJobDetail { get; set; }
+        public virtual ICollection<EmpJobDetail>? FirstEmpJobDetail { get; set; }
         public virtual ICollection<EmpTransferPosting>? CurrentEmpTransferPosting { get; set; }
         public virtual ICollection<EmpTransferPosting>? TransferEmpTransferPosting { get; set; }
         public virtual ICollection<EmpPromotionIncrement>? CurrentEmpPromotionIncrement { get; set; }
+        public virtual ICollection<EmpWorkHistory>? EmpWorkHistory { get; set; }
+        public virtual ICollection<EmpOtherResponsibility>? EmpOtherResponsibility { get; set; }
 
     }
 }

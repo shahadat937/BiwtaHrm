@@ -78,11 +78,15 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
       idCardNo: '',
       departmentName: '',
       designationName: '',
-      shiftId: 1
+      sectionName: '',
+      shiftId: 1,
+      empPhotoName : '',
+      empGenderName : '',
     };
   }
 
   resetForm(){
+    this.router.navigate(['/employee/create-new-employee']);
       this.BasicInfoForm.form.reset();
       this.BasicInfoForm.form.patchValue({
         id: this.empId,
@@ -163,6 +167,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   }
 
   cancel(){
+    this.router.navigate(['/employee/create-new-employee']);
     this.close.emit();
   }
 

@@ -77,24 +77,41 @@ export class DefaultHeaderComponent extends HeaderComponent {
   
   getEmployeeByEmpId() {
     if(this.empId){
-      this.subscription = this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
-        if(res){
-          this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`
-        }
-        else {
-          this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default.jpg`
-        }
-      })
       this.subscription = this.empBasicInfoService.findByEmpId(this.empId).subscribe((res) => {
         this.empBasicInfo = res;
+        this.patchEmpPhoto(res.empGenderName)
       });
       this.subscription = this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
-        this.designationName = res.designationName;
+        if(res){
+          this.designationName = res.designationName;
+        }
       });
     }
     else {
       this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default.jpg`
     }
+  }
+
+  patchEmpPhoto(empGender: string){
+    this.subscription = this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
+      if(res){
+        this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`
+      }
+      else {
+        if(empGender){
+          const gender = empGender.charAt(0).toLowerCase();
+          if(gender == 'm'){
+            this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default_Male.jpg`
+          }
+          else {
+            this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default_Female.jpg`
+          }
+        }
+        else{
+          this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default.jpg`
+        }
+      }
+    })
   }
 
   

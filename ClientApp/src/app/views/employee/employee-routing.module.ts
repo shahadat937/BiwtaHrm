@@ -7,6 +7,8 @@ import { EmployeeInformationComponent } from './manage-employee/employee-informa
 import { ViewEmployeeComponent } from './add-employee/view-employee/view-employee.component';
 import { EmpIdCardGenerateComponent } from './manage-employee/emp-id-card-generate/emp-id-card-generate.component';
 import { EmpShiftListComponent } from './assignShift/emp-shift-list/emp-shift-list.component';
+import { ViewEmployeePrimeNgComponent } from './add-employee/view-employee-prime-ng/view-employee-prime-ng.component';
+import { EmpProfileComponent } from './manage-employee/emp-profile/emp-profile.component';
 
 const routes: Routes = [
   {
@@ -23,6 +25,13 @@ const routes: Routes = [
       {
         path: 'employeeList',
         component: ViewEmployeeComponent,
+        data: {
+          title: 'Employee List',
+        },
+      },
+      {
+        path: 'allEmployeeList',
+        component: ViewEmployeePrimeNgComponent,
         data: {
           title: 'Employee List',
         },
@@ -68,6 +77,13 @@ const routes: Routes = [
         component: EmpShiftListComponent,
         data: {
           title: 'Employee Assigned Shift',
+        },
+      },
+      {
+        path: 'profile',
+        component: EmpProfileComponent,
+        data: {
+          title: 'Employee Profile',
         },
       },
     ]

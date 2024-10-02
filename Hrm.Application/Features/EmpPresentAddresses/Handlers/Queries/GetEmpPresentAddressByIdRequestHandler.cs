@@ -33,8 +33,8 @@ namespace Hrm.Application.Features.EmpPresentAddresses.Handlers.Queries
                 .Include(x => x.District)
                 .Include(x => x.Upazila)
                 .Include(x => x.Thana)
-                .Include(x => x.Union)
-                .Include(x => x.Ward)
+                //.Include(x => x.Union)
+                //.Include(x => x.Ward)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (empPresentAddress == null)

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {SiteVisitModel} from "../models/site-visit-model";
 import {SiteVisitService} from "../services/site-visit.service";
 import { cilList, cilShieldAlt } from '@coreui/icons';
@@ -12,6 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import { update } from 'lodash-es';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { AuthService } from 'src/app/core/service/auth.service';
+import { HttpParams } from '@angular/common/http';
 
 
 
@@ -22,8 +24,9 @@ import { RoleFeatureService } from '../../featureManagement/service/role-feature
 })
 export class SiteVisitComponent implements OnInit, OnDestroy{
 
-  
-  icons = {cilX,cilTrash,cilCheck, cilPencil}
+  @Input() IsUser: boolean;
+  @Input() filter: any;
+  icons = {cilX,cilTrash,cilCheck, cilPencil};
   subscription:Subscription = new Subscription();
   EmpOption: any[] = [];
   @ViewChild('siteVisitForm', { static: true }) siteVisitForm!: NgForm;
@@ -43,13 +46,22 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     public roleFeatureService: RoleFeatureService,
 
   ) {
-
+    this.IsUser = false;
+    this.filter = {};
   }
 
 
   ngOnInit(): void {
     this.getSiteVisit();
     this.getEmpOption();
+
+    if(this.IsUser) {
+      this.roleFeatureService.getFeaturePermission("manageSiteVisit").subscribe(response=> {
+      })
+    } else {
+      this.roleFeatureService.getFeaturePermission("siteVisit").subscribe(response=> {
+      })
+    }
   }
 
   ngOnDestroy(): void {
@@ -72,11 +84,34 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   }
 
   getSiteVisit() {
-    this.subscription = this.siteVisitService.getSiteVisitAll().subscribe(data=> {
-      this.tableData=data;
-    }, error=> {
-      console.log(error);
-    })
+
+    if(this.IsUser==false) {
+      this.subscription = this.siteVisitService.getSiteVisitAll().subscribe(data=> {
+        this.tableData=data;
+      }, error=> {
+        console.log(error);
+      })
+
+    } else {
+
+      let params = new HttpParams();
+
+      for(const key of Object.keys(this.filter)) {
+        if(key=="Status") {
+          for(const item of this.filter[key]) {
+            params = params.append(key, item);
+          }
+          continue;
+        }
+        params = params.set(key, this.filter[key]);
+      }
+
+      this.siteVisitService.getSiteVisitByFilter(params).subscribe({
+        next:response => {
+          this.tableData = response;
+        }
+      });
+    }
   }
 
   onApprove(siteVisitId:number) {
@@ -107,7 +142,6 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   }
 
   onDecline(siteVisitId:number) {
-    console.log(siteVisitId);
 
     this.confirmService.confirm("Confirm Decline","Are you sure?").subscribe((result)=> {
       if(!result) {
@@ -220,7 +254,6 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
         this.loading = false;
       },
       complete: () => {
-        console.log("Hello World");
         this.loading = false;
       }
     });

@@ -5,9 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { ShiftModule } from '../models/shift.module';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ShiftService {
 
   cachedData: any[] = [];

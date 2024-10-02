@@ -9,14 +9,14 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Microsoft.AspNetCore.Mvc;
-using Hrm.Application.DTOs.Shift;
-using Hrm.Application.Features.Shift.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.Shift)]
     [ApiController]
+    [Authorize]
     public class ShiftController : Controller
     {
         private readonly IMediator _mediator;
@@ -30,6 +30,14 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> GetShift()
         {
             var Shift = await _mediator.Send(new GetShiftRequest { });
+            return Ok(Shift);
+        }
+
+        [HttpGet]
+        [Route("get-firstShiftId")]
+        public async Task<ActionResult> GetFirstShiftId()
+        {
+            var Shift = await _mediator.Send(new GetFirstShiftIdRequest { });
             return Ok(Shift);
         }
 

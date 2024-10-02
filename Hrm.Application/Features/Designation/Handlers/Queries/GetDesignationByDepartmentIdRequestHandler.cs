@@ -25,7 +25,7 @@ namespace Hrm.Application.Features.OfficeBranch.Handlers.Queries
 
         public async Task<List<SelectedModel>> Handle(GetDesignationByDepartmentIdRequest request, CancellationToken cancellationToken)
         {
-            ICollection<Hrm.Domain.Designation> Designations = _DesignationRepository.FilterWithInclude(x => x.DepartmentId == request.DepartmentId).ToList();
+            ICollection<Hrm.Domain.Designation> Designations = _DesignationRepository.FilterWithInclude(x => x.DepartmentId == request.DepartmentId && x.SectionId == null).ToList();
             List<SelectedModel> SelectedModel = Designations.Select(x => new SelectedModel
             {
                 Id = x.DesignationId,

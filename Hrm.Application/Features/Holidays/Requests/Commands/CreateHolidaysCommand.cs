@@ -12,5 +12,7 @@ namespace Hrm.Application.Features.Holidays.Requests.Commands
     public class CreateHolidaysCommand : IRequest<BaseCommandResponse>
     {
         public CreateHolidayDto HolidayDto { get; set; }
+        public DateOnly DateFrom { get; set; }
+        public DateOnly DateTo { get; set; }
     }
 }

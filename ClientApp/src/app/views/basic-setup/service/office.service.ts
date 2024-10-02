@@ -7,9 +7,7 @@ import { Observable, map, of } from 'rxjs';
 import { SelectedModel } from '../../../core/models/selectedModel';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class OfficeService {
 
   cachedData: any[] = [];
@@ -48,7 +46,9 @@ export class OfficeService {
     );
   }
 
-
+  getOneOffice(){
+    return this.http.get<Office>(this.baseUrl + '/Office/get-oneOffice');
+  }
 
   update(id: number,model: any) {
     return this.http.put(this.baseUrl + '/Office/update-office/'+id, model);

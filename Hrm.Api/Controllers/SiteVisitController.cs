@@ -9,11 +9,13 @@ using Hrm.Application.Features.Shift.Requests.Commands;
 using Hrm.Domain;
 using Hrm.Application.DTOs.Shift;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.SiteVisit)]
     [ApiController]
+    [Authorize]
     public class SiteVisitController : Controller
     {
         private readonly IMediator _mediator;
@@ -36,6 +38,15 @@ namespace Hrm.Api.Controllers
             var SiteVisit = await _mediator.Send(new GetSiteVisitByIdRequest { SiteVisitId = id });
 
             return Ok(SiteVisit);
+        }
+
+        [HttpGet]
+        [Route("get-SiteVisitByFilter")]
+        public async Task<ActionResult> GetSiteVisitByFilter([FromQuery] SiteVisitFilterDto filter)
+        {
+            var command = new GetSiteVisitByFilterRequest { filters = filter };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HttpPost]

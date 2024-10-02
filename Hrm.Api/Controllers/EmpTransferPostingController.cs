@@ -3,6 +3,7 @@ using Hrm.Application.DTOs.EmpTransferPosting;
 using Hrm.Application.Features.EmpTransferPostings.Handlers.Queries;
 using Hrm.Application.Features.EmpTransferPostings.Requests.Commands;
 using Hrm.Application.Features.EmpTransferPostings.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpTransferPosting)]
     [ApiController]
+    [Authorize]
     public class EmpTransferPostingController : ControllerBase
     {
         private readonly IMediator _mediator;

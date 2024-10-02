@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hrm.Application.DTOs.Designation;
+using Microsoft.EntityFrameworkCore;
+using Hrm.Application.DTOs.EmpPersonalInfo;
 
 namespace Hrm.Application.Features.Section.Handlers.Queries
 {
@@ -27,7 +30,11 @@ namespace Hrm.Application.Features.Section.Handlers.Queries
 
         public async Task<object> Handle(GetSectionRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Hrm.Domain.Section> Sections = _SectionRepository.Where(x => true);
+            IQueryable<Domain.Section> Sections = _SectionRepository.Where(x => true)
+                .Include(x => x.Office)
+                .Include(x => x.Department)
+                .Include(x => x.UpperSection);
+
             Sections = Sections.OrderByDescending(x => x.SectionId);
 
             var SectionDtos = _mapper.Map<List<SectionDto>>(Sections);

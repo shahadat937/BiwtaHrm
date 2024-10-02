@@ -7,7 +7,7 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { EmpForeignTourInfoModule } from '../../../model/emp-foreign-tour-info.module';
 import { EmpForeignTourInfoService } from '../../../service/emp-foreign-tour-info.service';
-import { CountryService } from 'src/app/views/basic-setup/service/country.service';
+import { CountryService } from 'src/app/views/basic-setup/service/Country.service';
 
 @Component({
   selector: 'app-emp-foreign-tour-info',
@@ -154,7 +154,8 @@ export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
-        this.cancel();
+        // this.cancel();
+        this.getEmployeeForeignTourInfoByEmpId();
       } else {
         this.toastr.warning('', `${res.message}`, {
           positionClass: 'toast-top-right',

@@ -4,9 +4,7 @@ import { PostingOrderInfo } from '../model/posting-order-info';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PostingOrderInfoService {
   [x: string]: any;
 

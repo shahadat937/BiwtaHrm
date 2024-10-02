@@ -23,6 +23,7 @@ namespace Hrm.Application.DTOs.Holidays
         public int MenuPosition { get; set; }
         public bool IsActive { get; set; }
         public bool? IsWeekend { get; set; }
+        public int? GroupId { get; set; }
         public string? Remark { get; set; }
 
     }

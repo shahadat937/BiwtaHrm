@@ -7,6 +7,7 @@ import { NgFor } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { AddLeaveModel } from '../models/add-leave-model';
+import { AuthService } from 'src/app/core/service/auth.service';
 
 @Component({
   selector: 'app-addleave',
@@ -30,7 +31,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   constructor(
     public addLeaveService: AddLeaveService, 
     private toastr: ToastrService,
-    private confirmService: ConfirmService
+    private confirmService: ConfirmService,
+    private authService: AuthService
   ) {
     this.loading = false;
     this.empCardNo ="";
@@ -45,7 +47,19 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       next: option => {
         this.LeaveTypeOption = option;
       }
-    }) 
+    })
+
+
+    if(this.authService.currentUserValue.empId!=null) {
+      this.addLeaveService.getEmpById(parseInt(this.authService.currentUserValue.empId)).subscribe({
+        next: response => {
+          this.empCardNo = response.idCardNo;
+          this.isValidPMS = true;
+          this.addLeaveService.addLeaveModel.empId = parseInt(this.authService.currentUserValue.empId);
+          this.employeeName = response.firstName + " "+response.lastName;
+        }
+      })
+    }
 
     this.getCountry();
   }
@@ -53,7 +67,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   onEmpIdChange(event:any) {
     const source$ = of (this.empCardNo);
     const delay$ = source$.pipe(
-      delay(700)
+      delay(800)
     );
 
     if(this.empSubs) {
@@ -108,14 +122,19 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     if(this.empSubs) {
       this.empReqSub.unsubscribe();
     }
+    this.addLeaveService.addLeaveModel = new AddLeaveModel();
+  }
+
+  onDateChange() {
+    this.getLeaveAmount();
+    this.getWorkingDays();
   }
 
   getLeaveAmount() {
+    this.IsForeignLeave();
     console.log(this.addLeaveService.addLeaveModel);
     if(this.addLeaveService.addLeaveModel.empId==null||this.addLeaveService.addLeaveModel.leaveTypeId==null||this.addLeaveService.addLeaveModel.fromDate==null||this.addLeaveService.addLeaveModel.toDate==null) {
-      console.log("Hello World");
       this.totalDue = null;
-      this.totalLeave = null;
       return;
     }
 
@@ -128,19 +147,35 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.subcription = this.addLeaveService.getLeaveAmount(params).subscribe({
       next: response=> {
         this.totalDue = response.totalDue;
-        this.totalLeave = response.totalLeave;
       },
       error: err=> {
         this.totalDue =null;
-        this.totalLeave = null;
       }
     })
+
+    this.getWorkingDays();
   }
 
   getCountry() {
     this.subcription = this.addLeaveService.getSelectedCountry().subscribe({
       next: response=> {
         this.CountryOption = response;
+      }
+    })
+  }
+
+  getWorkingDays() {
+
+    if(this.addLeaveService.addLeaveModel.fromDate==null||this.addLeaveService.addLeaveModel.toDate==null) {
+      return;
+      this.totalLeave = null;
+    }
+    let params = new HttpParams();
+    params = params.set("From", this.addLeaveService.addLeaveModel.fromDate);
+    params = params.set("To", this.addLeaveService.addLeaveModel.toDate);
+    this.subcription = this.addLeaveService.getWorkingDays(params).subscribe({
+      next: response => {
+        this.totalLeave = response;
       }
     })
   }
@@ -167,9 +202,9 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       },
       error: (error)=> {
         this.loading=false;
-        this.toastr.warning('',`${error}`,{
+        /*this.toastr.warning('',`${error}`,{
           positionClass: 'toast-top-right'
-        })
+        })*/
       },
       complete: ()=> {
         this.loading=false;
@@ -217,4 +252,20 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   handleFile(event:any) {
     this.addLeaveService.addLeaveModel.associatedFiles = event.target.files[0];
   }
+
+  IsForeignLeave() {
+
+    let leaveName = this.LeaveTypeOption.find(x=>x.id == this.addLeaveService.addLeaveModel.leaveTypeId);
+    if(leaveName == undefined) {
+      this.addLeaveService.addLeaveModel.isForeignLeave = false;
+      return;
+    }
+
+    if(leaveName.name.toLocaleLowerCase().includes("foreign")) {
+      this.addLeaveService.addLeaveModel.isForeignLeave = true;
+    } else {
+      this.addLeaveService.addLeaveModel.isForeignLeave = false;
+    }
+  }
+
 }

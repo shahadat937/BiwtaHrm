@@ -6,9 +6,7 @@ import { Observable, map, of } from 'rxjs';
 
 import { SelectedModel } from '../../../core/models/selectedModel';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CompetenceService {
 
   cachedData: any[] = [];

@@ -138,47 +138,57 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   onSubmit(form:NgForm) {
     this.loading = true;
     
-    this.subscription=this.manualAtdService.submit(this.manualAtdService.attendances).subscribe((response:any)=> {
-      if(response.success) {
+    this.subscription = this.manualAtdService.submit(this.manualAtdService.attendances).subscribe({
+      next: (response:any) => {
+        if(response.success) {
+          this.ResetForm();
+          this.toastr.success('',`${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+        } else {
+          this.toastr.warning('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          });
+        } 
+        
+      },
+      error: err=> {
+        this.loading= false;
+      },
+      complete: () => {
         this.ResetForm();
         this.loading = false;
-        this.toastr.success('',`${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-      } else {
-        this.loading = false;
-        this.toastr.warning('',`${response.message}`, {
-          positionClass: 'toast-top-right'
-        });
-      } 
-
-      this.ResetForm();
-
-      this.loading = false;
-
-    });
+      }
+    })
   }
 
   onSubmitBulk(form:NgForm) {
 
     this.loadingBulk = true;
-    this.subscription = this.manualAtdService.submitBulk(this.atdFile).subscribe((response:any)=> {
-      if(response.success) {
-        this.ResetBulkForm();
-        this.loadingBulk=false;
-        this.toastr.success('',`${response.message}`,{
-          positionClass:'toast-top-right'
-        });
-      } else {
-        this.loadingBulk=false;
-        this.toastr.warning('',`${response.message}`, {
-          positionClass:'toast-top-right'
-        });
-      }
+    this.subscription = this.manualAtdService.submitBulk(this.atdFile).subscribe({
+      next: (response:any) => {
+        if(response.success) {
+          this.ResetBulkForm();
+          this.toastr.success('',`${response.message}`,{
+            positionClass:'toast-top-right'
+          });
+        } else {
+          this.loadingBulk=false;
+          this.toastr.warning('',`${response.message}`, {
+            positionClass:'toast-top-right'
+          });
+        }
 
-      this.ResetBulkForm();
-      this.loadingBulk = false;
-    });
+        this.ResetBulkForm();
+
+      },
+      error: err=> {
+        this.loadingBulk = false;
+      },
+      complete: () => {
+        this.loadingBulk = false;
+      }
+    })
   }
 
   onAtdFileChange(event:any) {

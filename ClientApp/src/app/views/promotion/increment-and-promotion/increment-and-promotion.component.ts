@@ -12,6 +12,8 @@ import { EmpPromotionIncrement } from '../model/emp-promotion-increment';
 import { EmpPromotionIncrementService } from '../service/emp-promotion-increment.service';
 import { EmpTransferPostingService } from '../../transferPosting/service/emp-transfer-posting.service';
 import { GradeService } from '../../basic-setup/service/Grade.service';
+import { EmpRewardPunishmentService } from '../service/emp-reward-punishment.service';
+import { EmpRewardPunishment } from '../model/emp-reward-punishment';
 
 @Component({
   selector: 'app-increment-and-promotion',
@@ -28,6 +30,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
   designations: SelectedModel[] = [];
   grades: SelectedModel[] = [];
   scales: SelectedModel[] = [];
+  empRewardPunishments: EmpRewardPunishment[] = [];
   subscription: Subscription = new Subscription();
   loading: boolean = false;
   isValidEmp: boolean = false;
@@ -48,6 +51,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     public departmentService: DepartmentService,
     private route: ActivatedRoute,
     private router: Router,
+    public empRewardPunishmentService: EmpRewardPunishmentService,
   ) {
 
   }
@@ -74,9 +78,9 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     });
     this.subscription = this.empPromotionIncrementService.findById(this.id).subscribe((res) => {
       if (res) {
-        console.log(res)
         this.empPromotionIncrement = res;
         this.patchEmpInfo();
+        this.getEmpRewardPunishmentByEmpId(res.empId || 0);
         this.getEmpJobDetailsByEmpId(res.empId || 0);
         this.onChangeGradeGetScale(res.updateGradeId || 0);
         if(res.approveDate){
@@ -216,6 +220,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
             this.empPromotionIncrementService.empPromotionIncrement.empName = res.firstName + " " + res.lastName;
             this.empPromotionIncrementService.empPromotionIncrement.empId = res.id;
             this.getEmpJobDetailsByEmpId(res.id);
+            this.getEmpRewardPunishmentByEmpId(res.id);
           }
         });
       }
@@ -225,6 +230,12 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
                 positionClass: 'toast-top-right',
         });
       }
+    })
+  }
+
+  getEmpRewardPunishmentByEmpId(id: number){
+    this.subscription = this.empRewardPunishmentService.findByEmpId(+id).subscribe((res) => {
+      this.empRewardPunishments = res;
     })
   }
 

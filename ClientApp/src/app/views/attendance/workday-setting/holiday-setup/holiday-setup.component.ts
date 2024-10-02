@@ -7,6 +7,9 @@ import {HolidayModel} from '../../models/holiday-model'
 import { NgForm } from '@angular/forms';
 import {cilPen, cilPencil, cilTrash} from '@coreui/icons'
 import { RoleFeatureService } from 'src/app/views/featureManagement/service/role-feature.service';
+import { FeaturePermission } from 'src/app/views/featureManagement/model/feature-permission';
+import { Feature } from 'src/app/views/featureManagement/model/feature';
+import { group } from '@angular/animations';
 
 @Component({
   selector: 'app-holiday-setup',
@@ -23,8 +26,7 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
   holidayTypeOption : any[] = [];
   Holidays: HolidayModel [];
   subscription: Subscription = new Subscription();
-  @ViewChild('holidayForm', {static:true}) holidayForm!:NgForm
-
+  @ViewChild('holidayForm', {static:true}) holidayForm!:NgForm;
 
   constructor(
     private toastr: ToastrService,
@@ -41,7 +43,9 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
     this.getHolidayType();
     this.getYear();
     this.getHolidays();
-    console.log(this.Holidays);
+    this.roleFeatureService.getFeaturePermission("workdaySetting").subscribe(data=> {
+
+    });
   }
 
   ngOnDestroy(): void {
@@ -56,7 +60,6 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
       this.isVisible=this.isVisible?false:true;
       this.holidayService.model = new HolidayModel();
       this.holidayForm.reset();
-      console.log("Hello World");
     }
     else{
       this.roleFeatureService.unauthorizeAccress();
@@ -89,7 +92,8 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
   getHolidays() {
     this.subscription = this.holidayService.getHolidays().subscribe({
       next: (response)=> {
-        this.Holidays = response;
+        this.Holidays =  this.getGroupedData(response);
+        console.log(this.Holidays);
       },
       error: (err) => {
         console.error("Error While loading holidays data from server");
@@ -97,10 +101,53 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
     })
   }
 
+  getGroupedData(data:HolidayModel[]) {
+    let reducedData : HolidayModel []=[];
+
+    let currentGroup = -1;
+
+    const minDate = (date1:Date|null, date2:Date|null) =>  {
+      if(date1!=null&&date2!=null&&date1<date2) {
+        return date1;
+      } else {
+        return date2;
+      }
+    }
+    const maxDate = (date1:Date|null, date2:Date|null) => {
+      if(date1!=null&&date2!=null&&date1>date2) {
+        return date1;
+      } else {
+        return date2;
+      }
+    }
+
+
+    data.forEach(x=> {
+      if(currentGroup!=x.groupId) {
+        x.holidayFrom = x.holidayDate;
+        x.holidayTo = x.holidayDate;
+        reducedData.push(x);
+        currentGroup = x.groupId;
+      } else {
+        let curDateFrom = reducedData[reducedData.length-1].holidayFrom;
+        let curDateTo = reducedData[reducedData.length-1].holidayTo;
+
+        reducedData[reducedData.length-1].holidayFrom = minDate(curDateFrom,x.holidayDate);
+        reducedData[reducedData.length-1].holidayTo = maxDate(curDateTo, x.holidayDate);
+      }
+    })
+
+
+
+    return reducedData;
+
+  }
+
   onCreate(form:NgForm) {
 
     let element = form.value;
     element['holidayId']=0;
+    element.holidayDate = element.holidayFrom;
     console.log(element);
     this.loading=true;
     this.subscription = this.holidayService.createHoliday(element).subscribe({
@@ -135,19 +182,19 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
     this.isUpdate?this.onUpdate():this.onCreate(form);
   }
 
-  onDelete(holidayId:number) {
+  onDelete(groupId:number) {
 
     this.confirmService.confirm("Confirm Delete Message","Are you sure?").subscribe((result)=> {
       if(!result) {
         return;
       }
-      this.holidayService.deleteHoliday(holidayId).subscribe({
+      this.holidayService.deleteHolidayByGroupId(groupId).subscribe({
         next: (response)=> {
           if(response.success==true) {
             this.toastr.success('',`${response.message}`,{
               positionClass: 'toast-top-right'
             })
-            var index = this.Holidays.findIndex((item)=> item.holidayId==holidayId);
+            var index = this.Holidays.findIndex((item)=> item.groupId==groupId);
             delete this.Holidays[index];
           } else {
             this.toastr.error('', `${response.message}`, {
@@ -178,7 +225,7 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
 
   onUpdate() {
     this.loading = true;
-    this.holidayService.updateHoliday(this.holidayService.model).subscribe({
+    this.holidayService.updateHolidayGroup(this.holidayService.model).subscribe({
       next: (response)=> {
         if(response.success==true) {
           this.toastr.success('',`${response.message}`,{

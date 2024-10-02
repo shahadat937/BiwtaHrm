@@ -103,7 +103,6 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
   getEmployeeSpouseInfoByEmpId() {
     this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res) => {
       if (res.length > 0) {
-        console.log("Spouse Info: ", res)
         this.headerText = 'Update Spouse Information';
         this.btnText = 'Update';
         this.empSpouse = res;
@@ -160,6 +159,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
+        this.getEmployeeSpouseInfoByEmpId();
         this.cancel();
       } else {
         this.toastr.warning('', `${res.message}`, {

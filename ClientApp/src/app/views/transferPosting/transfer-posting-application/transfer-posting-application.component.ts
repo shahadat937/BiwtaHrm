@@ -10,6 +10,7 @@ import { cilArrowLeft } from '@coreui/icons';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
 import { EmpTransferPosting } from '../model/emp-transfer-posting';
+import { SectionService } from '../../basic-setup/service/section.service';
 
 @Component({
   selector: 'app-transfer-posting-application',
@@ -44,6 +45,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     public departmentService: DepartmentService,
     private route: ActivatedRoute,
     private router: Router,
+    public sectionService: SectionService,
   ) {
 
   }
@@ -58,7 +60,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.getEmployeeByEmpId();
     this.loadOffice();
     this.getAllDepartment();
-    this.getSelectedSection();
+    // this.getSelectedSection();
     this.getSelectedReleaseType();
   }
   ngOnDestroy(): void {
@@ -74,7 +76,13 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if (res) {
         this.empTransferPosting = res;
-        this.getEmpJobDetailsInfo(res.empId, res.transferDepartmentId);
+        if(res.transferSectionId){
+          this.onSectionSelectGetDesignation(res.transferSectionId, this.empJobDetailsId);
+        }
+        else {
+          this.getEmpJobDetailsInfo(res.empId, res.transferDepartmentId);
+        }
+        this.onOfficeAndDepartmentSelect(res.transferDepartmentId);
         if(res.transferApproveStatus == true){
           this.empTransferPostingService.empTransferPosting.provideTransferApproveInfo = true;
           this.empTransferPostingService.empTransferPosting.transferApproveStatus = true;
@@ -477,6 +485,27 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.subscription = this.empTransferPostingService.getSelectedReleaseType().subscribe((data) => {
       this.releaseTypes = data;
     });
+  }
+
+  
+  onOfficeAndDepartmentSelect(departmentId : any){
+    this.empTransferPostingService.empTransferPosting.transferSectionId = null;
+    this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
+      this.sections = res;
+    });
+  }
+  
+  onSectionSelectGetDesignation(sectionId: any, empJobDetailsId: number) {
+    this.designations = [];
+    this.empTransferPostingService.empTransferPosting.transferDesignationId = null;
+    if (sectionId == null) {
+      this.getTransferDesignationByDepartmentOnChange(this.empTransferPostingService.empTransferPosting.transferDepartmentId, this.empJobDetailsId);
+    }
+    else {
+      this.empJobDetailsService.getDesignationBySectionId(+sectionId, +empJobDetailsId).subscribe((res) => {
+      this.designations = res;
+    });
+    }
   }
 
   onSubmit(form: NgForm): void {

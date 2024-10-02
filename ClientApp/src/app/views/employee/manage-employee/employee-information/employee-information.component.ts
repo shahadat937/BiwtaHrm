@@ -30,6 +30,10 @@ import { EmpPsiTrainingInfoModule } from '../../model/emp-psi-training-info.modu
 import { EmpBankInfoModule } from '../../model/emp-bank-info.module';
 import { EmpLanguageInfoModule } from '../../model/emp-language-info.module';
 import { EmpForeignTourInfoModule } from '../../model/emp-foreign-tour-info.module';
+import { EmpOtherResponsibility } from '../../model/emp-other-responsibility';
+import { EmpWorkHistory } from '../../model/emp-work-history';
+import { EmpOtherResponsibilityService } from '../../service/emp-other-responsibility.service';
+import { EmpWorkHistoryService } from '../../service/emp-work-history.service';
 
 @Component({
   selector: 'app-employee-information',
@@ -51,6 +55,8 @@ export class EmployeeInformationComponent implements OnInit {
   empBankInfo : EmpBankInfoModule[] = [];
   empLanguageInfo : EmpLanguageInfoModule[] = [];
   empForeignTourInfo : EmpForeignTourInfoModule[] = [];
+  empOtherResponsibility : EmpOtherResponsibility[] = [];
+  empWorkHistory : EmpWorkHistory[] = [];
   empPhoto : string = '';
   empSignature : string = '';
 
@@ -81,6 +87,8 @@ export class EmployeeInformationComponent implements OnInit {
     public empBankInfoService: EmpBankInfoService,
     public empLanguageInfoService: EmpLanguageInfoService,
     public empForeignTourInfoService: EmpForeignTourInfoService,
+    public empOtherResponsibilityService: EmpOtherResponsibilityService,
+    public empWorkHistoryService: EmpWorkHistoryService,
     public empPhotoSignService: EmpPhotoSignService,
     public manageEmployeeService: ManageEmployeeService,
     private bsModalRef: BsModalRef,
@@ -113,6 +121,8 @@ export class EmployeeInformationComponent implements OnInit {
       this.getEmpBankInfoByEmpId();
       this.getEmpLanguageInfoByEmpId();
       this.getEmpForeignTourInfoByEmpId();
+      this.getEmpWorkHistory();
+      this.getEmpOtherResponsibility();
     }
 
     getCanEditProfileStatusByEmpId(){
@@ -193,6 +203,17 @@ export class EmployeeInformationComponent implements OnInit {
         this.empForeignTourInfo = res;
       });
     }
+    getEmpOtherResponsibility(){
+      this.empOtherResponsibilityService.findByEmpId(this.id).subscribe((res) => {
+        this.empOtherResponsibility = res;
+      });
+    }
+    
+    getEmpWorkHistory(){
+      this.empWorkHistoryService.findByEmpId(this.id).subscribe((res) => {
+        this.empWorkHistory = res;
+      });
+    }
 
     getEmpPhotoSign(){
       this.empPhotoSignService.findByEmpId(this.id).subscribe((res) => {
@@ -230,7 +251,6 @@ export class EmployeeInformationComponent implements OnInit {
 
     
   toggleComponent(component: string) {
-    console.log("Component : ",component)
     this.componentVisible = false;
     if (this.visibleComponent === component) {
       this.visibleComponent = null;

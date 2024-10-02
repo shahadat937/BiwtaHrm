@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { NgForm } from '@angular/forms';
 import { LeaveRulesModel } from '../../model/leave-rules-model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-leave-rules',
@@ -21,6 +22,8 @@ export class LeaveRulesComponent implements OnInit, OnDestroy {
   leaveTypeIdFilter: number|null;
   leaveTypeOption: any[] = [];
   RuleNameOption: any[] = [];
+  GenderOption: any[] = [];
+  subscription: Subscription = new Subscription();
 
   constructor(
     public leaveRuleService: LeaveRuleService,
@@ -33,17 +36,18 @@ export class LeaveRulesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.leaveRuleService.getSelectedLeaveType().subscribe({
+    this.subscription = this.leaveRuleService.getSelectedLeaveType().subscribe({
       next: option => {
         this.leaveTypeOption = option;
       }
     });
-
-    this.leaveRuleService.getSelectedRuleName().subscribe({
+    
+    this.subscription = this.leaveRuleService.getSelectedRuleName().subscribe({
       next: (option)=> {
         this.RuleNameOption = option;
       }
     });
+    this.GetSelectedGender();
   }
 
   getAllLeaveRule() {
@@ -51,11 +55,13 @@ export class LeaveRulesComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy(): void {
-    
+    if(this.subscription) {
+      this.subscription.unsubscribe();
+    }    
   }
 
   onDelete(id:number, index:number) {
-    this.confirmService.confirm("Delete Confirmation","Are you sure?").subscribe({
+    this.subscription = this.confirmService.confirm("Delete Confirmation","Are you sure?").subscribe({
       next: response=> {
         if(response) {
           this.leaveRuleService.deleteLeaveRule(id).subscribe({
@@ -81,7 +87,7 @@ export class LeaveRulesComponent implements OnInit, OnDestroy {
   onUpdate() {
     this.loading = true;
     console.log(this.leaveRuleService.leaveRule);
-    this.leaveRuleService.updateLeaveRule(this.leaveRuleService.leaveRule).subscribe({
+    this.subscription = this.leaveRuleService.updateLeaveRule(this.leaveRuleService.leaveRule).subscribe({
       next: response => {
         if(response.success == true) {
           this.toastr.success('',`${response.message}`, {
@@ -124,7 +130,7 @@ export class LeaveRulesComponent implements OnInit, OnDestroy {
   saveLeaveRule() {
     console.log(this.leaveRuleService.leaveRule);
     this.loading = true;
-    this.leaveRuleService.saveLeaveRule(this.leaveRuleService.leaveRule).subscribe({
+    this.subscription = this.leaveRuleService.saveLeaveRule(this.leaveRuleService.leaveRule).subscribe({
       next: (response)=> {
         if(response.success) {
           this.toastr.success('',`${response.message}`, {
@@ -164,11 +170,19 @@ export class LeaveRulesComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.leaveRuleService.getLeaveRules(this.leaveTypeIdFilter).subscribe({
+    this.subscription = this.leaveRuleService.getLeaveRules(this.leaveTypeIdFilter).subscribe({
       next: data => {
         this.leaveRules = data;
       }
     });
+  }
+
+  GetSelectedGender() {
+    this.subscription = this.leaveRuleService.getSelectedGender().subscribe({
+      next: response=> {
+        this.GenderOption = response;
+      }
+    })
   }
 
 }

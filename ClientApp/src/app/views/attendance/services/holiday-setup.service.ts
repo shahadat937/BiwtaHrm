@@ -1,12 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, model } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HolidayModel } from '../models/holiday-model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class HolidaySetupService {
   baseUrl: string;
   cachedData: HolidayModel[] = [];
@@ -41,7 +39,15 @@ export class HolidaySetupService {
    }
 
    createHoliday(element:any):Observable<any> {
-    return this.http.post<any>(this.baseUrl+"/holidays/save-Holidays",element);
+
+    let params = new HttpParams();
+    params = params.set('holidayFrom', element.holidayFrom);
+    params = params.set('holidayTo', element.holidayTo);
+    
+    delete element['holidayFrom'];
+    delete element['holidayTo'];
+
+    return this.http.post<any>(this.baseUrl+"/holidays/save-Holidays",element, {params:params});
    }
 
    updateHoliday(element:any):Observable<any> {
@@ -58,7 +64,31 @@ export class HolidaySetupService {
     return this.http.put<any>(this.baseUrl+"/holidays/update-Holidays",element);
    }
 
+   updateHolidayGroup(element:any) :Observable<any> {
+    delete element['yearName'];
+    delete element['holidayTypeName'];
+    delete element['officeId'];
+    delete element['officeName'];
+    delete element['officeBranchName'];
+    delete element['officeBranchId'];
+    delete element['menuPosition'];
+
+    let params = new HttpParams();
+    params = params.set('GroupId', element['groupId']);
+    params = params.set('From', element['holidayFrom']);
+    params = params.set('To', element['holidayTo']);
+
+    console.log(element);
+
+    return this.http.put(this.baseUrl+"/holidays/update-HolidaysByGroupId",element,{params:params});
+    
+   }
+
    deleteHoliday(id:number): Observable<any> {
     return this.http.delete<any>(this.baseUrl+`/holidays/delete-Holidays/${id}`);
+   }
+
+   deleteHolidayByGroupId(groupId:number):Observable<any> {
+    return this.http.delete<any>(this.baseUrl+`/holidays/delete-HolidaysByGroupId/${groupId}`);
    }
 }

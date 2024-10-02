@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Shared.Models;
 using Hrm.Domain;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Bank)]
     [ApiController]
+    [Authorize]
     public class Bank : Controller
     {
         private readonly IMediator _mediator;

@@ -16,12 +16,14 @@ using SendGrid.Helpers.Mail;
 using Hrm.Application.DTOs.Scale;
 using Hrm.Application.Features.Scale.Requests.Queries;
 using Hrm.Application.Features.Scales.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.Scale)]
     [ApiController]
+    [Authorize]
     public class ScaleController : Controller
     {
         private readonly IMediator _mediator;

@@ -73,6 +73,7 @@ namespace Hrm.Application
         public const string Pool = HRMRoutePrefixBase + "pool";
         public const string SubDepartment = HRMRoutePrefixBase + "subDepartment";
         public const string UserRole = HRMRoutePrefixBase + "userRole";
+        public const string AspNetRoles = HRMRoutePrefixBase + "aspNetRoles";
         public const string ExamType = HRMRoutePrefixBase + "examType";
         public const string Board = HRMRoutePrefixBase + "board";
         public const string Section = HRMRoutePrefixBase + "section";
@@ -123,5 +124,14 @@ namespace Hrm.Application
         public const string EmpShiftAssign = HRMRoutePrefixBase + "empShiftAssign";
         public const string RewardPunishmentType = HRMRoutePrefixBase + "rewardPunishmentType";
         public const string RewardPunishmentPriority = HRMRoutePrefixBase + "rewardPunishmentPriority";
+
+        public const string Widgets = HRMRoutePrefixBase + "widgets";
+        public const string CancelledWeekend = HRMRoutePrefixBase + "cancelledWeekend";
+
+        public const string EmpRewardPunishment = HRMRoutePrefixBase + "empRewardPunishment";
+        public const string EmpWorkHistory = HRMRoutePrefixBase + "empWorkHistory";
+        public const string ResponsibilityType = HRMRoutePrefixBase + "responsibilityType";
+        public const string EmpOtherResponsibility = HRMRoutePrefixBase + "empOtherResponsibility";
+        public const string SiteSetting = HRMRoutePrefixBase + "siteSetting";
     }
 }

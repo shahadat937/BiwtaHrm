@@ -2,6 +2,7 @@ import { UserComponent } from './user/user.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RoleFeatureComponent } from './role-feature/role-feature.component';
+import { RolesComponent } from './roles/roles.component';
 
 const routes: Routes = [
   {
@@ -34,7 +35,14 @@ const routes: Routes = [
         path: 'rolePermission',
         component: RoleFeatureComponent,
         data: {
-          title: 'User',
+          title: 'Role Permission',
+        },
+      },
+      {
+        path: 'roles',
+        component: RolesComponent,
+        data: {
+          title: 'Roles',
         },
       },
     ]

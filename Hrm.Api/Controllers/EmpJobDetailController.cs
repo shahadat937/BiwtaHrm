@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpJobDetail;
 using Hrm.Application.Features.EmpJobDetails.Requests.Commands;
 using Hrm.Application.Features.EmpJobDetails.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.EmpJobDetail)]
     [ApiController]
+    [Authorize]
     public class EmpJobDetailController : ControllerBase
     {
         private readonly IMediator _mediator;

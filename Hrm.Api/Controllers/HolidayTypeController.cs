@@ -7,12 +7,14 @@ using Hrm.Application.Features.HolidayType.Requests.Queries;
 using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Features.Year.Requests.Queries;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.HolidayType)]
     [ApiController]
+    [Authorize]
     public class HolidayType : Controller
     {
         private readonly IMediator _mediator;

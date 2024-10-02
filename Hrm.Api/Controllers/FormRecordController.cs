@@ -3,10 +3,12 @@ using Hrm.Application.DTOs.Form;
 using Hrm.Application.DTOs.FormRecord;
 using Hrm.Application.Features.FormRecord.Requests.Commands;
 using Hrm.Application.Features.FormRecord.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.FormRecord)]
     [ApiController]
+    [Authorize]
     public class FormRecordController: Controller
     {
         private readonly IMediator _mediator;

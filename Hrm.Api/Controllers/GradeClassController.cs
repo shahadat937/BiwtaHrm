@@ -10,11 +10,13 @@ using Hrm.Application.Features.GradeType.Requests.Queries;
 using Hrm.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.GradeClass)]
     [ApiController]
+    [Authorize]
     public class GradeClassController : ControllerBase
     {
 

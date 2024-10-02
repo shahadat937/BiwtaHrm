@@ -13,12 +13,14 @@ using Hrm.Application.Features.Stores.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using Hrm.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace Hrm.Api.Controllers
 {
 
     [Route(HrmRoutePrefix.EmployeeType)]
     [ApiController]
+    [Authorize]
     public class EmployeeTypeController : Controller
     {
         private readonly IMediator _mediator;
@@ -33,6 +35,15 @@ namespace Hrm.Api.Controllers
             var EmployeeType = await _mediator.Send(new GetEmployeeTypeRequest { });
             return Ok(EmployeeType);
         }
+
+        [HttpGet]
+        [Route("get-firstEmployeeTypeId")]
+        public async Task<ActionResult> GetFirstEmployeeTypeId()
+        {
+            var EmployeeType = await _mediator.Send(new GetFirstEmployeeTypeIdRequest { });
+            return Ok(EmployeeType);
+        }
+
         [HttpGet]
         [Route("get-employeeTypeById/{id}")]
         public async Task<ActionResult<EmployeeTypeDto>> Get(int id)

@@ -32,7 +32,7 @@
                         }
                     </c-col>
                     <c-col md="3">
-                        <label for="holidayYear" cLabel>Select Holiday Type</label>
+                        <label for="holidayYear" cLabel>Select Year</label>
                         <select 
                         required
                         name="yearId" 
@@ -50,17 +50,31 @@
                         }
                     </c-col>
                     <c-col md="3">
-                        <label for="holidayDate" cLabel=>Holiday Date </label>
+                        <label for="holidayFrom" cLabel> From  </label>
                         <input type="date"
                         required 
                         cFormControl 
-                        [(ngModel)]="this.holidayService.model.holidayDate"
-                        #hDate = "ngModel"
-                        name="holidayDate" 
-                        id="holidayDate">
+                        [(ngModel)]="this.holidayService.model.holidayFrom"
+                        #hFromDate = "ngModel"
+                        name="holidayFrom" 
+                        id="holidayFrom">
 
-                        @if (hDate.invalid&&hDate.touched) {
-                            <div class="text-left text-danger">Holiday Date is required</div>
+                        @if (hFromDate.invalid&&hFromDate.touched) {
+                            <div class="text-left text-danger">From is required</div>
+                        }
+                    </c-col>
+                    <c-col md="3">
+                        <label for="holidayTo" cLabel> To  </label>
+                        <input type="date"
+                        required 
+                        cFormControl 
+                        [(ngModel)]="this.holidayService.model.holidayTo"
+                        #hToDate = "ngModel"
+                        name="holidayTo" 
+                        id="holidayTo">
+
+                        @if (hToDate.invalid&&hToDate.touched) {
+                            <div class="text-left text-danger">To is required</div>
                         }
                     </c-col>
                     <c-col md="3">
@@ -136,9 +150,9 @@
             >
                 <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="holidayId">Id <p-sortIcon field="holidayId"></p-sortIcon></th>
                         <th pSortableColumn="holidayName">Name <p-sortIcon field="holidayName"></p-sortIcon></th>
-                        <th pSortableColumn="holidayDate">Date <p-sortIcon field="holidayDate"></p-sortIcon></th>
+                        <th pSortableColumn="holidayFrom">From<p-sortIcon field="holidayDate"></p-sortIcon></th>
+                        <th pSortableColumn="holidayTo">To<p-sortIcon field="holidayDate"></p-sortIcon></th>
                         <th>Type</th>
                         <th>Active</th>
                         <th>Action</th>
@@ -146,17 +160,20 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-holiday>
                     <tr [pSelectableRow]="holiday">
-                        <td>{{ holiday.holidayId}}</td>
                         <td>{{ holiday.holidayName }}</td>
-                        <td>{{ holiday.holidayDate }}</td>
+                        <td>{{ holiday.holidayFrom|date }}</td>
+                        <td>{{ holiday.holidayTo|date }}</td>
                         <td>{{ holiday.holidayTypeName }}</td>
-                        <td>{{holiday.isActive}}</td>
+                        <td>
+                            <c-badge *ngIf="holiday.isActive" color="success">Active</c-badge>
+                            <c-badge *ngIf="!holiday.isActive" color="danger">Deactive</c-badge>
+                        </td>
                         <td>
                         <button class="custom-button me-1" (click)="toggleUpdate(holiday)" cTooltip="Update">
                             <svg [cIcon]="icons.cilPencil" size="lg" title="Update"></svg>
                         </button>
-                        <button class="custom-button me-1" (click)="onDelete(holiday.holidayId)" cTooltip="Delete">
-                            <svg [cIcon]="icons.cilTrash" size="lg" title="Update"></svg>
+                        <button class="custom-button me-1" (click)="onDelete(holiday.groupId)" cTooltip="Delete">
+                            <svg [cIcon]="icons.cilTrash" size="lg" title="Delete"></svg>
                         </button>
                         </td>
                     </tr>

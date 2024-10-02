@@ -1,0 +1,117 @@
+<c-card class="mt-3 mb-3 shadow">
+    <c-card-header class="d-flex justify-content-between">
+        <div>{{headerText}}</div>
+        <div><button cButton color="primary" shape="rounded-pill" (click)="UserFormView()">{{headerBtnText}}</button>
+        </div>
+    </c-card-header>
+    <c-card-body [visible]="visible" cCollapse>
+        <form [formGroup]="EmpOtherResponsibilityInfoForm" (ngSubmit)="saveOtherResponsibility()">
+            <ng-container formArrayName="empOtherResponsibilityList">
+                <ng-container *ngFor="let p of empOtherResponsibilityListArray.controls; let i=index">
+                    <c-card class="mt-3 mb-3 shadow">
+                        <c-card-body>
+                            <div [formGroupName]="i">
+                                <div class="form-group mb-2" cRow [gutter]="3">
+                                    <input type="hidden" formControlName="id" />
+                                    <input type="hidden" formControlName="empId" />
+
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="responsibilityTypeId{{i}}">Select Responsibility</label>
+                                        <select formControlName="responsibilityTypeId" class="form-select">
+                                            <option value="null" disabled>Select Responsibility</option>
+                                            <option *ngFor="let item of responsibilities" value="{{item.id}}">{{item.name}}
+                                            </option>
+                                        </select>
+                                    </c-col>
+
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="departmentId{{i}}">Select Department</label>
+                                        <select formControlName="departmentId" class="form-select" 
+                                            (change)="onDepartmentSelect($event, i)">
+                                            <option value="null" disabled>Select Department</option>
+                                            <option *ngFor="let item of departmentOptions[i]" [value]="item.id">{{item.name}}</option>
+                                        </select>
+                                    </c-col>
+                
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="sectionId{{i}}">Select Section</label>
+                                        <select formControlName="sectionId" class="form-select" 
+                                            (change)="onSectionSelect($event, i)">
+                                            <option value="null" disabled>Select Section</option>
+                                            <option *ngFor="let item of sectionOptions[i]" [value]="item.id">{{item.name}}</option>
+                                        </select>
+                                    </c-col>
+                
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="designationId{{i}}">Select Designation</label>
+                                        <select formControlName="designationId" class="form-select">
+                                            <option value="null" disabled>Select Designation</option>
+                                            <option *ngFor="let item of designationOptions[i]" value="{{item.id}}">{{item.name}}
+                                            </option>
+                                        </select>
+                                    </c-col>
+
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="startDate{{i}}">Start Date</label>
+                                        <input type="date" formControlName="startDate" class="form-control"
+                                            id="startDate{{i}}" />
+                                    </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="endDate{{i}}">End Date</label>
+                                        <input type="date" formControlName="endDate" class="form-control"
+                                            id="endDate{{i}}" />
+                                    </c-col>
+
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="serviceStatus{{i}}">Service Status</label>
+                                        <select formControlName="serviceStatus" class="form-select">
+                                            <option value="null" disabled>Select Responsibility</option>
+                                            <option value="true">In Service</option>
+                                            <option value="false">Out of Service</option>
+                                        </select>
+                                    </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="remark{{i}}">Remark</label>
+                                        <input type="text" formControlName="remark" class="form-control"
+                                            id="remark{{i}}" placeholder="Enter Remark" />
+                                    </c-col>
+
+                                    <c-col [md]="12" class="d-flex justify-content-end">
+                                        <button *ngIf="p.get('id')?.value" cTooltip="Inactive Designation" cTooltipPlacement="bottom" mat-mini-fab color="primary" type="button"
+                                            (click)="updateOtherResponsibilityStatus(i, p.get('id')?.value)"><mat-icon>highlight_off</mat-icon></button>&nbsp;
+                                        <button cTooltip="Delete" cTooltipPlacement="bottom" mat-mini-fab color="warn" type="button"
+                                            (click)="removeOtherResponsibilityList(i, p.get('id')?.value ?? null)"><mat-icon>delete</mat-icon></button>
+                                    </c-col>
+                                </div>
+                            </div>
+                        </c-card-body>
+                    </c-card>
+                </ng-container>
+            </ng-container>
+            <c-col [md]="12" class="d-flex justify-content-end">
+                <button cTooltip="Add" cTooltipPlacement="bottom" mat-mini-fab class="bg-success text-light mb-3" type="button"
+                    (click)="addOtherResponsibility()"><mat-icon>add</mat-icon></button>
+            </c-col>
+            <div class="form-group">
+                <c-col [xs]="12">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <button [disabled]="loading" [disabled]="EmpOtherResponsibilityInfoForm.invalid" cButton class="me-1"
+                                color="primary" type="submit">
+                                <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                                {{ btnText }}
+                            </button>
+                        </div>
+                        <div>
+                            <button cButton color="danger" class="text-light" (click)="cancel()" type="button">Cancel</button>
+                        </div>
+                    </div>
+                </c-col>
+            </div>
+        </form>
+
+    </c-card-body>
+</c-card>
+

@@ -68,7 +68,6 @@ import { LeaveService } from './service/Leave.service';
 import { OccupationService } from './service/Occupation.service';
 import { Overall_EV_PromotionService } from './service/Overall_EV_Promotion.service';
 import { BankAccountTypeService } from './service/bank-account-type.service';
-import { CountryService } from './service/country.service';
 import { EyesColorService } from './service/eyes-color.service';
 import { LanguageService } from './service/language.service';
 import { PoolService } from './service/pool.service';
@@ -110,6 +109,38 @@ import { TableModule } from 'primeng/table';
 import { LeaveRulesComponent } from './leave/leave-rules/leave-rules.component';
 import { TabsModule } from '@coreui/angular';
 import { TabViewModule } from 'primeng/tabview';
+import { CountryService } from './service/Country.service';
+import { OrganogramSectionComponent } from './organogram/organogram-section/organogram-section.component';
+import { HairColorService } from './service/hair-color.service';
+import { LeaveTypeService } from './service/leave-type.service';
+import { LeaveRuleService } from './service/leave-rule.service';
+import { ReleaseTypeService } from './service/release-type.service';
+import { DivisionService } from './service/division.service';
+import { DistrictService } from './service/district.service';
+import { UapzilaService } from './service/uapzila.service';
+import { ThanaService } from './service/thana.service';
+import { UnionService } from './service/union.service';
+import { WardService } from './service/ward.service';
+import { GroupService } from './service/group.service';
+import { ResultService } from './service/result.service';
+import { SubjectService } from './service/subject.service';
+import { TrainingTypeService } from './service/trainingType.service';
+import { TrainingNameService } from './service/trainingName.service';
+import { InstituteService } from './service/institute.service';
+import { CompetenceService } from './service/competence.service';
+import { DepartmentService } from './service/department.service';
+import { OfficeService } from './service/office.service';
+import { GradeTypeService } from './service/GradeType.service';
+import { GradeClassService } from './service/GradeClass.service';
+import { GradeService } from './service/Grade.service';
+import { ScaleService } from './service/Scale.service';
+import { DesignationService } from './service/designation.service';
+import { RewardPunishmentSetupComponent } from './reward-punishment-setup/reward-punishment-setup.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { RewardPunishmentTypeComponent } from './reward-punishment-type/reward-punishment-type.component';
+import { RewardPunishmentPriorityComponent } from './reward-punishment-priority/reward-punishment-priority.component';
+import { ResponsibilityTypeComponent } from './responsibility-type/responsibility-type.component';
+
 
 
 
@@ -176,6 +207,11 @@ import { TabViewModule } from 'primeng/tabview';
     ReleaseTypeComponent,
     LeaveTypeComponent,
     LeaveRulesComponent,
+    OrganogramSectionComponent,
+    RewardPunishmentSetupComponent,
+    RewardPunishmentTypeComponent,
+    RewardPunishmentPriorityComponent,
+    ResponsibilityTypeComponent,
   ],
   imports: [
     CommonModule,
@@ -200,8 +236,8 @@ import { TabViewModule } from 'primeng/tabview';
     MatTreeModule,
     TableModule,
     TabsModule,
-    TabViewModule
-
+    TabViewModule,
+    MatTabsModule
   ],
   providers: [
     SectionService,
@@ -232,6 +268,30 @@ import { TabViewModule } from 'primeng/tabview';
     YearSetupService,
     HolidaytypeService,
     OrganogramService,
+    HairColorService,
+    LeaveTypeService,
+    LeaveRuleService,
+    ReleaseTypeService,
+    DivisionService,
+    DistrictService,
+    UapzilaService,
+    ThanaService,
+    UnionService,
+    WardService,
+    GroupService,
+    ResultService,
+    SubjectService,
+    TrainingTypeService,
+    TrainingNameService,
+    InstituteService,
+    CompetenceService,
+    DepartmentService,
+    OfficeService,
+    GradeTypeService,
+    GradeClassService,
+    GradeService,
+    ScaleService,
+    DesignationService
   ],
 })
 export class BasicSetupModule {}

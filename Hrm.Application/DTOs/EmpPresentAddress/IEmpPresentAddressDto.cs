@@ -15,8 +15,8 @@ namespace Hrm.Application.DTOs.EmpPresentAddress
         public int? DistrictId { get; set; }
         public int? UpazilaId { get; set; }
         public int? ThanaId { get; set; }
-        public int? UnionId { get; set; }
-        public int? WardId { get; set; }
+        public string? UnionName { get; set; }
+        public string? WardName { get; set; }
         public int? ZipCode { get; set; }
         public string? Address { get; set; }
         public string? Email { get; set; }

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Section.Handlers.Commands
 {
-    public class UpdateSectionCommandHandler : IRequestHandler<UpdateExamTypeCommand, BaseCommandResponse>
+    public class UpdateSectionCommandHandler : IRequestHandler<UpdateSectionCommand, BaseCommandResponse>
     {
 
         private readonly IHrmRepository<Hrm.Domain.Section> _SectionRepository;
@@ -32,7 +32,7 @@ namespace Hrm.Application.Features.Section.Handlers.Commands
             _SectionRepository = SectionRepository;
         }
 
-        public async Task<BaseCommandResponse> Handle(UpdateExamTypeCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(UpdateSectionCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
             var validator = new UpdateSectionDtoValidator();

@@ -7,6 +7,7 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { EmpTrainingInfoService } from '../../../service/emp-training-info.service';
 import { EmpTrainingInfo } from '../../../model/emp-training-info';
+import { CountryService } from 'src/app/views/basic-setup/service/Country.service';
 
 @Component({
   selector: 'app-emp-training-info',
@@ -22,6 +23,11 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   loading: boolean = false;
   empTrainingInfo: EmpTrainingInfo[] = [];
+  trainingTypes: SelectedModel[] = [];
+  trainingNames: SelectedModel[] = [];
+  institute: SelectedModel[] = [];
+  courseDuration: SelectedModel[] = [];
+  countris: SelectedModel[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -29,11 +35,17 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
     private confirmService: ConfirmService,
     private toastr: ToastrService,
     public empTrainingInfoService: EmpTrainingInfoService,
+    public countryService: CountryService,
     private fb: FormBuilder) { }
 
 
   ngOnInit(): void {
     this.getEmployeeTrainingInfoByEmpId();
+    this.getSelectedTrainingType();
+    this.getSelectedTrainingName();
+    this.getSelectedInstitute();
+    this.getSelectedCourseDuration();
+    this.getSelectedCountries();
   }
 
   ngOnDestroy(): void {
@@ -113,6 +125,35 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
         this.addTraining();
       }
     })
+  }
+
+  getSelectedTrainingType(){
+    this.subscription = this.empTrainingInfoService.getSelectedTrainingType().subscribe((res) =>{
+      this.trainingTypes = res;
+    })
+  }
+  
+  getSelectedTrainingName(){
+    this.subscription = this.empTrainingInfoService.getSelectedTrainingName().subscribe((res) =>{
+      this.trainingNames = res;
+    })
+  }
+  
+  getSelectedInstitute(){
+    this.subscription = this.empTrainingInfoService.getSelectedInstitute().subscribe((res) =>{
+      this.institute = res;
+    })
+  }
+  
+  getSelectedCourseDuration(){
+    this.subscription = this.empTrainingInfoService.getSelectedCourseDuration().subscribe((res) =>{
+      this.courseDuration = res;
+    })
+  }
+  getSelectedCountries() {
+    this.subscription = this.countryService.selectGetCountry().subscribe((data) => {
+      this.countris = data;
+    });
   }
 
   patchTrainingInfo(trainingInfoList: any[]) {

@@ -28,4 +28,17 @@ export class EmpTrainingInfoService {
     return this.http.delete(this.baseUrl + '/empTrainingInfo/delete-EmpTrainingInfo/'+id);
   }
 
+  getSelectedTrainingType(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/training-type/get-selectedtrainingtype');
+  }
+  getSelectedTrainingName(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/TrainingName/get-selectedTrainingName');
+  }
+  getSelectedInstitute(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/Institute/get-selectedinstitute');
+  }
+  getSelectedCourseDuration(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/courseDuration/get-selectedCourseDurations')
+  }
+
 }

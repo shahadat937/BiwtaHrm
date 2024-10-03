@@ -45,9 +45,6 @@ export class CourseDurationService {
   delete(id:number){
     return this.http.delete(this.baseUrl + '/courseDuration/delete-CourseDuration/'+id);
   }
-  getSelectedCourseDuration(){
-    return this.http.get<SelectedModel[]>(this.baseUrl + '/courseDuration/get-selectedCourseDurations')
-  }
    
 }
 

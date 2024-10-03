@@ -26,6 +26,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
   visible = false;
   percentage = 0;
   btnText: string | undefined;
+  loading = false;
   @ViewChild('TrainingTypeForm', { static: true }) TrainingTypeForm!: NgForm;
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
@@ -53,6 +54,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.btnText = 'Update';
         this.trainingTypeService.getById(+id).subscribe((res) => {
           this.TrainingTypeForm?.form.patchValue(res);
+          
         });
       } else {
         this.btnText = 'Submit';
@@ -123,19 +125,25 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm):void {
+    this.loading=true;
+    this.trainingTypeService.cachedData = [];
     const id = this.TrainingTypeForm.form.get('trainingTypeId')?.value;
     if (id) {
       this.trainingTypeService.update(+id, this.TrainingTypeForm.value).subscribe(
         (response: any) => {
-          //console.log(response);
+      
+          this.loading=false;
           if (response.success) {
             this.toastr.success('Successfully', 'Update', {
               positionClass: 'toast-top-right',
             });
             this.getALlTrainingTypes();
             this.resetForm();
-            this.router.navigate(['/trainingSetup/trainingType']);
+            if(!id){
+              this.router.navigate(['/trainingSetup/trainingType']);
+            }
+            this.loading=false
           } else {
             this.toastr.warning('', `${response.message}`, {
               positionClass: 'toast-top-right',
@@ -172,6 +180,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.trainingTypeService.cachedData = [];
           console.log('trainingType id ' +element.trainingTypeId);
           this.trainingTypeService.delete(element.trainingTypeId).subscribe(
             (res) => {
@@ -180,6 +189,9 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.dataSource.data.splice(index, 1);
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
+              this.toastr.success('Delete sucessfully ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
                 },
                 (err) => {
                  // console.log(err);

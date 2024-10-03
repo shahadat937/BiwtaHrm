@@ -199,7 +199,13 @@ namespace Hrm.Persistence
             {
                 entity.HasKey(e => e.ScaleId)
                 .HasName("[[PK_ScaleId]]");
+
+                entity.HasOne(x => x.Grade)
+                .WithMany(x => x.Scales)
+                .HasForeignKey(x => x.GradeId);
+                
             });
+          
             modelBuilder.Entity<ScaleGradeView>(entity =>
             {
                 entity.HasKey(e => e.ScaleId)

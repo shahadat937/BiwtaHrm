@@ -5,6 +5,9 @@ import { environment } from '../../../../environments/environment';
 import { TrainingType } from './../model/trainingType';
 @Injectable()
 export class TrainingTypeService {
+  find(arg0: number) {
+    throw new Error('Method not implemented.');
+  }
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
   trainingTypes: TrainingType;

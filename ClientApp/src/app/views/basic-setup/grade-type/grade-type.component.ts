@@ -92,7 +92,7 @@ export class GradeTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/bascisetup/grade-type']);
+    this.router.navigate(['/officeSetup/grade-type']);
   }
 
   getALlGradeTypes() {

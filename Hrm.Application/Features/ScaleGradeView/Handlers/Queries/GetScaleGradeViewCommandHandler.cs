@@ -27,7 +27,7 @@ namespace Hrm.Application.Features.ScaleGradeView.Handlers.Queries
         public async Task<object> Handle(GetScaleGradeViewRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.ScaleGradeView> ScaleGradeView = _scaleRepository.Where(x => true);
-
+            
             var ScaleGradeViewDtos = _mapper.Map<List<ScaleGradeViewDto>>(ScaleGradeView);
 
             return ScaleGradeViewDtos;

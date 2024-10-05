@@ -6,12 +6,14 @@ import { LeaveModel } from '../models/leave-model';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { LeaveDetailViewComponent } from './leave-detail-view/leave-detail-view.component';
 import { HttpParams } from '@angular/common/http';
+import { cilZoom } from '@coreui/icons';
 @Component({
   selector: 'app-manageleave',
   templateUrl: './manageleave.component.html',
   styleUrl: './manageleave.component.scss'
 })
 export class ManageleaveComponent implements OnInit, OnDestroy {
+  icons = {cilZoom}
   loading: boolean ;
   DepartmentOption: any[] = [];
   subscription: Subscription = new Subscription();
@@ -44,6 +46,10 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
         this.leaveStatusOptions = option;
       }
     })
+  }
+
+  getInputEventValue(event: Event) {
+    return (event.target as HTMLInputElement).value;
   }
 
   ngOnDestroy(): void {

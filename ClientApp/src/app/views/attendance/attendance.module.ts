@@ -44,6 +44,9 @@ import { HolidaySetupService } from './services/holiday-setup.service';
 import { SiteVisitService } from './services/site-visit.service';
 import { WorkdayService } from './services/workday.service';
 import { ManageSiteVisitComponent } from './manage-site-visit/manage-site-visit.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule as PDropDownModule } from 'primeng/dropdown';
 
 
 
@@ -89,7 +92,10 @@ import { ManageSiteVisitComponent } from './manage-site-visit/manage-site-visit.
     CalendarModule,
     TableModule, 
     TooltipModule,
-    BadgeModule
+    BadgeModule,
+    InputTextModule,
+    MultiSelectModule,
+    PDropDownModule
 
   ],
   providers: [ 

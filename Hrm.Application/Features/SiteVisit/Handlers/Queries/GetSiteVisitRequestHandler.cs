@@ -29,9 +29,9 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Queries
 
         public async Task<object> Handle(GetSiteVisitRequest request, CancellationToken cancellationToken)
         {
-            var SiteVisits = _SiteVisitRepository.Where(x => true)
-                .Include(e => e.Employees)
-                .ToList();
+            var SiteVisits = await _SiteVisitRepository.Where(x => true)
+                .Include(e => e.Employees).OrderByDescending(x=>x.SiteVisitId)
+                .ToListAsync();
 
             //SiteVisits = SiteVisits.OrderByDescending(x => x.SiteVisitId);
             //var siteVisitDtos = SiteVisits.Select(sv => new SiteVisitDto

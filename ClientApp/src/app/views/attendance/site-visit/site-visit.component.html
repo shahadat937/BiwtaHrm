@@ -133,22 +133,48 @@
          [paginator]="true"
          [rows]="5"
          [rowsPerPageOptions]="[5,10,20,50]"
+         [globalFilterFields]="['firstName','lastName','fromDate','toDate','visitPlace','visitPurpose','status']"
          [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="caption">
+          <c-row>
+            <c-col md="3">
+              <c-input-group>
+                <span cInputGroupText class="bg-white">
+                  <svg [cIcon]="icons.cilZoom" size="lg"></svg>
+                </span>
+                <input
+                  class="border-start-0 ps-0 shadow-none"
+                  cFormControl
+                  type="text"
+                  (input)="dt2.filterGlobal(getInputEventValue($event),'contains')"
+                  placeholder="Search keyword"
+                />
+              </c-input-group>
+
+            </c-col>
+          </c-row>
+        </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>From</th>
-                <th>To</th>
+                <th pSortableColumn="firstName">Name
+                    <p-sortIcon field="firstName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="fromDate">From
+                    <p-sortIcon field="fromDate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="toDate">To
+                    <p-sortIcon field="toDate"></p-sortIcon>
+                </th>
                 <th>Place</th>
                 <th>Purpose</th>
-                <th>Status</th>
+                <th pSortableColumn="status">Status
+                    <p-sortIcon field="status"></p-sortIcon>
+                </th>
                 <th>Action</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-data let-index="rowIndex">
             <tr>
-                <td>{{ data.siteVisitId }}</td>
                 <td>{{ data.firstName+" "+data.lastName }}</td>
                 <td>{{ data.fromDate|date }}</td>
                 <td>{{ data.toDate|date }}</td>

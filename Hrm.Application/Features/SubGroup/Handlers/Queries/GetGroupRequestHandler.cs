@@ -6,6 +6,7 @@ using Hrm.Application.Exceptions;
 using Hrm.Application.Features.Group.Requests.Queries;
 using Hrm.Application.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,8 @@ namespace Hrm.Application.Features.Group.Handlers.Queries
 
         public async Task<object> Handle(GetGroupRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Hrm.Domain.SubGroup> Group = _GroupRepository.Where(x => true);
+            IQueryable<Hrm.Domain.SubGroup> Group = _GroupRepository.Where(x => true)
+                .Include(x => x.ExamType);
             Group = Group.OrderByDescending(x => x.GroupId);
 
             var GroupDtos = await Task.Run(() => _mapper.Map<List<GroupDto>>(Group));

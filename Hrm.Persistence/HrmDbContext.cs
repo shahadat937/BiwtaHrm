@@ -174,6 +174,10 @@ namespace Hrm.Persistence
             {
                 entity.HasKey(e => e.GroupId)
                 .HasName("[[PK__Group__149AF36A7B245A3B]]");
+
+                entity.HasOne(e => e.ExamType)
+                    .WithMany(eb => eb.SubGroup)
+                    .HasForeignKey(e => e.ExamTypeId);
             });
             modelBuilder.Entity<Punishment>(entity =>
             {

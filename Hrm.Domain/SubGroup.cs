@@ -6,9 +6,11 @@ namespace Hrm.Domain
     {
         public int GroupId { get; set; }
         public string? GroupName { get; set; }
+        public int? ExamTypeId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
 
         public virtual ICollection<EmpEducationInfo>? EmpEducationInfo { get; set; }
+        public virtual ExamType? ExamType { get; set; }
     }
 }

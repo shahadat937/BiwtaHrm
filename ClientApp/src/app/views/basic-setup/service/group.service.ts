@@ -13,11 +13,11 @@ export class GroupService {
     this.groups = new Group();
   }
 
-  getSubject() {
-    return this.http.get<SelectedModel[]>(
-      this.baseUrl + '/Subject/get-selectedsubject'
-    );
-  }
+  // getSubject() {
+  //   return this.http.get<SelectedModel[]>(
+  //     this.baseUrl + '/Subject/get-selectedsubject'
+  //   );
+  // }
 
   find(id: number) {
     return this.http.get<Group>(this.baseUrl + '/subGroup/get-subgroupbyid/' + id);
@@ -47,5 +47,10 @@ export class GroupService {
   }
   delete(id: number) {
     return this.http.delete(this.baseUrl + '/subGroup/delete-subgroup/' + id);
+  }
+  getSelectedExamType(){
+    return this.http.get<SelectedModel[]>(
+      this.baseUrl + '/examType/get-selectedExamType'
+    );
   }
 }

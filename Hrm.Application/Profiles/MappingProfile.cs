@@ -216,6 +216,8 @@ namespace Hrm.Application.Profiles
             CreateMap<Grade, CreateGradeDto>().ReverseMap();
             CreateMap<SubGroup, GroupDto>().ReverseMap();
             CreateMap<SubGroup, CreateGroupDto>().ReverseMap();
+            CreateMap<SubGroup, GroupDto>()
+                .ForMember(dest => dest.ExamTypeName, opt => opt.MapFrom(src => src.ExamType.ExamTypeName));
 
             CreateMap<Punishment, PunishmentDto>().ReverseMap();
             CreateMap<Punishment, CreatePunishmentDto>().ReverseMap();

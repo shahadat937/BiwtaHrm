@@ -47,6 +47,7 @@ import { ManageSiteVisitComponent } from './manage-site-visit/manage-site-visit.
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule as PDropDownModule } from 'primeng/dropdown';
+import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 
 
 
@@ -95,7 +96,8 @@ import { DropdownModule as PDropDownModule } from 'primeng/dropdown';
     BadgeModule,
     InputTextModule,
     MultiSelectModule,
-    PDropDownModule
+    PDropDownModule,
+    MatSortModule
 
   ],
   providers: [ 

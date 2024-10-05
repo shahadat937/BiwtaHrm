@@ -24,6 +24,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   DepartmentOption:any[]=[];
   ShiftOption: any[]=[];
   EmpOption: any[] = [];
+  SectionOption: any[] = [];
 
   // For Employee Wise
   PresentText:any="N/A";
@@ -78,7 +79,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
 
   ngOnInit(): void {
     this.getAllEmp();
-    this.getAllOffice();
+    this.getSelectedDepartment();
   }
 
   ngOnDestroy(): void {
@@ -96,6 +97,13 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
      this.subscription = this.AtdReportService.getOfficeOption().subscribe(option=> {
       this.OfficeOption = option;
       this.OfficeOptionDw = option;
+    })
+  }
+
+
+  getSelectedDepartment() {
+    this.subscription = this.AtdReportService.getSelectedDepartment().subscribe(option => {
+      this.DepartmentOption = option;
     })
   }
 
@@ -132,14 +140,15 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   onChange() {
     //console.log(this.selectedDepartment);
 
-    if(this.selectedOffice!=null)
-    this.AtdReportService.getDepartmentOption(this.selectedOffice).subscribe(
-      option => this.DepartmentOption = option,
-    );
+    //if(this.selectedOffice!=null)
+    //this.AtdReportService.getDepartmentOption(this.selectedOffice).subscribe(
+    //  option => this.DepartmentOption = option,
+    //);
 
-    if(this.selectedOffice==null) {
-      this.DepartmentOption=[];
-    }
+    //if(this.selectedOffice==null) {
+    //  this.DepartmentOption=[];
+    //}
+
 
     let params = new HttpParams();
     if(this.selectedDepartment!=null) {
@@ -150,14 +159,15 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     }
 
 
-    console.log(params.get('officeId'));
+    console.log(params.get('DepartmentId'));
 
-    if(this.selectedOffice!=null&&this.selectedDepartment!=null) {
+    if(true) {
        this.subscription = this.AtdReportService.getFilteredEmpOption(params).subscribe(response=> {
         this.EmpOption = response;
+        this.selectedEmp = null;
         console.log(response);
       });
-    }
+    } 
   }
 
   onChangeDw() {

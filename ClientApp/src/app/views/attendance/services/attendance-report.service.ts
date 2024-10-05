@@ -22,6 +22,10 @@ export class AttendanceReportService {
     return this.http.get<any[]>(this.baseUrl+`/department/get-SelectedDepartmentByOfficeId/${officeId}`);
   }
 
+  getSelectedDepartment(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl+"/department/get-selecteddepartment");
+  }
+
   getFilteredEmpOption(filter:any):Observable<any[]> {
 
     return this.http.get<any[]>(this.baseUrl+"/empBasicInfo/get-SelectedFilteredEmpBasicInfo",{params:filter})

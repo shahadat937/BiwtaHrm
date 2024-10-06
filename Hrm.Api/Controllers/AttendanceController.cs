@@ -9,7 +9,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Attendance)]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class AttendanceController:Controller
     {
         private readonly IMediator _mediator;
@@ -21,9 +21,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-Attendance")]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> Get([FromQuery] AttendanceFilterDto filters)
         {
-            var command = new GetAttendanceRequest { };
+            var command = new GetAttendanceRequest { Filters = filters};
             var response = await _mediator.Send(command);
 
             return Ok(response);

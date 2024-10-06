@@ -33,7 +33,24 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
                 .Include(at => at.Shift)
                 .Include(at => at.DayType)
                 .Include(at => at.AttendanceStatus)
-                .ToList();
+                .AsQueryable();
+
+            if(request.Filters.keyword==null)
+            {
+                request.Filters.keyword = "";
+            }
+
+            attendances = attendances.Where(x => x.EmpBasicInfo.IdCardNo.ToLower().Contains(request.Filters.keyword) || (x.EmpBasicInfo.FirstName + " " + x.EmpBasicInfo.LastName).ToLower().Contains(request.Filters.keyword)||request.Filters.keyword=="");
+
+            int total = await attendances.CountAsync();
+
+            if(request.Filters.PageSize.HasValue&&request.Filters.PageIndex.HasValue)
+            {
+                int skipFrom = (int)((total + request.Filters.PageSize - 1) / request.Filters.PageSize) * Math.Max(0,(int) request.Filters.PageIndex - 1);
+
+                attendances = attendances.Skip(skipFrom).Take((int)request.Filters.PageSize);
+            }
+
 
             var AttendancesDtos =  _mapper.Map<List<AttendanceDto>>(attendances);
 

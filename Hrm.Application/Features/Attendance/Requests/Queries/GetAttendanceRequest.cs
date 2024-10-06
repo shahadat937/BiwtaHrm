@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Hrm.Application.DTOs.Attendance;
+using Hrm.Application.Features.Attendance.Handlers.Queries;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,6 @@ namespace Hrm.Application.Features.Attendance.Requests.Queries
 {
     public class GetAttendanceRequest:IRequest<object>
     {
-        
+        public AttendanceFilterDto Filters {  get; set; }
     }
 }

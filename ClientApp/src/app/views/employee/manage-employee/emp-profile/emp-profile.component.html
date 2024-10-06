@@ -355,7 +355,7 @@
                     <h5 class="text-center text-light">Employee Education Information</h5>
                 </c-card-header>
                 <c-card-body>
-                    <!-- <table class="table">
+                    <table class="table">
                         <tbody *ngFor="let item of empEducationInfo" class="mb-3">
                             <tr>
                                 <th>Exam Type</th>
@@ -368,7 +368,8 @@
                                 <th>Subject/Group</th>
                                 <td *ngIf="item?.subGroupName; else emptyTd">{{item.subGroupName}}</td>
                                 <th>Result</th>
-                                <td *ngIf="item?.result; else emptyTd">{{item.result}}</td>
+                                <td *ngIf="!item?.point; else point">{{item.resultName}}</td>
+                                <ng-template #point><td *ngIf="item?.point; else emptyTd">{{item.point}}</td></ng-template>
                             </tr>
                             <tr>
                                 <th>Course Duration</th>
@@ -381,8 +382,8 @@
                                 <td *ngIf="item?.remark; else emptyTd">{{item.remark}}</td>
                                 <th colspan="2"></th>
                             </tr>
-                        </tbody>                        
-                    </table> -->
+                        </tbody>                   
+                    </table>
                     
                 </c-card-body>
             </c-card>

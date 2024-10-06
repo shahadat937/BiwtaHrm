@@ -4,8 +4,9 @@ export class EmpEducationInfoModule {
   examTypeId: any;
   boardId: any;
   subGroupId: any;
-  result: number | null;
-  courseDuration: string;
+  courseDurationId: number | null = null;
+  resultId: number | null = null;
+  point: number | null = null;
   passingYear: number | null;
   remark: string;
   menuPosition: number;
@@ -14,6 +15,8 @@ export class EmpEducationInfoModule {
   examTypeName: string = '';
   boardName: string = '';
   subGroupName: string = '';
+  courseDuration: string = '';
+  resultName: string = '';
   
   constructor(){
     this.id= 0;
@@ -21,8 +24,6 @@ export class EmpEducationInfoModule {
     this.examTypeId = null;
     this.boardId = null;
     this.subGroupId = null;
-    this.result = null;
-    this.courseDuration = '';
     this.passingYear = null;
     this.remark= '';
     this.menuPosition= 0;

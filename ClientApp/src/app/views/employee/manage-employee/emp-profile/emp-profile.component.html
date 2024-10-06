@@ -368,7 +368,8 @@
                                 <th>Subject/Group</th>
                                 <td *ngIf="item?.subGroupName; else emptyTd">{{item.subGroupName}}</td>
                                 <th>Result</th>
-                                <td *ngIf="item?.result; else emptyTd">{{item.result}}</td>
+                                <td *ngIf="!item?.point; else point">{{item.resultName}}</td>
+                                <ng-template #point><td *ngIf="item?.point; else emptyTd">{{item.point}}</td></ng-template>
                             </tr>
                             <tr>
                                 <th>Course Duration</th>
@@ -381,7 +382,7 @@
                                 <td *ngIf="item?.remark; else emptyTd">{{item.remark}}</td>
                                 <th colspan="2"></th>
                             </tr>
-                        </tbody>                        
+                        </tbody>                   
                     </table>
                     
                 </c-card-body>
@@ -524,7 +525,48 @@
                 </c-card-body>
             </c-card>
             }
+
+            <!-- Employee Training Information -->
+            @if(empTrainingInfo.length>0){
+                <c-card class="shadow mb-4">
+                    <c-card-header>
+                        <h5 class="text-center text-light">Employee Training Information</h5>
+                    </c-card-header>
+                    <c-card-body>
+                        <table class="table">
+                            <tbody *ngFor="let item of empTrainingInfo" class="mb-3">
+                                <tr>
+                                    <th>Training Type</th>
+                                    <td>{{item.trainingTypeName}}</td>
+                                    <th>Institute</th>
+                                    <td>{{item.trainingName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Institute</th>
+                                    <td>{{item.instituteName}}</td>
+                                    <th>Duration</th>
+                                    <td>{{item.trainingDuration}}</td>
+                                </tr>
+                                <tr>
+                                    <th>From Date</th>
+                                    <td>{{item.fromDate}}</td>
+                                    <th>To Date</th>
+                                    <td>{{item.toDate}}</td>
+                                </tr>
+                                <tr class="table_mergin_bottom">
+                                    <th>Country</th>
+                                    <td>{{item.countryName}}</td>
+                                    <th>Remark</th>
+                                    <td>{{item.remark}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </c-card-body>
+                </c-card>
+                }
     
+
+
             <!-- Employee Psi and Training Information -->
             <!-- @if(empPsiTrainingInfo.length>0){
             <c-card class="shadow mb-4">

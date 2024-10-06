@@ -13,8 +13,9 @@ namespace Hrm.Application.DTOs.EmpEducationInfo
         public int? ExamTypeId { get; set; }
         public int? BoardId { get; set; }
         public int? SubGroupId { get; set; }
-        public string? Result { get; set; }
-        public string? CourseDuration { get; set; }
+        public int? CourseDurationId { get; set; }
+        public int? ResultId { get; set; }
+        public float? Point { get; set; }
         public int? PassingYear { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }

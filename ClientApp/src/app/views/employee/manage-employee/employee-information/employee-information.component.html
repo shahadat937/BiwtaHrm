@@ -503,7 +503,9 @@
                                     <th>Group</th>
                                     <td>{{item.subGroupName}}</td>
                                     <th>Result</th>
-                                    <td>{{item.result}}</td>
+                                    <td *ngIf="!item?.point; else point">{{item.resultName}}</td>
+                                    <ng-template #point><td *ngIf="item?.point; else emptyTd">{{item.point}}</td></ng-template>
+                                    <ng-template #emptyTd><td></td></ng-template>
                                 </tr>
                                 <tr>
                                     <th>Duration</th>

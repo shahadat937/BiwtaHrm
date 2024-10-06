@@ -15,14 +15,16 @@
                         [style]="{height: '2.37rem'}"
                         name="dateRange"
                         [(ngModel)]="rangeDates" 
-                        [touchUI]="true"
-                        selectionMode="range"
+                        view="month"
+                        dateFormat="mm/yy"
+                        [readonlyInput]="true"
                         showIcon="true"
+                        (ngModelChange)="check()"
                         />
                     </c-col>
                 </c-row>
                 <c-row class="mt-3">
-                    <c-col md="2">
+                    <!--<c-col md="2">
                         <label for="office" cLabel>Office</label>
                         <select name="officeId" id="office" cSelect [(ngModel)]="selectedOffice"
                         (change)="onOfficeChange()"
@@ -33,7 +35,7 @@
                                 <option [ngValue]="office.id" >{{office.name}}</option>
                             }
                         </select>
-                    </c-col>
+                    </c-col> -->
                     <c-col md="2">
                         <label for="department" cLabel>Department</label>
                         <select name="departmentId" id="department" cSelect [(ngModel)]="selectedDepartment"
@@ -45,7 +47,7 @@
                             }
                         </select>
                     </c-col>
-                    <c-col md="2">
+                    <!--<c-col md="2">
                         <label for="designation" cLabel>Designation</label>
                         <select name="designationId" id="designation" cSelect [(ngModel)]="selectedDesignation"
                         (change)="onDesignationChange()"
@@ -64,6 +66,15 @@
                                 <option [ngValue]="shift.id">{{shift.name}}</option>
                             }
                         </select>
+                    </c-col>-->
+                    <c-col md="2" [class]="SectionOption.length<=0||selectedDepartment==null?'d-none':''">
+                        <label for="section" cLabel>Section</label>
+                        <select name="sectionId" id="sectionId" [(ngModel)]="selectedSection" cSelect>
+                            <option [ngValue]="null" cDropdownItem>Select Section</option>
+                            @for (section of SectionOption; track $index) {
+                                <option [ngValue]="section.id">{{section.name}}</option>
+                            }
+                        </select>
                     </c-col>
                     <c-col md="2">
                         <label for="emp" cLabel>Employee</label>
@@ -78,7 +89,7 @@
                 <c-row class="mt-3">
                     <c-col md="3">
                         <button type="submit" cButton class="btn btn-success"
-                        [disabled]="loading||rangeDates.length==0"
+                        [disabled]="loading||rangeDates==null"
                         >Show Report</button>
                     </c-col>
                 </c-row>
@@ -86,13 +97,22 @@
             </c-card-body>
         </c-card>
         <c-card class="mt-2">
-            <c-card-body>
-                <p-table styleClass="p-datatable-striped" [columns]="dynamicColumn" [value]="tableData" [tableStyle]="{'min-width': '50rem'}">
+            <c-card-body *ngIf="tableData.length>0">
+                <p-table 
+                [scrollable]="true"
+                scrollHeight="500px"
+                styleClass="p-datatable-striped" 
+                [columns]="dynamicColumn" 
+                [value]="tableData" [tableStyle]="{'min-width': '50rem'}">
+
+
+
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                             @for ( col of staticColumnsBefore; track $index) {
-                                <th>{{col.header}}</th>
+                                <th style="min-width: 150px" pFrozenColumn>{{col.header}}</th>
                             }
+
                             @for (column of columns; track $index) {
                                 <th class="text-nowrap">{{column.header}}</th>
                             }
@@ -102,14 +122,19 @@
                     <ng-template pTemplate="body" let-rowData let-columns="columns">
                         <tr>
                             @for(col of staticColumnsBefore; track $index) {
-                                <td>{{rowData[col.field]}}</td>
+                                <td style="min-width: 150px;" pFrozenColumn>
+                                    {{rowData[col.field]}}
+                                </td>
                             }
+
                             @for (col of columns; track $index) {
                                 <td>
                                     @if (rowData[col.field]==null||rowData[col.field]=="Absent") {
-                                        <svg [cIcon]="icons.cibXPack" cTooltip="Hello World"></svg>
+                                        <!--<svg [cIcon]="icons.cibXPack" cTooltip="Hello World"></svg>-->
+                                        <span class="text-danger">A</span>
                                     } @else {
-                                        <svg [cIcon]="icons.cibVerizon" cTooltip="Hello World"></svg><i class="cib-verizon"></i>
+                                        <!--<svg [cIcon]="icons.cibVerizon" cTooltip="Hello World"></svg><i class="cib-verizon"></i>-->
+                                        <span>P</span>
                                     }
                                 </td>
                             }

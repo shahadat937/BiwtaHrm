@@ -49,6 +49,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule as PDropDownModule } from 'primeng/dropdown';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { SectionService } from '../basic-setup/service/section.service';
+import { DepartmentService } from '../basic-setup/service/department.service';
 
 
 
@@ -111,7 +112,8 @@ import { SectionService } from '../basic-setup/service/section.service';
     HolidaySetupService,
     SiteVisitService,
     WorkdayService,
-    SectionService
+    SectionService,
+    DepartmentService
   ],
 })
 export class AttendanceModule { }

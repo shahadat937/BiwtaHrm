@@ -19,9 +19,10 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
   headerText: string = '';
   headerBtnText: string = 'Hide From';
   btnText: string = '';
+  examTypesOptions: SelectedModel[][] = [];
   examTypes: SelectedModel[] = [];
   boards: SelectedModel[] = [];
-  subGroups: SelectedModel[] = [];
+  subGroups: SelectedModel[][] = [];
   maritalStatuses: SelectedModel[] = [];
   subscription: Subscription = new Subscription();
   loading: boolean = false;
@@ -40,7 +41,6 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
     this.getEmployeeEducationInfoByEmpId();
     this.getSelectedExamTypeStatus();
     this.getSelectedBoard();
-    this.getSelectedSubGroups();
   }
 
   ngOnDestroy(): void {
@@ -71,7 +71,7 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
     const control = <FormArray>this.EmpEducationInfoForm.controls['empEducationList'];
     control.clear();
 
-    educationInfoList.forEach(educationInfo => {
+    educationInfoList.forEach((educationInfo, index) => {
       control.push(this.fb.group({
         id: [educationInfo.id],
         empId: [educationInfo.empId],
@@ -83,6 +83,13 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
         passingYear: [educationInfo.passingYear, Validators.required],
         remark: [educationInfo.remark],
       }));
+      this.examTypesOptions[index] = [...this.examTypes];
+
+      if(educationInfo.examTypeId){
+        this.subscription=this.empEducationInfoService.getSelectedSubject(educationInfo.examTypeId).subscribe((data) => {
+          this.subGroups[index] = data; 
+        });
+      }
     });
   }
   EmpEducationInfoForm: FormGroup = new FormGroup({
@@ -105,6 +112,8 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
       passingYear: new FormControl(undefined, Validators.required),
       remark: new FormControl(undefined),
     }));
+    this.examTypesOptions.push([...this.examTypes]);  // Clone the departments list
+    this.subGroups.push([]);
   }
 
   removeEducationList(index: number, id: number) {
@@ -155,10 +164,17 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
       this.boards = res;
     })
   }
-  getSelectedSubGroups(){
-    this.subscription=this.empEducationInfoService.getSelectedSubject().subscribe((data) => { 
-      this.subGroups = data;
-    });
+  getSelectedSubGroups(event: Event, index: number){
+    const selectElement = event.target as HTMLSelectElement;
+    const id = selectElement?.value ? +selectElement.value : null;
+    this.empEducationListArray.at(index).get('subGroupId')?.setValue(null);
+
+    if(id){
+      this.subGroups[index] = [];
+      this.subscription=this.empEducationInfoService.getSelectedSubject(+id).subscribe((data) => {
+        this.subGroups[index] = data; 
+      });
+    }
   }
 
   cancel() {

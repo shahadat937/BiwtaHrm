@@ -26,8 +26,12 @@ export class EmpEducationInfoService {
   getSelectedBoard(){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/board/get-selectedBoard/');
   }
-  getSelectedSubject(){
-    return this.http.get<SelectedModel[]>(this.baseUrl + '/subGroup/get-selectedsubgroup/');
+  getSelectedSubject(id: number){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/subGroup/get-selectedsubgroupByExamType/' + id);
+  }
+  
+  getSelectedResult(id: number){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/Result/get-selectedResults/' + id);
   }
   
   saveEmpEducationInfo(model: FormData) {

@@ -11,6 +11,8 @@ namespace Hrm.Domain
     {
         public int ResultId { get; set; }
         public string? ResultName { get; set; }
+        public bool? HavePoint { get; set; }
+        public int? MaxPoint { get; set; }
         public int MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

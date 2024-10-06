@@ -16,8 +16,8 @@
                                     <input type="hidden" formControlName="empId" />
 
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="examTypeId{{i}}">Exam Type</label>
-                                        <select formControlName="examTypeId" class="form-select">
+                                        <label class="col-form-label" for="examTypeId{{i}}">Exam Type<span class="text-danger">*</span></label>
+                                        <select formControlName="examTypeId" class="form-select" (change)="getSelectedSubGroups($event, i)">
                                             <option value="null" disabled>Select Exam Type</option>
                                             <option *ngFor="let item of examTypes" value="{{item.id}}">{{item.name}}
                                             </option>
@@ -37,13 +37,13 @@
                                         <label class="col-form-label" for="subGroupId{{i}}">Subject/Group</label>
                                         <select formControlName="subGroupId" class="form-select">
                                             <option value="null" disabled>Select Subject/Group</option>
-                                            <option *ngFor="let item of subGroups" value="{{item.id}}">{{item.name}}
+                                            <option *ngFor="let item of subGroups[i]" [value]="item.id">{{item.name}}
                                             </option>
                                         </select>
                                     </c-col>
                                     
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="result{{i}}">Result</label>
+                                        <label class="col-form-label" for="result{{i}}">Result<span class="text-danger">*</span></label>
                                         <input type="text" formControlName="result" class="form-control"
                                             id="result{{i}}" placeholder="Enter Result"/>
                                     </c-col>
@@ -55,7 +55,7 @@
                                     </c-col>
                                     
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="passingYear{{i}}">Passing Year</label>
+                                        <label class="col-form-label" for="passingYear{{i}}">Passing Year<span class="text-danger">*</span></label>
                                         <input type="number" formControlName="passingYear" class="form-control"
                                             id="passingYear{{i}}" placeholder="Enter Passing Year" />
                                     </c-col>
@@ -68,7 +68,7 @@
                                     
 
                                     <c-col [md]="12" class="d-flex justify-content-end">
-                                        <button mat-icon-button class="bg-danger text-light" type="button"
+                                        <button mat-mini-fab color="warn" type="button"
                                             (click)="removeEducationList(i, p.get('id')?.value ?? null)"><mat-icon>delete</mat-icon></button>
                                     </c-col>
                                 </div>
@@ -78,7 +78,7 @@
                 </ng-container>
             </ng-container>
             <c-col [md]="12" class="d-flex justify-content-end">
-                <button mat-icon-button class="bg-success text-light mb-3" type="button"
+                <button mat-mini-fab class="bg-success text-light mb-3" type="button"
                     (click)="addEducation()"><mat-icon>add</mat-icon></button>
             </c-col>
             <div class="form-group">

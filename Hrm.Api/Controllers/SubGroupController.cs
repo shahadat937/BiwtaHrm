@@ -82,10 +82,10 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-selectedsubgroup")]
-        public async Task<ActionResult<List<SelectedModel>>> GetSelectedGroup()
+        [Route("get-selectedsubgroupByExamType/{id}")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedGroup(int id)
         {
-            var group = await _mediator.Send(new GetSelectedGroupRequest { });
+            var group = await _mediator.Send(new GetSelectedGroupRequest { Id = id });
             return Ok(group);
         }
     }

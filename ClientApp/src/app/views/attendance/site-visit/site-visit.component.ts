@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {SiteVisitModel} from "../models/site-visit-model";
 import {SiteVisitService} from "../services/site-visit.service";
-import { cilList, cilShieldAlt } from '@coreui/icons';
+import { cilList, cilShieldAlt, cilZoom } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { cilX,cilCheck,cilPencil,cilTrash } from '@coreui/icons';
 import { Subscription } from 'rxjs';
@@ -26,7 +26,7 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
 
   @Input() IsUser: boolean;
   @Input() filter: any;
-  icons = {cilX,cilTrash,cilCheck, cilPencil};
+  icons = {cilX,cilTrash,cilCheck, cilPencil,cilZoom};
   subscription:Subscription = new Subscription();
   EmpOption: any[] = [];
   @ViewChild('siteVisitForm', { static: true }) siteVisitForm!: NgForm;
@@ -36,6 +36,7 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   isVisible: boolean = false;
   isUpdate: boolean = false;
   loading=false;
+  statusOption = ["Approved","Declined"]
 
   constructor(
     public siteVisitService : SiteVisitService,
@@ -51,6 +52,9 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   }
 
 
+  getInputEventValue(event:Event) {
+    return (event.target as HTMLInputElement).value;
+  }
   ngOnInit(): void {
     this.getSiteVisit();
     this.getEmpOption();
@@ -58,6 +62,8 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     if(this.IsUser) {
       this.roleFeatureService.getFeaturePermission("manageSiteVisit").subscribe(response=> {
       })
+
+      this.siteVisitService.model.empId = JSON.parse(JSON.stringify(this.filter)).EmpId; 
     } else {
       this.roleFeatureService.getFeaturePermission("siteVisit").subscribe(response=> {
       })
@@ -106,6 +112,10 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
         params = params.set(key, this.filter[key]);
       }
 
+
+      if(!params.get('empId')) {
+        return;
+      }
       this.siteVisitService.getSiteVisitByFilter(params).subscribe({
         next:response => {
           this.tableData = response;
@@ -219,7 +229,13 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     this.isVisible = false;
     this.isUpdate = false;
     this.siteVisitService.model = new SiteVisitModel();
-    this.siteVisitForm.reset();
+    this.siteVisitForm.reset(); 
+
+    if(this.IsUser) {
+      this.siteVisitService.model.empId = JSON.parse(JSON.stringify(this.filter)).EmpId;
+      this.siteVisitForm.control.patchValue({empId:this.filter.EmpId});
+    }
+
   }
 
   getEmpOption() {

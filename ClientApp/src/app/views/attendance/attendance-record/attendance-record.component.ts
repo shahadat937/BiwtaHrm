@@ -10,6 +10,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import {UpdateAttendanceModel} from "../models/update-attendance-model"
 import { NgForm } from '@angular/forms';
+import { MatSort } from '@angular/material/sort';
+import { cilZoom } from '@coreui/icons';
 
 
 @Component({
@@ -32,11 +34,12 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   selectedShift:number|null;
   selectedUpdateShift: any|null;
   selectedEmp:any|null;
-  displayedColumns = ["attendanceId","idCardNo","fullName","attendanceDate","inTime","outTime","dayTypeName","attendanceStatusName","Action"]
+  displayedColumns = ["idCardNo","fullName","attendanceDate","inTime","outTime","dayTypeName","attendanceStatusName","Action"]
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   updateWindowVisible:boolean = false;
-
+  icons = {cilZoom}
   constructor(
     public AtdRecordService: AttendanceRecordService,
     private route: ActivatedRoute,
@@ -52,11 +55,21 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   ngOnInit(): void {
-    this.getAllAttendance(); 
+    this.getAllAttendance();
 
     this.AtdRecordService.getAttendanceStatusOption().subscribe(option=> {
       this.AtdStatusOption = option;
     });
+  }
+
+  testSort() {
+    console.log("Sort Triggered");
+  }
+
+  applyFilter(event: Event) {
+    let val = (event.target as HTMLInputElement).value
+    val = val.trim().toLowerCase();
+    this.dataSource.filter=val;
   }
 
   ngOnDestroy(): void {
@@ -64,7 +77,6 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   ngAfterViewInit(): void {
-    
   }
 
   getAllAttendance() {
@@ -74,6 +86,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
         fullName: `${x.empFirstName} ${x.empLastName}`
       })));
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     })
   }
 

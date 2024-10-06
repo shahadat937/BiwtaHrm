@@ -42,7 +42,7 @@
                 <select name="Department" id="department" 
                 cSelect
                 [(ngModel)]="selectedDepartment"
-                (change)="onChange()"
+                (change)="onChange(true)"
                 >
                     <option [ngValue]="null" selected>Select Department</option>
                     @for ( department of DepartmentOption; track $index) {
@@ -50,8 +50,8 @@
                     }
                 </select>
             </c-col>
-            <c-col md="3">
-                <select name="Section" id="section" cSelect>
+            <c-col md="3" [ngClass]="this.SectionOption.length<=0||this.selectedDepartment==null?'d-none':''">
+                <select (change)="onChange(false)" name="Section" id="section" cSelect>
                     <option [ngValue]="null" selected>Select Section</option>
                     @for ( section of SectionOption; track $index) {
                         <option [ngValue]="section.id">{{section.name}}</option>

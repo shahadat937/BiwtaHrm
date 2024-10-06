@@ -8,6 +8,7 @@ import { AttendanceReportService } from '../services/attendance-report.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { DateRange } from '@angular/material/datepicker';
+import { SectionService } from '../../basic-setup/service/section.service';
 
 @Component({
   selector: 'app-attendance-summary',
@@ -38,6 +39,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   selectedEmp: number|null;
   selectedDepartment: number | null;
   selectedOffice: number|null;
+  selectedSection: number | null;
   fromDate: Date|null;
   toDate: Date | null;
   rangeDates: Date[] = [];
@@ -59,6 +61,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   selectedDepartmentDw : number | null;
   selectedOfficeDw: number | null;
   constructor(
+    private SectionService: SectionService,
     private AtdReportService: AttendanceReportService,
     private route: ActivatedRoute,
     private router: Router,
@@ -69,6 +72,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     this.selectedDepartment=null;
     this.selectedEmp = null;
     this.selectedOffice = null;
+    this.selectedSection = null;
     this.fromDate = null;
     this.toDate = null;
     this.selectedDepartmentDw = null;
@@ -137,7 +141,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     });
   }
 
-  onChange() {
+  onChange(IsDepartment: boolean) {
     //console.log(this.selectedDepartment);
 
     //if(this.selectedOffice!=null)
@@ -151,23 +155,32 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
 
 
     let params = new HttpParams();
+
+    if(this.selectedDepartment!=null&&IsDepartment) {
+      this.SectionService.getSectionByOfficeDepartment(this.selectedDepartment).subscribe({
+        next: response => {
+          this.SectionOption = response;
+          this.selectedSection = null;
+        }
+      })
+    }
+
     if(this.selectedDepartment!=null) {
-      params = params.set('DepartmentId',this.selectedDepartment==null?"":this.selectedDepartment);
-    }
-    if(this.selectedOffice!=null) {
-      params = params.set("OfficeId",this.selectedOffice==null?"":this.selectedOffice);
+      params = params.set('DepartmentId',this.selectedDepartment);
     }
 
+    if(this.selectedSection!=null) {
+      params = params.set('SectionId', this.selectedSection);
+    }
 
-    console.log(params.get('DepartmentId'));
 
-    if(true) {
-       this.subscription = this.AtdReportService.getFilteredEmpOption(params).subscribe(response=> {
+
+    this.subscription = this.AtdReportService.getFilteredEmpOption(params).subscribe(response=> {
         this.EmpOption = response;
         this.selectedEmp = null;
         console.log(response);
-      });
-    } 
+    })
+    
   }
 
   onChangeDw() {

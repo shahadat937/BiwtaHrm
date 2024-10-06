@@ -31,6 +31,8 @@ namespace Hrm.Application.Features.EmpEducationInfos.Handlers.Queries
                 .Include(x => x.ExamType)
                 .Include(x => x.Board)
                 .Include(x => x.SubGroup)
+                .Include(x => x.CourseDuration)
+                .Include(x => x.Result)
                 .ToListAsync(cancellationToken);
 
             if (empEducationInfos == null)

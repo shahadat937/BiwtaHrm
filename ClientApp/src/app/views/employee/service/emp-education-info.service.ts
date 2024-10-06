@@ -30,8 +30,8 @@ export class EmpEducationInfoService {
     return this.http.get<SelectedModel[]>(this.baseUrl + '/subGroup/get-selectedsubgroupByExamType/' + id);
   }
   
-  getSelectedResult(id: number){
-    return this.http.get<SelectedModel[]>(this.baseUrl + '/Result/get-selectedResults/' + id);
+  getSelectedResult(){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/Result/get-selectedResults/');
   }
   
   saveEmpEducationInfo(model: FormData) {

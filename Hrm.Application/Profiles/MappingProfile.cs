@@ -435,7 +435,9 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpEducationInfo, EmpEducationInfoDto>()
             .ForMember(dest => dest.ExamTypeName, opt => opt.MapFrom(src => src.ExamType.ExamTypeName))
             .ForMember(dest => dest.BoardName, opt => opt.MapFrom(src => src.Board.BoardName))
-            .ForMember(dest => dest.SubGroupName, opt => opt.MapFrom(src => src.SubGroup.GroupName));
+            .ForMember(dest => dest.SubGroupName, opt => opt.MapFrom(src => src.SubGroup.GroupName))
+            .ForMember(dest => dest.CourseDuration, opt => opt.MapFrom(src => src.CourseDuration.Duration))
+            .ForMember(dest => dest.ResultName, opt => opt.MapFrom(src => src.Result.ResultName));
 
             CreateMap<EmpPsiTrainingInfo, EmpPsiTrainingInfoDto>().ReverseMap();
             CreateMap<EmpPsiTrainingInfo, CreateEmpPsiTrainingInfoDto>().ReverseMap();

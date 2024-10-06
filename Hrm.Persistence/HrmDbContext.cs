@@ -711,6 +711,14 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.SubGroup)
                     .WithMany(eb => eb.EmpEducationInfo)
                     .HasForeignKey(e => e.SubGroupId);
+
+                entity.HasOne(e => e.CourseDuration)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.CourseDurationId);
+
+                entity.HasOne(e => e.Result)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.ResultId);
             });
 
             modelBuilder.Entity<EmpPsiTrainingInfo>(entity =>

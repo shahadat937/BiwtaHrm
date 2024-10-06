@@ -14,8 +14,9 @@ namespace Hrm.Domain
         public int? ExamTypeId { get; set; }
         public int? BoardId { get; set; }
         public int? SubGroupId { get; set; }
-        public string? Result { get; set; }
-        public string? CourseDuration { get; set; }
+        public int? CourseDurationId { get; set; }
+        public int? ResultId { get; set; }
+        public float? Point { get; set; }
         public int? PassingYear { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
@@ -25,5 +26,7 @@ namespace Hrm.Domain
         public virtual ExamType? ExamType { get; set; }
         public virtual Board? Board { get; set; }
         public virtual SubGroup? SubGroup { get; set; }
+        public virtual CourseDuration? CourseDuration { get; set; }
+        public virtual Result? Result { get; set; }
     }
 }

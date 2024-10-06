@@ -7,6 +7,9 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { EmpEducationInfoModule } from '../../../model/emp-education-info.module';
 import { EmpEducationInfoService } from '../../../service/emp-education-info.service';
+import { EmpTrainingInfoService } from '../../../service/emp-training-info.service';
+import { ResultService } from 'src/app/views/basic-setup/service/result.service';
+import { Result } from 'src/app/views/basic-setup/model/result';
 
 @Component({
   selector: 'app-emp-education-info',
@@ -19,10 +22,15 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
   headerText: string = '';
   headerBtnText: string = 'Hide From';
   btnText: string = '';
+  examTypesOptions: SelectedModel[][] = [];
   examTypes: SelectedModel[] = [];
   boards: SelectedModel[] = [];
-  subGroups: SelectedModel[] = [];
+  courseDurations: SelectedModel[] = [];
+  results: SelectedModel[] = [];
+  subGroups: SelectedModel[][] = [];
+  pointOptions: Result[] = [];
   maritalStatuses: SelectedModel[] = [];
+  yearOptions: number[] = [];
   subscription: Subscription = new Subscription();
   loading: boolean = false;
   empEducation: EmpEducationInfoModule[] = [];
@@ -33,6 +41,8 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
     private confirmService: ConfirmService,
     private toastr: ToastrService,
     public empEducationInfoService: EmpEducationInfoService,
+    public empTrainingInfoService: EmpTrainingInfoService,
+    public ResultService: ResultService,
     private fb: FormBuilder) { }
 
 
@@ -40,7 +50,9 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
     this.getEmployeeEducationInfoByEmpId();
     this.getSelectedExamTypeStatus();
     this.getSelectedBoard();
-    this.getSelectedSubGroups();
+    this.getSelectedCourseDuration();
+    this.getSelectedResults();
+    this.getOnlyYears();
   }
 
   ngOnDestroy(): void {
@@ -53,7 +65,6 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
   getEmployeeEducationInfoByEmpId() {
     this.empEducationInfoService.findByEmpId(this.empId).subscribe((res) => {
       if (res.length > 0) {
-        console.log("Education Info: ", res)
         this.headerText = 'Update Education Information';
         this.btnText = 'Update';
         this.empEducation = res;
@@ -71,18 +82,39 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
     const control = <FormArray>this.EmpEducationInfoForm.controls['empEducationList'];
     control.clear();
 
-    educationInfoList.forEach(educationInfo => {
+    educationInfoList.forEach((educationInfo, index) => {
       control.push(this.fb.group({
         id: [educationInfo.id],
         empId: [educationInfo.empId],
         examTypeId: [educationInfo.examTypeId, Validators.required],
         boardId: [educationInfo.boardId],
         subGroupId: [educationInfo.subGroupId],
-        result: [educationInfo.result, Validators.required],
-        courseDuration: [educationInfo.courseDuration],
+        resultId: [educationInfo.resultId, Validators.required],
+        point: [educationInfo.point],
+        courseDurationId: [educationInfo.courseDurationId],
         passingYear: [educationInfo.passingYear, Validators.required],
         remark: [educationInfo.remark],
       }));
+      this.examTypesOptions[index] = [...this.examTypes];
+
+      if(educationInfo.examTypeId){
+        this.subscription=this.empEducationInfoService.getSelectedSubject(educationInfo.examTypeId).subscribe((data) => {
+          this.subGroups[index] = data; 
+        });
+      }
+      if(educationInfo.resultId){
+        this.subscription=this.ResultService.find(educationInfo.resultId).subscribe((data) => {
+          this.pointOptions[index] = data; 
+          if (data.havePoint) {
+            this.empEducationListArray.at(index).get('point')?.enable();
+            this.empEducationListArray.at(index).get('point')?.setValidators([
+              Validators.required, Validators.max(data.maxPoint || 100)
+            ]);
+          } else {
+            this.empEducationListArray.at(index).get('point')?.disable();
+          }
+        });
+      }
     });
   }
   EmpEducationInfoForm: FormGroup = new FormGroup({
@@ -100,11 +132,14 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
       examTypeId: new FormControl(undefined, Validators.required),
       boardId: new FormControl(undefined),
       subGroupId: new FormControl(undefined),
-      result: new FormControl(undefined, Validators.required),
-      courseDuration: new FormControl(undefined),
+      courseDurationId: new FormControl(undefined),
+      point: new FormControl(undefined),
+      resultId: new FormControl(undefined, Validators.required),
       passingYear: new FormControl(undefined, Validators.required),
       remark: new FormControl(undefined),
     }));
+    this.examTypesOptions.push([...this.examTypes]);  // Clone the departments list
+    this.subGroups.push([]);
   }
 
   removeEducationList(index: number, id: number) {
@@ -155,10 +190,55 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
       this.boards = res;
     })
   }
-  getSelectedSubGroups(){
-    this.subscription=this.empEducationInfoService.getSelectedSubject().subscribe((data) => { 
-      this.subGroups = data;
-    });
+  getSelectedSubGroups(event: Event, index: number){
+    const selectElement = event.target as HTMLSelectElement;
+    const id = selectElement?.value ? +selectElement.value : null;
+    this.empEducationListArray.at(index).get('subGroupId')?.setValue(null);
+
+    if(id){
+      this.subGroups[index] = [];
+      this.subscription=this.empEducationInfoService.getSelectedSubject(+id).subscribe((data) => {
+        this.subGroups[index] = data; 
+      });
+    }
+  }
+  
+  getSelectedCourseDuration() {
+    this.empTrainingInfoService.getSelectedCourseDuration().subscribe((res) => {
+      this.courseDurations = res;
+    })
+  }
+  
+  getSelectedResults() {
+    this.empEducationInfoService.getSelectedResult().subscribe((res) => {
+      this.results = res;
+    })
+  }
+  getPointStatusByResult(event: Event, index: number){
+    const selectElement = event.target as HTMLSelectElement;
+    const id = selectElement?.value ? +selectElement.value : null;
+    this.empEducationListArray.at(index).get('point')?.setValue(null);
+
+    if(id){
+      this.subscription=this.ResultService.find(+id).subscribe((data) => {
+        this.pointOptions[index] = data; 
+        if (data.havePoint) {
+          this.empEducationListArray.at(index).get('point')?.enable();
+          this.empEducationListArray.at(index).get('point')?.setValidators([
+            Validators.required, Validators.max(data.maxPoint || 100)
+          ]);
+        } else {
+          this.empEducationListArray.at(index).get('point')?.disable();
+        }
+      });
+    }
+  }
+
+  getOnlyYears(){
+    const currentYear = new Date().getFullYear();
+    for (let year = currentYear; year >= 1970; year--) {
+      this.yearOptions.push(year);
+    } 
   }
 
   cancel() {

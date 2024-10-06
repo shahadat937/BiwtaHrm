@@ -15,16 +15,16 @@
                                     <input type="hidden" formControlName="id" />
                                     <input type="hidden" formControlName="empId" />
 
-                                    <c-col [md]="4">
-                                        <label class="col-form-label" for="examTypeId{{i}}">Exam Type</label>
-                                        <select formControlName="examTypeId" class="form-select">
+                                    <c-col [md]="3">
+                                        <label class="col-form-label" for="examTypeId{{i}}">Exam Type<span class="text-danger">*</span></label>
+                                        <select formControlName="examTypeId" class="form-select" (change)="getSelectedSubGroups($event, i)">
                                             <option value="null" disabled>Select Exam Type</option>
                                             <option *ngFor="let item of examTypes" value="{{item.id}}">{{item.name}}
                                             </option>
                                         </select>
                                     </c-col>
 
-                                    <c-col [md]="4">
+                                    <c-col [md]="3">
                                         <label class="col-form-label" for="boardId{{i}}">Board/University</label>
                                         <select formControlName="boardId" class="form-select">
                                             <option value="null" disabled>Select Board/University</option>
@@ -33,34 +33,54 @@
                                         </select>
                                     </c-col>
                                     
-                                    <c-col [md]="4">
+                                    <c-col [md]="3">
                                         <label class="col-form-label" for="subGroupId{{i}}">Subject/Group</label>
                                         <select formControlName="subGroupId" class="form-select">
                                             <option value="null" disabled>Select Subject/Group</option>
-                                            <option *ngFor="let item of subGroups" value="{{item.id}}">{{item.name}}
+                                            <option *ngFor="let item of subGroups[i]" [value]="item.id">{{item.name}}
                                             </option>
                                         </select>
                                     </c-col>
                                     
-                                    <c-col [md]="4">
-                                        <label class="col-form-label" for="result{{i}}">Result</label>
-                                        <input type="text" formControlName="result" class="form-control"
-                                            id="result{{i}}" placeholder="Enter Result"/>
+                                    <c-col [md]="3">
+                                        <label class="col-form-label" for="resultId{{i}}">Duration</label>
+                                        <select formControlName="courseDurationId" class="form-select">
+                                            <option value="null" disabled>Select Duration</option>
+                                            <option *ngFor="let item of courseDurations" value="{{item.id}}">{{item.name}}
+                                            </option>
+                                        </select>
                                     </c-col>
                                     
-                                    <c-col [md]="4">
-                                        <label class="col-form-label" for="courseDuration{{i}}">Course Duration</label>
-                                        <input type="text" formControlName="courseDuration" class="form-control"
-                                            id="courseDuration{{i}}" placeholder="Enter Course Duration" />
+                                    <c-col [md]="3">
+                                        <label class="col-form-label" for="resultId{{i}}">Result<span class="text-danger">*</span></label>
+                                        <select formControlName="resultId" class="form-select" (change)="getPointStatusByResult($event, i)">
+                                            <option value="null" disabled>Select Result</option>
+                                            <option *ngFor="let item of results" value="{{item.id}}">{{item.name}}
+                                            </option>
+                                        </select>
+                                    </c-col>
+                                    <c-col [md]="3">
+                                        <label class="col-form-label" for="point{{i}}">Point<span *ngIf="pointOptions[i]?.havePoint" class="text-danger">*</span></label>
+                                        <input type="number" step="0.01" formControlName="point" class="form-control"
+                                            id="point{{i}}" placeholder="Point" />
+
+                                        <div *ngIf="empEducationListArray.at(i).get('point')?.touched || empEducationListArray.at(i).get('point')?.dirty">
+                                            <span class="text-danger" *ngIf="empEducationListArray.at(i).get('point')?.hasError('max')">
+                                                Value can't exceed {{pointOptions[i].maxPoint}}.
+                                            </span>
+                                        </div>
                                     </c-col>
                                     
-                                    <c-col [md]="4">
+                                    <c-col [md]="3">
                                         <label class="col-form-label" for="passingYear{{i}}">Passing Year</label>
-                                        <input type="number" formControlName="passingYear" class="form-control"
-                                            id="passingYear{{i}}" placeholder="Enter Passing Year" />
+                                        <select formControlName="passingYear" class="form-select">
+                                            <option value="null" disabled>Select Year</option>
+                                            <option *ngFor="let item of yearOptions" value="{{item}}">{{item}}
+                                            </option>
+                                        </select>
                                     </c-col>
                                     
-                                    <c-col [md]="4">
+                                    <c-col [md]="3">
                                         <label class="col-form-label" for="remark{{i}}">Remark</label>
                                         <input type="text" formControlName="remark" class="form-control"
                                             id="remark{{i}}" placeholder="Enter Remark" />
@@ -68,7 +88,7 @@
                                     
 
                                     <c-col [md]="12" class="d-flex justify-content-end">
-                                        <button mat-icon-button class="bg-danger text-light" type="button"
+                                        <button mat-mini-fab color="warn" type="button"
                                             (click)="removeEducationList(i, p.get('id')?.value ?? null)"><mat-icon>delete</mat-icon></button>
                                     </c-col>
                                 </div>
@@ -78,7 +98,7 @@
                 </ng-container>
             </ng-container>
             <c-col [md]="12" class="d-flex justify-content-end">
-                <button mat-icon-button class="bg-success text-light mb-3" type="button"
+                <button mat-mini-fab class="bg-success text-light mb-3" type="button"
                     (click)="addEducation()"><mat-icon>add</mat-icon></button>
             </c-col>
             <div class="form-group">

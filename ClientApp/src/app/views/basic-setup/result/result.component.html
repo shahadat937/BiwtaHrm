@@ -10,13 +10,12 @@
       cRow
       class="needs-validation"
     >
-      <c-col [md]="6">
+      <c-col [md]="4">
         <input
           type="hidden"
           [(ngModel)]="resultService.result.resultId"
           name="resultId"
         />
-        <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
         <label cLabel for="validationCustom01"
           >Result Name<span class="text-danger">*</span></label
         >
@@ -36,19 +35,30 @@
         <div class="text-left text-danger">Result Name is required</div>
         }
       </c-col>
-      <!-- <c-col [md]="6">
-        <label cLabel for="validationCustom02">Is Active </label>
+
+      
+      <c-col [md]="4">
+        <c-form-check [switch]="true" class="mb-0">
+          <input cFormCheckInput type="checkbox" id="havePoint" name="havePoint" [(ngModel)]="resultService.result.havePoint" #havePoint="ngModel"/>
+          <label cLabel cFormCheckLabel for="havePoint">Have Point</label>
+        </c-form-check>
         <input
-          [(ngModel)]="resultService.result.isActive"
-          name="isActive"
+          [(ngModel)]="resultService.result.maxPoint"
+          name="maxPoint"
+          #maxPoint="ngModel"
+          placeholder="Enter Maximum Point"
           cFormControl
-          id="validationCustom02"
-          type="text"
-          value="Otto"
+          [required]="havePoint.value == true"
+          [readOnly]="havePoint.value == false"
+          type="number"
         />
-        <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
-      </c-col> -->
-      <c-col [md]="6">
+
+        @if(havePoint.value == true && !maxPoint.value){
+        <div class="text-left text-danger">Result Name is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
         <label cLabel for="activeStatus">Active Status</label>
         <select [(ngModel)]="resultService.result.isActive"
         name="isActive"
@@ -106,6 +116,10 @@
         <ng-container matColumnDef="resultName">
           <th mat-header-cell *matHeaderCellDef>Result Name</th>
           <td mat-cell *matCellDef="let element">{{ element.resultName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="point">
+          <th mat-header-cell *matHeaderCellDef>Maximum Point</th>
+          <td mat-cell *matCellDef="let element">{{ element.maxPoint }}</td>
         </ng-container>
 
         <!-- Name Column -->

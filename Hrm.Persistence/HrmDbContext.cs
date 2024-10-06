@@ -174,6 +174,10 @@ namespace Hrm.Persistence
             {
                 entity.HasKey(e => e.GroupId)
                 .HasName("[[PK__Group__149AF36A7B245A3B]]");
+
+                entity.HasOne(e => e.ExamType)
+                    .WithMany(eb => eb.SubGroup)
+                    .HasForeignKey(e => e.ExamTypeId);
             });
             modelBuilder.Entity<Punishment>(entity =>
             {
@@ -707,6 +711,14 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.SubGroup)
                     .WithMany(eb => eb.EmpEducationInfo)
                     .HasForeignKey(e => e.SubGroupId);
+
+                entity.HasOne(e => e.CourseDuration)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.CourseDurationId);
+
+                entity.HasOne(e => e.Result)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.ResultId);
             });
 
             modelBuilder.Entity<EmpPsiTrainingInfo>(entity =>

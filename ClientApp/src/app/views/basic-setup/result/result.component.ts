@@ -26,7 +26,7 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
   loading = false;
   @ViewChild('ResultForm', { static: true }) ResultForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'resultName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'resultName', 'point','isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -76,6 +76,8 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resultService.result = {
       resultId: 0,
       resultName: '',
+      havePoint: false,
+      maxPoint: null,
       menuPosition: 0,
       isActive: true,
     };
@@ -87,6 +89,8 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
       this.ResultForm.form.patchValue({
         resultId: 0,
         resultName: '',
+        havePoint: false,
+        maxPoint: null,
         menuPosition: 0,
         isActive: true,
       });
@@ -101,50 +105,6 @@ export class ResultComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     });
   }
-  // onSubmit(form: NgForm) {
-  //   this.resultService.cachedData = [];
-  //   const id = this.ResultForm.form.get('resultId')?.value;
-  //   if (id) {
-  //     this.resultService.update(+id, this.ResultForm.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', 'Update', {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlResults();
-  //           this.resetForm();
-  //           this.router.navigate(['/bascisetup/result']);
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   } else {
-  //     this.subscription = this.resultService.submit(form?.value).subscribe(
-  //       (response: any) => {
-  //         if (response.success) {
-  //           this.toastr.success('Successfully', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //           this.getALlResults();
-  //           this.resetForm();
-  //         } else {
-  //           this.toastr.warning('', `${response.message}`, {
-  //             positionClass: 'toast-top-right',
-  //           });
-  //         }
-  //       },
-  //       (err) => {
-  //         console.log(err);
-  //       }
-  //     );
-  //   }
-  // }
   onSubmit(form: NgForm): void {
     this.loading = true;
     this.resultService.cachedData = [];

@@ -34,6 +34,8 @@ import { EmpWorkHistoryService } from '../../service/emp-work-history.service';
 import { EmpOtherResponsibilityService } from '../../service/emp-other-responsibility.service';
 import { EmpWorkHistory } from '../../model/emp-work-history';
 import { EmpOtherResponsibility } from '../../model/emp-other-responsibility';
+import { EmpTrainingInfoService } from '../../service/emp-training-info.service';
+import { EmpTrainingInfo } from '../../model/emp-training-info';
 
 @Component({
   selector: 'app-emp-profile',
@@ -52,6 +54,7 @@ export class EmpProfileComponent  implements OnInit {
   empChildInfo : EmpChildInfoModule[] = [];
   empEducationInfo : EmpEducationInfoModule[] = [];
   empPsiTrainingInfo : EmpPsiTrainingInfoModule[] = [];
+  empTrainingInfo : EmpTrainingInfo[] = [];
   empBankInfo : EmpBankInfoModule[] = [];
   empLanguageInfo : EmpLanguageInfoModule[] = [];
   empForeignTourInfo : EmpForeignTourInfoModule[] = [];
@@ -84,6 +87,7 @@ export class EmpProfileComponent  implements OnInit {
     public manageEmployeeService: ManageEmployeeService,
     public empOtherResponsibilityService: EmpOtherResponsibilityService,
     public empWorkHistoryService: EmpWorkHistoryService,
+    public empTrainingInfoService: EmpTrainingInfoService,
     private bsModalRef: BsModalRef,
     private el: ElementRef, 
     private renderer: Renderer2
@@ -117,6 +121,7 @@ export class EmpProfileComponent  implements OnInit {
       this.getEmpChildInfoByEmpId();
       this.getEmpEducationInfoByEmpId();
       // this.getEmpPsiTrainingInfoByEmpId(); 
+      this.getEmpTrainingInfoByEmpId();
       this.getEmpBankInfoByEmpId();
       this.getEmpLanguageInfoByEmpId();
       this.getEmpForeignTourInfoByEmpId();
@@ -198,6 +203,15 @@ export class EmpProfileComponent  implements OnInit {
     //     this.empPsiTrainingInfo = res;
     //   });
     // }
+    getEmpTrainingInfoByEmpId(){
+      this.empTrainingInfoService.findByEmpId(this.id).subscribe((res) => {
+        if(res && res.length > 0) {
+          this.empTrainingInfo = res;
+        } else {
+          this.empTrainingInfo = [new EmpTrainingInfo()];
+        }
+      });
+    }
     
     getEmpBankInfoByEmpId(){
       this.empBankInfoService.findByEmpId(this.id).subscribe((res) => {
@@ -223,7 +237,12 @@ export class EmpProfileComponent  implements OnInit {
     
     getEmpForeignTourInfoByEmpId(){
       this.empForeignTourInfoService.findByEmpId(this.id).subscribe((res) => {
-        this.empForeignTourInfo = res;
+        if(res && res.length > 0){
+          this.empForeignTourInfo = res;
+        }
+        else {
+          this.empForeignTourInfo = [new EmpForeignTourInfoModule()];
+        }
       });
     }
     

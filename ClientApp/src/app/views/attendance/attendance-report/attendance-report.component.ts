@@ -11,6 +11,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { DateRange } from '@angular/material/datepicker';
 import { Office } from '../../basic-setup/model/office';
 import {cibVerizon,cibXPack} from '@coreui/icons'
+import { SectionService } from '../../basic-setup/service/section.service';
+import { DepartmentService } from '../../basic-setup/service/department.service';
 
 
 @Component({
@@ -19,9 +21,9 @@ import {cibVerizon,cibXPack} from '@coreui/icons'
   styleUrl: './attendance-report.component.scss'
 })
 export class AttendanceReportComponent implements OnInit, OnDestroy {
-  staticColumnsBefore:any[] = [{"field":"empId", "header":"EmployeeId"},
-    {"field":"firstName","header":"First Name"},
-    {"field":"lastName","header":"Last Name"}];
+  staticColumnsBefore:any[] = [
+    {"field":"name","header":"Name"},
+    {"field":"departmentName","header":"Department"}];
 
   loading:boolean = false;
   icons = {cibVerizon,cibXPack};
@@ -33,10 +35,12 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   DesignationOption: any[] = [];
   ShiftOption: any[] = [];
   EmployeeOption: any[] = [];
-  rangeDates: Date[] = [];
+  SectionOption: any[] = [];
+  rangeDates: Date | null;
   subscription: Subscription = new Subscription();
 
   // Selected Option Variable
+  selectedSection: number|null;
   selectedOffice: number|null;
   selectedDepartment: number | null;
   selectedDesignation: number | null;
@@ -44,6 +48,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   selectedEmp: number | null;
 
   constructor(
+    private departmentService: DepartmentService,
+    private SectionService: SectionService,
     private AtdReportService: AttendanceReportEmpService,
     private route: ActivatedRoute,
     private router: Router,
@@ -55,13 +61,12 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.selectedDesignation = null;
     this.selectedShift = null;
     this.selectedEmp = null;
+    this.selectedSection = null;
+    this.rangeDates = null;
   }
 
   ngOnInit(): void {
-    this.subscription = this.AtdReportService.getOfficeOption().subscribe(option=> {
-      this.OfficeOption = option;
-    });
-
+    this.getAllDepartment();
     this.AtdReportService.getEmpOption().subscribe({
       next: response => {
         this.EmployeeOption = response;
@@ -81,18 +86,34 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.selectedDepartment = null;
     this.onDepartmentChange();
     this.getFilteredEmp();
-    console.log(this.rangeDates.length);
+  }
+
+  getAllDepartment() {
+    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe({
+      next: response => {
+        this.DepartmentOption = response;
+      }
+    })
   }
 
   onDepartmentChange() {
     if(this.selectedDepartment!=null) {
-      this.AtdReportService.getDesignationOption(this.selectedDepartment).subscribe(option=> {
-        this.DesignationOption = option;
-      });
+      //this.AtdReportService.getDesignationOption(this.selectedDepartment).subscribe(option=> {
+      //  this.DesignationOption = option;
+      //});
+
+      this.subscription = this.SectionService.getSectionByOfficeDepartment(this.selectedDepartment).subscribe({
+        next: response => {
+          this.SectionOption = response;
+        }
+      })
     } else {
-      this.DesignationOption = [];
+      //this.DesignationOption = [];
+      this.SectionOption = [];
     }
     this.selectedDesignation = null;
+    this.selectedEmp = null;
+    this.selectedSection = null;
     this.getFilteredEmp();
   }
 
@@ -114,26 +135,31 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.hrmdateResize(this.rangeDates[0]));
 
     let params = new HttpParams();
-    params = params.set("From",this.hrmdateResize(this.rangeDates[0]));
-    params = params.set("To",this.hrmdateResize(this.rangeDates[1]));
+    if(this.rangeDates==null) {
+      return;
+    }
+    params = params.set("From",this.getDate(this.rangeDates.getMonth(),this.rangeDates.getFullYear(),true));
+    params = params.set("To",this.getDate(this.rangeDates.getMonth(),this.rangeDates.getFullYear(),false));
     
     params = this.selectedOffice == null?params:params.set("OfficeId",this.selectedOffice);
     params = this.selectedDepartment == null? params: params.set("DepartmentId",this.selectedDepartment);
     params = this.selectedDesignation == null? params: params.set("DesignationId", this.selectedDesignation);
+    params = this.selectedSection == null? params: params.set('SectionId', this.selectedSection);
     params = this.selectedShift == null? params: params.set("ShiftId",this.selectedShift);
     params = this.selectedEmp == null? params: params.set("EmpId",this.selectedEmp);
 
 
     this.subscription = this.AtdReportService.getAttendanceReport(params).subscribe(result=> {
       if(result.length>0) {
-        this.dynamicColumn=Object.keys(result[0]).slice(3).map(val=> {
-          return {"header":val,"field":val};
+        this.dynamicColumn=Object.keys(result[0]).slice(4).map(val=> {
+          return {"header":val.split('-')[2],"field":val};
         });
+
+        result = result.map(data => ({...data,"name":data.firstName+' '+data.lastName}))
         this.tableData = result;
-        this.reset();
+        //this.reset();
       }
     }, err=> {
       console.log(err);
@@ -143,7 +169,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
 
   reset() {
     this.selectedOffice = null
-    this.rangeDates=[];
+    this.rangeDates=null;
     this.DepartmentOption = [];
     this.selectedDepartment = null;
     this.DesignationOption = [];
@@ -178,5 +204,23 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
  
       EntryDate =dObj[2]+'-'+month+'-'+day;
       return EntryDate;
+  }
+
+  check() {
+    console.log(this.rangeDates);
+  }
+
+  getDate(month:number, year: number,IsFirst:boolean) {
+    let dt;
+
+    console.log(year);
+    if(IsFirst) {
+      dt = new Date(year,month,1);
+
+      return this.hrmdateResize(dt);
+    }
+
+    dt = new Date(year,month+1,0);
+    return this.hrmdateResize(dt);
   }
 }

@@ -9,7 +9,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Attendance)]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AttendanceController:Controller
     {
         private readonly IMediator _mediator;
@@ -75,6 +75,15 @@ namespace Hrm.Api.Controllers
             var commnad = new GetWorkingDaysRequest { From = From, To = To };
             var response = await _mediator.Send(commnad);
 
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-IsHolidayWeekend")]
+        public async Task<ActionResult> GetIsHolidayWeekend([FromQuery] DateOnly From, [FromQuery] DateOnly To)
+        {
+            var command = new GetIsDateHolidayWeekendRequest { From = From, To = To };
+            var response = await _mediator.Send(command);
             return Ok(response);
         }
 

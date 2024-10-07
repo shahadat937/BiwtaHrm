@@ -48,4 +48,11 @@ export class AttendanceReportEmpService {
 
     return this.http.get<any[]>(this.baseUrl+"/attendance/get-AttendanceReportByFilter",{params:filter});
   }
+
+  getIsHolidayWeekend(month:number, year:number): Observable<any[]> {
+    let params = new HttpParams();
+    params = params.set("month",month);
+    params = params.set("year",year);
+    return this.http.get<any[]>(this.baseUrl+"/attendance/get-IsHolidayWeekend", {params: params});
+  }
 }

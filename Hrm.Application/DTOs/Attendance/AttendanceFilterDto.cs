@@ -13,8 +13,8 @@ namespace Hrm.Application.DTOs.Attendance
         public int? DepartmentId { get; set; }
         public int? SectionId { get; set; }
         public int? DesignationId { get; set; }
-        public DateOnly? From { get; set; }
-        public DateOnly? To { get; set; }
+        public int? Year {  get; set; }
+        public int? Month {  get; set; }
         public int? PageSize {  get; set; }
         public int? PageIndex { get; set; }
 

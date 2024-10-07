@@ -80,9 +80,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-IsHolidayWeekend")]
-        public async Task<ActionResult> GetIsHolidayWeekend([FromQuery] DateOnly From, [FromQuery] DateOnly To)
+        public async Task<ActionResult> GetIsHolidayWeekend([FromQuery] int Month, [FromQuery] int Year)
         {
-            var command = new GetIsDateHolidayWeekendRequest { From = From, To = To };
+            var command = new GetIsDateHolidayWeekendRequest { Year = Year, Month = Month };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

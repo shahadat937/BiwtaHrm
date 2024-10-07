@@ -28,6 +28,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
             var attendances = _AttendanceRepository.Where(at => true)
                 .Include(at => at.AttendanceType)
                 .Include(at => at.EmpBasicInfo)
+                    .ThenInclude(em=>em.EmpJobDetail)
                 .Include(at => at.Office)
                 .Include(at => at.OfficeBranch)
                 .Include(at => at.Shift)
@@ -42,19 +43,45 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
 
             attendances = attendances.Where(x => x.EmpBasicInfo.IdCardNo.ToLower().Contains(request.Filters.keyword) || (x.EmpBasicInfo.FirstName + " " + x.EmpBasicInfo.LastName).ToLower().Contains(request.Filters.keyword)||request.Filters.keyword=="");
 
+            if(request.Filters.DepartmentId.HasValue)
+            {
+                attendances = attendances.Where(x => x.EmpBasicInfo.EmpJobDetail.FirstOrDefault().DepartmentId == request.Filters.DepartmentId);
+            }
+
+            if(request.Filters.EmpId.HasValue)
+            {
+                attendances = attendances.Where(x => x.EmpId == request.Filters.EmpId);
+            }
+
+            
+            if(request.Filters.Month.HasValue)
+            {
+                attendances = attendances.Where(x=>x.AttendanceDate.Month == request.Filters.Month);
+            }
+
+            if(request.Filters.Year.HasValue)
+            {
+                attendances = attendances.Where(x=>x.AttendanceDate.Year == request.Filters.Year);
+            }
+
             int total = await attendances.CountAsync();
+
+            attendances = attendances.OrderByDescending(x => x.AttendanceId);
 
             if(request.Filters.PageSize.HasValue&&request.Filters.PageIndex.HasValue)
             {
-                int skipFrom = (int)((total + request.Filters.PageSize - 1) / request.Filters.PageSize) * Math.Max(0,(int) request.Filters.PageIndex - 1);
+                int skipFrom = (int)(request.Filters.PageSize * Math.Max(0,(int) request.Filters.PageIndex - 1));
 
                 attendances = attendances.Skip(skipFrom).Take((int)request.Filters.PageSize);
             }
 
 
+
             var AttendancesDtos =  _mapper.Map<List<AttendanceDto>>(attendances);
 
-            return AttendancesDtos;
+            return new {TotalCount=total,Result =  AttendancesDtos};
+
+            //return AttendancesDtos;
         }
     }
 }

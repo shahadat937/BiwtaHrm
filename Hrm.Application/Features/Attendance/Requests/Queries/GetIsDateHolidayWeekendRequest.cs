@@ -9,7 +9,7 @@ namespace Hrm.Application.Features.Attendance.Requests.Queries
 {
     public class GetIsDateHolidayWeekendRequest: IRequest<object>
     {
-        public DateOnly From {  get; set; }
-        public DateOnly To { get; set; }
+        public int Month {  get; set; }
+        public int Year { get; set; }
     }
 }

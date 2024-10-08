@@ -129,12 +129,17 @@
 
                             @for (col of columns; track $index) {
                                 <td>
-                                    @if (rowData[col.field]==null||rowData[col.field]=="Absent") {
+                                    @if(col.offday==true) {
+                                        <span class="text-primary">WH</span>
+                                    }
+                                    @else if (rowData[col.field]==null||rowData[col.field]=='A') {
                                         <!--<svg [cIcon]="icons.cibXPack" cTooltip="Hello World"></svg>-->
                                         <span class="text-danger">A</span>
-                                    } @else {
+                                    } @else if(rowData[col.field]=="P") {
                                         <!--<svg [cIcon]="icons.cibVerizon" cTooltip="Hello World"></svg><i class="cib-verizon"></i>-->
-                                        <span>P</span>
+                                        <span>{{rowData[col.field]}}</span>
+                                    } @else {
+                                        <span class="text-warning">{{rowData[col.field]}}</span>
                                     }
                                 </td>
                             }

@@ -151,19 +151,24 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     params = this.selectedEmp == null? params: params.set("EmpId",this.selectedEmp);
 
 
-    this.subscription = this.AtdReportService.getAttendanceReport(params).subscribe(result=> {
-      if(result.length>0) {
-        this.dynamicColumn=Object.keys(result[0]).slice(4).map(val=> {
-          return {"header":val.split('-')[2],"field":val};
-        });
+    this.subscription = this.AtdReportService.getIsHolidayWeekend(this.rangeDates.getMonth()+1,this.rangeDates.getFullYear()).subscribe({
+      next: IsOffday => {
+        this.subscription = this.AtdReportService.getAttendanceReport(params).subscribe(result=> {
+          if(result.length>0) {
+            this.dynamicColumn=Object.keys(result[0]).slice(4).map(val=> {
+              return {"header":val.split('-')[2],"field":val,"offday":IsOffday[parseInt(val.split('-')[2])]};
+            });
 
-        result = result.map(data => ({...data,"name":data.firstName+' '+data.lastName}))
-        this.tableData = result;
-        //this.reset();
+            result = result.map(data => ({...data,"name":data.firstName+' '+data.lastName}))
+            this.tableData = result;
+            //this.reset();
+          }
+        }, err=> {
+          console.log(err);
+        });
+        
       }
-    }, err=> {
-      console.log(err);
-    });
+    })
 
   }
 
@@ -213,7 +218,6 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   getDate(month:number, year: number,IsFirst:boolean) {
     let dt;
 
-    console.log(year);
     if(IsFirst) {
       dt = new Date(year,month,1);
 

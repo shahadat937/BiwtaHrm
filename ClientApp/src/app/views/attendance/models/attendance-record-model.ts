@@ -35,3 +35,13 @@ export class AttendanceRecordModel {
         this.attendanceStatusName = "";
     }
 }
+
+export class AttendanceResult {
+    totalCount:number;
+    result: AttendanceRecordModel[];
+
+    constructor() {
+        this.totalCount= 0;
+        this.result = [];
+    }
+}

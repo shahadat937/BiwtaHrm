@@ -30,9 +30,10 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
 
         public async Task<object> Handle(GetIsDateHolidayWeekendRequest request, CancellationToken cancellationToken)
         {
-            bool[] IsWeekendOrHolidays = Enumerable.Repeat(false, 31).ToArray();
-
-            for(DateOnly curDate = request.From; curDate <= request.To; curDate = curDate.AddDays(1))
+            bool[] IsWeekendOrHolidays = Enumerable.Repeat(false, 32).ToArray();
+            DateOnly from = new DateOnly(request.Year, request.Month, 1);
+            DateOnly to = new DateOnly(request.Year, request.Month, DateTime.DaysInMonth(request.Year, request.Month));
+            for(DateOnly curDate = from; curDate <= to; curDate = curDate.AddDays(1))
             {
                 int day = curDate.Day;
                 IsWeekendOrHolidays[day] = AttendanceHelper.IsHoliday(curDate,_HolidayRepo) | (!AttendanceHelper.IsWeekDay(curDate, _WorkdayRepo, _CancelledWeekendRepo));

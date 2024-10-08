@@ -32,6 +32,7 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                 .Include(x => x.Department)
                 .Include(x => x.Section)
                 .Include(x => x.Designation)
+                        .ThenInclude(ds => ds.DesignationSetup)
                 .ToListAsync(cancellationToken);
 
             if (EmpWorkHistories == null)

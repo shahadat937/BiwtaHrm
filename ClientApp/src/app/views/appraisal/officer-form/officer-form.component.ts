@@ -11,6 +11,7 @@ import { FieldComponent } from '../field/field.component';
 import { FormRecordService } from '../services/form-record.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { UpdateFormComponent } from '../update-form/update-form.component';
+import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
 
 @Component({
   selector: 'app-officer-form',
@@ -39,6 +40,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   reportDates:string[]= [];
   
   constructor(
+    private empPhotoSignService: EmpPhotoSignService,
     private formRecordService: FormRecordService,
     public officerFormService: OfficerFormService,
     private toastr: ToastrService,
@@ -196,6 +198,16 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+
+  getPhotoInfo(empId:number) {
+    let signature;
+
+    this.empPhotoSignService.findByEmpId(empId).subscribe({
+      next: response => {
+        signature = response;
+      }
+    })
   }
 
 }

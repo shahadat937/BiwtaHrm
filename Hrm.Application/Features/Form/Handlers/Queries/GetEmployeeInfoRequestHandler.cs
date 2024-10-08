@@ -32,7 +32,18 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
 
             employeeInfo.success = true;
             var empPersonalInfo = await _unitOfWork.Repository<Hrm.Domain.EmpPersonalInfo>().Where(x=>x.EmpId == employee.Id).FirstOrDefaultAsync();
+
+            if(empPersonalInfo==null)
+            {
+                throw new BadRequestException("Employee's personal info is not found");
+            }
             var empJobDetail = await _unitOfWork.Repository<Hrm.Domain.EmpJobDetail>().Where(x=>x.EmpId == employee.Id).FirstOrDefaultAsync();
+
+            if(empJobDetail==null)
+            {
+                throw new BadRequestException("Employee's job detail is not found");
+            }
+
             var designation = await _unitOfWork.Repository<Hrm.Domain.Designation>().Get((int)empJobDetail.DesignationId);
 
 
@@ -49,7 +60,7 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                 employeeInfo.MotherName = empPersonalInfo.MotherName;
             }
 
-            if(empJobDetail!=null)
+            if(empJobDetail!=null&&empJobDetail.JoiningDate.HasValue)
             {
                 employeeInfo.JoiningDate = new DateTime(empJobDetail.JoiningDate.Value.Year, empJobDetail.JoiningDate.Value.Month, empJobDetail.JoiningDate.Value.Month);
             }

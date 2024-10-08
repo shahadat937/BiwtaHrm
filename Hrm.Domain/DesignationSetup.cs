@@ -14,5 +14,6 @@ namespace Hrm.Domain
         public string? NameBangla { get; set; }
         public string? Remark { get; set; }
         public bool IsActive { get; set; }
+        public ICollection<Designation> Designations { get; set; }
     }
 }

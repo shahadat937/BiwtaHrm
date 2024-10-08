@@ -43,11 +43,11 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
 
 
                 List<SelectedModel> selectModels = designations
-                    .GroupBy(x => x.DesignationName)
+                    .GroupBy(x => x.DesignationSetup.Name)
                     .Select(x => x.FirstOrDefault())
                     .Select(x => new SelectedModel
                     {
-                        Name = x.DesignationName,
+                        Name = x.DesignationSetup.Name,
                         Id = x.DesignationId
                     }).ToList();
 
@@ -59,11 +59,11 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
 
 
                 List<SelectedModel> selectModels = designations
-                    .GroupBy(x => x.DesignationName)
+                    .GroupBy(x => x.DesignationSetup.Name)
                     .Select(x => x.FirstOrDefault())
                     .Select(x => new SelectedModel
                     {
-                        Name = x.DesignationName,
+                        Name = x.DesignationSetup.Name,
                         Id = x.DesignationId
                     }).ToList();
 

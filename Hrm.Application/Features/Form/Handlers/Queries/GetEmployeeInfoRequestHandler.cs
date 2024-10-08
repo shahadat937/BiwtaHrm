@@ -56,7 +56,7 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
 
             if (designation != null)
             {
-                employeeInfo.Designation = designation.DesignationName;
+                employeeInfo.Designation = designation.DesignationSetup.Name;
 
                 var empPromotionInc = await _unitOfWork.Repository<Hrm.Domain.EmpPromotionIncrement>().Where(x => x.EmpId == employee.Id && x.UpdateDesignationId == designation.DesignationId && x.ApplicationStatus == true).OrderByDescending(x => x.ApproveDate).FirstOrDefaultAsync();
                 if(empPromotionInc!=null)

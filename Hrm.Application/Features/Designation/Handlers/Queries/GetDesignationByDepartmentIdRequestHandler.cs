@@ -29,7 +29,7 @@ namespace Hrm.Application.Features.OfficeBranch.Handlers.Queries
             List<SelectedModel> SelectedModel = Designations.Select(x => new SelectedModel
             {
                 Id = x.DesignationId,
-                Name = x.DesignationName
+                Name = x.DesignationSetup.Name,
             }).ToList();
             return SelectedModel;
         }

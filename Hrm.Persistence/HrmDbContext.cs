@@ -60,6 +60,11 @@ namespace Hrm.Persistence
                 .WithMany(dp => dp.Designations)
                 .HasForeignKey(d => d.SectionId);
 
+            modelBuilder.Entity<Designation>()
+                .HasOne(d => d.DesignationSetup)
+                .WithMany(dp => dp.Designations)
+                .HasForeignKey(d => d.DesignationSetupId);
+
 
             modelBuilder.Entity<OfficeBranch>(entity =>
             {

@@ -25,17 +25,6 @@ namespace Hrm.Application.Features.Designation.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(CreateDesignationCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
-            var validator = new CreateDesignationDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.DesignationDto);
-
-            if (validationResult.IsValid == false)
-            {
-                response.Success = false;
-                response.Message = "Creation Failed";
-                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
-            }
-            else
-            {
                 //   var DesignationName = request.DesignationDto.DesignationName.Trim().ToLower().Replace(" ", string.Empty);
 
                 //  IQueryable<Hrm.Domain.Designation> Designations = _DesignationRepository.Where(x => x.DesignationName.ToLower().Replace(" ", string.Empty) == DesignationName);
@@ -60,17 +49,8 @@ namespace Hrm.Application.Features.Designation.Handlers.Commands
                     response.Message = "Creation Successful";
                     response.Id = Designation.DesignationId;
                 //}
-            }
 
             return response;
-        }
-        private bool DesignationNameExists(CreateDesignationCommand request)
-        {
-            var DesignationName = request.DesignationDto.DesignationName.Trim().ToLower().Replace(" ", string.Empty);
-
-            IQueryable<Hrm.Domain.Designation> Designations = _DesignationRepository.Where(x => x.DesignationName.Trim().ToLower().Replace(" ", string.Empty) == DesignationName);
-
-            return Designations.Any();
         }
     }
 }

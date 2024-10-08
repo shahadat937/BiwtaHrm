@@ -4,6 +4,7 @@ using Hrm.Application.Features.Designations.Requests.Queries;
 using Hrm.Domain;
 using Hrm.Shared.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,14 +41,17 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
                 ICollection<EmpOtherResponsibility> otherResponsibilities = await _EmpOtherResponsibilityRepository.FilterAsync(x => x.EmpId != empId.EmpId && x.ServiceStatus == true);
                 var empOtherResponsibilityDesignationIds = otherResponsibilities.Select(x => x.DesignationId).ToHashSet();
 
-                ICollection<Hrm.Domain.Designation> designations = await _DesignationRepository.FilterAsync(x => x.DepartmentId == request.DepartmentId && x.SectionId == null && !empJobDetailDesignationIds.Contains(x.DesignationId) && !empOtherResponsibilityDesignationIds.Contains(x.DesignationId));
+                IQueryable<Hrm.Domain.Designation> designations = _DesignationRepository.Where(x => x.DepartmentId == request.DepartmentId && x.SectionId == null && !empJobDetailDesignationIds.Contains(x.DesignationId) && !empOtherResponsibilityDesignationIds.Contains(x.DesignationId))
+                    .Include(x => x.DesignationSetup);
 
-                List<SelectedModel> selectModels = designations
-                    .GroupBy(x => x.DesignationName)
+                List<Hrm.Domain.Designation> designationList = await designations.ToListAsync(cancellationToken);
+
+                List<SelectedModel> selectModels = designationList
+                    .GroupBy(x => x.DesignationSetup.Name)
                     .Select(x => x.FirstOrDefault())
                     .Select(x => new SelectedModel
                     {
-                        Name = x.DesignationName,
+                        Name = x.DesignationSetup.Name,
                         Id = x.DesignationId
                     }).ToList();
 
@@ -56,14 +60,18 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
 
             else
             {
-                ICollection<Hrm.Domain.Designation> designations = await _DesignationRepository.FilterAsync(x => x.DepartmentId == request.DepartmentId && x.SectionId == null && !empJobDetailDesignationIds.Contains(x.DesignationId));
+                IQueryable<Hrm.Domain.Designation> designationQuery = _DesignationRepository
+                    .Where(x => x.DepartmentId == request.DepartmentId && x.SectionId == null && !empJobDetailDesignationIds.Contains(x.DesignationId))
+                    .Include(x => x.DesignationSetup); 
+
+                List<Hrm.Domain.Designation> designations = await designationQuery.ToListAsync(cancellationToken);
 
                 List<SelectedModel> selectModels = designations
-                    .GroupBy(x => x.DesignationName)
+                    .GroupBy(x => x.DesignationSetup.Name)
                     .Select(x => x.FirstOrDefault())
                     .Select(x => new SelectedModel
                     {
-                        Name = x.DesignationName,
+                        Name = x.DesignationSetup.Name,
                         Id = x.DesignationId
                     }).ToList();
 

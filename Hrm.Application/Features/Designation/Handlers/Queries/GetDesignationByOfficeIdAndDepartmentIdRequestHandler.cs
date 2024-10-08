@@ -28,6 +28,7 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
             var designations = _DesignationRepository
             .Where(x => true)
             .Include(d => d.Office)
+            .Include(d => d.DesignationSetup)
             .Include(d => d.Department)
             .Where(x => x.OfficeId == request.OfficeId && x.DepartmentId == request.DepartmentId)
             .OrderByDescending(x => x.DesignationId);

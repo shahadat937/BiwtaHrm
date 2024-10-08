@@ -13,8 +13,8 @@ namespace Hrm.Application.DTOs.Designation.Validators
         {
             public IDesignationDtoValidator()
             {
-                RuleFor(b => b.DesignationName)
-                    .NotEmpty().WithMessage("{PropertyName} is required.").MaximumLength(150).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
+                //RuleFor(b => b.DesignationName)
+                //    .NotEmpty().WithMessage("{PropertyName} is required.").MaximumLength(150).WithMessage("{PropertyName} must not exceed {ComparisonValue} characters.");
             }
         }
     

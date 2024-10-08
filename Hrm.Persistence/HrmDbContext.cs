@@ -60,6 +60,11 @@ namespace Hrm.Persistence
                 .WithMany(dp => dp.Designations)
                 .HasForeignKey(d => d.SectionId);
 
+            modelBuilder.Entity<Designation>()
+                .HasOne(d => d.DesignationSetup)
+                .WithMany(dp => dp.Designations)
+                .HasForeignKey(d => d.DesignationSetupId);
+
 
             modelBuilder.Entity<OfficeBranch>(entity =>
             {
@@ -1325,6 +1330,7 @@ namespace Hrm.Persistence
         public virtual DbSet<EmpOtherResponsibility> EmpOtherResponsibility { get; set; } = null!;
         public virtual DbSet<SiteSetting> SiteSetting { get; set; } = null!;
         public virtual DbSet<CourseDuration> CourseDuration { get; set; } = null!;
+        public virtual DbSet<DesignationSetup> DesignationSetup { get; set; } = null!;
 
     }
 }

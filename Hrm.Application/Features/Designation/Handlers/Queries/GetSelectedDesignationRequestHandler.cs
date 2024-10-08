@@ -24,7 +24,7 @@ namespace Hrm.Application.Features.Designations.Handlers.Queries
             ICollection<Hrm.Domain.Designation> Designations = await _DesignationRepository.FilterAsync(x => x.IsActive);
             List<SelectedModel> selectModels = Designations.Select(x => new SelectedModel 
             {
-                Name = x.DesignationName,
+                Name = x.DesignationSetup.Name,
                 Id = x.DesignationId
             }).ToList();
             return selectModels;

@@ -61,6 +61,7 @@ import { ReleaseTypeComponent } from './release-type/release-type.component';
 import { RewardPunishmentSetupComponent } from './reward-punishment-setup/reward-punishment-setup.component';
 import { ResponsibilityTypeComponent } from './responsibility-type/responsibility-type.component';
 import { CourseDurationComponent } from './course-duration/course-duration.component';
+import { DesignationSetupComponent } from './designation-setup/designation-setup.component';
 
 
 const routes: Routes = [
@@ -893,6 +894,13 @@ const routes: Routes = [
         component: RewardPunishmentSetupComponent,
         data: {
           title: 'Office Address',
+        },
+      },
+      {
+        path: 'designation-setup',
+        component: DesignationSetupComponent,
+        data: {
+          title: 'Designation Setup',
         },
       },
 

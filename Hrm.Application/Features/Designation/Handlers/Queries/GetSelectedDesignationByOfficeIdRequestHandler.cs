@@ -32,11 +32,11 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
             ICollection<Hrm.Domain.Designation> designations = await _DesignationRepository.FilterAsync(x => x.OfficeId == request.OfficeId && x.DepartmentId == null && !empJobDetailDesignationIds.Contains(x.DesignationId));
 
             List<SelectedModel> selectModels = designations
-                .GroupBy(x => x.DesignationName)
+                .GroupBy(x => x.DesignationSetup.Name)
                 .Select(x => x.FirstOrDefault())
                 .Select(x => new SelectedModel
                 {
-                    Name = x.DesignationName,
+                    Name = x.DesignationSetup.Name,
                     Id = x.DesignationId
                 }).ToList();
             return selectModels;

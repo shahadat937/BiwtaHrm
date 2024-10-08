@@ -610,7 +610,8 @@ namespace Hrm.Application.Profiles
 
             CreateMap<FormSchema, FormSchemaDto>()
                 .ForMember(dest => dest.FormName, opt => opt.MapFrom(src => src.Form.FormName))
-                .ForMember(dest => dest.FieldName, opt => opt.MapFrom(src => src.FormField.FieldName));
+                .ForMember(dest => dest.FieldName, opt => opt.MapFrom(src => src.FormField.FieldName))
+                .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.FormSection.FormSectionName));
 
             CreateMap<FormRecord, FormRecordDto>()
                 .ForMember(dest => dest.EmpFirstName, opt => opt.MapFrom(src => src.Employee.FirstName))

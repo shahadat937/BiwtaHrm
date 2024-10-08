@@ -118,6 +118,7 @@ using Hrm.Application.DTOs.EmpOtherResponsibility;
 using Hrm.Application.DTOs.SiteSetting;
 using Hrm.Application.DTOs.CourseDuration;
 using Hrm.Application.DTOs.EmpTrainingInfo;
+using Hrm.Application.DTOs.DesignationSetup;
 
 
 
@@ -694,6 +695,10 @@ namespace Hrm.Application.Profiles
                 .ForMember(dest => dest.InstituteName, opt => opt.MapFrom(src => src.Institute.InstituteName))
                 .ForMember(dest => dest.TrainingDuration, opt => opt.MapFrom(src => src.CourseDuration.Duration))
                 .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.CountryName));
+
+
+            CreateMap<DesignationSetup, DesignationSetupDto>().ReverseMap();
+            CreateMap<DesignationSetup, CreateDesignationSetupDto>().ReverseMap();
 
         }
     }

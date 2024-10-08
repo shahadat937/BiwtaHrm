@@ -39,13 +39,16 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
 
             var formDto = _mapper.Map<FormDto>(form);
 
-            var sections = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == formDto.FormId).Select(x => x.Section).Distinct().ToListAsync();
+            //var sections = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == formDto.FormId).Select(x => x.Section).Distinct().ToListAsync();
+
+            var sections = await _unitOfWork.Repository<Hrm.Domain.FormSection>().Where(fs => fs.FormId == request.FormId).ToListAsync();
+
 
             List<FormSectionDto> sectionsWithField = new List<FormSectionDto>();
 
             foreach (var section in sections)
             {
-                var fieldIds = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == request.FormId && x.IsActive == true && x.Section == section).Select(x => x.FieldId).ToListAsync();
+                var fieldIds = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == request.FormId && x.IsActive == true && x.SectionId == section.FormSectionId).Select(x => x.FieldId).ToListAsync();
 
                 var fieldInfo = await _unitOfWork.Repository<Hrm.Domain.FormField>().Where(x => fieldIds.Contains(x.FieldId))
                     .Include(x=>x.FieldType)
@@ -81,9 +84,23 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                     }
                 }
 
+
+                var signatureUrl="";
+                if(section.EmpId!=null)
+                {
+                    var signature = _unitOfWork.Repository<Domain.EmpPhotoSign>().Where(x => x.EmpId == section.EmpId).FirstOrDefault();
+
+                    if(signature!=null)
+                    {
+                        signatureUrl = signature.SignatureUrl;
+                    }
+                }
                 sectionsWithField.Add(new FormSectionDto
                 {
-                    SectionId = (int) section,
+                    SectionId = (int) section.FormSectionId,
+                    SectionName = section.FormSectionName,
+                    EmpId = section.EmpId,
+                    SignaturePhotoUrl = signatureUrl,
                     Fields = fieldInfoDto
                 });
             }

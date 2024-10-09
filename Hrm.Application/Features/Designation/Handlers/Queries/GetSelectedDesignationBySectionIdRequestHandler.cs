@@ -3,6 +3,7 @@ using Hrm.Application.Features.Designation.Requests.Queries;
 using Hrm.Domain;
 using Hrm.Shared.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,11 +40,14 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
 
                 var empOtherResponsibilityDesignationIds = otherResponsibilities.Select(x => x.DesignationId).ToHashSet();
 
-                ICollection<Hrm.Domain.Designation> designations = await _DesignationRepository.FilterAsync(x => x.SectionId == request.SectionId && !empJobDetailDesignationIds.Contains(x.DesignationId) && !empOtherResponsibilityDesignationIds.Contains(x.DesignationId));
+                IQueryable<Hrm.Domain.Designation> designationQuery = _DesignationRepository.Where(x => x.SectionId == request.SectionId && !empJobDetailDesignationIds.Contains(x.DesignationId) && !empOtherResponsibilityDesignationIds.Contains(x.DesignationId))
+                        .Include(x => x.DesignationSetup);
+
+                List<Hrm.Domain.Designation> designations = await designationQuery.ToListAsync(cancellationToken);
 
 
                 List<SelectedModel> selectModels = designations
-                    .GroupBy(x => x.DesignationSetup.Name)
+                    .GroupBy(x => x.DesignationSetupId)
                     .Select(x => x.FirstOrDefault())
                     .Select(x => new SelectedModel
                     {
@@ -55,11 +59,14 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
             }
             else
             {
-                ICollection<Hrm.Domain.Designation> designations = await _DesignationRepository.FilterAsync(x => x.SectionId == request.SectionId && !empJobDetailDesignationIds.Contains(x.DesignationId));
+                IQueryable<Hrm.Domain.Designation> designationQuery =  _DesignationRepository.Where(x => x.SectionId == request.SectionId && !empJobDetailDesignationIds.Contains(x.DesignationId))
+                        .Include(x => x.DesignationSetup);
+
+                List<Hrm.Domain.Designation> designations = await designationQuery.ToListAsync(cancellationToken);
 
 
                 List<SelectedModel> selectModels = designations
-                    .GroupBy(x => x.DesignationSetup.Name)
+                    .GroupBy(x => x.DesignationSetupId)
                     .Select(x => x.FirstOrDefault())
                     .Select(x => new SelectedModel
                     {

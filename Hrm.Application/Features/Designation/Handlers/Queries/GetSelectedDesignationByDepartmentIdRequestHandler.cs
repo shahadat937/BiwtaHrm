@@ -47,7 +47,7 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
                 List<Hrm.Domain.Designation> designationList = await designations.ToListAsync(cancellationToken);
 
                 List<SelectedModel> selectModels = designationList
-                    .GroupBy(x => x.DesignationSetup.Name)
+                    .GroupBy(x => x.DesignationSetupId)
                     .Select(x => x.FirstOrDefault())
                     .Select(x => new SelectedModel
                     {
@@ -67,7 +67,7 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
                 List<Hrm.Domain.Designation> designations = await designationQuery.ToListAsync(cancellationToken);
 
                 List<SelectedModel> selectModels = designations
-                    .GroupBy(x => x.DesignationSetup.Name)
+                    .GroupBy(x => x.DesignationSetupId)
                     .Select(x => x.FirstOrDefault())
                     .Select(x => new SelectedModel
                     {

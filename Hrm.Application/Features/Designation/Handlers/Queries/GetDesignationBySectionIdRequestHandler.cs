@@ -4,6 +4,7 @@ using Hrm.Application.Features.Designation.Requests.Queries;
 using Hrm.Application.Features.OfficeBranch.Requests.Queries;
 using Hrm.Shared.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,15 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
 
         public async Task<List<SelectedModel>> Handle(GetDesignationBySectionIdRequest request, CancellationToken cancellationToken)
         {
-            ICollection<Hrm.Domain.Designation> Designations = _DesignationRepository.FilterWithInclude(x => x.SectionId == request.SectionId).ToList();
-            List<SelectedModel> SelectedModel = Designations.Select(x => new SelectedModel
+            IQueryable<Hrm.Domain.Designation> Designations = _DesignationRepository.Where(x => x.SectionId == request.SectionId)
+                    .Include(x => x.DesignationSetup);
+
+            List<Hrm.Domain.Designation> designations = await Designations.ToListAsync(cancellationToken);
+
+            List<SelectedModel> SelectedModel = designations
+                    .GroupBy(x => x.DesignationSetupId)
+                    .Select(x => x.FirstOrDefault())
+                    .Select(x => new SelectedModel
             {
                 Id = x.DesignationId,
                 Name = x.DesignationSetup.Name,

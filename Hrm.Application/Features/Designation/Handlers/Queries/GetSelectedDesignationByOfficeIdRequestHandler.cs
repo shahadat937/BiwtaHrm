@@ -2,6 +2,7 @@
 using Hrm.Application.Features.Designation.Requests.Queries;
 using Hrm.Shared.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,10 +30,13 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
             var empJobDetailDesignationIds = empJobDetails.Select(e => e.DesignationId).ToHashSet();
 
 
-            ICollection<Hrm.Domain.Designation> designations = await _DesignationRepository.FilterAsync(x => x.OfficeId == request.OfficeId && x.DepartmentId == null && !empJobDetailDesignationIds.Contains(x.DesignationId));
+            IQueryable<Hrm.Domain.Designation> designationQuery = _DesignationRepository.Where(x => x.OfficeId == request.OfficeId && x.DepartmentId == null && !empJobDetailDesignationIds.Contains(x.DesignationId))
+                    .Include(x => x.DesignationSetup);
+
+            List<Hrm.Domain.Designation> designations = await designationQuery.ToListAsync(cancellationToken);
 
             List<SelectedModel> selectModels = designations
-                .GroupBy(x => x.DesignationSetup.Name)
+                .GroupBy(x => x.DesignationSetupId)
                 .Select(x => x.FirstOrDefault())
                 .Select(x => new SelectedModel
                 {

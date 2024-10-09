@@ -616,7 +616,8 @@ namespace Hrm.Application.Profiles
             CreateMap<FormRecord, FormRecordDto>()
                 .ForMember(dest => dest.EmpFirstName, opt => opt.MapFrom(src => src.Employee.FirstName))
                 .ForMember(dest => dest.EmpLastName, opt => opt.MapFrom(src => src.Employee.LastName))
-                .ForMember(dest => dest.IdCardNo, opt => opt.MapFrom(src => src.Employee.IdCardNo));
+                .ForMember(dest => dest.IdCardNo, opt => opt.MapFrom(src => src.Employee.IdCardNo))
+                .ForMember(dest => dest.Department, opt => opt.MapFrom(src => src.Employee.EmpJobDetail.FirstOrDefault().Department.DepartmentName));
 
             CreateMap<FieldRecord, FieldRecordDto>()
                 .ForMember(dest => dest.FieldName, opt => opt.MapFrom(src => src.FormField.FieldName));

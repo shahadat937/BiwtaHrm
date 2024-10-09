@@ -64,11 +64,11 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
             foreach (var section in request.formData.Sections) { 
                 foreach (var field in section.Fields)
                 {
-                    if(field.FieldValue==""&&field.IsRequired) {
-                        await _unitOfWork.Repository<Hrm.Domain.FormRecord>().Delete(formRecord);
-                        await _unitOfWork.Save();
-                        throw new BadRequestException(field.FieldName + " is required");
-                    }
+                    //if(field.FieldValue==""&&field.IsRequired) {
+                    //    await _unitOfWork.Repository<Hrm.Domain.FormRecord>().Delete(formRecord);
+                    //    await _unitOfWork.Save();
+                    //    throw new BadRequestException(field.FieldName + " is required");
+                    //}
 
                     await CheckValidField(field,formRecord.RecordId);
 
@@ -95,6 +95,8 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
 
         public async Task CheckValidField(FormFieldValDto formField,int recordId)
         {
+            if (formField.FieldValue == "")
+                return;
             var formRecord = await _unitOfWork.Repository<Hrm.Domain.FormRecord>().Get(recordId);
 
             if(!await formHelper.CheckDataType(formField.FieldValue,formField.FieldId))

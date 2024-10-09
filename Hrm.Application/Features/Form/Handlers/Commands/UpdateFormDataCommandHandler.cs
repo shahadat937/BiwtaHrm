@@ -51,17 +51,17 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
             {
                 foreach(var field in section.Fields)
                 {
-                    if(!await _formHelper.CheckValidField(request.formData.FormId,field.FieldId))
+                    if(field.FieldValue!=""&&!await _formHelper.CheckValidField(request.formData.FormId,field.FieldId))
                     {
                         throw new BadRequestException("Invalid Field: "+field.FieldName);
                     }
 
-                    if(!await _formHelper.CheckDataType(field.FieldValue,field.FieldId))
+                    if(field.FieldValue!=""&&!await _formHelper.CheckDataType(field.FieldValue,field.FieldId))
                     {
                         throw new BadRequestException("Field Value (" + field.FieldName + ") is invalid");
                     }
 
-                    if(!await _formHelper.IsValidSelectable(field.FieldValue,field.FieldId))
+                    if(field.FieldValue!=""&&!await _formHelper.IsValidSelectable(field.FieldValue,field.FieldId))
                     {
                         throw new BadRequestException("Field Option (" + field.FieldName + ") is invalid");
                     }

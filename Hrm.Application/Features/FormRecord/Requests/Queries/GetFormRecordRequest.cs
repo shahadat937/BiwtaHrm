@@ -10,6 +10,6 @@ namespace Hrm.Application.Features.FormRecord.Requests.Queries
 {
     public class GetFormRecordRequest: IRequest<List<FormRecordDto>>
     {
-
+        public FormRecordFilterDto Filters { get; set; }
     }
 }

@@ -20,9 +20,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-FormRecord")]
-        public async Task<ActionResult> GetFormRecord()
+        public async Task<ActionResult> GetFormRecord([FromQuery] FormRecordFilterDto filters)
         {
-            var command = new GetFormRecordRequest();
+            var command = new GetFormRecordRequest { Filters = filters};
             var response = await _mediator.Send(command);
 
             return Ok(response);

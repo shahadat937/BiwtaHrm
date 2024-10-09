@@ -1,7 +1,6 @@
 export class Designation {
     designationId: number=0;
-    designationName: string="";
-    designationNameBangla: string="";
+    designationSetupId: number | null = null;
     officeId: any = null;
     departmentId: any = null;
     sectionId: any = null;
@@ -11,4 +10,5 @@ export class Designation {
     officeName: string = "";
     departmentName: string = "";
     sectionName: string = "";
+    designationName: string="";
 }

@@ -108,6 +108,8 @@ namespace Hrm.Api.Controllers
             var departments = await _context.Department
                 .Include(d => d.SubDepartments) // Include SubDepartments under Departments
                 .Include(d => d.Designations) // Include Designations under Departments
+                    .ThenInclude(de => de.DesignationSetup) // Include DesignationSetup for Designations
+                .Include(d => d.Designations)
                     .ThenInclude(de => de.EmpJobDetail)
                     .ThenInclude(ejd => ejd.EmpBasicInfo)
                 .Include(d => d.Designations) // Include EmpOtherResponsibility
@@ -117,6 +119,7 @@ namespace Hrm.Api.Controllers
                     .ThenInclude(s => s.SubSections) // Include SubSections under Sections
                 .Include(d => d.Section)
                     .ThenInclude(s => s.Designations) // Include Designations under Sections
+                        .ThenInclude(de => de.DesignationSetup) // Include DesignationSetup for Section Designations
                 .ToListAsync();
 
             var result = departments
@@ -137,7 +140,7 @@ namespace Hrm.Api.Controllers
                     .OrderBy(x => x.MenuPosition)
                     .Select(de => new OrganogramDesignationNameDto
                 {
-                    Name = de.DesignationName,
+                    Name = de.DesignationSetup.Name,
                     EmployeeName = GetEmployeeName(de)
                     }).ToList(),
                 Sections = department.Section != null
@@ -162,7 +165,7 @@ namespace Hrm.Api.Controllers
                     .OrderBy(x => x.MenuPosition)
                     .Select(se => new OrganogramDesignationNameDto
                 {
-                    Name = se.DesignationName,
+                    Name = se.DesignationSetup.Name,
                     EmployeeName = GetEmployeeName(se)
                     }).ToList(),
                 SubSections = section.SubSections.Select(ss => MapSectionName(ss)).ToList()

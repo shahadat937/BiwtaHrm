@@ -35,6 +35,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
   offices: SelectedModel[] = [];
   departments: SelectedModel[] = [];
   sections: SelectedModel[] = [];
+  designations: SelectedModel[] = [];
   upperDepartmentView = false;
   sectionView = false;
   loading = false;
@@ -75,6 +76,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
     this.loadOffice();
     this.getAllSelectedDepartments();
+    this.getSelectDesignationSetupName();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
@@ -162,7 +164,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     this.designationService.designation = {
       designationId: 0,
       designationName: '',
-      designationNameBangla: '',
+      designationSetupId: null,
       officeId: null,
       departmentId: null,
       sectionId: null,
@@ -180,7 +182,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       this.DesignationForm.form.patchValue({
         designationId: 0,
         designationName: '',
-        designationNameBangla: '',
+        designationSetupId: null,
         officeId: null,
         departmentId: null,
         sectionId: null,
@@ -217,6 +219,12 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       else{
         this.upperDepartmentView = false;
       }
+    });
+  }
+
+  getSelectDesignationSetupName() { 
+    this.subscription=this.designationService.getSelectDesignationSetupName().subscribe((data) => { 
+      this.designations = data;
     });
   }
   

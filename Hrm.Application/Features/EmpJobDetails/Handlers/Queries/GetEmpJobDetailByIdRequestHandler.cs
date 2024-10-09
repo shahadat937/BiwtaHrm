@@ -31,6 +31,7 @@ namespace Hrm.Application.Features.EmpJobDetails.Handlers.Queries
                 .Include(x => x.Office)
                 .Include(x => x.Department)
                 .Include(x => x.Designation)
+                    .ThenInclude(ds => ds.DesignationSetup)
                 .Include(x => x.Section)
                 .Include(x => x.PresentGrade)
                 .Include(x => x.PresentScale)

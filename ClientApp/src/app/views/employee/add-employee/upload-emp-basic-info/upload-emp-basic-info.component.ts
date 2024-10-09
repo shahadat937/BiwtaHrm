@@ -9,6 +9,7 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 import { ShiftService } from 'src/app/views/attendance/services/shift.service';
 import * as XLSX from 'xlsx';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
   selector: 'app-upload-emp-basic-info',
@@ -38,6 +39,7 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     public empBasicInfoService: EmpBasicInfoService,
     public shiftService: ShiftService,
+    private confirmService: ConfirmService,
   ) { }
 
   
@@ -183,8 +185,15 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
   }
   
   removeBasicInfoList(index: number) {
-    if (this.empBasicInfoListArray.controls.length > 0)
-      this.empBasicInfoListArray.removeAt(index);
+    if (this.empBasicInfoListArray.controls.length > 0){
+      this.confirmService
+        .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+        .subscribe((result) => {
+          if (result) {
+            this.empBasicInfoListArray.removeAt(index);
+          }
+        });
+    }
   }
   
   closeModal(): void {

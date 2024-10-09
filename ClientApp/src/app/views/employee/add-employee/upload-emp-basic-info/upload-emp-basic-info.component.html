@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{headingText}}</h5>
+                <h5 class="modal-title">{{headingText}} <small *ngIf="uploadedFile">(Total Employees: {{empBasicInfoListArray.controls.length}})</small></h5>
                 <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
                     <mat-icon>close</mat-icon>
                 </button>
@@ -20,6 +20,7 @@
                                 <c-card class="mt-3 mb-3 shadow">
                                     <c-card-body>
                                         <div [formGroupName]="i">
+                                        <h4 class="text-center bg-info text-light">{{i + 1}}</h4>
                                             <div class="form-group mb-2" cRow [gutter]="3">
                                                 <input type="hidden" formControlName="id"/>
                                                 <c-col [md]="4">

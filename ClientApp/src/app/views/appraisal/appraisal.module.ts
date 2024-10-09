@@ -32,6 +32,10 @@ import { UpdateFormComponent } from './update-form/update-form.component';
 import {MatIconModule} from '@angular/material/icon';
 import { ViewFormRecordComponent } from './manage-form/view-form-record/view-form-record.component';
 import { FormRecordService } from './services/form-record.service';
+import { OfficerFormApplicationComponent } from './officer-form/officer-form-application/officer-form-application.component';
+import { ReportingFormComponent } from './officer-form/reporting-form/reporting-form.component';
+import { CounterSignatureFormOfficerComponent } from './officer-form/counter-signature-form-officer/counter-signature-form-officer.component';
+import { ReceiverFormOfficerComponent } from './officer-form/receiver-form-officer/receiver-form-officer.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,11 @@ import { FormRecordService } from './services/form-record.service';
     OfficerFormComponent,
     FieldComponent,
     UpdateFormComponent,
-    ViewFormRecordComponent
+    ViewFormRecordComponent,
+    OfficerFormApplicationComponent,
+    ReportingFormComponent,
+    CounterSignatureFormOfficerComponent,
+    ReceiverFormOfficerComponent,
   ],
   imports: [
     TabViewModule,

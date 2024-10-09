@@ -20,6 +20,10 @@ import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.servi
 })
 export class OfficerFormComponent implements OnInit, OnDestroy {
 
+  @Input()
+  ActiveSection:boolean[];
+  @Input()
+  formRecordId;
   IdCardNo:string;
   formId:number = 1;
   loading: boolean;
@@ -37,7 +41,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     {fieldName: "Joining Date Of Current Designation", MapTo: "currentDesignationJoiningDate", Transform: "DateFormat"}
   ]
 
-  reportDates:string[]= [];
+  reportDates:any[]= [];
   
   constructor(
     private empPhotoSignService: EmpPhotoSignService,
@@ -52,11 +56,18 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.loading = false;
     this.submitLoading = false;
     this.currentSection = 0;
+    this.ActiveSection = [true,true,true,true,true,true,true];
+    this.formRecordId = 0;
   }
 
   ngOnInit(): void {
     this.loading=true;
-    this.getFormInfo(); 
+
+    if(this.formRecordId==0) {
+      this.getFormInfo(); 
+    } else {
+      this.getFormData();
+    }
   }
 
 
@@ -96,6 +107,12 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   saveFormData() {
     this.submitLoading=true;
+
+    if(this.formRecordId!=0) {
+      this.updateFormData();
+      return;
+    }
+
     console.log(this.reportDates);
     if(this.reportDates.length<2||this.reportDates[0]==null||this.reportDates[1]==null) {
       this.toastr.warning('',"Report Duration is required", {
@@ -206,6 +223,61 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.empPhotoSignService.findByEmpId(empId).subscribe({
       next: response => {
         signature = response;
+      }
+    })
+  }
+
+
+  updateFormData() {
+    this.submitLoading=true;
+    if(this.reportDates.length<2) {
+      this.toastr.warning('',"Report Duration is required", {
+        positionClass: 'toast-top-right'
+      });
+      return;
+    }
+
+    this.formData.reportFrom = this.reportDates[0];
+    this.formData.reportTo = this.reportDates[1];
+    
+    this.formRecordService.updateFormData(this.formData).subscribe({
+      next: response=> {
+        if(response.success) {
+          this.toastr.success('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        } else {
+          this.toastr.warning('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        }
+      },
+      error: err=> {
+        this.submitLoading=false;
+      },
+      complete: () => {
+        this.submitLoading=false;
+      }
+    })
+  }
+
+  getFormData() {
+    this.formRecordService.getFormData(this.formRecordId).subscribe({
+      next: (response)=> {
+        this.formData = response;
+        let datefrom = new Date(this.formData.reportFrom);
+        let dateto = new Date(this.formData.reportTo);
+        this.reportDates.push(datefrom);
+        this.reportDates.push(dateto);
+        console.log(this.reportDates);
+        this.loading=false;
+      },
+      error: (err)=> {
+        console.log(err);
+        this.loading=false;
+      },
+      complete:()=>  {
+        this.loading=false;
       }
     })
   }

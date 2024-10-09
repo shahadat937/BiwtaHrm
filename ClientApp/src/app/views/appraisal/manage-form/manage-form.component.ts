@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OfficerFormService } from '../officer-form/service/officer-form.service';
 import { ToastrService } from 'ngx-toastr';
@@ -9,6 +9,7 @@ import { cilPencil, cilTrash, cibZoom, cilZoom, cilEyedropper } from '@coreui/ic
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { UpdateFormComponent } from '../update-form/update-form.component';
 import {ViewFormRecordComponent} from './view-form-record/view-form-record.component'
+import {FormRecordFilter} from '../models/form-record-filter'
 
 @Component({
   selector: 'app-manage-form',
@@ -18,6 +19,8 @@ import {ViewFormRecordComponent} from './view-form-record/view-form-record.compo
 export class ManageFormComponent implements OnInit, OnDestroy {
   loading: boolean ;
   subscription: Subscription = new Subscription();
+  @Input()
+  filters: FormRecordFilter;
   formRecord: FormRecordModel[] = [];
   formRecordHeader: any[] ;
   icons = {cilPencil, cilTrash, cilZoom, cilEyedropper}
@@ -35,6 +38,7 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     this.formRecordHeader = [{header:"PMS No.", field:"idCardNo"}, {header:"Name",field:"fullName"}, {header:"Department", field:"department"}, 
       {header: "From", field:"reportFrom", IsDate: true}, {header:"To", field:"reportTo", IsDate:true}]
     this.globalFilter="";
+    this.filters = new FormRecordFilter()
   }
 
   ngOnInit(): void {

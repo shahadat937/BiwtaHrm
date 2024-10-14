@@ -30,6 +30,7 @@ namespace Hrm.Application.DTOs.EmpTransferPosting
         public int? UpdateScaleId { get; set; }
         public int? UpdateBasicPay { get; set; }
 
+        public bool? WithPromotion { get; set; }
         public bool? IsTransferApprove { get; set; }
         public int? TransferApproveById { get; set; }
         public DateTime? TransferApproveDate { get; set; }

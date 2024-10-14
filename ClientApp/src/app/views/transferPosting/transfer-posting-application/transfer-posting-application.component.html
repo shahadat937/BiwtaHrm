@@ -26,11 +26,14 @@
                     <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentOfficeId"
                         name="currentOfficeId" />
                     <c-col [md]="4">
-                        <label cLabel for="idCardNo">Employee PMS No<span class="text-danger">*</span></label>
+                        <label cLabel for="idCardNo">Employee PMIS No<span class="text-danger">*</span></label>
                         <c-input-group>
+                            <button cButton color="secondary" type="button" cTooltip="Search Employee" cTooltipPlacement="bottom" (click)="EmployeeListModal()">
+                                <svg [cIcon]="icons.cilSearch"></svg>
+                            </button>
                             <input aria-describedby="idCardNo" cFormControl
                                 [(ngModel)]="empTransferPostingService.empTransferPosting.empIdCardNo" name="empIdCardNo"
-                                #idCardNo="ngModel" required placeholder="Enter Employee PMS No" id="idCardNo"
+                                #idCardNo="ngModel" required placeholder="Enter Employee PMIS No" id="idCardNo"
                                 type="text" #idCardNoInput />
                             <button cButton color="primary" type="button"
                                 (click)="getEmpInfoByIdCardNo(idCardNoInput.value)">
@@ -38,7 +41,7 @@
                             </button>
                         </c-input-group>
                         @if(!idCardNo.valid&&idCardNo.touched){
-                        <div class="text-left text-danger">PMS No is required</div>
+                        <div class="text-left text-danger">PMIS No is required</div>
                         }
                     </c-col>
 
@@ -81,7 +84,7 @@
                 </c-card-header>
                 <c-card-body cRow [gutter]="3">
 
-                    <c-col [md]="4">
+                    <c-col [md]="3">
                         <label cLabel for="officeOrderNo">Office Order No.<span class="text-danger"></span></label>
                         <input [(ngModel)]="empTransferPostingService.empTransferPosting.officeOrderNo"
                             name="officeOrderNo" #officeOrderNo="ngModel" cFormControl id="officeOrderNo"
@@ -91,7 +94,7 @@
                         }
                     </c-col>
 
-                    <c-col [md]="4">
+                    <c-col [md]="3">
                         <label cLabel for="officeOrderDate">Office Order Date<span class="text-danger"></span></label>
                         <input [(ngModel)]="empTransferPostingService.empTransferPosting.officeOrderDate"
                             name="officeOrderDate" #officeOrderDate="ngModel" cFormControl id="officeOrderDate"
@@ -101,7 +104,27 @@
                         }
                     </c-col>
 
-                    <c-col [md]="4">
+                    <c-col [md]="3">
+                        <label cLabel for="orderOfficeById">Order Office/By<span
+                                class="text-danger"></span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.orderOfficeById"
+                                name="orderOfficeById" #orderOfficeById="ngModel" cFormControl id="orderOfficeById" aria-label="Default select example" cSelect>
+                                <option [ngValue]="null">Select Order Office/By</option>
+
+                                @for(department of departments; track department.id;let index=$index) {
+                                <option [value]="department.id">
+                                    {{ department.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!orderOfficeById.valid && orderOfficeById.touched){
+                            <div class="text-left text-danger">Transfer Department is required</div>
+                            }
+                        </div>
+                    </c-col>
+
+                    <!-- <c-col [md]="4">
                         <input [(ngModel)]="empTransferPostingService.empTransferPosting.orderOfficeById"
                             name="orderOfficeById" type="hidden" />
                         <label cLabel for="orderByIdCardNo">Order By<span class="text-danger">*</span></label>
@@ -119,9 +142,9 @@
                         @if(!orderByIdCardNo.valid&&orderByIdCardNo.touched){
                         <div class="text-left text-danger">Order By is required</div>
                         }
-                    </c-col>
+                    </c-col> -->
 
-                    @if(isValidOrderByEmp) {
+                    <!-- @if(isValidOrderByEmp) {
                     <c-col [md]="3">
                         <label cLabel for="orderByEmpName">Order By Name<span class="text-danger"></span></label>
                         <input [(ngModel)]="empTransferPostingService.empTransferPosting.orderByEmpName"
@@ -152,7 +175,29 @@
                             name="orderByDesignationName" #orderByDesignationName="ngModel" cFormControl
                             id="orderByDesignationName" readonly />
                     </c-col>
-                    }
+                    } -->
+
+                    
+                    <c-col [md]="3">
+                        <label cLabel for="releaseTypeId">Release Type<span class="text-danger"></span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.releaseTypeId"
+                                name="releaseTypeId" #releaseTypeId="ngModel" cFormControl id="releaseTypeId"
+                                aria-label="Default select example" cSelect
+                                (change)="gerReleaseTypeInfo(empTransferPostingService.empTransferPosting.releaseTypeId ?? 0)">
+                                <option [ngValue]="null" disabled>Select Release Type</option>
+
+                                @for(releaseType of releaseTypes; track releaseType.id;let index=$index) {
+                                <option [value]="releaseType.id">
+                                    {{ releaseType.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!releaseTypeId.valid && releaseTypeId.touched){
+                            <div class="text-left text-danger">Release Type is required</div>
+                            }
+                        </div>
+                    </c-col>
 
 
                     <c-col [md]="3">
@@ -222,26 +267,6 @@
 
 
                     <c-col [md]="3">
-                        <label cLabel for="releaseTypeId">Release Type<span class="text-danger"></span></label>
-                        <div class="input-wrapper">
-                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.releaseTypeId"
-                                name="releaseTypeId" #releaseTypeId="ngModel" cFormControl id="releaseTypeId"
-                                aria-label="Default select example" cSelect>
-                                <option [ngValue]="null">Select Release Type</option>
-
-                                @for(releaseType of releaseTypes; track releaseType.id;let index=$index) {
-                                <option [value]="releaseType.id">
-                                    {{ releaseType.name }}
-                                </option>
-                                }
-                            </select>
-                            @if(!releaseTypeId.valid && releaseTypeId.touched){
-                            <div class="text-left text-danger">Release Type is required</div>
-                            }
-                        </div>
-                    </c-col>
-
-                    <c-col [md]="3">
                         <label cLabel for="remark">Remark<span class="text-danger"></span></label>
                         <input [(ngModel)]="empTransferPostingService.empTransferPosting.remark" name="remark"
                             #remark="ngModel" cFormControl id="remark" placeholder="Enter Remark" type="text" />
@@ -254,7 +279,7 @@
 
 
             <!-- ************* Transfer Approve Information ************** -->
-            <c-card class="mt-3 mb-3 shadow">
+            <!-- <c-card class="mt-3 mb-3 shadow">
                 <c-card-header class="text-center">
                     <div>Transfer Approve Information</div>
                 </c-card-header>
@@ -362,7 +387,7 @@
                     }
                     </div>
                 </c-card-body>
-            </c-card>
+            </c-card> -->
 
 
             <!-- ************* Department Release Information ************** -->

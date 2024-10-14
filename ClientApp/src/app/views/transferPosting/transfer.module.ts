@@ -29,6 +29,7 @@ import { OfficeService } from '../basic-setup/service/office.service';
 import { DepartmentService } from '../basic-setup/service/department.service';
 import { GradeService } from '../basic-setup/service/Grade.service';
 import { SectionService } from '../basic-setup/service/section.service';
+import { ReleaseTypeService } from '../basic-setup/service/release-type.service';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { SectionService } from '../basic-setup/service/section.service';
     OfficeService,
     DepartmentService,
     GradeService,
-    SectionService
+    SectionService,
+    ReleaseTypeService,
   ],
   bootstrap: []
 })

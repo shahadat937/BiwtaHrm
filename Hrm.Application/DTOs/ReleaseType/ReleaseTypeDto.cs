@@ -10,6 +10,7 @@ namespace Hrm.Application.DTOs.ReleaseType
     {
         public int ReleaseTypeId { get; set; }
         public string? ReleaseTypeName { get; set; }
+        public bool? IsDeptRelease { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }

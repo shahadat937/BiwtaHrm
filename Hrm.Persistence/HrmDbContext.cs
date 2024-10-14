@@ -817,7 +817,7 @@ namespace Hrm.Persistence
                 .WithMany(eb => eb.TransferApproveTransfer)
                     .HasForeignKey(e => e.TransferApproveById);
 
-                entity.HasOne(e => e.OrderBy)
+                entity.HasOne(e => e.OrderOfficeBy)
                 .WithMany(eb => eb.OrderOfficeTransfer)
                     .HasForeignKey(e => e.OrderOfficeById);
 
@@ -868,6 +868,22 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.DeptReleaseType)
                 .WithMany(eb => eb.DeptEmpTransferPosting)
                     .HasForeignKey(e => e.DeptReleaseTypeId);
+
+                entity.HasOne(e => e.CurrentGrade)
+                .WithMany(eb => eb.CurrentEmpTransferPosting)
+                    .HasForeignKey(e => e.CurrentGradeId);
+
+                entity.HasOne(e => e.UpdateGrade)
+                .WithMany(eb => eb.UpdateEmpTransferPosting)
+                    .HasForeignKey(e => e.UpdateGradeId);
+
+                entity.HasOne(e => e.CurrentScale)
+                .WithMany(eb => eb.CurrentEmpTransferPosting)
+                    .HasForeignKey(e => e.CurrentScaleId);
+
+                entity.HasOne(e => e.UpdateScale)
+                .WithMany(eb => eb.UpdateEmpTransferPosting)
+                    .HasForeignKey(e => e.UpdateScaleId);
             });
 
             modelBuilder.Entity<EmpPromotionIncrement>(entity =>

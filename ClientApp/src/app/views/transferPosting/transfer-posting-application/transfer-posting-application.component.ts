@@ -200,6 +200,19 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       remark: null,
       menuPosition: null,
       isActive: null,
+      
+      withPromotion: false,
+      currentGradeId: null,
+      currentScaleId: null,
+      currentBasicPay: null,
+      updateGradeId: null,
+      updateScaleId: null,
+      updateBasicPay: null,
+
+      currentGradeName: '',
+      currentScaleName: '',
+      updateGradeName: '',
+      updateScaleName: '',
     };
   }
 
@@ -252,6 +265,18 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       remark: null,
       menuPosition: null,
       isActive: null,
+      
+      currentGradeId: null,
+      currentScaleId: null,
+      currentBasicPay: null,
+      updateGradeId: null,
+      updateScaleId: null,
+      updateBasicPay: null,
+
+      currentGradeName: '',
+      currentScaleName: '',
+      updateGradeName: '',
+      updateScaleName: '',
     });
   }
 

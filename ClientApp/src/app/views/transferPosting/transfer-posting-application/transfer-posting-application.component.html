@@ -274,6 +274,14 @@
                         <div class="text-left text-danger">Remark is required</div>
                         }
                     </c-col>
+
+                    <div class="mb-3">
+                        <c-form-check [switch]="true">
+                            <input cFormCheckInput type="checkbox" id="withPromotion" name="withPromotion"
+                                [(ngModel)]="empTransferPostingService.empTransferPosting.withPromotion"/>
+                            <label cFormCheckLabel for="withPromotion">With Promotion</label>
+                        </c-form-check>
+                    </div>
                 </c-card-body>
             </c-card>
 

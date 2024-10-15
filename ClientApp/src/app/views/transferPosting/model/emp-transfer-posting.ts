@@ -35,6 +35,19 @@ export class EmpTransferPosting {
     currentDesignationId: number | null = null;
     currentSectionId: number | null = null;
 
+    currentGradeId: number | null = null;
+    currentScaleId: number | null = null;
+    currentBasicPay: number | null = null;
+    updateGradeId: number | null = null;
+    updateScaleId: number | null = null;
+    updateBasicPay: number | null = null;
+
+    withPromotion: boolean = false;
+    currentGradeName: string = '';
+    currentScaleName: string = '';
+    updateGradeName: string = '';
+    updateScaleName: string = '';
+
     officeOrderNo: string | null = null;
     officeOrderDate: Date | null = null;
     orderOfficeById: number | null = null;
@@ -72,7 +85,7 @@ export class EmpTransferPosting {
     joiningDate: Date | null = null;
     joiningRemark: string | null = null;
     joiningStatus: boolean | null = null;
-    
+
     applicationStatus: boolean | null = null;
     remark: string | null = null;
     menuPosition: number | null = null;

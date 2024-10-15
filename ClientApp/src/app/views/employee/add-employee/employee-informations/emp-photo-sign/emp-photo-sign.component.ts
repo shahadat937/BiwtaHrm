@@ -92,10 +92,16 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
   }
 
   onPhotoSelected(event: any) {
-    this.empPhoto = event.target.files[0];
+    const file = event.target.files[0];
+    if (!file) {
+      this.photoInvalid = true;
+      return;
+    }
+    this.empPhoto = file; // Assign the file
+  
     const reader = new FileReader();
     const img = new Image();
-
+  
     reader.onload = (e: any) => {
       img.src = e.target.result;
       img.onload = () => {
@@ -110,14 +116,20 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
         }
       };
     };
-    reader.readAsDataURL(this.empPhoto);
+    reader.readAsDataURL(file);  // Read file as data URL
   }
 
   onSignatureSelected(event: any) {
-    this.empSignature = event.target.files[0];
+    const file = event.target.files[0];
+    if (!file) {
+      this.signatureInvalid = true;
+      return;
+    }
+    this.empSignature = file; // Assign the file
+  
     const reader = new FileReader();
     const img = new Image();
-
+  
     reader.onload = (e: any) => {
       img.src = e.target.result;
       img.onload = () => {
@@ -132,7 +144,7 @@ export class EmpPhotoSignComponent implements OnInit, OnDestroy {
         }
       };
     };
-    reader.readAsDataURL(this.empSignature);
+    reader.readAsDataURL(file);  // Read file as data URL
   }
 
   cancel() {

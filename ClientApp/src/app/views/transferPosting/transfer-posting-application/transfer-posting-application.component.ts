@@ -15,6 +15,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TransferPostingInfoComponent } from '../transfer-posting-info/transfer-posting-info.component';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
 import { ReleaseTypeService } from '../../basic-setup/service/release-type.service';
+import { GradeService } from '../../basic-setup/service/Grade.service';
 
 @Component({
   selector: 'app-transfer-posting-application',
@@ -31,6 +32,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   designations: SelectedModel[] = [];
   sections: SelectedModel[] = [];
   releaseTypes: SelectedModel[] = [];
+  grades: SelectedModel[] = [];
+  scales: SelectedModel[] = [];
   subscription: Subscription = new Subscription();
   loading: boolean = false;
   isValidEmp: boolean = false;
@@ -52,6 +55,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     public sectionService: SectionService,
     private modalService: BsModalService,
     public releaseTypeService: ReleaseTypeService,
+    private gradeService: GradeService,
   ) {
 
   }
@@ -68,6 +72,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.getAllDepartment();
     // this.getSelectedSection();
     this.getSelectedReleaseType();
+    this.SelectModelGrade();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -81,6 +86,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     });
     this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if (res) {
+        console.log("Application Response : ", res);
         this.empTransferPosting = res;
         if(res.transferSectionId){
           this.onSectionSelectGetDesignation(res.transferSectionId, this.empJobDetailsId);
@@ -89,13 +95,19 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
           this.getEmpJobDetailsInfo(res.empId, res.transferDepartmentId);
         }
         this.onOfficeAndDepartmentSelect(res.transferDepartmentId);
-        if(res.transferApproveStatus == true){
-          this.empTransferPostingService.empTransferPosting.provideTransferApproveInfo = true;
-          this.empTransferPostingService.empTransferPosting.transferApproveStatus = true;
-          this.empTransferPostingService.empTransferPosting.transferApproveDate = res.transferApproveDate;
-          this.empTransferPostingService.empTransferPosting.approveByIdCardNo = res.approveByIdCardNo;
-          this.empTransferPostingService.empTransferPosting.remark = res.remark;
-          this.getApproveByInfoByIdCardNo(res.approveByIdCardNo || '');
+        // if(res.transferApproveStatus == true){
+        //   this.empTransferPostingService.empTransferPosting.provideTransferApproveInfo = true;
+        //   this.empTransferPostingService.empTransferPosting.transferApproveStatus = true;
+        //   this.empTransferPostingService.empTransferPosting.transferApproveDate = res.transferApproveDate;
+        //   this.empTransferPostingService.empTransferPosting.approveByIdCardNo = res.approveByIdCardNo;
+        //   this.empTransferPostingService.empTransferPosting.remark = res.remark;
+        //   this.getApproveByInfoByIdCardNo(res.approveByIdCardNo || '');
+        // }
+        if(res.withPromotion == true){
+          this.getEmpJobDetailsByEmpId(res.empId || 0);
+          this.empTransferPostingService.empTransferPosting.updateGradeId = res.updateGradeId;
+          this.empTransferPostingService.empTransferPosting.updateScaleId = res.updateScaleId;
+          this.empTransferPostingService.empTransferPosting.updateBasicPay = res.updateBasicPay;
         }
         if(res.deptApproveStatus == true){
           this.empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo = true;
@@ -320,6 +332,11 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.empTransferPostingService.empTransferPosting.currentDesignationId = res.designationId;
         this.empTransferPostingService.empTransferPosting.currentSectionId = res.sectionId;
         this.empTransferPostingService.empTransferPosting.currentOfficeId = res.officeId;
+        this.empTransferPostingService.empTransferPosting.currentGradeId = res.presentGradeId;
+        this.empTransferPostingService.empTransferPosting.currentScaleId = res.presentScaleId;
+        this.empTransferPostingService.empTransferPosting.currentBasicPay = res.basicPay;
+        this.empTransferPostingService.empTransferPosting.currentGradeName = res.presentGradeName;
+        this.empTransferPostingService.empTransferPosting.currentScaleName = res.presentScaleName;
       }
     })
   }
@@ -343,6 +360,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.empTransferPostingService.empTransferPosting.isDepartmentApprove = true;
         this.isDeptApproveNeed(true);
       }
+      this.empTransferPostingService.empTransferPosting.deptReleaseTypeName = res.releaseTypeName;
     });
   }
 
@@ -400,39 +418,39 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       }
     })
   }
-  isTransferApproveNeed(status: boolean){
-    if(!status){
-      this.empTransferPostingService.empTransferPosting.provideTransferApproveInfo = false;
-    }
-    this.provideTransferApproveInfo(status);
-  }
-  provideTransferApproveInfo(status: boolean){
-    if(!status){
-      this.empTransferPostingService.empTransferPosting.approveByEmpName = '';
-      this.empTransferPostingService.empTransferPosting.transferApproveById = null;
-      this.empTransferPostingService.empTransferPosting.approveByDepartmentName = '';
-      this.empTransferPostingService.empTransferPosting.approveByDesignationName = '';
-      this.empTransferPostingService.empTransferPosting.approveBySectionName = '';
-      this.empTransferPostingService.empTransferPosting.approveByIdCardNo = '';
-      this.empTransferPostingService.empTransferPosting.transferApproveStatus = null;
-      this.empTransferPostingService.empTransferPosting.transferApproveDate = null;
-      this.empTransferPostingService.empTransferPosting.approveRemark = '';
-      this.isApproveByEmp = false;
-    }
-    else{
-      this.empTransferPostingService.empTransferPosting.transferApproveById = this.loginEmpId;
-      if(this.empTransferPosting.transferApproveById){
-        this.empTransferPostingService.empTransferPosting.approveByEmpName = this.empTransferPosting.approveByEmpName;
-        this.empTransferPostingService.empTransferPosting.transferApproveById = this.empTransferPosting.transferApproveById;
-        this.empTransferPostingService.empTransferPosting.approveByIdCardNo = this.empTransferPosting.approveByIdCardNo;
-        this.empTransferPostingService.empTransferPosting.transferApproveStatus = this.empTransferPosting.transferApproveStatus;
-        this.empTransferPostingService.empTransferPosting.transferApproveDate = null;
-        this.empTransferPostingService.empTransferPosting.approveRemark = this.empTransferPosting.approveRemark;
-        this.isApproveByEmp = true;
-        this.getApproveByInfoByIdCardNo(this.empTransferPosting.approveByIdCardNo || '');
-      }
-    }
-  }
+  // isTransferApproveNeed(status: boolean){
+  //   if(!status){
+  //     this.empTransferPostingService.empTransferPosting.provideTransferApproveInfo = false;
+  //   }
+  //   this.provideTransferApproveInfo(status);
+  // }
+  // provideTransferApproveInfo(status: boolean){
+  //   if(!status){
+  //     this.empTransferPostingService.empTransferPosting.approveByEmpName = '';
+  //     this.empTransferPostingService.empTransferPosting.transferApproveById = null;
+  //     this.empTransferPostingService.empTransferPosting.approveByDepartmentName = '';
+  //     this.empTransferPostingService.empTransferPosting.approveByDesignationName = '';
+  //     this.empTransferPostingService.empTransferPosting.approveBySectionName = '';
+  //     this.empTransferPostingService.empTransferPosting.approveByIdCardNo = '';
+  //     this.empTransferPostingService.empTransferPosting.transferApproveStatus = null;
+  //     this.empTransferPostingService.empTransferPosting.transferApproveDate = null;
+  //     this.empTransferPostingService.empTransferPosting.approveRemark = '';
+  //     this.isApproveByEmp = false;
+  //   }
+  //   else{
+  //     this.empTransferPostingService.empTransferPosting.transferApproveById = this.loginEmpId;
+  //     if(this.empTransferPosting.transferApproveById){
+  //       this.empTransferPostingService.empTransferPosting.approveByEmpName = this.empTransferPosting.approveByEmpName;
+  //       this.empTransferPostingService.empTransferPosting.transferApproveById = this.empTransferPosting.transferApproveById;
+  //       this.empTransferPostingService.empTransferPosting.approveByIdCardNo = this.empTransferPosting.approveByIdCardNo;
+  //       this.empTransferPostingService.empTransferPosting.transferApproveStatus = this.empTransferPosting.transferApproveStatus;
+  //       this.empTransferPostingService.empTransferPosting.transferApproveDate = null;
+  //       this.empTransferPostingService.empTransferPosting.approveRemark = this.empTransferPosting.approveRemark;
+  //       this.isApproveByEmp = true;
+  //       this.getApproveByInfoByIdCardNo(this.empTransferPosting.approveByIdCardNo || '');
+  //     }
+  //   }
+  // }
 
   isDeptApproveNeed(status: boolean){
     if(!status){
@@ -556,7 +574,26 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     }
   }
 
+  SelectModelGrade() {
+    this.gradeService.selectModelGrade().subscribe((data) => {
+      this.grades = data;
+    });
+  }
+
+  onChangeGradeGetScale(gradeId: number) {
+    this.empJobDetailsService.empJobDetails.presentScaleId = null;
+    this.empJobDetailsService.getScaleByGradeId(+gradeId).subscribe((res) => {
+      this.scales = res;
+    })
+  }
+  onChangeScaleGetBasicPay(scaleId: number) {
+    this.empJobDetailsService.getBasicPayByScale(scaleId).subscribe((res) => {
+      this.empTransferPostingService.empTransferPosting.updateBasicPay = res.basicPay;
+    })
+  }
+
   onSubmit(form: NgForm): void {
+    console.log(form.value)
     this.loading = true;
     this.empTransferPostingService.cachedData = [];
     const id = form.value.id;

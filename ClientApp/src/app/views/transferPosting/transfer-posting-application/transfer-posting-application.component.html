@@ -29,6 +29,10 @@
                         name="currentSectionId" />
                     <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentOfficeId"
                         name="currentOfficeId" />
+
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentGradeId" name="currentGradeId" />
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentScaleId"  name="currentScaleId" />
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentScaleName" name="currentScaleName"/>
                     <c-col [md]="4">
                         <label cLabel for="idCardNo">Employee PMIS No<span class="text-danger">*</span></label>
                         <c-input-group>
@@ -289,14 +293,12 @@
                         <div cRow [gutter]="3" *ngIf="empTransferPostingService.empTransferPosting.withPromotion">
                             <c-col [md]="4">
                                 <label cLabel for="currentGradeName">Current Grade<span class="text-danger"></span></label>
-                                <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentGradeId" name="currentGradeId" />
                                 <input [(ngModel)]="empTransferPostingService.empTransferPosting.currentGradeName"
                                     name="currentGradeName" #currentGradeName="ngModel" cFormControl id="currentGradeName"
                                     type="text" readonly />
                             </c-col>
                             <c-col [md]="4">
                                 <label cLabel for="currentScaleName">Current Scale Lavel<span class="text-danger"></span></label>
-                                <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentScaleId" name="currentScaleId" />
                                 <input [(ngModel)]="empTransferPostingService.empTransferPosting.currentScaleName"
                                     name="currentScaleName" #currentScaleName="ngModel" cFormControl id="currentScaleName"
                                     type="text" readonly />

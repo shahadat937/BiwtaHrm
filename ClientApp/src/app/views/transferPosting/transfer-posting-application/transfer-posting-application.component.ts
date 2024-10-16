@@ -110,7 +110,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
           this.empTransferPostingService.empTransferPosting.updateScaleId = res.updateScaleId;
           this.empTransferPostingService.empTransferPosting.updateBasicPay = res.updateBasicPay;
         }
-        if(res.deptApproveStatus == true){
+        if(res.deptApproveStatus == true && res.isDepartmentApprove == true){
           this.empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo = true;
           this.empTransferPostingService.empTransferPosting.deptReleaseTypeId = res.deptReleaseTypeId;
           this.empTransferPostingService.empTransferPosting.deptReleaseDate = res.deptReleaseDate;
@@ -118,7 +118,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
           this.empTransferPostingService.empTransferPosting.deptClearance = res.deptClearance;
           this.empTransferPostingService.empTransferPosting.deptRemark = res.deptRemark;
         }
-        if(res.joiningStatus == true){
+        if(res.joiningStatus == true && res.isJoining == true){
           this.empTransferPostingService.empTransferPosting.provideJoiningInfo = true;
           this.empTransferPostingService.empTransferPosting.joiningDate = res.joiningDate;
           this.empTransferPostingService.empTransferPosting.joiningRemark = res.joiningRemark;
@@ -512,6 +512,10 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.empTransferPostingService.empTransferPosting.empIdCardNo = idCardNo;
       }
     });
+  }
+  withPromotion(){
+    console.log(this.empTransferPostingService.empTransferPosting.empId)
+    this.getEmpJobDetailsByEmpId(this.empTransferPostingService.empTransferPosting.empId || 0);
   }
 
   loadOffice() {

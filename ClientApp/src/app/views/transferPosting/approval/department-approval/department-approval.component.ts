@@ -130,6 +130,7 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(deptApproveStatus?: boolean){
+    this.empTransferPostingService.cachedData = [];
     if(this.empTransferPosting.joiningStatus!=null){
       this.toastr.warning('', `Already Joining Status Updated`, {
         positionClass: 'toast-top-right',

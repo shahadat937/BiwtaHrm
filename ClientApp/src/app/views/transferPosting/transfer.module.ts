@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertComponent, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, PopoverModule, SpinnerModule, TableModule, TooltipModule } from '@coreui/angular';
+import { AlertComponent, BadgeComponent, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, PopoverModule, SpinnerModule, TableModule, TooltipModule } from '@coreui/angular';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -76,6 +76,7 @@ import { ReleaseTypeService } from '../basic-setup/service/release-type.service'
     PopoverModule,
     AlertComponent,
     TooltipModule,
+    BadgeComponent
   ],
   providers:[
     OfficeService,

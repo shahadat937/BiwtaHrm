@@ -132,6 +132,7 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(joiningStatus?: boolean){
+    this.empTransferPostingService.cachedData = [];
       if(joiningStatus == true || joiningStatus == false){
         this.empTransferPosting.joiningStatus = joiningStatus;
       }

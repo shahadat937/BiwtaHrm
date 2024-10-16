@@ -20,7 +20,7 @@ namespace Hrm.Domain
         public int? CurrentScaleId { get; set; }
         public int? CurrentBasicPay { get; set; }
         public string? OfficeOrderNo { get; set; }
-        public DateTime? OfficeOrderDate { get; set; }
+        public DateOnly? OfficeOrderDate { get; set; }
         public int? OrderOfficeById { get; set; }
         public int? ReleaseTypeId { get; set; }
         public int? TransferOfficeId { get; set; }
@@ -34,14 +34,14 @@ namespace Hrm.Domain
         public bool? WithPromotion { get; set; }
         public bool? IsTransferApprove { get; set; }
         public int? TransferApproveById { get; set; }
-        public DateTime? TransferApproveDate { get; set; }
+        public DateOnly? TransferApproveDate { get; set; }
         public string? ApproveRemark { get; set; }
         public bool? TransferApproveStatus { get; set; }
 
         public bool? IsDepartmentApprove { get; set; }
         public int? DeptReleaseTypeId { get; set; }
         public int? DeptReleaseById { get; set; }
-        public DateTime? DeptReleaseDate { get; set; }
+        public DateOnly? DeptReleaseDate { get; set; }
         public int? ReferenceNo { get; set; }
         public bool? DeptClearance { get; set; }
         public string? DeptRemark { get; set; }
@@ -49,7 +49,7 @@ namespace Hrm.Domain
 
         public bool? IsJoining { get; set; }
         public int? JoiningReportingById { get; set; }
-        public DateTime? JoiningDate { get; set; }
+        public DateOnly? JoiningDate { get; set; }
         public string? JoiningRemark { get; set; }
         public bool? JoiningStatus { get; set; }
 

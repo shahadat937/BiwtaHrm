@@ -49,7 +49,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
                 .Include(x => x.TransferSection)
                 .Include(x => x.ReleaseType)
                 .Include(x => x.DeptReleaseType)
-                .FirstOrDefaultAsync(cancellationToken); ;
+                .FirstOrDefaultAsync(cancellationToken);
 
             if (EmpTransferPostings == null)
             {

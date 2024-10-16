@@ -106,6 +106,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         if(res.withPromotion == true){
           this.getEmpJobDetailsByEmpId(res.empId || 0);
           this.empTransferPostingService.empTransferPosting.updateGradeId = res.updateGradeId;
+          this.onChangeGradeGetScale(res.updateGradeId || 0);
           this.empTransferPostingService.empTransferPosting.updateScaleId = res.updateScaleId;
           this.empTransferPostingService.empTransferPosting.updateBasicPay = res.updateBasicPay;
         }

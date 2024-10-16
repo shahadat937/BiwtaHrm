@@ -22,10 +22,10 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     'slNo',
     'PMS Id',
     'fullName',
-    'ApprovalStatus',
+    // 'ApprovalStatus',
     'DeptStatus',
     'JoiningStatus',
-    'ApplicationStatus',
+    // 'ApplicationStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)

@@ -143,10 +143,14 @@
                     <c-card-body cRow [gutter]="3">
                         <div class="mb-3">
                             <b>Department Release Status : </b>
+                            <button cButton color="info" size="sm" *ngIf="empTransferPosting?.isDepartmentApprove == false; else deptApproval">Clearence Not Needed</button>
+
+                            <ng-template #deptApproval>
                             <button cButton color="warning" size="sm" *ngIf="empTransferPosting.deptApproveStatus == null">Pending</button>
-                            <!-- <button cButton color="info" size="sm" *ngIf="empTransferPosting.deptApproveStatus == null && empTransferPosting.transferApproveStatus == true && empTransferPosting.isDepartmentApprove == true"><svg [cIcon]="icons.cilBell"></svg></button> -->
+                            <!-- <button cTooltip="Notice" cTooltipPlacement="bottom" cButton color="info" size="sm" *ngIf="element.deptApproveStatus == null && element.transferApproveStatus == true && element.isDepartmentApprove == true"><svg [cIcon]="icons.cilBell"></svg></button> -->
                             <button cButton color="success" size="sm" *ngIf="empTransferPosting.deptApproveStatus == true">Approved</button>
                             <button cButton color="danger" size="sm" *ngIf="empTransferPosting.deptApproveStatus == false">Rejected</button>
+                            </ng-template>
                         </div>
                         <div *ngIf="!empTransferPosting.isDepartmentApprove">
                             <c-alert class="text-center">Department Release is not needed</c-alert>

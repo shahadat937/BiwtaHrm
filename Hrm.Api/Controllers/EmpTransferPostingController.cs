@@ -80,19 +80,19 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-EmpTransferPostingDeptApprove")]
-        public async Task<ActionResult> EmpTransferPostingDeptApprove()
+        [Route("get-EmpTransferPostingDeptApprove/{id}")]
+        public async Task<ActionResult> EmpTransferPostingDeptApprove(int id)
         {
-            var command = new GetEmpTransferPostingDeptApprovalRequest { };
+            var command = new GetEmpTransferPostingDeptApprovalRequest { Id = id };
             var EmpTransferPosting = await _mediator.Send(command);
             return Ok(EmpTransferPosting);
         }
 
         [HttpGet]
-        [Route("get-EmpTransferPostingJoiningInfo")]
-        public async Task<ActionResult> EmpTransferPostingJoiningInfo()
+        [Route("get-EmpTransferPostingJoiningInfo/{id}")]
+        public async Task<ActionResult> EmpTransferPostingJoiningInfo(int id)
         {
-            var command = new GetEmpTransferPostingJoiningInfoRequest { };
+            var command = new GetEmpTransferPostingJoiningInfoRequest { Id = id };
             var EmpTransferPosting = await _mediator.Send(command);
             return Ok(EmpTransferPosting);
         }

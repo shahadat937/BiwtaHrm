@@ -30,6 +30,7 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+  loginEmpId: number = 0;
   
   constructor(
     private toastr: ToastrService,
@@ -44,11 +45,15 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    const currentUserString = localStorage.getItem('currentUser');
+    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
+    this.loginEmpId = currentUserJSON.empId ?? 0;
+
     this.getAllEmpTransferPostingJoiningInfo();
   }
 
   getAllEmpTransferPostingJoiningInfo() {
-    this.subscription = this.empTransferPostingService.getAllEmpTransferPostingJoiningInfo().subscribe((item) => {
+    this.subscription = this.empTransferPostingService.getAllEmpTransferPostingJoiningInfo(this.loginEmpId).subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;

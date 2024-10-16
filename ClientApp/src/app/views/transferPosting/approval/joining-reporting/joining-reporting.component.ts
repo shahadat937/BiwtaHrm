@@ -142,6 +142,7 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
       this.empTransferPosting.joiningReportingById = this.loginEmpId;
       this.empTransferPosting.joiningRemark = this.empTransferPostingService.empTransferPosting.joiningRemark;
       this.empTransferPosting.joiningDate = this.empTransferPostingService.empTransferPosting.joiningDate;
+      
       this.subscription = this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, this.empTransferPosting).subscribe((response: any) => {
         if (response.success) {
           if(joiningStatus == true){

@@ -9,5 +9,6 @@ namespace Hrm.Application.Features.EmpTransferPostings.Requests.Queries
 {
     public class GetEmpTransferPostingJoiningInfoRequest : IRequest<object>
     {
+        public int Id { get; set; }
     }
 }

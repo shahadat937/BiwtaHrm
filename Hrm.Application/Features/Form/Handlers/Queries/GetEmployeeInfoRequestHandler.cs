@@ -44,7 +44,10 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                 throw new BadRequestException("Employee's job detail is not found");
             }
 
-            var designation = await _unitOfWork.Repository<Hrm.Domain.Designation>().Get((int)empJobDetail.DesignationId);
+            //var designation = await _unitOfWork.Repository<Hrm.Domain.Designation>().Get((int)empJobDetail.DesignationId);
+
+            var designation = await _unitOfWork.Repository<Hrm.Domain.Designation>().Where(x => x.DesignationId == (int)empJobDetail.DesignationId).
+                Include(x => x.DesignationSetup).FirstOrDefaultAsync();
 
 
             employeeInfo.EmpId = employee.Id;

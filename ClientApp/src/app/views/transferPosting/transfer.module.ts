@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertComponent, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, PopoverModule, SpinnerModule, TableModule, TooltipModule } from '@coreui/angular';
+import { AlertComponent, BadgeComponent, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, PopoverModule, SpinnerModule, TableModule, TooltipModule } from '@coreui/angular';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -29,6 +29,7 @@ import { OfficeService } from '../basic-setup/service/office.service';
 import { DepartmentService } from '../basic-setup/service/department.service';
 import { GradeService } from '../basic-setup/service/Grade.service';
 import { SectionService } from '../basic-setup/service/section.service';
+import { ReleaseTypeService } from '../basic-setup/service/release-type.service';
 
 @NgModule({
   declarations: [
@@ -75,12 +76,14 @@ import { SectionService } from '../basic-setup/service/section.service';
     PopoverModule,
     AlertComponent,
     TooltipModule,
+    BadgeComponent
   ],
   providers:[
     OfficeService,
     DepartmentService,
     GradeService,
-    SectionService
+    SectionService,
+    ReleaseTypeService,
   ],
   bootstrap: []
 })

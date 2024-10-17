@@ -62,7 +62,7 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
     this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if(res){
         this.empTransferPosting = res;
-        this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
+        // this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
         this.getEmpJobDetailsByEmpIdOfTransferApproveBy( res.transferApproveById ||0 );
         this.getEmpJobDetailsByEmpIdDeptApproveBy( res.deptReleaseById ||0 );
         this.EmpTransferPostingForm?.form.patchValue(res);
@@ -76,15 +76,15 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
     }
   }
 
-  getEmpJobDetailsByEmpIdOfOrderOfficeBy(id: number){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
-      if(res){
-        this.empTransferPosting.orderByDepartmentName = res.departmentName;
-        this.empTransferPosting.orderByDesignationName = res.designationName;
-        this.empTransferPosting.orderBySectionName = res.sectionName;
-      }
-    })
-  }
+  // getEmpJobDetailsByEmpIdOfOrderOfficeBy(id: number){
+  //   this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+  //     if(res){
+  //       this.empTransferPosting.orderByDepartmentName = res.departmentName;
+  //       this.empTransferPosting.orderByDesignationName = res.designationName;
+  //       this.empTransferPosting.orderBySectionName = res.sectionName;
+  //     }
+  //   })
+  // }
   
   getEmpJobDetailsByEmpIdOfTransferApproveBy(id: number){
     this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
@@ -132,6 +132,7 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(joiningStatus?: boolean){
+    this.empTransferPostingService.cachedData = [];
       if(joiningStatus == true || joiningStatus == false){
         this.empTransferPosting.joiningStatus = joiningStatus;
       }
@@ -141,6 +142,7 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
       this.empTransferPosting.joiningReportingById = this.loginEmpId;
       this.empTransferPosting.joiningRemark = this.empTransferPostingService.empTransferPosting.joiningRemark;
       this.empTransferPosting.joiningDate = this.empTransferPostingService.empTransferPosting.joiningDate;
+      
       this.subscription = this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, this.empTransferPosting).subscribe((response: any) => {
         if (response.success) {
           if(joiningStatus == true){

@@ -1,0 +1,123 @@
+<div class="modal fade show" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Employee List</h5>
+              <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                  <mat-icon>close</mat-icon>
+              </button>
+          </div>
+          <div class="modal-body scrollable-modal-body">
+              <p-table
+        #dt
+        [value]="employees"
+        dataKey="id"
+        [rows]="10"
+        [paginator]="true"
+        [rowsPerPageOptions]="[5, 10, 25, 50]"
+        [loading]="loading"
+        [paginator]="true"
+        [scrollable]="true" 
+        scrollHeight="400px" 
+        [tableStyle]="{'min-width': '50rem'}"
+        [globalFilterFields]="['firstName', 'lastName', 'idCardNo', 'departmentName', 'designationName', 'sectionName']"
+      >
+        <!-- Search Input -->
+        <ng-template pTemplate="caption">
+          <div class="row">
+            <p-iconField iconPosition="right" class="ml-auto col-xl pb-2">
+              <p-inputIcon>
+                <mat-icon>search</mat-icon>
+              </p-inputIcon>
+              <input
+                pInputText
+                type="text"
+                (input)="onGlobalFilter($event)"
+                placeholder="Search Here.."
+              />
+            </p-iconField>
+            <p-dropdown
+              class="col-xl pb-2"
+              [options]="departments" 
+              optionLabel="name" 
+              placeholder="Select Departments"
+              display="chip" 
+              [showClear]="true"
+              (onChange)="onSelect($event.value ? $event.value.name : null)" />
+
+            <p-dropdown
+              class="col-xl pb-2"
+              [options]="sections"
+              optionLabel="name" 
+              placeholder="Select Section"
+              display="chip" 
+              [showClear]="true"
+              (onChange)="onSelect($event.value ? $event.value.name : null)" />
+              
+          </div>
+        </ng-template>
+    
+        <!-- Table Headers -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th>SL</th>
+            <th pSortableColumn="idCardNo">PMIS ID<p-sortIcon field="idCardNo"/></th>
+            <th pSortableColumn="firstName">Name<p-sortIcon field="firstName"/></th>
+            <th pSortableColumn="departmentName">Department<p-sortIcon field="departmentName"/></th>
+            <th pSortableColumn="sectionName">Section<p-sortIcon field="sectionName"/></th>
+            <th pSortableColumn="designationName">Designation<p-sortIcon field="designationName"/></th>
+            <th alignFrozen="right" pFrozenColumn>Action</th>
+          </tr>
+        </ng-template>
+    
+        <!-- Table Rows -->
+        <ng-template pTemplate="body" let-emp let-i="rowIndex">
+          <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ emp.idCardNo }}</td>
+            <td>
+              @if(emp.empPhotoName){
+                 <img [alt]="" src="{{imageLinkUrl}}/{{emp.empPhotoName}}" width="32" style="vertical-align: middle; border-radius: 50%;" />
+               }
+               @else {
+                @if(emp.empGenderName){
+                  @if(emp.empGenderName.charAt(0).toLowerCase() == 'm'){
+                    <img [alt]="" src="{{ maleImage }}" width="32" style="vertical-align: middle; border-radius: 50%;" />
+                  }
+                  @else {
+                    <img [alt]="" src="{{ femaleImage }}" width="32" style="vertical-align: middle; border-radius: 50%;" />
+                  }
+                }
+                @else {
+                  <img [alt]="" src="{{ defaultImage }}" width="32" style="vertical-align: middle; border-radius: 50%;" />
+                }
+               }
+              {{ emp.firstName }} {{emp.lastName}}</td>
+            <td>{{ emp.departmentName }}</td>
+            <td>{{ emp.sectionName }}</td>
+            <td>{{ emp.designationName }}</td>
+            <td alignFrozen="right" pFrozenColumn>
+              
+            <button cTooltip="Select Employee" cTooltipPlacement="bottom" mat-raised-button color="primary" (click)="onSelectEmployee(emp.idCardNo)">
+              Select
+            </button>
+            </td>
+          </tr>
+        </ng-template>
+    
+        <!-- Empty Message -->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">No employees found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+          </div>
+          <div class="modal-footer">
+              <button mat-raised-button color="warn" (click)="closeModal()">
+                  <mat-icon>cancel</mat-icon> Close
+              </button>
+          </div>
+      </div>
+  </div>
+</div>

@@ -90,6 +90,7 @@ import { EmpOtherResponsibilityComponent } from './add-employee/employee-informa
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { EmpTrainingInfoComponent } from './add-employee/employee-informations/emp-training-info/emp-training-info.component';
 import { ResultService } from '../basic-setup/service/result.service';
+import { EmployeeListModalComponent } from './employee-list-modal/employee-list-modal.component';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -124,6 +125,7 @@ import { ResultService } from '../basic-setup/service/result.service';
     EmpWorkHistoryComponent,
     EmpOtherResponsibilityComponent,
     EmpTrainingInfoComponent,
+    EmployeeListModalComponent,
   ],
   imports: [
     CommonModule,

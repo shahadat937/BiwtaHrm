@@ -482,8 +482,7 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.CurrentSection.SectionName))
             .ForMember(dest => dest.ApplicationByIdCardNo, opt => opt.MapFrom(src => src.ApplicationBy.IdCardNo))
             .ForMember(dest => dest.ApplicationByEmpName, opt => opt.MapFrom(src => src.ApplicationBy.FirstName + " " + src.ApplicationBy.LastName))
-            .ForMember(dest => dest.OrderByIdCardNo, opt => opt.MapFrom(src => src.OrderBy.IdCardNo))
-            .ForMember(dest => dest.OrderByEmpName, opt => opt.MapFrom(src => src.OrderBy.FirstName + " " + src.EmpBasicInfo.LastName))
+            .ForMember(dest => dest.OrderByOffice, opt => opt.MapFrom(src => src.OrderOfficeBy.DepartmentName))
             .ForMember(dest => dest.ReleaseTypeName, opt => opt.MapFrom(src => src.ReleaseType.ReleaseTypeName))
             .ForMember(dest => dest.TransferDepartmentName, opt => opt.MapFrom(src => src.TransferDepartment.DepartmentName))
             .ForMember(dest => dest.TransferDesignationName, opt => opt.MapFrom(src => src.TransferDesignation.DesignationSetup.Name))
@@ -494,7 +493,11 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.DeptReleaseByEmpName, opt => opt.MapFrom(src => src.DeptReleaseBy.FirstName + " " + src.DeptReleaseBy.LastName))
             .ForMember(dest => dest.JoiningReportingByIdCardNo, opt => opt.MapFrom(src => src.JoiningReportingBy.IdCardNo))
             .ForMember(dest => dest.JoiningReportingByEmpName, opt => opt.MapFrom(src => src.JoiningReportingBy.FirstName + " " + src.JoiningReportingBy.LastName))
-            .ForMember(dest => dest.DeptReleaseTypeName, opt => opt.MapFrom(src => src.DeptReleaseType.ReleaseTypeName));
+            .ForMember(dest => dest.DeptReleaseTypeName, opt => opt.MapFrom(src => src.DeptReleaseType.ReleaseTypeName))
+            .ForMember(dest => dest.CurrentGradeName, opt => opt.MapFrom(src => src.CurrentGrade.GradeName))
+            .ForMember(dest => dest.UpdateGradeName, opt => opt.MapFrom(src => src.UpdateGrade.GradeName))
+            .ForMember(dest => dest.CurrentScaleName, opt => opt.MapFrom(src => src.CurrentScale.ScaleName))
+            .ForMember(dest => dest.UpdateScaleName, opt => opt.MapFrom(src => src.UpdateScale.ScaleName));
 
 
             CreateMap<EmpPromotionIncrement, EmpPromotionIncrementDto>().ReverseMap();

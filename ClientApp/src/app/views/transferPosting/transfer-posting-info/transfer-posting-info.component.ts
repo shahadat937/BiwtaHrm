@@ -46,7 +46,7 @@ export class TransferPostingInfoComponent implements OnInit, OnDestroy {
     this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if(res){
         this.empTransferPosting = res;
-        this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
+        // this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
         this.getEmpJobDetailsByEmpIdOfTransferApproveBy( res.transferApproveById ||0 );
         this.getEmpJobDetailsByEmpIdDeptApproveBy( res.deptReleaseById ||0 );
         this.getEmpJobDetailsByEmpIdOfJoiningReportingBy( res.joiningReportingById ||0 );
@@ -60,15 +60,15 @@ export class TransferPostingInfoComponent implements OnInit, OnDestroy {
     }
   }
 
-  getEmpJobDetailsByEmpIdOfOrderOfficeBy(id: number){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
-      if(res){
-        this.empTransferPosting.orderByDepartmentName = res.departmentName;
-        this.empTransferPosting.orderByDesignationName = res.designationName;
-        this.empTransferPosting.orderBySectionName = res.sectionName;
-      }
-    })
-  }
+  // getEmpJobDetailsByEmpIdOfOrderOfficeBy(id: number){
+  //   this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+  //     if(res){
+  //       this.empTransferPosting.orderByDepartmentName = res.departmentName;
+  //       this.empTransferPosting.orderByDesignationName = res.designationName;
+  //       this.empTransferPosting.orderBySectionName = res.sectionName;
+  //     }
+  //   })
+  // }
   
   getEmpJobDetailsByEmpIdOfTransferApproveBy(id: number){
     this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {

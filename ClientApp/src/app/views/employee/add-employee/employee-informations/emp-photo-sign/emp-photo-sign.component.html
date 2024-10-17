@@ -17,7 +17,7 @@
                     <img [src]="photoPreviewUrl" alt="Employee Photo" style="max-width: 100px; max-height: 100px;"/>
                 </div>
                 <label cLabel for="photoFile">Photo<span class="text-danger"> (300*300)</span></label>
-                <input [(ngModel)]="empPhotoSignService.empPhotoSign.photoFile" name="photoFile" #photoFile="ngModel" required cFormControl id="photoFile" type="file" (change)="onPhotoSelected($event)" />
+                <input name="photoFile" required cFormControl id="photoFile" type="file" (change)="onPhotoSelected($event)" />
                 <div *ngIf="photoInvalid" class="text-left text-danger">Photo Size must be 300*300</div>
             </c-col>
 
@@ -26,7 +26,8 @@
                     <img [src]="signaturePreviewUrl" alt="Employee Signature" style="max-width: 100px; max-height: 100px;"/>
                 </div>
                 <label cLabel for="signatureFile">Signature<span class="text-danger"> (300*80)</span></label>
-                <input [(ngModel)]="empPhotoSignService.empPhotoSign.signatureFile" name="signatureFile" #signatureFile="ngModel" cFormControl id="signatureFile" type="file" (change)="onSignatureSelected($event)" />
+                <input name="signatureFile" cFormControl id="signatureFile" type="file" (change)="onSignatureSelected($event)" />
+
                 <div *ngIf="signatureInvalid" class="text-left text-danger">Signature Size must be 300*80</div>
             </c-col>
 

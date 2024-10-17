@@ -78,8 +78,8 @@ namespace Hrm.Application.Features.EmpPhotoSigns.Handlers.Commands
                 EmpPhotoSign.SignatureUrl = uniqueSignName;
             }
 
-            EmpPhotoSign.UniqueIdentity = request.EmpPhotoSignDto.UniqueIdentity;
-            EmpPhotoSign.Remark = request.EmpPhotoSignDto.Remark;
+            EmpPhotoSign.UniqueIdentity = request.EmpPhotoSignDto.UniqueIdentity ?? "";
+            EmpPhotoSign.Remark = request.EmpPhotoSignDto.Remark ?? "";
             EmpPhotoSign.MenuPosition = request.EmpPhotoSignDto.MenuPosition;
             EmpPhotoSign.IsActive = request.EmpPhotoSignDto.IsActive;
 

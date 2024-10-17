@@ -46,6 +46,9 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
             formRecordDto.FormId = request.formData.FormId;
             formRecordDto.ReportFrom = request.formData.ReportFrom;
             formRecordDto.ReportTo = request.formData.ReportTo;
+            formRecordDto.ReportingOfficerId = request.formData.ReportingOfficerId;
+            formRecordDto.CounterSignatoryId = request.formData.CounterSignatoryId;
+            formRecordDto.ReceiverId = request.formData.ReceiverId;
             
             formRecordDto.EmpId = (int)request.formData.EmpId;
             formRecordDto.IsActive = true;

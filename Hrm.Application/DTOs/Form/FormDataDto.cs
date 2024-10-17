@@ -15,6 +15,9 @@ namespace Hrm.Application.DTOs.Form
         public DateTime? ReportFrom { get; set; }
         public DateTime? ReportTo { get; set; }
         public int? EmpId { get; set; }
+        public int? ReportingOfficerId { get; set; }
+        public int? CounterSignatoryId { get; set; }
+        public int? ReceiverId { get; set; }
         public List<FormSectionDto> Sections { get; set; } = new List<FormSectionDto>();
     }
 }

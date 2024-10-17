@@ -51,7 +51,10 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                 Description = form.Description,
                 ReportFrom = formRecord.ReportFrom,
                 ReportTo = formRecord.ReportTo,
-                EmpId = formRecord.EmpId
+                EmpId = formRecord.EmpId,
+                ReportingOfficerId = formRecord.ReportingOfficerId,
+                CounterSignatoryId = formRecord.CounterSignatoryId,
+                ReceiverId = formRecord.ReceiverId
             };
 
             //var sections = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == formRecord.FormId).Select(x => x.Section).Distinct().ToListAsync();

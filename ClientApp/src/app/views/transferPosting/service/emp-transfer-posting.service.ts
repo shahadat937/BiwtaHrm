@@ -76,5 +76,9 @@ export class EmpTransferPostingService {
   updateEmpTransferPostingStatus(id: number,model: any) {
     return this.http.put(this.baseUrl + '/empTransferPosting/update-EmpTransferPostingStatus/'+id, model);
   }
+
+  CurrentDeptJoinDateByEmpId(id: number) {
+    return this.http.get(this.baseUrl + '/empTransferPosting/get-currentDeptJoinDateByEmpId/' + id);
+  }
   
 }

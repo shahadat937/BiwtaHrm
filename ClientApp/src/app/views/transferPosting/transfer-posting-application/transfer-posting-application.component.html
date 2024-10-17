@@ -80,6 +80,16 @@
                             name="designationName" #designationName="ngModel" cFormControl id="designationName"
                             readonly />
                     </c-col>
+
+                    <c-col [md]="4">
+                        <label cLabel for="currentDeptJoinDate">Current Department Joining Date<span class="text-danger"></span></label>
+                        <input [(ngModel)]="empTransferPostingService.empTransferPosting.currentDeptJoinDate"
+                            name="currentDeptJoinDate" #currentDeptJoinDate="ngModel" cFormControl id="currentDeptJoinDate"
+                            type="date" />
+                        @if(!currentDeptJoinDate.valid&&currentDeptJoinDate.touched){
+                        <div class="text-left text-danger">Current Department Joining Date is required</div>
+                        }
+                    </c-col>
                     }
                 </c-card-body>
             </c-card>
@@ -207,7 +217,6 @@
                         </div>
                     </c-col>
 
-
                     <c-col [md]="3">
                         <label cLabel for="transferDepartmentId">Transfer Department<span
                                 class="text-danger">*</span></label>
@@ -232,7 +241,7 @@
                     </c-col>
 
                     
-                    <c-col [md]="3">
+                    <c-col [md]="3" *ngIf="sections.length > 0">
                         <label cLabel for="transferSectionId">Transfer Section<span class="text-danger"></span></label>
                         <div class="input-wrapper">
                             <select [(ngModel)]="empTransferPostingService.empTransferPosting.transferSectionId" (change)="onSectionSelectGetDesignation(empTransferPostingService.empTransferPosting.transferSectionId, empJobDetailsId)"

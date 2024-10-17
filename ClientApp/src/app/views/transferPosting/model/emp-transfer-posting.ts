@@ -31,6 +31,7 @@ export class EmpTransferPosting {
 
     applicationById: number | null = null;
     currentOfficeId: number | null = null;
+    currentDeptJoinDate: Date | null = null;
     currentDepartmentId: number | null = null;
     currentDesignationId: number | null = null;
     currentSectionId: number | null = null;

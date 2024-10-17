@@ -36,6 +36,8 @@ import { OfficerFormApplicationComponent } from './officer-form/officer-form-app
 import { ReportingFormComponent } from './officer-form/reporting-form/reporting-form.component';
 import { CounterSignatureFormOfficerComponent } from './officer-form/counter-signature-form-officer/counter-signature-form-officer.component';
 import { ReceiverFormOfficerComponent } from './officer-form/receiver-form-officer/receiver-form-officer.component';
+import { EmpBasicInfoService } from '../employee/service/emp-basic-info.service';
+import { ApplicationHeaderComponent } from './application-header/application-header.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { ReceiverFormOfficerComponent } from './officer-form/receiver-form-offic
     ReportingFormComponent,
     CounterSignatureFormOfficerComponent,
     ReceiverFormOfficerComponent,
+    ApplicationHeaderComponent,
   ],
   imports: [
     TabViewModule,
@@ -78,7 +81,8 @@ import { ReceiverFormOfficerComponent } from './officer-form/receiver-form-offic
     CalendarModule
 
   ],providers:[
-    FormRecordService
+    FormRecordService,
+    EmpBasicInfoService
   ]
 })
 export class AppraisalModule { }

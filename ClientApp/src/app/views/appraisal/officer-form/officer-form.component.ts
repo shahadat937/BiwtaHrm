@@ -12,6 +12,8 @@ import { FormRecordService } from '../services/form-record.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { UpdateFormComponent } from '../update-form/update-form.component';
 import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
+import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-officer-form',
@@ -24,6 +26,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   ActiveSection:boolean[];
   @Input()
   formRecordId;
+  @Input()
+  showHeader: boolean;
   IdCardNo:string;
   formId:number = 1;
   loading: boolean;
@@ -41,9 +45,14 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     {fieldName: "Joining Date Of Current Designation", MapTo: "currentDesignationJoiningDate", Transform: "DateFormat"}
   ]
 
+  EmpOption: any[] = []
+
   reportDates:any[]= [];
+
+  department: string;
   
   constructor(
+    private empService: EmpBasicInfoService,
     private empPhotoSignService: EmpPhotoSignService,
     private formRecordService: FormRecordService,
     public officerFormService: OfficerFormService,
@@ -58,10 +67,18 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.currentSection = 0;
     this.ActiveSection = [true,true,true,true,true,true,true];
     this.formRecordId = 0;
+    this.showHeader = false
+    this.department = "ICT"
   }
 
   ngOnInit(): void {
     this.loading=true;
+
+    this.empService.getFilteredSelectedEmp(new HttpParams()).subscribe({
+      next: response => {
+        this.EmpOption = response
+      }
+    })
 
     if(this.formRecordId==0) {
       this.getFormInfo(); 
@@ -182,14 +199,33 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
             this.processEmpInfo(response);
           } else {
             this.formData.empId = 0;
+            this.resetAutofield();
           }
         },
         error: (err)=> {
           this.formData.empId = 0;
+          this.resetAutofield();
         }
       })
     })
 
+  }
+
+  resetAutofield() {
+    function findField(fieldName:string) {
+      const compare = (data:any)=> {
+        return data.fieldName == fieldName; 
+      }
+
+      return compare;
+    }
+    this.autoSetFields.forEach((field:any)=> {
+      const result = this.formData.sections[0].fields.find(findField(field.fieldName))
+
+      if(result!=undefined) {
+        result.fieldValue="";
+      }
+    })
   }
 
   processEmpInfo(empInfo:any) {
@@ -205,10 +241,9 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
     this.autoSetFields.forEach((field:any) => { 
       const result = this.formData.sections[0].fields.find(findField(field.fieldName));
-      
       if(result!=undefined) {
         let fieldValue = empInfo[field.MapTo];
-        if(field.Transform!=undefined&&field.Transform=="DateFormat") {
+        if(field.Transform!=undefined&&field.Transform=="DateFormat"&&fieldValue!=null) {
           fieldValue = fieldValue.split('T')[0];
         }
         result.fieldValue = fieldValue;
@@ -269,7 +304,6 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
         let dateto = new Date(this.formData.reportTo);
         this.reportDates.push(datefrom);
         this.reportDates.push(dateto);
-        console.log(this.reportDates);
         this.loading=false;
       },
       error: (err)=> {
@@ -281,5 +315,6 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       }
     })
   }
+
 
 }

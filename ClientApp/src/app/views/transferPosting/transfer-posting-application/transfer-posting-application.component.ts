@@ -362,6 +362,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.isDeptApproveNeed(true);
       }
       this.empTransferPostingService.empTransferPosting.deptReleaseTypeName = res.releaseTypeName;
+      this.empTransferPostingService.empTransferPosting.deptReleaseTypeId = id;
     });
   }
 

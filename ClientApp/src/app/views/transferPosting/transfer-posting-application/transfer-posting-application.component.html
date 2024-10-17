@@ -495,6 +495,7 @@
                 </c-card-header>
                 <c-card-body>
                     <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseById" name="deptReleaseById" />
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeId" name="deptReleaseTypeId" />
                     <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptApproveStatus" name="deptApproveStatus" />
                     <div class="mb-3">
                         <c-form-check [switch]="true">
@@ -513,10 +514,9 @@
                     <div cRow [gutter]="3" *ngIf="empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo">
                             <c-col [md]="3">
                                 <label cLabel for="deptReleaseTypeId">Release Type<span class="text-danger"></span></label>
-                                <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeId" name="deptReleaseTypeId" />
                                 <input [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeName"
                                     name="deptReleaseTypeName" #deptReleaseTypeName="ngModel" cFormControl id="deptReleaseTypeName"
-                                    type="text" readonly />
+                                    type="text" disabled />
                                 <!-- <div class="input-wrapper">
                                     <select [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeId"
                                         name="deptReleaseTypeId" #deptReleaseTypeId="ngModel" cFormControl id="deptReleaseTypeId"

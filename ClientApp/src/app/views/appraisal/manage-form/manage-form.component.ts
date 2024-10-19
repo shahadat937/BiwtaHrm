@@ -21,6 +21,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   @Input()
   filters: FormRecordFilter;
+  @Input()
+  appraisalUserRole: number;
   formRecord: FormRecordModel[] = [];
   formRecordHeader: any[] ;
   icons = {cilPencil, cilTrash, cilZoom, cilEyedropper}
@@ -38,7 +40,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     this.formRecordHeader = [{header:"PMS No.", field:"idCardNo"}, {header:"Name",field:"fullName"}, {header:"Department", field:"department"}, 
       {header: "From", field:"reportFrom", IsDate: true}, {header:"To", field:"reportTo", IsDate:true}]
     this.globalFilter="";
-    this.filters = new FormRecordFilter()
+    this.filters = new FormRecordFilter();
+    this.appraisalUserRole = -1;
   }
 
   ngOnInit(): void {
@@ -50,7 +53,7 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   }
 
   getFormRecord() {
-    this.formRecordService.getFormRecord().subscribe({
+    this.formRecordService.getFormRecordFiltered(this.filters).subscribe({
       next: (response)=> {
         this.formRecord = response;
         this.formRecord.forEach(item=> {

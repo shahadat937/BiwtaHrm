@@ -34,7 +34,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
                 .Where(wh => wh.EmpId == request.EmpId);
 
             var jobDetails = _EmpJobDetailRepository
-                .Where(wh => wh.EmpId == request.EmpId);
+                .Where(jd => jd.EmpId == request.EmpId);
 
             var latestTransferPostingJoiningDate = transferPostings
                 .OrderByDescending(tp => tp.JoiningDate)

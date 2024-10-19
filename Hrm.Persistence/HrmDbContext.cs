@@ -1043,6 +1043,10 @@ namespace Hrm.Persistence
                 .WithMany(e => e.FormSchemas)
                 .HasForeignKey(e => e.FieldId);
 
+                entity.HasOne(fs => fs.FormSection)
+                .WithMany(fs => fs.FormSchemas)
+                .HasForeignKey(fs => fs.SectionId);
+
             });
 
 
@@ -1223,6 +1227,16 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.CountryId);
             });
 
+            modelBuilder.Entity<FormSection>(entity =>
+            {
+                entity.HasKey(fs => fs.FormSectionId)
+                    .HasName("[[PK_FormSection]]");
+
+                entity.HasOne(fs => fs.Form)
+                    .WithMany(f => f.FormSections)
+                    .HasForeignKey(fs => fs.FormId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -1346,6 +1360,7 @@ namespace Hrm.Persistence
         public virtual DbSet<EmpOtherResponsibility> EmpOtherResponsibility { get; set; } = null!;
         public virtual DbSet<SiteSetting> SiteSetting { get; set; } = null!;
         public virtual DbSet<CourseDuration> CourseDuration { get; set; } = null!;
+        public virtual DbSet<FormSection> FormSection { get; set; } = null!;
         public virtual DbSet<DesignationSetup> DesignationSetup { get; set; } = null!;
 
     }

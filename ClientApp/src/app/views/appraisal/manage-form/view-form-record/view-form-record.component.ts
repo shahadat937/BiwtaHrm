@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { Subscription } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-view-form-record',
@@ -30,6 +31,8 @@ export class ViewFormRecordComponent implements OnInit, OnDestroy{
     this.loading = false;
     this.formRecordId = 0;
     this.department = "";
+    this.companyTitle = environment.companyTitle,
+    this.address = environment.companyAddress
   }
 
   ngOnInit(): void {

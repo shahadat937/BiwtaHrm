@@ -29,10 +29,32 @@ namespace Hrm.Application.Features.FormRecord.Handlers.Queries
 
         public async Task<List<FormRecordDto>> Handle(GetFormRecordRequest request, CancellationToken cancellationToken)
         {
-            var formRecords = await _repository.Where(x => true)
+            var formRecords = _repository.Where(x => true)
                 .Include(x => x.Form)
                 .Include(x => x.Employee)
-                .ToListAsync();
+                    .ThenInclude(x => x.EmpJobDetail)
+                .AsQueryable();
+
+            if(request.Filters.RecordId.HasValue)
+            {
+                formRecords = formRecords.Where(x => x.RecordId == request.Filters.RecordId);
+            }
+
+            if(request.Filters.FormId.HasValue)
+            {
+                formRecords = formRecords.Where(x=>x.FormId == request.Filters.FormId);
+            }
+
+            if(request.Filters.DepartmentId.HasValue)
+            {
+                formRecords = formRecords.Where(x=>x.Employee.EmpJobDetail!=null&&x.Employee.EmpJobDetail.FirstOrDefault().DepartmentId ==request.Filters.DepartmentId);
+            }
+
+            if(request.Filters.SectionId.HasValue)
+            {
+                formRecords = formRecords.Where(x=>x.Employee.EmpJobDetail!=null&&x.Employee.EmpJobDetail.FirstOrDefault().SectionId== request.Filters.SectionId);
+            }
+            
 
             var formRecordDtos = _mapper.Map<List<FormRecordDto>>(formRecords);
 

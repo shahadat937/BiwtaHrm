@@ -29,6 +29,7 @@ namespace Hrm.Application.Features.FormSchema.Handlers.Queries
             var Schema = await _repository.Where(x => x.SchemaId == request.SchemaId)
                 .Include(x => x.FormField)
                 .Include(x => x.Form)
+                .Include(x => x.FormSection)
                 .FirstOrDefaultAsync();
 
             if(Schema == null)

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hrm.Application.DTOs.FieldRecord;
+using Hrm.Application.Enum;
 
 namespace Hrm.Application.Features.Form.Handlers.Commands
 {
@@ -45,7 +46,37 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
                 throw new NotFoundException(nameof(formRecord), request.formData.RecordId);
             }
 
+            
+            if(request.UpdateRole == (int) AppraisalRole.User)
+            {
 
+            } else if(request.UpdateRole == (int) AppraisalRole.ReportingOfficer)
+            {
+                if(formRecord.CounterSignatoryApproval)
+                {
+                    throw new BadRequestException("Counter Signatory has already signed the apprisal");
+                }
+
+                formRecord.ReceiverApproval = true;
+
+            } else if(request.UpdateRole == (int) AppraisalRole.CounterSignatory)
+            {
+                if(formRecord.ReceiverApproval)
+                {
+                    throw new BadRequestException("Receiver has already received the apprisal");
+                }
+
+                formRecord.CounterSignatoryApproval = true;
+
+            } else if(request.UpdateRole == (int) AppraisalRole.Receiver)
+            {
+                formRecord.ReceiverApproval = true;
+            }
+
+            if(request.UpdateRole != (int) AppraisalRole.User)
+            {
+                await _unitOfWork.Repository<Domain.FormRecord>().Update(formRecord);
+            }
 
             foreach (var section in request.formData.Sections)
             {

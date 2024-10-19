@@ -13,6 +13,7 @@ namespace Hrm.Domain
         public int? EmpId { get; set; }
         public int? ApplicationById { get; set; }
         public int? CurrentOfficeId { get; set; }
+        public DateOnly? CurrentDeptJoinDate { get; set; }
         public int? CurrentDepartmentId { get; set; }
         public int? CurrentSectionId { get; set; }
         public int? CurrentDesignationId { get; set; }

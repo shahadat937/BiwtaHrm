@@ -55,6 +55,12 @@
                     </c-card-header>
                     <c-card-body cRow>
                         <c-col [md]="6">
+                            <label><b>Order No: </b>{{empPromotionIncrement.orderNo}}</label>
+                        </c-col>
+                        <c-col [md]="6">
+                            <label><b>Order Date: </b>{{empPromotionIncrement.orderDate}}</label>
+                        </c-col>
+                        <c-col [md]="6">
                             <label><b>Type: </b>{{empPromotionIncrement.promotionIncrementType}}</label>
                         </c-col>
                         <c-col [md]="6">
@@ -75,7 +81,7 @@
                 <div cRow [gutter]="3" >
                     <c-col [md]="4" *ngIf="clickedButton == 'Edit'">
                         <label cLabel for="approveStatus">Approve Status</label>
-                        <select [(ngModel)]="empTransferPostingService.empPromotionIncrement.approveStatus"
+                        <select [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.approveStatus"
                         name="approveStatus" #approveStatus="ngModel"
                         cSelect id="approveStatus">
                         <option value="">Pending</option>
@@ -86,7 +92,7 @@
                     
                     <c-col [md]="4">
                         <label cLabel for="approveRemark">Remark<span class="text-danger"></span></label>
-                        <input [(ngModel)]="empTransferPostingService.empPromotionIncrement.approveRemark" name="approveRemark"
+                        <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.approveRemark" name="approveRemark"
                             #approveRemark="ngModel" cFormControl id="approveRemark" placeholder="Enter Remark" type="text" />
                         @if(!approveRemark.valid&&approveRemark.touched){
                         <div class="text-left text-danger">Remark is required</div>

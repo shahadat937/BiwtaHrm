@@ -23,6 +23,7 @@ export class EmpPromotionIncrement {
     promotionIncrementType : string = 'Increment & Promotion';
     orderById : number | null = null;
     orderDate : Date | null = null;
+    orderNo : string = '';
     isApproval  : boolean = true;
     provideApprovalInfo : boolean = false;
     effectiveDate : Date | null = null;

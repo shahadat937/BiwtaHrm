@@ -390,61 +390,103 @@
             <!-- } -->
 
             <!-- Employee Work History -->
-            @if(empWorkHistory.length>0 || empOtherResponsibility.length>0){
-                <c-card class="shadow mb-4">
-                    <c-card-header>
-                        <h5 class="text-center text-light">Employee Work History</h5>
-                    </c-card-header>
-                    <c-card-body>
-                        <table class="table">
-                        @if(empWorkHistory.length>0){
-                            <tbody *ngFor="let item of empWorkHistory" class="mb-3">
-                                <tr>
-                                    <th>Department</th>
-                                    <td>{{item.departmentName}}</td>
-                                    <th>Section</th>
-                                    <td>{{item.sectionName}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Designation</th>
-                                    <td>{{item.designationName}}</td>
-                                    <th>Joining Date</th>
-                                    <td>{{item.joiningDate}}</td>
-                                </tr>
-                                <tr class="table_mergin_bottom">
-                                    <th>Release Date</th>
-                                    <td>{{item.releaseDate}}</td>
-                                    <th>Remark</th>
-                                    <td>{{item.remark}}</td>
-                                </tr>
-                            </tbody>
-                        }
-                        @if(empOtherResponsibility.length>0){
-                            <tbody *ngFor="let item of empOtherResponsibility">
-                                <tr>
-                                    <th>Department</th>
-                                    <td>{{item.departmentName}}</td>
-                                    <th>Section</th>
-                                    <td>{{item.sectionName}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Designation</th>
-                                    <td>{{item.responsibilityName}} {{item.designationName}}</td>
-                                    <th>Joining Date</th>
-                                    <td>{{item.startDate}}</td>
-                                </tr>
-                                <tr class="table_mergin_bottom">
-                                    <th>Release Date</th>
-                                    <td>{{item.endDate}}</td>
-                                    <th>Remark</th>
-                                    <td>{{item.remark}}</td>
-                                </tr>
-                            </tbody>
-                        }
-                        </table>
-                    </c-card-body>
-                </c-card>
-            }
+            <c-card class="shadow mb-4">
+                <c-card-header>
+                    <h5 class="text-center text-light">Employee Work History</h5>
+                </c-card-header>
+                <c-card-body>
+                    <table class="table">
+                            @if(empOtherResponsibility.length>0){
+                                <tbody *ngFor="let item of empOtherResponsibility">
+                                    <tr>
+                                        <th>Department</th>
+                                        <td>{{item.departmentName}}</td>
+                                        <th>Section</th>
+                                        <td>{{item.sectionName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Designation</th>
+                                        <td>{{item.responsibilityName}} {{item.designationName}}</td>
+                                        <th>Joining Date</th>
+                                        <td>{{item.startDate}}</td>
+                                    </tr>
+                                    <tr class="table_mergin_bottom">
+                                        <th>Release Date</th>
+                                        <td>{{item.endDate}}</td>
+                                        <th>Remark</th>
+                                        <td>{{item.remark}}</td>
+                                    </tr>
+                                </tbody>
+                            }
+                            @if(empTransferPosting.length>0){
+                                <tbody *ngFor="let item of empTransferPosting">
+                                    <tr>
+                                        <th>Department</th>
+                                        <td>{{item.departmentName}}</td>
+                                        <th>Section</th>
+                                        <td>{{item.sectionName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Designation</th>
+                                        <td>{{item.designationName}}</td>
+                                        <th>Joining Date</th>
+                                        <td>{{item.currentDeptJoinDate}}</td>
+                                    </tr>
+                                    <tr class="table_mergin_bottom">
+                                        <th>Release Date</th>
+                                        <td>{{item.joiningDate}}</td>
+                                        <th>Remark</th>
+                                        <td>{{item.remark}}</td>
+                                    </tr>
+                                </tbody>
+                            }
+                            @if(empWorkHistory.length>0){
+                                <tbody *ngFor="let item of empWorkHistory" class="mb-3">
+                                    <tr>
+                                        <th>Department</th>
+                                        <td>{{item.departmentName}}</td>
+                                        <th>Section</th>
+                                        <td>{{item.sectionName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Designation</th>
+                                        <td>{{item.designationName}}</td>
+                                        <th>Joining Date</th>
+                                        <td>{{item.joiningDate}}</td>
+                                    </tr>
+                                    <tr class="table_mergin_bottom">
+                                        <th>Release Date</th>
+                                        <td>{{item.releaseDate}}</td>
+                                        <th>Remark</th>
+                                        <td>{{item.remark}}</td>
+                                    </tr>
+                                </tbody>
+                            }
+                            @else {
+                                <tbody class="mb-3">
+                                    <tr>
+                                        <th>Department</th>
+                                        <td></td>
+                                        <th>Section</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Designation</th>
+                                        <td></td>
+                                        <th>Joining Date</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="table_mergin_bottom">
+                                        <th>Release Date</th>
+                                        <td></td>
+                                        <th>Remark</th>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            }
+                    </table>
+                </c-card-body>
+            </c-card>
     
             <!-- Employee Spouse Information -->
             @if(empSpouseInfo.length>0){

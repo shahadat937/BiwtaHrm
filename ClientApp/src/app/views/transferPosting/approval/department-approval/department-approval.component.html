@@ -30,6 +30,9 @@
                         <c-col [md]="6" *ngIf="empTransferPosting.sectionName">
                             <label><b>Section: </b>{{empTransferPosting.sectionName}}</label>
                         </c-col>
+                        <c-col [md]="6">
+                            <label><b>Current Department Joining Date: </b>{{empTransferPosting.currentDeptJoinDate}}</label>
+                        </c-col>
                     </c-card-body>
                 </c-card>
 
@@ -140,7 +143,7 @@
                 <div cRow [gutter]="3">
                     <c-col [md]="4">
                         <label cLabel for="deptReleaseTypeId">Release Type<span class="text-danger"></span></label>
-                        <div class="input-wrapper">
+                        <!-- <div class="input-wrapper">
                             <select [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeId"
                                 name="deptReleaseTypeId" #deptReleaseTypeId="ngModel" cFormControl id="deptReleaseTypeId"
                                 aria-label="Default select example" cSelect>
@@ -155,7 +158,11 @@
                             @if(!deptReleaseTypeId.valid && deptReleaseTypeId.touched){
                             <div class="text-left text-danger">Release Type is required</div>
                             }
-                        </div>
+                        </div> -->
+                        <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeId"
+                        name="deptReleaseTypeId" />
+                        <input disabled cFormControl [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeName"
+                        name="deptReleaseTypeName" />
                     </c-col>
                     
                     <c-col [md]="4">

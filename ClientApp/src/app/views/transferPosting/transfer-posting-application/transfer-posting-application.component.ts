@@ -157,6 +157,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       orderByOffice: '',
       applicationById: null,
       currentOfficeId: null,
+      currentDeptJoinDate: null,
       currentDepartmentId: null,
       currentDesignationId: null,
       currentSectionId: null,
@@ -242,6 +243,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       orderByOffice: '',
       applicationById: null,
       currentOfficeId: null,
+      currentDeptJoinDate: null,
       currentDepartmentId: null,
       currentDesignationId: null,
       currentSectionId: null,
@@ -309,6 +311,11 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
               this.empTransferPostingService.empTransferPosting.empName = res.firstName + " " + res.lastName;
               this.empTransferPostingService.empTransferPosting.empId = res.id;
               this.getEmpJobDetailsByEmpId(res.id);
+              this.empTransferPostingService.CurrentDeptJoinDateByEmpId(res.id).subscribe((res:any) => {
+                if(res){
+                  this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res;
+                }
+              });
             }
           });
         }
@@ -362,6 +369,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.isDeptApproveNeed(true);
       }
       this.empTransferPostingService.empTransferPosting.deptReleaseTypeName = res.releaseTypeName;
+      this.empTransferPostingService.empTransferPosting.deptReleaseTypeId = id;
     });
   }
 

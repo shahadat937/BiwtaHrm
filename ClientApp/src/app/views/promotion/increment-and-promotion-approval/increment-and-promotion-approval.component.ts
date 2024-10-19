@@ -28,7 +28,7 @@ export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy
 
   constructor(
     private toastr: ToastrService,
-    public empTransferPostingService: EmpPromotionIncrementService,
+    public empPromotionIncrementService: EmpPromotionIncrementService,
     public empJobDetailsService: EmpJobDetailsService,
     private route: ActivatedRoute,
     private bsModalRef: BsModalRef,
@@ -59,7 +59,7 @@ export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy
   }
 
   getTransferPostingInfo() {
-    this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
+    this.subscription = this.empPromotionIncrementService.findById(this.id).subscribe((res) => {
       if(res){
         this.empPromotionIncrement = res;
         this.EmpTransferPostingForm?.form.patchValue(res);
@@ -99,19 +99,20 @@ export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy
   }
 
   onSubmit(ApproveStatus?: boolean){
+      this.empPromotionIncrementService.cachedData = [];
       if(ApproveStatus == true || ApproveStatus == false){
         this.empPromotionIncrement.approveStatus = ApproveStatus;
       }
       else{
-        this.empPromotionIncrement.approveStatus = this.empTransferPostingService.empPromotionIncrement.approveStatus;
+        this.empPromotionIncrement.approveStatus = this.empPromotionIncrementService.empPromotionIncrement.approveStatus;
       }
-      // if(this.empTransferPostingService.empPromotionIncrement.approveStatus != true || this.empTransferPostingService.empPromotionIncrement.approveStatus != false){
+      // if(this.empPromotionIncrementService.empPromotionIncrement.approveStatus != true || this.empPromotionIncrementService.empPromotionIncrement.approveStatus != false){
       //   this.empPromotionIncrement.approveStatus = null;  
       // }
       this.empPromotionIncrement.approveById = this.loginEmpId;
       this.empPromotionIncrement.approveDate = new Date().toISOString().split('T')[0] as any as Date;
-      this.empPromotionIncrement.approveRemark = this.empTransferPostingService.empPromotionIncrement.approveRemark;
-      this.subscription = this.empTransferPostingService.updateEmpPromotionIncrement(this.empPromotionIncrement.id, this.empPromotionIncrement).subscribe((response: any) => {
+      this.empPromotionIncrement.approveRemark = this.empPromotionIncrementService.empPromotionIncrement.approveRemark;
+      this.subscription = this.empPromotionIncrementService.updateEmpPromotionIncrement(this.empPromotionIncrement.id, this.empPromotionIncrement).subscribe((response: any) => {
         if (response.success) {
           if(ApproveStatus == true){
             this.toastr.success('', `Application Approved Successfull`, {

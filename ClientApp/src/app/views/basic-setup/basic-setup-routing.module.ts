@@ -62,6 +62,7 @@ import { RewardPunishmentSetupComponent } from './reward-punishment-setup/reward
 import { ResponsibilityTypeComponent } from './responsibility-type/responsibility-type.component';
 import { CourseDurationComponent } from './course-duration/course-duration.component';
 import { DesignationSetupComponent } from './designation-setup/designation-setup.component';
+import { JobDetailsSetupComponent } from './job-details-setup/job-details-setup.component';
 
 
 const routes: Routes = [
@@ -455,6 +456,20 @@ const routes: Routes = [
         component: ResponsibilityTypeComponent,
         data: {
           title: 'Responsibility Type',
+        },
+      },
+      {
+        path: 'job-details-setup',
+        component: JobDetailsSetupComponent,
+        data: {
+          title: 'Job Details Setup',
+        },
+      },
+      {
+        path: 'update-job-details-setup/:id',
+        component: JobDetailsSetupComponent,
+        data: {
+          title: 'Update Job Details Setup',
         },
       },
 

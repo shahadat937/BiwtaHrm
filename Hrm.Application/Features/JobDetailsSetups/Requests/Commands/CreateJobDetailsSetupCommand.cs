@@ -1,12 +1,13 @@
-﻿using Hrm.Application.DTOs.JobDetailsSetup;
+﻿using MediatR;
 using Hrm.Application.Responses;
-using MediatR;
+using Hrm.Application.DTOs.JobDetailsSetup;
 
 
 namespace Hrm.Application.Features.JobDetailsSetups.Requests.Commands
 {
-    public class UpdateJobDetailsSetupCommand : IRequest<BaseCommandResponse>  
+    public class CreateJobDetailsSetupCommand : IRequest<BaseCommandResponse> 
     {
         public CreateJobDetailsSetupDto JobDetailsSetupDto { get; set; }
+
     }
 }

@@ -5,7 +5,7 @@ using Hrm.Application.Features.SiteSettings.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using MediatR;
-
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -52,11 +52,14 @@ namespace Hrm.Application.Features.SiteSettings.Handlers.Commands
 
             }
 
-            var findActive = await _unitOfWork.Repository<SiteSetting>().FindOneAsync(x => x.IsActive == true && x.Id != request.SiteSettingDto.Id);
+            var findActive = await _unitOfWork.Repository<SiteSetting>().Where(x => x.IsActive == true && x.Id != request.SiteSettingDto.Id).ToListAsync();
             if (findActive != null && request.SiteSettingDto.IsActive == true)
             {
-                findActive.IsActive = false;
-                await _unitOfWork.Repository<SiteSetting>().Update(findActive);
+                foreach (var item in findActive)
+                {
+                    item.IsActive = false;
+                    await _unitOfWork.Repository<SiteSetting>().Update(item);
+                }
             }
 
             siteSetting.SiteName = request.SiteSettingDto.SiteName;

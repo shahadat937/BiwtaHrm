@@ -310,16 +310,12 @@
                 >PRL Date<span class="text-danger"></span></label
             >
             <input
-                [(ngModel)]="empJobDetailsService.empJobDetails.prlDate"
-                name="prlDate"
-                #prlDate="ngModel"
+                value="{{prlDate}}"
                 cFormControl
                 id="prlDate"
-                type="date"
+                type="text"
+                disabled
             />
-            @if(!prlDate.valid&&prlDate.touched){
-            <div class="text-left text-danger">Joining Date is required</div>
-            }
             </c-col>
             
             <c-col [md]="3">
@@ -327,16 +323,12 @@
                 >Retirement Date<span class="text-danger"></span></label
             >
             <input
-                [(ngModel)]="empJobDetailsService.empJobDetails.retirementDate"
-                name="retirementDate"
-                #retirementDate="ngModel"
+                value="{{retirementDate}}"
                 cFormControl
                 id="retirementDate"
-                type="date"
+                type="text"
+                disabled
             />
-            @if(!retirementDate.valid&&retirementDate.touched){
-            <div class="text-left text-danger">Joining Date is required</div>
-            }
             </c-col>
             
             <c-col [md]="3">

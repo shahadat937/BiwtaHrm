@@ -1,33 +1,52 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
+
+import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import { ReleaseTypeService } from '../service/release-type.service';
+
+import {JobDetailsSetupService} from '../service/job-details-setup.service';
+import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { CountryService } from '../service/Country.service';
+import { DistrictService } from '../service/district.service';
+import { DivisionService } from '../service/division.service';
+import { ThanaService } from '../service/thana.service';
+import { UapzilaService } from '../service/uapzila.service';
+import { UnionService } from '../service/union.service';
+import { WardService } from '../service/ward.service';
 
 @Component({
-  selector: 'app-release-type',
-  templateUrl: './release-type.component.html',
-  styleUrl: './release-type.component.scss'
+  selector: 'app-job-details-setup',
+  templateUrl: './job-details-setup.component.html',
+  styleUrl: './job-details-setup.component.scss'
 })
-export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
+export class JobDetailsSetupComponent implements OnInit, OnDestroy, AfterViewInit {
+
   btnText: string | undefined;
   headerText: string | undefined;
-  @ViewChild('ReleaseTypeForm', { static: true }) ReleaseTypeForm!: NgForm;
+  @ViewChild('JobDetailsSetupForm', { static: true }) JobDetailsSetupForm!: NgForm;
   loading = false;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'releaseTypeName', 'isDeptRelease','isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'prlAge', 'retirmentAge', 'orderStartDate', 'orderEndDate','isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+
   constructor(
-    public releaseTypeService: ReleaseTypeService,
+    public jobDetailsSetupService: JobDetailsSetupService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -35,21 +54,21 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.getALlReleaseTypes();
+    this.getAllJobDetailsSetup();
     this.handleRouteParams();
   }
   handleRouteParams() {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('releaseTypeId');
+      const id = params.get('id');
       if (id) {
         this.btnText = 'Update';
-        this.headerText = 'Update Release Type';
-        this.releaseTypeService.getById(+id).subscribe((res) => {
-          this.ReleaseTypeForm?.form.patchValue(res);
+        this.headerText = 'Update Job Details Setup';
+        this.jobDetailsSetupService.find(+id).subscribe((res) => {
+          this.JobDetailsSetupForm?.form.patchValue(res);
         });
       } else {
         this.resetForm();
-        this.headerText = 'Add Release Type';
+        this.headerText = 'Add Job Details Setup';
         this.btnText = 'Submit';
         this.initaialReleaseType();
       }
@@ -72,33 +91,35 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   initaialReleaseType(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.releaseTypeService.releaseType = {
-      releaseTypeId: 0,
-      releaseTypeName: '',
-      isDeptRelease: true,
-      remark: '',
-      menuPosition: 0,
-      isActive: true,
+    this.jobDetailsSetupService.jobDetailsSetups = {
+      id: 0,
+      prlAge: null,
+      retirmentAge: null,
+      orderStartDate: null,
+      orderEndDate: null,
+      remark: "",
+      isActive: true
     };
   }
   resetForm() {
     this.btnText = 'Submit';
-    if (this.ReleaseTypeForm?.form != null) {
-      this.ReleaseTypeForm.form.reset();
-      this.ReleaseTypeForm.form.patchValue({
-        releaseTypeId: 0,
-        releaseTypeName: '',
-        isDeptRelease: true,
-        remark: '',
-        menuPosition: 0,
-        isActive: true,
+    if (this.JobDetailsSetupForm?.form != null) {
+      this.JobDetailsSetupForm.form.reset();
+      this.JobDetailsSetupForm.form.patchValue({
+        id: 0,
+        prlAge: null,
+        retirmentAge: null,
+        orderStartDate: null,
+        orderEndDate: null,
+        remark: "",
+        isActive: true
       });
     }
-    this.router.navigate(['/personalInfoSetup/releaseType']);
+    this.router.navigate(['/personalInfoSetup/job-details-setup']);
   }
 
-  getALlReleaseTypes() {
-    this.subscription = this.releaseTypeService.getAll().subscribe((item) => {
+  getAllJobDetailsSetup() {
+    this.subscription = this.jobDetailsSetupService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -106,20 +127,20 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onSubmit(form: NgForm): void {
     this.loading = true;
-    this.releaseTypeService.cachedData = [];
-    const id = form.value.releaseTypeId;
+    this.jobDetailsSetupService.cachedData = [];
+    const id = form.value.id;
     const action$ = id
-      ? this.releaseTypeService.update(id, form.value)
-      : this.releaseTypeService.submit(form.value);
+      ? this.jobDetailsSetupService.update(id, form.value)
+      : this.jobDetailsSetupService.submit(form.value);
     
     this.subscription = action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getALlReleaseTypes();
+        this.getAllJobDetailsSetup();
         this.resetForm();
-        this.router.navigate(['/personalInfoSetup/releaseType']);
+        this.router.navigate(['/personalInfoSetup/job-details-setup']);
       this.loading = false;
       } else {
         this.toastr.warning('', `${response.message}`, {
@@ -134,7 +155,7 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.releaseTypeService.delete(element.releaseTypeId).subscribe(
+          this.jobDetailsSetupService.delete(element.id).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {
@@ -155,6 +176,4 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
   }
-
-
 }

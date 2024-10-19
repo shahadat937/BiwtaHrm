@@ -142,6 +142,7 @@ import { RewardPunishmentPriorityComponent } from './reward-punishment-priority/
 import { ResponsibilityTypeComponent } from './responsibility-type/responsibility-type.component';
 import { CourseDurationComponent } from './course-duration/course-duration.component';
 import { DesignationSetupComponent } from './designation-setup/designation-setup.component';
+import { JobDetailsSetupComponent } from './job-details-setup/job-details-setup.component';
 
 
 
@@ -216,6 +217,7 @@ import { DesignationSetupComponent } from './designation-setup/designation-setup
     ResponsibilityTypeComponent,
     CourseDurationComponent,
     DesignationSetupComponent,
+    JobDetailsSetupComponent,
   ],
   imports: [
     CommonModule,

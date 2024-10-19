@@ -2,37 +2,50 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Features.JobDetailsSetups.Requests.Commands;
 using Hrm.Application.Responses;
-using MediatR;
 using Hrm.Domain;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Hrm.Application.Features.JobDetailsSetup.Handlers.Commands
+namespace Hrm.Application.Features.JobDetailsSetups.Handlers.Commands
 {
     public class CreateJobDetailsSetupCommandHandler : IRequestHandler<CreateJobDetailsSetupCommand, BaseCommandResponse>
     {
-        private readonly IHrmRepository<Hrm.Domain.JobDetailsSetup> _JobDetailsSetupRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CreateJobDetailsSetupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.JobDetailsSetup> JobDetailsSetupRepository)
+
+        public CreateJobDetailsSetupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _JobDetailsSetupRepository = JobDetailsSetupRepository;
         }
         public async Task<BaseCommandResponse> Handle(CreateJobDetailsSetupCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
 
 
-            var JobDetailsSetup = _mapper.Map<Hrm.Domain.JobDetailsSetup>(request.JobDetailsSetupDto);
+            var findActive = await _unitOfWork.Repository<JobDetailsSetup>().Where(x => x.IsActive == true).ToListAsync();
 
-            JobDetailsSetup = await _unitOfWork.Repository<Hrm.Domain.JobDetailsSetup>().Add(JobDetailsSetup);
+            if (findActive != null && request.JobDetailsSetupDto.IsActive == true)
+            {
+                foreach (var item in findActive)
+                {
+                    item.IsActive = false;
+                    await _unitOfWork.Repository<JobDetailsSetup>().Update(item);
+                }
+            }
+
+            var jobDetailsSetup = _mapper.Map<Hrm.Domain.JobDetailsSetup>(request.JobDetailsSetupDto);
+
+            await _unitOfWork.Repository<JobDetailsSetup>().Add(jobDetailsSetup);
             await _unitOfWork.Save();
 
 
             response.Success = true;
             response.Message = "Creation Successful";
-            response.Id = JobDetailsSetup.Id;
+            response.Id = request.JobDetailsSetupDto.Id;
 
             return response;
         }

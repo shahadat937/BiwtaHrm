@@ -5,42 +5,47 @@ using Hrm.Application.Features.JobDetailsSetups.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.Features.JobDetailsSetup.Handlers.Commands
+namespace Hrm.Application.Features.JobDetailsSetups.Handlers.Commands
 {
     public class UpdateJobDetailsSetupCommandHandler : IRequestHandler<UpdateJobDetailsSetupCommand, BaseCommandResponse>
     {
-
-        private readonly IHrmRepository<Hrm.Domain.JobDetailsSetup> _JobDetailsSetupRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public UpdateJobDetailsSetupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.JobDetailsSetup> JobDetailsSetupRepository)
+
+        public UpdateJobDetailsSetupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _JobDetailsSetupRepository = JobDetailsSetupRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateJobDetailsSetupCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
 
-            var JobDetailsSetup = await _unitOfWork.Repository<Hrm.Domain.JobDetailsSetup>().Get(request.JobDetailsSetupDto.Id);
+            var JobDetailsSetup = await _unitOfWork.Repository<JobDetailsSetup>().Get(request.JobDetailsSetupDto.Id);
 
-            if (JobDetailsSetup is null)
+
+            var findActive = await _unitOfWork.Repository<JobDetailsSetup>().Where(x => x.IsActive == true && x.Id != request.JobDetailsSetupDto.Id).ToListAsync();
+
+            if (findActive != null && request.JobDetailsSetupDto.IsActive == true)
             {
-                throw new NotFoundException(nameof(JobDetailsSetup), request.JobDetailsSetupDto.Id);
+                foreach (var item in findActive)
+                {
+                    item.IsActive = false;
+                    await _unitOfWork.Repository<JobDetailsSetup>().Update(item);
+                }
             }
 
             _mapper.Map(request.JobDetailsSetupDto, JobDetailsSetup);
 
-            await _unitOfWork.Repository<Hrm.Domain.JobDetailsSetup>().Update(JobDetailsSetup);
+
+            await _unitOfWork.Repository<JobDetailsSetup>().Update(JobDetailsSetup);
             await _unitOfWork.Save();
+
 
             response.Success = true;
             response.Message = "Update Successful";

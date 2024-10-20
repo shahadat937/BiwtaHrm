@@ -73,6 +73,28 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
                     //    throw new BadRequestException(field.FieldName + " is required");
                     //}
 
+                    if(field.HTMLInputType=="daterange")
+                    {
+                        foreach(var childField in field.ChildFields)
+                        {
+                            await CheckValidField(childField, formRecord.RecordId);
+                            var childFieldRecordDto = new FieldRecordDto
+                            {
+                                FieldRecordId = 0,
+                                FieldValue = childField.FieldValue,
+                                FieldId = childField.FieldId,
+                                FormRecordId = formRecord.RecordId,
+                                IsActive = true,
+                                Remark = childField.Remark
+                            };
+
+                            var childFieldRecord = _mapper.Map<Hrm.Domain.FieldRecord>(childFieldRecordDto);
+
+                            await _unitOfWork.Repository<Hrm.Domain.FieldRecord>().Add(childFieldRecord);
+                        }
+
+                    }
+
                     await CheckValidField(field,formRecord.RecordId);
 
                     var fieldRecordDto = new FieldRecordDto();

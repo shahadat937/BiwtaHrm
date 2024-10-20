@@ -1,4 +1,5 @@
-﻿using Hrm.Application.DTOs.SelectableOption;
+﻿using Hrm.Application.DTOs.FormField;
+using Hrm.Application.DTOs.SelectableOption;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +24,6 @@ namespace Hrm.Application.DTOs.Form
         public string FieldValue { get; set; }
         public string? Remark { get; set; }
         public List<SelectableOptionDto>? Options { get; set; } = new List<SelectableOptionDto>();
+        public List<FormFieldValDto>? ChildFields { get; set; } = new List<FormFieldValDto>();
     }
 }

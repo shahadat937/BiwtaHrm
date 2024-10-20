@@ -106,6 +106,43 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
 
                         field.Options = optionDtos;
                     }
+
+                    if(field.HTMLTagName =="daterange")
+                    {
+                        var childFields = await _unitOfWork.Repository<Hrm.Domain.FormGroup>().Where(x => x.ParentFieldId == field.FieldId)
+                            .Include(x => x.ChildField)
+                            .ThenInclude(x => x.FieldType).OrderBy(x => x.OrderNo).Select(x => x.ChildField).ToListAsync();
+
+                        var childFieldInfoDto = _mapper.Map<List<FormFieldDto>>(childFields).Select(x => new FormFieldValDto
+                        {
+                            FieldId = x.FieldId,
+                            FieldName = x.FieldName,
+                            Description = x.Description,
+                            IsRequired = (bool)x.IsRequired,
+                            FieldTypeId = x.FieldTypeId,
+                            FieldTypeName = x.FieldTypeName,
+                            HTMLTagName = x.HTMLTagName,
+                            HTMLInputType = x.HTMLInputType,
+                            HasMultipleValue = (bool)x.HasMultipleValue,
+                            HasSelectable = (bool)x.HasSelectable
+                        }).ToList();
+
+                        foreach(var childField in childFieldInfoDto)
+                        {
+                           var childfieldRecord = await _unitOfWork.Repository<Hrm.Domain.FieldRecord>().Where(x => x.FieldId == childField.FieldId && x.FormRecordId == formRecord.RecordId).FirstOrDefaultAsync();
+
+                            if (childfieldRecord == null)
+                            {
+                                continue;
+                            }
+
+                            childField.Remark = childfieldRecord.Remark;
+                            childField.FieldRecordId = childfieldRecord.FieldRecordId;
+                            childField.FieldValue = childfieldRecord.FieldValue;
+                        }
+
+                        field.ChildFields = childFieldInfoDto;
+                    }
                 }
 
                 var sectionDto = new FormSectionDto

@@ -119,6 +119,7 @@ using Hrm.Application.DTOs.SiteSetting;
 using Hrm.Application.DTOs.CourseDuration;
 using Hrm.Application.DTOs.EmpTrainingInfo;
 using Hrm.Application.DTOs.DesignationSetup;
+using Hrm.Application.DTOs.FormGroup;
 
 
 
@@ -705,6 +706,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<DesignationSetup, DesignationSetupDto>().ReverseMap();
             CreateMap<DesignationSetup, CreateDesignationSetupDto>().ReverseMap();
+
+            CreateMap<FormGroup,FormGroupDto>().ReverseMap();
+            CreateMap<FormGroup, CreateFormGroupDto>().ReverseMap();
 
         }
     }

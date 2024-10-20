@@ -69,7 +69,7 @@
 } @else if(fieldData.htmlTagName=="textarea") {
     <c-row class="mt-2" [gutter]="3">
         <c-col md="4">
-            <label cLabel><strong>{{fieldData.fieldName}}: </strong></label>
+            <label cLabel><strong>{{Index+fieldData.fieldName}}: </strong></label>
         </c-col>
         <c-col>
             <textarea [name]="fieldUniqueName" 
@@ -85,4 +85,43 @@
             }
         </c-col>
     </c-row>
-} 
+} @else if(fieldData.htmlTagName=="daterange") {
+    <c-row class="mt-2" [gutter]="3">
+        <c-col md="3">
+            <label cLabel><strong>{{Index+fieldData.fieldName}}: </strong></label>
+        </c-col>
+        <c-col md="2">
+            <input [name]="fieldUniqueName" 
+            [readOnly]="IsReadonly"
+            [id]="fieldUniqueName"
+            [(ngModel)]="this.fieldData.childFields[0].fieldValue"
+            #fieldRef = "ngModel"
+            (change)="onFieldChange($event)"
+            [type]="fieldData.childFields[0].htmlInputType"
+            [required]="fieldData.isRequired" cFormControl>
+                
+            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired){
+                <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
+            }
+        </c-col>
+        <c-col md="1">
+            To
+        </c-col>
+        <c-col md="2">
+            <input [name]="fieldUniqueName" 
+            [readOnly]="IsReadonly"
+            [id]="fieldUniqueName"
+            [(ngModel)]="this.fieldData.childFields[1].fieldValue"
+            #fieldRef = "ngModel"
+            (change)="onFieldChange($event)"
+            [type]="fieldData.childFields[1].htmlInputType"
+            [required]="fieldData.isRequired" cFormControl>
+                
+            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired){
+                <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
+            }
+        </c-col>
+
+    </c-row>
+
+}

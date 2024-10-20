@@ -15,6 +15,7 @@ import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.servi
 import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
 import { HttpParams } from '@angular/common/http';
 import {AppraisalRole} from '../enum/appraisal-role';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-officer-form',
@@ -32,7 +33,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   @Input()
   updateRole: number;
   IdCardNo:string;
-  formId:number = 1;
+  formId:number;
   loading: boolean;
   submitLoading: boolean;
   formData: any;
@@ -73,6 +74,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.showHeader = false
     this.department = "ICT"
     this.updateRole = AppraisalRole.User
+    this.formId = environment.officerFormId
   }
 
   ngOnInit(): void {

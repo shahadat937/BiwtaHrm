@@ -23,6 +23,7 @@ namespace Hrm.Domain
         public string? PromotionIncrementType { get; set; }
         public int? OrderById { get; set; }
         public DateOnly? OrderDate { get; set; }
+        public string? OrderNo { get; set; }
         public DateOnly? EffectiveDate { get; set; }
         public bool? IsApproval { get; set; }
         public int? ApplicationById { get; set; }

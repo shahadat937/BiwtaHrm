@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { cilArrowLeft } from '@coreui/icons';
+import { cilArrowLeft, cilSearch } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
@@ -14,6 +14,8 @@ import { EmpTransferPostingService } from '../../transferPosting/service/emp-tra
 import { GradeService } from '../../basic-setup/service/Grade.service';
 import { EmpRewardPunishmentService } from '../service/emp-reward-punishment.service';
 import { EmpRewardPunishment } from '../model/emp-reward-punishment';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
 
 @Component({
   selector: 'app-increment-and-promotion',
@@ -52,11 +54,12 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     public empRewardPunishmentService: EmpRewardPunishmentService,
+    private modalService: BsModalService,
   ) {
 
   }
 
-  icons = { cilArrowLeft };
+  icons = { cilArrowLeft, cilSearch };
 
   ngOnInit(): void {
     this.initaialForm();
@@ -70,6 +73,18 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  
+  EmployeeListModal() {
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
+
+    modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
+      if(idCardNo){
+        this.getEmpInfoByIdCardNo(idCardNo);
+        this.empPromotionIncrementService.empPromotionIncrement.empIdCardNo = idCardNo;
+      }
+    });
   }
 
   getEmployeeByEmpId() {
@@ -126,6 +141,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       promotionIncrementType : 'Increment & Promotion',
       orderById : null,
       orderDate : null,
+      orderNo: "",
       effectiveDate : null,
       applicationById : null,
       isApproval : true,
@@ -172,6 +188,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       promotionIncrementType : 'Increment & Promotion',
       orderById : null,
       orderDate : null,
+      orderNo: "",
       effectiveDate : null,
       applicationById : null,
       isApproval : true,

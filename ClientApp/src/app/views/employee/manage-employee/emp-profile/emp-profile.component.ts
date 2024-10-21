@@ -36,6 +36,8 @@ import { EmpWorkHistory } from '../../model/emp-work-history';
 import { EmpOtherResponsibility } from '../../model/emp-other-responsibility';
 import { EmpTrainingInfoService } from '../../service/emp-training-info.service';
 import { EmpTrainingInfo } from '../../model/emp-training-info';
+import { EmpTransferPosting } from 'src/app/views/transferPosting/model/emp-transfer-posting';
+import { EmpTransferPostingService } from 'src/app/views/transferPosting/service/emp-transfer-posting.service';
 
 @Component({
   selector: 'app-emp-profile',
@@ -59,6 +61,7 @@ export class EmpProfileComponent  implements OnInit {
   empLanguageInfo : EmpLanguageInfoModule[] = [];
   empForeignTourInfo : EmpForeignTourInfoModule[] = [];
   empOtherResponsibility : EmpOtherResponsibility[] = [];
+  empTransferPosting : EmpTransferPosting[] = [];
   empWorkHistory : EmpWorkHistory[] = [];
   photoPreviewUrl: string | ArrayBuffer | null = null;
   empProfileView = true;
@@ -88,6 +91,7 @@ export class EmpProfileComponent  implements OnInit {
     public empOtherResponsibilityService: EmpOtherResponsibilityService,
     public empWorkHistoryService: EmpWorkHistoryService,
     public empTrainingInfoService: EmpTrainingInfoService,
+    public empTransferPostingService: EmpTransferPostingService,
     private bsModalRef: BsModalRef,
     private el: ElementRef, 
     private renderer: Renderer2
@@ -127,6 +131,7 @@ export class EmpProfileComponent  implements OnInit {
       this.getEmpForeignTourInfoByEmpId();
       this.getEmpWorkHistory();
       this.getEmpOtherResponsibility();
+      this.getEmpTransferPostingInfo();
     }
 
     getEmpBasicInfoByEmpId(){
@@ -257,8 +262,13 @@ export class EmpProfileComponent  implements OnInit {
         if(res && res.length > 0){
           this.empWorkHistory = res;
         }
-        else {
-          this.empWorkHistory = [new EmpWorkHistory()];
+      });
+    }
+    
+    getEmpTransferPostingInfo(){
+      this.empTransferPostingService.findAllByEmpId(this.id).subscribe((res) => {
+        if(res && res.length > 0){
+          this.empTransferPosting = res;
         }
       });
     }

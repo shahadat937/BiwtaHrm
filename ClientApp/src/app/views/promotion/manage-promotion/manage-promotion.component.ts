@@ -23,7 +23,7 @@ export class ManagePromotionComponent implements OnInit, OnDestroy {
     'PMS Id',
     'fullName',
     'ApprovalStatus',
-    'ApplicationStatus',
+    // 'ApplicationStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)

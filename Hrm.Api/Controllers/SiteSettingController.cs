@@ -12,7 +12,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.SiteSetting)]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class SiteSettingController : ControllerBase
     {
         private readonly IMediator _mediator;

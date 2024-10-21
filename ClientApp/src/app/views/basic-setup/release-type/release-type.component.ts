@@ -43,7 +43,7 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       const id = params.get('releaseTypeId');
       if (id) {
         this.btnText = 'Update';
-        this.headerText = 'Update Blood Group';
+        this.headerText = 'Update Release Type';
         this.releaseTypeService.getById(+id).subscribe((res) => {
           this.ReleaseTypeForm?.form.patchValue(res);
         });

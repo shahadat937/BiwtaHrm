@@ -1,0 +1,20 @@
+export class NavbarThem {
+    id: number = 0;
+    themName: string = "";
+    bgColor: string = "";
+    brandBg: string = "";
+    togglerBg: string = "";
+    togglerHoverBg: string = "";
+    linkColor: string = "";
+    linkActiveColor: string = "";
+    linkActiveBg: string = "";
+    linkHoverColor: string = "";
+    linkHoverBg: string = "";
+    linkIconColor: string = "";
+    linkIconHoverColor: string = "";
+    groupBg: string = "";
+    groupToggleColor: string = "";
+    width: number = 0;
+    remark: string = "";
+    isActive: boolean = true;
+}

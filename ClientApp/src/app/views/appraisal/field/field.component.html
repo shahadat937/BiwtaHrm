@@ -124,4 +124,37 @@
 
     </c-row>
 
+} @else if(fieldData.htmlTagName=="table") {
+    <c-row class="mt-2" [gutter]="3">
+        <c-col md="4">
+            <label cLabel><strong>{{Index+fieldData.fieldName}}: </strong></label>
+        </c-col>
+        <c-col md="6">
+            <p-table
+            [rowHover]="true"
+            [value]="selectedEduInfos"
+            styleClass="p-datatable-striped">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:22%">Exam</th>
+                        <th style="width:25%">Board</th>
+                        <th style="width:25%">Result</th>
+                        <th style="width:25%">Passing Year</th>
+                        <th style="width: 2%"> </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-education>
+                    <tr>
+                        <td>{{ education.examTypeName }}</td>
+                        <td>{{ education.boardName }}</td>
+                        <td>{{ education.point }}</td>
+                        <td>{{ education.passingYear }}</td>
+                        <td>
+                            <button (click)="removeEducationInfo(education.id)">X</button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </c-col>
+    </c-row>
 }

@@ -78,6 +78,7 @@
                       }
                       @for (field of item.fields; track $index) {
                         <app-field
+                        [empId]="formData.empId"
                         [(field)]="field.fieldValue"
                         (change) = "onChange()"
                         [fieldData]="field"

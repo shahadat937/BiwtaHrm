@@ -48,11 +48,14 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
 
             foreach (var section in sections)
             {
-                var fieldIds = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == request.FormId && x.IsActive == true && x.SectionId == section.FormSectionId).Select(x => x.FieldId).ToListAsync();
+                var fieldInfo = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == request.FormId && x.IsActive == true && x.SectionId == section.FormSectionId)
+                    .Include(x=>x.FormField)
+                    .ThenInclude(x=>x.FieldType)
+                    .OrderBy(x=>x.OrderNo).Select(x => x.FormField).ToListAsync();
 
-                var fieldInfo = await _unitOfWork.Repository<Hrm.Domain.FormField>().Where(x => fieldIds.Contains(x.FieldId))
-                    .Include(x=>x.FieldType)
-                    .ToListAsync();
+                //var fieldInfo = await _unitOfWork.Repository<Hrm.Domain.FormField>().Where(x => fieldIds.Contains(x.FieldId))
+                    //.Include(x=>x.FieldType)
+                    //.ToListAsync();
 
                 var fieldInfoDto = _mapper.Map<List<FormFieldDto>>(fieldInfo).Select(x => new FormFieldValDto
                 {

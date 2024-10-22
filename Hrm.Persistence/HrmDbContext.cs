@@ -1237,6 +1237,20 @@ namespace Hrm.Persistence
                     .HasForeignKey(fs => fs.FormId);
             });
 
+            modelBuilder.Entity<FormGroup>(entity =>
+            {
+                entity.HasKey(fg => fg.FormGroupId)
+                    .HasName("[[FK_FormGroup]]");
+
+                entity.HasOne(fg => fg.ParentField)
+                    .WithMany(ff => ff.FormGroupParents)
+                    .HasForeignKey(fg => fg.ParentFieldId);
+
+                entity.HasOne(fg => fg.ChildField)
+                    .WithMany(ff => ff.FormGroupChild)
+                    .HasForeignKey(fg => fg.FormFieldId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;

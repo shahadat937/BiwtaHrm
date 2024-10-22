@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { AppraisalRole } from '../../enum/appraisal-role';
 
 @Component({
   selector: 'app-reporting-form',
@@ -9,10 +10,12 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 export class ReportingFormComponent implements OnInit {
   ActiveSection: boolean[] = [false,true,true,true,true,false,false];
   formRecordId: number = 0;
+  appraisalRole = AppraisalRole
   constructor(
     private route: ActivatedRoute,
     private router: Router
   ) {
+
   }
 
   ngOnInit(): void {

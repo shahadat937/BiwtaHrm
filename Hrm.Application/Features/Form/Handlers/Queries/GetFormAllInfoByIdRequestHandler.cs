@@ -48,11 +48,14 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
 
             foreach (var section in sections)
             {
-                var fieldIds = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == request.FormId && x.IsActive == true && x.SectionId == section.FormSectionId).Select(x => x.FieldId).ToListAsync();
+                var fieldInfo = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == request.FormId && x.IsActive == true && x.SectionId == section.FormSectionId)
+                    .Include(x=>x.FormField)
+                    .ThenInclude(x=>x.FieldType)
+                    .OrderBy(x=>x.OrderNo).Select(x => x.FormField).ToListAsync();
 
-                var fieldInfo = await _unitOfWork.Repository<Hrm.Domain.FormField>().Where(x => fieldIds.Contains(x.FieldId))
-                    .Include(x=>x.FieldType)
-                    .ToListAsync();
+                //var fieldInfo = await _unitOfWork.Repository<Hrm.Domain.FormField>().Where(x => fieldIds.Contains(x.FieldId))
+                    //.Include(x=>x.FieldType)
+                    //.ToListAsync();
 
                 var fieldInfoDto = _mapper.Map<List<FormFieldDto>>(fieldInfo).Select(x => new FormFieldValDto
                 {
@@ -81,6 +84,35 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
 
                         var selectableOptionDto = _mapper.Map<List<SelectableOptionDto>>(selectableOption);
                         field.Options = selectableOptionDto;
+                    }
+
+                    if(field.HTMLTagName=="daterange")
+                    {
+                        List<int> tempFieldIds = await _unitOfWork.Repository<Domain.FormGroup>().Where(x=>x.ParentFieldId == field.FieldId&&x.IsActive==true).Select(x=>x.FormFieldId).ToListAsync();
+
+                        var childField = await _unitOfWork.Repository<Hrm.Domain.FormGroup>().Where(x => x.ParentFieldId == field.FieldId && x.IsActive == true)
+                            .Include(x => x.ChildField)
+                            .ThenInclude(x=>x.FieldType).OrderBy(x => x.OrderNo).Select(x => x.ChildField).ToListAsync();
+
+
+
+                        //var childField = await _unitOfWork.Repository<Domain.FormField>().Where(x => tempFieldIds.Contains(x.FieldId))
+                           // .Include(x => x.FieldType).ToListAsync();
+                        field.ChildFields = _mapper.Map<List<FormFieldDto>>(childField).Select(x => new FormFieldValDto
+                        {
+                            FieldId = x.FieldId,
+                            FieldName = x.FieldName,
+                            Description = x.Description,
+                            IsRequired = (bool)x.IsRequired,
+                            FieldTypeId = x.FieldTypeId,
+                            FieldTypeName = x.FieldTypeName,
+                            HTMLTagName = x.HTMLTagName,
+                            HTMLInputType = x.HTMLInputType,
+                            HasMultipleValue = (bool)x.HasMultipleValue,
+                            HasSelectable = (bool)x.HasSelectable,
+                            FieldValue = "",
+                            Remark = ""
+                        }).ToList();
                     }
                 }
 

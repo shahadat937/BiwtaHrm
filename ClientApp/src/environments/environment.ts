@@ -9,7 +9,9 @@ export const environment = {
   fileUrl: 'http://localhost:25971/Content/',
   imageUrl: 'http://localhost:25971/assets/images/',
   companyTitle :"Bangladesh Inland Water Transport Authority",
-  companyAddress : "141-143, Motijheel Commerial Area, Dhaka-1000"
+  companyAddress : "141-143, Motijheel Commerial Area, Dhaka-1000",
+  officerFormId: 1,
+  staffFormId: 2
 
 
 };

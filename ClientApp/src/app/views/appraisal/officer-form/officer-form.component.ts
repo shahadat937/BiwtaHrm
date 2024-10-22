@@ -14,6 +14,8 @@ import { UpdateFormComponent } from '../update-form/update-form.component';
 import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
 import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
 import { HttpParams } from '@angular/common/http';
+import {AppraisalRole} from '../enum/appraisal-role';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-officer-form',
@@ -28,8 +30,10 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   formRecordId;
   @Input()
   showHeader: boolean;
+  @Input()
+  updateRole: number;
   IdCardNo:string;
-  formId:number = 1;
+  formId:number;
   loading: boolean;
   submitLoading: boolean;
   formData: any;
@@ -69,6 +73,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.formRecordId = 0;
     this.showHeader = false
     this.department = "ICT"
+    this.updateRole = AppraisalRole.User
+    this.formId = environment.officerFormId
   }
 
   ngOnInit(): void {
@@ -275,7 +281,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.formData.reportFrom = this.reportDates[0];
     this.formData.reportTo = this.reportDates[1];
     
-    this.formRecordService.updateFormData(this.formData).subscribe({
+    this.formRecordService.updateFormData(this.formData, this.updateRole).subscribe({
       next: response=> {
         if(response.success) {
           this.toastr.success('',`${response.message}`, {

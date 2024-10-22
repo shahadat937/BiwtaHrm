@@ -38,6 +38,9 @@ import { CounterSignatureFormOfficerComponent } from './officer-form/counter-sig
 import { ReceiverFormOfficerComponent } from './officer-form/receiver-form-officer/receiver-form-officer.component';
 import { EmpBasicInfoService } from '../employee/service/emp-basic-info.service';
 import { ApplicationHeaderComponent } from './application-header/application-header.component';
+import { ManageFormOfficerRfComponent } from './manage-form/manage-form-officer-rf/manage-form-officer-rf.component';
+import { ManageFormOfficerCsComponent } from './manage-form/manage-form-officer-cs/manage-form-officer-cs.component';
+import { ManageFormOfficerRComponent } from './manage-form/manage-form-officer-r/manage-form-officer-r.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,9 @@ import { ApplicationHeaderComponent } from './application-header/application-hea
     CounterSignatureFormOfficerComponent,
     ReceiverFormOfficerComponent,
     ApplicationHeaderComponent,
+    ManageFormOfficerRfComponent,
+    ManageFormOfficerCsComponent,
+    ManageFormOfficerRComponent,
   ],
   imports: [
     TabViewModule,

@@ -35,24 +35,39 @@ namespace Hrm.Application.Features.FormRecord.Handlers.Queries
                     .ThenInclude(x => x.EmpJobDetail)
                 .AsQueryable();
 
-            if(request.Filters.RecordId.HasValue)
+            if (request.Filters.RecordId.HasValue)
             {
                 formRecords = formRecords.Where(x => x.RecordId == request.Filters.RecordId);
             }
 
-            if(request.Filters.FormId.HasValue)
+            if (request.Filters.FormId.HasValue)
             {
-                formRecords = formRecords.Where(x=>x.FormId == request.Filters.FormId);
+                formRecords = formRecords.Where(x => x.FormId == request.Filters.FormId);
             }
 
-            if(request.Filters.DepartmentId.HasValue)
+            if (request.Filters.DepartmentId.HasValue)
             {
-                formRecords = formRecords.Where(x=>x.Employee.EmpJobDetail!=null&&x.Employee.EmpJobDetail.FirstOrDefault().DepartmentId ==request.Filters.DepartmentId);
+                formRecords = formRecords.Where(x => x.Employee.EmpJobDetail != null && x.Employee.EmpJobDetail.FirstOrDefault().DepartmentId == request.Filters.DepartmentId);
             }
 
-            if(request.Filters.SectionId.HasValue)
+            if (request.Filters.SectionId.HasValue)
             {
-                formRecords = formRecords.Where(x=>x.Employee.EmpJobDetail!=null&&x.Employee.EmpJobDetail.FirstOrDefault().SectionId== request.Filters.SectionId);
+                formRecords = formRecords.Where(x => x.Employee.EmpJobDetail != null && x.Employee.EmpJobDetail.FirstOrDefault().SectionId == request.Filters.SectionId);
+            }
+
+            if (request.Filters.ReporterId.HasValue)
+            {
+                formRecords = formRecords.Where(x => x.ReportingOfficerId == request.Filters.ReporterId);
+            }
+
+            if (request.Filters.CounterSignatureId.HasValue)
+            {
+                formRecords = formRecords.Where(x => x.CounterSignatoryId == request.Filters.CounterSignatureId);
+            }
+
+            if (request.Filters.ReceiverId.HasValue)
+            {
+                formRecords = formRecords.Where(x => x.ReceiverId == request.Filters.ReceiverId);
             }
             
 

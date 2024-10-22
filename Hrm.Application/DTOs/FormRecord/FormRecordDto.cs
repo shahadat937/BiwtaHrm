@@ -14,6 +14,9 @@ namespace Hrm.Application.DTOs.FormRecord
         public int? ReportingOfficerId { get; set; }
         public int? CounterSignatoryId { get; set; }
         public int? ReceiverId { get; set; }
+        public bool ReportingOfficerApproval { get; set; }
+        public bool CounterSignatoryApproval { get; set; }
+        public bool ReceiverApproval { get; set; }
         public DateTime? ReportFrom {  get; set; }
         public DateTime? ReportTo { get; set; }
         public string IdCardNo { get; set; }

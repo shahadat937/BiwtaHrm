@@ -8,6 +8,9 @@ import { OfficerFormApplicationComponent } from './officer-form/officer-form-app
 import { ReportingFormComponent } from './officer-form/reporting-form/reporting-form.component';
 import { CounterSignatureFormOfficerComponent } from './officer-form/counter-signature-form-officer/counter-signature-form-officer.component';
 import { ReceiverFormOfficerComponent } from './officer-form/receiver-form-officer/receiver-form-officer.component';
+import {ManageFormOfficerRfComponent} from './manage-form/manage-form-officer-rf/manage-form-officer-rf.component'
+import { ManageFormOfficerCsComponent } from './manage-form/manage-form-officer-cs/manage-form-officer-cs.component';
+import { ManageFormOfficerRComponent } from './manage-form/manage-form-officer-r/manage-form-officer-r.component';
 
 
 const routes: Routes = [
@@ -39,7 +42,19 @@ const routes: Routes = [
   {
     path: 'receiverFormOfficer/:formRecorcId',
     component: ReceiverFormOfficerComponent
-  }
+  },
+   {
+    path: 'manageFormOfficerRF',
+    component: ManageFormOfficerRfComponent
+   },
+   {
+    path: 'manageFormOfficerCs',
+    component: ManageFormOfficerCsComponent
+   },
+   {
+    path: 'manageFormOfficerR',
+    component: ManageFormOfficerRComponent
+   }
 ];
 
 @NgModule({

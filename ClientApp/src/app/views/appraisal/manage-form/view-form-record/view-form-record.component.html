@@ -73,6 +73,7 @@
                                     <c-card-body>
                                         @for (field of section.fields; track $index) {
                                             <app-field
+                                            [empId]="formData.empId"
                                             [(field)] = "field.fieldValue"
                                             [fieldData]="field"
                                             [IsReadonly]="true"

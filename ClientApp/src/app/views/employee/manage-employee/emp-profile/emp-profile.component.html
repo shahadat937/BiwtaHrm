@@ -236,11 +236,11 @@
                                     {{ empJobDetails.serviceStatus === true ? 'In Service' : 'Out of Service' }}
                                 </td>
                                 <th>PRL Date</th>
-                                <td *ngIf="empJobDetails?.prlDate; else emptyTd">{{empJobDetails.prlDate}}</td>
+                                <td *ngIf="prlDate; else emptyTd">{{prlDate}}</td>
                             </tr>
                             <tr>
                                 <th>Retirement Date</th>
-                                <td *ngIf="empJobDetails?.retirementDate; else emptyTd">{{empJobDetails.retirementDate}}</td>
+                                <td *ngIf="retirementDate; else emptyTd">{{retirementDate}}</td>
                                 <th>Remark</th>
                                 <td *ngIf="empJobDetails?.remark; else emptyTd">{{empJobDetails.remark}}</td>
                             </tr>

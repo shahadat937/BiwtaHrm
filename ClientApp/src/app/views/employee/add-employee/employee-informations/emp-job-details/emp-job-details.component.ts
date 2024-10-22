@@ -8,6 +8,8 @@ import { OfficeService } from 'src/app/views/basic-setup/service/office.service'
 import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
 import { GradeService } from 'src/app/views/basic-setup/service/Grade.service';
 import { SectionService } from 'src/app/views/basic-setup/service/section.service';
+import { EmpBasicInfoService } from '../../../service/emp-basic-info.service';
+import { JobDetailsSetupService } from '../../../../basic-setup/service/job-details-setup.service';
 
 @Component({
   selector: 'app-emp-job-details',
@@ -38,11 +40,15 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   firstSectionView: boolean = false;
   subscription: Subscription = new Subscription();
   loading: boolean = false;
+  prlDate: string = '';
+  retirementDate: string = '';
   @ViewChild('EmpJobDetailsForm', { static: true }) EmpJobDetailsForm!: NgForm;
 
   constructor(
     private toastr: ToastrService,
     public empJobDetailsService: EmpJobDetailsService,
+    public empBasicInfoService: EmpBasicInfoService,
+    public jobDetailsSetupService: JobDetailsSetupService,
     public officeService: OfficeService,
     public departmentService: DepartmentService,
     private gradeService: GradeService,
@@ -57,6 +63,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     this.SelectModelGrade();
     this.getAllDepartment();
     this.getAllSelectedDepartments();
+    this.getPrlAndRetirmentDate();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -106,6 +113,22 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
         this.initaialForm();
       }
     })
+  }
+
+  getPrlAndRetirmentDate(){
+    this.subscription = this.empBasicInfoService.findByEmpId(this.empId).subscribe((res) => {
+      this.subscription = this.jobDetailsSetupService.getActive().subscribe((response) =>{
+        if(res.dateOfBirth && response){
+          let prlDate = new Date(res.dateOfBirth);
+          prlDate.setFullYear(prlDate.getFullYear() + (response.prlAge || 0));
+          this.prlDate = prlDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+          let retirementDate = new Date(res.dateOfBirth);
+          retirementDate.setFullYear(retirementDate.getFullYear() + (response.retirmentAge || 0));
+          this.retirementDate = retirementDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      }
+      })
+    });
   }
 
   initaialForm(form?: NgForm) {

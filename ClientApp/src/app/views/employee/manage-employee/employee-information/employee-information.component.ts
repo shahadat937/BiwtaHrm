@@ -34,6 +34,7 @@ import { EmpOtherResponsibility } from '../../model/emp-other-responsibility';
 import { EmpWorkHistory } from '../../model/emp-work-history';
 import { EmpOtherResponsibilityService } from '../../service/emp-other-responsibility.service';
 import { EmpWorkHistoryService } from '../../service/emp-work-history.service';
+import { JobDetailsSetupService } from 'src/app/views/basic-setup/service/job-details-setup.service';
 
 @Component({
   selector: 'app-employee-information',
@@ -59,6 +60,9 @@ export class EmployeeInformationComponent implements OnInit {
   empWorkHistory : EmpWorkHistory[] = [];
   empPhoto : string = '';
   empSignature : string = '';
+  
+  prlDate: string = '';
+  retirementDate: string = '';
 
   id: number = 0;
   clickedButton: string = '';
@@ -91,6 +95,7 @@ export class EmployeeInformationComponent implements OnInit {
     public empWorkHistoryService: EmpWorkHistoryService,
     public empPhotoSignService: EmpPhotoSignService,
     public manageEmployeeService: ManageEmployeeService,
+    public jobDetailsSetupService: JobDetailsSetupService,
     private bsModalRef: BsModalRef,
     private el: ElementRef, 
     private renderer: Renderer2
@@ -123,6 +128,7 @@ export class EmployeeInformationComponent implements OnInit {
       this.getEmpForeignTourInfoByEmpId();
       this.getEmpWorkHistory();
       this.getEmpOtherResponsibility();
+      this.getPrlAndRetirmentDate();
     }
 
     getCanEditProfileStatusByEmpId(){
@@ -161,6 +167,23 @@ export class EmployeeInformationComponent implements OnInit {
         this.empJobDetails = res;
       });
     }
+
+    
+  getPrlAndRetirmentDate(){
+    this.empBasicInfoService.findByEmpId(this.id).subscribe((res) => {
+      this.jobDetailsSetupService.getActive().subscribe((response) =>{
+        if(res.dateOfBirth && response){
+          let prlDate = new Date(res.dateOfBirth);
+          prlDate.setFullYear(prlDate.getFullYear() + (response.prlAge || 0));
+          this.prlDate = prlDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+          let retirementDate = new Date(res.dateOfBirth);
+          retirementDate.setFullYear(retirementDate.getFullYear() + (response.retirmentAge || 0));
+          this.retirementDate = retirementDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      }
+      })
+    });
+  }
     
     getEmpSpouseInfoByEmpId(){
       this.empSpouseInfoService.findByEmpId(this.id).subscribe((res) => {

@@ -13,6 +13,7 @@ namespace Hrm.Domain
         public int FormId { get; set; }
         public int FieldId { get; set; }
         public int? Section { get; set; }
+        public int? SectionId { get; set; }
         public bool IsActive { get; set; }
         public int? OrderNo { get; set; }
         public string? Remark { get; set; }
@@ -20,5 +21,6 @@ namespace Hrm.Domain
 
         public Form Form { get; set; }
         public FormField FormField { get; set; }
+        public FormSection FormSection { get; set; }
     }
 }

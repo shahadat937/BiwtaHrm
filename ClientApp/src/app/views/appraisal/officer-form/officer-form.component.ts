@@ -11,6 +11,11 @@ import { FieldComponent } from '../field/field.component';
 import { FormRecordService } from '../services/form-record.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { UpdateFormComponent } from '../update-form/update-form.component';
+import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
+import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
+import { HttpParams } from '@angular/common/http';
+import {AppraisalRole} from '../enum/appraisal-role';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-officer-form',
@@ -19,8 +24,16 @@ import { UpdateFormComponent } from '../update-form/update-form.component';
 })
 export class OfficerFormComponent implements OnInit, OnDestroy {
 
+  @Input()
+  ActiveSection:boolean[];
+  @Input()
+  formRecordId;
+  @Input()
+  showHeader: boolean;
+  @Input()
+  updateRole: number;
   IdCardNo:string;
-  formId:number = 1;
+  formId:number;
   loading: boolean;
   submitLoading: boolean;
   formData: any;
@@ -36,9 +49,15 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     {fieldName: "Joining Date Of Current Designation", MapTo: "currentDesignationJoiningDate", Transform: "DateFormat"}
   ]
 
-  reportDates:string[]= [];
+  EmpOption: any[] = []
+
+  reportDates:any[]= [];
+
+  department: string;
   
   constructor(
+    private empService: EmpBasicInfoService,
+    private empPhotoSignService: EmpPhotoSignService,
     private formRecordService: FormRecordService,
     public officerFormService: OfficerFormService,
     private toastr: ToastrService,
@@ -50,11 +69,28 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.loading = false;
     this.submitLoading = false;
     this.currentSection = 0;
+    this.ActiveSection = [true,true,true,true,true,true,true];
+    this.formRecordId = 0;
+    this.showHeader = false
+    this.department = "ICT"
+    this.updateRole = AppraisalRole.User
+    this.formId = environment.officerFormId
   }
 
   ngOnInit(): void {
     this.loading=true;
-    this.getFormInfo(); 
+
+    this.empService.getFilteredSelectedEmp(new HttpParams()).subscribe({
+      next: response => {
+        this.EmpOption = response
+      }
+    })
+
+    if(this.formRecordId==0) {
+      this.getFormInfo(); 
+    } else {
+      this.getFormData();
+    }
   }
 
 
@@ -94,6 +130,12 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   saveFormData() {
     this.submitLoading=true;
+
+    if(this.formRecordId!=0) {
+      this.updateFormData();
+      return;
+    }
+
     console.log(this.reportDates);
     if(this.reportDates.length<2||this.reportDates[0]==null||this.reportDates[1]==null) {
       this.toastr.warning('',"Report Duration is required", {
@@ -163,14 +205,33 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
             this.processEmpInfo(response);
           } else {
             this.formData.empId = 0;
+            this.resetAutofield();
           }
         },
         error: (err)=> {
           this.formData.empId = 0;
+          this.resetAutofield();
         }
       })
     })
 
+  }
+
+  resetAutofield() {
+    function findField(fieldName:string) {
+      const compare = (data:any)=> {
+        return data.fieldName == fieldName; 
+      }
+
+      return compare;
+    }
+    this.autoSetFields.forEach((field:any)=> {
+      const result = this.formData.sections[0].fields.find(findField(field.fieldName))
+
+      if(result!=undefined) {
+        result.fieldValue="";
+      }
+    })
   }
 
   processEmpInfo(empInfo:any) {
@@ -186,10 +247,9 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
     this.autoSetFields.forEach((field:any) => { 
       const result = this.formData.sections[0].fields.find(findField(field.fieldName));
-      
       if(result!=undefined) {
         let fieldValue = empInfo[field.MapTo];
-        if(field.Transform!=undefined&&field.Transform=="DateFormat") {
+        if(field.Transform!=undefined&&field.Transform=="DateFormat"&&fieldValue!=null) {
           fieldValue = fieldValue.split('T')[0];
         }
         result.fieldValue = fieldValue;
@@ -197,5 +257,70 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     });
 
   }
+
+  getPhotoInfo(empId:number) {
+    let signature;
+
+    this.empPhotoSignService.findByEmpId(empId).subscribe({
+      next: response => {
+        signature = response;
+      }
+    })
+  }
+
+
+  updateFormData() {
+    this.submitLoading=true;
+    if(this.reportDates.length<2) {
+      this.toastr.warning('',"Report Duration is required", {
+        positionClass: 'toast-top-right'
+      });
+      return;
+    }
+
+    this.formData.reportFrom = this.reportDates[0];
+    this.formData.reportTo = this.reportDates[1];
+    
+    this.formRecordService.updateFormData(this.formData, this.updateRole).subscribe({
+      next: response=> {
+        if(response.success) {
+          this.toastr.success('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        } else {
+          this.toastr.warning('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        }
+      },
+      error: err=> {
+        this.submitLoading=false;
+      },
+      complete: () => {
+        this.submitLoading=false;
+      }
+    })
+  }
+
+  getFormData() {
+    this.formRecordService.getFormData(this.formRecordId).subscribe({
+      next: (response)=> {
+        this.formData = response;
+        let datefrom = new Date(this.formData.reportFrom);
+        let dateto = new Date(this.formData.reportTo);
+        this.reportDates.push(datefrom);
+        this.reportDates.push(dateto);
+        this.loading=false;
+      },
+      error: (err)=> {
+        console.log(err);
+        this.loading=false;
+      },
+      complete:()=>  {
+        this.loading=false;
+      }
+    })
+  }
+
 
 }

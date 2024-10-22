@@ -29,6 +29,7 @@ namespace Hrm.Application.Features.FormSchema.Handlers.Queries
             IQueryable<Hrm.Domain.FormSchema> querable = _repository.Where(x => true)
                 .Include(x => x.FormField)
                 .Include(x => x.Form)
+                .Include(x => x.FormSection)
                 .AsQueryable();
 
             if(request.filters.IsActive.HasValue)

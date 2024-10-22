@@ -19,5 +19,6 @@ namespace Hrm.Domain
 
         public virtual ICollection<FormRecord> FormRecords { get; } = new List<FormRecord>();
         public virtual ICollection<FormSchema> FormSchemas { get; set; }
+        public virtual ICollection<FormSection> FormSections { get; set; }
     }
 }

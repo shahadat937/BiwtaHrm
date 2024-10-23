@@ -112,6 +112,8 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
     this.isUpdate = false;
     this.leaveTypeForm.reset();
     this.leaveTypeService.leaveTypes = new LeaveType();
+    this.leaveTypeForm.form.patchValue(this.leaveTypeService.leaveTypes);
+    this.leaveTypeService.leaveTypes.eLWorkDayCal = true;
   }
 
   saveLeaveType() {

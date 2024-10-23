@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Hrm.Application.Enum;
 using System.Reflection.Metadata.Ecma335;
 using CsvHelper.Configuration.Attributes;
+using Microsoft.VisualBasic;
 
 namespace Hrm.Application.Helpers
 {
@@ -301,6 +302,16 @@ namespace Hrm.Application.Helpers
             leaveAmountDue.Add(-1);
             return leaveAmountDue;
 
+        }
+
+        private async Task<int> calculateWorkingDays(DateTime startDate, DateTime endDate)
+        {
+            int totalDays = (int) endDate.Subtract(startDate).TotalDays;
+            List<int> leaveTypes = new List<int> { 1, 2, 3, 4, 5 };
+
+            int totalLeaves = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveType.ELWorkDayCal == true).CountAsync();
+
+            return totalDays - totalLeaves;
         }
     }
 }

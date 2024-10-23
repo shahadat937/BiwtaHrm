@@ -79,7 +79,7 @@ export class UpdateFormComponent implements OnInit, OnDestroy {
     this.formData.reportFrom = this.reportDates[0];
     this.formData.reportTo = this.reportDates[1];
     
-    this.formRecordService.updateFormData(this.formData).subscribe({
+    this.formRecordService.updateFormData(this.formData,-1).subscribe({
       next: response=> {
         if(response.success) {
           this.toastr.success('',`${response.message}`, {

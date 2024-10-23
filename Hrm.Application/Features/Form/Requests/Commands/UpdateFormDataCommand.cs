@@ -12,5 +12,6 @@ namespace Hrm.Application.Features.Form.Requests.Commands
     public class UpdateFormDataCommand: IRequest<BaseCommandResponse>
     {
         public FormDataDto formData {  get; set; }
+        public int UpdateRole {  get; set; }
     }
 }

@@ -11,38 +11,74 @@
       (submit)="saveFormData()">
         <p-stepper>
             @for (item of formData.sections; track $index) {
+
+              @if (ActiveSection[$index]) {
               <p-stepperPanel >
                 <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback" let-ind="index">
                   <c-card>
                     <c-card-body [gutter]="3">
-                      <div class="d-flex justify-content-center">
-                        <h5>Part {{item.sectionId}}</h5>
+                      <app-application-header [dates]="reportDates" *ngIf="ind==0&&showHeader" [empId]="formData.empId"></app-application-header>
+                      <div class="mt-4 d-flex justify-content-center">
+                        <h5>{{item.sectionName}}</h5>
                       </div>
                       <hr>
-                      @if (ind==0) {
-                        <c-col md="3">
-                          <label for="empId" cLabel><strong>Employee PMS:</strong></label>
-                          <input type="text" 
-                          name="empId" 
-                          (input)="getEmpInfo()"
-                          [(ngModel)]="IdCardNo"
-                          id="empId" cFormControl>
-                        </c-col>
+                      @if (ind==0&&showHeader) {
                         <c-row class="mt-3" [gutter]="3">
-                          <label><strong>Report Duration:</strong></label>
-                          <p-calendar 
-                          [style]="{height: '2.37rem'}"
-                          name="dateRange"
-                          [(ngModel)] ="reportDates"
-                          selectionMode="range"
-                          showIcon="true"
-                          [touchUI]="true"
-                          />
+                          <c-col md="3">
+                            <label for="empId" cLabel><strong>Employee PMS:</strong></label>
+                            <input type="text" 
+                            name="empId" 
+                            (input)="getEmpInfo()"
+                            [(ngModel)]="IdCardNo"
+                            id="empId" cFormControl>
+                          </c-col>
+                          <c-col md="3">
+                            <label cLabel><strong>Report Duration:</strong></label>
+                            <p-calendar 
+                            [style]="{height: '2.37rem'}"
+                            name="dateRange"
+                            [(ngModel)] ="reportDates"
+                            selectionMode="range"
+                            showIcon="true"
+                            [touchUI]="true"
+                            />
+                          </c-col>
+                        </c-row>
+
+
+                        <c-row class="mt-3" [gutter]="3">
+                          <c-col md="3">
+                            <label for="reportingOfficer" cLabel><strong>Reporting Officer</strong></label>
+                            <select 
+                            name="reportingOfficer" id="reportingOfficer"
+                            cSelect
+                            [(ngModel)]="formData.reportingOfficerId"
+                            >
+                              <option [ngValue]="null">Select Officer</option>
+                              @for(option of EmpOption; track $index) {
+                                <option [ngValue]="option.id">{{option.name}}</option>
+                              } 
+                            </select>
+                          </c-col>
+                          <c-col md="3">
+                            <label for="counterSignatory" cLabel><strong>Counter Signatory</strong></label>
+                            <select 
+                            name="counterSignatory" id="counterSignatory"
+                            cSelect
+                            [(ngModel)]="formData.counterSignatoryId"
+                            >
+                              <option [ngValue]="null">Select Counter Signatory</option>
+                              @for(option of EmpOption; track $index) {
+                                <option [ngValue]="option.id">{{option.name}}</option>
+                              } 
+                            </select>
+                          </c-col>
                         </c-row>
                         <hr class="mb-3">
                       }
                       @for (field of item.fields; track $index) {
                         <app-field
+                        [empId]="formData.empId"
                         [(field)]="field.fieldValue"
                         (change) = "onChange()"
                         [fieldData]="field"
@@ -51,6 +87,23 @@
                       }
 
                       <hr>
+                      <div class="d-flex justify-content-between">
+                        <c-card class="p-1 d-flex justify-content-center align-items-center">
+                          <input type="date" name="date" id="" cFormControl>
+                        </c-card>
+                        @if (item.empId==null) {
+                          <c-card class="p-1 d-flex justify-content-center align-items-center me-2">
+                            <button cButton color="primary">
+                              Choose Signature
+                            </button>
+                          </c-card>
+                        } @else {
+                          <c-card class="p-1">
+                            <img src="https://placehold.co/150x50" width="150" height="52" alt="" srcset="">
+                          </c-card>
+                        }
+
+                      </div>
                       <div class="d-flex justify-content-end mt-3">
                         <button cButton type="submit" class="me-3" [disabled]="submitLoading||!officerForm.valid">
                           @if (submitLoading==true) {
@@ -83,6 +136,8 @@
                  
                 </ng-template>
               </p-stepperPanel>
+
+              }
             }
         </p-stepper>
       </form>

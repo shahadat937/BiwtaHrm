@@ -51,20 +51,28 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                 Description = form.Description,
                 ReportFrom = formRecord.ReportFrom,
                 ReportTo = formRecord.ReportTo,
-                EmpId = formRecord.EmpId
+                EmpId = formRecord.EmpId,
+                ReportingOfficerId = formRecord.ReportingOfficerId,
+                CounterSignatoryId = formRecord.CounterSignatoryId,
+                ReceiverId = formRecord.ReceiverId
             };
 
-            var sections = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == formRecord.FormId).Select(x => x.Section).Distinct().ToListAsync();
+            //var sections = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == formRecord.FormId).Select(x => x.Section).Distinct().ToListAsync();
+
+            var sections = await _unitOfWork.Repository<Hrm.Domain.FormSection>().Where(fs => fs.FormId == formRecord.FormId).ToListAsync();
 
             List<FormSectionDto> sectionDtos = new List<FormSectionDto>();
 
             foreach(var section in sections)
             {
-                var fieldIds = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == formRecord.FormId && x.IsActive == true && x.Section == section).Select(x => x.FieldId).ToListAsync();
+                var fieldInfo = await _unitOfWork.Repository<Hrm.Domain.FormSchema>().Where(x => x.FormId == formRecord.FormId && x.IsActive == true && x.SectionId == section.FormSectionId)
+                    .Include(x=>x.FormField)
+                    .ThenInclude(x=>x.FieldType)
+                    .OrderBy(x=>x.OrderNo).Select(x => x.FormField).ToListAsync();
 
-                var fieldInfo = await _unitOfWork.Repository<Hrm.Domain.FormField>().Where(x => fieldIds.Contains(x.FieldId))
-                    .Include(x => x.FieldType)
-                    .ToListAsync();
+                //var fieldInfo = await _unitOfWork.Repository<Hrm.Domain.FormField>().Where(x => fieldIds.Contains(x.FieldId))
+                  //  .Include(x => x.FieldType)
+                    //.ToListAsync();
 
                 var fieldInfoDto = _mapper.Map<List<FormFieldDto>>(fieldInfo).Select(x => new FormFieldValDto
                 {
@@ -101,11 +109,49 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
 
                         field.Options = optionDtos;
                     }
+
+                    if(field.HTMLTagName =="daterange")
+                    {
+                        var childFields = await _unitOfWork.Repository<Hrm.Domain.FormGroup>().Where(x => x.ParentFieldId == field.FieldId)
+                            .Include(x => x.ChildField)
+                            .ThenInclude(x => x.FieldType).OrderBy(x => x.OrderNo).Select(x => x.ChildField).ToListAsync();
+
+                        var childFieldInfoDto = _mapper.Map<List<FormFieldDto>>(childFields).Select(x => new FormFieldValDto
+                        {
+                            FieldId = x.FieldId,
+                            FieldName = x.FieldName,
+                            Description = x.Description,
+                            IsRequired = (bool)x.IsRequired,
+                            FieldTypeId = x.FieldTypeId,
+                            FieldTypeName = x.FieldTypeName,
+                            HTMLTagName = x.HTMLTagName,
+                            HTMLInputType = x.HTMLInputType,
+                            HasMultipleValue = (bool)x.HasMultipleValue,
+                            HasSelectable = (bool)x.HasSelectable
+                        }).ToList();
+
+                        foreach(var childField in childFieldInfoDto)
+                        {
+                           var childfieldRecord = await _unitOfWork.Repository<Hrm.Domain.FieldRecord>().Where(x => x.FieldId == childField.FieldId && x.FormRecordId == formRecord.RecordId).FirstOrDefaultAsync();
+
+                            if (childfieldRecord == null)
+                            {
+                                continue;
+                            }
+
+                            childField.Remark = childfieldRecord.Remark;
+                            childField.FieldRecordId = childfieldRecord.FieldRecordId;
+                            childField.FieldValue = childfieldRecord.FieldValue;
+                        }
+
+                        field.ChildFields = childFieldInfoDto;
+                    }
                 }
 
                 var sectionDto = new FormSectionDto
                 {
-                    SectionId = (int)section,
+                    SectionId = (int)section.FormSectionId,
+                    SectionName = section.FormSectionName,
                     Fields = fieldInfoDto
 
                 };

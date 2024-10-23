@@ -14,6 +14,8 @@ namespace Hrm.Application.DTOs.FormSchema
         public int FieldId { get; set; }
         public string FieldName { get; set; }
         public int? Section { get; set; }
+        public int? SectionId { get; set; }
+        public string SectionName { get; set; }
         public bool IsActive { get; set; }
         public int? OrderNo { get; set; }
         public string? Remark { get; set; }

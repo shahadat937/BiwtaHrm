@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ModuleListComponent } from './module-list/module-list.component';
 import { FeatureListComponent } from './feature-list/feature-list.component';
 import { SiteSettingComponent } from './site-setting/site-setting.component';
+import { NavbarThemListComponent } from './navbar-them-list/navbar-them-list.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,13 @@ const routes: Routes = [
         component: SiteSettingComponent,
         data: {
           title: 'Site Setting',
+        },
+      },
+      {
+        path: 'navbar-them',
+        component: NavbarThemListComponent,
+        data: {
+          title: 'Navbar Them',
         },
       },
     ]

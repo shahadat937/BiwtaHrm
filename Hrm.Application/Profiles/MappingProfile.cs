@@ -120,7 +120,11 @@ using Hrm.Application.DTOs.CourseDuration;
 using Hrm.Application.DTOs.EmpTrainingInfo;
 using Hrm.Application.DTOs.DesignationSetup;
 using Hrm.Application.DTOs.JobDetailsSetup;
+
+using Hrm.Application.DTOs.NavbarThem;
+
 using Hrm.Application.DTOs.FormGroup;
+
 
 
 
@@ -711,8 +715,13 @@ namespace Hrm.Application.Profiles
             CreateMap<JobDetailsSetup, JobDetailsSetupDto>().ReverseMap();
             CreateMap<JobDetailsSetup, CreateJobDetailsSetupDto>().ReverseMap();
 
+
+            CreateMap<NavbarThem, NavbarThemDto>().ReverseMap();
+            CreateMap<NavbarThem, CreateNavbarThemDto>().ReverseMap();
+
             CreateMap<FormGroup,FormGroupDto>().ReverseMap();
             CreateMap<FormGroup, CreateFormGroupDto>().ReverseMap();
+
 
         }
     }

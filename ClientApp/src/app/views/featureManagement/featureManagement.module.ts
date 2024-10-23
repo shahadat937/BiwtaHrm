@@ -38,6 +38,8 @@ import { MatTableModule } from '@angular/material/table';
 import { IconModule } from '@coreui/icons-angular';
 import { SiteSettingComponent } from './site-setting/site-setting.component';
 import { CreateSiteSettingComponent } from './create-site-setting/create-site-setting.component';
+import { NavbarThemListComponent } from './navbar-them-list/navbar-them-list.component';
+import { CreateNavbarThemComponent } from './create-navbar-them/create-navbar-them.component';
 
 
 @NgModule({
@@ -48,6 +50,8 @@ import { CreateSiteSettingComponent } from './create-site-setting/create-site-se
     CreateFeatureComponent,
     SiteSettingComponent,
     CreateSiteSettingComponent,
+    NavbarThemListComponent,
+    CreateNavbarThemComponent,
   ],
   imports: [
     CommonModule,

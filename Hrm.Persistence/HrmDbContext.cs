@@ -1377,6 +1377,7 @@ namespace Hrm.Persistence
         public virtual DbSet<FormSection> FormSection { get; set; } = null!;
         public virtual DbSet<DesignationSetup> DesignationSetup { get; set; } = null!;
         public virtual DbSet<JobDetailsSetup> JobDetailsSetup { get; set; } = null!;
+        public virtual DbSet<NavbarThem> NavbarThem { get; set; } = null!;
 
     }
 }

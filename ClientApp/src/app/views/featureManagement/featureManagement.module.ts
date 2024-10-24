@@ -19,6 +19,7 @@ import {
   PopoverModule,
   ProgressModule,
   SharedModule,
+  SidebarModule,
   SpinnerModule,
   TableModule,
   TooltipModule,
@@ -40,6 +41,7 @@ import { SiteSettingComponent } from './site-setting/site-setting.component';
 import { CreateSiteSettingComponent } from './create-site-setting/create-site-setting.component';
 import { NavbarThemListComponent } from './navbar-them-list/navbar-them-list.component';
 import { CreateNavbarThemComponent } from './create-navbar-them/create-navbar-them.component';
+import { ColorPickerModule } from 'primeng/colorpicker';
 
 
 @NgModule({
@@ -74,7 +76,6 @@ import { CreateNavbarThemComponent } from './create-navbar-them/create-navbar-th
     CollapseDirective,
     MatFormFieldModule,
     MatTableModule,
-    FormsModule,
     MatPaginatorModule,
     MatInputModule,
     CollapseDirective,
@@ -90,7 +91,9 @@ import { CreateNavbarThemComponent } from './create-navbar-them/create-navbar-th
     PopoverModule,
     AlertComponent,
     TooltipModule,
-    BadgeModule
+    BadgeModule,
+    ColorPickerModule,
+    SidebarModule,
   ],
   providers: [ 
     ToastrService,

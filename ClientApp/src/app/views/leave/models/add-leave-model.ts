@@ -12,6 +12,9 @@ export class AddLeaveModel {
     isActive: boolean;
     associatedFiles: File | null;
     remark: string;
+    reviewedBy: number | null;
+    approvedBy: number | null;
+
 
 
     constructor() {
@@ -28,6 +31,8 @@ export class AddLeaveModel {
         this.isActive = true;
         this.remark = "";
         this.associatedFiles= null;
+        this.reviewedBy = null;
+        this.approvedBy = null;
     }
 
 }

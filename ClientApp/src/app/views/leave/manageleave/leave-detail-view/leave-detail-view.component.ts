@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { environment } from 'src/environments/environment';
+import { AddLeaveService } from '../../service/add-leave.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-leave-detail-view',
@@ -17,17 +19,19 @@ import { environment } from 'src/environments/environment';
 })
 export class LeaveDetailViewComponent implements OnInit, OnDestroy{
 
+  subscription: Subscription = new Subscription();
   loading: boolean = false;
   @Input() leaveRequestId: number = 0;
   @Input() CanApprove: boolean = false;
   @Input() Role : string = "Reviewer";
-  subscription: Subscription = new Subscription();
   leaveData : LeaveModel = new LeaveModel();
   leaveStatusOption: string [] = [];
   modalOpened: boolean = false;
   baseImageUrl: string;
+  totalLeave: number;
   constructor (
     public leaveService: ManageLeaveService,
+    private addLeaveService: AddLeaveService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -39,11 +43,13 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
     private renderer: Renderer2
   ) {
     this.baseImageUrl = environment.imageUrl;
+    this.totalLeave = 0;
   }
 
   ngOnInit(): void {
     this.getLeaveStatusOption();
     this.getLeaveRequestById();
+    //this.getWorkingDays();
     setTimeout(() => {
       this.modalOpened = true;
     }, 0);
@@ -60,6 +66,7 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
     this.subscription = this.leaveService.getLeaveById(this.leaveRequestId).subscribe({
       next: response=> {
         this.leaveData = response;
+        this.getWorkingDays();
       },
       error: err => {
         console.log(err);
@@ -181,5 +188,22 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
     } else {
       this.toastr.warning('',"Invalid Role");
     }
+  }
+
+  getWorkingDays() {
+    console.log("Getting Working Days");
+    if(this.leaveData.fromDate==""||this.leaveData.toDate=="") {
+      console.log(this.leaveData);
+      return;
+      this.totalLeave = 0;
+    }
+    let params = new HttpParams();
+    params = params.set("From", this.leaveData.fromDate);
+    params = params.set("To", this.leaveData.toDate);
+    this.subscription = this.addLeaveService.getWorkingDays(params).subscribe({
+      next: response => {
+        this.totalLeave = response;
+      }
+    })
   }
 }

@@ -2,6 +2,10 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, S
 import { EmpEducationInfoService } from '../../employee/service/emp-education-info.service';
 import { EmpEducationInfoModule } from '../../employee/model/emp-education-info.module';
 import { Subscription } from 'rxjs';
+import { cilX } from '@coreui/icons';
+import { FormRecordService } from '../services/form-record.service';
+import { JobHistoryModel } from '../models/job-history-model';
+import { ThanaService } from '../../basic-setup/service/thana.service';
 
 @Component({
   selector: 'app-field',
@@ -33,23 +37,28 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
     this.change.emit(event);
   }
 
+  jobHistory: JobHistoryModel[];
   educationInfos: EmpEducationInfoModule[];
   subscription: Subscription = new Subscription();
   selectedEduInfos : EmpEducationInfoModule[] = [];
+  icons = {cilX};
 
   constructor(
-    private empEducationInfoService: EmpEducationInfoService
+    private empEducationInfoService: EmpEducationInfoService,
+    private formRecordService: FormRecordService, 
   ) {
     this.fieldUniqueName = "default";
     this.Index = "";
     this.IsReadonly = false;
     this.empId = 0;
     this.educationInfos = [];
+    this.jobHistory = [];
   }
 
   ngOnInit(): void {
-    console.log(this.field);
+
     this.getEducationInfo(false);
+    this.getJobHistory();
   }
 
   ngOnDestroy(): void {
@@ -93,5 +102,19 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
   getSelectedEducationInfo() {
     let ids =this.field.trim().split(',').map(x=>parseInt(x));
     this.selectedEduInfos = this.educationInfos.filter(x=>ids.includes(x.id));
+  }
+
+  getJobHistory() {
+
+    if(this.fieldData.htmlTagName!="table"||this.fieldData.htmlInputType!="jobhistory") {
+      return;
+    }
+    let startDate = "2002-01-01";
+    let endDate = "2025-01-01";
+    this.formRecordService.getJobHistory(this.empId,startDate,endDate).subscribe({
+      next: response => {
+        this.jobHistory = response;
+      }
+    })
   }
 }

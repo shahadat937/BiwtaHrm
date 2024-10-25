@@ -63,6 +63,7 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
           this.leaveTypes[this.updateIndex].leaveTypeName = this.leaveTypeService.leaveTypes.leaveTypeName;
           this.leaveTypes[this.updateIndex].remark = this.leaveTypeService.leaveTypes.remark;
           this.leaveTypes[this.updateIndex].isActive = this.leaveTypeService.leaveTypes.isActive;
+          this.leaveTypes[this.updateIndex].elWorkDayCal = this.leaveTypeService.leaveTypes.elWorkDayCal;
 
           this.onReset();
         } else {
@@ -112,6 +113,7 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
     this.isUpdate = false;
     this.leaveTypeForm.reset();
     this.leaveTypeService.leaveTypes = new LeaveType();
+    this.leaveTypeForm.form.patchValue(this.leaveTypeService.leaveTypes);
   }
 
   saveLeaveType() {
@@ -154,6 +156,7 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
   updateButtonAction(data:any,index:number) {
     
     this.isUpdate = true;
+    console.log(data);
     this.leaveTypeForm.form.patchValue(data);
     this.leaveTypeService.leaveTypes.leaveTypeId = data.leaveTypeId;
     this.updateIndex = index;

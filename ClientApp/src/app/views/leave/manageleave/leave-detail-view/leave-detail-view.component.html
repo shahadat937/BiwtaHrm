@@ -40,13 +40,13 @@
                   <c-col [md]="2">
                     <strong>Duration:</strong>
                   </c-col>
-                  <c-col [md]="4"> 5 days </c-col>
+                  <c-col [md]="4"> {{this.totalLeave}} days </c-col>
                 </c-row>
                 <c-row>
                   <c-col [md]="2">
                     <strong>Dates:</strong>
                   </c-col>
-                  <c-col [md]="4"> {{leaveData.fromDate.split('T')[0]}} to {{leaveData.toDate.split('T')[0]}} </c-col>
+                  <c-col [md]="4"> {{leaveData.fromDate|date}} to {{leaveData.toDate | date}} </c-col>
                 </c-row>
                 <c-row>
                   <c-col [md]="2">

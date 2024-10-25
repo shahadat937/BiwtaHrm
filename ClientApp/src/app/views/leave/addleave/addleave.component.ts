@@ -8,6 +8,8 @@ import { NgForm } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { AddLeaveModel } from '../models/add-leave-model';
 import { AuthService } from 'src/app/core/service/auth.service';
+import { LeaveBalanceService } from '../service/leave-balance.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-addleave',
@@ -21,15 +23,24 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   @ViewChild("addLeaveForm",{static:true}) addLeaveForm!: NgForm
   empCardNo:string ;
   employeeName: string;
+  defaultPhoto: string;
+  employeePhoto: string;
+  department: string;
+  designation: string;
   empSubs: Subscription = new Subscription();
   empReqSub: Subscription = new Subscription();
   totalLeave:number|null;
   totalDue: number|null;
   CountryOption: any[] = [];
   isValidPMS: boolean;
+  leaveBalances: any[] = [];
+  imageUrl: string;
 
+  reviewerPMIS: string;
+  approverPMIS: string;
   constructor(
-    public addLeaveService: AddLeaveService, 
+    public addLeaveService: AddLeaveService,
+    private leaveBalanceService: LeaveBalanceService, 
     private toastr: ToastrService,
     private confirmService: ConfirmService,
     private authService: AuthService
@@ -40,6 +51,13 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.totalDue = null;
     this.totalLeave = null;
     this.isValidPMS = false;
+    this.reviewerPMIS = "";
+    this.approverPMIS = "";
+    this.imageUrl = environment.imageUrl;
+    this.defaultPhoto = environment.imageUrl + "EmpPhoto/default.jpg";
+    this.employeePhoto = this.defaultPhoto;
+    this.designation = "";
+    this.department = "";
   }
 
   ngOnInit(): void {
@@ -57,6 +75,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
           this.isValidPMS = true;
           this.addLeaveService.addLeaveModel.empId = parseInt(this.authService.currentUserValue.empId);
           this.employeeName = response.firstName + " "+response.lastName;
+          this.department = response.departmentName;
+          this.designation = response.designationName;
         }
       })
     }
@@ -82,6 +102,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       this.employeeName = "";
       this.addLeaveService.addLeaveModel.empId = null;
       this.getLeaveAmount();
+      this.leaveBalances = [];
+      this.employeePhoto = this.defaultPhoto;
       return;
     }
 
@@ -92,12 +114,23 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
             this.employeeName = response.firstName + " "+response.lastName;
             this.addLeaveService.addLeaveModel.empId = response.id;
             this.isValidPMS = true;
+            if(response.empPhotoName!="") {
+              this.employeePhoto = this.imageUrl + "EmpPhoto/"+response.empPhotoName;
+            } else {
+              this.employeePhoto = this.defaultPhoto;
+            }
             this.getLeaveAmount();
+            this.getLeaveBalanceForAllType(response.id);
+            this.department = response.departmentName;
+            this.designation = response.designationName;
           } else {
             this.employeeName = "";
             this.addLeaveService.addLeaveModel.empId = null;
             this.isValidPMS = false
             this.getLeaveAmount();
+            this.employeePhoto = this.defaultPhoto;
+            this.department = "";
+            this.designation = "";
           }
         },
         error: err=> {
@@ -105,8 +138,11 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
           this.employeeName = "";
           this.addLeaveService.addLeaveModel.empId = null;
           this.getLeaveAmount();
+          this.employeePhoto = this.defaultPhoto;
+          this.department = "";
+          this.designation = "";
         }
-      })
+      });
     })
 
   }
@@ -230,8 +266,11 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.loading = false;
     this.empCardNo ="";
     this.employeeName = "";
+    this.employeePhoto = this.defaultPhoto;
     this.totalDue = null;
     this.totalLeave = null;
+
+    this.leaveBalances = [];
   }
 
   convertToFormData(model: any, fileFields: string[] = []): FormData {
@@ -266,6 +305,78 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     } else {
       this.addLeaveService.addLeaveModel.isForeignLeave = false;
     }
+  }
+
+  getLeaveBalanceForAllType(empId:number) {
+    this.leaveBalanceService.getLeaveBalance(empId).subscribe({
+      next: response => {
+        this.leaveBalances = response;
+      }
+    })
+  }
+
+  onReviewerChange() {
+    if(this.reviewerPMIS.trim()=="") {
+      this.addLeaveService.addLeaveModel.reviewedBy = null;
+      return;
+    }
+
+    const source$ = of (this.reviewerPMIS).pipe(
+      delay(700)
+    );
+
+    if(this.subcription) {
+      this.subcription.unsubscribe();
+    }
+
+    this.subcription = source$.subscribe(data => {
+      this.addLeaveService.getEmpInfoByCard(data).subscribe({
+        next: response => {
+          if(response!=null) {
+            this.addLeaveService.addLeaveModel.reviewedBy = response.id;
+          } else {
+            this.addLeaveService.addLeaveModel.reviewedBy = null;
+          }
+        },
+        error: (err) => {
+          this.addLeaveService.addLeaveModel.reviewedBy = null;
+        }
+      })
+    })
+  }
+  onApproverChange() {
+    if(this.reviewerPMIS.trim()=="") {
+      this.addLeaveService.addLeaveModel.approvedBy = null;
+      return;
+    }
+
+    const source$ = of (this.approverPMIS).pipe(
+      delay(700)
+    );
+
+    if(this.subcription) {
+      this.subcription.unsubscribe();
+    }
+
+    this.subcription = source$.subscribe(data => {
+      this.addLeaveService.getEmpInfoByCard(data).subscribe({
+        next: response => {
+          if(response!=null) {
+            this.addLeaveService.addLeaveModel.approvedBy = response.id;
+          } else {
+            this.addLeaveService.addLeaveModel.approvedBy = null;
+          }
+        },
+        error: (err) => {
+          this.addLeaveService.addLeaveModel.approvedBy = null;
+        }
+      })
+    })
+  }
+
+  onImageError(event:any) {
+    const target = event.target as HTMLImageElement;
+    target.src = this.defaultPhoto;
   }
 
 }

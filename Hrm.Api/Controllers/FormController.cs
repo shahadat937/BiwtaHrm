@@ -73,6 +73,16 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("get-EmployeeJobHistory")]
+        public async Task<ActionResult> GetEmployeeJobHistory([FromQuery] int EmpId, [FromQuery] DateOnly StartDate, DateOnly EndDate)
+        {
+            var command = new GetEmployeeJobHistoryForFormRequest { EmpId = EmpId, startDate = StartDate, endDate = EndDate };
+
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

@@ -11,6 +11,7 @@ namespace Hrm.Domain
     {
         public int LeaveTypeId { get; set; }
         public string LeaveTypeName { get; set; }
+        public bool? ELWorkDayCal {  get; set; }
         public bool IsActive { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }

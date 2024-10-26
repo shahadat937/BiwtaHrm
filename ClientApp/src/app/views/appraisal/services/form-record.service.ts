@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { filter, map, Observable, of } from 'rxjs';
 import { FormRecordFilter } from '../models/form-record-filter';
+import {JobHistoryModel} from '../models/job-history-model'
 
 @Injectable()
 export class FormRecordService {
@@ -76,5 +77,14 @@ export class FormRecordService {
     }
 
     return params;
+  }
+
+  getJobHistory(empId:number,startDate:string,endDate:string): Observable<JobHistoryModel[]> {
+    let params = new HttpParams();
+    params = params.set('empId',empId);
+    params = params.set('startDate', startDate);
+    params = params.set('endDate', endDate);
+
+    return this.http.get<JobHistoryModel[]>(this.baseUrl+"/form/get-EmployeeJobHistory", {params: params});
   }
 }

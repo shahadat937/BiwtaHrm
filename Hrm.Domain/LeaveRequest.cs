@@ -33,6 +33,7 @@ namespace Hrm.Domain
         public LeaveType LeaveType {get; set;}
         public Country Country {get; set;}
         public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
+        public ICollection<LeaveFiles> LeaveFiles { get; set; } = new List<LeaveFiles>();
         
     }
 }

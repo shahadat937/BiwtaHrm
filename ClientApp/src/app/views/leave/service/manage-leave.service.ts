@@ -51,4 +51,8 @@ export class ManageLeaveService {
   getLeaveByFilter(params: HttpParams): Observable<LeaveModel[]> {
     return this.http.get<LeaveModel[]>(this.baseUrl+"/leaveRequest/get-LeaveRequestByFilter", {params:params});
   }
+
+  getLeaveFiles(leaveRequestId: number): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl+`/leaveRequest/get-LeaveFilesByLeaveRequestId/${leaveRequestId}`);
+  }
 }

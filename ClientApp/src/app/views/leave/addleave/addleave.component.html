@@ -213,7 +213,8 @@
             <div class="mt-4">
               <h5 class="mb-3">Leave Associate File Upload</h5>
               <input 
-              type="file" 
+              multiple
+              type="file"
               (change)="handleFile($event)"
               name="associatedFiles"
               cFormControl />
@@ -382,7 +383,7 @@
                 id="reviewerRemark">
               </c-col>
             </c-row>
-            <c-row class="mt-3 ms-md-5" [gutter]="3">
+            <c-row class="mt-3 ms-md-5 mb-3" [gutter]="3">
               <label cCol cLabel="col" sm="2">Approver: </label>
               <c-col md="4">
                 <input type="text"
@@ -402,6 +403,23 @@
                 id="reviewerRemark">
               </c-col>
             </c-row>
+            <!-- <c-row clas="mt-2 ms-3">
+              <p-fileUpload 
+                  name="demo[]" 
+                  [multiple]="true" 
+                  [showUploadButton]="false"
+                  accept="image/*" 
+                  maxFileSize="1000000">
+
+                  <ng-template pTemplate="content">
+                      <ul *ngIf="uploadedFiles.length">
+                          <li *ngFor="let file of uploadedFiles">
+                              {{ file.name }} - {{ file.size }} bytes
+                          </li>
+                      </ul>
+                  </ng-template>
+              </p-fileUpload>
+            </c-row> -->
             <div class="mt-3 d-flex justify-content-end">
               <button 
               cButton 

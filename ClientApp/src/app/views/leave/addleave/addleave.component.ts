@@ -35,6 +35,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   isValidPMS: boolean;
   leaveBalances: any[] = [];
   imageUrl: string;
+  uploadedFiles: any[] = [];
 
   reviewerPMIS: string;
   approverPMIS: string;
@@ -278,12 +279,15 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   convertToFormData(model: any, fileFields: string[] = []): FormData {
     const formData = new FormData();
     for (const key in model) {
-      if (model.hasOwnProperty(key)) {
-        if (fileFields.includes(key)) {
-          formData.append(key, model[key], model[key]);
-        } else if (model[key] != null) {
-          formData.append(key, model[key]);
+      if (model.hasOwnProperty(key)&&model[key]!=null) {
+        if(key=="associatedFiles") {
+          model[key].forEach((data:any)=> {
+            formData.append(key,data);
+          })
+          continue;
         }
+
+        formData.append(key, model[key]);
       }
     }
 
@@ -291,7 +295,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   }
 
   handleFile(event:any) {
-    this.addLeaveService.addLeaveModel.associatedFiles = event.target.files[0];
+    const files: FileList = event.target.files;
+    this.addLeaveService.addLeaveModel.associatedFiles = Array.from(files); 
   }
 
   IsForeignLeave() {

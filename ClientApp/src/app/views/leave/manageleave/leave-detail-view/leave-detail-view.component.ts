@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/core/service/auth.service';
 import { environment } from 'src/environments/environment';
 import { AddLeaveService } from '../../service/add-leave.service';
 import { HttpParams } from '@angular/common/http';
+import { ThanaService } from 'src/app/views/basic-setup/service/thana.service';
 
 @Component({
   selector: 'app-leave-detail-view',
@@ -29,6 +30,7 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
   modalOpened: boolean = false;
   baseImageUrl: string;
   totalLeave: number;
+  leaveFiles: any[];
   constructor (
     public leaveService: ManageLeaveService,
     private addLeaveService: AddLeaveService,
@@ -44,11 +46,13 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
   ) {
     this.baseImageUrl = environment.imageUrl;
     this.totalLeave = 0;
+    this.leaveFiles = [];
   }
 
   ngOnInit(): void {
     this.getLeaveStatusOption();
     this.getLeaveRequestById();
+    this.getLeaveFiles();
     //this.getWorkingDays();
     setTimeout(() => {
       this.modalOpened = true;
@@ -191,7 +195,6 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
   }
 
   getWorkingDays() {
-    console.log("Getting Working Days");
     if(this.leaveData.fromDate==""||this.leaveData.toDate=="") {
       console.log(this.leaveData);
       return;
@@ -203,6 +206,15 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
     this.subscription = this.addLeaveService.getWorkingDays(params).subscribe({
       next: response => {
         this.totalLeave = response;
+      }
+    })
+  }
+
+  getLeaveFiles() {
+    this.leaveService.getLeaveFiles(this.leaveRequestId).subscribe({
+      next: response => {
+        this.leaveFiles = response;
+        console.log(this.leaveFiles);
       }
     })
   }

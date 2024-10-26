@@ -1251,6 +1251,13 @@ namespace Hrm.Persistence
                     .HasForeignKey(fg => fg.FormFieldId);
             });
 
+            modelBuilder.Entity<NavbarSetting>(entity =>
+            {
+                entity.HasOne(e => e.NavbarThem)
+                    .WithMany(e => e.NavbarSettings)
+                    .HasForeignKey(e => e.ThemId);
+            });
+
             modelBuilder.Entity<LeaveFiles>(entity =>
             {
                 entity.HasKey(lf => lf.Id)
@@ -1388,6 +1395,7 @@ namespace Hrm.Persistence
         public virtual DbSet<DesignationSetup> DesignationSetup { get; set; } = null!;
         public virtual DbSet<JobDetailsSetup> JobDetailsSetup { get; set; } = null!;
         public virtual DbSet<NavbarThem> NavbarThem { get; set; } = null!;
+        public virtual DbSet<NavbarSetting> NavbarSetting { get; set; } = null!;
         public virtual DbSet<LeaveFiles> LeaveFiles { get; set; } = null!;
 
     }

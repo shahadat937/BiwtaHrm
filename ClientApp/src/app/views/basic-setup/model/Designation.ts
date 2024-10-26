@@ -5,6 +5,7 @@ export class Designation {
     departmentId: any = null;
     sectionId: any = null;
     remark: string="";
+    createCount: number = 1;
     menuPosition: number=0;
     isActive:boolean= true;
     officeName: string = "";

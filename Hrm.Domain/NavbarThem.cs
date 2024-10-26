@@ -27,6 +27,8 @@ namespace Hrm.Domain
         public int? Width { get; set; }
         public string? Remark { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual ICollection<NavbarSetting>? NavbarSettings { get; set; }
     }
 
 }

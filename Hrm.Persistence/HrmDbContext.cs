@@ -1251,6 +1251,16 @@ namespace Hrm.Persistence
                     .HasForeignKey(fg => fg.FormFieldId);
             });
 
+            modelBuilder.Entity<LeaveFiles>(entity =>
+            {
+                entity.HasKey(lf => lf.Id)
+                .HasName("[[PK_LeaveFiles]]");
+
+                entity.HasOne(lf => lf.LeaveRequest)
+                .WithMany(lr => lr.LeaveFiles)
+                .HasForeignKey(lf => lf.LeaveRequestId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -1378,6 +1388,7 @@ namespace Hrm.Persistence
         public virtual DbSet<DesignationSetup> DesignationSetup { get; set; } = null!;
         public virtual DbSet<JobDetailsSetup> JobDetailsSetup { get; set; } = null!;
         public virtual DbSet<NavbarThem> NavbarThem { get; set; } = null!;
+        public virtual DbSet<LeaveFiles> LeaveFiles { get; set; } = null!;
 
     }
 }

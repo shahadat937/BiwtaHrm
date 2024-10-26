@@ -269,6 +269,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.employeePhoto = this.defaultPhoto;
     this.totalDue = null;
     this.totalLeave = null;
+    this.department = "";
+    this.designation = "";
 
     this.leaveBalances = [];
   }

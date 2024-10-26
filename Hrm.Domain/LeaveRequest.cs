@@ -26,6 +26,8 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public int? ReviewedBy { get; set; }
         public int? ApprovedBy { get; set; }
+        public string? ReviewerRemark {  get; set; }
+        public string? ApproverRemark {  get; set; }
 
         public EmpBasicInfo Employee {get; set;}
         public LeaveType LeaveType {get; set;}

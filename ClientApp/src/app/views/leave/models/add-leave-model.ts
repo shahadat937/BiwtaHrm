@@ -14,6 +14,8 @@ export class AddLeaveModel {
     remark: string;
     reviewedBy: number | null;
     approvedBy: number | null;
+    reviewerRemark: string;
+    approverRemark: string;
 
 
 
@@ -33,6 +35,8 @@ export class AddLeaveModel {
         this.associatedFiles= null;
         this.reviewedBy = null;
         this.approvedBy = null;
+        this.reviewerRemark = "";
+        this.approverRemark = "";
     }
 
 }

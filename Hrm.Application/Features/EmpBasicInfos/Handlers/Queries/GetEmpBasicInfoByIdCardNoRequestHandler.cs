@@ -35,6 +35,8 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
                     .ThenInclude(x=>x.Designation)
                         .ThenInclude(x=>x.DesignationSetup)
                 .Include(x=>x.EmpPhotoSign)
+                .Include(x=>x.EmpJobDetail)
+                    .ThenInclude(x=>x.Section)
                 .FirstOrDefaultAsync();
 
             var EmpBasicInfoDto = _mapper.Map<EmpBasicInfoDto>(EmpBasicInfo);

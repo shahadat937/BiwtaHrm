@@ -131,6 +131,21 @@
               type="number"
             />
           </c-col>
+          
+        
+          <c-col [md]="4" *ngIf="btnText == 'Submit'">
+            <label cLabel for="createCount"
+            >Create Count<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="designationService.designation.createCount"
+              name="createCount" 
+              #createCount="ngModel"
+              placeholder="Create Count"
+              cFormControl
+              id="createCount"
+              type="number"
+            />
+          </c-col>
     
             <c-col [md]="4">
               <label cLabel for="validationCustom04">Active Status</label>

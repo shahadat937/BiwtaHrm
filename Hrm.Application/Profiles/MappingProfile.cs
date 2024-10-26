@@ -723,10 +723,10 @@ namespace Hrm.Application.Profiles
             CreateMap<FormGroup,FormGroupDto>().ReverseMap();
             CreateMap<FormGroup, CreateFormGroupDto>().ReverseMap();
 
-            CreateMap<NavbarSetting, NavbarSettingDto>().ReverseMap();
-            CreateMap<NavbarSetting, CreateNavbarSettingDto>().ReverseMap();
-            CreateMap<NavbarSetting, NavbarSettingDto>()
-                .ForMember(dest => dest.ThemName, opt => opt.MapFrom(src => src.NavbarThem.ThemName));
+            //CreateMap<NavbarSetting, NavbarSettingDto>().ReverseMap();
+            //CreateMap<NavbarSetting, CreateNavbarSettingDto>().ReverseMap();
+            //CreateMap<NavbarSetting, NavbarSettingDto>()
+            //    .ForMember(dest => dest.ThemName, opt => opt.MapFrom(src => src.NavbarThem.ThemName));
 
         }
     }

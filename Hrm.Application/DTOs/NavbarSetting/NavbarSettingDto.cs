@@ -16,6 +16,6 @@ namespace Hrm.Application.DTOs.NavbarSetting
         public string? Remark { get; set; }
         public bool IsActive { get; set; }
 
-        public string? ThemName { get; set; }
+        //public string? ThemName { get; set; }
     }
 }

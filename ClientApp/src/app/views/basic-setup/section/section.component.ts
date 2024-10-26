@@ -76,7 +76,6 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
         this.BtnText = " Hide Form";
         this.buttonIcon = "cilTrash";
         this.sectionService.find(+id).subscribe((res) => {
-          this.onOfficeSelect(res.officeId);
           this.onOfficeAndDepartmentSelect(res.departmentId);
           this.SectionForm?.form.patchValue(res);
         });

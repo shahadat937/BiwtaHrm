@@ -78,11 +78,20 @@ public class LeaveRequestController:Controller
         return Ok(response);
     }
 
+    [HttpGet]
+    [Route("get-LeaveFilesByLeaveRequestId/{LeaveRequestId}")]
+    public async Task<ActionResult> GetLeaveFiles(int LeaveRequestId)
+    {
+        var command = new GetLeaveFilesByLeaveRequestIdRequest { LeaveRequestId = LeaveRequestId };
+        var response = await _mediator.Send(command);
+        return Ok(response);
+    }
+
     [HttpPost]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     [Route("save-leaveRequest")]
-    public async Task<ActionResult> SaveLeaveRequest([FromForm] CreateLeaveRequestDto leaveRequestDto, IFormFile? AssociatedFiles)
+    public async Task<ActionResult> SaveLeaveRequest([FromForm] CreateLeaveRequestDto leaveRequestDto, List<IFormFile>? AssociatedFiles)
     {
         var command = new CreateLeaveRequestCommand { createLeaveRequestDto = leaveRequestDto, AssociatedFiles = AssociatedFiles };
         var response = await _mediator.Send(command);

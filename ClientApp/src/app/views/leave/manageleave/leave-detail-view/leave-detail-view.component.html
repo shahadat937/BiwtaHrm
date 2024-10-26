@@ -88,9 +88,26 @@
                   <c-col [md]="2">
                     <strong>File:</strong>
                   </c-col>
-                  <c-col [md]="4">
-                    @if (leaveData.associatedFile!=null) {
-                      <a target="_blank" class="btn btn-outline-primary" [href]="baseImageUrl+'/leaveFile/'+leaveData.associatedFile">Download</a>
+                  <c-col [md]="6">
+                    @if (leaveFiles.length>0) {
+                      <p-table styleClass="p-datatable-striped" [value]="leaveFiles">
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <th>FileName</th>
+                            <th>Action</th>
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-file>
+                          <tr>
+                            <td>{{file.fileTitle}}</td>
+                            <td>
+                              <a target="_blank" [href]="baseImageUrl+'/leaveFile/'+file.filePath">
+                                <mat-icon aria-hidden="false" aria-label="Download Leave File" fontIcon="download"></mat-icon>
+                              </a>
+                            </td>
+                          </tr>
+                        </ng-template>
+                      </p-table>
                     } @else {
                       No Associated File
                     } 

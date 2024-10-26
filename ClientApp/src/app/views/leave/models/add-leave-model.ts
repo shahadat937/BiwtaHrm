@@ -10,10 +10,12 @@ export class AddLeaveModel {
     foreignLeavePurpose: string | null;
     accompanyBy: string;
     isActive: boolean;
-    associatedFiles: File | null;
+    associatedFiles: File[] | null;
     remark: string;
     reviewedBy: number | null;
     approvedBy: number | null;
+    reviewerRemark: string;
+    approverRemark: string;
 
 
 
@@ -33,6 +35,8 @@ export class AddLeaveModel {
         this.associatedFiles= null;
         this.reviewedBy = null;
         this.approvedBy = null;
+        this.reviewerRemark = "";
+        this.approverRemark = "";
     }
 
 }

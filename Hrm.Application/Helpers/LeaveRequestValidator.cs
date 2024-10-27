@@ -313,5 +313,19 @@ namespace Hrm.Application.Helpers
 
             return totalDays - totalLeaves;
         }
+
+        public async Task<int> GetAvailedLeave(int empId, int leaveTypeId)
+        {
+            int availed = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x=>x.AttendanceStatusId == (int) AttendanceStatusOption.OnLeave&& x.LeaveRequest.LeaveTypeId == (int) leaveTypeId && x.EmpId == empId).CountAsync();
+
+            return availed;
+        }
+
+        public async Task<int> GetTotalApplied(int empId, int leaveTypeId)
+        {
+            int applied = await _unitOfWork.Repository<Hrm.Domain.LeaveRequest>().Where(x=>x.EmpId == empId && x.LeaveTypeId ==  leaveTypeId).CountAsync();
+
+            return applied;
+        }
     }
 }

@@ -67,21 +67,21 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
             request.createLeaveRequestDto.Status = (int) LeaveStatusOption.Pending;
             var leaveRequest = _mapper.Map<Hrm.Domain.LeaveRequest>(request.createLeaveRequestDto);
 
-            if (request.AssociatedFiles != null&&false)
-            {
-                string uniqueFileName = GenerateUniqueFileName(Path.GetExtension(request.AssociatedFiles[0].FileName));
+            //if (request.AssociatedFiles != null&&false)
+            //{
+            //    string uniqueFileName = GenerateUniqueFileName(Path.GetExtension(request.AssociatedFiles[0].FileName));
 
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\leaveFile", uniqueFileName);
+            //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\leaveFile", uniqueFileName);
 
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            //    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
-                using (var signStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await request.AssociatedFiles[0].CopyToAsync(signStream);
-                }
-                leaveRequest.AssociatedFile = uniqueFileName;
+            //    using (var signStream = new FileStream(filePath, FileMode.Create))
+            //    {
+            //        await request.AssociatedFiles[0].CopyToAsync(signStream);
+            //    }
+            //    leaveRequest.AssociatedFile = uniqueFileName;
 
-            }
+            //}
 
 
             await _unitOfWork.Repository<Hrm.Domain.LeaveRequest>().Add(leaveRequest);

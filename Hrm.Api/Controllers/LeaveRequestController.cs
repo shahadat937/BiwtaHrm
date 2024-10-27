@@ -115,6 +115,17 @@ public class LeaveRequestController:Controller
     [HttpPut]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
+    [Route("update-LeaveRequest")]
+    public async Task<ActionResult<BaseCommandResponse>> UpdateLeaveRequest([FromForm] LeaveRequestDto leaveRequestDto, [FromForm] List<IFormFile>? AssociateFiles, [FromForm] List<int>? AssociateFileDeletion)
+    {
+        var command = new UpdateLeaveRequestByIdCommand { LeaveRequestDto = leaveRequestDto, AssociateFiles = AssociateFiles, AssociateFileDeletion = AssociateFileDeletion };
+        var response = await _mediator.Send(command);
+        return Ok(response);
+    }
+
+    [HttpPut]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
     [Route("approve-LeaveRequestByReviewer/{leaveRequestId}")]
     public async Task<ActionResult<BaseCommandResponse>> approveLeaveRequestReviewer(int leaveRequestId)
     {

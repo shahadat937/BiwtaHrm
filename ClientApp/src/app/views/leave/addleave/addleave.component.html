@@ -183,13 +183,19 @@
       <form cForm #addLeaveForm="ngForm" (ngSubmit)="onSubmit()">
         <c-row>
           <c-col md="2">
-            <input type="text" 
-            name="empCardNo" 
-            #Pms = "ngModel"
-            placeholder="Enter PMIS"
-            [(ngModel)]="empCardNo" 
-            cFormControl id="employeeId" 
-            (input)="onEmpIdChange($event)"/>
+            <c-input-group>
+              <button cButton type="button" color="secondary" (click)="openEmployeeModal()">
+                <svg [cIcon]="icons.cilSearch"></svg>
+              </button>
+              <input type="text"
+              [readOnly]="IsReadonly"
+              name="empCardNo" 
+              #Pms = "ngModel"
+              placeholder="Enter PMIS"
+              [(ngModel)]="empCardNo" 
+              cFormControl id="employeeId" 
+              (input)="onEmpIdChange()"/>
+            </c-input-group>
           </c-col>
         </c-row>
         <div class="d-flex justify-content-center text-center mt-2">
@@ -200,10 +206,11 @@
         </div>
         <c-row [gutter]="3" class="d-flex justify-content-around">
           <c-col md="3">
-            <div class="">
+            <div class="p-4">
               <c-card>
                 <img [src]="employeePhoto" (error)="onImageError($event)" alt="Image Of Something" cCardImg="top">
                 <c-card-body>
+                  <p>{{empCardNo}}</p>
                   <p cCardTitle>{{employeeName}}</p>
                   <p>{{designation}}</p>
 
@@ -225,6 +232,7 @@
               <c-col md="6">
                   <label cLabel for="leaveType">Leave Type</label>
                   <select 
+                  [disabled]="IsReadonly"
                   required
                   name="leaveTypeId"
                   #leaveType = "ngModel"
@@ -280,6 +288,7 @@
               <c-col [md]="6">
                 <label cLabel for="leavePurpose">Leave Purpose</label>
                 <textarea type="text"
+                [readOnly]="IsReadonly"
                 rows="1"
                 required
                 #leavePurpose = "ngModel"
@@ -293,7 +302,8 @@
               </c-col>
               <c-col [md]="6">
                 <label cLabel for="remarks">Remarks</label>
-                <input 
+                <input
+                [readOnly]="IsReadonly"
                 type="text" 
                 name="remark" 
                 [(ngModel)]="this.addLeaveService.addLeaveModel.remark"
@@ -305,7 +315,8 @@
               <c-row [gutter]="3">
                 <c-col [md]="6">
                   <label cLabel for="country">Country</label>
-                  <select 
+                  <select
+                  [disabled]="IsReadonly" 
                   name="countryId"
                   [(ngModel)]="this.addLeaveService.addLeaveModel.countryId"
                   cSelect 
@@ -319,13 +330,15 @@
                 <c-col [md]="6">
                   <label cLabel for="purpose">Purpose</label>
                   <input type="text"
+                  [readOnly]="IsReadonly"
                   name="foreignLeavePurpose"
                   [(ngModel)] = "this.addLeaveService.addLeaveModel.foreignLeavePurpose"
                   cFormControl id="purpose" />
                 </c-col>
                 <c-col [md]="6">
                   <label cLabel for="accompanyBy">Accompany by</label>
-                  <input 
+                  <input
+                  [readOnly]="IsReadonly"
                   type="text" 
                   name="accompanyBy"
                   [(ngModel)]="this.addLeaveService.addLeaveModel.accompanyBy"
@@ -338,7 +351,7 @@
               <c-col md="3">
               </c-col> 
               <c-col md="9">
-                <p-table [value]="leaveBalances"
+                <p-table [value]="filteredLeaveBalances"
                 [scrollable]="true" 
                 scrollHeight="15rem"
                 styleClass="p-datatable-striped">
@@ -348,14 +361,16 @@
                       <th>Total Leave</th>
                       <th>Availed</th>
                       <th>Balance</th>
+                      <th>Applied</th>
                     </tr>
                   </ng-template> 
                   <ng-template pTemplate="body" let-leave>
                     <tr>
                       <td>{{leave.leaveTypeName}}</td>
                       <td>{{leave.totalAmount==-1?'Unlimited':leave.totalAmount}}</td>
-                      <td>{{leave.totalAmount - leave.leaveDue}}</td>
+                      <td>{{leave.availed}}</td>
                       <td>{{leave.totalAmount==-1?'Unlimited':leave.leaveDue}}</td>
+                      <td>{{leave.applied}}</td>
                     </tr>
                   </ng-template>
                 </p-table>
@@ -365,14 +380,23 @@
             <c-row class="mt-3 ms-md-5" [gutter]="3">
               <label cCol cLabel="col" sm="2">Reviewer: </label>
               <c-col md="4">
-                <input type="text" 
-                cFormControl
-                #reviewer = "ngModel"
-                [(ngModel)] = "reviewerPMIS"
-                name="reviewedBy"
-                (input)="onReviewerChange()"
-                placeholder="Reviewer PMIS"
-                id="reviewedBy">
+                <c-input-group>
+                  <button color="secondary" 
+                  (click)="openReviewerModal()"
+                  type="button" 
+                  cTooltip="Search Employee" 
+                  cTooltipPlacement="bottom" cButton>
+                    <svg [cIcon]="icons.cilSearch"></svg>
+                  </button>
+                  <input type="text" 
+                  cFormControl
+                  #reviewer = "ngModel"
+                  [(ngModel)] = "reviewerPMIS"
+                  name="reviewedBy"
+                  (input)="onReviewerChange()"
+                  placeholder="Reviewer PMIS"
+                  id="reviewedBy">
+                  </c-input-group>
               </c-col>
               <c-col md="4">
                 <input type="text" 
@@ -386,13 +410,21 @@
             <c-row class="mt-3 ms-md-5 mb-3" [gutter]="3">
               <label cCol cLabel="col" sm="2">Approver: </label>
               <c-col md="4">
-                <input type="text"
-                [(ngModel)]="approverPMIS"
-                placeholder="Approver PMIS"
-                (input)="onApproverChange()" 
-                cFormControl
-                name="approvedBy"
-                id="approvedBy">
+                <c-input-group>
+                  <button color="secondary" 
+                  (click)="openApproverModal()"
+                  type="button" 
+                  cTooltip="Search Employee" 
+                  cTooltipPlacement="bottom" cButton>
+                    <svg [cIcon]="icons.cilSearch"></svg>
+                  </button>
+                  <input type="text"
+                  [(ngModel)]="approverPMIS"
+                  placeholder="Approver PMIS"
+                  cFormControl
+                  name="approvedBy"
+                  id="approvedBy">
+                </c-input-group>
               </c-col>
               <c-col md="4">
                 <input type="text"

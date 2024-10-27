@@ -13,6 +13,10 @@ export class LeaveModel {
     associatedFile: string;
     status: number;
     isActive: boolean | null;
+    reviewedBy: number | null;
+    approvedBy: number | null;
+    reviewerRemark: string;
+    approverRemark: string;
     remark: string;
     empFirstName: string;
     empLastName: string;
@@ -34,6 +38,10 @@ export class LeaveModel {
         this.associatedFile = "";
         this.status = 0;
         this.isActive = null;
+        this.reviewedBy = null;
+        this.approvedBy = null;
+        this.reviewerRemark = "";
+        this.approverRemark = "";
         this.remark = "";
         this.empFirstName = "";
         this.empLastName = "";

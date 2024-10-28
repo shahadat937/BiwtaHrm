@@ -14,6 +14,7 @@ import { forEach } from 'lodash-es';
 import { cilSearch } from '@coreui/icons';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ManageLeaveService } from '../service/manage-leave.service';
 
 @Component({
   selector: 'app-addleave',
@@ -45,12 +46,14 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   uploadedFiles: any[] = [];
   @Input()
   IsReadonly: boolean
+  buttonTitle: string;
 
   reviewerPMIS: string;
   approverPMIS: string;
   icons = {cilSearch}
   constructor(
     private modalService: BsModalService,
+    private manageLeaveService: ManageLeaveService,
     public addLeaveService: AddLeaveService,
     private leaveBalanceService: LeaveBalanceService, 
     private toastr: ToastrService,
@@ -72,6 +75,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.department = "";
     this.IsReadonly = false;
     this.leaveData = null;
+    this.buttonTitle = "Submit";
   }
 
   ngOnInit(): void {
@@ -85,6 +89,10 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
         this.LeaveTypeOption = option;
       }
     })
+
+    if(this.IsReadonly) {
+      this.buttonTitle = "Update";
+    }
 
     if(this.authService.currentUserValue.empId!=null) {
       this.addLeaveService.getEmpById(parseInt(this.authService.currentUserValue.empId)).subscribe({
@@ -240,6 +248,12 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
 
   onSubmit() {
     this.loading = true;
+
+    if(this.IsReadonly) {
+      this.onUpdate();
+      return;
+    }
+
     if(this.addLeaveService.addLeaveModel.countryId!=null) {
       this.addLeaveService.addLeaveModel.isForeignLeave = true;
     }
@@ -463,5 +477,29 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.empCardNo = this.leaveData.idCardNo;
     this.onEmpIdChange();
     return leave;
+  }
+
+  onUpdate() {
+    this.loading = true;
+    let formData = this.convertToFormData(this.addLeaveService.addLeaveModel,["AssociatedFiles"]);
+    this.manageLeaveService.updateLeaveRequest(formData).subscribe({
+      next: response => {
+        if(response.success) {
+          this.toastr.success('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        } else {
+          this.toastr.warning('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        }
+      },
+      error: err => {
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    })
   }
 }

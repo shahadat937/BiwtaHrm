@@ -460,8 +460,8 @@
               [disabled]="addLeaveForm.invalid||loading||!isValidPMS"
               class="me-2">
               <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-              Submit</button>
-              <button cButton color="dark" (click)="onReset()">Cancel</button>
+              {{buttonTitle}}</button>
+              <button *ngIf="!IsReadonly" cButton color="dark" (click)="onReset()">Cancel</button>
             </div>
         </c-col>
       </c-row>

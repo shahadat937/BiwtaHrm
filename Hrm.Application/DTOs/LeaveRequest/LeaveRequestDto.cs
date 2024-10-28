@@ -10,7 +10,7 @@ namespace Hrm.Application.DTOs.LeaveRequest
     {
         public int LeaveRequestId { get; set; }
         public int EmpId { get; set; }
-        public string IdCardNo { get; set; }
+        public string? IdCardNo { get; set; }
         public int LeaveTypeId { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
@@ -29,8 +29,8 @@ namespace Hrm.Application.DTOs.LeaveRequest
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
 
-        public string EmpFirstName { get; set; }
-        public string EmpLastName { get; set; }
+        public string? EmpFirstName { get; set; }
+        public string? EmpLastName { get; set; }
         public string? LeaveTypeName { get; set; }
         public string? CountryName { get; set; }
 

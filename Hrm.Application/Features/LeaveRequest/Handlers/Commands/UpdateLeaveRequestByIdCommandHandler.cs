@@ -41,6 +41,8 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
                 throw new BadRequestException("To Update , leave request should be in pending state");
             }
 
+            int statusId = (int) leaveRequest.Status;
+
             var leaveValidator = new LeaveRequestValidator(_unitOfWork);
 
             bool leaveValidationResult = await leaveValidator.Validate(request.LeaveRequestDto.FromDate, request.LeaveRequestDto.ToDate, request.LeaveRequestDto.EmpId, request.LeaveRequestDto.LeaveTypeId);
@@ -54,6 +56,7 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
             }
 
             _mapper.Map(request.LeaveRequestDto, leaveRequest);
+            leaveRequest.Status = statusId;
 
             await _unitOfWork.Repository<Hrm.Domain.LeaveRequest>().Update(leaveRequest);
             await _unitOfWork.Save();

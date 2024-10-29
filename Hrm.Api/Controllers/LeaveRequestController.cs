@@ -112,6 +112,17 @@ public class LeaveRequestController:Controller
         return Ok(response);
     }
 
+    [HttpDelete]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    [Route("delete-LeaveFile/{LeaveFileId}")]
+    public async Task<ActionResult<BaseCommandResponse>> DeleteLeaveFile(int LeaveFileId)
+    {
+        var command = new DeleteLeaveFileByIdCommand { LeaveFileId = LeaveFileId };
+        var response = await _mediator.Send(command);
+        return Ok(response);
+    }
+
     [HttpPut]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]

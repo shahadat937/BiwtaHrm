@@ -29,9 +29,6 @@ namespace Hrm.Application.Features.EmpTrainingInfos.Handlers.Queries
         {
             List<EmpTrainingInfo> EmpTrainingInfos = await _EmpTrainingInfoRepository.Where(x => x.EmpId == request.Id)
                 .Include(x => x.TrainingType)
-                .Include(x => x.TrainingName)
-                .Include(x => x.Institute)
-                .Include(x => x.CourseDuration)
                 .Include(x => x.Country)
                 .ToListAsync(cancellationToken);
 

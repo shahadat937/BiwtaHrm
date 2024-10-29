@@ -704,9 +704,9 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpTrainingInfo, CreateEmpTrainingInfoDto>().ReverseMap(); 
             CreateMap<EmpTrainingInfo, EmpTrainingInfoDto>()
                 .ForMember(dest => dest.TrainingTypeName, opt => opt.MapFrom(src => src.TrainingType.TrainingTypeName))
-                .ForMember(dest => dest.TrainingName, opt => opt.MapFrom(src => src.TrainingName.TrainingNames))
-                .ForMember(dest => dest.InstituteName, opt => opt.MapFrom(src => src.Institute.InstituteName))
-                .ForMember(dest => dest.TrainingDuration, opt => opt.MapFrom(src => src.CourseDuration.Duration))
+                //.ForMember(dest => dest.TrainingName, opt => opt.MapFrom(src => src.TrainingName.TrainingNames))
+                //.ForMember(dest => dest.InstituteName, opt => opt.MapFrom(src => src.Institute.InstituteName))
+                //.ForMember(dest => dest.TrainingDuration, opt => opt.MapFrom(src => src.CourseDuration.Duration))
                 .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.CountryName));
 
 

@@ -15,6 +15,6 @@ namespace Hrm.Domain
         public bool IsActive { get; set; }
 
         public virtual ICollection<EmpPsiTrainingInfo>? EmpPsiTrainingInfo { get; set; }
-        public virtual ICollection<EmpTrainingInfo>? EmpTrainingInfo { get; set; }
+        //public virtual ICollection<EmpTrainingInfo>? EmpTrainingInfo { get; set; }
     }
 }

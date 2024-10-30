@@ -27,4 +27,8 @@ export class EmpWorkHistoryService {
     return this.http.delete(this.baseUrl + '/empWorkHistory/delete-EmpWorkHistory/'+id);
   }
 
+  findById(id: number) {
+    return this.http.get<EmpWorkHistory>(this.baseUrl + '/empWorkHistory/get-EmpWorkHistoryDetails/' + id);
+  }
+
 }

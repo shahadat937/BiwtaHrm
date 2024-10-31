@@ -39,6 +39,7 @@ import { EmpTrainingInfo } from '../../model/emp-training-info';
 import { EmpTransferPosting } from 'src/app/views/transferPosting/model/emp-transfer-posting';
 import { EmpTransferPostingService } from 'src/app/views/transferPosting/service/emp-transfer-posting.service';
 import { JobDetailsSetupService } from 'src/app/views/basic-setup/service/job-details-setup.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-emp-profile',
@@ -73,6 +74,9 @@ export class EmpProfileComponent  implements OnInit {
   pNo: string = '';
   id : number = 0;
   clickedButton: any;
+
+  educationColumns: string[] = ['slNo', 'examTypeName', 'boardName', 'subGroupName', 'result', 'courseDuration', 'passingYear', 'remark'];
+  educationSource = new MatTableDataSource<any>();
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -218,11 +222,12 @@ export class EmpProfileComponent  implements OnInit {
     
     getEmpEducationInfoByEmpId(){
       this.empEducationInfoService.findByEmpId(this.id).subscribe((res) => {
-        if(res && res.length > 0) {
+        // if(res && res.length > 0) {
           this.empEducationInfo = res;
-        } else {
-          this.empEducationInfo = [new EmpEducationInfoModule()];
-        }
+          this.educationSource = new MatTableDataSource(res);
+        // } else {
+        //   this.empEducationInfo = [new EmpEducationInfoModule()];
+        // }
       });
     }
     

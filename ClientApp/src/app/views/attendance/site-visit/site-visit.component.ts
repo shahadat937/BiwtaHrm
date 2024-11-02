@@ -113,7 +113,7 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
       }
 
 
-      if(!params.get('empId')) {
+      if(!params.get('EmpId')) {
         return;
       }
       this.siteVisitService.getSiteVisitByFilter(params).subscribe({

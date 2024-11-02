@@ -15,6 +15,7 @@ import { cilSearch } from '@coreui/icons';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ManageLeaveService } from '../service/manage-leave.service';
+import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
 
 @Component({
   selector: 'app-addleave',
@@ -22,6 +23,7 @@ import { ManageLeaveService } from '../service/manage-leave.service';
   styleUrl: './addleave.component.scss'
 })
 export class AddleaveComponent  implements OnInit, OnDestroy{
+  baseImageUrl: string;
   subcription: Subscription = new Subscription();
   loading: boolean;
   LeaveTypeOption:any[] = [];
@@ -39,6 +41,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   CountryOption: any[] = [];
   isValidPMS: boolean;
   leaveBalances: any[] = [];
+  leaveFiles : any[] = [];
   @Input()
   leaveData: any;
   filteredLeaveBalances: any[] = [];
@@ -52,6 +55,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   approverPMIS: string;
   icons = {cilSearch}
   constructor(
+    private empBasicInfoService: EmpBasicInfoService,
     private modalService: BsModalService,
     private manageLeaveService: ManageLeaveService,
     public addLeaveService: AddLeaveService,
@@ -76,6 +80,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.IsReadonly = false;
     this.leaveData = null;
     this.buttonTitle = "Submit";
+    this.baseImageUrl = environment.imageUrl;
   }
 
   ngOnInit(): void {
@@ -83,6 +88,26 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       this.addLeaveService.addLeaveModel=this.FillLeaveDataToAddLeaveModel(this.addLeaveService.addLeaveModel);
       this.filterLeaveBalance();
       console.log(this.addLeaveService.addLeaveModel);
+
+
+      if(this.leaveData.reviewedBy) {
+        this.empBasicInfoService.findByEmpId(this.leaveData.reviewedBy).subscribe({
+          next: response => {
+            this.reviewerPMIS = response.idCardNo
+          }
+        })
+      }
+
+      if(this.leaveData.approvedBy) {
+        this.empBasicInfoService.findByEmpId(this.leaveData.approvedBy).subscribe({
+          next: response => {
+            this.approverPMIS = response.idCardNo
+          }
+        })
+      }
+
+      this.getLeaveFiles();
+
     }
     this.addLeaveService.getSelectedLeaveType().subscribe({
       next: option => {
@@ -100,9 +125,16 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
           this.empCardNo = response.idCardNo;
           this.isValidPMS = true;
           this.addLeaveService.addLeaveModel.empId = parseInt(this.authService.currentUserValue.empId);
-          this.employeeName = response.firstName + " "+response.lastName;
+          this.employeeName = [response.firstName,response.lastName].join(' ');
           this.department = response.departmentName;
           this.designation = response.designationName;
+
+          if(response.empPhotoName!="") {
+              this.employeePhoto = this.imageUrl + "EmpPhoto/"+response.empPhotoName;
+          } else {
+              this.employeePhoto = this.defaultPhoto;
+          }
+          this.getLeaveBalanceForAllType(response.id);
         }
       })
     }
@@ -139,7 +171,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       this.empReqSub = this.addLeaveService.getEmpInfoByCard(data).subscribe({
         next: response=> {
           if(response!=null) {
-            this.employeeName = response.firstName + " "+response.lastName;
+            this.employeeName = [response.firstName,response.lastName].join(' ');
             this.addLeaveService.addLeaveModel.empId = response.id;
             this.isValidPMS = true;
             if(response.empPhotoName!="") {
@@ -353,6 +385,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       next: response => {
         this.leaveBalances = response;
         this.filteredLeaveBalances = this.leaveBalances;
+        this.filterLeaveBalance();
       }
     })
   }
@@ -499,6 +532,20 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       },
       complete: () => {
         this.loading = false;
+      }
+    })
+  }
+
+  test(event:any) {
+    event.preventDefault();
+
+  }
+
+  getLeaveFiles() {
+    this.manageLeaveService.getLeaveFiles(this.leaveData.leaveRequestId).subscribe({
+      next: response => {
+        this.leaveFiles = response;
+        console.log(this.leaveFiles);
       }
     })
   }

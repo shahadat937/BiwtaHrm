@@ -217,7 +217,7 @@
                 </c-card-body>
               </c-card>
             </div>
-            <div class="mt-4">
+            <div *ngIf="!IsReadonly" class="mt-4">
               <h5 class="mb-3">Leave Associate File Upload</h5>
               <input 
               multiple
@@ -225,6 +225,17 @@
               (change)="handleFile($event)"
               name="associatedFiles"
               cFormControl />
+            </div>
+            <div *ngIf="IsReadonly" class="mt-4" cListGroup>
+              <h5>Leave Associated Files</h5>
+              @for (file of leaveFiles; track $index) {
+                <a cListGroupItem target="_blank" [href]="baseImageUrl+'/leaveFile/'+file.filePath">
+                  {{file.fileTitle}}
+                  <!--<button (click)="test($event)" class="custom-button">
+                    X
+                  </button>-->
+                </a>
+              }
             </div>
           </c-col>
           <c-col>

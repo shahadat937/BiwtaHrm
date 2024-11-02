@@ -89,13 +89,13 @@
                             type="password"
                             minlength="8"
                             autocomplete="new-password" 
-                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                            pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$'
                         />
                         @if(!Password.value&&Password.touched){
                         <div class="text-left text-danger">Password is required</div>
                         }
                         @if(!Password.valid&&Password.touched&&Password.value){
-                            <div class="text-left text-danger">Please is not valid</div>
+                            <div class="text-left text-danger">Password is not valid</div>
                             <div class="text-left text-success">Password must contain (8 character, 1 uppercase, 1 lowercase, 1 number, 1 symbol)</div>
                             }
                         </c-col>

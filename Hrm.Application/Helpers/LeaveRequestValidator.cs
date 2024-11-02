@@ -13,6 +13,7 @@ using Hrm.Application.Enum;
 using System.Reflection.Metadata.Ecma335;
 using CsvHelper.Configuration.Attributes;
 using Microsoft.VisualBasic;
+using MediatR;
 
 namespace Hrm.Application.Helpers
 {
@@ -27,8 +28,9 @@ namespace Hrm.Application.Helpers
         public async Task<bool> Validate(DateTime startDate, DateTime endDate, int empId, int leaveTypeId)
         {
             var leaveRules = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.LeaveTypeId == leaveTypeId).ToListAsync();
+            bool IsSandwichLeave = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.LeaveTypeId == leaveTypeId && x.IsActive == true && x.RuleName == LeaveRule.SandwichLeave).AnyAsync();
 
-            if(leaveRules.Count<=0)
+            if (leaveRules.Count<=0)
             {
                 return true;
             }
@@ -40,7 +42,13 @@ namespace Hrm.Application.Helpers
             await HaveMinimumAge(empId, leaveTypeId);
             await ValidateApplyFreq(empId, leaveTypeId, startDate);
 
-            var totalLeaveDays =await AttendanceHelper.calculateWorkingDay(startDate, endDate, startDate.Year, _unitOfWork);
+
+            int totalLeaveDays = await AttendanceHelper.calculateWorkingDay(startDate, endDate, startDate.Year, _unitOfWork);
+
+            if(IsSandwichLeave)
+            {
+                totalLeaveDays = (int) endDate.Subtract(startDate).TotalDays + 1;
+            }
 
             if(await IsTotalDayExceedPerRequest(empId, leaveTypeId, totalLeaveDays))
             {

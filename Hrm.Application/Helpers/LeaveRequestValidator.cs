@@ -13,6 +13,7 @@ using Hrm.Application.Enum;
 using System.Reflection.Metadata.Ecma335;
 using CsvHelper.Configuration.Attributes;
 using Microsoft.VisualBasic;
+using MediatR;
 
 namespace Hrm.Application.Helpers
 {
@@ -27,8 +28,9 @@ namespace Hrm.Application.Helpers
         public async Task<bool> Validate(DateTime startDate, DateTime endDate, int empId, int leaveTypeId)
         {
             var leaveRules = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.LeaveTypeId == leaveTypeId).ToListAsync();
+            bool IsSandwichLeave = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.LeaveTypeId == leaveTypeId && x.IsActive == true && x.RuleName == LeaveRule.SandwichLeave).AnyAsync();
 
-            if(leaveRules.Count<=0)
+            if (leaveRules.Count<=0)
             {
                 return true;
             }
@@ -38,8 +40,15 @@ namespace Hrm.Application.Helpers
             await IsExceedMaxRequest(empId, leaveTypeId);
             await IsCorrectGender(empId, leaveTypeId);
             await HaveMinimumAge(empId, leaveTypeId);
+            await ValidateApplyFreq(empId, leaveTypeId, startDate);
 
-            var totalLeaveDays =await AttendanceHelper.calculateWorkingDay(startDate, endDate, startDate.Year, _unitOfWork);
+
+            int totalLeaveDays = await AttendanceHelper.calculateWorkingDay(startDate, endDate, startDate.Year, _unitOfWork);
+
+            if(IsSandwichLeave)
+            {
+                totalLeaveDays = (int) endDate.Subtract(startDate).TotalDays + 1;
+            }
 
             if(await IsTotalDayExceedPerRequest(empId, leaveTypeId, totalLeaveDays))
             {
@@ -198,7 +207,7 @@ namespace Hrm.Application.Helpers
 
                 DateTime joiningDate = new DateTime(empJobDetail.JoiningDate.Value.Year, empJobDetail.JoiningDate.Value.Month,empJobDetail.JoiningDate.Value.Day);
 
-                totalWorkingDayLIfetime = await AttendanceHelper.calculateWorkingDay(joiningDate, endYear, curYear, _unitOfWork);
+                totalWorkingDayLIfetime = await calculateWorkingDays(empId, joiningDate, startDate);
 
                 accuralLeave = (totalWorkingDayLIfetime / accuralFreq) * accuralRate;
             }
@@ -304,14 +313,71 @@ namespace Hrm.Application.Helpers
 
         }
 
-        private async Task<int> calculateWorkingDays(DateTime startDate, DateTime endDate)
+        private async Task<int> calculateWorkingDays(int empId, DateTime startDate, DateTime endDate)
         {
             int totalDays = (int) endDate.Subtract(startDate).TotalDays;
-            List<int> leaveTypes = new List<int> { 1, 2, 3, 4, 5 };
 
-            int totalLeaves = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveType.ELWorkDayCal == true).CountAsync();
+            int totalLeaves = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveType.ELWorkDayCal == true && x.EmpId == empId).CountAsync();
 
             return totalDays - totalLeaves;
+        }
+
+        public async Task<int> GetAvailedLeave(int empId, int leaveTypeId)
+        {
+            int availed = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x=>x.AttendanceStatusId == (int) AttendanceStatusOption.OnLeave&& x.LeaveRequest.LeaveTypeId == (int) leaveTypeId && x.EmpId == empId).CountAsync();
+
+            return availed;
+        }
+
+        public async Task<int> GetTotalApplied(int empId, int leaveTypeId)
+        {
+            int applied = await _unitOfWork.Repository<Hrm.Domain.LeaveRequest>().Where(x=>x.EmpId == empId && x.LeaveTypeId ==  leaveTypeId).CountAsync();
+
+            return applied;
+        }
+
+        public async Task<bool> ValidateApplyFreq(int empId, int leaveTypeId, DateTime startDate)
+        {
+            var haveAppliedFreqRule = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.LeaveTypeId == leaveTypeId && x.RuleName == LeaveRule.ApplyFreq).FirstOrDefaultAsync();
+
+            if(haveAppliedFreqRule==null)
+            {
+                return true;
+            }
+
+            var leaveRequests = await _unitOfWork.Repository<Hrm.Domain.LeaveRequest>().Where(x => x.EmpId == empId && x.LeaveTypeId == leaveTypeId && x.FromDate <= startDate).OrderBy(x => x.DateCreated).ToListAsync();
+
+
+            if(leaveRequests.Count() <= 0)
+            {
+                return true;
+            }
+
+            DateTime previousApplicationDate = leaveRequests[^1].FromDate;
+
+            for(var i = leaveRequests.Count - 2; i>=0;i--)
+            {
+                if (leaveRequests[i].Status == (int) LeaveStatusOption.ReviewerApproved || leaveRequests[i].Status == (int) LeaveStatusOption.FinalApproved)
+                {
+                    break;
+                }
+
+                if (leaveRequests[i].Status == (int)LeaveStatusOption.ReviewerDenied || leaveRequests[i].Status == (int)LeaveStatusOption.FinalDenied)
+                {
+                    previousApplicationDate = (DateTime)leaveRequests[i].DateCreated;
+                }
+            }
+
+
+            TimeSpan days= startDate.Subtract(previousApplicationDate);
+
+            if(days.TotalDays>haveAppliedFreqRule.RuleValue)
+            {
+                return true;
+            }
+
+            throw new BadRequestException($"You should apply after {haveAppliedFreqRule.RuleValue} days from the previous application");
+
         }
     }
 }

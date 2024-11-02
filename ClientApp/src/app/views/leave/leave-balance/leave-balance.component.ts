@@ -15,7 +15,7 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
   IdCardNo: string;
   leaveBalances: any[] = [];
   loading: boolean ;
-  cols = [{header: "Leave Type Name", field: "leaveTypeName"}, {header: "Leave Due", field:"leaveDue"}, {header: "Total Leave", field: "totalAmount"}]
+  cols = [{header: "Type", field: "leaveTypeName"}, {header: "Total Leave", field:"totalAmount"}, {header: "Availed", field: "availed"},{header:"Balance",field:"leaveDue"},{header: "Applied", field: "applied"}]
   empName:string;
 
   constructor(

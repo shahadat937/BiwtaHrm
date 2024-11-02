@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hrm.Application.Constants;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Attendance;
 using Hrm.Application.Enum;
@@ -52,9 +53,11 @@ namespace Hrm.Application.Helpers
             return true;
         }
 
-        public async Task<bool> saveAttendance(DateOnly from, DateOnly to, int empId)
+        public async Task<bool> saveAttendance(DateOnly from, DateOnly to, int empId, int leaveTypeId)
         {
             List<CreateAttendanceDto> list = new List<CreateAttendanceDto>();
+
+            bool IsSandwichLeave = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.IsActive == true && x.LeaveTypeId == leaveTypeId && x.RuleName == LeaveRule.SandwichLeave).AnyAsync();
 
             for (DateOnly curDate = from; curDate <= to; curDate = curDate.AddDays(1))
             {
@@ -64,7 +67,7 @@ namespace Hrm.Application.Helpers
 
                 daytypeId = IsHoliday(curDate) ? (int)DayTypeOption.Holiday : daytypeId;
 
-                list.Add(new CreateAttendanceDto
+                var attendance =new CreateAttendanceDto
                 {
                     EmpId = empId,
                     AttendanceDate = curDate,
@@ -72,9 +75,14 @@ namespace Hrm.Application.Helpers
                     AttendanceStatusId = (int)AttendanceStatusOption.OnLeave,
                     LeaveRequestId = leaveRequestId
 
-                });
+                };
 
-                list[^1].DayTypeId = AttendanceHelper.SetDayTypeId(list[^1],_unitOfWork.Repository<Domain.Workday>(),_unitOfWork.Repository<Domain.Holidays>(),_unitOfWork.Repository<Domain.CancelledWeekend>());
+                attendance.DayTypeId = AttendanceHelper.SetDayTypeId(attendance,_unitOfWork.Repository<Domain.Workday>(),_unitOfWork.Repository<Domain.Holidays>(),_unitOfWork.Repository<Domain.CancelledWeekend>());
+
+                if(attendance.DayTypeId == (int) DayTypeOption.Workday || IsSandwichLeave)
+                {
+                    list.Add(attendance);
+                }
             }
 
             var attendances = _mapper.Map<List<Hrm.Domain.Attendance>>(list);

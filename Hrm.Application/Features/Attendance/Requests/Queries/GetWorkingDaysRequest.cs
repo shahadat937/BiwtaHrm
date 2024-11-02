@@ -11,5 +11,6 @@ namespace Hrm.Application.Features.Attendance.Requests.Queries
     {
         public DateTime From { get; set; }
         public DateTime To { get; set; }
+        public int? LeaveTypeId { get; set; }
     }
 }

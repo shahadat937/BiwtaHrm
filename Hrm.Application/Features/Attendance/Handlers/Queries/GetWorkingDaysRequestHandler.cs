@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Hrm.Application.Constants;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Features.Attendance.Requests.Queries;
 using Hrm.Application.Helpers;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,23 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
 
         public async Task<object> Handle(GetWorkingDaysRequest request, CancellationToken cancellationToken)
         {
-            int workingDay = await AttendanceHelper.calculateWorkingDay(request.From, request.To, request.From.Year, _unitOfWork);
+            bool IsSandwichLeave = true;
+            if(request.LeaveTypeId.HasValue)
+            {
+                var leaveRules = await _unitOfWork.Repository<Hrm.Domain.LeaveRules>().Where(x => x.IsActive == true && x.LeaveTypeId == request.LeaveTypeId && x.RuleName == LeaveRule.SandwichLeave).AnyAsync();
+                IsSandwichLeave = leaveRules;
+            }
+
+            int workingDay;
+
+            if(IsSandwichLeave)
+            {
+                workingDay = (int)request.To.Subtract(request.From).TotalDays + 1;
+
+                return workingDay;
+            }
+
+            workingDay = await AttendanceHelper.calculateWorkingDay(request.From, request.To, request.From.Year, _unitOfWork);
 
             return workingDay;
         }

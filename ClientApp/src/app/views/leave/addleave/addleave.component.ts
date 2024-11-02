@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import {AddLeaveService} from '../service/add-leave.service';
@@ -10,6 +10,12 @@ import { AddLeaveModel } from '../models/add-leave-model';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { LeaveBalanceService } from '../service/leave-balance.service';
 import { environment } from 'src/environments/environment';
+import { forEach } from 'lodash-es';
+import { cilSearch } from '@coreui/icons';
+import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ManageLeaveService } from '../service/manage-leave.service';
+import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
 
 @Component({
   selector: 'app-addleave',
@@ -17,6 +23,7 @@ import { environment } from 'src/environments/environment';
   styleUrl: './addleave.component.scss'
 })
 export class AddleaveComponent  implements OnInit, OnDestroy{
+  baseImageUrl: string;
   subcription: Subscription = new Subscription();
   loading: boolean;
   LeaveTypeOption:any[] = [];
@@ -34,12 +41,23 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   CountryOption: any[] = [];
   isValidPMS: boolean;
   leaveBalances: any[] = [];
+  leaveFiles : any[] = [];
+  @Input()
+  leaveData: any;
+  filteredLeaveBalances: any[] = [];
   imageUrl: string;
   uploadedFiles: any[] = [];
+  @Input()
+  IsReadonly: boolean
+  buttonTitle: string;
 
   reviewerPMIS: string;
   approverPMIS: string;
+  icons = {cilSearch}
   constructor(
+    private empBasicInfoService: EmpBasicInfoService,
+    private modalService: BsModalService,
+    private manageLeaveService: ManageLeaveService,
     public addLeaveService: AddLeaveService,
     private leaveBalanceService: LeaveBalanceService, 
     private toastr: ToastrService,
@@ -59,15 +77,47 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.employeePhoto = this.defaultPhoto;
     this.designation = "";
     this.department = "";
+    this.IsReadonly = false;
+    this.leaveData = null;
+    this.buttonTitle = "Submit";
+    this.baseImageUrl = environment.imageUrl;
   }
 
   ngOnInit(): void {
+    if(this.IsReadonly) {
+      this.addLeaveService.addLeaveModel=this.FillLeaveDataToAddLeaveModel(this.addLeaveService.addLeaveModel);
+      this.filterLeaveBalance();
+      console.log(this.addLeaveService.addLeaveModel);
+
+
+      if(this.leaveData.reviewedBy) {
+        this.empBasicInfoService.findByEmpId(this.leaveData.reviewedBy).subscribe({
+          next: response => {
+            this.reviewerPMIS = response.idCardNo
+          }
+        })
+      }
+
+      if(this.leaveData.approvedBy) {
+        this.empBasicInfoService.findByEmpId(this.leaveData.approvedBy).subscribe({
+          next: response => {
+            this.approverPMIS = response.idCardNo
+          }
+        })
+      }
+
+      this.getLeaveFiles();
+
+    }
     this.addLeaveService.getSelectedLeaveType().subscribe({
       next: option => {
         this.LeaveTypeOption = option;
       }
     })
 
+    if(this.IsReadonly) {
+      this.buttonTitle = "Update";
+    }
 
     if(this.authService.currentUserValue.empId!=null) {
       this.addLeaveService.getEmpById(parseInt(this.authService.currentUserValue.empId)).subscribe({
@@ -75,9 +125,16 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
           this.empCardNo = response.idCardNo;
           this.isValidPMS = true;
           this.addLeaveService.addLeaveModel.empId = parseInt(this.authService.currentUserValue.empId);
-          this.employeeName = response.firstName + " "+response.lastName;
+          this.employeeName = [response.firstName,response.lastName].join(' ');
           this.department = response.departmentName;
           this.designation = response.designationName;
+
+          if(response.empPhotoName!="") {
+              this.employeePhoto = this.imageUrl + "EmpPhoto/"+response.empPhotoName;
+          } else {
+              this.employeePhoto = this.defaultPhoto;
+          }
+          this.getLeaveBalanceForAllType(response.id);
         }
       })
     }
@@ -85,7 +142,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.getCountry();
   }
 
-  onEmpIdChange(event:any) {
+  onEmpIdChange() {
     const source$ = of (this.empCardNo);
     const delay$ = source$.pipe(
       delay(800)
@@ -101,6 +158,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
 
     if(this.empCardNo.trim()=="") {
       this.employeeName = "";
+      this.department = "";
+      this.designation = "";
       this.addLeaveService.addLeaveModel.empId = null;
       this.getLeaveAmount();
       this.leaveBalances = [];
@@ -112,7 +171,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       this.empReqSub = this.addLeaveService.getEmpInfoByCard(data).subscribe({
         next: response=> {
           if(response!=null) {
-            this.employeeName = response.firstName + " "+response.lastName;
+            this.employeeName = [response.firstName,response.lastName].join(' ');
             this.addLeaveService.addLeaveModel.empId = response.id;
             this.isValidPMS = true;
             if(response.empPhotoName!="") {
@@ -168,6 +227,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   }
 
   getLeaveAmount() {
+    this.filterLeaveBalance();
     this.IsForeignLeave();
     console.log(this.addLeaveService.addLeaveModel);
     if(this.addLeaveService.addLeaveModel.empId==null||this.addLeaveService.addLeaveModel.leaveTypeId==null||this.addLeaveService.addLeaveModel.fromDate==null||this.addLeaveService.addLeaveModel.toDate==null) {
@@ -220,6 +280,12 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
 
   onSubmit() {
     this.loading = true;
+
+    if(this.IsReadonly) {
+      this.onUpdate();
+      return;
+    }
+
     if(this.addLeaveService.addLeaveModel.countryId!=null) {
       this.addLeaveService.addLeaveModel.isForeignLeave = true;
     }
@@ -318,6 +384,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.leaveBalanceService.getLeaveBalance(empId).subscribe({
       next: response => {
         this.leaveBalances = response;
+        this.filteredLeaveBalances = this.leaveBalances;
+        this.filterLeaveBalance();
       }
     })
   }
@@ -386,4 +454,99 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     target.src = this.defaultPhoto;
   }
 
+  filterLeaveBalance() {
+    this.filteredLeaveBalances = this.leaveBalances.filter(data => {
+      return data.leaveTypeId == this.addLeaveService.addLeaveModel.leaveTypeId || this.addLeaveService.addLeaveModel.leaveTypeId == null;
+    })
+  }
+
+  openEmployeeModal() {
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
+
+    modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
+      if(idCardNo){
+          this.empCardNo = idCardNo;
+          this.onEmpIdChange();
+      }
+    });
+  }
+
+  openReviewerModal() {
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, {backdrop: 'static', class: 'modal-xl'});
+
+    modalRef.content.employeeSelected.subscribe((idCardNo:string) => {
+      if(idCardNo) {
+        this.reviewerPMIS = idCardNo;
+        this.onReviewerChange();
+      }
+    })
+  }
+
+  openApproverModal() {
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, {backdrop: 'static', class: 'modal-xl'});
+
+    modalRef.content.employeeSelected.subscribe((idCardNo:string) => {
+      if(idCardNo) {
+        this.approverPMIS = idCardNo;
+        this.onApproverChange();
+      }
+    })
+  }
+
+  FillLeaveDataToAddLeaveModel(leave:any) {
+    if(this.leaveData==null) {
+      return leave;
+    }
+    for(const key in leave) {
+      leave[key] = this.leaveData[key];
+    }
+
+    if(this.leaveData.fromDate!=null)
+    leave.fromDate = this.leaveData.fromDate.split('T')[0];
+
+    if(this.leaveData.toDate!=null)
+    leave.toDate = this.leaveData.toDate.split('T')[0];
+
+    this.empCardNo = this.leaveData.idCardNo;
+    this.onEmpIdChange();
+    return leave;
+  }
+
+  onUpdate() {
+    this.loading = true;
+    let formData = this.convertToFormData(this.addLeaveService.addLeaveModel,["AssociatedFiles"]);
+    this.manageLeaveService.updateLeaveRequest(formData).subscribe({
+      next: response => {
+        if(response.success) {
+          this.toastr.success('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        } else {
+          this.toastr.warning('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        }
+      },
+      error: err => {
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    })
+  }
+
+  test(event:any) {
+    event.preventDefault();
+
+  }
+
+  getLeaveFiles() {
+    this.manageLeaveService.getLeaveFiles(this.leaveData.leaveRequestId).subscribe({
+      next: response => {
+        this.leaveFiles = response;
+        console.log(this.leaveFiles);
+      }
+    })
+  }
 }

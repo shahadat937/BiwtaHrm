@@ -13,13 +13,13 @@ export class ManageSiteVisitComponent implements OnInit {
   constructor(
     private authService: AuthService
   ) {
-
-  }
-
-  ngOnInit(): void {
     this.authService.currentUser.subscribe(user => {
       this.filter = {EmpId: user.empId};
     }) 
+  }
+
+  ngOnInit(): void {
+    
   }
 
 

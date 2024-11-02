@@ -42,7 +42,7 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
             leaveAtdHelper.leaveRequestId = leaveRequest.LeaveRequestId;
 
             await leaveAtdHelper.deleteAttendance();
-            await leaveAtdHelper.saveAttendance(DateOnly.FromDateTime(leaveRequest.FromDate), DateOnly.FromDateTime(leaveRequest.ToDate), leaveRequest.EmpId);
+            await leaveAtdHelper.saveAttendance(DateOnly.FromDateTime(leaveRequest.FromDate), DateOnly.FromDateTime(leaveRequest.ToDate), leaveRequest.EmpId, leaveRequest.LeaveTypeId);
 
 
             leaveRequest.Status = (int) LeaveStatusOption.FinalApproved;

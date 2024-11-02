@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { AddLeaveService } from '../../service/add-leave.service';
 import { HttpParams } from '@angular/common/http';
 import { ThanaService } from 'src/app/views/basic-setup/service/thana.service';
+import { update } from 'lodash-es';
 
 @Component({
   selector: 'app-leave-detail-view',
@@ -26,11 +27,13 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
   @Input() CanApprove: boolean = false;
   @Input() Role : string = "Reviewer";
   leaveData : LeaveModel = new LeaveModel();
+  updateLeaveData: LeaveModel = new LeaveModel();
   leaveStatusOption: string [] = [];
   modalOpened: boolean = false;
   baseImageUrl: string;
   totalLeave: number;
   leaveFiles: any[];
+  IsUpdating: boolean
   constructor (
     public leaveService: ManageLeaveService,
     private addLeaveService: AddLeaveService,
@@ -47,10 +50,12 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
     this.baseImageUrl = environment.imageUrl;
     this.totalLeave = 0;
     this.leaveFiles = [];
+    this.IsUpdating = false;
   }
 
   ngOnInit(): void {
-    this.getLeaveStatusOption();
+    //this.getLeaveStatusOption();
+    this.loading = true;
     this.getLeaveRequestById();
     this.getLeaveFiles();
     //this.getWorkingDays();
@@ -70,10 +75,15 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
     this.subscription = this.leaveService.getLeaveById(this.leaveRequestId).subscribe({
       next: response=> {
         this.leaveData = response;
+        this.updateLeaveData = this.leaveData;
         this.getWorkingDays();
       },
       error: err => {
+        this.loading = false;
         console.log(err);
+      },
+      complete: () => {
+        this.loading = false;
       }
     });
   }
@@ -217,5 +227,52 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
         console.log(this.leaveFiles);
       }
     })
+  }
+
+  updateLeaveRequest() {
+    this.loading = true;
+    const formData = this.convertToFormData(this.updateLeaveData);
+    this.leaveService.updateLeaveRequest(formData).subscribe({
+      next: response => {
+        if(response.success) {
+          this.toastr.success('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+          this.leaveData = this.updateLeaveData;
+        } else {
+          this.toastr.warning('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    })
+  }
+
+  convertToFormData(model: any, fileFields: string[] = []): FormData {
+    const formData = new FormData();
+    for (const key in model) {
+      if (model.hasOwnProperty(key)&&model[key]!=null) {
+        if(key=="associatedFiles"||Array.isArray(model[key])) {
+          model[key].forEach((data:any)=> {
+            formData.append(key,data);
+          })
+          continue;
+        }
+
+        formData.append(key, model[key]);
+      }
+    }
+    return formData;
+  }
+
+  toggleUpdate() {
+    this.updateLeaveData = this.leaveData;
+    this.IsUpdating = !this.IsUpdating;
   }
 }

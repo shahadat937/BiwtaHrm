@@ -270,6 +270,9 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     let params = new HttpParams();
     params = params.set("From", this.addLeaveService.addLeaveModel.fromDate);
     params = params.set("To", this.addLeaveService.addLeaveModel.toDate);
+    if(this.addLeaveService.addLeaveModel.leaveTypeId!=null) {
+      params = params.set("leaveTypeId",this.addLeaveService.addLeaveModel.leaveTypeId);
+    }
     this.subcription = this.addLeaveService.getWorkingDays(params).subscribe({
       next: response => {
         this.totalLeave = response;

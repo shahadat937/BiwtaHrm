@@ -14,6 +14,7 @@ import {cibVerizon,cibXPack} from '@coreui/icons'
 import { SectionService } from '../../basic-setup/service/section.service';
 import { DepartmentService } from '../../basic-setup/service/department.service';
 import { AuthService } from 'src/app/core/service/auth.service';
+import { Role } from 'src/app/core/models/role';
 
 
 @Component({
@@ -67,9 +68,11 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.selectedSection = null;
     this.rangeDates = null;
     this.isUser = false;
-    this.authService.currentUser.subscribe(data => {
+    this.subscription = this.authService.currentUser.subscribe(data => {
       if(data.empId!=null) {
         this.selectedEmp = parseInt(data.empId);
+      }
+      if(data.role.toString() != "Master Admin") {
         this.isUser = true;
       }
     })

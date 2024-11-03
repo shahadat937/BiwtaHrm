@@ -317,7 +317,7 @@ namespace Hrm.Application.Helpers
         {
             int totalDays = (int) endDate.Subtract(startDate).TotalDays;
 
-            int totalLeaves = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveType.ELWorkDayCal == true && x.EmpId == empId).CountAsync();
+            int totalLeaves = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveType.ELWorkDayCal == true && x.EmpId == empId && x.AttendanceDate < DateOnly.FromDateTime(endDate)).CountAsync();
 
             return totalDays - totalLeaves;
         }

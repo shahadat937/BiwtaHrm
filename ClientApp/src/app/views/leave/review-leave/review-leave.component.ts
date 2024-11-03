@@ -13,6 +13,6 @@ export class ReviewLeaveComponent {
   CanApprove : boolean = true;
 
   constructor() {
-    this.filterLeave = {Status: [LeaveStatus.Pending,LeaveStatus.ReviewerApproved,LeaveStatus.ReviewerDenied]}
+    this.filterLeave = {Status: [LeaveStatus.Pending,LeaveStatus.ReviewerApproved,LeaveStatus.ReviewerDenied,LeaveStatus.FinalApproved,LeaveStatus.FinalDenied]}
   }
 }

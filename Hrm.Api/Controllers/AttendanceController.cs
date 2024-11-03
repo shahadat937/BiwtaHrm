@@ -70,9 +70,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-WorkingDays")]
-        public async Task<ActionResult> GetWorkingDays([FromQuery] DateTime From, [FromQuery] DateTime To)
+        public async Task<ActionResult> GetWorkingDays([FromQuery] DateTime From, [FromQuery] DateTime To, [FromQuery] int? LeaveTypeId)
         {
-            var commnad = new GetWorkingDaysRequest { From = From, To = To };
+            var commnad = new GetWorkingDaysRequest { From = From, To = To, LeaveTypeId = LeaveTypeId };
             var response = await _mediator.Send(commnad);
 
             return Ok(response);

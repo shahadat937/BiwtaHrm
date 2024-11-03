@@ -67,7 +67,7 @@
                             [type]="hideOld ? 'password' : 'text'"
                             minlength="8"
                             autocomplete="new-password" 
-                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                            pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$'
                           />
                           <span cInputGroupText (click)="hideOld = !hideOld">
                             <mat-icon *ngIf="!hideOld">visibility</mat-icon>

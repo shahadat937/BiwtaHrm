@@ -66,7 +66,7 @@
                             type="password"
                             minlength="8"
                             autocomplete="new-password" 
-                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                            pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$'
                           />
                           @if(!OldPassword.valid&&OldPassword.touched&&OldPassword.value){
                             <div class="text-left text-danger">Password is not valid</div>

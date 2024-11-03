@@ -55,7 +55,8 @@
                             <label cLabel for="oldPassword"
                             >Enter Old Password<span class="text-danger">*</span></label
                           >
-                          <input
+                          <c-input-group>
+                            <input
                             [(ngModel)]="userService.users.oldPassword"
                             name="oldPassword"
                             #OldPassword="ngModel"
@@ -63,11 +64,16 @@
                             cFormControl
                             id="oldPassword"
                             required
-                            type="password"
+                            [type]="hideOld ? 'password' : 'text'"
                             minlength="8"
                             autocomplete="new-password" 
                             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                           />
+                          <span cInputGroupText (click)="hideOld = !hideOld">
+                            <mat-icon *ngIf="!hideOld">visibility</mat-icon>
+                            <mat-icon *ngIf="hideOld">visibility_off</mat-icon>
+                          </span>
+                          </c-input-group>
                           @if(!OldPassword.valid&&OldPassword.touched&&OldPassword.value){
                             <div class="text-left text-danger">Password is not valid</div>
                             <div class="text-left text-success">Password must contain (8 character, 1 uppercase, 1 lowercase, 1 number, 1 symbol)</div>
@@ -78,7 +84,8 @@
                             <label cLabel for="validationCustom07"
                             >Enter New Password<span class="text-danger">*</span></label
                         >
-                        <input
+                        <c-input-group>
+                            <input
                             [(ngModel)]="userService.users.password"
                             name="password"
                             #Password="ngModel"
@@ -86,11 +93,17 @@
                             cFormControl
                             id="validationCustom07"
                             required
-                            type="password"
+                            [type]="hideNew ? 'password' : 'text'"
                             minlength="8"
                             autocomplete="new-password" 
                             pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$'
                         />
+                        <span cInputGroupText (click)="hideNew = !hideNew">
+                          <mat-icon *ngIf="!hideNew">visibility</mat-icon>
+                          <mat-icon *ngIf="hideNew">visibility_off</mat-icon>
+                        </span>
+                        </c-input-group>
+                        
                         @if(!Password.value&&Password.touched){
                         <div class="text-left text-danger">Password is required</div>
                         }
@@ -103,7 +116,8 @@
                             <label cLabel for="validationCustom08"
                             >Re-Type Password<span class="text-danger">*</span></label
                         >
-                        <input
+                        <c-input-group>
+                            <input
                             [(ngModel)]="userService.users.rePassword"
                             name="rePassword"
                             #RePassword="ngModel"
@@ -111,9 +125,15 @@
                             cFormControl
                             id="validationCustom08"
                             required
-                            type="password"
+                            [type]="hideRetype ? 'password' : 'text'"
                             autocomplete="new-password" 
                         />
+                        <span cInputGroupText (click)="hideRetype = !hideRetype">
+                          <mat-icon *ngIf="!hideRetype">visibility</mat-icon>
+                          <mat-icon *ngIf="hideRetype">visibility_off</mat-icon>
+                        </span>
+                        </c-input-group>
+                        
                         @if(RePassword.touched && Password.value !== RePassword.value){
                         <div class="text-left text-danger">Password Doesn't Match</div>
                         }
@@ -122,7 +142,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button mat-raised-button class="bg-secondary text-light" type="button" (click)="closeModal()">
+                    <button mat-raised-button color="warn" type="button" (click)="closeModal()">
                         <mat-icon>cancel</mat-icon> Close
                     </button>
                     <button mat-raised-button class="bg-success text-light" type="submit" [disabled]="UserForm.invalid">

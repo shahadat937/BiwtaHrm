@@ -13,6 +13,7 @@ import { Office } from '../../basic-setup/model/office';
 import {cibVerizon,cibXPack} from '@coreui/icons'
 import { SectionService } from '../../basic-setup/service/section.service';
 import { DepartmentService } from '../../basic-setup/service/department.service';
+import { AuthService } from 'src/app/core/service/auth.service';
 
 
 @Component({
@@ -46,8 +47,10 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   selectedDesignation: number | null;
   selectedShift : number | null;
   selectedEmp: number | null;
+  isUser: boolean ;
 
   constructor(
+    private authService: AuthService,
     private departmentService: DepartmentService,
     private SectionService: SectionService,
     private AtdReportService: AttendanceReportEmpService,
@@ -63,6 +66,13 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.selectedEmp = null;
     this.selectedSection = null;
     this.rangeDates = null;
+    this.isUser = false;
+    this.authService.currentUser.subscribe(data => {
+      if(data.empId!=null) {
+        this.selectedEmp = parseInt(data.empId);
+        this.isUser = true;
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -72,6 +82,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
         this.EmployeeOption = response;
       }
     });
+
+
   }
 
 

@@ -42,9 +42,9 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getEmployeeTrainingInfoByEmpId();
     this.getSelectedTrainingType();
-    this.getSelectedTrainingName();
-    this.getSelectedInstitute();
-    this.getSelectedCourseDuration();
+    // this.getSelectedTrainingName();
+    // this.getSelectedInstitute();
+    // this.getSelectedCourseDuration();
     this.getSelectedCountries();
   }
 
@@ -68,11 +68,11 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
       id: new FormControl(0),
       empId: new FormControl(this.empId),
       trainingTypeId: new FormControl(undefined, Validators.required),
-      trainingNameId: new FormControl(undefined),
-      instituteId: new FormControl(undefined),
+      trainingName: new FormControl(undefined),
+      instituteName: new FormControl(undefined),
       fromDate: new FormControl(undefined),
       toDate: new FormControl(undefined),
-      trainingDurationId: new FormControl(undefined),
+      trainingDuration: new FormControl(undefined),
       countryId: new FormControl(undefined),
       remark: new FormControl(undefined),
     }));
@@ -165,11 +165,11 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
         id: [trainingInfo.id],
         empId: [trainingInfo.empId],
         trainingTypeId: [trainingInfo.trainingTypeId, Validators.required],
-        trainingNameId: [trainingInfo.trainingNameId],
-        instituteId: [trainingInfo.instituteId],
+        trainingName: [trainingInfo.trainingName],
+        instituteName: [trainingInfo.instituteName],
         fromDate: [trainingInfo.fromDate],
         toDate: [trainingInfo.toDate],
-        trainingDurationId: [trainingInfo.trainingDurationId],
+        trainingDuration: [trainingInfo.trainingDuration],
         countryId: [trainingInfo.countryId],
         remark: [trainingInfo.remark],
       }));

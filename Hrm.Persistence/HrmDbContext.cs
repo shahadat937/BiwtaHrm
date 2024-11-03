@@ -1210,17 +1210,17 @@ namespace Hrm.Persistence
                     .WithMany(e => e.EmpTrainingInfo)
                     .HasForeignKey(e => e.TrainingTypeId);
 
-                entity.HasOne(e => e.TrainingName)
-                    .WithMany(e => e.EmpTrainingInfo)
-                    .HasForeignKey(e => e.TrainingNameId);
+                //entity.HasOne(e => e.TrainingName)
+                //    .WithMany(e => e.EmpTrainingInfo)
+                //    .HasForeignKey(e => e.TrainingNameId);
 
-                entity.HasOne(e => e.Institute)
-                    .WithMany(e => e.EmpTrainingInfo)
-                    .HasForeignKey(e => e.InstituteId);
+                //entity.HasOne(e => e.Institute)
+                //    .WithMany(e => e.EmpTrainingInfo)
+                //    .HasForeignKey(e => e.InstituteId);
 
-                entity.HasOne(e => e.CourseDuration)
-                    .WithMany(e => e.EmpTrainingInfo)
-                    .HasForeignKey(e => e.TrainingDurationId);
+                //entity.HasOne(e => e.CourseDuration)
+                //    .WithMany(e => e.EmpTrainingInfo)
+                //    .HasForeignKey(e => e.TrainingDurationId);
 
                 entity.HasOne(e => e.Country)
                     .WithMany(e => e.EmpTrainingInfo)

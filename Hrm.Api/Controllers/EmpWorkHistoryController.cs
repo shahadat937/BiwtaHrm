@@ -44,5 +44,14 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+
+        [HttpGet]
+        [Route("get-EmpWorkHistoryDetails/{id}")]
+        public async Task<ActionResult<EmpWorkHistoryDto>> GetById(int id)
+        {
+            var EmpWorkHistories = await _mediator.Send(new GetEmpWorkHistoryDetailsRequest { Id = id });
+            return Ok(EmpWorkHistories);
+        }
     }
 }

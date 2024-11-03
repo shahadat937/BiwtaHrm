@@ -12,11 +12,11 @@ namespace Hrm.Domain
         public int Id { get; set; }
         public int EmpId { get; set; }
         public int? TrainingTypeId { get; set; }
-        public int? TrainingNameId { get; set; }
-        public int? InstituteId { get; set; }
+        public string? TrainingName { get; set; }
+        public string? InstituteName { get; set; }
         public DateOnly? FromDate { get; set; }
         public DateOnly? ToDate { get; set; }
-        public int? TrainingDurationId { get; set; }
+        public string? TrainingDuration { get; set; }
         public string? FileUrl { get; set; }
         public int? CountryId { get; set; }
         public string? Remark { get; set; }
@@ -25,9 +25,9 @@ namespace Hrm.Domain
 
         public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
         public virtual TrainingType? TrainingType { get; set; }
-        public virtual TrainingName? TrainingName { get; set; }
-        public virtual Institute? Institute { get; set; }
-        public virtual CourseDuration? CourseDuration { get; set; }
+        //public virtual TrainingName? TrainingName { get; set; }
+        //public virtual Institute? Institute { get; set; }
+        //public virtual CourseDuration? CourseDuration { get; set; }
         public virtual Country? Country { get; set; }
     }
 }

@@ -15,6 +15,7 @@ import { cilZoom } from '@coreui/icons';
 import { DepartmentService } from '../../basic-setup/service/department.service';
 import { SectionService } from '../../basic-setup/service/section.service';
 import { HttpParams } from '@angular/common/http';
+import { AuthService } from 'src/app/core/service/auth.service';
 
 
 @Component({
@@ -52,8 +53,11 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   pageSize: number;
   pageIndex: number;
   totalRecord: number;
+  empId: number | null;
+  isUser: boolean
 
   constructor(
+    private authService: AuthService,
     private sectionService: SectionService,
     private departmentService: DepartmentService,
     public AtdRecordService: AttendanceRecordService,
@@ -73,6 +77,18 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     this.pageSize = 10;
     this.pageIndex = 0;
     this.totalRecord = 0;
+    this.empId = null;
+    this.isUser = false;
+
+    this.authService.currentUser.subscribe(data => {
+      if(data.empId!=null) {
+        this.empId = parseInt(data.empId);
+      }
+
+      if(data.role.toString()!="Master Admin") {
+        this.isUser = true;
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -127,6 +143,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
 
     params = this.selectedDepartment==null?params:params.set('departmentId',this.selectedDepartment);
     params = this.selectedSection==null? params: params.set('sectionId', this.selectedSection);
+    params = this.isUser && this.empId != null? params.set("empId", this.empId): params;
 
     if(this.selectedDate!=null) {
       params = params.set('month',this.selectedDate.getMonth()+1);
@@ -137,7 +154,6 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     params = params.set('pageIndex',pageIndex);
 
     params = this.searchKeyword.trim()==""?params:params.set('keyword',this.searchKeyword);
-
 
     this.AtdRecordService.getAttendance(params).subscribe({
       next: response => {

@@ -206,5 +206,52 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  saveNomineeSingle() {
+    this.empNomineeListArray.controls.forEach(control => {
+      this.loading = true;
+      let formData = this.convertFormGroupToFormData(control as FormGroup);
+      this.empNomineeInfoService.saveEmpNomineeInfo(formData).subscribe({
+        next: (response:any) => {
+          if(response.success) {
+            this.toastr.success('',`${response.message}`, {
+              positionClass: 'toast-top-right'
+            })
+          } else {
+            this.toastr.warning('',`${response.message}`, {
+              positionClass: 'toast-top-right'
+            })
+          }
+        },
+        error: (err) => {
+          this.loading = false;
+        },
+        complete: () => {
+          this.loading = false;
+        }
+      })
+    })
+    this.getEmployeeNomineeInfoByEmpId();
+  }
+
+  private convertFormGroupToFormData(formGroup: FormGroup): FormData {
+    let formData = new FormData();
+    Object.keys(formGroup.controls).forEach((key) => {
+      const control = formGroup.get(key);
+      if (control) {
+        const value = control.value;
+        // Check if the control value is an array (e.g., for file inputs)
+        if (Array.isArray(value)) {
+          value.forEach((file: File) => {
+            formData.append(key, file);
+          });
+        } else {
+          formData.append(key, value);
+        }
+      }
+    });
+    
+    return formData;
+  }
   
 }

@@ -5,7 +5,7 @@
         </div>
     </c-card-header>
     <c-card-body [visible]="visible" cCollapse>
-        <form [formGroup]="EmpNomineeInfoForm" (ngSubmit)="saveNominee()">
+        <form [formGroup]="EmpNomineeInfoForm" (ngSubmit)="saveNomineeSingle()">
             <ng-container formArrayName="empNomineeList">
                 <ng-container *ngFor="let p of empNomineeListArray.controls; let i=index">
                     <c-card class="mt-3 mb-3 shadow">

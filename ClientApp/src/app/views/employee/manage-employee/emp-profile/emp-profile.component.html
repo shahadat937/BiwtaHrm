@@ -355,7 +355,68 @@
                     <h5 class="text-center text-light">Employee Education Information</h5>
                 </c-card-header>
                 <c-card-body>
-                    <table class="table">
+                <div>
+                    <table mat-table [dataSource]="educationSource" class="table-responsive">
+                      <ng-container matColumnDef="slNo">
+                        <th mat-header-cell *matHeaderCellDef>SL</th>
+                        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="examTypeName">
+                        <th mat-header-cell *matHeaderCellDef>Exam Type</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.examTypeName }}
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="boardName">
+                        <th mat-header-cell *matHeaderCellDef>Board/University</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.boardName }}
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="subGroupName">
+                        <th mat-header-cell *matHeaderCellDef>Subject/Group</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.subGroupName }}
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="result">
+                        <th mat-header-cell *matHeaderCellDef>Result</th>
+                        <td mat-cell *matCellDef="let element">
+                            <span *ngIf="!element?.point; else point">{{element.resultName}}</span>
+                            <ng-template #point><span *ngIf="element?.point">{{element.point}}</span>
+                            </ng-template>
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="courseDuration">
+                        <th mat-header-cell *matHeaderCellDef>Course Duration</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.courseDuration }}
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="passingYear">
+                        <th mat-header-cell *matHeaderCellDef>Passing Year</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.passingYear }}
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="remark">
+                        <th mat-header-cell *matHeaderCellDef>Remark</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.remark }}
+                        </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="educationColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: educationColumns"></tr>
+                    </table>
+                </div>
+                    <!-- <table class="table">
                         <tbody *ngFor="let item of empEducationInfo" class="mb-3">
                             <tr>
                                 <th>Exam Type</th>
@@ -383,7 +444,7 @@
                                 <th colspan="2"></th>
                             </tr>
                         </tbody>                   
-                    </table>
+                    </table> -->
                     
                 </c-card-body>
             </c-card>

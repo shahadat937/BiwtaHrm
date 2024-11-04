@@ -23,6 +23,9 @@ export class UpdateUserComponent  implements OnInit, OnDestroy {
   heading: string = '';
   modalOpened: boolean = false;
   loginEmpId : number = 0;
+  hideOld = true;
+  hideNew = true;
+  hideRetype = true;
   
   @ViewChild('UserForm', { static: true }) UserForm!: NgForm;
 
@@ -98,15 +101,15 @@ export class UpdateUserComponent  implements OnInit, OnDestroy {
     this.bsModalRef.hide();
   }
   
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent): void {
-    if (this.modalOpened) {
-      const modalElement = this.el.nativeElement.querySelector('.modal-content');
-      if (modalElement && !modalElement.contains(event.target as Node)) {
-        this.shakeModal();
-      }
-    }
-  }
+  // @HostListener('document:click', ['$event'])
+  // onClickOutside(event: MouseEvent): void {
+  //   if (this.modalOpened) {
+  //     const modalElement = this.el.nativeElement.querySelector('.modal-content');
+  //     if (modalElement && !modalElement.contains(event.target as Node)) {
+  //       this.shakeModal();
+  //     }
+  //   }
+  // }
 
   shakeModal(): void {
     const modalElement = this.el.nativeElement.querySelector('.modal-content');

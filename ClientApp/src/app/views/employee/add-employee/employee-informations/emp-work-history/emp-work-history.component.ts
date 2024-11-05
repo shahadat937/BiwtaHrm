@@ -97,7 +97,7 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
         const control = <FormArray>this.EmpWorkHistoryInfoForm.controls['empWorkHistoryList'];
         control.clear();
         this.visible = false;
-        this.headerText = 'Add Work History';
+        this.headerText = 'Add Employment History';
         this.btnText = 'Submit';
         this.headerBtnText = 'Add New';
         this.addWorkHistory();
@@ -184,7 +184,7 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
       if(res){
         this.visible = true;
         this.headerBtnText = 'Hide From';
-        this.headerText = 'Update Work History';
+        this.headerText = 'Update Employment History';
         this.btnText = 'Update';
         const index = 0;
         const control = <FormArray>this.EmpWorkHistoryInfoForm.controls['empWorkHistoryList'];

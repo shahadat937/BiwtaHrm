@@ -129,7 +129,6 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     filter = filter.set("From", this.hrmdateResize(this.rangeDates[0]));
     filter = filter.set("To", this.hrmdateResize(this.rangeDates[1]));
 
-    console.log(this.selectedEmp);
 
      this.subscription = this.AtdReportService.getEmpSummary(filter).subscribe(response=> {
       this.PresentText = response.totalPresent;
@@ -178,7 +177,6 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     this.subscription = this.AtdReportService.getFilteredEmpOption(params).subscribe(response=> {
         this.EmpOption = response;
         this.selectedEmp = null;
-        console.log(response);
     })
     
   }

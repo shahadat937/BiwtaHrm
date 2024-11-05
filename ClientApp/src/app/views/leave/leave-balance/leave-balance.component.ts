@@ -30,6 +30,9 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.empId = parseInt(this.authService.currentUserValue.empId);
+
+    if(isNaN(this.empId))
+      return;
     this.subscription=this.leaveBalanceService.getEmpInfo(this.empId).subscribe({
       next: response => {
         this.IdCardNo = response.idCardNo;
@@ -43,7 +46,6 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
   onEmpCardChange() {
     this.subscription = this.leaveBalanceService.getEmpInfoByCardNo(this.IdCardNo).subscribe({
       next: (response) => {
-        console.log(response)
         if(response==null) {
           this.leaveBalances = [];
           return;
@@ -51,7 +53,6 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
         this.empName = response.firstName+' '+response.lastName;
         this.subscription = this.subscription = this.leaveBalanceService.getLeaveBalance(response.id).subscribe({
           next: response => {
-            console.log(response)
             this.leaveBalances = response;
           },
           error: err=> {

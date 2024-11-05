@@ -128,11 +128,9 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   onPageChange(event:PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    console.log(this.pageIndex);
     this.getFilteredAttendance(false);
   }
   getFilteredAttendance(resetPage: boolean) {
-    console.log("Hello World");
     let params = new HttpParams();
     let pageSize = this.pageSize;
     let pageIndex = this.pageIndex+1;
@@ -209,7 +207,6 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     });
 
     this.selectedEmp = {id:this.AtdRecordService.UpdateAtdModel.empId, name: element.empFirstName+" "+element.empLastName};
-    console.log(element);
 
     this.selectedUpdateShift = {id:element.shiftId, name:element.shiftName};
     //this.updateAtdForm?.form.patchValue(this.AtdRecordService.UpdateAtdModel);
@@ -240,8 +237,6 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
       this.loading = false;
     }, error=> {
       this.loading = false;
-      console.log(error);
-      console.log(typeof(error));
     });
   }
 

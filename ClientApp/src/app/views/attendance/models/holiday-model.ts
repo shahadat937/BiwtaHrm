@@ -6,7 +6,7 @@ export class HolidayModel {
     holidayTo: Date | null;
     holidayTypeId: number| null;
     yearId: number | null;
-    isActive: boolean| null;
+    isActive: boolean = true;
     yearName: string;
     holidayTypeName: string;
     remark: string;

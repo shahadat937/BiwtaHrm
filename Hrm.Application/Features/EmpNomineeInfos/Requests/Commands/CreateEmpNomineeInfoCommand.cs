@@ -11,6 +11,6 @@ namespace Hrm.Application.Features.EmpNomineeInfos.Requests.Commands
 {
     public class CreateEmpNomineeInfoCommand : IRequest<BaseCommandResponse>
     {
-        public List<CreateEmpNomineeInfoDto> EmpNomineeInfoDto { get; set; }
+        public CreateEmpNomineeInfoDto EmpNomineeInfoDto { get; set; }
     }
 }

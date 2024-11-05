@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
+using Hrm.Application.DTOs.EmpNomineeInfo;
 using Hrm.Application.Features.EmpNomineeInfos.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
@@ -32,7 +33,10 @@ namespace Hrm.Application.Features.EmpNomineeInfos.Handlers.Commands
             int photoCount = 1;
             int signatureCount = 1;
 
-            foreach (var item in request.EmpNomineeInfoDto)
+            List<CreateEmpNomineeInfoDto> nomineeInfo = new List<CreateEmpNomineeInfoDto>();
+            nomineeInfo.Add(request.EmpNomineeInfoDto);
+
+            foreach (var item in nomineeInfo)
             {
                 empId = item.EmpId;
                 if (item.Id == 0 )

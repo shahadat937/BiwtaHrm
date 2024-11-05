@@ -62,4 +62,8 @@ export class EmpBasicInfoService {
     return this.http.get<SelectedModel[]>(this.baseUrl+'/empBasicInfo/get-SelectedFilteredEmpBasicInfo',{params:filters});
   }
 
+  getEmpInfoByCard(cardNo:string):Observable<any> {
+    return this.http.get<any>(this.baseUrl+`/empBasicInfo/get-empBasicInfoByIdCardNo/${cardNo}`);
+  }
+
 }

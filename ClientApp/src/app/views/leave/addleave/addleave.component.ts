@@ -16,6 +16,7 @@ import { EmployeeListModalComponent } from '../../employee/employee-list-modal/e
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ManageLeaveService } from '../service/manage-leave.service';
 import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
+import { LeaveStatus } from '../enum/leave-status';
 
 @Component({
   selector: 'app-addleave',
@@ -51,6 +52,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   IsReadonly: boolean
   buttonTitle: string;
 
+  leaveStatus = LeaveStatus;
   reviewerPMIS: string;
   approverPMIS: string;
   icons = {cilSearch}
@@ -87,8 +89,6 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     if(this.IsReadonly) {
       this.addLeaveService.addLeaveModel=this.FillLeaveDataToAddLeaveModel(this.addLeaveService.addLeaveModel);
       this.filterLeaveBalance();
-      console.log(this.addLeaveService.addLeaveModel);
-
 
       if(this.leaveData.reviewedBy) {
         this.empBasicInfoService.findByEmpId(this.leaveData.reviewedBy).subscribe({
@@ -270,6 +270,9 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     let params = new HttpParams();
     params = params.set("From", this.addLeaveService.addLeaveModel.fromDate);
     params = params.set("To", this.addLeaveService.addLeaveModel.toDate);
+    if(this.addLeaveService.addLeaveModel.leaveTypeId!=null) {
+      params = params.set("leaveTypeId",this.addLeaveService.addLeaveModel.leaveTypeId);
+    }
     this.subcription = this.addLeaveService.getWorkingDays(params).subscribe({
       next: response => {
         this.totalLeave = response;
@@ -466,7 +469,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
       if(idCardNo){
           this.empCardNo = idCardNo;
-          this.onEmpIdChange();
+          //this.onEmpIdChange();
       }
     });
   }

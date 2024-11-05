@@ -11,7 +11,7 @@ namespace Hrm.Application.DTOs.EmpNomineeInfo
     {
         public int Id { get; set; }
         public int EmpId { get; set; }
-        public string PNo { get; set; }
+        public string? PNo { get; set; }
         public string? NomineeName { get; set; }
         public DateOnly? DateOfBirth { get; set; }
         public string? BirthRegNo { get; set; }

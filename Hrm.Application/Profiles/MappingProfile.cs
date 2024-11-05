@@ -554,7 +554,8 @@ namespace Hrm.Application.Profiles
 
             CreateMap<SiteVisit, SiteVisitDto>()
             .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Employees.FirstName))
-            .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Employees.LastName));
+            .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Employees.LastName))
+            .ForMember(dest => dest.IdCardNo, opt => opt.MapFrom(src => src.Employees.IdCardNo));
 
             CreateMap<Workday, WorkdayDto>()
             .ForMember(dest => dest.YearName, opt => opt.MapFrom(src => src.year.YearName))

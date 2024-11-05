@@ -23,7 +23,7 @@
                     [value]="0"
                     [(ngModel)] = "this.siteVisitService.model.siteVisitId"
                     >
-                    <c-col md="3">
+                    <!--<c-col md="3">
                         <label cLabel for="empId">Employee</label>
                         <select name="empId" id="empId" cSelect
                         required
@@ -40,7 +40,25 @@
                         @if(empId.invalid&&empId.touched) {
                             <div class="text-left text-danger">Employee is required</div>
                         }
-                    </c-col>
+                    </c-col> -->
+                    <c-row>
+                        <c-col md="4">
+                            <c-input-group>
+                              <button [disabled]="isUpdate" cButton type="button" color="secondary" (click)="openEmployeeModal()">
+                                <svg [cIcon]="icons.cilSearch"></svg>
+                              </button>
+                              <input type="text"
+                              [readOnly]="isUpdate"
+                              name="empIdCardNo" 
+                              #Pms = "ngModel"
+                              placeholder="Enter PMIS"
+                              [(ngModel)]="empIdCardNo" 
+                              cFormControl id="employeeId"
+                              (input)="onEmpIdChange()"/>
+                              <input type="text" placeholder="Name" cFormControl [ngModel]="empName" name="empName" readonly>
+                            </c-input-group>
+                        </c-col>
+                    </c-row>
                     <c-col md="3">
                         <label cLabel for="fromDate">From</label>
                         <input type="date" 
@@ -109,14 +127,14 @@
                                 <button class="me-1" 
                                 type="submit"
                                 color="primary" 
-                                [disabled]="loading==true||siteVisitForm.invalid"
+                                [disabled]="loading==true||siteVisitForm.invalid||isValidPMIS==false"
                                 cButton>
                                     <c-spinner
                                       [hidden]="loading == false"
                                       size="sm"
                                     ></c-spinner>
                                     {{isUpdate?'Update':'Submit'}}</button>
-                                <button type="reset" color="secondary" cButton>Reset</button> 
+                                <button type="reset" color="secondary" (click)="resetEmp()" cButton>Reset</button> 
                             </div>
                             <div>
                                 <button cButton (click)="onCancel()" color="danger">Cancel</button>

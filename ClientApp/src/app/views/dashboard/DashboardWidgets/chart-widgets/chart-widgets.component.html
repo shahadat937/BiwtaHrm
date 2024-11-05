@@ -1,13 +1,13 @@
 <c-card class="mb-4">
     <c-card-body>
-        <c-row>
-            <c-col sm="4">
+        <c-row class="justify-content-evenly">
+            <c-col md="4">
                 <h4 class="text-center">Gender</h4>
                 <c-chart [data]="gendersInfo" type="doughnut" />
             </c-col>
 
-            <c-col sm="4">
-                <h4 class="text-center">Feild Unfield Positions</h4>
+            <c-col md="4">
+                <h4 class="text-center">In Service and Vacant Post</h4>
                 <c-chart [data]="fieldUnfield" type="doughnut" />
             </c-col>
         </c-row>

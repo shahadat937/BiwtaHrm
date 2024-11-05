@@ -82,7 +82,7 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
     const control = <FormArray>this.EmpEducationInfoForm.controls['empEducationList'];
     control.clear();
 
-    educationInfoList.forEach((educationInfo, index) => {
+    educationInfoList.forEach((educationInfo, index) => {      
       control.push(this.fb.group({
         id: [educationInfo.id],
         empId: [educationInfo.empId],
@@ -254,7 +254,7 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
         });
         this.loading = false;
         // this.cancel();
-        this.getEmployeeEducationInfoByEmpId();
+        // this.getEmployeeEducationInfoByEmpId();
       } else {
         this.toastr.warning('', `${res.message}`, {
           positionClass: 'toast-top-right',

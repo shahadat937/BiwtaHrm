@@ -73,6 +73,7 @@ export class EmpProfileComponent  implements OnInit {
 
   pNo: string = '';
   id : number = 0;
+  isModal = false;
   clickedButton: any;
 
   educationColumns: string[] = ['slNo', 'examTypeName', 'boardName', 'subGroupName', 'result', 'courseDuration', 'passingYear', 'remark'];
@@ -299,6 +300,10 @@ export class EmpProfileComponent  implements OnInit {
           this.empTransferPosting = res;
         }
       });
+    }
+    
+    closeModal(): void {
+      this.bsModalRef.hide();
     }
 
     patchEmpPhoto(empGender: string){

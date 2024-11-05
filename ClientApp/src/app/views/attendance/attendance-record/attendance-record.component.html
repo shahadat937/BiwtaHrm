@@ -220,7 +220,7 @@
             (onClear)="getFilteredAttendance(true)"
             />
         </c-col>
-        <c-col md="3">
+        <c-col *ngIf="!isUser" md="3">
           <select 
           cSelect
           [(ngModel)]="selectedDepartment"
@@ -233,7 +233,7 @@
             }
           </select>
         </c-col>
-        <c-col md="3">
+        <c-col *ngIf="!isUser" md="3">
           <select 
           [(ngModel)]="selectedSection"
           (change)="onSectionChange()"

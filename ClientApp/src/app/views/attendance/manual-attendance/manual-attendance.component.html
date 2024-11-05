@@ -7,7 +7,7 @@
 
     <c-card-body>
         <form [gutter]="3" cForm #manualAtdform="ngForm" (ngSubmit)="onSubmit(manualAtdForm)">
-            <c-row [gutter]="3">
+            <!--<c-row [gutter]="3">
                 <c-col md="3">
                     <label for="Office">Office</label>
                     <select name="Offices" id="Office" cSelect
@@ -64,6 +64,49 @@
                         <div class="text-left text-danger">Employee is required</div>
                     }
                 </c-col>
+            </c-row> -->
+
+            <c-row [gutter]="3">
+                <c-col md="3">
+                    <label cLabel for="">Select Employee</label>
+                    <c-input-group>
+                      <button cButton type="button" color="secondary" (click)="openEmployeeModal()">
+                        <svg [cIcon]="icons.cilSearch"></svg>
+                      </button>
+                      <input type="text"
+                      name="empCardNo" 
+                      #Pms = "ngModel"
+                      [(ngModel)]="PMIS"
+                      placeholder="Enter PMIS"
+                      cFormControl id="employeeId" 
+                      (input)="onEmpIdChange()"/>
+                    </c-input-group>
+                </c-col>
+                 <c-col md="3">
+                    <label cLabel for="Shifts">Shift<span class="text-danger">*</span></label>
+                    <select name="shiftId" id="Shifts" 
+                    cSelect
+                    required
+                    #Shift = "ngModel"
+                    [(ngModel)]="this.manualAtdService.attendances.shiftId">
+                        <option [ngValue]="null" >Select Shift</option>
+                        @for (shift of ShiftOption; track $index) {
+                            <option [value]="shift.id">{{shift.name}}</option>
+                        }
+                    </select>
+
+                    @if(Shift.invalid&&Shift.touched) {
+                        <div class="text-left text-danger">Shift is required</div>
+                    }
+                </c-col>
+            </c-row>
+            <c-row class="mt-1" [gutter]="3">
+                <c-col md="3">
+                    <c-input-group>
+                        <label cInputGroupText for="">Name: </label>
+                        <input type="text" name="EmpName" [(ngModel)]="EmpName" readonly cFormControl>
+                    </c-input-group>
+                </c-col>
             </c-row>
             <hr>
 
@@ -108,6 +151,7 @@
                     id="AtdStatus" 
                     cSelect
                     [(ngModel)]="this.manualAtdService.attendances.attendanceStatusId">
+                        <option [ngValue]="null">Set Automatically</option>
                         @for (status of AtdStatusOption; track $index) {
                             <option [value]="status.id">{{status.name}}</option>
                         }
@@ -124,7 +168,7 @@
                 <div class="d-flex justify-content-between">
                   <div>
                     <button
-                      [disabled]="loading==true||manualAtdForm.invalid"
+                      [disabled]="loading==true||manualAtdForm.invalid||validPMIS==false"
                       cButton
                       class="me-1"
                       color="primary"

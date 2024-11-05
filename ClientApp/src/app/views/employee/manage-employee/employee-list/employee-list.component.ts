@@ -75,10 +75,12 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
   
   viewEmployeeProfile(id: number){
+    const isModal = true;
     const initialState = {
-      id: id
+      id: id,
+      isModal: isModal
     };
-    const modalRef: BsModalRef = this.modalService.show(EmpProfileComponent, { initialState, class: 'modal-xl' });
+    const modalRef: BsModalRef = this.modalService.show(EmpProfileComponent, { initialState});
   }
 
 }

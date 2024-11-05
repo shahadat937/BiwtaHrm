@@ -110,25 +110,15 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
             }).ToList();
 
 
-            // Validate the attendance dto
-            foreach( var attendance in attendancedtos)
-            {
 
-                var validationResult = await validator.ValidateAsync(attendance);
-
-                if(!validationResult.IsValid)
-                {
-                    throw new ValidationException(validationResult);
-                }
-            }
 
 
             // set other attendance related field
             foreach(var attendance in attendancedtos)
             {
-                attendance.AttendanceTypeId = 1;
+                attendance.AttendanceTypeId = 1; // Attendance Type Manual
 
-                var employee = await _unitOfWork.Repository<Hrm.Domain.EmpBasicInfo>().Where(x => x.IdCardNo == attendance.EmpId.ToString()).FirstOrDefaultAsync();
+                var employee = await _unitOfWork.Repository<Hrm.Domain.EmpBasicInfo>().Where(x => x.IdCardNo == attendance.Pmis).FirstOrDefaultAsync();
 
                 if(employee == null)
                 {
@@ -155,6 +145,18 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
                 if (!attendance.OverTime.HasValue)
                 {
                     attendance.OverTime = AttendanceHelper.SetOverTime(attendance, _shiftRepository);
+                }
+            }
+
+            // Validate the attendance dto
+            foreach (var attendance in attendancedtos)
+            {
+
+                var validationResult = await validator.ValidateAsync(attendance);
+
+                if (!validationResult.IsValid)
+                {
+                    throw new ValidationException(validationResult);
                 }
             }
 

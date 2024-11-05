@@ -143,11 +143,9 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
     }
 
 
-    console.log(params.get('officeId'));
 
     this.manualAtdService.getFilteredEmpOption(params).subscribe(response=> {
       this.EmpOption = response;
-      console.log(response);
     });
   }
 
@@ -227,7 +225,6 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
            this.manualAtdService.attendances.empId = response.id;
            this.EmpName = [response.firstName,response.lastName].join(' ');
            this.validPMIS = true;
-           console.log(this.EmpName);
           } else {
             this.resetEmp();
           }

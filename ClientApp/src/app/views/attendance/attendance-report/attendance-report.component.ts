@@ -139,7 +139,6 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   getFilteredEmp() {
     let params = new HttpParams();
 
-    console.log(this.selectedDesignation);
     params = this.selectedOffice!=null?params.set('OfficeId',this.selectedOffice):params;
     params = this.selectedDepartment!=null?params.set("DepartmentId",this.selectedDepartment):params;
     params = this.selectedDesignation!=null?params.set("DesignationId",this.selectedDesignation):params;

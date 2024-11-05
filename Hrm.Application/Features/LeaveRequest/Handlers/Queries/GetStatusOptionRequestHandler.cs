@@ -19,7 +19,7 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
         {
             List<string> options = new List<string>
             {
-                "Pending", "Denied", "Approved (R)", "Approved", "Denied"
+                "Pending", "Not Recommended", "Recommended", "Approved", "Denied"
             };
 
             return options;

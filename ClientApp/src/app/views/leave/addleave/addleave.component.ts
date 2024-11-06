@@ -230,6 +230,9 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   onDateChange() {
     this.getLeaveAmount();
     this.getWorkingDays();
+    if(this.addLeaveService.addLeaveModel.empId!=null) {
+      this.getLeaveBalanceForAllType(this.addLeaveService.addLeaveModel.empId);
+    }
   }
 
   getLeaveAmount() {
@@ -349,6 +352,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.designation = "";
 
     this.leaveBalances = [];
+    this.filteredLeaveBalances = [];
   }
 
   convertToFormData(model: any, fileFields: string[] = []): FormData {
@@ -390,7 +394,18 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   }
 
   getLeaveBalanceForAllType(empId:number) {
-    this.leaveBalanceService.getLeaveBalance(empId).subscribe({
+    let params = new HttpParams();
+    params = params.set('empId',empId);
+
+    if(this.addLeaveService.addLeaveModel.fromDate!=null) {
+      params = params.set('leaveStartDate',this.addLeaveService.addLeaveModel.fromDate);
+    }
+
+    if(this.addLeaveService.addLeaveModel.toDate!=null) {
+      params = params.set('leaveEndDate', this.addLeaveService.addLeaveModel.toDate);
+    }
+
+    this.leaveBalanceService.getLeaveBalance(params).subscribe({
       next: response => {
         this.leaveBalances = response;
         this.filteredLeaveBalances = this.leaveBalances;

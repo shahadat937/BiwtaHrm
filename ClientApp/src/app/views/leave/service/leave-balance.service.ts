@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -13,8 +13,8 @@ export class LeaveBalanceService {
     this.baseUrl = environment.apiUrl;
   }
 
-  getLeaveBalance(empId:number): Observable<any> {
-    return this.http.get<any>(this.baseUrl+`/leaveRequest/get-LeaveAmountForAllLeaveTypeByEmp/${empId}`);
+  getLeaveBalance(params: HttpParams): Observable<any> {
+    return this.http.get<any>(this.baseUrl+`/leaveRequest/get-LeaveAmountForAllLeaveTypeByEmp/`, {params: params});
   }
 
   getEmpInfo (empId:number): Observable<any>{

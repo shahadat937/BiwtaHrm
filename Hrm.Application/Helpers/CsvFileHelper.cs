@@ -18,7 +18,7 @@ namespace Hrm.Application.Helpers
         {
             Map(at => at.AttendanceDate).Name("Date").TypeConverter<CustomDateConverter>();
             Map(at => at.AttendanceTypeId).Name("attendanceType").Optional();
-            Map(at => at.EmpId).Name("EmpId");
+            Map(at => at.Pmis).Name("EmpId");
             Map(at => at.OfficeId).Name("OfficeId").Optional();
             Map(at => at.OfficeBranchId).Name("OfficeBranchId").Optional();
             Map(at => at.ShiftId).Name("ShiftId").Optional();

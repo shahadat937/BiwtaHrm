@@ -24,7 +24,8 @@
                         required
                         [(ngModel)]="this.holidayService.model.holidayName"
                         #holidayName="ngModel"
-                        cFormControl 
+                        cFormControl
+                        placeholder="Enter Holiday Name"
                         name="holidayName" 
                         id="holidayName">
                         @if(holidayName.invalid&&holidayName.touched) {
@@ -100,11 +101,12 @@
                         <select name="isActive" 
                         id="holidayActive"
                         cSelect
-                        [(ngModel)]="this.holidayService.model.isActive"
+                        required
+                        [(ngModel)]="holidayService.model.isActive"
                         #hActive="ngModel"
                         >
-                        <option value="true">Active</option>
-                        <option value="false">Deactive</option>
+                        <option [selected]="true" [ngValue]="true">Active</option>
+                        <option [ngValue]="false">Deactive</option>
                         </select>
                     </c-col>
                     <c-col md="3">
@@ -112,6 +114,7 @@
                         <input type="text"
                         [(ngModel)]="this.holidayService.model.remark"
                         #hRemark = "ngModel"
+                        placeholder="Enter Remark"
                         name="remark" 
                         id="remark" 
                         cFormControl>

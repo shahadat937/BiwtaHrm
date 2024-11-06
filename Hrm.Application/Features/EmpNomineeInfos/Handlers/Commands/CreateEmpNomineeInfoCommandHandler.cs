@@ -30,14 +30,18 @@ namespace Hrm.Application.Features.EmpNomineeInfos.Handlers.Commands
         {
             var response = new BaseCommandResponse();
             int empId = 0;
-            int photoCount = 1;
-            int signatureCount = 1;
+
 
             List<CreateEmpNomineeInfoDto> nomineeInfo = new List<CreateEmpNomineeInfoDto>();
             nomineeInfo.Add(request.EmpNomineeInfoDto);
 
             foreach (var item in nomineeInfo)
             {
+
+                var count = _EmpNomineeInfoRepository.Where(x => x.EmpId == item.EmpId).Count();
+                int photoCount = count;
+                int signatureCount = count;
+
                 empId = item.EmpId;
                 if (item.Id == 0 )
                 {
@@ -56,7 +60,6 @@ namespace Hrm.Application.Features.EmpNomineeInfos.Handlers.Commands
                         }
 
                         empNomineeInfos.PhotoUrl = uniqueImageName;
-                        photoCount++;
                     }
                     if (item.SignatureFile!=null)
                     {
@@ -70,7 +73,6 @@ namespace Hrm.Application.Features.EmpNomineeInfos.Handlers.Commands
                         }
 
                         empNomineeInfos.SignatureUrl = uniqueSignName;
-                        signatureCount++;
                     }
 
                     await _unitOfWork.Repository<EmpNomineeInfo>().Add(empNomineeInfos);

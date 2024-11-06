@@ -127,20 +127,20 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
       id: new FormControl(0),
       empId: new FormControl(this.empId),
       pNo: new FormControl(this.pNo),
-      nomineeName: new FormControl(undefined, Validators.required),
-      dateOfBirth: new FormControl(undefined),
-      birthRegNo: new FormControl(undefined),
-      nid: new FormControl(undefined),
-      relationId: new FormControl(undefined, Validators.required),
-      percentage: new FormControl(undefined),
-      address: new FormControl(undefined),
-      photoFile: new FormControl(undefined),
-      signatureFile: new FormControl(undefined),
-      uniqueIdentity: new FormControl(undefined),
-      remark: new FormControl(undefined),
+      nomineeName: new FormControl("", Validators.required),
+      dateOfBirth: new FormControl(""),
+      birthRegNo: new FormControl(""),
+      nid: new FormControl(""),
+      relationId: new FormControl(null),
+      percentage: new FormControl(0),
+      address: new FormControl(""),
+      photoFile: new FormControl(null),
+      signatureFile: new FormControl(null),
+      uniqueIdentity: new FormControl(""),
+      remark: new FormControl(""),
       isActive: new FormControl(true),
-      photoPreviewUrl: new FormControl(undefined),
-      signaturePreviewUrl: new FormControl(undefined),
+      photoPreviewUrl: new FormControl(null),
+      signaturePreviewUrl: new FormControl(null),
     }));
   }
 
@@ -197,7 +197,7 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
         });
         this.loading = false;
         // this.cancel();
-    this.getEmployeeNomineeInfoByEmpId();
+      this.getEmployeeNomineeInfoByEmpId();
       } else {
         this.toastr.warning('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -208,29 +208,52 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
   }
 
   saveNomineeSingle() {
-    this.empNomineeListArray.controls.forEach(control => {
+    const empNomineeList = this.EmpNomineeInfoForm.get('empNomineeList')?.value as any[]; // Replace 'any' with the 
+    empNomineeList.forEach((nominee) => {
       this.loading = true;
-      let formData = this.convertFormGroupToFormData(control as FormGroup);
-      this.empNomineeInfoService.saveEmpNomineeInfo(formData).subscribe({
-        next: (response:any) => {
-          if(response.success) {
-            this.toastr.success('',`${response.message}`, {
-              positionClass: 'toast-top-right'
-            })
-          } else {
-            this.toastr.warning('',`${response.message}`, {
-              positionClass: 'toast-top-right'
-            })
+        this.empNomineeInfoService.saveEmpNomineeInfo(nominee).subscribe({
+          next: (response:any) => {
+            if(response.success) {
+              this.toastr.success('',`${response.message}`, {
+                positionClass: 'toast-top-right'
+              })
+            } else {
+              this.toastr.warning('',`${response.message}`, {
+                positionClass: 'toast-top-right'
+              })
+            }
+          },
+          error: (err) => {
+            this.loading = false;
+          },
+          complete: () => {
+            this.loading = false;
           }
-        },
-        error: (err) => {
-          this.loading = false;
-        },
-        complete: () => {
-          this.loading = false;
-        }
-      })
-    })
+        })
+    });
+    // this.empNomineeListArray.controls.forEach(control => {
+    //   this.loading = true;
+    //   // let formData = this.convertFormGroupToFormData(control as FormGroup);
+    //   // this.empNomineeInfoService.saveEmpNomineeInfo(control.value).subscribe({
+    //   //   next: (response:any) => {
+    //   //     if(response.success) {
+    //   //       this.toastr.success('',`${response.message}`, {
+    //   //         positionClass: 'toast-top-right'
+    //   //       })
+    //   //     } else {
+    //   //       this.toastr.warning('',`${response.message}`, {
+    //   //         positionClass: 'toast-top-right'
+    //   //       })
+    //   //     }
+    //   //   },
+    //   //   error: (err) => {
+    //   //     this.loading = false;
+    //   //   },
+    //   //   complete: () => {
+    //   //     this.loading = false;
+    //   //   }
+    //   // })
+    // })
     this.getEmployeeNomineeInfoByEmpId();
   }
 
@@ -250,7 +273,6 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
         }
       }
     });
-    
     return formData;
   }
   

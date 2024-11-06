@@ -139,5 +139,6 @@ namespace Hrm.Application
         public const string JobDetailsSetup = HRMRoutePrefixBase + "jobDetailsSetup";
         public const string NavbarThem = HRMRoutePrefixBase + "navbarThem";
         public const string NavbarSetting = HRMRoutePrefixBase + "navbarSetting";
+        public const string RoleDashboard = HRMRoutePrefixBase + "roleDashboard";
     }
 }

@@ -153,8 +153,8 @@
                             <ng-template #deptApproval>
                             <button cButton color="warning" size="sm" *ngIf="empTransferPosting.deptApproveStatus == null">Pending</button>
                             <!-- <button cTooltip="Notice" cTooltipPlacement="bottom" cButton color="info" size="sm" *ngIf="element.deptApproveStatus == null && element.transferApproveStatus == true && element.isDepartmentApprove == true"><svg [cIcon]="icons.cilBell"></svg></button> -->
-                            <button cButton color="success" size="sm" *ngIf="empTransferPosting.deptApproveStatus == true">Approved</button>
-                            <button cButton color="danger" size="sm" *ngIf="empTransferPosting.deptApproveStatus == false">Rejected</button>
+                            <button cButton color="success" size="sm" *ngIf="empTransferPosting.deptApproveStatus == true">Released</button>
+                            <button cButton color="danger" size="sm" *ngIf="empTransferPosting.deptApproveStatus == false">Not-Released</button>
                             </ng-template>
                         </div>
                         <div *ngIf="!empTransferPosting.isDepartmentApprove">

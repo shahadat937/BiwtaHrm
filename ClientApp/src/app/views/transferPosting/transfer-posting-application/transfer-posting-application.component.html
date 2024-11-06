@@ -510,14 +510,14 @@
                         <c-form-check [switch]="true">
                             <input cFormCheckInput type="checkbox" id="isDepartmentApprove" name="isDepartmentApprove"
                                 [(ngModel)]="empTransferPostingService.empTransferPosting.isDepartmentApprove" (change)="isDeptApproveNeed(empTransferPostingService.empTransferPosting.isDepartmentApprove)"/>
-                            <label cFormCheckLabel for="isDepartmentApprove">Department Approve Needed</label>
+                            <label cFormCheckLabel for="isDepartmentApprove">Department Release Needed</label>
                         </c-form-check>
                     </div>
                     <div class="mb-3" *ngIf="empTransferPostingService.empTransferPosting.isDepartmentApprove">
                         <c-form-check [switch]="true">
                             <input cFormCheckInput type="checkbox" id="provideDepartmentApproveInfo" name="provideDepartmentApproveInfo"
                             [(ngModel)]="empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo" (change)="provideDeptApproveInfo(empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo)"/>
-                            <label cFormCheckLabel for="provideDepartmentApproveInfo">Provide Department Transfer Approve Info</label>
+                            <label cFormCheckLabel for="provideDepartmentApproveInfo">Provide Department Release Info</label>
                         </c-form-check>
                     </div>
                     <div cRow [gutter]="3" *ngIf="empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo">

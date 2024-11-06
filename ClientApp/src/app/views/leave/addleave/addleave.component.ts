@@ -55,6 +55,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   leaveStatus = LeaveStatus;
   reviewerPMIS: string;
   approverPMIS: string;
+  reviewerName: string;
+  approverName: string;
   icons = {cilSearch}
   constructor(
     private empBasicInfoService: EmpBasicInfoService,
@@ -74,6 +76,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.isValidPMS = false;
     this.reviewerPMIS = "";
     this.approverPMIS = "";
+    this.reviewerName = "";
+    this.approverName = "";
     this.imageUrl = environment.imageUrl;
     this.defaultPhoto = environment.imageUrl + "EmpPhoto/default.jpg";
     this.employeePhoto = this.defaultPhoto;
@@ -94,6 +98,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
         this.empBasicInfoService.findByEmpId(this.leaveData.reviewedBy).subscribe({
           next: response => {
             this.reviewerPMIS = response.idCardNo
+            this.reviewerName = [response.firstName, response.lastName].join(' ');
           }
         })
       }
@@ -102,6 +107,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
         this.empBasicInfoService.findByEmpId(this.leaveData.approvedBy).subscribe({
           next: response => {
             this.approverPMIS = response.idCardNo
+            this.reviewerName = [response.firstName, response.lastName].join(' ');
           }
         })
       }
@@ -412,12 +418,15 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
         next: response => {
           if(response!=null) {
             this.addLeaveService.addLeaveModel.reviewedBy = response.id;
+            this.reviewerName = [response.firstName, response.lastName].join(' ');
           } else {
             this.addLeaveService.addLeaveModel.reviewedBy = null;
+            this.reviewerName = "";
           }
         },
         error: (err) => {
           this.addLeaveService.addLeaveModel.reviewedBy = null;
+          this.reviewerName = ""
         }
       })
     })
@@ -441,12 +450,15 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
         next: response => {
           if(response!=null) {
             this.addLeaveService.addLeaveModel.approvedBy = response.id;
+            this.approverName = [response.firstName, response.lastName].join(' ');
           } else {
             this.addLeaveService.addLeaveModel.approvedBy = null;
+            this.approverName = "";
           }
         },
         error: (err) => {
           this.addLeaveService.addLeaveModel.approvedBy = null;
+          this.approverName = "";
         }
       })
     })

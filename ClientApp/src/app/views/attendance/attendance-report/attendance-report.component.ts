@@ -27,6 +27,10 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     {"field":"name","header":"Name"},
     {"field":"departmentName","header":"Department"}];
 
+  staticColumnAfter: any[] = [
+    {"field":"totalLate", "header":"Total Late"}
+  ]
+
   loading:boolean = false;
   icons = {cibVerizon,cibXPack};
 
@@ -169,7 +173,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
       next: IsOffday => {
         this.subscription = this.AtdReportService.getAttendanceReport(params).subscribe(result=> {
           if(result.length>0) {
-            this.dynamicColumn=Object.keys(result[0]).slice(4).map(val=> {
+            this.dynamicColumn=Object.keys(result[0]).slice(5).map(val=> {
               return {"header":val.split('-')[2],"field":val,"offday":IsOffday[parseInt(val.split('-')[2])]};
             });
 

@@ -44,10 +44,19 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
 
             
             List<LeaveAmount> leaveAmounts = new List<LeaveAmount>();
+            DateTime startDate = DateTime.Now;
+            DateTime endDate = DateTime.Now;
+
+            if(request.LeaveStartDate.HasValue && request.LeaveEndDate.HasValue)
+            {
+                startDate = (DateTime) request.LeaveStartDate;
+                endDate = (DateTime) request.LeaveEndDate;
+            }
+
             foreach(var type in leaveTypeDto)
             {
                 LeaveAmount leaveAmount = new LeaveAmount();
-                List<int> leaveAmountAndDue = await _leaveValidator.CalculateLeaveAmount(request.EmpId, type.LeaveTypeId, DateTime.Now, DateTime.Now, DateTime.Now.Year);
+                List<int> leaveAmountAndDue = await _leaveValidator.CalculateLeaveAmount(request.EmpId, type.LeaveTypeId, startDate, endDate, DateTime.Now.Year);
                 leaveAmount.LeaveTypeId = type.LeaveTypeId;
                 leaveAmount.LeaveTypeName = type.LeaveTypeName;
                 leaveAmount.TotalAmount = leaveAmountAndDue[0];

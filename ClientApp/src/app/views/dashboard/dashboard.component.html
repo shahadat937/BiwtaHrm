@@ -1,10 +1,14 @@
-<app-users-widgets></app-users-widgets>
+<div *ngIf="dashboardPermission.dashboardPermission">
+    <app-users-widgets></app-users-widgets>
 
-<!-- <app-transfer-widgets></app-transfer-widgets>
+    <!-- <app-transfer-widgets></app-transfer-widgets>
 
-<app-promotion-widgets></app-promotion-widgets> -->
+    <app-promotion-widgets></app-promotion-widgets> -->
 
-<app-chart-widgets></app-chart-widgets>
+    <app-chart-widgets></app-chart-widgets>
+</div>
 
-<app-emp-dashboard></app-emp-dashboard>
+<div *ngIf="dashboardPermission.empDashboardPermission">
+    <app-emp-dashboard></app-emp-dashboard>
+</div>
 

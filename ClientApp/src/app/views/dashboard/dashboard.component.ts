@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { RoleDashboardService } from '../usermanagement/service/role-dashboard.service';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { RoleDashboard } from '../usermanagement/model/role-dashboard';
+import { ToastrService } from 'ngx-toastr';
 
 interface IUser {
   name: string;
@@ -33,7 +34,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private roleDashboardService: RoleDashboardService,
-    private authService: AuthService,){
+    private authService: AuthService,
+    private toastr: ToastrService,){
   }
 
   ngOnInit(): void {
@@ -54,7 +56,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   getRolePermission(roleName: string){
     this.subscription = this.roleDashboardService.getRoleDashboardPermission(roleName).subscribe((res) => {
-      this.dashboardPermission = res;
+      if(res){
+        this.dashboardPermission = res;
+      }
+      else{
+        this.toastr.warning('', 'Permission Not Found', {
+          positionClass: 'toast-top-right',
+        });
+      }
     })
   }
 

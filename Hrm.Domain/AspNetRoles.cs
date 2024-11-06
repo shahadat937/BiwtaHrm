@@ -12,5 +12,6 @@ namespace Hrm.Domain
         public string Name { get; set; }
 
         //public virtual ICollection<RoleFeature>? RoleFeature { get; set; }
+        public virtual ICollection<RoleDashboard>? RoleDashboard { get; set; }
     }
 }

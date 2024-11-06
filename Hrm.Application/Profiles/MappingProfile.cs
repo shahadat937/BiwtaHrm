@@ -125,6 +125,7 @@ using Hrm.Application.DTOs.NavbarThem;
 
 using Hrm.Application.DTOs.FormGroup;
 using Hrm.Application.DTOs.NavbarSetting;
+using Hrm.Application.DTOs.RoleDashboard;
 
 
 
@@ -723,6 +724,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<FormGroup,FormGroupDto>().ReverseMap();
             CreateMap<FormGroup, CreateFormGroupDto>().ReverseMap();
+
+            CreateMap<RoleDashboard, RoleDashboardDto>()
+                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.AspNetRoles.Name));
 
             //CreateMap<NavbarSetting, NavbarSettingDto>().ReverseMap();
             //CreateMap<NavbarSetting, CreateNavbarSettingDto>().ReverseMap();

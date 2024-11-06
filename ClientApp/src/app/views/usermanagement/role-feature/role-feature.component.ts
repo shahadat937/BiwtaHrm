@@ -127,6 +127,7 @@ toggleRowSelection(index: number) {
         this.loading = false;
       }
     }));
+    this.onRoleChange();
   }
 
 }

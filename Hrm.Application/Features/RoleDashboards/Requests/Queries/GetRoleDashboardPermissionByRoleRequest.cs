@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.RoleDashboards.Requests.Queries
 {
-    public class GetRoleDashboardPermissionByRoleRequest : IRequest<RoleDashboardDto>
+    public class GetRoleDashboardPermissionByRoleRequest : IRequest<object>
     {
         public string RoleName { get; set; }
     }

@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.RoleDashboard;
+using Hrm.Application.Exceptions;
 using Hrm.Application.Features.RoleDashboards.Requests.Queries;
 using Hrm.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.RoleDashboards.Handlers.Queries
 {
-    public class GetRoleDashboardPermissionByRoleRequestHandler : IRequestHandler<GetRoleDashboardPermissionByRoleRequest, RoleDashboardDto>
+    public class GetRoleDashboardPermissionByRoleRequestHandler : IRequestHandler<GetRoleDashboardPermissionByRoleRequest, object>
     {
         private readonly IHrmRepository<RoleDashboard> _RoleDashboardRepository;
         private readonly IHrmRepository<AspNetRoles> _AspNetRolesRepository;
@@ -22,19 +24,24 @@ namespace Hrm.Application.Features.RoleDashboards.Handlers.Queries
             _RoleDashboardRepository = RoleDashboardRepository;
         }
 
-        public async Task<RoleDashboardDto> Handle(GetRoleDashboardPermissionByRoleRequest request, CancellationToken cancellationToken)
+        public async Task<object> Handle(GetRoleDashboardPermissionByRoleRequest request, CancellationToken cancellationToken)
         {
             var roleId = await _AspNetRolesRepository.FindOneAsync(x => x.Name == request.RoleName);
 
-            var roleDashboard = await _RoleDashboardRepository.FindOneAsync(x => x.RoleId == roleId.Id);
+            var roleDashboard = await _RoleDashboardRepository.Where(x => x.RoleId == roleId.Id).FirstOrDefaultAsync();
 
-            var result = new RoleDashboardDto
+            if(roleDashboard != null)
             {
-                DashboardPermission = roleDashboard.DashboardPermission,
-                EmpDashboardPermission = roleDashboard.EmpDashboardPermission,
-            };
+                var result = new RoleDashboardDto
+                {
+                    DashboardPermission = roleDashboard.DashboardPermission,
+                    EmpDashboardPermission = roleDashboard.EmpDashboardPermission,
+                };
+                return result;
+            }
 
-            return result;
+            return null;
+
         }
     }
 }

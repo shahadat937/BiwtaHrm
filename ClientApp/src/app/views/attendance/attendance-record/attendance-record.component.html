@@ -263,17 +263,11 @@
             </td>
           </ng-container>-->
 
-          <ng-container matColumnDef="idCardNo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee PMS</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.idCardNo }}
-            </td>
-          </ng-container>
 
           <ng-container matColumnDef="fullName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name</th>
             <td mat-cell *matCellDef="let element">
-              {{element.fullName}}
+              {{element.fullName}} ({{element.idCardNo}})
             </td>
           </ng-container>
 
@@ -295,6 +289,13 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by outTime">Out Time</th>
             <td mat-cell *matCellDef="let element">
               {{ element.outTime | timeFormat }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="lateTime">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by lateTime">Late</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.lateTime}}m
             </td>
           </ng-container>
 

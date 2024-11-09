@@ -16,6 +16,9 @@ export class FinalApprovalComponent {
     this.filterLeave = {Status: [LeaveStatus.ReviewerApproved,LeaveStatus.FinalApproved,LeaveStatus.FinalDenied]}
 
     this.authService.currentUser.subscribe(user => {
+      if(user==null) {
+        return;
+      }
       let empId = parseInt(user.empId);
 
       if(!isNaN(empId)) {

@@ -32,6 +32,9 @@ export class EmpDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.authService.currentUser.subscribe(data => {
+      if(data==null) {
+        return;
+      }
       if(data.empId!=null) {
         this.empId = parseInt(data.empId);
       }

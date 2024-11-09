@@ -16,8 +16,9 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
   @Input() fieldData:any;
   @Input() fieldUniqueName: string;
   @Input() Index:any;
-  @Input() IsReadonly: boolean
-  @Input() empId: number
+  @Input() IsReadonly: boolean;
+  @Input() empId: number;
+  @Input() IsChild: boolean;
 
   fieldValue: string = "";
   @Output() fieldChange = new EventEmitter();
@@ -53,6 +54,7 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
     this.empId = 0;
     this.educationInfos = [];
     this.jobHistory = [];
+    this.IsChild = false;
   }
 
   ngOnInit(): void {

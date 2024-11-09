@@ -102,7 +102,7 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
                         throw new NotFoundException(nameof(fieldRecord), fieldDto.FieldRecordId);
                     }
 
-                    if(field.HTMLTagName == "daterange")
+                    if(field.HTMLTagName == "daterange"||field.HTMLTagName=="group")
                     {
                         foreach(var childField in field.ChildFields)
                         {

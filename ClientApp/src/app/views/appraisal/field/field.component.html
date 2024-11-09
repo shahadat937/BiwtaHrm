@@ -193,4 +193,21 @@
             </p-table>
         </c-col>
     </c-row>
+} @else if(fieldData.htmlTagName == "group") {
+    <c-row class="mt-2" [gutter]="3">
+        <c-col>
+            <label cLabel><strong>{{Index+fieldData.fieldName}}</strong></label>
+        </c-col>
+        <div class="ms-5">
+
+            @for (field of fieldData.childFields; track $index) {
+                <app-field
+                [empId]="empId"
+                [(field)]="field.fieldValue"
+                [fieldData]="field"
+                [Index]="$index+1+'. '" 
+                [fieldUniqueName]="fieldUniqueName+field.fieldName+field.fieldId"></app-field>
+            }
+        </div>
+    </c-row>
 }

@@ -84,6 +84,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   ngOnInit(): void {
     this.getAllEmp();
     this.getSelectedDepartment();
+    this.onChangeDw();
   }
 
   ngOnDestroy(): void {
@@ -114,7 +115,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
 
   onEmpChange() {
     //console.log(this.toDate?.toString());
-    if(this.selectedEmp==null||this.rangeDates.length<2) {
+    if(this.selectedEmp==null||this.rangeDates.length<2||this.rangeDates[0]>this.rangeDates[1]) {
         this.PresentText="N/A";
         this.AbsentText ="N/A";
         this.LateText = "N/A";
@@ -182,23 +183,21 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   onChangeDw() {
-    if(this.selectedOfficeDw!=null) {
-      this.subscription = this.AtdReportService.getDepartmentOption(this.selectedOfficeDw).subscribe(option=> {
-        this.DepartmentOptionDw = option;
-      })
-    } else {
-      this.DepartmentOptionDw = [];
-      this.selectedDepartmentDw = null;
-    }
+
+    this.subscription = this.AtdReportService.getSelectedDepartment().subscribe(option=> {
+      this.DepartmentOptionDw = option;
+    })
 
 /*     if(this.toDateDw==null||this.fromDateDw==null) {
       // TO DO
       return;
     } */
 
-    if(this.rangeDatesDw.length<2) {
+    if(this.rangeDatesDw.length<2||this.rangeDatesDw[0]>this.rangeDatesDw[1]) {
       return;
     }
+
+    console.log(this.rangeDatesDw);
 
     
 

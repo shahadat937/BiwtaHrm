@@ -28,6 +28,7 @@ namespace Hrm.Application.DTOs.Attendance
         public int? Done { get; set; }
         public string? Remark { get; set; }
         public int? SiteVisitId { get; set; }
+        public int? LateTime {  get; set; }
 
         public string? AttendanceTypeName { get; set; }
         public string? EmpFirstName { get; set; }

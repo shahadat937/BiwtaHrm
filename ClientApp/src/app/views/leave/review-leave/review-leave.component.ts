@@ -20,7 +20,7 @@ export class ReviewLeaveComponent {
 
       let empId = parseInt(user.empId);
       if(!isNaN(empId)) {
-        this.filterLeave['approvedBy'] = parseInt(user.empId);
+        this.filterLeave['reviewedBy'] = parseInt(user.empId);
       }
     })
   }

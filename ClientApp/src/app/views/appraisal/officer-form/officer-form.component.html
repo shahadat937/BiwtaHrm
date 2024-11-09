@@ -2,8 +2,14 @@
   @if (loading==true) {
     <div class="d-flex justify-content-center">Loading...</div>
   } @else {
-    <c-card-header>
+    <c-card-header class="d-flex justify-content-between">
       <h5>{{ formData.formName }}</h5>
+
+      @if (updateRole!=appraisalRole.User) {
+        <button cButton size="sm" color="danger" (click)="goBack()">
+          <svg [cIcon]="icons.cilArrowLeft"></svg>
+        </button>
+      }
     </c-card-header>
     <c-card-body>
       <form 

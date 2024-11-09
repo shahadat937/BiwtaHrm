@@ -60,9 +60,12 @@
               <button class="custom-button me-1" (click)="onView(formRecord.recordId)" title="View the record">
                 <mat-icon fontIcon="visibility"></mat-icon>
               </button>
-              <button class="custom-button me-1" (click)="onUpdate(formRecord.recordId)" title="Edit The Record">
-                <mat-icon fontIcon="edit"></mat-icon>
-              </button>
+
+              @if (appraisalUserRole!=-1) {
+                <button class="custom-button me-1" [routerLink]="officerFormEditRoute[appraisalUserRole]+formRecord.recordId" title="Edit The Record">
+                  <mat-icon fontIcon="edit"></mat-icon>
+                </button>
+              }
               
               <button
                 class="custom-button me-1"

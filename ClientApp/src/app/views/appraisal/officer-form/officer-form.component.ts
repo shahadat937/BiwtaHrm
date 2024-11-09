@@ -16,6 +16,7 @@ import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.servi
 import { HttpParams } from '@angular/common/http';
 import {AppraisalRole} from '../enum/appraisal-role';
 import { environment } from 'src/environments/environment';
+import { cilArrowLeft } from '@coreui/icons';
 
 @Component({
   selector: 'app-officer-form',
@@ -32,6 +33,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   showHeader: boolean;
   @Input()
   updateRole: number;
+  appraisalRole = AppraisalRole;
   IdCardNo:string;
   formId:number;
   loading: boolean;
@@ -48,6 +50,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     {fieldName: "Birthdate", MapTo: "birthDate", Transform: "DateFormat"},
     {fieldName: "Joining Date Of Current Designation", MapTo: "currentDesignationJoiningDate", Transform: "DateFormat"}
   ]
+  icons = {cilArrowLeft};
 
   EmpOption: any[] = []
 
@@ -320,6 +323,10 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
         this.loading=false;
       }
     })
+  }
+
+  goBack() {
+    window.history.back();
   }
 
 

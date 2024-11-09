@@ -10,6 +10,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { UpdateFormComponent } from '../update-form/update-form.component';
 import {ViewFormRecordComponent} from './view-form-record/view-form-record.component'
 import {FormRecordFilter} from '../models/form-record-filter'
+import { AppraisalRole } from '../enum/appraisal-role';
 
 @Component({
   selector: 'app-manage-form',
@@ -27,6 +28,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   formRecordHeader: any[] ;
   icons = {cilPencil, cilTrash, cilZoom, cilEyedropper}
   globalFilter:string;
+  officerFormEditRoute: any;
+  appraisalRole = AppraisalRole;
 
 
   constructor(
@@ -42,6 +45,20 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     this.globalFilter="";
     this.filters = new FormRecordFilter();
     this.appraisalUserRole = -1;
+    // To future developer: Don't change the order of the strings, it 
+    /*this.officerFormEditRoute = [
+       "",
+       "/appraisal/reportingFormOfficer/",
+       "/appraisal/counterSignatureFormOfficer/",
+       "/appraisal/receiverFormOfficer/"
+    ]*/
+    this.officerFormEditRoute = {
+      [AppraisalRole.ReportingOfficer]: "/appraisal/reportingFormOfficer/",
+      [AppraisalRole.CounterSignatory]: "/appraisal/counterSignatureFormOfficer/",
+      [AppraisalRole.Receiver]: "/appraisal/receiverFormOfficer/"
+    };
+    this.appraisalRole.Receiver
+
   }
 
   ngOnInit(): void {

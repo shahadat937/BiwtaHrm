@@ -60,7 +60,7 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
                     throw new BadRequestException("Counter Signatory has already signed the apprisal");
                 }
 
-                formRecord.ReceiverApproval = true;
+                formRecord.ReportingOfficerApproval = true;
 
             } else if(request.UpdateRole == (int) AppraisalRole.CounterSignatory)
             {

@@ -45,11 +45,11 @@
               </ng-container>
               
               <ng-container matColumnDef="ApprovalStatus">
-                <th mat-header-cell *matHeaderCellDef>Approval Status</th>
+                <th mat-header-cell *matHeaderCellDef>Release Status</th>
                 <td mat-cell *matCellDef="let element">
                     <button cButton color="warning" size="sm" *ngIf="element.deptApproveStatus == null">Pending</button>
-                    <button cButton color="success" size="sm" *ngIf="element.deptApproveStatus == true">Approved</button>
-                    <button cButton color="danger" size="sm" *ngIf="element.deptApproveStatus == false">Rejected</button>
+                    <button cButton color="success" size="sm" *ngIf="element.deptApproveStatus == true">Released</button>
+                    <button cButton color="danger" size="sm" *ngIf="element.deptApproveStatus == false">Not-Released</button>
                 </td>
               </ng-container>
               

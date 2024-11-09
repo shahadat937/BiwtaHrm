@@ -1268,6 +1268,13 @@ namespace Hrm.Persistence
                 .HasForeignKey(lf => lf.LeaveRequestId);
             });
 
+            modelBuilder.Entity<RoleDashboard>(entity =>
+            {
+                entity.HasOne(rd => rd.AspNetRoles)
+                .WithMany(rd => rd.RoleDashboard)
+                .HasForeignKey(rd => rd.RoleId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -1397,6 +1404,7 @@ namespace Hrm.Persistence
         public virtual DbSet<NavbarThem> NavbarThem { get; set; } = null!;
         public virtual DbSet<NavbarSetting> NavbarSetting { get; set; } = null!;
         public virtual DbSet<LeaveFiles> LeaveFiles { get; set; } = null!;
+        public virtual DbSet<RoleDashboard> RoleDashboard { get; set; } = null!;
 
     }
 }

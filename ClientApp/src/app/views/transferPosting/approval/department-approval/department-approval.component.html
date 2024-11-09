@@ -202,8 +202,8 @@
                         name="deptApproveStatus" #deptApproveStatus="ngModel"
                         cSelect id="deptApproveStatus">
                         <option value="">Pending</option>
-                        <option value="true">Approve</option>
-                        <option value="false">Reject</option>
+                        <option value="true">Release</option>
+                        <option value="false">No-Release</option>
                         </select>
                     </c-col>
                     
@@ -225,10 +225,10 @@
                     <mat-icon>cancel</mat-icon> Close
                 </button>
                 <button mat-raised-button class="bg-success text-light" (click)="onSubmit(true)" *ngIf="clickedButton == 'Approve'">
-                    <mat-icon>check</mat-icon> Approve
+                    <mat-icon>check</mat-icon> Release
                 </button>
                 <button mat-raised-button color="warn" (click)="onSubmit(false)" *ngIf="clickedButton == 'Reject'">
-                    <mat-icon>close</mat-icon> Reject
+                    <mat-icon>close</mat-icon> No-Release
                 </button>
                 <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="clickedButton == 'Edit'">
                     <mat-icon>update</mat-icon> Update

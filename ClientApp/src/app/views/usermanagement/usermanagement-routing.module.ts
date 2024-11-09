@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RoleFeatureComponent } from './role-feature/role-feature.component';
 import { RolesComponent } from './roles/roles.component';
+import { RoleDashboardComponent } from './role-dashboard/role-dashboard.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,13 @@ const routes: Routes = [
         component: RolesComponent,
         data: {
           title: 'Roles',
+        },
+      },
+      {
+        path: 'dashboard-permission',
+        component: RoleDashboardComponent,
+        data: {
+          title: 'Dashboard Permission',
         },
       },
     ]

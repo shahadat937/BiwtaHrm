@@ -107,7 +107,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
         this.empBasicInfoService.findByEmpId(this.leaveData.approvedBy).subscribe({
           next: response => {
             this.approverPMIS = response.idCardNo
-            this.reviewerName = [response.firstName, response.lastName].join(' ');
+            this.approverName = [response.firstName, response.lastName].join(' ');
           }
         })
       }
@@ -125,7 +125,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       this.buttonTitle = "Update";
     }
 
-    if(this.authService.currentUserValue.empId!=null) {
+    if(this.authService.currentUserValue.empId!=null&&this.IsReadonly==false) {
       this.addLeaveService.getEmpById(parseInt(this.authService.currentUserValue.empId)).subscribe({
         next: response => {
           this.empCardNo = response.idCardNo;
@@ -496,7 +496,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
       if(idCardNo){
           this.empCardNo = idCardNo;
-          //this.onEmpIdChange();
+          this.onEmpIdChange();
       }
     });
   }

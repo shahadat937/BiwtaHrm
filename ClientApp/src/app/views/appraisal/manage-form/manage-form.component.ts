@@ -41,7 +41,10 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   ) {
     this.loading = false;
     this.formRecordHeader = [{header:"PMS No.", field:"idCardNo"}, {header:"Name",field:"fullName"}, {header:"Department", field:"department"}, 
-      {header: "From", field:"reportFrom", IsDate: true}, {header:"To", field:"reportTo", IsDate:true}]
+      {header: "From", field:"reportFrom", IsDate: true}, {header:"To", field:"reportTo", IsDate:true},
+      {header:"Reporting Officer",field:"reportingOfficerApproval",IsBinary:true},
+      {header:"Counter Signatory", field:"counterSignatoryApproval",IsBinary:true},
+      {header: "Receiver", field:"receiverApproval",IsBinary:true}]
     this.globalFilter="";
     this.filters = new FormRecordFilter();
     this.appraisalUserRole = -1;
@@ -57,7 +60,7 @@ export class ManageFormComponent implements OnInit, OnDestroy {
       [AppraisalRole.CounterSignatory]: "/appraisal/counterSignatureFormOfficer/",
       [AppraisalRole.Receiver]: "/appraisal/receiverFormOfficer/"
     };
-    this.appraisalRole.Receiver
+    //this.appraisalRole.Receiver
 
   }
 

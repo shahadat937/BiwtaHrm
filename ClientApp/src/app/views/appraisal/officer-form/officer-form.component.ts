@@ -208,6 +208,9 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
             this.processEmpInfo(response);
           } else {
             this.formData.empId = 0;
+            this.toastr.warning('',`Employee (${data}) wasn't found`, {
+              positionClass: 'toast-top-right'
+            });
             this.resetAutofield();
           }
         },

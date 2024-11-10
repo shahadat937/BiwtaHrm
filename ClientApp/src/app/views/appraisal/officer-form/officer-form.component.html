@@ -28,7 +28,7 @@
                         <h5>{{item.sectionName}}</h5>
                       </div>
                       <hr>
-                      @if (ind==0&&showHeader) {
+                      @if (ind==0&&showHeader&&updateRole == appraisalRole.User) {
                         <c-row class="mt-3" [gutter]="3">
                           <c-col md="3">
                             <label for="empId" cLabel><strong>Employee PMS:</strong></label>
@@ -100,7 +100,7 @@
                         @if (item.empId==null) {
                           <c-card class="p-1 d-flex justify-content-center align-items-center me-2">
                             <button cButton color="primary">
-                              Choose Signature
+                              Signature
                             </button>
                           </c-card>
                         } @else {

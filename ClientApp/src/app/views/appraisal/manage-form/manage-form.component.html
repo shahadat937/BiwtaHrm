@@ -49,11 +49,15 @@
         >
           <tr>
             @for (column of columns; track $index) {
-            @if (column.IsDate) {
-              <td>{{formRecord[column.field] | date}}</td>
-            } @else {
-              <td>{{ formRecord[column.field] }}</td>
-            }
+              @if (column.IsDate) {
+                <td>{{formRecord[column.field] | date}}</td>
+              } @else if(column.IsBinary){
+                <td>
+                  <c-badge color="{{formRecord[column.field]==true?'success':'warning'}}">{{formRecord[column.field]==true?'Complete':'Pending'}}</c-badge>
+                </td>
+              } @else {
+                <td>{{formRecord[column.field]}}</td>
+              }
             }
 
             <td>

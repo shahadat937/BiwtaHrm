@@ -36,6 +36,16 @@ namespace Hrm.Api.Controllers
             return Ok(EmpTrainingInfos);
         }
 
+        [HttpGet]
+        [Route("get-EmpTrainingInfo")]
+        public async Task<ActionResult> GetEmpTrainingInfo([FromQuery] EmpTrainingFilterDto EmpTrainingFilter)
+        {
+            var command = new GetEmpTrainingInfoRequest { Filters = EmpTrainingFilter };
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
         [HttpDelete]
         [Route("delete-EmpTrainingInfo/{id}")]
         public async Task<ActionResult> Delete(int id)

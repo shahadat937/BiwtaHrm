@@ -8,6 +8,9 @@ export class FormRecordFilter {
     reporterId: number|null;
     counterSignatureId: number|null;
     receiverId: number|null;
+    reportingOfficerApproval: boolean|null;
+    counterSignatoryApproval: boolean|null;
+    receiverApproval: boolean|null;
     isActive: boolean|null;
 
     constructor() {
@@ -20,6 +23,9 @@ export class FormRecordFilter {
         this.reporterId = null;
         this.counterSignatureId = null;
         this.receiverId = null;
+        this.reportingOfficerApproval = null;
+        this.counterSignatoryApproval = null;
+        this.receiverApproval = null;
         this.isActive = null;
     }
 }

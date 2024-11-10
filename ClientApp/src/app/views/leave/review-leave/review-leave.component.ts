@@ -17,7 +17,9 @@ export class ReviewLeaveComponent {
 
     this.filterLeave = {Status: [LeaveStatus.Pending,LeaveStatus.ReviewerApproved,LeaveStatus.ReviewerDenied,LeaveStatus.FinalApproved,LeaveStatus.FinalDenied]}
     this.authService.currentUser.subscribe(user => {
-
+      if(user==null) {
+        return;
+      }
       let empId = parseInt(user.empId);
       if(!isNaN(empId)) {
         this.filterLeave['reviewedBy'] = parseInt(user.empId);

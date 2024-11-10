@@ -6,6 +6,8 @@ import { cilX } from '@coreui/icons';
 import { FormRecordService } from '../services/form-record.service';
 import { JobHistoryModel } from '../models/job-history-model';
 import { ThanaService } from '../../basic-setup/service/thana.service';
+import { EmpTrainingInfoService } from '../../employee/service/emp-training-info.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-field',
@@ -16,8 +18,9 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
   @Input() fieldData:any;
   @Input() fieldUniqueName: string;
   @Input() Index:any;
-  @Input() IsReadonly: boolean
-  @Input() empId: number
+  @Input() IsReadonly: boolean;
+  @Input() empId: number;
+  @Input() IsChild: boolean;
 
   fieldValue: string = "";
   @Output() fieldChange = new EventEmitter();
@@ -38,12 +41,14 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   jobHistory: JobHistoryModel[];
+  trainingHistory: any[];
   educationInfos: EmpEducationInfoModule[];
   subscription: Subscription = new Subscription();
   selectedEduInfos : EmpEducationInfoModule[] = [];
   icons = {cilX};
 
   constructor(
+    private empTrainingInfoService: EmpTrainingInfoService,
     private empEducationInfoService: EmpEducationInfoService,
     private formRecordService: FormRecordService, 
   ) {
@@ -53,11 +58,14 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
     this.empId = 0;
     this.educationInfos = [];
     this.jobHistory = [];
+    this.trainingHistory = [];
+    this.IsChild = false;
   }
 
   ngOnInit(): void {
 
     this.getEducationInfo(false);
+    this.getEmpTrainingInfo();
     this.getJobHistory();
   }
 
@@ -68,8 +76,11 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes["empId"])
-    this.getEducationInfo(true);
+    if(changes["empId"]) {
+      this.getEducationInfo(true);
+      this.getEmpTrainingInfo();
+    }
+
   }
 
   getEducationInfo(reset: boolean) {
@@ -116,5 +127,25 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
         this.jobHistory = response;
       }
     })
+  }
+
+  getEmpTrainingInfo() {
+    if(this.empId !=0 && this.fieldData.htmlInputType=="trainingHistory") {
+      let params = new HttpParams;
+      params = params.set("empId", this.empId);
+      this.subscription = this.empTrainingInfoService.getEmpTrainingInfo(params).subscribe({
+        next: response => {
+          if(response) {
+            this.trainingHistory = response;
+          }
+        },
+        error: err => {
+          console.log(err);
+        },
+        complete: () => {
+
+        }
+      })
+    }
   }
 }

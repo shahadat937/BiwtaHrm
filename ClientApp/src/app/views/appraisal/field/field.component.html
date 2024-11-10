@@ -210,4 +210,33 @@
             }
         </div>
     </c-row>
+} @else if (fieldData.htmlTagName == "table" && fieldData.htmlInputType=="trainingHistory"){
+    <c-row class="mt-2" [gutter]="3">
+        <c-col md="4">
+            <label cLabel><strong>{{Index+fieldData.fieldName}}: </strong></label>
+        </c-col>
+        <c-col md="6">
+            <p-table
+            [value]="trainingHistory"
+            [rowHover]="true"
+            styleClass="p-datatable-striped">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Name</th>
+                        <th>Institute</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-training>
+                    <tr>
+                        <td>{{ training.trainingName }}</td>
+                        <td>{{ training.instituteName }}</td>
+                        <td>{{ training.fromDate }}</td>
+                        <td>{{ training.toDate }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </c-col>
+    </c-row>
 }

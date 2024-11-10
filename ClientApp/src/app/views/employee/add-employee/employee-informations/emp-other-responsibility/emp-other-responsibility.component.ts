@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -11,6 +11,9 @@ import { EmpOtherResponsibility } from '../../../model/emp-other-responsibility'
 import { EmpJobDetailsService } from '../../../service/emp-job-details.service';
 import { EmpOtherResponsibilityService } from '../../../service/emp-other-responsibility.service';
 import { ResponsibilityTypeService } from 'src/app/views/basic-setup/service/responsibility-type.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-emp-other-responsibility',
@@ -36,6 +39,21 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
   sectionView: boolean = false;
   empJobDetailsId = 0;
   empOtherResponsibility: EmpOtherResponsibility[] = [];
+  
+  displayedColumns: string[] = [
+    'slNo',
+    'responsibilityName',
+    'department',
+    'section',
+    'designation',
+    'joiningDate',
+    'releaseDate',
+    'Action'];
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+  @ViewChild(MatSort)
+  matSort!: MatSort;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,12 +72,27 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
     this.getSelectedResponsibilityType();
     this.getAllSelectedDepartments();
     this.getEmployeeOtherResponsibilityInfoByEmpId();
+    this.getInActiveEmpOtherResponsibility();
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  getInActiveEmpOtherResponsibility(){
+    this.subscription = this.empOtherResponsibilityService.findInActiveByEmpId(this.empId).subscribe((res) => {
+      this.dataSource = new MatTableDataSource(res);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.matSort;
+    })
+  }
+  
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
 
@@ -170,9 +203,9 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
                   positionClass: 'toast-top-right',
                 });
 
-                if (this.empOtherResponsibilityListArray.controls.length > 0)
-                  this.empOtherResponsibilityListArray.removeAt(index);
-                this.getEmployeeOtherResponsibilityInfoByEmpId();
+                // if (this.empOtherResponsibilityListArray.controls.length > 0)
+                //   this.empOtherResponsibilityListArray.removeAt(index);
+                this.getInActiveEmpOtherResponsibility();
               },
               (err) => {
                 this.toastr.error('Somethig Wrong ! ', ` `, {
@@ -285,6 +318,7 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
               if (this.empOtherResponsibilityListArray.controls.length > 0)
                 this.empOtherResponsibilityListArray.removeAt(index);
                 // this.getEmployeeOtherResponsibilityInfoByEmpId();
+                this.getInActiveEmpOtherResponsibility();
             }
           },
           (err) => {

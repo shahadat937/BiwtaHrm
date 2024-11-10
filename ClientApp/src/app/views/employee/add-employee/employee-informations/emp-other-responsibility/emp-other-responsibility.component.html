@@ -81,7 +81,7 @@
                                     <c-col [md]="12" class="d-flex justify-content-end">
                                         <button *ngIf="p.get('id')?.value" cTooltip="Inactive Designation" cTooltipPlacement="bottom" mat-mini-fab color="primary" type="button"
                                             (click)="updateOtherResponsibilityStatus(i, p.get('id')?.value)"><mat-icon>highlight_off</mat-icon></button>&nbsp;
-                                        <button cTooltip="Delete" cTooltipPlacement="bottom" mat-mini-fab color="warn" type="button"
+                                        <button *ngIf="!p.get('id')?.value" cTooltip="Delete" cTooltipPlacement="bottom" mat-mini-fab color="warn" type="button"
                                             (click)="removeOtherResponsibilityList(i, p.get('id')?.value ?? null)"><mat-icon>delete</mat-icon></button>
                                     </c-col>
                                 </div>
@@ -112,6 +112,79 @@
             </div>
         </form>
 
+    </c-card-body>
+</c-card>
+
+<c-card>
+    <c-card-header>
+        Employee Other Responsibility
+    </c-card-header>
+    <c-card-body>
+        <div class="example-header">
+            <mat-form-field>
+              <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here.." />
+              <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
+                (click)="filter.value = ''; applyFilter('')"></button>
+            </mat-form-field>
+          </div>
+          <div class="mat-elevation-z8 table-responsive">
+            <table mat-table [dataSource]="dataSource">
+              <ng-container matColumnDef="slNo">
+                <th mat-header-cell *matHeaderCellDef>SL</th>
+                <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+              </ng-container>
+              <ng-container matColumnDef="responsibilityName">
+                <th mat-header-cell *matHeaderCellDef>Responsibility</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.responsibilityName }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="department">
+                <th mat-header-cell *matHeaderCellDef>Department</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.departmentName }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="section">
+                <th mat-header-cell *matHeaderCellDef>Section</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.sectionName }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="designation">
+                <th mat-header-cell *matHeaderCellDef>Designation</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.designationName }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="joiningDate">
+                <th mat-header-cell *matHeaderCellDef>Joining Date</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.startDate }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="releaseDate">
+                <th mat-header-cell *matHeaderCellDef>Release Date</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.endDate }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Action">
+                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <td mat-cell *matCellDef="let element">
+                    <!-- <button class="custom-button" type="button" (click)="find(element.id)">
+                        <svg cIcon name="cilPencil"></svg>
+                    </button> -->
+                    <button class="custom-button" type="button" (click)="removeOtherResponsibilityList(0, element.id)">
+                        <svg cIcon name="cilTrash"></svg>
+                    </button>
+                </td>
+              </ng-container>
+      
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
     </c-card-body>
 </c-card>
 

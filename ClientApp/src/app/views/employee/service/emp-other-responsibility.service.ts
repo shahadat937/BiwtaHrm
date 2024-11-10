@@ -23,6 +23,10 @@ export class EmpOtherResponsibilityService {
     return this.http.get<EmpOtherResponsibility[]>(this.baseUrl + '/empOtherResponsibility/get-allEmpOtherResponsibilityByEmpId/' + id);
   }
 
+  findInActiveByEmpId(id: number) {
+    return this.http.get<EmpOtherResponsibility[]>(this.baseUrl + '/empOtherResponsibility/get-InActiveEmpOtherResponsibilityByEmpId/' + id);
+  }
+
   saveEmpOtherResponsibility(model: FormData) {
     return this.http.post(this.baseUrl + '/empOtherResponsibility/save-EmpOtherResponsibility', model);
   }

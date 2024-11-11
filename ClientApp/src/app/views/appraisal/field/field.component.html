@@ -56,7 +56,7 @@
                 [type]="fieldData.htmlInputType" 
                 [required]="fieldData.isRequired" cFormControl>
                 
-                @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired){
+                @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly){
                     <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
                 }
             </c-col>
@@ -80,7 +80,7 @@
             [required] = "fieldData.isRequired"
             cFormControl
             ></textarea>
-            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired) {
+            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly) {
                 <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
             }
         </c-col>
@@ -100,7 +100,7 @@
             [type]="fieldData.childFields[0].htmlInputType"
             [required]="fieldData.isRequired" cFormControl>
                 
-            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired){
+            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly){
                 <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
             }
         </c-col>
@@ -117,7 +117,7 @@
             [type]="fieldData.childFields[1].htmlInputType"
             [required]="fieldData.isRequired" cFormControl>
                 
-            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired){
+            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly){
                 <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
             }
         </c-col>
@@ -193,7 +193,7 @@
             </p-table>
         </c-col>
     </c-row>
-} @else if(fieldData.htmlTagName == "group") {
+} @else if(fieldData.htmlTagName == "group" && fieldData.htmlInputType=="general") {
     <c-row class="mt-2" [gutter]="3">
         <c-col>
             <label cLabel><strong>{{Index+fieldData.fieldName}}</strong></label>
@@ -238,5 +238,45 @@
                 </ng-template>
             </p-table>
         </c-col>
+    </c-row>
+} @else if (fieldData.htmlTagName=="group"&&fieldData.htmlInputType=="question") {
+    <c-row class="mt-3">
+        <div class="table-responsive-md">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2"></th>
+                        <th>A1</th>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>C</th>
+                        <th>D</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @for (childFieldData of fieldData.childFields; track $index) {
+                        <tr>
+                            <td [colSpan]="2">{{childFieldData.fieldName}}</td>
+                            @for (option of childFieldData.options; track $index) {
+                                <td>
+                                    <input 
+                                    class="form-check-input" 
+                                    type="radio"
+                                    [disabled]="IsReadonly"
+                                    [(ngModel)]="childFieldData.fieldValue"
+                                    [name]="childFieldData.fieldId+'field'+option.optionId+'option'" 
+                                    [value]="option.optionValue"
+                                    [id]="childFieldData.fieldId+'field'+option.optionId+'option'">
+                                </td>
+                            }
+                            <td style="max-width: 1.8rem"><input [readOnly]="IsReadonly" cFormControl [(ngModel)]="childFieldData.remark" type="text" placeholder="Remark" name="remark" id="remark"></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
     </c-row>
 }

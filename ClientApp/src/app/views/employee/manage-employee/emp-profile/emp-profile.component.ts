@@ -78,6 +78,24 @@ export class EmpProfileComponent  implements OnInit {
 
   educationColumns: string[] = ['slNo', 'examTypeName', 'boardName', 'subGroupName', 'result', 'courseDuration', 'passingYear', 'remark'];
   educationSource = new MatTableDataSource<any>();
+  
+  spouseColumns: string[] = ['slNo', 'spouseName', 'spouseNameBangla', 'dateOfBirth', 'birthRegNo', 'nidNo','occupationName', 'remark'];
+  spouseSource = new MatTableDataSource<any>();
+  
+  childsColumns: string[] = ['slNo', 'childName', 'childNameBangla', 'dateOfBirth', 'birthRegNo', 'nidNo','genderName', 'occupationName', 'maritalStatusName', 'childStatusName','remark'];
+  childsSource = new MatTableDataSource<any>();
+  
+  trainingColumns: string[] = ['slNo', 'trainingTypeName', 'trainingName', 'instituteName', 'trainingDuration', 'fromDate','toDate', 'countryName','remark'];
+  trainingSource = new MatTableDataSource<any>();
+  
+  bankColumns: string[] = ['slNo', 'accountName', 'accountNumber', 'accountTypeName', 'bankName', 'branchName','routingNo', 'remark'];
+  bankSource = new MatTableDataSource<any>();
+  
+  // languageColumns: string[] = ['slNo', 'spouseName', 'spouseNameBangla', 'dateOfBirth', 'birthRegNo', 'nidNo','occupationName', 'remark'];
+  // languageSource = new MatTableDataSource<any>();
+  
+  // foreignTourColumns: string[] = ['slNo', 'spouseName', 'spouseNameBangla', 'dateOfBirth', 'birthRegNo', 'nidNo','occupationName', 'remark'];
+  // foreignTourSource = new MatTableDataSource<any>();
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -201,23 +219,25 @@ export class EmpProfileComponent  implements OnInit {
     
     getEmpSpouseInfoByEmpId(){
       this.empSpouseInfoService.findByEmpId(this.id).subscribe((res) => {
-        if(res && res.length > 0){
+        // if(res && res.length > 0){
           this.empSpouseInfo = res;
-        }
-        else {
-          this.empSpouseInfo = [new EmpSpouseInfoModule()];
-        }
+          this.spouseSource = new MatTableDataSource(res);
+        // }
+        // else {
+        //   this.empSpouseInfo = [new EmpSpouseInfoModule()];
+        // }
       });
     }
     
     getEmpChildInfoByEmpId(){
       this.empChildInfoService.findByEmpId(this.id).subscribe((res) => {
-        if(res && res.length > 0){
+        // if(res && res.length > 0){
           this.empChildInfo = res;
-        }
-        else {
-          this.empChildInfo = [new EmpChildInfoModule()];
-        }
+          this.childsSource = new MatTableDataSource(res);
+        // }
+        // else {
+        //   this.empChildInfo = [new EmpChildInfoModule()];
+        // }
       });
     }
     
@@ -239,22 +259,24 @@ export class EmpProfileComponent  implements OnInit {
     // }
     getEmpTrainingInfoByEmpId(){
       this.empTrainingInfoService.findByEmpId(this.id).subscribe((res) => {
-        if(res && res.length > 0) {
+        // if(res && res.length > 0) {
           this.empTrainingInfo = res;
-        } else {
-          this.empTrainingInfo = [new EmpTrainingInfo()];
-        }
+          this.trainingSource = new MatTableDataSource(res);
+        // } else {
+        //   this.empTrainingInfo = [new EmpTrainingInfo()];
+        // }
       });
     }
     
     getEmpBankInfoByEmpId(){
       this.empBankInfoService.findByEmpId(this.id).subscribe((res) => {
-        if(res && res.length > 0){
+        // if(res && res.length > 0){
           this.empBankInfo = res;
-        }
-        else {
-          this.empBankInfo = [new EmpBankInfoModule()];
-        }
+          this.bankSource = new MatTableDataSource(res);
+        // }
+        // else {
+        //   this.empBankInfo = [new EmpBankInfoModule()];
+        // }
       });
     }
     

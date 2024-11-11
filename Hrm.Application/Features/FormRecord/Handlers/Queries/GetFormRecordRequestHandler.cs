@@ -35,6 +35,11 @@ namespace Hrm.Application.Features.FormRecord.Handlers.Queries
                     .ThenInclude(x => x.EmpJobDetail)
                 .AsQueryable();
 
+            if(request.Filters.EmpId.HasValue)
+            {
+                formRecords = formRecords.Where(x => x.EmpId ==  request.Filters.EmpId);
+            }
+
             if (request.Filters.RecordId.HasValue)
             {
                 formRecords = formRecords.Where(x => x.RecordId == request.Filters.RecordId);
@@ -57,17 +62,17 @@ namespace Hrm.Application.Features.FormRecord.Handlers.Queries
 
             if (request.Filters.ReporterId.HasValue)
             {
-                formRecords = formRecords.Where(x => x.ReportingOfficerId == request.Filters.ReporterId);
+                formRecords = formRecords.Where(x => x.ReportingOfficerId == request.Filters.ReporterId || x.ReportingOfficerId == null);
             }
 
             if (request.Filters.CounterSignatureId.HasValue)
             {
-                formRecords = formRecords.Where(x => x.CounterSignatoryId == request.Filters.CounterSignatureId);
+                formRecords = formRecords.Where(x => x.CounterSignatoryId == request.Filters.CounterSignatureId || x.CounterSignatoryId == null);
             }
 
             if (request.Filters.ReceiverId.HasValue)
             {
-                formRecords = formRecords.Where(x => x.ReceiverId == request.Filters.ReceiverId);
+                formRecords = formRecords.Where(x => x.ReceiverId == request.Filters.ReceiverId || x.ReceiverId == null);
             }
 
             if(request.Filters.ReportingOfficerApproval.HasValue)

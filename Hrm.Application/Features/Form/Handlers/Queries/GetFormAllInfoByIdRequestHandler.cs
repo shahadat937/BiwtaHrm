@@ -113,6 +113,17 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                             FieldValue = "",
                             Remark = ""
                         }).ToList();
+
+                        foreach(var tempChildField in field.ChildFields)
+                        {
+                            if (field.HasSelectable == true)
+                            {
+                                var selectableOption = await _unitOfWork.Repository<Hrm.Domain.SelectableOption>().Where(x => x.FieldId == tempChildField.FieldId && x.IsActive == true).ToListAsync();
+
+                                var selectableOptionDto = _mapper.Map<List<SelectableOptionDto>>(selectableOption);
+                                tempChildField.Options = selectableOptionDto;
+                            }
+                        }
                     }
                 }
 

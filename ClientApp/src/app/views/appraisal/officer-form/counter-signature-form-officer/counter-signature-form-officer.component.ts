@@ -8,7 +8,7 @@ import { AppraisalRole } from '../../enum/appraisal-role';
   styleUrl: './counter-signature-form-officer.component.scss'
 })
 export class CounterSignatureFormOfficerComponent implements OnInit{
-  ActiveSection: boolean[] = [false,true,true,true,true,true,false]
+  ActiveSection: boolean[] = [false,false,false,false,false,true,false]
 
   formRecordId: number = 0;
   appraisalRole = AppraisalRole;

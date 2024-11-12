@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { FormRecordFilter } from '../../models/form-record-filter';
 import { environment } from 'src/environments/environment';
+import { AppraisalRole } from '../../enum/appraisal-role';
 
 @Component({
   selector: 'app-manage-form-officer-cs',
@@ -10,12 +11,14 @@ import { environment } from 'src/environments/environment';
 })
 export class ManageFormOfficerCsComponent {
   filters: FormRecordFilter
+  appraisalRole = AppraisalRole
 
   constructor(
     private authService: AuthService
   ) {
     this.filters = new FormRecordFilter();
     this.filters.formId = environment.officerFormId;
+    this.filters.reportingOfficerApproval = true
   }
 
   ngOnInit(): void {

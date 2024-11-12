@@ -70,10 +70,10 @@ public class LeaveRequestController:Controller
     }
 
     [HttpGet]
-    [Route("get-LeaveAmountForAllLeaveTypeByEmp/{empId}")]
-    public async Task<ActionResult> GetLeaveAmountForAllLeaveType(int empId)
+    [Route("get-LeaveAmountForAllLeaveTypeByEmp")]
+    public async Task<ActionResult> GetLeaveAmountForAllLeaveType([FromQuery] int EmpId, [FromQuery] DateTime? LeaveStartDate, [FromQuery] DateTime? LeaveEndDate)
     {
-        var command = new GetAllLeaveTypeAmountByEmpIdRequest { EmpId = empId };
+        var command = new GetAllLeaveTypeAmountByEmpIdRequest { EmpId = EmpId, LeaveStartDate = LeaveStartDate, LeaveEndDate = LeaveEndDate  };
         var response = await _mediator.Send(command);
         return Ok(response);
     }

@@ -10,5 +10,7 @@ namespace Hrm.Application.Features.LeaveRequest.Requests.Queries
     public class GetAllLeaveTypeAmountByEmpIdRequest: IRequest<object>
     {
         public int EmpId { get; set; }
+        public DateTime? LeaveStartDate {  get; set; }
+        public DateTime? LeaveEndDate { get; set; }
     }
 }

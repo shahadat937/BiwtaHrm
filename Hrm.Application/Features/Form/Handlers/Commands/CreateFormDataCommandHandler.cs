@@ -73,7 +73,7 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
                     //    throw new BadRequestException(field.FieldName + " is required");
                     //}
 
-                    if(field.HTMLInputType=="daterange")
+                    if(field.HTMLInputType=="daterange"||field.HTMLTagName=="group")
                     {
                         foreach(var childField in field.ChildFields)
                         {

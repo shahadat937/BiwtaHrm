@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { environment } from 'src/environments/environment';
 import { EmpTrainingInfo } from '../model/emp-training-info';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,10 @@ export class EmpTrainingInfoService {
   }
   getSelectedCourseDuration(){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/courseDuration/get-selectedCourseDurations')
+  }
+
+  getEmpTrainingInfo(params: HttpParams): Observable<EmpTrainingInfo[]> {
+    return this.http.get<EmpTrainingInfo[]>(this.baseUrl+ "/empTrainingInfo/get-EmpTrainingInfo", {params: params});
   }
 
 }

@@ -117,6 +117,10 @@
                                 <th class="text-nowrap">{{column.header}}</th>
                             }
 
+                            @for(col of staticColumnAfter; track $index) {
+                                <th>{{col.header}}</th>
+                            }
+
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -137,12 +141,17 @@
                                         <span class="text-danger">A</span>
                                     } @else if(rowData[col.field]=="P") {
                                         <!--<svg [cIcon]="icons.cibVerizon" cTooltip="Hello World"></svg><i class="cib-verizon"></i>-->
-                                        <span>{{rowData[col.field]}}</span>
+                                        <span class="text-success">{{rowData[col.field]}}</span>
                                     } @else {
                                         <span class="text-warning">{{rowData[col.field]}}</span>
                                     }
                                 </td>
                             }
+
+                            @for ( col of staticColumnAfter; track $index) {
+                                <td>{{rowData[col.field]}}</td>
+                            }
+
                         </tr>
                     </ng-template>
                 </p-table>

@@ -55,6 +55,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   leaveStatus = LeaveStatus;
   reviewerPMIS: string;
   approverPMIS: string;
+  reviewerName: string;
+  approverName: string;
   icons = {cilSearch}
   constructor(
     private empBasicInfoService: EmpBasicInfoService,
@@ -74,6 +76,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.isValidPMS = false;
     this.reviewerPMIS = "";
     this.approverPMIS = "";
+    this.reviewerName = "";
+    this.approverName = "";
     this.imageUrl = environment.imageUrl;
     this.defaultPhoto = environment.imageUrl + "EmpPhoto/default.jpg";
     this.employeePhoto = this.defaultPhoto;
@@ -94,6 +98,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
         this.empBasicInfoService.findByEmpId(this.leaveData.reviewedBy).subscribe({
           next: response => {
             this.reviewerPMIS = response.idCardNo
+            this.reviewerName = [response.firstName, response.lastName].join(' ');
           }
         })
       }
@@ -102,6 +107,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
         this.empBasicInfoService.findByEmpId(this.leaveData.approvedBy).subscribe({
           next: response => {
             this.approverPMIS = response.idCardNo
+            this.approverName = [response.firstName, response.lastName].join(' ');
           }
         })
       }
@@ -119,7 +125,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       this.buttonTitle = "Update";
     }
 
-    if(this.authService.currentUserValue.empId!=null) {
+    if(this.authService.currentUserValue.empId!=null&&this.IsReadonly==false) {
       this.addLeaveService.getEmpById(parseInt(this.authService.currentUserValue.empId)).subscribe({
         next: response => {
           this.empCardNo = response.idCardNo;
@@ -224,6 +230,9 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   onDateChange() {
     this.getLeaveAmount();
     this.getWorkingDays();
+    if(this.addLeaveService.addLeaveModel.empId!=null) {
+      this.getLeaveBalanceForAllType(this.addLeaveService.addLeaveModel.empId);
+    }
   }
 
   getLeaveAmount() {
@@ -343,6 +352,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.designation = "";
 
     this.leaveBalances = [];
+    this.filteredLeaveBalances = [];
   }
 
   convertToFormData(model: any, fileFields: string[] = []): FormData {
@@ -384,7 +394,18 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   }
 
   getLeaveBalanceForAllType(empId:number) {
-    this.leaveBalanceService.getLeaveBalance(empId).subscribe({
+    let params = new HttpParams();
+    params = params.set('empId',empId);
+
+    if(this.addLeaveService.addLeaveModel.fromDate!=null) {
+      params = params.set('leaveStartDate',this.addLeaveService.addLeaveModel.fromDate);
+    }
+
+    if(this.addLeaveService.addLeaveModel.toDate!=null) {
+      params = params.set('leaveEndDate', this.addLeaveService.addLeaveModel.toDate);
+    }
+
+    this.leaveBalanceService.getLeaveBalance(params).subscribe({
       next: response => {
         this.leaveBalances = response;
         this.filteredLeaveBalances = this.leaveBalances;
@@ -412,12 +433,15 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
         next: response => {
           if(response!=null) {
             this.addLeaveService.addLeaveModel.reviewedBy = response.id;
+            this.reviewerName = [response.firstName, response.lastName].join(' ');
           } else {
             this.addLeaveService.addLeaveModel.reviewedBy = null;
+            this.reviewerName = "";
           }
         },
         error: (err) => {
           this.addLeaveService.addLeaveModel.reviewedBy = null;
+          this.reviewerName = ""
         }
       })
     })
@@ -441,12 +465,15 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
         next: response => {
           if(response!=null) {
             this.addLeaveService.addLeaveModel.approvedBy = response.id;
+            this.approverName = [response.firstName, response.lastName].join(' ');
           } else {
             this.addLeaveService.addLeaveModel.approvedBy = null;
+            this.approverName = "";
           }
         },
         error: (err) => {
           this.addLeaveService.addLeaveModel.approvedBy = null;
+          this.approverName = "";
         }
       })
     })
@@ -469,7 +496,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
       if(idCardNo){
           this.empCardNo = idCardNo;
-          //this.onEmpIdChange();
+          this.onEmpIdChange();
       }
     });
   }

@@ -3,6 +3,7 @@ import { FormRecordFilter } from '../../models/form-record-filter';
 import { filter } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/core/service/auth.service';
+import { AppraisalRole } from '../../enum/appraisal-role';
 
 @Component({
   selector: 'app-manage-form-officer-rf',
@@ -11,6 +12,7 @@ import { AuthService } from 'src/app/core/service/auth.service';
 })
 export class ManageFormOfficerRfComponent implements OnInit{
   filters: FormRecordFilter
+  appraisalRole = AppraisalRole
 
   constructor(
     private authService: AuthService

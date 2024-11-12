@@ -86,7 +86,7 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                         field.Options = selectableOptionDto;
                     }
 
-                    if(field.HTMLTagName=="daterange")
+                    if(field.HTMLTagName=="daterange"||field.HTMLTagName=="group")
                     {
                         List<int> tempFieldIds = await _unitOfWork.Repository<Domain.FormGroup>().Where(x=>x.ParentFieldId == field.FieldId&&x.IsActive==true).Select(x=>x.FormFieldId).ToListAsync();
 

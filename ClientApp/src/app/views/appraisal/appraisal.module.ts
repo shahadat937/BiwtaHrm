@@ -41,6 +41,7 @@ import { ApplicationHeaderComponent } from './application-header/application-hea
 import { ManageFormOfficerRfComponent } from './manage-form/manage-form-officer-rf/manage-form-officer-rf.component';
 import { ManageFormOfficerCsComponent } from './manage-form/manage-form-officer-cs/manage-form-officer-cs.component';
 import { ManageFormOfficerRComponent } from './manage-form/manage-form-officer-r/manage-form-officer-r.component';
+import { BadgeModule } from '@coreui/angular';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { ManageFormOfficerRComponent } from './manage-form/manage-form-officer-r
     TableModulePN,
     IconDirective,
     MatIconModule,
-    CalendarModule
+    CalendarModule,
+    BadgeModule
 
   ],providers:[
     FormRecordService,

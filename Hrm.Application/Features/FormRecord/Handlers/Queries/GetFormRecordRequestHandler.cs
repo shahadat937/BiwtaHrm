@@ -69,6 +69,21 @@ namespace Hrm.Application.Features.FormRecord.Handlers.Queries
             {
                 formRecords = formRecords.Where(x => x.ReceiverId == request.Filters.ReceiverId);
             }
+
+            if(request.Filters.ReportingOfficerApproval.HasValue)
+            {
+                formRecords = formRecords.Where(x => x.ReportingOfficerApproval == request.Filters.ReportingOfficerApproval);
+            }
+
+            if(request.Filters.CounterSignatoryApproval.HasValue)
+            {
+                formRecords = formRecords.Where(x => x.CounterSignatoryApproval == request.Filters.CounterSignatoryApproval);
+            }
+
+            if(request.Filters.ReceiverApproval.HasValue)
+            {
+                formRecords = formRecords.Where(x => x.ReceiverApproval == request.Filters.ReceiverApproval);
+            }
             
 
             var formRecordDtos = _mapper.Map<List<FormRecordDto>>(formRecords);

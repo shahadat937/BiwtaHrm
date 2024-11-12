@@ -38,7 +38,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   selectedShift:number|null;
   selectedUpdateShift: any|null;
   selectedEmp:any|null;
-  displayedColumns = ["idCardNo","fullName","attendanceDate","inTime","outTime","dayTypeName","attendanceStatusName","Action"]
+  displayedColumns = ["fullName","attendanceDate","inTime","outTime","lateTime","dayTypeName","attendanceStatusName","Action"]
   @ViewChild('paginator')
   paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -157,7 +157,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
       next: response => {
         this.dataSource =new MatTableDataSource (response.result.map(x=>({
           ...x,
-          fullName: `${x.empFirstName} ${x.empLastName}`
+          fullName: [x.empFirstName,x.empLastName].join(' ')
         })));
         this.totalRecord = response.totalCount;
         this.pageIndex = pageIndex -1;

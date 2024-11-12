@@ -184,7 +184,7 @@
         <c-row>
           <c-col md="2">
             <c-input-group>
-              <button cButton type="button" color="secondary" (click)="openEmployeeModal()">
+              <button cButton [disabled]="IsReadonly" type="button" color="secondary" (click)="openEmployeeModal()">
                 <svg [cIcon]="icons.cilSearch"></svg>
               </button>
               <input type="text"
@@ -241,7 +241,7 @@
           <c-col>
             <c-row class="mt-5 ms-md-5" [gutter]="3">
               <c-col md="6">
-                  <label cLabel for="leaveType">Leave Type</label>
+                  <label cLabel for="leaveType">Leave Type<span class="text-danger">*</span></label>
                   <select 
                   [disabled]="IsReadonly"
                   required
@@ -262,7 +262,7 @@
                   }
               </c-col>
               <c-col [md]="6">
-                <label cLabel for="startDate">Start Date</label>
+                <label cLabel for="startDate">Start Date<span class="text-danger">*</span></label>
                 <input type="date" 
                 required
                 #startDate = "ngModel"
@@ -275,7 +275,7 @@
                 }
               </c-col>
               <c-col [md]="6">
-                <label cLabel for="endDate">End Date</label>
+                <label cLabel for="endDate">End Date<span class="text-danger">*</span></label>
                 <input type="date" 
                 required
                 (change)="onDateChange()"
@@ -297,7 +297,7 @@
                 cFormControl id="totalLeaveDays" />
               </c-col>
               <c-col [md]="6">
-                <label cLabel for="leavePurpose">Leave Purpose</label>
+                <label cLabel for="leavePurpose">Leave Purpose<span class="text-danger">*</span></label>
                 <textarea type="text"
                 [readOnly]="IsReadonly"
                 rows="1"
@@ -392,7 +392,8 @@
               <label cCol cLabel="col" sm="2">Reviewer: </label>
               <c-col md="4">
                 <c-input-group>
-                  <button color="secondary" 
+                  <button color="secondary"
+                  [disabled]="IsReadonly"
                   (click)="openReviewerModal()"
                   type="button" 
                   cTooltip="Search Employee" 
@@ -401,16 +402,18 @@
                   </button>
                   <input type="text" 
                   cFormControl
+                  readonly
                   #reviewer = "ngModel"
-                  [(ngModel)] = "reviewerPMIS"
+                  [(ngModel)] = "reviewerName"
                   name="reviewedBy"
                   (input)="onReviewerChange()"
-                  placeholder="Reviewer PMIS"
+                  placeholder="Reviewer Name"
                   id="reviewedBy">
-                  </c-input-group>
+                </c-input-group>
               </c-col>
               <c-col md="4">
-                <input type="text" 
+                <input type="text"
+                [readOnly]="IsReadonly"
                 [(ngModel)]="addLeaveService.addLeaveModel.reviewerRemark"
                 name="reviewerRemark" 
                 cFormControl
@@ -423,6 +426,7 @@
               <c-col md="4">
                 <c-input-group>
                   <button color="secondary" 
+                  [disabled]="IsReadonly"
                   (click)="openApproverModal()"
                   type="button" 
                   cTooltip="Search Employee" 
@@ -430,8 +434,9 @@
                     <svg [cIcon]="icons.cilSearch"></svg>
                   </button>
                   <input type="text"
-                  [(ngModel)]="approverPMIS"
-                  placeholder="Approver PMIS"
+                  readonly
+                  [(ngModel)]="approverName"
+                  placeholder="Approver Name"
                   cFormControl
                   name="approvedBy"
                   id="approvedBy">
@@ -439,6 +444,7 @@
               </c-col>
               <c-col md="4">
                 <input type="text"
+                [readOnly]="IsReadonly"
                 [(ngModel)]="addLeaveService.addLeaveModel.approverRemark"
                 name="reviewerRemark" 
                 cFormControl

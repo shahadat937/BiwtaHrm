@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { LeaveBalanceService } from '../service/leave-balance.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-leave-balance',
@@ -71,7 +72,9 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
 
   getLeaveBalance(empId:number) {
     this.loading = true;
-    this.subscription = this.leaveBalanceService.getLeaveBalance(empId).subscribe({
+    let params = new HttpParams();
+    params = params.set('empId',empId);
+    this.subscription = this.leaveBalanceService.getLeaveBalance(params).subscribe({
       next: response => {
         this.leaveBalances = response;        
       },

@@ -2,3 +2,24 @@
     background-color:  #32a9f8;
     color: white;
 }
+
+.bordered-table {
+  border: 1px solid #ddd; /* Adds a border around the entire table */
+  border-collapse: collapse; /* Ensures borders between cells collapse into a single line */
+}
+
+.bordered-table th,
+.bordered-table td {
+  border: 1px solid #ddd; /* Adds borders to each cell */
+  padding: 8px; /* Adds padding to cells */
+  text-align: left; /* Aligns text to the left */
+}
+
+.bordered-table th {
+  background-color: #f4f4f4; /* Light gray background for headers */
+  font-weight: bold; /* Makes header text bold */
+}
+
+.ui-datatable .ui-datatable-thead > tr > th {
+    background: red;
+}

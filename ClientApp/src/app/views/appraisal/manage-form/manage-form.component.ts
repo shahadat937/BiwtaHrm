@@ -11,6 +11,7 @@ import { UpdateFormComponent } from '../update-form/update-form.component';
 import {ViewFormRecordComponent} from './view-form-record/view-form-record.component'
 import {FormRecordFilter} from '../models/form-record-filter'
 import { AppraisalRole } from '../enum/appraisal-role';
+import { AuthService } from 'src/app/core/service/auth.service';
 
 @Component({
   selector: 'app-manage-form',
@@ -33,6 +34,7 @@ export class ManageFormComponent implements OnInit, OnDestroy {
 
 
   constructor(
+    private authService: AuthService,
     public formRecordService: FormRecordService,
     private officerService: OfficerFormService,
     private toastr: ToastrService,
@@ -61,6 +63,12 @@ export class ManageFormComponent implements OnInit, OnDestroy {
       [AppraisalRole.Receiver]: "/appraisal/receiverFormOfficer/"
     };
     //this.appraisalRole.Receiver
+
+    this.authService.currentUser.subscribe(user => {
+      if(user&&user.empId) {
+        this.filters.empId = parseInt(user.empId);
+      }
+    })
 
   }
 

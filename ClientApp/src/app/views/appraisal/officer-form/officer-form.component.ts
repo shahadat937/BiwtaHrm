@@ -24,7 +24,7 @@ import { cilArrowLeft } from '@coreui/icons';
   styleUrl: './officer-form.component.scss'
 })
 export class OfficerFormComponent implements OnInit, OnDestroy {
-
+  @ViewChild('officerForm') officerForm!: NgForm;
   @Input()
   ActiveSection:boolean[];
   @Input()
@@ -128,7 +128,9 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   }
 
   onReset() {
+    this.officerForm.form.reset();
     this.getFormInfo();
+    this.reportDates = [];
   }
 
   saveFormData() {
@@ -147,8 +149,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       this.submitLoading=false;
       return;
     }
-    this.formData.reportFrom = this.reportDates[0];
-    this.formData.reportTo = this.reportDates[1];
+    this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]); 
+    this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
     this.officerFormService.saveFormData(this.formData).subscribe({
       next: (response)=> {
         if(response.success) {
@@ -284,8 +286,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.formData.reportFrom = this.reportDates[0];
-    this.formData.reportTo = this.reportDates[1];
+    this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]);
+    this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
     
     this.formRecordService.updateFormData(this.formData, this.updateRole).subscribe({
       next: response=> {
@@ -330,6 +332,26 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   goBack() {
     window.history.back();
+  }
+
+
+ hrmdateResize(formDateValue:any){
+   let EntryDate="";
+   var month;
+   var day;
+   var dateObj = new Date(formDateValue);
+   var dObj=dateObj.toLocaleDateString().split('/');
+   month=parseInt(dObj[0]);
+   day=parseInt(dObj[1]);
+   if(month<10){
+     month='0'+month;
+   }
+   if(day<10){
+     day='0'+day;
+   }
+ 
+   EntryDate =dObj[2]+'-'+month+'-'+day;
+   return EntryDate;
   }
 
 

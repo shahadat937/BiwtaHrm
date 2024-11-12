@@ -40,7 +40,7 @@ const routes: Routes = [
     component: CounterSignatureFormOfficerComponent
   },
   {
-    path: 'receiverFormOfficer/:formRecorcId',
+    path: 'receiverFormOfficer/:formRecordId',
     component: ReceiverFormOfficerComponent
   },
    {

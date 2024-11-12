@@ -4,6 +4,7 @@ export class EmpPromotionIncrement {
     empName : string | null = null;
     empIdCardNo : string | null = null;
     currentDepartmentId : number | null = null;
+    currentDeptJoinDate : Date | null = null;
     currentDesignationId : number | null = null;
     currentGradeId : number | null = null;
     currentScaleId : number | null = null;

@@ -91,11 +91,11 @@ export class EmpProfileComponent  implements OnInit {
   bankColumns: string[] = ['slNo', 'accountName', 'accountNumber', 'accountTypeName', 'bankName', 'branchName','routingNo', 'remark'];
   bankSource = new MatTableDataSource<any>();
   
-  // languageColumns: string[] = ['slNo', 'spouseName', 'spouseNameBangla', 'dateOfBirth', 'birthRegNo', 'nidNo','occupationName', 'remark'];
-  // languageSource = new MatTableDataSource<any>();
+  languageColumns: string[] = ['slNo', 'languageName', 'competenceName', 'remark'];
+  languageSource = new MatTableDataSource<any>();
   
-  // foreignTourColumns: string[] = ['slNo', 'spouseName', 'spouseNameBangla', 'dateOfBirth', 'birthRegNo', 'nidNo','occupationName', 'remark'];
-  // foreignTourSource = new MatTableDataSource<any>();
+  foreignTourColumns: string[] = ['slNo', 'countryName', 'purpose', 'fromDate', 'toDate', 'remark'];
+  foreignTourSource = new MatTableDataSource<any>();
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -282,23 +282,25 @@ export class EmpProfileComponent  implements OnInit {
     
     getEmpLanguageInfoByEmpId(){
       this.empLanguageInfoService.findByEmpId(this.id).subscribe((res) => {
-        if(res && res.length > 0){
+        // if(res && res.length > 0){
           this.empLanguageInfo = res;
-        }
-        else {
-          this.empLanguageInfo = [new EmpLanguageInfoModule()];
-        }
+          this.languageSource = new MatTableDataSource(res);
+        // }
+        // else {
+        //   this.empLanguageInfo = [new EmpLanguageInfoModule()];
+        // }
       });
     }
     
     getEmpForeignTourInfoByEmpId(){
       this.empForeignTourInfoService.findByEmpId(this.id).subscribe((res) => {
-        if(res && res.length > 0){
+        // if(res && res.length > 0){
           this.empForeignTourInfo = res;
-        }
-        else {
-          this.empForeignTourInfo = [new EmpForeignTourInfoModule()];
-        }
+          this.foreignTourSource = new MatTableDataSource(res);
+        // }
+        // else {
+        //   this.empForeignTourInfo = [new EmpForeignTourInfoModule()];
+        // }
       });
     }
     

@@ -19,8 +19,15 @@ export class EmpOtherResponsibilityService {
   findByEmpId(id: number) {
     return this.http.get<EmpOtherResponsibility[]>(this.baseUrl + '/empOtherResponsibility/get-EmpOtherResponsibilityByEmpId/' + id);
   }
+  findById(id: number) {
+    return this.http.get<EmpOtherResponsibility>(this.baseUrl + '/empOtherResponsibility/get-EmpOtherResponsibilityDetails/' + id);
+  }
   findAllByEmpId(id: number) {
     return this.http.get<EmpOtherResponsibility[]>(this.baseUrl + '/empOtherResponsibility/get-allEmpOtherResponsibilityByEmpId/' + id);
+  }
+
+  findInActiveByEmpId(id: number) {
+    return this.http.get<EmpOtherResponsibility[]>(this.baseUrl + '/empOtherResponsibility/get-InActiveEmpOtherResponsibilityByEmpId/' + id);
   }
 
   saveEmpOtherResponsibility(model: FormData) {

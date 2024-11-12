@@ -180,7 +180,6 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
 
   find(id: number){
     this.empWorkHistoryService.findById(id).subscribe((res) => {
-      console.log(res)
       if(res){
         this.visible = true;
         this.headerBtnText = 'Hide From';
@@ -190,7 +189,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
         const control = <FormArray>this.EmpWorkHistoryInfoForm.controls['empWorkHistoryList'];
         control.clear();
 
-        this.departmentOptions[index] = [...this.departments];if (res.departmentId) {
+        this.departmentOptions[index] = [...this.departments];
+        if (res.departmentId) {
         this.sectionService.getSectionByOfficeDepartment(res.departmentId).subscribe((sections) => {
           this.sectionOptions[index] = sections; 
 

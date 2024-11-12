@@ -141,7 +141,7 @@ namespace Hrm.Api.Controllers
                     .Select(de => new OrganogramDesignationNameDto
                 {
                     Name = de.DesignationSetup.Name,
-                    EmployeeName = GetEmployeeName(de)
+                    EmployeeInfo = GetEmployeeInformation(de)
                     }).ToList(),
                 Sections = department.Section != null
                     ? department.Section
@@ -164,21 +164,27 @@ namespace Hrm.Api.Controllers
                 Designations = section.Designations
                     .OrderBy(x => x.MenuPosition)
                     .Select(se => new OrganogramDesignationNameDto
-                {
-                    Name = se.DesignationSetup.Name,
-                    EmployeeName = GetEmployeeName(se)
+                    {
+                        Name = se.DesignationSetup.Name,
+                        EmployeeInfo = GetEmployeeInformation(se)
                     }).ToList(),
                 SubSections = section.SubSections.Select(ss => MapSectionName(ss)).ToList()
             };
 
             return sectionNameDto;
         }
-        private string GetEmployeeName(Designation designation)
+        private OrganogramEmployeeInfoDto GetEmployeeInformation(Designation designation)
         {
             var empJobDetail = designation.EmpJobDetail?.FirstOrDefault(x => x.ServiceStatus == true)?.EmpBasicInfo;
             if (empJobDetail != null)
             {
-                return $"{empJobDetail.FirstName} {empJobDetail.LastName}";
+                var empInfo = new OrganogramEmployeeInfoDto
+                {
+                    EmpId = empJobDetail.Id,
+                    EmployeeName = $"{empJobDetail.FirstName} {empJobDetail.LastName}"
+                };
+
+                return empInfo;
             }
 
             var empOtherResponsibility = designation.EmpOtherResponsibility?.FirstOrDefault(x => x.ServiceStatus == true);
@@ -189,9 +195,15 @@ namespace Hrm.Api.Controllers
 
                 if (empBasicInfo != null)
                 {
-                    return responsibilityTypeName != null
+                    var empInfo = new OrganogramEmployeeInfoDto
+                    {
+                        EmpId = empBasicInfo.Id,
+                        EmployeeName = responsibilityTypeName != null
                         ? $"{empBasicInfo.FirstName} {empBasicInfo.LastName} ({responsibilityTypeName})"
-                        : $"{empBasicInfo.FirstName} {empBasicInfo.LastName}";
+                        : $"{empBasicInfo.FirstName} {empBasicInfo.LastName}"
+                    };
+
+                    return empInfo;
                 }
             }
 

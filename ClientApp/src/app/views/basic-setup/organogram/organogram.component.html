@@ -23,7 +23,7 @@
                                 <li *ngFor="let designation of office.designations" class="designation-text">
                                     {{ designation.name }}
                                 <ul>
-                                    <li class="employeeName">{{designation.employeeName}}</li>
+                                    <li class="employeeName" *ngIf="designation.employeeInfo" (click)="viewEmployeeProfile(designation.employeeInfo.empId)">{{designation.employeeInfo.employeeName}}</li>
                                 </ul>
                                 </li>
                             </ul>

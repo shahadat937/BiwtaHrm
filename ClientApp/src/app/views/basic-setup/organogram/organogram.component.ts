@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { OrganogramDepartmentNameDto, OrganogramOfficeNameDto, OrganogramService } from '../service/organogram.service';
 import { Subscription } from 'rxjs';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { EmpProfileComponent } from '../../employee/manage-employee/emp-profile/emp-profile.component';
 
 @Component({
   selector: 'app-organogram',
@@ -24,11 +26,7 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
 
   constructor(
     public organogramService: OrganogramService,
-    private snackBar: MatSnackBar,
-    private route: ActivatedRoute,
-    private router: Router,
-    private confirmService: ConfirmService,
-    private toastr: ToastrService,
+    private modalService: BsModalService,
   ) {
   }
   ngOnInit(): void {
@@ -80,5 +78,14 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     return this.expandedSections[officeName];
   }
   
+  
+  viewEmployeeProfile(id: number){
+    const isModal = true;
+    const initialState = {
+      id: id,
+      isModal: isModal
+    };
+    const modalRef: BsModalRef = this.modalService.show(EmpProfileComponent, { initialState});
+  }
 }
 

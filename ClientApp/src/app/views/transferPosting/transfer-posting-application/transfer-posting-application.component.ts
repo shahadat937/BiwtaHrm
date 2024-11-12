@@ -86,7 +86,6 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     });
     this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if (res) {
-        console.log("Application Response : ", res);
         this.empTransferPosting = res;
         if(res.transferSectionId){
           this.onSectionSelectGetDesignation(res.transferSectionId, this.empJobDetailsId);
@@ -132,6 +131,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
           this.empTransferPostingService.empTransferPosting.departmentName = res.departmentName;
           this.empTransferPostingService.empTransferPosting.designationName = res.designationName;
           this.empTransferPostingService.empTransferPosting.sectionName = res.sectionName;
+          this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res.currentDeptJoinDate;
         }
         // if(res.orderByIdCardNo){
         //   this.getOrderByInfoByIdCardNo(res.orderByIdCardNo);

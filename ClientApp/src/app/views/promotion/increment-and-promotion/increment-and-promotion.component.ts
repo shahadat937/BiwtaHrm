@@ -66,8 +66,8 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     const currentUserString = localStorage.getItem('currentUser');
     const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
     this.loginEmpId = currentUserJSON.empId;
-    this.getEmployeeByEmpId();
     this.SelectedModelGrade();
+    this.getEmployeeByEmpId();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -122,6 +122,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       empName : null,
       empIdCardNo : null,
       currentDepartmentId : null,
+      currentDeptJoinDate : null,
       currentDesignationId : null,
       currentGradeId : null,
       currentScaleId : null,
@@ -169,6 +170,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       empName : null,
       empIdCardNo : null,
       currentDepartmentId : null,
+      currentDeptJoinDate : null,
       currentDesignationId : null,
       currentGradeId : null,
       currentScaleId : null,
@@ -214,6 +216,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     this.empPromotionIncrementService.empPromotionIncrement.currentSectionName = this.empPromotionIncrement.currentSectionName;
     this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentName = this.empPromotionIncrement.currentDepartmentName;
     this.empPromotionIncrementService.empPromotionIncrement.currentDesignationName = this.empPromotionIncrement.currentDesignationName;
+    this.empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate = this.empPromotionIncrement.currentDeptJoinDate;
   }
   pathApproveStatusInfo(){
     this.empPromotionIncrementService.empPromotionIncrement.approveById = this.empPromotionIncrement.approveById;
@@ -238,6 +241,11 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
             this.empPromotionIncrementService.empPromotionIncrement.empId = res.id;
             this.getEmpJobDetailsByEmpId(res.id);
             this.getEmpRewardPunishmentByEmpId(res.id);
+            this.empTransferPostingService.CurrentDeptJoinDateByEmpId(res.id).subscribe((res:any) => {
+              if(res){
+                this.empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate = res;
+              }
+            });
           }
         });
       }

@@ -68,6 +68,13 @@
                           readonly />
                     </c-col>
                   }
+                  
+                  <c-col [md]="4">
+                    <label cLabel for="currentDeptJoinDate">Current Department Joining Date<span class="text-danger"></span></label>
+                    <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate"
+                        name="currentDeptJoinDate" #currentDeptJoinDate="ngModel" cFormControl id="currentDeptJoinDate"
+                        type="date" />
+                    </c-col>
                   }
               </c-card-body>
           </c-card>
@@ -177,6 +184,19 @@
                     #orderDate="ngModel"
                     cFormControl
                     id="orderDate"
+                    type="date"
+                    />
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="effectiveDate"
+                    >Effective Date<span class="text-danger"></span></label>
+                    <input
+                    [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.effectiveDate"
+                    name="effectiveDate"
+                    #effectiveDate="ngModel"
+                    cFormControl
+                    id="effectiveDate"
                     type="date"
                     />
                 </c-col>

@@ -33,9 +33,11 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
                 .Include(x => x.ApproveBy)
                 .Include(x => x.CurrentDepartment)
                 .Include(x => x.CurrentDesignation)
+                    .ThenInclude(x => x.DesignationSetup)
                 .Include(x => x.CurrentGrade)
                 .Include(x => x.CurrentScale)
                 .Include(x => x.UpdateDesignation)
+                    .ThenInclude(x => x.DesignationSetup)
                 .Include(x => x.UpdateGrade)
                 .Include(x => x.UpdateScale)
                 .FirstOrDefaultAsync(cancellationToken);

@@ -25,13 +25,18 @@ export class ErrorInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const shouldSuppressError = request.headers.has('Suppress-Error-Message');
     return next.handle(request).pipe(
+
       catchError((err) => {
         // if (err.status === 401) {
         //   // auto logout if 401 response returned from api
         //   this.authenticationService.logout();
         //   location.reload(true);
         // }
+        if(shouldSuppressError) {
+          throw err;
+        }
         if (err) {
           switch (err.status) {
             case 400:

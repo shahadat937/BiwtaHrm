@@ -85,7 +85,8 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                     HTMLTagName = x.HTMLTagName,
                     HTMLInputType = x.HTMLInputType,
                     HasMultipleValue = (bool)x.HasMultipleValue,
-                    HasSelectable = (bool)x.HasSelectable
+                    HasSelectable = (bool)x.HasSelectable,
+                    TotalSubquestion = x.TotalSubquestion
                 }).ToList();
 
                 foreach(var field in fieldInfoDto)
@@ -127,7 +128,8 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                             HTMLTagName = x.HTMLTagName,
                             HTMLInputType = x.HTMLInputType,
                             HasMultipleValue = (bool)x.HasMultipleValue,
-                            HasSelectable = (bool)x.HasSelectable
+                            HasSelectable = (bool)x.HasSelectable,
+                            TotalSubquestion = x.TotalSubquestion
                         }).ToList();
 
                         foreach(var childField in childFieldInfoDto)

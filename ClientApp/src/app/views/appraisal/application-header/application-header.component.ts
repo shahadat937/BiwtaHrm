@@ -11,10 +11,15 @@ import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.servi
 export class ApplicationHeaderComponent implements OnInit, OnChanges, OnDestroy {
   companyTitle :string = "Bangladesh Inland Water Transport Authority"
   address = "141-143, Motijheel Commerial Area, Dhaka-1000"
-  formName = "Annual Confidential Report Of Officer"
 
   @Input()
-  dates: any[]
+  formName: string; 
+
+  @Input()
+  from: string;
+
+  @Input()
+  to: string;
 
   @Input()
   department: string
@@ -29,7 +34,10 @@ export class ApplicationHeaderComponent implements OnInit, OnChanges, OnDestroy 
     this.address = environment.companyAddress
     this.department = ""
     this.empId = 0
-    this.dates = []
+    this.from = "";
+    this.to = "";
+
+    this.formName = "Annual Confidential Report Of Officer"
   }
 
   ngOnInit(): void {
@@ -40,8 +48,6 @@ export class ApplicationHeaderComponent implements OnInit, OnChanges, OnDestroy 
         }
       })
     } 
-
-    console.log("Application Header");
   }
 
   ngOnChanges(changes: SimpleChanges): void {

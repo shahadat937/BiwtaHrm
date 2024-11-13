@@ -23,7 +23,7 @@
                 <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback" let-ind="index">
                   <c-card>
                     <c-card-body [gutter]="3">
-                      <app-application-header [dates]="reportDates" *ngIf="ind==0&&showHeader" [empId]="formData.empId"></app-application-header>
+                      <app-application-header [from]="formData.reportFrom" [to]="formData.reportTo" *ngIf="ind==0&&showHeader" [empId]="formData.empId"></app-application-header>
                       <div class="mt-4 d-flex justify-content-center">
                         <h5>{{item.sectionName}}</h5>
                       </div>

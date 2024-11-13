@@ -258,10 +258,18 @@
 
                     @for (childFieldData of fieldData.childFields; track $index) {
                         <tr>
-                            <td [colSpan]="2">{{childFieldData.fieldName}}</td>
+
+                            @if (childFieldData.totalSubquestion==0) {
+                                <td [colSpan]="2">{{childFieldData.fieldName}}</td>
+                            } @else {
+                                @if (childFieldData.totalSubquestion!=1) {
+                                    <td [rowSpan]="childFieldData.totalSubquestion">{{childFieldData.description}}</td>
+                                }
+                                <td>{{childFieldData.fieldName}}</td>
+                            }
                             @for (option of childFieldData.options; track $index) {
                                 <td>
-                                    <input 
+                                    <input
                                     class="form-check-input" 
                                     type="radio"
                                     [disabled]="IsReadonly"

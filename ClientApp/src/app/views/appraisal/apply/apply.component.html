@@ -1,4 +1,4 @@
-@if (true||!loading&&currentGrade == officerGradeType) {
+@if (!loading&&currentGrade == officerGradeType) {
     <app-officer-form-application></app-officer-form-application>
 } @else if (!loading&&currentGrade == staffGradeType) {
     <app-staff-form></app-staff-form>

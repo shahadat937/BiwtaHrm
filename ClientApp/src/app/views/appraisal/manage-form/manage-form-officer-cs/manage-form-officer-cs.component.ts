@@ -12,6 +12,7 @@ import { AppraisalRole } from '../../enum/appraisal-role';
 export class ManageFormOfficerCsComponent {
   filters: FormRecordFilter
   appraisalRole = AppraisalRole
+  haveError: boolean;
 
   constructor(
     private authService: AuthService
@@ -19,6 +20,7 @@ export class ManageFormOfficerCsComponent {
     this.filters = new FormRecordFilter();
     this.filters.formId = environment.officerFormId;
     this.filters.reportingOfficerApproval = true
+    this.haveError = false;
   }
 
   ngOnInit(): void {

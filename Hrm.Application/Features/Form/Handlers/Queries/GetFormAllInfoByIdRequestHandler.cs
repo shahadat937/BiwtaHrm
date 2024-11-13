@@ -69,6 +69,7 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                     HTMLInputType = x.HTMLInputType,
                     HasMultipleValue=(bool)x.HasMultipleValue,
                     HasSelectable=(bool)x.HasSelectable,
+                    TotalSubquestion = x.TotalSubquestion,
                     FieldValue = "",
                     Remark = ""
                 }).ToList();
@@ -110,6 +111,7 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                             HTMLInputType = x.HTMLInputType,
                             HasMultipleValue = (bool)x.HasMultipleValue,
                             HasSelectable = (bool)x.HasSelectable,
+                            TotalSubquestion = x.TotalSubquestion,
                             FieldValue = "",
                             Remark = ""
                         }).ToList();

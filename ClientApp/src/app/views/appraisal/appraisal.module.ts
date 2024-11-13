@@ -42,6 +42,8 @@ import { ManageFormOfficerRfComponent } from './manage-form/manage-form-officer-
 import { ManageFormOfficerCsComponent } from './manage-form/manage-form-officer-cs/manage-form-officer-cs.component';
 import { ManageFormOfficerRComponent } from './manage-form/manage-form-officer-r/manage-form-officer-r.component';
 import { BadgeModule } from '@coreui/angular';
+import { ApplyComponent } from './apply/apply.component';
+import { GradeService } from '../basic-setup/service/Grade.service';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { BadgeModule } from '@coreui/angular';
     ManageFormOfficerRfComponent,
     ManageFormOfficerCsComponent,
     ManageFormOfficerRComponent,
+    ApplyComponent,
   ],
   imports: [
     TabViewModule,
@@ -90,7 +93,8 @@ import { BadgeModule } from '@coreui/angular';
 
   ],providers:[
     FormRecordService,
-    EmpBasicInfoService
+    EmpBasicInfoService,
+    GradeService
   ]
 })
 export class AppraisalModule { }

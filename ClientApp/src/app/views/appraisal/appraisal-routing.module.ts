@@ -11,6 +11,7 @@ import { ReceiverFormOfficerComponent } from './officer-form/receiver-form-offic
 import {ManageFormOfficerRfComponent} from './manage-form/manage-form-officer-rf/manage-form-officer-rf.component'
 import { ManageFormOfficerCsComponent } from './manage-form/manage-form-officer-cs/manage-form-officer-cs.component';
 import { ManageFormOfficerRComponent } from './manage-form/manage-form-officer-r/manage-form-officer-r.component';
+import { ApplyComponent } from './apply/apply.component';
 
 
 const routes: Routes = [
@@ -29,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: 'apply',
-    component: OfficerFormApplicationComponent
+    component: ApplyComponent
   },
   {
     path: "reportingFormOfficer/:formRecordId",

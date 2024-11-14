@@ -31,8 +31,8 @@ export class EmpPromotionIncrementService {
     }
   }
 
-  getAllEmpPromotionIncrementApproveInfo(){
-    return this.http.get<EmpPromotionIncrement[]>(this.baseUrl + '/empPromotionIncrement/get-AllEmpPromotionIncrementApproveInfo');
+  getAllEmpPromotionIncrementApproveInfo(id: number){
+    return this.http.get<EmpPromotionIncrement[]>(this.baseUrl + '/empPromotionIncrement/get-AllEmpPromotionIncrementApproveInfo/' + id);
   }
   
   

@@ -37,6 +37,7 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
                 Add = roleFeature.Add,
                 Update = roleFeature.Update,
                 Delete = roleFeature.Delete,
+                Report = roleFeature.Report,
             };
 
             return result;

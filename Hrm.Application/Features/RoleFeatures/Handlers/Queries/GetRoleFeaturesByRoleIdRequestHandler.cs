@@ -52,7 +52,8 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
                     ViewStatus = roleFeature?.ViewStatus ?? false,
                     Add = roleFeature?.Add ?? false,
                     Update = roleFeature?.Update ?? false,
-                    Delete = roleFeature?.Delete ?? false
+                    Delete = roleFeature?.Delete ?? false,
+                    Report = roleFeature?.Report ?? false
                 };
             }).ToList();
 

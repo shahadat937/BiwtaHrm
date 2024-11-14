@@ -16,13 +16,15 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
         private readonly IHrmRepository<EmpTransferPosting> _EmpEmpTransferPostingRepository;
         private readonly IHrmRepository<EmpWorkHistory> _EmpWorkHistoryRepository;
         private readonly IHrmRepository<EmpJobDetail> _EmpJobDetailRepository;
+        private readonly IHrmRepository<EmpPromotionIncrement> _EmpPromotionIncrementRepository;
         private readonly IMapper _mapper;
-        public GetCurrentDeptJoinDateByEmpIdRequestHandler(IHrmRepository<EmpTransferPosting> EmpEmpTransferPostingRepository, IMapper mapper, IHrmRepository<EmpWorkHistory> empWorkHistoryRepository, IHrmRepository<EmpJobDetail> empJobDetailRepository)
+        public GetCurrentDeptJoinDateByEmpIdRequestHandler(IHrmRepository<EmpTransferPosting> EmpEmpTransferPostingRepository, IMapper mapper, IHrmRepository<EmpWorkHistory> empWorkHistoryRepository, IHrmRepository<EmpJobDetail> empJobDetailRepository, IHrmRepository<EmpPromotionIncrement> empPromotionIncrementRepository)
         {
             _EmpEmpTransferPostingRepository = EmpEmpTransferPostingRepository;
             _mapper = mapper;
             _EmpWorkHistoryRepository = empWorkHistoryRepository;
             _EmpJobDetailRepository = empJobDetailRepository;
+            _EmpPromotionIncrementRepository = empPromotionIncrementRepository;
         }
 
         public async Task<object> Handle(GetCurrentDeptJoinDateByEmpIdRequest request, CancellationToken cancellationToken)
@@ -35,6 +37,9 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
 
             var jobDetails = _EmpJobDetailRepository
                 .Where(jd => jd.EmpId == request.EmpId);
+
+            var promotionIncrements = _EmpPromotionIncrementRepository
+                .Where(pi => pi.EmpId == request.EmpId && pi.UpdateDesignationId != null);
 
             var latestTransferPostingJoiningDate = transferPostings
                 .OrderByDescending(tp => tp.JoiningDate)
@@ -53,8 +58,12 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
                 .Select(jd => jd.JoiningDate)
                 .FirstOrDefault();
 
+            var latestPromotionIncrementsDate = promotionIncrements
+                .OrderByDescending(wh => wh.EffectiveDate)
+                .Select(wh => wh.EffectiveDate)
+                .FirstOrDefault();
 
-            var latestDate = new[] { latestTransferPostingJoiningDate, extendedlatestWorkHistoryReleaseDate, latestJobDetailJoiningDate }
+            var latestDate = new[] { latestTransferPostingJoiningDate, extendedlatestWorkHistoryReleaseDate, latestJobDetailJoiningDate, latestPromotionIncrementsDate }
                 .Where(d => d != null).Max();
 
 

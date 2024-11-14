@@ -93,6 +93,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     });
     this.subscription = this.empPromotionIncrementService.findById(this.id).subscribe((res) => {
       if (res) {
+        console.log(res)
         this.empPromotionIncrement = res;
         this.patchEmpInfo();
         this.getEmpRewardPunishmentByEmpId(res.empId || 0);
@@ -125,6 +126,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       currentDeptJoinDate : null,
       currentDesignationId : null,
       currentGradeId : null,
+      currentSectionId : null,
       currentScaleId : null,
       currentDepartmentName : null,
       currentDesignationName : null,
@@ -171,6 +173,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       empIdCardNo : null,
       currentDepartmentId : null,
       currentDeptJoinDate : null,
+      currentSectionId : null,
       currentDesignationId : null,
       currentGradeId : null,
       currentScaleId : null,
@@ -239,12 +242,10 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
             this.isValidEmp = true;
             this.empPromotionIncrementService.empPromotionIncrement.empName = res.firstName + " " + res.lastName;
             this.empPromotionIncrementService.empPromotionIncrement.empId = res.id;
-            this.getEmpJobDetailsByEmpId(res.id);
+            this.getEmpJobDetailsNewByEmpId(res.id);
             this.getEmpRewardPunishmentByEmpId(res.id);
             this.empTransferPostingService.CurrentDeptJoinDateByEmpId(res.id).subscribe((res:any) => {
-              if(res){
-                this.empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate = res;
-              }
+              this.empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate = res;
             });
           }
         });
@@ -274,6 +275,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
           this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentName = res.departmentName;
           this.empPromotionIncrementService.empPromotionIncrement.currentDesignationName = res.designationName;
           this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentId = res.departmentId;
+          this.empPromotionIncrementService.empPromotionIncrement.currentSectionId = res.sectionId;
           this.empPromotionIncrementService.empPromotionIncrement.currentDesignationId = res.designationId;
           this.empPromotionIncrementService.empPromotionIncrement.currentGradeId = res.presentGradeId;
           this.empPromotionIncrementService.empPromotionIncrement.currentGradeName = res.presentGradeName;
@@ -281,6 +283,26 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
           this.empPromotionIncrementService.empPromotionIncrement.currentScaleName = res.presentScaleName;
           this.empPromotionIncrementService.empPromotionIncrement.currentBasicPay = res.basicPay;
         }
+      }
+    })
+  }
+  
+  getEmpJobDetailsNewByEmpId(id: number){
+    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+      if(res){
+        this.empJobDetailsId = res.id;
+        this.getDesignationByDepartmentId(res.departmentId, res.id);
+          this.empPromotionIncrementService.empPromotionIncrement.currentSectionName = res.sectionName;
+          this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentName = res.departmentName;
+          this.empPromotionIncrementService.empPromotionIncrement.currentDesignationName = res.designationName;
+          this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentId = res.departmentId;
+          this.empPromotionIncrementService.empPromotionIncrement.currentSectionId = res.sectionId;
+          this.empPromotionIncrementService.empPromotionIncrement.currentDesignationId = res.designationId;
+          this.empPromotionIncrementService.empPromotionIncrement.currentGradeId = res.presentGradeId;
+          this.empPromotionIncrementService.empPromotionIncrement.currentGradeName = res.presentGradeName;
+          this.empPromotionIncrementService.empPromotionIncrement.currentScaleId = res.presentScaleId;
+          this.empPromotionIncrementService.empPromotionIncrement.currentScaleName = res.presentScaleName;
+          this.empPromotionIncrementService.empPromotionIncrement.currentBasicPay = res.basicPay;
       }
     })
   }

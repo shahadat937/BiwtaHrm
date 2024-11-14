@@ -36,6 +36,14 @@ namespace Hrm.Api.Controllers
             return Ok(EmpWorkHistories);
         }
 
+        [HttpGet]
+        [Route("get-CombinedEmpWorkHistoryByEmpId/{id}")]
+        public async Task<ActionResult<EmpWorkHistoryDto>> GetCombined(int id)
+        {
+            var EmpWorkHistories = await _mediator.Send(new GetCombinedEmpWorkHistoryByEmpIdRequest { EmpId = id });
+            return Ok(EmpWorkHistories);
+        }
+
         [HttpDelete]
         [Route("delete-EmpWorkHistory/{id}")]
         public async Task<ActionResult> Delete(int id)

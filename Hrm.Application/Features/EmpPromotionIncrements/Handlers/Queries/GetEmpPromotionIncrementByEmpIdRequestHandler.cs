@@ -32,6 +32,7 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
                 .Include(x => x.OrderBy)
                 .Include(x => x.ApproveBy)
                 .Include(x => x.CurrentDepartment)
+                .Include(x => x.CurrentSection)
                 .Include(x => x.CurrentDesignation)
                     .ThenInclude(x => x.DesignationSetup)
                 .Include(x => x.CurrentGrade)

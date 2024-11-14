@@ -31,4 +31,7 @@ export class EmpWorkHistoryService {
     return this.http.get<EmpWorkHistory>(this.baseUrl + '/empWorkHistory/get-EmpWorkHistoryDetails/' + id);
   }
 
+  findCombinedById(id: number) {
+    return this.http.get<EmpWorkHistory[]>(this.baseUrl + '/empWorkHistory/get-CombinedEmpWorkHistoryByEmpId/' + id);
+  }
 }

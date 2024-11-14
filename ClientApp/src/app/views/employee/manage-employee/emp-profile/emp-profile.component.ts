@@ -96,6 +96,9 @@ export class EmpProfileComponent  implements OnInit {
   
   foreignTourColumns: string[] = ['slNo', 'countryName', 'purpose', 'fromDate', 'toDate', 'remark'];
   foreignTourSource = new MatTableDataSource<any>();
+  
+  workHistoryColumns: string[] = ['slNo', 'departmentName', 'sectionName', 'designationName', 'joiningDate', 'releaseDate'];
+  workHistorySource = new MatTableDataSource<any>();
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -158,8 +161,8 @@ export class EmpProfileComponent  implements OnInit {
       this.getEmpLanguageInfoByEmpId();
       this.getEmpForeignTourInfoByEmpId();
       this.getEmpWorkHistory();
-      this.getEmpOtherResponsibility();
-      this.getEmpTransferPostingInfo();
+      // this.getEmpOtherResponsibility();
+      // this.getEmpTransferPostingInfo();
       this.getPrlAndRetirmentDate();
     }
 
@@ -311,10 +314,11 @@ export class EmpProfileComponent  implements OnInit {
     }
     
     getEmpWorkHistory(){
-      this.empWorkHistoryService.findByEmpId(this.id).subscribe((res) => {
-        if(res && res.length > 0){
+      this.empWorkHistoryService.findCombinedById(this.id).subscribe((res) => {
+        // if(res && res.length > 0){
           this.empWorkHistory = res;
-        }
+          this.workHistorySource = new MatTableDataSource(res);
+        // }
       });
     }
     

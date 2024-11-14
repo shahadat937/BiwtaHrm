@@ -63,10 +63,10 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-AllEmpPromotionIncrementApproveInfo")]
-        public async Task<ActionResult> GetAllEmpPromotionIncrementApproveInfo()
+        [Route("get-AllEmpPromotionIncrementApproveInfo/{id}")]
+        public async Task<ActionResult> GetAllEmpPromotionIncrementApproveInfo(int id)
         {
-            var EmpPromotionIncrement = await _mediator.Send(new GetEmpPromotionIncrementApprovalListRequest { });
+            var EmpPromotionIncrement = await _mediator.Send(new GetEmpPromotionIncrementApprovalListRequest {Id = id });
             return Ok(EmpPromotionIncrement);
         }
     }

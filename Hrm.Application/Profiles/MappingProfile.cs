@@ -514,6 +514,7 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.EmpIdCardNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
             .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName + " " + src.EmpBasicInfo.LastName))
             .ForMember(dest => dest.CurrentDepartmentName, opt => opt.MapFrom(src => src.CurrentDepartment.DepartmentName))
+            .ForMember(dest => dest.CurrentSectionName, opt => opt.MapFrom(src => src.CurrentSection.SectionName))
             .ForMember(dest => dest.CurrentDesignationName, opt => opt.MapFrom(src => src.CurrentDesignation.DesignationSetup.Name))
             .ForMember(dest => dest.CurrentGradeName, opt => opt.MapFrom(src => src.CurrentGrade.GradeName))
             .ForMember(dest => dest.CurrentScaleName, opt => opt.MapFrom(src => src.CurrentScale.ScaleName))

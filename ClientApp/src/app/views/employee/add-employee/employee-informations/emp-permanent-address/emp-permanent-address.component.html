@@ -194,12 +194,12 @@
       </c-col> -->
 
       <c-col [md]="3">
-        <label cLabel for="zipCode">Zip Code<span class="text-danger"></span></label>
+        <label cLabel for="zipCode">Post Code<span class="text-danger"></span></label>
         <input [(ngModel)]="empPermanentAddressService.empPermanentAddress.zipCode" name="zipCode" #zipCode="ngModel"
-          placeholder="Enter Zip Code" cFormControl id="zipCode" type="text" pattern="[0-9]*"
+          placeholder="Enter Post Code" cFormControl id="zipCode" type="text" pattern="[0-9]*"
           [class.readonly-select]="sameAsPresentAddress" />
         @if(!zipCode.valid&&zipCode.touched&&zipCode.value){
-        <div class="text-left text-danger">Invalid Phone Number</div>
+        <div class="text-left text-danger">Invalid Post Code</div>
         }
       </c-col>
 

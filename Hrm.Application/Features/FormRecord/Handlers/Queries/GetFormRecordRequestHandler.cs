@@ -35,6 +35,11 @@ namespace Hrm.Application.Features.FormRecord.Handlers.Queries
                     .ThenInclude(x => x.EmpJobDetail)
                 .AsQueryable();
 
+            if(request.Filters.EmpId.HasValue)
+            {
+                formRecords = formRecords.Where(x => x.EmpId ==  request.Filters.EmpId);
+            }
+
             if (request.Filters.RecordId.HasValue)
             {
                 formRecords = formRecords.Where(x => x.RecordId == request.Filters.RecordId);
@@ -67,7 +72,7 @@ namespace Hrm.Application.Features.FormRecord.Handlers.Queries
 
             if (request.Filters.ReceiverId.HasValue)
             {
-                formRecords = formRecords.Where(x => x.ReceiverId == request.Filters.ReceiverId);
+                formRecords = formRecords.Where(x => x.ReceiverId == request.Filters.ReceiverId || x.ReceiverId == null);
             }
 
             if(request.Filters.ReportingOfficerApproval.HasValue)

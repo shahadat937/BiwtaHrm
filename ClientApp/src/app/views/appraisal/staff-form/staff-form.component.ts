@@ -1,27 +1,49 @@
-import { StaffFormServiceService } from './service/staff-form-service.service';
-
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Division } from './../../basic-setup/model/division';
+import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { delay, of, Subscription } from 'rxjs';
-import { OfficerFormService } from '../officer-form/service/officer-form.service';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { delay, of, Subscription } from 'rxjs';
+import { FieldComponent } from '../field/field.component';
 import { FormRecordService } from '../services/form-record.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { UpdateFormComponent } from '../update-form/update-form.component';
+import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
+import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
+import { HttpParams } from '@angular/common/http';
+import {AppraisalRole} from '../enum/appraisal-role';
+import { environment } from 'src/environments/environment';
+import { cilArrowLeft } from '@coreui/icons';
+import { AuthService } from 'src/app/core/service/auth.service';
+import { OfficerFormService } from '../officer-form/service/officer-form.service';
 
 @Component({
   selector: 'app-staff-form',
   templateUrl: './staff-form.component.html',
-  styleUrl: './staff-form.component.scss',
+  styleUrl: './staff-form.component.scss'
 })
 export class StaffFormComponent implements OnInit, OnDestroy {
-  formId:number = 2;
+  @ViewChild('officerForm') officerForm!: NgForm;
+  @Input()
+  ActiveSection:boolean[];
+  @Input()
+  formRecordId;
+  @Input()
+  showHeader: boolean;
+  @Input()
+  updateRole: number;
+  appraisalRole = AppraisalRole;
+  IdCardNo:string;
+  formId:number;
   loading: boolean;
   submitLoading: boolean;
+  @Input()
+  submitButtonText: string;
   formData: any;
+  formName: string;
   subscription: Subscription = new Subscription();
   currentSection:number ;
-  reportDates: any[] = [];
-  IdCardNo: string;
   empSubs: Subscription = new Subscription();
   empReqSub: Subscription = new Subscription();
   autoSetFields: any = [{fieldName:"Name",MapTo:"firstName"}, {fieldName: "Father Name",MapTo:"fatherName"},
@@ -31,23 +53,73 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     {fieldName: "Birthdate", MapTo: "birthDate", Transform: "DateFormat"},
     {fieldName: "Joining Date Of Current Designation", MapTo: "currentDesignationJoiningDate", Transform: "DateFormat"}
   ]
+  icons = {cilArrowLeft};
+
+  EmpOption: any[] = []
+
+  reportDates:any[]= [];
+
+  department: string;
+  @Input()
+  firstSection:number;
+  @Input()
+  lastSection:number;
   
   constructor(
+    private authService: AuthService,
+    private empService: EmpBasicInfoService,
+    private empPhotoSignService: EmpPhotoSignService,
     private formRecordService: FormRecordService,
     public officerFormService: OfficerFormService,
     private toastr: ToastrService,
-    private confirmService: ConfirmService
+    private confirmService: ConfirmService,
+    private modalService: BsModalService
   ) {
     
+    this.IdCardNo = "";
     this.loading = false;
     this.submitLoading = false;
     this.currentSection = 0;
-    this.IdCardNo = "";
+    this.ActiveSection = [true,true,true,true,true,true,true];
+    this.formRecordId = 0;
+    this.showHeader = true
+    this.department = "ICT"
+    this.updateRole = AppraisalRole.User
+    this.formId = environment.staffFormId
+    this.firstSection = 0;
+    this.lastSection = 1;
+    this.submitButtonText = "Submit";
+    this.formName = "Annual Confidential Report Of Staff"
   }
 
   ngOnInit(): void {
+    console.log(this.firstSection);
+    console.log(this.lastSection);
     this.loading=true;
-    this.getFormInfo(); 
+
+    this.empService.getFilteredSelectedEmp(new HttpParams()).subscribe({
+      next: response => {
+        this.EmpOption = response
+      }
+    })
+
+    if(this.formRecordId==0) {
+      this.getFormInfo(); 
+      this.subscription=this.authService.currentUser.subscribe(user => {
+        if(user&&user.empId) {
+          let empId = parseInt(user.empId);
+          this.empService.findByEmpId(empId).subscribe({
+            next: response => {
+              this.IdCardNo = response.idCardNo;
+              this.getEmpInfo();
+            }
+          })
+        }
+      })
+    } else {
+      this.getFormData();
+    }
+
   }
 
 
@@ -82,27 +154,43 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   }
 
   onReset() {
+    this.officerForm.form.reset();
     this.getFormInfo();
+    this.reportDates = [];
   }
 
   saveFormData() {
     this.submitLoading=true;
-    if(this.reportDates.length<2||this.reportDates[0]==null||this.reportDates[1]==null) {
+
+    if(this.formRecordId!=0) {
+      this.updateFormData();
+      return;
+    }
+
+    if(this.formData.reportFrom==null||this.formData.reportTo==null) {
       this.toastr.warning('',"Report Duration is required", {
         positionClass: 'toast-top-right'
       });
       this.submitLoading=false;
       return;
     }
-    this.formData.reportFrom = this.reportDates[0];
-    this.formData.reportTo = this.reportDates[1];
+    //if(this.reportDates.length<2||this.reportDates[0]==null||this.reportDates[1]==null) {
+    //  this.toastr.warning('',"Report Duration is required", {
+    //    positionClass: 'toast-top-right'
+    //  });
+    //  this.submitLoading=false;
+    //  return;
+    //}
+    //this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]); 
+    //this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
     this.officerFormService.saveFormData(this.formData).subscribe({
       next: (response)=> {
         if(response.success) {
           this.toastr.success('',`${response.message}`, {
             positionClass: 'toast-top-right'
           })
-          this.formRecordService.cachedData=[];
+
+          this.formRecordService.cachedData = [];
         } else {
           this.toastr.warning('',`${response.message}`, {
             positionClass: 'toast-top-right'
@@ -114,10 +202,18 @@ export class StaffFormComponent implements OnInit, OnDestroy {
       },
       complete: ()=> {
         this.submitLoading=false;
-        console.log("complete");
       }
     })
   }
+
+  onUpdate(formRecordId:number) {
+    const initialState = {
+      formRecordId : formRecordId
+    } 
+
+    this.modalService.show(UpdateFormComponent,{initialState:initialState});
+  }
+
 
   getEmpInfo() {
     const source$ = of (this.IdCardNo);
@@ -140,21 +236,41 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     this.empSubs = delay$.subscribe(data=> {
       this.empReqSub = this.formRecordService.empInfo(data).subscribe({
         next: response=> {
-          console.log(response);
           if(response.success==true) {
             this.processEmpInfo(response);
           } else {
             this.formData.empId = 0;
+            this.toastr.warning('',`Employee (${data}) wasn't found`, {
+              positionClass: 'toast-top-right'
+            });
+            this.resetAutofield();
           }
         },
         error: (err)=> {
           this.formData.empId = 0;
+          this.resetAutofield();
         }
       })
     })
 
   }
 
+  resetAutofield() {
+    function findField(fieldName:string) {
+      const compare = (data:any)=> {
+        return data.fieldName == fieldName; 
+      }
+
+      return compare;
+    }
+    this.autoSetFields.forEach((field:any)=> {
+      const result = this.formData.sections[0].fields.find(findField(field.fieldName))
+
+      if(result!=undefined) {
+        result.fieldValue="";
+      }
+    })
+  }
 
   processEmpInfo(empInfo:any) {
     this.formData.empId = empInfo.empId;
@@ -169,15 +285,104 @@ export class StaffFormComponent implements OnInit, OnDestroy {
 
     this.autoSetFields.forEach((field:any) => { 
       const result = this.formData.sections[0].fields.find(findField(field.fieldName));
-      
       if(result!=undefined) {
         let fieldValue = empInfo[field.MapTo];
-        if(field.Transform!=undefined&&field.Transform=="DateFormat") {
+        if(field.Transform!=undefined&&field.Transform=="DateFormat"&&fieldValue!=null) {
           fieldValue = fieldValue.split('T')[0];
         }
         result.fieldValue = fieldValue;
       }
     });
+
   }
+
+  getPhotoInfo(empId:number) {
+    let signature;
+
+    this.empPhotoSignService.findByEmpId(empId).subscribe({
+      next: response => {
+        signature = response;
+      }
+    })
+  }
+
+
+  updateFormData() {
+    this.submitLoading=true;
+    if(this.reportDates.length<2) {
+      this.toastr.warning('',"Report Duration is required", {
+        positionClass: 'toast-top-right'
+      });
+      return;
+    }
+
+    //this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]);
+    //this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
+    
+    this.formRecordService.updateFormData(this.formData, this.updateRole).subscribe({
+      next: response=> {
+        if(response.success) {
+          this.toastr.success('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        } else {
+          this.toastr.warning('',`${response.message}`, {
+            positionClass: 'toast-top-right'
+          })
+        }
+      },
+      error: err=> {
+        this.submitLoading=false;
+      },
+      complete: () => {
+        this.submitLoading=false;
+      }
+    })
+  }
+
+  getFormData() {
+    this.formRecordService.getFormData(this.formRecordId).subscribe({
+      next: (response)=> {
+        this.formData = response;
+        let datefrom = new Date(this.formData.reportFrom);
+        let dateto = new Date(this.formData.reportTo);
+        this.reportDates.push(datefrom);
+        this.reportDates.push(dateto);
+        this.loading=false;
+      },
+      error: (err)=> {
+        console.log(err);
+        this.loading=false;
+      },
+      complete:()=>  {
+        this.loading=false;
+      }
+    })
+  }
+
+  goBack() {
+    window.history.back();
+  }
+
+
+ hrmdateResize(formDateValue:any){
+   let EntryDate="";
+   var month;
+   var day;
+   var dateObj = new Date(formDateValue);
+   var dObj=dateObj.toLocaleDateString().split('/');
+   month=parseInt(dObj[0]);
+   day=parseInt(dObj[1]);
+   if(month<10){
+     month='0'+month;
+   }
+   if(day<10){
+     day='0'+day;
+   }
+ 
+   EntryDate =dObj[2]+'-'+month+'-'+day;
+   return EntryDate;
+  }
+
 
 }

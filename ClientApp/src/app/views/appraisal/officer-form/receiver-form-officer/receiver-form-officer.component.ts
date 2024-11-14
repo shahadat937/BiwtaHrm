@@ -16,7 +16,6 @@ export class ReceiverFormOfficerComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-
   }
 
   ngOnInit(): void {

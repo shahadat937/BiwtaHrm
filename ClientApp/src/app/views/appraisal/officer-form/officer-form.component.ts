@@ -17,6 +17,7 @@ import { HttpParams } from '@angular/common/http';
 import {AppraisalRole} from '../enum/appraisal-role';
 import { environment } from 'src/environments/environment';
 import { cilArrowLeft } from '@coreui/icons';
+import { AuthService } from 'src/app/core/service/auth.service';
 
 @Component({
   selector: 'app-officer-form',
@@ -24,7 +25,7 @@ import { cilArrowLeft } from '@coreui/icons';
   styleUrl: './officer-form.component.scss'
 })
 export class OfficerFormComponent implements OnInit, OnDestroy {
-
+  @ViewChild('officerForm') officerForm!: NgForm;
   @Input()
   ActiveSection:boolean[];
   @Input()
@@ -38,6 +39,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   formId:number;
   loading: boolean;
   submitLoading: boolean;
+  @Input()
+  submitButtonText: string;
   formData: any;
   subscription: Subscription = new Subscription();
   currentSection:number ;
@@ -57,8 +60,13 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   reportDates:any[]= [];
 
   department: string;
+  @Input()
+  firstSection:number;
+  @Input()
+  lastSection:number;
   
   constructor(
+    private authService: AuthService,
     private empService: EmpBasicInfoService,
     private empPhotoSignService: EmpPhotoSignService,
     private formRecordService: FormRecordService,
@@ -78,9 +86,14 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.department = "ICT"
     this.updateRole = AppraisalRole.User
     this.formId = environment.officerFormId
+    this.firstSection = 0;
+    this.lastSection = 6;
+    this.submitButtonText = "Submit";
   }
 
   ngOnInit(): void {
+    console.log(this.firstSection);
+    console.log(this.lastSection);
     this.loading=true;
 
     this.empService.getFilteredSelectedEmp(new HttpParams()).subscribe({
@@ -91,9 +104,21 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
     if(this.formRecordId==0) {
       this.getFormInfo(); 
+      this.subscription=this.authService.currentUser.subscribe(user => {
+        if(user&&user.empId) {
+          let empId = parseInt(user.empId);
+          this.empService.findByEmpId(empId).subscribe({
+            next: response => {
+              this.IdCardNo = response.idCardNo;
+              this.getEmpInfo();
+            }
+          })
+        }
+      })
     } else {
       this.getFormData();
     }
+
   }
 
 
@@ -128,7 +153,9 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   }
 
   onReset() {
+    this.officerForm.form.reset();
     this.getFormInfo();
+    this.reportDates = [];
   }
 
   saveFormData() {
@@ -139,16 +166,22 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log(this.reportDates);
-    if(this.reportDates.length<2||this.reportDates[0]==null||this.reportDates[1]==null) {
+    if(this.formData.reportFrom==null||this.formData.reportTo==null) {
       this.toastr.warning('',"Report Duration is required", {
         positionClass: 'toast-top-right'
       });
       this.submitLoading=false;
       return;
     }
-    this.formData.reportFrom = this.reportDates[0];
-    this.formData.reportTo = this.reportDates[1];
+    //if(this.reportDates.length<2||this.reportDates[0]==null||this.reportDates[1]==null) {
+    //  this.toastr.warning('',"Report Duration is required", {
+    //    positionClass: 'toast-top-right'
+    //  });
+    //  this.submitLoading=false;
+    //  return;
+    //}
+    //this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]); 
+    //this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
     this.officerFormService.saveFormData(this.formData).subscribe({
       next: (response)=> {
         if(response.success) {
@@ -168,7 +201,6 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       },
       complete: ()=> {
         this.submitLoading=false;
-        console.log("complete");
       }
     })
   }
@@ -203,7 +235,6 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.empSubs = delay$.subscribe(data=> {
       this.empReqSub = this.formRecordService.empInfo(data).subscribe({
         next: response=> {
-          console.log(response);
           if(response.success==true) {
             this.processEmpInfo(response);
           } else {
@@ -284,8 +315,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.formData.reportFrom = this.reportDates[0];
-    this.formData.reportTo = this.reportDates[1];
+    //this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]);
+    //this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
     
     this.formRecordService.updateFormData(this.formData, this.updateRole).subscribe({
       next: response=> {
@@ -330,6 +361,26 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   goBack() {
     window.history.back();
+  }
+
+
+ hrmdateResize(formDateValue:any){
+   let EntryDate="";
+   var month;
+   var day;
+   var dateObj = new Date(formDateValue);
+   var dObj=dateObj.toLocaleDateString().split('/');
+   month=parseInt(dObj[0]);
+   day=parseInt(dObj[1]);
+   if(month<10){
+     month='0'+month;
+   }
+   if(day<10){
+     day='0'+day;
+   }
+ 
+   EntryDate =dObj[2]+'-'+month+'-'+day;
+   return EntryDate;
   }
 
 

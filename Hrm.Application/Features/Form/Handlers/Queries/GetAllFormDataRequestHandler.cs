@@ -85,7 +85,8 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                     HTMLTagName = x.HTMLTagName,
                     HTMLInputType = x.HTMLInputType,
                     HasMultipleValue = (bool)x.HasMultipleValue,
-                    HasSelectable = (bool)x.HasSelectable
+                    HasSelectable = (bool)x.HasSelectable,
+                    TotalSubquestion = x.TotalSubquestion
                 }).ToList();
 
                 foreach(var field in fieldInfoDto)
@@ -110,7 +111,7 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                         field.Options = optionDtos;
                     }
 
-                    if(field.HTMLTagName =="daterange")
+                    if(field.HTMLTagName =="daterange"||field.HTMLTagName=="group")
                     {
                         var childFields = await _unitOfWork.Repository<Hrm.Domain.FormGroup>().Where(x => x.ParentFieldId == field.FieldId)
                             .Include(x => x.ChildField)
@@ -127,7 +128,8 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                             HTMLTagName = x.HTMLTagName,
                             HTMLInputType = x.HTMLInputType,
                             HasMultipleValue = (bool)x.HasMultipleValue,
-                            HasSelectable = (bool)x.HasSelectable
+                            HasSelectable = (bool)x.HasSelectable,
+                            TotalSubquestion = x.TotalSubquestion
                         }).ToList();
 
                         foreach(var childField in childFieldInfoDto)
@@ -137,6 +139,15 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                             if (childfieldRecord == null)
                             {
                                 continue;
+                            }
+
+                            if (childField.HasSelectable == true)
+                            {
+                                var options = await _unitOfWork.Repository<Hrm.Domain.SelectableOption>().Where(x => x.FieldId == childField.FieldId && x.IsActive == true).ToListAsync();
+
+                                var optionDtos = _mapper.Map<List<SelectableOptionDto>>(options);
+
+                                childField.Options = optionDtos;
                             }
 
                             childField.Remark = childfieldRecord.Remark;

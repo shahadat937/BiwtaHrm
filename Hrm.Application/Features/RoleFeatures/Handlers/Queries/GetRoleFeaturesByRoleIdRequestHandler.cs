@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
 
         public async Task<List<RoleFeatureDto>> Handle(GetRoleFeaturesByRoleIdRequest request, CancellationToken cancellationToken)
         {
-            var allFeatures = await _FeaturesRepository.GetAll();
+            var allFeatures = await _FeaturesRepository.Where(x => true).Include(x => x.Module).ToListAsync();
 
             var roleName = _AspNetRolesRepository.Where(x => x.Id == request.RoleId).FirstOrDefault();
 
@@ -53,9 +54,13 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
                     Add = roleFeature?.Add ?? false,
                     Update = roleFeature?.Update ?? false,
                     Delete = roleFeature?.Delete ?? false,
-                    Report = roleFeature?.Report ?? false
+                    Report = roleFeature?.Report ?? false,
+                    ModuleId = f.ModuleId,
+                    ModuleName = f.Module.Title,
+                    MenuPosition = f.Module.MenuPosition
                 };
-            }).ToList();
+            }).OrderBy(x => x.MenuPosition).ToList();
+
 
             return result;
         }

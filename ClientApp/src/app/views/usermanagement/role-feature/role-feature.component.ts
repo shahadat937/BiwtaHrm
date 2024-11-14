@@ -65,7 +65,7 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
     return this.RoleFeaturesForm.get('featuresList') as FormArray;
   }
 
-  pathFeaturesList(featuresInfoList: RoleFeature[]) {
+  pathFeaturesList(featuresInfoList: any[]) {
     const control = this.FeaturesListArray;
     control.clear();
 
@@ -77,6 +77,9 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
         featureKey: [featureInfo.featureKey],
         featureName: [featureInfo.featureName],
         featurePath: [featureInfo.featurePath],
+        moduleId: [featureInfo.moduleId],
+        moduleName: [featureInfo.moduleName],
+        menuPosition: [featureInfo.menuPosition],
         selectAll: [featureInfo.selectAll === true],
         viewStatus: [featureInfo.viewStatus === true],
         add: [featureInfo.add === true],

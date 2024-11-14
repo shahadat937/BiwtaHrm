@@ -1,10 +1,23 @@
-<app-officer-form 
-[submitButtonText]="'Forward'"
-[ActiveSection]="ActiveSection"
-[firstSection]="0"
-[lastSection]="3"
-[formRecordId]="formRecordId" 
-[showHeader]="true" 
-[updateRole]="appraisalRole.ReportingOfficer">
+@if(formId == officerFormId) {
+    <app-officer-form 
+    [submitButtonText]="'Forward'"
+    [ActiveSection]="ActiveSection"
+    [firstSection]="0"
+    [lastSection]="3"
+    [formRecordId]="formRecordId" 
+    [showHeader]="true" 
+    [updateRole]="appraisalRole.ReportingOfficer">
 
-</app-officer-form>
+    </app-officer-form>
+} @else if(formId == staffFormId) {
+    <app-staff-form 
+    [submitButtonText]="'Forward'"
+    [ActiveSection]="ActiveSectionForStaff"
+    [firstSection]="0"
+    [lastSection]="2"
+    [formRecordId]="formRecordId" 
+    [showHeader]="true" 
+    [updateRole]="appraisalRole.ReportingOfficer">
+
+    </app-staff-form>
+}

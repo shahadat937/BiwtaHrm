@@ -4,6 +4,7 @@ import { GradeService } from '../../basic-setup/service/Grade.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { Subscription } from 'rxjs';
+import { AppraisalRole } from '../enum/appraisal-role';
 
 @Component({
   selector: 'app-apply',
@@ -16,6 +17,8 @@ export class ApplyComponent implements OnInit, OnDestroy{
   officerGradeType: number;
   staffGradeType: number;
   loading: boolean;
+  ActiveSectionForStaff : boolean[] = [true,false,false,false];
+  appraisalRole = AppraisalRole;
   constructor(private gradeService: GradeService,
     private authService: AuthService
   ) {

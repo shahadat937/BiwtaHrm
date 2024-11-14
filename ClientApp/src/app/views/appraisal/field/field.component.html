@@ -1,6 +1,6 @@
 @if (fieldData.htmlTagName=="input") {
     
-    @if (fieldData.hasSelectable&&fieldData.hasMultipleValue==false) {
+    @if (fieldData.hasSelectable&&fieldData.hasMultipleValue==false&&fieldData.htmlInputType!="inline-radio") {
         <c-row class="mt-2" [gutter]="3">
             <c-col md="5">
                 <label cLabel class="font-weight-bold"><strong>{{Index+fieldData.fieldName}}</strong></label> 
@@ -40,12 +40,27 @@
                 </c-row>
             }
         </c-row>
+    } @else if (fieldData.htmlInputType=="inline-radio") {
+        {{Index+' '+fieldData.fieldName}}
+        @for (option of fieldData.options; track $index) {
+            <input
+            class="me-1 ms-2" 
+            type="radio" 
+            inline
+            [(ngModel)]="fieldData.fieldValue"
+            cFormCheckInput 
+            [value]="option.optionValue" 
+            [name]="fieldUniqueName" 
+            [id]="fieldUniqueName+option.optionValue">
+            <label  [for]="fieldUniqueName+option.optionValue" cFormCheckLabel >{{option.optionName}}</label>
+        }
+        {{fieldData.description}}
     } @else {
         <c-row class="mt-2"  [gutter]="3">
             <c-col md="4">
                 <label class="font-weight-bold" cLabel><strong>{{Index+fieldData.fieldName}}:</strong></label>
             </c-col>
-            <c-col>
+            <c-col md="4">
 
                 <input [name]="fieldUniqueName" 
                 [readOnly]="IsReadonly"
@@ -59,9 +74,6 @@
                 @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly){
                     <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
                 }
-            </c-col>
-            <c-col>
-                
             </c-col>
         </c-row>
     }

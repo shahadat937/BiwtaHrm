@@ -44,6 +44,8 @@ import { ManageFormOfficerRComponent } from './manage-form/manage-form-officer-r
 import { BadgeModule } from '@coreui/angular';
 import { ApplyComponent } from './apply/apply.component';
 import { GradeService } from '../basic-setup/service/Grade.service';
+import { FieldPrintComponent } from './field-print/field-print.component';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import { GradeService } from '../basic-setup/service/Grade.service';
     ManageFormOfficerCsComponent,
     ManageFormOfficerRComponent,
     ApplyComponent,
+    FieldPrintComponent,
   ],
   imports: [
     TabViewModule,
@@ -89,7 +92,8 @@ import { GradeService } from '../basic-setup/service/Grade.service';
     IconDirective,
     MatIconModule,
     CalendarModule,
-    BadgeModule
+    BadgeModule,
+    NgxPrintModule
 
   ],providers:[
     FormRecordService,

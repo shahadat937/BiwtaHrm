@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { environment } from 'src/environments/environment';
 
+
 @Component({
   selector: 'app-view-form-record',
   templateUrl: './view-form-record.component.html',
@@ -68,6 +69,7 @@ export class ViewFormRecordComponent implements OnInit, OnDestroy{
   }
 
   printRecordDetail() {
+      const element = this.recordDetail.nativeElement; // Access the DOM element
     const printContents = this.recordDetail.nativeElement.innerHTML;
     const originalContents = document.body.innerHTML;
     document.body.innerHTML = printContents;

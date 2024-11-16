@@ -74,13 +74,6 @@ export class FieldPrintComponent {
     } 
   }
 
-  ngOnChanges(changes: SimpleChange): void {
-    if(changes["empId"]) {
-      this.getEducationInfo(true);
-      this.getEmpTrainingInfo();
-    }
-
-  }
 
   getEducationInfo(reset: boolean) {
     if(this.empId!=0&&this.fieldData.htmlInputType=="educationinfo") {

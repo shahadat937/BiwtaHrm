@@ -39,28 +39,39 @@
                                         <th scope="col">Can Add</th>
                                         <th scope="col">Can Edit</th>
                                         <th scope="col">Can Delete</th>
+                                        <th scope="col">Can See Report</th>
                                     </tr>
                                 </thead>
                                 <tbody formArrayName="featuresList">
-                                    <tr *ngFor="let p of FeaturesListArray.controls; let i=index" [formGroupName]="i">
-                                        <td>
-                                            <input type="checkbox" formControlName="selectAll" class="form-check-input" (change)="toggleRowSelection(i)" />
-                                        </td>
-                                        <td>{{ p.get('featureName')?.value }}</td>
-                                        <td>
-                                            <input type="checkbox" formControlName="viewStatus" class="form-check-input" />
-                                        </td>
-                                        <td>
-                                            <input type="checkbox" formControlName="add" class="form-check-input" />
-                                        </td>
-                                        <td>
-                                            <input type="checkbox" formControlName="update" class="form-check-input" />
-                                        </td>
-                                        <td>
-                                            <input type="checkbox" formControlName="delete" class="form-check-input" />
-                                        </td>
-                                    </tr>
+                                    <ng-container *ngFor="let p of FeaturesListArray.controls; let i = index">
+                                        <!-- Check for new moduleName -->
+                                        <tr *ngIf="i === 0 || p.get('moduleName')?.value !== FeaturesListArray.controls[i - 1]?.get('moduleName')?.value">
+                                            <td colspan="7" class="module-header text-center bg-info text-light">{{ p.get('moduleName')?.value }}</td>
+                                        </tr>
+                                        <tr [formGroupName]="i">
+                                            <td>
+                                                <input type="checkbox" formControlName="selectAll" class="form-check-input" (change)="toggleRowSelection(i)" />
+                                            </td>
+                                            <td>{{ p.get('featureName')?.value }}</td>
+                                            <td>
+                                                <input type="checkbox" formControlName="viewStatus" class="form-check-input" />
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" formControlName="add" class="form-check-input" />
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" formControlName="update" class="form-check-input" />
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" formControlName="delete" class="form-check-input" />
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" formControlName="report" class="form-check-input" />
+                                            </td>
+                                        </tr>
+                                    </ng-container>
                                 </tbody>
+                                
                             </table>
                             <div class="text-center">
                                 <button mat-raised-button color="primary" type="submit" [disabled]="loading">

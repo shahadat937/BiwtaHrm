@@ -65,7 +65,7 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
     return this.RoleFeaturesForm.get('featuresList') as FormArray;
   }
 
-  pathFeaturesList(featuresInfoList: RoleFeature[]) {
+  pathFeaturesList(featuresInfoList: any[]) {
     const control = this.FeaturesListArray;
     control.clear();
 
@@ -77,11 +77,15 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
         featureKey: [featureInfo.featureKey],
         featureName: [featureInfo.featureName],
         featurePath: [featureInfo.featurePath],
+        moduleId: [featureInfo.moduleId],
+        moduleName: [featureInfo.moduleName],
+        menuPosition: [featureInfo.menuPosition],
         selectAll: [featureInfo.selectAll === true],
         viewStatus: [featureInfo.viewStatus === true],
         add: [featureInfo.add === true],
         update: [featureInfo.update === true],
         delete: [featureInfo.delete === true],
+        report: [featureInfo.report === true],
       }));
     });
 
@@ -96,6 +100,7 @@ toggleAllSelection(event: any) {
       add: isChecked,
       update: isChecked,
       delete: isChecked,
+      report: isChecked,
       selectAll: isChecked
     });
   });
@@ -108,7 +113,8 @@ toggleRowSelection(index: number) {
     viewStatus: isChecked,
     add: isChecked,
     update: isChecked,
-    delete: isChecked
+    delete: isChecked,
+    report: isChecked
   });
 }
 
@@ -119,6 +125,7 @@ toggleRowSelection(index: number) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
         });
+        this.onRoleChange();
         this.loading = false;
       } else {
         this.toastr.warning('', `${res.message}`, {
@@ -127,7 +134,6 @@ toggleRowSelection(index: number) {
         this.loading = false;
       }
     }));
-    this.onRoleChange();
   }
 
 }

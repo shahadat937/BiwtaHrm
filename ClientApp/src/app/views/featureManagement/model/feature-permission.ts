@@ -3,4 +3,5 @@ export class FeaturePermission {
     add : boolean = false;
     update : boolean = false;
     delete : boolean = false;
+    report : boolean = false;
 }

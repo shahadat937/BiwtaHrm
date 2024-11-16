@@ -285,7 +285,7 @@
                                     <tr>
                                         <th>Ward</th>
                                         <td *ngIf="empPresentAddress?.wardName; else emptyTd">{{empPresentAddress.wardName}}</td>
-                                        <th>Zip Code</th>
+                                        <th>Post Code</th>
                                         <td *ngIf="empPresentAddress?.zipCode; else emptyTd">{{empPresentAddress.zipCode}}</td>
                                     </tr>
                                     <tr>
@@ -335,7 +335,7 @@
                                     <tr>
                                         <th>Ward</th>
                                         <td *ngIf="empPermanentAddress?.wardName; else emptyTd">{{empPermanentAddress.wardName}}</td>
-                                        <th>Zip Code</th>
+                                        <th>Post Code</th>
                                         <td *ngIf="empPermanentAddress?.zipCode; else emptyTd">{{empPermanentAddress.zipCode}}</td>
                                     </tr>
                                     <tr>
@@ -461,7 +461,54 @@
                             <h5 class="text-center text-light">Employee Work History</h5>
                         </c-card-header>
                         <c-card-body>
-                            <table class="table">
+                            <div class="table-responsive">
+                                <table mat-table [dataSource]="workHistorySource">
+                                <ng-container matColumnDef="slNo">
+                                    <th mat-header-cell *matHeaderCellDef>SL</th>
+                                    <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="departmentName">
+                                    <th mat-header-cell *matHeaderCellDef>Department</th>
+                                    <td mat-cell *matCellDef="let element">
+                                    {{ element.departmentName }}
+                                    </td>
+                                </ng-container>
+                                
+                                <ng-container matColumnDef="sectionName">
+                                    <th mat-header-cell *matHeaderCellDef>Section</th>
+                                    <td mat-cell *matCellDef="let element">
+                                    {{ element.sectionName }}
+                                    </td>
+                                </ng-container>
+                                
+                                <ng-container matColumnDef="designationName">
+                                    <th mat-header-cell *matHeaderCellDef>Designation</th>
+                                    <td mat-cell *matCellDef="let element">
+                                    {{ element.designationName }}
+                                    </td>
+                                </ng-container>
+                                
+                                <ng-container matColumnDef="joiningDate">
+                                    <th mat-header-cell *matHeaderCellDef>Joining Date</th>
+                                    <td mat-cell *matCellDef="let element">
+                                    {{ element.joiningDate }}
+                                    </td>
+                                </ng-container>
+                                
+                                <ng-container matColumnDef="releaseDate">
+                                    <th mat-header-cell *matHeaderCellDef>Release Date</th>
+                                    <td mat-cell *matCellDef="let element">
+                                    {{ element.releaseDate }}
+                                    </td>
+                                </ng-container>
+                                
+            
+                                <tr mat-header-row *matHeaderRowDef="workHistoryColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: workHistoryColumns"></tr>
+                                </table>
+                            </div>
+                            <!-- <table class="table">
                                     @if(empOtherResponsibility.length>0){
                                         <tbody *ngFor="let item of empOtherResponsibility">
                                             <tr>
@@ -550,7 +597,7 @@
                                             </tr>
                                         </tbody>
                                     }
-                            </table>
+                            </table> -->
                         </c-card-body>
                     </c-card>
             
@@ -1443,7 +1490,7 @@
                             <tr>
                                 <th>Ward</th>
                                 <td *ngIf="empPresentAddress?.wardName; else emptyTd">{{empPresentAddress.wardName}}</td>
-                                <th>Zip Code</th>
+                                <th>Post Code</th>
                                 <td *ngIf="empPresentAddress?.zipCode; else emptyTd">{{empPresentAddress.zipCode}}</td>
                             </tr>
                             <tr>
@@ -1493,7 +1540,7 @@
                             <tr>
                                 <th>Ward</th>
                                 <td *ngIf="empPermanentAddress?.wardName; else emptyTd">{{empPermanentAddress.wardName}}</td>
-                                <th>Zip Code</th>
+                                <th>Post Code</th>
                                 <td *ngIf="empPermanentAddress?.zipCode; else emptyTd">{{empPermanentAddress.zipCode}}</td>
                             </tr>
                             <tr>
@@ -1613,13 +1660,59 @@
             </c-card>
             <!-- } -->
 
-            <!-- Employee Work History -->
             <c-card class="shadow mb-4">
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Work History</h5>
                 </c-card-header>
                 <c-card-body>
-                    <table class="table">
+                    <div class="table-responsive">
+                        <table mat-table [dataSource]="workHistorySource">
+                        <ng-container matColumnDef="slNo">
+                            <th mat-header-cell *matHeaderCellDef>SL</th>
+                            <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="departmentName">
+                            <th mat-header-cell *matHeaderCellDef>Department</th>
+                            <td mat-cell *matCellDef="let element">
+                            {{ element.departmentName }}
+                            </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="sectionName">
+                            <th mat-header-cell *matHeaderCellDef>Section</th>
+                            <td mat-cell *matCellDef="let element">
+                            {{ element.sectionName }}
+                            </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="designationName">
+                            <th mat-header-cell *matHeaderCellDef>Designation</th>
+                            <td mat-cell *matCellDef="let element">
+                            {{ element.designationName }}
+                            </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="joiningDate">
+                            <th mat-header-cell *matHeaderCellDef>Joining Date</th>
+                            <td mat-cell *matCellDef="let element">
+                            {{ element.joiningDate }}
+                            </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="releaseDate">
+                            <th mat-header-cell *matHeaderCellDef>Release Date</th>
+                            <td mat-cell *matCellDef="let element">
+                            {{ element.releaseDate }}
+                            </td>
+                        </ng-container>
+                        
+    
+                        <tr mat-header-row *matHeaderRowDef="workHistoryColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: workHistoryColumns"></tr>
+                        </table>
+                    </div>
+                    <!-- <table class="table">
                             @if(empOtherResponsibility.length>0){
                                 <tbody *ngFor="let item of empOtherResponsibility">
                                     <tr>
@@ -1708,7 +1801,7 @@
                                     </tr>
                                 </tbody>
                             }
-                    </table>
+                    </table> -->
                 </c-card-body>
             </c-card>
     

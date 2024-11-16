@@ -910,6 +910,10 @@ namespace Hrm.Persistence
                     .WithMany(eb => eb.CurrentEmpPromotionIncrement)
                     .HasForeignKey(e => e.CurrentDepartmentId);
 
+                entity.HasOne(e => e.CurrentSection)
+                    .WithMany(eb => eb.CurrentEmpPromotionIncrement)
+                    .HasForeignKey(e => e.CurrentSectionId);
+
                 entity.HasOne(e => e.CurrentDesignation)
                     .WithMany(eb => eb.CurrentEmpPromotionIncrement)
                     .HasForeignKey(e => e.CurrentDesignationId);

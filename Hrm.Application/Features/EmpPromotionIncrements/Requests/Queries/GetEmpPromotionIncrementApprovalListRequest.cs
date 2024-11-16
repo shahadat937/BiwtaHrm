@@ -9,5 +9,6 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Requests.Queries
 {
     public class GetEmpPromotionIncrementApprovalListRequest : IRequest<object>
     {
+        public int Id { get; set; }
     }
 }

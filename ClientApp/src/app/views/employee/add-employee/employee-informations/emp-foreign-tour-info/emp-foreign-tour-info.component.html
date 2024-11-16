@@ -50,7 +50,7 @@
                                     
 
                                     <c-col [md]="12" class="d-flex justify-content-end">
-                                        <button mat-icon-button class="bg-danger text-light" type="button"
+                                        <button mat-mini-fab class="bg-danger text-light" type="button"
                                             (click)="removeForeignTourList(i, p.get('id')?.value ?? null)"><mat-icon>delete</mat-icon></button>
                                     </c-col>
                                 </div>
@@ -60,7 +60,7 @@
                 </ng-container>
             </ng-container>
             <c-col [md]="12" class="d-flex justify-content-end">
-                <button mat-icon-button class="bg-success text-light mb-3" type="button"
+                <button mat-mini-fab class="bg-success text-light mb-3" type="button"
                     (click)="addForeignTour()"><mat-icon>add</mat-icon></button>
             </c-col>
             <div class="form-group">

@@ -6,6 +6,7 @@ export class EmpPromotionIncrement {
     currentDepartmentId : number | null = null;
     currentDeptJoinDate : Date | null = null;
     currentDesignationId : number | null = null;
+    currentSectionId : number | null = null;
     currentGradeId : number | null = null;
     currentScaleId : number | null = null;
     currentDepartmentName : string | null = null;

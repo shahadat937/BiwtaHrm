@@ -45,6 +45,7 @@
         @for (option of fieldData.options; track $index) {
             <input
             class="me-1 ms-2" 
+            [disabled]="IsReadonly"
             type="radio" 
             inline
             [(ngModel)]="fieldData.fieldValue"

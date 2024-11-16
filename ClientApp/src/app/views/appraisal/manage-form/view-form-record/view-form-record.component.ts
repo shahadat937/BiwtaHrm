@@ -19,6 +19,7 @@ export class ViewFormRecordComponent implements OnInit, OnDestroy{
   formData: any;
   companyTitle :string = "Bangladesh Inland Water Transport Authority"
   address = "141-143, Motijheel Commerial Area, Dhaka-1000"
+  @Input()
   formName = "Annual Confidential Report Of Officer"
   @ViewChild('recordDetail', {static:false}) recordDetail!: ElementRef;
   constructor(

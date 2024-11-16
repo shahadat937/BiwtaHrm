@@ -12,8 +12,9 @@
 } @else if(formId == staffFormId) {
     <app-staff-form 
     [ActiveSection]="ActiveSectionForStaff"
+    [ReadonlySection]="ReceiverReadonlySectionStaff"
     [firstSection]="0" 
-    [lastSection]="0"
+    [lastSection]="3"
     [submitButtonText]="'Receive'"
     [formRecordId]="formRecordId" 
     [showHeader]="true" 

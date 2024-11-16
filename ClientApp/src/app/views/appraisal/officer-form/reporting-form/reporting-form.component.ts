@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ReportingFormComponent implements OnInit {
   ActiveSection: boolean[] = [false,true,true,true,true,false,false];
-  ActiveSectionForStaff: boolean[] = [false,true,true,true];
+  ActiveSectionForStaff: boolean[] = [false,true,true,false];
   formRecordId: number = 0;
   officerFormId: number = 0;
   staffFormId: number = 0;

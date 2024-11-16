@@ -10,7 +10,8 @@ import { environment } from 'src/environments/environment';
 })
 export class ReceiverFormOfficerComponent implements OnInit {
   ActiveSection: boolean[] = [false,false,false,false,false,false,true]
-  ActiveSectionForStaff: boolean[] = [false,false,false,true]
+  ActiveSectionForStaff: boolean[] = [true,true,true,true]
+  ReceiverReadonlySectionStaff: boolean[] = [true,true,true,true];
   formRecordId: number = 0
   officerFormId: number = 0;
   staffFormId : number = 0;

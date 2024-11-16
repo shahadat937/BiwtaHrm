@@ -13,12 +13,11 @@ export class ManageFormOfficerCsComponent {
   filters: FormRecordFilter
   appraisalRole = AppraisalRole
   haveError: boolean;
-
   constructor(
     private authService: AuthService
   ) {
     this.filters = new FormRecordFilter();
-    this.filters.formId = environment.officerFormId;
+    //this.filters.formId = environment.officerFormId;
     this.filters.reportingOfficerApproval = true
     this.haveError = false;
   }

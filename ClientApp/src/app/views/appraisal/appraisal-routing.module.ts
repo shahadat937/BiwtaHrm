@@ -33,15 +33,15 @@ const routes: Routes = [
     component: ApplyComponent
   },
   {
-    path: "reportingFormOfficer/:formRecordId",
+    path: "reportingFormOfficer/:formRecordId/:formId",
     component: ReportingFormComponent
   },
   {
-    path: 'counterSignatureFormOfficer/:formRecordId',
+    path: 'counterSignatureFormOfficer/:formRecordId/:formId',
     component: CounterSignatureFormOfficerComponent
   },
   {
-    path: 'receiverFormOfficer/:formRecordId',
+    path: 'receiverFormOfficer/:formRecordId/:formId',
     component: ReceiverFormOfficerComponent
   },
    {

@@ -1,7 +1,11 @@
 @if (!loading&&currentGrade == officerGradeType) {
     <app-officer-form-application></app-officer-form-application>
 } @else if (!loading&&currentGrade == staffGradeType) {
-    <app-staff-form></app-staff-form>
+    <app-staff-form [ActiveSection]="ActiveSectionForStaff" 
+    [submitButtonText]="'Submit'"
+    [firstSection]="0"
+    [lastSection]="0"
+    [updateRole]="appraisalRole.User"></app-staff-form>
 } @else {
     <div class="d-flex justify-content-center text-center">
         <h3 class="text-danger">Unable to determine whether the user is officer or staff. Make sure to add grade information in the job detail.</h3>

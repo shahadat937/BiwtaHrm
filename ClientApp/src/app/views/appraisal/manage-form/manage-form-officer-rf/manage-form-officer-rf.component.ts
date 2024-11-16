@@ -18,7 +18,7 @@ export class ManageFormOfficerRfComponent implements OnInit{
     private authService: AuthService
   ) {
     this.filters = new FormRecordFilter();
-    this.filters.formId = environment.officerFormId;
+    //this.filters.formId = environment.officerFormId;
   }
 
   ngOnInit(): void {

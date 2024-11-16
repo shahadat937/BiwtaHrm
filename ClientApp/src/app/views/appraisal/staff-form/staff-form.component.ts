@@ -28,6 +28,8 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   @Input()
   ActiveSection:boolean[];
   @Input()
+  ReadonlySection: boolean[];
+  @Input()
   formRecordId;
   @Input()
   showHeader: boolean;
@@ -80,16 +82,17 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     this.loading = false;
     this.submitLoading = false;
     this.currentSection = 0;
-    this.ActiveSection = [true,true,true,true,true,true,true];
+    this.ActiveSection = [true,true,true,true];
+    this.ReadonlySection = [false,false,false,false];
     this.formRecordId = 0;
     this.showHeader = true
     this.department = "ICT"
     this.updateRole = AppraisalRole.User
     this.formId = environment.staffFormId
     this.firstSection = 0;
-    this.lastSection = 1;
+    this.lastSection = 3;
     this.submitButtonText = "Submit";
-    this.formName = "Annual Confidential Report Of Staff"
+    this.formName = environment.staffFormName;
   }
 
   ngOnInit(): void {

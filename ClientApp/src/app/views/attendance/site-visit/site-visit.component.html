@@ -60,7 +60,7 @@
                         </c-col>
                     </c-row>
                     <c-col md="3">
-                        <label cLabel for="fromDate">From</label>
+                        <label cLabel for="fromDate">From<span class="text-danger">*</span></label>
                         <input type="date" 
                         [(ngModel)]="this.siteVisitService.model.fromDate"
                         name="fromDate" 
@@ -73,7 +73,7 @@
                         }
                     </c-col>
                     <c-col md="3">
-                        <label for="toDate" cLabel>To</label>
+                        <label for="toDate" cLabel>To<span class="text-danger">*</span></label>
                         <input type="date" 
                         [(ngModel)]="this.siteVisitService.model.toDate"
                         name="toDate" 
@@ -86,7 +86,7 @@
                         }
                     </c-col>
                     <c-col md="3">
-                        <label for="visitPlace" cLabel>Visiting Place</label>
+                        <label for="visitPlace" cLabel>Visiting Place<span class="text-danger">*</span></label>
                         <input type="text" 
                         cFormControl
                         name="visitPlace"
@@ -99,7 +99,7 @@
                         }
                     </c-col>
                     <c-col md="3">
-                        <label for="visitPurpose" cLabel>Visiting Purpose</label>
+                        <label for="visitPurpose" cLabel>Visiting Purpose<span class="text-danger">*</span></label>
                         <input type="text" 
                         cFormControl
                         name="visitPurpose"

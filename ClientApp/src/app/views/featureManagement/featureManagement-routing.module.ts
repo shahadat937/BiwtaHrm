@@ -4,6 +4,7 @@ import { ModuleListComponent } from './module-list/module-list.component';
 import { FeatureListComponent } from './feature-list/feature-list.component';
 import { SiteSettingComponent } from './site-setting/site-setting.component';
 import { NavbarThemListComponent } from './navbar-them-list/navbar-them-list.component';
+import { NavbarSettingComponent } from './navbar-setting/navbar-setting.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,13 @@ const routes: Routes = [
         component: NavbarThemListComponent,
         data: {
           title: 'Navbar Them',
+        },
+      },
+      {
+        path: 'navbar-setting',
+        component: NavbarSettingComponent,
+        data: {
+          title: 'Navbar Setting',
         },
       },
     ]

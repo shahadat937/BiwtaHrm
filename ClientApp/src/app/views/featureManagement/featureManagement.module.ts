@@ -42,6 +42,8 @@ import { CreateSiteSettingComponent } from './create-site-setting/create-site-se
 import { NavbarThemListComponent } from './navbar-them-list/navbar-them-list.component';
 import { CreateNavbarThemComponent } from './create-navbar-them/create-navbar-them.component';
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { NavbarSettingComponent } from './navbar-setting/navbar-setting.component';
+import { CreateNavbarSettingComponent } from './create-navbar-setting/create-navbar-setting.component';
 
 
 @NgModule({
@@ -54,6 +56,8 @@ import { ColorPickerModule } from 'primeng/colorpicker';
     CreateSiteSettingComponent,
     NavbarThemListComponent,
     CreateNavbarThemComponent,
+    NavbarSettingComponent,
+    CreateNavbarSettingComponent,
   ],
   imports: [
     CommonModule,

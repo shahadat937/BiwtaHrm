@@ -4,6 +4,7 @@ using Hrm.Application.DTOs.NavbarSetting;
 using Hrm.Application.Features.NavbarSettings.Requests.Queries;
 using Hrm.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Hrm.Application.Features.NavbarSettings.Handlers.Queries
@@ -19,7 +20,9 @@ namespace Hrm.Application.Features.NavbarSettings.Handlers.Queries
         }
         public async Task<NavbarSettingDto> Handle(GetNavbarSettingDetailRequest request, CancellationToken cancellationToken)
         {
-            var NavbarSetting = await _NavbarSettingRepository.Get(request.Id);
+            var NavbarSetting = await _NavbarSettingRepository.Where(x => x.Id == request.Id)
+                .Include(x => x.NavbarThem)
+                .FirstOrDefaultAsync();
             return _mapper.Map<NavbarSettingDto>(NavbarSetting);
         }
     }

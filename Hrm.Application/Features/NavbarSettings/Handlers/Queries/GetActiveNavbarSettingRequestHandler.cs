@@ -5,6 +5,7 @@ using Hrm.Application.DTOs.NavbarSetting;
 using Hrm.Application.Features.NavbarSettings.Requests.Queries;
 using Hrm.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,9 @@ namespace Hrm.Application.Features.NavbarSettings.Handlers.Queries
         {
             var validator = new QueryParamsValidator();
 
-            var NavbarSettings = await _NavbarSettingRepository.FindOneAsync(x => x.IsActive == true);
+            var NavbarSettings = await _NavbarSettingRepository.Where(x => x.IsActive == true)
+                .Include(x => x.NavbarThem)
+                .FirstOrDefaultAsync();
 
 
             var NavbarSettingsDtos = _mapper.Map<NavbarSettingDto>(NavbarSettings);

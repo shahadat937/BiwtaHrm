@@ -32,7 +32,7 @@ namespace Hrm.Application.Features.NavbarSettings.Handlers.Commands
             if (request.NavbarSettingDto.NavbarLogoFile != null)
             {
                 var navbarLogoFile = Path.GetFileName(request.NavbarSettingDto.NavbarLogoFile.FileName);
-                string uniqueImageName = Guid.NewGuid().ToString() + "_" + navbarLogoFile;
+                string uniqueImageName = Guid.NewGuid().ToString() + "_NavbarLogo_" + navbarLogoFile;
                 var photoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\TempleteImage", uniqueImageName);
 
                 using (var photoSteam = new FileStream(photoPath, FileMode.Create))

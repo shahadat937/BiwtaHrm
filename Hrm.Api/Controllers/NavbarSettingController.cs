@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hrm.Api.Controllers
 {
-    [Route(HrmRoutePrefix.SiteSetting)]
+    [Route(HrmRoutePrefix.NavbarSetting)]
     [ApiController]
     [Authorize]
     public class NavbarSettingController : ControllerBase

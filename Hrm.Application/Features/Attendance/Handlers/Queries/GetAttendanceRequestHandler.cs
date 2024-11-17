@@ -64,9 +64,18 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
                 attendances = attendances.Where(x=>x.AttendanceDate.Year == request.Filters.Year);
             }
 
+            // sort the data
+            if(request.Filters.sortColumn!=null&&request.Filters.sortDirection!=null)
+            {
+                attendances = GetSortedAttendance(attendances,request.Filters.sortDirection,request.Filters.sortColumn);
+            } else
+            {
+                attendances = attendances.OrderByDescending(x => x.AttendanceId);
+
+            }
+
             int total = await attendances.CountAsync();
 
-            attendances = attendances.OrderByDescending(x => x.AttendanceId);
 
             if(request.Filters.PageSize.HasValue&&request.Filters.PageIndex.HasValue)
             {
@@ -82,6 +91,35 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
             return new {TotalCount=total,Result =  AttendancesDtos};
 
             //return AttendancesDtos;
+        }
+
+        private IQueryable<Domain.Attendance> GetSortedAttendance(IQueryable<Domain.Attendance> record, string sortDirection, string sortColumn)
+        {
+            var sortMappings = new Dictionary<string, Func<IQueryable<Domain.Attendance>, IOrderedQueryable<Domain.Attendance>>>
+            {
+                { "fullName", attendance => attendance.OrderBy(a=>a.EmpBasicInfo.FirstName).ThenBy(a => a.EmpBasicInfo.LastName) },
+                { "attendanceDate", attendance => attendance.OrderBy(a => a.AttendanceDate) },
+                { "inTime", attendance => attendance.OrderBy(a => a.InTime) },
+                { "outTime", attendance => attendance.OrderBy(a => a.OutTime) },
+                { "dayTypeName", attendance => attendance.OrderBy(a => a.DayType.DayTypeName) },
+                { "attendanceStatusName", attendance => attendance.OrderBy(a => a.AttendanceStatus.AttendanceStatusName) }
+            };
+
+            var sortMappingsDesc = new Dictionary<string, Func<IQueryable<Domain.Attendance>, IOrderedQueryable<Domain.Attendance>>>
+            {
+                { "fullName", attendance => attendance.OrderByDescending(a => a.EmpBasicInfo.FirstName).ThenByDescending(a => a.EmpBasicInfo.LastName) },
+                { "attendanceDate", attendance => attendance.OrderByDescending(a => a.AttendanceDate) },
+                { "inTime", attendance => attendance.OrderByDescending(a => a.InTime) },
+                { "outTime", attendance => attendance.OrderByDescending(a => a.OutTime) },
+                { "dayTypeName", attendance => attendance.OrderByDescending(a => a.DayType.DayTypeName) },
+                { "attendanceStatusName", attendance => attendance.OrderByDescending(a => a.AttendanceStatus.AttendanceStatusName) }
+            };
+
+            var sortFunc = sortDirection == "asc" ? sortMappings[sortColumn]: sortMappingsDesc[sortColumn];
+
+            var sortedAttendance = sortFunc(record);
+
+            return sortedAttendance;
         }
     }
 }

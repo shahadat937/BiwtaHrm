@@ -12,6 +12,7 @@ import {ViewFormRecordComponent} from './view-form-record/view-form-record.compo
 import {FormRecordFilter} from '../models/form-record-filter'
 import { AppraisalRole } from '../enum/appraisal-role';
 import { AuthService } from 'src/app/core/service/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-manage-form',
@@ -25,6 +26,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   filters: FormRecordFilter;
   @Input()
   appraisalUserRole: number;
+  officerFormId: number;
+  staffFormId: number;
   formRecord: FormRecordModel[] = [];
   formRecordHeader: any[] ;
   icons = {cilPencil, cilTrash, cilZoom, cilEyedropper}
@@ -41,6 +44,9 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     private confirmService: ConfirmService,
     private modalService: BsModalService
   ) {
+    this.officerFormId = environment.officerFormId;
+    this.staffFormId = environment.staffFormId;
+    this.staffFormId = environment.staffFormId;
     this.loading = false;
     this.formRecordHeader = [{header:"PMS No.", field:"idCardNo"}, {header:"Name",field:"fullName"}, {header:"Department", field:"department"}, 
       {header: "From", field:"reportFrom", IsDate: true}, {header:"To", field:"reportTo", IsDate:true},
@@ -132,12 +138,19 @@ export class ManageFormComponent implements OnInit, OnDestroy {
 
 
   onView(formRecordId:number) {
-    console.log(formRecordId);
+    let formName = "";
+    let formId = this.formRecord.find(x=>x.recordId == formRecordId)?.formId;
+    if(formId == this.officerFormId) {
+      formName = environment.officerFormName;
+    } else if(formId == this.staffFormId) {
+      formName = environment.staffFormName;
+    }
     const department = this.formRecord.find(x=>x.recordId == formRecordId)?.department;
     console.log(department);
     const initialState = {
       formRecordId: formRecordId,
-      department: department
+      department: department,
+      formName: formName
     }
 
     this.modalService.show(ViewFormRecordComponent, {initialState: initialState});

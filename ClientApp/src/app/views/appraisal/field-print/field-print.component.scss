@@ -1,3 +1,4 @@
+
 .modal {
     display: block;
 }
@@ -78,9 +79,5 @@
     body {
         print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
-    }
-    input[type="radio"] {
-        visibility: visible !important;
-        display: inline-block !important;
     }
 }

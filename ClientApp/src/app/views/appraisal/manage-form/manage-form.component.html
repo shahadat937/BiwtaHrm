@@ -66,12 +66,13 @@
               </button>
 
               @if (appraisalUserRole!=-1) {
-                <button class="custom-button me-1" [routerLink]="officerFormEditRoute[appraisalUserRole]+formRecord.recordId" title="Edit The Record">
+                <button class="custom-button me-1" [routerLink]="officerFormEditRoute[appraisalUserRole]+formRecord.recordId+'/'+formRecord.formId" title="Edit The Record">
                   <mat-icon fontIcon="edit"></mat-icon>
                 </button>
               }
               
               <button
+                *ngIf="formRecord[formRecordHeader[5].field]==false"
                 class="custom-button me-1"
                 title="Delete The Record"
                 (click)="onDelete(formRecord.recordId, index)"

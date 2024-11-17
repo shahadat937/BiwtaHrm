@@ -10,9 +10,10 @@
       <div class="modal-body scrollable-modal-body" cRow [gutter]="3">
         @if (loading==false) {
             <div>
-                <button cButton (click)="printRecordDetail()">Print</button>
+                <button [useExistingCss]="true" printSectionId="recordDetail" ngxPrint cButton (click)="printRecordDetail()">Print</button>
+                <!--<button [useExistingCss]="true" ngxPrint printSectionId="recordDetail">Print Ngx</button>-->
             </div>
-            <div>
+            <div id="recordDetail">
                 <c-card>
                     <c-card-body>
                         <div class="d-flex justify-content-end">
@@ -67,7 +68,7 @@
                                 <c-card class="p-0 mt-3">
                                     <c-card-header style="background-color:#014878; color:white">
                                         <div class="d-flex justify-content-center">
-                                            <h4>Part {{section.sectionId}}</h4>
+                                            <h4>{{section.sectionName}}</h4>
                                         </div>
                                     </c-card-header>
                                     <c-card-body>
@@ -90,7 +91,7 @@
                 </c-card>
             </div>
 
-            <div #recordDetail style="display: none;">
+            <div style="display: none;">
                 <div class="d-flex justify-content-end">
                     <p style="text-decoration: underline;"><strong>Confidential</strong></p>
                 </div>
@@ -113,9 +114,9 @@
                     <div>{{department}}</div>
                 </div>
                 <div class="formDuration">
-                    <div>{{formData.reportFrom.split('T')[0]}}</div>
+                    <div>{{formData.reportFrom|date}}</div>
                     <h5 style="flex-grow: 1; padding-right: 10px;">To</h5>
-                    <div>{{formData.reportTo.split('T')[0]}}</div>
+                    <div>{{formData.reportTo|date}}</div>
                     <p style="flex-grow:2;">Annual/Special Report</p>
                 </div>
 
@@ -123,37 +124,16 @@
                     <div class="card-custom mt-3">
                         <div class="card-header-custom">
                             <div class="d-flex justify-content-center">
-                                <h5>Part {{section.sectionId}}</h5>
+                                <h5>{{section.sectionName}}</h5>
                             </div>
                         </div>
 
                         <div class="card-body-custom">
                             @for (field of section.fields; track $index) {
                                 @if (field.hasSelectable==true) {
-                                    <div class="row mt-3">
-                                        <div class="col">
-                                            <strong>{{$index+1}}. {{field.fieldName}}</strong>
-                                        </div>
-                                        @for (option of field.options; track $index) {
-                                            <div class="row ms-3">
-                                                <div class="col-5">
-                                                {{$index+1}}. {{option.optionName}}
-                                                </div>
-                                                <div class="col-3 mt-1">
-                                                    @if (option.optionValue==field.fieldValue) {
-                                                        <div style="width: 60px; height: 25px;background: #32a9f8;" class="text-center flex border border-2 border-secondary justify-content-center">
-                                                            {{option.optionValue}}
-                                                        </div>
-
-                                                    } @else {
-                                                        <div style="width: 60px; height: 25px;" class="text-center flex border border-2 border-secondary justify-content-center">
-                                                            {{option.optionValue}}
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
+                                    <app-field-print [fieldData]="field"
+                                    [Index]="$index+1+'. '">
+                                    </app-field-print>
                                 } @else {
                                     <div class="row mt-3 align-items-end">
                                         <div class="col-5">

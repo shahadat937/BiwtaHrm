@@ -1,45 +1,31 @@
 @if (fieldData.htmlTagName=="input") {
     
     @if (fieldData.hasSelectable&&fieldData.hasMultipleValue==false&&fieldData.htmlInputType!="inline-radio") {
-        <c-row class="mt-2" [gutter]="3">
-            <c-col md="5">
-                <label cLabel class="font-weight-bold"><strong>{{Index+fieldData.fieldName}}</strong></label> 
-            </c-col>
+        <div class="row mt-3">
+            <div class="col">
+                <strong>{{Index+fieldData.fieldName}}</strong>
+            </div>
                     
             @for (option of fieldData.options; track $index) {
-                <c-row class="ms-5 mt-3" [gutter]="1" id="radioButton">
-                    <c-col md="4">
-                        <label cLabel class="font-weight-bold"><strong>{{$index+1}}. {{option.optionName}}</strong></label>
-                    </c-col>
-                    <c-col md="1">
-                        <input type="radio" 
-                        [disabled]="IsReadonly"
-                        [(ngModel)]="field"
-                        [required]="fieldData.isRequired"
-                        [name]="fieldUniqueName"
-                        [value]="option.optionValue"
-                        style="display: none;"
-                        [id]="fieldUniqueName+option.optionValue"
-                         />
-                        <label for="{{fieldUniqueName+option.optionValue}}">
-                            <div style="width: 60px; height: 35px;" class="text-center flex border border-2 border-secondary justify-content-center">
+                <div class="row ms-3">
+                    <div class="col-5">
+                    {{$index+1}}. {{option.optionName}}
+                    </div>
+                    <div class="col-3 mt-1">
+                        @if (option.optionValue==fieldData.fieldValue) {
+                            <div style="width: 60px; height: 25px;background: #32a9f8;" class="text-center flex border border-2 border-secondary justify-content-center">
                                 {{option.optionValue}}
                             </div>
-                        </label>
-                    </c-col>
-                    <c-col md="2" *ngIf="field==option.optionValue">
-                        <input
-                        [readOnly]="IsReadonly"
-                        type="text"
-                        placeholder="Remark"
-                        [(ngModel)] = "fieldData.remark"
-                        cFormControl 
-                        [name]="fieldUniqueName+'remark'" 
-                        id="fieldUniqueName+'remark'">
-                    </c-col>
-                </c-row>
+
+                        } @else {
+                            <div style="width: 60px; height: 25px;" class="text-center flex border border-2 border-secondary justify-content-center">
+                                {{option.optionValue}}
+                            </div>
+                        }
+                    </div>
+                </div>
             }
-        </c-row>
+        </div>
     } @else if (fieldData.htmlInputType=="inline-radio") {
         {{Index+' '+fieldData.fieldName}}
         @for (option of fieldData.options; track $index) {
@@ -73,7 +59,6 @@
                 [required]="fieldData.isRequired" cFormControl>
                 
                 @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly){
-                    <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
                 }
             </c-col>
         </c-row>
@@ -292,7 +277,7 @@
                                     [id]="childFieldData.fieldId+'field'+option.optionId+'option'">
                                 </td>
                             }
-                            <td style="max-width: 1.8rem"><input [readOnly]="IsReadonly" cFormControl [(ngModel)]="childFieldData.remark" type="text" placeholder="Remark" name="remark" id="remark"></td>
+                            <td style="max-width: 1.8rem"><input [readOnly]="IsReadonly" [(ngModel)]="childFieldData.remark" type="text" placeholder="Remark" name="remark" id="remark"></td>
                         </tr>
                     }
                 </tbody>

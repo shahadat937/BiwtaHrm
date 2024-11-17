@@ -1,1 +1,105 @@
-<p>create-navbar-setting works!</p>
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{heading}}</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                    <form #NavbarSettingForm="ngForm" [gutter]="3" novalidate cForm cRow
+                        class="needs-validation">
+                    <c-col [md]="4">
+                        <input type="hidden" [(ngModel)]="navbarSettingService.navbarSetting.id" name="id" />
+                        
+                        <div *ngIf="logoPreviewUrl">
+                            <img [src]="logoPreviewUrl" alt="Navbar Photo" style="max-width: 100px; max-height: 100px;"/>
+                        </div>
+                        <label cLabel for="navbarLogoFile">Navbar Logo<span class="text-danger"></span></label>
+                        <input [(ngModel)]="navbarSettingService.navbarSetting.navbarLogoFile" name="navbarLogoFile" #navbarLogoFile="ngModel"
+                             cFormControl id="navbarLogoFile" type="file" (change)="onPhotoSelected($event)"
+                            />
+
+                        @if(!navbarLogoFile.valid&&navbarLogoFile.touched){
+                        <div class="text-left text-danger">Navbar Logo is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="showLogo">Show Logo</label>
+                        <select [(ngModel)]="navbarSettingService.navbarSetting.showLogo"
+                        name="showLogo"
+                        cSelect
+                        id="showLogo">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                        </select>
+                    </c-col>
+
+                    <c-col [md]="4">
+                        <label cLabel for="brandName">Brand Name<span class="text-danger"></span></label>
+                        <input [(ngModel)]="navbarSettingService.navbarSetting.brandName" name="brandName" #brandName="ngModel"
+                            placeholder="Enter Brand Name" cFormControl id="brandName" type="text"
+                            />
+
+                        @if(!brandName.valid&&brandName.touched){
+                        <div class="text-left text-danger">Brand Name is required</div>
+                        }
+                    </c-col>
+
+                    <c-col [md]="4">
+                        <label cLabel for="themId">Them<span class="text-danger"></span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="navbarSettingService.navbarSetting.themId"
+                                name="themId" #themId="ngModel" cFormControl id="themId"
+                                aria-label="Default select example" cSelect>
+                                <option [ngValue]="null">Select Them</option>
+
+                                @for(them of thems; track them.id;let index=$index) {
+                                <option [value]="them.id">
+                                    {{ them.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!themId.valid && themId.touched){
+                            <div class="text-left text-danger">Them is required</div>
+                            }
+                        </div>
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="remark">Remark<span class="text-danger"></span></label>
+                        <input [(ngModel)]="navbarSettingService.navbarSetting.remark" name="remark" #remark="ngModel"
+                            placeholder="Enter Site Name" cFormControl id="remark" type="text"
+                            />
+
+                        @if(!remark.valid&&remark.touched){
+                        <div class="text-left text-danger">Remark is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="isActive">Active Status</label>
+                        <select [(ngModel)]="navbarSettingService.navbarSetting.isActive"
+                        name="isActive"
+                        cSelect
+                        id="isActive">
+                        <option value="true">Active</option>
+                        <option value="false">De-Active</option>
+                        </select>
+                    </c-col>
+
+            </form>
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button color="warn" type="button" (click)="closeModal()">
+                        <mat-icon>cancel</mat-icon> Close
+                    </button>
+                    <button [disabled]="NavbarSettingForm.invalid" mat-raised-button class="me-1" color="primary" type="submit" (click)="onSubmit(NavbarSettingForm)">
+                        <mat-icon>{{btnIcon}}</mat-icon> {{ btnText }}
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>

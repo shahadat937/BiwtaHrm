@@ -26,16 +26,16 @@ namespace Hrm.Application.Features.NavbarSettings.Handlers.Commands
         {
             var response = new BaseCommandResponse();
 
-            var NavbarSetting = await _unitOfWork.Repository<NavbarSetting>().Get(request.NavbarSettingDto.Id);
+            var navbarSettings = await _unitOfWork.Repository<NavbarSetting>().Get(request.NavbarSettingDto.Id);
 
 
-            var navbarSettings = _mapper.Map<NavbarSetting>(request.NavbarSettingDto);
+            //var navbarSettings = _mapper.Map<NavbarSetting>(request.NavbarSettingDto);
 
             if (request.NavbarSettingDto.NavbarLogoFile != null)
             {
-                if (!string.IsNullOrEmpty(NavbarSetting.NavbarLogo))
+                if (!string.IsNullOrEmpty(navbarSettings.NavbarLogo))
                 {
-                    var oldPhotoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\TempleteImage", NavbarSetting.NavbarLogo);
+                    var oldPhotoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\TempleteImage", navbarSettings.NavbarLogo);
                     if (File.Exists(oldPhotoPath))
                     {
                         File.Delete(oldPhotoPath);
@@ -65,7 +65,11 @@ namespace Hrm.Application.Features.NavbarSettings.Handlers.Commands
                 }
             }
 
-
+            navbarSettings.BrandName = request.NavbarSettingDto.BrandName;
+            navbarSettings.ShowLogo = request.NavbarSettingDto.ShowLogo;
+            navbarSettings.ThemId = request.NavbarSettingDto.ThemId;
+            navbarSettings.Remark = request.NavbarSettingDto.Remark;
+            navbarSettings.IsActive = request.NavbarSettingDto.IsActive;
 
             await _unitOfWork.Repository<NavbarSetting>().Update(navbarSettings);
             await _unitOfWork.Save();

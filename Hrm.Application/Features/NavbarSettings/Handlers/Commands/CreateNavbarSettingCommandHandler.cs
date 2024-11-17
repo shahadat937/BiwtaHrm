@@ -24,10 +24,10 @@ namespace Hrm.Application.Features.NavbarSettings.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(CreateNavbarSettingCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
-            NavbarSetting NavbarSetting = new NavbarSetting();
+            NavbarSetting navbarSettings = new NavbarSetting();
 
 
-            var navbarSettings = _mapper.Map<NavbarSetting>(request.NavbarSettingDto);
+            //var navbarSettings = _mapper.Map<NavbarSetting>(request.NavbarSettingDto);
 
             if (request.NavbarSettingDto.NavbarLogoFile != null)
             {
@@ -54,6 +54,12 @@ namespace Hrm.Application.Features.NavbarSettings.Handlers.Commands
                 }
             }
 
+            navbarSettings.BrandName = request.NavbarSettingDto.BrandName;
+            navbarSettings.ShowLogo = request.NavbarSettingDto.ShowLogo;
+            navbarSettings.ThemId = request.NavbarSettingDto.ThemId;
+            navbarSettings.Remark = request.NavbarSettingDto.Remark;
+            navbarSettings.IsActive = request.NavbarSettingDto.IsActive;
+
 
             await _unitOfWork.Repository<NavbarSetting>().Add(navbarSettings);
             await _unitOfWork.Save();
@@ -61,7 +67,7 @@ namespace Hrm.Application.Features.NavbarSettings.Handlers.Commands
 
             response.Success = true;
             response.Message = "Creation Successful";
-            response.Id = NavbarSetting.Id;
+            response.Id = navbarSettings.Id;
 
             return response;
         }

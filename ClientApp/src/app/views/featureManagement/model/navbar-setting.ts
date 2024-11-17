@@ -7,5 +7,5 @@ export class NavbarSetting {
     themId : number | null = null;
     themName : string = "";
     remark : string = "";
-    true : boolean = false;
+    isActive : boolean = true;
 }

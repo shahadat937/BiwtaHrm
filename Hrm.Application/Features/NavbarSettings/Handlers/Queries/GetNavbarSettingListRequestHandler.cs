@@ -13,6 +13,7 @@ using Hrm.Application.DTOs.NavbarSetting;
 using Hrm.Application.Models;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.NavbarSettings.Handlers.Queries
 {
@@ -33,7 +34,8 @@ namespace Hrm.Application.Features.NavbarSettings.Handlers.Queries
         {
             var validator = new QueryParamsValidator();
 
-            IQueryable<NavbarSetting> NavbarSettings = _NavbarSettingRepository.Where(x => true);
+            IQueryable<NavbarSetting> NavbarSettings = _NavbarSettingRepository.Where(x => true)
+                .Include(x => x.NavbarThem);
 
             NavbarSettings = NavbarSettings.OrderByDescending(x => x.IsActive).ThenByDescending(x => x.Id);
 

@@ -37,6 +37,13 @@
                   <img src="{{folderUrl}}{{element.navbarLogo}}" alt="Navbar Logo" style="max-width: auto; max-height: 30px;"/>
                 </td>
             </ng-container>
+            
+            <ng-container matColumnDef="brandLogo">
+              <th mat-header-cell *matHeaderCellDef>Brand Logo</th>
+              <td mat-cell *matCellDef="let element">
+                <img src="{{folderUrl}}{{element.brandLogo}}" alt="Brand Logo" style="max-width: auto; max-height: 30px;"/>
+              </td>
+            </ng-container>
 
             <ng-container matColumnDef="brandName">
               <th mat-header-cell *matHeaderCellDef>Brand Name</th>

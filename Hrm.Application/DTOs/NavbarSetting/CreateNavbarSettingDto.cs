@@ -12,6 +12,8 @@ namespace Hrm.Application.DTOs.NavbarSetting
         public int Id { get; set; }
         public string? NavbarLogo { get; set; }
         public IFormFile? NavbarLogoFile { get; set; }
+        public string? BrandLogo { get; set; }
+        public IFormFile? BrandLogoFile { get; set; }
         public string? BrandName { get; set; }
         public bool? ShowLogo { get; set; }
         public int? ThemId { get; set; }

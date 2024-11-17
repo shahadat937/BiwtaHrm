@@ -24,7 +24,9 @@ export class CreateNavbarSettingComponent implements OnInit, OnDestroy {
   btnIcon: string = '';
   modalOpened: boolean = false;
   navbarLogo: File = null!;
+  brandLogo: File = null!;
   logoPreviewUrl: string | ArrayBuffer | null = null;
+  brandPreviewUrl: string | ArrayBuffer | null = null;
   thems: SelectedModel[] = [];
 
   @ViewChild('NavbarSettingForm', { static: true }) NavbarSettingForm!: NgForm;
@@ -87,6 +89,8 @@ export class CreateNavbarSettingComponent implements OnInit, OnDestroy {
       id : 0,
       navbarLogo : "",
       navbarLogoFile : null,
+      brandLogo : "",
+      brandLogoFile : null,
       brandName : "",
       showLogo : false,
       themId : null,
@@ -108,6 +112,20 @@ export class CreateNavbarSettingComponent implements OnInit, OnDestroy {
       };
     };
     reader.readAsDataURL(this.navbarLogo);
+  }
+  
+  onBrandPhotoSelected(event: any) {
+    this.brandLogo = event.target.files[0];
+    const reader = new FileReader();
+    const img = new Image();
+
+    reader.onload = (e: any) => {
+      img.src = e.target.result;
+      img.onload = () => {
+          this.brandPreviewUrl = e.target.result;
+      };
+    };
+    reader.readAsDataURL(this.brandLogo);
   }
 
 
@@ -139,6 +157,7 @@ export class CreateNavbarSettingComponent implements OnInit, OnDestroy {
     console.log(form.value)
     this.navbarSettingService.cachedData = [];
     form.value.navbarLogoFile = this.navbarLogo;
+    form.value.brandLogoFile = this.brandLogo;
     const id = form.value.id;
     const action$ = id
       ? this.navbarSettingService.update(id, form.value)

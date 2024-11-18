@@ -2,6 +2,7 @@
 using Hrm.Application.Features.DesignationSetups.Requests.Queries;
 using Hrm.Shared.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -21,7 +22,7 @@ namespace Hrm.Application.Features.DesignationSetups.Handlers.Queries
 
         public async Task<List<SelectedModel>> Handle(GetSelectedDesignationSetupRequest request, CancellationToken cancellationToken)
         {
-            ICollection<Hrm.Domain.DesignationSetup> DesignationSetups = await _DesignationSetupRepository.FilterAsync(x => x.IsActive == true);
+            ICollection<Hrm.Domain.DesignationSetup> DesignationSetups = await _DesignationSetupRepository.Where(x => x.IsActive == true).OrderBy(x => x.Name).ToListAsync();
             List<SelectedModel> selectModels = DesignationSetups.Select(x => new SelectedModel 
             {
                 Name = x.Name,

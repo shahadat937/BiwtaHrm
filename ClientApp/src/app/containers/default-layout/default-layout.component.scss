@@ -15,17 +15,23 @@
 
 // .sidebar  {
 //   --cui-sidebar-bg: white;
-//   --cui-sidebar-brand-bg: white;
-//   --cui-sidebar-toggler-bg: white;
-//   --cui-sidebar-toggler-hover-bg: gray;
+//   --cui-sidebar-brand-color: black;
+//   --cui-sidebar-brand-bg: rgb(136, 136, 136);
+//   --cui-sidebar-toggler-bg: rgb(136, 136, 136);
+//   --cui-sidebar-toggler-hover-bg: black;
 //   --cui-sidebar-nav-link-color: black;
+//   --cui-sidebar-nav-link-bg: white;
 //   --cui-sidebar-nav-link-active-color: white;
-//   --cui-sidebar-nav-link-active-bg: gray;
+//   --cui-sidebar-nav-link-active-bg: black;
+//   --cui-sidebar-nav-link-active-icon-color: white;
 //   --cui-sidebar-nav-link-hover-color: white;
 //   --cui-sidebar-nav-link-hover-bg: black;
-//   --cui-sidebar-nav-link-icon-color: black;
 //   --cui-sidebar-nav-link-hover-icon-color: white;
-//   --cui-sidebar-nav-group-bg: rgb(170, 220, 243);
-//   --cui-sidebar-nav-group-toggle-show-color: white;
-//   --cui-sidebar-width: 30%;
+//   --cui-sidebar-nav-link-icon-color: black;
+  // --cui-sidebar-nav-group-bg: #{$sidebar-nav-group-bg};
+  // --cui-sidebar-nav-group-items-padding-y: #{$sidebar-nav-group-items-padding-y};
+  // --cui-sidebar-nav-group-items-padding-x: #{$sidebar-nav-group-items-padding-x};
+  // --cui-sidebar-nav-group-indicator: #{escape-svg($sidebar-nav-group-indicator-icon)};
+  // --cui-sidebar-nav-group-indicator-hover: #{escape-svg($sidebar-nav-group-indicator-hover-icon)};
+  // --cui-sidebar-nav-group-toggle-show-color: #{$sidebar-nav-group-toggle-show-color};
 // }

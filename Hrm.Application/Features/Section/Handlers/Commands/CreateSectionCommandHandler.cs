@@ -41,23 +41,23 @@ namespace Hrm.Application.Features.Section.Handlers.Commands
             }
             else
             {
-                var SectionName = request.SectionDto.SectionName.ToLower();
+                //var SectionName = request.SectionDto.SectionName.ToLower();
 
-                IQueryable<Hrm.Domain.Section> Sections = _SectionRepository.Where(x => x.SectionName.ToLower() == SectionName);
-
-
-                if (SectionNameExists(request))
-                {
-                    response.Success = false;
-                    response.Message = $"Creation Failed '{request.SectionDto.SectionName}' already exists.";
+                //IQueryable<Hrm.Domain.Section> Sections = _SectionRepository.Where(x => x.SectionName.ToLower() == SectionName);
 
 
-                    //response.Message = "Creation Failed, Name already exists";
-                    response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
+                //if (SectionNameExists(request))
+                //{
+                //    response.Success = false;
+                //    response.Message = $"Creation Failed '{request.SectionDto.SectionName}' already exists.";
 
-                }
-                else
-                {
+
+                //    //response.Message = "Creation Failed, Name already exists";
+                //    response.Errors = validatorResult.Errors.Select(x => x.ErrorMessage).ToList();
+
+                //}
+                //else
+                //{
                     var Section = _mapper.Map<Hrm.Domain.Section>(request.SectionDto);
 
                     Section = await _unitOfWork.Repository<Hrm.Domain.Section>().Add(Section);
@@ -65,20 +65,20 @@ namespace Hrm.Application.Features.Section.Handlers.Commands
                     response.Success = true;
                     response.Message = "Creation Successfull";
                     response.Id = Section.SectionId;
-                }
+                //}
             }
 
             return response;
         }
-        private bool SectionNameExists(CreateSectionCommand request)
-        {
+        //private bool SectionNameExists(CreateSectionCommand request)
+        //{
 
-            var SectionName = request.SectionDto.SectionName.Trim().ToLower().Replace(" ", string.Empty);
+        //    var SectionName = request.SectionDto.SectionName.Trim().ToLower().Replace(" ", string.Empty);
 
-            IQueryable<Hrm.Domain.Section> Sections = _SectionRepository.Where(x => x.SectionName.Trim().ToLower().Replace(" ", string.Empty) == SectionName);
+        //    IQueryable<Hrm.Domain.Section> Sections = _SectionRepository.Where(x => x.SectionName.Trim().ToLower().Replace(" ", string.Empty) == SectionName);
 
-            return Sections.Any();
+        //    return Sections.Any();
 
-        }
+        //}
     }
 }

@@ -68,7 +68,7 @@
                             <select [(ngModel)]="navbarSettingService.navbarSetting.themId"
                                 name="themId" #themId="ngModel" cFormControl id="themId"
                                 aria-label="Default select example" cSelect>
-                                <option [ngValue]="null">Select Them</option>
+                                <option [ngValue]="null">Default Them</option>
 
                                 @for(them of thems; track them.id;let index=$index) {
                                 <option [value]="them.id">

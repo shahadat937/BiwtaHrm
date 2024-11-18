@@ -16,6 +16,7 @@ import { DepartmentService } from '../../basic-setup/service/department.service'
 import { SectionService } from '../../basic-setup/service/section.service';
 import { HttpParams } from '@angular/common/http';
 import { AuthService } from 'src/app/core/service/auth.service';
+import { trigger } from '@angular/animations';
 
 
 @Component({
@@ -122,6 +123,14 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+    this.subscription = this.sort.sortChange.subscribe(() => {
+      this.getFilteredAttendance(false);
+    })
+  }
+
+  logSort() {
+    console.log(this.sort.active);
+    console.log(this.sort.direction);
   }
 
 
@@ -131,6 +140,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     this.getFilteredAttendance(false);
   }
   getFilteredAttendance(resetPage: boolean) {
+    console.log("triggered");
     let params = new HttpParams();
     let pageSize = this.pageSize;
     let pageIndex = this.pageIndex+1;
@@ -143,6 +153,12 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     params = this.selectedSection==null? params: params.set('sectionId', this.selectedSection);
     params = this.isUser && this.empId != null? params.set("empId", this.empId): params;
 
+    
+    if(this.sort!=undefined) {
+      params = params.set('sortColumn',this.sort.active);
+      params = params.set('sortDirection', this.sort.direction);
+    }
+
     if(this.selectedDate!=null) {
       params = params.set('month',this.selectedDate.getMonth()+1);
       params = params.set('year', this.selectedDate.getFullYear());
@@ -153,13 +169,14 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
 
     params = this.searchKeyword.trim()==""?params:params.set('keyword',this.searchKeyword);
 
-    this.AtdRecordService.getAttendance(params).subscribe({
+    this.subscription = this.AtdRecordService.getAttendance(params).subscribe({
       next: response => {
         this.dataSource =new MatTableDataSource (response.result.map(x=>({
           ...x,
           fullName: [x.empFirstName,x.empLastName].join(' ')
         })));
         this.totalRecord = response.totalCount;
+        this.dataSource.sort = this.sort;
         this.pageIndex = pageIndex -1;
       }
     })

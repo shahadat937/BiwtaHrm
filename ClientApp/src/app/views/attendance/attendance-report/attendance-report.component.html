@@ -5,95 +5,171 @@
     <c-card-body>
         <c-card>
             <c-card-body [gutter]="3">
-                <form (ngSubmit)="onSubmit()" #filterform="ngForm">
-                <c-row>
-                    <c-col md="6">
-                        <div>
-                        <label for="dateRange" cLabel>Date Range</label>
-                        </div>
-                        <p-calendar 
-                        [style]="{height: '2.37rem'}"
-                        name="dateRange"
-                        [(ngModel)]="rangeDates" 
-                        view="month"
-                        dateFormat="mm/yy"
-                        [readonlyInput]="true"
-                        showIcon="true"
-                        (ngModelChange)="check()"
-                        />
-                    </c-col>
-                </c-row>
-                <c-row *ngIf="isUser==false" class="mt-3">
-                    <!--<c-col md="2">
-                        <label for="office" cLabel>Office</label>
-                        <select name="officeId" id="office" cSelect [(ngModel)]="selectedOffice"
-                        (change)="onOfficeChange()"
-                        >
-                            <option [ngValue]="null" selected>Select Office</option>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <form (ngSubmit)="onSubmit()" #filterform="ngForm">
+                        <c-row>
+                            <c-col md="6">
+                                <div>
+                                <label for="dateRange" cLabel>Date Range</label>
+                                </div>
+                                <p-calendar 
+                                [style]="{height: '2.37rem'}"
+                                name="dateRange"
+                                [(ngModel)]="rangeDates" 
+                                view="month"
+                                dateFormat="mm/yy"
+                                [readonlyInput]="true"
+                                showIcon="true"
+                                (ngModelChange)="check()"
+                                />
+                            </c-col>
+                        </c-row>
+                        <c-row *ngIf="isUser==false" class="mt-3">
+                            <!--<c-col md="2">
+                                <label for="office" cLabel>Office</label>
+                                <select name="officeId" id="office" cSelect [(ngModel)]="selectedOffice"
+                                (change)="onOfficeChange()"
+                                >
+                                    <option [ngValue]="null" selected>Select Office</option>
+                            
+                                    @for (office of OfficeOption; track $index) {
+                                        <option [ngValue]="office.id" >{{office.name}}</option>
+                                    }
+                                </select>
+                            </c-col> -->
+                            <c-col md="2">
+                                <label for="department" cLabel>Department</label>
+                                <select name="departmentId" id="department" cSelect [(ngModel)]="selectedDepartment"
+                                (change)="onDepartmentChange()"
+                                >
+                                    <option [ngValue]="null" cDropdownItem>Select Department</option>
+                                    @for (department of DepartmentOption; track $index) {
+                                        <option [ngValue]="department.id">{{department.name}}</option>
+                                    }
+                                </select>
+                            </c-col>
+                            <!--<c-col md="2">
+                                <label for="designation" cLabel>Designation</label>
+                                <select name="designationId" id="designation" cSelect [(ngModel)]="selectedDesignation"
+                                (change)="onDesignationChange()"
+                                >
+                                    <option [ngValue]="null" cDropdownItem selected>Select Designation</option>
+                                    @for (designation of DesignationOption; track $index) {
+                                        <option [ngValue]="designation.id">{{designation.name}}</option>
+                                    }
+                                </select>
+                            </c-col>
+                            <c-col md="2">
+                                <label for="shift" cLabel>Shift</label>
+                                <select name="shiftId" id="shift" cSelect [(ngModel)]="selectedShift">
+                                    <option [ngValue]="null" cDropdownItem selected>Select Shift</option>
+                                    @for (shift of ShiftOption; track $index) {
+                                        <option [ngValue]="shift.id">{{shift.name}}</option>
+                                    }
+                                </select>
+                            </c-col>-->
+                            <c-col md="2" [class]="SectionOption.length<=0||selectedDepartment==null?'d-none':''">
+                                <label for="section" cLabel>Section</label>
+                                <select name="sectionId" id="sectionId" [(ngModel)]="selectedSection" cSelect>
+                                    <option [ngValue]="null" cDropdownItem>Select Section</option>
+                                    @for (section of SectionOption; track $index) {
+                                        <option [ngValue]="section.id">{{section.name}}</option>
+                                    }
+                                </select>
+                            </c-col>
+                            <c-col md="2">
+                                <label for="emp" cLabel>Employee</label>
+                                <select name="empId" id="emp" [(ngModel)]="selectedEmp" cSelect>
+                                    <option [ngValue]="null" cDropdownItem>Select Employee</option>
+                                    @for (employee of EmployeeOption; track $index) {
+                                        <option [ngValue]="employee.id">{{employee.name}}</option>
+                                    }
+                                </select>
+                            </c-col>
+                        </c-row>
+                        <c-row class="mt-3">
+                            <c-col md="3">
+                                <button type="submit" cButton class="btn btn-success"
+                                [disabled]="loading||rangeDates==null"
+                                >Show Report</button>
+                            </c-col>
+                        </c-row>
+                        </form>
+                    
+                    </div>
+                    <div>
+                        <c-row>
+                            <c-col md="3">
+                                <table class="table table-bordered table-sm">
+                                    <thead>
+                                        <tr scope="row">
+                                            <th scope="col">
+                                                Full Form
+                                            </th>
+                                            <th scope="col">
+                                                Short Form
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr scope="row">
+                                            <td>
+                                                Present
+                                            </td>
+                                            <td>
+                                                <span class="text-success">
+                                                    P
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr scope="row">
+                                            <td>
+                                                Absent
+                                            </td>
+                                            <td>
+                                                <span class="text-danger">
+                                                    A
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr scope="row">
+                                            <td>
+                                                Late 
+                                            </td>
+                                            <td>
+                                                <span class="text-warning">
+                                                    L
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr scope="row">
+                                            <td>
+                                                Weekend/Holiday
+                                            </td>
+                                            <td>
+                                                <span class="text-primary">
+                                                    WH
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr scope="row">
+                                            <td>
+                                                Leave
+                                            </td>
+                                            <td>
+                                                <span class="text-warning">
+                                                    LV
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </c-col>
+                        </c-row>
 
-                            @for (office of OfficeOption; track $index) {
-                                <option [ngValue]="office.id" >{{office.name}}</option>
-                            }
-                        </select>
-                    </c-col> -->
-                    <c-col md="2">
-                        <label for="department" cLabel>Department</label>
-                        <select name="departmentId" id="department" cSelect [(ngModel)]="selectedDepartment"
-                        (change)="onDepartmentChange()"
-                        >
-                            <option [ngValue]="null" cDropdownItem>Select Department</option>
-                            @for (department of DepartmentOption; track $index) {
-                                <option [ngValue]="department.id">{{department.name}}</option>
-                            }
-                        </select>
-                    </c-col>
-                    <!--<c-col md="2">
-                        <label for="designation" cLabel>Designation</label>
-                        <select name="designationId" id="designation" cSelect [(ngModel)]="selectedDesignation"
-                        (change)="onDesignationChange()"
-                        >
-                            <option [ngValue]="null" cDropdownItem selected>Select Designation</option>
-                            @for (designation of DesignationOption; track $index) {
-                                <option [ngValue]="designation.id">{{designation.name}}</option>
-                            }
-                        </select>
-                    </c-col>
-                    <c-col md="2">
-                        <label for="shift" cLabel>Shift</label>
-                        <select name="shiftId" id="shift" cSelect [(ngModel)]="selectedShift">
-                            <option [ngValue]="null" cDropdownItem selected>Select Shift</option>
-                            @for (shift of ShiftOption; track $index) {
-                                <option [ngValue]="shift.id">{{shift.name}}</option>
-                            }
-                        </select>
-                    </c-col>-->
-                    <c-col md="2" [class]="SectionOption.length<=0||selectedDepartment==null?'d-none':''">
-                        <label for="section" cLabel>Section</label>
-                        <select name="sectionId" id="sectionId" [(ngModel)]="selectedSection" cSelect>
-                            <option [ngValue]="null" cDropdownItem>Select Section</option>
-                            @for (section of SectionOption; track $index) {
-                                <option [ngValue]="section.id">{{section.name}}</option>
-                            }
-                        </select>
-                    </c-col>
-                    <c-col md="2">
-                        <label for="emp" cLabel>Employee</label>
-                        <select name="empId" id="emp" [(ngModel)]="selectedEmp" cSelect>
-                            <option [ngValue]="null" cDropdownItem>Select Employee</option>
-                            @for (employee of EmployeeOption; track $index) {
-                                <option [ngValue]="employee.id">{{employee.name}}</option>
-                            }
-                        </select>
-                    </c-col>
-                </c-row>
-                <c-row class="mt-3">
-                    <c-col md="3">
-                        <button type="submit" cButton class="btn btn-success"
-                        [disabled]="loading||rangeDates==null"
-                        >Show Report</button>
-                    </c-col>
-                </c-row>
-                </form>
+                    </div>
+                </div>
             </c-card-body>
         </c-card>
         <c-card class="mt-2">

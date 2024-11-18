@@ -230,8 +230,8 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
             this.toastr.success('',`${response.message}`,{
               positionClass: 'toast-top-right'
             })
-            var index = this.tableData.findIndex((item)=> item.siteVisitId === siteVisitId);
-            delete this.tableData[index];
+            //var index = this.tableData.findIndex((item)=> item.siteVisitId === siteVisitId);
+            this.tableData = this.tableData.filter((item)=>item.siteVisitId != siteVisitId);
           } else {
             this.toastr.warning('', `${response.message}`, {
               positionClass: 'toast-top-right'

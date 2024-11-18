@@ -114,7 +114,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
                   positionClass: 'toast-top-right'
                 })
 
-                delete this.formRecord[index];
+                this.formRecord = this.formRecord.filter(x=>x.recordId != recordId);
+                //delete this.formRecord[index];
               } else {
                 this.toastr.warning('',`${response.message}`, {
                   positionClass: 'toast-top-right'

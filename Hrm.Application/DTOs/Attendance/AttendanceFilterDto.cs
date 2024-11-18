@@ -17,6 +17,8 @@ namespace Hrm.Application.DTOs.Attendance
         public int? Month {  get; set; }
         public int? PageSize {  get; set; }
         public int? PageIndex { get; set; }
+        public string? sortColumn {  get; set; }
+        public string? sortDirection { get; set; }
 
     }
 }

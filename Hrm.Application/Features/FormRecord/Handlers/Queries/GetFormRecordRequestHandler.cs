@@ -89,8 +89,9 @@ namespace Hrm.Application.Features.FormRecord.Handlers.Queries
             {
                 formRecords = formRecords.Where(x => x.ReceiverApproval == request.Filters.ReceiverApproval);
             }
-            
 
+
+            formRecords = formRecords.OrderByDescending(x => x.RecordId);
             var formRecordDtos = _mapper.Map<List<FormRecordDto>>(formRecords);
 
             foreach (var formRecordDto in formRecordDtos)

@@ -47,10 +47,10 @@ export class NavbarSettingService {
   private toFormData(model: any): FormData {
     const formData = new FormData();
     for (const key of Object.keys(model)) {
-      if (model[key] instanceof File) {
+      if (model[key] instanceof File && model[key]) { // Check for null or undefined
         formData.append(key, model[key], model[key].name);
-      } else {
-        formData.append(key, model[key]);
+      } else if (model[key] !== null && model[key] !== undefined) { // Avoid null/undefined fields
+        formData.append(key, model[key].toString());
       }
     }
     return formData;

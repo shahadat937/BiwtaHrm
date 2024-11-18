@@ -19,6 +19,7 @@ namespace Hrm.Application.DTOs.EmpNomineeInfo
         public int? RelationId { get; set; }
         public int? Percentage { get; set; }
         public string? Address { get; set; }
+        public string? UniqueIdentity { get; set; }
         public string? PhotoUrl { get; set; }
         public IFormFile? PhotoFile { get; set; }
         public string? SignatureUrl { get; set; }

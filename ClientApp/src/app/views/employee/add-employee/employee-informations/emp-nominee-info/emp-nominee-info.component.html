@@ -40,9 +40,9 @@
                                     </c-col>
                                     
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="relationId{{i}}">Relation Type<span class="text-danger">*</span></label>
+                                        <label class="col-form-label" for="relationId{{i}}">Relation Type<span class="text-danger"></span></label>
                                         <select formControlName="relationId" class="form-select">
-                                            <option value="null" disabled>Select Relation</option>
+                                            <option value="null">Select Relation</option>
                                             <option *ngFor="let item of relationType" value="{{item.id}}">{{item.name}}
                                             </option>
                                         </select>

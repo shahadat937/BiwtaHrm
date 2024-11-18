@@ -25,6 +25,7 @@ export class NavbarSettingComponent implements OnInit, OnDestroy {
     displayedColumns: string[] = [
       'slNo',
       'navbarLogo',
+      'brandLogo',
       'brandName',
       'themName',
       'showLogo',

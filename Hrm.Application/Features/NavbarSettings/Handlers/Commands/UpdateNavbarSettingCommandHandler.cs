@@ -55,6 +55,31 @@ namespace Hrm.Application.Features.NavbarSettings.Handlers.Commands
 
             }
 
+
+            if (request.NavbarSettingDto.BrandLogoFile != null)
+            {
+                if (!string.IsNullOrEmpty(navbarSettings.BrandLogo))
+                {
+                    var oldPhotoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\TempleteImage", navbarSettings.BrandLogo);
+                    if (File.Exists(oldPhotoPath))
+                    {
+                        File.Delete(oldPhotoPath);
+                    }
+                }
+
+                var navbarLogo = Path.GetFileName(request.NavbarSettingDto.BrandLogoFile.FileName);
+                string uniqueImageName = Guid.NewGuid().ToString() + "_BrandLogo_" + navbarLogo;
+                var photoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\TempleteImage", uniqueImageName);
+
+                using (var photoSteam = new FileStream(photoPath, FileMode.Create))
+                {
+                    await request.NavbarSettingDto.BrandLogoFile.CopyToAsync(photoSteam);
+                }
+
+                navbarSettings.BrandLogo = uniqueImageName;
+
+            }
+
             var findActive = await _unitOfWork.Repository<NavbarSetting>().Where(x => x.IsActive == true && x.Id != request.NavbarSettingDto.Id).ToListAsync();
             if (findActive != null && request.NavbarSettingDto.IsActive == true)
             {

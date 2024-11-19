@@ -55,7 +55,7 @@
             <ng-container matColumnDef="themName">
               <th mat-header-cell *matHeaderCellDef>Them Name</th>
               <td mat-cell *matCellDef="let element">
-                {{ element.themName }}
+                {{ element.themName || "Default Them"}}
               </td>
             </ng-container>
             

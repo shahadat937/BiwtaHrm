@@ -39,7 +39,8 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
     // 'office',
     'department',
     'section',
-    'upperSection', 
+    'upperSection',
+    'sequence',
     'isActive', 
     'Action'];
   dataSource = new MatTableDataSource<any>();
@@ -255,6 +256,15 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.matSort;
       });
+    }
+  }
+
+  
+  getSectionPosition(departmentId : any, sectionId : any){
+    if(this.btnText == 'Submit'){
+      this.sectionService.getSectionPosition(+departmentId, +sectionId).subscribe((res) => {
+        this.sectionService.sections.sequence = res;
+      })
     }
   }
 

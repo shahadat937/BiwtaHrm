@@ -146,6 +146,7 @@ namespace Hrm.Api.Controllers
                 Sections = department.Section != null
                     ? department.Section
                         .Where(s => s.UpperSectionId == null)
+                        .OrderBy(s => s.Sequence)
                         .Select(s => MapSectionName(s))
                         .ToList()
                     : new List<OrganogramSectionNameDto>(),
@@ -168,7 +169,9 @@ namespace Hrm.Api.Controllers
                         Name = se.DesignationSetup.Name,
                         EmployeeInfo = GetEmployeeInformation(se)
                     }).ToList(),
-                SubSections = section.SubSections.Select(ss => MapSectionName(ss)).ToList()
+                SubSections = section.SubSections
+                    .OrderBy(ss => ss.Sequence)
+                    .Select(ss => MapSectionName(ss)).ToList()
             };
 
             return sectionNameDto;

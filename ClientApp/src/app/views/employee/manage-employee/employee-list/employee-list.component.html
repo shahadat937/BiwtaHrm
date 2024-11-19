@@ -3,12 +3,22 @@
     <div>Employee List</div>
   </c-card-header>
   <c-card-body>
-    <div class="example-header">
-      <mat-form-field>
-        <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here.." />
-        <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
-          (click)="filter.value = ''; applyFilter('')"></button>
-      </mat-form-field>
+    <div cRow [gutter]="3" class="mb-3">
+      <c-col md="4">
+        <c-input-group>
+          <span cInputGroupText class="bg-white">
+            <svg [cIcon]="icons.cilZoom" size="lg"></svg>
+          </span>
+          <input
+            class="border-start-0 ps-0 shadow-none"
+            #filter
+            cFormControl
+            type="text"
+            (keyup)="applyFilter(filter.value)"
+            placeholder="Search Keyword"
+          />
+        </c-input-group>
+      </c-col>
     </div>
     <div class="mat-elevation-z8 table-responsive">
       <table mat-table [dataSource]="dataSource">
@@ -111,11 +121,12 @@
   <c-card-footer class="text-medium-emphasis">
     <mat-paginator 
               appBubblePagination
-		          [length]="100"
-              [pageSize]="10"
-              [pageSizeOptions]="[5, 10, 25, 100]"
+              [length]="pagination.length"
+              [pageSize]="pagination.pageSize"
+              [pageSizeOptions]="pagination.pageSizeOptions"
               [showFirstLastButtons]="true"
-              aria-label="Select page">
+              aria-label="Select page"
+              (page)="onPageChange($event)">
 </mat-paginator>
 
   </c-card-footer>

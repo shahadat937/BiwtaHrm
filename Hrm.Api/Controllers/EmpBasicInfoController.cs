@@ -24,9 +24,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-allEmpBasicInfo")]
-        public async Task<ActionResult> GetEmpBasicInfos()
+        public async Task<ActionResult<List<EmpBasicInfoDto>>> GetEmpBasicInfos([FromQuery] QueryParams queryParams)
         {
-            var EmpBasicInfos = await _mediator.Send(new GetAllEmpBasicInfoRequest { });
+            var EmpBasicInfos = await _mediator.Send(new GetAllEmpBasicInfoRequest { QueryParams = queryParams });
             return Ok(EmpBasicInfos);
         }
 

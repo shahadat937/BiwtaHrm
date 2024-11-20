@@ -120,14 +120,12 @@
   </c-card-body>
   <c-card-footer class="text-medium-emphasis">
     <mat-paginator 
-              appBubblePagination
               [length]="pagination.length"
               [pageSize]="pagination.pageSize"
               [pageSizeOptions]="pagination.pageSizeOptions"
               [showFirstLastButtons]="true"
-              aria-label="Select page"
               (page)="onPageChange($event)">
-</mat-paginator>
+    </mat-paginator>
 
   </c-card-footer>
 </c-card>

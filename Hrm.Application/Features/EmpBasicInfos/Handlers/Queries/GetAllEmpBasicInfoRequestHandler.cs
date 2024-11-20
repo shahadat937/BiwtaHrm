@@ -42,7 +42,13 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
             //    .Include(x => x.EmpPersonalInfo)
             //        .ThenInclude(x => x.Gender);
 
-            IQueryable<EmpBasicInfo> empBasicInfos = _EmpBasicInfoRepository.FilterWithInclude(x => (x.IdCardNo.ToLower().Contains(request.QueryParams.SearchText) || x.FirstName.ToLower().Contains(request.QueryParams.SearchText) || x.LastName.ToLower().Contains(request.QueryParams.SearchText) || String.IsNullOrEmpty(request.QueryParams.SearchText)), "EmployeeType")
+            IQueryable<EmpBasicInfo> empBasicInfos = _EmpBasicInfoRepository.FilterWithInclude(x => (x.IdCardNo.ToLower().Contains(request.QueryParams.SearchText) || 
+                x.FirstName.ToLower().Contains(request.QueryParams.SearchText) || 
+                x.LastName.ToLower().Contains(request.QueryParams.SearchText) || 
+                x.EmpJobDetail.FirstOrDefault().Department.DepartmentName.ToLower().Contains(request.QueryParams.SearchText) || 
+                x.EmpJobDetail.FirstOrDefault().Section.SectionName.ToLower().Contains(request.QueryParams.SearchText) ||
+                x.EmpJobDetail.FirstOrDefault().Designation.DesignationSetup.Name.ToLower().Contains(request.QueryParams.SearchText) ||
+                String.IsNullOrEmpty(request.QueryParams.SearchText)))
                 .Include(x => x.EmployeeType)
                 .Include(x => x.EmpJobDetail)
                     .ThenInclude(ejd => ejd.Department)

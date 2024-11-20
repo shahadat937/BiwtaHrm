@@ -83,19 +83,19 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   applyFilter(filterValue: string) {
     filterValue = filterValue.toLowerCase();
     this.pagination.searchText = filterValue;
-    this.onPageChange(this.pagination);
+    this.getAllEmpBasicInfoQueryPerams(this.pagination);
   }
 
   onPageChange(event: any){
     this.pagination.pageSize = event.pageSize;
+    event.pageIndex = event.pageIndex + 1;
     this.getAllEmpBasicInfoQueryPerams(event);
   }
 
   getAllEmpBasicInfoQueryPerams(queryParams: any){
     this.subscription = this.manageEmployeeService.getAllPagination(queryParams).subscribe((res: any) => {
-      console.log(res)
-      this.dataSource = new MatTableDataSource(res.items);
-      this.dataSource.paginator = this.paginator;
+      this.dataSource.data = res.items;
+      // this.dataSource.paginator = this.paginator;
       this.pagination.length = res.totalItemsCount;
     });
   }

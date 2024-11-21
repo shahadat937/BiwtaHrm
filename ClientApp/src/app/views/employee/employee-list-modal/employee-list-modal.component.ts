@@ -11,6 +11,7 @@ import { BasicInfoModule } from '../model/basic-info.module';
 import { UserModule } from '../../usermanagement/model/user.module';
 import { EmpBasicInfoService } from '../service/emp-basic-info.service';
 import { EmpPhotoSignService } from '../service/emp-photo-sign.service';
+import { PaginatorModel } from 'src/app/core/models/paginator-model';
 
 @Component({
   selector: 'app-employee-list-modal',
@@ -40,6 +41,7 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
   loadingMap: { [key: number]: boolean } = {};
   userForm : UserModule;
   selectedEmpId!: number;
+  pagination: PaginatorModel = new PaginatorModel();
 
   constructor(
     private toastr: ToastrService,
@@ -54,7 +56,7 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getAllEmpBasicInfo();
+    this.getAllEmpBasicInfo(this.pagination);
     setTimeout(() => {
       this.modalOpened = true;
     }, 0);
@@ -66,21 +68,21 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  getAllEmpBasicInfo() {
-    this.subscription = this.empBasicInfoService.getAll().subscribe((employees) => {
-      this.employees = employees;
-      this.totalRecords = employees.length;
+  getAllEmpBasicInfo(queryParams: any) {
+    this.subscription = this.empBasicInfoService.getAllPagination(queryParams).subscribe((employees: any) => {
+      this.totalRecords = employees.totalItemsCount;
+      this.employees = employees.items;
       this.loading = false;
 
-      this.departments = [...new Set(employees
-        .map(emp => emp.departmentName)
-        .filter(departmentName => departmentName !== null && departmentName.trim() !== '')
-      )].map(department => ({ name: department }));
+      // this.departments = [...new Set(employees
+      //   .map(emp => emp.departmentName)
+      //   .filter(departmentName => departmentName !== null && departmentName.trim() !== '')
+      // )].map(department => ({ name: department }));
       
-      this.sections = [...new Set(employees
-        .map(emp => emp.sectionName)
-        .filter(sectionName => sectionName !== null && sectionName.trim() !== '')
-      )].map(section => ({ name: section }));
+      // this.sections = [...new Set(employees
+      //   .map(emp => emp.sectionName)
+      //   .filter(sectionName => sectionName !== null && sectionName.trim() !== '')
+      // )].map(section => ({ name: section }));
     });
 
     this.imageLinkUrl = this.empPhotoSign.imageUrl + '/EmpPhoto';
@@ -90,9 +92,17 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
+    console.log(filterValue)
     filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+    this.pagination.pageIndex = 1;
+    this.pagination.searchText = filterValue;
+    this.getAllEmpBasicInfo(this.pagination);
+  }
+
+  onPageChange(event: any){
+    this.pagination.pageSize = event.rows;
+    this.pagination.pageIndex = (event.first / event.rows) + 1;
+    this.getAllEmpBasicInfo(this.pagination);
   }
 
   onGlobalFilter(event: Event) {

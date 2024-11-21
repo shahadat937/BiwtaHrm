@@ -65,9 +65,10 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
 
 
 
-
-
-            request.createLeaveRequestDto.Status = (int) LeaveStatusOption.Pending;
+            if (request.createLeaveRequestDto.Status == null)
+            {
+                request.createLeaveRequestDto.Status = (int)LeaveStatusOption.Pending;
+            }
             var leaveRequest = _mapper.Map<Hrm.Domain.LeaveRequest>(request.createLeaveRequestDto);
 
             //if (request.AssociatedFiles != null&&false)

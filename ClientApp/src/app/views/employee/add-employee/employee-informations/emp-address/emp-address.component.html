@@ -83,14 +83,13 @@
                     </c-col>
 
                     <c-col [md]="3">
-                        <label cLabel for="validationCustom06">Upazila<span class="text-danger"></span></label>
+                        <label cLabel for="validationCustom06">Upazila/Thana<span class="text-danger"></span></label>
                         <div class="input-wrapper">
-                            <select
-                                (change)="onPresentAddressThanaNamesChangeByUpazilaId(empPresentAddressService.empPresentAddress.upazilaId)"
+                            <select 
                                 [(ngModel)]="empPresentAddressService.empPresentAddress.upazilaId" name="upazilaId"
                                 #upazilaId="ngModel" cFormControl id="validationCustom06"
                                 aria-label="Default select example" cSelect>
-                                <option [ngValue]="null">Select Upazila</option>
+                                <option [ngValue]="null">Select Upazila/Thana</option>
 
                                 @for(upazila of presentAddressupazilas; track upazila.id;let index=$index) {
                                 <option [value]="upazila.id">
@@ -105,7 +104,7 @@
                         </div>
                     </c-col>
 
-                    <c-col [md]="3">
+                    <!-- <c-col [md]="3">
                         <label cLabel for="validationCustom07">Thana<span class="text-danger"></span></label>
                         <div class="input-wrapper">
                             <select
@@ -126,7 +125,7 @@
                             <div class="text-left text-danger">Thana is required</div>
                             }
                         </div>
-                    </c-col>
+                    </c-col> -->
 
                     <c-col [md]="3">
                         <label cLabel for="unionName"
@@ -174,17 +173,8 @@
                         <div class="text-left text-danger">Invalid Phone Number</div>
                         }
                     </c-col>
-
-                    <c-col [md]="4">
-                        <label cLabel for="address">Village/Road<span class="text-danger"></span></label>
-                        <input [(ngModel)]="empPresentAddressService.empPresentAddress.address" name="address"
-                            #address="ngModel" placeholder="Enter Village/Road" cFormControl id="address" type="text" />
-                        @if(!address.valid&&address.touched){
-                        <div class="text-left text-danger">Village/Road is required</div>
-                        }
-                    </c-col>
-
-                    <c-col [md]="4">
+                    
+                    <c-col [md]="3">
                         <label cLabel for="validationCustom08">Email<span class="text-danger"></span></label>
                         <input [(ngModel)]="empPresentAddressService.empPresentAddress.email" name="email"
                             #Email="ngModel" placeholder="Enter Email Address" cFormControl id="validationCustom08"
@@ -196,6 +186,16 @@
                         <div class="text-left text-danger">Email is not valid</div>
                         }
                     </c-col>
+
+                    <c-col [md]="4">
+                        <label cLabel for="address">Village/Road<span class="text-danger"></span></label>
+                        <input [(ngModel)]="empPresentAddressService.empPresentAddress.address" name="address"
+                            #address="ngModel" placeholder="Enter Village/Road" cFormControl id="address" type="text" />
+                        @if(!address.valid&&address.touched){
+                        <div class="text-left text-danger">Village/Road is required</div>
+                        }
+                    </c-col>
+
 
                     <c-col [md]="4">
                         <label cLabel for="remark">Remark<span class="text-danger"></span></label>
@@ -299,15 +299,14 @@
                     </c-col>
 
                     <c-col [md]="3">
-                        <label cLabel for="validationCustom06">Upazila<span class="text-danger"></span></label>
+                        <label cLabel for="validationCustom06">Upazila/Thana<span class="text-danger"></span></label>
                         <div class="input-wrapper">
                             <select
-                                (change)="onPermanentAddressThanaNamesChangeByUpazilaId(empPermanentAddressService.empPermanentAddress.upazilaId)"
                                 [(ngModel)]="empPermanentAddressService.empPermanentAddress.upazilaId" name="upazilaId"
                                 #upazilaId="ngModel" cFormControl id="validationCustom06"
                                 aria-label="Default select example" cSelect
                                 [class.readonly-select]="sameAsPresentAddress">
-                                <option [ngValue]="null">Select Upazila</option>
+                                <option [ngValue]="null">Select Upazila/Thana</option>
 
                                 @for(upazila of permanentAddressupazilas; track upazila.id;let index=$index) {
                                 <option [value]="upazila.id">
@@ -322,7 +321,7 @@
                         </div>
                     </c-col>
 
-                    <c-col [md]="3">
+                    <!-- <c-col [md]="3">
                         <label cLabel for="validationCustom07">Thana<span class="text-danger"></span></label>
                         <div class="input-wrapper">
                             <select
@@ -344,7 +343,7 @@
                             <div class="text-left text-danger">Thana is required</div>
                             }
                         </div>
-                    </c-col>
+                    </c-col> -->
 
                     <c-col [md]="3">
                         <label cLabel for="unionName">Union<span class="text-danger"></span></label>
@@ -427,17 +426,8 @@
                         <div class="text-left text-danger">Invalid Zip Code</div>
                         }
                     </c-col>
-
-                    <c-col [md]="4">
-                        <label cLabel for="address">Village/Road<span class="text-danger"></span></label>
-                        <input [(ngModel)]="empPermanentAddressService.empPermanentAddress.address" name="address"
-                            #address="ngModel" placeholder="Enter Village/Road" cFormControl id="address" type="text"/>
-                        @if(!address.valid&&address.touched){
-                        <div class="text-left text-danger">Village/Road is required</div>
-                        }
-                    </c-col>
-
-                    <c-col [md]="4">
+                    
+                    <c-col [md]="3">
                         <label cLabel for="validationCustom08">Email<span class="text-danger"></span></label>
                         <input [(ngModel)]="empPermanentAddressService.empPermanentAddress.email" name="email"
                             #Email="ngModel" placeholder="Enter Email Address" cFormControl id="validationCustom08"
@@ -449,6 +439,16 @@
                         <div class="text-left text-danger">Email is not valid</div>
                         }
                     </c-col>
+
+                    <c-col [md]="4">
+                        <label cLabel for="address">Village/Road<span class="text-danger"></span></label>
+                        <input [(ngModel)]="empPermanentAddressService.empPermanentAddress.address" name="address"
+                            #address="ngModel" placeholder="Enter Village/Road" cFormControl id="address" type="text"/>
+                        @if(!address.valid&&address.touched){
+                        <div class="text-left text-danger">Village/Road is required</div>
+                        }
+                    </c-col>
+
 
                     <c-col [md]="4">
                         <label cLabel for="remark">Remark<span class="text-danger"></span></label>

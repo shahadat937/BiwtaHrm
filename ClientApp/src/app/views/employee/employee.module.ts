@@ -91,6 +91,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { EmpTrainingInfoComponent } from './add-employee/employee-informations/emp-training-info/emp-training-info.component';
 import { ResultService } from '../basic-setup/service/result.service';
 import { EmployeeListModalComponent } from './employee-list-modal/employee-list-modal.component';
+import { UploadFingerPrintComponent } from './add-employee/employee-informations/upload-finger-print/upload-finger-print.component';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -126,6 +127,7 @@ import { EmployeeListModalComponent } from './employee-list-modal/employee-list-
     EmpOtherResponsibilityComponent,
     EmpTrainingInfoComponent,
     EmployeeListModalComponent,
+    UploadFingerPrintComponent,
   ],
   imports: [
     CommonModule,

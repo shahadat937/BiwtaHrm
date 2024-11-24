@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -8,6 +8,7 @@ import { cilZoom, cilPlus } from '@coreui/icons';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EmployeeInformationComponent } from '../employee-information/employee-information.component';
 import { EmpProfileComponent } from '../emp-profile/emp-profile.component';
+import { PaginatorModel } from 'src/app/core/models/paginator-model';
 
 @Component({
   selector: 'app-employee-list',
@@ -33,6 +34,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+  pagination: PaginatorModel = new PaginatorModel();
 
   constructor(
     public manageEmployeeService: ManageEmployeeService,
@@ -43,26 +45,19 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   icons = { cilZoom, cilPlus };
 
   ngOnInit(): void {
-    this.getAllEmpBasicInfo();
+    // this.getAllEmpBasicInfo();
+    this.getAllEmpBasicInfoQueryPerams(this.pagination);
   }
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
-  
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
-  }
-
 
   getAllEmpBasicInfo(){
     this.subscription = this.manageEmployeeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.matSort;
     });
   }
 
@@ -81,6 +76,28 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       isModal: isModal
     };
     const modalRef: BsModalRef = this.modalService.show(EmpProfileComponent, { initialState});
+  }
+
+  
+  
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.toLowerCase();
+    this.pagination.searchText = filterValue;
+    this.getAllEmpBasicInfoQueryPerams(this.pagination);
+  }
+
+  onPageChange(event: any){
+    this.pagination.pageSize = event.pageSize;
+    event.pageIndex = event.pageIndex + 1;
+    this.getAllEmpBasicInfoQueryPerams(event);
+  }
+
+  getAllEmpBasicInfoQueryPerams(queryParams: any){
+    this.subscription = this.manageEmployeeService.getAllPagination(queryParams).subscribe((res: any) => {
+      this.dataSource.data = res.items;
+      // this.dataSource.paginator = this.paginator;
+      this.pagination.length = res.totalItemsCount;
+    });
   }
 
 }

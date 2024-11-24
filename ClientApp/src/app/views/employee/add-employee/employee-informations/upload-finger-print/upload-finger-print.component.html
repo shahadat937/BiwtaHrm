@@ -1,0 +1,48 @@
+<c-card>
+    <c-card-header class="text-center">Upload Fingerprint</c-card-header>
+    <c-card-body>
+      <form [formGroup]="fingerprintForm" (ngSubmit)="onSubmit()">
+        <c-row>
+          <!-- Left Side -->
+          <c-col [md]="6">
+            <c-card>
+              <c-card-header class="text-center">Left Side</c-card-header>
+              <c-card-body>
+                <c-row class="justify-content-evenly mt-3">
+                  <c-col [md]="2" class="d-flex justify-content-evenly" *ngFor="let finger of leftFingers">
+                    <div class="text-center finger-container">
+                      <img *ngIf="finger.image" [src]="finger.image" class="preview-image" />
+                      <label [for]="finger.id" [class.active]="finger.image">{{ finger.label }}</label>
+                      <input type="file" [id]="finger.id" (change)="onPhotoSelected($event, finger)" />
+                    </div>
+                  </c-col>
+                </c-row>
+              </c-card-body>
+            </c-card>
+          </c-col>
+  
+          <!-- Right Side -->
+          <c-col [md]="6">
+            <c-card>
+              <c-card-header class="text-center">Right Side</c-card-header>
+              <c-card-body>
+                <c-row class="justify-content-evenly mt-3">
+                  <c-col [md]="2" class="d-flex justify-content-evenly" *ngFor="let finger of rightFingers">
+                    <div class="text-center finger-container">
+                      <img *ngIf="finger.image" [src]="finger.image" class="preview-image" />
+                      <label [for]="finger.id" [class.active]="finger.image">{{ finger.label }}</label>
+                      <input type="file" [id]="finger.id" (change)="onPhotoSelected($event, finger)" />
+                    </div>
+                  </c-col>
+                </c-row>
+              </c-card-body>
+            </c-card>
+          </c-col>
+        </c-row>
+        <div class="text-center mt-3">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </c-card-body>
+  </c-card>
+  

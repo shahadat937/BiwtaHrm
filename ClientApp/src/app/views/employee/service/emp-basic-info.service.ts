@@ -21,6 +21,11 @@ export class EmpBasicInfoService {
   getAll(): Observable<BasicInfoModule[]> {
       return this.http.get<BasicInfoModule[]>(this.baseUrl + '/empBasicInfo/get-allEmpBasicInfo')
   }
+  
+  getAllPagination(queryParams: any): Observable<any> {
+    const params = new HttpParams({ fromObject: queryParams });
+    return this.http.get<any>(`${this.baseUrl}/empBasicInfo/get-allEmpBasicInfo`, { params });
+}
 
   findByEmpId(id: number) {
     return this.http.get<BasicInfoModule>(this.baseUrl + '/empBasicInfo/get-EmpBasicInfosById/' + id);

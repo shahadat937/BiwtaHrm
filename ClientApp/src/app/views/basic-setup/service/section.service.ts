@@ -55,4 +55,9 @@ export class SectionService {
   getSectionByOfficeDepartment(departmentId: number) {
     return this.http.get<SelectedModel[]>(this.baseUrl + '/section/get-sectionByOfficeIdAndDepartmentId?&departmentId='+departmentId);
   }
+
+  getSectionPosition(departmentId:number, sectionId:number){
+    return this.http.get<any>(this.baseUrl + '/section/get-sectionPosition?&departmentId=' + departmentId + '&sectionId='+sectionId);
+  }
+
 }

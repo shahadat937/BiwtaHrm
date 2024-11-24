@@ -7,6 +7,7 @@ import { ReviewLeaveComponent } from './review-leave/review-leave.component'
 import {FinalApprovalComponent} from './final-approval/final-approval.component'
 import {PersonalLeaveComponent} from './personal-leave/personal-leave.component'
 import {LeaveBalanceComponent} from './leave-balance/leave-balance.component'
+import { OldLeaveEntryComponent } from './old-leave-entry/old-leave-entry.component';
 
 const routes: Routes = [
   {
@@ -32,7 +33,11 @@ const routes: Routes = [
   {
     path: 'leavebalance',
     component: LeaveBalanceComponent
-  }
+  },
+  {
+    path: 'old-leave-entry',
+    component: OldLeaveEntryComponent
+  },
 ];
 
 @NgModule({

@@ -85,5 +85,14 @@ namespace Hrm.Api.Controllers
             var Designations = await _mediator.Send(new GetSelectedSectionByOfficeDepartmentRequest { DepartmentId = departmentId });
             return Ok(Designations);
         }
+
+
+        [HttpGet]
+        [Route("get-sectionPosition")]
+        public async Task<ActionResult<int>> GetDesignationPosition(int departmentId, int sectionId)
+        {
+            var sections = await _mediator.Send(new GetSectionLastSequenceRequest { DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(sections);
+        }
     }
 }

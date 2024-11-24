@@ -733,10 +733,10 @@ namespace Hrm.Application.Profiles
             CreateMap<RoleDashboard, RoleDashboardDto>()
                 .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.AspNetRoles.Name));
 
-            //CreateMap<NavbarSetting, NavbarSettingDto>().ReverseMap();
+            CreateMap<NavbarSetting, NavbarSettingDto>().ReverseMap();
             //CreateMap<NavbarSetting, CreateNavbarSettingDto>().ReverseMap();
-            //CreateMap<NavbarSetting, NavbarSettingDto>()
-            //    .ForMember(dest => dest.ThemName, opt => opt.MapFrom(src => src.NavbarThem.ThemName));
+            CreateMap<NavbarSetting, NavbarSettingDto>()
+                .ForMember(dest => dest.ThemName, opt => opt.MapFrom(src => src.NavbarThem.ThemName)).ReverseMap();
 
         }
     }

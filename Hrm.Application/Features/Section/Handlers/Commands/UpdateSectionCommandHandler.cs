@@ -45,20 +45,20 @@ namespace Hrm.Application.Features.Section.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
             }
             //var SectionName = request.SectionDto.SectionName.ToLower();
-            var SectionName = request.SectionDto.SectionName.Trim().ToLower().Replace(" ", string.Empty);
-            IQueryable<Hrm.Domain.Section> Sections = _SectionRepository.Where(x => x.SectionName.ToLower() == SectionName);
-            if (Sections.Any())
-            {
-                response.Success = false;
-                response.Message = $"Update Failed '{request.SectionDto.SectionName}' already exists.";
+            //var SectionName = request.SectionDto.SectionName.Trim().ToLower().Replace(" ", string.Empty);
+            //IQueryable<Hrm.Domain.Section> Sections = _SectionRepository.Where(x => x.SectionName.ToLower() == SectionName);
+            //if (Sections.Any())
+            //{
+            //    response.Success = false;
+            //    response.Message = $"Update Failed '{request.SectionDto.SectionName}' already exists.";
 
-                //response.Message = "Creation Failed Name already exists.";
-                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+            //    //response.Message = "Creation Failed Name already exists.";
+            //    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
 
-            }
+            //}
 
-            else
-            {
+            //else
+            //{
 
                 var Section = await _unitOfWork.Repository<Hrm.Domain.Section>().Get(request.SectionDto.SectionId);
 
@@ -76,7 +76,7 @@ namespace Hrm.Application.Features.Section.Handlers.Commands
                 response.Message = "Update Successfull";
                 response.Id = Section.SectionId;
 
-            }
+            //}
 
             return response;
         }

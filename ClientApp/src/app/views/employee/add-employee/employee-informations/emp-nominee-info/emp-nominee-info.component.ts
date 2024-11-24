@@ -65,11 +65,12 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
       control.push(this.fb.group({
         id: [nomineeInfo.id],
         empId: [nomineeInfo.empId],
+        pNo: [this.pNo],
         nomineeName : [nomineeInfo.nomineeName, Validators.required],
         dateOfBirth: [nomineeInfo.dateOfBirth],
         birthRegNo: [nomineeInfo.birthRegNo],
         nid: [nomineeInfo.nid],
-        relationId : [nomineeInfo.relationId, Validators.required],
+        relationId : [nomineeInfo.relationId],
         percentage : [nomineeInfo.percentage],
         address : [nomineeInfo.address ],
         photoUrl: [nomineeInfo.photoUrl],
@@ -127,17 +128,17 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
       id: new FormControl(0),
       empId: new FormControl(this.empId),
       pNo: new FormControl(this.pNo),
-      nomineeName: new FormControl("", Validators.required),
-      dateOfBirth: new FormControl(""),
-      birthRegNo: new FormControl(""),
-      nid: new FormControl(""),
+      nomineeName: new FormControl(undefined, Validators.required),
+      dateOfBirth: new FormControl(undefined),
+      birthRegNo: new FormControl(undefined),
+      nid: new FormControl(undefined),
       relationId: new FormControl(null),
       percentage: new FormControl(0),
-      address: new FormControl(""),
+      address: new FormControl(undefined),
       photoFile: new FormControl(null),
       signatureFile: new FormControl(null),
-      uniqueIdentity: new FormControl(""),
-      remark: new FormControl(""),
+      uniqueIdentity: new FormControl(undefined),
+      remark: new FormControl(undefined),
       isActive: new FormControl(true),
       photoPreviewUrl: new FormControl(null),
       signaturePreviewUrl: new FormControl(null),
@@ -189,7 +190,6 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
   saveNominee() {
     this.loading = true;
     const formData = this.EmpNomineeInfoForm.get('empNomineeList')?.value;
-    console.log("Form Data: ", formData);
     this.empNomineeInfoService.saveEmpNomineeInfo(formData).subscribe((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
@@ -197,7 +197,7 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
         });
         this.loading = false;
         // this.cancel();
-      this.getEmployeeNomineeInfoByEmpId();
+        this.getEmployeeNomineeInfoByEmpId();
       } else {
         this.toastr.warning('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -211,6 +211,7 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
     const empNomineeList = this.EmpNomineeInfoForm.get('empNomineeList')?.value as any[]; // Replace 'any' with the 
     empNomineeList.forEach((nominee) => {
       this.loading = true;
+      const success = false;
         this.empNomineeInfoService.saveEmpNomineeInfo(nominee).subscribe({
           next: (response:any) => {
             if(response.success) {
@@ -254,7 +255,7 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
     //   //   }
     //   // })
     // })
-    this.getEmployeeNomineeInfoByEmpId();
+    // this.getEmployeeNomineeInfoByEmpId();
   }
 
   private convertFormGroupToFormData(formGroup: FormGroup): FormData {

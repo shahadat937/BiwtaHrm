@@ -9,18 +9,20 @@
           </div>
           <div class="modal-body scrollable-modal-body">
               <p-table
-        #dt
-        [value]="employees"
-        dataKey="id"
-        [rows]="10"
-        [paginator]="true"
-        [rowsPerPageOptions]="[5, 10, 25, 50]"
-        [loading]="loading"
-        [paginator]="true"
-        [scrollable]="true" 
-        scrollHeight="400px" 
-        [tableStyle]="{'min-width': '50rem'}"
-        [globalFilterFields]="['firstName', 'lastName', 'idCardNo', 'departmentName', 'designationName', 'sectionName']"
+              [value]="employees"
+              dataKey="id"
+              [rows]="pagination.pageSize"
+              [paginator]="true"
+              (onPage)="onPageChange($event)"
+              [lazy]="true"
+              [totalRecords]='totalRecords'
+              [rowsPerPageOptions]="pagination.pageSizeOptions"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [showCurrentPageReport]="true"
+              [loading]="loading"
+              [scrollable]="true" 
+              scrollHeight="400px" 
+              [tableStyle]="{'min-width': '50rem'}"
       >
         <!-- Search Input -->
         <ng-template pTemplate="caption">
@@ -32,11 +34,12 @@
               <input
                 pInputText
                 type="text"
-                (input)="onGlobalFilter($event)"
+                #filter
+                (keyup)="applyFilter(filter.value)"
                 placeholder="Search Here.."
               />
             </p-iconField>
-            <p-dropdown
+            <!-- <p-dropdown
               class="col-xl pb-2"
               [options]="departments" 
               optionLabel="name" 
@@ -52,7 +55,7 @@
               placeholder="Select Section"
               display="chip" 
               [showClear]="true"
-              (onChange)="onSelect($event.value ? $event.value.name : null)" />
+              (onChange)="onSelect($event.value ? $event.value.name : null)" /> -->
               
           </div>
         </ng-template>

@@ -53,6 +53,7 @@ import { AuthService } from './core/service/auth.service';
 import { SharedCustomModule } from './shared/shared.module';
 import { FormRecordService } from './views/appraisal/services/form-record.service';
 import { YearSetupService } from './views/basic-setup/service/year-setup.service';
+import { NavbarSettingService } from './views/featureManagement/service/navbar-setting.service';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
@@ -112,7 +113,8 @@ const APP_CONTAINERS = [
     AuthService,
     FormRecordService ,
     YearSetupService,
-    ToastrService
+    ToastrService,
+    NavbarSettingService
   ],
   bootstrap: [AppComponent],
 })

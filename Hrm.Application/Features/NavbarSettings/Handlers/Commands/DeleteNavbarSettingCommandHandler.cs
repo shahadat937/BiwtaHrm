@@ -39,6 +39,15 @@ namespace Hrm.Application.Features.NavbarSettings.Handlers.Commands
                 }
             }
 
+            if (!string.IsNullOrEmpty(NavbarSetting.BrandLogo))
+            {
+                var oldPhotoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\TempleteImage", NavbarSetting.BrandLogo);
+                if (File.Exists(oldPhotoPath))
+                {
+                    File.Delete(oldPhotoPath);
+                }
+            }
+
             await _unitOfWork.Repository<Hrm.Domain.NavbarSetting>().Delete(NavbarSetting);
             await _unitOfWork.Save();
 

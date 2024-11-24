@@ -1,6 +1,7 @@
 export class EmpFingerprint {
     id : number = 0;
 	empId : number | null = null;
+	pNo: string = '';
 	rightThumbFile : File | null = null;
 	rightIndexFile : File | null = null;
 	rightMiddleFile : File | null = null;

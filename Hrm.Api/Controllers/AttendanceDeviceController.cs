@@ -1,5 +1,8 @@
 ﻿using Azure.Core;
+using Hrm.Api.ModelBindings;
 using Hrm.Application;
+using Hrm.Application.DTOs.Devicecmd;
+using Hrm.Application.Features.AttendanceDevice.Requests.Commands;
 using Hrm.Application.Features.AttendanceDevice.Requests.Queries;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -66,9 +69,11 @@ namespace Hrm.Api.Controllers
 
         [HttpPost]
         [Route("devicecmd")]
-        public async Task<ActionResult> Devicemd()
+        public async Task<ActionResult> Devicemd([FromQuery] string SN, [ModelBinder(BinderType = typeof(DevicecmdBinding))] DeviceCmdResponse devicecmd)
         {
-            return Ok("OK");
+            var command = new DeviceCmdResponseCommand { SN = SN, CommandResponse = devicecmd };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

@@ -1279,6 +1279,13 @@ namespace Hrm.Persistence
                 .HasForeignKey(rd => rd.RoleId);
             });
 
+            modelBuilder.Entity<EmpFingerPrint>(entity =>
+            {
+                entity.HasOne(rd => rd.EmpBasicInfo)
+                .WithMany(rd => rd.EmpFingerPrint)
+                .HasForeignKey(rd => rd.EmpId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -1409,6 +1416,7 @@ namespace Hrm.Persistence
         public virtual DbSet<NavbarSetting> NavbarSetting { get; set; } = null!;
         public virtual DbSet<LeaveFiles> LeaveFiles { get; set; } = null!;
         public virtual DbSet<RoleDashboard> RoleDashboard { get; set; } = null!;
+        public virtual DbSet<EmpFingerPrint> EmpFingerPrint { get; set; } = null!;
 
     }
 }

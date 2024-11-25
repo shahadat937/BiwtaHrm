@@ -12,8 +12,8 @@
                   <c-col [md]="2" class="d-flex justify-content-evenly" *ngFor="let finger of leftFingers">
                     <div class="text-center finger-container">
                       <img *ngIf="finger.image" [src]="finger.image" class="preview-image" />
-                      <label [for]="finger.id" [class.active]="finger.image">{{ finger.label }}</label>
-                      <input type="file" [id]="finger.id" (change)="onPhotoSelected($event, finger)" />
+                      <label [for]="finger.id" [class.active]="finger.image" [cTooltip]="finger.label" cTooltipPlacement="bottom">{{ finger.count }}</label>
+                      <input type="file" [id]="finger.id" (change)="onPhotoSelected($event, finger)"/>
                     </div>
                   </c-col>
                 </c-row>
@@ -30,7 +30,7 @@
                   <c-col [md]="2" class="d-flex justify-content-evenly" *ngFor="let finger of rightFingers">
                     <div class="text-center finger-container">
                       <img *ngIf="finger.image" [src]="finger.image" class="preview-image" />
-                      <label [for]="finger.id" [class.active]="finger.image">{{ finger.label }}</label>
+                      <label [for]="finger.id" [class.active]="finger.image" [cTooltip]="finger.label" cTooltipPlacement="bottom">{{ finger.count }}</label>
                       <input type="file" [id]="finger.id" (change)="onPhotoSelected($event, finger)" />
                     </div>
                   </c-col>

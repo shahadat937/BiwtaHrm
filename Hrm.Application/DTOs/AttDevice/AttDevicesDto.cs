@@ -15,6 +15,8 @@ namespace Hrm.Application.DTOs.AttDevice
         public string? Area { get; set; }
         public string? MAC {  get; set; }
         public string? LocalIpAddress { get; set; }
+        public string? AttStamp { get; set; }
+        public string? OpStamp { get; set; }
         public string? OEM {  get; set; }
         public string? PushVersion { get; set; }
         public string? Language {  get; set; }

@@ -126,6 +126,7 @@ using Hrm.Application.DTOs.NavbarThem;
 using Hrm.Application.DTOs.FormGroup;
 using Hrm.Application.DTOs.NavbarSetting;
 using Hrm.Application.DTOs.RoleDashboard;
+using Hrm.Application.DTOs.EmpFingerPrint;
 
 
 
@@ -475,6 +476,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpPhotoSign, EmpPhotoSignDto>().ReverseMap();
             CreateMap<EmpPhotoSign, CreateEmpPhotoSignDto>().ReverseMap();
+
+            CreateMap<EmpFingerPrint, EmpFingerPrintDto>().ReverseMap();
+            //CreateMap<EmpFingerPrint, CreateEmpFingerPrintDto>().ReverseMap();
 
             CreateMap<EmpNomineeInfo, EmpNomineeInfoDto>().ReverseMap();
             CreateMap<EmpNomineeInfo, CreateEmpNomineeInfoDto>().ReverseMap();

@@ -72,10 +72,12 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
     this.departmentOptions = [];
     this.sectionOptions = [];
     this.designationOptions = [];
-    this.getSelectedResponsibilityType();
     this.getAllSelectedDepartments();
-    this.getEmployeeOtherResponsibilityInfoByEmpId();
+    this.getSelectedResponsibilityType();
     this.getInActiveEmpOtherResponsibility();
+    setTimeout(() => {
+      this.getEmployeeOtherResponsibilityInfoByEmpId();
+    }, 0);
   }
 
   ngOnDestroy(): void {
@@ -173,6 +175,11 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
   }
 
   addOtherResponsibility() {
+    
+    this.departmentOptions.push([...this.departments]);  // Clone the departments list
+    this.sectionOptions.push([]);
+    this.designationOptions.push([]);
+
     const formGroup = new FormGroup({
       id: new FormControl(0),
       empId: new FormControl(this.empId),
@@ -185,11 +192,6 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
       serviceStatus: new FormControl(true),
       remark: new FormControl(null),
     });
-
-    this.departmentOptions.push([...this.departments]);  // Clone the departments list
-    this.sectionOptions.push([]);
-    this.designationOptions.push([]);
-
     this.empOtherResponsibilityListArray.push(formGroup);
     
   }

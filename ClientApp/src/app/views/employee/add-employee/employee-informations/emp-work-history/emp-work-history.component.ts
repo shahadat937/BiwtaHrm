@@ -67,7 +67,9 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllSelectedDepartments();
-    this.getEmployeeWorkHistoryInfoByEmpId();
+    setTimeout(() => {
+      this.getEmployeeWorkHistoryInfoByEmpId();
+    }, 0);
   }
 
   ngOnDestroy(): void {
@@ -159,6 +161,12 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
   }
 
   addWorkHistory() {
+    // Step 1: Initialize department, section, and designation options for the new row
+    this.departmentOptions.push([...this.departments]); // Clone the departments list
+    this.sectionOptions.push([]);
+    this.designationOptions.push([]);
+  
+    // Step 2: Push the formGroup into empWorkHistoryListArray
     const formGroup = new FormGroup({
       id: new FormControl(0),
       empId: new FormControl(this.empId),
@@ -169,13 +177,7 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
       releaseDate: new FormControl(null),
       remark: new FormControl(null),
     });
-
     this.empWorkHistoryListArray.push(formGroup);
-    
-    // Initialize department, section, and designation options for the new row
-    this.departmentOptions.push([...this.departments]);  // Clone the departments list
-    this.sectionOptions.push([]);
-    this.designationOptions.push([]);
   }
 
   find(id: number){

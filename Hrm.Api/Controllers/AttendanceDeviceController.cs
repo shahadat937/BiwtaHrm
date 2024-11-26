@@ -23,9 +23,9 @@ namespace Hrm.Api.Controllers
 
         [HttpPost]
         [Route("cdata")]
-        public async Task<ActionResult> Post([FromQuery] string SN)
+        public async Task<ActionResult> Post([FromQuery] string SN, [ModelBinder(BinderType = typeof(RequestBodyBinding))] string RequestBody)
         {
-            var command = new DeviceTableDataCommand { SN = SN };
+            var command = new DeviceTableDataCommand { SN = SN, RequestBody = RequestBody };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

@@ -31,7 +31,7 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
                 return "Invalid Options";
             }
 
-            return "OK";
+            return "OK\n";
         }
     }
 }

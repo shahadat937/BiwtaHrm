@@ -127,6 +127,7 @@ using Hrm.Application.DTOs.FormGroup;
 using Hrm.Application.DTOs.NavbarSetting;
 using Hrm.Application.DTOs.RoleDashboard;
 using Hrm.Application.DTOs.EmpFingerPrint;
+using Hrm.Application.DTOs.PendingDevice;
 
 
 
@@ -741,6 +742,11 @@ namespace Hrm.Application.Profiles
             //CreateMap<NavbarSetting, CreateNavbarSettingDto>().ReverseMap();
             CreateMap<NavbarSetting, NavbarSettingDto>()
                 .ForMember(dest => dest.ThemName, opt => opt.MapFrom(src => src.NavbarThem.ThemName)).ReverseMap();
+
+
+            //Attendance Device Related Dto Mapping
+            CreateMap<PendingDevice, PendingDeviceDto>().ReverseMap();
+            CreateMap<PendingDevice, CreatePendingDeviceDto>().ReverseMap();
 
         }
     }

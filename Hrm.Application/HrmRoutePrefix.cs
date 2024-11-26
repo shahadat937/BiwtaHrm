@@ -141,5 +141,7 @@ namespace Hrm.Application
         public const string NavbarSetting = HRMRoutePrefixBase + "navbarSetting";
         public const string RoleDashboard = HRMRoutePrefixBase + "roleDashboard";
         public const string EmpFingerPrint = HRMRoutePrefixBase + "empFingerPrint";
+        public const string DeviceController = "iclock";
+        public const string DeviceUserController = HRMRoutePrefixBase + "AttendanceDevice";
     }
 }

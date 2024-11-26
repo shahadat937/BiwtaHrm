@@ -1418,5 +1418,11 @@ namespace Hrm.Persistence
         public virtual DbSet<RoleDashboard> RoleDashboard { get; set; } = null!;
         public virtual DbSet<EmpFingerPrint> EmpFingerPrint { get; set; } = null!;
 
+        // Attendance Device Related Table
+        public virtual DbSet<PendingDevice> PendingDevice {  get; set; } = null!;
+        public virtual DbSet<DeviceParameters> DeviceParameters { get; set; } = null!;
+        public virtual DbSet<AttDevices> AttDevices { get; set; } = null!;
+        public virtual DbSet<AttDeviceCommands> AttDeviceCommands { get; set; } = null!;
+
     }
 }

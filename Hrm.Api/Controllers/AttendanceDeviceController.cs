@@ -23,24 +23,26 @@ namespace Hrm.Api.Controllers
 
         [HttpPost]
         [Route("cdata")]
-        public async Task<ActionResult> Post()
+        public async Task<ActionResult> Post([FromQuery] string SN)
         {
-            using (var reader = new StreamReader(Request.Body))
-            {
-                var data = await reader.ReadToEndAsync();
-                return Ok("OK");
-            }
+            var command = new DeviceTableDataCommand { SN = SN };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HttpGet]
         [Route("cdata")]
-        public async Task<ActionResult> GetCData()
+        public async Task<ActionResult> GetCData([FromQuery] string SN, [FromQuery] string Options, [FromQuery] string DeviceType, [FromQuery] string PushOptionsFlag)
         {
-            using (var reader = new StreamReader(Request.Body))
-            {
-                var data = await reader.ReadToEndAsync();
-                return Ok("OK");
-            }
+            //using (var reader = new StreamReader(Request.Body))
+            //{
+            //    var data = await reader.ReadToEndAsync();
+            //    return Ok("OK");
+            //}
+
+            var command = new PairDeviceRequest { SN = SN, DeviceType = DeviceType };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HttpPost]
@@ -62,9 +64,11 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("ping")]
-        public async Task<ActionResult> GetPing()
+        public async Task<ActionResult> GetPing([FromQuery] string SN)
         {
-            return Ok("OK");
+            var command = new GetDevicePingRequest { SN = SN };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HttpPost]

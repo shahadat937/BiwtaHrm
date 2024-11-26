@@ -7,6 +7,7 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Features.AttendanceDevice.Requests.Queries;
 using Hrm.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
@@ -14,16 +15,18 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
     public class PairDeviceRequestHandler:IRequestHandler<PairDeviceRequest,object>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IHttpContextAccessor _httpContext;
         private readonly string UnauthorizedDeviceResponse = "Not Authorized Terminal";
 
-        public PairDeviceRequestHandler(IUnitOfWork unitOfWork)
+        public PairDeviceRequestHandler(IUnitOfWork unitOfWork, IHttpContextAccessor httpContext)
         {
             _unitOfWork = unitOfWork;
+            _httpContext = httpContext;
         }
 
         public async Task<object> Handle(PairDeviceRequest request, CancellationToken cancellationToken)
         {
-            var pairedDevice = await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Where(x => x.SN == request.SN && x.Status == true).FirstOrDefaultAsync();
+            var pairedDevice = await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Where(x => x.SN == request.SN).FirstOrDefaultAsync();
             var pendingDevice = await _unitOfWork.Repository<Hrm.Domain.PendingDevice>().Where(x => x.SN == request.SN).FirstOrDefaultAsync();
             if(pairedDevice == null && pendingDevice == null)
             {
@@ -31,6 +34,7 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
                 device.Id = 0;
                 device.SN = request.SN;
                 device.DeviceType = request.DeviceType;
+                device.DeviceIp = this.getDeviceIp();
                 device.ExpireTime = DateTime.Now.AddSeconds(25);
                 await _unitOfWork.Repository<Hrm.Domain.PendingDevice>().Add(device);
                 await _unitOfWork.Save();
@@ -62,5 +66,20 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
 
             return defaultResponse;
         }
+
+        private string getDeviceIp()
+        {
+            string clientIp = _httpContext.HttpContext.Connection.RemoteIpAddress.ToString();
+
+            var xForwardHeader = _httpContext.HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+
+            if (!string.IsNullOrEmpty(xForwardHeader))
+            {
+                clientIp = xForwardHeader.Split(',')[0];
+            }
+
+            return clientIp;
+        }
+
     }
 }

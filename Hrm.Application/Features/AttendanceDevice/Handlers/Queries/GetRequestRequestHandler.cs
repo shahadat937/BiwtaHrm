@@ -7,6 +7,7 @@ using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Features.AttendanceDevice.Requests.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
@@ -16,15 +17,24 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
         private readonly IHrmRepository<Domain.AttDeviceCommands> _repo;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContext;
 
-        public GetRequestRequestHandler(IUnitOfWork unitOfWork,  IMapper mapper)
+        public GetRequestRequestHandler(IUnitOfWork unitOfWork,  IMapper mapper, IHttpContextAccessor httpContext)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _httpContext = httpContext;
         }
 
         public async Task<object> Handle(GetRequestRequest request, CancellationToken cancellationToken)
         {
+            var IsAuthorizedDevice = await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Where(x => x.SN == request.SN && x.Status == true).AnyAsync();
+
+            if(!IsAuthorizedDevice)
+            {
+                return "Invalid Options";
+            }
+
             var command = await _unitOfWork.Repository<Hrm.Domain.AttDeviceCommands>().Where(x => x.SN == request.SN).OrderBy(x => x.Id).FirstOrDefaultAsync();
             if(command==null)
             {

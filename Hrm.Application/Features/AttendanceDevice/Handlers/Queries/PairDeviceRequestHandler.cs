@@ -41,6 +41,8 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
                 return UnauthorizedDeviceResponse;
             } else if(pairedDevice == null && pendingDevice != null)
             {
+                pendingDevice.DeviceType = request.DeviceType;
+                pendingDevice.DeviceIp = this.getDeviceIp();
                 pendingDevice.ExpireTime = DateTime.Now.AddSeconds(25);
                 await _unitOfWork.Repository<Hrm.Domain.PendingDevice>().Update(pendingDevice);
                 await _unitOfWork.Save();

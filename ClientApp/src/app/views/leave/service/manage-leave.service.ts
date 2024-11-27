@@ -59,4 +59,8 @@ export class ManageLeaveService {
   updateLeaveRequest(leaveRequest:FormData): Observable<any> {
     return this.http.put<any>(this.baseUrl+'/leaveRequest/update-LeaveRequest', leaveRequest)
   }
+
+  deleteLeaveRequest(leaveRequestId:number): Observable<any> {
+    return this.http.delete<any>(this.baseUrl+`/leaveRequest/delete-LeaveRequest/${leaveRequestId}`);
+  }
 }

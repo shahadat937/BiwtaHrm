@@ -110,6 +110,9 @@
                 >
                   <mat-icon fontIcon="visibility"></mat-icon>
                 </button>
+                <button *ngIf="this.Role=='Reviewer'" class="custom-button me-1" [disabled]="loading" (click)="onDelete(leave.leaveRequestId)" title="Delete Leave">
+                  <mat-icon fontIcon="delete"></mat-icon>
+                </button>
               </td>
             </tr>
           </ng-template>

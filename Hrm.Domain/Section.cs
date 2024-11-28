@@ -24,6 +24,7 @@ namespace Hrm.Domain
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+        public bool? ShowAllDesignation { get; set; }
 
         public virtual ICollection<EmpJobDetail>? EmpJobDetail { get; set; }
         public virtual ICollection<EmpJobDetail>? FirstEmpJobDetail { get; set; }

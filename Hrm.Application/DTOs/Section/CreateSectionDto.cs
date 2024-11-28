@@ -23,5 +23,6 @@ namespace Hrm.Application.DTOs.Section
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+        public bool? ShowAllDesignation { get; set; }
     }
 }

@@ -189,6 +189,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         sectionId: null,
         remark: '',
         menuPosition: 0,
+        createCount: 1,
         isActive: true,
         officeName: "",
         departmentName: "",

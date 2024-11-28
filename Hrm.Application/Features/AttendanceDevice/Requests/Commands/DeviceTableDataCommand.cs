@@ -10,6 +10,7 @@ namespace Hrm.Application.Features.AttendanceDevice.Requests.Commands
     public class DeviceTableDataCommand : IRequest<object>
     {
         public string SN { get; set; }
+        public string Table { get; set; }
         public string? RequestBody { get; set; }
     }
 }

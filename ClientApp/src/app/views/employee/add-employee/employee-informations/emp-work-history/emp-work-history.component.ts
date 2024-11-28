@@ -15,6 +15,7 @@ import { SectionService } from 'src/app/views/basic-setup/service/section.servic
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { DesignationService } from 'src/app/views/basic-setup/service/designation.service';
 
 @Component({
   selector: 'app-emp-work-history',
@@ -62,6 +63,7 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
     public empJobDetailsService: EmpJobDetailsService,
     public departmentService: DepartmentService,
     public sectionService : SectionService,
+    public designationService: DesignationService,
     private fb: FormBuilder) { }
 
 
@@ -305,8 +307,18 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
     this.empWorkHistoryListArray.at(index).get('designationId')?.setValue(null);
   
     if (sectionId) {
-      this.empJobDetailsService.getOldDesignationBySection(sectionId).subscribe((res) => {
-        this.designationOptions[index] = res; 
+      this.sectionService.find(sectionId).subscribe((res) => {
+        console.log(res)
+        if(res.showAllDesignation == true){
+          this.designationService.getSelectDesignationSetupName().subscribe((data) => { 
+            this.designationOptions[index] = data;
+          });
+        }
+        else{
+          this.empJobDetailsService.getOldDesignationBySection(sectionId).subscribe((res) => {
+            this.designationOptions[index] = res;
+          });
+        }
       });
     } else {
       this.designationOptions[index] = [];

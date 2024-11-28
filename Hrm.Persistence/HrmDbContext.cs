@@ -1171,6 +1171,10 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.Designation)
                     .WithMany(e => e.EmpWorkHistory)
                     .HasForeignKey(e => e.DesignationId);
+
+                entity.HasOne(e => e.DesignationSetup)
+                    .WithMany(e => e.EmpWorkHistory)
+                    .HasForeignKey(e => e.DesignationSetupId);
             });
 
             modelBuilder.Entity<EmpOtherResponsibility>(entity =>

@@ -20,7 +20,7 @@ namespace Hrm.Api.Controllers
         }
         [HttpPost]
         [Route("save-EmpWorkHistory")]
-        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] List<CreateEmpWorkHistoryDto> EmpWorkHistory)
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateEmpWorkHistoryDto EmpWorkHistory)
         {
             var command = new CreateEmpWorkHistoryCommand { EmpWorkHistoryDto = EmpWorkHistory };
             var response = await _mediator.Send(command);

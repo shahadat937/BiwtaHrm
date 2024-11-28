@@ -13,6 +13,7 @@ namespace Hrm.Domain
         public int? EmpId { get; set; }
         public int? OfficeId { get; set; }
         public int? DepartmentId { get; set; }
+        public int? DesignationSetupId { get; set; }
         public int? SectionId { get; set; }
         public int? DesignationId { get; set; }
         public DateOnly? JoiningDate { get; set; }
@@ -25,6 +26,7 @@ namespace Hrm.Domain
         public virtual Department? Department { get; set; }
         public virtual Section? Section { get; set; }
         public virtual Designation? Designation { get; set; }
+        public virtual DesignationSetup? DesignationSetup { get; set; }
     }
 
 }

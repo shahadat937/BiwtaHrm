@@ -30,6 +30,7 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                 .Include(x => x.Office)
                 .Include(x => x.Department)
                 .Include(x => x.Section)
+                .Include(x => x.DesignationSetup)
                 .Include(x => x.Designation)
                         .ThenInclude(ds => ds.DesignationSetup)
                 .FirstOrDefault();

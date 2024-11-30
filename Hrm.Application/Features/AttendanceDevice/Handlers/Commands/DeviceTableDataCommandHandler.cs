@@ -9,6 +9,7 @@ using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.AttDevice;
 using Hrm.Application.DTOs.Attendance;
+using Hrm.Application.Enum;
 using Hrm.Application.Features.AttendanceDevice.Interfaces;
 using Hrm.Application.Features.AttendanceDevice.Requests.Commands;
 using Hrm.Application.Helpers;
@@ -66,7 +67,7 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
                     count = count + 1;
                 }
             }
-            await _unitOfWork.Save();
+            //await _unitOfWork.Save();
 
             return $"OK:{count}\n";
         }
@@ -100,20 +101,58 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
                 createAtdDto.AttendanceStatusId = AttendanceHelper.SetAttendanceStatus(createAtdDto, _shiftRepo);
                 var attendanceRecord = _mapper.Map<Hrm.Domain.Attendance>(createAtdDto);
                 await _unitOfWork.Repository<Hrm.Domain.Attendance>().Add(attendanceRecord);
+                await _unitOfWork.Save();
             } else
             {
-                if(attendance.InTime.HasValue)
+                if(attendance.InTime.HasValue && !attendance.OutTime.HasValue)
                 {
-                    attendance.OutTime = PunchDto.PunchTime;
-                } else
+                    if(attendance.InTime > PunchDto.PunchTime)
+                    {
+                        attendance.OutTime = attendance.InTime;
+                        attendance.InTime = PunchDto.PunchTime;
+                        attendance.AttendanceStatusId = GetAttendanceStatus(attendance);
+                    } else
+                    {
+                        attendance.OutTime = PunchDto.PunchTime;
+                    }
+                } else if(attendance.InTime.HasValue && attendance.OutTime.HasValue)
+                {
+                    if(attendance.InTime > PunchDto.PunchTime)
+                    {
+                        attendance.InTime = PunchDto.PunchTime;
+                        attendance.AttendanceStatusId = GetAttendanceStatus(attendance);
+                    } else if(attendance.OutTime < PunchDto.PunchTime)
+                    {
+                        attendance.OutTime = PunchDto.PunchTime;
+                    }
+                } else if(!attendance.InTime.HasValue)
                 {
                     attendance.InTime = PunchDto.PunchTime;
+                    attendance.AttendanceStatusId = GetAttendanceStatus(attendance);
                 }
                 await _unitOfWork.Repository<Hrm.Domain.Attendance>().Update(attendance);
+                await _unitOfWork.Save();
                 return true;
             }
 
             return true;
         }
+
+        private int? GetAttendanceStatus(Domain.Attendance dto)
+        {
+            CreateAttendanceDto createAtdDto = new CreateAttendanceDto();
+            createAtdDto.EmpId = dto.EmpId;
+            createAtdDto.ShiftId = dto.ShiftId;
+            createAtdDto.AttendanceDate = dto.AttendanceDate;
+            createAtdDto.InTime = dto.InTime;
+            createAtdDto.OutTime = dto.OutTime;
+            if(!dto.AttendanceStatusId.HasValue || (dto.AttendanceStatusId != (int) AttendanceStatusOption.OnSiteVisit && dto.AttendanceStatusId != (int) AttendanceStatusOption.OnLeave) )
+            {
+                return AttendanceHelper.SetAttendanceStatus(createAtdDto, _shiftRepo);
+            }
+
+            return dto.AttendanceStatusId;
+        }
+
     }
 }

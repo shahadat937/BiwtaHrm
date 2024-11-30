@@ -55,6 +55,15 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [Route("reboot-Device")]
+        [HttpPost]
+        public async Task<ActionResult<BaseCommandResponse>> RebootDevice([FromForm] int DeviceId)
+        {
+            var command = new RebootDeviceCommand { DeviceId = DeviceId };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
         [Route("delete-User/{EmpId}/{DeviceId}")]
         [HttpDelete]
         public async Task<ActionResult<BaseCommandResponse>> DeleteUser(int EmpId, int DeviceId)

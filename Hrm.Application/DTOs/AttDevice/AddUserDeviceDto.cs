@@ -11,7 +11,7 @@ namespace Hrm.Application.DTOs.AttDevice
         public int? EmpId { get; set; }
         public string? IdCardNo { get; set; }
         public int DeviceId { get; set; }
-        public string Passwd { get; set; }
+        public string? Passwd { get; set; }
         public int GroupId { get; set; }
         public int Privilage { get; set; }
     }

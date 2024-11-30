@@ -24,6 +24,7 @@ export class EmpIdCardGenerateComponent implements OnInit  {
   empPersonalInfo : PersonalInfoModule = new PersonalInfoModule;
   empId: any = null;
   pNo: string = '';
+  photoPreviewUrl: string | ArrayBuffer | null = null;
   
   empPhoto : string = '';
   empSignature : string = '';
@@ -56,8 +57,8 @@ export class EmpIdCardGenerateComponent implements OnInit  {
 
     this.getEmpBasicInfoByEmpId();
     this.getEmpJobDetailsByEmpId();
-    this.getEmpPhotoSign();
     this.getEmpPersonalInfoByEmpId();
+    // this.getEmpPhotoSign();
   }
 
   
@@ -71,6 +72,7 @@ export class EmpIdCardGenerateComponent implements OnInit  {
   getEmpPersonalInfoByEmpId(){
     this.empPersonalInfoService.findByEmpId(this.empId).subscribe((res) => {
       this.empPersonalInfo = res;
+      this.patchEmpPhoto(res.genderName);
     });
   }
   
@@ -80,14 +82,42 @@ export class EmpIdCardGenerateComponent implements OnInit  {
     });
   }
   
-  getEmpPhotoSign(){
+  // getEmpPhotoSign(){
+  //   this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
+  //     if(res){
+  //       if(res.photoUrl){
+  //         this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`;
+  //       }
+  //     }
+  //     else if(this.empPersonalInfo.genderName){
+  //       this.patchEmpPhoto(this.empPersonalInfo.genderName);
+  //     }
+  //     else {
+  //       this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default.jpg`
+  //     }
+  //   });
+  // }
+
+  patchEmpPhoto(empGender: string){
     this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
       if(res){
-        this.empPhotoSign = res;
-        this.empPhoto = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`;
-        this.empSignature = `${this.empPhotoSignService.imageUrl}EmpSignature/${res.signatureUrl}`;
+        this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`
       }
-    });
+      else {
+        if(empGender){
+          const gender = empGender.charAt(0).toLowerCase();
+          if(gender == 'm'){
+            this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default_Male.jpg`
+          }
+          else {
+            this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default_Female.jpg`
+          }
+        }
+        else{
+          this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default.jpg`
+        }
+      }
+    })
   }
 
   printIdCard() {

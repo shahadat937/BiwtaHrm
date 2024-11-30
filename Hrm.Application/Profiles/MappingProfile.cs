@@ -421,6 +421,7 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
             .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Section.SectionName))
             .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.Designation.DesignationSetup.Name))
+            .ForMember(dest => dest.DesignationNameBangla, opt => opt.MapFrom(src => src.Designation.DesignationSetup.NameBangla))
             .ForMember(dest => dest.PresentGradeName, opt => opt.MapFrom(src => src.PresentGrade.GradeName))
             .ForMember(dest => dest.PresentScaleName, opt => opt.MapFrom(src => src.PresentScale.ScaleName))
             .ForMember(dest => dest.FirstDepartmentName, opt => opt.MapFrom(src => src.FirstDepartment.DepartmentName))

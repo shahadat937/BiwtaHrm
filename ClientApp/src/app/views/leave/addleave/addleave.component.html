@@ -243,7 +243,6 @@
               <c-col md="6">
                   <label cLabel for="leaveType">Leave Type<span class="text-danger">*</span></label>
                   <select 
-                  [disabled]="IsReadonly"
                   required
                   name="leaveTypeId"
                   #leaveType = "ngModel"
@@ -299,7 +298,6 @@
               <c-col [md]="6">
                 <label cLabel for="leavePurpose">Leave Purpose<span class="text-danger">*</span></label>
                 <textarea type="text"
-                [readOnly]="IsReadonly"
                 rows="1"
                 required
                 #leavePurpose = "ngModel"
@@ -314,7 +312,6 @@
               <c-col [md]="6">
                 <label cLabel for="remarks">Remarks</label>
                 <input
-                [readOnly]="IsReadonly"
                 type="text" 
                 name="remark" 
                 [(ngModel)]="this.addLeaveService.addLeaveModel.remark"

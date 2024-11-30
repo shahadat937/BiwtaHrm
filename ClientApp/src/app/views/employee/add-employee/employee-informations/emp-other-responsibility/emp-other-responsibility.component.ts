@@ -75,9 +75,7 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
     this.getAllSelectedDepartments();
     this.getSelectedResponsibilityType();
     this.getInActiveEmpOtherResponsibility();
-    setTimeout(() => {
-      this.getEmployeeOtherResponsibilityInfoByEmpId();
-    }, 0);
+    this.getEmployeeOtherResponsibilityInfoByEmpId();
   }
 
   ngOnDestroy(): void {
@@ -148,18 +146,20 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
         this.sectionOptions[index] = [];
         this.designationOptions[index] = [];
       }
-      control.push(this.fb.group({
-        id: [OtherResponsibilityInfo.id],
-        empId: [OtherResponsibilityInfo.empId],
-        responsibilityTypeId: [OtherResponsibilityInfo.responsibilityTypeId],
-        departmentId: [OtherResponsibilityInfo.departmentId],
-        sectionId: [OtherResponsibilityInfo.sectionId],
-        designationId: [OtherResponsibilityInfo.designationId],
-        startDate: [OtherResponsibilityInfo.startDate],
-        endDate: [OtherResponsibilityInfo.endDate],
-        serviceStatus: [OtherResponsibilityInfo.serviceStatus],
-        remark: [OtherResponsibilityInfo.remark],
-      }));
+      setTimeout(() => {
+        control.push(this.fb.group({
+          id: [OtherResponsibilityInfo.id],
+          empId: [OtherResponsibilityInfo.empId],
+          responsibilityTypeId: [OtherResponsibilityInfo.responsibilityTypeId],
+          departmentId: [OtherResponsibilityInfo.departmentId],
+          sectionId: [OtherResponsibilityInfo.sectionId],
+          designationId: [OtherResponsibilityInfo.designationId],
+          startDate: [OtherResponsibilityInfo.startDate],
+          endDate: [OtherResponsibilityInfo.endDate],
+          serviceStatus: [OtherResponsibilityInfo.serviceStatus],
+          remark: [OtherResponsibilityInfo.remark],
+        }));
+      }, 500);
   
 
     });
@@ -192,7 +192,9 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
       serviceStatus: new FormControl(true),
       remark: new FormControl(null),
     });
-    this.empOtherResponsibilityListArray.push(formGroup);
+    setTimeout(() => {
+      this.empOtherResponsibilityListArray.push(formGroup);
+    }, 500);
     
   }
 

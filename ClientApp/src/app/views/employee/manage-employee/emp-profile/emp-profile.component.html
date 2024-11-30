@@ -99,7 +99,7 @@
                                             <td></td>
                                         </ng-template>
                                         <th>NID Number</th>
-                                        <td *ngIf="empBasicInfo?.nid; else emptyTd"></td>
+                                        <td *ngIf="empBasicInfo?.nid; else emptyTd">{{empBasicInfo.nid}}</td>
                                     </tr>
                                     
                                     <tr>
@@ -226,14 +226,14 @@
                                     <tr>
                                         <th>Present Scale Level</th>
                                         <td *ngIf="empJobDetails?.presentScaleName; else emptyTd">{{empJobDetails.presentScaleName}}</td>
-                                        <th>First Grade</th>
-                                        <td *ngIf="empJobDetails?.firstGradeName; else emptyTd">{{empJobDetails.firstGradeName}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>First Scale Level</th>
-                                        <td *ngIf="empJobDetails?.firstScaleName; else emptyTd">{{empJobDetails.firstScaleName}}</td>
                                         <th>Basic Pay</th>
                                         <td *ngIf="empJobDetails?.basicPay; else emptyTd">{{empJobDetails.basicPay}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>First Grade</th>
+                                        <td *ngIf="empJobDetails?.firstGradeName; else emptyTd">{{empJobDetails.firstGradeName}}</td>
+                                        <th>First Scale Level</th>
+                                        <td *ngIf="empJobDetails?.firstScaleName; else emptyTd">{{empJobDetails.firstScaleName}}</td>
                                     </tr>
                                     <tr>
                                         <th>Service Status</th>
@@ -1304,7 +1304,7 @@
                                     <td></td>
                                 </ng-template>
                                 <th>NID Number</th>
-                                <td *ngIf="empBasicInfo?.nid; else emptyTd"></td>
+                                <td *ngIf="empBasicInfo?.nid; else emptyTd">{{empBasicInfo.nid}}</td>
                             </tr>
                             
                             <tr>
@@ -1431,14 +1431,14 @@
                             <tr>
                                 <th>Present Scale Level</th>
                                 <td *ngIf="empJobDetails?.presentScaleName; else emptyTd">{{empJobDetails.presentScaleName}}</td>
-                                <th>First Grade</th>
-                                <td *ngIf="empJobDetails?.firstGradeName; else emptyTd">{{empJobDetails.firstGradeName}}</td>
-                            </tr>
-                            <tr>
-                                <th>First Scale Level</th>
-                                <td *ngIf="empJobDetails?.firstScaleName; else emptyTd">{{empJobDetails.firstScaleName}}</td>
                                 <th>Basic Pay</th>
                                 <td *ngIf="empJobDetails?.basicPay; else emptyTd">{{empJobDetails.basicPay}}</td>
+                            </tr>
+                            <tr>
+                                <th>First Grade</th>
+                                <td *ngIf="empJobDetails?.firstGradeName; else emptyTd">{{empJobDetails.firstGradeName}}</td>
+                                <th>First Scale Level</th>
+                                <td *ngIf="empJobDetails?.firstScaleName; else emptyTd">{{empJobDetails.firstScaleName}}</td>
                             </tr>
                             <tr>
                                 <th>Service Status</th>

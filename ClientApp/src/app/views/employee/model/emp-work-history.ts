@@ -5,6 +5,7 @@ export class EmpWorkHistory {
     departmentId : number | null = null;
     sectionId : number | null = null;
     designationId : number | null = null;
+    designationSetupId : number | null = null;
     joiningDate : Date | null = null;
     releaseDate : Date | null = null;
     remark : string = '';
@@ -14,4 +15,5 @@ export class EmpWorkHistory {
     departmentName : string = '';
     sectionName : string = '';
     designationName : string = '';
+    designationSetupName : string = '';
 }

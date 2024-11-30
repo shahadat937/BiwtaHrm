@@ -14,6 +14,7 @@ namespace Hrm.Application.DTOs.EmpWorkHistory
         public int? DepartmentId { get; set; }
         public int? SectionId { get; set; }
         public int? DesignationId { get; set; }
+        public int? DesignationSetupId { get; set; }
         public DateOnly? JoiningDate { get; set; }
         public DateOnly? ReleaseDate { get; set; }
         public string? Remark { get; set; }
@@ -23,5 +24,6 @@ namespace Hrm.Application.DTOs.EmpWorkHistory
         public string? DepartmentName { get; set; }
         public string? SectionName { get; set; }
         public string? DesignationName { get; set; }
+        public string? DesignationSetupName { get; set; }
     }
 }

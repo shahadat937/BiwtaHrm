@@ -20,7 +20,7 @@ export class EmpWorkHistoryService {
     return this.http.get<EmpWorkHistory[]>(this.baseUrl + '/empWorkHistory/get-EmpWorkHistoryByEmpId/' + id);
   }
 
-  saveEmpWorkHistory(model: FormData) {
+  saveEmpWorkHistory(model: any) {
     return this.http.post(this.baseUrl + '/empWorkHistory/save-EmpWorkHistory', model);
   }
   deleteEmpWorkHistory(id: number) {

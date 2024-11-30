@@ -169,7 +169,8 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
       isActive: true,
       officeName: "", 
       departmentName: "", 
-      upperSectionName: "", 
+      upperSectionName: "",
+      showAllDesignation: false,
     };
   }
   resetForm() {

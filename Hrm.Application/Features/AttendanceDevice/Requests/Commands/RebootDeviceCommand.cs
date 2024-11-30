@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hrm.Application.Responses;
 using MediatR;
 
 namespace Hrm.Application.Features.AttendanceDevice.Requests.Commands
 {
-    public class DeviceTableDataCommand : IRequest<object>
+    public class RebootDeviceCommand : IRequest<BaseCommandResponse>
     {
-        public string SN { get; set; }
-        public string Table { get; set; }
-        public string? RequestBody { get; set; }
+        public int DeviceId { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Features.AttendanceDevice.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing;
+using Hrm.Application.DTOs.AttDevice;
 
 namespace Hrm.Application.Features.AttendanceDevice.Services
 {
@@ -72,11 +73,31 @@ namespace Hrm.Application.Features.AttendanceDevice.Services
             return true;
         }
 
-        public async Task<List<object>> ParseDeviceAttendance(string DeviceSN, string rawAttendance)
+        public async Task<List<AttPunchDto>> ParseDeviceAttendance(string rawAttendance)
         {
-            bool IsAuthorizedDevice = await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Where(x => x.SN == DeviceSN && x.Status == true).AnyAsync();
 
-            List<object> result = new List<object>();
+            List<string> records = rawAttendance.Split(new[] {"\r\n", "\n"}, StringSplitOptions.None).ToList();
+
+            List<AttPunchDto> result = new List<AttPunchDto>();
+
+            foreach (var record in records)
+            {
+                var punch = new AttPunchDto();
+                List<string> fields = record.Split(new[] {"\t"}, StringSplitOptions.None).ToList();
+                punch.IdCardNo = fields[0];
+
+                if (fields.Count < 4)
+                    continue;
+
+                // separate datetime
+                DateTime tempDateTime = DateTime.Parse(fields[1]);
+                punch.PunchDate = DateOnly.FromDateTime(tempDateTime);
+                punch.PunchTime = TimeOnly.FromDateTime(tempDateTime);
+                punch.PunchState = Int32.Parse(fields[2]);
+                punch.PunchType = Int32.Parse(fields[3]);
+                result.Add(punch);
+
+            }
 
             return result;
         }
@@ -112,6 +133,25 @@ namespace Hrm.Application.Features.AttendanceDevice.Services
             var deviceCommand = new Domain.AttDeviceCommands();
             deviceCommand.SN = DeviceSN;
             deviceCommand.Command = $"DATA UPDATE USERPIC PIN={Pin}\tContent={UserPic}";
+
+            await _unitOfWork.Repository<Hrm.Domain.AttDeviceCommands>().Add(deviceCommand);
+            await _unitOfWork.Save();
+
+            return true;
+        }
+
+        public async Task<bool> EnrollFingerPrint(string DeviceSN, string Pin,int FID=5)
+        {
+            bool IsAuthorizedDevice = await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Where(x => x.SN == DeviceSN && x.Status == true).AnyAsync();
+
+            if (!IsAuthorizedDevice)
+            {
+                return false;
+            }
+
+            var deviceCommand = new Domain.AttDeviceCommands();
+            deviceCommand.SN = DeviceSN;
+            deviceCommand.Command = $"ENROLL_FP PIN={Pin}\tFID={FID}\tRETRY=3\tOVERWRITE=1";
 
             await _unitOfWork.Repository<Hrm.Domain.AttDeviceCommands>().Add(deviceCommand);
             await _unitOfWork.Save();

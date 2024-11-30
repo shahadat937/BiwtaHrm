@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hrm.Application.DTOs.AttDevice;
 
 namespace Hrm.Application.Features.AttendanceDevice.Interfaces
 {
@@ -10,9 +11,10 @@ namespace Hrm.Application.Features.AttendanceDevice.Interfaces
     {
         Task<bool> AddUser(string DeviceSN, string Pin, string Name, string Passwd="", int GroupId=1, int Privilage = 0, int Verifty = 0);
         Task<bool> DeleteUser(string DeviceSN, string Pin);
-        Task<List<object>> ParseDeviceAttendance(string DeviceSN, string rawAttendance);
+        Task<List<AttPunchDto>> ParseDeviceAttendance(string rawAttendance);
         Task<bool> RebootDevice(string DeviceSN);
         Task<bool> CustomCommand(string DeviceSN, string Command);
         Task<bool> UpdateUserPic(string DeviceSN, string Pin, string UserPic);
+        Task<bool> EnrollFingerPrint(string DeviceSN, string Pin, int FID);
     }
 }

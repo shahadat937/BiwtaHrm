@@ -34,7 +34,7 @@ namespace Hrm.Application.Features.DesignationSetups.Handlers.Commands
 
             //var DesignationSetupName = request.DesignationSetupDto.DesignationSetupName.ToLower();
             var DesignationSetupName = request.DesignationSetupDto.Name.Trim().ToLower().Replace(" ", string.Empty);
-            IQueryable<Hrm.Domain.DesignationSetup> DesignationSetups = _DesignationSetupRepository.Where(x => x.Name.Trim().ToLower().Replace(" ", string.Empty) == DesignationSetupName);
+            IQueryable<Hrm.Domain.DesignationSetup> DesignationSetups = _DesignationSetupRepository.Where(x => x.Name.Trim().ToLower().Replace(" ", string.Empty) == DesignationSetupName && x.Id != request.DesignationSetupDto.Id);
 
 
 

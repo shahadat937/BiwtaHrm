@@ -17,7 +17,7 @@
                     <img src="{{IdCardFront}}" alt="Front Image" class="front-image">
                     <div class="content-overlay">
                         <p class="idNo">ID: {{empBasicInfo.idCardNo}}</p>
-                        <p class="empPhoto text-center mb-3"><img src="{{empPhoto}}"></p>
+                        <p class="empPhoto text-center mb-3"><img src="{{photoPreviewUrl}}"></p>
                         <div class="EmpInfo">
                             <div class="title">
                                 <p>নাম</p>
@@ -28,20 +28,26 @@
                             <div class="text">
                                 <p>: {{empBasicInfo.firstNameBangla}} {{empBasicInfo.lastNameBangla}}</p>
                                 <p class="mb-1">: {{empBasicInfo.firstName}} {{empBasicInfo.lastName}}</p>
-                                <p *ngIf="empJobDetails?.designationNameBangla; else emptyText">
-                                    : {{ empJobDetails.designationNameBangla }}
-                                  </p>
-                                  <ng-template #emptyText>
-                                    <p></p>
-                                  </ng-template>
+                                <p>: {{empJobDetails.designationNameBangla}}</p>
+                                <p>: {{empJobDetails.designationName}}</p>
+                                <!-- <div>
+                                    <p *ngIf="empJobDetails?.designationNameBangla; else emptyText">
+                                        : {{ empJobDetails.designationNameBangla }}
+                                    </p>
+                                    <ng-template #emptyText>
+                                    <p> </p>
+                                    </ng-template>
+                                </div> -->
                                 <!-- <p>: {{empJobDetails.designationNameBangla==null?'':empJobDetails.designationNameBangla}}</p> -->
                                                <!-- <p>: {{empJobDetails.designationName}}</p> -->
-                                               <p *ngIf="empJobDetails?.designationName; else emptyDesignation">
-                                                : {{ empJobDetails.designationName }}
-                                              </p>
-                                              <ng-template #emptyDesignation>
-                                                <p></p>
-                                              </ng-template>
+                                <!-- <div>
+                                    <p *ngIf="empJobDetails?.designationName; else emptyDesignation">
+                                        : {{ empJobDetails.designationName }}
+                                        </p>
+                                    <ng-template #emptyDesignation>
+                                        <p> </p>
+                                    </ng-template>
+                                </div> -->
                             </div>
                         </div>
                         <p class="signature">পরিচালক (প্রশাসন ও মানব সম্পদ)</p>

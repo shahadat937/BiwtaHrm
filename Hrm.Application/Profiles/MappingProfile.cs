@@ -128,6 +128,7 @@ using Hrm.Application.DTOs.NavbarSetting;
 using Hrm.Application.DTOs.RoleDashboard;
 using Hrm.Application.DTOs.EmpFingerPrint;
 using Hrm.Application.DTOs.PendingDevice;
+using Hrm.Application.DTOs.AttDevice;
 
 
 
@@ -748,6 +749,8 @@ namespace Hrm.Application.Profiles
             //Attendance Device Related Dto Mapping
             CreateMap<PendingDevice, PendingDeviceDto>().ReverseMap();
             CreateMap<PendingDevice, CreatePendingDeviceDto>().ReverseMap();
+            CreateMap<AttDevices, CreateAttDeviceDto>().ReverseMap();
+            CreateMap<AttDevices, AttDevicesDto>().ReverseMap();
 
         }
     }

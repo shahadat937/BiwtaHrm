@@ -1,5 +1,6 @@
 ﻿using Hrm.Application;
 using Hrm.Application.DTOs.EmpTransferPosting;
+using Hrm.Application.Features.EmpSpouseInfos.Requests.Commands;
 using Hrm.Application.Features.EmpTransferPostings.Handlers.Queries;
 using Hrm.Application.Features.EmpTransferPostings.Requests.Commands;
 using Hrm.Application.Features.EmpTransferPostings.Requests.Queries;
@@ -111,6 +112,15 @@ namespace Hrm.Api.Controllers
         {
             var lastDate = await _mediator.Send(new GetCurrentDeptJoinDateByEmpIdRequest { EmpId = id });
             return Ok(lastDate);
+        }
+
+        [HttpDelete]
+        [Route("delete-EmpTransferPosting/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var command = new DeleteEmpTransferPostingCommand { Id = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

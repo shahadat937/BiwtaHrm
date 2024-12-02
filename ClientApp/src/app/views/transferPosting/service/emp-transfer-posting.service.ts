@@ -84,5 +84,10 @@ export class EmpTransferPostingService {
   CurrentDeptJoinDateByEmpId(id: number) {
     return this.http.get(this.baseUrl + '/empTransferPosting/get-currentDeptJoinDateByEmpId/' + id);
   }
+
+  
+  deleteEmpTransferPosting(id: number) {
+    return this.http.delete(this.baseUrl + '/empTransferPosting/delete-EmpTransferPosting/'+id);
+  }
   
 }

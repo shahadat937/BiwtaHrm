@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { MatSort } from '@angular/material/sort';
 import { TransferPostingInfoComponent } from '../transfer-posting-info/transfer-posting-info.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
   selector: 'app-trainsfer-posting-list',
@@ -38,6 +39,7 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     public empTransferPostingService: EmpTransferPostingService,
     private route: ActivatedRoute,
     private modalService: BsModalService,
+    private confirmService: ConfirmService,
   ) {
 
   }
@@ -75,5 +77,33 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     };
     const modalRef: BsModalRef = this.modalService.show(TransferPostingInfoComponent, { initialState, backdrop: 'static' });
   }
+
+  delete(element: any) {
+    this.confirmService
+      .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+      .subscribe((result) => {
+        if (result) {
+          this.empTransferPostingService.deleteEmpTransferPosting(element.id).subscribe(
+            (res) => {
+              const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
+              }
+              this.toastr.success('Delete sucessfully ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+            },
+            (err) => {
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+            }
+          );
+        }
+      });
+  }
+
+
 
 }

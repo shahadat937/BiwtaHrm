@@ -44,6 +44,20 @@
                 </td>
               </ng-container>
               
+            <ng-container matColumnDef="transferFrom">
+              <th mat-header-cell *matHeaderCellDef>Transfer From</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.departmentName }}<span *ngOf="element.sectionName">, </span>{{ element.sectionName }}
+              </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="transferTo">
+              <th mat-header-cell *matHeaderCellDef>Transfer To</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.transferDepartmentName }}<span *ngOf="element.transferSectionName">, </span>{{ element.transferSectionName }}
+              </td>
+            </ng-container>
+              
               <ng-container matColumnDef="ApprovalStatus">
                 <th mat-header-cell *matHeaderCellDef>Release Status</th>
                 <td mat-cell *matCellDef="let element">

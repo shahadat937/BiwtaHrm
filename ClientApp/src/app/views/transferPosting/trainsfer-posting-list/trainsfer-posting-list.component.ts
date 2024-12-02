@@ -20,9 +20,11 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
-    'slNo',
+    // 'slNo',
     'PMS Id',
     'fullName',
+    'transferFrom',
+    'transferTo',
     // 'ApprovalStatus',
     'DeptStatus',
     'JoiningStatus',

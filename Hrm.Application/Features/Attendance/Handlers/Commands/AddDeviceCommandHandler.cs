@@ -50,6 +50,12 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
                 return response;
             }
             var device = _mapper.Map<Hrm.Domain.AttDevices>(request.Device);
+            var pendingDevice = await _unitOfWork.Repository<Hrm.Domain.PendingDevice>().Where(x => x.SN == device.SN).FirstOrDefaultAsync();
+
+            if(pendingDevice!=null)
+            {
+                await _unitOfWork.Repository<Hrm.Domain.PendingDevice>().Delete(pendingDevice);
+            }
 
             await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Add(device);
             await _unitOfWork.Save();

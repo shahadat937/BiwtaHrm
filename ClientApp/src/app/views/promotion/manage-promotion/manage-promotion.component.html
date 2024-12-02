@@ -47,6 +47,34 @@
               </td>
             </ng-container>
             
+            <ng-container matColumnDef="promotedFrom">
+              <th mat-header-cell *matHeaderCellDef>Promoted From</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.currentDesignationName }}
+              </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="promotedTo">
+              <th mat-header-cell *matHeaderCellDef>Promoted To</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.updateDesignationName }}
+              </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="basicPayFrom">
+              <th mat-header-cell *matHeaderCellDef>Grade From</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.currentScaleName }} ({{ element.currentBasicPay }})
+              </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="basicPayTo">
+              <th mat-header-cell *matHeaderCellDef>Grade To</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.updateScaleName }} ({{ element.updateBasicPay }})
+              </td>
+            </ng-container>
+            
             <ng-container matColumnDef="ApprovalStatus">
               <th mat-header-cell *matHeaderCellDef>Approval Status</th>
               <td mat-cell *matCellDef="let element">

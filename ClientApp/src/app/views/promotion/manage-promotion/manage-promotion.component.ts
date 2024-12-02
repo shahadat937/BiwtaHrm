@@ -20,11 +20,14 @@ export class ManagePromotionComponent implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
-    'slNo',
+    // 'slNo',
     'PMS Id',
     'fullName',
+    'promotedFrom',
+    'promotedTo',
+    'basicPayFrom',
+    'basicPayTo',
     'ApprovalStatus',
-    // 'ApplicationStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)

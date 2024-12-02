@@ -48,11 +48,12 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
 
             int fid = request.FID.HasValue ? (int)request.FID : 5;
 
-            bool ok = await _attendanceDevice.EnrollFingerPrint(device.SN, employee.IdCardNo, fid);
+            int id = await _attendanceDevice.EnrollFingerPrint(device.SN, employee.IdCardNo, fid);
 
             var response = new BaseCommandResponse();
-            response.Success = ok;
-            response.Message = ok ? "Successful" : "Unsuccessful";
+            response.Success = id != -1;
+            response.Message = id != -1 ? "Successful" : "Unsuccessful";
+            response.Id = id;
 
             return response;
 

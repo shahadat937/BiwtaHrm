@@ -35,11 +35,11 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
 
             var response = new BaseCommandResponse();
 
-            bool ok = await _attendanceDevice.RebootDevice(device.SN);
+            int id = await _attendanceDevice.RebootDevice(device.SN);
 
-            response.Success = ok;
-            response.Message = ok ? "Successful" : "Unsuccessful";
-            response.Id = request.DeviceId;
+            response.Success = id != -1;
+            response.Message = id != -1 ? "Successful" : "Unsuccessful";
+            response.Id = id;
 
             return response;
         }

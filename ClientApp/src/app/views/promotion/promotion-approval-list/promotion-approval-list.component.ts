@@ -20,9 +20,13 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
-    'slNo',
+    // 'slNo',
     'PMS Id',
     'fullName',
+    'promotedFrom',
+    'promotedTo',
+    'basicPayFrom',
+    'basicPayTo',
     'ApprovalStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();

@@ -20,9 +20,11 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
-    'slNo',
+    // 'slNo',
     'PMS Id',
     'fullName',
+    'transferFrom',
+    'transferTo',
     'ApprovalStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();

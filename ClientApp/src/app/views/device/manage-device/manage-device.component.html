@@ -1,0 +1,49 @@
+<c-card>
+    <c-card-header>
+        Manage Device
+    </c-card-header>
+    <c-card-body>
+        <p-table
+        [tableStyle]="{'min-width': '50rem'}" 
+        styleClass="p-datatable-sm"
+        [value]="attendanceDevices">
+            <ng-template pTemplate="caption">
+                <button cButton color="light" shape="rounded-pill" (click)="getAttendanceDevice()">
+                    <svg [cIcon]="icons.cilReload" size="sm" title="Refresh"></svg>
+                </button>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Name</th>
+                    <th>SN</th>
+                    <th>MAC</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-device>
+                <tr>
+                    <td>{{device.title}}</td>
+                    <td>{{device.sn}}</td>
+                    <td>{{device.mac}}</td>
+                    <td>
+                        <c-badge [color]="device.status2.color">
+                            {{device.status2.value}}
+                        </c-badge>
+                    </td>
+                    <td>
+                        <button [disabled]="loading" class="custom-button" title="Delete The Device" (click)="deleteDevice(device.id)">
+                            <svg [cIcon]="icons.cilTrash" size="xl" title="Delete The Device"></svg>
+                        </button>
+                        <button *ngIf="device.status!=false&&device.status2.value!='Offline'" [disabled]="loading" (click)="rebootDevice(device.id)" class="me-1 custom-button" title="Reboot The Device">
+                            <svg [cIcon]="icons.cilReload" size="xl" title="Reboot The Device"></svg>
+                        </button>
+                        <button *ngIf="device.status!=false&&device.status2.value!='Offline'" [disabled]="loading" class="me-1 custom-button" title="Give Custom Command To Device">
+                            <svg [cIcon]="icons.cilCommand" size="xl" title="Give Custom Command To Device"></svg>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </c-card-body>
+</c-card>

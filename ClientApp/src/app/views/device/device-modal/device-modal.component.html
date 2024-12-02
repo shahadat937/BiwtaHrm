@@ -1,0 +1,73 @@
+<div class="modal fade show">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{modalName}}</h5>
+        <button
+          mat-mini-fab
+          color="warn"
+          class="close"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body scrollable-modal-body" cRow [gutter]="3">
+        <div class="container mt-4">
+          <form #attForm="ngForm" (submit)="onSubmit()">
+            <c-row [gutter]="3">
+              <c-col md="4">
+                <label cLabel for="title">Enter Name</label>     
+                <input #name="ngModel" required [(ngModel)]="deviceModel.title" cFormControl type="text" name="title" id="title">
+                @if (name.touched && name.invalid) {
+                  <p><span class="text-danger">Name is required</span></p>
+                }
+              </c-col>
+              <c-col md="4">
+                <label cLabel for="sn">SN</label>     
+                <input [(ngModel)]="deviceModel.sn" required [readOnly]="this.deviceModel.sn!=null" cFormControl type="text" name="sn" id="sn">
+              </c-col>
+              <c-col md="4">
+                <label cLabel for="area">Enter Area</label>
+                <input cFormControl type="text" [(ngModel)]="deviceModel.area" name="area" id="area">
+              </c-col>
+              <c-col md="4">
+                <label cLabel for="timezone">Select Timezone</label>
+                <select #timeZoneRef = "ngModel" required cSelect [(ngModel)]="deviceModel.timezone" name="timezone" id="timezone">
+                  <option [ngValue]="null">Select Timezone</option>
+                  @for (item of Timezones; track $index) {
+                    <option [ngValue]="item.value">{{item.name}}</option>
+                  }
+                </select>
+                @if (timeZoneRef.touched && timeZoneRef.invalid) {
+                  <p><span class="text-danger">Timezone is required</span></p>
+                }
+              </c-col>
+              <c-col md="4">
+                <label cLabel for="accDevice">Access Control</label>
+                <select cSelect [(ngModel)]="deviceModel.accDevice" name="accDevice" id="accDevice">
+                  <option [ngValue]="true">Yes</option>
+                  <option [ngValue]="false">No</option>
+                </select>
+              </c-col>
+              <c-col md="4">
+                <label cLabel for="status">Status</label>
+                <select cSelect name="status" id="status">
+                  <option [ngValue]="true">Active</option>
+                  <option [ngValue]="false">Deactive</option>
+                </select>
+              </c-col>
+            </c-row>
+            <div class="mt-3 d-flex justify-content-end">
+              <button [disabled]="this.loading || attForm.invalid" type="submit" cButton color="success">
+                <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+                {{buttonText}}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -56,9 +56,9 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
-        [Route("reboot-Device")]
+        [Route("reboot-Device/{DeviceId}")]
         [HttpPost]
-        public async Task<ActionResult<BaseCommandResponse>> RebootDevice([FromForm] int DeviceId)
+        public async Task<ActionResult<BaseCommandResponse>> RebootDevice(int DeviceId)
         {
             var command = new RebootDeviceCommand { DeviceId = DeviceId };
             var response = await _mediator.Send(command);
@@ -67,7 +67,7 @@ namespace Hrm.Api.Controllers
 
         [Route("add-Device")]
         [HttpPost]
-        public async Task<ActionResult<BaseCommandResponse>> AddDevice([FromForm] CreateAttDeviceDto Device)
+        public async Task<ActionResult<BaseCommandResponse>> AddDevice([FromBody] CreateAttDeviceDto Device)
         {
             var command = new AddDeviceCommand { Device = Device };
             var response = await _mediator.Send(command);
@@ -79,6 +79,15 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult> GetDevice()
         {
             var command = new GetDeviceRequest { };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [Route("delete-Device/{DeviceId}")]
+        [HttpDelete]
+        public async Task<ActionResult<BaseCommandResponse>> DeleteDevice(int DeviceId)
+        {
+            var command = new DeleteDeviceCommand { DeviceId = DeviceId };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

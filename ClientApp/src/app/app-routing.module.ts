@@ -172,6 +172,11 @@ const routes: Routes = [
         path: 'navbarsetup',
         loadChildren: () =>
           import('./views/featureManagement/featureManagement.module').then((m) => m.FeatureManagementModule)
+      },
+      {
+        path: 'device',
+        loadChildren: () => 
+          import('./views/device/device.module').then((m) => m.DeviceModule)
       }
 
     ]

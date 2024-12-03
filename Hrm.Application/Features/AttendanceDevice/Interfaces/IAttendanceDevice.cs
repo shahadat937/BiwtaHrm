@@ -12,9 +12,9 @@ namespace Hrm.Application.Features.AttendanceDevice.Interfaces
         Task<bool> AddUser(string DeviceSN, string Pin, string Name, string Passwd="", int GroupId=1, int Privilage = 0, int Verifty = 0);
         Task<bool> DeleteUser(string DeviceSN, string Pin);
         Task<List<AttPunchDto>> ParseDeviceAttendance(string rawAttendance);
-        Task<bool> RebootDevice(string DeviceSN);
+        Task<int> RebootDevice(string DeviceSN);
         Task<bool> CustomCommand(string DeviceSN, string Command);
         Task<bool> UpdateUserPic(string DeviceSN, string Pin, string UserPic);
-        Task<bool> EnrollFingerPrint(string DeviceSN, string Pin, int FID);
+        Task<int> EnrollFingerPrint(string DeviceSN, string Pin, int FID);
     }
 }

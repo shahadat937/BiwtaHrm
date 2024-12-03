@@ -55,13 +55,13 @@ namespace Hrm.Application.Features.AttendanceDevice.Services
             return true;
         }
 
-        public async Task<bool> RebootDevice(string DeviceSN)
+        public async Task<int> RebootDevice(string DeviceSN)
         {
             bool IsAuthorizedDevice = await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Where(x => x.SN == DeviceSN && x.Status == true).AnyAsync();
 
             if(!IsAuthorizedDevice)
             {
-                return IsAuthorizedDevice;
+                return -1;
             }
 
             var deviceCommand = new Domain.AttDeviceCommands();
@@ -70,7 +70,7 @@ namespace Hrm.Application.Features.AttendanceDevice.Services
 
             await _unitOfWork.Repository<Hrm.Domain.AttDeviceCommands>().Add(deviceCommand);
             await _unitOfWork.Save();
-            return true;
+            return deviceCommand.Id;
         }
 
         public async Task<List<AttPunchDto>> ParseDeviceAttendance(string rawAttendance)
@@ -140,13 +140,13 @@ namespace Hrm.Application.Features.AttendanceDevice.Services
             return true;
         }
 
-        public async Task<bool> EnrollFingerPrint(string DeviceSN, string Pin,int FID=5)
+        public async Task<int> EnrollFingerPrint(string DeviceSN, string Pin,int FID=5)
         {
             bool IsAuthorizedDevice = await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Where(x => x.SN == DeviceSN && x.Status == true).AnyAsync();
 
             if (!IsAuthorizedDevice)
             {
-                return false;
+                return -1;
             }
 
             var deviceCommand = new Domain.AttDeviceCommands();
@@ -156,7 +156,7 @@ namespace Hrm.Application.Features.AttendanceDevice.Services
             await _unitOfWork.Repository<Hrm.Domain.AttDeviceCommands>().Add(deviceCommand);
             await _unitOfWork.Save();
 
-            return true;
+            return deviceCommand.Id;
         }
     }
 }

@@ -12,21 +12,27 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
 {
     public class GetDevicePingRequestHandler : IRequestHandler<GetDevicePingRequest,object>
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IHrmRepository<Hrm.Domain.AttDevices> _repo;
 
-        public GetDevicePingRequestHandler(IHrmRepository<Domain.AttDevices> repo)
+        public GetDevicePingRequestHandler(IHrmRepository<Domain.AttDevices> repo, IUnitOfWork unitOfWork)
         {
             _repo = repo;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<object> Handle(GetDevicePingRequest request, CancellationToken cancellationToken)
         {
-            var IsAuthorizedDevice = await _repo.Where(x => x.SN == request.SN && x.Status == true).AnyAsync();
+            var device = await _repo.Where(x => x.SN == request.SN && x.Status == true).FirstOrDefaultAsync();
 
-            if(!IsAuthorizedDevice)
+            if(device == null)
             {
                 return "Invalid Options";
             }
+
+            device.LastOnline = DateTime.Now;
+            await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Update(device);
+            await _unitOfWork.Save();
 
             return "OK";
         }

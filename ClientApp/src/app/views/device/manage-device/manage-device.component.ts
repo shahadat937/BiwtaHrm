@@ -2,10 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import {AttendanceDeviceModel} from '../model/attendance-device-model'
 import {AttendanceDeviceService} from '../service/attendance-device.service'
 import { Subscription } from 'rxjs';
-import { cilCommand, cilFingerprint, cilReload, cilTrash } from '@coreui/icons';
+import { cilCommand, cilFingerprint, cilPencil, cilReload, cilTrash } from '@coreui/icons';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
 import { setThrowInvalidWriteToSignalError } from '@angular/core/primitives/signals';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { DeviceModalComponent } from '../device-modal/device-modal.component';
+import {CustomCommandModalComponent} from '../custom-command-modal/custom-command-modal.component'
 
 @Component({
   selector: 'app-manage-device',
@@ -17,11 +20,13 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
   attendanceDevices: AttendanceDeviceModel[];
   subscription: Subscription = new Subscription;
 
-  icons = {cilReload, cilFingerprint, cilTrash, cilCommand}
+  icons = {cilReload, cilPencil , cilFingerprint, cilTrash, cilCommand}
   constructor(
     private AttendanceDeviceService: AttendanceDeviceService,
     private confirmService: ConfirmService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modalService: BsModalService,
+    private bsModalRef: BsModalRef
   ) {
     this.attendanceDevices = []
     this.loading = false;
@@ -129,5 +134,38 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
 
       }
     })
+  }
+
+  onUpdate(device: AttendanceDeviceModel) {
+    const initialState = {
+      deviceModel: device,
+      IsUpdate: true,
+      buttonText: "Update",
+      modalName: "Update Device"
+    }
+
+    const modalRef: BsModalRef = this.modalService.show(DeviceModalComponent,{initialState: initialState});
+
+    if(modalRef) {
+      modalRef.onHide?.subscribe(()=> {
+        this.getAttendanceDevice();
+      })
+    }
+  }
+
+  customCommandHandler(deviceId:number,title:string) {
+    const initialState = {
+      deviceId: deviceId,
+      deviceName: title
+    }
+
+    const modalRef: BsModalRef = this.modalService.show(CustomCommandModalComponent,{initialState:initialState});
+
+    if(modalRef) {
+      modalRef.onHide?.subscribe(()=> {
+
+      })
+    }
+
   }
 }

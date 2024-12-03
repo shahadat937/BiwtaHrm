@@ -24,6 +24,8 @@ import { TableModule } from 'primeng/table';
 import { BadgeModule } from '@coreui/angular';
 import { AddDeviceComponent } from './add-device/add-device.component';
 import { DeviceModalComponent } from './device-modal/device-modal.component';
+import { AssignEmployeeToDeviceComponent } from './assign-employee-to-device/assign-employee-to-device.component';
+import { CustomCommandModalComponent } from './custom-command-modal/custom-command-modal.component';
 
 
 
@@ -31,7 +33,9 @@ import { DeviceModalComponent } from './device-modal/device-modal.component';
   declarations: [
     ManageDeviceComponent,
     AddDeviceComponent,
-    DeviceModalComponent
+    DeviceModalComponent,
+    AssignEmployeeToDeviceComponent,
+    CustomCommandModalComponent
   ],
   imports: [
     CommonModule,

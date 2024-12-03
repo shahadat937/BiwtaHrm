@@ -32,13 +32,16 @@
                         </c-badge>
                     </td>
                     <td>
-                        <button [disabled]="loading" class="custom-button" title="Delete The Device" (click)="deleteDevice(device.id)">
+                        <button [disabled]="loading" class="custom-button" title="Update" (click)="onUpdate(device)">
+                            <svg [cIcon]="icons.cilPencil" size="xl" title="Update"></svg>
+                        </button>
+                        <button [disabled]="loading" class="me-1 custom-button" title="Delete The Device" (click)="deleteDevice(device.id)">
                             <svg [cIcon]="icons.cilTrash" size="xl" title="Delete The Device"></svg>
                         </button>
-                        <button *ngIf="device.status!=false&&device.status2.value!='Offline'" [disabled]="loading" (click)="rebootDevice(device.id)" class="me-1 custom-button" title="Reboot The Device">
+                        <button *ngIf="device.status!=false&&device.status2.value=='Online'" [disabled]="loading" (click)="rebootDevice(device.id)" class="me-1 custom-button" title="Reboot The Device">
                             <svg [cIcon]="icons.cilReload" size="xl" title="Reboot The Device"></svg>
                         </button>
-                        <button *ngIf="device.status!=false&&device.status2.value!='Offline'" [disabled]="loading" class="me-1 custom-button" title="Give Custom Command To Device">
+                        <button (click)="customCommandHandler(device.id,device.title)" *ngIf="device.status!=false&&device.status2.value=='Online'" [disabled]="loading" class="me-1 custom-button" title="Give Custom Command To Device">
                             <svg [cIcon]="icons.cilCommand" size="xl" title="Give Custom Command To Device"></svg>
                         </button>
                     </td>

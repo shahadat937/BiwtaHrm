@@ -485,7 +485,8 @@
                                 <ng-container matColumnDef="designationName">
                                     <th mat-header-cell *matHeaderCellDef>Designation</th>
                                     <td mat-cell *matCellDef="let element">
-                                    {{ element.designationName }}
+                                        <label *ngIf="element.designationName">{{ element.designationName }}</label>
+                                        <label *ngIf="element.designationSetupName">{{ element.designationSetupName }}</label>
                                     </td>
                                 </ng-container>
                                 
@@ -1689,7 +1690,8 @@
                         <ng-container matColumnDef="designationName">
                             <th mat-header-cell *matHeaderCellDef>Designation</th>
                             <td mat-cell *matCellDef="let element">
-                            {{ element.designationName }}
+                                <label *ngIf="element.designationName">{{ element.designationName }}</label>
+                                <label *ngIf="element.designationSetupName">{{ element.designationSetupName }}</label>
                             </td>
                         </ng-container>
                         

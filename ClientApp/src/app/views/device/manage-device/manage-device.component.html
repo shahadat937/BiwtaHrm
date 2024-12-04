@@ -15,6 +15,7 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th>Name</th>
+                    <th>Device</th>
                     <th>SN</th>
                     <th>MAC</th>
                     <th>Status</th>
@@ -24,6 +25,7 @@
             <ng-template pTemplate="body" let-device>
                 <tr>
                     <td>{{device.title}}</td>
+                    <td>{{device.deviceName}}</td>
                     <td>{{device.sn}}</td>
                     <td>{{device.mac}}</td>
                     <td>

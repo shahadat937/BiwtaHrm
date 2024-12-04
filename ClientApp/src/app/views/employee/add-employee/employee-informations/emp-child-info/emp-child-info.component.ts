@@ -26,7 +26,8 @@ export class EmpChildInfoComponent implements OnInit, OnDestroy {
   childStatuses: SelectedModel[] = [];
   genders: SelectedModel[] = [];
   maritalStatuses: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription:Subscription[]=[]
   loading: boolean = false;
   empChild: EmpChildInfoModule[] = [];
 
@@ -51,7 +52,7 @@ export class EmpChildInfoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs => subs.unsubscribe());
     }
   }
 
@@ -169,14 +170,22 @@ export class EmpChildInfoComponent implements OnInit, OnDestroy {
     })
   }
   getSelectedGenders(){
-    this.subscription=this.empPersonalInfoService.getSelectedGender().subscribe((data) => { 
-      this.genders = data;
-    });
+    // this.subscription=
+    this.subscription.push(
+      this.empPersonalInfoService.getSelectedGender().subscribe((data) => { 
+        this.genders = data;
+      })
+    )
+   
   }
   getSelectedMaritalStatuses(){
-    this.subscription=this.empPersonalInfoService.getSelectedMaritalStatus().subscribe((data) => { 
-      this.maritalStatuses = data;
-    });
+    // this.subscription=
+    this.subscription.push(
+      this.empPersonalInfoService.getSelectedMaritalStatus().subscribe((data) => { 
+        this.maritalStatuses = data;
+      })
+    )
+    
   }
 
   cancel() {

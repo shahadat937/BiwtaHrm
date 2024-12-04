@@ -25,7 +25,8 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
   isUpdate: boolean
   holidayTypeOption : any[] = [];
   Holidays: HolidayModel [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   @ViewChild('holidayForm', {static:true}) holidayForm!:NgForm;
 
   constructor(
@@ -50,7 +51,7 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     } 
   }
 
@@ -69,36 +70,48 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
   }
 
   getHolidayType() {
-    this.subscription = this.holidayService.getHolidayTypeOption().subscribe({
-      next: (option)=> {
-        this.holidayTypeOption = option;
-      },
-      error: (err)=> {
-        console.log(err);
-      }
-    })
+  
+    this.subscription.push(
+      this.holidayService.getHolidayTypeOption().subscribe({
+        next: (option)=> {
+          this.holidayTypeOption = option;
+        },
+        error: (err)=> {
+          console.log(err);
+        }
+      })
+    )
+    
   }
 
   getYear() {
-    this.subscription = this.holidayService.getYear().subscribe({
-      next: (option)=> {
-        this.YearOption = option;
-      },
-      error: (err)=> {
-        console.error("Got error while retriving Year Option for Selection");
-      }
-    })
+
+    this.subscription.push(
+      this.holidayService.getYear().subscribe({
+        next: (option)=> {
+          this.YearOption = option;
+        },
+        error: (err)=> {
+          console.error("Got error while retriving Year Option for Selection");
+        }
+      })
+    )
+   
   }
 
   getHolidays() {
-    this.subscription = this.holidayService.getHolidays().subscribe({
-      next: (response)=> {
-        this.Holidays =  this.getGroupedData(response);
-      },
-      error: (err) => {
-        console.error("Error While loading holidays data from server");
-      }
-    })
+   
+    this.subscription.push(
+      this.holidayService.getHolidays().subscribe({
+        next: (response)=> {
+          this.Holidays =  this.getGroupedData(response);
+        },
+        error: (err) => {
+          console.error("Error While loading holidays data from server");
+        }
+      })
+    )
+  
   }
 
   getGroupedData(data:HolidayModel[]) {
@@ -149,31 +162,35 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
     element['holidayId']=0;
     element.holidayDate = element.holidayFrom;
     this.loading=true;
-    this.subscription = this.holidayService.createHoliday(element).subscribe({
-      next: (response)=> {
-        if(response.success==true) {
-          this.toastr.success('',`${response.message}`, {
+    
+    this.subscription.push(
+      this.holidayService.createHoliday(element).subscribe({
+        next: (response)=> {
+          if(response.success==true) {
+            this.toastr.success('',`${response.message}`, {
+              positionClass: 'toast-top-right'
+            })
+  
+            this.holidayService.cachedData = [];
+            this.getHolidays();
+          } else {
+            this.toastr.warning('',`${response.message}`, {
+              positionClass: 'toast-top-right'
+            })
+          }
+        },
+        error: (err)=> {
+          this.toastr.error('',`${err}`,{
             positionClass: 'toast-top-right'
-          })
-
-          this.holidayService.cachedData = [];
-          this.getHolidays();
-        } else {
-          this.toastr.warning('',`${response.message}`, {
-            positionClass: 'toast-top-right'
-          })
+          });
+          this.loading=false;
+        },
+        complete: ()=> {
+          this.loading=false;
         }
-      },
-      error: (err)=> {
-        this.toastr.error('',`${err}`,{
-          positionClass: 'toast-top-right'
-        });
-        this.loading=false;
-      },
-      complete: ()=> {
-        this.loading=false;
-      }
-    })
+      })
+    )
+    
   }
 
   onSubmit(form:NgForm) {

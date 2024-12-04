@@ -34,7 +34,8 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   ShiftOption:any[]=[]
   AtdStatusOption:any[]=[];
   selectedDepartment:number|null;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   selectedOffice:number|null;
   selectedShift:number|null;
   selectedUpdateShift: any|null;
@@ -104,11 +105,14 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
 
 
   getSelectedDepartment() {
-    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe({
-      next: response => {
-        this.DepartmentOption = response;
-      }
-    })
+    this.subscription.push(
+      this.departmentService.getSelectedAllDepartment().subscribe({
+        next: response => {
+          this.DepartmentOption = response;
+        }
+      })
+    )
+    
   }
 
   applyFilter(event: Event) {
@@ -118,14 +122,17 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription.forEach(subs=>subs.unsubscribe())
   }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
-    this.subscription = this.sort.sortChange.subscribe(() => {
+    this.subscription.push(
+      this.sort.sortChange.subscribe(() => {
       this.getFilteredAttendance(false);
     })
+    )
+   
   }
 
   logSort() {
@@ -169,17 +176,21 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
 
     params = this.searchKeyword.trim()==""?params:params.set('keyword',this.searchKeyword);
 
-    this.subscription = this.AtdRecordService.getAttendance(params).subscribe({
-      next: response => {
-        this.dataSource =new MatTableDataSource (response.result.map(x=>({
-          ...x,
-          fullName: [x.empFirstName,x.empLastName].join(' ')
-        })));
-        this.totalRecord = response.totalCount;
-        this.dataSource.sort = this.sort;
-        this.pageIndex = pageIndex -1;
-      }
-    })
+    this.subscription.push(
+      this.AtdRecordService.getAttendance(params).subscribe({
+        next: response => {
+          this.dataSource =new MatTableDataSource (response.result.map(x=>({
+            ...x,
+            fullName: [x.empFirstName,x.empLastName].join(' ')
+          })));
+          this.totalRecord = response.totalCount;
+          this.dataSource.sort = this.sort;
+          this.pageIndex = pageIndex -1;
+        }
+      })
+    )
+
+   
   
   }
 
@@ -211,7 +222,8 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   update(element:any) {
-    this.subscription = this.AtdRecordService.getAttendanceById(element.attendanceId).subscribe(res=> {
+    this.subscription.push(
+      this.AtdRecordService.getAttendanceById(element.attendanceId).subscribe(res=> {
       this.AtdRecordService.UpdateAtdModel.attendanceId = res.attendanceId;
       this.AtdRecordService.UpdateAtdModel.attendanceDate = res.attendanceDate;
       this.AtdRecordService.UpdateAtdModel.empId = res.empId;
@@ -221,7 +233,9 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
       this.AtdRecordService.UpdateAtdModel.attendanceStatusId = res.attendanceStatusId;
       this.AtdRecordService.UpdateAtdModel.done = res.done;
       this.AtdRecordService.UpdateAtdModel.remark = res.remark;
-    });
+    })
+    )
+   
 
     this.selectedEmp = {id:this.AtdRecordService.UpdateAtdModel.empId, name: element.empFirstName+" "+element.empLastName};
 
@@ -281,11 +295,14 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
 
   onDepartmentChange() {
     if(this.selectedDepartment!=null) {
-      this.subscription = this.sectionService.getSectionByOfficeDepartment(this.selectedDepartment).subscribe({
-        next: response => {
-          this.SectionOption = response;
-        }
-      })
+      this.subscription.push(
+        this.sectionService.getSectionByOfficeDepartment(this.selectedDepartment).subscribe({
+          next: response => {
+            this.SectionOption = response;
+          }
+        })
+      )
+     
     }
 
     this.getFilteredAttendance(true);
@@ -297,16 +314,19 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
 
   onSearch() {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
 
     const source$ = of (this.searchKeyword).pipe(
       delay(700)
     );
 
-    this.subscription = source$.subscribe(data=> {
-      this.getFilteredAttendance(true);
-    })
+    this.subscription.push(
+      source$.subscribe(data=> {
+        this.getFilteredAttendance(true);
+      })
+    )
+    
   }
 
 }

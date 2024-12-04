@@ -31,7 +31,8 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
   pointOptions: Result[] = [];
   maritalStatuses: SelectedModel[] = [];
   yearOptions: number[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[];
   loading: boolean = false;
   empEducation: EmpEducationInfoModule[] = [];
 
@@ -57,7 +58,7 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -98,12 +99,18 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
       this.examTypesOptions[index] = [...this.examTypes];
 
       if(educationInfo.examTypeId){
-        this.subscription=this.empEducationInfoService.getSelectedSubject(educationInfo.examTypeId).subscribe((data) => {
+        // this.subscription=
+        this.subscription.push(
+          this.empEducationInfoService.getSelectedSubject(educationInfo.examTypeId).subscribe((data) => {
           this.subGroups[index] = data; 
-        });
+        })
+        )
+        
       }
       if(educationInfo.resultId){
-        this.subscription=this.ResultService.find(educationInfo.resultId).subscribe((data) => {
+        // this.subscription=
+        this.subscription.push(
+          this.ResultService.find(educationInfo.resultId).subscribe((data) => {
           this.pointOptions[index] = data; 
           if (data.havePoint) {
             this.empEducationListArray.at(index).get('point')?.enable();
@@ -113,7 +120,9 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
           } else {
             this.empEducationListArray.at(index).get('point')?.disable();
           }
-        });
+        })
+        )
+        
       }
     });
   }
@@ -197,9 +206,13 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
 
     if(id){
       this.subGroups[index] = [];
-      this.subscription=this.empEducationInfoService.getSelectedSubject(+id).subscribe((data) => {
+      // this.subscription=
+      this.subscription.push(
+        this.empEducationInfoService.getSelectedSubject(+id).subscribe((data) => {
         this.subGroups[index] = data; 
-      });
+      })
+      )
+      
     }
   }
   
@@ -220,7 +233,9 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
     this.empEducationListArray.at(index).get('point')?.setValue(null);
 
     if(id){
-      this.subscription=this.ResultService.find(+id).subscribe((data) => {
+      // this.subscription=
+      this.subscription.push(
+        this.ResultService.find(+id).subscribe((data) => {
         this.pointOptions[index] = data; 
         if (data.havePoint) {
           this.empEducationListArray.at(index).get('point')?.enable();
@@ -230,7 +245,9 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
         } else {
           this.empEducationListArray.at(index).get('point')?.disable();
         }
-      });
+      })
+      )
+      
     }
   }
 

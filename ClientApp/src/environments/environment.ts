@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://114.134.95.238:9091/api/hrm',
-  securityUrl: 'http://114.134.95.238:9091/api',
-  fileUrl: 'http://114.134.95.238:9091/Content/',
-  imageUrl: 'http://114.134.95.238:9091/assets/images/',
+  apiUrl: 'http://localhost:25971/api/hrm',
+  securityUrl: 'http://localhost:25971/api',
+  fileUrl: 'http://localhost:25971/Content/',
+  imageUrl: 'http://localhost:25971/assets/images/',
   companyTitle :"Bangladesh Inland Water Transport Authority",
   companyAddress : "141-143, Motijheel Commerial Area, Dhaka-1000",
   officerFormName: "Annual Confidential Record Of Officer",

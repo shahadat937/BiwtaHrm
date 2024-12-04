@@ -21,7 +21,8 @@ export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
   headerBtnText: string = 'Hide From';
   btnText: string = '';
   countris: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   empForeignTour: EmpForeignTourInfoModule[] = [];
 
@@ -42,7 +43,7 @@ export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -137,9 +138,13 @@ export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
 
 
   getSelectedCountries() {
-    this.subscription = this.countryService.selectGetCountry().subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.countryService.selectGetCountry().subscribe((data) => {
       this.countris = data;
-    });
+    })
+    )
+    
   }
 
   cancel() {

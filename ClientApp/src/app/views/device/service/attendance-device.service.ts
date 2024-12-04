@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AttendanceDeviceModel } from '../model/attendance-device-model';
 import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 import { PendingDeviceModel } from '../model/pending-device-model';
+import { AssignEmployeeModel } from '../model/assign-employee-model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,10 @@ export class AttendanceDeviceService {
     return this.http.post<any>(this.baseUrl + "/AttendanceDevice/add-Device",device);
   }
 
+  updateDevice(device: AttendanceDeviceModel): Observable<any> {
+    return this.http.put<any>(this.baseUrl + "/AttendanceDevice/update-Device", device);
+  }
+
   rebootDevice(deviceId:number): Observable<any> {
     return this.http.post<any>(this.baseUrl+`/AttendanceDevice/reboot-Device/${deviceId}`,{});
   }
@@ -34,5 +39,20 @@ export class AttendanceDeviceService {
     return this.http.delete<any>(this.baseUrl + `/AttendanceDevice/delete-Device/${deviceId}`);
   }
 
+  assignEmployee(employee: AssignEmployeeModel):Observable<any> {
+    return this.http.post<any>(this.baseUrl + "/AttendanceDevice/add-User",employee);
+  }
+
+  getSelectedDevice() : Observable<any[]> {
+    return this.http.get<any>(this.baseUrl + "/AttendanceDevice/get-SelectedDevice");
+  }
+
+  enrollFingerprint(employee:any): Observable<any> {
+    return this.http.post<any>(this.baseUrl + "/AttendanceDevice/enroll-Fingerprint",employee);
+  }
+
+  customCommand(command:FormData) : Observable<any> {
+    return this.http.post<any>(this.baseUrl + "/AttendanceDevice/add-CustomCommand", command); 
+  }
 
 }

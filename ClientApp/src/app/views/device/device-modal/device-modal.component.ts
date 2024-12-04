@@ -21,6 +21,8 @@ export class DeviceModalComponent implements OnInit, OnDestroy {
   deviceModel: AttendanceDeviceModel
   @Input()
   buttonText: string;
+  @Input()
+  IsUpdate: boolean
   loading: boolean;
 
   Timezones: any[] = [
@@ -48,20 +50,7 @@ export class DeviceModalComponent implements OnInit, OnDestroy {
   { name: "UTC +09:00", value: "9" },
   { name: "UTC +10:00", value: "10" },
   { name: "UTC +11:00", value: "11" },
-  { name: "UTC +12:00", value: "12" },
-  { name: "Pacific/Kwajalein (UTC +12)", value: "12" },
-  { name: "Asia/Kolkata (UTC +05:30)", value: "5.5" },
-  { name: "Asia/Dhaka (UTC +06:00)", value: "6" },
-  { name: "Asia/Tokyo (UTC +09:00)", value: "9" },
-  { name: "Australia/Sydney (UTC +11:00)", value: "11" },
-  { name: "Europe/London (UTC +00:00)", value: "0" },
-  { name: "Europe/Berlin (UTC +01:00)", value: "1" },
-  { name: "America/New_York (UTC -05:00)", value: "-5" },
-  { name: "America/Los_Angeles (UTC -08:00)", value: "-8" },
-  { name: "America/Chicago (UTC -06:00)", value: "-6" },
-  { name: "America/Denver (UTC -07:00)", value: "-7" },
-  { name: "Asia/Dubai (UTC +04:00)", value: "4" },
-  { name: "Asia/Singapore (UTC +08:00)", value: "8" }
+  { name: "UTC +12:00", value: "12" }
 ]; 
 
   constructor(
@@ -78,13 +67,14 @@ export class DeviceModalComponent implements OnInit, OnDestroy {
     this.deviceModel.title = "Default"
     this.buttonText = "Submit"
     this.loading = false;
+    this.IsUpdate = false;
   }
 
   ngOnInit(): void {
     if(this.pendingDevice!=null) {
       this.deviceModel.sn = this.pendingDevice.sn;
-      console.log(this.deviceModel.title);
     } 
+    console.log(this.deviceModel.status);
   }
 
   closeModal() {
@@ -98,12 +88,36 @@ export class DeviceModalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.addDevice();
+
+    this.IsUpdate?this.onUpdate():this.addDevice();
   }
 
   addDevice() {
     this.loading = true;
     this.attendanceDeviceService.addDevice(this.deviceModel).subscribe({
+      next: response => {
+        if(response.success) {
+          this.toastr.success("",`${response.message}`, {
+            positionClass: "toast-top-right"
+          })          
+        } else {
+          this.toastr.warning("",`${response.message}`, {
+            positionClass: "toast-top-right"
+          })
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    })    
+  }
+
+  onUpdate() {
+    this.loading = true;
+    this.attendanceDeviceService.updateDevice(this.deviceModel).subscribe({
       next: response => {
         if(response.success) {
           this.toastr.success("",`${response.message}`, {

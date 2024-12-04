@@ -22,7 +22,8 @@ export class EmpBankInfoComponent implements OnInit, OnDestroy {
   accountTypes: SelectedModel[] = [];
   banks: SelectedModel[] = [];
   bankBranches: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   empBank: EmpBankInfoModule[] = [];
 
@@ -44,25 +45,28 @@ export class EmpBankInfoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
 
   getEmployeeBankInfoByEmpId() {
-    this.empBankInfoService.findByEmpId(this.empId).subscribe((res) => {
-      if (res.length > 0) {
-        this.headerText = 'Update Bank Information';
-        this.btnText = 'Update';
-        this.empBank = res;
-        this.patchBankInfo(res);
-      }
-      else {
-        this.headerText = 'Add Bank Information';
-        this.btnText = 'Submit';
-        this.addBank();
-      }
-    })
+    this.subscription.push(
+      this.empBankInfoService.findByEmpId(this.empId).subscribe((res) => {
+        if (res.length > 0) {
+          this.headerText = 'Update Bank Information';
+          this.btnText = 'Update';
+          this.empBank = res;
+          this.patchBankInfo(res);
+        }
+        else {
+          this.headerText = 'Add Bank Information';
+          this.btnText = 'Submit';
+          this.addBank();
+        }
+      })
+    )
+    
   }
 
   patchBankInfo(bankInfoList: any[]) {
@@ -106,7 +110,9 @@ export class EmpBankInfoComponent implements OnInit, OnDestroy {
   }
 
   removeBankList(index: number, id: number) {
+   
     if (id != 0) {
+      this.subscription.push(
       this.confirmService
         .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
         .subscribe((result) => {
@@ -129,7 +135,9 @@ export class EmpBankInfoComponent implements OnInit, OnDestroy {
               }
             );
           }
-        });
+        })
+      )
+      
     }
     else if (id == 0) {
       if (this.empBankListArray.controls.length > 0)
@@ -143,19 +151,28 @@ export class EmpBankInfoComponent implements OnInit, OnDestroy {
   }
 
   getSelectedBankAccountType() {
-    this.empBankInfoService.getSelectedBankAccountType().subscribe((res) => {
+    this.subscription.push(
+      this.empBankInfoService.getSelectedBankAccountType().subscribe((res) => {
       this.accountTypes = res;
     })
+    )
+    
   }
   getSelectedBankName() {
-    this.empBankInfoService.getSelectedBankName().subscribe((res) => {
+    this.subscription.push(
+       this.empBankInfoService.getSelectedBankName().subscribe((res) => {
       this.banks = res;
     })
+    )
+   
   }
   getSelectedBankBranchName() {
-    this.empBankInfoService.getSelectedBankBranchName().subscribe((res) => {
+    this.subscription.push(
+       this.empBankInfoService.getSelectedBankBranchName().subscribe((res) => {
       this.bankBranches = res;
     })
+    )
+   
   }
 
   cancel() {

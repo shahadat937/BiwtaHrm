@@ -46,6 +46,8 @@ import { ApplyComponent } from './apply/apply.component';
 import { GradeService } from '../basic-setup/service/Grade.service';
 import { FieldPrintComponent } from './field-print/field-print.component';
 import { NgxPrintModule } from 'ngx-print';
+// import { NgxPrintModule } from 'ngx-print';
+
 
 @NgModule({
   declarations: [

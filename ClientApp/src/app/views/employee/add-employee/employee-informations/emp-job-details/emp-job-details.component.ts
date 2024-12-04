@@ -38,7 +38,8 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   empJobDetailsId: number = 0;
   sectionView: boolean = false;
   firstSectionView: boolean = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   prlDate: string = '';
   retirementDate: string = '';
@@ -67,7 +68,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -116,19 +117,24 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   }
 
   getPrlAndRetirmentDate(){
-    this.subscription = this.empBasicInfoService.findByEmpId(this.empId).subscribe((res) => {
-      this.subscription = this.jobDetailsSetupService.getActive().subscribe((response) =>{
-        if(res.dateOfBirth && response){
-          let prlDate = new Date(res.dateOfBirth);
-          prlDate.setFullYear(prlDate.getFullYear() + (response.prlAge || 0));
-          this.prlDate = prlDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-
-          let retirementDate = new Date(res.dateOfBirth);
-          retirementDate.setFullYear(retirementDate.getFullYear() + (response.retirmentAge || 0));
-          this.retirementDate = retirementDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-      }
-      })
-    });
+    // this.subscription = 
+    this.subscription.push(
+      this.empBasicInfoService.findByEmpId(this.empId).subscribe((res) => {
+    
+        this.jobDetailsSetupService.getActive().subscribe((response) =>{
+         if(res.dateOfBirth && response){
+           let prlDate = new Date(res.dateOfBirth);
+           prlDate.setFullYear(prlDate.getFullYear() + (response.prlAge || 0));
+           this.prlDate = prlDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+ 
+           let retirementDate = new Date(res.dateOfBirth);
+           retirementDate.setFullYear(retirementDate.getFullYear() + (response.retirmentAge || 0));
+           this.retirementDate = retirementDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+       }
+       })
+     })
+    )
+    
   }
 
   initaialForm(form?: NgForm) {
@@ -202,9 +208,13 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   }
 
   loadOffice() {
-    this.subscription = this.officeService.selectGetoffice().subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.officeService.selectGetoffice().subscribe((data) => {
       this.offices = data;
-    });
+    })
+    )
+    
   }
 
   
@@ -236,9 +246,13 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
 
   
   getAllSelectedDepartments(){
-    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.departmentService.getSelectedAllDepartment().subscribe((res) => {
           this.departments = res;
-    });
+    })
+    )
+    
   }
 
   onOfficeSelect(officeId: number) {
@@ -341,7 +355,9 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       ? this.empJobDetailsService.updateEmpJobDetails(id, form.value)
       : this.empJobDetailsService.saveEmpJobDetails(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    // this.subscription = 
+    this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -356,7 +372,9 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
       this.loading = false;
-    });
+    })
+    )
+    
   }
 
 }

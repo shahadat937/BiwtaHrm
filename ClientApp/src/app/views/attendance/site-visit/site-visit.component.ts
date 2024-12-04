@@ -30,7 +30,8 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   @Input() IsUser: boolean;
   @Input() filter: any;
   icons = {cilX,cilTrash,cilCheck, cilPencil,cilZoom, cilSearch};
-  subscription:Subscription = new Subscription();
+  // subscription:Subscription = new Subscription();
+  subscription: Subscription[]=[]
   EmpOption: any[] = [];
   @ViewChild('siteVisitForm', { static: true }) siteVisitForm!: NgForm;
   tableData: any[] = [];
@@ -89,7 +90,7 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     if(this.subscription!=null) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
   getBadgeColor(status:string) {
@@ -109,11 +110,14 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   getSiteVisit() {
 
     if(this.IsUser==false) {
-      this.subscription = this.siteVisitService.getSiteVisitAll().subscribe(data=> {
-        this.tableData=data;
-      }, error=> {
-        console.log(error);
-      })
+   
+      this.subscription.push(
+        this.siteVisitService.getSiteVisitAll().subscribe(data=> {
+          this.tableData=data;
+        }, error=> {
+          console.log(error);
+        })
+      )
 
     } else {
 
@@ -357,10 +361,11 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     }
 
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
 
-    this.subscription = source$.subscribe(data => {
+   this.subscription.push(
+    source$.subscribe(data => {
       this.empBasicInfoService.getEmpInfoByCard(data).subscribe({
         next: (response:any) => {
 
@@ -377,6 +382,9 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
         }
       })
     })
+   )
+    
+    
   }
 
   openEmployeeModal() {

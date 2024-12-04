@@ -28,7 +28,8 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   btnText:string='';
   employeeType: SelectedModel[] = [];
   shifts: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   userForm : UserModule = new UserModule;
   empShiftForm : EmpShiftAssign = new EmpShiftAssign;
@@ -55,7 +56,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -156,14 +157,21 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   }
 
   getSelectedEmployeeType(){
-    this.subscription=this.empBasicInfoService.getSelectedEmployeeType().subscribe((data) => { 
+    // this.subscription=
+    this.subscription.push(
+      this.empBasicInfoService.getSelectedEmployeeType().subscribe((data) => { 
       this.employeeType = data;
-    });
+    })
+    )
+    
   }
   getSelectedShift(){
-    this.subscription=this.shiftService.getSelectedShift().subscribe((data) => { 
-      this.shifts = data;
-    });
+    this.subscription.push(
+      this.shiftService.getSelectedShift().subscribe((data) => { 
+        this.shifts = data;
+      })
+    )
+    // this.subscription=
   }
 
   cancel(){
@@ -179,7 +187,9 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
       ? this.empBasicInfoService.updateEmpBasicInfo(id, form.value)
       : this.empBasicInfoService.saveEmpBasicInfo(form.value);
     
-      this.subscription = action$.subscribe((response: any) => {
+   
+      this.subscription.push(
+        action$.subscribe((response: any) => {
         if (response.success) {
         if(!id){
           this.userForm.firstName = form.value.firstName;
@@ -211,6 +221,8 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
           this.loading = false;
         }
         this.loading = false;
-      });
+      })
+      )
+      
   }
 }

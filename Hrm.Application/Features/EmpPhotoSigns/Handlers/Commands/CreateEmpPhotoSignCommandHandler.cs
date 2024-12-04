@@ -56,8 +56,8 @@ namespace Hrm.Application.Features.EmpPhotoSigns.Handlers.Commands
             }
 
             empPhotoSigns.EmpId = request.EmpPhotoSignDto.EmpId;
-            empPhotoSigns.UniqueIdentity = request.EmpPhotoSignDto.UniqueIdentity;
-            empPhotoSigns.Remark = request.EmpPhotoSignDto.Remark;
+            empPhotoSigns.UniqueIdentity = request.EmpPhotoSignDto.UniqueIdentity ?? "";
+            empPhotoSigns.Remark = request.EmpPhotoSignDto.Remark ?? "";
 
 
             await _unitOfWork.Repository<EmpPhotoSign>().Add(empPhotoSigns);

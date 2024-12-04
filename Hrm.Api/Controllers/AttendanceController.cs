@@ -21,9 +21,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-Attendance")]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> Get([FromQuery] AttendanceFilterDto filters)
         {
-            var command = new GetAttendanceRequest { };
+            var command = new GetAttendanceRequest { Filters = filters};
             var response = await _mediator.Send(command);
 
             return Ok(response);
@@ -70,11 +70,20 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-WorkingDays")]
-        public async Task<ActionResult> GetWorkingDays([FromQuery] DateTime From, [FromQuery] DateTime To)
+        public async Task<ActionResult> GetWorkingDays([FromQuery] DateTime From, [FromQuery] DateTime To, [FromQuery] int? LeaveTypeId)
         {
-            var commnad = new GetWorkingDaysRequest { From = From, To = To };
+            var commnad = new GetWorkingDaysRequest { From = From, To = To, LeaveTypeId = LeaveTypeId };
             var response = await _mediator.Send(commnad);
 
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("get-IsHolidayWeekend")]
+        public async Task<ActionResult> GetIsHolidayWeekend([FromQuery] int Month, [FromQuery] int Year)
+        {
+            var command = new GetIsDateHolidayWeekendRequest { Year = Year, Month = Month };
+            var response = await _mediator.Send(command);
             return Ok(response);
         }
 

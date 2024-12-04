@@ -39,21 +39,10 @@
         <c-row class="mt-3"  >
             <h5 cCardTitle>Select Employee</h5>
             <c-col md="3">
-                <select name="Office" id="office"
-                cSelect 
-                [(ngModel)]="selectedOffice"
-                (change)="onChange()">
-                    <option [ngValue]="null" selected>Select Office</option>
-                    @for (office of OfficeOption; track $index) {
-                        <option [ngValue]="office.id">{{office.name}}</option>
-                    }
-                </select>
-            </c-col>
-            <c-col md="3">
                 <select name="Department" id="department" 
                 cSelect
                 [(ngModel)]="selectedDepartment"
-                (change)="onChange()"
+                (change)="onChange(true)"
                 >
                     <option [ngValue]="null" selected>Select Department</option>
                     @for ( department of DepartmentOption; track $index) {
@@ -61,11 +50,11 @@
                     }
                 </select>
             </c-col>
-            <c-col md="3">
-                <select name="Shift" id="shift" cSelect>
-                    <option [ngValue]="null" selected>Select Shift</option>
-                    @for ( shift of ShiftOption; track $index) {
-                        <option [ngValue]="shift.id">{{shift.name}}</option>
+            <c-col md="3" [ngClass]="this.SectionOption.length<=0||this.selectedDepartment==null?'d-none':''">
+                <select (change)="onChange(false)" name="Section" id="section" cSelect>
+                    <option [ngValue]="null" selected>Select Section</option>
+                    @for ( section of SectionOption; track $index) {
+                        <option [ngValue]="section.id">{{section.name}}</option>
                     }
                 </select>
             </c-col>
@@ -175,17 +164,6 @@
         </c-row>
         <c-row class="mt-3"  >
             <h5 cCardTitle>Filter</h5>
-            <c-col md="3">
-                <select name="Office" id="office"
-                cSelect 
-                [(ngModel)]="selectedOfficeDw"
-                (change)="onChangeDw()">
-                    <option [ngValue]="null" selected>Select Office</option>
-                    @for (office of OfficeOptionDw; track $index) {
-                        <option [ngValue]="office.id">{{office.name}}</option>
-                    }
-                </select>
-            </c-col>
             <c-col md="3">
                 <select name="Department" id="department" 
                 cSelect

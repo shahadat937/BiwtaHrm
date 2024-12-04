@@ -33,6 +33,7 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
                                                                 .ThenInclude(ejd => ejd.Department)
                                                             .Include(x => x.EmpJobDetail)
                                                                 .ThenInclude(ejd => ejd.Designation)
+                                                                    .ThenInclude(ds => ds.DesignationSetup)
                                                             .Include(x => x.EmpJobDetail)
                                                                 .ThenInclude(ejd => ejd.Section)
                                                             .Include(x => x.EmpPhotoSign)

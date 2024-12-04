@@ -51,4 +51,16 @@ export class ManageLeaveService {
   getLeaveByFilter(params: HttpParams): Observable<LeaveModel[]> {
     return this.http.get<LeaveModel[]>(this.baseUrl+"/leaveRequest/get-LeaveRequestByFilter", {params:params});
   }
+
+  getLeaveFiles(leaveRequestId: number): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl+`/leaveRequest/get-LeaveFilesByLeaveRequestId/${leaveRequestId}`);
+  }
+
+  updateLeaveRequest(leaveRequest:FormData): Observable<any> {
+    return this.http.put<any>(this.baseUrl+'/leaveRequest/update-LeaveRequest', leaveRequest)
+  }
+
+  deleteLeaveRequest(leaveRequestId:number): Observable<any> {
+    return this.http.delete<any>(this.baseUrl+`/leaveRequest/delete-LeaveRequest/${leaveRequestId}`);
+  }
 }

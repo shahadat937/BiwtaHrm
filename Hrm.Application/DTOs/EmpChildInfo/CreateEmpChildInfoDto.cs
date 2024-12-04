@@ -13,7 +13,7 @@ namespace Hrm.Application.DTOs.EmpChildInfo
         public string? ChildName { get; set; }
         public string? ChildNameBangla { get; set; }
         public DateOnly? DateOfBirth { get; set; }
-        public int? BirthRegNo { get; set; }
+        public string? BirthRegNo { get; set; }
         public string? NID { get; set; }
         public int? OccupationId { get; set; }
         public int? GenderId { get; set; }

@@ -19,6 +19,7 @@ import {
   PopoverModule,
   ProgressModule,
   SharedModule,
+  SidebarModule,
   SpinnerModule,
   TableModule,
   TooltipModule,
@@ -38,6 +39,11 @@ import { MatTableModule } from '@angular/material/table';
 import { IconModule } from '@coreui/icons-angular';
 import { SiteSettingComponent } from './site-setting/site-setting.component';
 import { CreateSiteSettingComponent } from './create-site-setting/create-site-setting.component';
+import { NavbarThemListComponent } from './navbar-them-list/navbar-them-list.component';
+import { CreateNavbarThemComponent } from './create-navbar-them/create-navbar-them.component';
+import { ColorPickerModule } from 'primeng/colorpicker';
+import { NavbarSettingComponent } from './navbar-setting/navbar-setting.component';
+import { CreateNavbarSettingComponent } from './create-navbar-setting/create-navbar-setting.component';
 
 
 @NgModule({
@@ -48,6 +54,10 @@ import { CreateSiteSettingComponent } from './create-site-setting/create-site-se
     CreateFeatureComponent,
     SiteSettingComponent,
     CreateSiteSettingComponent,
+    NavbarThemListComponent,
+    CreateNavbarThemComponent,
+    NavbarSettingComponent,
+    CreateNavbarSettingComponent,
   ],
   imports: [
     CommonModule,
@@ -70,7 +80,6 @@ import { CreateSiteSettingComponent } from './create-site-setting/create-site-se
     CollapseDirective,
     MatFormFieldModule,
     MatTableModule,
-    FormsModule,
     MatPaginatorModule,
     MatInputModule,
     CollapseDirective,
@@ -86,7 +95,9 @@ import { CreateSiteSettingComponent } from './create-site-setting/create-site-se
     PopoverModule,
     AlertComponent,
     TooltipModule,
-    BadgeModule
+    BadgeModule,
+    ColorPickerModule,
+    SidebarModule,
   ],
   providers: [ 
     ToastrService,

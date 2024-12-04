@@ -19,11 +19,16 @@
               <c-card-body cRow [gutter]="3">
                   <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDepartmentId"
                       name="currentDepartmentId" />
+                <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentSectionId"
+                name="currentSectionId" />
                   <input type="hidden" [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDesignationId"
                       name="currentDesignationId" />
                   <c-col [md]="4">
                       <label cLabel for="idCardNo">Employee PMS No<span class="text-danger">*</span></label>
                       <c-input-group>
+                        <button cButton color="secondary" type="button" cTooltip="Search Employee" cTooltipPlacement="bottom" (click)="EmployeeListModal()">
+                            <svg [cIcon]="icons.cilSearch"></svg>
+                        </button>
                           <input aria-describedby="idCardNo" cFormControl
                               [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.empIdCardNo" name="empIdCardNo"
                               #idCardNo="ngModel" required placeholder="Enter Employee PMS No" id="idCardNo"
@@ -65,6 +70,13 @@
                           readonly />
                     </c-col>
                   }
+                  
+                  <c-col [md]="4">
+                    <label cLabel for="currentDeptJoinDate">Current Department Joining Date<span class="text-danger"></span></label>
+                    <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate"
+                        name="currentDeptJoinDate" #currentDeptJoinDate="ngModel" cFormControl id="currentDeptJoinDate"
+                        type="date" />
+                    </c-col>
                   }
               </c-card-body>
           </c-card>
@@ -150,6 +162,46 @@
               </c-form-check>
             </c-card-header>
             <c-card-body cRow [gutter]="3">
+
+                <c-col [md]="4">
+                    <label cLabel for="orderNo"
+                    >Order No<span class="text-danger"></span></label>
+                    <input
+                    [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.orderNo"
+                    name="orderNo"
+                    #orderNo="ngModel"
+                    placeholder="Order No"
+                    cFormControl
+                    id="orderNo"
+                    type="text"
+                    />
+                </c-col>
+
+                <c-col [md]="4">
+                    <label cLabel for="orderDate"
+                    >Order Date<span class="text-danger"></span></label>
+                    <input
+                    [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.orderDate"
+                    name="orderDate"
+                    #orderDate="ngModel"
+                    cFormControl
+                    id="orderDate"
+                    type="date"
+                    />
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="effectiveDate"
+                    >Effective Date<span class="text-danger"></span></label>
+                    <input
+                    [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.effectiveDate"
+                    name="effectiveDate"
+                    #effectiveDate="ngModel"
+                    cFormControl
+                    id="effectiveDate"
+                    type="date"
+                    />
+                </c-col>
               @if(empPromotionIncrementService.empPromotionIncrement.promotionIncrementType == 'Increment & Promotion' || empPromotionIncrementService.empPromotionIncrement.promotionIncrementType == 'Promotion'){
                 <c-col [md]="4">
                   <label cLabel for="updateDesignationId">Designation<span class="text-danger"></span></label>
@@ -229,7 +281,7 @@
                     placeholder="Basic Pay"
                     cFormControl
                     id="updateBasicPay"
-                    type="text"
+                    type="number"
                     />
                 </c-col>
               }

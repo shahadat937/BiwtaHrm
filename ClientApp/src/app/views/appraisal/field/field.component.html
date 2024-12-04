@@ -1,19 +1,9 @@
 @if (fieldData.htmlTagName=="input") {
     
-    @if (fieldData.hasSelectable&&fieldData.hasMultipleValue==false) {
+    @if (fieldData.hasSelectable&&fieldData.hasMultipleValue==false&&fieldData.htmlInputType!="inline-radio") {
         <c-row class="mt-2" [gutter]="3">
             <c-col md="5">
                 <label cLabel class="font-weight-bold"><strong>{{Index+fieldData.fieldName}}</strong></label> 
-            </c-col>
-            <c-col md="3">
-                <input
-                [readOnly]="IsReadonly"
-                type="text"
-                placeholder="Remark"
-                [(ngModel)] = "fieldData.remark"
-                cFormControl 
-                [name]="fieldUniqueName+'remark'" 
-                id="fieldUniqueName+'remark'">
             </c-col>
                     
             @for (option of fieldData.options; track $index) {
@@ -21,7 +11,7 @@
                     <c-col md="4">
                         <label cLabel class="font-weight-bold"><strong>{{$index+1}}. {{option.optionName}}</strong></label>
                     </c-col>
-                    <c-col>
+                    <c-col md="1">
                         <input type="radio" 
                         [disabled]="IsReadonly"
                         [(ngModel)]="field"
@@ -31,21 +21,47 @@
                         style="display: none;"
                         [id]="fieldUniqueName+option.optionValue"
                          />
-                    <label for="{{fieldUniqueName+option.optionValue}}">
-                        <div style="width: 60px; height: 35px;" class="text-center flex border border-2 border-secondary justify-content-center">
-                            {{option.optionValue}}
-                        </div>
-                    </label>
+                        <label for="{{fieldUniqueName+option.optionValue}}">
+                            <div style="width: 60px; height: 35px;" class="text-center flex border border-2 border-secondary justify-content-center">
+                                {{option.optionValue}}
+                            </div>
+                        </label>
+                    </c-col>
+                    <c-col md="2" *ngIf="field==option.optionValue">
+                        <input
+                        [readOnly]="IsReadonly"
+                        type="text"
+                        placeholder="Remark"
+                        [(ngModel)] = "fieldData.remark"
+                        cFormControl 
+                        [name]="fieldUniqueName+'remark'" 
+                        id="fieldUniqueName+'remark'">
                     </c-col>
                 </c-row>
             }
         </c-row>
+    } @else if (fieldData.htmlInputType=="inline-radio") {
+        {{Index+' '+fieldData.fieldName}}
+        @for (option of fieldData.options; track $index) {
+            <input
+            class="me-1 ms-2" 
+            [disabled]="IsReadonly"
+            type="radio" 
+            inline
+            [(ngModel)]="fieldData.fieldValue"
+            cFormCheckInput 
+            [value]="option.optionValue" 
+            [name]="fieldUniqueName" 
+            [id]="fieldUniqueName+option.optionValue">
+            <label  [for]="fieldUniqueName+option.optionValue" cFormCheckLabel >{{option.optionName}}</label>
+        }
+        {{fieldData.description}}
     } @else {
         <c-row class="mt-2"  [gutter]="3">
             <c-col md="4">
                 <label class="font-weight-bold" cLabel><strong>{{Index+fieldData.fieldName}}:</strong></label>
             </c-col>
-            <c-col>
+            <c-col md="4">
 
                 <input [name]="fieldUniqueName" 
                 [readOnly]="IsReadonly"
@@ -56,12 +72,9 @@
                 [type]="fieldData.htmlInputType" 
                 [required]="fieldData.isRequired" cFormControl>
                 
-                @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired){
+                @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly){
                     <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
                 }
-            </c-col>
-            <c-col>
-                
             </c-col>
         </c-row>
     }
@@ -69,7 +82,7 @@
 } @else if(fieldData.htmlTagName=="textarea") {
     <c-row class="mt-2" [gutter]="3">
         <c-col md="4">
-            <label cLabel><strong>{{fieldData.fieldName}}: </strong></label>
+            <label cLabel><strong>{{Index+fieldData.fieldName}}: </strong></label>
         </c-col>
         <c-col>
             <textarea [name]="fieldUniqueName" 
@@ -80,9 +93,211 @@
             [required] = "fieldData.isRequired"
             cFormControl
             ></textarea>
-            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired) {
+            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly) {
                 <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
             }
         </c-col>
     </c-row>
-} 
+} @else if(fieldData.htmlTagName=="daterange") {
+    <c-row class="mt-2" [gutter]="3">
+        <c-col md="4">
+            <label cLabel><strong>{{Index+fieldData.fieldName}}: </strong></label>
+        </c-col>
+        <c-col md="2">
+            <input [name]="fieldUniqueName" 
+            [readOnly]="IsReadonly"
+            [id]="fieldUniqueName"
+            [(ngModel)]="this.fieldData.childFields[0].fieldValue"
+            #fieldRef = "ngModel"
+            (change)="onFieldChange($event)"
+            [type]="fieldData.childFields[0].htmlInputType"
+            [required]="fieldData.isRequired" cFormControl>
+                
+            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly){
+                <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
+            }
+        </c-col>
+        <c-col md="1">
+            To
+        </c-col>
+        <c-col md="2">
+            <input [name]="fieldUniqueName" 
+            [readOnly]="IsReadonly"
+            [id]="fieldUniqueName"
+            [(ngModel)]="this.fieldData.childFields[1].fieldValue"
+            #fieldRef = "ngModel"
+            (change)="onFieldChange($event)"
+            [type]="fieldData.childFields[1].htmlInputType"
+            [required]="fieldData.isRequired" cFormControl>
+                
+            @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly){
+                <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
+            }
+        </c-col>
+
+    </c-row>
+
+} @else if(fieldData.htmlTagName=="table"&&fieldData.htmlInputType=="educationinfo") {
+    <c-row class="mt-2" [gutter]="3">
+        <c-col md="4">
+            <label cLabel><strong>{{Index+fieldData.fieldName}}: </strong></label>
+        </c-col>
+        <c-col md="6">
+            <p-table
+            [rowHover]="true"
+            [value]="selectedEduInfos"
+            styleClass="p-datatable-striped">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:22%">Exam</th>
+                        <th style="width:25%">Board</th>
+                        <th style="width:25%">Result</th>
+                        <th style="width:25%">Passing Year</th>
+
+                        @if (IsReadonly==false) {
+                            <th style="width: 2%"> </th>
+                        }
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-education>
+                    <tr>
+                        <td>{{ education.examTypeName }}</td>
+                        <td>{{ education.boardName }}</td>
+                        <td>{{ education.point }}</td>
+                        <td>{{ education.passingYear }}</td>
+                        @if (IsReadonly==false) {
+                            <td>
+                                <button color="danger" cButton size="sm" shape="rounded-pill" title="Remove" (click)="removeEducationInfo(education.id)">
+                                    <svg [cIcon]="icons.cilX" size="sm"></svg>
+                                </button>
+                            </td>
+                        }
+                    </tr>
+                </ng-template>
+            </p-table>
+        </c-col>
+    </c-row>
+} @else if(fieldData.htmlTagName=="table"&&fieldData.htmlInputType=="jobhistory") {
+    <c-row class="mt-2" [gutter]="3">
+        <c-col md="4">
+            <label cLabel><strong>{{Index+fieldData.fieldName}}: </strong></label>
+        </c-col>
+        <c-col md="6">
+            <p-table
+            [value]="jobHistory"
+            [rowHover]="true"
+            styleClass="p-datatable-striped">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:22%">Department</th>
+                        <th style="width:25%">Designation</th>
+                        <th style="width:25%">Joining Date</th>
+                        <th style="width:25%">Release Date</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-job>
+                    <tr>
+                        <td>{{ job.deppartmentName }}</td>
+                        <td>{{ job.designationName }}</td>
+                        <td>{{ job.startDate }}</td>
+                        <td>{{ job.endDate }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </c-col>
+    </c-row>
+} @else if(fieldData.htmlTagName == "group" && fieldData.htmlInputType=="general") {
+    <c-row class="mt-2" [gutter]="3">
+        <c-col>
+            <label cLabel><strong>{{Index+fieldData.fieldName}}</strong></label>
+        </c-col>
+        <div class="ms-5">
+
+            @for (field of fieldData.childFields; track $index) {
+                <app-field
+                [empId]="empId"
+                [(field)]="field.fieldValue"
+                [fieldData]="field"
+                [Index]="$index+1+'. '" 
+                [fieldUniqueName]="fieldUniqueName+field.fieldName+field.fieldId"></app-field>
+            }
+        </div>
+    </c-row>
+} @else if (fieldData.htmlTagName == "table" && fieldData.htmlInputType=="trainingHistory"){
+    <c-row class="mt-2" [gutter]="3">
+        <c-col md="4">
+            <label cLabel><strong>{{Index+fieldData.fieldName}}: </strong></label>
+        </c-col>
+        <c-col md="6">
+            <p-table
+            [value]="trainingHistory"
+            [rowHover]="true"
+            styleClass="p-datatable-striped">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Name</th>
+                        <th>Institute</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-training>
+                    <tr>
+                        <td>{{ training.trainingName }}</td>
+                        <td>{{ training.instituteName }}</td>
+                        <td>{{ training.fromDate }}</td>
+                        <td>{{ training.toDate }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </c-col>
+    </c-row>
+} @else if (fieldData.htmlTagName=="group"&&fieldData.htmlInputType=="question") {
+    <c-row class="mt-3">
+        <div class="table-responsive-md">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2"></th>
+                        <th>A1</th>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>C</th>
+                        <th>D</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @for (childFieldData of fieldData.childFields; track $index) {
+                        <tr>
+
+                            @if (childFieldData.totalSubquestion==0) {
+                                <td [colSpan]="2">{{childFieldData.fieldName}}</td>
+                            } @else {
+                                @if (childFieldData.totalSubquestion!=1) {
+                                    <td [rowSpan]="childFieldData.totalSubquestion">{{childFieldData.description}}</td>
+                                }
+                                <td>{{childFieldData.fieldName}}</td>
+                            }
+                            @for (option of childFieldData.options; track $index) {
+                                <td>
+                                    <input
+                                    class="form-check-input" 
+                                    type="radio"
+                                    [disabled]="IsReadonly"
+                                    [(ngModel)]="childFieldData.fieldValue"
+                                    [name]="childFieldData.fieldId+'field'+option.optionId+'option'" 
+                                    [value]="option.optionValue"
+                                    [id]="childFieldData.fieldId+'field'+option.optionId+'option'">
+                                </td>
+                            }
+                            <td style="max-width: 1.8rem"><input [readOnly]="IsReadonly" cFormControl [(ngModel)]="childFieldData.remark" type="text" placeholder="Remark" name="remark" id="remark"></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </c-row>
+}

@@ -17,5 +17,7 @@ namespace Hrm.Application.Constants
         public static readonly string MaxRequestLifeTime = "MaxRequestLifeTime";
         public static readonly string MinimumAge = "MinimumAge";
         public static readonly string Gender = "Gender";
+        public static readonly string ApplyFreq = "ApplyFreq";
+        public static readonly string SandwichLeave = "SandwichLeave";
     }
 }

@@ -2,6 +2,7 @@
 using Hrm.Application.DTOs.EmpPromotionIncrement;
 using Hrm.Application.Features.EmpPromotionIncrements.Requests.Commands;
 using Hrm.Application.Features.EmpPromotionIncrements.Requests.Queries;
+using Hrm.Application.Features.EmpTransferPostings.Requests.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -63,11 +64,20 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-AllEmpPromotionIncrementApproveInfo")]
-        public async Task<ActionResult> GetAllEmpPromotionIncrementApproveInfo()
+        [Route("get-AllEmpPromotionIncrementApproveInfo/{id}")]
+        public async Task<ActionResult> GetAllEmpPromotionIncrementApproveInfo(int id)
         {
-            var EmpPromotionIncrement = await _mediator.Send(new GetEmpPromotionIncrementApprovalListRequest { });
+            var EmpPromotionIncrement = await _mediator.Send(new GetEmpPromotionIncrementApprovalListRequest {Id = id });
             return Ok(EmpPromotionIncrement);
+        }
+
+        [HttpDelete]
+        [Route("delete-EmpPromotionIncrement/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var command = new DeleteEmpPromotionIncrementCommand { Id = id };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

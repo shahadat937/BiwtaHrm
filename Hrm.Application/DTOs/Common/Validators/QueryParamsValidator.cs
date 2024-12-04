@@ -12,7 +12,7 @@ namespace Hrm.Application.DTOs.Common.Validators
         public int[] allowedPageSize = { 5, 10, 15, 20, 25, 50, 100, 200, 500, 1000 };
         public QueryParamsValidator()
         {
-            RuleFor(q => q.PageNumber).GreaterThanOrEqualTo(1);
+            RuleFor(q => q.PageIndex).GreaterThanOrEqualTo(1);
             RuleFor(q => q.PageSize).Custom((value, context) =>
             {
                 if (!allowedPageSize.Contains(value))

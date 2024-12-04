@@ -10,7 +10,7 @@
         cRow
         class="needs-validation"
       >
-        <c-col [md]="4">
+        <c-col [md]="3">
           <input
             type="hidden"
             [(ngModel)]="releaseTypeService.releaseType.releaseTypeId"
@@ -33,8 +33,23 @@
           <div class="text-left text-danger">Release Type Name is required</div>
           }
         </c-col>
+        
+        <c-col [md]="3">
+          <label cLabel for="isDeptRelease">Department Release<span class="text-danger">*</span></label>
+          <select [(ngModel)]="releaseTypeService.releaseType.isDeptRelease"
+          name="isDeptRelease"
+          #isDeptRelease="ngModel"
+          cSelect
+          id="isDeptRelease">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+          @if(!isDeptRelease.valid&&isDeptRelease.touched){
+          <div class="text-left text-danger">Department Release field required</div>
+          }
+        </c-col>
 
-        <c-col [md]="4">
+        <c-col [md]="3">
             <label cLabel for="Remark"
               >Remark<span class="text-danger"></span></label
             >
@@ -52,7 +67,7 @@
             }
           </c-col>
         
-        <c-col [md]="4">
+        <c-col [md]="3">
           <label cLabel for="validationCustom03">Active Status</label>
           <select [(ngModel)]="releaseTypeService.releaseType.isActive"
           name="isActive"
@@ -111,6 +126,14 @@
             <th mat-header-cell *matHeaderCellDef>Release Type Name</th>
             <td mat-cell *matCellDef="let element">
               {{ element.releaseTypeName }}
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="isDeptRelease">
+            <th mat-header-cell *matHeaderCellDef>Department Release</th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.isDeptRelease">Yes</span>
+              <span *ngIf="!element.isDeptRelease">No</span>
             </td>
           </ng-container>
   

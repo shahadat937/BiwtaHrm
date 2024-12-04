@@ -1,10 +1,10 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {SiteVisitModel} from "../models/site-visit-model";
 import {SiteVisitService} from "../services/site-visit.service";
-import { cilList, cilShieldAlt } from '@coreui/icons';
+import { cilList, cilSearch, cilShieldAlt, cilZoom } from '@coreui/icons';
 import { IconDirective } from '@coreui/icons-angular';
 import { cilX,cilCheck,cilPencil,cilTrash } from '@coreui/icons';
-import { Subscription } from 'rxjs';
+import { delay, of, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ConfirmService } from "../../../core/service/confirm.service";
@@ -14,6 +14,9 @@ import { update } from 'lodash-es';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { HttpParams } from '@angular/common/http';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
+import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
 
 
 
@@ -26,7 +29,7 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
 
   @Input() IsUser: boolean;
   @Input() filter: any;
-  icons = {cilX,cilTrash,cilCheck, cilPencil};
+  icons = {cilX,cilTrash,cilCheck, cilPencil,cilZoom, cilSearch};
   subscription:Subscription = new Subscription();
   EmpOption: any[] = [];
   @ViewChild('siteVisitForm', { static: true }) siteVisitForm!: NgForm;
@@ -36,9 +39,15 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   isVisible: boolean = false;
   isUpdate: boolean = false;
   loading=false;
+  statusOption = ["Approved","Declined"]
+  empIdCardNo: string;
+  empName: string;
+  isValidPMIS: boolean;
 
   constructor(
     public siteVisitService : SiteVisitService,
+    private modalService: BsModalService,
+    private empBasicInfoService: EmpBasicInfoService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -48,9 +57,21 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   ) {
     this.IsUser = false;
     this.filter = {};
+    this.empIdCardNo = "";
+    this.empName = "";
+    this.isValidPMIS = false;
+  }
+
+  resetEmp() {
+    this.empName = "";
+    this.isValidPMIS = false;
+    this.siteVisitService.model.empId = null;  
   }
 
 
+  getInputEventValue(event:Event) {
+    return (event.target as HTMLInputElement).value;
+  }
   ngOnInit(): void {
     this.getSiteVisit();
     this.getEmpOption();
@@ -58,6 +79,8 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     if(this.IsUser) {
       this.roleFeatureService.getFeaturePermission("manageSiteVisit").subscribe(response=> {
       })
+
+      this.siteVisitService.model.empId = JSON.parse(JSON.stringify(this.filter)).EmpId; 
     } else {
       this.roleFeatureService.getFeaturePermission("siteVisit").subscribe(response=> {
       })
@@ -106,6 +129,10 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
         params = params.set(key, this.filter[key]);
       }
 
+
+      if(!params.get('EmpId')) {
+        return;
+      }
       this.siteVisitService.getSiteVisitByFilter(params).subscribe({
         next:response => {
           this.tableData = response;
@@ -164,6 +191,9 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   }
 
   onSubmit(form:NgForm) {
+    console.log(this.siteVisitService.model);
+    form.control.removeControl("empIdCardNo");
+    form.control.removeControl("empName");
     this.isUpdate?this.onSiteVisitUpdate(form):this.onSiteVisitCreate(form);
     
   }
@@ -180,8 +210,11 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   toggleUpdate(element:any) {
     this.isUpdate = true;
     this.isVisible = true;
+    this.isValidPMIS = true;
     this.siteVisitForm?.form.patchValue(element);
     this.siteVisitService.model.empId = element.empId;
+    this.empName = [element.firstName,element.lastName].join(' ');
+    this.empIdCardNo = element.idCardNo;
 
   }
 
@@ -197,8 +230,8 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
             this.toastr.success('',`${response.message}`,{
               positionClass: 'toast-top-right'
             })
-            var index = this.tableData.findIndex((item)=> item.siteVisitId === siteVisitId);
-            delete this.tableData[index];
+            //var index = this.tableData.findIndex((item)=> item.siteVisitId === siteVisitId);
+            this.tableData = this.tableData.filter((item)=>item.siteVisitId != siteVisitId);
           } else {
             this.toastr.warning('', `${response.message}`, {
               positionClass: 'toast-top-right'
@@ -218,8 +251,15 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   onCancel() {
     this.isVisible = false;
     this.isUpdate = false;
+    this.siteVisitForm.reset(); 
     this.siteVisitService.model = new SiteVisitModel();
-    this.siteVisitForm.reset();
+    this.resetEmp();
+
+    if(this.IsUser) {
+      this.siteVisitService.model.empId = JSON.parse(JSON.stringify(this.filter)).EmpId;
+      this.onEmpIdChange(false);
+    }
+
   }
 
   getEmpOption() {
@@ -230,8 +270,13 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
 
   onSiteVisitCreate(form:NgForm) {
     this.loading = true;
-    console.log(form.value);
-    this.siteVisitService.submit(form.value).subscribe({
+
+    const formData = {
+      ...form.value,
+      "empId": this.siteVisitService.model.empId
+    }
+
+    this.siteVisitService.submit(formData).subscribe({
       next: (result)=> {
         if(result.success==true) {
           this.toastr.success("",`${result.message}`, {
@@ -297,5 +342,51 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
         this.loading = false;
       }
     })
+  }
+
+  onEmpIdChange(delayedRequest:boolean = true) {
+    console.log("Emp Id changed");
+    const delayTime = delayedRequest ?700:0;
+    const source$ = of (this.empIdCardNo).pipe(
+      delay(delayTime)
+    );
+
+    if(this.empIdCardNo.trim()=="") {
+      this.resetEmp();
+      return;
+    }
+
+    if(this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.subscription = source$.subscribe(data => {
+      this.empBasicInfoService.getEmpInfoByCard(data).subscribe({
+        next: (response:any) => {
+
+          if(response) {
+            this.empName = [response.firstName,response.lastName].join(' ');
+            this.siteVisitService.model.empId = response.id;
+            this.isValidPMIS = true;
+          } else {
+            this.resetEmp();
+          }
+        },
+        error: err => {
+          this.resetEmp();
+        }
+      })
+    })
+  }
+
+  openEmployeeModal() {
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
+
+    modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
+      if(idCardNo){
+          this.empIdCardNo = idCardNo;
+          this.onEmpIdChange(false);
+      }
+    });
   }
 }

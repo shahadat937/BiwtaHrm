@@ -27,12 +27,13 @@ namespace Hrm.Application.Features.EmpOtherResponsibilities.Handlers.Queries
 
         public async Task<List<EmpOtherResponsibilityDto>> Handle(GetEmpOtherResponsibilityByEmpIdRequest request, CancellationToken cancellationToken)
         {
-            List<EmpOtherResponsibility> EmpOtherResponsibilities = await _EmpOtherResponsibilityRepository.Where(x => x.EmpId == request.Id && x.IsActive != false)
+            List<EmpOtherResponsibility> EmpOtherResponsibilities = await _EmpOtherResponsibilityRepository.Where(x => x.EmpId == request.Id && x.ServiceStatus != false)
                 .Include(x => x.ResponsibilityType)
                 .Include(x => x.Office)
                 .Include(x => x.Department)
                 .Include(x => x.Section)
                 .Include(x => x.Designation)
+                    .ThenInclude(ds => ds.DesignationSetup)
                 .ToListAsync(cancellationToken);
 
             if (EmpOtherResponsibilities == null)

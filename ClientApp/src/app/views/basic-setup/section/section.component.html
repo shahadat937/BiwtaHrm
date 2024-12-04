@@ -38,10 +38,19 @@
               </div>
             </c-col> -->
             
+            <c-col [md]="12">
+              <c-form-check [switch]="true">
+                <input cFormCheckInput type="checkbox" id="showAllDesignation" name="showAllDesignation"
+                    [(ngModel)]="sectionService.sections.showAllDesignation"/>
+                <label cFormCheckLabel for="showAllDesignation">Show All Designation</label>
+              </c-form-check>
+            </c-col>
+
                 <c-col [md]="4">
                     <label cLabel for="departmentId">Department<span class="text-danger"></span></label>
                     <div class="input-wrapper">
                       <select (change)="onOfficeAndDepartmentSelect(sectionService.sections.departmentId)"
+                        (change)="getSectionPosition(sectionService.sections.departmentId, 0)"
                         [(ngModel)]="sectionService.sections.departmentId" name="departmentId" #departmentId="ngModel"
                         cFormControl id="departmentId" aria-label="Default select example" cSelect>
                         <option [ngValue]="null">Select Department</option>
@@ -63,7 +72,9 @@
                     <label cLabel for="upperSectionId">Upper Section<span class="text-danger"></span></label>
                     <div class="input-wrapper">
                       <select 
-                        [(ngModel)]="sectionService.sections.upperSectionId" name="upperSectionId" #upperSectionId="ngModel"
+                        [(ngModel)]="sectionService.sections.upperSectionId" name="upperSectionId" 
+                        (change)="getSectionPosition(sectionService.sections.departmentId, sectionService.sections.upperSectionId)" 
+                        #upperSectionId="ngModel"
                         cFormControl id="upperSectionId" aria-label="Default select example" cSelect>
                         <option [ngValue]="null">Select Upper Section</option>
             
@@ -350,6 +361,14 @@
               {{ element.sectionName }}
             </td>
           </ng-container>
+          
+          <ng-container matColumnDef="sequence">
+            <th mat-header-cell *matHeaderCellDef>Sequence</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.sequence }}
+            </td>
+          </ng-container>
+
           <ng-container matColumnDef="isActive">
             <th mat-header-cell *matHeaderCellDef>Is Active</th>
             <td mat-cell *matCellDef="let element">

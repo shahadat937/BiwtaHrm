@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BasicInfoModule } from '../model/basic-info.module';
-import { Observable, of, map } from 'rxjs';
+import { Observable, of, map, filter } from 'rxjs';
 import { EmployeesModule } from '../model/employees.module';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 
 @Injectable({
@@ -21,6 +21,11 @@ export class EmpBasicInfoService {
   getAll(): Observable<BasicInfoModule[]> {
       return this.http.get<BasicInfoModule[]>(this.baseUrl + '/empBasicInfo/get-allEmpBasicInfo')
   }
+  
+  getAllPagination(queryParams: any): Observable<any> {
+    const params = new HttpParams({ fromObject: queryParams });
+    return this.http.get<any>(`${this.baseUrl}/empBasicInfo/get-allEmpBasicInfo`, { params });
+}
 
   findByEmpId(id: number) {
     return this.http.get<BasicInfoModule>(this.baseUrl + '/empBasicInfo/get-EmpBasicInfosById/' + id);
@@ -56,6 +61,14 @@ export class EmpBasicInfoService {
   
   getFirstShiftId(){
     return this.http.get<number>(this.baseUrl + '/shift/get-firstShiftId');
+  }
+
+  getFilteredSelectedEmp(filters: HttpParams): Observable<SelectedModel[]>{
+    return this.http.get<SelectedModel[]>(this.baseUrl+'/empBasicInfo/get-SelectedFilteredEmpBasicInfo',{params:filters});
+  }
+
+  getEmpInfoByCard(cardNo:string):Observable<any> {
+    return this.http.get<any>(this.baseUrl+`/empBasicInfo/get-empBasicInfoByIdCardNo/${cardNo}`);
   }
 
 }

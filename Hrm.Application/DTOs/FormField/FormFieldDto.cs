@@ -15,6 +15,7 @@ namespace Hrm.Application.DTOs.FormField
         public bool? HasMultipleValue { get; set; }
         public bool? HasSelectable { get; set; }
         public int FieldTypeId { get; set; }
+        public int? TotalSubquestion {  get; set; }
         public string FieldTypeName { get; set; }
         public string HTMLTagName { get; set; }
         public string HTMLInputType { get; set; }

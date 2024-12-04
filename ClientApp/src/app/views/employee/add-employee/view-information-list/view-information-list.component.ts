@@ -118,7 +118,7 @@ export class ViewInformationListComponent implements OnInit {
           this.getStatusOfEmpSpouseInfo();
           this.getStatusOfEmpChildStatus();
           this.getStatusOfEmpEducationStatus();
-          this.getStatusOfEmpPsiTrainingStatus();
+          // this.getStatusOfEmpPsiTrainingStatus();
           this.getStatusOfEmpBankInfoStatus();
           this.getStatusOfEmpLanguageInfoStatus();
           this.getStatusOfEmpForeignTourInfoStatus();
@@ -145,7 +145,7 @@ export class ViewInformationListComponent implements OnInit {
         this.getStatusOfEmpSpouseInfo();
         this.getStatusOfEmpChildStatus();
         this.getStatusOfEmpEducationStatus();
-        this.getStatusOfEmpPsiTrainingStatus();
+        // this.getStatusOfEmpPsiTrainingStatus();
         this.getStatusOfEmpBankInfoStatus();
         this.getStatusOfEmpLanguageInfoStatus();
         this.getStatusOfEmpForeignTourInfoStatus();
@@ -209,16 +209,16 @@ export class ViewInformationListComponent implements OnInit {
       }
     })
   }
-  getStatusOfEmpPsiTrainingStatus() {
-    this.empPsiTrainingInfoService.findByEmpId(this.empId).subscribe((res) => {
-      if(res.length>0){
-        this.empPsiTrainingInfoEntryStatus = true;
-      }
-      else {
-        this.empPsiTrainingInfoEntryStatus = false;
-      }
-    })
-  }
+  // getStatusOfEmpPsiTrainingStatus() {
+  //   this.empPsiTrainingInfoService.findByEmpId(this.empId).subscribe((res) => {
+  //     if(res.length>0){
+  //       this.empPsiTrainingInfoEntryStatus = true;
+  //     }
+  //     else {
+  //       this.empPsiTrainingInfoEntryStatus = false;
+  //     }
+  //   })
+  // }
   getStatusOfEmpBankInfoStatus() {
     this.empBankInfoService.findByEmpId(this.empId).subscribe((res) => {
       if(res.length>0){

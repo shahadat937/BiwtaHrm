@@ -14,6 +14,7 @@ export class Section {
     remark: string = ""; 
     menuPosition: number = 0;
     isActive: boolean = true;
+    showAllDesignation: boolean = false;
     officeName: string = ""; 
     departmentName: string = ""; 
     upperSectionName: string = ""; 

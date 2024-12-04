@@ -10,6 +10,7 @@ namespace Hrm.Application.DTOs.SiteVisit
     {
         public int SiteVisitId { get; set; }
         public int EmpId { get; set; }
+        public string? IdCardNo { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateOnly? FromDate { get; set; }

@@ -88,6 +88,12 @@ import { EmpProfileComponent } from './manage-employee/emp-profile/emp-profile.c
 import { EmpWorkHistoryComponent } from './add-employee/employee-informations/emp-work-history/emp-work-history.component';
 import { EmpOtherResponsibilityComponent } from './add-employee/employee-informations/emp-other-responsibility/emp-other-responsibility.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { EmpTrainingInfoComponent } from './add-employee/employee-informations/emp-training-info/emp-training-info.component';
+import { ResultService } from '../basic-setup/service/result.service';
+import { EmployeeListModalComponent } from './employee-list-modal/employee-list-modal.component';
+import { UploadFingerPrintComponent } from './add-employee/employee-informations/upload-finger-print/upload-finger-print.component';
+import { DesignationService } from '../basic-setup/service/designation.service';
+import { EmpWorkHistorySingleComponent } from './add-employee/employee-informations/emp-work-history-single/emp-work-history-single.component';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -121,6 +127,10 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     EmpProfileComponent,
     EmpWorkHistoryComponent,
     EmpOtherResponsibilityComponent,
+    EmpTrainingInfoComponent,
+    EmployeeListModalComponent,
+    UploadFingerPrintComponent,
+    EmpWorkHistorySingleComponent,
   ],
   imports: [
     CommonModule,
@@ -182,7 +192,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     DivisionService,
     OfficeService,
     GradeService,
-    SectionService
+    SectionService,
+    ResultService,
+    DesignationService
   ],
 })
 export class EmployeeModule { }

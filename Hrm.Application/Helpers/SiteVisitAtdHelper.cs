@@ -81,6 +81,6 @@ namespace Hrm.Application.Helpers
             await _unitOfWork.Repository<Hrm.Domain.Attendance>().AddRangeAsync(attendances);
             await _unitOfWork.Save();
             return true;
-        } 
+        }
     }
 }

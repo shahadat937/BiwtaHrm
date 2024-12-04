@@ -20,11 +20,18 @@ export class EmpWorkHistoryService {
     return this.http.get<EmpWorkHistory[]>(this.baseUrl + '/empWorkHistory/get-EmpWorkHistoryByEmpId/' + id);
   }
 
-  saveEmpWorkHistory(model: FormData) {
+  saveEmpWorkHistory(model: any) {
     return this.http.post(this.baseUrl + '/empWorkHistory/save-EmpWorkHistory', model);
   }
   deleteEmpWorkHistory(id: number) {
     return this.http.delete(this.baseUrl + '/empWorkHistory/delete-EmpWorkHistory/'+id);
   }
 
+  findById(id: number) {
+    return this.http.get<EmpWorkHistory>(this.baseUrl + '/empWorkHistory/get-EmpWorkHistoryDetails/' + id);
+  }
+
+  findCombinedById(id: number) {
+    return this.http.get<EmpWorkHistory[]>(this.baseUrl + '/empWorkHistory/get-CombinedEmpWorkHistoryByEmpId/' + id);
+  }
 }

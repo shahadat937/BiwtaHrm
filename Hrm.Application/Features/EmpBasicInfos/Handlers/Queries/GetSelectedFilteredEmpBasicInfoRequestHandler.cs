@@ -39,16 +39,21 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
                 EmpInfos = EmpInfos.Where(em => em.EmpJobDetail!=null && em.EmpJobDetail.Any() && em.EmpJobDetail.ToList()[0].DepartmentId == request.EmpFilterDto.DepartmentId);
             }
 
+            if(request.EmpFilterDto.SectionId.HasValue)
+            {
+                EmpInfos = EmpInfos.Where(em => em.EmpJobDetail != null && em.EmpJobDetail.Any() && em.EmpJobDetail.FirstOrDefault().SectionId == request.EmpFilterDto.SectionId);
+            }
+
             if(request.EmpFilterDto.DesignationId.HasValue)
             {
                 EmpInfos = EmpInfos.Where(em => em.EmpJobDetail != null && em.EmpJobDetail.Any() && em.EmpJobDetail.ToList()[0].DesignationId == request.EmpFilterDto.DesignationId);
             }
 
-            var SelectedEmpInfos = EmpInfos.Select(x => new SelectedModel
+            var SelectedEmpInfos = await EmpInfos.Select(x => new SelectedModel
             {
                 Id = x.Id,
                 Name = x.FirstName + " " + x.LastName
-            }).ToList();
+            }).ToListAsync();
 
             return SelectedEmpInfos;
         }

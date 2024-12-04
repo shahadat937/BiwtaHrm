@@ -49,21 +49,30 @@
         >
           <tr>
             @for (column of columns; track $index) {
-            @if (column.IsDate) {
-              <td>{{formRecord[column.field] | date}}</td>
-            } @else {
-              <td>{{ formRecord[column.field] }}</td>
-            }
+              @if (column.IsDate) {
+                <td>{{formRecord[column.field] | date}}</td>
+              } @else if(column.IsBinary){
+                <td>
+                  <c-badge color="{{formRecord[column.field]==true?'success':'warning'}}">{{formRecord[column.field]==true?'Complete':'Pending'}}</c-badge>
+                </td>
+              } @else {
+                <td>{{formRecord[column.field]}}</td>
+              }
             }
 
             <td>
               <button class="custom-button me-1" (click)="onView(formRecord.recordId)" title="View the record">
                 <mat-icon fontIcon="visibility"></mat-icon>
               </button>
-              <button class="custom-button me-1" (click)="onUpdate(formRecord.recordId)" title="Edit The Record">
-                <mat-icon fontIcon="edit"></mat-icon>
-              </button>
+
+              @if (appraisalUserRole!=-1) {
+                <button class="custom-button me-1" [routerLink]="officerFormEditRoute[appraisalUserRole]+formRecord.recordId+'/'+formRecord.formId" title="Edit The Record">
+                  <mat-icon fontIcon="edit"></mat-icon>
+                </button>
+              }
+              
               <button
+                *ngIf="formRecord[formRecordHeader[5].field]==false"
                 class="custom-button me-1"
                 title="Delete The Record"
                 (click)="onDelete(formRecord.recordId, index)"

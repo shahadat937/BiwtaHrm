@@ -49,6 +49,15 @@ namespace Hrm.Api.Controllers
             return Ok(grades);
         }
 
+        [HttpGet]
+        [Route("get-GradeByEmpId/{EmpId}")]
+        public async Task<ActionResult> GetGradeByEmp(int EmpId)
+        {
+            var command = new GetGradeByEmpIdRequest { EmpId = EmpId };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
         [HttpPost]
         [Route("save-grade")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateGradeDto grade)

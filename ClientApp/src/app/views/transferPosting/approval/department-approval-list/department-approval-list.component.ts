@@ -20,9 +20,11 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
-    'slNo',
+    // 'slNo',
     'PMS Id',
     'fullName',
+    'transferFrom',
+    'transferTo',
     'ApprovalStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();
@@ -30,6 +32,7 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+  loginEmpId: number = 0;
   
   constructor(
     private toastr: ToastrService,
@@ -44,11 +47,15 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    const currentUserString = localStorage.getItem('currentUser');
+    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
+    this.loginEmpId = currentUserJSON.empId ?? 0;
+
     this.getAllEmpTransferPostingDeptApproveInfo();
   }
 
   getAllEmpTransferPostingDeptApproveInfo() {
-    this.subscription = this.empTransferPostingService.getAllEmpTransferPostingDeptApproveInfo().subscribe((item) => {
+    this.subscription = this.empTransferPostingService.getAllEmpTransferPostingDeptApproveInfo(this.loginEmpId).subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;

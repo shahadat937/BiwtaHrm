@@ -17,7 +17,7 @@ namespace Hrm.Domain
         public int? NationalityId { get; set; }
         public string? MobileNumber { get; set; }
         public string? Email { get; set; }
-        public int? BirthRegNo { get; set; }
+        public string? BirthRegNo { get; set; }
         public string? PlaceOfBirth { get; set; }
         public string? FatherName { get; set; }
         public string? FatherNameBangla { get; set; }
@@ -29,13 +29,13 @@ namespace Hrm.Domain
         public string? EmergencyContact { get; set; }
         public string? FreedomfighterStatus { get; set; }
         public int? ReligionId { get; set; }
-        public int? TinNo { get; set; }
+        public string? TinNo { get; set; }
         public int? HairColorId { get; set; }
         public int? EyesColorId { get; set; }
         public string? Height { get; set; }
         public string? Weight { get; set; }
         public int? HealthIssueStatusId { get; set; }
-        public int? DrivingLicenceNo { get; set; }
+        public string? DrivingLicenceNo { get; set; }
         public DateOnly? DrivingLicenceDate { get; set; }
         public string? PassportNo { get; set; }
         public DateOnly? PassportExpireDate { get; set; }

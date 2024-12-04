@@ -133,5 +133,15 @@ namespace Hrm.Application
         public const string ResponsibilityType = HRMRoutePrefixBase + "responsibilityType";
         public const string EmpOtherResponsibility = HRMRoutePrefixBase + "empOtherResponsibility";
         public const string SiteSetting = HRMRoutePrefixBase + "siteSetting";
+        public const string CourseDuration = HRMRoutePrefixBase + "courseDuration";
+        public const string EmpTrainingInfo = HRMRoutePrefixBase + "empTrainingInfo";
+        public const string DesignationSetup = HRMRoutePrefixBase + "designationSetup";
+        public const string JobDetailsSetup = HRMRoutePrefixBase + "jobDetailsSetup";
+        public const string NavbarThem = HRMRoutePrefixBase + "navbarThem";
+        public const string NavbarSetting = HRMRoutePrefixBase + "navbarSetting";
+        public const string RoleDashboard = HRMRoutePrefixBase + "roleDashboard";
+        public const string EmpFingerPrint = HRMRoutePrefixBase + "empFingerPrint";
+        public const string DeviceController = "iclock";
+        public const string DeviceUserController = HRMRoutePrefixBase + "AttendanceDevice";
     }
 }

@@ -46,6 +46,9 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
             formRecordDto.FormId = request.formData.FormId;
             formRecordDto.ReportFrom = request.formData.ReportFrom;
             formRecordDto.ReportTo = request.formData.ReportTo;
+            formRecordDto.ReportingOfficerId = request.formData.ReportingOfficerId;
+            formRecordDto.CounterSignatoryId = request.formData.CounterSignatoryId;
+            formRecordDto.ReceiverId = request.formData.ReceiverId;
             
             formRecordDto.EmpId = (int)request.formData.EmpId;
             formRecordDto.IsActive = true;
@@ -64,10 +67,32 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
             foreach (var section in request.formData.Sections) { 
                 foreach (var field in section.Fields)
                 {
-                    if(field.FieldValue==""&&field.IsRequired) {
-                        await _unitOfWork.Repository<Hrm.Domain.FormRecord>().Delete(formRecord);
-                        await _unitOfWork.Save();
-                        throw new BadRequestException(field.FieldName + " is required");
+                    //if(field.FieldValue==""&&field.IsRequired) {
+                    //    await _unitOfWork.Repository<Hrm.Domain.FormRecord>().Delete(formRecord);
+                    //    await _unitOfWork.Save();
+                    //    throw new BadRequestException(field.FieldName + " is required");
+                    //}
+
+                    if(field.HTMLInputType=="daterange"||field.HTMLTagName=="group")
+                    {
+                        foreach(var childField in field.ChildFields)
+                        {
+                            await CheckValidField(childField, formRecord.RecordId);
+                            var childFieldRecordDto = new FieldRecordDto
+                            {
+                                FieldRecordId = 0,
+                                FieldValue = childField.FieldValue,
+                                FieldId = childField.FieldId,
+                                FormRecordId = formRecord.RecordId,
+                                IsActive = true,
+                                Remark = childField.Remark
+                            };
+
+                            var childFieldRecord = _mapper.Map<Hrm.Domain.FieldRecord>(childFieldRecordDto);
+
+                            await _unitOfWork.Repository<Hrm.Domain.FieldRecord>().Add(childFieldRecord);
+                        }
+
                     }
 
                     await CheckValidField(field,formRecord.RecordId);
@@ -95,6 +120,8 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
 
         public async Task CheckValidField(FormFieldValDto formField,int recordId)
         {
+            if (formField.FieldValue == "")
+                return;
             var formRecord = await _unitOfWork.Repository<Hrm.Domain.FormRecord>().Get(recordId);
 
             if(!await formHelper.CheckDataType(formField.FieldValue,formField.FieldId))

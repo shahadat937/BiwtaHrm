@@ -49,6 +49,21 @@
                         id="remark" cFormControl>
                     </c-col>
 
+                    <c-row class="mt-3">
+                        <c-col>
+                            <c-form-check>
+                                <input id="elWorkDayCal" 
+                                name="elWorkDayCal" 
+                                value="true"
+                                [(ngModel)]="leaveTypeService.leaveTypes.elWorkDayCal" 
+                                cFormCheckInput 
+                                type="checkbox" 
+                                [checked]="this.leaveTypeService.leaveTypes.elWorkDayCal" />
+                                <label cFormCheckLabel>Include Earn Leave Calculation</label>
+                            </c-form-check>
+                        </c-col>
+                    </c-row>
+
                     <c-row class="mt-3 d-flex justify-content-between">
                         <div class="d-flex justify-content-between">
                             <div>

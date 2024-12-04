@@ -18,6 +18,7 @@ namespace Hrm.Domain
         public int? RelationId { get; set; }
         public int? Percentage { get; set; }
         public string? Address { get; set; }
+        public string? UniqueIdentity { get; set; }
         public string? PhotoUrl { get; set; }
         public string? SignatureUrl { get; set; }
         public string? Remark { get; set; }

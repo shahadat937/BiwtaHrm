@@ -37,14 +37,15 @@
               }
             </div>
           </c-col> -->
-
+          <input
+          [(ngModel)]="designationService.designation.designationId" name="designationId" type="hidden"/>
             <c-col [md]="4">
-              <label cLabel for="Department">Department<span class="text-danger"></span></label>
+              <label cLabel for="Department">Department<span class="text-danger">*</span></label>
               <div class="input-wrapper">
                 <select (change)="onOfficeAndDepartmentSelect(designationService.designation.departmentId)"
                   (change)="getDesignationPosition(designationService.designation.departmentId, 0)"
                   [(ngModel)]="designationService.designation.departmentId" name="departmentId" #Department="ngModel"
-                  cFormControl id="Department" aria-label="Default select example" cSelect>
+                  cFormControl id="Department" required cSelect>
                   <option [ngValue]="null">Select Department</option>
       
                   @for(department of departments; track department.id;let index=$index) {
@@ -82,46 +83,26 @@
                 </div>
               </c-col>
 
-            <c-col [md]="4">
-              <input
-                type="hidden"
-                [(ngModel)]="designationService.designation.designationId"
-                name="designationId" #DesignationId="ngModel"
-              />
-              <label cLabel for="validationCustom01"
-                >Designation Name<span class="text-danger">*</span></label
-              >
-              <input
-                [(ngModel)]="designationService.designation.designationName"
-                name="designationName"
-                #DesignationName="ngModel"
-                placeholder="Enter Designation Name"
-                cFormControl
-                id="validationCustom01"
-                required
-                type="text"
-              />
-              @if(!DesignationName.valid&&DesignationName.touched){
-              <div class="text-left text-danger">Designation Name is required</div>
-              }
+              <c-col [md]="4">
+                <label cLabel for="designationSetupId">Designation<span class="text-danger">*</span></label>
+                <div class="input-wrapper">
+                    <select [(ngModel)]="designationService.designation.designationSetupId"
+                        name="designationSetupId" #designationSetupId="ngModel" cFormControl id="designationSetupId"
+                        aria-label="Default select example" required cSelect>
+                        <option [ngValue]="null">Select Designation</option>
+
+                        @for(designation of designations; track designation.id;let index=$index) {
+                        <option [value]="designation.id">
+                            {{ designation.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(!designationSetupId.valid && designationSetupId.touched){
+                    <div class="text-left text-danger">Designation is required</div>
+                    }
+                </div>
             </c-col>
-          
-          <c-col [md]="4">
-              <label cLabel for="validationCustom02"
-              >Designation Name in Bangla<span class="text-danger"></span></label>
-            <input
-              [(ngModel)]="designationService.designation.designationNameBangla"
-              name="designationNameBangla"
-              #DesignationNameBangla="ngModel"
-              placeholder="Enter Designation Name in Bangla"
-              cFormControl
-              id="validationCustom02"
-              type="text"
-            />
-            @if(!DesignationNameBangla.valid&&DesignationNameBangla.touched){
-            <div class="text-left text-danger">Designation Name in Bangla is required</div>
-            }
-          </c-col>
+
           
           <c-col [md]="4">
             <label cLabel for="validationCustom03"
@@ -148,6 +129,21 @@
               placeholder="Position"
               cFormControl
               id="menuPosition"
+              type="number"
+            />
+          </c-col>
+          
+        
+          <c-col [md]="4" *ngIf="btnText == 'Submit'">
+            <label cLabel for="createCount"
+            >Create Count<span class="text-danger"></span></label>
+            <input
+              [(ngModel)]="designationService.designation.createCount"
+              name="createCount" 
+              #createCount="ngModel"
+              placeholder="Create Count"
+              cFormControl
+              id="createCount"
               type="number"
             />
           </c-col>

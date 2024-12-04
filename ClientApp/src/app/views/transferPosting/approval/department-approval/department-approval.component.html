@@ -30,6 +30,9 @@
                         <c-col [md]="6" *ngIf="empTransferPosting.sectionName">
                             <label><b>Section: </b>{{empTransferPosting.sectionName}}</label>
                         </c-col>
+                        <c-col [md]="6">
+                            <label><b>Current Department Joining Date: </b>{{empTransferPosting.currentDeptJoinDate}}</label>
+                        </c-col>
                     </c-card-body>
                 </c-card>
 
@@ -46,9 +49,9 @@
                             <label><b>Office Order Date: </b>{{empTransferPosting.officeOrderDate}}</label>
                         </c-col>
                         <c-col [md]="6">
-                            <label><b>Order By: </b>{{empTransferPosting.orderByEmpName}}</label>
+                            <label><b>Order By: </b>{{empTransferPosting.orderByOffice}}</label>
                         </c-col>
-                        <c-col [md]="6">
+                        <!-- <c-col [md]="6">
                             <label><b>Department: </b>{{empTransferPosting.orderByDepartmentName}}</label>
                         </c-col>
                         <c-col [md]="6">
@@ -56,7 +59,7 @@
                         </c-col>
                         <c-col [md]="6" *ngIf="empTransferPosting.orderBySectionName">
                             <label><b>Section: </b>{{empTransferPosting.orderBySectionName}}</label>
-                        </c-col>
+                        </c-col> -->
                         <c-col [md]="6">
                             <label><b>Transfer Department: </b>{{empTransferPosting.transferDepartmentName}}</label>
                         </c-col>
@@ -72,11 +75,33 @@
                         <c-col [md]="6" *ngIf="empTransferPosting.remark">
                             <label><b>Remark: </b>{{empTransferPosting.remark}}</label>
                         </c-col>
+
+                        <div *ngIf="empTransferPosting.withPromotion == true" class="mt-3" cRow>
+                            <c-alert color="info" class="text-center">With Promotion</c-alert>
+                            <c-col [md]="6">
+                                <label><b>Grade: </b>{{empTransferPosting.currentGradeName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Scale: </b>{{empTransferPosting.currentScaleName}}</label>
+                            </c-col>
+                            <c-col [md]="12" class="mb-2">
+                                <label><b>Basic Pay: </b>{{empTransferPosting.currentBasicPay}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Update Grade: </b>{{empTransferPosting.updateGradeName}}</label>
+                            </c-col>
+                            <c-col [md]="6">
+                                <label><b>Update Scale: </b>{{empTransferPosting.updateScaleName}}</label>
+                            </c-col>
+                            <c-col [md]="12">
+                                <label><b>Update Basic Pay: </b>{{empTransferPosting.updateBasicPay}}</label>
+                            </c-col>
+                        </div>
                     </c-card-body>
                 </c-card>
 
                 <!-- ********** Transfer Approve Information *********** -->
-                <c-card class="mb-3 shadow">
+                <!-- <c-card class="mb-3 shadow">
                     <c-card-header class="text-center">
                         <div>Transfer Approve Information</div>
                     </c-card-header>
@@ -112,13 +137,13 @@
                             </c-col>
                         </div>
                     </c-card-body>
-                </c-card>
+                </c-card> -->
                 
                 <!-- ********** Department Approve Information *********** -->
                 <div cRow [gutter]="3">
                     <c-col [md]="4">
                         <label cLabel for="deptReleaseTypeId">Release Type<span class="text-danger"></span></label>
-                        <div class="input-wrapper">
+                        <!-- <div class="input-wrapper">
                             <select [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeId"
                                 name="deptReleaseTypeId" #deptReleaseTypeId="ngModel" cFormControl id="deptReleaseTypeId"
                                 aria-label="Default select example" cSelect>
@@ -133,7 +158,11 @@
                             @if(!deptReleaseTypeId.valid && deptReleaseTypeId.touched){
                             <div class="text-left text-danger">Release Type is required</div>
                             }
-                        </div>
+                        </div> -->
+                        <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeId"
+                        name="deptReleaseTypeId" />
+                        <input disabled cFormControl [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeName"
+                        name="deptReleaseTypeName" />
                     </c-col>
                     
                     <c-col [md]="4">
@@ -173,8 +202,8 @@
                         name="deptApproveStatus" #deptApproveStatus="ngModel"
                         cSelect id="deptApproveStatus">
                         <option value="">Pending</option>
-                        <option value="true">Approve</option>
-                        <option value="false">Reject</option>
+                        <option value="true">Release</option>
+                        <option value="false">No-Release</option>
                         </select>
                     </c-col>
                     
@@ -196,10 +225,10 @@
                     <mat-icon>cancel</mat-icon> Close
                 </button>
                 <button mat-raised-button class="bg-success text-light" (click)="onSubmit(true)" *ngIf="clickedButton == 'Approve'">
-                    <mat-icon>check</mat-icon> Approve
+                    <mat-icon>check</mat-icon> Release
                 </button>
                 <button mat-raised-button color="warn" (click)="onSubmit(false)" *ngIf="clickedButton == 'Reject'">
-                    <mat-icon>close</mat-icon> Reject
+                    <mat-icon>close</mat-icon> No-Release
                 </button>
                 <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="clickedButton == 'Edit'">
                     <mat-icon>update</mat-icon> Update

@@ -17,6 +17,10 @@ export class PersonalLeaveComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterLeave = {empId:this.authService.currentUserValue.empId}
+
+    this.authService.currentUser.subscribe(user => {
+      let empId = user && user.empId != null? user.empId: 0;
+      this.filterLeave = {empId:empId};
+    })
   }
 }

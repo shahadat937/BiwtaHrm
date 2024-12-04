@@ -3,10 +3,15 @@ import { NgForm, NgModel, FormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { delay, of, Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import {ManualAttendanceService} from '../services/manual-attendance.service'
 import { HttpParams } from '@angular/common/http';
+import { cilSearch, cilZoom } from '@coreui/icons';
+import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
+import { Attendances } from '../models/attendances';
 
 @Component({
   selector: 'app-manual-attendance',
@@ -35,9 +40,16 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   selectedDepartment:number|null;
   selectedEmp:number;
   atdFile: File | null;
+  icons = {cilZoom, cilSearch}
+  PMIS:string;
+  EmpName: string;
+  validPMIS: boolean;
+
 
 
   constructor(
+    private empBasicInfoService: EmpBasicInfoService,
+    private modalService: BsModalService,
     public manualAtdService: ManualAttendanceService,
     private route: ActivatedRoute,
     private router: Router,
@@ -56,6 +68,9 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
       this.ShiftOption = []
       this.EmpOption = []
       this.AtdStatusOption = []
+      this.PMIS = "";
+      this.EmpName = "";
+      this.validPMIS = false;
   }
 
   ngOnInit(): void {
@@ -93,6 +108,7 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
       empId:null
 
     })
+    this.manualAtdService.attendances = new Attendances();
     //console.log("Form Reset");
     //console.log(this.loading);
   }
@@ -127,11 +143,9 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
     }
 
 
-    console.log(params.get('officeId'));
 
     this.manualAtdService.getFilteredEmpOption(params).subscribe(response=> {
       this.EmpOption = response;
-      console.log(response);
     });
   }
 
@@ -189,6 +203,56 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
         this.loadingBulk = false;
       }
     })
+  }
+
+  onEmpIdChange() {
+    if(this.PMIS.trim() == "") {
+      this.resetEmp();
+      return;
+    }
+    const source$ = of (this.PMIS).pipe(
+      delay(700)
+    );
+
+    if(this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.subscription = source$.subscribe(data => {
+      this.empBasicInfoService.getEmpInfoByCard(data).subscribe({
+        next: response => {
+          if(response) {
+           this.manualAtdService.attendances.empId = response.id;
+           this.EmpName = [response.firstName,response.lastName].join(' ');
+           this.validPMIS = true;
+          } else {
+            this.resetEmp();
+          }
+        },
+        error: err => {
+          this.resetEmp();
+        }
+      })
+    })
+
+  }
+
+  resetEmp() {
+    this.manualAtdService.attendances.empId = null;
+    this.EmpName = "";
+    this.validPMIS = false;
+  }
+
+
+  openEmployeeModal() {
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
+
+    modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
+      if(idCardNo){
+          this.PMIS = idCardNo;
+          this.onEmpIdChange();
+      }
+    });
   }
 
   onAtdFileChange(event:any) {

@@ -21,7 +21,7 @@ namespace Hrm.Application.Features.Group.Handlers.Queries
 
         public async Task<List<SelectedModel>> Handle(GetSelectedGroupRequest request, CancellationToken cancellationToken)
         {
-            ICollection<Hrm.Domain.SubGroup> Groups = await _GroupRepository.FilterAsync(x => x.IsActive);
+            ICollection<Hrm.Domain.SubGroup> Groups = await _GroupRepository.FilterAsync(x => x.ExamTypeId == request.Id && x.IsActive == true);
             List<SelectedModel> selectModels = Groups.Select(x => new SelectedModel 
             {
                 Name = x.GroupName,

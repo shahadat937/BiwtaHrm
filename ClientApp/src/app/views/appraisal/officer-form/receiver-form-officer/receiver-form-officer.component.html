@@ -1,0 +1,25 @@
+@if(formId == officerFormId) {
+    <app-officer-form 
+    [ActiveSection]="ActiveSection"
+    [firstSection]="0" 
+    [lastSection]="0"
+    [submitButtonText]="'Receive'"
+    [formRecordId]="formRecordId" 
+    [showHeader]="true" 
+    [updateRole]="appraisalRole.Receiver">
+
+    </app-officer-form>
+} @else if(formId == staffFormId) {
+    <app-staff-form 
+    [ActiveSection]="ActiveSectionForStaff"
+    [ReadonlySection]="ReceiverReadonlySectionStaff"
+    [firstSection]="0" 
+    [lastSection]="3"
+    [submitButtonText]="'Receive'"
+    [formRecordId]="formRecordId" 
+    [showHeader]="true" 
+    [updateRole]="appraisalRole.Receiver">
+
+    </app-staff-form>
+
+}

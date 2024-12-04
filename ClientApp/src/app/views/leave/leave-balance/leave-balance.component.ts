@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { delay, of, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { LeaveBalanceService } from '../service/leave-balance.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-leave-balance',
@@ -15,7 +16,7 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
   IdCardNo: string;
   leaveBalances: any[] = [];
   loading: boolean ;
-  cols = [{header: "Leave Type Name", field: "leaveTypeName"}, {header: "Leave Due", field:"leaveDue"}, {header: "Total Leave", field: "totalAmount"}]
+  cols = [{header: "Type", field: "leaveTypeName"}, {header: "Total Leave", field:"totalAmount"}, {header: "Availed", field: "availed"},{header:"Balance",field:"leaveDue"},{header: "Applied", field: "applied"}]
   empName:string;
 
   constructor(
@@ -30,6 +31,9 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.empId = parseInt(this.authService.currentUserValue.empId);
+
+    if(isNaN(this.empId))
+      return;
     this.subscription=this.leaveBalanceService.getEmpInfo(this.empId).subscribe({
       next: response => {
         this.IdCardNo = response.idCardNo;
@@ -41,24 +45,50 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
   }
 
   onEmpCardChange() {
-    this.subscription = this.leaveBalanceService.getEmpInfoByCardNo(this.IdCardNo).subscribe({
-      next: (response) => {
-        console.log(response)
-        if(response==null) {
-          this.leaveBalances = [];
-          return;
-        }
-        this.empName = response.firstName+' '+response.lastName;
-        this.subscription = this.subscription = this.leaveBalanceService.getLeaveBalance(response.id).subscribe({
-          next: response => {
-            console.log(response)
-            this.leaveBalances = response;
-          },
-          error: err=> {
+
+    if(this.IdCardNo.trim()=="") {
+      this.leaveBalances = [];
+      this.empId = null;
+      this.empName = "";
+      return;
+    }
+
+    const source$ = of (this.IdCardNo).pipe(
+      delay(700)
+    );
+
+    if(this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.subscription = source$.subscribe(data => {
+      this.leaveBalanceService.getEmpInfoByCardNo(this.IdCardNo).subscribe({
+        next: (response) => {
+          if(response==null) {
             this.leaveBalances = [];
+            this.empId = null;
+            this.empName = "";
+            return;
           }
-        })
-      }
+          this.empName = response.firstName+' '+response.lastName;
+          this.empId = response.id;
+          this.getLeaveBalance(response.id);
+          //this.subscription = this.subscription = this.leaveBalanceService.getLeaveBalance(response.id).subscribe({
+          //  next: response => {
+          //    this.leaveBalances = response;
+          //  },
+          //  error: err=> {
+          //    this.leaveBalances = [];
+          //  }
+          //})
+        },
+        error: err => {
+          this.empId = null;
+          this.leaveBalances = [];
+          this.empName = "";
+        }
+      })
+
     })
   }
 
@@ -70,7 +100,9 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
 
   getLeaveBalance(empId:number) {
     this.loading = true;
-    this.subscription = this.leaveBalanceService.getLeaveBalance(empId).subscribe({
+    let params = new HttpParams();
+    params = params.set('empId',empId);
+    this.subscription = this.leaveBalanceService.getLeaveBalance(params).subscribe({
       next: response => {
         this.leaveBalances = response;        
       },

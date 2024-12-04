@@ -126,7 +126,7 @@
                                 <tr>
                                     <th>Nationality</th>
                                     <td>{{empPersonalInfo.nationalityName}}</td>
-                                    <th>Mother Name</th>
+                                    <th>Religion</th>
                                     <td>{{empPersonalInfo.religionName}}</td>
                                 </tr>
                                 <tr>
@@ -338,9 +338,9 @@
                                 </tr>
                                 <tr>
                                     <th>PRT Date</th>
-                                    <td>{{empJobDetails.prlDate}}</td>
+                                    <td>{{prlDate}}</td>
                                     <th>Retirment Date</th>
-                                    <td>{{empJobDetails.retirementDate}}</td>
+                                    <td>{{retirementDate}}</td>
                                 </tr>
                                 <tr>
                                     <th>Service Status</th>
@@ -376,38 +376,39 @@
                             <tbody>
                                 <tr>
                                     <th>Country</th>
-                                    <td>{{empPresentAddress.countryName}}</td>
+                                    <td *ngIf="empPresentAddress?.countryName; else emptyTd">{{empPresentAddress.countryName}}</td>
+                                    <ng-template #emptyTd><td></td></ng-template>
                                     <th>Division</th>
-                                    <td>{{empPresentAddress.divisionName}}</td>
+                                    <td *ngIf="empPresentAddress?.divisionName; else emptyTd">{{empPresentAddress.divisionName}}</td>
                                 </tr>
                                 <tr>
                                     <th>District</th>
-                                    <td>{{empPresentAddress.districtName}}</td>
-                                    <th>Upazila</th>
-                                    <td>{{empPresentAddress.upazilaName}}</td>
+                                    <td *ngIf="empPresentAddress?.districtName; else emptyTd">{{empPresentAddress.districtName}}</td>
+                                    <th>Upazila/Thana</th>
+                                    <td *ngIf="empPresentAddress?.upazilaName; else emptyTd">{{empPresentAddress.upazilaName}}</td>
                                 </tr>
                                 <tr>
-                                    <th>Thana</th>
-                                    <td>{{empPresentAddress.thanaName}}</td>
+                                    <!-- <th>Thana</th>
+                                    <td *ngIf="empPresentAddress?.thanaName; else emptyTd">{{empPresentAddress.thanaName}}</td> -->
                                     <th>Union</th>
-                                    <td>{{empPresentAddress.unionName}}</td>
-                                </tr>
-                                <tr>
+                                    <td *ngIf="empPresentAddress?.unionName; else emptyTd">{{empPresentAddress.unionName}}</td>
                                     <th>Ward</th>
-                                    <td>{{empPresentAddress.wardName}}</td>
-                                    <th>Zip Code</th>
-                                    <td>{{empPresentAddress.zipCode}}</td>
+                                    <td *ngIf="empPresentAddress?.wardName; else emptyTd">{{empPresentAddress.wardName}}</td>
                                 </tr>
                                 <tr>
-                                    <th>Road No/Hose No</th>
-                                    <td>{{empPresentAddress.address}}</td>
+                                    <th>Post Code</th>
+                                    <td *ngIf="empPresentAddress?.zipCode; else emptyTd">{{empPresentAddress.zipCode}}</td>
+                                    <th>Road No/House No</th>
+                                    <td *ngIf="empPresentAddress?.address; else emptyTd">{{empPresentAddress.address}}</td>
+                                </tr>
+                                <tr>
                                     <th>Email</th>
-                                    <td>{{empPresentAddress.email}}</td>
-                                </tr>
-                                <tr>
+                                    <td *ngIf="empPresentAddress?.email; else emptyTd">{{empPresentAddress.email}}</td>
                                     <th>Remark</th>
-                                    <td>{{empPresentAddress.remark}}</td>
+                                    <td *ngIf="empPresentAddress?.remark; else emptyTd">{{empPresentAddress.remark}}</td>
                                 </tr>
+                                <!-- <tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </c-card-body>
@@ -435,39 +436,40 @@
                             <tbody>
                                 <tr>
                                     <th>Country</th>
-                                    <td>{{empPermanentAddress.countryName}}</td>
+                                    <td *ngIf="empPermanentAddress?.countryName; else emptyTd">{{empPermanentAddress.countryName}}</td>
+                                    <ng-template #emptyTd><td></td></ng-template>
                                     <th>Division</th>
-                                    <td>{{empPermanentAddress.divisionName}}</td>
+                                    <td *ngIf="empPermanentAddress?.divisionName; else emptyTd">{{empPermanentAddress.divisionName}}</td>
                                 </tr>
                                 <tr>
                                     <th>District</th>
-                                    <td>{{empPermanentAddress.districtName}}</td>
-                                    <th>Upazila</th>
-                                    <td>{{empPermanentAddress.upazilaName}}</td>
+                                    <td *ngIf="empPermanentAddress?.districtName; else emptyTd">{{empPermanentAddress.districtName}}</td>
+                                    <th>Upazila/Thana</th>
+                                    <td *ngIf="empPermanentAddress?.upazilaName; else emptyTd">{{empPermanentAddress.upazilaName}}</td>
                                 </tr>
                                 <tr>
-                                    <th>Thana</th>
-                                    <td>{{empPermanentAddress.thanaName}}</td>
+                                    <!-- <th>Thana</th>
+                                    <td *ngIf="empPermanentAddress?.thanaName; else emptyTd">{{empPermanentAddress.thanaName}}</td> -->
                                     <th>Union</th>
-                                    <td>{{empPermanentAddress.unionName}}</td>
-                                </tr>
-                                <tr>
+                                    <td *ngIf="empPermanentAddress?.unionName; else emptyTd">{{empPermanentAddress.unionName}}</td>
                                     <th>Ward</th>
-                                    <td>{{empPermanentAddress.wardName}}</td>
-                                    <th>Zip Code</th>
-                                    <td>{{empPermanentAddress.zipCode}}</td>
+                                    <td *ngIf="empPermanentAddress?.wardName; else emptyTd">{{empPermanentAddress.wardName}}</td>
                                 </tr>
                                 <tr>
-                                    <th>Road No/Hose No</th>
-                                    <td>{{empPermanentAddress.address}}</td>
+                                    <th>Post Code</th>
+                                    <td *ngIf="empPermanentAddress?.zipCode; else emptyTd">{{empPermanentAddress.zipCode}}</td>
+                                    <th>Road No/House No</th>
+                                    <td *ngIf="empPermanentAddress?.address; else emptyTd">{{empPermanentAddress.address}}</td>
+                                </tr>
+                                <tr>
                                     <th>Email</th>
-                                    <td>{{empPermanentAddress.email}}</td>
-                                </tr>
-                                <tr>
+                                    <td *ngIf="empPermanentAddress?.email; else emptyTd">{{empPermanentAddress.email}}</td>
                                     <th>Remark</th>
-                                    <td>{{empPermanentAddress.remark}}</td>
+                                    <td *ngIf="empPermanentAddress?.remark; else emptyTd">{{empPermanentAddress.remark}}</td>
                                 </tr>
-                            </tbody>
+                                <!-- <tr>
+                                </tr> -->
+                            </tbody>     
                         </table>
                     </c-card-body>
                 </c-card>
@@ -503,7 +505,9 @@
                                     <th>Group</th>
                                     <td>{{item.subGroupName}}</td>
                                     <th>Result</th>
-                                    <td>{{item.result}}</td>
+                                    <td *ngIf="!item?.point; else point">{{item.resultName}}</td>
+                                    <ng-template #point><td *ngIf="item?.point; else emptyTd">{{item.point}}</td></ng-template>
+                                    <ng-template #emptyTd><td></td></ng-template>
                                 </tr>
                                 <tr>
                                     <th>Duration</th>
@@ -524,7 +528,7 @@
                 </c-card>
 
                 <!-- Employee Psi and Training Information -->
-                <c-card class="shadow mb-4">
+                <!-- <c-card class="shadow mb-4">
                     <c-card-header>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -566,7 +570,7 @@
                         }
 
                     </c-card-body>
-                </c-card>
+                </c-card> -->
 
                 <!-- Employee Bank Information -->
                 <c-card class="shadow mb-4">

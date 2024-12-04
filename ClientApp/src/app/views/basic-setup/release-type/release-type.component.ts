@@ -20,7 +20,7 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('ReleaseTypeForm', { static: true }) ReleaseTypeForm!: NgForm;
   loading = false;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'releaseTypeName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'releaseTypeName', 'isDeptRelease','isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -43,7 +43,7 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       const id = params.get('releaseTypeId');
       if (id) {
         this.btnText = 'Update';
-        this.headerText = 'Update Blood Group';
+        this.headerText = 'Update Release Type';
         this.releaseTypeService.getById(+id).subscribe((res) => {
           this.ReleaseTypeForm?.form.patchValue(res);
         });
@@ -75,6 +75,7 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.releaseTypeService.releaseType = {
       releaseTypeId: 0,
       releaseTypeName: '',
+      isDeptRelease: true,
       remark: '',
       menuPosition: 0,
       isActive: true,
@@ -87,6 +88,7 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.ReleaseTypeForm.form.patchValue({
         releaseTypeId: 0,
         releaseTypeName: '',
+        isDeptRelease: true,
         remark: '',
         menuPosition: 0,
         isActive: true,

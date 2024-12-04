@@ -79,10 +79,11 @@ namespace Hrm.Application.Features.RoleFeatures.Handlers.Queries
                         {
                             Name = feature.FeatureName,
                             Url = "/" + group.Key.Url + "/" + feature.Path,
-                            OrderNo = feature.OrderNo
+                            OrderNo = feature.OrderNo,
+                            IsActive = feature.IsActive
                         };
                     })
-                    .OrderBy(child => child.OrderNo).ToList()
+                    .OrderBy(child => child.OrderNo).Where(x => x.IsActive == true).ToList()
                 })
                 .ToList();
 

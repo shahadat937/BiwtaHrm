@@ -32,6 +32,22 @@ import { UpdateFormComponent } from './update-form/update-form.component';
 import {MatIconModule} from '@angular/material/icon';
 import { ViewFormRecordComponent } from './manage-form/view-form-record/view-form-record.component';
 import { FormRecordService } from './services/form-record.service';
+import { OfficerFormApplicationComponent } from './officer-form/officer-form-application/officer-form-application.component';
+import { ReportingFormComponent } from './officer-form/reporting-form/reporting-form.component';
+import { CounterSignatureFormOfficerComponent } from './officer-form/counter-signature-form-officer/counter-signature-form-officer.component';
+import { ReceiverFormOfficerComponent } from './officer-form/receiver-form-officer/receiver-form-officer.component';
+import { EmpBasicInfoService } from '../employee/service/emp-basic-info.service';
+import { ApplicationHeaderComponent } from './application-header/application-header.component';
+import { ManageFormOfficerRfComponent } from './manage-form/manage-form-officer-rf/manage-form-officer-rf.component';
+import { ManageFormOfficerCsComponent } from './manage-form/manage-form-officer-cs/manage-form-officer-cs.component';
+import { ManageFormOfficerRComponent } from './manage-form/manage-form-officer-r/manage-form-officer-r.component';
+import { BadgeModule } from '@coreui/angular';
+import { ApplyComponent } from './apply/apply.component';
+import { GradeService } from '../basic-setup/service/Grade.service';
+import { FieldPrintComponent } from './field-print/field-print.component';
+import { NgxPrintModule } from 'ngx-print';
+// import { NgxPrintModule } from 'ngx-print';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +56,17 @@ import { FormRecordService } from './services/form-record.service';
     OfficerFormComponent,
     FieldComponent,
     UpdateFormComponent,
-    ViewFormRecordComponent
+    ViewFormRecordComponent,
+    OfficerFormApplicationComponent,
+    ReportingFormComponent,
+    CounterSignatureFormOfficerComponent,
+    ReceiverFormOfficerComponent,
+    ApplicationHeaderComponent,
+    ManageFormOfficerRfComponent,
+    ManageFormOfficerCsComponent,
+    ManageFormOfficerRComponent,
+    ApplyComponent,
+    FieldPrintComponent,
   ],
   imports: [
     TabViewModule,
@@ -67,10 +93,14 @@ import { FormRecordService } from './services/form-record.service';
     TableModulePN,
     IconDirective,
     MatIconModule,
-    CalendarModule
+    CalendarModule,
+    BadgeModule,
+    NgxPrintModule
 
   ],providers:[
-    FormRecordService
+    FormRecordService,
+    EmpBasicInfoService,
+    GradeService
   ]
 })
 export class AppraisalModule { }

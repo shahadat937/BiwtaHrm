@@ -30,13 +30,13 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('GroupForm', { static: true }) GroupForm!: NgForm;
   subscription: Subscription = new Subscription();
-  displayedColumns: string[] = ['slNo', 'groupName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'examType', 'groupName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-  subjects: SelectedModel[] = [];
+  examTypes: SelectedModel[] = [];
   constructor(
     public groupService: GroupService,
     private snackBar: MatSnackBar,
@@ -60,7 +60,7 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnInit(): void {
     this.getALlGroups();
-    this.loadsubjects();
+    this.getSelectedExamType();
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -93,8 +93,8 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
     this.groupService.groups = {
       groupId: 0,
       groupName: '',
-      subjectId: 0,
-      //subjectName:"",
+      examTypeId: 0,
+      examTypeName:"",
       menuPosition: 0,
       isActive: true,
     };
@@ -108,8 +108,8 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
       this.GroupForm.form.patchValue({
         groupId: 0,
         groupName: '',
-        subjectId: 0,
-        //  subjectName:"",
+        examTypeId: 0,
+        examTypeName:"",
         menuPosition: 0,
         isActive: true,
       });
@@ -117,11 +117,9 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/educationSetup/group']);
   }
 
-  loadsubjects() {
-    console.log('subject');
-    this.groupService.getSubject().subscribe((data) => {
-      console.log('subject' + data);
-      this.subjects = data;
+  getSelectedExamType() {
+    this.groupService.getSelectedExamType().subscribe((data) => {
+      this.examTypes = data;
     });
   }
 

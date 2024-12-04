@@ -95,6 +95,19 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                 {
                     empJobDetails.SectionId = updateEmptransferPosting.TransferSectionId;
                 }
+
+                if (updateEmptransferPosting.UpdateGradeId != null)
+                {
+                    empJobDetails.PresentGradeId = updateEmptransferPosting.UpdateGradeId;
+                }
+                if (updateEmptransferPosting.UpdateScaleId != null)
+                {
+                    empJobDetails.PresentScaleId = updateEmptransferPosting.UpdateScaleId;
+                }
+                if (updateEmptransferPosting.UpdateBasicPay != null)
+                {
+                    empJobDetails.BasicPay = updateEmptransferPosting.UpdateBasicPay;
+                }
                 await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
             }
             else if (updateEmptransferPosting.TransferApproveStatus == false || updateEmptransferPosting.DeptApproveStatus == false || updateEmptransferPosting.JoiningStatus == false)
@@ -114,6 +127,19 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                 {
                     empJobDetails.SectionId = updateEmptransferPosting.CurrentSectionId;
                 }
+
+                if (empJobDetails.PresentGradeId != updateEmptransferPosting.CurrentGradeId)
+                {
+                    empJobDetails.PresentGradeId = updateEmptransferPosting.CurrentGradeId;
+                }
+                if (empJobDetails.PresentScaleId != updateEmptransferPosting.CurrentScaleId)
+                {
+                    empJobDetails.PresentScaleId = updateEmptransferPosting.CurrentScaleId;
+                }
+                if (empJobDetails.BasicPay != updateEmptransferPosting.CurrentBasicPay)
+                {
+                    empJobDetails.BasicPay = updateEmptransferPosting.CurrentBasicPay;
+                }
                 await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
             }
             else
@@ -132,6 +158,19 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                 if (empJobDetails.SectionId != updateEmptransferPosting.CurrentSectionId)
                 {
                     empJobDetails.SectionId = updateEmptransferPosting.CurrentSectionId;
+                }
+
+                if (empJobDetails.PresentGradeId != updateEmptransferPosting.CurrentGradeId)
+                {
+                    empJobDetails.PresentGradeId = updateEmptransferPosting.CurrentGradeId;
+                }
+                if (empJobDetails.PresentScaleId != updateEmptransferPosting.CurrentScaleId)
+                {
+                    empJobDetails.PresentScaleId = updateEmptransferPosting.CurrentScaleId;
+                }
+                if (empJobDetails.BasicPay != updateEmptransferPosting.CurrentBasicPay)
+                {
+                    empJobDetails.BasicPay = updateEmptransferPosting.CurrentBasicPay;
                 }
                 await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
             }

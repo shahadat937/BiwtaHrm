@@ -25,52 +25,31 @@ namespace Hrm.Application.Features.Designation.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(CreateDesignationCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
-            var validator = new CreateDesignationDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.DesignationDto);
 
-            if (validationResult.IsValid == false)
+            var successCount = 0;
+            var errorCount = 0;
+            var position = request.DesignationDto.MenuPosition;
+
+
+            for (int i = 0; i < request.DesignationDto.CreateCount; i++)
             {
-                response.Success = false;
-                response.Message = "Creation Failed";
-                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+                var Designation = _mapper.Map<Hrm.Domain.Designation>(request.DesignationDto);
+                Designation.MenuPosition = position;
+                await _unitOfWork.Repository<Hrm.Domain.Designation>().Add(Designation);
+                await _unitOfWork.Save();
+                successCount++;
+                position++;
             }
-            else
+            if (successCount == 0)
             {
-                //   var DesignationName = request.DesignationDto.DesignationName.Trim().ToLower().Replace(" ", string.Empty);
-
-                //  IQueryable<Hrm.Domain.Designation> Designations = _DesignationRepository.Where(x => x.DesignationName.ToLower().Replace(" ", string.Empty) == DesignationName);
-
-
-                //if (DesignationNameExists(request))
-                //{
-                //    response.Success = false;
-                //    response.Message = $"Creation Failed '{request.DesignationDto.DesignationName}' already exists.";
-                //    response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
-
-                //}
-                //else
-                //{
-                    var Designation = _mapper.Map<Hrm.Domain.Designation>(request.DesignationDto);
-
-                    Designation = await _unitOfWork.Repository<Hrm.Domain.Designation>().Add(Designation);
-                    await _unitOfWork.Save();
-
-
-                    response.Success = true;
-                    response.Message = "Creation Successful";
-                    response.Id = Designation.DesignationId;
-                //}
+                errorCount = request.DesignationDto.CreateCount ?? 0;
             }
+
+            response.Success = true;
+            response.Message = $"'{successCount}' Creation Successful, '{errorCount}' Failed";
+
 
             return response;
-        }
-        private bool DesignationNameExists(CreateDesignationCommand request)
-        {
-            var DesignationName = request.DesignationDto.DesignationName.Trim().ToLower().Replace(" ", string.Empty);
-
-            IQueryable<Hrm.Domain.Designation> Designations = _DesignationRepository.Where(x => x.DesignationName.Trim().ToLower().Replace(" ", string.Empty) == DesignationName);
-
-            return Designations.Any();
         }
     }
 }

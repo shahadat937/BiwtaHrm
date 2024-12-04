@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormArray, Validators, FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -12,6 +12,10 @@ import { EmpSpouseInfoService } from '../../../service/emp-spouse-info.service';
 import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
 import { EmpJobDetailsService } from '../../../service/emp-job-details.service';
 import { SectionService } from 'src/app/views/basic-setup/service/section.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { DesignationService } from 'src/app/views/basic-setup/service/designation.service';
 
 @Component({
   selector: 'app-emp-work-history',
@@ -21,9 +25,9 @@ import { SectionService } from 'src/app/views/basic-setup/service/section.servic
 export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
   @Input() empId!: number;
   @Output() close = new EventEmitter<void>();
-  visible: boolean = true;
+  visible: boolean = false;
   headerText: string = '';
-  headerBtnText: string = 'Hide From';
+  headerBtnText: string = 'Add New';
   btnText: string = '';
   departments: SelectedModel[] = [];
   sections: SelectedModel[] = [];
@@ -36,6 +40,20 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
   sectionView: boolean = false;
   empWorkHistory: EmpWorkHistory[] = [];
 
+  displayedColumns: string[] = [
+    'slNo',
+    'department',
+    'section',
+    'designation',
+    'joiningDate',
+    'releaseDate',
+    'Action'];
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+  @ViewChild(MatSort)
+  matSort!: MatSort;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -45,12 +63,15 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
     public empJobDetailsService: EmpJobDetailsService,
     public departmentService: DepartmentService,
     public sectionService : SectionService,
+    public designationService: DesignationService,
     private fb: FormBuilder) { }
 
 
   ngOnInit(): void {
     this.getAllSelectedDepartments();
-    this.getEmployeeWorkHistoryInfoByEmpId();
+    setTimeout(() => {
+      this.getEmployeeWorkHistoryInfoByEmpId();
+    }, 0);
   }
 
   ngOnDestroy(): void {
@@ -59,20 +80,35 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
     }
   }
 
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
 
   getEmployeeWorkHistoryInfoByEmpId() {
     this.empWorkHistoryService.findByEmpId(this.empId).subscribe((res) => {
-      if (res.length > 0) {
-        this.headerText = 'Update Work History';
-        this.btnText = 'Update';
-        this.empWorkHistory = res;
-        this.patchWorkHistoryInfo(res);
-      }
-      else {
-        this.headerText = 'Add Work History';
+      // if (res.length > 0) {
+      //   this.headerText = 'Update Work History';
+      //   this.btnText = 'Update';
+      //   this.empWorkHistory = res;
+      //   // this.patchWorkHistoryInfo(res);
+      //   this.dataSource = new MatTableDataSource(res);
+      //   this.dataSource.paginator = this.paginator;
+      //   this.dataSource.sort = this.matSort;
+      // }
+      // else {
+        const control = <FormArray>this.EmpWorkHistoryInfoForm.controls['empWorkHistoryList'];
+        control.clear();
+        this.visible = false;
+        this.headerText = 'Add Employment History';
         this.btnText = 'Submit';
+        this.headerBtnText = 'Add New';
         this.addWorkHistory();
-      }
+        this.empWorkHistory = res;
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.matSort;
     })
   }
 
@@ -127,6 +163,12 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
   }
 
   addWorkHistory() {
+    // Step 1: Initialize department, section, and designation options for the new row
+    this.departmentOptions.push([...this.departments]); // Clone the departments list
+    this.sectionOptions.push([]);
+    this.designationOptions.push([]);
+  
+    // Step 2: Push the formGroup into empWorkHistoryListArray
     const formGroup = new FormGroup({
       id: new FormControl(0),
       empId: new FormControl(this.empId),
@@ -137,30 +179,77 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
       releaseDate: new FormControl(null),
       remark: new FormControl(null),
     });
-
     this.empWorkHistoryListArray.push(formGroup);
-    
-    // Initialize department, section, and designation options for the new row
-    this.departmentOptions.push([...this.departments]);  // Clone the departments list
-    this.sectionOptions.push([]);
-    this.designationOptions.push([]);
   }
 
-  removeWorkHistoryList(index: number, id: number) {
-    if (id != 0) {
-      this.confirmService
+  find(id: number){
+    this.empWorkHistoryService.findById(id).subscribe((res) => {
+      if(res){
+        this.visible = true;
+        this.headerBtnText = 'Hide From';
+        this.headerText = 'Update Employment History';
+        this.btnText = 'Update';
+        const index = 0;
+        const control = <FormArray>this.EmpWorkHistoryInfoForm.controls['empWorkHistoryList'];
+        control.clear();
+
+        this.departmentOptions[index] = [...this.departments];
+        if (res.departmentId) {
+        this.sectionService.getSectionByOfficeDepartment(res.departmentId).subscribe((sections) => {
+          this.sectionOptions[index] = sections; 
+
+          if (res.sectionId) {
+            this.empJobDetailsService.getOldDesignationBySection(res.sectionId).subscribe((designations) => {
+              this.designationOptions[index] = designations; 
+            });
+          }
+          else {
+            this.empJobDetailsService.getOldDesignationByDepartment(res.departmentId || 0).subscribe((designations) => {
+              this.designationOptions[index] = designations; 
+            });
+          }
+        });
+      } else {
+        this.sectionOptions[index] = [];
+        this.designationOptions[index] = [];
+      }
+
+        control.push(this.fb.group({
+          id: [res.id],
+          empId: [res.empId],
+          departmentId: [res.departmentId],
+          sectionId: [res.sectionId],
+          designationId: [res.designationId],
+          joiningDate: [res.joiningDate],
+          releaseDate: [res.releaseDate],
+          remark: [res.remark],
+        }));
+
+        
+      }
+    })
+  }
+
+  removeWorkHistoryList(index: number) {
+    this.empWorkHistoryListArray.removeAt(index);
+  }
+
+  delete(element: any){
+    this.confirmService
         .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
         .subscribe((result) => {
           if (result) {
-            this.empWorkHistoryService.deleteEmpWorkHistory(id).subscribe(
+            this.empWorkHistoryService.deleteEmpWorkHistory(element.id).subscribe(
               (res) => {
                 this.toastr.warning('Delete sucessfully ! ', ` `, {
                   positionClass: 'toast-top-right',
                 });
 
-                if (this.empWorkHistoryListArray.controls.length > 0)
-                  this.empWorkHistoryListArray.removeAt(index);
-                // this.getEmployeeWorkHistoryInfoByEmpId();
+                const index = this.dataSource.data.indexOf(element);
+                if (index !== -1) {
+                  this.dataSource.data.splice(index, 1);
+                  this.dataSource = new MatTableDataSource(this.dataSource.data);
+                }
               },
               (err) => {
                 this.toastr.error('Somethig Wrong ! ', ` `, {
@@ -171,25 +260,21 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
             );
           }
         });
-    }
-    else if (id == 0) {
-      if (this.empWorkHistoryListArray.controls.length > 0)
-        this.empWorkHistoryListArray.removeAt(index);
-    }
   }
 
   UserFormView(): void {
     this.visible = !this.visible;
-    this.headerBtnText = this.visible ? 'Hide Form' : 'Show Form';
+    this.headerBtnText = this.visible ? 'Hide Form' : 'Add New';
   }
 
 
   cancel() {
-    this.close.emit();
+    this.getEmployeeWorkHistoryInfoByEmpId();
+    // this.close.emit();
   }
 
   getAllSelectedDepartments(){
-    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+    this.departmentService.getSelectedAllDepartment().subscribe((res) => {
           this.departments = res;
     });
   }
@@ -222,8 +307,18 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
     this.empWorkHistoryListArray.at(index).get('designationId')?.setValue(null);
   
     if (sectionId) {
-      this.empJobDetailsService.getOldDesignationBySection(sectionId).subscribe((res) => {
-        this.designationOptions[index] = res; 
+      this.sectionService.find(sectionId).subscribe((res) => {
+        console.log(res)
+        if(res.showAllDesignation == true){
+          this.designationService.getSelectDesignationSetupName().subscribe((data) => { 
+            this.designationOptions[index] = data;
+          });
+        }
+        else{
+          this.empJobDetailsService.getOldDesignationBySection(sectionId).subscribe((res) => {
+            this.designationOptions[index] = res;
+          });
+        }
       });
     } else {
       this.designationOptions[index] = [];
@@ -240,7 +335,7 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
         });
         this.loading = false;
         // this.cancel();
-        // this.getEmployeeWorkHistoryInfoByEmpId();
+        this.getEmployeeWorkHistoryInfoByEmpId();
       } else {
         this.toastr.warning('', `${res.message}`, {
           positionClass: 'toast-top-right',

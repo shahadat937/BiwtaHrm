@@ -22,5 +22,6 @@ namespace Hrm.Domain
         public virtual ICollection<EmpForeignTourInfo>? EmpForeignTourInfo { get; set; }
         // public virtual ICollection<Division> Divisions { get; set; }
         public virtual ICollection<LeaveRequest> LeaveRequests {get; } = new List<LeaveRequest>();
+        public virtual ICollection<EmpTrainingInfo>? EmpTrainingInfo { get; set; }
     }
 }

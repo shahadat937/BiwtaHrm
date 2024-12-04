@@ -4,7 +4,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 
 import { environment } from '../../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 import { Grade } from '../model/Grade';
 import { GradeViewModel } from '../model/GradeViewModel';
@@ -54,5 +54,11 @@ export class GradeService {
   // }
   delete(id:number){
     return this.http.delete(this.baseUrl + '/grade/delete-grade/'+id);
+  }
+
+  getByEmpId(empId:number): Observable<Grade> {
+
+    const headers = new HttpHeaders().set('Suppress-Error-Message', 'true');
+    return this.http.get<Grade>(this.baseUrl + `/grade/get-GradeByEmpId/${empId}`,{headers: headers});
   }
 }

@@ -39,7 +39,7 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Queries
                 siteVisits = siteVisits.Where(x=> x.EmpId == request.filters.EmpId);
             }
 
-            var siteVisitList = await siteVisits.ToListAsync();
+            var siteVisitList = await siteVisits.OrderByDescending(x=>x.SiteVisitId).ToListAsync();
 
             var siteVisitDtoList = _mapper.Map<List<SiteVisitDto>>(siteVisitList);
 

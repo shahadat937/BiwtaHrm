@@ -44,6 +44,13 @@ import { HolidaySetupService } from './services/holiday-setup.service';
 import { SiteVisitService } from './services/site-visit.service';
 import { WorkdayService } from './services/workday.service';
 import { ManageSiteVisitComponent } from './manage-site-visit/manage-site-visit.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule as PDropDownModule } from 'primeng/dropdown';
+import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { SectionService } from '../basic-setup/service/section.service';
+import { DepartmentService } from '../basic-setup/service/department.service';
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -89,7 +96,13 @@ import { ManageSiteVisitComponent } from './manage-site-visit/manage-site-visit.
     CalendarModule,
     TableModule, 
     TooltipModule,
-    BadgeModule
+    BadgeModule,
+    InputTextModule,
+    MultiSelectModule,
+    PDropDownModule,
+    MatTableModule,
+    MatSortModule
+
 
   ],
   providers: [ 
@@ -102,6 +115,8 @@ import { ManageSiteVisitComponent } from './manage-site-visit/manage-site-visit.
     HolidaySetupService,
     SiteVisitService,
     WorkdayService,
+    SectionService,
+    DepartmentService
   ],
 })
 export class AttendanceModule { }

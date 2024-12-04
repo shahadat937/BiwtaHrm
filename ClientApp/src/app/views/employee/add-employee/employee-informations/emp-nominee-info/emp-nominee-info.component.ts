@@ -65,11 +65,12 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
       control.push(this.fb.group({
         id: [nomineeInfo.id],
         empId: [nomineeInfo.empId],
+        pNo: [this.pNo],
         nomineeName : [nomineeInfo.nomineeName, Validators.required],
         dateOfBirth: [nomineeInfo.dateOfBirth],
         birthRegNo: [nomineeInfo.birthRegNo],
         nid: [nomineeInfo.nid],
-        relationId : [nomineeInfo.relationId, Validators.required],
+        relationId : [nomineeInfo.relationId],
         percentage : [nomineeInfo.percentage],
         address : [nomineeInfo.address ],
         photoUrl: [nomineeInfo.photoUrl],
@@ -131,16 +132,16 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
       dateOfBirth: new FormControl(undefined),
       birthRegNo: new FormControl(undefined),
       nid: new FormControl(undefined),
-      relationId: new FormControl(undefined, Validators.required),
-      percentage: new FormControl(undefined),
+      relationId: new FormControl(null),
+      percentage: new FormControl(0),
       address: new FormControl(undefined),
-      photoFile: new FormControl(undefined),
-      signatureFile: new FormControl(undefined),
+      photoFile: new FormControl(null),
+      signatureFile: new FormControl(null),
       uniqueIdentity: new FormControl(undefined),
       remark: new FormControl(undefined),
       isActive: new FormControl(true),
-      photoPreviewUrl: new FormControl(undefined),
-      signaturePreviewUrl: new FormControl(undefined),
+      photoPreviewUrl: new FormControl(null),
+      signaturePreviewUrl: new FormControl(null),
     }));
   }
 
@@ -189,7 +190,6 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
   saveNominee() {
     this.loading = true;
     const formData = this.EmpNomineeInfoForm.get('empNomineeList')?.value;
-    console.log("Form Data: ", formData);
     this.empNomineeInfoService.saveEmpNomineeInfo(formData).subscribe((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
@@ -197,7 +197,7 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
         });
         this.loading = false;
         // this.cancel();
-    this.getEmployeeNomineeInfoByEmpId();
+        this.getEmployeeNomineeInfoByEmpId();
       } else {
         this.toastr.warning('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -205,6 +205,76 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
     });
+  }
+
+  saveNomineeSingle() {
+    const empNomineeList = this.EmpNomineeInfoForm.get('empNomineeList')?.value as any[]; // Replace 'any' with the 
+    empNomineeList.forEach((nominee) => {
+      this.loading = true;
+      const success = false;
+        this.empNomineeInfoService.saveEmpNomineeInfo(nominee).subscribe({
+          next: (response:any) => {
+            if(response.success) {
+              this.toastr.success('',`${response.message}`, {
+                positionClass: 'toast-top-right'
+              })
+            } else {
+              this.toastr.warning('',`${response.message}`, {
+                positionClass: 'toast-top-right'
+              })
+            }
+          },
+          error: (err) => {
+            this.loading = false;
+          },
+          complete: () => {
+            this.loading = false;
+          }
+        })
+    });
+    // this.empNomineeListArray.controls.forEach(control => {
+    //   this.loading = true;
+    //   // let formData = this.convertFormGroupToFormData(control as FormGroup);
+    //   // this.empNomineeInfoService.saveEmpNomineeInfo(control.value).subscribe({
+    //   //   next: (response:any) => {
+    //   //     if(response.success) {
+    //   //       this.toastr.success('',`${response.message}`, {
+    //   //         positionClass: 'toast-top-right'
+    //   //       })
+    //   //     } else {
+    //   //       this.toastr.warning('',`${response.message}`, {
+    //   //         positionClass: 'toast-top-right'
+    //   //       })
+    //   //     }
+    //   //   },
+    //   //   error: (err) => {
+    //   //     this.loading = false;
+    //   //   },
+    //   //   complete: () => {
+    //   //     this.loading = false;
+    //   //   }
+    //   // })
+    // })
+    // this.getEmployeeNomineeInfoByEmpId();
+  }
+
+  private convertFormGroupToFormData(formGroup: FormGroup): FormData {
+    let formData = new FormData();
+    Object.keys(formGroup.controls).forEach((key) => {
+      const control = formGroup.get(key);
+      if (control) {
+        const value = control.value;
+        // Check if the control value is an array (e.g., for file inputs)
+        if (Array.isArray(value)) {
+          value.forEach((file: File) => {
+            formData.append(key, file);
+          });
+        } else {
+          formData.append(key, value);
+        }
+      }
+    });
+    return formData;
   }
   
 }

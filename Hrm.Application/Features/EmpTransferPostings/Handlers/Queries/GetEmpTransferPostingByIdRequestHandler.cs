@@ -29,7 +29,11 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
             var EmpTransferPostings = await _EmpTransferPostingRepository.Where(x=> x.Id == request.Id)
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.ApplicationBy)
-                .Include(x => x.OrderBy)
+                .Include(x => x.OrderOfficeBy)
+                .Include(x => x.CurrentGrade)
+                .Include(x => x.UpdateGrade)
+                .Include(x => x.CurrentScale)
+                .Include(x => x.UpdateScale)
                 .Include(x => x.TransferApproveBy)
                 .Include(x => x.DeptReleaseBy)
                 .Include(x => x.JoiningReportingBy)
@@ -38,12 +42,14 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
                 .Include(x => x.CurrentDepartment)
                 .Include(x => x.TransferDepartment)
                 .Include(x => x.CurrentDesignation)
+                    .ThenInclude(x => x.DesignationSetup)
                 .Include(x => x.TransferDesignation)
+                    .ThenInclude(x => x.DesignationSetup)
                 .Include(x => x.CurrentSection)
                 .Include(x => x.TransferSection)
                 .Include(x => x.ReleaseType)
                 .Include(x => x.DeptReleaseType)
-                .FirstOrDefaultAsync(cancellationToken); ;
+                .FirstOrDefaultAsync(cancellationToken);
 
             if (EmpTransferPostings == null)
             {

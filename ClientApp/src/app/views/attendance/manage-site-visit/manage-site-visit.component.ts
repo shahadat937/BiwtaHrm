@@ -13,13 +13,14 @@ export class ManageSiteVisitComponent implements OnInit {
   constructor(
     private authService: AuthService
   ) {
-
+    this.authService.currentUser.subscribe(user => {
+      let empId = user && user.empId == null? user.empId: 0
+      this.filter = {EmpId: empId};
+    }) 
   }
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(user => {
-      this.filter = {EmpId: user.empId};
-    }) 
+    
   }
 
 

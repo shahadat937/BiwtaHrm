@@ -10,8 +10,7 @@ namespace Hrm.Application.DTOs.Designation
     {
 
         public int DesignationId { get; set; }
-        public string? DesignationName { get; set; }
-        public string? DesignationNameBangla { get; set; }
+        public int? DesignationSetupId { get; set; }
         public int? OfficeId { get; set; }
         public int? DepartmentId { get; set; }
         public int? SectionId { get; set; }

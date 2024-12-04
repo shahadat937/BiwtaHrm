@@ -58,12 +58,22 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
                 leaveRequesQuery = leaveRequesQuery.Where(x=>x.EmpId == request.filterDto.EmpId);
             }
 
+            if(request.filterDto.ReviewedBy.HasValue)
+            {
+                leaveRequesQuery = leaveRequesQuery.Where(x=>x.ReviewedBy == request.filterDto.ReviewedBy || x.ReviewedBy == null);
+            }
+
+            if(request.filterDto.ApprovedBy.HasValue)
+            {
+                leaveRequesQuery = leaveRequesQuery.Where(x=>x.ApprovedBy == request.filterDto.ApprovedBy || x.ApprovedBy == null);
+            }
+
             if(request.filterDto.Status!=null&&request.filterDto.Status.Count>0)
             {
                 leaveRequesQuery = leaveRequesQuery.Where(x => request.filterDto.Status.Contains((int)x.Status));
             }
 
-            var LeaveRequests = await leaveRequesQuery.ToListAsync();
+            var LeaveRequests = await leaveRequesQuery.OrderByDescending(x => x.LeaveRequestId).ToListAsync();
             var leaveRequestdto = _mapper.Map<List<LeaveRequestDto>>(LeaveRequests);
 
             return leaveRequestdto;

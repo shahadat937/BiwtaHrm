@@ -57,6 +57,11 @@ export class DesignationService {
       this.baseUrl + '/designation/get-designation'
     );
   }
+  getSelectDesignationSetupName() {
+    return this.http.get<SelectedModel[]>(
+      this.baseUrl + '/designationSetup/get-selectedDesignationSetups'
+    );
+  }
 
   getDesignationByDepartmentId(id:number){
     return this.http.get<SelectedModel[]>(this.baseUrl + '/designation/get-selectedDesignationByDepartmentId/' + id);

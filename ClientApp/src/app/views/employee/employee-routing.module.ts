@@ -9,6 +9,7 @@ import { EmpIdCardGenerateComponent } from './manage-employee/emp-id-card-genera
 import { EmpShiftListComponent } from './assignShift/emp-shift-list/emp-shift-list.component';
 import { ViewEmployeePrimeNgComponent } from './add-employee/view-employee-prime-ng/view-employee-prime-ng.component';
 import { EmpProfileComponent } from './manage-employee/emp-profile/emp-profile.component';
+import { UploadFingerPrintComponent } from './add-employee/employee-informations/upload-finger-print/upload-finger-print.component';
 
 const routes: Routes = [
   {
@@ -82,6 +83,13 @@ const routes: Routes = [
       {
         path: 'profile',
         component: EmpProfileComponent,
+        data: {
+          title: 'Employee Profile',
+        },
+      },
+      {
+        path: 'upload-fingerPrint',
+        component: UploadFingerPrintComponent,
         data: {
           title: 'Employee Profile',
         },

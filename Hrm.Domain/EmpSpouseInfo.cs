@@ -14,7 +14,7 @@ namespace Hrm.Domain
         public string? SpouseName { get; set; }
         public string? SpouseNameBangla { get; set; }
         public DateOnly? DateOfBirth { get; set; }
-        public int? BirthRegNo { get; set; }
+        public string? BirthRegNo { get; set; }
         public string? NID { get; set; }
         public int? OccupationId { get; set; }
         public string? Remark { get; set; }

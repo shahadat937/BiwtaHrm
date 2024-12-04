@@ -28,6 +28,7 @@ namespace Hrm.Application.Features.FormSchema.Handlers.Queries
             var formSchema = await _repository.Where(x => true)
                 .Include(x => x.FormField)
                 .Include(x => x.Form)
+                .Include(x => x.FormSection)
                 .ToListAsync();
 
             var formSchemaList = _mapper.Map<List<FormSchemaDto>>(formSchema);

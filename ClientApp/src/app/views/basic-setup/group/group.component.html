@@ -1,5 +1,5 @@
 <c-card>
-  <c-card-header>SubGroup </c-card-header>
+  <c-card-header>Subject/Group </c-card-header>
   <c-card-body>
     <form
       #GroupForm="ngForm"
@@ -10,26 +10,26 @@
       cRow
       class="needs-validation"
     >
-      <!-- <c-col [md]="6">
-        <label cLabel for="validationCustom01">Subject<span class="text-danger">*</span></label>
+      <c-col [md]="4">
+        <label cLabel for="examTypeId">Exam Type<span class="text-danger">*</span></label>
         <div class="input-wrapper">
-          <select [(ngModel)]="groupService.groups.subjectId" name="subjectId" #subjectId="ngModel" cFormControl
-            id="validationCustom01" required aria-label="Default select example" cSelect>
-            <option [ngValue]="0">Select Subject</option>
-            @for(subject of subjects; track subject.id;let index=$index) {
+          <select [(ngModel)]="groupService.groups.examTypeId" name="examTypeId" #examTypeId="ngModel" cFormControl
+            id="examTypeId" required aria-label="Default select example" cSelect>
+            <option [ngValue]="0">Select Exam Type</option>
+            @for(subject of examTypes; track subject.id;let index=$index) {
             <option [value]="subject.id">
               {{ subject.name }}
             </option>
             }
           </select>
-      
-          @if(!subjectId.valid && subjectId.touched){
-          <div class="text-left text-danger">Grade is required</div>
+
+          @if(!examTypeId.valid && examTypeId.touched){
+          <div class="text-left text-danger">Exam Type is required</div>
           }
         </div>
-      </c-col> -->
+      </c-col>
 
-      <c-col [md]="6">
+      <c-col [md]="4">
         <input
           type="hidden"
           [(ngModel)]="groupService.groups.groupId"
@@ -37,7 +37,7 @@
         />
         <!-- <input type="hidden" [(ngModel)]="bloodGroupService.bloodGroups.menuPosition" name="menuPosition"/> -->
         <label cLabel for="validationCustom01"
-          >Sub Group Name<span class="text-danger">*</span></label
+          >Subject/Group Name<span class="text-danger">*</span></label
         >
         <input
           [(ngModel)]="groupService.groups.groupName"
@@ -67,7 +67,7 @@
         />
         <c-form-feedback [valid]="true">Looks good!</c-form-feedback>
       </c-col> -->
-      <c-col [md]="6">
+      <c-col [md]="4">
         <label cLabel for="activeStatus">Active Status</label>
         <select [(ngModel)]="groupService.groups.isActive"
         name="isActive"
@@ -94,7 +94,7 @@
 </c-card>
 
 <c-card class="mt-3">
-  <c-card-header>SubGroup List</c-card-header>
+  <c-card-header>Subject/Group List</c-card-header>
   <c-card-body>
     <div class="example-header">
       <mat-form-field>
@@ -120,8 +120,12 @@
           <th mat-header-cell *matHeaderCellDef>Serial No</th>
           <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
         </ng-container>
+        <ng-container matColumnDef="examType">
+          <th mat-header-cell *matHeaderCellDef>Exam Type</th>
+          <td mat-cell *matCellDef="let element">{{ element.examTypeName }}</td>
+        </ng-container>
         <ng-container matColumnDef="groupName">
-          <th mat-header-cell *matHeaderCellDef>SubGroup Name</th>
+          <th mat-header-cell *matHeaderCellDef>Subject/Group Name</th>
           <td mat-cell *matCellDef="let element">{{ element.groupName }}</td>
         </ng-container>
 
@@ -159,7 +163,7 @@
     </div>
   </c-card-body>
   <c-card-footer class="text-medium-emphasis">
-    <mat-paginator 
+    <mat-paginator
 appBubblePagination
 		[length]="100"
               [pageSize]="10"

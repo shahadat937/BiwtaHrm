@@ -44,7 +44,7 @@ namespace Hrm.Application.Features.Subject.Handlers.Commands
 
             
             var SubjectName = request.SubjectDto.SubjectName.Trim().ToLower().Replace(" ", string.Empty);
-            IQueryable<Hrm.Domain.Subject> Subjects = _SubjectRepository.Where(x => x.SubjectName.ToLower() == SubjectName);
+            IQueryable<Hrm.Domain.Subject> Subjects = _SubjectRepository.Where(x => x.SubjectName.Trim().ToLower().Replace(" ", string.Empty) == SubjectName && x.SubjectId != request.SubjectDto.SubjectId);
 
 
 

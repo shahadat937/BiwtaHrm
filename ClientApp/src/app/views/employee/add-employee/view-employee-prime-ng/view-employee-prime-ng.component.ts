@@ -16,6 +16,7 @@ import { Table } from 'primeng/table';
 import { EmpPhotoSignService } from '../../service/emp-photo-sign.service';
 import { UploadEmpBasicInfoComponent } from '../upload-emp-basic-info/upload-emp-basic-info.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { PaginatorModel } from 'src/app/core/models/paginator-model';
 
 @Component({
   selector: 'app-view-employee-prime-ng',
@@ -37,7 +38,7 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
   totalRecords: number = 0;
   dataSource = new MatTableDataSource<any>();
   // @ViewChild(MatPaginator);
-  @ViewChild('dt') dt: Table | undefined;
+  // @ViewChild('dt') dt: Table | undefined;
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
@@ -46,6 +47,7 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
   userForm : UserModule;
   selectedEmpId!: number;
   showUpdateUserInfo: boolean = false;
+  pagination: PaginatorModel = new PaginatorModel();
 
   constructor(
     public userService: UserService,
@@ -71,7 +73,7 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
     this.roleFeatureService.getFeaturePermission('allEmployeeList').subscribe((item) => {
       this.roleFeatureService.featurePermission.add == true;
       if(item.viewStatus == true){
-        this.getAllEmpBasicInfo();
+        this.getAllEmpBasicInfo(this.pagination);
       }
       else{
         this.unauthorizeAccress()
@@ -84,21 +86,21 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
       positionClass: 'toast-top-right',
     });
   }
-  getAllEmpBasicInfo() {
-    this.subscription = this.empBasicInfoService.getAll().subscribe((employees) => {
-      this.employees = employees;
-      this.totalRecords = employees.length;
+  getAllEmpBasicInfo(queryParams: any) {
+    this.subscription = this.empBasicInfoService.getAllPagination(queryParams).subscribe((employees: any) => {
+      this.totalRecords = employees.totalItemsCount;
+      this.employees = employees.items;
       this.loading = false;
 
-      this.departments = [...new Set(employees
-        .map(emp => emp.departmentName)
-        .filter(departmentName => departmentName !== null && departmentName.trim() !== '')
-      )].map(department => ({ name: department }));
+      // this.departments = [...new Set(employees
+      //   .map(emp => emp.departmentName)
+      //   .filter(departmentName => departmentName !== null && departmentName.trim() !== '')
+      // )].map(department => ({ name: department }));
       
-      this.sections = [...new Set(employees
-        .map(emp => emp.sectionName)
-        .filter(sectionName => sectionName !== null && sectionName.trim() !== '')
-      )].map(section => ({ name: section }));
+      // this.sections = [...new Set(employees
+      //   .map(emp => emp.sectionName)
+      //   .filter(sectionName => sectionName !== null && sectionName.trim() !== '')
+      // )].map(section => ({ name: section }));
     });
 
     this.imageLinkUrl = this.empPhotoSign.imageUrl + '/EmpPhoto';
@@ -108,22 +110,29 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
+    console.log(filterValue)
     filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+    this.pagination.pageIndex = 1;
+    this.pagination.searchText = filterValue;
+    this.getAllEmpBasicInfo(this.pagination);
+  }
+
+  onPageChange(event: any){
+    this.pagination.pageSize = event.rows;
+    this.pagination.pageIndex = (event.first / event.rows) + 1;
+    this.getAllEmpBasicInfo(this.pagination);
   }
 
   onGlobalFilter(event: Event) {
-    console.log(event)
     const inputValue = (event.target as HTMLInputElement).value;
-    this.dt!.filterGlobal(inputValue, 'contains');
+    // this.dt!.filterGlobal(inputValue, 'contains');
   }
   onSelect(selectedValue: string | null) {
-    if (!selectedValue) {
-      this.dt!.filterGlobal('', 'contains');
-    } else {
-      this.dt!.filterGlobal(selectedValue, 'contains');
-    }
+    // if (!selectedValue) {
+    //   this.dt!.filterGlobal('', 'contains');
+    // } else {
+    //   this.dt!.filterGlobal(selectedValue, 'contains');
+    // }
   }
 
   addNewEmployee(){
@@ -158,7 +167,7 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
 
     if (modalRef.onHide) {
       modalRef.onHide.subscribe(() => {
-        this.getAllEmpBasicInfo();
+        this.getAllEmpBasicInfo(this.pagination);
       });
     }
   }
@@ -179,7 +188,7 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
             });
             this.empBasicInfoService.updateUserStatus(id).subscribe((res) =>{
                 if(res){
-                  this.getAllEmpBasicInfo();
+                  this.getAllEmpBasicInfo(this.pagination);
                 }
             });
             this.loadingMap[id] = false;

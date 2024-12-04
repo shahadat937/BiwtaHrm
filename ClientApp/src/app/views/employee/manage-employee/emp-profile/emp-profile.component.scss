@@ -1,5 +1,6 @@
-c-card-header {
+c-card-header, .modal-header {
     background-color:cadetblue;
+    color: white;
 }
 
 .borderless td, .borderless th {
@@ -13,3 +14,10 @@ c-card-header {
     border-bottom: 2px solid gray;
 }
 
+.modal {
+    display: block;
+}
+.scrollable-modal-body {
+    max-height: 80vh; /* Adjust the height as needed */
+    overflow-y: auto;
+  }

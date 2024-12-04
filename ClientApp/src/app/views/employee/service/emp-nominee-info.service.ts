@@ -20,11 +20,24 @@ export class EmpNomineeInfoService {
     return this.http.get<EmpNomineeInfoModel[]>(this.baseUrl + '/empNomineeInfo/get-EmpNomineeInfoByEmpId/' + id);
   }
 
-  saveEmpNomineeInfo(model: FormData) {
-    return this.http.post(this.baseUrl + '/empNomineeInfo/save-EmpNomineeInfo', model);
+  saveEmpNomineeInfo(model: any) {
+    const formData = this.toFormData(model);
+    return this.http.post(this.baseUrl + '/empNomineeInfo/save-EmpNomineeInfo', formData);
   }
   deleteEmpNomineeInfo(id: number) {
     return this.http.delete(this.baseUrl + '/empNomineeInfo/delete-EmpNomineeInfo/'+id);
+  }
+  
+  private toFormData(model: any): FormData {
+    const formData = new FormData();
+    for (const key of Object.keys(model)) {
+      if (model[key] instanceof File && model[key]) { // Check for null or undefined
+        formData.append(key, model[key], model[key].name);
+      } else if (model[key] !== null && model[key] !== undefined) { // Avoid null/undefined fields
+        formData.append(key, model[key].toString());
+      }
+    }
+    return formData;
   }
   
 }

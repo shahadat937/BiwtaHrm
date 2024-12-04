@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { EmpPromotionIncrementService } from '../service/emp-promotion-increment.service';
 import { PromotionIncrementInfoComponent } from '../promotion-increment-info/promotion-increment-info.component';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
   selector: 'app-manage-promotion',
@@ -19,11 +20,14 @@ export class ManagePromotionComponent implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
-    'slNo',
+    // 'slNo',
     'PMS Id',
     'fullName',
+    'promotedFrom',
+    'promotedTo',
+    'basicPayFrom',
+    'basicPayTo',
     'ApprovalStatus',
-    'ApplicationStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -36,6 +40,7 @@ export class ManagePromotionComponent implements OnInit, OnDestroy {
     public empPromotionIncrementService: EmpPromotionIncrementService,
     private route: ActivatedRoute,
     private modalService: BsModalService,
+    private confirmService: ConfirmService,
   ) {
 
   }
@@ -72,5 +77,31 @@ export class ManagePromotionComponent implements OnInit, OnDestroy {
       id: id
     };
     const modalRef: BsModalRef = this.modalService.show(PromotionIncrementInfoComponent, { initialState, backdrop: 'static' });
+  }
+
+  delete(element: any) {
+    this.confirmService
+      .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+      .subscribe((result) => {
+        if (result) {
+          this.empPromotionIncrementService.deleteEmpPromotionIncrement(element.id).subscribe(
+            (res) => {
+              const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
+              }
+              this.toastr.success('Delete sucessfully ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+            },
+            (err) => {
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+            }
+          );
+        }
+      });
   }
 }

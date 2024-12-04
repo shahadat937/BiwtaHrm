@@ -48,9 +48,12 @@ export interface OrganogramDepartmentNameDto {
 
 export interface OrganogramDesignationNameDto {
   name: string;
+  employeeInfo: OrganogramEmployeeInfoDto;
+} 
+export interface OrganogramEmployeeInfoDto {
+  empId: number;
   employeeName: string;
 }
-
 export interface OrganogramSectionNameDto {
   name: string;
   designations: OrganogramDesignationNameDto[];

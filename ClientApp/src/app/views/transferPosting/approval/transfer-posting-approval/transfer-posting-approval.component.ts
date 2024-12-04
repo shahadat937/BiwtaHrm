@@ -62,7 +62,7 @@ export class TransferPostingApprovalComponent implements OnInit, OnDestroy {
     this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if(res){
         this.empTransferPosting = res;
-        this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
+        // this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
         this.EmpTransferPostingForm?.form.patchValue(res);
       }
     });
@@ -74,15 +74,15 @@ export class TransferPostingApprovalComponent implements OnInit, OnDestroy {
     }
   }
 
-  getEmpJobDetailsByEmpIdOfOrderOfficeBy(id: number){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
-      if(res){
-        this.empTransferPosting.orderByDepartmentName = res.departmentName;
-        this.empTransferPosting.orderByDesignationName = res.designationName;
-        this.empTransferPosting.orderBySectionName = res.sectionName;
-      }
-    })
-  }
+  // getEmpJobDetailsByEmpIdOfOrderOfficeBy(id: number){
+  //   this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+  //     if(res){
+  //       this.empTransferPosting.orderByDepartmentName = res.departmentName;
+  //       this.empTransferPosting.orderByDesignationName = res.designationName;
+  //       this.empTransferPosting.orderBySectionName = res.sectionName;
+  //     }
+  //   })
+  // }
 
 
   closeModal(): void {

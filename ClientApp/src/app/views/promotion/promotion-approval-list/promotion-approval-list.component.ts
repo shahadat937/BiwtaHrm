@@ -20,9 +20,13 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
   displayedColumns: string[] = [
-    'slNo',
+    // 'slNo',
     'PMS Id',
     'fullName',
+    'promotedFrom',
+    'promotedTo',
+    'basicPayFrom',
+    'basicPayTo',
     'ApprovalStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();
@@ -30,6 +34,7 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+  loginEmpId: number = 0;
   
   constructor(
     private toastr: ToastrService,
@@ -44,11 +49,14 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    const currentUserString = localStorage.getItem('currentUser');
+    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
+    this.loginEmpId = currentUserJSON.empId ?? 0;
     this.getAllPromotionIncrementInfo();
   }
 
   getAllPromotionIncrementInfo() {
-    this.subscription = this.empPromotionIncrementService.getAllEmpPromotionIncrementApproveInfo().subscribe((item) => {
+    this.subscription = this.empPromotionIncrementService.getAllEmpPromotionIncrementApproveInfo(this.loginEmpId).subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;

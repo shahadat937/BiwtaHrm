@@ -29,9 +29,12 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
 
         class LeaveAmount
         {
+            public int LeaveTypeId { get; set; }
             public string LeaveTypeName {  get; set; }
             public int LeaveDue { get; set; }
             public int TotalAmount { get; set; }
+            public int Availed {  get; set; }
+            public int Applied { get; set; }
         }
 
         public async Task<object> Handle(GetAllLeaveTypeAmountByEmpIdRequest request, CancellationToken cancellationToken)
@@ -41,13 +44,25 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
 
             
             List<LeaveAmount> leaveAmounts = new List<LeaveAmount>();
+            DateTime startDate = DateTime.Now;
+            DateTime endDate = DateTime.Now;
+
+            if(request.LeaveStartDate.HasValue && request.LeaveEndDate.HasValue)
+            {
+                startDate = (DateTime) request.LeaveStartDate;
+                endDate = (DateTime) request.LeaveEndDate;
+            }
+
             foreach(var type in leaveTypeDto)
             {
                 LeaveAmount leaveAmount = new LeaveAmount();
-                List<int> leaveAmountAndDue = await _leaveValidator.CalculateLeaveAmount(request.EmpId, type.LeaveTypeId, DateTime.Now, DateTime.Now, DateTime.Now.Year);
+                List<int> leaveAmountAndDue = await _leaveValidator.CalculateLeaveAmount(request.EmpId, type.LeaveTypeId, startDate, endDate, DateTime.Now.Year);
+                leaveAmount.LeaveTypeId = type.LeaveTypeId;
                 leaveAmount.LeaveTypeName = type.LeaveTypeName;
                 leaveAmount.TotalAmount = leaveAmountAndDue[0];
                 leaveAmount.LeaveDue = leaveAmountAndDue[1];
+                leaveAmount.Availed = await _leaveValidator.GetAvailedLeave(request.EmpId, type.LeaveTypeId);
+                leaveAmount.Applied = await _leaveValidator.GetTotalApplied(request.EmpId, type.LeaveTypeId);
                 leaveAmounts.Add(leaveAmount);
             }
 

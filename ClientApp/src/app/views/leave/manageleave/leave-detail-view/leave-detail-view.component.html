@@ -1,5 +1,5 @@
 <div class="modal fade show">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Leave Request</h5>
@@ -15,90 +15,7 @@
       </div>
       <div class="modal-body scrollable-modal-body" cRow [gutter]="3">
         <div class="container mt-4">
-          <c-card>
-            <c-card-body>
-              <div class="mb-4">
-                <c-row>
-                  <c-col [md]="2">
-                    <strong>PMS_ID:</strong>
-                  </c-col>
-                  <c-col [md]="4"> {{leaveData.idCardNo}} </c-col>
-                </c-row>
-                <c-row>
-                  <c-col [md]="2">
-                    <strong>Emp_Name:</strong>
-                  </c-col>
-                  <c-col [md]="4"> {{leaveData.empFirstName + " " + leaveData.empLastName}} </c-col>
-                </c-row>
-                <c-row>
-                  <c-col [md]="2">
-                    <strong>Leave type:</strong>
-                  </c-col>
-                  <c-col [md]="4"> {{leaveData.leaveTypeName}} </c-col>
-                </c-row>
-                <c-row>
-                  <c-col [md]="2">
-                    <strong>Duration:</strong>
-                  </c-col>
-                  <c-col [md]="4"> 5 days </c-col>
-                </c-row>
-                <c-row>
-                  <c-col [md]="2">
-                    <strong>Dates:</strong>
-                  </c-col>
-                  <c-col [md]="4"> {{leaveData.fromDate.split('T')[0]}} to {{leaveData.toDate.split('T')[0]}} </c-col>
-                </c-row>
-                <c-row>
-                  <c-col [md]="2">
-                    <strong>Status:</strong>
-                  </c-col>
-                  <c-col [md]="4"> {{leaveStatusOption[leaveData.status]}} </c-col>
-                </c-row>
-              </div>
-              <h5 class="mb-3">Foreign Leave</h5>
-              <div class="mb-4">
-                <c-row>
-                  <c-col [md]="2">
-                    <strong>Country:</strong>
-                  </c-col>
-                  <c-col [md]="4">
-                    {{leaveData.countryName}}
-                  </c-col>
-                </c-row>
-                <c-row>
-                  <c-col [md]="2">
-                    <strong>Purpose:</strong>
-                  </c-col>
-                  <c-col [md]="4">
-                    {{leaveData.foreignLeavePurpose}}
-                  </c-col>
-                </c-row>
-                <c-row>
-                  <c-col [md]="2">
-                    <strong>Accompany:</strong>
-                  </c-col>
-                  <c-col [md]="4">
-                    {{leaveData.accompanyBy}}
-                  </c-col>
-                </c-row>
-              </div>
-              <h5 class="mb-3">Leave Associate File Upload</h5>
-              <div class="mb-4">
-                <c-row>
-                  <c-col [md]="2">
-                    <strong>File:</strong>
-                  </c-col>
-                  <c-col [md]="4">
-                    @if (leaveData.associatedFile!=null) {
-                      <a target="_blank" class="btn btn-outline-primary" [href]="baseImageUrl+'/leaveFile/'+leaveData.associatedFile">Download</a>
-                    } @else {
-                      No Associated File
-                    } 
-                  </c-col>
-                </c-row>
-              </div>
-            </c-card-body>
-          </c-card>
+          <app-addleave *ngIf="!loading" [IsReadonly]="true" [leaveData]="leaveData"></app-addleave>
         </div>
       </div>
       <div class="modal-footer">

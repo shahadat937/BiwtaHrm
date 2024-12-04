@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -11,6 +11,9 @@ import { EmpOtherResponsibility } from '../../../model/emp-other-responsibility'
 import { EmpJobDetailsService } from '../../../service/emp-job-details.service';
 import { EmpOtherResponsibilityService } from '../../../service/emp-other-responsibility.service';
 import { ResponsibilityTypeService } from 'src/app/views/basic-setup/service/responsibility-type.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-emp-other-responsibility',
@@ -36,6 +39,21 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
   sectionView: boolean = false;
   empJobDetailsId = 0;
   empOtherResponsibility: EmpOtherResponsibility[] = [];
+  
+  displayedColumns: string[] = [
+    'slNo',
+    'responsibilityName',
+    'department',
+    'section',
+    'designation',
+    'joiningDate',
+    'releaseDate',
+    'Action'];
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+  @ViewChild(MatSort)
+  matSort!: MatSort;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,8 +69,12 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.getSelectedResponsibilityType();
+    this.departmentOptions = [];
+    this.sectionOptions = [];
+    this.designationOptions = [];
     this.getAllSelectedDepartments();
+    this.getSelectedResponsibilityType();
+    this.getInActiveEmpOtherResponsibility();
     this.getEmployeeOtherResponsibilityInfoByEmpId();
   }
 
@@ -60,6 +82,20 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  getInActiveEmpOtherResponsibility(){
+    this.subscription = this.empOtherResponsibilityService.findInActiveByEmpId(this.empId).subscribe((res) => {
+      this.dataSource = new MatTableDataSource(res);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.matSort;
+    })
+  }
+  
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
 
@@ -90,21 +126,7 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
   
     OtherResponsibilityInfoList.forEach((OtherResponsibilityInfo, index) => {
       // Add the work history form group for each row
-      control.push(this.fb.group({
-        id: [OtherResponsibilityInfo.id],
-        empId: [OtherResponsibilityInfo.empId],
-        responsibilityTypeId: [OtherResponsibilityInfo.responsibilityTypeId],
-        departmentId: [OtherResponsibilityInfo.departmentId],
-        sectionId: [OtherResponsibilityInfo.sectionId],
-        designationId: [OtherResponsibilityInfo.designationId],
-        startDate: [OtherResponsibilityInfo.startDate],
-        endDate: [OtherResponsibilityInfo.endDate],
-        serviceStatus: [OtherResponsibilityInfo.serviceStatus],
-        remark: [OtherResponsibilityInfo.remark],
-      }));
-  
       this.departmentOptions[index] = [...this.departments];
-
       if (OtherResponsibilityInfo.departmentId) {
         this.sectionService.getSectionByOfficeDepartment(OtherResponsibilityInfo.departmentId).subscribe((sections) => {
           this.sectionOptions[index] = sections; 
@@ -124,6 +146,22 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
         this.sectionOptions[index] = [];
         this.designationOptions[index] = [];
       }
+      setTimeout(() => {
+        control.push(this.fb.group({
+          id: [OtherResponsibilityInfo.id],
+          empId: [OtherResponsibilityInfo.empId],
+          responsibilityTypeId: [OtherResponsibilityInfo.responsibilityTypeId],
+          departmentId: [OtherResponsibilityInfo.departmentId],
+          sectionId: [OtherResponsibilityInfo.sectionId],
+          designationId: [OtherResponsibilityInfo.designationId],
+          startDate: [OtherResponsibilityInfo.startDate],
+          endDate: [OtherResponsibilityInfo.endDate],
+          serviceStatus: [OtherResponsibilityInfo.serviceStatus],
+          remark: [OtherResponsibilityInfo.remark],
+        }));
+      }, 500);
+  
+
     });
   }
   
@@ -137,6 +175,11 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
   }
 
   addOtherResponsibility() {
+    
+    this.departmentOptions.push([...this.departments]);  // Clone the departments list
+    this.sectionOptions.push([]);
+    this.designationOptions.push([]);
+
     const formGroup = new FormGroup({
       id: new FormControl(0),
       empId: new FormControl(this.empId),
@@ -149,13 +192,10 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
       serviceStatus: new FormControl(true),
       remark: new FormControl(null),
     });
-
-    this.empOtherResponsibilityListArray.push(formGroup);
+    setTimeout(() => {
+      this.empOtherResponsibilityListArray.push(formGroup);
+    }, 500);
     
-    // Initialize department, section, and designation options for the new row
-    this.departmentOptions.push([...this.departments]);  // Clone the departments list
-    this.sectionOptions.push([]);
-    this.designationOptions.push([]);
   }
 
   removeOtherResponsibilityList(index: number, id: number) {
@@ -170,9 +210,9 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
                   positionClass: 'toast-top-right',
                 });
 
-                if (this.empOtherResponsibilityListArray.controls.length > 0)
-                  this.empOtherResponsibilityListArray.removeAt(index);
-                this.getEmployeeOtherResponsibilityInfoByEmpId();
+                // if (this.empOtherResponsibilityListArray.controls.length > 0)
+                //   this.empOtherResponsibilityListArray.removeAt(index);
+                this.getInActiveEmpOtherResponsibility();
               },
               (err) => {
                 this.toastr.error('Somethig Wrong ! ', ` `, {
@@ -197,7 +237,8 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
 
 
   cancel() {
-    this.close.emit();
+    // this.close.emit();
+    this.ngOnInit();
   }
 
   getSelectedResponsibilityType(){
@@ -247,6 +288,51 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
       this.designationOptions[index] = [];
     }
   }
+
+  findById(id: number){
+    this.subscription = this.empOtherResponsibilityService.findById(id).subscribe((res) => {
+      if(res){
+        this.headerText = 'Update Other Responsibility';
+        this.btnText = 'Update';
+        const index = 0;
+        const control = <FormArray>this.EmpOtherResponsibilityInfoForm.controls['empOtherResponsibilityList'];
+        control.clear();
+
+        this.departmentOptions[index] = [...this.departments];
+      if (res.departmentId) {
+        this.sectionService.getSectionByOfficeDepartment(res.departmentId).subscribe((sections) => {
+          this.sectionOptions[index] = sections; 
+
+          if (res.sectionId) {
+            this.empJobDetailsService.getDesignationBySectionId(res.sectionId, this.empJobDetailsId).subscribe((designations) => {
+              this.designationOptions[index] = designations; 
+            });
+          }
+          else {
+            this.empJobDetailsService.getDesignationByDepartmentId(res.departmentId, this.empJobDetailsId).subscribe((designations) => {
+              this.designationOptions[index] = designations; 
+            });
+          }
+        });
+      } else {
+        this.sectionOptions[index] = [];
+        this.designationOptions[index] = [];
+      }
+      control.push(this.fb.group({
+        id: [res.id],
+        empId: [res.empId],
+        responsibilityTypeId: [res.responsibilityTypeId],
+        departmentId: [res.departmentId],
+        sectionId: [res.sectionId],
+        designationId: [res.designationId],
+        startDate: [res.startDate],
+        endDate: [res.endDate],
+        serviceStatus: [res.serviceStatus],
+        remark: [res.remark],
+      }));
+      }
+    });
+  }
   
 
   saveOtherResponsibility() {
@@ -259,6 +345,7 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
         this.loading = false;
         // this.cancel();
         // this.getEmployeeOtherResponsibilityInfoByEmpId();
+        this.ngOnInit();
       } else {
         this.toastr.warning('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -285,6 +372,7 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
               if (this.empOtherResponsibilityListArray.controls.length > 0)
                 this.empOtherResponsibilityListArray.removeAt(index);
                 // this.getEmployeeOtherResponsibilityInfoByEmpId();
+                this.getInActiveEmpOtherResponsibility();
             }
           },
           (err) => {

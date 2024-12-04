@@ -13,5 +13,6 @@ namespace Hrm.Domain
         public string InstituteName { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+        //public virtual ICollection<EmpTrainingInfo>? EmpTrainingInfo { get; set; }
     }
 }

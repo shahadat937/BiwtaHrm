@@ -34,15 +34,6 @@ namespace Hrm.Application.Features.Designation.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(UpdateDesignationCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
-            var validator = new IDesignationDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.DesignationDto);
-
-            if (validationResult.IsValid == false)
-            {
-                response.Success = false;
-                response.Message = "Creation Failed";
-                response.Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
-            }
 
             var Designation = await _unitOfWork.Repository<Hrm.Domain.Designation>().Get(request.DesignationDto.DesignationId);
 
@@ -50,10 +41,6 @@ namespace Hrm.Application.Features.Designation.Handlers.Commands
             {
                 throw new NotFoundException(nameof(Designation), request.DesignationDto.DesignationId);
             }
-
-            var DesignationName = request.DesignationDto.DesignationName.ToLower();
-
-            IQueryable<Hrm.Domain.Designation> Designations = _DesignationRepository.Where(x => x.DesignationName.ToLower() == DesignationName);
 
 
             //if (Designations.Any())

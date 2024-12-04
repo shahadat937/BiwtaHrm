@@ -41,9 +41,9 @@ namespace Hrm.Application.Features.Group.Handlers.Commands
             }
             else
             {
-                var GroupName = request.GroupDto.GroupName.ToLower();
+                var GroupName = request.GroupDto.GroupName.Trim().ToLower().Replace(" ", string.Empty);
 
-                IQueryable<Hrm.Domain.SubGroup> Groups = _GroupRepository.Where(x => x.GroupName.ToLower() == GroupName);
+                IQueryable<Hrm.Domain.SubGroup> Groups = _GroupRepository.Where(x => x.GroupName.Trim().ToLower().Replace(" ", string.Empty) == GroupName && x.ExamTypeId == request.GroupDto.ExamTypeId);
 
                 if (GroupNameExists(request))
                 {
@@ -71,7 +71,7 @@ namespace Hrm.Application.Features.Group.Handlers.Commands
         {
             var GroupName = request.GroupDto.GroupName.Trim().ToLower().Replace(" ", string.Empty);
 
-            IQueryable<Hrm.Domain.SubGroup> Groups = _GroupRepository.Where(x => x.GroupName.Trim().ToLower().Replace(" ", string.Empty) == GroupName);
+            IQueryable<Hrm.Domain.SubGroup> Groups = _GroupRepository.Where(x => x.GroupName.Trim().ToLower().Replace(" ", string.Empty) == GroupName && x.ExamTypeId == request.GroupDto.ExamTypeId);
 
             return Groups.Any();
         }

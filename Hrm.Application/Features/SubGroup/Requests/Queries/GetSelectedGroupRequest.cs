@@ -8,6 +8,7 @@ namespace Hrm.Application.Features.Group.Requests.Queries
 {
     public class GetSelectedGroupRequest : IRequest<List<SelectedModel>>
     {
+        public int Id { get; set; }
     }
 } 
       

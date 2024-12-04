@@ -38,12 +38,12 @@ export class EmpTransferPostingService {
     return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-AllEmpTransferPostingApproveInfo');
   }
   
-  getAllEmpTransferPostingDeptApproveInfo(){
-    return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingDeptApprove');
+  getAllEmpTransferPostingDeptApproveInfo(id: number){
+    return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingDeptApprove/' + id);
   }
   
-  getAllEmpTransferPostingJoiningInfo(){
-    return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingJoiningInfo');
+  getAllEmpTransferPostingJoiningInfo(id: number){
+    return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingJoiningInfo/' + id);
   }
   
   findById(id: number) {
@@ -52,6 +52,10 @@ export class EmpTransferPostingService {
   
   findByEmpId(id: number) {
     return this.http.get<EmpTransferPosting>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingByEmpId/' + id);
+  }
+
+  findAllByEmpId(id: number) {
+    return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-AllEmpTransferPostingByEmpId/' + id);
   }
 
   getEmpBasicInfoByIdCardNo(id: string){
@@ -75,6 +79,15 @@ export class EmpTransferPostingService {
   
   updateEmpTransferPostingStatus(id: number,model: any) {
     return this.http.put(this.baseUrl + '/empTransferPosting/update-EmpTransferPostingStatus/'+id, model);
+  }
+
+  CurrentDeptJoinDateByEmpId(id: number) {
+    return this.http.get(this.baseUrl + '/empTransferPosting/get-currentDeptJoinDateByEmpId/' + id);
+  }
+
+  
+  deleteEmpTransferPosting(id: number) {
+    return this.http.delete(this.baseUrl + '/empTransferPosting/delete-EmpTransferPosting/'+id);
   }
   
 }

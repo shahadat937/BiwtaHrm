@@ -49,7 +49,6 @@ namespace Hrm.Domain
         public ICollection<SiteVisit> SiteVisits { get; set; }
         public virtual ICollection<EmpTransferPosting>? EmpTransferPosting { get; set; }
         public virtual ICollection<EmpTransferPosting>? ApplicationTransfer { get; set; }
-        public virtual ICollection<EmpTransferPosting>? OrderOfficeTransfer { get; set; }
         public virtual ICollection<EmpTransferPosting>? TransferApproveTransfer { get; set; }
         public virtual ICollection<EmpTransferPosting>? DeptReleaseTransfer { get; set; }
         public virtual ICollection<EmpTransferPosting>? JoiningReportingTransfer { get; set; }
@@ -69,5 +68,7 @@ namespace Hrm.Domain
         public virtual ICollection<EmpWorkHistory>? EmpWorkHistory { get; set; }
         public virtual ICollection<EmpOtherResponsibility>? EmpOtherResponsibility { get; set; }
         public virtual ICollection<CancelledWeekend> CancelledWeekends { get; } = new List<CancelledWeekend>();
+        public virtual ICollection<EmpTrainingInfo>? EmpTrainingInfo { get; set; }
+        public virtual ICollection<EmpFingerPrint>? EmpFingerPrint { get; set; }
     }
 }

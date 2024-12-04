@@ -60,6 +60,11 @@ namespace Hrm.Persistence
                 .WithMany(dp => dp.Designations)
                 .HasForeignKey(d => d.SectionId);
 
+            modelBuilder.Entity<Designation>()
+                .HasOne(d => d.DesignationSetup)
+                .WithMany(dp => dp.Designations)
+                .HasForeignKey(d => d.DesignationSetupId);
+
 
             modelBuilder.Entity<OfficeBranch>(entity =>
             {
@@ -174,6 +179,10 @@ namespace Hrm.Persistence
             {
                 entity.HasKey(e => e.GroupId)
                 .HasName("[[PK__Group__149AF36A7B245A3B]]");
+
+                entity.HasOne(e => e.ExamType)
+                    .WithMany(eb => eb.SubGroup)
+                    .HasForeignKey(e => e.ExamTypeId);
             });
             modelBuilder.Entity<Punishment>(entity =>
             {
@@ -707,6 +716,14 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.SubGroup)
                     .WithMany(eb => eb.EmpEducationInfo)
                     .HasForeignKey(e => e.SubGroupId);
+
+                entity.HasOne(e => e.CourseDuration)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.CourseDurationId);
+
+                entity.HasOne(e => e.Result)
+                    .WithMany(eb => eb.EmpEducationInfo)
+                    .HasForeignKey(e => e.ResultId);
             });
 
             modelBuilder.Entity<EmpPsiTrainingInfo>(entity =>
@@ -800,7 +817,7 @@ namespace Hrm.Persistence
                 .WithMany(eb => eb.TransferApproveTransfer)
                     .HasForeignKey(e => e.TransferApproveById);
 
-                entity.HasOne(e => e.OrderBy)
+                entity.HasOne(e => e.OrderOfficeBy)
                 .WithMany(eb => eb.OrderOfficeTransfer)
                     .HasForeignKey(e => e.OrderOfficeById);
 
@@ -851,6 +868,22 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.DeptReleaseType)
                 .WithMany(eb => eb.DeptEmpTransferPosting)
                     .HasForeignKey(e => e.DeptReleaseTypeId);
+
+                entity.HasOne(e => e.CurrentGrade)
+                .WithMany(eb => eb.CurrentEmpTransferPosting)
+                    .HasForeignKey(e => e.CurrentGradeId);
+
+                entity.HasOne(e => e.UpdateGrade)
+                .WithMany(eb => eb.UpdateEmpTransferPosting)
+                    .HasForeignKey(e => e.UpdateGradeId);
+
+                entity.HasOne(e => e.CurrentScale)
+                .WithMany(eb => eb.CurrentEmpTransferPosting)
+                    .HasForeignKey(e => e.CurrentScaleId);
+
+                entity.HasOne(e => e.UpdateScale)
+                .WithMany(eb => eb.UpdateEmpTransferPosting)
+                    .HasForeignKey(e => e.UpdateScaleId);
             });
 
             modelBuilder.Entity<EmpPromotionIncrement>(entity =>
@@ -876,6 +909,10 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.CurrentDepartment)
                     .WithMany(eb => eb.CurrentEmpPromotionIncrement)
                     .HasForeignKey(e => e.CurrentDepartmentId);
+
+                entity.HasOne(e => e.CurrentSection)
+                    .WithMany(eb => eb.CurrentEmpPromotionIncrement)
+                    .HasForeignKey(e => e.CurrentSectionId);
 
                 entity.HasOne(e => e.CurrentDesignation)
                     .WithMany(eb => eb.CurrentEmpPromotionIncrement)
@@ -1010,6 +1047,10 @@ namespace Hrm.Persistence
                 .WithMany(e => e.FormSchemas)
                 .HasForeignKey(e => e.FieldId);
 
+                entity.HasOne(fs => fs.FormSection)
+                .WithMany(fs => fs.FormSchemas)
+                .HasForeignKey(fs => fs.SectionId);
+
             });
 
 
@@ -1130,6 +1171,10 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.Designation)
                     .WithMany(e => e.EmpWorkHistory)
                     .HasForeignKey(e => e.DesignationId);
+
+                entity.HasOne(e => e.DesignationSetup)
+                    .WithMany(e => e.EmpWorkHistory)
+                    .HasForeignKey(e => e.DesignationSetupId);
             });
 
             modelBuilder.Entity<EmpOtherResponsibility>(entity =>
@@ -1159,6 +1204,90 @@ namespace Hrm.Persistence
                 entity.HasOne(e => e.Designation)
                     .WithMany(e => e.EmpOtherResponsibility)
                     .HasForeignKey(e => e.DesignationId);
+            });
+
+            modelBuilder.Entity<EmpTrainingInfo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(e => e.EmpTrainingInfo)
+                    .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.TrainingType)
+                    .WithMany(e => e.EmpTrainingInfo)
+                    .HasForeignKey(e => e.TrainingTypeId);
+
+                //entity.HasOne(e => e.TrainingName)
+                //    .WithMany(e => e.EmpTrainingInfo)
+                //    .HasForeignKey(e => e.TrainingNameId);
+
+                //entity.HasOne(e => e.Institute)
+                //    .WithMany(e => e.EmpTrainingInfo)
+                //    .HasForeignKey(e => e.InstituteId);
+
+                //entity.HasOne(e => e.CourseDuration)
+                //    .WithMany(e => e.EmpTrainingInfo)
+                //    .HasForeignKey(e => e.TrainingDurationId);
+
+                entity.HasOne(e => e.Country)
+                    .WithMany(e => e.EmpTrainingInfo)
+                    .HasForeignKey(e => e.CountryId);
+            });
+
+            modelBuilder.Entity<FormSection>(entity =>
+            {
+                entity.HasKey(fs => fs.FormSectionId)
+                    .HasName("[[PK_FormSection]]");
+
+                entity.HasOne(fs => fs.Form)
+                    .WithMany(f => f.FormSections)
+                    .HasForeignKey(fs => fs.FormId);
+            });
+
+            modelBuilder.Entity<FormGroup>(entity =>
+            {
+                entity.HasKey(fg => fg.FormGroupId)
+                    .HasName("[[FK_FormGroup]]");
+
+                entity.HasOne(fg => fg.ParentField)
+                    .WithMany(ff => ff.FormGroupParents)
+                    .HasForeignKey(fg => fg.ParentFieldId);
+
+                entity.HasOne(fg => fg.ChildField)
+                    .WithMany(ff => ff.FormGroupChild)
+                    .HasForeignKey(fg => fg.FormFieldId);
+            });
+
+            modelBuilder.Entity<NavbarSetting>(entity =>
+            {
+                entity.HasOne(e => e.NavbarThem)
+                    .WithMany(e => e.NavbarSettings)
+                    .HasForeignKey(e => e.ThemId);
+            });
+
+            modelBuilder.Entity<LeaveFiles>(entity =>
+            {
+                entity.HasKey(lf => lf.Id)
+                .HasName("[[PK_LeaveFiles]]");
+
+                entity.HasOne(lf => lf.LeaveRequest)
+                .WithMany(lr => lr.LeaveFiles)
+                .HasForeignKey(lf => lf.LeaveRequestId);
+            });
+
+            modelBuilder.Entity<RoleDashboard>(entity =>
+            {
+                entity.HasOne(rd => rd.AspNetRoles)
+                .WithMany(rd => rd.RoleDashboard)
+                .HasForeignKey(rd => rd.RoleId);
+            });
+
+            modelBuilder.Entity<EmpFingerPrint>(entity =>
+            {
+                entity.HasOne(rd => rd.EmpBasicInfo)
+                .WithMany(rd => rd.EmpFingerPrint)
+                .HasForeignKey(rd => rd.EmpId);
             });
 
             base.OnModelCreating(modelBuilder);
@@ -1283,6 +1412,21 @@ namespace Hrm.Persistence
         public virtual DbSet<ResponsibilityType> ResponsibilityType { get; set; } = null!;
         public virtual DbSet<EmpOtherResponsibility> EmpOtherResponsibility { get; set; } = null!;
         public virtual DbSet<SiteSetting> SiteSetting { get; set; } = null!;
+        public virtual DbSet<CourseDuration> CourseDuration { get; set; } = null!;
+        public virtual DbSet<FormSection> FormSection { get; set; } = null!;
+        public virtual DbSet<DesignationSetup> DesignationSetup { get; set; } = null!;
+        public virtual DbSet<JobDetailsSetup> JobDetailsSetup { get; set; } = null!;
+        public virtual DbSet<NavbarThem> NavbarThem { get; set; } = null!;
+        public virtual DbSet<NavbarSetting> NavbarSetting { get; set; } = null!;
+        public virtual DbSet<LeaveFiles> LeaveFiles { get; set; } = null!;
+        public virtual DbSet<RoleDashboard> RoleDashboard { get; set; } = null!;
+        public virtual DbSet<EmpFingerPrint> EmpFingerPrint { get; set; } = null!;
+
+        // Attendance Device Related Table
+        public virtual DbSet<PendingDevice> PendingDevice {  get; set; } = null!;
+        public virtual DbSet<DeviceParameters> DeviceParameters { get; set; } = null!;
+        public virtual DbSet<AttDevices> AttDevices { get; set; } = null!;
+        public virtual DbSet<AttDeviceCommands> AttDeviceCommands { get; set; } = null!;
 
     }
 }

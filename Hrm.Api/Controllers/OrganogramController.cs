@@ -108,6 +108,8 @@ namespace Hrm.Api.Controllers
             var departments = await _context.Department
                 .Include(d => d.SubDepartments) // Include SubDepartments under Departments
                 .Include(d => d.Designations) // Include Designations under Departments
+                    .ThenInclude(de => de.DesignationSetup) // Include DesignationSetup for Designations
+                .Include(d => d.Designations)
                     .ThenInclude(de => de.EmpJobDetail)
                     .ThenInclude(ejd => ejd.EmpBasicInfo)
                 .Include(d => d.Designations) // Include EmpOtherResponsibility
@@ -117,6 +119,7 @@ namespace Hrm.Api.Controllers
                     .ThenInclude(s => s.SubSections) // Include SubSections under Sections
                 .Include(d => d.Section)
                     .ThenInclude(s => s.Designations) // Include Designations under Sections
+                        .ThenInclude(de => de.DesignationSetup) // Include DesignationSetup for Section Designations
                 .ToListAsync();
 
             var result = departments
@@ -137,12 +140,13 @@ namespace Hrm.Api.Controllers
                     .OrderBy(x => x.MenuPosition)
                     .Select(de => new OrganogramDesignationNameDto
                 {
-                    Name = de.DesignationName,
-                    EmployeeName = GetEmployeeName(de)
+                    Name = de.DesignationSetup.Name,
+                    EmployeeInfo = GetEmployeeInformation(de)
                     }).ToList(),
                 Sections = department.Section != null
                     ? department.Section
                         .Where(s => s.UpperSectionId == null)
+                        .OrderBy(s => s.Sequence)
                         .Select(s => MapSectionName(s))
                         .ToList()
                     : new List<OrganogramSectionNameDto>(),
@@ -161,21 +165,29 @@ namespace Hrm.Api.Controllers
                 Designations = section.Designations
                     .OrderBy(x => x.MenuPosition)
                     .Select(se => new OrganogramDesignationNameDto
-                {
-                    Name = se.DesignationName,
-                    EmployeeName = GetEmployeeName(se)
+                    {
+                        Name = se.DesignationSetup.Name,
+                        EmployeeInfo = GetEmployeeInformation(se)
                     }).ToList(),
-                SubSections = section.SubSections.Select(ss => MapSectionName(ss)).ToList()
+                SubSections = section.SubSections
+                    .OrderBy(ss => ss.Sequence)
+                    .Select(ss => MapSectionName(ss)).ToList()
             };
 
             return sectionNameDto;
         }
-        private string GetEmployeeName(Designation designation)
+        private OrganogramEmployeeInfoDto GetEmployeeInformation(Designation designation)
         {
             var empJobDetail = designation.EmpJobDetail?.FirstOrDefault(x => x.ServiceStatus == true)?.EmpBasicInfo;
             if (empJobDetail != null)
             {
-                return $"{empJobDetail.FirstName} {empJobDetail.LastName}";
+                var empInfo = new OrganogramEmployeeInfoDto
+                {
+                    EmpId = empJobDetail.Id,
+                    EmployeeName = $"{empJobDetail.FirstName} {empJobDetail.LastName}"
+                };
+
+                return empInfo;
             }
 
             var empOtherResponsibility = designation.EmpOtherResponsibility?.FirstOrDefault(x => x.ServiceStatus == true);
@@ -186,9 +198,15 @@ namespace Hrm.Api.Controllers
 
                 if (empBasicInfo != null)
                 {
-                    return responsibilityTypeName != null
+                    var empInfo = new OrganogramEmployeeInfoDto
+                    {
+                        EmpId = empBasicInfo.Id,
+                        EmployeeName = responsibilityTypeName != null
                         ? $"{empBasicInfo.FirstName} {empBasicInfo.LastName} ({responsibilityTypeName})"
-                        : $"{empBasicInfo.FirstName} {empBasicInfo.LastName}";
+                        : $"{empBasicInfo.FirstName} {empBasicInfo.LastName}"
+                    };
+
+                    return empInfo;
                 }
             }
 

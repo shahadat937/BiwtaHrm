@@ -11,6 +11,8 @@ namespace Hrm.Application.DTOs.EmpPromotionIncrement
         public int Id { get; set; }
         public int? EmpId { get; set; }
         public int? CurrentDepartmentId { get; set; }
+        public DateOnly? CurrentDeptJoinDate { get; set; }
+        public int? CurrentSectionId { get; set; }
         public int? CurrentDesignationId { get; set; }
         public int? CurrentGradeId { get; set; }
         public int? CurrentScaleId { get; set; }
@@ -22,6 +24,7 @@ namespace Hrm.Application.DTOs.EmpPromotionIncrement
         public string? PromotionIncrementType { get; set; }
         public int? OrderById { get; set; }
         public DateOnly? OrderDate { get; set; }
+        public string? OrderNo { get; set; }
         public DateOnly? EffectiveDate { get; set; }
         public int? ApplicationById { get; set; }
         public bool? IsApproval { get; set; }

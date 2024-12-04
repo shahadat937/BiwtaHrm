@@ -4,7 +4,9 @@ export class EmpPromotionIncrement {
     empName : string | null = null;
     empIdCardNo : string | null = null;
     currentDepartmentId : number | null = null;
+    currentDeptJoinDate : Date | null = null;
     currentDesignationId : number | null = null;
+    currentSectionId : number | null = null;
     currentGradeId : number | null = null;
     currentScaleId : number | null = null;
     currentDepartmentName : string | null = null;
@@ -23,6 +25,7 @@ export class EmpPromotionIncrement {
     promotionIncrementType : string = 'Increment & Promotion';
     orderById : number | null = null;
     orderDate : Date | null = null;
+    orderNo : string = '';
     isApproval  : boolean = true;
     provideApprovalInfo : boolean = false;
     effectiveDate : Date | null = null;

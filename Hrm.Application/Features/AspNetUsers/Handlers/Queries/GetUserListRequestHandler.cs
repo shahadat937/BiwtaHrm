@@ -34,7 +34,8 @@ namespace Hrm.Application.Features.AspNetUsers.Handlers.Queries
                 .ThenInclude(ejd => ejd.Department)
                 .Include(x => x.EmpBasicInfo)
                 .ThenInclude(ebi => ebi.EmpJobDetail)
-                .ThenInclude(ejd => ejd.Designation);
+                .ThenInclude(ejd => ejd.Designation)
+                   .ThenInclude(ds => ds.DesignationSetup);
 
             aspNetUsers = aspNetUsers.OrderByDescending(x => x.DateCreated);
 

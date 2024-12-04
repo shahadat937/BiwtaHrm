@@ -10,9 +10,9 @@
         <c-card-group>
           <c-card class="pt-3 pb-3 ps-4 pe-4 borderround shadow">
             <c-card-body>
-              <div class="biwtaLogo mb-3 text-center">
+              <div class="biwtaLogo mb-3 d-flex justify-content-center align-items-center">
                 <img src="{{siteLogo}}" alt="Logo">
-                <h4 class="mt-2">{{siteName}}</h4>
+                <h3 class="mt-3 mb-3 ps-2">{{siteName}}</h3>
               </div>
               <form cForm [formGroup]="authForm">
                 <p class="text-medium-emphasis">Sign In to your account</p>
@@ -20,14 +20,14 @@
                   <span cInputGroupText>
                     <svg cIcon name="cilUser"></svg>
                   </span>
-                  <input formControlName="email" autoComplete="username" cFormControl placeholder="Username" />
+                  <input formControlName="email" autoComplete="username" cFormControl placeholder="Username" (keyup.enter)="onSubmit()"/>
                 </c-input-group>
                 <c-input-group class="mb-4">
                   <span cInputGroupText>
                     <svg cIcon name="cilLockLocked"></svg>
                   </span>
                   <input formControlName="password" autoComplete="current-password" cFormControl placeholder="Password"
-                  [type]="hide ? 'password' : 'text'" />
+                  [type]="hide ? 'password' : 'text'" (keyup.enter)="onSubmit()"/>
 
                      <!-- visibility without cross effect  -->
 
@@ -83,7 +83,7 @@
                     <img [src]="captchaImage" alt="CAPTCHA" />
                   </div>
                   <c-col md="7" class="mb-2">
-                    <input formControlName="captcha" cFormControl placeholder="Enter the result" />
+                    <input formControlName="captcha" cFormControl placeholder="Enter the result" (keyup.enter)="onSubmit()"/>
                   </c-col>
                   <c-col md="3">
                     <button cButton color="primary" (click)="generateCaptcha()">Reset</button>

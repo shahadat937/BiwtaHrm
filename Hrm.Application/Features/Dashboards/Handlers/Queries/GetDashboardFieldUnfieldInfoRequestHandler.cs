@@ -44,7 +44,7 @@ namespace Hrm.Application.Features.Dashboards.Handlers.Queries
 
             var chartWidgetsDto = new ChartWidgetsDto
             {
-                Labels = new List<string> { "Field", "Unfield" },
+                Labels = new List<string> { "In Service", "Vacant Post" },
                 Datasets = new List<ChartWidgetsDataSets>
                 {
                     new ChartWidgetsDataSets

@@ -1,4 +1,4 @@
-import { Component, Input, input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, input, model, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
@@ -58,8 +58,9 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
     if(this.roleFeatureService.featurePermission.add == true){
       this.isUpdate = false;
       this.isVisible=this.isVisible?false:true;
-      this.holidayService.model = new HolidayModel();
       this.holidayForm.reset();
+      this.holidayService.model = new HolidayModel();
+      this.holidayForm.form.patchValue(this.holidayService.model);
     }
     else{
       this.roleFeatureService.unauthorizeAccress();
@@ -93,7 +94,6 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
     this.subscription = this.holidayService.getHolidays().subscribe({
       next: (response)=> {
         this.Holidays =  this.getGroupedData(response);
-        console.log(this.Holidays);
       },
       error: (err) => {
         console.error("Error While loading holidays data from server");
@@ -148,7 +148,6 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
     let element = form.value;
     element['holidayId']=0;
     element.holidayDate = element.holidayFrom;
-    console.log(element);
     this.loading=true;
     this.subscription = this.holidayService.createHoliday(element).subscribe({
       next: (response)=> {

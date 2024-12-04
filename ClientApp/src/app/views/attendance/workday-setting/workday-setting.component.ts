@@ -92,7 +92,6 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
     this.subscription = this.workdayService.getWeekend(this.selectedYear).subscribe({
       next: response=> {
         this.weekendData = response;
-        console.log(this.weekendData);
       }
     })
   }

@@ -23,7 +23,7 @@
                     [value]="0"
                     [(ngModel)] = "this.siteVisitService.model.siteVisitId"
                     >
-                    <c-col md="3">
+                    <!--<c-col md="3">
                         <label cLabel for="empId">Employee</label>
                         <select name="empId" id="empId" cSelect
                         required
@@ -40,9 +40,27 @@
                         @if(empId.invalid&&empId.touched) {
                             <div class="text-left text-danger">Employee is required</div>
                         }
-                    </c-col>
+                    </c-col> -->
+                    <c-row>
+                        <c-col md="6">
+                            <c-input-group>
+                              <button [disabled]="isUpdate" cButton type="button" color="secondary" (click)="openEmployeeModal()">
+                                <svg [cIcon]="icons.cilSearch"></svg>
+                              </button>
+                              <input type="text"
+                              [readOnly]="isUpdate"
+                              name="empIdCardNo" 
+                              #Pms = "ngModel"
+                              placeholder="Enter PMIS"
+                              [(ngModel)]="empIdCardNo" 
+                              cFormControl id="employeeId"
+                              (input)="onEmpIdChange()"/>
+                              <input type="text" placeholder="Name" cFormControl [ngModel]="empName" name="empName" readonly>
+                            </c-input-group>
+                        </c-col>
+                    </c-row>
                     <c-col md="3">
-                        <label cLabel for="fromDate">From</label>
+                        <label cLabel for="fromDate">From<span class="text-danger">*</span></label>
                         <input type="date" 
                         [(ngModel)]="this.siteVisitService.model.fromDate"
                         name="fromDate" 
@@ -55,7 +73,7 @@
                         }
                     </c-col>
                     <c-col md="3">
-                        <label for="toDate" cLabel>To</label>
+                        <label for="toDate" cLabel>To<span class="text-danger">*</span></label>
                         <input type="date" 
                         [(ngModel)]="this.siteVisitService.model.toDate"
                         name="toDate" 
@@ -68,7 +86,7 @@
                         }
                     </c-col>
                     <c-col md="3">
-                        <label for="visitPlace" cLabel>Visiting Place</label>
+                        <label for="visitPlace" cLabel>Visiting Place<span class="text-danger">*</span></label>
                         <input type="text" 
                         cFormControl
                         name="visitPlace"
@@ -81,7 +99,7 @@
                         }
                     </c-col>
                     <c-col md="3">
-                        <label for="visitPurpose" cLabel>Visiting Purpose</label>
+                        <label for="visitPurpose" cLabel>Visiting Purpose<span class="text-danger">*</span></label>
                         <input type="text" 
                         cFormControl
                         name="visitPurpose"
@@ -109,14 +127,14 @@
                                 <button class="me-1" 
                                 type="submit"
                                 color="primary" 
-                                [disabled]="loading==true||siteVisitForm.invalid"
+                                [disabled]="loading==true||siteVisitForm.invalid||isValidPMIS==false"
                                 cButton>
                                     <c-spinner
                                       [hidden]="loading == false"
                                       size="sm"
                                     ></c-spinner>
                                     {{isUpdate?'Update':'Submit'}}</button>
-                                <button type="reset" color="secondary" cButton>Reset</button> 
+                                <button type="reset" color="secondary" (click)="resetEmp()" cButton>Reset</button> 
                             </div>
                             <div>
                                 <button cButton (click)="onCancel()" color="danger">Cancel</button>
@@ -133,22 +151,48 @@
          [paginator]="true"
          [rows]="5"
          [rowsPerPageOptions]="[5,10,20,50]"
+         [globalFilterFields]="['firstName','lastName','fromDate','toDate','visitPlace','visitPurpose','status']"
          [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="caption">
+          <c-row>
+            <c-col md="3">
+              <c-input-group>
+                <span cInputGroupText class="bg-white">
+                  <svg [cIcon]="icons.cilZoom" size="lg"></svg>
+                </span>
+                <input
+                  class="border-start-0 ps-0 shadow-none"
+                  cFormControl
+                  type="text"
+                  (input)="dt2.filterGlobal(getInputEventValue($event),'contains')"
+                  placeholder="Search keyword"
+                />
+              </c-input-group>
+
+            </c-col>
+          </c-row>
+        </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>From</th>
-                <th>To</th>
+                <th pSortableColumn="firstName">Name
+                    <p-sortIcon field="firstName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="fromDate">From
+                    <p-sortIcon field="fromDate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="toDate">To
+                    <p-sortIcon field="toDate"></p-sortIcon>
+                </th>
                 <th>Place</th>
                 <th>Purpose</th>
-                <th>Status</th>
+                <th pSortableColumn="status">Status
+                    <p-sortIcon field="status"></p-sortIcon>
+                </th>
                 <th>Action</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-data let-index="rowIndex">
             <tr>
-                <td>{{ data.siteVisitId }}</td>
                 <td>{{ data.firstName+" "+data.lastName }}</td>
                 <td>{{ data.fromDate|date }}</td>
                 <td>{{ data.toDate|date }}</td>

@@ -67,7 +67,7 @@ namespace Hrm.Application.Features.PostingOrderInfo.Handlers.Queries
             if (designationId.HasValue)
             {
                 var designation = await _designation.Get(designationId.Value);
-                return designation?.DesignationName;
+                return designation?.DesignationSetup.Name;
             }
             return null;
         }

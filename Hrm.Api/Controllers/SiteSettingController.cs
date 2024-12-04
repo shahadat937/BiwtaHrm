@@ -12,7 +12,6 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.SiteSetting)]
     [ApiController]
-    //[Authorize]
     public class SiteSettingController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -24,6 +23,7 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-SiteSettings")]
+        [Authorize]
         public async Task<ActionResult<List<SiteSettingDto>>> Get()
         {
             var SiteSettings = await _mediator.Send(new GetSiteSettingListRequest { });
@@ -40,6 +40,7 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-SiteSettingDetail/{id}")]
+        [Authorize]
         public async Task<ActionResult<SiteSettingDto>> Get(int id)
         {
             var SiteSetting = await _mediator.Send(new GetSiteSettingDetailRequest { Id = id });
@@ -48,6 +49,7 @@ namespace Hrm.Api.Controllers
 
         [HttpPost]
         [Route("save-SiteSetting")]
+        [Authorize]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromForm] CreateSiteSettingDto SiteSetting)
         {
             var command = new CreateSiteSettingCommand { SiteSettingDto = SiteSetting };
@@ -56,8 +58,8 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpPut]
-        [ProducesDefaultResponseType]
         [Route("update-SiteSetting/{id}")]
+        [Authorize]
         public async Task<ActionResult> Put([FromForm] CreateSiteSettingDto SiteSetting)
         {
             var command = new UpdateSiteSettingCommand { SiteSettingDto = SiteSetting };
@@ -66,10 +68,9 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpDelete]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         [Route("delete-SiteSetting/{id}")]
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             var command = new DeleteSiteSettingCommand { Id = id };

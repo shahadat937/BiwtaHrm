@@ -70,10 +70,19 @@ public class LeaveRequestController:Controller
     }
 
     [HttpGet]
-    [Route("get-LeaveAmountForAllLeaveTypeByEmp/{empId}")]
-    public async Task<ActionResult> GetLeaveAmountForAllLeaveType(int empId)
+    [Route("get-LeaveAmountForAllLeaveTypeByEmp")]
+    public async Task<ActionResult> GetLeaveAmountForAllLeaveType([FromQuery] int EmpId, [FromQuery] DateTime? LeaveStartDate, [FromQuery] DateTime? LeaveEndDate)
     {
-        var command = new GetAllLeaveTypeAmountByEmpIdRequest { EmpId = empId };
+        var command = new GetAllLeaveTypeAmountByEmpIdRequest { EmpId = EmpId, LeaveStartDate = LeaveStartDate, LeaveEndDate = LeaveEndDate  };
+        var response = await _mediator.Send(command);
+        return Ok(response);
+    }
+
+    [HttpGet]
+    [Route("get-LeaveFilesByLeaveRequestId/{LeaveRequestId}")]
+    public async Task<ActionResult> GetLeaveFiles(int LeaveRequestId)
+    {
+        var command = new GetLeaveFilesByLeaveRequestIdRequest { LeaveRequestId = LeaveRequestId };
         var response = await _mediator.Send(command);
         return Ok(response);
     }
@@ -82,7 +91,7 @@ public class LeaveRequestController:Controller
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     [Route("save-leaveRequest")]
-    public async Task<ActionResult> SaveLeaveRequest([FromForm] CreateLeaveRequestDto leaveRequestDto, IFormFile? AssociatedFiles)
+    public async Task<ActionResult> SaveLeaveRequest([FromForm] CreateLeaveRequestDto leaveRequestDto, List<IFormFile>? AssociatedFiles)
     {
         var command = new CreateLeaveRequestCommand { createLeaveRequestDto = leaveRequestDto, AssociatedFiles = AssociatedFiles };
         var response = await _mediator.Send(command);
@@ -99,6 +108,28 @@ public class LeaveRequestController:Controller
     {
         var command = new DeleteLeaveRequestCommand { LeaveRequestId = LeaveRequestId };
 
+        var response = await _mediator.Send(command);
+        return Ok(response);
+    }
+
+    [HttpDelete]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    [Route("delete-LeaveFile/{LeaveFileId}")]
+    public async Task<ActionResult<BaseCommandResponse>> DeleteLeaveFile(int LeaveFileId)
+    {
+        var command = new DeleteLeaveFileByIdCommand { LeaveFileId = LeaveFileId };
+        var response = await _mediator.Send(command);
+        return Ok(response);
+    }
+
+    [HttpPut]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    [Route("update-LeaveRequest")]
+    public async Task<ActionResult<BaseCommandResponse>> UpdateLeaveRequest([FromForm] LeaveRequestDto leaveRequestDto, [FromForm] List<IFormFile>? AssociateFiles, [FromForm] List<int>? AssociateFileDeletion)
+    {
+        var command = new UpdateLeaveRequestByIdCommand { LeaveRequestDto = leaveRequestDto, AssociateFiles = AssociateFiles, AssociateFileDeletion = AssociateFileDeletion };
         var response = await _mediator.Send(command);
         return Ok(response);
     }

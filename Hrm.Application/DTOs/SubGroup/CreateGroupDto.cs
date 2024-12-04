@@ -10,6 +10,7 @@ namespace Hrm.Application.DTOs.Group
     {
         public int GroupId { get; set; }
         public string? GroupName { get; set; }
+        public int? ExamTypeId { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
     }

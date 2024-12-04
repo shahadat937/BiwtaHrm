@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LeaveStatus } from '../enum/leave-status';
 import { Leave } from '../../basic-setup/model/Leave';
+import { AuthService } from 'src/app/core/service/auth.service';
 
 @Component({
   selector: 'app-review-leave',
@@ -12,7 +13,17 @@ export class ReviewLeaveComponent {
   Role: string = "Reviewer";
   CanApprove : boolean = true;
 
-  constructor() {
-    this.filterLeave = {Status: [LeaveStatus.Pending,LeaveStatus.ReviewerApproved,LeaveStatus.ReviewerDenied]}
+  constructor(private authService: AuthService) {
+
+    this.filterLeave = {Status: [LeaveStatus.Pending,LeaveStatus.ReviewerApproved,LeaveStatus.ReviewerDenied,LeaveStatus.FinalApproved,LeaveStatus.FinalDenied]}
+    this.authService.currentUser.subscribe(user => {
+      if(user==null) {
+        return;
+      }
+      let empId = parseInt(user.empId);
+      if(!isNaN(empId)) {
+        this.filterLeave['reviewedBy'] = parseInt(user.empId);
+      }
+    })
   }
 }

@@ -17,19 +17,29 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
     {
 
         private readonly IHrmRepository<EmpTransferPosting> _EmpTransferPostingRepository;
+        private readonly IHrmRepository<EmpJobDetail> _EmpJobDetailRepository;
         private readonly IMapper _mapper;
-        public GetEmpTransferPostingDeptApprovalRequestHandler(IHrmRepository<Hrm.Domain.EmpTransferPosting> EmpTransferPostingRepository, IMapper mapper)
+        public GetEmpTransferPostingDeptApprovalRequestHandler(IHrmRepository<Hrm.Domain.EmpTransferPosting> EmpTransferPostingRepository, IMapper mapper, IHrmRepository<EmpJobDetail> empJobDetailRepository)
         {
             _EmpTransferPostingRepository = EmpTransferPostingRepository;
             _mapper = mapper;
+            _EmpJobDetailRepository = empJobDetailRepository;
         }
 
         public async Task<object> Handle(GetEmpTransferPostingDeptApprovalRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<EmpTransferPosting> EmpTransferPostings = _EmpTransferPostingRepository.Where(x => (x.TransferApproveStatus == true || x.IsTransferApprove == false)&& x.IsDepartmentApprove == true)
+            if (request.Id != 0)
+            {
+                var empJobDetail = await _EmpJobDetailRepository.FindOneAsync(x => x.EmpId == request.Id);
+
+                IQueryable<EmpTransferPosting> EmpTransferPostings = _EmpTransferPostingRepository.Where(x => (x.TransferApproveStatus == true || x.IsTransferApprove == false) && x.IsDepartmentApprove == true && x.CurrentDepartmentId == empJobDetail.DepartmentId)
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.ApplicationBy)
-                .Include(x => x.OrderBy)
+                .Include(x => x.OrderOfficeBy)
+                .Include(x => x.CurrentGrade)
+                .Include(x => x.UpdateGrade)
+                .Include(x => x.CurrentScale)
+                .Include(x => x.UpdateScale)
                 .Include(x => x.TransferApproveBy)
                 .Include(x => x.DeptReleaseBy)
                 .Include(x => x.JoiningReportingBy)
@@ -38,17 +48,53 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
                 .Include(x => x.CurrentDepartment)
                 .Include(x => x.TransferDepartment)
                 .Include(x => x.CurrentDesignation)
+                    .ThenInclude(x => x.DesignationSetup)
                 .Include(x => x.TransferDesignation)
+                    .ThenInclude(x => x.DesignationSetup)
                 .Include(x => x.CurrentSection)
                 .Include(x => x.TransferSection)
                 .Include(x => x.ReleaseType)
                 .Include(x => x.DeptReleaseType);
 
-            EmpTransferPostings = EmpTransferPostings.OrderBy(x => x.DeptApproveStatus);
+                EmpTransferPostings = EmpTransferPostings.OrderBy(x => x.DeptApproveStatus);
 
-            var EmpTransferPostingDtos = _mapper.Map<List<EmpTransferPostingDto>>(EmpTransferPostings);
+                var EmpTransferPostingDtos = _mapper.Map<List<EmpTransferPostingDto>>(EmpTransferPostings);
 
-            return EmpTransferPostingDtos;
+                return EmpTransferPostingDtos;
+            }
+            else
+            {
+                IQueryable<EmpTransferPosting> EmpTransferPostings = _EmpTransferPostingRepository.Where(x => (x.TransferApproveStatus == true || x.IsTransferApprove == false) && x.IsDepartmentApprove == true)
+                .Include(x => x.EmpBasicInfo)
+                .Include(x => x.ApplicationBy)
+                .Include(x => x.OrderOfficeBy)
+                .Include(x => x.CurrentGrade)
+                .Include(x => x.UpdateGrade)
+                .Include(x => x.CurrentScale)
+                .Include(x => x.UpdateScale)
+                .Include(x => x.TransferApproveBy)
+                .Include(x => x.DeptReleaseBy)
+                .Include(x => x.JoiningReportingBy)
+                .Include(x => x.CurrentOffice)
+                .Include(x => x.TransferOffice)
+                .Include(x => x.CurrentDepartment)
+                .Include(x => x.TransferDepartment)
+                .Include(x => x.CurrentDesignation)
+                    .ThenInclude(x => x.DesignationSetup)
+                .Include(x => x.TransferDesignation)
+                    .ThenInclude(x => x.DesignationSetup)
+                .Include(x => x.CurrentSection)
+                .Include(x => x.TransferSection)
+                .Include(x => x.ReleaseType)
+                .Include(x => x.DeptReleaseType);
+
+                EmpTransferPostings = EmpTransferPostings.OrderBy(x => x.DeptApproveStatus);
+
+                var EmpTransferPostingDtos = _mapper.Map<List<EmpTransferPostingDto>>(EmpTransferPostings);
+
+                return EmpTransferPostingDtos;
+            }
+                
         }
     }
 }

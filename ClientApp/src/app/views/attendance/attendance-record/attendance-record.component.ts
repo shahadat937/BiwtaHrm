@@ -1,15 +1,22 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AttendanceRecordService } from '../services/attendance-record-service.service';
 import { Router } from '@angular/router';
-import { Subscription, timeInterval } from 'rxjs';
+import { delay, map, of, Subscription, timeInterval } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataSource } from '@angular/cdk/collections';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import {UpdateAttendanceModel} from "../models/update-attendance-model"
 import { NgForm } from '@angular/forms';
+import { MatSort } from '@angular/material/sort';
+import { cilZoom } from '@coreui/icons';
+import { DepartmentService } from '../../basic-setup/service/department.service';
+import { SectionService } from '../../basic-setup/service/section.service';
+import { HttpParams } from '@angular/common/http';
+import { AuthService } from 'src/app/core/service/auth.service';
+import { trigger } from '@angular/animations';
 
 
 @Component({
@@ -32,12 +39,28 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   selectedShift:number|null;
   selectedUpdateShift: any|null;
   selectedEmp:any|null;
-  displayedColumns = ["attendanceId","idCardNo","fullName","attendanceDate","inTime","outTime","dayTypeName","attendanceStatusName","Action"]
-  @ViewChild(MatPaginator)
+  displayedColumns = ["fullName","attendanceDate","inTime","outTime","lateTime","dayTypeName","attendanceStatusName","Action"]
+  @ViewChild('paginator')
   paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   updateWindowVisible:boolean = false;
+  icons = {cilZoom}
+
+  // Server Side Pagination
+  selectedDate: Date | null;
+  SectionOption: any[] = [];
+  selectedSection: number|null;
+  searchKeyword: string;
+  pageSize: number;
+  pageIndex: number;
+  totalRecord: number;
+  empId: number | null;
+  isUser: boolean
 
   constructor(
+    private authService: AuthService,
+    private sectionService: SectionService,
+    private departmentService: DepartmentService,
     public AtdRecordService: AttendanceRecordService,
     private route: ActivatedRoute,
     private router: Router,
@@ -49,14 +72,49 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     this.selectedShift=null;
     this.selectedEmp = {"id":null,name:"No Employee Selected"};
     this.selectedUpdateShift = {"id":null,name:"No Shift Selected"};
+    this.selectedDate = null;
+    this.searchKeyword = "";
+    this.selectedSection = null;
+    this.pageSize = 10;
+    this.pageIndex = 0;
+    this.totalRecord = 0;
+    this.empId = null;
+    this.isUser = false;
+
+    this.authService.currentUser.subscribe(data => {
+      if(data && data.empId!=null) {
+        this.empId = parseInt(data.empId);
+      }
+
+      if(data && data.role.toString()!="Master Admin") {
+        this.isUser = true;
+      }
+    })
   }
 
   ngOnInit(): void {
-    this.getAllAttendance(); 
+    this.getFilteredAttendance(true);
+    //this.getAllAttendance();
+    this.getSelectedDepartment();
 
     this.AtdRecordService.getAttendanceStatusOption().subscribe(option=> {
       this.AtdStatusOption = option;
     });
+  }
+
+
+  getSelectedDepartment() {
+    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe({
+      next: response => {
+        this.DepartmentOption = response;
+      }
+    })
+  }
+
+  applyFilter(event: Event) {
+    let val = (event.target as HTMLInputElement).value
+    val = val.trim().toLowerCase();
+    this.dataSource.filter=val;
   }
 
   ngOnDestroy(): void {
@@ -64,18 +122,67 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   ngAfterViewInit(): void {
-    
-  }
-
-  getAllAttendance() {
-    this.subscription = this.AtdRecordService.getAll().subscribe(item=> {
-      this.dataSource = new MatTableDataSource(item.map(x=>({
-        ...x,
-        fullName: `${x.empFirstName} ${x.empLastName}`
-      })));
-      this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.subscription = this.sort.sortChange.subscribe(() => {
+      this.getFilteredAttendance(false);
     })
   }
+
+  logSort() {
+    console.log(this.sort.active);
+    console.log(this.sort.direction);
+  }
+
+
+  onPageChange(event:PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getFilteredAttendance(false);
+  }
+  getFilteredAttendance(resetPage: boolean) {
+    console.log("triggered");
+    let params = new HttpParams();
+    let pageSize = this.pageSize;
+    let pageIndex = this.pageIndex+1;
+
+    if(resetPage) {
+      pageIndex = 1;
+    }
+
+    params = this.selectedDepartment==null?params:params.set('departmentId',this.selectedDepartment);
+    params = this.selectedSection==null? params: params.set('sectionId', this.selectedSection);
+    params = this.isUser && this.empId != null? params.set("empId", this.empId): params;
+
+    
+    if(this.sort!=undefined) {
+      params = params.set('sortColumn',this.sort.active);
+      params = params.set('sortDirection', this.sort.direction);
+    }
+
+    if(this.selectedDate!=null) {
+      params = params.set('month',this.selectedDate.getMonth()+1);
+      params = params.set('year', this.selectedDate.getFullYear());
+    }
+
+    params = params.set('pageSize',pageSize);
+    params = params.set('pageIndex',pageIndex);
+
+    params = this.searchKeyword.trim()==""?params:params.set('keyword',this.searchKeyword);
+
+    this.subscription = this.AtdRecordService.getAttendance(params).subscribe({
+      next: response => {
+        this.dataSource =new MatTableDataSource (response.result.map(x=>({
+          ...x,
+          fullName: [x.empFirstName,x.empLastName].join(' ')
+        })));
+        this.totalRecord = response.totalCount;
+        this.dataSource.sort = this.sort;
+        this.pageIndex = pageIndex -1;
+      }
+    })
+  
+  }
+
 
     delete(element: any){
       this.confirmService
@@ -117,7 +224,6 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     });
 
     this.selectedEmp = {id:this.AtdRecordService.UpdateAtdModel.empId, name: element.empFirstName+" "+element.empLastName};
-    console.log(element);
 
     this.selectedUpdateShift = {id:element.shiftId, name:element.shiftName};
     //this.updateAtdForm?.form.patchValue(this.AtdRecordService.UpdateAtdModel);
@@ -134,7 +240,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     this.AtdRecordService.update(this.AtdRecordService.UpdateAtdModel).subscribe((response:any)=> {
       if(response.success) {
         this.AtdRecordService.cachedData = [];
-        this.getAllAttendance();
+        this.getFilteredAttendance(false);
         this.toastr.success('',`${response.message}`, {
           messageClass:"toast-top-right"
         });
@@ -148,8 +254,6 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
       this.loading = false;
     }, error=> {
       this.loading = false;
-      console.log(error);
-      console.log(typeof(error));
     });
   }
 
@@ -173,6 +277,36 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
 
     let fixedFormat = data+":00";
     return fixedFormat;
+  }
+
+  onDepartmentChange() {
+    if(this.selectedDepartment!=null) {
+      this.subscription = this.sectionService.getSectionByOfficeDepartment(this.selectedDepartment).subscribe({
+        next: response => {
+          this.SectionOption = response;
+        }
+      })
+    }
+
+    this.getFilteredAttendance(true);
+  }
+
+  onSectionChange() {
+    this.getFilteredAttendance(true)
+  }
+
+  onSearch() {
+    if(this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    const source$ = of (this.searchKeyword).pipe(
+      delay(700)
+    );
+
+    this.subscription = source$.subscribe(data=> {
+      this.getFilteredAttendance(true);
+    })
   }
 
 }

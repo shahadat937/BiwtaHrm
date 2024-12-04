@@ -1,0 +1,275 @@
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{heading}}</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                <form #NavbarThemForm="ngForm" [gutter]="3" novalidate cForm cRow
+                    class="needs-validation">
+                <c-col [md]="4">
+                    <input type="hidden" [(ngModel)]="navbarThemService.navbarThem.id" name="id" />
+                    <label cLabel for="themName">Them Name<span class="text-danger">*</span></label>
+                    <input [(ngModel)]="navbarThemService.navbarThem.themName" name="themName" #themName="ngModel"
+                        placeholder="Enter NavbarThem Title" cFormControl id="themName" required type="text"
+                        />
+
+                    @if(!themName.valid&&themName.touched){
+                    <div class="text-left text-danger">Them Name is required</div>
+                    }
+                </c-col>
+
+                <c-col [md]="4">
+                    <label cLabel for="bgColor">Background Color<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.bgColor" name="bgColor"
+                            #bgColor="ngModel" placeholder="Background Color" id="bgColor"
+                            type="text" />
+                        <!-- <p-colorPicker cInputGroupText [(ngModel)]="navbarThemService.navbarThem.togglerBg" name="togglerBg"/> -->
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.bgColor" name="bgColor"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="brandBg">Brand Background Color<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.brandBg" name="brandBg"
+                            #brandBg="ngModel" placeholder="Brand Background" id="brandBg"
+                            type="text" />
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.brandBg" name="brandBg"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="togglerBg">Toggle Background Color<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.togglerBg" name="togglerBg"
+                            #togglerBg="ngModel" placeholder="Toggle Background" id="togglerBg"
+                            type="text" />
+                        
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.togglerBg" name="togglerBg"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="togglerHoverBg">Toggle Hover Color<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.togglerHoverBg" name="togglerHoverBg"
+                            #togglerHoverBg="ngModel" placeholder="Toggle Hover" id="togglerHoverBg"
+                            type="text" />
+                        
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.togglerHoverBg" name="togglerHoverBg"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="linkColor">Link Color<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.linkColor" name="linkColor"
+                            #linkColor="ngModel" placeholder="Link Color" id="linkColor"
+                            type="text" />
+                    
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.linkColor" name="linkColor"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="linkActiveColor">Active Link Color<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.linkActiveColor" name="linkActiveColor"
+                            #linkActiveColor="ngModel" placeholder="Active Link Color" id="linkActiveColor"
+                            type="text" />
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.linkActiveColor" name="linkActiveColor"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="linkActiveBg">Active Link Background<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.linkActiveBg" name="linkActiveBg"
+                            #linkActiveBg="ngModel" placeholder="Active Link Background" id="linkActiveBg"
+                            type="text" />
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.linkActiveBg" name="linkActiveBg"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="linkHoverColor">Link Hover Color<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.linkHoverColor" name="linkHoverColor"
+                            #linkHoverColor="ngModel" placeholder="Link Hover Color" id="linkHoverColor"
+                            type="text" />
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.linkHoverColor" name="linkHoverColor"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="linkHoverBg">Link Hover Background<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.linkHoverBg" name="linkHoverBg"
+                            #linkHoverBg="ngModel" placeholder="Link Hover Background" id="linkHoverBg"
+                            type="text" />
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.linkHoverBg" name="linkHoverBg"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="linkIconColor">Link Icon Color<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.linkIconColor" name="linkIconColor"
+                            #linkIconColor="ngModel" placeholder="Link Icon Color" id="linkIconColor"
+                            type="text" />
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.linkIconColor" name="linkIconColor"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="linkIconHoverColor">Link Icon Hover<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.linkIconHoverColor" name="linkIconHoverColor"
+                            #linkIconHoverColor="ngModel" placeholder="Link Icon Hover" id="linkIconHoverColor"
+                            type="text" />
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.linkIconHoverColor" name="linkIconHoverColor"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="groupBg">Group Background Color<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.groupBg" name="groupBg"
+                            #groupBg="ngModel" placeholder="Group Background Color" id="groupBg"
+                            type="text" />
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.groupBg" name="groupBg"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="groupToggleColor">Group Toggle Color<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input cFormControl
+                            [(ngModel)]="navbarThemService.navbarThem.groupToggleColor" name="groupToggleColor"
+                            #groupToggleColor="ngModel" placeholder="Background Color" id="groupToggleColor"
+                            type="text" />
+                        <span cInputGroupText class="colorPicker">
+                            <input [(ngModel)]="navbarThemService.navbarThem.groupToggleColor" name="groupToggleColor"
+                            cFormControl
+                            title="Choose Color"
+                            type="color" class="colorPickerInput">
+                        </span>
+                    </c-input-group>
+                </c-col>
+                
+                <!-- <c-col [md]="4">
+                    <label cLabel for="width">Width<span class="text-danger"></span></label>
+                    <c-input-group>
+                        <input [(ngModel)]="navbarThemService.navbarThem.width" name="width"
+                        #width="ngModel" cFormControl id="width" placeholder="Enter Width" type="number" />
+                        <span cInputGroupText>%</span>
+                    </c-input-group>
+                </c-col> -->
+
+                <c-col [md]="4">
+                    <label cLabel for="remark">Remark<span class="text-danger"></span></label>
+                    <input [(ngModel)]="navbarThemService.navbarThem.remark" name="remark"
+                        #remark="ngModel" cFormControl id="remark" placeholder="Enter Remark" type="text" />
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="isActive">Active Status</label>
+                    <select [(ngModel)]="navbarThemService.navbarThem.isActive"
+                    name="isActive"
+                    cSelect
+                    id="isActive">
+                    <option value="true">Active</option>
+                    <option value="false">De-Active</option>
+                    </select>
+                </c-col>
+
+            </form>
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button color="warn" type="button" (click)="closeModal()">
+                        <mat-icon>cancel</mat-icon> Close
+                    </button>
+                    <button [disabled]="NavbarThemForm.invalid" mat-raised-button class="me-1" color="primary" type="submit" (click)="onSubmit(NavbarThemForm)">
+                        <mat-icon>{{btnIcon}}</mat-icon> {{ btnText }}
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>

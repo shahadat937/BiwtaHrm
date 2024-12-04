@@ -15,7 +15,8 @@ import { cilZoom } from '@coreui/icons';
   styleUrl: './workday-setting.component.scss'
 })
 export class WorkdaySettingComponent implements OnInit, OnDestroy {
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   icons = {cilZoom,cilTrash, cilPlus, cilX};
   YearOption: any[] = [];
   DayOption: any[] = [];
@@ -50,30 +51,35 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if(this.subscription!=null) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
   getYear() {
-    this.subscription = this.workdayService.getYear().subscribe({
-      next: (option)=> {
-        this.YearOption = option;
-        this.setDefaultYear();
-        this.getWorkday();
-        this.getWeekend();
-        this.yearLoaded=true;
-      },
-      error: (err)=> {
-        console.error("Got error while retriving Year Option for Selection");
-        this.yearLoaded=true;
-      }
-    })
+    this.subscription.push(
+      this.workdayService.getYear().subscribe({
+        next: (option)=> {
+          this.YearOption = option;
+          this.setDefaultYear();
+          this.getWorkday();
+          this.getWeekend();
+          this.yearLoaded=true;
+        },
+        error: (err)=> {
+          console.error("Got error while retriving Year Option for Selection");
+          this.yearLoaded=true;
+        }
+      })
+    )
+    
 
     this.yearLoaded=true;
   }
 
   getDay() {
-    this.subscription = this.workdayService.getDay().subscribe({
+
+    this.subscription.push(
+      this.workdayService.getDay().subscribe({
       next: option=> {
         this.DayOption = option;
       },
@@ -81,6 +87,8 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
         console.log("Got error while retriving Day Option for Selection");
       }
     })
+    )
+   
   }
 
 
@@ -89,11 +97,15 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.subscription = this.workdayService.getWeekend(this.selectedYear).subscribe({
-      next: response=> {
-        this.weekendData = response;
-      }
-    })
+    // this.subscription = 
+    this.subscription.push(
+      this.workdayService.getWeekend(this.selectedYear).subscribe({
+        next: response=> {
+          this.weekendData = response;
+        }
+      })
+    )
+    
   }
 
 
@@ -101,51 +113,62 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
     let empId : number = parseInt(this.authService.currentUserValue.empId);
     this.loading = true;
     if(weekend.isActive) {
-      this.subscription = this.workdayService.addCancelledWeekend(weekend.date,empId).subscribe({
-        next: response => {
-          if(response.success) {
-            this.toastr.success('',"Deactivated", {
-              positionClass: 'toast-top-right'
-            })
-            weekend.isActive = false;
-            weekend.cancelId = {id:response.id};
-          } else {
-            this.toastr.warning('', `${response.message}`, {
-              positionClass: 'toast-top-right'
-            })
-          }
-        },
-        error: err => {
-          this.loading = false;
-        },
-        complete: ()=> {
-          this.loading = false;
-        }
-      })
-    } else {
-        this.subscription=this.workdayService.deleteCancelledWeekend(weekend.cancelId.id).subscribe({
+
+      this.subscription.push(
+        
+      )
+      // this.subscription = 
+      this.subscription.push(
+        this.workdayService.addCancelledWeekend(weekend.date,empId).subscribe({
           next: response => {
             if(response.success) {
-              this.toastr.success('', "Activated", {
+              this.toastr.success('',"Deactivated", {
                 positionClass: 'toast-top-right'
               })
-
-              weekend.isActive = true;
-              weekend.cancelId = null;
+              weekend.isActive = false;
+              weekend.cancelId = {id:response.id};
             } else {
-              this.toastr.warning('',`${response.message}`, {
+              this.toastr.warning('', `${response.message}`, {
                 positionClass: 'toast-top-right'
               })
             }
           },
-          error: err=> {
+          error: err => {
             this.loading = false;
           },
-
-          complete: () => {
+          complete: ()=> {
             this.loading = false;
           }
-        })      
+        })
+      )
+    } else {
+        // this.subscription=
+        this.subscription.push(
+          this.workdayService.deleteCancelledWeekend(weekend.cancelId.id).subscribe({
+            next: response => {
+              if(response.success) {
+                this.toastr.success('', "Activated", {
+                  positionClass: 'toast-top-right'
+                })
+  
+                weekend.isActive = true;
+                weekend.cancelId = null;
+              } else {
+                this.toastr.warning('',`${response.message}`, {
+                  positionClass: 'toast-top-right'
+                })
+              }
+            },
+            error: err=> {
+              this.loading = false;
+            },
+  
+            complete: () => {
+              this.loading = false;
+            }
+          })   
+        )
+           
     }
   }
 
@@ -153,14 +176,18 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
     if(this.selectedYear==null) {
       return;
     }
-    this.subscription = this.workdayService.getWorkday(this.selectedYear).subscribe({
-      next: (option)=> {
-        this.Workday = option;
-      },
-      error: (err)=> {
-        console.log("Got error while retriving Workday");
-      }
-    })
+    
+    this.subscription.push(
+      this.workdayService.getWorkday(this.selectedYear).subscribe({
+        next: (option)=> {
+          this.Workday = option;
+        },
+        error: (err)=> {
+          console.log("Got error while retriving Workday");
+        }
+      })
+    )
+    
   }
 
   setDefaultYear() {
@@ -191,26 +218,30 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
     console.log(this.selectedDayForAddition);
 
     let workday = {yearId: this.selectedYear, weekdayId: this.selectedDayForAddition, isActive: true}
-    this.subscription = this.workdayService.addWorkday(workday).subscribe({
-      next: (response)=> {
-        if(response.success==true) {
-          this.toastr.success('',`${response.message}`, {
-            positionClass: 'toast-top-right'
-          })
-          this.togglePlusButton();
-          this.getWorkday();
-        } else {
-          this.toastr.warning('',`${response.message}`, {
+    
+    this.subscription.push(
+      this.workdayService.addWorkday(workday).subscribe({
+        next: (response)=> {
+          if(response.success==true) {
+            this.toastr.success('',`${response.message}`, {
+              positionClass: 'toast-top-right'
+            })
+            this.togglePlusButton();
+            this.getWorkday();
+          } else {
+            this.toastr.warning('',`${response.message}`, {
+              positionClass: 'toast-top-right'
+            })
+          }
+        },
+        error: (error)=> {
+          this.toastr.error('',`${error}`, {
             positionClass: 'toast-top-right'
           })
         }
-      },
-      error: (error)=> {
-        this.toastr.error('',`${error}`, {
-          positionClass: 'toast-top-right'
-        })
-      }
-    })
+      })
+    )
+    
   }
 
   onWorkdayDelete(workdayId:number) {

@@ -19,6 +19,14 @@
             <c-row [gutter]="3">
               <h6>Device: {{deviceName}}</h6>
               <hr>
+              <c-col md="12">
+                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                  <svg [cIcon]="icons.cilWarning" size="md" title="Warning"></svg>
+                  <div>
+                    Note: This function is intended for advance user, invalid command might break the device.
+                  </div>
+                </div>
+              </c-col>
               <c-col md="7">
                 <textarea required [(ngModel)]="command" name="command" placeholder="Enter Command" cFormControl id="command" rows="3"></textarea>
               </c-col>

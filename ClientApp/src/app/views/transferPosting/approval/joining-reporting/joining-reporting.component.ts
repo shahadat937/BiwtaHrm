@@ -16,7 +16,8 @@ import { EmpTransferPostingService } from '../../service/emp-transfer-posting.se
 })
 export class JoiningReportingComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   empTransferPosting: EmpTransferPosting = new EmpTransferPosting();
   id: number = 0;
   clickedButton: string = '';
@@ -59,7 +60,8 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
   }
 
   getTransferPostingInfo() {
-    this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
+    this.subscription.push(
+    this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if(res){
         this.empTransferPosting = res;
         // this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
@@ -67,12 +69,14 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
         this.getEmpJobDetailsByEmpIdDeptApproveBy( res.deptReleaseById ||0 );
         this.EmpTransferPostingForm?.form.patchValue(res);
       }
-    });
+    })
+    )
+   
   }
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -87,23 +91,29 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
   // }
   
   getEmpJobDetailsByEmpIdOfTransferApproveBy(id: number){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+    this.subscription.push(
+       this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
       if(res){
         this.empTransferPosting.approveByDepartmentName = res.departmentName;
         this.empTransferPosting.approveByDesignationName = res.designationName;
         this.empTransferPosting.approveBySectionName = res.sectionName;
       }
     })
+    )
+  
   }
   
   getEmpJobDetailsByEmpIdDeptApproveBy(id: number){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+    this.subscription.push(
+      this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
       if(res){
         this.empTransferPosting.deptReleaseByDepartmentName = res.departmentName;
         this.empTransferPosting.deptReleaseByDesignationName = res.designationName;
         this.empTransferPosting.deptReleaseBySectionName = res.sectionName;
       }
     })
+    )
+     
   }
 
 
@@ -143,7 +153,8 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
       this.empTransferPosting.joiningRemark = this.empTransferPostingService.empTransferPosting.joiningRemark;
       this.empTransferPosting.joiningDate = this.empTransferPostingService.empTransferPosting.joiningDate;
       
-      this.subscription = this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, this.empTransferPosting).subscribe((response: any) => {
+      this.subscription.push(
+      this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, this.empTransferPosting).subscribe((response: any) => {
         if (response.success) {
           if(joiningStatus == true){
             this.toastr.success('', `Application Approved Successfull`, {
@@ -166,6 +177,8 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
           });
         }
         this.closeModal();
-      });
+      })
+      )
+      
   }
 }

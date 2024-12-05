@@ -18,7 +18,8 @@ import { EmpJobDetailsService } from '../../employee/service/emp-job-details.ser
 })
 export class RewardPunishmentComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   id: number = 0;
   clickedButton: string = '';
   heading: string = '';
@@ -67,17 +68,21 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   }
 
   getRewardPunishmentInfo() {
-    this.subscription = this.empRewardPunishmentService.findById(this.id).subscribe((res) => {
+    this.subscription.push(
+     this.empRewardPunishmentService.findById(this.id).subscribe((res) => {
       if(res){
         console.log(res)
         this.getEmpInfoByIdCardNo(res.empIdCardNo);
         this.EmpRewardPunishmentFrom?.form.patchValue(res);
       }
-    });
+    })
+    )
+    
   }
   
   getEmpInfoByIdCardNo(idCardNo: string) {
-    this.subscription = this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
+    this.subscription.push(
+    this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
       if (res) {
             this.isValidEmp = true;
             this.empRewardPunishmentService.empRewardPunishment.empName = res.firstName + " " + res.lastName;
@@ -91,22 +96,28 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
         });
       }
     })
+    )
+   
   }
 
   
   getEmpJobDetailsByEmpId(id: number){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
       if(res){
         this.empJobDetailsId = res.id;
           this.empRewardPunishmentService.empRewardPunishment.departmentName = res.departmentName;
           this.empRewardPunishmentService.empRewardPunishment.designationName = res.designationName;
       }
     })
+    )
+    
   }
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -145,14 +156,22 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   }
 
   getSelectedRewardPunishmentType(){
-    this.subscription = this.rewardPunishmentSetupService.getSelectedRewardType().subscribe((res) =>{
+    // this.subscription = 
+    this.subscription.push(
+    this.rewardPunishmentSetupService.getSelectedRewardType().subscribe((res) =>{
       this.rewardType = res;
-    });
+    })
+    )
+    
   }
   getSelectedRewardPunishmentPriority(){
-    this.subscription = this.rewardPunishmentSetupService.getSelectedRewardPriority().subscribe((res) =>{
+    // this.subscription =
+    this.subscription.push(
+    this.rewardPunishmentSetupService.getSelectedRewardPriority().subscribe((res) =>{
       this.rewardPriority = res;
-    });
+    })
+    )
+    
   }
 
   closeModal(): void {
@@ -186,7 +205,9 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
       ? this.empRewardPunishmentService.updateEmpRewardPunishment(id, form.value)
       : this.empRewardPunishmentService.saveEmpRewardPunishment(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -197,6 +218,8 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+    )
+    
   }
 }

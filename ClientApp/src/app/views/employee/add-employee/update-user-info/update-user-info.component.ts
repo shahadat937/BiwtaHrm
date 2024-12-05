@@ -18,8 +18,8 @@ export class UpdateUserInfoComponent implements OnInit, OnDestroy  {
   @ViewChild('UserForm', { static: true }) UserForm!: NgForm;
   btnText: String = 'Update';
   loading = false;
-  subscription: Subscription = new Subscription();
-
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   constructor(
     public userService: UserService,
     private toastr: ToastrService,
@@ -34,7 +34,7 @@ export class UpdateUserInfoComponent implements OnInit, OnDestroy  {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -63,9 +63,12 @@ export class UpdateUserInfoComponent implements OnInit, OnDestroy  {
 
   getUserByEmpId(){
     this.initaialUser();
-    this.userService.getInfoByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.userService.getInfoByEmpId(this.empId).subscribe((res) => {
       this.UserForm?.form.patchValue(res);
-    });
+    })
+    )
+    
   }
   
   // ngOnChanges(changes: SimpleChanges) {
@@ -83,7 +86,9 @@ export class UpdateUserInfoComponent implements OnInit, OnDestroy  {
     this.loading = true;
     console.log("Form Value : ", form.value)
     this.userService.cachedData = [];
-    this.route.paramMap.subscribe((params) => {
+
+    this.subscription.push(
+       this.route.paramMap.subscribe((params) => {
       const id = form.value.id;
       const oldPassword = form.value.oldPassword;
       const currentPassword = form.value.password;
@@ -98,7 +103,9 @@ export class UpdateUserInfoComponent implements OnInit, OnDestroy  {
         action$ = this.userService.submit(form.value);
       }
 
-      this.subscription =action$.subscribe((response: any)  => {
+      // this.subscription =
+      this.subscription.push(
+         action$.subscribe((response: any)  => {
         if (response.success) {
           this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right',
@@ -111,8 +118,12 @@ export class UpdateUserInfoComponent implements OnInit, OnDestroy  {
           });
         }
         this.loading = false;
-      });
-    });
+      })
+      )
+     
+    })
+    )
+   
   }
 }
 

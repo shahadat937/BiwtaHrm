@@ -1,0 +1,36 @@
+<div class="modal fade show">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Custom Command</h5>
+        <button
+          mat-mini-fab
+          color="warn"
+          class="close"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body scrollable-modal-body" cRow [gutter]="3">
+        <div class="container mt-4">
+          <form #commandForm="ngForm" (submit)="onSubmit()">
+            <c-row [gutter]="3">
+              <h6>Device: {{deviceName}}</h6>
+              <hr>
+              <c-col md="7">
+                <textarea required [(ngModel)]="command" name="command" placeholder="Enter Command" cFormControl id="command" rows="3"></textarea>
+              </c-col>
+            </c-row>
+            <div class="mt-3 d-flex justify-content-end">
+              <button [disabled]="loading||commandForm.invalid" type="submit" cButton color="success">
+                <c-spinner [hidden]="!loading" size="sm"></c-spinner>
+                Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

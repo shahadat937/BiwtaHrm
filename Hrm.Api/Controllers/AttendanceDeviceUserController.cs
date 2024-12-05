@@ -31,7 +31,7 @@ namespace Hrm.Api.Controllers
 
         [Route("add-User")]
         [HttpPost]
-        public async Task<ActionResult<BaseCommandResponse>> AddUser([FromForm] AddUserDeviceDto User)
+        public async Task<ActionResult<BaseCommandResponse>> AddUser([FromBody] AddUserDeviceDto User)
         {
             var commnad = new AddUserDeviceCommand { AddUserDeviceDto = User };
             var response = await _mediator.Send(commnad);
@@ -74,11 +74,29 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [Route("update-Device")]
+        [HttpPut]
+        public async Task<ActionResult<BaseCommandResponse>> UpdateDevice([FromBody] AttDevicesDto Device)
+        {
+            var command = new UpdateDeviceCommand { Device = Device };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
         [Route("get-Device")]
         [HttpGet]
         public async Task<ActionResult> GetDevice()
         {
             var command = new GetDeviceRequest { };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [Route("get-SelectedDevice")]
+        [HttpGet]
+        public async Task<ActionResult> GetSelectedDevice()
+        {
+            var command = new GetSelectedDeviceRequest { };
             var response = await _mediator.Send(command);
             return Ok(response);
         }

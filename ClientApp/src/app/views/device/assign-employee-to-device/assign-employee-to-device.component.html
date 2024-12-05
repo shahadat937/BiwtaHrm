@@ -1,0 +1,84 @@
+<c-card>
+    <c-card-header>
+        Assign Employee
+    </c-card-header>
+    <c-card-body>
+        <form #assignForm="ngForm">
+            <c-row [gutter]="3">
+                <c-col md="4">
+                  <label cLabel for="idCard">Select Employee<span class="text-danger">*</span></label>
+                  <c-input-group>
+                    <button cButton color="secondary" (click)="openEmployeeModal()">
+                      <svg [cIcon]="icons.cilSearch"></svg>
+                    </button>
+                    <input type="text"
+                    required
+                    #IdCardNo="ngModel"
+                    [(ngModel)]="employeeAssignModel.idCardNo"
+                    name="idCard" 
+                    placeholder="Enter PMIS"
+                    cFormControl id="idCard"/>
+                  </c-input-group>
+                  @if (IdCardNo.touched&&IdCardNo.invalid) {
+                    <p class="text-danger">PMIS is required</p>
+                  }
+                </c-col>
+                <c-col md="4">
+                    <label cLabel for="idCardNo">Select Device<span class="text-danger">*</span></label>
+                    <select #device="ngModel" required [(ngModel)]="employeeAssignModel.deviceId" cSelect name="deviceId" id="deviceId">
+                        <option [ngValue]="null">Select Device</option>
+                        @for (item of devices ; track $index) {
+                            <option [ngValue]="item.id">{{item.name}}</option>
+                        }
+                    </select>
+                    @if (device.touched&&device.invalid) {
+                        <p class="text-danger">Device is required</p>
+                    }
+                </c-col>
+                <c-col md="4">
+                    <label cLabel for="passwd">Enter Password</label>
+                    <input [(ngModel)]="employeeAssignModel.passwd" cFormControl type="text" name="passwd" id="passwd">
+                </c-col>
+
+                <c-col md="4">
+                    <label cLabel for="privilage">Select Privilage</label>
+                    <select [(ngModel)]="employeeAssignModel.privilage" cSelect name="privilage" id="privilage">
+                        @for (item of privilages; track $index) {
+                            <option [value]="item.value">{{item.name}}</option>
+                        }
+                    </select>
+                </c-col>
+                <hr/>
+                <c-row class="mt-3">
+                    <h6>For FingerPrint Enrollment</h6>
+                    <label cLabel for="fid">Select Thumb</label>
+
+                    <c-col md="4">
+                        <select [(ngModel)]="FID" cSelect name="fid" id="fid">
+                            @for (item of thumbs; track $index) {
+                                <option [value]="item.value">{{item.name}}</option>
+                            }
+                        </select>
+                    </c-col>
+                    
+                </c-row>
+                <c-row class="mt-3">
+                    <div class="d-flex justify-content-end">
+                        <div>
+                            <button (click)="onSubmit()" [disabled]="loadingEnroll||loading||assignForm.invalid" class="me-2" cButton color="success">
+                                <c-spinner *ngIf="loading" size="sm"></c-spinner>
+                                Submit
+                            </button>
+                            <button (click)="onFingerprintEnroll()" [disabled]="assignForm.invalid||loadingEnroll" class="me-2" cButton color="success" title="Enroll Fingerprint">
+                                <svg [cIcon]="icons.cilFingerprint" size="md" title="Enroll Fingerprint"></svg>
+                            </button>
+                            <button cButton color="danger" (click)="onReset()" title="Reset Form Data">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </c-row>
+            </c-row>
+        </form>
+    </c-card-body>
+</c-card>

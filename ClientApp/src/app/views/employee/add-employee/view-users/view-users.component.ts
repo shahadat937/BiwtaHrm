@@ -16,7 +16,8 @@ import { UserService } from 'src/app/views/usermanagement/service/user.service';
 })
 export class ViewUsersComponent implements OnInit, OnDestroy, AfterViewInit   {
   
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo', 
     'pNo', 
@@ -47,7 +48,7 @@ export class ViewUsersComponent implements OnInit, OnDestroy, AfterViewInit   {
   }
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
   ngAfterViewInit(): void {
@@ -63,10 +64,14 @@ export class ViewUsersComponent implements OnInit, OnDestroy, AfterViewInit   {
 
   
   getAllUsers(){
-    this.subscription = this.userService.getAll().subscribe((item) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.userService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 }

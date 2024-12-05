@@ -31,7 +31,8 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
   sections: SelectedModel[] = [];
   designations: SelectedModel[] = [];
   showAllDesination = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   sectionView: boolean = false;
   empWorkHistory: EmpWorkHistory[] = [];
@@ -70,7 +71,7 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
   
     ngOnDestroy(): void {
       if (this.subscription) {
-        this.subscription.unsubscribe();
+        this.subscription.forEach(subs=>subs.unsubscribe());
       }
     }
     
@@ -85,9 +86,12 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
   }
 
     getAllSelectedDepartments(){
-      this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+      this.subscription.push(
+        this.departmentService.getSelectedAllDepartment().subscribe((res) => {
             this.departments = res;
-      });
+      })
+      )
+      
     }
 
     
@@ -98,9 +102,12 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
     this.empWorkHistoryService.empWorkHistory.designationId = null;
     this.empWorkHistoryService.empWorkHistory.designationSetupId = null;
     if(departmentId){
-      this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
+      this.subscription.push(
+        this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
         this.sections = res;
-      });
+      })
+      )
+      
     }
   }
   onDepartmntSelectGetDesignation(departmentId: any) {
@@ -108,9 +115,12 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
     this.empWorkHistoryService.empWorkHistory.designationId = null;
     this.empWorkHistoryService.empWorkHistory.designationSetupId = null;
     if(departmentId){
-      this.empJobDetailsService.getOldDesignationByDepartment(+departmentId).subscribe((res) => {
+      this.subscription.push(
+        this.empJobDetailsService.getOldDesignationByDepartment(+departmentId).subscribe((res) => {
         this.designations = res;
-      });
+      })
+      )
+      
     }
   }
   onSectionSelectGetDesignation(sectionId: any){
@@ -118,7 +128,8 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
     this.empWorkHistoryService.empWorkHistory.designationId = null;
     this.empWorkHistoryService.empWorkHistory.designationSetupId = null;
     if(sectionId){
-      this.sectionService.find(sectionId).subscribe((res) => {
+      this.subscription.push(
+        this.sectionService.find(sectionId).subscribe((res) => {
         if(res.showAllDesignation == true){
           this.designationService.getSelectDesignationSetupName().subscribe((data) => { 
             this.designations = data;
@@ -131,7 +142,9 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
             this.showAllDesination = false;
           });
         }
-    })}
+    })
+      )
+      }
   }
 
     initaialForm(form?: NgForm) {
@@ -181,7 +194,8 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
 
     getEmployeeWorkHistoryInfoByEmpId() {
       this.initaialForm();
-      this.empWorkHistoryService.findByEmpId(this.empId).subscribe((res) => {
+      this.subscription.push(
+        this.empWorkHistoryService.findByEmpId(this.empId).subscribe((res) => {
           this.headerText = 'Add Employment History';
           this.btnText = 'Submit';
           this.headerBtnText = 'Add New';
@@ -190,10 +204,13 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.matSort;
       })
+      )
+      
     }
 
     find(id: number){
-      this.empWorkHistoryService.findById(id).subscribe((res) => {
+      this.subscription.push(
+        this.empWorkHistoryService.findById(id).subscribe((res) => {
         if(res){
           this.visible = true;
           this.headerBtnText = 'Hide From';
@@ -214,13 +231,16 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
           }, 500);
         }
       })
+      )
+      
     }
 
     onSubmit(form: NgForm): void {
       this.loading = true;
       this.empJobDetailsService.cachedData = [];
       this.loading = true;
-      this.empWorkHistoryService.saveEmpWorkHistory(form.value).subscribe(((res: any) => {
+      this.subscription.push(
+        this.empWorkHistoryService.saveEmpWorkHistory(form.value).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -237,6 +257,8 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
       this.loading = false;
     })
     )
+      )
+      
   }
   
     delete(element: any){
@@ -244,7 +266,8 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
           .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
           .subscribe((result) => {
             if (result) {
-              this.empWorkHistoryService.deleteEmpWorkHistory(element.id).subscribe(
+              this.subscription.push(
+                 this.empWorkHistoryService.deleteEmpWorkHistory(element.id).subscribe(
                 (res) => {
                   this.toastr.warning('Delete sucessfully ! ', ` `, {
                     positionClass: 'toast-top-right',
@@ -262,7 +285,9 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
                   });
                   console.log(err);
                 }
-              );
+              )
+              )
+             
             }
           });
     }

@@ -25,7 +25,7 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
     private confirmService: ConfirmService,
     private toastr: ToastrService,
     private modalService: BsModalService,
-    private modalRef: BsModalRef
+    private bsModalRef: BsModalRef
   ) {
     this.pendingDevice = [];
     this.loading = false
@@ -65,10 +65,10 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
     }
     const modalRef: BsModalRef = this.modalService.show(DeviceModalComponent, { initialState, backdrop: 'static' });
 
-    if(modalRef.onHide) {
-      this.modalRef.onHide?.subscribe(()=> {
+    if(modalRef&&modalRef.onHide) {
+      this.subscription = modalRef.onHide.subscribe(()=> {
         this.getPendingDevice();
-      })
+      });
     }
   }
 }

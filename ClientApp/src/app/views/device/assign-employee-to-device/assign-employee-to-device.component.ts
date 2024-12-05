@@ -26,17 +26,19 @@ export class AssignEmployeeToDeviceComponent implements OnInit, OnDestroy {
     {name:"Super Admin", value:'14'}
   ]
 
-  thumbs: any[] = [
-    {name: "0", value: '0'},
-    {name: "1", value: '1'},
-    {name: "2", value: "2"},
-    {name: "3", value: "3"},
-    {name: "4", value: "4"},
-    {name: "5", value: "5"},
-    {name: "6", value: "6"},
-    {name: "7", value: "7"},
-    {name: "8", value: "8"},
-    {name: "9", value: "9"}
+  fingers: any[] = [[
+      {name: "Pinky", value: '0'},
+      {name: "Ring Finger", value: '1'},
+      {name: "Middle Finger", value: "2"},
+      {name: "Index Finger", value: "3"},
+      {name: "Thumb", value: "4"},
+    ],[
+      {name: "Thumb", value: "5"},
+      {name: "Index Finger", value: "6"},
+      {name: "Middle Finger", value: "7"},
+      {name: "Ring Finger", value: "8"},
+      {name: "Pinky", value: "9"}
+    ]
   ]
 
   icons = {cilSearch, cilFingerprint}

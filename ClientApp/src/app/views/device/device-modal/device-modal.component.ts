@@ -74,7 +74,6 @@ export class DeviceModalComponent implements OnInit, OnDestroy {
     if(this.pendingDevice!=null) {
       this.deviceModel.sn = this.pendingDevice.sn;
     } 
-    console.log(this.deviceModel.status);
   }
 
   closeModal() {

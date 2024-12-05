@@ -17,6 +17,7 @@ import {CustomCommandModalComponent} from '../custom-command-modal/custom-comman
 })
 export class ManageDeviceComponent implements OnInit, OnDestroy {
   loading: boolean
+  attLoading: boolean
   attendanceDevices: AttendanceDeviceModel[];
   subscription: Subscription = new Subscription;
 
@@ -30,6 +31,7 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
   ) {
     this.attendanceDevices = []
     this.loading = false;
+    this.attLoading = false;
   }
 
   ngOnInit(): void {
@@ -43,7 +45,8 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
   }
 
   getAttendanceDevice() {
-    this.loading = false;
+    this.loading = true;
+    this.attLoading = true;
    this.subscription = this.AttendanceDeviceService.getDevice().subscribe({
     next: response => {
       this.attendanceDevices = response.map(item => {
@@ -52,11 +55,7 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
           status2 = {value: "Deactive", color:"danger"}
         } else {
           const now = new Date();
-          console.log(now);
-          now.setSeconds(now.getSeconds()-30)
-          console.log(now)
-          console.log(item.lastOnline)
-          console.log("------------------------")
+          now.setSeconds(now.getSeconds()-15)
           if(item.lastOnline == null || (new Date(item.lastOnline)).getTime() < now.getTime()) {
             status2 = {value:"Offline", color: "warning"}
           } else {
@@ -71,17 +70,19 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
     },
     error: (err) => {
       this.loading = false;
+      this.attLoading = false;
     },
     complete: () => {
       this.loading = false;
+      this.attLoading = false;
     }
    }) 
   }
 
   deleteDevice(deviceId:number) {
-    this.loading = true;
     this.confirmService.confirm("Delete Confirmation", "Are You Sure?").subscribe(response=> {
       if(response) {
+        this.loading = true;
         this.subscription = this.AttendanceDeviceService.deleteDevice(deviceId).subscribe({
           next: response => {
             if(response.success) {
@@ -146,8 +147,8 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
 
     const modalRef: BsModalRef = this.modalService.show(DeviceModalComponent,{initialState: initialState});
 
-    if(modalRef) {
-      modalRef.onHide?.subscribe(()=> {
+    if(modalRef&&modalRef.onHide) {
+      this.subscription = modalRef.onHide.subscribe(()=> {
         this.getAttendanceDevice();
       })
     }
@@ -160,12 +161,6 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
     }
 
     const modalRef: BsModalRef = this.modalService.show(CustomCommandModalComponent,{initialState:initialState});
-
-    if(modalRef) {
-      modalRef.onHide?.subscribe(()=> {
-
-      })
-    }
 
   }
 }

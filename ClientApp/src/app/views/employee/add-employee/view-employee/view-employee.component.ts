@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
@@ -18,9 +18,10 @@ import { FeaturePermission } from 'src/app/views/featureManagement/model/feature
   templateUrl: './view-employee.component.html',
   styleUrl: './view-employee.component.scss',
 })
-export class ViewEmployeeComponent implements OnInit {
+export class ViewEmployeeComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'pNo',
@@ -54,6 +55,14 @@ export class ViewEmployeeComponent implements OnInit {
   ) {
     this.userForm = new UserModule;
   }
+  // ngOnDestroy(): void {
+  //   throw new Error('Method not implemented.');
+  // }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.forEach(subs=>subs.unsubscribe());
+    }
+  }
   icons = { cilPlus, cilCloudUpload,cilUser,cilUserPlus };
 
   ngOnInit(): void {
@@ -61,7 +70,8 @@ export class ViewEmployeeComponent implements OnInit {
   }
   
   getPermission(){
-    this.roleFeatureService.getFeaturePermission('employeeList').subscribe((item) => {
+    this.subscription.push(
+       this.roleFeatureService.getFeaturePermission('employeeList').subscribe((item) => {
       this.roleFeatureService.featurePermission.add == true;
       if(item.viewStatus == true){
         this.getAllEmpBasicInfo();
@@ -70,7 +80,9 @@ export class ViewEmployeeComponent implements OnInit {
         this.unauthorizeAccress()
         this.router.navigate(['/dashboard']);
       }
-    });
+    })
+    )
+   
   }
   unauthorizeAccress(){
     this.toastr.warning('Unauthorized Access', ` `, {
@@ -79,11 +91,15 @@ export class ViewEmployeeComponent implements OnInit {
   }
 
   getAllEmpBasicInfo() {
-    this.subscription = this.empBasicInfoService.getAll().subscribe((item) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empBasicInfoService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   applyFilter(filterValue: string) {
@@ -113,7 +129,8 @@ export class ViewEmployeeComponent implements OnInit {
   createUser(id : number){
     if(this.roleFeatureService.featurePermission.add == true){
       this.loadingMap[id] = true;
-      this.empBasicInfoService.findByEmpId(id).subscribe((res) => {
+      this.subscription.push(
+        this.empBasicInfoService.findByEmpId(id).subscribe((res) => {
         this.userForm.firstName = res.firstName;
         this.userForm.lastName = res.lastName;
         this.userForm.userName = res.idCardNo;
@@ -140,6 +157,8 @@ export class ViewEmployeeComponent implements OnInit {
         })
         )
       })
+      )
+      
     }
     else{
       this.unauthorizeAccress();

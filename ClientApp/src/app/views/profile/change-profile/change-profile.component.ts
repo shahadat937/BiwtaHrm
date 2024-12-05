@@ -18,7 +18,8 @@ export class ChangeProfileComponent implements OnInit, OnDestroy {
 
   id: number = 0;
   clickedButton: string = '';
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   pNo: string = '';
   headerText: string = '';
@@ -56,22 +57,27 @@ export class ChangeProfileComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
   getEmployeeByEmpId() {
     this.initaialForm();
-    this.subscription = this.empBasicInfoService.findByEmpId(this.id).subscribe((res) => {
+    this.subscription.push(
+      this.empBasicInfoService.findByEmpId(this.id).subscribe((res) => {
       this.pNo = res.idCardNo;
     })
-    this.empPhotoSignService.findByEmpId(this.id).subscribe((res) => {
+    )
+    this.subscription.push(
+      this.empPhotoSignService.findByEmpId(this.id).subscribe((res) => {
       if (res) {
         this.EmpPhotoSignForm?.form.patchValue(res);
         this.photoPreviewUrl = res.photoUrl ? `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}` : null;
         this.signaturePreviewUrl = res.signatureUrl ? `${this.empPhotoSignService.imageUrl}EmpSignature/${res.signatureUrl}` : null;
       }
     })
+    )
+    
   }
   initaialForm(form?: NgForm) {
     if (form != null) form.resetForm();
@@ -170,7 +176,9 @@ export class ChangeProfileComponent implements OnInit, OnDestroy {
       ? this.empPhotoSignService.updateEmpPhotoSignInfo(id, form.value)
       : this.empPhotoSignService.saveEmpPhotoSignInfo(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    // this.subscription = 
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -184,7 +192,9 @@ export class ChangeProfileComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
       this.loading = false;
-    });
+    })
+    )
+    
   }
 
 

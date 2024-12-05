@@ -18,7 +18,8 @@ import { JoiningReportingComponent } from '../joining-reporting/joining-reportin
 })
 export class JoiningReportingListComponent  implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     // 'slNo',
     'PMS Id',
@@ -55,11 +56,14 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
   }
 
   getAllEmpTransferPostingJoiningInfo() {
-    this.subscription = this.empTransferPostingService.getAllEmpTransferPostingJoiningInfo(this.loginEmpId).subscribe((item) => {
+    this.subscription.push(
+    this.empTransferPostingService.getAllEmpTransferPostingJoiningInfo(this.loginEmpId).subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   applyFilter(filterValue: string) {
@@ -70,7 +74,7 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   

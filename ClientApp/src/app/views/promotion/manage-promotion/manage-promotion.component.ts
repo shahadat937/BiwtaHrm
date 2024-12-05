@@ -18,7 +18,8 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 })
 export class ManagePromotionComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     // 'slNo',
     'PMS Id',
@@ -53,11 +54,15 @@ export class ManagePromotionComponent implements OnInit, OnDestroy {
   }
 
   getAllPromotionIncrementInfo() {
-    this.subscription = this.empPromotionIncrementService.getAll().subscribe((item) => {
+    // this.subscription = 
+    this.subscription.push(
+    this.empPromotionIncrementService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   applyFilter(filterValue: string) {
@@ -68,7 +73,7 @@ export class ManagePromotionComponent implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -80,6 +85,7 @@ export class ManagePromotionComponent implements OnInit, OnDestroy {
   }
 
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -102,6 +108,8 @@ export class ManagePromotionComponent implements OnInit, OnDestroy {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

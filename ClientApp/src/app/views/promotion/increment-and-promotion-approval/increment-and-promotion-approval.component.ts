@@ -16,7 +16,8 @@ import { EmpPromotionIncrement } from '../model/emp-promotion-increment';
 })
 export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   empPromotionIncrement: EmpPromotionIncrement = new EmpPromotionIncrement();
   id: number = 0;
   clickedButton: string = '';
@@ -59,17 +60,21 @@ export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy
   }
 
   getTransferPostingInfo() {
-    this.subscription = this.empPromotionIncrementService.findById(this.id).subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+    this.empPromotionIncrementService.findById(this.id).subscribe((res) => {
       if(res){
         this.empPromotionIncrement = res;
         this.EmpTransferPostingForm?.form.patchValue(res);
       }
-    });
+    })
+    )
+    
   }
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -112,7 +117,9 @@ export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy
       this.empPromotionIncrement.approveById = this.loginEmpId;
       this.empPromotionIncrement.approveDate = new Date().toISOString().split('T')[0] as any as Date;
       this.empPromotionIncrement.approveRemark = this.empPromotionIncrementService.empPromotionIncrement.approveRemark;
-      this.subscription = this.empPromotionIncrementService.updateEmpPromotionIncrement(this.empPromotionIncrement.id, this.empPromotionIncrement).subscribe((response: any) => {
+      // this.subscription = 
+      this.subscription.push(
+      this.empPromotionIncrementService.updateEmpPromotionIncrement(this.empPromotionIncrement.id, this.empPromotionIncrement).subscribe((response: any) => {
         if (response.success) {
           if(ApproveStatus == true){
             this.toastr.success('', `Application Approved Successfull`, {
@@ -135,6 +142,8 @@ export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy
           });
         }
         this.closeModal();
-      });
+      })
+      )
+      
     }
 }

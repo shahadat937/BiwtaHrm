@@ -1,8 +1,8 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PersonalInformationComponent } from '../employee-informations/personal-information/personal-information.component';
-import { config } from 'rxjs';
+import { config, Subscription } from 'rxjs';
 import { BasicInformationComponent } from '../employee-informations/basic-information/basic-information.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
@@ -29,7 +29,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './view-information-list.component.html',
   styleUrl: './view-information-list.component.scss'
 })
-export class ViewInformationListComponent implements OnInit {
+export class ViewInformationListComponent implements OnInit, OnDestroy {
 
   gettingStatus : boolean = false;
   entryStatus : boolean = false;
@@ -57,6 +57,7 @@ export class ViewInformationListComponent implements OnInit {
   headerText: string = '';
   selectedTabIndex: number | null = null;
   featurePermission : FeaturePermission = new FeaturePermission;
+  subscription: Subscription[]=[]
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -82,9 +83,15 @@ export class ViewInformationListComponent implements OnInit {
     ngOnInit(): void {
       this.getPermission();
     }
+    ngOnDestroy(): void {
+      if (this.subscription) {
+        this.subscription.forEach(subs=>subs.unsubscribe());
+      }
+    }
 
     getPermission(){
-      this.roleFeatureService.getFeaturePermission('allEmployeeList').subscribe((item) => {
+      this.subscription.push(
+        this.roleFeatureService.getFeaturePermission('allEmployeeList').subscribe((item) => {
         this.featurePermission = item;
         if(item.viewStatus == true && ( item.add == true || item.update == true)){
           this.handleRouteParams();
@@ -93,7 +100,9 @@ export class ViewInformationListComponent implements OnInit {
           this.unauthorizeAccress()
           this.router.navigate(['/dashboard']);
         }
-      });
+      })
+      )
+      
     }
     unauthorizeAccress(){
       this.toastr.warning('Unauthorized Access', ` `, {
@@ -102,7 +111,8 @@ export class ViewInformationListComponent implements OnInit {
     }
 
   handleRouteParams() {
-    this.route.paramMap.subscribe((params) => {
+    this.subscription.push(
+      this.route.paramMap.subscribe((params) => {
       this.empId = Number(params.get('id'));
       this.selectedTabIndex = 0;
       this.empBasicInfoService.findByEmpId(this.empId).subscribe((res) => {
@@ -129,11 +139,14 @@ export class ViewInformationListComponent implements OnInit {
           this.headerText = "Add Employee Information";
         }
       });
-    });
+    })
+    )
+    
   }
 
   getEmployeeByAspNetUserId(){
-    this.empBasicInfoService.findByAspNetUserId(this.userId).subscribe((res) => {
+    this.subscription.push(
+      this.empBasicInfoService.findByAspNetUserId(this.userId).subscribe((res) => {
       if(res){
         this.gettingStatus = true;
         this.basicInfoEntryStatus=true;
@@ -154,33 +167,49 @@ export class ViewInformationListComponent implements OnInit {
       else{
         this.gettingStatus = false;
       }
-    });
+    })
+    )
+    
   }
 
   getStatusOfPersonalInfo(){
-    this.empPersonalInfoService.findByEmpId(this.empId).subscribe((res)=>{
+    this.subscription.push(
+      this.empPersonalInfoService.findByEmpId(this.empId).subscribe((res)=>{
       this.personalInfoEntryStatus = !!res;
     })
+    )
+    
   }
 
   getStatusOfPresentAddress(){
-    this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
+
+    this.subscription.push(
+      this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
       this.presentAddressEntryStatus = !!res;
     })
+    )
+    
   }
 
   getStatusOfPermanentAddress(){
-    this.empPermanentAddressService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empPermanentAddressService.findByEmpId(this.empId).subscribe((res) => {
       this.permanentAddressEntryStatus = !!res;
     })
+    )
+    
   }
   getStatusOfEmpJobDetails(){
-    this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
       this.empJobDetailsEntryStatus = !!res;
     })
+    )
+    
   }
   getStatusOfEmpSpouseInfo(){
-    this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res: any[]) => {
+    this.subscription.push(
+      this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res: any[]) => {
       if(res.length>0){
         this.empSpouseInfoEntryStatus = true;
       }
@@ -188,9 +217,12 @@ export class ViewInformationListComponent implements OnInit {
         this.empSpouseInfoEntryStatus = false;
       }
     })
+    )
+    
   }
   getStatusOfEmpChildStatus() {
-    this.empChildInfoService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empChildInfoService.findByEmpId(this.empId).subscribe((res) => {
       if(res.length>0){
         this.empChildInfoEntryStatus = true;
       }
@@ -198,9 +230,12 @@ export class ViewInformationListComponent implements OnInit {
         this.empChildInfoEntryStatus = false;
       }
     })
+    )
+    
   }
   getStatusOfEmpEducationStatus() {
-    this.empEducationInfoService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empEducationInfoService.findByEmpId(this.empId).subscribe((res) => {
       if(res.length>0){
         this.empEducationInfoEntryStatus = true;
       }
@@ -208,6 +243,8 @@ export class ViewInformationListComponent implements OnInit {
         this.empEducationInfoEntryStatus = false;
       }
     })
+    )
+    
   }
   // getStatusOfEmpPsiTrainingStatus() {
   //   this.empPsiTrainingInfoService.findByEmpId(this.empId).subscribe((res) => {
@@ -220,7 +257,8 @@ export class ViewInformationListComponent implements OnInit {
   //   })
   // }
   getStatusOfEmpBankInfoStatus() {
-    this.empBankInfoService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empBankInfoService.findByEmpId(this.empId).subscribe((res) => {
       if(res.length>0){
         this.empBankInfoEntryStatus = true;
       }
@@ -228,9 +266,12 @@ export class ViewInformationListComponent implements OnInit {
         this.empBankInfoEntryStatus = false;
       }
     })
+    )
+    
   }
   getStatusOfEmpLanguageInfoStatus() {
-    this.empLanguageInfoService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empLanguageInfoService.findByEmpId(this.empId).subscribe((res) => {
       if(res.length>0){
         this.empLanguageInfoEntryStatus = true;
       }
@@ -238,9 +279,12 @@ export class ViewInformationListComponent implements OnInit {
         this.empLanguageInfoEntryStatus = false;
       }
     })
+    )
+    
   }
   getStatusOfEmpForeignTourInfoStatus() {
-    this.empForeignTourInfoService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empForeignTourInfoService.findByEmpId(this.empId).subscribe((res) => {
       if(res.length>0){
         this.empForeignTourInfoEntryStatus = true;
       }
@@ -248,11 +292,16 @@ export class ViewInformationListComponent implements OnInit {
         this.empForeignTourInfoEntryStatus = false;
       }
     })
+    )
+    
   }
   getStatusOfEmpPhotoSign(){
-    this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empPhotoSignService.findByEmpId(this.empId).subscribe((res) => {
       this.empPhotoSignEntryStatus = !!res;
     })
+    )
+    
   }
 
 

@@ -11,7 +11,8 @@ import { HttpParams } from '@angular/common/http';
 })
 export class LeaveBalanceComponent implements OnInit, OnDestroy {
   
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   empId: number | null;
   IdCardNo: string;
   leaveBalances: any[] = [];
@@ -34,13 +35,15 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
 
     if(isNaN(this.empId))
       return;
-    this.subscription=this.leaveBalanceService.getEmpInfo(this.empId).subscribe({
+    // this.subscription=
+    this.subscription.push(
+      this.leaveBalanceService.getEmpInfo(this.empId).subscribe({
       next: response => {
         this.IdCardNo = response.idCardNo;
         this.empName = response.firstName+' '+response.lastName;
       }
     })
-
+    )
     this.getLeaveBalance(this.empId);
   }
 
@@ -58,10 +61,12 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
     );
 
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
 
-    this.subscription = source$.subscribe(data => {
+    // this.subscription = 
+    this.subscription.push(
+      source$.subscribe(data => {
       this.leaveBalanceService.getEmpInfoByCardNo(this.IdCardNo).subscribe({
         next: (response) => {
           if(response==null) {
@@ -90,11 +95,13 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
       })
 
     })
+    )
+    
   }
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     } 
   }
 
@@ -102,7 +109,8 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
     this.loading = true;
     let params = new HttpParams();
     params = params.set('empId',empId);
-    this.subscription = this.leaveBalanceService.getLeaveBalance(params).subscribe({
+    this.subscription.push(
+      this.leaveBalanceService.getLeaveBalance(params).subscribe({
       next: response => {
         this.leaveBalances = response;        
       },
@@ -113,5 +121,7 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
     })
+    )
+    
   }
 }

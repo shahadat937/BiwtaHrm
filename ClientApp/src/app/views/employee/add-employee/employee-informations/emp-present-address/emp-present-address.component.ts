@@ -32,7 +32,8 @@ export class EmpPresentAddressComponent implements OnInit, OnDestroy {
   thanas: SelectedModel[] = [];
   unions: SelectedModel[] = [];
   wards: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   @ViewChild('EmpPresentAddressForm', { static: true }) EmpPresentAddressForm!: NgForm;
 
@@ -55,7 +56,7 @@ export class EmpPresentAddressComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -65,24 +66,27 @@ export class EmpPresentAddressComponent implements OnInit, OnDestroy {
   }
 
   getEmployeeByEmpId() {
-    this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
-      if (res) {
-        res.countryId ? this.onDivisionNamesChangeByCounterId(res.countryId) : null;
-        res.divisionId ? this.onDistrictNamesChangeByDivisionId(res.divisionId) : null;
-        res.districtId ? this.onUpazilaNamesChangeByDistrictId(res.districtId) : null;
-        res.upazilaId ? this.onThanaNamesChangeByUpazilaId(res.upazilaId) : null;
-        // res.thanaId ? this.onUnionNamesChangeByThanaId(res.thanaId) : null;
-        // res.unionId ? this.onWardNamesChangeByUnionId(res.unionId) : null;
-        this.EmpPresentAddressForm?.form.patchValue(res);
-        this.headerText = 'Update Present Address';
-        this.btnText = 'Update';
-      }
-      else {
-        this.headerText = 'Add Present Address';
-        this.btnText = 'Submit';
-        this.initaialForm();
-      }
-    })
+    this.subscription.push(
+      this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
+        if (res) {
+          res.countryId ? this.onDivisionNamesChangeByCounterId(res.countryId) : null;
+          res.divisionId ? this.onDistrictNamesChangeByDivisionId(res.divisionId) : null;
+          res.districtId ? this.onUpazilaNamesChangeByDistrictId(res.districtId) : null;
+          res.upazilaId ? this.onThanaNamesChangeByUpazilaId(res.upazilaId) : null;
+          // res.thanaId ? this.onUnionNamesChangeByThanaId(res.thanaId) : null;
+          // res.unionId ? this.onWardNamesChangeByUnionId(res.unionId) : null;
+          this.EmpPresentAddressForm?.form.patchValue(res);
+          this.headerText = 'Update Present Address';
+          this.btnText = 'Update';
+        }
+        else {
+          this.headerText = 'Add Present Address';
+          this.btnText = 'Submit';
+          this.initaialForm();
+        }
+      })
+    )
+    
   }
 
   initaialForm(form?: NgForm) {
@@ -135,42 +139,70 @@ export class EmpPresentAddressComponent implements OnInit, OnDestroy {
   }
 
   loadcountris() {
-    this.subscription = this.countryService.selectGetCountry().subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.countryService.selectGetCountry().subscribe((data) => {
       this.countris = data;
-    });
+    })
+    )
+    
   }
   onDivisionNamesChangeByCounterId(counterId: number) {
-    this.subscription = this.divisionService.getDivisionByCountryId(counterId).subscribe((data) => {
-      this.divisions = data;
-    });
+    // this.subscription = 
+    this.subscription.push(
+      this.divisionService.getDivisionByCountryId(counterId).subscribe((data) => {
+        this.divisions = data;
+      })
+    )
+    
   }
   onDistrictNamesChangeByDivisionId(divisionId: number) {
-    this.subscription = this.districtService.getDistrictByDivisionId(divisionId).subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.districtService.getDistrictByDivisionId(divisionId).subscribe((data) => {
       this.districts = data;
 
-    });
+    })
+    )
+    
   }
   onUpazilaNamesChangeByDistrictId(districtId: number) {
-    this.subscription = this.uapzilaService.getUpapzilaByDistrictId(districtId).subscribe((data) => {
-      this.upazilas = data;
-    });
+    // this.subscription = 
+    this.subscription.push(
+      this.uapzilaService.getUpapzilaByDistrictId(districtId).subscribe((data) => {
+        this.upazilas = data;
+      })
+    )
+    
   }
   onThanaNamesChangeByUpazilaId(upazilaId: number) {
-    this.subscription = this.thanaService.getthanaNamesByUpazilaId(upazilaId).subscribe((data) => {
-      this.thanas = data;
-
-    });
+    // this.subscription = 
+    this.subscription.push(
+      this.thanaService.getthanaNamesByUpazilaId(upazilaId).subscribe((data) => {
+        this.thanas = data;
+  
+      })
+    )
+    
   }
   onUnionNamesChangeByThanaId(thanaId: number) {
-    this.subscription = this.unionService.getUnionNamesByThanaId(thanaId).subscribe((data) => {
-      this.unions = data;
-    });
+    // this.subscription = 
+    this.subscription.push(
+      this.unionService.getUnionNamesByThanaId(thanaId).subscribe((data) => {
+        this.unions = data;
+      })
+    )
+    
   }
   onWardNamesChangeByUnionId(unionId: number) {
-    this.subscription = this.wardService.getWardNamesByUnionId(unionId).subscribe((data) => {
-      this.wards = data;
-
-    });
+    // this.subscription = 
+    this.subscription.push(
+      this.wardService.getWardNamesByUnionId(unionId).subscribe((data) => {
+        this.wards = data;
+  
+      })
+    )
+    
   }
 
 
@@ -186,22 +218,26 @@ export class EmpPresentAddressComponent implements OnInit, OnDestroy {
       ? this.empPresentAddressService.updateEmpPresentInfo(id, form.value)
       : this.empPresentAddressService.saveEmpPresentInfo(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
-      if (response.success) {
-        this.toastr.success('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
+    // this.subscription = 
+    this.subscription.push(
+      action$.subscribe((response: any) => {
+        if (response.success) {
+          this.toastr.success('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.loading = false;
+          // this.cancel();
+          this.getEmployeeByEmpId();
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.loading = false;
+        }
         this.loading = false;
-        // this.cancel();
-        this.getEmployeeByEmpId();
-      } else {
-        this.toastr.warning('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-        this.loading = false;
-      }
-      this.loading = false;
-    });
+      })
+    )
+    
   }
 
 }

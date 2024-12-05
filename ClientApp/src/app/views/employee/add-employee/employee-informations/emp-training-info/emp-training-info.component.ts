@@ -20,7 +20,8 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
   headerText: string = '';
   headerBtnText: string = 'Hide From';
   btnText: string = '';
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   empTrainingInfo: EmpTrainingInfo[] = [];
   trainingTypes: SelectedModel[] = [];
@@ -50,7 +51,7 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -80,7 +81,8 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
 
   removeTrainingList(index: number, id: number) {
     if (id != 0) {
-      this.confirmService
+      this.subscription.push(
+        this.confirmService
         .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
         .subscribe((result) => {
           if (result) {
@@ -102,7 +104,9 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
               }
             );
           }
-        });
+        })
+      )
+      
     }
     else if (id == 0) {
       if (this.empTrainingListArray.controls.length > 0)
@@ -112,7 +116,8 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
 
 
   getEmployeeTrainingInfoByEmpId() {
-    this.empTrainingInfoService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empTrainingInfoService.findByEmpId(this.empId).subscribe((res) => {
       if (res.length > 0) {
         this.headerText = 'Update Training Information';
         this.btnText = 'Update';
@@ -125,35 +130,57 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
         this.addTraining();
       }
     })
+    )
+    
   }
 
   getSelectedTrainingType(){
-    this.subscription = this.empTrainingInfoService.getSelectedTrainingType().subscribe((res) =>{
+    // this.subscription = 
+    this.subscription.push(
+      this.empTrainingInfoService.getSelectedTrainingType().subscribe((res) =>{
       this.trainingTypes = res;
     })
+    )
+    
   }
   
   getSelectedTrainingName(){
-    this.subscription = this.empTrainingInfoService.getSelectedTrainingName().subscribe((res) =>{
+    // this.subscription = 
+    this.subscription.push(
+      this.empTrainingInfoService.getSelectedTrainingName().subscribe((res) =>{
       this.trainingNames = res;
     })
+    )
+    
   }
   
   getSelectedInstitute(){
-    this.subscription = this.empTrainingInfoService.getSelectedInstitute().subscribe((res) =>{
+    // this.subscription = 
+    this.subscription.push(
+      this.empTrainingInfoService.getSelectedInstitute().subscribe((res) =>{
       this.institute = res;
     })
+    )
+    
   }
   
   getSelectedCourseDuration(){
-    this.subscription = this.empTrainingInfoService.getSelectedCourseDuration().subscribe((res) =>{
+    // this.subscription = 
+    this.subscription.push(
+      this.empTrainingInfoService.getSelectedCourseDuration().subscribe((res) =>{
       this.courseDuration = res;
     })
+    )
+    
   }
   getSelectedCountries() {
-    this.subscription = this.countryService.selectGetCountry().subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.countryService.selectGetCountry().subscribe((data) => {
       this.countris = data;
-    });
+    })
+    )
+    
   }
 
   patchTrainingInfo(trainingInfoList: any[]) {
@@ -188,7 +215,8 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
 
   insertTraining() {
     this.loading = true;
-    this.empTrainingInfoService.save(this.EmpTrainingInfoForm.get("empTrainingInfoList")?.value).subscribe(((res: any) => {
+    this.subscription.push(
+      this.empTrainingInfoService.save(this.EmpTrainingInfoForm.get("empTrainingInfoList")?.value).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -205,6 +233,8 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
       this.loading = false;
     })
     )
+    )
+    
   }
 
 

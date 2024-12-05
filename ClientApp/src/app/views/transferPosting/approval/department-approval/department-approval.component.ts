@@ -17,7 +17,8 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 })
 export class DepartmentApprovalComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   empTransferPosting: EmpTransferPosting = new EmpTransferPosting();
   id: number = 0;
   clickedButton: string = '';
@@ -62,26 +63,34 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
   }
 
   getTransferPostingInfo() {
-    this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
+    
+    this.subscription.push(
+    this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if(res){
         this.empTransferPosting = res;
         // this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
         this.getEmpJobDetailsByEmpIdOfTransferApproveBy( res.transferApproveById ||0 );
         this.EmpTransferPostingForm?.form.patchValue(res);
       }
-    });
+    })
+    )
+    
   }
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   
   getSelectedReleaseType(){
-    this.subscription = this.empTransferPostingService.getSelectedReleaseType().subscribe((data) => {
+
+    this.subscription.push(
+    this.empTransferPostingService.getSelectedReleaseType().subscribe((data) => {
       this.releaseTypes = data;
-    });
+    })
+    )
+    
   }
 
   // getEmpJobDetailsByEmpIdOfOrderOfficeBy(id: number){
@@ -95,13 +104,16 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
   // }
   
   getEmpJobDetailsByEmpIdOfTransferApproveBy(id: number){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+    this.subscription.push(
+      this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
       if(res){
         this.empTransferPosting.approveByDepartmentName = res.departmentName;
         this.empTransferPosting.approveByDesignationName = res.designationName;
         this.empTransferPosting.approveBySectionName = res.sectionName;
       }
     })
+    )
+    
   }
 
 
@@ -149,7 +161,9 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
       this.empTransferPosting.referenceNo = this.empTransferPostingService.empTransferPosting.referenceNo;
       this.empTransferPosting.deptClearance = this.empTransferPostingService.empTransferPosting.deptClearance;
       this.empTransferPosting.deptRemark = this.empTransferPostingService.empTransferPosting.deptRemark;
-      this.subscription = this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, this.empTransferPosting).subscribe((response: any) => {
+      
+      this.subscription.push(
+      this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, this.empTransferPosting).subscribe((response: any) => {
         if (response.success) {
           if(deptApproveStatus == true){
             this.toastr.success('', `Application Approved Successfull`, {
@@ -172,7 +186,9 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
           });
         }
         this.closeModal();
-      });
+      })
+      )
+      
     }
   }
 }

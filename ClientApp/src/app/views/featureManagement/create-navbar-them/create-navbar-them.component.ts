@@ -14,7 +14,8 @@ import { NavbarThemService } from '../service/navbar-them.service';
 })
 export class CreateNavbarThemComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   id: number = 0;
   clickedButton: string = '';
   heading: string = '';
@@ -53,16 +54,20 @@ export class CreateNavbarThemComponent implements OnInit, OnDestroy {
   }
 
   getNavbarThemInfo() {
-    this.subscription = this.navbarThemService.find(this.id).subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+    this.navbarThemService.find(this.id).subscribe((res) => {
       if(res){
         this.NavbarThemForm?.form.patchValue(res);
       }
-    });
+    })
+    )
+    
   }
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -122,17 +127,21 @@ export class CreateNavbarThemComponent implements OnInit, OnDestroy {
       ? this.navbarThemService.update(id, form.value)
       : this.navbarThemService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
-      if (response.success) {
-        this.toastr.success('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-        this.closeModal();
-      } else {
-        this.toastr.warning('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-      }
-    });
+    // this.subscription = 
+    this.subscription.push(
+      action$.subscribe((response: any) => {
+        if (response.success) {
+          this.toastr.success('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.closeModal();
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+        }
+      })
+    )
+    
   }
 }

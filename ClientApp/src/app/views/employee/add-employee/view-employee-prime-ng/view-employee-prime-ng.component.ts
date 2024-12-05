@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -23,9 +23,10 @@ import { PaginatorModel } from 'src/app/core/models/paginator-model';
   templateUrl: './view-employee-prime-ng.component.html',
   styleUrl: './view-employee-prime-ng.component.scss'
 })
-export class ViewEmployeePrimeNgComponent implements OnInit {
+export class ViewEmployeePrimeNgComponent implements OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
 
   employees: BasicInfoModule[] = [];
   departments: any[] = [];
@@ -68,9 +69,15 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
   ngOnInit(): void {
     this.getPermission();
   }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.forEach(subs=>subs.unsubscribe());
+    }
+  }
   
   getPermission(){
-    this.roleFeatureService.getFeaturePermission('allEmployeeList').subscribe((item) => {
+    this.subscription.push(
+       this.roleFeatureService.getFeaturePermission('allEmployeeList').subscribe((item) => {
       this.roleFeatureService.featurePermission.add == true;
       if(item.viewStatus == true){
         this.getAllEmpBasicInfo(this.pagination);
@@ -79,7 +86,9 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
         this.unauthorizeAccress()
         this.router.navigate(['/dashboard']);
       }
-    });
+    })
+    )
+   
   }
   unauthorizeAccress(){
     this.toastr.warning('Unauthorized Access', ` `, {
@@ -87,7 +96,9 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
     });
   }
   getAllEmpBasicInfo(queryParams: any) {
-    this.subscription = this.empBasicInfoService.getAllPagination(queryParams).subscribe((employees: any) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empBasicInfoService.getAllPagination(queryParams).subscribe((employees: any) => {
       this.totalRecords = employees.totalItemsCount;
       this.employees = employees.items;
       this.loading = false;
@@ -101,7 +112,9 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
       //   .map(emp => emp.sectionName)
       //   .filter(sectionName => sectionName !== null && sectionName.trim() !== '')
       // )].map(section => ({ name: section }));
-    });
+    })
+    )
+    
 
     this.imageLinkUrl = this.empPhotoSign.imageUrl + '/EmpPhoto';
     this.defaultImage = this.empPhotoSign.imageUrl + '/EmpPhoto/default.jpg';
@@ -166,16 +179,20 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
     const modalRef: BsModalRef = this.modalService.show(UploadEmpBasicInfoComponent, { backdrop: 'static' });
 
     if (modalRef.onHide) {
-      modalRef.onHide.subscribe(() => {
+      this.subscription.push(
+        modalRef.onHide.subscribe(() => {
         this.getAllEmpBasicInfo(this.pagination);
-      });
+      })
+      )
+      
     }
   }
 
   createUser(id : number){
     if(this.roleFeatureService.featurePermission.add == true){
       this.loadingMap[id] = true;
-      this.empBasicInfoService.findByEmpId(id).subscribe((res) => {
+      this.subscription.push(
+        this.empBasicInfoService.findByEmpId(id).subscribe((res) => {
         this.userForm.firstName = res.firstName;
         this.userForm.lastName = res.lastName;
         this.userForm.userName = res.idCardNo;
@@ -202,6 +219,8 @@ export class ViewEmployeePrimeNgComponent implements OnInit {
         })
         )
       })
+      )
+      
     }
     else{
       this.unauthorizeAccress();

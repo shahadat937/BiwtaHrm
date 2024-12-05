@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -35,13 +35,14 @@ import { EmpWorkHistory } from '../../model/emp-work-history';
 import { EmpOtherResponsibilityService } from '../../service/emp-other-responsibility.service';
 import { EmpWorkHistoryService } from '../../service/emp-work-history.service';
 import { JobDetailsSetupService } from 'src/app/views/basic-setup/service/job-details-setup.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-employee-information',
   templateUrl: './employee-information.component.html',
   styleUrl: './employee-information.component.scss'
 })
-export class EmployeeInformationComponent implements OnInit {
+export class EmployeeInformationComponent implements OnInit, OnDestroy {
 
   empBasicInfo : BasicInfoModule = new BasicInfoModule;
   empPhotoSign : EmpPhotoSignModule = new EmpPhotoSignModule;
@@ -74,6 +75,7 @@ export class EmployeeInformationComponent implements OnInit {
   visibleComponent: string | null = null;
   empId: number = 0;
   pNo: string = '';
+  subscription: Subscription[]=[]
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -108,6 +110,11 @@ export class EmployeeInformationComponent implements OnInit {
       }, 0);
       this.empId = this.id;
     }
+    ngOnDestroy(): void {
+      if (this.subscription) {
+        this.subscription.forEach(subs=>subs.unsubscribe());
+      }
+    }
   
     handleRouteParams() {
       if(this.clickedButton == 'viewProfile'){
@@ -132,45 +139,64 @@ export class EmployeeInformationComponent implements OnInit {
     }
 
     getCanEditProfileStatusByEmpId(){
-      this.userService.getInfoByEmpId(this.id).subscribe((res) => {
+      this.subscription.push(
+        this.userService.getInfoByEmpId(this.id).subscribe((res) => {
         this.canEditProfile = res.canEditProfile;
       })
+      )
+      
     }
 
     getEmpBasicInfoByEmpId(){
-      this.manageEmployeeService.getEmpBasicInfoByEmpId(this.id).subscribe((res) => {
+      this.subscription.push(
+        this.manageEmployeeService.getEmpBasicInfoByEmpId(this.id).subscribe((res) => {
         this.empBasicInfo = res;
         this.pNo = res.idCardNo;
-      });
+      })
+      )
+      
     }
     
     getEmpPersonalInfoByEmpId(){
+      this.subscription.push(
       this.empPersonalInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empPersonalInfo = res;
-      });
+      })
+      )
+      
     }
     
     getEmpPresentAddressByEmpId(){
-      this.empPresentAddressService.findByEmpId(this.id).subscribe((res) => {
+      this.subscription.push(
+        this.empPresentAddressService.findByEmpId(this.id).subscribe((res) => {
         this.empPresentAddress = res;
-      });
+      })
+      )
+      
     }
     
     getEmpPermanentAddressByEmpId(){
+      this.subscription.push(
       this.empPermanentAddressService.findByEmpId(this.id).subscribe((res) => {
         this.empPermanentAddress = res;
-      });
+      })
+      )
+      
     }
 
     getEmpJobDetailsByEmpId(){
+      this.subscription.push(
       this.empJobDetailsService.findByEmpId(this.id).subscribe((res) => {
         this.empJobDetails = res;
-      });
+      })
+      )
+      
     }
 
     
   getPrlAndRetirmentDate(){
-    this.empBasicInfoService.findByEmpId(this.id).subscribe((res) => {
+    this.subscription.push(
+      this.empBasicInfoService.findByEmpId(this.id).subscribe((res) => {
       this.jobDetailsSetupService.getActive().subscribe((response) =>{
         if(res.dateOfBirth && response){
           let prlDate = new Date(res.dateOfBirth);
@@ -182,25 +208,36 @@ export class EmployeeInformationComponent implements OnInit {
           this.retirementDate = retirementDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
       }
       })
-    });
+    })
+    )
+    
   }
     
     getEmpSpouseInfoByEmpId(){
-      this.empSpouseInfoService.findByEmpId(this.id).subscribe((res) => {
+      this.subscription.push(
+        this.empSpouseInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empSpouseInfo = res;
-      });
+      })
+      )
+      
     }
     
     getEmpChildInfoByEmpId(){
+      this.subscription.push(
       this.empChildInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empChildInfo = res;
-      });
+      })
+      )
+      
     }
     
     getEmpEducationInfoByEmpId(){
-      this.empEducationInfoService.findByEmpId(this.id).subscribe((res) => {
+      this.subscription.push(
+ this.empEducationInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empEducationInfo = res;
-      });
+      })
+      )
+     
     }
     
     // getEmpPsiTrainingInfoByEmpId(){
@@ -210,42 +247,60 @@ export class EmployeeInformationComponent implements OnInit {
     // }
     
     getEmpBankInfoByEmpId(){
+      this.subscription.push(
       this.empBankInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empBankInfo = res;
-      });
+      })
+      )
+      
     }
     
     getEmpLanguageInfoByEmpId(){
-      this.empLanguageInfoService.findByEmpId(this.id).subscribe((res) => {
-        this.empLanguageInfo = res;
-      });
+      this.subscription.push(
+        this.empLanguageInfoService.findByEmpId(this.id).subscribe((res) => {
+          this.empLanguageInfo = res;
+        })
+      )
+     
     }
     
     getEmpForeignTourInfoByEmpId(){
+      this.subscription.push(
       this.empForeignTourInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empForeignTourInfo = res;
-      });
+      })
+      )
+      
     }
     getEmpOtherResponsibility(){
+      this.subscription.push(
       this.empOtherResponsibilityService.findByEmpId(this.id).subscribe((res) => {
         this.empOtherResponsibility = res;
-      });
+      })
+      )
+      
     }
     
     getEmpWorkHistory(){
+      this.subscription.push(
       this.empWorkHistoryService.findByEmpId(this.id).subscribe((res) => {
         this.empWorkHistory = res;
-      });
+      })
+      )
+      
     }
 
     getEmpPhotoSign(){
-      this.empPhotoSignService.findByEmpId(this.id).subscribe((res) => {
-        if(res){
-          this.empPhotoSign = res;
-          this.empPhoto = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`;
-          this.empSignature = `${this.empPhotoSignService.imageUrl}EmpSignature/${res.signatureUrl}`;
-        }
-      });
+      this.subscription.push(
+        this.empPhotoSignService.findByEmpId(this.id).subscribe((res) => {
+          if(res){
+            this.empPhotoSign = res;
+            this.empPhoto = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`;
+            this.empSignature = `${this.empPhotoSignService.imageUrl}EmpSignature/${res.signatureUrl}`;
+          }
+        })
+      )
+      
     }
 
     closeModal(): void {

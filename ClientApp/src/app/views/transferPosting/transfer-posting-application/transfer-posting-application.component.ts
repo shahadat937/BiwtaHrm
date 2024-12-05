@@ -34,7 +34,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   releaseTypes: SelectedModel[] = [];
   grades: SelectedModel[] = [];
   scales: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   isValidEmp: boolean = false;
   isValidOrderByEmp: boolean = false;
@@ -76,15 +77,18 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
   getEmployeeByEmpId() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
-    });
-    this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
+    })
+    )
+    this.subscription.push(
+      this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if (res) {
         this.empTransferPosting = res;
         if(res.transferSectionId){
@@ -142,6 +146,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.btnText = 'Submit';
       }
     })
+    )
+    
   }
 
   initaialForm(form?: NgForm) {
@@ -297,9 +303,11 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
 
   getEmpInfoByIdCardNo(idCardNo: string) {
     if(idCardNo){
-      this.subscription = this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
+      this.subscription.push(
+        this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
         if (res) {
-          this.subscription = this.empTransferPostingService.findByEmpId(res.id).subscribe((response) => {
+          this.subscription.push(
+          this.empTransferPostingService.findByEmpId(res.id).subscribe((response) => {
             if(response){
               this.isValidEmp = false;
               this.toastr.warning('', 'Employee have pending Application', {
@@ -311,13 +319,18 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
               this.empTransferPostingService.empTransferPosting.empName = res.firstName + " " + res.lastName;
               this.empTransferPostingService.empTransferPosting.empId = res.id;
               this.getEmpJobDetailsByEmpId(res.id);
+              this.subscription.push(
               this.empTransferPostingService.CurrentDeptJoinDateByEmpId(res.id).subscribe((res:any) => {
                 if(res){
                   this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res;
                 }
-              });
+              })
+              )
+              
             }
-          });
+          })
+          )
+          
         }
         else {
           this.isValidEmp = false;
@@ -326,11 +339,14 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
           });
         }
       })
+      )
+    
     }
   }
 
   getEmpJobDetailsByEmpId(id: number){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+    this.subscription.push(
+      this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
       if(res){
         this.empJobDetailsId = res.id;
         this.empTransferPostingService.empTransferPosting.sectionName = res.sectionName;
@@ -347,18 +363,25 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.empTransferPostingService.empTransferPosting.currentScaleName = res.presentScaleName;
       }
     })
+    )
+    
   }
 
   getEmpJobDetailsInfo(id: number | null, departmentId : number | null){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+   this.subscription.push(
+    this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
       if(res){
         this.empJobDetailsId = res.id;
         this.getTransferDesignationByDepartment(departmentId, res.id);
       }
     })
+   )
+    
+    
   }
 
   gerReleaseTypeInfo(id: number){
+    this.subscription.push(
     this.releaseTypeService.getById(id).subscribe((res) => {
       if(res.isDeptRelease == false){
         this.empTransferPostingService.empTransferPosting.isDepartmentApprove = false;
@@ -370,7 +393,9 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       }
       this.empTransferPostingService.empTransferPosting.deptReleaseTypeName = res.releaseTypeName;
       this.empTransferPostingService.empTransferPosting.deptReleaseTypeId = id;
-    });
+    })
+    )
+    
   }
 
   // getOrderByInfoByIdCardNo(idCardNo: string){
@@ -402,7 +427,9 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   // }
 
   getApproveByInfoByIdCardNo(idCardNo: string){
-    this.subscription = this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
+  
+    this.subscription.push(
+    this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
       if (res) {
         this.isApproveByEmp = true;
         this.empTransferPostingService.empTransferPosting.approveByEmpName = res.firstName + " " + res.lastName;
@@ -416,16 +443,21 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         });
       }
     })
+    )
+    
   }
 
   getEmpJobDetailsByEmpIdOfApproveBy(id: number){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+    this.subscription.push(
+      this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
       if(res){
         this.empTransferPostingService.empTransferPosting.approveByDepartmentName = res.departmentName;
         this.empTransferPostingService.empTransferPosting.approveByDesignationName = res.designationName;
         this.empTransferPostingService.empTransferPosting.approveBySectionName = res.sectionName;
       }
     })
+    )
+    
   }
   // isTransferApproveNeed(status: boolean){
   //   if(!status){
@@ -527,51 +559,73 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   }
 
   loadOffice() {
-    this.subscription = this.officeService.selectGetoffice().subscribe((data) => {
+    this.subscription.push(
+    this.officeService.selectGetoffice().subscribe((data) => {
       this.offices = data;
-    });
+    })
+    )
+    
+    
   }
 
   getAllDepartment() {
+    this.subscription.push(
     this.empJobDetailsService.getAllDepartment().subscribe((res) => {
       this.departments = res;
-    });
+    })
+    )
+    
   }
   
   getTransferDesignationByDepartment(departmentId: number | null, empJobDetailsId: number) {
     this.designations = [];
     this.empTransferPostingService.empTransferPosting.transferDesignationId = null;
+    this.subscription.push(
     this.empJobDetailsService.getDesignationByDepartmentId(departmentId, empJobDetailsId).subscribe((res) => {
       this.designations = res;
-    });
+    })
+    )
+    
     this.empTransferPostingService.empTransferPosting.transferDesignationId = this.empTransferPosting.transferDesignationId;
   }
   
   getTransferDesignationByDepartmentOnChange(departmentId: number | null, empJobDetailsId: number) {
     this.designations = [];
     this.empTransferPostingService.empTransferPosting.transferDesignationId = null;
+    this.subscription.push(
     this.empJobDetailsService.getDesignationByDepartmentId(departmentId, empJobDetailsId).subscribe((res) => {
       this.designations = res;
-    });
+    })
+    )
+    
   }
 
   getSelectedSection(){
-    this.subscription = this.empJobDetailsService.getSelectedSection().subscribe((data) => {
+    this.subscription.push(
+    this.empJobDetailsService.getSelectedSection().subscribe((data) => {
       this.sections = data;
-    });
+    })
+    )
+    
   }
   getSelectedReleaseType(){
-    this.subscription = this.empTransferPostingService.getSelectedReleaseType().subscribe((data) => {
+    this.subscription.push(
+    this.empTransferPostingService.getSelectedReleaseType().subscribe((data) => {
       this.releaseTypes = data;
-    });
+    })
+    )
+    
   }
 
   
   onOfficeAndDepartmentSelect(departmentId : any){
     this.empTransferPostingService.empTransferPosting.transferSectionId = null;
+    this.subscription.push(
     this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
       this.sections = res;
-    });
+    })
+    )
+    
   }
   
   onSectionSelectGetDesignation(sectionId: any, empJobDetailsId: number) {
@@ -581,28 +635,40 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       this.getTransferDesignationByDepartmentOnChange(this.empTransferPostingService.empTransferPosting.transferDepartmentId, this.empJobDetailsId);
     }
     else {
+      this.subscription.push(
       this.empJobDetailsService.getDesignationBySectionId(+sectionId, +empJobDetailsId).subscribe((res) => {
       this.designations = res;
-    });
+    })
+      )
+      
     }
   }
 
   SelectModelGrade() {
-    this.gradeService.selectModelGrade().subscribe((data) => {
+    this.subscription.push(
+   this.gradeService.selectModelGrade().subscribe((data) => {
       this.grades = data;
-    });
+    })
+    )
+   
   }
 
   onChangeGradeGetScale(gradeId: number) {
     this.empJobDetailsService.empJobDetails.presentScaleId = null;
-    this.empJobDetailsService.getScaleByGradeId(+gradeId).subscribe((res) => {
+    this.subscription.push(
+      this.empJobDetailsService.getScaleByGradeId(+gradeId).subscribe((res) => {
       this.scales = res;
     })
+    )
+    
   }
   onChangeScaleGetBasicPay(scaleId: number) {
-    this.empJobDetailsService.getBasicPayByScale(scaleId).subscribe((res) => {
+    this.subscription.push(
+      this.empJobDetailsService.getBasicPayByScale(scaleId).subscribe((res) => {
       this.empTransferPostingService.empTransferPosting.updateBasicPay = res.basicPay;
     })
+    )
+    
   }
 
   onSubmit(form: NgForm): void {
@@ -614,7 +680,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       ? this.empTransferPostingService.updateEmpTransferPosting(id, form.value)
       : this.empTransferPostingService.saveEmpTransferPosting(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -628,6 +695,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
       this.loading = false;
-    });
+    })
+      )
+     
   }
 }

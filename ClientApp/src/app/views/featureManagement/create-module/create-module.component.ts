@@ -14,7 +14,8 @@ import { FeatureManagementService } from '../service/feature-management.service'
 })
 export class CreateModuleComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   id: number = 0;
   clickedButton: string = '';
   heading: string = '';
@@ -53,16 +54,20 @@ export class CreateModuleComponent implements OnInit, OnDestroy {
   }
 
   getModuleInfo() {
-    this.subscription = this.featureManagementService.find(this.id).subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+    this.featureManagementService.find(this.id).subscribe((res) => {
       if(res){
         this.ModuleForm?.form.patchValue(res);
       }
-    });
+    })
+    )
+    
   }
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -114,17 +119,21 @@ export class CreateModuleComponent implements OnInit, OnDestroy {
       ? this.featureManagementService.update(id, form.value)
       : this.featureManagementService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
-      if (response.success) {
-        this.toastr.success('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-        this.closeModal();
-      } else {
-        this.toastr.warning('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-      }
-    });
+    // this.subscription = 
+    this.subscription.push(
+      action$.subscribe((response: any) => {
+        if (response.success) {
+          this.toastr.success('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.closeModal();
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+        }
+      })
+    )
+    
   }
 }

@@ -11,7 +11,8 @@ import { RoleDashboardService } from '../service/role-dashboard.service';
   styleUrl: './role-dashboard.component.scss'
 })
 export class RoleDashboardComponent implements OnInit, OnDestroy {
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   roleDashboard: RoleDashboard[] = [];
   RoleDashboardsForm: FormGroup;
   loading: boolean = false;
@@ -32,12 +33,13 @@ export class RoleDashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
   getAllRoleDashboardList(){
-    this.subscription = this.roleDashboardService.getRoleDashboardList().subscribe((res) => {
+    this.subscription.push(
+    this.roleDashboardService.getRoleDashboardList().subscribe((res) => {
       if (res.length > 0) {
         this.roleDashboard = res;
         this.pathRoleDashboardList(res);
@@ -45,7 +47,9 @@ export class RoleDashboardComponent implements OnInit, OnDestroy {
       else{
         this.roleDashboard = [];
       }
-    });
+    })
+    )
+    
   }
 
   get RoleDashboardListArray() {
@@ -72,7 +76,8 @@ export class RoleDashboardComponent implements OnInit, OnDestroy {
 
   submit(){
     this.loading = true;
-    this.roleDashboardService.saveRoleDashboard(this.RoleDashboardsForm.get("roleDashboardsList")?.value).subscribe(((res: any) => {
+    this.subscription.push(
+      this.roleDashboardService.saveRoleDashboard(this.RoleDashboardsForm.get("roleDashboardsList")?.value).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -84,6 +89,8 @@ export class RoleDashboardComponent implements OnInit, OnDestroy {
         });
         this.loading = false;
       }
-    }));
+    }))
+    )
+    
   }
 }

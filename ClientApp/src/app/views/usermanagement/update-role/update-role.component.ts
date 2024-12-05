@@ -17,7 +17,8 @@ import { SelectedStringModel } from 'src/app/core/models/selectedStringModel';
 })
 export class UpdateRoleComponent  implements OnInit, OnDestroy {
   
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   userRoles: UserRoles = new UserRoles();
   id: string = '';
   oldRole: string = '';
@@ -57,21 +58,27 @@ export class UpdateRoleComponent  implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
   getById(){
+    this.subscription.push(
     this.userService.getUserRoleDetails(this.id).subscribe((res) => {
       this.UserRoleForm?.form.patchValue(res);
       this.oldRole = res.roleId;
-    });
+    })
+    )
+    
   }
 
   getSelectedRoles(){
+    this.subscription.push(
     this.userService.getSelectedUserRoles().subscribe((res) => {
       this.selectedRoles = res;
-    });
+    })
+    )
+    
   }
   
   initaialUser(form?: NgForm) {
@@ -118,7 +125,8 @@ export class UpdateRoleComponent  implements OnInit, OnDestroy {
 
     action$ = this.userService.updateUserRoles(id, form.value);
 
-    this.subscription = action$.subscribe((response: any)  => {
+    this.subscription.push(
+    action$.subscribe((response: any)  => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -129,6 +137,8 @@ export class UpdateRoleComponent  implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+    )
+   
   }
 }

@@ -35,7 +35,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
   departmentOptions: SelectedModel[][] = [];
   sectionOptions: SelectedModel[][] = [];
   designationOptions: SelectedModel[][] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   sectionView: boolean = false;
   empWorkHistory: EmpWorkHistory[] = [];
@@ -76,7 +77,7 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -87,7 +88,9 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
   }
 
   getEmployeeWorkHistoryInfoByEmpId() {
-    this.empWorkHistoryService.findByEmpId(this.empId).subscribe((res) => {
+
+    this.subscription.push(
+      this.empWorkHistoryService.findByEmpId(this.empId).subscribe((res) => {
       // if (res.length > 0) {
       //   this.headerText = 'Update Work History';
       //   this.btnText = 'Update';
@@ -110,6 +113,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.matSort;
     })
+    )
+    
   }
 
   patchWorkHistoryInfo(workHistoryInfoList: any[]) {
@@ -132,20 +137,29 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
       this.departmentOptions[index] = [...this.departments];
 
       if (workHistoryInfo.departmentId) {
-        this.sectionService.getSectionByOfficeDepartment(workHistoryInfo.departmentId).subscribe((sections) => {
+        this.subscription.push(
+          this.sectionService.getSectionByOfficeDepartment(workHistoryInfo.departmentId).subscribe((sections) => {
           this.sectionOptions[index] = sections; 
 
           if (workHistoryInfo.sectionId) {
-            this.empJobDetailsService.getOldDesignationBySection(workHistoryInfo.sectionId).subscribe((designations) => {
+            this.subscription.push(
+              this.empJobDetailsService.getOldDesignationBySection(workHistoryInfo.sectionId).subscribe((designations) => {
               this.designationOptions[index] = designations; 
-            });
+            })
+            )
+            
           }
           else {
-            this.empJobDetailsService.getOldDesignationByDepartment(workHistoryInfo.departmentId).subscribe((designations) => {
+            this.subscription.push(
+              this.empJobDetailsService.getOldDesignationByDepartment(workHistoryInfo.departmentId).subscribe((designations) => {
               this.designationOptions[index] = designations; 
-            });
+            })
+            )
+            
           }
-        });
+        })
+        )
+        
       } else {
         this.sectionOptions[index] = [];
         this.designationOptions[index] = [];
@@ -183,7 +197,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
   }
 
   find(id: number){
-    this.empWorkHistoryService.findById(id).subscribe((res) => {
+    this.subscription.push(
+      this.empWorkHistoryService.findById(id).subscribe((res) => {
       if(res){
         this.visible = true;
         this.headerBtnText = 'Hide From';
@@ -228,6 +243,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
         
       }
     })
+    )
+    
   }
 
   removeWorkHistoryList(index: number) {
@@ -239,7 +256,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
         .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
         .subscribe((result) => {
           if (result) {
-            this.empWorkHistoryService.deleteEmpWorkHistory(element.id).subscribe(
+            this.subscription.push(
+              this.empWorkHistoryService.deleteEmpWorkHistory(element.id).subscribe(
               (res) => {
                 this.toastr.warning('Delete sucessfully ! ', ` `, {
                   positionClass: 'toast-top-right',
@@ -257,7 +275,9 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
                 });
                 console.log(err);
               }
-            );
+            )
+            )
+            
           }
         });
   }
@@ -274,9 +294,13 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
   }
 
   getAllSelectedDepartments(){
-    this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+
+    this.subscription.push(
+      this.departmentService.getSelectedAllDepartment().subscribe((res) => {
           this.departments = res;
-    });
+    })
+    )
+    
   }
 
   onDepartmentSelect(event: Event, index: number) {
@@ -288,6 +312,7 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
   
     if (departmentId) {
       this.designationOptions[index] = [];
+      
       this.sectionService.getSectionByOfficeDepartment(departmentId).subscribe((res) => {
         this.sectionOptions[index] = res;
       });
@@ -328,7 +353,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
 
   saveWorkHistory() {
     this.loading = true;
-    this.empWorkHistoryService.saveEmpWorkHistory(this.EmpWorkHistoryInfoForm.get("empWorkHistoryList")?.value).subscribe(((res: any) => {
+    this.subscription.push(
+       this.empWorkHistoryService.saveEmpWorkHistory(this.EmpWorkHistoryInfoForm.get("empWorkHistoryList")?.value).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -345,6 +371,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
       this.loading = false;
     })
     )
+    )
+   
   }
 
 

@@ -33,7 +33,8 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
   grades: SelectedModel[] = [];
   scales: SelectedModel[] = [];
   empRewardPunishments: EmpRewardPunishment[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   isValidEmp: boolean = false;
   isValidOrderByEmp: boolean = false;
@@ -71,7 +72,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -88,10 +89,13 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
   }
 
   getEmployeeByEmpId() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
-    });
-    this.subscription = this.empPromotionIncrementService.findById(this.id).subscribe((res) => {
+    })
+    )
+    this.subscription.push(
+       this.empPromotionIncrementService.findById(this.id).subscribe((res) => {
       if (res) {
         console.log(res)
         this.empPromotionIncrement = res;
@@ -112,6 +116,8 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
         this.btnText = 'Submit';
       }
     })
+    )
+   
   }
 
 
@@ -229,9 +235,11 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
   }
   
   getEmpInfoByIdCardNo(idCardNo: string) {
-    this.subscription = this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
+    this.subscription.push(
+      this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
       if (res) {
-        this.subscription = this.empPromotionIncrementService.findByEmpId(res.id).subscribe((response) => {
+       this.subscription.push(
+      this.empPromotionIncrementService.findByEmpId(res.id).subscribe((response) => {
           if(response){
             this.isValidEmp = false;
             this.toastr.warning('', 'Employee have pending Application', {
@@ -244,11 +252,16 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
             this.empPromotionIncrementService.empPromotionIncrement.empId = res.id;
             this.getEmpJobDetailsNewByEmpId(res.id);
             this.getEmpRewardPunishmentByEmpId(res.id);
-            this.empTransferPostingService.CurrentDeptJoinDateByEmpId(res.id).subscribe((res:any) => {
+            this.subscription.push(
+              this.empTransferPostingService.CurrentDeptJoinDateByEmpId(res.id).subscribe((res:any) => {
               this.empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate = res;
-            });
+            })
+            )
+            
           }
-        });
+        })
+       )
+       
       }
       else {
         this.isValidEmp = false;
@@ -256,17 +269,25 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
                 positionClass: 'toast-top-right',
         });
       }
-    })
+    })    
+    )
+   
   }
 
   getEmpRewardPunishmentByEmpId(id: number){
-    this.subscription = this.empRewardPunishmentService.findByEmpId(+id).subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empRewardPunishmentService.findByEmpId(+id).subscribe((res) => {
       this.empRewardPunishments = res;
     })
+    )
+    
   }
 
   getEmpJobDetailsByEmpId(id: number){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
       if(res){
         this.empJobDetailsId = res.id;
         this.getDesignationByDepartmentId(res.departmentId, res.id);
@@ -285,10 +306,13 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
         }
       }
     })
+    )
   }
   
   getEmpJobDetailsNewByEmpId(id: number){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
       if(res){
         this.empJobDetailsId = res.id;
         this.getDesignationByDepartmentId(res.departmentId, res.id);
@@ -305,32 +329,46 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
           this.empPromotionIncrementService.empPromotionIncrement.currentBasicPay = res.basicPay;
       }
     })
+    )
+    
   }
 
   getDesignationByDepartmentId(departmentId: number | null, empJobDetailsId: number) {
     this.designations = [];
     this.empTransferPostingService.empTransferPosting.transferDesignationId = null;
+    this.subscription.push(
     this.empJobDetailsService.getDesignationByDepartmentId(departmentId, empJobDetailsId).subscribe((res) => {
       this.designations = res;
-    });
+    })
+    )
+   
   }
 
   SelectedModelGrade() {
+    this.subscription.push(
     this.gradeService.selectModelGrade().subscribe((data) => {
       this.grades = data;
-    });
+    })
+    )
+    
   }
 
   onChangeGradeGetScale(gradeId: number) {
     this.empJobDetailsService.empJobDetails.presentScaleId = null;
-    this.empJobDetailsService.getScaleByGradeId(+gradeId).subscribe((res) => {
+    this.subscription.push(
+      this.empJobDetailsService.getScaleByGradeId(+gradeId).subscribe((res) => {
       this.scales = res;
     })
+    )
+    
   }
   onChangeScaleGetBasicPay(scaleId: number) {
-    this.empJobDetailsService.getBasicPayByScale(scaleId).subscribe((res) => {
+    this.subscription.push(
+      this.empJobDetailsService.getBasicPayByScale(scaleId).subscribe((res) => {
       this.empPromotionIncrementService.empPromotionIncrement.updateBasicPay = res.basicPay;
     })
+    )
+    
   }
 
   
@@ -350,7 +388,9 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       ? this.empPromotionIncrementService.updateEmpPromotionIncrement(id, form.value)
       : this.empPromotionIncrementService.saveEmpPromotionIncrement(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    // this.subscription = 
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -364,7 +404,9 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
         this.loading = false;
       }
       this.loading = false;
-    });
+    })
+    )
+    
   }
 
 }

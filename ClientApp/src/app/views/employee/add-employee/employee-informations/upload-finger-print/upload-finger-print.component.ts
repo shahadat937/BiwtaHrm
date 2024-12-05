@@ -12,7 +12,8 @@ import { environment } from 'src/environments/environment';
 })
 export class UploadFingerPrintComponent implements OnInit {
   
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   imageUrl = environment.imageUrl + "EmpFingerprint/";
   
   empFingerprint: EmpFingerprint = new EmpFingerprint();
@@ -44,9 +45,16 @@ export class UploadFingerPrintComponent implements OnInit {
   ngOnInit(): void {
     this.getEmpFingerPrint();
   }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.forEach(subs=>subs.unsubscribe());
+    }
+  }
 
   getEmpFingerPrint(){
-    this.subscription = this.empFingerPrintService.findByEmpId(79).subscribe((res)=> {
+    // this.subscription = 
+    this.subscription.push(
+      this.empFingerPrintService.findByEmpId(79).subscribe((res)=> {
       if(res){
         this.empFingerprint = res;
         // Patch the response to leftFingers
@@ -64,6 +72,8 @@ export class UploadFingerPrintComponent implements OnInit {
         this.rightFingers[4].image = res.rightLittle ? `${this.imageUrl}${res.rightLittle}` : null;
       }
     })
+    )
+    
   }
 
   onPhotoSelected(event: any, finger: any) {
@@ -95,6 +105,7 @@ export class UploadFingerPrintComponent implements OnInit {
     this.empFingerprint.empId = 79;
     this.empFingerprint.pNo = '001077';
 
+    
     this.empFingerPrintService.saveEmpFingerprintInfo(this.empFingerprint).subscribe((res) => {
       console.log(res);
     });

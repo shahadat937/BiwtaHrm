@@ -22,6 +22,7 @@ namespace Hrm.Domain
         public string? PushVersion { get; set; }
         public string? Language {  get; set; }
         public string? Timezone {  get; set; }
+        public bool AccDevice { get; set; }
         public DateTime? LastOnline { get; set; }
         public bool Status { get; set; }
     }

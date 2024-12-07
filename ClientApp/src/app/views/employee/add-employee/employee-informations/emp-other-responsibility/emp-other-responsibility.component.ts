@@ -34,7 +34,8 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
   departmentOptions: SelectedModel[][] = [];
   sectionOptions: SelectedModel[][] = [];
   designationOptions: SelectedModel[][] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[] = []
   loading: boolean = false;
   sectionView: boolean = false;
   empJobDetailsId = 0;
@@ -80,16 +81,20 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
   getInActiveEmpOtherResponsibility(){
-    this.subscription = this.empOtherResponsibilityService.findInActiveByEmpId(this.empId).subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empOtherResponsibilityService.findInActiveByEmpId(this.empId).subscribe((res) => {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     })
+    )
+    
   }
   
   applyFilter(filterValue: string) {
@@ -100,12 +105,15 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
 
 
   getEmployeeOtherResponsibilityInfoByEmpId() {
-    this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
       if (res) {
         this.empJobDetailsId = res.id;
       }
-    });
-    this.empOtherResponsibilityService.findByEmpId(this.empId).subscribe((res) => {
+    })
+    )
+    this.subscription.push(
+      this.empOtherResponsibilityService.findByEmpId(this.empId).subscribe((res) => {
       if (res.length > 0) {
         this.headerText = 'Update Other Responsibility';
         this.btnText = 'Update';
@@ -118,6 +126,8 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
         this.addOtherResponsibility();
       }
     })
+    )
+    
   }
 
   patchOtherResponsibilityInfo(OtherResponsibilityInfoList: any[]) {
@@ -200,7 +210,8 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
 
   removeOtherResponsibilityList(index: number, id: number) {
     if (id != 0) {
-      this.confirmService
+      this.subscription.push(
+        this.confirmService
         .confirm('Confirm delete message', 'Are You Sure Delete This  Item.')
         .subscribe((result) => {
           if (result) {
@@ -222,7 +233,9 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
               }
             );
           }
-        });
+        })
+      )
+      
     }
     else if (id == 0) {
       if (this.empOtherResponsibilityListArray.controls.length > 0)
@@ -242,15 +255,22 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
   }
 
   getSelectedResponsibilityType(){
-    this.subscription = this.responsibilityTypeService.getSelectedResponsibilityType().subscribe((res) => {
+    this.subscription.push(
+      this.responsibilityTypeService.getSelectedResponsibilityType().subscribe((res) => {
       this.responsibilities = res;
-    });
+    })
+    )
+    
   }
 
   getAllSelectedDepartments(){
-    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.departmentService.getSelectedAllDepartment().subscribe((res) => {
           this.departments = res;
-    });
+    })
+    )
+    
   }
 
   onDepartmentSelect(event: Event, index: number) {
@@ -261,13 +281,19 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
     this.empOtherResponsibilityListArray.at(index).get('designationId')?.setValue(null);
   
     if (departmentId) {
+      
       this.designationOptions[index] = [];
-      this.sectionService.getSectionByOfficeDepartment(departmentId).subscribe((res) => {
+      this.subscription.push(
+        this.sectionService.getSectionByOfficeDepartment(departmentId).subscribe((res) => {
         this.sectionOptions[index] = res;
-      });
-      this.empJobDetailsService.getDesignationByDepartmentId(departmentId, this.empJobDetailsId).subscribe((res) => {
+      })
+      )
+      this.subscription.push(
+        this.empJobDetailsService.getDesignationByDepartmentId(departmentId, this.empJobDetailsId).subscribe((res) => {
         this.designationOptions[index] = res; 
-      });
+      })
+      )
+      
     } else {
       this.sectionOptions[index] = [];
       this.designationOptions[index] = [];
@@ -281,16 +307,20 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
     this.empOtherResponsibilityListArray.at(index).get('designationId')?.setValue(null);
   
     if (sectionId) {
-      this.empJobDetailsService.getDesignationBySectionId(+sectionId, this.empJobDetailsId).subscribe((res) => {
+      this.subscription.push(
+        this.empJobDetailsService.getDesignationBySectionId(+sectionId, this.empJobDetailsId).subscribe((res) => {
         this.designationOptions[index] = res; 
-      });
+      })
+      )
+      
     } else {
       this.designationOptions[index] = [];
     }
   }
 
   findById(id: number){
-    this.subscription = this.empOtherResponsibilityService.findById(id).subscribe((res) => {
+    this.subscription.push(
+    this.empOtherResponsibilityService.findById(id).subscribe((res) => {
       if(res){
         this.headerText = 'Update Other Responsibility';
         this.btnText = 'Update';
@@ -331,13 +361,16 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
         remark: [res.remark],
       }));
       }
-    });
+    })
+    )
+   
   }
   
 
   saveOtherResponsibility() {
     this.loading = true;
-    this.empOtherResponsibilityService.saveEmpOtherResponsibility(this.EmpOtherResponsibilityInfoForm.get("empOtherResponsibilityList")?.value).subscribe(((res: any) => {
+    this.subscription.push(
+      this.empOtherResponsibilityService.saveEmpOtherResponsibility(this.EmpOtherResponsibilityInfoForm.get("empOtherResponsibilityList")?.value).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -355,6 +388,8 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
       this.loading = false;
     })
     )
+    )
+    
   }
 
   updateOtherResponsibilityStatus(index: number, id: number){
@@ -362,7 +397,8 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
     .confirm('Confirm Inactive message', 'Are You Sure In-Active This Responsibility.')
     .subscribe((result) => {
       if (result) {
-        this.empOtherResponsibilityService.updateEmpOtherResponsibilityStatus(id).subscribe(
+        this.subscription.push(
+          this.empOtherResponsibilityService.updateEmpOtherResponsibilityStatus(id).subscribe(
           (res:any) => {
             if(res.success){
               this.toastr.warning('In-Active sucessfully ! ', ` `, {
@@ -381,7 +417,9 @@ export class EmpOtherResponsibilityComponent implements OnInit, OnDestroy {
             });
             console.log(err);
           }
-        );
+        )
+        )
+        
       }
     });
   }

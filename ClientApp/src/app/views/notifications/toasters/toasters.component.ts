@@ -1,7 +1,7 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { ToasterComponent, ToasterPlacement } from '@coreui/angular';
@@ -24,7 +24,8 @@ export enum Colors {
   templateUrl: './toasters.component.html',
   styleUrls: ['./toasters.component.scss']
 })
-export class ToastersComponent implements OnInit {
+export class ToastersComponent implements OnInit, OnDestroy {
+
 
   positions = Object.values(ToasterPlacement);
   position = ToasterPlacement.TopEnd;
@@ -49,8 +50,10 @@ export class ToastersComponent implements OnInit {
   );
 
   @ViewChildren(ToasterComponent) viewChildren!: QueryList<ToasterComponent>;
+  subscription: Subscription[]=[];
 
   ngOnInit(): void {
+    this.subscription.push(
     this.formChanges.subscribe(e => {
       this.autohide = e.autohide;
       this.position = e.position;
@@ -58,9 +61,15 @@ export class ToastersComponent implements OnInit {
       const control = this.toasterForm?.get('delay');
       this.autohide ? control?.enable() : control?.disable();
       this.delay = control?.enabled ? e.timeout : this.delay;
-    });
+    })
+    )
+    
   }
-
+  ngOnDestroy(): void {
+    if(this.subscription) {
+      this.subscription.forEach(subs=>subs.unsubscribe());
+    } 
+  }
   addToast() {
     const formValues = this.toasterForm.value;
     const toasterPosition = this.viewChildren.filter(item => item.placement === this.toasterForm.value.position);

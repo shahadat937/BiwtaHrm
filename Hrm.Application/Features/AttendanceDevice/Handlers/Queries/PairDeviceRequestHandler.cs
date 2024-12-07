@@ -49,6 +49,11 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
                 return UnauthorizedDeviceResponse;
             }
 
+            if(pairedDevice.Status == false)
+            {
+                return UnauthorizedDeviceResponse;
+            }
+
             // Building the response for authorized device
             var parameters = await _unitOfWork.Repository<Hrm.Domain.DeviceParameters>().Where(x => true).ToListAsync();
 

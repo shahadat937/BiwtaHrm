@@ -114,6 +114,8 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
     detectRetina: true,
   };
 
+  loggedIn: boolean
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -126,9 +128,17 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
     public siteSettingService: SiteSettingService,
   ) {
     super();
+    this.loggedIn = false;
+    if(this.authService.currentUserValue!=null) {
+      this.loggedIn = true;
+    }
   }
 
   ngOnInit() {
+
+    if(this.loggedIn) {
+      this.router.navigate(["/dashboard"])
+    }
     this.lastPublishDate = '01/15/2023';
     this.authForm = this.formBuilder.group({
       email: ['', Validators.required],

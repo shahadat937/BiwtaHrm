@@ -33,7 +33,8 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
   thanas: SelectedModel[] = [];
   unions: SelectedModel[] = [];
   wards: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   sameAsPresentAddress: boolean = false;
   presentAddressStatus: boolean = false;
@@ -59,7 +60,7 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -69,7 +70,8 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
   }
 
   getEmployeeByEmpId() {
-    this.empPermanentAddressService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empPermanentAddressService.findByEmpId(this.empId).subscribe((res) => {
       if (res) {
         this.onDivisionNamesChangeByCounterId(res.countryId);
         this.onDistrictNamesChangeByDivisionId(res.divisionId);
@@ -88,6 +90,8 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
         this.getPresentAddress();
       }
     })
+    )
+    
   }
 
   initaialForm(form?: NgForm) {
@@ -140,7 +144,8 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
   }
 
   loadEmpPresentAddress(){
-    this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
       if (res) {
         const { id, ...formData } = res;
         this.onDivisionNamesChangeByCounterId(formData.countryId);
@@ -152,11 +157,16 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
         this.EmpPermanentAddressForm?.form.patchValue(formData);
       }
     })
+    )
+    
   }
   getPresentAddress(){
-    this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empPresentAddressService.findByEmpId(this.empId).subscribe((res) => {
       this.presentAddressStatus = res ? true : false;
     })
+    )
+    
   }
   onPresentCheckboxChange(event: any): void {
     if (event.target.checked) {
@@ -169,42 +179,70 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
   }
 
   loadcountris() {
-    this.subscription = this.countryService.selectGetCountry().subscribe((data) => {
+    // this.subscription =
+    this.subscription.push(
+      this.countryService.selectGetCountry().subscribe((data) => {
       this.countris = data;
-    });
+    })
+    )
+    
   }
   onDivisionNamesChangeByCounterId(counterId: number) {
-    this.subscription = this.divisionService.getDivisionByCountryId(counterId).subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.divisionService.getDivisionByCountryId(counterId).subscribe((data) => {
       this.divisions = data;
-    });
+    })
+    )
+    
   }
   onDistrictNamesChangeByDivisionId(divisionId: number) {
-    this.subscription = this.districtService.getDistrictByDivisionId(divisionId).subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.districtService.getDistrictByDivisionId(divisionId).subscribe((data) => {
       this.districts = data;
 
-    });
+    })
+    )
+    
   }
   onUpazilaNamesChangeByDistrictId(districtId: number) {
-    this.subscription = this.uapzilaService.getUpapzilaByDistrictId(districtId).subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.uapzilaService.getUpapzilaByDistrictId(districtId).subscribe((data) => {
       this.upazilas = data;
-    });
+    })
+    )
+    
   }
   onThanaNamesChangeByUpazilaId(upazilaId: number) {
-    this.subscription = this.thanaService.getthanaNamesByUpazilaId(upazilaId).subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.thanaService.getthanaNamesByUpazilaId(upazilaId).subscribe((data) => {
       this.thanas = data;
 
-    });
+    })
+    )
+    
   }
   onUnionNamesChangeByThanaId(thanaId: number) {
-    this.subscription = this.unionService.getUnionNamesByThanaId(thanaId).subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.unionService.getUnionNamesByThanaId(thanaId).subscribe((data) => {
       this.unions = data;
-    });
+    })
+    )
+    
   }
   onWardNamesChangeByUnionId(unionId: number) {
-    this.subscription = this.wardService.getWardNamesByUnionId(unionId).subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.wardService.getWardNamesByUnionId(unionId).subscribe((data) => {
       this.wards = data;
 
-    });
+    })
+    )
+    
   }
 
   
@@ -221,7 +259,9 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
       ? this.empPermanentAddressService.updateEmpPermanentInfo(id, form.value)
       : this.empPermanentAddressService.saveEmpPermanentInfo(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    // this.subscription = 
+    this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -236,7 +276,9 @@ export class EmpPermanentAddressComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
       this.loading = false;
-    });
+    })
+    )
+    
   }
 
 }

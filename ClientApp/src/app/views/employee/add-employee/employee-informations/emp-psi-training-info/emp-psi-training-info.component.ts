@@ -20,7 +20,8 @@ export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
   headerBtnText: string = 'Hide From';
   btnText: string = '';
   trainingNames: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   empPsiTraining: EmpPsiTrainingInfoModule[] = [];
 
@@ -40,25 +41,28 @@ export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
 
   getEmployeePsiTrainingInfoByEmpId() {
-    this.empPsiTrainingInfoService.findByEmpId(this.empId).subscribe((res) => {
-      if (res.length > 0) {
-        this.headerText = 'Update PSI Training Information';
-        this.btnText = 'Update';
-        this.empPsiTraining = res;
-        this.patchPsiTrainingInfo(res);
-      }
-      else {
-        this.headerText = 'Add PSI Training Information';
-        this.btnText = 'Submit';
-        this.addPsiTraining();
-      }
-    })
+    this.subscription.push(
+      this.empPsiTrainingInfoService.findByEmpId(this.empId).subscribe((res) => {
+        if (res.length > 0) {
+          this.headerText = 'Update PSI Training Information';
+          this.btnText = 'Update';
+          this.empPsiTraining = res;
+          this.patchPsiTrainingInfo(res);
+        }
+        else {
+          this.headerText = 'Add PSI Training Information';
+          this.btnText = 'Submit';
+          this.addPsiTraining();
+        }
+      })
+    )
+    
   }
 
   patchPsiTrainingInfo(psiTrainingInfoList: any[]) {
@@ -99,7 +103,8 @@ export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
 
   removePsiTrainingList(index: number, id: number) {
     if (id != 0) {
-      this.confirmService
+      this.subscription.push(
+        this.confirmService
         .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
         .subscribe((result) => {
           if (result) {
@@ -121,7 +126,9 @@ export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
               }
             );
           }
-        });
+        })
+      )
+      
     }
     else if (id == 0) {
       if (this.empPsiTrainingListArray.controls.length > 0)
@@ -136,9 +143,12 @@ export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
 
 
   getSelectedTrainingName() {
-    this.empPsiTrainingInfoService.getSelectedTrainingName().subscribe((res) => {
+    this.subscription.push(
+      this.empPsiTrainingInfoService.getSelectedTrainingName().subscribe((res) => {
       this.trainingNames = res;
     })
+    )
+    
   }
 
   cancel() {
@@ -147,7 +157,8 @@ export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
 
   insertPsiTraining() {
     this.loading = true;
-    this.empPsiTrainingInfoService.saveEmpPsiTrainingInfo(this.EmpPsiTrainingInfoForm.get("empPsiTrainingList")?.value).subscribe(((res: any) => {
+    this.subscription.push(
+       this.empPsiTrainingInfoService.saveEmpPsiTrainingInfo(this.EmpPsiTrainingInfoForm.get("empPsiTrainingList")?.value).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -163,6 +174,8 @@ export class EmpPsiTrainingInfoComponent implements OnInit, OnDestroy {
       }
       this.loading = false;
     })
+    )
+   
     )
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -40,13 +40,14 @@ import { EmpTransferPosting } from 'src/app/views/transferPosting/model/emp-tran
 import { EmpTransferPostingService } from 'src/app/views/transferPosting/service/emp-transfer-posting.service';
 import { JobDetailsSetupService } from 'src/app/views/basic-setup/service/job-details-setup.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-emp-profile',
   templateUrl: './emp-profile.component.html',
   styleUrl: './emp-profile.component.scss'
 })
-export class EmpProfileComponent  implements OnInit {
+export class EmpProfileComponent  implements OnInit, OnDestroy {
 
   empBasicInfo : BasicInfoModule = new BasicInfoModule;
   empPhotoSign : EmpPhotoSignModule = new EmpPhotoSignModule;
@@ -65,6 +66,7 @@ export class EmpProfileComponent  implements OnInit {
   empOtherResponsibility : EmpOtherResponsibility[] = [];
   empTransferPosting : EmpTransferPosting[] = [];
   empWorkHistory : EmpWorkHistory[] = [];
+  subscription: Subscription[]=[]
   photoPreviewUrl: string | ArrayBuffer | null = null;
   empProfileView = true;
   
@@ -145,6 +147,11 @@ export class EmpProfileComponent  implements OnInit {
         this.handleRouteParams();
       }
     }
+    ngOnDestroy(): void {
+      if (this.subscription) {
+        this.subscription.forEach(subs=>subs.unsubscribe());
+      }
+    }
   
     handleRouteParams() {
       this.getEmpBasicInfoByEmpId();
@@ -167,7 +174,8 @@ export class EmpProfileComponent  implements OnInit {
     }
 
     getEmpBasicInfoByEmpId(){
-      this.manageEmployeeService.getEmpBasicInfoByEmpId(this.id).subscribe((res) => {
+      this.subscription.push(
+        this.manageEmployeeService.getEmpBasicInfoByEmpId(this.id).subscribe((res) => {
         if(res){
           this.empBasicInfo = res;
           this.pNo = res.idCardNo;
@@ -176,36 +184,51 @@ export class EmpProfileComponent  implements OnInit {
         else {
           this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default.jpg`
         }
-      });
+      })
+      )
+      
     }
     
     getEmpPersonalInfoByEmpId(){
-      this.empPersonalInfoService.findByEmpId(this.id).subscribe((res) => {
+      this.subscription.push(
+        this.empPersonalInfoService.findByEmpId(this.id).subscribe((res) => {
         this.empPersonalInfo = res;
-      });
+      })
+      )
+      
     }
     
     getEmpPresentAddressByEmpId(){
-      this.empPresentAddressService.findByEmpId(this.id).subscribe((res) => {
-        this.empPresentAddress = res;
-      });
+      this.subscription.push(
+        this.empPresentAddressService.findByEmpId(this.id).subscribe((res) => {
+          this.empPresentAddress = res;
+        })
+      )
+      
     }
     
     getEmpPermanentAddressByEmpId(){
-      this.empPermanentAddressService.findByEmpId(this.id).subscribe((res) => {
-        this.empPermanentAddress = res;
-      });
+      this.subscription.push(
+        this.empPermanentAddressService.findByEmpId(this.id).subscribe((res) => {
+          this.empPermanentAddress = res;
+        })
+      )
+      
     }
 
     getEmpJobDetailsByEmpId(){
-      this.empJobDetailsService.findByEmpId(this.id).subscribe((res) => {
+      this.subscription.push(
+        this.empJobDetailsService.findByEmpId(this.id).subscribe((res) => {
         this.empJobDetails = res;
-      });
+      })
+      )
+      
     }
 
     
   getPrlAndRetirmentDate(){
-    this.empBasicInfoService.findByEmpId(this.id).subscribe((res) => {
+    this.subscription.push(
+      this.empBasicInfoService.findByEmpId(this.id).subscribe((res) => {
       this.jobDetailsSetupService.getActive().subscribe((response) =>{
         if(res.dateOfBirth && response){
           let prlDate = new Date(res.dateOfBirth);
@@ -217,11 +240,14 @@ export class EmpProfileComponent  implements OnInit {
           this.retirementDate = retirementDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
       }
       })
-    });
+    })
+    )
+    
   }
     
     getEmpSpouseInfoByEmpId(){
-      this.empSpouseInfoService.findByEmpId(this.id).subscribe((res) => {
+      this.subscription.push(
+        this.empSpouseInfoService.findByEmpId(this.id).subscribe((res) => {
         // if(res && res.length > 0){
           this.empSpouseInfo = res;
           this.spouseSource = new MatTableDataSource(res);
@@ -229,11 +255,14 @@ export class EmpProfileComponent  implements OnInit {
         // else {
         //   this.empSpouseInfo = [new EmpSpouseInfoModule()];
         // }
-      });
+      })
+      )
+      
     }
     
     getEmpChildInfoByEmpId(){
-      this.empChildInfoService.findByEmpId(this.id).subscribe((res) => {
+      this.subscription.push(
+        this.empChildInfoService.findByEmpId(this.id).subscribe((res) => {
         // if(res && res.length > 0){
           this.empChildInfo = res;
           this.childsSource = new MatTableDataSource(res);
@@ -241,10 +270,13 @@ export class EmpProfileComponent  implements OnInit {
         // else {
         //   this.empChildInfo = [new EmpChildInfoModule()];
         // }
-      });
+      })
+      )
+      
     }
     
     getEmpEducationInfoByEmpId(){
+      this.subscription.push(
       this.empEducationInfoService.findByEmpId(this.id).subscribe((res) => {
         // if(res && res.length > 0) {
           this.empEducationInfo = res;
@@ -252,7 +284,9 @@ export class EmpProfileComponent  implements OnInit {
         // } else {
         //   this.empEducationInfo = [new EmpEducationInfoModule()];
         // }
-      });
+      })
+      )
+      
     }
     
     // getEmpPsiTrainingInfoByEmpId(){
@@ -261,6 +295,7 @@ export class EmpProfileComponent  implements OnInit {
     //   });
     // }
     getEmpTrainingInfoByEmpId(){
+      this.subscription.push(
       this.empTrainingInfoService.findByEmpId(this.id).subscribe((res) => {
         // if(res && res.length > 0) {
           this.empTrainingInfo = res;
@@ -268,22 +303,28 @@ export class EmpProfileComponent  implements OnInit {
         // } else {
         //   this.empTrainingInfo = [new EmpTrainingInfo()];
         // }
-      });
+      })
+      )
+     
     }
     
     getEmpBankInfoByEmpId(){
-      this.empBankInfoService.findByEmpId(this.id).subscribe((res) => {
-        // if(res && res.length > 0){
-          this.empBankInfo = res;
-          this.bankSource = new MatTableDataSource(res);
-        // }
-        // else {
-        //   this.empBankInfo = [new EmpBankInfoModule()];
-        // }
-      });
+      this.subscription.push(
+        this.empBankInfoService.findByEmpId(this.id).subscribe((res) => {
+          // if(res && res.length > 0){
+            this.empBankInfo = res;
+            this.bankSource = new MatTableDataSource(res);
+          // }
+          // else {
+          //   this.empBankInfo = [new EmpBankInfoModule()];
+          // }
+        })
+      )
+      
     }
     
     getEmpLanguageInfoByEmpId(){
+      this.subscription.push(
       this.empLanguageInfoService.findByEmpId(this.id).subscribe((res) => {
         // if(res && res.length > 0){
           this.empLanguageInfo = res;
@@ -292,10 +333,13 @@ export class EmpProfileComponent  implements OnInit {
         // else {
         //   this.empLanguageInfo = [new EmpLanguageInfoModule()];
         // }
-      });
+      })
+      )
+      
     }
     
     getEmpForeignTourInfoByEmpId(){
+      this.subscription.push(
       this.empForeignTourInfoService.findByEmpId(this.id).subscribe((res) => {
         // if(res && res.length > 0){
           this.empForeignTourInfo = res;
@@ -304,30 +348,41 @@ export class EmpProfileComponent  implements OnInit {
         // else {
         //   this.empForeignTourInfo = [new EmpForeignTourInfoModule()];
         // }
-      });
+      })
+      )
+      
     }
     
     getEmpOtherResponsibility(){
-      this.empOtherResponsibilityService.findAllByEmpId(this.id).subscribe((res) => {
+      this.subscription.push(
+        this.empOtherResponsibilityService.findAllByEmpId(this.id).subscribe((res) => {
         this.empOtherResponsibility = res;
-      });
+      })
+      )
+      
     }
     
     getEmpWorkHistory(){
-      this.empWorkHistoryService.findCombinedById(this.id).subscribe((res) => {
-        // if(res && res.length > 0){
-          this.empWorkHistory = res;
-          this.workHistorySource = new MatTableDataSource(res);
-        // }
-      });
+      this.subscription.push(
+        this.empWorkHistoryService.findCombinedById(this.id).subscribe((res) => {
+          // if(res && res.length > 0){
+            this.empWorkHistory = res;
+            this.workHistorySource = new MatTableDataSource(res);
+          // }
+        })
+      )
+      
     }
     
     getEmpTransferPostingInfo(){
-      this.empTransferPostingService.findAllByEmpId(this.id).subscribe((res) => {
-        if(res && res.length > 0){
-          this.empTransferPosting = res;
-        }
-      });
+      this.subscription.push(
+        this.empTransferPostingService.findAllByEmpId(this.id).subscribe((res) => {
+          if(res && res.length > 0){
+            this.empTransferPosting = res;
+          }
+        })
+      )
+     
     }
     
     closeModal(): void {
@@ -335,24 +390,27 @@ export class EmpProfileComponent  implements OnInit {
     }
 
     patchEmpPhoto(empGender: string){
-      this.empPhotoSignService.findByEmpId(this.id).subscribe((res) => {
-        if(res){
-          this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`
-        }
-        else {
-          if(empGender){
-            const gender = empGender.charAt(0).toLowerCase();
-            if(gender == 'm'){
-              this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default_Male.jpg`
+      this.subscription.push(
+        this.empPhotoSignService.findByEmpId(this.id).subscribe((res) => {
+          if(res){
+            this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/${res.photoUrl}`
+          }
+          else {
+            if(empGender){
+              const gender = empGender.charAt(0).toLowerCase();
+              if(gender == 'm'){
+                this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default_Male.jpg`
+              }
+              else {
+                this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default_Female.jpg`
+              }
             }
-            else {
-              this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default_Female.jpg`
+            else{
+              this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default.jpg`
             }
           }
-          else{
-            this.photoPreviewUrl = `${this.empPhotoSignService.imageUrl}/EmpPhoto/default.jpg`
-          }
-        }
-      })
+        })
+      )
+      
     }
 }

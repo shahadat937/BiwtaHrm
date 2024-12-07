@@ -28,12 +28,16 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
 
         public async Task<object> Handle(GetRequestRequest request, CancellationToken cancellationToken)
         {
-            var IsAuthorizedDevice = await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Where(x => x.SN == request.SN && x.Status == true).AnyAsync();
+            var device = await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Where(x => x.SN == request.SN && x.Status == true).FirstOrDefaultAsync();
 
-            if(!IsAuthorizedDevice)
+            if(device==null)
             {
                 return "Invalid Options";
             }
+
+            device.LastOnline = DateTime.Now;
+            await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Update(device);
+            await _unitOfWork.Save();
 
             var command = await _unitOfWork.Repository<Hrm.Domain.AttDeviceCommands>().Where(x => x.SN == request.SN).OrderBy(x => x.Id).FirstOrDefaultAsync();
             if(command==null)

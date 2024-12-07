@@ -18,7 +18,8 @@ import { SectionService } from '../../basic-setup/service/section.service';
 export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewInit {
   isVisibleEmpSummary=true;
   EmpSummaryButtonText="Hide";
-  subscription:Subscription = new Subscription();
+  // subscription:Subscription = new Subscription();
+  subscription: Subscription[]=[]
 
   // For Employee Wise
   OfficeOption:any[] = [];
@@ -89,7 +90,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
 
   ngOnDestroy(): void {
     if(this.subscription!=null) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -99,17 +100,24 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
 
 
   getAllOffice() {
-     this.subscription = this.AtdReportService.getOfficeOption().subscribe(option=> {
+     this.subscription.push(
+      this.AtdReportService.getOfficeOption().subscribe(option=> {
       this.OfficeOption = option;
       this.OfficeOptionDw = option;
     })
+     )
+     
   }
 
 
   getSelectedDepartment() {
-    this.subscription = this.AtdReportService.getSelectedDepartment().subscribe(option => {
+
+    this.subscription.push(
+       this.AtdReportService.getSelectedDepartment().subscribe(option => {
       this.DepartmentOption = option;
     })
+    )
+   
   }
 
 
@@ -131,14 +139,18 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     filter = filter.set("To", this.hrmdateResize(this.rangeDates[1]));
 
 
-     this.subscription = this.AtdReportService.getEmpSummary(filter).subscribe(response=> {
-      this.PresentText = response.totalPresent;
-      this.AbsentText = response.totalAbsent;
-      this.LateText = response.totalLate;
-      this.WorkingDayText = response.totalWorkingDay;
-      this.SiteVisitText = response.totalSiteVisit;
-      this.OnLeaveText = response.totalOnLeave;
-    });
+     
+     this.subscription.push(
+      this.AtdReportService.getEmpSummary(filter).subscribe(response=> {
+        this.PresentText = response.totalPresent;
+        this.AbsentText = response.totalAbsent;
+        this.LateText = response.totalLate;
+        this.WorkingDayText = response.totalWorkingDay;
+        this.SiteVisitText = response.totalSiteVisit;
+        this.OnLeaveText = response.totalOnLeave;
+      })
+     )
+    
   }
 
   onChange(IsDepartment: boolean) {
@@ -173,20 +185,24 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
       params = params.set('SectionId', this.selectedSection);
     }
 
-
-
-    this.subscription = this.AtdReportService.getFilteredEmpOption(params).subscribe(response=> {
+    this.subscription.push(
+      this.AtdReportService.getFilteredEmpOption(params).subscribe(response=> {
         this.EmpOption = response;
         this.selectedEmp = null;
     })
+    )
+    
     
   }
 
   onChangeDw() {
 
-    this.subscription = this.AtdReportService.getSelectedDepartment().subscribe(option=> {
+    this.subscription.push(
+       this.AtdReportService.getSelectedDepartment().subscribe(option=> {
       this.DepartmentOptionDw = option;
     })
+    )
+   
 
 /*     if(this.toDateDw==null||this.fromDateDw==null) {
       // TO DO
@@ -213,10 +229,13 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
       params = params.set("DepartmentId",this.selectedDepartmentDw);
     }
 
-    this.subscription = this.AtdReportService.getDepartmentWiseSummary(params).subscribe(item=> {
+    this.subscription.push(
+      this.AtdReportService.getDepartmentWiseSummary(params).subscribe(item=> {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
-    });
+    })
+    )
+   
 
 
   }
@@ -226,7 +245,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     var month;
     var day;
     var dateObj = new Date(formDateValue);
-    var dObj=dateObj.toLocaleDateString().split('/');
+    var dObj=dateObj.toLocaleDateString("en-US").split('/');
     month=parseInt(dObj[0]);
     day=parseInt(dObj[1]);
     if(month<10){

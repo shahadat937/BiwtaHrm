@@ -22,7 +22,8 @@ export class EmpLanguageInfoComponent implements OnInit, OnDestroy {
   btnText: string = '';
   languageNames: SelectedModel[] = [];
   competences: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[];
   loading: boolean = false;
   empLanguage: EmpLanguageInfoModule[] = [];
 
@@ -43,24 +44,27 @@ export class EmpLanguageInfoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
 
   getEmployeeLanguageInfoByEmpId() {
-    this.empLanguageInfoService.findByEmpId(this.empId).subscribe((res) => {
-      if (res.length > 0) {
-        this.headerText = 'Update Language Information';
-        this.btnText = 'Update';
-        this.patchLanguageInfo(res);
-      }
-      else {
-        this.headerText = 'Add Language Information';
-        this.btnText = 'Submit';
-        this.addLanguage();
-      }
-    })
+    this.subscription.push(
+      this.empLanguageInfoService.findByEmpId(this.empId).subscribe((res) => {
+        if (res.length > 0) {
+          this.headerText = 'Update Language Information';
+          this.btnText = 'Update';
+          this.patchLanguageInfo(res);
+        }
+        else {
+          this.headerText = 'Add Language Information';
+          this.btnText = 'Submit';
+          this.addLanguage();
+        }
+      })
+    )
+   
   }
 
   patchLanguageInfo(languageInfoList: any[]) {
@@ -133,14 +137,20 @@ export class EmpLanguageInfoComponent implements OnInit, OnDestroy {
   }
 
   getSelectedLanguageName() {
-    this.empLanguageInfoService.getSelectedLanguageName().subscribe((res) => {
+    this.subscription.push(
+      this.empLanguageInfoService.getSelectedLanguageName().subscribe((res) => {
       this.languageNames = res;
     })
+    )
+    
   }
   getSelectedCompetence() {
-    this.empLanguageInfoService.getSelectedCompetency().subscribe((res) => {
+    this.subscription.push(
+      this.empLanguageInfoService.getSelectedCompetency().subscribe((res) => {
       this.competences = res;
     })
+    )
+    
   }
 
   cancel() {
@@ -149,7 +159,8 @@ export class EmpLanguageInfoComponent implements OnInit, OnDestroy {
 
   insertLanguage() {
     this.loading = true;
-    this.empLanguageInfoService.saveEmpLanguageInfo(this.EmpLanguageInfoForm.get("empLanguageList")?.value).subscribe(((res: any) => {
+    this.subscription.push(
+       this.empLanguageInfoService.saveEmpLanguageInfo(this.EmpLanguageInfoForm.get("empLanguageList")?.value).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -165,6 +176,8 @@ export class EmpLanguageInfoComponent implements OnInit, OnDestroy {
       }
       this.loading = false;
     })
+    )
+   
     )
   }
 }

@@ -10,6 +10,9 @@ using Hrm.Application.Responses;
 using Hrm.Application.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using CsvHelper.Configuration.Attributes;
 
 namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
 {
@@ -49,8 +52,8 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
                 {
                     var photoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images\\EmpPhoto", empPhoto.PhotoUrl);
                     byte[] imageBytes = File.ReadAllBytes(photoPath);
-
-                    base64Image = Convert.ToBase64String(imageBytes);
+                    byte[] convertedImage = await ConvertToJpeg(imageBytes);
+                    base64Image = Convert.ToBase64String(convertedImage);
                     //await _attendanceDevice.UpdateUserPic(device.SN, empBasicInfo.IdCardNo, base64Image);
                 } catch (Exception e)
                 {
@@ -67,5 +70,22 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
             response.Message = ok ? "Successful" : "Unsuccessful";
             return response;
         }
+
+
+        private async Task<byte[]> ConvertToJpeg(byte[] imageByte)
+        {
+            using(var inputStream = new MemoryStream(imageByte))
+            {
+                var image = await Image.LoadAsync(inputStream);
+
+                using(var outputStream = new MemoryStream())
+                {
+                    await image.SaveAsync(outputStream, new JpegEncoder());
+
+                    return outputStream.ToArray();
+                }
+            }
+        }
+
     }
 }

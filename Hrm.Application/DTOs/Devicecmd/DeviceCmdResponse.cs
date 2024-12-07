@@ -11,5 +11,8 @@ namespace Hrm.Application.DTOs.Devicecmd
         public string? Id { get; set; }
         public string? Return { get; set; }
         public string? CMD { get; set; }
+        public string? DeviceName { get; set; }
+        public string? MAC { get; set; }
+        public string? IpAddress { get; set; }
     }
 }

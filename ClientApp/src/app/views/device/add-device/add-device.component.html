@@ -1,0 +1,40 @@
+<c-card>
+    <c-card-header>
+        New Device
+    </c-card-header>
+    <c-card-body>
+        <p-table
+        [loading]="loading"
+        [tableStyle]="{'min-width': '50rem'}" 
+        styleClass="p-datatable-sm"
+        [value]="pendingDevice">
+            <ng-template pTemplate="caption">
+                <button cButton color="light" shape="rounded-pill" (click)="getPendingDevice()">
+                    <svg [cIcon]="icons.cilReload" size="sm" title="Refresh"></svg>
+                </button>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Name</th>
+                    <th>SN</th>
+                    <th>IP Address</th>
+                    <th>Device Type</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-device>
+                <tr>
+                    <td>Default</td>
+                    <td>{{device.sn}}</td>
+                    <td>{{device.deviceIp}}</td>
+                    <td>{{device.deviceType}}</td>
+                    <td>
+                        <button class="custom-button" title="Add New Device" (click)="addDevice(device)">
+                            <svg [cIcon]="icons.cilPlus" size="xl" title="Add New Device"></svg>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </c-card-body>
+</c-card>

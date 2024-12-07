@@ -18,7 +18,8 @@ import { TransferPostingApprovalComponent } from '../transfer-posting-approval/t
 })
 export class TransferPostingApprovalListComponent  implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'PMS Id',
@@ -48,11 +49,14 @@ export class TransferPostingApprovalListComponent  implements OnInit, OnDestroy 
   }
   
   getAllEmpTransferPostingApproveInfo() {
-    this.subscription = this.empTransferPostingService.getAllEmpTransferPostingApproveInfo().subscribe((item) => {
+    this.subscription.push(
+    this.empTransferPostingService.getAllEmpTransferPostingApproveInfo().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   applyFilter(filterValue: string) {
@@ -63,7 +67,7 @@ export class TransferPostingApprovalListComponent  implements OnInit, OnDestroy 
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   
@@ -81,9 +85,12 @@ export class TransferPostingApprovalListComponent  implements OnInit, OnDestroy 
     const modalRef: BsModalRef = this.modalService.show(TransferPostingApprovalComponent, { initialState, backdrop: 'static' });
 
     if (modalRef.onHide) {
+      this.subscription.push(
       modalRef.onHide.subscribe(() => {
         this.getAllEmpTransferPostingApproveInfo();
-      });
+      })
+      )
+     
     }
   }
 

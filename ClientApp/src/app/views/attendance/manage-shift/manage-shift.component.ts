@@ -26,7 +26,8 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('ShiftForm', { static: true }) ShiftForm!: NgForm;
   loading = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'shiftId', 'shiftName', 'startTime', 'endTime', 'bufferTime', 'absentTime', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -127,16 +128,20 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAllUsers(){
-    this.subscription = this.shiftService.getAll().subscribe((item) => {
+   
+    this.subscription.push(
+      this.shiftService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
   ngAfterViewInit(): void {
@@ -208,23 +213,26 @@ export class ManageShiftComponent implements OnInit, OnDestroy, AfterViewInit {
         ? this.shiftService.update(id, form.value)
         : this.shiftService.submit(form.value);
   
-        this.subscription =action$.subscribe((response: any)  => {
-          if (response.success) {
-            this.toastr.success('', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
+        this.subscription.push(
+          action$.subscribe((response: any)  => {
+            if (response.success) {
+              this.toastr.success('', `${response.message}`, {
+                positionClass: 'toast-top-right',
+              });
+              this.loading = false;
+              this.getAllUsers();
+              this.resetForm();
+              this.router.navigate(['/attendance/manageShift']);
+            } else {
+              this.toastr.warning('', `${response.message}`, {
+                positionClass: 'toast-top-right',
+              });
+              this.loading = false;
+            }
             this.loading = false;
-            this.getAllUsers();
-            this.resetForm();
-            this.router.navigate(['/attendance/manageShift']);
-          } else {
-            this.toastr.warning('', `${response.message}`, {
-              positionClass: 'toast-top-right',
-            });
-            this.loading = false;
-          }
-          this.loading = false;
-        });
+          })
+        )
+       
       });
     }
 

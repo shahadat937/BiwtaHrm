@@ -31,7 +31,8 @@ export class EmpWorkHistorySingleComponent implements OnInit, OnDestroy {
   sections: SelectedModel[] = [];
   designations: SelectedModel[] = [];
   showAllDesination = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   sectionView: boolean = false;
   empWorkHistory: EmpWorkHistory[] = [];

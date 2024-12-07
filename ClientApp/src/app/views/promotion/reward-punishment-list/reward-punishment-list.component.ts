@@ -20,7 +20,8 @@ import { RoleFeatureService } from '../../featureManagement/service/role-feature
 })
 export class RewardPunishmentListComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'pmsId',
@@ -55,11 +56,14 @@ export class RewardPunishmentListComponent implements OnInit, OnDestroy {
   }
 
   getAllEmpRewardPunishment() {
-    this.subscription = this.empRewardPunishmentService.getAll().subscribe((item) => {
+    this.subscription.push(
+      this.empRewardPunishmentService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   applyFilter(filterValue: string) {
@@ -70,12 +74,13 @@ export class RewardPunishmentListComponent implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
 
   getPermission(){
+    this.subscription.push(
     this.roleFeatureService.getFeaturePermission('rewardPunishment').subscribe((item) => {
       this.featurePermission = item;
       if(item.viewStatus == true){
@@ -85,7 +90,9 @@ export class RewardPunishmentListComponent implements OnInit, OnDestroy {
         this.roleFeatureService.unauthorizeAccress();
         this.router.navigate(['/dashboard']);
       }
-    });
+    })
+    )
+   
   }
 
 
@@ -98,9 +105,12 @@ export class RewardPunishmentListComponent implements OnInit, OnDestroy {
       const modalRef: BsModalRef = this.modalService.show(RewardPunishmentComponent, { initialState, backdrop: 'static' });
   
       if (modalRef.onHide) {
+        this.subscription.push(
         modalRef.onHide.subscribe(() => {
           this.getAllEmpRewardPunishment();
-        });
+        })
+        )
+       
       }
     }
     else {
@@ -110,10 +120,12 @@ export class RewardPunishmentListComponent implements OnInit, OnDestroy {
 
   delete(element: any) {
     if(this.featurePermission.delete == true){
+      this.subscription.push(
       this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.empRewardPunishmentService.deleteEmpRewardPunishment(element.id).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -130,9 +142,13 @@ export class RewardPunishmentListComponent implements OnInit, OnDestroy {
                 positionClass: 'toast-top-right',
               });
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+      )
+      
     }
     else {
       this.roleFeatureService.unauthorizeAccress();

@@ -22,21 +22,21 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
 
         public async Task<object> Handle(DeviceCmdResponseCommand request, CancellationToken cancellationToken)
         {
-            bool IsAuthorized = await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Where(x => x.SN == request.SN).AnyAsync();
+            var device = await _unitOfWork.Repository<Hrm.Domain.AttDevices>().Where(x => x.SN == request.SN).FirstOrDefaultAsync();
 
-            if(!IsAuthorized)
+            if(device==null)
             {
                 return "Not Authorized Terminal";
             }
 
             if(request.CommandResponse == null)
             {
-                return "OK\n";
+                return "Invalid Options\n";
             }
             int commandId;
             if(!Int32.TryParse(request.CommandResponse.Id, out commandId))
             {
-                return "OK\n";
+                // Todo: 
             }
 
             var command = await _unitOfWork.Repository<Hrm.Domain.AttDeviceCommands>().Where(x=>x.Id == commandId).FirstOrDefaultAsync();
@@ -47,6 +47,30 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
                 await _unitOfWork.Save();
             }
 
+            bool updateDeviceInfo = false;
+            if(request.CommandResponse.DeviceName!=null)
+            {
+                updateDeviceInfo = true;
+                device.DeviceName = request.CommandResponse.DeviceName;
+            }
+
+            if(request.CommandResponse.MAC!=null)
+            {
+                updateDeviceInfo = true;
+                device.MAC = request.CommandResponse.MAC;
+            }
+
+            if(request.CommandResponse.IpAddress!=null)
+            {
+                updateDeviceInfo = true;
+                device.LocalIpAddress = request.CommandResponse.IpAddress;
+            }
+
+            if(updateDeviceInfo)
+            {
+                await _unitOfWork.Repository<Domain.AttDevices>().Update(device);
+                await _unitOfWork.Save();
+            }
             return "OK\n";
         }
     }

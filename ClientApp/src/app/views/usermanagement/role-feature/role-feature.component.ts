@@ -13,7 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RoleFeatureComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   roles: SelectedStringModel[] = [];
   features: RoleFeature[] = [];
   RoleFeaturesForm: FormGroup;
@@ -36,18 +37,22 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
   getSelectedRoles() {
-    this.subscription = this.roleFeatureService.getSelectedModule().subscribe((item) => {
+    this.subscription.push(
+    this.roleFeatureService.getSelectedModule().subscribe((item) => {
       this.roles = item;
-    });
+    })
+    )
+   
   }
 
   onRoleChange() {
     if(this.roleFeatureService.roleFeature.roleId != ''){
+      this.subscription.push(
       this.roleFeatureService.getFeaturesByRoleId(this.roleFeatureService.roleFeature.roleId)
       .subscribe((res) => {
         if (res.length > 0) {
@@ -57,7 +62,9 @@ export class RoleFeatureComponent implements OnInit, OnDestroy {
         else{
           this.features = [];
         }
-      });
+      })
+      )
+      
     }
   }
 
@@ -120,6 +127,7 @@ toggleRowSelection(index: number) {
 
   submitFeature() {
     this.loading = true;
+    this.subscription.push(
     this.roleFeatureService.saveRoleFeatures(this.RoleFeaturesForm.get("featuresList")?.value).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
@@ -133,7 +141,9 @@ toggleRowSelection(index: number) {
         });
         this.loading = false;
       }
-    }));
+    }))
+    )
+    
   }
 
 }

@@ -15,7 +15,8 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 })
 export class CreateFeatureComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   id: number = 0;
   clickedButton: string = '';
   heading: string = '';
@@ -56,24 +57,31 @@ export class CreateFeatureComponent implements OnInit, OnDestroy {
   }
 
   getFeatureInfo() {
-    this.subscription = this.featureManagementService.findFeature(this.id).subscribe((res) => {
+    // this.subscription =
+    this.subscription.push(
+    this.featureManagementService.findFeature(this.id).subscribe((res) => {
       if(res){
         this.FeatureForm?.form.patchValue(res);
       }
-    });
+    })
+    )
+    
   }
 
   getSelectedModule(){
-    this.subscription = this.featureManagementService.getSelectedModule().subscribe((res) => {
+    this.subscription.push(
+    this.featureManagementService.getSelectedModule().subscribe((res) => {
       if(res){
         this.modules = res;
       }
-    });
+    })
+    )
+    
   }
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -129,7 +137,9 @@ export class CreateFeatureComponent implements OnInit, OnDestroy {
       ? this.featureManagementService.updateFeature(id, form.value)
       : this.featureManagementService.submitFeature(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    // this.subscription =
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -140,6 +150,8 @@ export class CreateFeatureComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+    )
+    
   }
 }

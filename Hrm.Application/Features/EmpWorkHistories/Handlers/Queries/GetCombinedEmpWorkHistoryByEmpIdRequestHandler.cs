@@ -35,12 +35,12 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
             List<EmpWorkHistoryDto> combinedWorkHistory = new List<EmpWorkHistoryDto>();
 
             var workHistory = await _EmpWorkHistoryRepository.Where(x => x.EmpId == request.EmpId)
-                .Include(x => x.Office)
-                .Include(x => x.Department)
-                .Include(x => x.Section)
-                .Include(x => x.DesignationSetup)
-                .Include(x => x.Designation)
-                    .ThenInclude(x => x.DesignationSetup)
+                //.Include(x => x.Office)
+                //.Include(x => x.Department)
+                //.Include(x => x.Section)
+                //.Include(x => x.DesignationSetup)
+                //.Include(x => x.Designation)
+                //    .ThenInclude(x => x.DesignationSetup)
                 .ToListAsync(cancellationToken);
             if (workHistory != null && workHistory.Any())
             {
@@ -61,15 +61,15 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                 var mappedResponsibilities = otherResponsibilities.Select(responsibility => new EmpWorkHistoryDto
                 {
                     EmpId = responsibility.EmpId,
-                    OfficeId = responsibility.OfficeId,
-                    DepartmentId = responsibility.DepartmentId,
-                    SectionId = responsibility.SectionId,
-                    DesignationId = responsibility.DesignationId,
+                    //OfficeId = responsibility.OfficeId,
+                    //DepartmentId = responsibility.DepartmentId,
+                    //SectionId = responsibility.SectionId,
+                    //DesignationId = responsibility.DesignationId,
                     JoiningDate = responsibility.StartDate,
                     ReleaseDate = responsibility.EndDate,
                     Remark = responsibility.Remark,
                     IsActive = responsibility.IsActive,
-                    OfficeName = responsibility.Office?.OfficeName,
+                    //OfficeName = responsibility.Office?.OfficeName,
                     DepartmentName = responsibility.Department?.DepartmentName,
                     SectionName = responsibility.Section?.SectionName,
                     DesignationName = responsibility.Designation?.DesignationSetup.Name + " ("+ responsibility.ResponsibilityType?.Name + ")"
@@ -89,15 +89,15 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                 var mappedTransferPosting = empTransferPosting.Select(transferPosting => new EmpWorkHistoryDto
                 {
                     EmpId = transferPosting.EmpId,
-                    OfficeId = transferPosting.CurrentOfficeId,
-                    DepartmentId = transferPosting.CurrentDepartmentId,
-                    SectionId = transferPosting.CurrentSectionId,
-                    DesignationId = transferPosting.CurrentDesignationId,
+                    //OfficeId = transferPosting.CurrentOfficeId,
+                    //DepartmentId = transferPosting.CurrentDepartmentId,
+                    //SectionId = transferPosting.CurrentSectionId,
+                    //DesignationId = transferPosting.CurrentDesignationId,
                     JoiningDate = transferPosting.CurrentDeptJoinDate,
                     ReleaseDate = transferPosting.JoiningDate?.AddDays(-1),
                     Remark = transferPosting.Remark,
                     IsActive = transferPosting.IsActive,
-                    OfficeName = transferPosting.CurrentOffice?.OfficeName,
+                    //OfficeName = transferPosting.CurrentOffice?.OfficeName,
                     DepartmentName = transferPosting.CurrentDepartment?.DepartmentName,
                     SectionName = transferPosting.CurrentSection?.SectionName,
                     DesignationName = transferPosting.CurrentDesignation?.DesignationSetup.Name
@@ -118,9 +118,9 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                 var mappedPromotionIncrement = empPormotionIncrement.Select(promotionIncrement => new EmpWorkHistoryDto
                 {
                     EmpId = promotionIncrement.EmpId,
-                    DepartmentId = promotionIncrement.CurrentDepartmentId,
-                    SectionId = promotionIncrement.CurrentSectionId,
-                    DesignationId = promotionIncrement.CurrentDesignationId,
+                    //DepartmentId = promotionIncrement.CurrentDepartmentId,
+                    //SectionId = promotionIncrement.CurrentSectionId,
+                    //DesignationId = promotionIncrement.CurrentDesignationId,
                     JoiningDate = promotionIncrement.CurrentDeptJoinDate,
                     ReleaseDate = promotionIncrement.EffectiveDate?.AddDays(-1),
                     Remark = promotionIncrement.Remark,

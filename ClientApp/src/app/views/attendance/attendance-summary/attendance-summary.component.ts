@@ -245,7 +245,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     var month;
     var day;
     var dateObj = new Date(formDateValue);
-    var dObj=dateObj.toLocaleDateString().split('/');
+    var dObj=dateObj.toLocaleDateString("en-US").split('/');
     month=parseInt(dObj[0]);
     day=parseInt(dObj[1]);
     if(month<10){

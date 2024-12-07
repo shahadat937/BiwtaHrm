@@ -18,22 +18,22 @@
           <form #attForm="ngForm" (submit)="onSubmit()">
             <c-row [gutter]="3">
               <c-col md="4">
-                <label cLabel for="title">Enter Name</label>     
+                <label cLabel for="title">Enter Name<span class="text-danger">*</span></label>     
                 <input #name="ngModel" required [(ngModel)]="deviceModel.title" cFormControl type="text" name="title" id="title">
                 @if (name.touched && name.invalid) {
                   <p><span class="text-danger">Name is required</span></p>
                 }
               </c-col>
               <c-col md="4">
-                <label cLabel for="sn">SN</label>     
-                <input [(ngModel)]="deviceModel.sn" required [readOnly]="this.deviceModel.sn!=null||IsUpdate" cFormControl type="text" name="sn" id="sn">
+                <label cLabel for="sn">SN<span class="text-danger">*</span></label>     
+                <input [(ngModel)]="deviceModel.sn" placeholder="Enter Serial Number" required [readOnly]="this.deviceModel.sn!=null||IsUpdate" cFormControl type="text" name="sn" id="sn">
               </c-col>
               <c-col md="4">
                 <label cLabel for="area">Enter Area</label>
-                <input cFormControl type="text" [(ngModel)]="deviceModel.area" name="area" id="area">
+                <input cFormControl type="text" [(ngModel)]="deviceModel.area" placeholder="Enter Area" name="area" id="area">
               </c-col>
               <c-col md="4">
-                <label cLabel for="timezone">Select Timezone</label>
+                <label cLabel for="timezone">Select Timezone<span class="text-danger">*</span></label>
                 <select #timeZoneRef = "ngModel" required cSelect [(ngModel)]="deviceModel.timezone" name="timezone" id="timezone">
                   <option [ngValue]="null">Select Timezone</option>
                   @for (item of Timezones; track $index) {
@@ -52,7 +52,7 @@
                 </select>
               </c-col>
               <c-col md="4">
-                <label cLabel for="status">Status</label>
+                <label cLabel for="status">Status<span class="text-danger">*</span></label>
                 <select cSelect [(ngModel)]="deviceModel.status" name="status" id="status">
                   <option [ngValue]="true">Active</option>
                   <option [ngValue]="false">Deactive</option>

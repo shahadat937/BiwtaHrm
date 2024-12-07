@@ -4,6 +4,7 @@
     </c-card-header>
     <c-card-body>
         <p-table
+        [loading]="attLoading"
         [tableStyle]="{'min-width': '50rem'}" 
         styleClass="p-datatable-sm"
         [value]="attendanceDevices">

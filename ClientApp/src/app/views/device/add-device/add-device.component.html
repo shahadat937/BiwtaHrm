@@ -4,6 +4,7 @@
     </c-card-header>
     <c-card-body>
         <p-table
+        [loading]="loading"
         [tableStyle]="{'min-width': '50rem'}" 
         styleClass="p-datatable-sm"
         [value]="pendingDevice">

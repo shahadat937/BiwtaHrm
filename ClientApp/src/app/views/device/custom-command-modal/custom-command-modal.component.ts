@@ -3,6 +3,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AttendanceDeviceService } from '../service/attendance-device.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { cilWarning } from '@coreui/icons';
 
 @Component({
   selector: 'app-custom-command-modal',
@@ -16,6 +17,7 @@ export class CustomCommandModalComponent implements OnInit, OnDestroy {
   deviceId: number;
   deviceName: string;
   command: string;
+  icons = {cilWarning}
   constructor(
     private bsModalRef: BsModalRef,
     private modalService: BsModalService,

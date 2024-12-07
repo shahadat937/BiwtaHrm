@@ -16,6 +16,7 @@ export class AddLeaveModel {
     approvedBy: number | null;
     reviewerRemark: string;
     approverRemark: string;
+    isOldLeave: boolean;
 
 
 
@@ -37,6 +38,7 @@ export class AddLeaveModel {
         this.approvedBy = null;
         this.reviewerRemark = "";
         this.approverRemark = "";
+        this.isOldLeave = false;
     }
 
 }

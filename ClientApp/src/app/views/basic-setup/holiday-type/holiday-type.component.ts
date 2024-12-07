@@ -20,7 +20,8 @@ export class HolidayTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   headerText: string | undefined;
   @ViewChild('HolidayTypeForm', { static: true }) HolidayTypeForm!: NgForm;
   loading = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'holidayTypeName', 'isActive', 'remark','Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -42,7 +43,8 @@ export class HolidayTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
   }
   handleRouteParams() {
-    this.route.paramMap.subscribe((params) => {
+    this.subscription.push(
+  this.route.paramMap.subscribe((params) => {
       const id = params.get('holidayTypeId');
       if (id) {
         this.headerText = 'Update Holiday Type';
@@ -55,7 +57,9 @@ export class HolidayTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.headerText = 'Add New Holiday Type';
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+   
   }
   
   ngAfterViewInit() {
@@ -64,7 +68,7 @@ export class HolidayTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -75,11 +79,14 @@ export class HolidayTypeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   
   getALlYears() {
-    this.subscription = this.holidayTypeService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.holidayTypeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   
@@ -117,7 +124,8 @@ export class HolidayTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.holidayTypeService.update(id, form.value)
       : this.holidayTypeService.submit(form.value);
     
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -136,10 +144,13 @@ export class HolidayTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       
     this.loading = false;
-    });
+    })
+    )
+     
   }
 
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -163,6 +174,8 @@ export class HolidayTypeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

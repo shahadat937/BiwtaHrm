@@ -26,7 +26,8 @@ export class SubDepartmentComponent {
   btnText: string | undefined;
   loading = false;
   @ViewChild('SubDepartmentForm', { static: true }) SubDepartmentForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'subDepartmentName',
@@ -78,7 +79,7 @@ export class SubDepartmentComponent {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -111,17 +112,23 @@ export class SubDepartmentComponent {
     this.router.navigate(['/bascisetup/subDepartment']);
   }
   getAllSubDepartments() {
-    this.subscription = this.subDepartmentService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.subDepartmentService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+   
   }
  
   onSubDepartmentNamesChangeByDepartmentId(departmentId:number){
-    this.subscription=this.subDepartmentService.getSubDepartmentByDepartmentId(departmentId).subscribe((data) => { 
+    this.subscription.push(
+    this.subDepartmentService.getSubDepartmentByDepartmentId(departmentId).subscribe((data) => { 
         this.subDepartments = data;
-      });
+      })
+    )
+    
   }
 
   // loadDepartments() { 
@@ -139,7 +146,8 @@ export class SubDepartmentComponent {
       ? this.subDepartmentService.update(id, form.value)
       : this.subDepartmentService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? 'Update' : 'Successfully';
         this.toastr.success('', `${response.message}`, {
@@ -157,9 +165,12 @@ export class SubDepartmentComponent {
         });
       }
       this.loading = false;
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -180,6 +191,8 @@ export class SubDepartmentComponent {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

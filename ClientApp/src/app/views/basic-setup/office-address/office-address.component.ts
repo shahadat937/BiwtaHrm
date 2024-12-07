@@ -42,7 +42,8 @@ export class OfficeAddressComponent implements OnInit, OnDestroy {
   wards: SelectedModel[] = [];
   btnText: string | undefined;
   @ViewChild('OfficeAddressForm', { static: true }) OfficeAddressForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'officeAddressName', 'isActive', 'Action'];
   loading = false;
   dataSource = new MatTableDataSource<any>();
@@ -96,7 +97,7 @@ export class OfficeAddressComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -149,58 +150,85 @@ export class OfficeAddressComponent implements OnInit, OnDestroy {
   }
 
   getAllOfficeAddresss() {
-    this.subscription = this.officeAddressService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.officeAddressService.getAll().subscribe((item) => {
       
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+     
   }
 
 
   loadoffices() { 
-    this.subscription=this.officeService.selectGetoffice().subscribe((data) => { 
+   this.subscription.push(
+    this.officeService.selectGetoffice().subscribe((data) => { 
       this.offices = data;
-    });
+    })
+   )
+    
   }
   
   onDivisionNamesChangeByCounterId(counterId:number){
-    this.subscription=this.divisionService.getDivisionByCountryId(counterId).subscribe((data) => { 
+    this.subscription.push(
+    this.divisionService.getDivisionByCountryId(counterId).subscribe((data) => { 
         this.divisions = data;
-      });
+      })
+    )
+    
   }
   onDistrictNamesChangeByDivisionId(divisionId:number){
-    this.subscription=this.districtService.getDistrictByDivisionId(divisionId).subscribe((data) => { 
+    this.subscription.push(
+    this.districtService.getDistrictByDivisionId(divisionId).subscribe((data) => { 
         this.districts = data;
  
-      });
+      })
+    )
+    
   }
   onUpazilaNamesChangeByDistrictId(districtId:number){
-    this.subscription=this.uapzilaService.getUpapzilaByDistrictId(districtId).subscribe((data) => { 
+    this.subscription.push(
+    this.uapzilaService.getUpapzilaByDistrictId(districtId).subscribe((data) => { 
         this.upazilas = data;
-      });
+      })
+    )
+   
   }
   onThanaNamesChangeByUpazilaId(upazilaId:number){
- this.subscription=this.thanaService.getthanaNamesByUpazilaId(upazilaId).subscribe((data) => { 
+    this.subscription.push(
+    this.thanaService.getthanaNamesByUpazilaId(upazilaId).subscribe((data) => { 
      this.thanas = data;
     
-   });
+   })
+    )
+ 
 }
 onUnionNamesChangeByThanaId(thanaId:number){
-  this.subscription=this.unionService.getUnionNamesByThanaId(thanaId).subscribe((data) => { 
+  this.subscription.push(
+  this.unionService.getUnionNamesByThanaId(thanaId).subscribe((data) => { 
       this.unions = data;
-        });
+        })
+  )
+  
  }
  onWardNamesChangeByUnionId(unionId:number){
-  this.subscription=this.wardService.getWardNamesByUnionId(unionId).subscribe((data) => { 
+  this.subscription.push(
+  this.wardService.getWardNamesByUnionId(unionId).subscribe((data) => { 
       this.wards = data;
       
-        });
+        })
+  )
+ 
  }
   loadcountris() { 
-    this.subscription=this.countryService.selectGetCountry().subscribe((data) => { 
+    this.subscription.push(
+    this.countryService.selectGetCountry().subscribe((data) => { 
       this.countris = data;
-    });
+    })
+    )
+    
   }
 
 
@@ -212,7 +240,8 @@ onUnionNamesChangeByThanaId(thanaId:number){
       ? this.officeAddressService.update(id, form.value)
       : this.officeAddressService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -232,7 +261,9 @@ onUnionNamesChangeByThanaId(thanaId:number){
       }
       this.loading = false;
 
-    });
+    })
+    )
+      
   }
   delete(element: any) {
     this.confirmService

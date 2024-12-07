@@ -28,7 +28,8 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
   percentage = 0;
   btnText: string | undefined;
   @ViewChild('SubjectForm', { static: true }) SubjectForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'subjectName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -65,7 +66,7 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -113,11 +114,14 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getALlSubjects() {
-    this.subscription = this.subjectService.getAll().subscribe((item) => {
+   this.subscription.push(
+    this.subjectService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+   )
+    
   }
 
  
@@ -128,7 +132,8 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.subjectService.update(id, form.value)
       : this.subjectService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? 'Update' : 'Successfully';
         this.toastr.success('', `${response.message}`, {
@@ -144,9 +149,12 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -172,6 +180,8 @@ export class SubjectComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

@@ -42,7 +42,8 @@ export class FieldPrintComponent {
   jobHistory: JobHistoryModel[];
   trainingHistory: any[];
   educationInfos: EmpEducationInfoModule[];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   selectedEduInfos : EmpEducationInfoModule[] = [];
   icons = {cilX};
 
@@ -70,14 +71,15 @@ export class FieldPrintComponent {
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     } 
   }
 
 
   getEducationInfo(reset: boolean) {
     if(this.empId!=0&&this.fieldData.htmlInputType=="educationinfo") {
-      this.subscription = this.empEducationInfoService.findByEmpId(this.empId).subscribe({
+      this.subscription.push(
+      this.empEducationInfoService.findByEmpId(this.empId).subscribe({
         next: response => {
           this.educationInfos = response;
           if(reset&&this.IsReadonly==false) {
@@ -87,6 +89,8 @@ export class FieldPrintComponent {
           }
         }
       })
+      )
+      
     }
   }
 
@@ -125,7 +129,8 @@ export class FieldPrintComponent {
     if(this.empId !=0 && this.fieldData.htmlInputType=="trainingHistory") {
       let params = new HttpParams;
       params = params.set("empId", this.empId);
-      this.subscription = this.empTrainingInfoService.getEmpTrainingInfo(params).subscribe({
+      this.subscription.push(
+        this.empTrainingInfoService.getEmpTrainingInfo(params).subscribe({
         next: response => {
           if(response) {
             this.trainingHistory = response;
@@ -138,6 +143,8 @@ export class FieldPrintComponent {
 
         }
       })
+      )
+      
     }
   }
 }

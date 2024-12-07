@@ -37,7 +37,8 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   upperDepartmentView = false;
   loading = false;
   @ViewChild('DepartmentForm', { static: true }) DepartmentForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo', 
     // 'officeName',
@@ -70,6 +71,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('departmentId');
       if (id) {
@@ -91,7 +93,9 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
         this.BtnText = " Add Department";
         this.departmentService.departments.officeId = null;
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -99,7 +103,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -109,6 +113,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   
   UserFormView() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('departmentId');
       if(id){
@@ -139,7 +144,9 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
           this.visible = false;
         }
       }
-    });
+    })
+    )
+   
   }
 
   toggleCollapse() {
@@ -198,17 +205,25 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getALlDepartments() {
-    this.subscription = this.departmentService.getAll().subscribe((item) => {
+    // this.subscription = 
+    this.subscription.push(
+    this.departmentService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   
   loadOffice() { 
-    this.subscription=this.officeService.selectGetoffice().subscribe((data) => { 
+    // this.subscription=
+    this.subscription.push(
+    this.officeService.selectGetoffice().subscribe((data) => { 
       this.offices = data;
-    });
+    })
+    )
+    
   }
 
   // onOfficeSelect(officeId : number){
@@ -225,9 +240,13 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
   // }
 
   getAllSelectedDepartments(){
-    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+    this.departmentService.getSelectedAllDepartment().subscribe((res) => {
           this.departments = res;
-    });
+    })
+    )
+    
   }
 
   onOfficeSelectGetDepartment(officeId : number){
@@ -235,11 +254,14 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getALlDepartments();
     }
     else {
+      this.subscription.push(
       this.departmentService.onOfficeSelectGetDepartment(+officeId).subscribe((res) => {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.matSort;
-      });
+      })
+      )
+     
     }
   }
 
@@ -251,7 +273,9 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.departmentService.update(id, form.value)
       : this.departmentService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    // this.subscription = 
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -268,13 +292,17 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+    )
+   
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.departmentService.delete(element.departmentId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -291,8 +319,12 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
                 positionClass: 'toast-top-right',
               });
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+    )
+    
   }
 }

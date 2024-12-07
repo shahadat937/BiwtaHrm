@@ -16,7 +16,8 @@ export class ViewFormRecordComponent implements OnInit, OnDestroy{
   loading: boolean;
   @Input() formRecordId: number;
   @Input() department: string;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   formData: any;
   companyTitle :string = "Bangladesh Inland Water Transport Authority"
   address = "141-143, Motijheel Commerial Area, Dhaka-1000"
@@ -44,12 +45,13 @@ export class ViewFormRecordComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     } 
   }
 
   getFormData() {
-    this.formRecordService.getFormData(this.formRecordId).subscribe({
+    this.subscription.push(
+      this.formRecordService.getFormData(this.formRecordId).subscribe({
       next: (response)=> {
         this.formData = response;
         console.log(this.formData)
@@ -62,6 +64,8 @@ export class ViewFormRecordComponent implements OnInit, OnDestroy{
         this.loading=false;
       }
     })
+    )
+    
   }
 
   onHide() {

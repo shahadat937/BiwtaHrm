@@ -37,7 +37,8 @@ export class JobDetailsSetupComponent implements OnInit, OnDestroy, AfterViewIni
   headerText: string | undefined;
   @ViewChild('JobDetailsSetupForm', { static: true }) JobDetailsSetupForm!: NgForm;
   loading = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'prlAge', 'retirmentAge', 'orderStartDate', 'orderEndDate','isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -58,6 +59,7 @@ export class JobDetailsSetupComponent implements OnInit, OnDestroy, AfterViewIni
     this.handleRouteParams();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
@@ -72,7 +74,9 @@ export class JobDetailsSetupComponent implements OnInit, OnDestroy, AfterViewIni
         this.btnText = 'Submit';
         this.initaialReleaseType();
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -80,7 +84,7 @@ export class JobDetailsSetupComponent implements OnInit, OnDestroy, AfterViewIni
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -119,11 +123,14 @@ export class JobDetailsSetupComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   getAllJobDetailsSetup() {
-    this.subscription = this.jobDetailsSetupService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.jobDetailsSetupService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   onSubmit(form: NgForm): void {
     this.loading = true;
@@ -133,7 +140,8 @@ export class JobDetailsSetupComponent implements OnInit, OnDestroy, AfterViewIni
       ? this.jobDetailsSetupService.update(id, form.value)
       : this.jobDetailsSetupService.submit(form.value);
     
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -148,9 +156,12 @@ export class JobDetailsSetupComponent implements OnInit, OnDestroy, AfterViewIni
         });
       this.loading = false;
       }
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -174,6 +185,8 @@ export class JobDetailsSetupComponent implements OnInit, OnDestroy, AfterViewIni
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

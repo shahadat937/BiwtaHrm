@@ -15,7 +15,8 @@ import { EmpProfileComponent } from '../../employee/manage-employee/emp-profile/
 })
 export class OrganogramComponent implements OnInit, OnDestroy  {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   organograms:any[] = [];
   offices: OrganogramOfficeNameDto[] = [];
   departments: OrganogramDepartmentNameDto[] = [];
@@ -34,15 +35,18 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
   getOrganogram(){
-    this.subscription=this.organogramService.getOrganogramNamesOnly().subscribe((data: OrganogramDepartmentNameDto[]) => { 
+    this.subscription.push(
+    this.organogramService.getOrganogramNamesOnly().subscribe((data: OrganogramDepartmentNameDto[]) => { 
       this.organograms = data;
       this.departments = data;
-    });
+    })
+    )
+    
   }
   
   toggleOfficeExpand(officeName: string): void {

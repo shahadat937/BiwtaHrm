@@ -16,7 +16,8 @@ import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 })
 export class UpdateUserComponent  implements OnInit, OnDestroy {
   
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   empPromotionIncrement: EmpPromotionIncrement = new EmpPromotionIncrement();
   id: string = '';
   clickedButton: string = '';
@@ -58,7 +59,7 @@ export class UpdateUserComponent  implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -69,9 +70,12 @@ export class UpdateUserComponent  implements OnInit, OnDestroy {
     else {
       this.heading = "Change Password";
     }
+    this.subscription.push(
     this.userService.find(this.id).subscribe((res) => {
       this.UserForm?.form.patchValue(res);
-    });
+    })
+    )
+    
   }
 
   
@@ -128,7 +132,8 @@ export class UpdateUserComponent  implements OnInit, OnDestroy {
 
     action$ = this.clickedButton == 'UpdateUser' ? this.userService.update(id, form.value) :  this.userService.updatePassword(id, form.value);
 
-    this.subscription = action$.subscribe((response: any)  => {
+    this.subscription.push(
+    action$.subscribe((response: any)  => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -139,6 +144,8 @@ export class UpdateUserComponent  implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+    )
+    
   }
 }

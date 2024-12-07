@@ -20,7 +20,8 @@ export class DesignationSetupComponent implements OnInit, OnDestroy, AfterViewIn
   btnText: string = 'Submit';
   loading = false;
   @ViewChild('DesignationSetupForm', { static: true }) DesignationSetupForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'name', 'nameBangla', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -45,7 +46,7 @@ export class DesignationSetupComponent implements OnInit, OnDestroy, AfterViewIn
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -81,21 +82,27 @@ export class DesignationSetupComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   getDesignationSetupId(id: number){
-    this.subscription = this.designationSetupService.find(id).subscribe((item) => {
+    this.subscription.push(
+    this.designationSetupService.find(id).subscribe((item) => {
       if(item){
         this.btnText = "Update";
         this.DesignationSetupForm.form.patchValue(item);
         window.scrollTo(0, 0);
       }
-    });
+    })
+    )
+  
   }
 
   getAllDesignationSetup() {
-    this.subscription = this.designationSetupService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.designationSetupService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+   
   }
 
   onSubmit(form: NgForm): void {
@@ -106,7 +113,8 @@ export class DesignationSetupComponent implements OnInit, OnDestroy, AfterViewIn
       ? this.designationSetupService.update(id, form.value)
       : this.designationSetupService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -120,14 +128,18 @@ export class DesignationSetupComponent implements OnInit, OnDestroy, AfterViewIn
         });
       }
       this.loading = false;
-    });
+    })
+      )
+     
   }
 
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.designationSetupService.delete(element.id).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -142,8 +154,12 @@ export class DesignationSetupComponent implements OnInit, OnDestroy, AfterViewIn
               });
               console.log(err);
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+    )
+    
   }
 }

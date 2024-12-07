@@ -21,7 +21,8 @@ import { environment } from 'src/environments/environment';
 })
 export class ManageFormComponent implements OnInit, OnDestroy {
   loading: boolean ;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   @Input()
   filters: FormRecordFilter;
   @Input()
@@ -70,11 +71,14 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     };
     //this.appraisalRole.Receiver
 
-    this.authService.currentUser.subscribe(user => {
+    this.subscription.push(
+      this.authService.currentUser.subscribe(user => {
       if(user&&user.empId) {
         this.filters.empId = parseInt(user.empId);
       }
     })
+    )
+    
 
   }
 
@@ -83,11 +87,14 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-
+    if (this.subscription) {
+      this.subscription.forEach(subs=>subs.unsubscribe())
+    }
   }
 
   getFormRecord() {
-    this.formRecordService.getFormRecordFiltered(this.filters).subscribe({
+    this.subscription.push(
+      this.formRecordService.getFormRecordFiltered(this.filters).subscribe({
       next: (response)=> {
         this.formRecord = response;
         this.formRecord.forEach(item=> {
@@ -101,10 +108,13 @@ export class ManageFormComponent implements OnInit, OnDestroy {
 
       }
     })
+    )
+    
   }
 
   onDelete(recordId:number, index:number) {
-    this.confirmService.confirm('Delete Confirmation', 'Are you sure?').subscribe({
+    this.subscription.push(
+      this.confirmService.confirm('Delete Confirmation', 'Are you sure?').subscribe({
       next:(response)=> {
         if(response) {
           this.formRecordService.deleteRecordById(recordId).subscribe({
@@ -127,6 +137,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
         }
       }
     })
+    )
+    
   }
 
   onUpdate(formRecordId:number) {

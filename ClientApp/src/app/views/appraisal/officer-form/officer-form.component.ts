@@ -42,7 +42,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   @Input()
   submitButtonText: string;
   formData: any;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   currentSection:number ;
   empSubs: Subscription = new Subscription();
   empReqSub: Subscription = new Subscription();
@@ -95,16 +96,19 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     console.log(this.firstSection);
     console.log(this.lastSection);
     this.loading=true;
-
-    this.empService.getFilteredSelectedEmp(new HttpParams()).subscribe({
+    this.subscription.push(
+      this.empService.getFilteredSelectedEmp(new HttpParams()).subscribe({
       next: response => {
         this.EmpOption = response
       }
     })
+    )
+    
 
     if(this.formRecordId==0) {
       this.getFormInfo(); 
-      this.subscription=this.authService.currentUser.subscribe(user => {
+      this.subscription.push(
+        this.authService.currentUser.subscribe(user => {
         if(user&&user.empId) {
           let empId = parseInt(user.empId);
           this.empService.findByEmpId(empId).subscribe({
@@ -115,6 +119,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
           })
         }
       })
+      )
+      
     } else {
       this.getFormData();
     }
@@ -124,11 +130,12 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     } 
   }
 
   getFormInfo() {
+    this.subscription.push(
     this.officerFormService.getFormInfo(this.formId).subscribe({
       next: response => {
         this.formData=null;
@@ -141,7 +148,9 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       complete: () => {
         this.loading = false
       }
-    });
+    })
+    )
+    
   }
 
   onChange() {
@@ -182,7 +191,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     //}
     //this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]); 
     //this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
-    this.officerFormService.saveFormData(this.formData).subscribe({
+    this.subscription.push(
+      this.officerFormService.saveFormData(this.formData).subscribe({
       next: (response)=> {
         if(response.success) {
           this.toastr.success('',`${response.message}`, {
@@ -203,6 +213,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
         this.submitLoading=false;
       }
     })
+    )
+    
   }
 
   onUpdate(formRecordId:number) {
@@ -232,7 +244,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.empSubs = delay$.subscribe(data=> {
+    this.subscription.push(
+       this.empSubs = delay$.subscribe(data=> {
       this.empReqSub = this.formRecordService.empInfo(data).subscribe({
         next: response=> {
           if(response.success==true) {
@@ -251,6 +264,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
         }
       })
     })
+    )
+   
 
   }
 

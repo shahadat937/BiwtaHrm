@@ -11,7 +11,8 @@ import { HttpParams } from '@angular/common/http';
 })
 export class EmpDashboardComponent implements OnInit, OnDestroy {
   
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
 
   fromDate = new Date();
   toDate = new Date();
@@ -31,14 +32,17 @@ export class EmpDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = this.authService.currentUser.subscribe(data => {
+    this.subscription.push(
+    this.authService.currentUser.subscribe(data => {
       if(data==null) {
         return;
       }
       if(data.empId!=null) {
         this.empId = parseInt(data.empId);
       }
-    });
+    })
+    )
+     
 
     const startOfMonth = new Date(this.toDate.getFullYear(), this.toDate.getMonth(), 1);
     this.fromDate = startOfMonth;
@@ -49,7 +53,7 @@ export class EmpDashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if(this.subscription!=null) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -78,14 +82,17 @@ export class EmpDashboardComponent implements OnInit, OnDestroy {
     filter = filter.set("From", this.hrmdateResize(this.fromDate));
     filter = filter.set("To", this.hrmdateResize(this.toDate));
 
-    this.subscription = this.attendanceReportService.getEmpSummary(filter).subscribe(response=> {
+    this.subscription.push(
+    this.attendanceReportService.getEmpSummary(filter).subscribe(response=> {
       this.PresentText = response.totalPresent;
       this.AbsentText = response.totalAbsent;
       this.LateText = response.totalLate;
       this.WorkingDayText = response.totalWorkingDay;
       this.SiteVisitText = response.totalSiteVisit;
       this.OnLeaveText = response.totalOnLeave;
-    });
+    })
+    )
+    
   }
 
 }

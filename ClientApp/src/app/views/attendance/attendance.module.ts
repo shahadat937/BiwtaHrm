@@ -51,7 +51,9 @@ import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { SectionService } from '../basic-setup/service/section.service';
 import { DepartmentService } from '../basic-setup/service/department.service';
 import { MatTableModule } from '@angular/material/table';
-
+import { PrintAttReportComponent } from './attendance-report/print-att-report/print-att-report.component';
+import {NgxPrintModule} from 'ngx-print'
+import { LeaveTypeService } from '../basic-setup/service/leave-type.service';
 
 
 
@@ -66,7 +68,8 @@ import { MatTableModule } from '@angular/material/table';
     AttendanceSummaryComponent,
     HolidaySetupComponent,
     TimeFormatPipe,
-    ManageSiteVisitComponent
+    ManageSiteVisitComponent,
+    PrintAttReportComponent
   ],
   imports: [
     CommonModule,
@@ -101,8 +104,8 @@ import { MatTableModule } from '@angular/material/table';
     MultiSelectModule,
     PDropDownModule,
     MatTableModule,
-    MatSortModule
-
+    MatSortModule,
+    NgxPrintModule
 
   ],
   providers: [ 
@@ -116,7 +119,8 @@ import { MatTableModule } from '@angular/material/table';
     SiteVisitService,
     WorkdayService,
     SectionService,
-    DepartmentService
+    DepartmentService,
+    LeaveTypeService
   ],
 })
 export class AttendanceModule { }

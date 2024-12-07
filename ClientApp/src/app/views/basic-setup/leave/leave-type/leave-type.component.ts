@@ -61,9 +61,11 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
 
           this.leaveTypes[this.updateIndex].leaveTypeId = this.leaveTypeService.leaveTypes.leaveTypeId;
           this.leaveTypes[this.updateIndex].leaveTypeName = this.leaveTypeService.leaveTypes.leaveTypeName;
+          this.leaveTypes[this.updateIndex].shortName = this.leaveTypeService.leaveTypes.shortName;
           this.leaveTypes[this.updateIndex].remark = this.leaveTypeService.leaveTypes.remark;
           this.leaveTypes[this.updateIndex].isActive = this.leaveTypeService.leaveTypes.isActive;
           this.leaveTypes[this.updateIndex].elWorkDayCal = this.leaveTypeService.leaveTypes.elWorkDayCal;
+          this.leaveTypes[this.updateIndex].showReport = this.leaveTypeService.leaveTypes.showReport;
 
           this.onReset();
         } else {
@@ -135,6 +137,9 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
           curData.leaveTypeName = this.leaveTypeService.leaveTypes.leaveTypeName;
           curData.remark = this.leaveTypeService.leaveTypes.remark;
           curData.isActive = this.leaveTypeService.leaveTypes.isActive;
+          curData.elWorkDayCal = this.leaveTypeService.leaveTypes.elWorkDayCal;
+          curData.showReport = this.leaveTypeService.leaveTypes.showReport;
+          curData.shortName = this.leaveTypeService.leaveTypes.shortName;
 
           this.leaveTypes.push(curData)
           this.onReset();

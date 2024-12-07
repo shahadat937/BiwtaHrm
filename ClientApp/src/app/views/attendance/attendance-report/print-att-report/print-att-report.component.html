@@ -1,0 +1,61 @@
+<div class="p-2">
+    <div class="d-flex justify-content-center">
+        <div>
+        <h2 class="text-center">{{companyTitle}}</h2>
+        <h4 class="text-center">Attendance Report Auguest, 2024</h4>
+        </div>
+    </div>
+    <div class="report d-flex justify-content-center">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" rowspan="2">SL</th>
+                    @for (item of staticColumn; track $index) {
+                        <th scope="col" rowspan="2">{{item.header}}</th>
+                    }
+
+                    @for (item of dynamicColumn; track $index) {
+                        <th scope="col" rowspan="2">{{item.header}}</th>
+                    }
+                    <th scope="col" [colSpan]="leaveTypeReport.length + 1" class="text-center">Total</th>
+                </tr>
+                <tr>
+                    <th scope="col">L</th>
+                    @for (item of leaveTypeReport; track $index) {
+                        <th scope="col">{{item.shortName}}</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (rowData of tableData; track $index) {
+                    <tr>
+                        <td scope="col">{{$index+1}}</td>
+                        @for (column of staticColumn; track $index) {
+                            <td scope="col">{{rowData[column.field]}}</td>
+                        }
+                        @for (col of dynamicColumn; track $index) {
+                            <td>
+                                @if(col.offday==true) {
+                                    <span class="text-primary">WH</span>
+                                }
+                                @else if (rowData[col.field]==null||rowData[col.field]=='A') {
+                                    <!--<svg [cIcon]="icons.cibXPack" cTooltip="Hello World"></svg>-->
+                                    <span class="text-danger">A</span>
+                                } @else if(rowData[col.field]=="P") {
+                                    <!--<svg [cIcon]="icons.cibVerizon" cTooltip="Hello World"></svg><i class="cib-verizon"></i>-->
+                                    <span class="text-success">{{rowData[col.field]}}</span>
+                                } @else {
+                                    <span class="text-warning">{{rowData[col.field]}}</span>
+                                }
+                            </td>
+                        }
+                        <td scope="col">{{rowData['totalLate']}}</td>
+                        @for (item of leaveTypeReport; track $index) {
+                            <td scope="col">{{rowData['leaveReport'][item.leaveTypeId]}}</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

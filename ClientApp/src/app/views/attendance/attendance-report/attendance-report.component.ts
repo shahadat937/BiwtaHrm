@@ -15,6 +15,8 @@ import { SectionService } from '../../basic-setup/service/section.service';
 import { DepartmentService } from '../../basic-setup/service/department.service';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { Role } from 'src/app/core/models/role';
+import { LeaveTypeService } from '../../basic-setup/service/leave-type.service';
+import { xor } from 'lodash-es';
 
 
 @Component({
@@ -30,6 +32,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   staticColumnAfter: any[] = [
     {"field":"totalLate", "header":"Total Late"}
   ]
+
+  leaveTypesReport: any[];
 
   loading:boolean = false;
   icons = {cibVerizon,cibXPack};
@@ -59,6 +63,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     private departmentService: DepartmentService,
     private SectionService: SectionService,
     private AtdReportService: AttendanceReportEmpService,
+    private leaveTypeService: LeaveTypeService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -72,6 +77,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.selectedSection = null;
     this.rangeDates = null;
     this.isUser = false;
+    this.leaveTypesReport = [];
     this.subscription = this.authService.currentUser.subscribe(data => {
       if(data.empId!=null) {
         this.selectedEmp = parseInt(data.empId);
@@ -84,6 +90,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllDepartment();
+    this.getLeaveTypeForReport();
     this.AtdReportService.getEmpOption().subscribe({
       next: response => {
         this.EmployeeOption = response;
@@ -178,7 +185,16 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
             });
 
             result = result.map(data => ({...data,"name":data.firstName+' '+data.lastName}))
-            this.tableData = result;
+            this.subscription = this.leaveTypeService.getTakenLeaveReport(result.map(x=>x.empId)).subscribe({
+              next: response => {
+                var leaveReportMap = new Map(response.map(x => [x.empId,x.leaveTypesCount]));
+                result = result.map(x => ({
+                  ...x,
+                  leaveReport: leaveReportMap.get(x.empId)??null
+                }))
+                this.tableData = result;
+              }
+            })
             //this.reset();
           }
         }, err=> {
@@ -188,6 +204,15 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
       }
     })
 
+  }
+
+
+  getLeaveTypeForReport() {
+    this.subscription = this.leaveTypeService.getLeaveTypes(true).subscribe({
+      next: response => {
+        this.leaveTypesReport = response;
+      }
+    })
   }
 
   reset() {

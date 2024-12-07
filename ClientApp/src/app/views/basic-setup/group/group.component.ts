@@ -29,7 +29,8 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
   percentage = 0;
   btnText: string | undefined;
   @ViewChild('GroupForm', { static: true }) GroupForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'examType', 'groupName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -45,6 +46,7 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
     private confirmService: ConfirmService,
     private toastr: ToastrService
   ) {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('groupId');
       if (id) {
@@ -56,7 +58,9 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   ngOnInit(): void {
     this.getALlGroups();
@@ -68,7 +72,7 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -118,17 +122,23 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getSelectedExamType() {
+    this.subscription.push(
     this.groupService.getSelectedExamType().subscribe((data) => {
       this.examTypes = data;
-    });
+    })
+    )
+   
   }
 
   getALlGroups() {
-    this.subscription = this.groupService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.groupService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+   
   }
   
   onSubmit(form: NgForm): void {
@@ -138,7 +148,8 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.groupService.update(id, form.value)
       : this.groupService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -154,9 +165,12 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -181,6 +195,8 @@ export class GroupComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

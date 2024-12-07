@@ -11,6 +11,7 @@ using AutoMapper;
 using System.Diagnostics.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Hrm.Application.DTOs.LeaveType;
+using Hrm.Application.Features.GradeType.Requests.Queries;
 
 namespace Hrm.Application.Features.LeaveType.Handlers.Queries
 {
@@ -27,9 +28,16 @@ namespace Hrm.Application.Features.LeaveType.Handlers.Queries
 
         public async Task<object> Handle(GetLeaveTypeRequest request, CancellationToken cancellationToken)
         {
-            var leaveTypes = await _LeaveTypeRepository.Where(x=>x.IsActive==true).ToListAsync();
+            var leaveTypes =  _LeaveTypeRepository.Where(x => x.IsActive == true);
 
-            var leaveTypeDtos = _mapper.Map<List<LeaveTypeDto>>(leaveTypes);
+            if(request.ShowReport.HasValue)
+            {
+                leaveTypes = leaveTypes.Where(x => x.ShowReport == request.ShowReport);
+            }
+
+            
+
+            var leaveTypeDtos = _mapper.Map<List<LeaveTypeDto>>(await leaveTypes.ToListAsync());
 
             return leaveTypeDtos;
         }

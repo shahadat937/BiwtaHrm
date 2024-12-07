@@ -13,7 +13,8 @@
             <mat-tab>
                 <ng-template mat-tab-label>Basic Information</ng-template>
                 <ng-container *ngIf="selectedTabIndex === 0">
-                    <app-basic-information [empId]="empId"></app-basic-information>
+                    <!-- <app-basic-information [empId]="empId"></app-basic-information> -->
+                    <app-emp-other-responsibility-single [empId]="empId" *ngIf="empId"></app-emp-other-responsibility-single>
                 </ng-container>
             </mat-tab>
         

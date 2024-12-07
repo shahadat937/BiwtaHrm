@@ -94,6 +94,7 @@ import { EmployeeListModalComponent } from './employee-list-modal/employee-list-
 import { UploadFingerPrintComponent } from './add-employee/employee-informations/upload-finger-print/upload-finger-print.component';
 import { DesignationService } from '../basic-setup/service/designation.service';
 import { EmpWorkHistorySingleComponent } from './add-employee/employee-informations/emp-work-history-single/emp-work-history-single.component';
+import { EmpOtherResponsibilitySingleComponent } from './add-employee/employee-informations/emp-other-responsibility-single/emp-other-responsibility-single.component';
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -131,6 +132,7 @@ import { EmpWorkHistorySingleComponent } from './add-employee/employee-informati
     EmployeeListModalComponent,
     UploadFingerPrintComponent,
     EmpWorkHistorySingleComponent,
+    EmpOtherResponsibilitySingleComponent,
   ],
   imports: [
     CommonModule,

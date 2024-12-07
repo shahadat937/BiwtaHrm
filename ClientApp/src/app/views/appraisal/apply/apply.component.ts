@@ -12,7 +12,8 @@ import { AppraisalRole } from '../enum/appraisal-role';
   styleUrl: './apply.component.scss'
 })
 export class ApplyComponent implements OnInit, OnDestroy{
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   currentGrade: number;
   officerGradeType: number;
   staffGradeType: number;
@@ -30,10 +31,12 @@ export class ApplyComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.loading = true;
-    this.subscription = this.authService.currentUser.subscribe(user => {
+    this.subscription.push(
+    this.authService.currentUser.subscribe(user => {
       if(user!=null&&user.empId!=null) {
         const empId = parseInt(user.empId);
-        this.subscription = this.gradeService.getByEmpId(empId).subscribe({
+        this.subscription.push(
+          this.gradeService.getByEmpId(empId).subscribe({
           next: response => {
             if(response) {
               this.currentGrade = response.gradeTypeId;
@@ -46,16 +49,20 @@ export class ApplyComponent implements OnInit, OnDestroy{
             this.loading = false;
           }
         }) 
+        )
+        
       } else {
         this.loading = false;
       }
-    });
+    })
+    )
+    
     this.loading = false;
   }
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 }

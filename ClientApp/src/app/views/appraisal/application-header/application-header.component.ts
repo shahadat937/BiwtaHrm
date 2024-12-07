@@ -26,7 +26,8 @@ export class ApplicationHeaderComponent implements OnInit, OnChanges, OnDestroy 
 
   @Input()
   empId: number;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   constructor(
     private empService: EmpBasicInfoService
   ) {
@@ -42,22 +43,28 @@ export class ApplicationHeaderComponent implements OnInit, OnChanges, OnDestroy 
 
   ngOnInit(): void {
     if(this.empId!=0) {
-      this.subscription = this.empService.findByEmpId(this.empId).subscribe({
+      this.subscription.push(
+        this.empService.findByEmpId(this.empId).subscribe({
         next: response => {
           this.department = response.departmentName
         }
       })
+      )
+      
     } 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['empId']) {
       if(this.empId!=0) {
-        this.subscription = this.empService.findByEmpId(this.empId).subscribe({
+        this.subscription.push(
+          this.empService.findByEmpId(this.empId).subscribe({
           next: response => {
             this.department = response.departmentName
           }
         })
+        )
+        
       } else {
         this.department = "";
       } 
@@ -67,7 +74,7 @@ export class ApplicationHeaderComponent implements OnInit, OnChanges, OnDestroy 
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 

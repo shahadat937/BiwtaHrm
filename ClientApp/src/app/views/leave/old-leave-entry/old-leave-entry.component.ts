@@ -340,6 +340,7 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
     this.loading = true;
     let formData = this.convertToFormData(this.addLeaveService.addLeaveModel,["AssociatedFiles"]);
     formData.set('status', '3');
+    formData.set('isOldLeave', 'true');
     this.addLeaveService.createLeaveRequest(formData).subscribe({
       next: response=> {
         if(response.success==true) {

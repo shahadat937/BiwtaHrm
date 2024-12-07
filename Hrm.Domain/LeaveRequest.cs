@@ -28,6 +28,7 @@ namespace Hrm.Domain
         public int? ApprovedBy { get; set; }
         public string? ReviewerRemark {  get; set; }
         public string? ApproverRemark {  get; set; }
+        public bool? IsOldLeave {  get; set; }
 
         public EmpBasicInfo Employee {get; set;}
         public LeaveType LeaveType {get; set;}

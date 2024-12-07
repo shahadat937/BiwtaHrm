@@ -11,6 +11,6 @@ namespace Hrm.Application.Features.EmpWorkHistories.Requests.Commands
 {
     public class CreateEmpWorkHistoryCommand : IRequest<BaseCommandResponse>
     {
-        public CreateEmpWorkHistoryDto EmpWorkHistoryDto { get; set; }
+        public List<CreateEmpWorkHistoryDto> EmpWorkHistoryDto { get; set; }
     }
 }

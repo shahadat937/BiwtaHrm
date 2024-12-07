@@ -28,23 +28,29 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(CreateEmpWorkHistoryCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
+            int empId = 0;
 
-                if (request.EmpWorkHistoryDto.Id == 0 )
+            foreach (var item in request.EmpWorkHistoryDto)
+            {
+                empId = item.EmpId ?? 0;
+                if (item.Id == 0)
                 {
-                    var EmpWorkHistory = _mapper.Map<EmpWorkHistory>(request.EmpWorkHistoryDto);
+                    var EmpWorkHistory = _mapper.Map<EmpWorkHistory>(item);
 
                     EmpWorkHistory = await _unitOfWork.Repository<EmpWorkHistory>().Add(EmpWorkHistory);
                 }
                 else
                 {
-                    var EmpWorkHistory = await _unitOfWork.Repository<EmpWorkHistory>().Get(request.EmpWorkHistoryDto.Id);
+                    var EmpWorkHistory = await _unitOfWork.Repository<EmpWorkHistory>().Get(item.Id);
 
-                    _mapper.Map(request.EmpWorkHistoryDto, EmpWorkHistory);
+                    _mapper.Map(item, EmpWorkHistory);
 
                     await _unitOfWork.Repository<EmpWorkHistory>().Update(EmpWorkHistory);
                 }
+            }
+            IQueryable<EmpWorkHistory> EmpWorkHistories = _EmpPersonalInfoRepository.Where(x => x.EmpId == empId);
 
-            if (request.EmpWorkHistoryDto.Id != 0)
+            if (EmpWorkHistories.Any())
             {
                 response.Success = true;
                 response.Message = "Update Successful";

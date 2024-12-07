@@ -1156,25 +1156,25 @@ namespace Hrm.Persistence
                     .WithMany(e => e.EmpWorkHistory)
                     .HasForeignKey(e => e.EmpId);
 
-                entity.HasOne(e => e.Office)
-                    .WithMany(e => e.EmpWorkHistory)
-                    .HasForeignKey(e => e.OfficeId);
+                //entity.HasOne(e => e.Office)
+                //    .WithMany(e => e.EmpWorkHistory)
+                //    .HasForeignKey(e => e.OfficeId);
 
-                entity.HasOne(e => e.Department)
-                    .WithMany(e => e.EmpWorkHistory)
-                    .HasForeignKey(e => e.DepartmentId);
+                //entity.HasOne(e => e.Department)
+                //    .WithMany(e => e.EmpWorkHistory)
+                //    .HasForeignKey(e => e.DepartmentId);
 
-                entity.HasOne(e => e.Section)
-                    .WithMany(e => e.EmpWorkHistory)
-                    .HasForeignKey(e => e.SectionId);
+                //entity.HasOne(e => e.Section)
+                //    .WithMany(e => e.EmpWorkHistory)
+                //    .HasForeignKey(e => e.SectionId);
 
-                entity.HasOne(e => e.Designation)
-                    .WithMany(e => e.EmpWorkHistory)
-                    .HasForeignKey(e => e.DesignationId);
+                //entity.HasOne(e => e.Designation)
+                //    .WithMany(e => e.EmpWorkHistory)
+                //    .HasForeignKey(e => e.DesignationId);
 
-                entity.HasOne(e => e.DesignationSetup)
-                    .WithMany(e => e.EmpWorkHistory)
-                    .HasForeignKey(e => e.DesignationSetupId);
+                //entity.HasOne(e => e.DesignationSetup)
+                //    .WithMany(e => e.EmpWorkHistory)
+                //    .HasForeignKey(e => e.DesignationSetupId);
             });
 
             modelBuilder.Entity<EmpOtherResponsibility>(entity =>

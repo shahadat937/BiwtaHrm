@@ -28,6 +28,7 @@ namespace Hrm.Application.DTOs.LeaveRequest
         public string? ApproverRemark {  get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
+        public bool? IsOldLeave { get; set; }
 
         public string? EmpFirstName { get; set; }
         public string? EmpLastName { get; set; }

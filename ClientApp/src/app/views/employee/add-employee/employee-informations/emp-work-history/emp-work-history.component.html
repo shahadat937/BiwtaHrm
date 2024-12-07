@@ -14,7 +14,7 @@
                                 <div class="form-group mb-2" cRow [gutter]="3">
                                     <input type="hidden" formControlName="id" />
                                     <input type="hidden" formControlName="empId" />
-
+<!-- 
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="departmentId{{i}}">Select Department</label>
                                         <select formControlName="departmentId" class="form-select" 
@@ -40,7 +40,45 @@
                                             <option *ngFor="let item of designationOptions[i]" value="{{item.id}}">{{item.name}}
                                             </option>
                                         </select>
+                                    </c-col> -->
+
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="departmentName{{i}}">Department<span class="text-danger">*</span></label>
+                                        <input type="text" formControlName="departmentName" class="form-control"
+                                            id="departmentName{{i}}" placeholder="Enter Department Name" />
                                     </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="departmentNameBangla{{i}}">Department Bangla</label>
+                                        <input type="text" formControlName="departmentNameBangla" class="form-control"
+                                            id="departmentNameBangla{{i}}" placeholder="Enter Department Name Bangla" />
+                                    </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="sectionName{{i}}">Section</label>
+                                        <input type="text" formControlName="sectionName" class="form-control"
+                                            id="sectionName{{i}}" placeholder="Enter Section Name" />
+                                    </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="sectionNameBangla{{i}}">Section Bangla</label>
+                                        <input type="text" formControlName="sectionNameBangla" class="form-control"
+                                            id="sectionNameBangla{{i}}" placeholder="Enter Section Name Bangla" />
+                                    </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="designationName{{i}}">Designation</label>
+                                        <input type="text" formControlName="designationName" class="form-control"
+                                            id="designationName{{i}}" placeholder="Enter Designation Name" />
+                                    </c-col>
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="designationNameBangla{{i}}">Designation Bangla</label>
+                                        <input type="text" formControlName="designationNameBangla" class="form-control"
+                                            id="designationNameBangla{{i}}" placeholder="Enter Designation Name Bangla" />
+                                    </c-col>
+                                    
 
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="joiningDate{{i}}">Joining Date</label>

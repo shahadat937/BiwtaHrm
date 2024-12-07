@@ -85,8 +85,8 @@
                 <ng-template mat-tab-label>Employment History</ng-template>
                 <ng-container *ngIf="selectedTabIndex === 7">
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
-                    <!-- <app-emp-work-history [empId]="empId" *ngIf="empId"></app-emp-work-history> -->
-                    <app-emp-work-history-single [empId]="empId" *ngIf="empId"></app-emp-work-history-single>
+                    <app-emp-work-history [empId]="empId" *ngIf="empId"></app-emp-work-history>
+                    <!-- <app-emp-work-history-single [empId]="empId" *ngIf="empId"></app-emp-work-history-single> -->
                 </ng-container>
             </mat-tab>
         

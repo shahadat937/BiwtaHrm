@@ -27,7 +27,8 @@ export class SubBranchComponent {
   btnText: string | undefined;
   loading = false;
   @ViewChild('SubBranchForm', { static: true }) SubBranchForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'subBranchName',
@@ -55,6 +56,7 @@ export class SubBranchComponent {
     this.handleRouteParams();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('subBranchId');
       if (id) {
@@ -66,7 +68,9 @@ export class SubBranchComponent {
       } else {
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   SelectModelBranchs() {
     this.branchService.getSelectBranch().subscribe((data) => {
@@ -79,7 +83,7 @@ export class SubBranchComponent {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -112,18 +116,24 @@ export class SubBranchComponent {
     this.router.navigate(['/bascisetup/SubBranch']);
   }
   getAllSubBranchs() {
-    this.subscription = this.subBranchsService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.subBranchsService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
 
   onSubBranchNamesChangeByOfficeBranchId(officeBranchId:number){
-    this.subscription=this.subBranchsService.getSubBranchByOfficeBranchId(officeBranchId).subscribe((data) => { 
+    this.subscription.push(
+      this.subBranchsService.getSubBranchByOfficeBranchId(officeBranchId).subscribe((data) => { 
         this.subBranchs = data;
-      });
+      })
+    )
+    
   }
 
   onSubmit(form: NgForm): void {
@@ -134,7 +144,8 @@ export class SubBranchComponent {
       ? this.subBranchsService.update(id, form.value)
       : this.subBranchsService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? 'Update' : 'Successfully';
         this.toastr.success('', `${response.message}`, {
@@ -152,9 +163,12 @@ export class SubBranchComponent {
         });
       }
       this.loading = false;
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -175,6 +189,8 @@ export class SubBranchComponent {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

@@ -31,7 +31,8 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   loading = false;
   @ViewChild('GradeForm', { static: true }) GradeForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'gradeName',
@@ -64,27 +65,39 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('gradeId');
       if (id) {
         this.btnText = 'Update';
+        this.subscription.push(
         this.gradeService.find(+id).subscribe((res) => {
           this.GradeForm?.form.patchValue(res);
-        });
+        })
+        )
+        
       } else {
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   GetModelGradeClass() {
+    this.subscription.push(
     this.gradeServiceClass.getSelectedGradeClass().subscribe((res) => {
       this.gradeClass = res;
-    });
+    })
+    )
+    
   }
   GetModelGradeType() {
-    this.gradeTypeService.getSelectGradeType().subscribe((res) => {
+    this.subscription.push(
+      this.gradeTypeService.getSelectGradeType().subscribe((res) => {
       this.gradeType = res;
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -92,7 +105,7 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -127,11 +140,14 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/officeSetup/grade']);
   }
   getALlGrades() {
-    this.subscription = this.gradeService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.gradeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+   
   }
   onSubmit(form: NgForm): void {
     this.loading = true;
@@ -141,7 +157,8 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.gradeService.update(id, form.value)
       : this.gradeService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+   this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -159,14 +176,18 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+   )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.gradeService.delete(element.gradeId).subscribe(
+          this.subscription.push(
+         this.gradeService.delete(element.gradeId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {
@@ -175,7 +196,7 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
               }
               this.toastr.success('Delete sucessfully ! ', ` `, {
                 positionClass: 'toast-top-right',
-              });
+              })
             },
             (err) => {
               this.toastr.error('Somethig Wrong ! ', ` `, {
@@ -183,8 +204,12 @@ export class GradeComponent implements OnInit, OnDestroy, AfterViewInit {
               });
               console.log(err);
             }
-          );
+          )
+          )
+         
         }
-      });
+      })
+    )
+    
   }
 }

@@ -18,7 +18,8 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   loading = false;
   @ViewChild('HairColorForm', { static: true }) HairColorForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'hairColorName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -39,17 +40,23 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('hairColorId');
       if (id) {
         this.btnText = 'Update';
+        this.subscription.push(
         this.hairColorService.find(+id).subscribe((res) => {
           this.HairColorForm?.form.patchValue(res);
-        });
+        })
+        )
+       
       } else {
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+   
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -57,7 +64,7 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -90,12 +97,15 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAllHairColors() {
-    this.subscription = this.hairColorService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.hairColorService.getAll().subscribe((item) => {
       //console.log(item);
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   
   onSubmit(form: NgForm): void {
@@ -106,7 +116,8 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.hairColorService.update(id, form.value)
       : this.hairColorService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -125,9 +136,12 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.loading = false;
 
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -151,6 +165,8 @@ export class HairColorComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

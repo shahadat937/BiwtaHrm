@@ -28,30 +28,30 @@ namespace Hrm.Application.Features.EmpOtherResponsibilities.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(CreateEmpOtherResponsibilityCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
-            int empId = 0;
+            //int empId = 0;
 
-            foreach (var item in request.EmpOtherResponsibilityDto)
-            {
-                empId = item.EmpId ?? 0;
-                if (item.Id == 0 )
+            //foreach (var item in request.EmpOtherResponsibilityDto)
+            //{
+            //    empId = item.EmpId ?? 0;
+                if (request.EmpOtherResponsibilityDto.Id == 0)
                 {
-                    var EmpOtherResponsibility = _mapper.Map<EmpOtherResponsibility>(item);
+                    var EmpOtherResponsibility = _mapper.Map<EmpOtherResponsibility>(request.EmpOtherResponsibilityDto);
 
                     EmpOtherResponsibility = await _unitOfWork.Repository<EmpOtherResponsibility>().Add(EmpOtherResponsibility);
                 }
                 else
                 {
-                    var EmpOtherResponsibility = await _unitOfWork.Repository<EmpOtherResponsibility>().Get(item.Id);
+                    var EmpOtherResponsibility = await _unitOfWork.Repository<EmpOtherResponsibility>().Get(request.EmpOtherResponsibilityDto.Id);
 
-                    _mapper.Map(item, EmpOtherResponsibility);
+                    _mapper.Map(request.EmpOtherResponsibilityDto, EmpOtherResponsibility);
 
                     await _unitOfWork.Repository<EmpOtherResponsibility>().Update(EmpOtherResponsibility);
                 }
-            }
+            //}
 
-            IQueryable<EmpOtherResponsibility> EmpOtherResponsibilities = _EmpPersonalInfoRepository.Where(x => x.EmpId == empId);
+            //IQueryable<EmpOtherResponsibility> EmpOtherResponsibilities = _EmpPersonalInfoRepository.Where(x => x.EmpId == empId);
 
-            if (EmpOtherResponsibilities.Any())
+            if (request.EmpOtherResponsibilityDto.Id != 0)
             {
                 response.Success = true;
                 response.Message = "Update Successful";

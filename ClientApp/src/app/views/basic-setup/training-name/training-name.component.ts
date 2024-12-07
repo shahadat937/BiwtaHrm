@@ -26,7 +26,8 @@ export class TrainingNameComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('TrainingNameForm', { static: true }) TrainingNameForm!: NgForm;
   loading = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'trainingNames', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -66,7 +67,7 @@ export class TrainingNameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -99,11 +100,14 @@ export class TrainingNameComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getALlTrainingNames() {
-    this.subscription = this.trainingNameService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.trainingNameService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+     
   }
   
   onSubmit(form: NgForm): void {
@@ -114,7 +118,8 @@ export class TrainingNameComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.trainingNameService.update(id, form.value)
       : this.trainingNameService.submit(form.value);
     
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -133,7 +138,9 @@ export class TrainingNameComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       
     this.loading = false;
-    });
+    })
+    )
+      
   }
   delete(element: any) {
     this.confirmService

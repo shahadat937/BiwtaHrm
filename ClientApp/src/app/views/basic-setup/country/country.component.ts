@@ -24,7 +24,8 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   headerText: string | undefined;
   @ViewChild('CountryForm', { static: true }) CountryForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'countryName', 'isActive', 'Action'];
   loading = false;
   dataSource = new MatTableDataSource<any>();
@@ -47,6 +48,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('countryId');
       
@@ -61,7 +63,9 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
         this.headerText = 'Add Country';
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -69,7 +73,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -102,11 +106,14 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getALcountries() {
-    this.subscription = this.countryServices.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.countryServices.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   // onSubmit(form: NgForm) {
   //   this.countryServices.cachedData = [];
@@ -161,7 +168,8 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.countryServices.update(id, form.value)
       : this.countryServices.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -179,13 +187,17 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+      )
+    
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.countryServices.delete(element.countryId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -202,8 +214,12 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
               });
               console.log(err);
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+    )
+    
   }
 }

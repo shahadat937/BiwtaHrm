@@ -18,7 +18,8 @@ export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   headerText: string | undefined;
   @ViewChild('BankForm', { static: true }) BankForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'bankName', 'isActive', 'Action'];
   loading = false;
   dataSource = new MatTableDataSource<any>();
@@ -40,7 +41,8 @@ export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
   }
   handleRouteParams() {
-    this.route.paramMap.subscribe((params) => {
+    this.subscription.push(
+this.route.paramMap.subscribe((params) => {
       const id = params.get('bankId');
       if (id) {
         this.headerText = 'Update Bank Name'
@@ -53,7 +55,9 @@ export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
         this.headerText = 'Add Bank Name'
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -61,7 +65,7 @@ export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -94,11 +98,14 @@ export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAllBanks() {
-    this.subscription = this.bankService.getAll().subscribe((item) => {
+    this.subscription.push(
+this.bankService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   onSubmit(form: NgForm): void {
     this.loading = true;
@@ -108,7 +115,8 @@ export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.bankService.update(id, form.value)
       : this.bankService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -126,10 +134,13 @@ export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+      )
+    
   }
   delete(element: any) {
-    this.confirmService
+    this.subscription.push(
+this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
@@ -151,6 +162,8 @@ export class BankComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

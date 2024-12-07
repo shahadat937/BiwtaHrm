@@ -20,7 +20,8 @@ export class ResponsibilityTypeComponent implements OnInit, OnDestroy, AfterView
   btnText: string = 'Submit';
   loading = false;
   @ViewChild('ResponsibilityTypeForm', { static: true }) ResponsibilityTypeForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'name', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -45,7 +46,7 @@ export class ResponsibilityTypeComponent implements OnInit, OnDestroy, AfterView
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -79,21 +80,27 @@ export class ResponsibilityTypeComponent implements OnInit, OnDestroy, AfterView
   }
 
   getResponsibilityTypeById(id: number){
-    this.subscription = this.responsibilityTypeService.find(id).subscribe((item) => {
+    this.subscription.push(
+    this.responsibilityTypeService.find(id).subscribe((item) => {
       if(item){
         this.btnText = "Update";
         this.ResponsibilityTypeForm.form.patchValue(item);
         window.scrollTo(0, 0);
       }
-    });
+    })
+    )
+   
   }
 
   getAllResponsibilityType() {
-    this.subscription = this.responsibilityTypeService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.responsibilityTypeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   onSubmit(form: NgForm): void {
@@ -104,7 +111,8 @@ export class ResponsibilityTypeComponent implements OnInit, OnDestroy, AfterView
       ? this.responsibilityTypeService.update(id, form.value)
       : this.responsibilityTypeService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -118,10 +126,13 @@ export class ResponsibilityTypeComponent implements OnInit, OnDestroy, AfterView
         });
       }
       this.loading = false;
-    });
+    })
+      )
+     
   }
 
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -142,6 +153,8 @@ export class ResponsibilityTypeComponent implements OnInit, OnDestroy, AfterView
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

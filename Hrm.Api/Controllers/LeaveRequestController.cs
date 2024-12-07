@@ -87,6 +87,15 @@ public class LeaveRequestController:Controller
         return Ok(response);
     }
 
+    [HttpGet]
+    [Route("get-TakenLeaveReport")]
+    public async Task<ActionResult> GetTakenLeaveReport([FromQuery] DateTime StartDate, [FromQuery] DateTime EndDate, [FromQuery] List<int> EmpId)
+    {
+        var command = new GetTakenLeaveReportRequest { EmpId = EmpId, StartDate = StartDate, EndDate = EndDate };
+        var response = await _mediator.Send(command);
+        return Ok(response);
+    }
+
     [HttpPost]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]

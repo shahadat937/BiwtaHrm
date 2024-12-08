@@ -1,0 +1,28 @@
+.custom-content {
+    border: 1px solid black;
+    border-bottom: 0px;
+    padding: 3px;
+
+}
+
+
+.custom-no-margin, .custom-no-margin > * {
+    margin: 0px;
+}
+
+.custom-content > p {
+    margin: 0px;
+}
+.custom-table {
+    border: 1px solid black;
+    width: 100%;
+}
+
+.custom-table  tr,th,td {
+    border: 1px solid black;
+    text-align: center;
+}
+.custom-table thead > tr, thead> th {
+    border: 2px solid black;
+    font-weight: bold;
+}

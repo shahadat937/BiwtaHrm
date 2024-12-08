@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
 {
-    public class GetCombinedEmpWorkHistoryByEmpIdRequestHandler : IRequestHandler<GetCombinedEmpWorkHistoryByEmpIdRequest, List<EmpWorkHistoryDto>>
+    public class GetDateRangeCombinedEmpWorkHistoryByEmpIdRequestHandler : IRequestHandler<GetDateRangeCombinedEmpWorkHistoryByEmpIdRequest, List<EmpWorkHistoryDto>>
     {
 
         private readonly IHrmRepository<EmpWorkHistory> _EmpWorkHistoryRepository;
@@ -22,7 +22,7 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
         private readonly IHrmRepository<EmpPromotionIncrement> _EmpPromotionIncrementRepository;
         private readonly IHrmRepository<EmpJobDetail> _EmpJobDetailRepository;
         private readonly IMapper _mapper;
-        public GetCombinedEmpWorkHistoryByEmpIdRequestHandler(IHrmRepository<EmpWorkHistory> EmpWorkHistoryRepository, IMapper mapper, IHrmRepository<EmpOtherResponsibility> empOtherResponsibilityRepository, IHrmRepository<EmpTransferPosting> empTransferPostingRepository, IHrmRepository<EmpPromotionIncrement> empPromotionIncrementRepository, IHrmRepository<EmpJobDetail> empJobDetailRepository)
+        public GetDateRangeCombinedEmpWorkHistoryByEmpIdRequestHandler(IHrmRepository<EmpWorkHistory> EmpWorkHistoryRepository, IMapper mapper, IHrmRepository<EmpOtherResponsibility> empOtherResponsibilityRepository, IHrmRepository<EmpTransferPosting> empTransferPostingRepository, IHrmRepository<EmpPromotionIncrement> empPromotionIncrementRepository, IHrmRepository<EmpJobDetail> empJobDetailRepository)
         {
             _EmpWorkHistoryRepository = EmpWorkHistoryRepository;
             _mapper = mapper;
@@ -32,7 +32,7 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
             _EmpJobDetailRepository = empJobDetailRepository;
         }
 
-        public async Task<List<EmpWorkHistoryDto>> Handle(GetCombinedEmpWorkHistoryByEmpIdRequest request, CancellationToken cancellationToken)
+        public async Task<List<EmpWorkHistoryDto>> Handle(GetDateRangeCombinedEmpWorkHistoryByEmpIdRequest request, CancellationToken cancellationToken)
         {
             List<EmpWorkHistoryDto> combinedWorkHistory = new List<EmpWorkHistoryDto>();
 
@@ -200,7 +200,7 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                 combinedWorkHistory.Add(currentJobDetailsInfo);
             }
 
-            var sortedCombinedWorkHistory = combinedWorkHistory.OrderBy(x => x.JoiningDate).ToList();
+            var sortedCombinedWorkHistory = combinedWorkHistory.Where(x => x.JoiningDate !> request.EndDate && x.ReleaseDate !< request.StartDate).OrderBy(x => x.JoiningDate).ToList();
 
             return sortedCombinedWorkHistory;
         }

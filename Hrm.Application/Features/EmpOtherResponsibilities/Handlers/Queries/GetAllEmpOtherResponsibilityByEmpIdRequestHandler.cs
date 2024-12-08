@@ -40,6 +40,8 @@ namespace Hrm.Application.Features.EmpOtherResponsibilities.Handlers.Queries
                 return null;
             }
 
+            EmpOtherResponsibilities.OrderByDescending(x => x.ServiceStatus);
+
             List<EmpOtherResponsibilityDto> result = _mapper.Map<List<EmpOtherResponsibilityDto>>(EmpOtherResponsibilities);
 
             return result;

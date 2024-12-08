@@ -30,7 +30,7 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
         {
             var leavetypes = await _LeaveTypeRepo.Where(x => x.ShowReport == true).Select(x => x.LeaveTypeId).ToListAsync();
 
-            var attendance = _AttendanceRepo.Where(x => x.AttendanceDate >= DateOnly.FromDateTime(request.StartDate) && x.AttendanceDate <= DateOnly.FromDateTime(request.EndDate))
+            var attendance = _AttendanceRepo.Where(x => x.LeaveRequestId!=null && x.AttendanceDate >= DateOnly.FromDateTime(request.StartDate) && x.AttendanceDate <= DateOnly.FromDateTime(request.EndDate))
                 
                             .Include(x => x.LeaveRequest)
                             .AsQueryable();

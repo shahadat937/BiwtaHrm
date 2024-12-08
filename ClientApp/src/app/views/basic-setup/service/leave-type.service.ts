@@ -35,9 +35,11 @@ export class LeaveTypeService {
     return this.http.post<any>(this.baseUrl+"/leaveType/save-leaveType", leaveType);
   }
 
-  getTakenLeaveReport(EmpIds:number[]) : Observable<any[]> {
+  getTakenLeaveReport(EmpIds:number[],startDate:string, endDate:string) : Observable<any[]> {
     console.log(EmpIds);
     let params = new HttpParams();
+    params = params.set('startDate',startDate);
+    params = params.set('endDate', endDate);
     EmpIds.forEach(id => {
       params = params.append('empId',id);
     })

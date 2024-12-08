@@ -57,6 +57,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   selectedShift : number | null;
   selectedEmp: number | null;
   isUser: boolean ;
+  reportDate: Date;
 
   constructor(
     private authService: AuthService,
@@ -78,6 +79,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.rangeDates = null;
     this.isUser = false;
     this.leaveTypesReport = [];
+    this.reportDate = new Date();
     this.subscription = this.authService.currentUser.subscribe(data => {
       if(data.empId!=null) {
         this.selectedEmp = parseInt(data.empId);
@@ -165,8 +167,11 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     if(this.rangeDates==null) {
       return;
     }
-    params = params.set("From",this.getDate(this.rangeDates.getMonth(),this.rangeDates.getFullYear(),true));
-    params = params.set("To",this.getDate(this.rangeDates.getMonth(),this.rangeDates.getFullYear(),false));
+    this.reportDate = new Date(this.rangeDates.getFullYear(),this.rangeDates.getMonth());
+    let startDate = this.getDate(this.rangeDates.getMonth(),this.rangeDates.getFullYear(),true);
+    let endDate = this.getDate(this.rangeDates.getMonth(),this.rangeDates.getFullYear(),false)
+    params = params.set("From",startDate);
+    params = params.set("To",endDate);
     
     params = this.selectedOffice == null?params:params.set("OfficeId",this.selectedOffice);
     params = this.selectedDepartment == null? params: params.set("DepartmentId",this.selectedDepartment);
@@ -185,7 +190,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
             });
 
             result = result.map(data => ({...data,"name":data.firstName+' '+data.lastName}))
-            this.subscription = this.leaveTypeService.getTakenLeaveReport(result.map(x=>x.empId)).subscribe({
+            this.subscription = this.leaveTypeService.getTakenLeaveReport(result.map(x=>x.empId),startDate, endDate).subscribe({
               next: response => {
                 var leaveReportMap = new Map(response.map(x => [x.empId,x.leaveTypesCount]));
                 result = result.map(x => ({

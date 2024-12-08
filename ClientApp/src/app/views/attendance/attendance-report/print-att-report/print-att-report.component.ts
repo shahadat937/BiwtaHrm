@@ -19,11 +19,15 @@ export class PrintAttReportComponent {
   leaveTypeReport : any[];
   @Input()
   tableData: any[];
+
+  @Input()
+  reportDate: Date;
   constructor() {
     this.companyTitle = environment.companyTitle;
     this.staticColumn = [];
     this.dynamicColumn = [];
     this.tableData = [];
     this.leaveTypeReport = [];
+    this.reportDate = new Date();
   }
 }

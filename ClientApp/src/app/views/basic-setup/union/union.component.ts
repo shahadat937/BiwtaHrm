@@ -26,7 +26,8 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('UnionForm', { static: true }) UnionForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'unionName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -63,7 +64,7 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -103,17 +104,23 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   loadthanas() {
-    this.subscription =this.unionService.getThana().subscribe((data) => {
+    this.subscription.push(
+    this.unionService.getThana().subscribe((data) => {
       this.thanas = data;
-    });
+    })
+    )
+    
   }
 
   getAllUnions() {
-    this.subscription = this.unionService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.unionService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   // onSubmit(form: NgForm) {
   //   const id = this.UnionForm.form.get('unionId')?.value;
@@ -170,7 +177,8 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.unionService.update(id, form.value)
       : this.unionService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? 'Update' : 'Successfully';
         this.toastr.success('', `${response.message}`, {
@@ -186,7 +194,9 @@ export class UnionComponent implements OnInit, OnDestroy, AfterViewInit {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+    )
+      
   }
   delete(element: any) {
     this.confirmService

@@ -22,7 +22,8 @@ export class EmployeeTypeComponent {
   headerText: string | undefined;
   featurePermission : FeaturePermission = new FeaturePermission;
   @ViewChild('employeeTypeForm', { static: true }) employeeTypeForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'employeeTypeName',
@@ -49,20 +50,26 @@ export class EmployeeTypeComponent {
    this. getPermission()
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('employeeTypeId');
       if (id) {
         this.btnText = 'Update';
         this.headerText = 'Update Employee Type';
+        this.subscription.push(
         this.employeeTypeService.find(+id).subscribe((res) => {
           this.employeeTypeForm?.form.patchValue(res);
-        });
+        })
+        )
+       
       } else {
         this.resetForm();
         this.headerText = 'Add Employee Type';
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -70,7 +77,7 @@ export class EmployeeTypeComponent {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -79,6 +86,7 @@ export class EmployeeTypeComponent {
     this.dataSource.filter = filterValue;
   }
   getPermission(){
+    this.subscription.push(
     this.roleFeatureService.getFeaturePermission('employee-type').subscribe((item) => {
       this.featurePermission = item;
       if(item.viewStatus == true){
@@ -89,7 +97,9 @@ export class EmployeeTypeComponent {
         this.unauthorizeAccress()
         this.router.navigate(['/dashboard']);
       }
-    });
+    })
+    )
+    
   }
   unauthorizeAccress(){
     this.toastr.warning('Unauthorized Access', ` `, {
@@ -120,11 +130,14 @@ export class EmployeeTypeComponent {
   }
 
   getEmployeeTypes() {
-    this.subscription = this.employeeTypeService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.employeeTypeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   //  onSubmit(form:NgForm){
   //   this.employeeTypeService.cachedData = [];
@@ -168,7 +181,8 @@ export class EmployeeTypeComponent {
       ? this.employeeTypeService.update(id, form.value)
       : this.employeeTypeService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -184,7 +198,9 @@ export class EmployeeTypeComponent {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+      )
+   
     }
     else {
       this.unauthorizeAccress();
@@ -192,10 +208,12 @@ export class EmployeeTypeComponent {
   }
   delete(element: any) {
     if(this.featurePermission.delete == true){
+      this.subscription.push(
       this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.employeeTypeService.delete(element.employeeTypeId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -213,9 +231,13 @@ export class EmployeeTypeComponent {
               });
               console.log(err);
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+      )
+      
     }
     else {
       this.unauthorizeAccress();

@@ -19,7 +19,8 @@ export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   loading = false;
   @ViewChild('OccupationForm', { static: true }) OccupationForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'occupationName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -40,6 +41,7 @@ export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('occupationId');
       if (id) {
@@ -50,7 +52,9 @@ export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -58,7 +62,7 @@ export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -92,11 +96,15 @@ export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAllOccupations() {
-    this.subscription = this.occupationService.getAll().subscribe((item) => {
+ 
+    this.subscription.push(
+    this.occupationService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+   
   }
 
   onSubmit(form: NgForm): void {
@@ -107,7 +115,8 @@ export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.occupationService.update(id, form.value)
       : this.occupationService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -125,9 +134,12 @@ export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -151,6 +163,8 @@ export class OccupationComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+   
   }
 }

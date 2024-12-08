@@ -30,7 +30,8 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   loading = false;
   @ViewChild('ScaleForm', { static: true }) ScaleForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'scaleName',
@@ -82,7 +83,7 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -117,11 +118,14 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/officeSetup/scale']);
   }
   getALlScales() {
-    this.subscription = this.ScaleService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.ScaleService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+   
   }
   // onSubmit(form: NgForm) {
   //   this.ScaleService.cachedData = [];
@@ -164,7 +168,8 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.ScaleService.update(id, form.value)
       : this.ScaleService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? 'Update' : 'Successfully';
         this.toastr.success('', `${response.message}`, {
@@ -182,9 +187,12 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+    )
+     
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -208,6 +216,8 @@ export class ScaleComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

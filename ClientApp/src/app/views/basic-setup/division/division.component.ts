@@ -32,7 +32,8 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
   headerText: string | undefined;
   loading = false;
   @ViewChild('DivisionForm', { static: true }) DivisionForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo','countryName','divisionName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -55,20 +56,26 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('divisionId');
       if (id) {
         this.btnText = 'Update';
         this.headerText = 'Update Division';
+        this.subscription.push(
         this.devisionService.find(+id).subscribe((res) => {
           this.DivisionForm?.form.patchValue(res);
-        });
+        })
+        )
+        
       } else {
         this.resetForm();
         this.headerText = 'Add Division';
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   // loaddivisions() {
   //   console.log('division')
@@ -78,10 +85,13 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
   //   });
   // }
   SelectModelCountry() {
+    this.subscription.push(
     this.countryService.selectGetCountry().subscribe((data) => {
       //console.log(data);
       this.countrys = data;
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -89,7 +99,7 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -122,11 +132,14 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/addressSetup/division']);
   }
   getALlDivisions() {
-    this.subscription = this.devisionService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.devisionService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   // onSubmit(form: NgForm) {
   //   this.devisionService.cachedData = [];
@@ -169,7 +182,8 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.devisionService.update(id, form.value)
       : this.devisionService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -187,13 +201,17 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+      )
+   
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.devisionService.delete(element.divisionId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -211,8 +229,12 @@ export class DivisionComponent implements OnInit, OnDestroy, AfterViewInit {
               });
               console.log(err);
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+    )
+    
   }
 }

@@ -29,7 +29,8 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
   percentage = 0;
   btnText: string | undefined;
   @ViewChild('UpazilaForm', { static: true }) UpazilaForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo','districtName', 'upazilaName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -67,7 +68,7 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -125,11 +126,14 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getALlUpazilas() {
-    this.subscription = this.upazilaService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.upazilaService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   // onSubmit(form: NgForm) {
@@ -184,7 +188,8 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.upazilaService.update(id, form.value)
       : this.upazilaService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? 'Update' : 'Successfully';
         this.toastr.success('', `${response.message}`, {
@@ -200,7 +205,9 @@ export class UpazilaComponent implements OnInit, OnDestroy, AfterViewInit {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+    )
+      
   }
   delete(element: any) {
     this.confirmService

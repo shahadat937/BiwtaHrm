@@ -40,7 +40,8 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
   sectionView = false;
   loading = false;
   @ViewChild('DesignationForm', { static: true }) DesignationForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     // 'officeName',
@@ -79,6 +80,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getSelectDesignationSetupName();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('designationId');
       if (id) {
@@ -87,11 +89,14 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         this.headerText = "Update Designation";
         this.BtnText = " Hide Form";
         this.buttonIcon = "cilTrash";
+        this.subscription.push(
         this.designationService.find(+id).subscribe((res) => {
           // this.onOfficeSelect(res.officeId);
           this.onOfficeAndDepartmentSelect(res.departmentId);
           this.DesignationForm?.form.patchValue(res);
-        });
+        })
+        )
+        
       } else {
         this.resetForm();
         this.btnText = 'Submit';
@@ -101,7 +106,9 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         this.BtnText = " Add Designation";
         this.designationService.designation.officeId = null;
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -109,7 +116,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -119,6 +126,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   
   UserFormView() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('designationId');
       if(id){
@@ -149,7 +157,9 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
           this.visible = false;
         }
       }
-    });
+    })
+    )
+    
   }
   toggleCollapse() {
     this.handleRouteParams();
@@ -198,21 +208,29 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getALlDesignations() {
-    this.subscription = this.designationService.getAll().subscribe((item) => {
+    // this.subscription = 
+    this.subscription.push(
+    this.designationService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   loadOffice() { 
-    this.subscription=this.officeService.selectGetoffice().subscribe((data) => { 
+    this.subscription.push(
+    this.officeService.selectGetoffice().subscribe((data) => { 
       this.offices = data;
-    });
+    })
+    )
+   
   }
   
   onOfficeSelect(officeId : number){
     this.designationService.designation.departmentId = null;
+    this.subscription.push(
     this.departmentService.getSelectedDepartmentByOfficeId(+officeId).subscribe((res) => {
       this.departments = res;
       if(res.length>0){
@@ -221,13 +239,18 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       else{
         this.upperDepartmentView = false;
       }
-    });
+    })
+    )
+    
   }
 
   getSelectDesignationSetupName() { 
-    this.subscription=this.designationService.getSelectDesignationSetupName().subscribe((data) => { 
+    this.subscription.push(
+    this.designationService.getSelectDesignationSetupName().subscribe((data) => { 
       this.designations = data;
-    });
+    })
+    )
+    
   }
   
   onOfficeSelectGetDesignation(officeId : number){
@@ -235,18 +258,24 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getALlDesignations();
     }
     else {
-      this.subscription = this.designationService.getDesignationsByOfficeId(+officeId).subscribe((item) => {
+      this.subscription.push(
+      this.designationService.getDesignationsByOfficeId(+officeId).subscribe((item) => {
         this.dataSource = new MatTableDataSource(item);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.matSort;
-      });
+      })
+      )
+      
     }
   }
   
   getAllSelectedDepartments(){
-    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+    this.subscription.push(
+    this.departmentService.getSelectedAllDepartment().subscribe((res) => {
         this.departments = res;
-    });
+    })
+    )
+   
   }
   
   onDepartmentSelectGetDesignation(officeId : number, departmentId : number){
@@ -254,17 +283,21 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       this.onOfficeSelectGetDesignation(officeId);
     }
     else {
-      this.subscription = this.designationService.getDesignationsByOfficeIdAndDepartmentId(officeId,departmentId).subscribe((item) => {
+      this.subscription.push(
+      this.designationService.getDesignationsByOfficeIdAndDepartmentId(officeId,departmentId).subscribe((item) => {
         this.dataSource = new MatTableDataSource(item);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.matSort;
-      });
+      })
+      )
+      
     }
   }
 
   
   onOfficeAndDepartmentSelect(departmentId : number){
     this.designationService.designation.sectionId = null;
+    this.subscription.push(
     this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
       this.sections = res;
       if(res.length>0){
@@ -273,14 +306,19 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       else{
         this.sectionView = false;
       }
-    });
+    })
+    )
+    
   }
 
   getDesignationPosition(departmentId : any, sectionId : any){
     if(this.btnText == 'Submit'){
-      this.designationService.getDesignationPosition(+departmentId, +sectionId).subscribe((res) => {
+      this.subscription.push(
+        this.designationService.getDesignationPosition(+departmentId, +sectionId).subscribe((res) => {
         this.designationService.designation.menuPosition = res;
       })
+      )
+      
     }
   }
 
@@ -292,7 +330,8 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     const action$ = id
       ? this.designationService.update(id, form.value)
       : this.designationService.submit(form.value);
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -308,14 +347,18 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+      )
+  
     
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.designationService.delete(element.designationId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -333,8 +376,12 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
               });
               console.log(err);
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+    )
+    
   }
 }

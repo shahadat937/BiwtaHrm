@@ -19,7 +19,8 @@ export class ExamTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   headerText: string | undefined;
   @ViewChild('ExamTypeForm', { static: true }) ExamTypeForm!: NgForm;
   loading = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'examTypeName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -40,20 +41,26 @@ export class ExamTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('examTypeId');
       if (id) {
         this.btnText = 'Update';
         this.headerText = 'Update Exam Type';
+        this.subscription.push(
         this.examTypeService.find(+id).subscribe((res) => {
           this.ExamTypeForm?.form.patchValue(res);
-        });
+        })
+        )
+        
       } else {
         this.resetForm();
         this.headerText = 'Add Exam Type';
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -61,7 +68,7 @@ export class ExamTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -94,11 +101,14 @@ export class ExamTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAllExamTypes() {
-    this.subscription = this.examTypeService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.examTypeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+     
   }
  
   onSubmit(form: NgForm): void {
@@ -109,7 +119,8 @@ export class ExamTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.examTypeService.update(id, form.value)
       : this.examTypeService.submit(form.value);
     
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -128,13 +139,17 @@ export class ExamTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       
     this.loading = false;
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.examTypeService.delete(element.examTypeId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -152,8 +167,12 @@ export class ExamTypeComponent implements OnInit, OnDestroy, AfterViewInit {
               });
               console.log(err);
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+    )
+    
   }
 }

@@ -33,7 +33,8 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
   upperSectionView = false;
   loading = false;
   @ViewChild('SectionForm', { static: true }) SectionForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo', 
     // 'office',
@@ -96,7 +97,7 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -201,21 +202,29 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAllSection() {
-    this.subscription = this.sectionService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.sectionService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   
   loadOffice() { 
-    this.subscription=this.officeService.selectGetoffice().subscribe((data) => { 
+    // this.subscription=
+    this.subscription.push(
+    this.officeService.selectGetoffice().subscribe((data) => { 
       this.offices = data;
-    });
+    })
+    )
+    
   }
 
   onOfficeSelect(officeId : number){
     this.departmentService.departments.upperDepartmentId = null;
+    this.subscription.push(
     this.departmentService.getSelectedDepartmentByOfficeId(+officeId).subscribe((res) => {
       this.departments = res;
       if(res.length>0){
@@ -224,18 +233,24 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
       else{
         this.departmentView = false;
       }
-    });
+    })
+    )
+    
   }
 
   
   getAllSelectedDepartments(){
-    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+    this.subscription.push(
+       this.departmentService.getSelectedAllDepartment().subscribe((res) => {
           this.departments = res;
-    });
+    })
+    )
+    
   }
   
   onOfficeAndDepartmentSelect(departmentId : number){
     this.sectionService.sections.upperSectionId = null;
+    this.subscription.push(
     this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
       this.upperSections = res;
       if(res.length>0){
@@ -244,7 +259,9 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
       else{
         this.upperSectionView = false;
       }
-    });
+    })
+    )
+    
   }
 
   onOfficeSelectGetDepartment(officeId : number){
@@ -252,11 +269,14 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getAllSection();
     }
     else {
+      this.subscription.push(
       this.departmentService.onOfficeSelectGetDepartment(+officeId).subscribe((res) => {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.matSort;
-      });
+      })
+      )
+      
     }
   }
 
@@ -277,7 +297,8 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.sectionService.update(id, form.value)
       : this.sectionService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -293,10 +314,13 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+    )
+    
   }
   delete(element: any) {
-    this.confirmService
+    this.subscription.push(
+      this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
@@ -318,7 +342,9 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }
 

@@ -43,7 +43,8 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
   jobHistory: JobHistoryModel[];
   trainingHistory: any[];
   educationInfos: EmpEducationInfoModule[];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   selectedEduInfos : EmpEducationInfoModule[] = [];
   icons = {cilX};
 
@@ -71,7 +72,7 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     } 
   }
 
@@ -85,7 +86,8 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
 
   getEducationInfo(reset: boolean) {
     if(this.empId!=0&&this.fieldData.htmlInputType=="educationinfo") {
-      this.subscription = this.empEducationInfoService.findByEmpId(this.empId).subscribe({
+      this.subscription.push(
+        this.empEducationInfoService.findByEmpId(this.empId).subscribe({
         next: response => {
           this.educationInfos = response;
           if(reset&&this.IsReadonly==false) {
@@ -95,6 +97,8 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
           }
         }
       })
+      )
+      
     }
   }
 
@@ -122,18 +126,22 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
     }
     let startDate = "2002-01-01";
     let endDate = "2025-01-01";
-    this.formRecordService.getJobHistory(this.empId,startDate,endDate).subscribe({
+    this.subscription.push(
+      this.formRecordService.getJobHistory(this.empId,startDate,endDate).subscribe({
       next: response => {
         this.jobHistory = response;
       }
     })
+    )
+    
   }
 
   getEmpTrainingInfo() {
     if(this.empId !=0 && this.fieldData.htmlInputType=="trainingHistory") {
       let params = new HttpParams;
       params = params.set("empId", this.empId);
-      this.subscription = this.empTrainingInfoService.getEmpTrainingInfo(params).subscribe({
+      this.subscription.push(
+      this.empTrainingInfoService.getEmpTrainingInfo(params).subscribe({
         next: response => {
           if(response) {
             this.trainingHistory = response;
@@ -146,6 +154,8 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
 
         }
       })
+      )
+     
     }
   }
 }

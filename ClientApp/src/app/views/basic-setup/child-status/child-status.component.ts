@@ -24,7 +24,8 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   headerText: string | undefined;
   @ViewChild('ChildStatusForm', { static: true }) ChildStatusForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'childStatusName',
@@ -50,20 +51,26 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('childStatusId');
       if (id) {
         this.btnText = 'Update';
         this.headerText = 'Update Child Status';
+        this.subscription.push(
         this.childStatusService.find(+id).subscribe((res) => {
           this.ChildStatusForm?.form.patchValue(res);
-        });
+        })
+        )
+        
       } else {
         this.resetForm();
         this.headerText = 'Add Child Status';
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -71,7 +78,7 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -104,11 +111,14 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getALlChildStatus() {
-    this.subscription = this.childStatusService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.childStatusService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   onSubmit(form: NgForm): void {
     this.childStatusService.cachedData = [];
@@ -117,7 +127,8 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.childStatusService.update(id, form.value)
       : this.childStatusService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -133,9 +144,12 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+      )
+     
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -160,6 +174,8 @@ export class ChildStatusComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

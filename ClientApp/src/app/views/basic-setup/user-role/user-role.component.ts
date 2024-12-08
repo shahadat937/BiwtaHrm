@@ -18,7 +18,8 @@ export class UserRoleComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   @ViewChild('UserRoleForm', { static: true }) UserRoleForm!: NgForm;
   loading = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'userRoleName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -57,7 +58,7 @@ export class UserRoleComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -90,11 +91,14 @@ export class UserRoleComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAllUserRoles() {
-    this.subscription = this.userRoleService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.userRoleService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   
   onSubmit(form: NgForm): void {
@@ -105,7 +109,8 @@ export class UserRoleComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.userRoleService.update(id, form.value)
       : this.userRoleService.submit(form.value);
     
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -124,7 +129,10 @@ export class UserRoleComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       
     this.loading = false;
-    });
+    })
+    )
+    
+    
   }
   delete(element: any) {
     this.confirmService

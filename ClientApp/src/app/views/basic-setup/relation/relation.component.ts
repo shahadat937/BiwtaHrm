@@ -18,7 +18,8 @@ export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   loading = false;
   @ViewChild('RelationForm', { static: true }) RelationForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'relationName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -57,7 +58,7 @@ export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -91,11 +92,14 @@ export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAllRelations() {
-    this.subscription = this.relationsService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.relationsService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   onSubmit(form: NgForm): void {
@@ -106,7 +110,8 @@ export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.relationsService.update(id, form.value)
       : this.relationsService.submit(form.value);
     
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -125,9 +130,12 @@ export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       
     this.loading = false;
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -151,6 +159,8 @@ export class RelationComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+   
   }
 }

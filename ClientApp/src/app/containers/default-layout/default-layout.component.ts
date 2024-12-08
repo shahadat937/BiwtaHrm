@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { navItems } from './_nav';
 import { EmpPhotoSignService } from 'src/app/views/employee/service/emp-photo-sign.service';
@@ -8,13 +8,14 @@ import { NavbarSettingService } from 'src/app/views/featureManagement/service/na
 import { NavbarSetting } from 'src/app/views/featureManagement/model/navbar-setting';
 import { NavbarThemService } from 'src/app/views/featureManagement/service/navbar-them.service';
 import { NavbarThem } from 'src/app/views/featureManagement/model/navbar-them';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss'],
 })
-export class DefaultLayoutComponent implements OnInit{
+export class DefaultLayoutComponent implements OnInit, OnDestroy{
 
   biwtaLogo : string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta.png`;
   logo : string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta-logo.png`;
@@ -25,12 +26,18 @@ export class DefaultLayoutComponent implements OnInit{
   navbarSetting: NavbarSetting = new NavbarSetting();
   navbarThem: NavbarThem = new NavbarThem();
   templatePath: string = `${this.empPhotoSignService.imageUrl}TempleteImage/`;
+  subscription: Subscription[]=[];
 
   constructor(
     public empPhotoSignService: EmpPhotoSignService,
     public roleFeatureService: RoleFeatureService,
     public navbarSettingService: NavbarSettingService,
     public navbarThemService: NavbarThemService) {}
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.forEach(subs=>subs.unsubscribe())
+    }
+  }
 
 
   ngOnInit(): void {
@@ -42,13 +49,17 @@ export class DefaultLayoutComponent implements OnInit{
   }
 
   getMenuList(){
+    this.subscription.push(
     this.roleFeatureService.getModuleFeaturesByRole(this.roleName).subscribe((item) => {
       this.navItems = item;
-    });
+    })
+    )
+    
   }
 
   getActiveNavbarSetting(){
-    this.navbarSettingService.getActive().subscribe((item) => {
+    this.subscription.push(
+      this.navbarSettingService.getActive().subscribe((item) => {
       if(item){
         this.navbarSetting = item;
         this.navbarSetting.navbarLogo = this.templatePath + item.navbarLogo;
@@ -58,9 +69,12 @@ export class DefaultLayoutComponent implements OnInit{
         }
       }
     })
+    )
+    
   }
 
   getThemInformation(id: number){
+    this.subscription.push(
     this.navbarThemService.find(id).subscribe((res) => {
       if(res){
         this.navbarThem = res;
@@ -88,6 +102,8 @@ export class DefaultLayoutComponent implements OnInit{
         styleElement.innerHTML = css;
         document.head.appendChild(styleElement);
       }
-    });
+    })
+    )
+    
   }
 }

@@ -20,7 +20,8 @@ export class RewardPunishmentTypeComponent implements OnInit, OnDestroy, AfterVi
   btnText: string = 'Submit';
   loading = false;
   @ViewChild('RewardTypeForm', { static: true }) RewardTypeForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'name', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -45,7 +46,7 @@ export class RewardPunishmentTypeComponent implements OnInit, OnDestroy, AfterVi
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -81,21 +82,27 @@ export class RewardPunishmentTypeComponent implements OnInit, OnDestroy, AfterVi
   }
 
   getRewardTypeById(id: number){
-    this.subscription = this.rewardPunishmentSetupService.findRewardType(id).subscribe((item) => {
+    this.subscription.push(
+    this.rewardPunishmentSetupService.findRewardType(id).subscribe((item) => {
       if(item){
         this.btnText = "Update";
         this.RewardTypeForm.form.patchValue(item);
         window.scrollTo(0, 0);
       }
-    });
+    })
+    )
+    
   }
 
   getAllRewardType() {
-    this.subscription = this.rewardPunishmentSetupService.getAllRewardType().subscribe((item) => {
+    this.subscription.push(
+    this.rewardPunishmentSetupService.getAllRewardType().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   onSubmit(form: NgForm): void {
@@ -106,7 +113,8 @@ export class RewardPunishmentTypeComponent implements OnInit, OnDestroy, AfterVi
       ? this.rewardPunishmentSetupService.updateRewardType(id, form.value)
       : this.rewardPunishmentSetupService.submitRewardType(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -120,10 +128,13 @@ export class RewardPunishmentTypeComponent implements OnInit, OnDestroy, AfterVi
         });
       }
       this.loading = false;
-    });
+    })
+    )
+      
   }
 
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -147,7 +158,9 @@ export class RewardPunishmentTypeComponent implements OnInit, OnDestroy, AfterVi
             }
           );
         }
-      });
+      })
+    )
+   
   }
 }
 

@@ -19,7 +19,8 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   headerText: string | undefined;
   @ViewChild('ReleaseTypeForm', { static: true }) ReleaseTypeForm!: NgForm;
   loading = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'releaseTypeName', 'isDeptRelease','isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -61,7 +62,7 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -98,11 +99,14 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getALlReleaseTypes() {
-    this.subscription = this.releaseTypeService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.releaseTypeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   onSubmit(form: NgForm): void {
     this.loading = true;
@@ -112,7 +116,8 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.releaseTypeService.update(id, form.value)
       : this.releaseTypeService.submit(form.value);
     
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -127,9 +132,12 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       this.loading = false;
       }
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -153,7 +161,9 @@ export class ReleaseTypeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+   
   }
 
 

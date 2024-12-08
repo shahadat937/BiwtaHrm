@@ -18,7 +18,8 @@ export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterView
   btnText: string | undefined;
   loading = false;
   @ViewChild('Overall_EV_PromotionForm', { static: true }) Overall_EV_PromotionForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'overallEVPromotionName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -43,9 +44,12 @@ export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterView
       const id = params.get('overallEVPromotionId');
       if (id) {
         this.btnText = 'Update';
-        this.overall_EV_PromotionService.find(+id).subscribe((res) => {
+        this.subscription.push(
+          this.overall_EV_PromotionService.find(+id).subscribe((res) => {
           this.Overall_EV_PromotionForm?.form.patchValue(res);
-        });
+        })
+        )
+        
       } else {
         this.btnText = 'Submit';
       }
@@ -57,7 +61,7 @@ export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterView
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -91,12 +95,15 @@ export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterView
   }
 
   getAllOverall_EV_Promotions() {
-    this.subscription = this.overall_EV_PromotionService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.overall_EV_PromotionService.getAll().subscribe((item) => {
       //console.log(item);
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   onSubmit(form: NgForm): void {
     this.loading = true;
@@ -106,7 +113,8 @@ export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterView
       ? this.overall_EV_PromotionService.update(id, form.value)
       : this.overall_EV_PromotionService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
          //const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -124,9 +132,12 @@ export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterView
         });
       }
       this.loading = false;
-    });
+    })
+      )
+   
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -150,6 +161,8 @@ export class OverallEVPromotionComponent implements OnInit, OnDestroy, AfterView
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

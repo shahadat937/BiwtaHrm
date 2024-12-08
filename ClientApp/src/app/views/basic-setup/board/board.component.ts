@@ -19,7 +19,8 @@ export class BoardComponent implements OnInit, OnDestroy, AfterViewInit {
   headerText: string | undefined;
   @ViewChild('BoardForm', { static: true }) BoardForm!: NgForm;
   loading = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'boardName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -45,9 +46,12 @@ export class BoardComponent implements OnInit, OnDestroy, AfterViewInit {
       if (id) {
         this.btnText = 'Update';
         this.headerText = 'Update Board';
+        this.subscription.push(
         this.boardService.find(+id).subscribe((res) => {
           this.BoardForm?.form.patchValue(res);
-        });
+        })
+        )
+        
       } else {
         this.resetForm();
         this.headerText = 'Add Board';
@@ -61,7 +65,7 @@ export class BoardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -94,11 +98,14 @@ export class BoardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAllBoards() {
-    this.subscription = this.boardService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.boardService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   
   onSubmit(form: NgForm): void {
@@ -109,7 +116,8 @@ export class BoardComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.boardService.update(id, form.value)
       : this.boardService.submit(form.value);
     
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -128,7 +136,9 @@ export class BoardComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       
     this.loading = false;
-    });
+    })
+    )
+      
   }
   delete(element: any) {
     this.confirmService

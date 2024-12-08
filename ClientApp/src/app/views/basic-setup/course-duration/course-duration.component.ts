@@ -20,7 +20,8 @@ export class CourseDurationComponent implements OnInit, OnDestroy, AfterViewInit
   btnText: string = 'Submit';
   loading = false;
   @ViewChild('CourseDurationForm', { static: true }) CourseDurationForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'name', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -45,7 +46,7 @@ export class CourseDurationComponent implements OnInit, OnDestroy, AfterViewInit
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -79,21 +80,27 @@ export class CourseDurationComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   getCourseDurationId(id: number){
-    this.subscription = this.courseDurationService.find(id).subscribe((item) => {
+    this.subscription.push(
+    this.courseDurationService.find(id).subscribe((item) => {
       if(item){
         this.btnText = "Update";
         this.CourseDurationForm.form.patchValue(item);
         window.scrollTo(0, 0);
       }
-    });
+    })
+    )
+    
   }
 
   getAllCourseDuration() {
-    this.subscription = this.courseDurationService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.courseDurationService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   onSubmit(form: NgForm): void {
@@ -104,7 +111,8 @@ export class CourseDurationComponent implements OnInit, OnDestroy, AfterViewInit
       ? this.courseDurationService.update(id, form.value)
       : this.courseDurationService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+  action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -118,14 +126,18 @@ export class CourseDurationComponent implements OnInit, OnDestroy, AfterViewInit
         });
       }
       this.loading = false;
-    });
+    })
+      )
+     
   }
 
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.courseDurationService.delete(element.id).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -140,9 +152,13 @@ export class CourseDurationComponent implements OnInit, OnDestroy, AfterViewInit
               });
               console.log(err);
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+    )
+    
   }
 }
 

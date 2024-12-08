@@ -26,7 +26,8 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
   headerText: string | undefined;
   loading = false;
   @ViewChild('BankBranchForm', { static: true }) BankBranchForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'bankBranchName', 'bankName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -51,7 +52,8 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
   }
   handleRouteParams() {
-    this.route.paramMap.subscribe((params) => {
+    this.subscription.push(
+ this.route.paramMap.subscribe((params) => {
 
       const id = params.get('bankBranchId');
 
@@ -66,7 +68,9 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
         this.headerText = 'Add Bank Branch';
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+   
   }
   // loaddivisions() {
   //   console.log('division')
@@ -78,10 +82,13 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
 
   SelectModelCountry() {
 
-    this.bankService.selectGetBank().subscribe((data) => {
+    this.subscription.push(
+ this.bankService.selectGetBank().subscribe((data) => {
       //console.log(data);
       this.banks = data;
-    });
+    })
+    )
+   
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -89,7 +96,7 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -137,11 +144,14 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/bankInfoSetup/bankBranch']);
   }
   getAlBankBranchs() {
-    this.subscription = this.bankBranchService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.bankBranchService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   onSubmit(form: NgForm): void {
@@ -152,7 +162,8 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.bankBranchService.update(id, form.value)
       : this.bankBranchService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+      action$.subscribe((response: any) => {
 
       if (response.success) {
         //  const successMessage = id ? '' : '';
@@ -171,9 +182,12 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+      )
+   
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -194,6 +208,8 @@ export class BankBranchComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

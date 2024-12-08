@@ -29,7 +29,8 @@ export class InstituteComponent implements OnInit, OnDestroy, AfterViewInit {
   percentage = 0;
   btnText: string | undefined;
   @ViewChild('InstituteForm', { static: true }) InstituteForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'instituteName', 'isActive', 'Action'];
   loading = false;
 
@@ -51,6 +52,7 @@ export class InstituteComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('instituteId');
       if (id) {
@@ -61,7 +63,9 @@ export class InstituteComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -69,7 +73,7 @@ export class InstituteComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -117,11 +121,14 @@ export class InstituteComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getALlInstitutes() {
-    this.subscription = this.instituteService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.instituteService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+     
   }
 
   // onSubmit(form: NgForm) {
@@ -176,7 +183,8 @@ export class InstituteComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.instituteService.update(id, form.value)
       : this.instituteService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -196,9 +204,12 @@ export class InstituteComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.loading = false;
 
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -224,6 +235,8 @@ export class InstituteComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

@@ -28,7 +28,8 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   loading = false;
   @ViewChild('TrainingTypeForm', { static: true }) TrainingTypeForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'trainingTypeName',
@@ -70,7 +71,7 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -118,11 +119,14 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getALlTrainingTypes() {
-    this.subscription = this.trainingTypeService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.trainingTypeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   onSubmit(form: NgForm):void {
@@ -155,7 +159,8 @@ export class TrainingComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       );
     } else {
-      this.subscription = this.trainingTypeService.submit(form?.value).subscribe(
+      
+      this.trainingTypeService.submit(form?.value).subscribe(
         (response: any) => {
           if (response.success) {
             this.toastr.success('Successfully', `${response.message}`, {

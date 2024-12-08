@@ -20,14 +20,16 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
         private readonly IHrmRepository<EmpOtherResponsibility> _EmpOtherResponsibilityRepository;
         private readonly IHrmRepository<EmpTransferPosting> _EmpTransferPostingRepository;
         private readonly IHrmRepository<EmpPromotionIncrement> _EmpPromotionIncrementRepository;
+        private readonly IHrmRepository<EmpJobDetail> _EmpJobDetailRepository;
         private readonly IMapper _mapper;
-        public GetCombinedEmpWorkHistoryByEmpIdRequestHandler(IHrmRepository<EmpWorkHistory> EmpWorkHistoryRepository, IMapper mapper, IHrmRepository<EmpOtherResponsibility> empOtherResponsibilityRepository, IHrmRepository<EmpTransferPosting> empTransferPostingRepository, IHrmRepository<EmpPromotionIncrement> empPromotionIncrementRepository)
+        public GetCombinedEmpWorkHistoryByEmpIdRequestHandler(IHrmRepository<EmpWorkHistory> EmpWorkHistoryRepository, IMapper mapper, IHrmRepository<EmpOtherResponsibility> empOtherResponsibilityRepository, IHrmRepository<EmpTransferPosting> empTransferPostingRepository, IHrmRepository<EmpPromotionIncrement> empPromotionIncrementRepository, IHrmRepository<EmpJobDetail> empJobDetailRepository)
         {
             _EmpWorkHistoryRepository = EmpWorkHistoryRepository;
             _mapper = mapper;
             _EmpOtherResponsibilityRepository = empOtherResponsibilityRepository;
             _EmpTransferPostingRepository = empTransferPostingRepository;
             _EmpPromotionIncrementRepository = empPromotionIncrementRepository;
+            _EmpJobDetailRepository = empJobDetailRepository;
         }
 
         public async Task<List<EmpWorkHistoryDto>> Handle(GetCombinedEmpWorkHistoryByEmpIdRequest request, CancellationToken cancellationToken)
@@ -131,6 +133,71 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                 }).ToList();
 
                 combinedWorkHistory.AddRange(mappedPromotionIncrement);
+            }
+
+            var transferPostings = _EmpTransferPostingRepository
+                .Where(tp => tp.EmpId == request.EmpId && tp.ApplicationStatus == true);
+
+            var workHistories = _EmpWorkHistoryRepository
+                .Where(wh => wh.EmpId == request.EmpId);
+
+            var jobDetails = _EmpJobDetailRepository
+                .Where(jd => jd.EmpId == request.EmpId);
+
+            var promotionIncrements = _EmpPromotionIncrementRepository
+                .Where(pi => pi.EmpId == request.EmpId && pi.UpdateDesignationId != null);
+
+            var latestTransferPostingJoiningDate = transferPostings
+                .OrderByDescending(tp => tp.JoiningDate)
+                .Select(tp => tp.JoiningDate)
+                .FirstOrDefault();
+
+            var latestWorkHistoryReleaseDate = workHistories
+                .OrderByDescending(wh => wh.ReleaseDate)
+                .Select(wh => wh.ReleaseDate)
+                .FirstOrDefault();
+
+            var extendedlatestWorkHistoryReleaseDate = latestWorkHistoryReleaseDate?.AddDays(1);
+
+            var latestJobDetailJoiningDate = jobDetails
+                .OrderByDescending(jd => jd.JoiningDate)
+                .Select(jd => jd.JoiningDate)
+                .FirstOrDefault();
+
+            var latestPromotionIncrementsDate = promotionIncrements
+                .OrderByDescending(wh => wh.EffectiveDate)
+                .Select(wh => wh.EffectiveDate)
+                .FirstOrDefault();
+
+            var latestDate = new[] { latestTransferPostingJoiningDate, extendedlatestWorkHistoryReleaseDate, latestJobDetailJoiningDate, latestPromotionIncrementsDate }
+                .Where(d => d != null).Max();
+
+
+            var jobDetailsInfo = await _EmpJobDetailRepository
+                .Where(jd => jd.EmpId == request.EmpId)
+                .Include(x => x.Department)
+                .Include(x => x.Section)
+                .Include(x => x.Designation)
+                    .ThenInclude(x => x.DesignationSetup)
+                .FirstOrDefaultAsync();
+
+            if (jobDetailsInfo != null)
+            {
+                var currentJobDetailsInfo = new EmpWorkHistoryDto
+                {
+                    EmpId = jobDetailsInfo.EmpId,
+                    //DepartmentId = promotionIncrement.CurrentDepartmentId,
+                    //SectionId = promotionIncrement.CurrentSectionId,
+                    //DesignationId = promotionIncrement.CurrentDesignationId,
+                    JoiningDate = latestDate,
+                    Remark = jobDetailsInfo.Remark,
+                    IsActive = jobDetailsInfo.IsActive,
+                    DepartmentName = jobDetailsInfo.Department?.DepartmentName,
+                    SectionName = jobDetailsInfo.Section?.SectionName,
+                    DesignationName = jobDetailsInfo.Designation?.DesignationSetup.Name
+                };
+
+                combinedWorkHistory.Add(currentJobDetailsInfo);
             }
 
             var sortedCombinedWorkHistory = combinedWorkHistory.OrderBy(x => x.JoiningDate).ToList();

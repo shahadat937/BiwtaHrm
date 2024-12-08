@@ -13,8 +13,7 @@
             <mat-tab>
                 <ng-template mat-tab-label>Basic Information</ng-template>
                 <ng-container *ngIf="selectedTabIndex === 0">
-                    <!-- <app-basic-information [empId]="empId"></app-basic-information> -->
-                    <app-emp-other-responsibility-single [empId]="empId" *ngIf="empId"></app-emp-other-responsibility-single>
+                    <app-basic-information [empId]="empId"></app-basic-information>
                 </ng-container>
             </mat-tab>
         
@@ -78,7 +77,8 @@
                 <ng-template mat-tab-label>Other Responsibility</ng-template>
                 <ng-container *ngIf="selectedTabIndex === 6">
                     <h4 *ngIf="!empId" class="mt-4 text-center" (click)="selectedTabIndex = 0">Please Sumbit Basic Information First</h4>
-                    <app-emp-other-responsibility [empId]="empId" *ngIf="empId"></app-emp-other-responsibility>
+                    <!-- <app-emp-other-responsibility [empId]="empId" *ngIf="empId"></app-emp-other-responsibility> -->
+                    <app-emp-other-responsibility-single [empId]="empId" *ngIf="empId"></app-emp-other-responsibility-single>
                 </ng-container>
             </mat-tab>
 

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
+  BadgeModule,
   ButtonGroupModule,
   ButtonModule,
   CardModule,
@@ -180,6 +181,7 @@ import { EmpOtherResponsibilitySingleComponent } from './add-employee/employee-i
     HttpClientModule, 
     DropdownModule,
     ScrollingModule,
+    BadgeModule,
   ],
   providers:
   [

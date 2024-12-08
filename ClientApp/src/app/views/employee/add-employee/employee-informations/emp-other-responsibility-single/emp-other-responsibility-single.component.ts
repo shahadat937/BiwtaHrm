@@ -46,6 +46,7 @@ export class EmpOtherResponsibilitySingleComponent implements OnInit, OnDestroy 
     'designation',
     'joiningDate',
     'releaseDate',
+    'status',
     'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -68,8 +69,8 @@ export class EmpOtherResponsibilitySingleComponent implements OnInit, OnDestroy 
 
 
   ngOnInit(): void {
-    // this.getAllSelectedDepartments();
-    // this.getSelectedResponsibilityType();
+    this.getAllSelectedDepartments();
+    this.getSelectedResponsibilityType();
     this.getAllEmpOtherResponsibilityByEmpId();
     // this.getEmployeeOtherResponsibilityInfoByEmpId();
   }
@@ -83,15 +84,24 @@ export class EmpOtherResponsibilitySingleComponent implements OnInit, OnDestroy 
   
   getAllEmpOtherResponsibilityByEmpId(){
     // this.subscription = 
+    this.headerText = 'Add Employment History';
+    this.btnText = 'Submit';
+    this.headerBtnText = 'Add New';
+    this.initaialForm();
     this.subscription.push(
       this.empOtherResponsibilityService.findAllByEmpId(this.empId).subscribe((res) => {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     })
-    )
-    
+    );
+    this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
+      if (res) {
+        this.empJobDetailsId = res.id;
+      }
+    });
   }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
@@ -106,6 +116,7 @@ export class EmpOtherResponsibilitySingleComponent implements OnInit, OnDestroy 
 
   cancel() {
     // this.close.emit();
+    this.visible = false;
     this.ngOnInit();
   }
 
@@ -123,6 +134,32 @@ export class EmpOtherResponsibilitySingleComponent implements OnInit, OnDestroy 
           this.departments = res;
     })
   }
+  onDepartmentSelectGetDesignation(departmentId: number, empJobDetailsId: number) {
+    this.designations = [];
+    this.empOtherResponsibilityService.empOtherResponsibility.designationId = null;
+    if (departmentId != null) {
+      this.empJobDetailsService.getDesignationByDepartmentId(departmentId, empJobDetailsId).subscribe((res) => {
+        this.designations = res;
+      });
+    }
+  }
+  onDepartmentSelectGetSection(departmentId : number){
+    this.sections = [];
+    this.empOtherResponsibilityService.empOtherResponsibility.sectionId = null;
+    this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
+      this.sections = res;
+    });
+  }
+
+  onSectionSelectGetDesignation(sectionId: number, empJobDetailsId: number) {
+    this.designations = [];
+    this.empOtherResponsibilityService.empOtherResponsibility.designationId = null;
+    if (sectionId != null) {
+      this.empJobDetailsService.getDesignationBySectionId(+sectionId, +empJobDetailsId).subscribe((res) => {
+        this.designations = res;
+      });
+    }
+  }
 
   
     initaialForm(form?: NgForm) {
@@ -139,7 +176,7 @@ export class EmpOtherResponsibilitySingleComponent implements OnInit, OnDestroy 
         designationId : null,
         startDate : null,
         endDate : null,
-        serviceStatus: false,
+        serviceStatus: true,
         remark : '',
         isActive : true,
         responsibilityName: '',
@@ -166,7 +203,7 @@ export class EmpOtherResponsibilitySingleComponent implements OnInit, OnDestroy 
         designationId : null,
         startDate : null,
         endDate : null,
-        serviceStatus: false,
+        serviceStatus: true,
         remark : '',
         isActive : true,
         responsibilityName: '',
@@ -190,80 +227,75 @@ export class EmpOtherResponsibilitySingleComponent implements OnInit, OnDestroy 
 //       })
 //     }
 
-//     find(id: number){
-//       this.empWorkHistoryService.findById(id).subscribe((res) => {
-//         if(res){
-//           this.visible = true;
-//           this.headerBtnText = 'Hide From';
-//           this.headerText = 'Update Employment History';
-//           this.btnText = 'Update';
+    find(id: number){
+      this.empOtherResponsibilityService.findById(id).subscribe((res) => {
+        if(res){
+          this.visible = true;
+          this.headerBtnText = 'Hide From';
+          this.headerText = 'Update Employment History';
+          this.btnText = 'Update';
 
-//           if(res.departmentId){
-//             this.onDepartmntSelectGetSection(res.departmentId);
-//           }
-//           if(res.sectionId){
-//             this.onSectionSelectGetDesignation(res.sectionId);
-//           }
-//           else{
-//             this.onDepartmntSelectGetDesignation(res.departmentId);
-//           }
-//           setTimeout(() => {
-//             this.EmpWorkHistoryForm?.form.patchValue(res);
-//           }, 500);
-//         }
-//       })
-//     }
+          if(res.departmentId){
+            this.onDepartmentSelectGetSection(res.departmentId);
+          }
+          if(res.sectionId){
+            this.onSectionSelectGetDesignation(res.sectionId, this.empJobDetailsId);
+          }
+          else{
+            this.onDepartmentSelectGetDesignation(res.departmentId, this.empJobDetailsId);
+          }
+          this.EmpOtherResponsibilityForm?.form.patchValue(res);
+        }
+      })
+    }
 
-    onSubmit(form: NgForm): void {}
-//       this.loading = true;
-//       this.empJobDetailsService.cachedData = [];
-//       this.loading = true;
-//       this.empWorkHistoryService.saveEmpWorkHistory(form.value).subscribe(((res: any) => {
-//       if (res.success) {
-//         this.toastr.success('', `${res.message}`, {
-//           positionClass: 'toast-top-right',
-//         });
-//         this.loading = false;
-//         // this.cancel();
-//         this.getEmployeeWorkHistoryInfoByEmpId();
-//       } else {
-//         this.toastr.warning('', `${res.message}`, {
-//           positionClass: 'toast-top-right',
-//         });
-//         this.loading = false;
-//       }
-//       this.loading = false;
-//     })
-//     )
-//   }
+    onSubmit(form: NgForm): void {
+      this.loading = true;
+      this.empJobDetailsService.cachedData = [];
+      this.loading = true;
+      this.empOtherResponsibilityService.saveEmpOtherResponsibility(form.value).subscribe(((res: any) => {
+      if (res.success) {
+        this.toastr.success('', `${res.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.loading = false;
+        this.cancel();
+      } else {
+        this.toastr.warning('', `${res.message}`, {
+          positionClass: 'toast-top-right',
+        });
+        this.loading = false;
+      }
+      this.loading = false;
+    })
+    )
+  }
   
-//     delete(element: any){
-//       this.confirmService
-//           .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
-//           .subscribe((result) => {
-//             if (result) {
-//               this.empWorkHistoryService.deleteEmpWorkHistory(element.id).subscribe(
-//                 (res) => {
-//                   this.toastr.warning('Delete sucessfully ! ', ` `, {
-//                     positionClass: 'toast-top-right',
-//                   });
-  
-//                   const index = this.dataSource.data.indexOf(element);
-//                   if (index !== -1) {
-//                     this.dataSource.data.splice(index, 1);
-//                     this.dataSource = new MatTableDataSource(this.dataSource.data);
-//                   }
-//                 },
-//                 (err) => {
-//                   this.toastr.error('Somethig Wrong ! ', ` `, {
-//                     positionClass: 'toast-top-right',
-//                   });
-//                   console.log(err);
-//                 }
-//               );
-//             }
-//           });
-//     }
+  delete(element: any){
+    this.confirmService
+        .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+        .subscribe((result) => {
+          if (result) {
+            this.empOtherResponsibilityService.deleteEmpOtherResponsibility(element.id).subscribe(
+              (res) => {
+                this.toastr.warning('Delete sucessfully ! ', ` `, {
+                  positionClass: 'toast-top-right',
+                });
 
-
+                const index = this.dataSource.data.indexOf(element);
+                if (index !== -1) {
+                  this.dataSource.data.splice(index, 1);
+                  this.dataSource = new MatTableDataSource(this.dataSource.data);
+                }
+              },
+              (err) => {
+                this.toastr.error('Somethig Wrong ! ', ` `, {
+                  positionClass: 'toast-top-right',
+                });
+                console.log(err);
+              }
+            );
+          }
+        });
+  }
 }

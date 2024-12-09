@@ -34,4 +34,8 @@ export class AttendanceReportService {
   getDepartmentWiseSummary(filter:HttpParams):Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl+"/attendance/get-TotalPresentAbsentEmp",{params:filter});
   }
+
+  getAttendanceDetailSummary(params:HttpParams) : Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl + "/attendance/get-AttendanceSummaryDetail",{params: params});
+  }
 }

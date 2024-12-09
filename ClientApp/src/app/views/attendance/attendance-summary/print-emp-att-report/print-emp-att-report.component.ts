@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -8,12 +8,20 @@ import { environment } from 'src/environments/environment';
 })
 export class PrintEmpAttReportComponent implements OnInit, OnDestroy {
   companyTitle: string;
+  @Input()
+  attendanceData: any[];
+  photoUrl: string;
+
+  @Input()
+  empInfo: any;
   constructor() {
     this.companyTitle = environment.companyTitle
+    this.attendanceData = [];
+    this.photoUrl = environment.imageUrl;
   }
 
   ngOnInit(): void {
-    
+
   }
 
   ngOnDestroy(): void {

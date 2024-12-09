@@ -29,7 +29,11 @@ namespace Hrm.Application.Features.EmpRewardPunishments.Handlers.Queries
             IQueryable<EmpRewardPunishment> empRewardPunishment = _EmpRewardPunishmentRepository.Where(x => x.EmpId == request.EmpId)
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.RewardPunishmentPriority)
-                .Include(x => x.RewardPunishmentType);
+                .Include(x => x.RewardPunishmentType)
+                .Include(x => x.Department)
+                .Include(x => x.Section)
+                .Include(x => x.Designation)
+                    .ThenInclude(x => x.DesignationSetup);
 
             var result = await Task.Run(() => _mapper.Map<List<EmpRewardPunishmentDto>>(empRewardPunishment));
 

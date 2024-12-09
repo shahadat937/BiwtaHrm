@@ -682,6 +682,9 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpRewardPunishment, EmpRewardPunishmentDto>()
                 .ForMember(dest => dest.EmpIdCardNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
                 .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName + " " + src.EmpBasicInfo.LastName))
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
+                .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Section.SectionName))
+                .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.Designation.DesignationSetup.Name))
                 .ForMember(dest => dest.RewardPunishmentTypeName, opt => opt.MapFrom(src => src.RewardPunishmentType.Name))
                 .ForMember(dest => dest.RewardPunishmentPriorityName, opt => opt.MapFrom(src => src.RewardPunishmentPriority.Name)).ReverseMap();
 

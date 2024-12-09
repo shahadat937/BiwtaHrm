@@ -11,6 +11,9 @@ namespace Hrm.Domain
     {
         public int Id { get; set; }
         public int? EmpId { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? SectionId { get; set; }
+        public int? DesignationId { get; set; }
         public int? RewardPunishmentTypeId { get; set; }
         public int? RewardPunishmentPriorityId { get; set; }
         public DateOnly RewardPunishmentDate { get; set; }
@@ -38,6 +41,9 @@ namespace Hrm.Domain
         public virtual EmpBasicInfo? OrderByNavigation { get; set; }
         public virtual EmpBasicInfo? ApplicationByNavigation { get; set; }
         public virtual EmpBasicInfo? ApproveByNavigation { get; set; }
+        public virtual Department? Department { get; set; }
+        public virtual Section? Section { get; set; }
+        public virtual Designation? Designation { get; set; }
     }
 
 }

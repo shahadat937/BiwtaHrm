@@ -1122,6 +1122,19 @@ namespace Hrm.Persistence
                     .WithMany(e => e.EmpRewardPunishmentEmp)
                     .HasForeignKey(e => e.EmpId);
 
+                entity.HasOne(e => e.Department)
+                    .WithMany(e => e.EmpRewardPunishment)
+                    .HasForeignKey(e => e.DepartmentId);
+
+                entity.HasOne(e => e.Section)
+                    .WithMany(e => e.EmpRewardPunishment)
+                    .HasForeignKey(e => e.SectionId);
+
+                entity.HasOne(e => e.Designation)
+                    .WithMany(e => e.EmpRewardPunishment)
+                    .HasForeignKey(e => e.DesignationId);
+
+
                 entity.HasOne(e => e.OrderByNavigation)
                     .WithMany(e => e.EmpRewardPunishmentOrderBy)
                     .HasForeignKey(e => e.OrderBy);

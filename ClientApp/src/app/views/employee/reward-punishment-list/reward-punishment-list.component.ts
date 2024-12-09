@@ -97,7 +97,7 @@ export class RewardPunishmentListComponent implements OnInit, OnDestroy {
 
 
   editInfo(id: number, clickedButton: string){
-    if(clickedButton == "Create" && this.featurePermission.add == true || clickedButton == "Edit" && this.featurePermission.update == true){
+    if(clickedButton == "Create" && this.featurePermission.add == true || clickedButton == "Edit" && this.featurePermission.update == true || clickedButton == "Withdraw"){
       const initialState = {
         id: id,
         clickedButton: clickedButton

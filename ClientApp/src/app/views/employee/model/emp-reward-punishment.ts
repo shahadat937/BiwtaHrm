@@ -1,7 +1,10 @@
 export class EmpRewardPunishment {
     id : number = 0;
     empId : number | null = null;
-    rewardPunishmentTypeId : number | null = null;
+    departmentId : any = null;
+    sectionId : any = null;
+    designationId : any = null;
+    rewardPunishmentTypeId : any = null;
     rewardPunishmentPriorityId : number | null = null;
     rewardPunishmentDate : Date | null = null;
     startDate : Date | null = null;
@@ -25,6 +28,7 @@ export class EmpRewardPunishment {
     empName : string = '';
     departmentName : string = '';
     designationName : string = '';
+    sectionName : string = '';
     rewardPunishmentTypeName : string = '';
     rewardPunishmentPriorityName : string = '';
 }

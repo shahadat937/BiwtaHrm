@@ -8,6 +8,7 @@ import { FeaturePermission } from '../model/feature-permission';
 import { SelectedStringModel } from 'src/app/core/models/selectedStringModel';
 import { map, Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'
@@ -44,15 +45,20 @@ export class RoleFeatureService {
 
   
   getFeaturePermission(featurePath: string): Observable<FeaturePermission>{
-    const currentUserString = localStorage.getItem('currentUser');
-    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-    var roleName = currentUserJSON.role;
+    const encryptedUser = localStorage.getItem('encryptedUser');
+    var roleName;
+    if (encryptedUser) {
+      const bytes = CryptoJS.AES.decrypt(encryptedUser, 'secret-key');
+      // console.log(JSON.parse(bytes.toString(CryptoJS.enc.Utf8)));
+      roleName = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).role;
+    }
     return this.http.get<FeaturePermission>(this.baseUrl + '/roleFeatures/get-featurePermission?roleName=' + roleName + '&featurePath=' + featurePath).pipe(
       map((data) => {
         this.featurePermission = data; // Cache the data
         return data;
       })
     );;
+    
   }
 
   unauthorizeAccress(){

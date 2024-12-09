@@ -26,5 +26,6 @@ namespace Hrm.Domain
         public virtual ICollection<EmpPromotionIncrement>? UpdateEmpPromotionIncrement { get; set; }
         //public virtual ICollection<EmpWorkHistory>? EmpWorkHistory { get; set; }
         public virtual ICollection<EmpOtherResponsibility>? EmpOtherResponsibility { get; set; }
+        public virtual ICollection<EmpRewardPunishment>? EmpRewardPunishment { get; set; }
     }
 }

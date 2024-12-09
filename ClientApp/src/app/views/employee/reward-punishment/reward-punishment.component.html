@@ -16,6 +16,12 @@
                         name="applicationBy" />
                     <input type="hidden" [(ngModel)]="empRewardPunishmentService.empRewardPunishment.approveById"
                         name="approveById" />
+                    <input type="hidden" [(ngModel)]="empRewardPunishmentService.empRewardPunishment.departmentId"
+                        name="departmentId" />
+                    <input type="hidden" [(ngModel)]="empRewardPunishmentService.empRewardPunishment.sectionId"
+                        name="sectionId" />
+                    <input type="hidden" [(ngModel)]="empRewardPunishmentService.empRewardPunishment.designationId"
+                        name="designationId" />
 
                     <!-- ************* Employee Information ************** -->
                     <c-card class="mt-3 mb-3 shadow">
@@ -24,13 +30,16 @@
                         </c-card-header>
                         <c-card-body>
                             <div cRow [gutter]="3">
-                                <c-col [md]="6">
+                                <c-col [md]="4">
                                     <label cLabel for="idCardNo">Employee PMS No<span class="text-danger">*</span></label>
                                     <c-input-group>
+                                        <button cButton color="secondary" type="button" cTooltip="Search Employee" cTooltipPlacement="bottom" (click)="EmployeeListModal()">
+                                            <svg [cIcon]="icons.cilSearch"></svg>
+                                        </button>
                                         <input aria-describedby="idCardNo" cFormControl
-                                            [(ngModel)]="empRewardPunishmentService.empRewardPunishment.empIdCardNo"
-                                            name="empIdCardNo" #idCardNo="ngModel" required
-                                            placeholder="Enter Employee PMS No" id="idCardNo" type="text" #idCardNoInput />
+                                            [(ngModel)]="empTransferPostingService.empTransferPosting.empIdCardNo" name="empIdCardNo"
+                                            #idCardNo="ngModel" required placeholder="Enter Employee PMIS No" id="idCardNo"
+                                            type="text" #idCardNoInput />
                                         <button cButton color="primary" type="button"
                                             (click)="getEmpInfoByIdCardNo(idCardNoInput.value)">
                                             Select
@@ -42,13 +51,13 @@
                                 </c-col>
     
                                 @if(isValidEmp) {
-                                <c-col [md]="6">
+                                <c-col [md]="4">
                                     <label cLabel for="empName">Employee Name<span class="text-danger"></span></label>
                                     <input [(ngModel)]="empRewardPunishmentService.empRewardPunishment.empName"
                                         name="empName" #empName="ngModel" cFormControl id="empName" readonly />
                                 </c-col>
     
-                                <c-col [md]="6">
+                                <c-col [md]="4">
                                     <label cLabel for="departmentName">Department<span
                                             class="text-danger"></span></label>
                                     <input
@@ -56,8 +65,17 @@
                                         name="departmentName" #departmentName="ngModel" cFormControl
                                         id="departmentName" readonly />
                                 </c-col>
+                                
+                                <c-col [md]="4" *ngIf="empRewardPunishmentService.empRewardPunishment.sectionName">
+                                    <label cLabel for="sectionName">Section<span
+                                            class="text-danger"></span></label>
+                                    <input
+                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.sectionName"
+                                        name="sectionName" #sectionName="ngModel" cFormControl
+                                        id="sectionName" readonly />
+                                </c-col>
     
-                                <c-col [md]="6">
+                                <c-col [md]="4">
                                     <label cLabel for="designationName">Designation<span
                                             class="text-danger"></span></label>
                                     <input
@@ -99,7 +117,8 @@
                                 <c-col [md]="4">
                                     <label cLabel for="rewardPunishmentTypeId">Reward/Punishment Type<span class="text-danger">*</span></label>
                                     <div class="input-wrapper">
-                                        <select [(ngModel)]="empRewardPunishmentService.empRewardPunishment.rewardPunishmentTypeId"
+                                        <select (change)="getWithdrawAndPriorityStatus(empRewardPunishmentService.empRewardPunishment.rewardPunishmentTypeId)"
+                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.rewardPunishmentTypeId"
                                             name="rewardPunishmentTypeId" #rewardPunishmentTypeId="ngModel" cFormControl
                                             id="rewardPunishmentTypeId" aria-label="Default select example" required cSelect>
                                             <option [ngValue]="null">Reward/Punishment Type</option>
@@ -116,12 +135,12 @@
                                     </div>
                                 </c-col>
                                 
-                                <c-col [md]="4">
-                                    <label cLabel for="rewardPunishmentPriorityId">Reward/Punishment Priority<span class="text-danger">*</span></label>
+                                <c-col [md]="4" *ngIf="isPriority">
+                                    <label cLabel for="rewardPunishmentPriorityId">Reward/Punishment Priority<span class="text-danger"></span></label>
                                     <div class="input-wrapper">
                                         <select [(ngModel)]="empRewardPunishmentService.empRewardPunishment.rewardPunishmentPriorityId"
                                             name="rewardPunishmentPriorityId" #rewardPunishmentPriorityId="ngModel" cFormControl
-                                            id="rewardPunishmentPriorityId" aria-label="Default select example" required cSelect>
+                                            id="rewardPunishmentPriorityId" aria-label="Default select example" cSelect>
                                             <option [ngValue]="null">Reward/Punishment Priority</option>
                     
                                             @for(rewardPriority of rewardPriority; track rewardPriority.id;let index=$index) {
@@ -136,7 +155,7 @@
                                     </div>
                                 </c-col>
                                 
-                                <c-col [md]="4">
+                                <c-col [md]="4" *ngIf="isWithdraw">
                                     <label cLabel for="withdrawStatus">Withdraw Status<span class="text-danger"></span></label>
                                     <div class="input-wrapper">
                                         <select [(ngModel)]="empRewardPunishmentService.empRewardPunishment.withdrawStatus"
@@ -145,13 +164,13 @@
                                             <option [ngValue]="true">Yes</option>
                                             <option [ngValue]="false">No</option>
                                         </select>
-                                        @if(!rewardPunishmentPriorityId.valid && rewardPunishmentPriorityId.touched){
+                                        @if(!withdrawStatus.valid && withdrawStatus.touched){
                                         <div class="text-left text-danger">Withdraw Status</div>
                                         }
                                     </div>
                                 </c-col>
                                 
-                                <c-col [md]="4">
+                                <c-col [md]="4" *ngIf="isWithdraw">
                                     <label cLabel for="withdrawOrderNo">Withdraw Order No<span
                                             class="text-danger"></span></label>
                                     <input
@@ -160,7 +179,7 @@
                                         id="withdrawOrderNo" type="text" />
                                 </c-col>
 
-                                <c-col [md]="4">
+                                <c-col [md]="4" *ngIf="isWithdraw">
                                     <label cLabel for="withdrawDate">Withdraw Date<span
                                             class="text-danger"></span></label>
                                     <input

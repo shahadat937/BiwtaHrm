@@ -13,7 +13,7 @@ import { EmpPromotionIncrementService } from '../service/emp-promotion-increment
 import { EmpTransferPostingService } from '../../transferPosting/service/emp-transfer-posting.service';
 import { GradeService } from '../../basic-setup/service/Grade.service';
 import { EmpRewardPunishmentService } from '../../employee/service/emp-reward-punishment.service';
-import { EmpRewardPunishment } from '../model/emp-reward-punishment';
+import { EmpRewardPunishment } from '../../employee/model/emp-reward-punishment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
 

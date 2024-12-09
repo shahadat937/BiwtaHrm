@@ -80,6 +80,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.selectedSection = null;
     this.rangeDates = null;
     this.isUser = false;
+    this.leaveTypesReport = [];
+    this.reportDate = new Date();
     this.subscription.push(
       this.authService.currentUser.subscribe(data => {
       
@@ -176,6 +178,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     if(this.rangeDates==null) {
       return;
     }
+
     this.reportDate = new Date(this.rangeDates.getFullYear(),this.rangeDates.getMonth());
     let startDate = this.getDate(this.rangeDates.getMonth(),this.rangeDates.getFullYear(),true);
     let endDate = this.getDate(this.rangeDates.getMonth(),this.rangeDates.getFullYear(),false)
@@ -190,8 +193,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     params = this.selectedEmp == null? params: params.set("EmpId",this.selectedEmp);
 
 
-    this.subscription.push(
-      this.AtdReportService.getIsHolidayWeekend(this.rangeDates.getMonth()+1,this.rangeDates.getFullYear()).subscribe({
+    
+      const subs0 = this.AtdReportService.getIsHolidayWeekend(this.rangeDates.getMonth()+1,this.rangeDates.getFullYear()).subscribe({
       next: IsOffday => {
         this.subscription.push(
         this.AtdReportService.getAttendanceReport(params).subscribe(result=> {
@@ -201,7 +204,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
             });
 
             result = result.map(data => ({...data,"name":data.firstName+' '+data.lastName}))
-            this.subscription = this.leaveTypeService.getTakenLeaveReport(result.map(x=>x.empId),startDate, endDate).subscribe({
+            const subs1 = this.leaveTypeService.getTakenLeaveReport(result.map(x=>x.empId),startDate, endDate).subscribe({
               next: response => {
                 var leaveReportMap = new Map(response.map(x => [x.empId,x.leaveTypesCount]));
                 result = result.map(x => ({
@@ -211,25 +214,30 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
                 this.tableData = result;
               }
             })
+
+            this.subscription.push(subs1);
             //this.reset();
           }
         }, err=> {
           console.log(err);
         })
-        )      
-        
+        )    
       }
     })
+
+    this.subscription.push(subs0);
 
   }
 
 
   getLeaveTypeForReport() {
-    this.subscription = this.leaveTypeService.getLeaveTypes(true).subscribe({
+    const subs = this.leaveTypeService.getLeaveTypes(true).subscribe({
       next: response => {
         this.leaveTypesReport = response;
       }
     })
+
+    this.subscription.push(subs);
   }
 
   reset() {

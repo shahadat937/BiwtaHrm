@@ -24,11 +24,13 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly LeaveAtdHelper leaveAtdHelper;
 
         public CreateLeaveRequestCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            leaveAtdHelper = new LeaveAtdHelper(unitOfWork, _mapper);
         }
 
         public async Task<BaseCommandResponse> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
@@ -69,6 +71,7 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
             {
                 request.createLeaveRequestDto.Status = (int)LeaveStatusOption.Pending;
             }
+
             var leaveRequest = _mapper.Map<Hrm.Domain.LeaveRequest>(request.createLeaveRequestDto);
 
             //if (request.AssociatedFiles != null&&false)
@@ -90,6 +93,21 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
 
             await _unitOfWork.Repository<Hrm.Domain.LeaveRequest>().Add(leaveRequest);
             await _unitOfWork.Save();
+
+            if(request.createLeaveRequestDto.Status == (int) LeaveStatusOption.FinalApproved)
+            {
+                try
+                {
+                    leaveAtdHelper.leaveRequestId = leaveRequest.LeaveRequestId;
+                    await leaveAtdHelper.saveAttendance(DateOnly.FromDateTime(leaveRequest.FromDate), DateOnly.FromDateTime(leaveRequest.ToDate), leaveRequest.EmpId, leaveRequest.LeaveTypeId);
+                } catch(Exception ex)
+                {
+                    await _unitOfWork.Repository<Hrm.Domain.LeaveRequest>().Delete(leaveRequest);
+                    await _unitOfWork.Save();
+
+                    throw new BadRequestException("Error while saving the attendance for leave");
+                }
+            }
 
 
             try

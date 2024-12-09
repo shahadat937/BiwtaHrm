@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Hrm.Application.Helpers;
 
 namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
 {
@@ -17,11 +18,13 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly LeaveAtdHelper leaveAtdHelper;
 
         public DeleteLeaveRequestCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            leaveAtdHelper = new LeaveAtdHelper(_unitOfWork, _mapper);
         }
 
         public async Task<BaseCommandResponse> Handle(DeleteLeaveRequestCommand request,  CancellationToken cancellationToken)
@@ -33,6 +36,11 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
                 throw new NotFoundException(nameof(leaveRequest), request.LeaveRequestId);
             }
 
+            if(leaveRequest.IsOldLeave==true)
+            {
+                leaveAtdHelper.leaveRequestId = leaveRequest.LeaveRequestId;
+                await leaveAtdHelper.deleteAttendance();
+            }
             await _unitOfWork.Repository<Hrm.Domain.LeaveRequest>().Delete(leaveRequest);
 
             await _unitOfWork.Save();

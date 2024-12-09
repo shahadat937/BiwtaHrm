@@ -23,9 +23,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-LeaveType")]
-        public async Task<ActionResult> GetLeaveType()
+        public async Task<ActionResult> GetLeaveType([FromQuery] bool? ShowReport)
         {
-            var command = new GetLeaveTypeRequest { };
+            var command = new GetLeaveTypeRequest { ShowReport = ShowReport };
             var response = await _mediator.Send(command);
 
             return Ok(response);

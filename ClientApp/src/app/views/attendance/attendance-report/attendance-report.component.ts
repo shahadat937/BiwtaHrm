@@ -15,6 +15,8 @@ import { SectionService } from '../../basic-setup/service/section.service';
 import { DepartmentService } from '../../basic-setup/service/department.service';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { Role } from 'src/app/core/models/role';
+import { LeaveTypeService } from '../../basic-setup/service/leave-type.service';
+import { xor } from 'lodash-es';
 
 
 @Component({
@@ -30,6 +32,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   staticColumnAfter: any[] = [
     {"field":"totalLate", "header":"Total Late"}
   ]
+
+  leaveTypesReport: any[];
 
   loading:boolean = false;
   icons = {cibVerizon,cibXPack};
@@ -55,12 +59,14 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   selectedEmp: number | null;
   // subscription: Subscription
   isUser: boolean ;
+  reportDate: Date;
 
   constructor(
     private authService: AuthService,
     private departmentService: DepartmentService,
     private SectionService: SectionService,
     private AtdReportService: AttendanceReportEmpService,
+    private leaveTypeService: LeaveTypeService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -74,6 +80,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.selectedSection = null;
     this.rangeDates = null;
     this.isUser = false;
+    this.leaveTypesReport = [];
+    this.reportDate = new Date();
     this.subscription.push(
       this.authService.currentUser.subscribe(data => {
       
@@ -90,6 +98,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllDepartment();
+    this.getLeaveTypeForReport();
     this.AtdReportService.getEmpOption().subscribe({
       next: response => {
         this.EmployeeOption = response;
@@ -169,8 +178,12 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     if(this.rangeDates==null) {
       return;
     }
-    params = params.set("From",this.getDate(this.rangeDates.getMonth(),this.rangeDates.getFullYear(),true));
-    params = params.set("To",this.getDate(this.rangeDates.getMonth(),this.rangeDates.getFullYear(),false));
+
+    this.reportDate = new Date(this.rangeDates.getFullYear(),this.rangeDates.getMonth());
+    let startDate = this.getDate(this.rangeDates.getMonth(),this.rangeDates.getFullYear(),true);
+    let endDate = this.getDate(this.rangeDates.getMonth(),this.rangeDates.getFullYear(),false)
+    params = params.set("From",startDate);
+    params = params.set("To",endDate);
     
     params = this.selectedOffice == null?params:params.set("OfficeId",this.selectedOffice);
     params = this.selectedDepartment == null? params: params.set("DepartmentId",this.selectedDepartment);
@@ -180,8 +193,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     params = this.selectedEmp == null? params: params.set("EmpId",this.selectedEmp);
 
 
-    this.subscription.push(
-      this.AtdReportService.getIsHolidayWeekend(this.rangeDates.getMonth()+1,this.rangeDates.getFullYear()).subscribe({
+    
+      const subs0 = this.AtdReportService.getIsHolidayWeekend(this.rangeDates.getMonth()+1,this.rangeDates.getFullYear()).subscribe({
       next: IsOffday => {
         this.subscription.push(
         this.AtdReportService.getAttendanceReport(params).subscribe(result=> {
@@ -191,20 +204,40 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
             });
 
             result = result.map(data => ({...data,"name":data.firstName+' '+data.lastName}))
-            this.tableData = result;
+            const subs1 = this.leaveTypeService.getTakenLeaveReport(result.map(x=>x.empId),startDate, endDate).subscribe({
+              next: response => {
+                var leaveReportMap = new Map(response.map(x => [x.empId,x.leaveTypesCount]));
+                result = result.map(x => ({
+                  ...x,
+                  leaveReport: leaveReportMap.get(x.empId)??null
+                }))
+                this.tableData = result;
+              }
+            })
+
+            this.subscription.push(subs1);
             //this.reset();
           }
         }, err=> {
           console.log(err);
         })
-        )      
-        
+        )    
       }
     })
-    )
-    
-     
 
+    this.subscription.push(subs0);
+
+  }
+
+
+  getLeaveTypeForReport() {
+    const subs = this.leaveTypeService.getLeaveTypes(true).subscribe({
+      next: response => {
+        this.leaveTypesReport = response;
+      }
+    })
+
+    this.subscription.push(subs);
   }
 
   reset() {

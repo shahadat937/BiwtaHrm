@@ -471,7 +471,7 @@
               cButton 
               type="submit" 
               color="primary" 
-              [disabled]="addLeaveForm.invalid||loading||!isValidPMS||(IsReadonly&&(leaveData.status!=leaveStatus.Pending))"
+              [disabled]="addLeaveForm.invalid||loading||!isValidPMS||(this.addLeaveService.addLeaveModel.isOldLeave!=true&&(leaveData.status!=leaveStatus.Pending))"
               class="me-2">
               <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
               {{buttonTitle}}</button>

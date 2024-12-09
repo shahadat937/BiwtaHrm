@@ -18,11 +18,13 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly LeaveAtdHelper leaveAtdHelper;
 
         public UpdateLeaveRequestByIdCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            leaveAtdHelper = new LeaveAtdHelper(_unitOfWork,_mapper);
         }
 
         public async Task<BaseCommandResponse> Handle(UpdateLeaveRequestByIdCommand request, CancellationToken cancellationToken)
@@ -36,7 +38,7 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
             }
 
 
-            if(leaveRequest.Status != (int) LeaveStatusOption.Pending)
+            if(leaveRequest.Status != (int) LeaveStatusOption.Pending && leaveRequest.IsOldLeave!=true)
             {
                 throw new BadRequestException("To Update , leave request should be in pending state");
             }
@@ -59,6 +61,14 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
             leaveRequest.Status = statusId;
 
             await _unitOfWork.Repository<Hrm.Domain.LeaveRequest>().Update(leaveRequest);
+
+            if(leaveRequest.Status == (int)LeaveStatusOption.FinalApproved)
+            {
+                leaveAtdHelper.leaveRequestId = leaveRequest.LeaveRequestId;
+                await leaveAtdHelper.deleteAttendance();
+                await leaveAtdHelper.saveAttendance(DateOnly.FromDateTime(leaveRequest.FromDate), DateOnly.FromDateTime(leaveRequest.ToDate), leaveRequest.EmpId, leaveRequest.LeaveTypeId);
+            }
+
             await _unitOfWork.Save();
 
             

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LeaveType } from '../model/leave-type';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -15,8 +15,12 @@ export class LeaveTypeService {
     this.leaveTypes = new LeaveType();
   }
 
-  getLeaveTypes(): Observable<LeaveType[]> {
-    return this.http.get<LeaveType[]>(this.baseUrl+"/leaveType/get-leaveType")
+  getLeaveTypes(showReport?:boolean): Observable<LeaveType[]> {
+    let params = new HttpParams();
+    if(showReport) {
+      params = params.set('showReport', showReport);
+    }
+    return this.http.get<LeaveType[]>(this.baseUrl+"/leaveType/get-leaveType", {params: params})
   }
 
   updateLeaveType(leaveType:LeaveType): Observable<any> {
@@ -29,6 +33,18 @@ export class LeaveTypeService {
 
   createLeaveType(leaveType:LeaveType): Observable<any> {
     return this.http.post<any>(this.baseUrl+"/leaveType/save-leaveType", leaveType);
+  }
+
+  getTakenLeaveReport(EmpIds:number[],startDate:string, endDate:string) : Observable<any[]> {
+    console.log(EmpIds);
+    let params = new HttpParams();
+    params = params.set('startDate',startDate);
+    params = params.set('endDate', endDate);
+    EmpIds.forEach(id => {
+      params = params.append('empId',id);
+    })
+
+    return this.http.get<any[]>(this.baseUrl + "/leaveRequest/get-TakenLeaveReport", {params: params});
   }
 
 }

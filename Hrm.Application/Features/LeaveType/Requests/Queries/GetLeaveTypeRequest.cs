@@ -9,6 +9,6 @@ namespace Hrm.Application.Features.LeaveType.Requests.Queries
 {
     public class GetLeaveTypeRequest: IRequest<object>
     {
-
+        public bool? ShowReport { get; set; }
     }
 }

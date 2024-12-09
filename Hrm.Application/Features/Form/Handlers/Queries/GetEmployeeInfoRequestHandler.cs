@@ -58,7 +58,7 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
 
             if(empPersonalInfo!=null)
             {
-                employeeInfo.BirthCertificateNo = empPersonalInfo.BirthRegNo.ToString();
+                employeeInfo.BirthCertificateNo = empPersonalInfo.BirthRegNo;
                 employeeInfo.FatherName = empPersonalInfo.FatherName;
                 employeeInfo.MotherName = empPersonalInfo.MotherName;
             }

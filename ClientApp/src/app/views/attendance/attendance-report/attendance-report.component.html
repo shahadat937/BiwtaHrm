@@ -182,7 +182,11 @@
                 [value]="tableData" [tableStyle]="{'min-width': '50rem'}">
 
 
-
+                    <ng-template pTemplate="caption">
+                        <div class="d-flex justify-content-start">
+                            <button [closeWindow]="false" cButton color="primary" printTitle="Attendance Report" [useExistingCss]="true" ngxPrint printSectionId="printSection">Print</button>
+                        </div>
+                    </ng-template>
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                             @for ( col of staticColumnsBefore; track $index) {
@@ -235,3 +239,8 @@
         </c-card>
     </c-card-body>
 </c-card>
+<div class="mt-3" hidden id="printSection">
+    <app-print-att-report [reportDate]="reportDate" [leaveTypeReport]="leaveTypesReport" [staticColumn]="staticColumnsBefore" [dynamicColumn]="dynamicColumn" [tableData]="tableData">
+
+    </app-print-att-report>
+</div>

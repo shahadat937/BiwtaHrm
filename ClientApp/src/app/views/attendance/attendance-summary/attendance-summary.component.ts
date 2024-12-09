@@ -20,6 +20,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   EmpSummaryButtonText="Hide";
   // subscription:Subscription = new Subscription();
   subscription: Subscription[]=[]
+  summaryDetail: any[];
 
   // For Employee Wise
   OfficeOption:any[] = [];
@@ -44,6 +45,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   fromDate: Date|null;
   toDate: Date | null;
   rangeDates: Date[] = [];
+  empInfo: any;
 
   //For Department wise
   TotalPresentEmp:any="N/A";
@@ -80,6 +82,15 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     this.selectedOfficeDw = null;
     this.toDateDw = null;
     this.fromDateDw = null;
+    this.summaryDetail = [];
+
+    this.empInfo = {
+      empName: "",
+      pmis: "",
+      designation: "",
+      department: "",
+      photoUrl: "",
+    }
   }
 
   ngOnInit(): void {
@@ -130,10 +141,13 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
         this.WorkingDayText = "N/A";
         this.SiteVisitText = "N/A";
         this.OnLeaveText = "N/A";
+        this.summaryDetail = [];
         return;
     }
 
     let filter = new HttpParams();
+    let from = this.hrmdateResize(this.rangeDates[0])
+    let to = this.hrmdateResize(this.rangeDates[1])
     filter = filter.set("EmpId",this.selectedEmp);
     filter = filter.set("From", this.hrmdateResize(this.rangeDates[0]));
     filter = filter.set("To", this.hrmdateResize(this.rangeDates[1]));
@@ -150,6 +164,20 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
         this.OnLeaveText = response.totalOnLeave;
       })
      )
+
+     let params = new HttpParams();
+     params = params.set('empId',this.selectedEmp);
+     params = params.set('startDate', from);
+     params = params.set('endDate', to);
+     
+     const subs = this.AtdReportService.getAttendanceDetailSummary(params).subscribe({
+      next: (response:any) => {
+        this.summaryDetail = response.attendance;
+        this.empInfo = response.employeeInfo
+      }
+     });
+
+     this.subscription.push(subs);
     
   }
 
@@ -191,8 +219,6 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
         this.selectedEmp = null;
     })
     )
-    
-    
   }
 
   onChangeDw() {
@@ -213,7 +239,6 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
       return;
     }
 
-    console.log(this.rangeDatesDw);
 
     
 

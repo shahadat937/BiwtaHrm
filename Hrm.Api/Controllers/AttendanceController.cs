@@ -40,6 +40,15 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
+        [Route("get-AttendanceSummaryDetail")]
+        public async Task<ActionResult> GetAttendanceSummaryDetail([FromQuery] int EmpId, [FromQuery] DateTime StartDate, [FromQuery] DateTime EndDate)
+        {
+            var command = new GetAttendanceSummaryDetailRequest { EmpId = EmpId, StartDate = StartDate, EndDate = EndDate };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpGet]
         [Route("get-AttendanceReportByFilter")]
         public async Task<ActionResult> GetAttendanceReportByFilter([FromQuery] AttendanceReportFilterDto AttendanceReportFilterdto)
         {

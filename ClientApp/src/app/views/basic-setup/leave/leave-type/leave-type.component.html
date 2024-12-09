@@ -16,10 +16,25 @@
                         #leaveTypeName = "ngModel"
                         name="leaveTypeName" 
                         id="leaveTypeName"
+                        placeholder="Enter LeaveType"
                         required 
                         cFormControl>
                         @if (leaveTypeName.invalid&&leaveTypeName.touched) {
                             <div class="text-left text-danger">Leave Type Name is required</div>
+                        }
+                    </c-col>
+                    <c-col md="4">
+                        <label for="shortName" cLabel>Short Name</label>
+                        <input type="text" 
+                        [(ngModel)] = "this.leaveTypeService.leaveTypes.shortName"
+                        #shortName = "ngModel"
+                        name="shortName" 
+                        placeholder="Enter Short Name"
+                        id="shortName"
+                        required 
+                        cFormControl>
+                        @if (shortName.invalid&&shortName.touched) {
+                            <div class="text-left text-danger">Short Name is required</div>
                         }
                     </c-col>
                     <c-col md="4">
@@ -42,7 +57,8 @@
                     <c-col md="4">
                         <label for="remark" 
                         cLabel>Remark</label>
-                        <input type="text" 
+                        <input type="text"
+                        placeholder="Enter Remark" 
                         [(ngModel)]="this.leaveTypeService.leaveTypes.remark"
                         #remark = "ngModel" 
                         name="remark" 
@@ -60,6 +76,20 @@
                                 type="checkbox" 
                                 [checked]="this.leaveTypeService.leaveTypes.elWorkDayCal" />
                                 <label cFormCheckLabel>Include Earn Leave Calculation</label>
+                            </c-form-check>
+                        </c-col>
+                    </c-row>
+                    <c-row class="mt-3">
+                        <c-col>
+                            <c-form-check>
+                                <input id="showReport" 
+                                name="showReport" 
+                                value="true"
+                                [(ngModel)]="leaveTypeService.leaveTypes.showReport" 
+                                cFormCheckInput 
+                                type="checkbox" 
+                                [checked]="this.leaveTypeService.leaveTypes.showReport" />
+                                <label cFormCheckLabel>Show In Report</label>
                             </c-form-check>
                         </c-col>
                     </c-row>

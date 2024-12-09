@@ -8,6 +8,7 @@ import { ReligionService } from './service/religion.service';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
+  BadgeModule,
   ButtonGroupModule,
   ButtonModule,
   CardModule,
@@ -243,7 +244,8 @@ import { JobDetailsSetupComponent } from './job-details-setup/job-details-setup.
     TableModule,
     TabsModule,
     TabViewModule,
-    MatTabsModule
+    MatTabsModule,
+    BadgeModule,
   ],
   providers: [
     SectionService,

@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { environment } from '../../../environments/environment';
+import * as CryptoJS from 'crypto-js';
+
 
 
 @Injectable({
@@ -37,6 +39,9 @@ export class AuthService {
 
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
+          
+          const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(user), 'secret-key').toString();
+          localStorage.setItem('encryptedUser', encryptedUser);
           return user;
         })
       );

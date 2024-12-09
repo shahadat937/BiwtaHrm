@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EmpRewardPunishment } from '../model/emp-reward-punishment';
+import { EmpRewardPunishment } from '../../promotion/model/emp-reward-punishment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, map } from 'rxjs';
 import { environment } from 'src/environments/environment';

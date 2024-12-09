@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 import { RewardPunishmentSetupService } from '../../basic-setup/service/reward-punishment-setup.service';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { EmpTransferPostingService } from '../../transferPosting/service/emp-transfer-posting.service';
-import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
+import { EmpJobDetailsService } from '../service/emp-job-details.service';
 
 @Component({
   selector: 'app-reward-punishment',

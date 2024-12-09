@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EmpRewardPunishmentService } from './emp-reward-punishment.service';
+import { EmpRewardPunishmentService } from '../service/emp-reward-punishment.service';
 
 describe('EmpRewardPunishmentService', () => {
   let service: EmpRewardPunishmentService;

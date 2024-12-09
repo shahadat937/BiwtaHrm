@@ -44,6 +44,14 @@ namespace Hrm.Api.Controllers
             return Ok(EmpWorkHistories);
         }
 
+        [HttpGet]
+        [Route("get-CombinedDateRangeEmpWorkHistoryByEmpId")]
+        public async Task<ActionResult<EmpWorkHistoryDto>> GetCombinedDateRange(int id, DateOnly startDate, DateOnly endDate)
+        {
+            var EmpWorkHistories = await _mediator.Send(new GetDateRangeCombinedEmpWorkHistoryByEmpIdRequest { EmpId = id, StartDate = startDate, EndDate = endDate });
+            return Ok(EmpWorkHistories);
+        }
+
         [HttpDelete]
         [Route("delete-EmpWorkHistory/{id}")]
         public async Task<ActionResult> Delete(int id)

@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ManagePromotionComponent } from './manage-promotion/manage-promotion.component';
 import { PromotionApprovalListComponent } from './promotion-approval-list/promotion-approval-list.component';
-import { RewardPunishmentListComponent } from './reward-punishment-list/reward-punishment-list.component';
+import { RewardPunishmentListComponent } from '../employee/reward-punishment-list/reward-punishment-list.component';
 
 
 const routes: Routes = [
@@ -40,13 +40,6 @@ const routes: Routes = [
         component:ManagePromotionComponent,
         data: {
           title: 'Manage Increment and Promotion',
-        },
-      },
-      {
-        path:'rewardPunishment',
-        component:RewardPunishmentListComponent,
-        data: {
-          title: 'Reward/Punishment',
         },
       },
     ]

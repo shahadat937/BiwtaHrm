@@ -41,8 +41,6 @@ import { IconModule } from '@coreui/icons-angular';
 import { TransferPostingRoutingModule } from '../transferPosting/transfer-routing.module';
 import { PromotionIncrementInfoComponent } from './promotion-increment-info/promotion-increment-info.component';
 import { PromotionApprovalListComponent } from './promotion-approval-list/promotion-approval-list.component';
-import { RewardPunishmentListComponent } from './reward-punishment-list/reward-punishment-list.component';
-import { RewardPunishmentComponent } from './reward-punishment/reward-punishment.component';
 import { GradeService } from '../basic-setup/service/Grade.service';
 import { OfficeService } from '../basic-setup/service/office.service';
 import { DepartmentService } from '../basic-setup/service/department.service';
@@ -56,8 +54,6 @@ import { DepartmentService } from '../basic-setup/service/department.service';
     IncrementAndPromotionApprovalComponent,
     PromotionIncrementInfoComponent,
     PromotionApprovalListComponent,
-    RewardPunishmentListComponent,
-    RewardPunishmentComponent,
   ],
   imports: [
     CommonModule,

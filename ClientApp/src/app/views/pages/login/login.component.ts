@@ -146,7 +146,6 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
       captcha: ['', Validators.required],
       remember: [false]
     });
-    this.schoolId = 20;
     this.generateCaptcha();
     this.pathRememberValue();
     this.getSiteSetting();

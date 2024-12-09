@@ -25,7 +25,8 @@ export class MaritalStatusComponent
 {
   btnText: string | undefined;
   @ViewChild('maritalStatusForm', { static: true }) maritalStatusForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'maritalStatusName',
@@ -52,6 +53,7 @@ export class MaritalStatusComponent
     this.handleRouteParams();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('maritalStatusId');
       if (id) {
@@ -62,7 +64,9 @@ export class MaritalStatusComponent
       } else {
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -70,7 +74,7 @@ export class MaritalStatusComponent
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -104,11 +108,14 @@ export class MaritalStatusComponent
   }
 
   getMaritalStatuses() {
-    this.subscription = this.maritalStatusService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.maritalStatusService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+   
   }
   //  onSubmit(form:NgForm){
   //   this.maritalStatusService.cachedData = [];
@@ -151,7 +158,8 @@ export class MaritalStatusComponent
       ? this.maritalStatusService.update(id, form.value)
       : this.maritalStatusService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+  action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -167,9 +175,12 @@ export class MaritalStatusComponent
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+    )
+     
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -193,6 +204,8 @@ export class MaritalStatusComponent
             }
           );
         }
-      });
+      })
+    )
+   
   }
 }

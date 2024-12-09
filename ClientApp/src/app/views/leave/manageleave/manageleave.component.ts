@@ -18,7 +18,8 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
   icons = {cilZoom}
   loading: boolean ;
   DepartmentOption: any[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   selectedDepartment: number|null;
   leaves: any[] = [];
   leaveStatusOptions: any [] = [];
@@ -45,11 +46,14 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
     this.getDepartmentOption();
     this.getLeaves();
 
-    this.leaveService.getLeaveStatusOption().subscribe( {
+    this.subscription.push(
+       this.leaveService.getLeaveStatusOption().subscribe( {
       next: option =>  {
         this.leaveStatusOptions = option;
       }
     })
+    )
+   
   }
 
   getInputEventValue(event: Event) {
@@ -58,16 +62,19 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
   getDepartmentOption() {
-    this.leaveService.getSelectedDepartment().subscribe({
+    this.subscription.push(
+      this.leaveService.getSelectedDepartment().subscribe({
       next: option => {
         this.DepartmentOption = option;
       }
     }) 
+    )
+    
   }
 
   getLeaves() {
@@ -83,7 +90,8 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
       params = params.set(key, this.LeaveFilterParams[key]);
     }
 
-    this.leaveService.getLeaveByFilter(params).subscribe({
+    this.subscription.push(
+      this.leaveService.getLeaveByFilter(params).subscribe({
       next: response=> {
         this.leaves = response;
       
@@ -92,6 +100,8 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     })
+    )
+    
   }
 
   selectLeave(leave:LeaveModel) {
@@ -122,11 +132,13 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
 
   onDelete(leaveRequestId:number) {
 
-    this.confirmService.confirm('Delete Confirmation','Are you sure?').subscribe({
+   this.subscription.push(
+     this.confirmService.confirm('Delete Confirmation','Are you sure?').subscribe({
       next: response => {
         if(response) {
           this.loading = true;
-          this.subscription = this.leaveService.deleteLeaveRequest(leaveRequestId).subscribe({
+          this.subscription.push(
+            this.leaveService.deleteLeaveRequest(leaveRequestId).subscribe({
             next: (response) => {
               if(response.success) {
                 this.toastr.success('',`${response.message}`, {
@@ -148,10 +160,14 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
               this.loading = false;
             }
           })
+          )
+           
 
         }
       }
     })
+   )
+   
 
   }
 }

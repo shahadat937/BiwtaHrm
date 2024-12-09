@@ -20,7 +20,8 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
   headerBtnText: string = 'Hide From';
   btnText: string = '';
   occupations: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   empSpouse: EmpSpouseInfoModule[] = [];
 
@@ -40,7 +41,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -69,7 +70,8 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
 
   removeSpouselList(index: number, id: number) {
     if (id != 0) {
-      this.confirmService
+      this.subscription.push(
+        this.confirmService
         .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
         .subscribe((result) => {
           if (result) {
@@ -91,7 +93,9 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
               }
             );
           }
-        });
+        })
+      )
+      
     }
     else if (id == 0) {
       if (this.empSpouseListArray.controls.length > 0)
@@ -101,19 +105,22 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
 
 
   getEmployeeSpouseInfoByEmpId() {
-    this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res) => {
-      if (res.length > 0) {
-        this.headerText = 'Update Spouse Information';
-        this.btnText = 'Update';
-        this.empSpouse = res;
-        this.patchSpouseInfo(res);
-      }
-      else {
-        this.headerText = 'Add Spouse Information';
-        this.btnText = 'Submit';
-        this.addSpouse();
-      }
-    })
+    this.subscription.push(
+      this.empSpouseInfoService.findByEmpId(this.empId).subscribe((res) => {
+        if (res.length > 0) {
+          this.headerText = 'Update Spouse Information';
+          this.btnText = 'Update';
+          this.empSpouse = res;
+          this.patchSpouseInfo(res);
+        }
+        else {
+          this.headerText = 'Add Spouse Information';
+          this.btnText = 'Submit';
+          this.addSpouse();
+        }
+      })
+    )
+    
   }
 
   patchSpouseInfo(spouseInfoList: any[]) {
@@ -142,9 +149,12 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
 
 
   getSelectedOccupation() {
-    this.empSpouseInfoService.getSelectedOccupation().subscribe((res) => {
+    this.subscription.push(
+      this.empSpouseInfoService.getSelectedOccupation().subscribe((res) => {
       this.occupations = res;
     })
+    )
+    
   }
 
   cancel() {
@@ -153,7 +163,8 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
 
   insertSpouse() {
     this.loading = true;
-    this.empSpouseInfoService.saveEmpSpouseInfo(this.EmpSpouseInfoForm.get("empSpouseList")?.value).subscribe(((res: any) => {
+    this.subscription.push(
+      this.empSpouseInfoService.saveEmpSpouseInfo(this.EmpSpouseInfoForm.get("empSpouseList")?.value).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -170,6 +181,8 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
       this.loading = false;
     })
     )
+    )
+    
   }
 
 

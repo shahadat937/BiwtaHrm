@@ -24,7 +24,7 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   loadingBulk = false;
   @ViewChild('manualAtdform', { static: true }) manualAtdForm!: NgForm;
   @ViewChild('manualAtdBulkForm', { static: true }) manualAtdBulkForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
   displayedColumnName: string[] = ["Attendance Id", "Attendance Date", "Shift", "Employee Name","InTime","OutTime", "Attendance Type", "Attendance Status"];
   dataSource = new MatTableDataSource<any>();
   HeaderText: string | undefined;
@@ -32,6 +32,7 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   buttonIcon:string = '';
   OfficeOption:any;
   DepartmentOption:any;
+  subscription: Subscription[]=[]
   ShiftOption: any;
   EmpOption:any;
   AtdStatusOption:any;
@@ -152,57 +153,65 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   onSubmit(form:NgForm) {
     this.loading = true;
     
-    this.subscription = this.manualAtdService.submit(this.manualAtdService.attendances).subscribe({
-      next: (response:any) => {
-        if(response.success) {
+  
+    this.subscription.push(
+      this.manualAtdService.submit(this.manualAtdService.attendances).subscribe({
+        next: (response:any) => {
+          if(response.success) {
+            this.ResetForm();
+            this.toastr.success('',`${response.message}`, {
+              positionClass: 'toast-top-right',
+            });
+          } else {
+            this.toastr.warning('',`${response.message}`, {
+              positionClass: 'toast-top-right'
+            });
+          } 
+          
+        },
+        error: err=> {
+          this.loading= false;
+        },
+        complete: () => {
           this.ResetForm();
-          this.toastr.success('',`${response.message}`, {
-            positionClass: 'toast-top-right',
-          });
-        } else {
-          this.toastr.warning('',`${response.message}`, {
-            positionClass: 'toast-top-right'
-          });
-        } 
-        
-      },
-      error: err=> {
-        this.loading= false;
-      },
-      complete: () => {
-        this.ResetForm();
-        this.loading = false;
-      }
-    })
+          this.loading = false;
+        }
+      })
+    )
+    
   }
 
   onSubmitBulk(form:NgForm) {
 
     this.loadingBulk = true;
-    this.subscription = this.manualAtdService.submitBulk(this.atdFile).subscribe({
-      next: (response:any) => {
-        if(response.success) {
+
+    this.subscription.push(
+      this.manualAtdService.submitBulk(this.atdFile).subscribe({
+        next: (response:any) => {
+          if(response.success) {
+            this.ResetBulkForm();
+            this.toastr.success('',`${response.message}`,{
+              positionClass:'toast-top-right'
+            });
+          } else {
+            this.loadingBulk=false;
+            this.toastr.warning('',`${response.message}`, {
+              positionClass:'toast-top-right'
+            });
+          }
+  
           this.ResetBulkForm();
-          this.toastr.success('',`${response.message}`,{
-            positionClass:'toast-top-right'
-          });
-        } else {
-          this.loadingBulk=false;
-          this.toastr.warning('',`${response.message}`, {
-            positionClass:'toast-top-right'
-          });
+  
+        },
+        error: err=> {
+          this.loadingBulk = false;
+        },
+        complete: () => {
+          this.loadingBulk = false;
         }
-
-        this.ResetBulkForm();
-
-      },
-      error: err=> {
-        this.loadingBulk = false;
-      },
-      complete: () => {
-        this.loadingBulk = false;
-      }
-    })
+      })
+    )
+   
   }
 
   onEmpIdChange() {
@@ -215,25 +224,30 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
     );
 
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
 
-    this.subscription = source$.subscribe(data => {
-      this.empBasicInfoService.getEmpInfoByCard(data).subscribe({
-        next: response => {
-          if(response) {
-           this.manualAtdService.attendances.empId = response.id;
-           this.EmpName = [response.firstName,response.lastName].join(' ');
-           this.validPMIS = true;
-          } else {
+
+    
+    this.subscription.push(
+      source$.subscribe(data => {
+        this.empBasicInfoService.getEmpInfoByCard(data).subscribe({
+          next: response => {
+            if(response) {
+             this.manualAtdService.attendances.empId = response.id;
+             this.EmpName = [response.firstName,response.lastName].join(' ');
+             this.validPMIS = true;
+            } else {
+              this.resetEmp();
+            }
+          },
+          error: err => {
             this.resetEmp();
           }
-        },
-        error: err => {
-          this.resetEmp();
-        }
+        })
       })
-    })
+    )
+   
 
   }
 
@@ -261,7 +275,7 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 

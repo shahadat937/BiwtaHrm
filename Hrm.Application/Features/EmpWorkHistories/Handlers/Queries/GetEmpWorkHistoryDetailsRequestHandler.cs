@@ -27,12 +27,12 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
         public async Task<EmpWorkHistoryDto> Handle(GetEmpWorkHistoryDetailsRequest request, CancellationToken cancellationToken)
         {
             var EmpWorkHistories = _EmpWorkHistoryRepository.Where(x => x.Id == request.Id)
-                .Include(x => x.Office)
-                .Include(x => x.Department)
-                .Include(x => x.Section)
-                .Include(x => x.DesignationSetup)
-                .Include(x => x.Designation)
-                        .ThenInclude(ds => ds.DesignationSetup)
+                //.Include(x => x.Office)
+                //.Include(x => x.Department)
+                //.Include(x => x.Section)
+                //.Include(x => x.DesignationSetup)
+                //.Include(x => x.Designation)
+                //        .ThenInclude(ds => ds.DesignationSetup)
                 .FirstOrDefault();
 
 

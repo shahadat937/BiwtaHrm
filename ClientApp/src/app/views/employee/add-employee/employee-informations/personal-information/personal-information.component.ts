@@ -29,7 +29,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   eyeColors: SelectedModel[] = [];
   relations: SelectedModel[] = [];
   countries: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   @ViewChild('PersonalInfoForm', { static: true }) PersonalInfoForm!: NgForm;
 
@@ -53,7 +54,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -63,7 +64,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   }
 
   getEmployeeByEmpId() {
-    this.empPersonalInfoService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+      this.empPersonalInfoService.findByEmpId(this.empId).subscribe((res) => {
       this.PersonalInfoForm?.form.patchValue(res);
       if (res) {
         this.headerText = 'Update Personal Information';
@@ -75,7 +77,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
         this.initaialForm();
         // this.getUserDetails();
       }
-    });
+    })
+    )
+    
   }
 
   // getUserDetails(){
@@ -167,44 +171,76 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
 
   
   getSelectedGenders(){
-    this.subscription=this.empPersonalInfoService.getSelectedGender().subscribe((data) => { 
+    // this.subscription=
+    this.subscription.push(
+      this.empPersonalInfoService.getSelectedGender().subscribe((data) => { 
       this.genders = data;
-    });
+    })
+    )
+    
   }
   getSelectedMaritalStatuses(){
-    this.subscription=this.empPersonalInfoService.getSelectedMaritalStatus().subscribe((data) => { 
+    // this.subscription=
+    this.subscription.push(
+      this.empPersonalInfoService.getSelectedMaritalStatus().subscribe((data) => { 
       this.maritalStatuses = data;
-    });
+    })
+    )
+    
   }
   getSelectedBloodGroups(){
-    this.subscription=this.empPersonalInfoService.getSelectedBloodGroup().subscribe((data) => { 
+    // this.subscription=
+    this.subscription.push(
+      this.empPersonalInfoService.getSelectedBloodGroup().subscribe((data) => { 
       this.bloodGroups = data;
-    });
+    })
+    )
+    
   }
   getSelectedCountris() {
-    this.subscription = this.countryService.selectGetCountry().subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.countryService.selectGetCountry().subscribe((data) => {
       this.countries = data;
-    });
+    })
+    )
+    
   }
   getSelectedReligions(){
-    this.subscription=this.empPersonalInfoService.getSelectedReligion().subscribe((data) => { 
+    // this.subscription=
+    this.subscription.push(
+      this.empPersonalInfoService.getSelectedReligion().subscribe((data) => { 
       this.religions = data;
-    });
+    })
+    )
+    
   }
   getSelectedHairColors(){
-    this.subscription=this.empPersonalInfoService.getSelectedHairColor().subscribe((data) => { 
+    // this.subscription=
+    this.subscription.push(
+      this.empPersonalInfoService.getSelectedHairColor().subscribe((data) => { 
       this.hairColors = data;
-    });
+    })
+    )
+    
   }
   getSelectedEyeColors(){
-    this.subscription=this.empPersonalInfoService.getSelectedEyeColor().subscribe((data) => { 
+    // this.subscription=
+    this.subscription.push(
+      this.empPersonalInfoService.getSelectedEyeColor().subscribe((data) => { 
       this.eyeColors = data;
-    });
+    })
+    )
+    
   }
   getSelectedRelation(){
-    this.subscription=this.empPersonalInfoService.getSelectedRelationType().subscribe((data) => { 
+    // this.subscription=
+    this.subscription.push(
+      this.empPersonalInfoService.getSelectedRelationType().subscribe((data) => { 
       this.relations = data;
-    });
+    })
+    )
+    
   }
 
   cancel() {
@@ -219,7 +255,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       ? this.empPersonalInfoService.updateEmpPersonalInfo(id, form.value)
       : this.empPersonalInfoService.saveEmpPersonalInfo(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    // this.subscription = 
+    this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -234,6 +272,8 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
       this.loading = false;
-    });
+    })
+    )
+    
   }
 }

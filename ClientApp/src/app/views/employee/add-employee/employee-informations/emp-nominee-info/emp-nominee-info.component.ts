@@ -22,7 +22,8 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
   headerBtnText: string = 'Hide From';
   btnText: string = '';
   relationType: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
 
   constructor(
@@ -39,12 +40,13 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
   getEmployeeNomineeInfoByEmpId() {
-    this.empNomineeInfoService.findByEmpId(this.empId).subscribe((res) => {
+    this.subscription.push(
+       this.empNomineeInfoService.findByEmpId(this.empId).subscribe((res) => {
       if (res.length > 0) {
         this.headerText = 'Update Nominee Information';
         this.btnText = 'Update';
@@ -54,7 +56,9 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
         this.btnText = 'Submit';
         this.addNominee();
       }
-    });
+    })
+    )
+   
   }
 
   patchNomineeInfo(nomineeInfoList: any[]) {
@@ -147,7 +151,8 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
 
   removeNomineeList(index: number, id: number) {
     if (id != 0) {
-      this.confirmService
+      this.subscription.push(
+         this.confirmService
         .confirm('Confirm delete message', 'Are You Sure Delete This Item')
         .subscribe((result) => {
           if (result) {
@@ -169,7 +174,9 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
               }
             );
           }
-        });
+        })
+      )
+     
     } else if (id == 0) {
       if (this.empNomineeListArray.controls.length > 0) {
         this.empNomineeListArray.removeAt(index);
@@ -178,9 +185,13 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
   }
 
   getSelectedRelation() {
-    this.subscription = this.empPersonalInfoService.getSelectedRelationType().subscribe((data) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empPersonalInfoService.getSelectedRelationType().subscribe((data) => {
       this.relationType = data;
-    });
+    })
+    )
+    
   }
 
   cancel() {
@@ -190,21 +201,24 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
   saveNominee() {
     this.loading = true;
     const formData = this.EmpNomineeInfoForm.get('empNomineeList')?.value;
-    this.empNomineeInfoService.saveEmpNomineeInfo(formData).subscribe((res: any) => {
-      if (res.success) {
-        this.toastr.success('', `${res.message}`, {
-          positionClass: 'toast-top-right',
-        });
-        this.loading = false;
-        // this.cancel();
-        this.getEmployeeNomineeInfoByEmpId();
-      } else {
-        this.toastr.warning('', `${res.message}`, {
-          positionClass: 'toast-top-right',
-        });
-        this.loading = false;
-      }
-    });
+    this.subscription.push(
+      this.empNomineeInfoService.saveEmpNomineeInfo(formData).subscribe((res: any) => {
+        if (res.success) {
+          this.toastr.success('', `${res.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.loading = false;
+          // this.cancel();
+          this.getEmployeeNomineeInfoByEmpId();
+        } else {
+          this.toastr.warning('', `${res.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.loading = false;
+        }
+      })
+    )
+    
   }
 
   saveNomineeSingle() {
@@ -212,6 +226,7 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
     empNomineeList.forEach((nominee) => {
       this.loading = true;
       const success = false;
+      this.subscription.push(
         this.empNomineeInfoService.saveEmpNomineeInfo(nominee).subscribe({
           next: (response:any) => {
             if(response.success) {
@@ -231,6 +246,8 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
             this.loading = false;
           }
         })
+      )
+        
     });
     // this.empNomineeListArray.controls.forEach(control => {
     //   this.loading = true;

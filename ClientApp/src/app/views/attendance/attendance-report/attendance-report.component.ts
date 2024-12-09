@@ -47,7 +47,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   EmployeeOption: any[] = [];
   SectionOption: any[] = [];
   rangeDates: Date | null;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
 
   // Selected Option Variable
   selectedSection: number|null;
@@ -56,6 +57,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   selectedDesignation: number | null;
   selectedShift : number | null;
   selectedEmp: number | null;
+  // subscription: Subscription
   isUser: boolean ;
   reportDate: Date;
 
@@ -78,16 +80,18 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.selectedSection = null;
     this.rangeDates = null;
     this.isUser = false;
-    this.leaveTypesReport = [];
-    this.reportDate = new Date();
-    this.subscription = this.authService.currentUser.subscribe(data => {
-      if(data.empId!=null) {
+    this.subscription.push(
+      this.authService.currentUser.subscribe(data => {
+      
+      if(data && data.empId!=null) {
         this.selectedEmp = parseInt(data.empId);
       }
-      if(data.role.toString() != "Master Admin") {
+      if(data && data.role.toString() != "Master Admin") {
         this.isUser = true;
       }
     })
+    )
+   
   }
 
   ngOnInit(): void {
@@ -117,11 +121,15 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   }
 
   getAllDepartment() {
-    this.subscription = this.departmentService.getSelectedAllDepartment().subscribe({
+    this.subscription.push(
+ this.departmentService.getSelectedAllDepartment().subscribe({
       next: response => {
+        
         this.DepartmentOption = response;
       }
     })
+    )
+    
   }
 
   onDepartmentChange() {
@@ -129,12 +137,13 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
       //this.AtdReportService.getDesignationOption(this.selectedDepartment).subscribe(option=> {
       //  this.DesignationOption = option;
       //});
-
-      this.subscription = this.SectionService.getSectionByOfficeDepartment(this.selectedDepartment).subscribe({
+      this.subscription.push(
+        this.SectionService.getSectionByOfficeDepartment(this.selectedDepartment).subscribe({
         next: response => {
           this.SectionOption = response;
         }
       })
+      ) 
     } else {
       //this.DesignationOption = [];
       this.SectionOption = [];
@@ -181,9 +190,11 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     params = this.selectedEmp == null? params: params.set("EmpId",this.selectedEmp);
 
 
-    this.subscription = this.AtdReportService.getIsHolidayWeekend(this.rangeDates.getMonth()+1,this.rangeDates.getFullYear()).subscribe({
+    this.subscription.push(
+      this.AtdReportService.getIsHolidayWeekend(this.rangeDates.getMonth()+1,this.rangeDates.getFullYear()).subscribe({
       next: IsOffday => {
-        this.subscription = this.AtdReportService.getAttendanceReport(params).subscribe(result=> {
+        this.subscription.push(
+        this.AtdReportService.getAttendanceReport(params).subscribe(result=> {
           if(result.length>0) {
             this.dynamicColumn=Object.keys(result[0]).slice(5).map(val=> {
               return {"header":val.split('-')[2],"field":val,"offday":IsOffday[parseInt(val.split('-')[2])]};
@@ -204,7 +215,8 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
           }
         }, err=> {
           console.log(err);
-        });
+        })
+        )      
         
       }
     })
@@ -231,13 +243,12 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
     this.selectedDesignation = null;
     this.ShiftOption = [];
     this.selectedShift = null;
-    //this.EmployeeOption = [];
-    //this.selectedEmp = null;
+    
   }
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs => subs.unsubscribe())
     }
   }
     hrmdateResize(formDateValue:any){

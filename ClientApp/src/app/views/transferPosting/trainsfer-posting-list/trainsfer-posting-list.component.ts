@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { MatSort } from '@angular/material/sort';
 import { TransferPostingInfoComponent } from '../transfer-posting-info/transfer-posting-info.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
   selector: 'app-trainsfer-posting-list',
@@ -17,11 +18,14 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class TrainsferPostingListComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
-    'slNo',
+    // 'slNo',
     'PMS Id',
     'fullName',
+    'transferFrom',
+    'transferTo',
     // 'ApprovalStatus',
     'DeptStatus',
     'JoiningStatus',
@@ -38,6 +42,7 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     public empTransferPostingService: EmpTransferPostingService,
     private route: ActivatedRoute,
     private modalService: BsModalService,
+    private confirmService: ConfirmService,
   ) {
 
   }
@@ -50,11 +55,14 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
   }
 
   getAllTransferPostingInfo() {
-    this.subscription = this.empTransferPostingService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.empTransferPostingService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   applyFilter(filterValue: string) {
@@ -65,7 +73,7 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -75,5 +83,36 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     };
     const modalRef: BsModalRef = this.modalService.show(TransferPostingInfoComponent, { initialState, backdrop: 'static' });
   }
+
+  delete(element: any) {
+    this.subscription.push(
+    this.confirmService
+      .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+      .subscribe((result) => {
+        if (result) {
+          this.empTransferPostingService.deleteEmpTransferPosting(element.id).subscribe(
+            (res) => {
+              const index = this.dataSource.data.indexOf(element);
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
+              }
+              this.toastr.success('Delete sucessfully ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+            },
+            (err) => {
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+            }
+          );
+        }
+      })
+    )
+    
+  }
+
+
 
 }

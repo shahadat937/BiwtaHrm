@@ -21,7 +21,8 @@ export class RolesComponent  implements OnInit, OnDestroy, AfterViewInit {
   heading: string = 'Add New Roles'
   loading = false;
   @ViewChild('RolesForm', { static: true }) RolesForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'name','Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -46,7 +47,7 @@ export class RolesComponent  implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -77,22 +78,28 @@ export class RolesComponent  implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getRolesById(id: string){
-    this.subscription = this.rolesService.find(id).subscribe((item) => {
+    this.subscription.push(
+    this.rolesService.find(id).subscribe((item) => {
       if(item){
         this.btnText = "Update";
         this.heading = 'Update Roles';
         this.RolesForm.form.patchValue(item);
         window.scrollTo(0, 0);
       }
-    });
+    })
+    )
+   
   }
 
   getAllRoles() {
-    this.subscription = this.rolesService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.rolesService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   onSubmit(form: NgForm): void {
@@ -103,7 +110,8 @@ export class RolesComponent  implements OnInit, OnDestroy, AfterViewInit {
       ? this.rolesService.update(id, form.value)
       : this.rolesService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -117,15 +125,19 @@ export class RolesComponent  implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+      )
+    
   }
 
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.rolesService.delete(element.id).subscribe(
+          this.subscription.push(
+            this.rolesService.delete(element.id).subscribe(
             (res: any) => {
               if(res.success == true){
                 this.toastr.warning('', `${res.message}`, {
@@ -149,8 +161,12 @@ export class RolesComponent  implements OnInit, OnDestroy, AfterViewInit {
               });
               console.log(err);
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+    )
+    
   }
 }

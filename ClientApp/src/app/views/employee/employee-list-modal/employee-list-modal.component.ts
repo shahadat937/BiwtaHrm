@@ -20,7 +20,8 @@ import { PaginatorModel } from 'src/app/core/models/paginator-model';
 })
 export class EmployeeListModalComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   modalOpened: boolean = false;
   @Output() employeeSelected = new EventEmitter<string>();
   employees: BasicInfoModule[] = [];
@@ -64,12 +65,14 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
   getAllEmpBasicInfo(queryParams: any) {
-    this.subscription = this.empBasicInfoService.getAllPagination(queryParams).subscribe((employees: any) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empBasicInfoService.getAllPagination(queryParams).subscribe((employees: any) => {
       this.totalRecords = employees.totalItemsCount;
       this.employees = employees.items;
       this.loading = false;
@@ -83,7 +86,9 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
       //   .map(emp => emp.sectionName)
       //   .filter(sectionName => sectionName !== null && sectionName.trim() !== '')
       // )].map(section => ({ name: section }));
-    });
+    })
+    )
+    
 
     this.imageLinkUrl = this.empPhotoSign.imageUrl + '/EmpPhoto';
     this.defaultImage = this.empPhotoSign.imageUrl + '/EmpPhoto/default.jpg';

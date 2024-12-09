@@ -19,7 +19,8 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
   headerText: string | undefined;
   loading = false;
   @ViewChild('EyesColorForm', { static: true }) EyesColorForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'eyesColorName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -45,9 +46,12 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
       if (id) {
         this.btnText = 'Update';
         this.headerText = 'Update Eye Color';
+        this.subscription.push(
         this.eyesColorService.find(+id).subscribe((res) => {
           this.EyesColorForm?.form.patchValue(res);
-        });
+        })
+        )
+       
       } else {
         this.resetForm();
         this.headerText = 'Add Eye Color';
@@ -61,7 +65,7 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -94,11 +98,14 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAllEyesColors() {
-    this.subscription = this.eyesColorService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.eyesColorService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
   
   onSubmit(form: NgForm): void {
@@ -109,7 +116,8 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.eyesColorService.update(id, form.value)
       : this.eyesColorService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -127,13 +135,17 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+      )
+  
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.eyesColorService.delete(element.eyesColorId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -151,8 +163,12 @@ export class EyesColorComponent implements OnInit, OnDestroy, AfterViewInit {
               });
               console.log(err);
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+    )
+    
   }
 }

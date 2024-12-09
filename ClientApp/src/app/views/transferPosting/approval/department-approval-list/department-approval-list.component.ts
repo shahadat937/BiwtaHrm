@@ -18,11 +18,14 @@ import { DepartmentApprovalComponent } from '../department-approval/department-a
 })
 export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
-    'slNo',
+    // 'slNo',
     'PMS Id',
     'fullName',
+    'transferFrom',
+    'transferTo',
     'ApprovalStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();
@@ -53,11 +56,14 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
   }
 
   getAllEmpTransferPostingDeptApproveInfo() {
-    this.subscription = this.empTransferPostingService.getAllEmpTransferPostingDeptApproveInfo(this.loginEmpId).subscribe((item) => {
+    this.subscription.push(
+    this.empTransferPostingService.getAllEmpTransferPostingDeptApproveInfo(this.loginEmpId).subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+   
   }
 
   applyFilter(filterValue: string) {
@@ -68,7 +74,7 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -89,9 +95,12 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
     const modalRef: BsModalRef = this.modalService.show(DepartmentApprovalComponent, { initialState, backdrop: 'static' });
 
     if (modalRef.onHide) {
-      modalRef.onHide.subscribe(() => {
-        this.getAllEmpTransferPostingDeptApproveInfo();
-      });
+      this.subscription.push(
+        modalRef.onHide.subscribe(() => {
+          this.getAllEmpTransferPostingDeptApproveInfo();
+        })
+      )
+     
     }
   }
 

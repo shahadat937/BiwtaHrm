@@ -34,11 +34,12 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
         public async Task<object> Handle(GetEmployeeJobHistoryForFormRequest request, CancellationToken cancellationToken)
         {
             var workHistory = await _EmpWorkHistoryRepo.Where(x => x.EmpId == request.EmpId && x.JoiningDate < request.endDate && x.ReleaseDate > request.startDate)
-                .Include(x => x.Office)
-                .Include(x => x.Department)
-                .Include(x => x.Section)
-                .Include(x => x.Designation)
-                .ThenInclude(x => x.DesignationSetup).ToListAsync();
+                //.Include(x => x.Office)
+                //.Include(x => x.Department)
+                //.Include(x => x.Section)
+                //.Include(x => x.Designation)
+                //.ThenInclude(x => x.DesignationSetup)
+                .ToListAsync();
 
             var otherResponsibility = await _EmpOtherResponsibilityRepo.Where(x => x.EmpId == request.EmpId && x.StartDate < request.endDate && x.EndDate > request.startDate)
                 .Include(x => x.Office)
@@ -63,9 +64,9 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                 EmpId = (int)x.EmpId,
                 startDate = (DateOnly) x.JoiningDate,
                 endDate = (DateOnly) x.ReleaseDate,
-                DepartmentId = x.DepartmentId,
-                DesignationId = x.DesignationId,
-                SectionId = x.SectionId,
+                //DepartmentId = x.DepartmentId,
+                //DesignationId = x.DesignationId,
+                //SectionId = x.SectionId,
                 DepartmentName = x.DepartmentName,
                 DesignationName = x.DesignationName,
                 SectionName = x.SectionName

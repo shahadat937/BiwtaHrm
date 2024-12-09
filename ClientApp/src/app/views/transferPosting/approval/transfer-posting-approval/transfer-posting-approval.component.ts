@@ -16,7 +16,8 @@ import { NgForm } from '@angular/forms';
 })
 export class TransferPostingApprovalComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   empTransferPosting: EmpTransferPosting = new EmpTransferPosting();
   id: number = 0;
   clickedButton: string = '';
@@ -59,18 +60,21 @@ export class TransferPostingApprovalComponent implements OnInit, OnDestroy {
   }
 
   getTransferPostingInfo() {
-    this.subscription = this.empTransferPostingService.findById(this.id).subscribe((res) => {
+    this.subscription.push(
+    this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if(res){
         this.empTransferPosting = res;
         // this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
         this.EmpTransferPostingForm?.form.patchValue(res);
       }
-    });
+    })
+    )
+   
   }
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -126,7 +130,9 @@ export class TransferPostingApprovalComponent implements OnInit, OnDestroy {
       this.empTransferPosting.transferApproveDate = new Date().toISOString().split('T')[0] as any as Date;
       this.empTransferPosting.approveRemark = this.empTransferPostingService.empTransferPosting.approveRemark;
       console.log("Full Response : ", this.empTransferPosting);
-      this.subscription = this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, this.empTransferPosting).subscribe((response: any) => {
+
+      this.subscription.push(
+      this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, this.empTransferPosting).subscribe((response: any) => {
         if (response.success) {
           if(transferApproveStatus == true){
             this.toastr.success('', `Application Approved Successfull`, {
@@ -149,7 +155,9 @@ export class TransferPostingApprovalComponent implements OnInit, OnDestroy {
           });
         }
         this.closeModal();
-      });
+      })
+      )
+      
     }
   }
 }

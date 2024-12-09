@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -12,13 +12,14 @@ import { EmpShiftAssignService } from '../../service/emp-shift-assign.service';
   templateUrl: './update-emp-shift.component.html',
   styleUrl: './update-emp-shift.component.scss'
 })
-export class UpdateEmpShiftComponent implements OnInit {
+export class UpdateEmpShiftComponent implements OnInit, OnDestroy {
 
   id: number = 0;
   modalOpened: boolean = false;
   
   shifts: SelectedModel[] = [];
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   
   @ViewChild('EmpShiftAssignForm', { static: true }) EmpShiftAssignForm!: NgForm;
 
@@ -40,6 +41,11 @@ export class UpdateEmpShiftComponent implements OnInit {
       this.modalOpened = true;
     }, 0);
   }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.forEach(subs=>subs.unsubscribe());
+    }
+  }
 
   
   initaialUser(form?: NgForm) {
@@ -58,15 +64,21 @@ export class UpdateEmpShiftComponent implements OnInit {
   }
   
   getById(){
-    this.empShiftAssignService.findById(this.id).subscribe((res) => {
+    this.subscription.push(
+      this.empShiftAssignService.findById(this.id).subscribe((res) => {
       this.EmpShiftAssignForm?.form.patchValue(res);
-    });
+    })
+    )
+    
   }
 
   getSelectedShift(){
-    this.ShiftService.getSelectedShift().subscribe((res) => {
+    this.subscription.push(
+      this.ShiftService.getSelectedShift().subscribe((res) => {
       this.shifts = res;
     })
+    )
+    
   }
 
   
@@ -101,7 +113,9 @@ export class UpdateEmpShiftComponent implements OnInit {
 
     action$ = this.empShiftAssignService.updateEmpShiftAssign(id, form.value);
 
-    this.subscription = action$.subscribe((response: any)  => {
+    // this.subscription = 
+    this.subscription.push(
+      action$.subscribe((response: any)  => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -112,7 +126,9 @@ export class UpdateEmpShiftComponent implements OnInit {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+    )
+    
   }
 
 }

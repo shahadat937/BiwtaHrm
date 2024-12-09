@@ -15,7 +15,8 @@ import { UpdateEmpShiftComponent } from '../update-emp-shift/update-emp-shift.co
 })
 export class EmpShiftListComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo', 
     'idNo', 
@@ -45,7 +46,7 @@ export class EmpShiftListComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
   
@@ -57,11 +58,15 @@ export class EmpShiftListComponent implements OnInit, OnDestroy {
 
 
   getAllEmpShiftAssignedList(){
-    this.subscription = this.empShiftAssignService.getAll().subscribe((item) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empShiftAssignService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   updateEmpShift(id: number){
@@ -71,9 +76,12 @@ export class EmpShiftListComponent implements OnInit, OnDestroy {
     const modalRef: BsModalRef = this.modalService.show(UpdateEmpShiftComponent, { initialState, backdrop: 'static' });
     
     if (modalRef.onHide) {
-      modalRef.onHide.subscribe(() => {
+      this.subscription.push(
+        modalRef.onHide.subscribe(() => {
         this.getAllEmpShiftAssignedList();
-      });
+      })
+      )
+      
     }
   }
 

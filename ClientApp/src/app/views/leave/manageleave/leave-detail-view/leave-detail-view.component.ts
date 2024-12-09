@@ -21,7 +21,8 @@ import { update } from 'lodash-es';
 })
 export class LeaveDetailViewComponent implements OnInit, OnDestroy{
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   loading: boolean = false;
   @Input() leaveRequestId: number = 0;
   @Input() CanApprove: boolean = false;
@@ -67,12 +68,14 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     } 
   }
 
   getLeaveRequestById() {
-    this.subscription = this.leaveService.getLeaveById(this.leaveRequestId).subscribe({
+    // this.subscription = 
+    this.subscription.push(
+      this.leaveService.getLeaveById(this.leaveRequestId).subscribe({
       next: response=> {
         this.leaveData = response;
         this.updateLeaveData = this.leaveData;
@@ -85,11 +88,15 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
       complete: () => {
         this.loading = false;
       }
-    });
+    })
+    )
+    
   }
 
   getLeaveStatusOption() {
-    this.subscription = this.leaveService.getLeaveStatusOption().subscribe({
+    // this.subscription = 
+    this.subscription.push(
+      this.leaveService.getLeaveStatusOption().subscribe({
       next: option=> {
         this.leaveStatusOption = option;
       },
@@ -97,6 +104,8 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
         console.log(err);
       }
     })
+    )
+    
   }
 
   modalClose() {
@@ -107,7 +116,9 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
   approveLeaveRequest() {
     this.loading = true;
     if(this.Role=='Approver') {
-      this.subscription = this.leaveService.approveFinalLeaveRequest(this.leaveRequestId).subscribe({
+      // this.subscription = 
+      this.subscription.push(
+         this.leaveService.approveFinalLeaveRequest(this.leaveRequestId).subscribe({
         next: response=> {
           if(response.success == true) {
             this.toastr.success('',`${response.message}`, {
@@ -127,8 +138,11 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
           this.loading = false;
         }
       })
+      )
+     
     } else if(this.Role=="Reviewer"){
-      this.leaveService.approveLeaveRequestByReviewer(this.leaveRequestId).subscribe({
+      this.subscription.push(
+        this.leaveService.approveLeaveRequestByReviewer(this.leaveRequestId).subscribe({
         next: response=> {
           if(response.success == true) {
             this.toastr.success('',`${response.message}`, {
@@ -148,6 +162,8 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
           this.loading = false;
         }
       })
+      )
+      
     } else {
       this.toastr.warning('',"Invalid Role", {
         positionClass: 'toast-top-right'
@@ -158,7 +174,9 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
   denyLeaveRequest() {
     this.loading = true;
     if(this.Role=='Approver') {
-      this.subscription = this.leaveService.denyFinalLeaveRequest(this.leaveRequestId).subscribe({
+      // this.subscription = 
+      this.subscription.push(
+        this.leaveService.denyFinalLeaveRequest(this.leaveRequestId).subscribe({
         next: response=> {
           if(response.success == true) {
             this.toastr.success('',`${response.message}`, {
@@ -178,8 +196,12 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
           this.loading = false;
         }
       })
+      )
+      
     } else if (this.Role == "Reviewer"){
-      this.subscription = this.leaveService.denyLeaveRequestByReviewer(this.leaveRequestId).subscribe({
+      // this.subscription = 
+      this.subscription.push(
+        this.leaveService.denyLeaveRequestByReviewer(this.leaveRequestId).subscribe({
         next: response=> {
           if(response.success == true) {
             this.toastr.success('',`${response.message}`, {
@@ -199,6 +221,8 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
           this.loading = false;
         }
       })
+      )
+      
     } else {
       this.toastr.warning('',"Invalid Role");
     }
@@ -213,26 +237,34 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
     let params = new HttpParams();
     params = params.set("From", this.leaveData.fromDate);
     params = params.set("To", this.leaveData.toDate);
-    this.subscription = this.addLeaveService.getWorkingDays(params).subscribe({
+    // this.subscription = 
+    this.subscription.push(
+      this.addLeaveService.getWorkingDays(params).subscribe({
       next: response => {
         this.totalLeave = response;
       }
     })
+    )
+    
   }
 
   getLeaveFiles() {
-    this.leaveService.getLeaveFiles(this.leaveRequestId).subscribe({
+    this.subscription.push(
+      this.leaveService.getLeaveFiles(this.leaveRequestId).subscribe({
       next: response => {
         this.leaveFiles = response;
         console.log(this.leaveFiles);
       }
     })
+    )
+    
   }
 
   updateLeaveRequest() {
     this.loading = true;
     const formData = this.convertToFormData(this.updateLeaveData);
-    this.leaveService.updateLeaveRequest(formData).subscribe({
+    this.subscription.push(
+      this.leaveService.updateLeaveRequest(formData).subscribe({
       next: response => {
         if(response.success) {
           this.toastr.success('',`${response.message}`, {
@@ -252,6 +284,8 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
         this.loading = false;
       }
     })
+    )
+    
   }
 
   convertToFormData(model: any, fileFields: string[] = []): FormData {

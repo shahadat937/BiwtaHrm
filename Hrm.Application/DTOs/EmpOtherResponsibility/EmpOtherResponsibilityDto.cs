@@ -10,6 +10,8 @@ namespace Hrm.Application.DTOs.EmpOtherResponsibility
     {
         public int Id { get; set; }
         public int? EmpId { get; set; }
+        public string? OrderNo { get; set; }
+        public DateOnly? OrderDate { get; set; }
         public int? ResponsibilityTypeId { get; set; }
         public int? OfficeId { get; set; }
         public int? DepartmentId { get; set; }

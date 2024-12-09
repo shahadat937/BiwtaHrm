@@ -30,7 +30,8 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   btnText: string | undefined;
   @ViewChild('UserForm', { static: true }) UserForm!: NgForm;
   loading = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'fullName', 'userName', 'department', 'designation','isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -59,6 +60,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.getAllUsers();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
@@ -67,9 +69,12 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.userHeaderText = "Update User";
         this.userBtnText = " Hide Form";
         this.buttonIcon = "cilTrash";
+        this.subscription.push(
         this.userService.find(id).subscribe((res) => {
           this.UserForm?.form.patchValue(res);
-        });
+        })
+        )
+        
       } else {
         this.btnText = 'Submit';
         this.userHeaderText = "User List"
@@ -77,11 +82,13 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.visible = false;
         this.initaialUser();
       }
-    });
+    })
+    )
+    
   }
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   ngAfterViewInit(): void {
@@ -170,11 +177,14 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   getAllUsers(){
-    this.subscription = this.userService.getAll().subscribe((item) => {
+    this,this.subscription.push(
+    this.userService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   updateUserInformation(id: string, clickedButton: string){
@@ -185,9 +195,12 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     const modalRef: BsModalRef = this.modalService.show(UpdateUserComponent, { initialState, backdrop: 'static' });
 
     if (modalRef.onHide) {
+      this.subscription.push(
       modalRef.onHide.subscribe(() => {
         this.getAllUsers();
-      });
+      })
+      )
+      
     }
   }
   
@@ -198,13 +211,17 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     const modalRef: BsModalRef = this.modalService.show(UpdateRoleComponent, { initialState, backdrop: 'static' });
 
     if (modalRef.onHide) {
+      this.subscription.push(
       modalRef.onHide.subscribe(() => {
         this.getAllUsers();
-      });
+      })
+      )
+      
     }
   }
 
   resetPassword(id: string){
+    this.subscription.push(
     this.confirmService
     .confirm('Confirm Reset Password', 'Are You Sure Reset Password')
     .subscribe((result) => {
@@ -226,13 +243,16 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
           }
         );
       }
-    });
+    })
+    )
+    
   }
   
 
   onSubmit(form: NgForm): void{
     this.loading = true;
     this.userService.cachedData = [];
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = form.value.id;
       const oldPassword = form.value.oldPassword;
@@ -248,7 +268,8 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         action$ = this.userService.submit(form.value);
       }
 
-      this.subscription = action$.subscribe((response: any)  => {
+      this.subscription.push(
+      action$.subscribe((response: any)  => {
         if (response.success) {
           this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right',
@@ -263,7 +284,11 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
           });
         }
         this.loading = false;
-      });
-    });
+      })
+      )
+      
+    })
+    )
+    
   }
 }

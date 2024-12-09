@@ -36,7 +36,8 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
   branches: SelectedModel[] = [];
   upperBranchView = false;
   @ViewChild('BranchForm', { static: true }) BranchForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'branchName','branchNameBangla', 'isActive', 'Action'];
   loading = false;
 
@@ -60,6 +61,7 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadOffice();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('branchId');
       if (id) {
@@ -80,7 +82,9 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
         this.buttonIcon = "cilPencil";
         this.BtnText = " Add Branch";
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -88,7 +92,7 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -168,12 +172,16 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   loadOffice() { 
-    this.subscription=this.officeService.selectGetoffice().subscribe((data) => { 
+    this.subscription.push(
+    this.officeService.selectGetoffice().subscribe((data) => { 
       this.offices = data;
-    });
+    })
+    )
+    
   }
 
   onOfficeSelect(officeId:number){
+    this.subscription.push(
     this.branchService.getBranchByOfficeId(+officeId).subscribe((res) => {
       this.branches = res;
       if(res.length>0){
@@ -182,15 +190,20 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
       else{
         this.upperBranchView = false;
       }
-    });
+    })
+    )
+    
   }
 
   getALlBranchs() {
-    this.subscription = this.branchService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.branchService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   
@@ -202,7 +215,8 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.branchService.update(id, form.value)
       : this.branchService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+      this.subscription.push(
+      action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -218,13 +232,17 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
       this.loading = false;
-    });
+    })
+      )
+     
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.branchService.delete(element.officeBranchId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -241,8 +259,12 @@ export class BranchComponent implements OnInit, OnDestroy, AfterViewInit {
                 positionClass: 'toast-top-right',
               });
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+    )
+    
   }
 }

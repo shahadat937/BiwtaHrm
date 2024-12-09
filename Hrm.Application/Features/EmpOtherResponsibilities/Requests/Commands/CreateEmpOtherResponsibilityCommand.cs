@@ -11,6 +11,6 @@ namespace Hrm.Application.Features.EmpOtherResponsibilities.Requests.Commands
 {
     public class CreateEmpOtherResponsibilityCommand : IRequest<BaseCommandResponse>
     {
-        public List<CreateEmpOtherResponsibilityDto> EmpOtherResponsibilityDto { get; set; }
+        public CreateEmpOtherResponsibilityDto EmpOtherResponsibilityDto { get; set; }
     }
 }

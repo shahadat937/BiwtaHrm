@@ -422,6 +422,7 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
             .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Section.SectionName))
             .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.Designation.DesignationSetup.Name))
+            .ForMember(dest => dest.DesignationNameBangla, opt => opt.MapFrom(src => src.Designation.DesignationSetup.NameBangla))
             .ForMember(dest => dest.PresentGradeName, opt => opt.MapFrom(src => src.PresentGrade.GradeName))
             .ForMember(dest => dest.PresentScaleName, opt => opt.MapFrom(src => src.PresentScale.ScaleName))
             .ForMember(dest => dest.FirstDepartmentName, opt => opt.MapFrom(src => src.FirstDepartment.DepartmentName))
@@ -687,12 +688,12 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpWorkHistory, EmpWorkHistoryDto>().ReverseMap();
             CreateMap<EmpWorkHistory, CreateEmpWorkHistoryDto>().ReverseMap();
-            CreateMap<EmpWorkHistory, EmpWorkHistoryDto>()
-                .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
-                .ForMember(dest => dest.DesignationSetupName, opt => opt.MapFrom(src => src.DesignationSetup.Name))
-                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
-                .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Section.SectionName))
-                .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.Designation.DesignationSetup.Name));
+            //CreateMap<EmpWorkHistory, EmpWorkHistoryDto>()
+            //    .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
+            //    .ForMember(dest => dest.DesignationSetupName, opt => opt.MapFrom(src => src.DesignationSetup.Name))
+            //    .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
+            //    .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Section.SectionName))
+            //    .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.Designation.DesignationSetup.Name));
 
             CreateMap<ResponsibilityType, ResponsibilityTypeDto>().ReverseMap();
             CreateMap<ResponsibilityType, CreateResponsibilityTypeDto>().ReverseMap();

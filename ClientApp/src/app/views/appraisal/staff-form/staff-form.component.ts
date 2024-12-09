@@ -44,7 +44,8 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   submitButtonText: string;
   formData: any;
   formName: string;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   currentSection:number ;
   empSubs: Subscription = new Subscription();
   empReqSub: Subscription = new Subscription();
@@ -108,7 +109,9 @@ export class StaffFormComponent implements OnInit, OnDestroy {
 
     if(this.formRecordId==0) {
       this.getFormInfo(); 
-      this.subscription=this.authService.currentUser.subscribe(user => {
+      // this.subscription=
+      this.subscription.push(
+        this.authService.currentUser.subscribe(user => {
         if(user&&user.empId) {
           let empId = parseInt(user.empId);
           this.empService.findByEmpId(empId).subscribe({
@@ -119,6 +122,8 @@ export class StaffFormComponent implements OnInit, OnDestroy {
           })
         }
       })
+      )
+      
     } else {
       this.getFormData();
     }
@@ -128,7 +133,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     } 
   }
 

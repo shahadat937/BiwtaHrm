@@ -17,7 +17,8 @@ import { PaginatorModel } from 'src/app/core/models/paginator-model';
 })
 export class EmployeeListComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'idNo',
@@ -50,15 +51,20 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
   getAllEmpBasicInfo(){
-    this.subscription = this.manageEmployeeService.getAll().subscribe((item) => {
+    // this.subscription = 
+    this.subscription.push(
+     this.manageEmployeeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
-    });
+    })
+    )
+   
+
   }
 
   viewEmployeeInformation(id: number, clickedButton: string){
@@ -93,11 +99,15 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
 
   getAllEmpBasicInfoQueryPerams(queryParams: any){
-    this.subscription = this.manageEmployeeService.getAllPagination(queryParams).subscribe((res: any) => {
+    // this.subscription = 
+    this.subscription.push(
+    this.manageEmployeeService.getAllPagination(queryParams).subscribe((res: any) => {
       this.dataSource.data = res.items;
       // this.dataSource.paginator = this.paginator;
       this.pagination.length = res.totalItemsCount;
-    });
+    })
+    )
+    
   }
 
 }

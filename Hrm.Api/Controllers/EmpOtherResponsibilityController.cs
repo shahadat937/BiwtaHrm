@@ -21,7 +21,7 @@ namespace Hrm.Api.Controllers
         }
         [HttpPost]
         [Route("save-EmpOtherResponsibility")]
-        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] List<CreateEmpOtherResponsibilityDto> EmpOtherResponsibility)
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateEmpOtherResponsibilityDto EmpOtherResponsibility)
         {
             var command = new CreateEmpOtherResponsibilityCommand { EmpOtherResponsibilityDto = EmpOtherResponsibility };
             var response = await _mediator.Send(command);

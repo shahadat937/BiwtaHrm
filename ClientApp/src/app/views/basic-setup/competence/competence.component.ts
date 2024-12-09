@@ -30,7 +30,8 @@ export class CompetenceComponent implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   headerText: string | undefined;
   @ViewChild('CompetenceForm', { static: true }) CompetenceForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo', 'competenceName', 'isActive', 'Action'];
   loading = false;
 
@@ -52,20 +53,26 @@ export class CompetenceComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
   }
   handleRouteParams() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('competenceId');
       if (id) {
         this.btnText = 'Update';
         this.headerText = 'Update Competence';
-        this.competenceService.getById(+id).subscribe((res) => {
+        this.subscription.push(
+      this.competenceService.getById(+id).subscribe((res) => {
           this.CompetenceForm?.form.patchValue(res);
-        });
+        })
+        )
+        
       } else {
         this.resetForm();
         this.headerText = 'Add Competence';
         this.btnText = 'Submit';
       }
-    });
+    })
+    )
+    
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -73,7 +80,7 @@ export class CompetenceComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -121,11 +128,14 @@ export class CompetenceComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getALlCompetences() {
-    this.subscription = this.competenceService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.competenceService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   // onSubmit(form: NgForm) {
@@ -180,7 +190,8 @@ export class CompetenceComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.competenceService.update(id, form.value)
       : this.competenceService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -200,13 +211,17 @@ export class CompetenceComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.loading = false;
 
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.competenceService.delete(element.competenceId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -225,8 +240,12 @@ export class CompetenceComponent implements OnInit, OnDestroy, AfterViewInit {
                 positionClass: 'toast-top-right',
               });
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+    )
+    
   }
 }

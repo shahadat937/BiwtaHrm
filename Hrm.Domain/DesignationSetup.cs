@@ -15,6 +15,6 @@ namespace Hrm.Domain
         public string? Remark { get; set; }
         public bool IsActive { get; set; }
         public ICollection<Designation> Designations { get; set; }
-        public virtual ICollection<EmpWorkHistory>? EmpWorkHistory { get; set; }
+        //public virtual ICollection<EmpWorkHistory>? EmpWorkHistory { get; set; }
     }
 }

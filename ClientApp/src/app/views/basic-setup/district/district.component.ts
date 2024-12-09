@@ -28,7 +28,8 @@ export class DistrictComponent implements OnInit, OnDestroy {
   btnText: string | undefined;
   headerText: string | undefined;
   @ViewChild('DistrictForm', { static: true }) DistrictForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['slNo','divisionName','districtName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -46,11 +47,15 @@ export class DistrictComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('districtId');
       if (id) {
+
         this.btnText = 'Update';
         this.headerText = 'Update District';
+        this.subscription.push(
         this.districtService.find(+id).subscribe((res) => {        
           this.DistrictForm?.form.patchValue(res);
-        });
+        })
+        )
+        
       } else {
         this.resetForm();
         this.headerText = 'Add District';
@@ -68,7 +73,7 @@ export class DistrictComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -105,17 +110,24 @@ export class DistrictComponent implements OnInit, OnDestroy {
   }
 
   loaddivisions() {
+    this.subscription.push(
     this.districtService.getDivision().subscribe(data => {
       this.divisions = data;
-    });
+    })
+    )
+    
   }
 
   getALlDistricts() {
-    this.subscription = this.districtService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.districtService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
+   
   }
 
   // onSubmit(form: NgForm) {
@@ -173,7 +185,8 @@ export class DistrictComponent implements OnInit, OnDestroy {
       ? this.districtService.update(id, form.value)
       : this.districtService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+   this.subscription.push(
+action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -189,13 +202,17 @@ export class DistrictComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+   )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
+          this.subscription.push(
           this.districtService.delete(element.districtId).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
@@ -214,8 +231,12 @@ export class DistrictComponent implements OnInit, OnDestroy {
                 positionClass: 'toast-top-right',
               });
             }
-          );
+          )
+          )
+          
         }
-      });
+      })
+    )
+    
   }
 }

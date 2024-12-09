@@ -16,7 +16,8 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 })
 export class CreateNavbarSettingComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   id: number = 0;
   clickedButton: string = '';
   heading: string = '';
@@ -56,11 +57,15 @@ export class CreateNavbarSettingComponent implements OnInit, OnDestroy {
   }
   
   getSelectedThem(){
-    this.subscription = this.navbarThemService.getSelectedNavbarThem().subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+    this.navbarThemService.getSelectedNavbarThem().subscribe((res) => {
       if(res){
         this.thems = res;
       }
-    });
+    })
+    )
+    
   }
 
   handleText(){
@@ -70,16 +75,20 @@ export class CreateNavbarSettingComponent implements OnInit, OnDestroy {
   }
 
   getModuleInfo() {
-    this.subscription = this.navbarSettingService.find(this.id).subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+    this.navbarSettingService.find(this.id).subscribe((res) => {
       if(res){
         this.NavbarSettingForm?.form.patchValue(res);
       }
-    });
+    })
+    )
+   
   }
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -163,17 +172,21 @@ export class CreateNavbarSettingComponent implements OnInit, OnDestroy {
       ? this.navbarSettingService.update(id, form.value)
       : this.navbarSettingService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
-      if (response.success) {
-        this.toastr.success('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-        this.closeModal();
-      } else {
-        this.toastr.warning('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-      }
-    });
+    // this.subscription = 
+    this.subscription.push(
+      action$.subscribe((response: any) => {
+        if (response.success) {
+          this.toastr.success('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.closeModal();
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+        }
+      })
+    )
+    
   }
 }

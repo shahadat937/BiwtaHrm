@@ -20,7 +20,8 @@ import { RoleFeatureService } from '../service/role-feature.service';
 })
 export class NavbarThemListComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'name',
@@ -54,11 +55,14 @@ export class NavbarThemListComponent implements OnInit, OnDestroy {
   }
 
   getAllNavbarThem() {
-    this.subscription = this.navbarThemService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.navbarThemService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   applyFilter(filterValue: string) {
@@ -69,22 +73,25 @@ export class NavbarThemListComponent implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
 
   getPermission(){
-    this.roleFeatureService.getFeaturePermission('navbar-them').subscribe((item) => {
-      this.featurePermission = item;
-      if(item.viewStatus == true){
-        this.getAllNavbarThem();
-      }
-      else{
-        this.roleFeatureService.unauthorizeAccress();
-        this.router.navigate(['/dashboard']);
-      }
-    });
+    this.subscription.push(
+      this.roleFeatureService.getFeaturePermission('navbar-them').subscribe((item) => {
+        this.featurePermission = item;
+        if(item.viewStatus == true){
+          this.getAllNavbarThem();
+        }
+        else{
+          this.roleFeatureService.unauthorizeAccress();
+          this.router.navigate(['/dashboard']);
+        }
+      })
+    )
+   
   }
 
 
@@ -109,7 +116,8 @@ export class NavbarThemListComponent implements OnInit, OnDestroy {
 
   delete(element: any) {
     if(this.featurePermission.delete == true){
-      this.confirmService
+      this.subscription.push(
+        this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
@@ -131,7 +139,9 @@ export class NavbarThemListComponent implements OnInit, OnDestroy {
             }
           );
         }
-      });
+      })
+      )
+      
     }
     else {
       this.roleFeatureService.unauthorizeAccress();

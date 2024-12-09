@@ -14,7 +14,8 @@ import { SiteSettingService } from '../service/site-setting.service';
 })
 export class CreateSiteSettingComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   id: number = 0;
   clickedButton: string = '';
   heading: string = '';
@@ -55,16 +56,20 @@ export class CreateSiteSettingComponent implements OnInit, OnDestroy {
   }
 
   getModuleInfo() {
-    this.subscription = this.siteSettingService.find(this.id).subscribe((res) => {
+    // this.subscription =
+    this.subscription.push(
+    this.siteSettingService.find(this.id).subscribe((res) => {
       if(res){
         this.SiteSettingForm?.form.patchValue(res);
       }
-    });
+    })
+    )
+   
   }
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
@@ -130,7 +135,9 @@ export class CreateSiteSettingComponent implements OnInit, OnDestroy {
       ? this.siteSettingService.update(id, form.value)
       : this.siteSettingService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    // this.subscription = 
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
@@ -141,6 +148,8 @@ export class CreateSiteSettingComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+    )
+    
   }
 }

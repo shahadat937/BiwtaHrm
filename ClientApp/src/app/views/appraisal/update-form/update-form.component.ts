@@ -14,7 +14,8 @@ export class UpdateFormComponent implements OnInit, OnDestroy {
   @Input() formRecordId: number;
   loading:boolean;
   updateLoading:boolean
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   formData:any;
   reportDates:any[] = [];
 
@@ -37,7 +38,7 @@ export class UpdateFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if(this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 

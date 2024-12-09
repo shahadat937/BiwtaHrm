@@ -19,7 +19,8 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
 
   modalOpened: boolean = false;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   @ViewChild('formFile') formFileInput!: ElementRef;
   uploadedFile: boolean = false;
   headingText: string = "Upload Employee Basic Information";
@@ -54,25 +55,41 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
   getSelectedEmployeeType(){
-    this.subscription = this.empBasicInfoService.getFirstEmpTypeId().subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empBasicInfoService.getFirstEmpTypeId().subscribe((res) => {
       this.empTypeId = res;
     })
-    this.subscription = this.empBasicInfoService.getSelectedEmployeeType().subscribe((data) => { 
+    )
+    
+    // this.subscription = 
+    this.subscription.push(
+      this.empBasicInfoService.getSelectedEmployeeType().subscribe((data) => { 
       this.employeeTypes = data;
-    });
+    })
+    )
+    
   }
   getSelectedShift(){
-    this.subscription = this.empBasicInfoService.getFirstShiftId().subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empBasicInfoService.getFirstShiftId().subscribe((res) => {
       this.empShiftId = res;
     })
-    this.subscription = this.shiftService.getSelectedShift().subscribe((data) => { 
+    )
+    
+    // this.subscription = 
+    this.subscription.push(
+      this.shiftService.getSelectedShift().subscribe((data) => { 
       this.shifts = data;
-    });
+    })
+    )
+    
   }
 
   uploadFile() {
@@ -186,13 +203,16 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
   
   removeBasicInfoList(index: number) {
     if (this.empBasicInfoListArray.controls.length > 0){
-      this.confirmService
+      this.subscription.push(
+         this.confirmService
         .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
         .subscribe((result) => {
           if (result) {
             this.empBasicInfoListArray.removeAt(index);
           }
-        });
+        })
+      )
+     
     }
   }
   
@@ -223,7 +243,8 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
   saveEmployeeBasicInfo(){
     this.loading = true;
     console.log(this.EmpBasicInfoForm.get("empBasicList")?.value);
-    this.empBasicInfoService.saveImportedEmployeeBasicInfo(this.EmpBasicInfoForm.get("empBasicList")?.value).subscribe(((res: any) => {
+    this.subscription.push(
+      this.empBasicInfoService.saveImportedEmployeeBasicInfo(this.EmpBasicInfoForm.get("empBasicList")?.value).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',
@@ -238,6 +259,8 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
       }
       this.loading = false;
     })
+    )
+    
     )
   }
 }

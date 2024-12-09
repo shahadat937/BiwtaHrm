@@ -22,7 +22,8 @@ import { FeaturePermission } from '../model/feature-permission';
 })
 export class ModuleListComponent  implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'title',
@@ -57,11 +58,14 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
   }
 
   getAllModule() {
-    this.subscription = this.featureManagementService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.featureManagementService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   applyFilter(filterValue: string) {
@@ -72,12 +76,13 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
 
   getPermission(){
+    this.subscription.push(
     this.roleFeatureService.getFeaturePermission('module').subscribe((item) => {
       this.featurePermission = item;
       if(item.viewStatus == true){
@@ -87,7 +92,9 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
         this.roleFeatureService.unauthorizeAccress();
         this.router.navigate(['/dashboard']);
       }
-    });
+    })
+    )
+   
   }
 
 
@@ -112,7 +119,8 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
 
   delete(element: any) {
     if(this.featurePermission.delete == true){
-      this.confirmService
+      this.subscription.push(
+        this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
@@ -134,7 +142,9 @@ export class ModuleListComponent  implements OnInit, OnDestroy {
             }
           );
         }
-      });
+      })
+      )
+      
     }
     else {
       this.roleFeatureService.unauthorizeAccress();

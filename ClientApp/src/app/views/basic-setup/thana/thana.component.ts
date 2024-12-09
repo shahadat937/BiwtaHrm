@@ -30,7 +30,8 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
   percentage = 0;
   btnText: string | undefined;
   @ViewChild('ThanaForm', { static: true }) ThanaForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = ['upazilaName' ,'thanaName', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -68,7 +69,7 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -124,11 +125,14 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getALlThanas() {
-    this.subscription = this.thanaService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.thanaService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   // onSubmit(form: NgForm) {
@@ -184,7 +188,8 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
       ? this.thanaService.update(id, form.value)
       : this.thanaService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? 'Update' : 'Successfully';
         this.toastr.success('', `${response.message}`, {
@@ -200,9 +205,12 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
           positionClass: 'toast-top-right',
         });
       }
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -225,6 +233,8 @@ export class ThanaComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

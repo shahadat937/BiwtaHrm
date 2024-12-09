@@ -47,7 +47,8 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
   unions: SelectedModel[] = [];
   wards: SelectedModel[] = [];
   @ViewChild('OfficeForm', { static: true }) OfficeForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo', 
     'officeName', 
@@ -85,7 +86,8 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getOneOfficeInfo(){
-    this.subscription = this.officeService.getOneOffice().subscribe((res) =>{
+   this.subscription.push(
+    this.officeService.getOneOffice().subscribe((res) =>{
       if(res){
         this.btnText = 'Update';
         this.HeaderText = "Update Office";
@@ -98,10 +100,13 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.visible = true;
       }
     })
+   )
+    
   }
 
   handleRouteParams() {
-    this.route.paramMap.subscribe((params) => {
+    this.subscription.push(
+ this.route.paramMap.subscribe((params) => {
       const id = params.get('officeId');
       if (id) {
         this.visible = true;
@@ -125,7 +130,9 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.buttonIcon = "cilPencil";
         this.BtnText = " Add Office";
       }
-    });
+    })
+    )
+   
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -133,7 +140,7 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -198,15 +205,19 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getALlOffices() {
-    this.subscription = this.officeService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.officeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+   
   }
 
   
   UserFormView() {
+    this.subscription.push(
     this.route.paramMap.subscribe((params) => {
       const id = params.get('officeId');
       if(id){
@@ -237,7 +248,9 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.visible = false;
         }
       }
-    });
+    })
+    )
+    
   }
   
   toggleCollapse(){
@@ -252,42 +265,64 @@ export class OfficeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onDivisionNamesChangeByCounterId(counterId:number){
-    this.subscription=this.divisionService.getDivisionByCountryId(counterId).subscribe((data) => { 
+    this.subscription.push(
+    this.divisionService.getDivisionByCountryId(counterId).subscribe((data) => { 
         this.divisions = data;
-      });
+      })
+    )
+   
   }
   onDistrictNamesChangeByDivisionId(divisionId:number){
-    this.subscription=this.districtService.getDistrictByDivisionId(divisionId).subscribe((data) => { 
+    this.subscription.push(
+    this.districtService.getDistrictByDivisionId(divisionId).subscribe((data) => { 
         this.districts = data;
  
-      });
+      })
+    )
+    
   }
   onUpazilaNamesChangeByDistrictId(districtId:number){
-    this.subscription=this.uapzilaService.getUpapzilaByDistrictId(districtId).subscribe((data) => { 
+    // this.subscription=
+    this.subscription.push(
+    this.uapzilaService.getUpapzilaByDistrictId(districtId).subscribe((data) => { 
         this.upazilas = data;
-      });
+      })
+    )
+    
   }
   onThanaNamesChangeByUpazilaId(upazilaId:number){
- this.subscription=this.thanaService.getthanaNamesByUpazilaId(upazilaId).subscribe((data) => { 
+    this.subscription.push(
+    this.thanaService.getthanaNamesByUpazilaId(upazilaId).subscribe((data) => { 
      this.thanas = data;
     
-   });
+   })
+    )
+    
 }
 onUnionNamesChangeByThanaId(thanaId:number){
-  this.subscription=this.unionService.getUnionNamesByThanaId(thanaId).subscribe((data) => { 
+  this.subscription.push(
+    this.unionService.getUnionNamesByThanaId(thanaId).subscribe((data) => { 
       this.unions = data;
-        });
+        })
+  )
+  
  }
  onWardNamesChangeByUnionId(unionId:number){
-  this.subscription=this.wardService.getWardNamesByUnionId(unionId).subscribe((data) => { 
+  this.subscription.push(
+  this.wardService.getWardNamesByUnionId(unionId).subscribe((data) => { 
       this.wards = data;
       
-        });
+        })
+  )
+ 
  }
   loadcountris() { 
-    this.subscription=this.countryService.selectGetCountry().subscribe((data) => { 
+    this.subscription.push(
+    this.countryService.selectGetCountry().subscribe((data) => { 
       this.countris = data;
-    });
+    })
+    )
+    
   }
 
   onSubmit(form: NgForm): void {
@@ -298,7 +333,8 @@ onUnionNamesChangeByThanaId(thanaId:number){
       ? this.officeService.update(id, form.value)
       : this.officeService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+    action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -316,9 +352,12 @@ onUnionNamesChangeByThanaId(thanaId:number){
       }
       this.loading = false;
 
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -344,6 +383,8 @@ onUnionNamesChangeByThanaId(thanaId:number){
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

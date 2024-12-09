@@ -18,11 +18,16 @@ import { IncrementAndPromotionApprovalComponent } from '../increment-and-promoti
 })
 export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
-    'slNo',
+    // 'slNo',
     'PMS Id',
     'fullName',
+    'promotedFrom',
+    'promotedTo',
+    'basicPayFrom',
+    'basicPayTo',
     'ApprovalStatus',
     'Action'];
   dataSource = new MatTableDataSource<any>();
@@ -52,11 +57,15 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
   }
 
   getAllPromotionIncrementInfo() {
-    this.subscription = this.empPromotionIncrementService.getAllEmpPromotionIncrementApproveInfo(this.loginEmpId).subscribe((item) => {
+    // this.subscription = 
+    this.subscription.push(
+    this.empPromotionIncrementService.getAllEmpPromotionIncrementApproveInfo(this.loginEmpId).subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+    
   }
 
   applyFilter(filterValue: string) {
@@ -67,7 +76,7 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 
@@ -86,9 +95,12 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
     const modalRef: BsModalRef = this.modalService.show(IncrementAndPromotionApprovalComponent, { initialState, backdrop: 'static' });
 
     if (modalRef.onHide) {
+      this.subscription.push(
       modalRef.onHide.subscribe(() => {
         this.getAllPromotionIncrementInfo();
-      });
+      })
+      )
+      
     }
   }
 }

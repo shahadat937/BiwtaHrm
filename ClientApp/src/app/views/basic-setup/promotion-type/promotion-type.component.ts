@@ -25,7 +25,8 @@ export class PromotionTypeComponent
   btnText: string | undefined;
   loading = false;
   @ViewChild('PromotionTypeForm', { static: true }) PromotionTypeForm!: NgForm;
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   displayedColumns: string[] = [
     'slNo',
     'promotionTypeName',
@@ -67,7 +68,7 @@ export class PromotionTypeComponent
   }
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
   applyFilter(filterValue: string) {
@@ -100,11 +101,14 @@ export class PromotionTypeComponent
   }
 
   getALlPromotionTypes() {
-    this.subscription = this.promotionTypeService.getAll().subscribe((item) => {
+    this.subscription.push(
+    this.promotionTypeService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    });
+    })
+    )
+   
   }
   // onSubmit(form: NgForm) {
   //   this.promotionTypeService.cachedData = [];
@@ -162,7 +166,8 @@ export class PromotionTypeComponent
       ? this.promotionTypeService.update(id, form.value)
       : this.promotionTypeService.submit(form.value);
 
-    this.subscription = action$.subscribe((response: any) => {
+    this.subscription.push(
+  action$.subscribe((response: any) => {
       if (response.success) {
         //  const successMessage = id ? '' : '';
         this.toastr.success('', `${response.message}`, {
@@ -180,9 +185,12 @@ export class PromotionTypeComponent
         });
       }
       this.loading = false;
-    });
+    })
+    )
+      
   }
   delete(element: any) {
+    this.subscription.push(
     this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -203,6 +211,8 @@ export class PromotionTypeComponent
             }
           );
         }
-      });
+      })
+    )
+    
   }
 }

@@ -15,7 +15,8 @@ import { EmpJobDetailsService } from '../../employee/service/emp-job-details.ser
 })
 export class PromotionIncrementInfoComponent  implements OnInit, OnDestroy {
 
-  subscription: Subscription = new Subscription();
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
   empPromotionIncrement: EmpPromotionIncrement = new EmpPromotionIncrement();
   id: number = 0;
   modalOpened: boolean = false;
@@ -43,25 +44,33 @@ export class PromotionIncrementInfoComponent  implements OnInit, OnDestroy {
 
   
   getAllPromotionIncrementInfo() {
-    this.subscription = this.empPromotionIncrementService.findById(this.id).subscribe((item) => {
+    // this.subscription = 
+    this.subscription.push(
+    this.empPromotionIncrementService.findById(this.id).subscribe((item) => {
       this.empPromotionIncrement = item;
       this.getEmpJobDetailsByEmpIdOfApproveBy(item.approveById || 0);
-    });
+    })
+    )
+    
   }
 
   getEmpJobDetailsByEmpIdOfApproveBy(id: number){
-    this.subscription = this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+    // this.subscription = 
+    this.subscription.push(
+      this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
       if(res){
         this.empPromotionIncrement.approveByDepartmentName = res.departmentName;
         this.empPromotionIncrement.approveByDesignationName = res.designationName;
       }
     })
+    )
+    
   }
 
   
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.forEach(subs=>subs.unsubscribe())
     }
   }
 

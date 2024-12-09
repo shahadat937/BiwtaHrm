@@ -9,6 +9,7 @@ import { HttpParams } from '@angular/common/http';
 import { cilZoom } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { LeaveStatus } from '../enum/leave-status';
 @Component({
   selector: 'app-manageleave',
   templateUrl: './manageleave.component.html',
@@ -27,6 +28,8 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
   @Input() LeaveFilterParams: any;
   @Input() CanApprove: boolean;
   @Input() Role: string = "Reviewer"
+
+  leaveStatus = LeaveStatus 
 
   constructor(
     public leaveService: ManageLeaveService,

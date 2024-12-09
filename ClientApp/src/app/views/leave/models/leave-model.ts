@@ -13,6 +13,7 @@ export class LeaveModel {
     associatedFile: string;
     status: number;
     isActive: boolean | null;
+    isOldLeave: boolean | null;
     reviewedBy: number | null;
     approvedBy: number | null;
     reviewerRemark: string;
@@ -38,6 +39,7 @@ export class LeaveModel {
         this.associatedFile = "";
         this.status = 0;
         this.isActive = null;
+        this.isOldLeave = null;
         this.reviewedBy = null;
         this.approvedBy = null;
         this.reviewerRemark = "";

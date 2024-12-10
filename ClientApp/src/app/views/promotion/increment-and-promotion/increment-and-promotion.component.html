@@ -55,13 +55,7 @@
                       <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDepartmentName"
                           name="currentDepartmentName" #currentDepartmentName="ngModel" cFormControl id="currentDepartmentName" readonly />
                   </c-col>
-
-                  <c-col [md]="4">
-                      <label cLabel for="currentDesignationName">Designation<span class="text-danger"></span></label>
-                      <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDesignationName"
-                          name="currentDesignationName" #currentDesignationName="ngModel" cFormControl id="currentDesignationName"
-                          readonly />
-                  </c-col>
+                  
                   @if(empPromotionIncrementService.empPromotionIncrement.currentSectionName){
                     <c-col [md]="4">
                       <label cLabel for="currentSectionName">Section<span class="text-danger"></span></label>
@@ -70,6 +64,13 @@
                           readonly />
                     </c-col>
                   }
+
+                  <c-col [md]="4">
+                      <label cLabel for="currentDesignationName">Designation<span class="text-danger"></span></label>
+                      <input [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDesignationName"
+                          name="currentDesignationName" #currentDesignationName="ngModel" cFormControl id="currentDesignationName"
+                          readonly />
+                  </c-col>
                   
                   <c-col [md]="4">
                     <label cLabel for="currentDeptJoinDate">Current Department Joining Date<span class="text-danger"></span></label>

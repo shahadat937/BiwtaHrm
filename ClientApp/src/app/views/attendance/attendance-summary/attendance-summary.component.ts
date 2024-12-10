@@ -37,13 +37,15 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   SiteVisitText: any = "N/A";
   OnLeaveText: any = "N/A";
 
+  summary: any ;
+
   // For Employee Wise
   selectedEmp: number|null;
   selectedDepartment: number | null;
   selectedOffice: number|null;
   selectedSection: number | null;
-  fromDate: Date|null;
-  toDate: Date | null;
+  fromDate: string;
+  toDate: string;
   rangeDates: Date[] = [];
   empInfo: any;
 
@@ -76,13 +78,14 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     this.selectedEmp = null;
     this.selectedOffice = null;
     this.selectedSection = null;
-    this.fromDate = null;
-    this.toDate = null;
+    this.fromDate = "";
+    this.toDate = "";
     this.selectedDepartmentDw = null;
     this.selectedOfficeDw = null;
     this.toDateDw = null;
     this.fromDateDw = null;
     this.summaryDetail = [];
+
 
     this.empInfo = {
       empName: "",
@@ -91,12 +94,25 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
       department: "",
       photoUrl: "",
     }
+
+    this.setSummary();
   }
 
   ngOnInit(): void {
     this.getAllEmp();
     this.getSelectedDepartment();
     this.onChangeDw();
+  }
+
+  setSummary() {
+    this.summary = {
+      Present: this.PresentText,
+      Absent: this.AbsentText,
+      Late: this.LateText,
+      Workingday: this.WorkingDayText,
+      Sitevisit: this.SiteVisitText,
+      Leave: this.OnLeaveText
+    };
   }
 
   ngOnDestroy(): void {
@@ -142,12 +158,17 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
         this.SiteVisitText = "N/A";
         this.OnLeaveText = "N/A";
         this.summaryDetail = [];
+        this.fromDate = "";
+        this.toDate = "";
+        this.setSummary();
         return;
     }
 
     let filter = new HttpParams();
     let from = this.hrmdateResize(this.rangeDates[0])
     let to = this.hrmdateResize(this.rangeDates[1])
+    this.fromDate = from;
+    this.toDate = to;
     filter = filter.set("EmpId",this.selectedEmp);
     filter = filter.set("From", this.hrmdateResize(this.rangeDates[0]));
     filter = filter.set("To", this.hrmdateResize(this.rangeDates[1]));
@@ -162,6 +183,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
         this.WorkingDayText = response.totalWorkingDay;
         this.SiteVisitText = response.totalSiteVisit;
         this.OnLeaveText = response.totalOnLeave;
+        this.setSummary();
       })
      )
 

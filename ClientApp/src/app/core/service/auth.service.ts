@@ -53,4 +53,12 @@ export class AuthService {
     this.currentUserSubject.next(null!);
     return of({ success: false });
   }
+
+  verifyToken(token:string) : Observable<any> {
+    let payload = {
+       "userName":"string",
+      'token':token
+    }
+    return this.http.post<any>(`${environment.securityUrl}/account/verifyToken`,payload)
+  }
 }

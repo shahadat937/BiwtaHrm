@@ -22,7 +22,7 @@ export class RewardPunishmentTypeComponent implements OnInit, OnDestroy, AfterVi
   @ViewChild('RewardTypeForm', { static: true }) RewardTypeForm!: NgForm;
   // subscription: Subscription = new Subscription();
   subscription: Subscription[]=[]
-  displayedColumns: string[] = ['slNo', 'name', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'name', 'isPriority','isWithdraw','isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -61,6 +61,8 @@ export class RewardPunishmentTypeComponent implements OnInit, OnDestroy, AfterVi
     this.rewardPunishmentSetupService.rewardPunishmentType = {
       id : 0,
       name : "",
+      isPriority : false,
+      isWithdraw : false,
       menuPosition : 0,
       remark : "",
       isActive : true,
@@ -74,6 +76,8 @@ export class RewardPunishmentTypeComponent implements OnInit, OnDestroy, AfterVi
       this.RewardTypeForm.form.patchValue({
         id : 0,
         name : "",
+        isPriority : false,
+        isWithdraw : false,
         menuPosition : 0,
         remark : "",
         isActive : true,

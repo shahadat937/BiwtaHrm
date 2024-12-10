@@ -10,6 +10,9 @@ namespace Hrm.Application.DTOs.EmpRewardPunishment
     {
         public int Id { get; set; }
         public int? EmpId { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? SectionId { get; set; }
+        public int? DesignationId { get; set; }
         public int? RewardPunishmentTypeId { get; set; }
         public int? RewardPunishmentPriorityId { get; set; }
         public DateOnly RewardPunishmentDate { get; set; }
@@ -34,5 +37,8 @@ namespace Hrm.Application.DTOs.EmpRewardPunishment
         public string? EmpName { get; set; }
         public string? RewardPunishmentTypeName { get; set; }
         public string? RewardPunishmentPriorityName { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? SectionName { get; set; }
+        public string? DesignationName { get; set; }
     }
 }

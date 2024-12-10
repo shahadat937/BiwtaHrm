@@ -2,14 +2,15 @@ import { Component, ElementRef, HostListener, OnDestroy, OnInit, Renderer2, View
 import { EmpRewardPunishmentService } from '../service/emp-reward-punishment.service';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { cilArrowLeft, cilPlus, cilBell, cilSearch } from '@coreui/icons';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { RewardPunishmentSetupService } from '../../basic-setup/service/reward-punishment-setup.service';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { EmpTransferPostingService } from '../../transferPosting/service/emp-transfer-posting.service';
-import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
+import { EmpJobDetailsService } from '../service/emp-job-details.service';
+import { EmployeeListModalComponent } from '../employee-list-modal/employee-list-modal.component';
 
 @Component({
   selector: 'app-reward-punishment',
@@ -30,6 +31,8 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   rewardPriority: SelectedModel[] = [];
   isValidEmp: boolean = false;
   empJobDetailsId: number = 0;
+  isPriority = true;
+  isWithdraw = true;
 
   @ViewChild('EmpRewardPunishmentFrom', { static: true }) EmpRewardPunishmentFrom!: NgForm;
 
@@ -42,12 +45,13 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private bsModalRef: BsModalRef,
     private el: ElementRef, 
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private modalService: BsModalService,
   ) {
 
   }
 
-  icons = { cilArrowLeft, cilPlus, cilBell };
+  icons = { cilArrowLeft, cilPlus, cilBell, cilSearch };
 
   ngOnInit(): void {
     console.log(this.id)
@@ -62,22 +66,47 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   handleText(){
     this.getSelectedRewardPunishmentType();
     this.getSelectedRewardPunishmentPriority();
-    this.heading = this.clickedButton == 'Edit' ? 'Edit Reward/Punishment Information' : 'Create Reward/Punishment Information';
-    this.btnText = this.clickedButton == 'Edit' ? 'Update' : 'Submit';
-    this.btnIcon = this.clickedButton == 'Edit' ? 'update' : 'save';
+    this.heading = 
+      this.clickedButton === 'Edit' ? 'Edit Reward/Punishment Information' : 
+      this.clickedButton === 'Create' ? 'Create Reward/Punishment Information' : 
+      this.clickedButton === 'Withdraw' ? 'Withdraw Reward/Punishment Information' : 
+      'Reward/Punishment Information';
+      this.btnText = 
+        this.clickedButton === 'Edit' ? 'Update' : 
+        this.clickedButton === 'Create' ? 'Submit' : 
+        this.clickedButton === 'Withdraw' ? 'Withdraw' : 
+        'Submit';
+      this.btnIcon = 
+        this.clickedButton === 'Edit' ? 'update' : 
+        this.clickedButton === 'Create' ? 'save' : 
+        this.clickedButton === 'Withdraw' ? 'how_to_reg' : 
+        'save';
   }
 
   getRewardPunishmentInfo() {
     this.subscription.push(
      this.empRewardPunishmentService.findById(this.id).subscribe((res) => {
       if(res){
-        console.log(res)
-        this.getEmpInfoByIdCardNo(res.empIdCardNo);
+        this.isValidEmp = true;
+        // this.getEmpInfoByIdCardNo(res.empIdCardNo);
+        this.getWithdrawAndPriorityStatus(res.rewardPunishmentTypeId);
         this.EmpRewardPunishmentFrom?.form.patchValue(res);
+        this.empRewardPunishmentService.empRewardPunishment.empName = res.empName;
+        this.empRewardPunishmentService.empRewardPunishment.departmentName = res.departmentName;
+        this.empRewardPunishmentService.empRewardPunishment.sectionName = res.sectionName;
+        this.empRewardPunishmentService.empRewardPunishment.designationName = res.designationName;
       }
     })
     )
-    
+  }
+
+  getWithdrawAndPriorityStatus(id: number){
+    this.subscription.push(
+      this.rewardPunishmentSetupService.findRewardType(id).subscribe((res) =>{
+        this.isPriority = res.isPriority;
+        this.isWithdraw = res.isWithdraw;
+      })
+    )
   }
   
   getEmpInfoByIdCardNo(idCardNo: string) {
@@ -99,6 +128,17 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
     )
    
   }
+  
+  EmployeeListModal() {
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
+
+    modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
+      if(idCardNo){
+        this.getEmpInfoByIdCardNo(idCardNo);
+        this.empTransferPostingService.empTransferPosting.empIdCardNo = idCardNo;
+      }
+    });
+  }
 
   
   getEmpJobDetailsByEmpId(id: number){
@@ -108,7 +148,11 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
       if(res){
         this.empJobDetailsId = res.id;
           this.empRewardPunishmentService.empRewardPunishment.departmentName = res.departmentName;
+          this.empRewardPunishmentService.empRewardPunishment.sectionName = res.sectionName;
           this.empRewardPunishmentService.empRewardPunishment.designationName = res.designationName;
+          this.empRewardPunishmentService.empRewardPunishment.departmentId = res.departmentId;
+          this.empRewardPunishmentService.empRewardPunishment.sectionId = res.sectionId;
+          this.empRewardPunishmentService.empRewardPunishment.designationId = res.designationId;
       }
     })
     )
@@ -126,6 +170,9 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
     this.empRewardPunishmentService.empRewardPunishment = {
       id : 0,
       empId : null,
+      departmentId : null,
+      sectionId : null,
+      designationId : null,
       rewardPunishmentTypeId : null,
       rewardPunishmentPriorityId : null,
       rewardPunishmentDate : null,
@@ -149,6 +196,7 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
       empIdCardNo : '',
       empName : '',
       departmentName : '',
+      sectionName : '',
       designationName : '',
       rewardPunishmentTypeName : '',
       rewardPunishmentPriorityName : '',
@@ -201,6 +249,7 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   onSubmit(form: NgForm): void {
     this.empRewardPunishmentService.cachedData = [];
     const id = form.value.id;
+    console.log(form.value)
     const action$ = id
       ? this.empRewardPunishmentService.updateEmpRewardPunishment(id, form.value)
       : this.empRewardPunishmentService.saveEmpRewardPunishment(form.value);

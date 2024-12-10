@@ -9,6 +9,7 @@ import { NavbarSetting } from 'src/app/views/featureManagement/model/navbar-sett
 import { NavbarThemService } from 'src/app/views/featureManagement/service/navbar-them.service';
 import { NavbarThem } from 'src/app/views/featureManagement/model/navbar-them';
 import { Subscription } from 'rxjs';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-dashboard',
@@ -43,8 +44,8 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     const currentUserString = localStorage.getItem('currentUser');
     const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-    this.roleName = currentUserJSON.role;
-    this.getMenuList();
+    // this.roleName = currentUserJSON.role;
+    this.getDecryptedUser();
     this.getActiveNavbarSetting();
   }
 
@@ -55,6 +56,16 @@ export class DefaultLayoutComponent implements OnInit, OnDestroy{
     })
     )
     
+  }
+
+  getDecryptedUser() {
+    const encryptedUser = localStorage.getItem('encryptedUser');
+    if (encryptedUser) {
+      const bytes = CryptoJS.AES.decrypt(encryptedUser, 'secret-key');
+      // console.log(JSON.parse(bytes.toString(CryptoJS.enc.Utf8)));
+      this.roleName = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).role;
+    }
+    this.getMenuList();
   }
 
   getActiveNavbarSetting(){

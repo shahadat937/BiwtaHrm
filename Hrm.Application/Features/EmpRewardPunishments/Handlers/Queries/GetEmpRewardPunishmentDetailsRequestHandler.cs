@@ -30,6 +30,10 @@ namespace Hrm.Application.Features.EmpRewardPunishments.Handlers.Queries
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.RewardPunishmentPriority)
                 .Include(x => x.RewardPunishmentType)
+                .Include(x => x.Department)
+                .Include(x => x.Section)
+                .Include(x => x.Designation)
+                    .ThenInclude(x => x.DesignationSetup)
                 .FirstOrDefaultAsync(cancellationToken);
 
             var result = _mapper.Map<EmpRewardPunishmentDto>(empRewardPunishment);

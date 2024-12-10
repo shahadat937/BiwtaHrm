@@ -1,6 +1,25 @@
 <c-card class="mt-4">
     <c-card-body>
     <form #RewardTypeForm="ngForm" (submit)="onSubmit(RewardTypeForm)" [gutter]="3" novalidate cForm cRow class="needs-validation">
+
+      
+      <c-col [md]="12">
+        <c-form-check [switch]="true">
+          <input cFormCheckInput type="checkbox" id="isPriority" name="isPriority"
+              [(ngModel)]="rewardPunishmentSetupService.rewardPunishmentType.isPriority"/>
+          <label cFormCheckLabel for="isPriority">Priority Needed</label>
+        </c-form-check>
+      </c-col>
+      
+      <c-col [md]="12">
+        <c-form-check [switch]="true">
+          <input cFormCheckInput type="checkbox" id="isWithdraw" name="isWithdraw"
+              [(ngModel)]="rewardPunishmentSetupService.rewardPunishmentType.isWithdraw"/>
+          <label cFormCheckLabel for="isWithdraw">Withdraw Needed</label>
+        </c-form-check>
+      </c-col>
+
+
         <c-col [md]="4">
             <input type="hidden" [(ngModel)]="rewardPunishmentSetupService.rewardPunishmentType.id" name="id" />
             <input type="hidden" [(ngModel)]="rewardPunishmentSetupService.rewardPunishmentType.menuPosition" name="menuPosition" />
@@ -30,6 +49,7 @@
                 <option value="false">De-Active</option>
             </select>
         </c-col>
+
         <c-col [xs]="12">
             <button [disabled]="loading" [disabled]="RewardTypeForm.invalid" cButton class="me-1" color="primary" type="submit">
                 <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
@@ -67,9 +87,25 @@
               </ng-container>
 
               <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Result Name</th>
+                <th mat-header-cell *matHeaderCellDef>Name</th>
                 <td mat-cell *matCellDef="let element">{{ element.name }}</td>
               </ng-container>
+              
+            <ng-container matColumnDef="isPriority">
+              <th mat-header-cell *matHeaderCellDef>Priority Needed</th>
+              <td mat-cell *matCellDef="let element">
+                <c-badge *ngIf="element.isPriority" color="success">Yes</c-badge>
+                <c-badge *ngIf="!element.isPriority" color="danger">No</c-badge>
+              </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="isWithdraw">
+              <th mat-header-cell *matHeaderCellDef>Withdraw Needed</th>
+              <td mat-cell *matCellDef="let element">
+                <c-badge *ngIf="element.isWithdraw" color="success">Yes</c-badge>
+                <c-badge *ngIf="!element.isWithdraw" color="danger">No</c-badge>
+              </td>
+            </ng-container>
 
               <ng-container matColumnDef="isActive">
                 <th mat-header-cell *matHeaderCellDef>Is Active</th>

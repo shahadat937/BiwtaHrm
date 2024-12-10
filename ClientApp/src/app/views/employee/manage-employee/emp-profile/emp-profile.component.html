@@ -1198,6 +1198,61 @@
                         </c-card-body>
                     </c-card>
                     <!-- } -->
+                    
+                    <c-card class="shadow mb-4">
+                        <c-card-header>
+                            <h5 class="text-center text-light">Employee Reward/Punishment Information</h5>
+                        </c-card-header>
+                        <c-card-body>
+                            <div class="table-responsive">
+                                <table mat-table [dataSource]="rewardPunishmentsSource">
+                                <ng-container matColumnDef="slNo">
+                                    <th mat-header-cell *matHeaderCellDef>SL</th>
+                                    <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="type">
+                                    <th mat-header-cell *matHeaderCellDef>Type</th>
+                                    <td mat-cell *matCellDef="let element">
+                                    {{ element.rewardPunishmentTypeName }}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="orderDate">
+                                    <th mat-header-cell *matHeaderCellDef>Order Date</th>
+                                    <td mat-cell *matCellDef="let element">
+                                    {{ element.orderDate }}
+                                    </td>
+                                </ng-container>
+                                
+                                <ng-container matColumnDef="priority">
+                                    <th mat-header-cell *matHeaderCellDef>Priority</th>
+                                    <td mat-cell *matCellDef="let element">
+                                    {{ element.rewardPunishmentPriorityName }}
+                                    </td>
+                                </ng-container>
+                                
+                                <ng-container matColumnDef="withdrawStatus">
+                                    <th mat-header-cell *matHeaderCellDef>Withdraw Status</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <span *ngIf="element.withdrawStatus">Yes</span>
+                                        <span *ngIf="element.withdrawStatus == false">No</span>
+                                    </td>
+                                </ng-container>
+                                
+                                <ng-container matColumnDef="withdrawDate">
+                                    <th mat-header-cell *matHeaderCellDef>Withdraw Date</th>
+                                    <td mat-cell *matCellDef="let element">
+                                    {{ element.withdrawDate }}
+                                    </td>
+                                </ng-container>
+            
+                                <tr mat-header-row *matHeaderRowDef="rewardPunishmentColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: rewardPunishmentColumns"></tr>
+                                </table>
+                            </div>
+                        </c-card-body>
+                    </c-card>
                 </div>
             </div>
             <!-- <div class="modal-footer">
@@ -2403,6 +2458,61 @@
                 </c-card-body>
             </c-card>
             <!-- } -->
+
+            <c-card class="shadow mb-4">
+                <c-card-header>
+                    <h5 class="text-center text-light">Employee Reward/Punishment Information</h5>
+                </c-card-header>
+                <c-card-body>
+                    <div class="table-responsive">
+                        <table mat-table [dataSource]="rewardPunishmentsSource">
+                        <ng-container matColumnDef="slNo">
+                            <th mat-header-cell *matHeaderCellDef>SL</th>
+                            <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="type">
+                            <th mat-header-cell *matHeaderCellDef>Type</th>
+                            <td mat-cell *matCellDef="let element">
+                            {{ element.rewardPunishmentTypeName }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="orderDate">
+                            <th mat-header-cell *matHeaderCellDef>Order Date</th>
+                            <td mat-cell *matCellDef="let element">
+                            {{ element.orderDate }}
+                            </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="priority">
+                            <th mat-header-cell *matHeaderCellDef>Priority</th>
+                            <td mat-cell *matCellDef="let element">
+                            {{ element.rewardPunishmentPriorityName }}
+                            </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="withdrawStatus">
+                            <th mat-header-cell *matHeaderCellDef>Withdraw Status</th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.withdrawStatus">Yes</span>
+                                <span *ngIf="element.withdrawStatus == false">No</span>
+                            </td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="withdrawDate">
+                            <th mat-header-cell *matHeaderCellDef>Withdraw Date</th>
+                            <td mat-cell *matCellDef="let element">
+                            {{ element.withdrawDate }}
+                            </td>
+                        </ng-container>
+    
+                        <tr mat-header-row *matHeaderRowDef="rewardPunishmentColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: rewardPunishmentColumns"></tr>
+                        </table>
+                    </div>
+                </c-card-body>
+            </c-card>
         </div>
     </c-card-body>
 </c-card>

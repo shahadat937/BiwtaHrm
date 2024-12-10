@@ -26,7 +26,7 @@
         <p-table
           [value]="employees"
           dataKey="id"
-          [rows]="pagination.pageSize"
+          [rows]="5"
           [paginator]="true"
           (onPage)="onPageChange($event)"
           [lazy]="true"
@@ -36,7 +36,6 @@
           [showCurrentPageReport]="true"
           [loading]="loading"
           [scrollable]="true" 
-          scrollHeight="400px" 
           [tableStyle]="{'min-width': '50rem'}"
         >
           <!-- Search Input -->

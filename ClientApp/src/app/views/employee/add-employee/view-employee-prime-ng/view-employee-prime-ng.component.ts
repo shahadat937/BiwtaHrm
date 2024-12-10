@@ -123,7 +123,6 @@ export class ViewEmployeePrimeNgComponent implements OnDestroy {
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue)
     filterValue = filterValue.toLowerCase();
     this.pagination.pageIndex = 1;
     this.pagination.searchText = filterValue;

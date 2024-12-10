@@ -14,7 +14,7 @@ export class ManageSiteVisitComponent implements OnInit {
     private authService: AuthService
   ) {
     this.authService.currentUser.subscribe(user => {
-      let empId = user && user.empId == null? user.empId: 0
+      let empId = user && user.empId != null? user.empId: 0
       this.filter = {EmpId: empId};
     }) 
   }

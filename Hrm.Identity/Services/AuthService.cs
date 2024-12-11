@@ -73,7 +73,7 @@ namespace Hrm.Identity.Services
 
             string roleName = _aspNetRolesRepository.Where(x => x.Id == role).Select(x => x.Name).FirstOrDefault();
 
-            JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
+            JwtSecurityToken jwtSecurityToken = await GenerateToken(user,request.Remember);
 
             AuthResponse response = new AuthResponse
             {
@@ -150,7 +150,7 @@ namespace Hrm.Identity.Services
             return response;
         }
 
-        private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
+        private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user,bool Remember)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
@@ -179,11 +179,21 @@ namespace Hrm.Identity.Services
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
+            double duration = 0;
+
+            if(Remember)
+            {
+                duration = _jwtSettings.RememberDurationInMinutes;
+            } else
+            {
+                duration = _jwtSettings.DurationInMinutes;
+            }
+
             var jwtSecurityToken = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
                 audience: _jwtSettings.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
+                expires: DateTime.UtcNow.AddMinutes(duration),
                 signingCredentials: signingCredentials);
             return jwtSecurityToken;
         }

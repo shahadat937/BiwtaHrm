@@ -27,11 +27,14 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string, remember: boolean) {
+
+    console.log(remember);
     return this.http
       .post<any>(`${environment.securityUrl}/account/login`, {
         email,
         password,
+        remember
       })
       .pipe(
         map((user) => {

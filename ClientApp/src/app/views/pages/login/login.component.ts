@@ -205,8 +205,10 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
       this.submitted = true;
       this.loading = true;
       this.error = '';
-  
+      
       if (this.authForm.invalid) {
+        this.submitted = false;
+        this.loading = false;
         return;
       }
 

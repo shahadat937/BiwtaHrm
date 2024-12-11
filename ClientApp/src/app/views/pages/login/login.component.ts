@@ -210,18 +210,11 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
         return;
       }
 
-      if (this.authForm.get('remember')?.value) {
-        localStorage.setItem('rememberedEmail', this.f['email'].value);
-        localStorage.setItem('rememberedPassword', this.f['password'].value);
-      } else {
-        localStorage.removeItem('rememberedEmail');
-        localStorage.removeItem('rememberedPassword');
-      }
   
       this.subs.sink = this.authService
-        .login(this.f['email'].value, this.f['password'].value)
-        .subscribe(
-          (res) => {
+        .login(this.f['email'].value, this.f['password'].value,this.f['remember'].value)
+        .subscribe( {
+          next: res => {
             if (res) {
               const role = this.authService.currentUserValue.role;
               this.router.navigate(['/dashboard']);
@@ -234,11 +227,11 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
               this.loading = false;
             }
           },
-          (error) => {
+          error: err => {
             this.submitted = false;
             this.loading = false;
           }
-        );
+        });
     }
     else {
       this.toastr.warning('', `Invalid Answer`, {

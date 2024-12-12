@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.Board.Handlers.Queries
             {
                 Name = x.BoardName,
                 Id = x.BoardId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

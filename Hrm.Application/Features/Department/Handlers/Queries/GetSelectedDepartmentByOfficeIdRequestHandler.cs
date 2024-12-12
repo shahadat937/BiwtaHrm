@@ -30,7 +30,7 @@ namespace Hrm.Application.Features.OfficeBranch.Handlers.Queries
             {
                 Id = x.DepartmentId,
                 Name = x.DepartmentName
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return SelectedModel;
         }
     }

@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.Bank.Handlers.Queries
             {
                 Name = x.BankName,
                 Id = x.BankId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

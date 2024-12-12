@@ -42,7 +42,7 @@ namespace Hrm.Application.Features.Designation.Handlers.Queries
                 {
                     Name = x.DesignationSetup.Name,
                     Id = x.DesignationId
-                }).ToList();
+                }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

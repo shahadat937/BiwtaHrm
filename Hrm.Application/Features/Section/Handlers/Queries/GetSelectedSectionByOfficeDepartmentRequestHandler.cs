@@ -30,7 +30,7 @@ namespace Hrm.Application.Features.Section.Handlers.Queries
                 {
                     Name = x.SectionName,
                     Id = x.SectionId
-                }).ToList();
+                }).OrderBy(x => x.Name).ToList();
                 return selectModels;
             //}
             //else

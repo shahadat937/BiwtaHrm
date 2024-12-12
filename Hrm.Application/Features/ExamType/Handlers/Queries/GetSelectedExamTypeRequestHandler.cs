@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.ExamType.Handlers.Queries
             {
                 Name = x.ExamTypeName,
                 Id = x.ExamTypeId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

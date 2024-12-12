@@ -33,7 +33,7 @@ namespace Hrm.Application.Features.Division.Handlers.Queries
             {
                 Id = x.DivisionId,
                 Name = x.DivisionName
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
          //   var DivisionDtos = _mapper.Map<List<DivisionDto>>(DivisionNames);
             return DivisionNames;
         }

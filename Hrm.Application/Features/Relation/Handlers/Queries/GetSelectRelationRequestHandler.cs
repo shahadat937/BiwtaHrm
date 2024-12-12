@@ -28,7 +28,7 @@ namespace Hrm.Application.Features.Relation.Handlers.Queries
             {
                 Name = x.RelationName,
                 Id = x.RelationId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

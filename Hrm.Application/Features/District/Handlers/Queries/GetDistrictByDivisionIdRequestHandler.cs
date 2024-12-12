@@ -33,7 +33,7 @@ namespace Hrm.Application.Features.District.Handlers.Queries
             {
                 Id = x.DistrictId,
                 Name = x.DistrictName
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
            
         }

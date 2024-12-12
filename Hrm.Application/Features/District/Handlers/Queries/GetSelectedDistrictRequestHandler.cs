@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.District.Handlers.Queries
             {
                 Name = x.DistrictName,
                 Id = x.DistrictId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

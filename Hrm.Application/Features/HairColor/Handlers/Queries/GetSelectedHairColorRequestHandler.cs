@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.HairColors.Handlers.Queries
             {
                 Name = x.HairColorName,
                 Id = x.HairColorId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

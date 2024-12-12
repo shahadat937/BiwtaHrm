@@ -345,6 +345,7 @@ namespace Hrm.Application.Profiles
             CreateMap<AspNetUsers, CreateAspNetUserDto>().ReverseMap();
             CreateMap<AspNetUsers, AspNetUserDto>()
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.EmpBasicInfo.EmpJobDetail.FirstOrDefault().Department.DepartmentName))
+                .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.EmpBasicInfo.EmpJobDetail.FirstOrDefault().Section.SectionName))
                 .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.EmpBasicInfo.EmpJobDetail.FirstOrDefault().Designation.DesignationSetup.Name))
                 .ReverseMap();
 

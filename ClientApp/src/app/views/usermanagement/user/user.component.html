@@ -250,6 +250,13 @@
             </td>
           </ng-container>
           
+        <ng-container matColumnDef="section">
+          <th mat-header-cell *matHeaderCellDef>Section</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.sectionName }}
+          </td>
+        </ng-container>
+          
           <ng-container matColumnDef="designation">
             <th mat-header-cell *matHeaderCellDef>Designation</th>
             <td mat-cell *matCellDef="let element">
@@ -283,7 +290,7 @@
               >
                 <svg cIcon name="cilPencil"></svg>
               </button> -->
-              <div class="d-grid gap-2 d-md-flex">
+              <div class="d-grid gap-1 d-md-flex">
                 <button cTooltip="Update User" cTooltipPlacement="bottom" mat-icon-button color="primary" (click)="updateUserInformation(element.id, 'UpdateUser')">
                   <mat-icon>update</mat-icon>
                 </button>

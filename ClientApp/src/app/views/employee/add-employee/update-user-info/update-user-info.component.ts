@@ -57,6 +57,7 @@ export class UpdateUserInfoComponent implements OnInit, OnDestroy  {
       isActive : true,
       canEditProfile : false,
       departmentName: '',
+      sectionName: '',
       designationName: '',
     };
   }

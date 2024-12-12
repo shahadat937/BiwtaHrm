@@ -25,6 +25,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
     'fullName', 
     'department', 
+    'section', 
     'designation', 
     // 'fullNameBangla', 
     // 'email', 

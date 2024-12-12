@@ -32,7 +32,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
   loading = false;
   // subscription: Subscription = new Subscription();
   subscription: Subscription[]=[]
-  displayedColumns: string[] = ['slNo', 'fullName', 'userName', 'department', 'designation','isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'fullName', 'userName', 'department', 'section','designation','isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -147,6 +147,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
       isActive : true,
       canEditProfile : false,
       departmentName: '',
+      sectionName: '',
       designationName: '',
     };
   }
@@ -170,6 +171,7 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         isActive : true,
         canEditProfile : false,
         departmentName: '',
+        sectionName: '',
         designationName: '',
       });
     }

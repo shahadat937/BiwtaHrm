@@ -29,6 +29,18 @@ public class LeaveRequestController:Controller
     [HttpGet]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
+    [Route("get-OldLeaveRequest")]
+    public async Task<ActionResult> GetOldLeaveRequest()
+    {
+        var command = new GetOldLeaveRequestRequest { };
+        var response = await _mediator.Send(command);
+
+        return Ok(response);
+    }
+
+    [HttpGet]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
     [Route("get-LeaveRequestById/{id}")]
     public async Task<ActionResult> GetLeaveRequestById(int id) {
         var command = new GetLeaveRequestByIdRequest { LeaveRequestId = id};

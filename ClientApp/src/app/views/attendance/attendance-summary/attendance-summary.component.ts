@@ -9,6 +9,15 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { DateRange } from '@angular/material/datepicker';
 import { SectionService } from '../../basic-setup/service/section.service';
+import { cilSearch } from '@coreui/icons';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
+import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { Feature } from '../../featureManagement/model/feature';
+import { AuthService } from 'src/app/core/service/auth.service';
+import { TimeScale } from 'chart.js';
 
 @Component({
   selector: 'app-attendance-summary',
@@ -16,8 +25,12 @@ import { SectionService } from '../../basic-setup/service/section.service';
   styleUrl: './attendance-summary.component.scss'
 })
 export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewInit {
+  // Feature Permission
+  featurePermission: FeaturePermission = new FeaturePermission();
+
   isVisibleEmpSummary=true;
   EmpSummaryButtonText="Hide";
+  icons = {cilSearch}
   // subscription:Subscription = new Subscription();
   subscription: Subscription[]=[]
   summaryDetail: any[];
@@ -30,6 +43,8 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   SectionOption: any[] = [];
 
   // For Employee Wise
+  PMIS: string;
+  EmpName: string;
   PresentText:any="N/A";
   AbsentText: any ="N/A";
   LateText:any = "N/A";
@@ -37,13 +52,15 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   SiteVisitText: any = "N/A";
   OnLeaveText: any = "N/A";
 
+  summary: any ;
+
   // For Employee Wise
   selectedEmp: number|null;
   selectedDepartment: number | null;
   selectedOffice: number|null;
   selectedSection: number | null;
-  fromDate: Date|null;
-  toDate: Date | null;
+  fromDate: string;
+  toDate: string;
   rangeDates: Date[] = [];
   empInfo: any;
 
@@ -64,6 +81,10 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
   selectedDepartmentDw : number | null;
   selectedOfficeDw: number | null;
   constructor(
+    private authService: AuthService,
+    private roleFeatureService: RoleFeatureService,
+    private empBasicInfoService: EmpBasicInfoService,
+    private modalService: BsModalService,
     private SectionService: SectionService,
     private AtdReportService: AttendanceReportService,
     private route: ActivatedRoute,
@@ -76,13 +97,16 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     this.selectedEmp = null;
     this.selectedOffice = null;
     this.selectedSection = null;
-    this.fromDate = null;
-    this.toDate = null;
+    this.fromDate = "";
+    this.toDate = "";
     this.selectedDepartmentDw = null;
     this.selectedOfficeDw = null;
     this.toDateDw = null;
     this.fromDateDw = null;
     this.summaryDetail = [];
+    this.PMIS = "";
+    this.EmpName = "";
+
 
     this.empInfo = {
       empName: "",
@@ -91,12 +115,52 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
       department: "",
       photoUrl: "",
     }
+
+    this.setSummary();
   }
 
   ngOnInit(): void {
+
+    this.getPermission();
+    this.setEmployee();
     this.getAllEmp();
     this.getSelectedDepartment();
     this.onChangeDw();
+    
+  }
+
+  setEmployee() {
+    const subs = this.authService.currentUser.subscribe(user => {
+      if(user!=null&&user.empId!=null) {
+        let empID = parseInt(user.empId);
+
+        if(empID !=undefined) {
+          this.empBasicInfoService.findByEmpId(empID).subscribe({
+            next: response => {
+              this.selectedEmp = response.id;
+              this.EmpName = [response.firstName, response.lastName].join(' ');
+            }
+          })
+        }
+      }
+    })
+  }
+
+  getPermission() {
+    const subs = this.roleFeatureService.getFeaturePermission("attendanceSummary").subscribe(item => {
+      this.featurePermission = item;
+    })
+  }
+
+  setSummary() {
+    this.summary = {
+      Present: this.PresentText,
+      Absent: this.AbsentText,
+      Late: this.LateText,
+      Workingday: this.WorkingDayText,
+      Sitevisit: this.SiteVisitText,
+      Leave: this.OnLeaveText
+    };
   }
 
   ngOnDestroy(): void {
@@ -142,12 +206,17 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
         this.SiteVisitText = "N/A";
         this.OnLeaveText = "N/A";
         this.summaryDetail = [];
+        this.fromDate = "";
+        this.toDate = "";
+        this.setSummary();
         return;
     }
 
     let filter = new HttpParams();
     let from = this.hrmdateResize(this.rangeDates[0])
     let to = this.hrmdateResize(this.rangeDates[1])
+    this.fromDate = from;
+    this.toDate = to;
     filter = filter.set("EmpId",this.selectedEmp);
     filter = filter.set("From", this.hrmdateResize(this.rangeDates[0]));
     filter = filter.set("To", this.hrmdateResize(this.rangeDates[1]));
@@ -162,6 +231,7 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
         this.WorkingDayText = response.totalWorkingDay;
         this.SiteVisitText = response.totalSiteVisit;
         this.OnLeaveText = response.totalOnLeave;
+        this.setSummary();
       })
      )
 
@@ -291,5 +361,28 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
         this.EmpOption = response;
       }
     })
+  }
+
+  openEmployeeModal() {
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
+
+    const subs = modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
+      if(idCardNo){
+          this.PMIS = idCardNo;
+          this.onPMISChange();
+      }
+    });
+  }
+
+  onPMISChange() {
+      const subs = this.empBasicInfoService.getEmpInfoByCard(this.PMIS).subscribe({
+        next: response => {
+          if(response!=null&&response.id!=null) {
+            this.selectedEmp = response.id;
+            this.EmpName = [response.firstName,response.lastName].join(' ');
+            this.onEmpChange();
+          }
+        }
+      })  
   }
 }

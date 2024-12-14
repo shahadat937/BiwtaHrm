@@ -27,11 +27,14 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string, remember: boolean) {
+
+    console.log(remember);
     return this.http
       .post<any>(`${environment.securityUrl}/account/login`, {
         email,
         password,
+        remember
       })
       .pipe(
         map((user) => {
@@ -52,5 +55,13 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null!);
     return of({ success: false });
+  }
+
+  verifyToken(token:string) : Observable<any> {
+    let payload = {
+       "userName":"string",
+      'token':token
+    }
+    return this.http.post<any>(`${environment.securityUrl}/account/verifyToken`,payload)
   }
 }

@@ -1,7 +1,7 @@
 <div class="printAttReport">
     <h2 class="text-center">{{companyTitle}}</h2>
     <h4 class="text-center">Employee Attendance Ledger</h4>
-    <h4 class="text-center">From Date 01/01/2024 To Date: 30/01/2024</h4>
+    <h4 class="text-center">From Date: {{reportFrom|date}} To Date: {{reportTo|date}}</h4>
 
     <div class="mt-3">
         <div class="custom-content d-flex justify-content-between align-items-center">
@@ -12,7 +12,7 @@
                 <p>Department: {{empInfo.department}}</p>
             </div>
             <div>
-                <img [src]="photoUrl+'EmpPhoto/'+empInfo.photoUrl" alt="Test Image" width="80px" height="80px">
+                <img [src]="photoUrl+'EmpPhoto/'+empInfo.photoUrl" alt="Employee Image" width="80px" height="80px">
             </div>
         </div>
         <table class="custom-table">
@@ -30,13 +30,37 @@
                 @for (item of attendanceData; track $index) {
                     <tr>
                         <td>{{item.attendanceDate|date}}</td>
-                        <td>{{item.inTime}}</td>
-                        <td>{{item.outTime}}</td>
+                        <td>{{item.inTime | timeFormat}}</td>
+                        <td>{{item.outTime | timeFormat}}</td>
                         <td>{{item.lateTime}}</td>
                         <td>{{item.attendanceStatusName}}</td>
                     </tr>
                 }
             </tbody>
         </table>
+        <div class="custom-content-bottom">
+            <div class="d-flex justify-content-around text-row">
+                <div class="text-block">
+                    <p>Total Present: {{summary.Present}}</p>
+                </div>
+                <div class="text-block">
+                    <p>Absent: {{summary.Absent}}</p>
+                </div>
+                <div class="text-block">
+                    <p>Late: {{summary.Late}}</p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-around text-row">
+                <div class="text-block">
+                    <p>Total Working day: {{summary.Workingday}}</p>
+                </div>
+                <div class="text-block">
+                    <p>Total Sitevisit: {{summary.Sitevisit}}</p>
+                </div>
+                <div class="text-block">
+                    <p>Total Leave: {{summary.Leave}}</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

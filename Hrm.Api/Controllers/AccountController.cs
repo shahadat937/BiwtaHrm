@@ -3,6 +3,7 @@ using Hrm.Application.Contracts.Identity;
 using Hrm.Application.DTOs.BloodGroup;
 using Hrm.Application.Features.BloodGroups.Requests.Queries;
 using Hrm.Application.Models.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hrm.Api.Controllers;
 //[Route(HrmRoutePrefix.Account)]
@@ -30,6 +31,13 @@ public class AccountController : ControllerBase
     public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request)
     {
         return Ok(await _authenticationService.Register(request));
+    }
+
+    [HttpPost]
+    [Route("verifyToken")]
+    public async Task<ActionResult<BaseCommandResponse>> VerifyToken([FromBody]VerifyTokenRequest request)
+    {
+        return Ok(await _authenticationService.VerifyToken(request));
     }
 
 }

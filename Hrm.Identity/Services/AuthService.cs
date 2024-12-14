@@ -44,7 +44,7 @@ namespace Hrm.Identity.Services
 
         public async Task<AuthResponse> Login(AuthRequest request)
         {
-
+            
 
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == request.Email || x.UserName == request.Email);
             if (user == null)
@@ -73,7 +73,7 @@ namespace Hrm.Identity.Services
 
             string roleName = _aspNetRolesRepository.Where(x => x.Id == role).Select(x => x.Name).FirstOrDefault();
 
-            JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
+            JwtSecurityToken jwtSecurityToken = await GenerateToken(user,request.Remember);
 
             AuthResponse response = new AuthResponse
             {
@@ -92,7 +92,6 @@ namespace Hrm.Identity.Services
         public async Task<BaseCommandResponse> Register(RegistrationRequest request)
         {
             var response = new BaseCommandResponse();
-
 
             var user = new ApplicationUser
             {
@@ -151,7 +150,7 @@ namespace Hrm.Identity.Services
             return response;
         }
 
-        private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
+        private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user,bool Remember)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
@@ -180,11 +179,21 @@ namespace Hrm.Identity.Services
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
+            double duration = 0;
+
+            if(Remember)
+            {
+                duration = _jwtSettings.RememberDurationInMinutes;
+            } else
+            {
+                duration = _jwtSettings.DurationInMinutes;
+            }
+
             var jwtSecurityToken = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
                 audience: _jwtSettings.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
+                expires: DateTime.UtcNow.AddMinutes(duration),
                 signingCredentials: signingCredentials);
             return jwtSecurityToken;
         }
@@ -317,6 +326,99 @@ namespace Hrm.Identity.Services
                 return response;
             }
 
+        }
+
+        public async Task<BaseCommandResponse> VerifyToken(VerifyTokenRequest request)
+        {
+            var response = new BaseCommandResponse();
+            if (string.IsNullOrEmpty(request?.Token))
+            {
+                throw new BadRequestException("Token must be provided");
+            }
+
+            try
+            {
+                var claimsPrincipal = await ValidateTokenAsync(request.Token);
+
+                if(claimsPrincipal!=null)
+                {
+                    var exp = claimsPrincipal.FindFirstValue("exp");
+
+                    var expInt = Int32.Parse(exp);
+
+                    if(expInt<DateTimeOffset.UtcNow.ToUnixTimeSeconds())
+                    {
+                        response.Success = false;
+                        response.Message = "Invalid Token";
+                        return response;
+                    }
+                }
+
+                if (claimsPrincipal == null)
+                {
+                    response.Success = false;
+                    response.Message = "Invalid Token";
+                    return response;
+                }
+
+                response.Success = true;
+                response.Message = "Valid Token";
+                return response;
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                response.Success = false;
+                response.Message = "Invalid Token";
+                return response;
+            }
+
+        }
+
+        private async Task<ClaimsPrincipal> ValidateTokenAsync(string token)
+        {
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.UTF8.GetBytes(_jwtSettings.Key);
+
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = _jwtSettings.Issuer,
+                    ValidAudience = _jwtSettings.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+
+                // Validate token
+                var principal = tokenHandler.ValidateToken(
+                    token,
+                    validationParameters,
+                    out var validatedToken
+                );
+
+                // Ensure the token is a valid JwtSecurityToken
+                if (validatedToken is JwtSecurityToken jwtToken)
+                {
+                    return principal; // Return the principal (valid claims)
+                }
+
+                return null; // Token is invalid
+            }
+            catch (SecurityTokenExpiredException)
+            {
+                throw new UnauthorizedAccessException("Token has expired.");
+            }
+            catch (SecurityTokenInvalidSignatureException)
+            {
+                throw new UnauthorizedAccessException("Invalid token signature.");
+            }
+            catch (Exception ex)
+            {
+                throw new UnauthorizedAccessException($"Token validation failed: {ex.Message}");
+            }
         }
 
     }

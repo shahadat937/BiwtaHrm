@@ -26,13 +26,13 @@
                     <span cInputGroupText>
                       <svg cIcon name="cilUser"></svg>
                     </span>
-                    <input formControlName="email" autoComplete="username" cFormControl placeholder="Username" (keyup.enter)="onSubmit()"/>
+                    <input formControlName="email" required autoComplete="username" cFormControl placeholder="Username" (keyup.enter)="onSubmit()"/>
                   </c-input-group>
                   <c-input-group class="mb-4">
                     <span cInputGroupText>
                       <svg cIcon name="cilLockLocked"></svg>
                     </span>
-                    <input formControlName="password" autoComplete="current-password" cFormControl placeholder="Password"
+                    <input formControlName="password" required autoComplete="current-password" cFormControl placeholder="Password"
                     [type]="hide ? 'password' : 'text'" (keyup.enter)="onSubmit()"/>
 
                        <!-- visibility without cross effect  -->
@@ -104,7 +104,7 @@
                   </c-row>
                   <c-row>
                     <c-col xs="6">
-                      <button cButton class="px-4" color="primary" (click)="onSubmit()">
+                      <button [disabled]="authForm.invalid" cButton class="px-4" color="primary" (click)="onSubmit()">
                         <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
                         {{ btnText }}
                         Login

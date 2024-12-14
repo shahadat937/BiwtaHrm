@@ -14,6 +14,7 @@ namespace Hrm.Application.Contracts.Identity
         Task<BaseCommandResponse> UpdateUser(UpdateUserRequest request);
         Task<BaseCommandResponse> UpdateUserAndChangePassword(UpdateUserRequest request);
         Task<BaseCommandResponse> ResetPassword(UpdateUserRequest request);
+        Task<BaseCommandResponse> VerifyToken(VerifyTokenRequest request);
 
 
     }

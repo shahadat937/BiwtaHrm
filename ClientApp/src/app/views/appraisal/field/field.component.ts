@@ -8,6 +8,7 @@ import { JobHistoryModel } from '../models/job-history-model';
 import { ThanaService } from '../../basic-setup/service/thana.service';
 import { EmpTrainingInfoService } from '../../employee/service/emp-training-info.service';
 import { HttpParams } from '@angular/common/http';
+import {InputFieldSyncService} from '../services/input-field-sync.service'
 
 @Component({
   selector: 'app-field',
@@ -34,10 +35,12 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
   set field(value) {
     this.fieldValue = value;
     this.fieldChange.emit(this.fieldValue);
+    this.inputFieldSyncService.emitValueChange(this.fieldUniqueName,this.fieldData);
   }
 
   onFieldChange(event:any) {
     this.change.emit(event);
+    this.inputFieldSyncService.emitValueChange(this.fieldUniqueName,this.fieldData);
   }
 
   jobHistory: JobHistoryModel[];
@@ -49,6 +52,7 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
   icons = {cilX};
 
   constructor(
+    private inputFieldSyncService: InputFieldSyncService, 
     private empTrainingInfoService: EmpTrainingInfoService,
     private empEducationInfoService: EmpEducationInfoService,
     private formRecordService: FormRecordService, 
@@ -68,6 +72,11 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
     this.getEducationInfo(false);
     this.getEmpTrainingInfo();
     this.getJobHistory();
+    const subs = this.inputFieldSyncService.valueChange$.subscribe(data => {
+      console.log(data);
+    })
+
+    this.subscription.push(subs);
   }
 
   ngOnDestroy(): void {

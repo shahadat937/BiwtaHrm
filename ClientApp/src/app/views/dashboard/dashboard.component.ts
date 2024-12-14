@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.authService.currentUser.subscribe(data => {
-      if(data.role!=null) {
+      if(data && data.role!=null) {
         this.getRolePermission(data.role);
       }
     });

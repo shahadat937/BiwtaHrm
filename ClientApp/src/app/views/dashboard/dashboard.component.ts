@@ -8,6 +8,7 @@ import { RoleDashboardService } from '../usermanagement/service/role-dashboard.s
 import { AuthService } from 'src/app/core/service/auth.service';
 import { RoleDashboard } from '../usermanagement/model/role-dashboard';
 import { ToastrService } from 'ngx-toastr';
+import * as CryptoJS from 'crypto-js';
 
 interface IUser {
   name: string;
@@ -29,7 +30,7 @@ interface IUser {
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   
-  subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[];
   dashboardPermission = new RoleDashboard();
 
   constructor(
@@ -39,23 +40,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = this.authService.currentUser.subscribe(data => {
-      if(data && data.role!=null) {
-        this.getRolePermission(data.role);
-      }
-    });
-
-    
+    const currentEncryptedUser =  localStorage.getItem('encryptedUser');
+    if(currentEncryptedUser){
+      const bytes = CryptoJS.AES.decrypt(currentEncryptedUser, 'secret-key');
+      const roleName = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).role;
+      this.getRolePermission(roleName);
+    }
   }
 
   ngOnDestroy(): void {
-    if(this.subscription!=null) {
-      this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.forEach(subs=>subs.unsubscribe());
     }
   }
 
   getRolePermission(roleName: string){
-    this.subscription = this.roleDashboardService.getRoleDashboardPermission(roleName).subscribe((res) => {
+    this.subscription.push(this.roleDashboardService.getRoleDashboardPermission(roleName).subscribe((res) => {
       if(res){
         this.dashboardPermission = res;
       }
@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
       }
-    })
+    }))
   }
 
 }

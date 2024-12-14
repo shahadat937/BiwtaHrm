@@ -10,11 +10,13 @@ import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.servi
 import { AddLeaveService } from '../service/add-leave.service';
 import { LeaveBalanceService } from '../service/leave-balance.service';
 import { ManageLeaveService } from '../service/manage-leave.service';
-import { cilSearch } from '@coreui/icons';
+import { cilSearch, cilZoom } from '@coreui/icons';
 import { LeaveStatus } from '../enum/leave-status';
 import { AddLeaveModel } from '../models/add-leave-model';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
 import { HttpParams } from '@angular/common/http';
+import { LeaveModel } from '../models/leave-model';
+import { LeaveDetailViewComponent } from '../manageleave/leave-detail-view/leave-detail-view.component';
 
 @Component({
   selector: 'app-old-leave-entry',
@@ -48,13 +50,24 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
   @Input()
   IsReadonly: boolean
   buttonTitle: string;
+  
+  DepartmentOption: any[] = [];
+  // subscription: Subscription = new Subscription();
+  subscription: Subscription[]=[]
+  selectedDepartment: number|null;
+  leaves: any[] = [];
+  leaveStatusOptions: any [] = [];
+  selectedLeave: LeaveModel;
+  @Input() LeaveFilterParams: any;
+  @Input() CanApprove: boolean;
+  @Input() Role: string = "Reviewer"
 
   leaveStatus = LeaveStatus;
   reviewerPMIS: string;
   approverPMIS: string;
   reviewerName: string;
   approverName: string;
-  icons = {cilSearch}
+  icons = {cilSearch, cilZoom}
 
   constructor(
     private empBasicInfoService: EmpBasicInfoService,
@@ -64,7 +77,7 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
     private leaveBalanceService: LeaveBalanceService, 
     private toastr: ToastrService,
     private confirmService: ConfirmService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.loading = false;
     this.empCardNo ="";
@@ -84,6 +97,10 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
     this.leaveData = null;
     this.buttonTitle = "Submit";
     this.baseImageUrl = environment.imageUrl;
+    this.selectedDepartment = null;
+    this.selectedLeave = new LeaveModel();
+    this.LeaveFilterParams = {};
+    this.CanApprove = true;
   }
 
   ngOnInit(): void {
@@ -92,6 +109,38 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
       this.LeaveTypeOption = option;
       }
     });
+    
+    this.getLeaves();
+  }
+  getLeaves() {
+    let params = new HttpParams();
+
+    for(const key of Object.keys(this.LeaveFilterParams)) {
+      if(key=="Status") {
+        for(const item of this.LeaveFilterParams[key]) {
+          params = params.append(key, item);
+        }
+        continue;
+      }
+      params = params.set(key, this.LeaveFilterParams[key]);
+    }
+
+    this.subscription.push(
+      this.manageLeaveService.getOldLeaveRequest().subscribe({
+      next: response=> {
+        this.leaves = response;
+      
+      },
+      error: error=> {
+        console.log(error);
+      }
+    })
+    )
+    
+  }
+
+  getInputEventValue(event: Event) {
+    return (event.target as HTMLInputElement).value;
   }
 
   ngOnDestroy(): void {
@@ -369,9 +418,68 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
     formData.forEach((value, key) => {
         output += `${key}: ${value}\n`;
     });
+  }
 
-    // Print the form data to the console
-    console.log(output);
+  onViewDetail(leaveRequestId:number) {
+
+    interface LeaveDetailViewModalConfig {
+      leaveRequestId: number;
+      CanApprove: boolean;
+      Role: string
+    }
+    const initialState:LeaveDetailViewModalConfig = {
+      leaveRequestId : leaveRequestId,
+      CanApprove: this.CanApprove,
+      Role: this.Role
+    };
+    const modalRef: BsModalRef = this.modalService.show(LeaveDetailViewComponent, { initialState, backdrop: 'static' });
+
+    if (modalRef.onHide) {
+      modalRef.onHide.subscribe(() => {
+        this.getLeaves();
+      });
+    }
+  }
+
+  onDelete(leaveRequestId:number) {
+
+   this.subscription.push(
+     this.confirmService.confirm('Delete Confirmation','Are you sure?').subscribe({
+      next: response => {
+        if(response) {
+          this.loading = true;
+          this.subscription.push(
+            this.manageLeaveService.deleteLeaveRequest(leaveRequestId).subscribe({
+            next: (response) => {
+              if(response.success) {
+                this.toastr.success('',`${response.message}`, {
+                  positionClass: 'toast-top-right'
+                })
+
+                this.leaves = this.leaves.filter(item => item.leaveRequestId != leaveRequestId);
+              } else {
+                this.toastr.warning('',`${response.message}`, {
+                  positionClass: 'toast-top-right'
+                })
+              }
+            },
+            error: (err)=> {
+              console.log(err);
+              this.loading = false;
+            },
+            complete: () => {
+              this.loading = false;
+            }
+          })
+          )
+           
+
+        }
+      }
+    })
+   )
+   
+
   }
 
 }

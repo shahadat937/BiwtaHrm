@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.Competence.Handlers.Queries
             {
                 Name = x.CompetenceName,
                 Id = x.CompetenceId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.EyesColors.Handlers.Queries
             {
                 Name = x.EyesColorName,
                 Id = x.EyesColorId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

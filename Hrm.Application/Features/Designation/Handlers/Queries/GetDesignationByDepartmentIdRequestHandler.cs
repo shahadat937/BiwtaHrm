@@ -38,7 +38,7 @@ namespace Hrm.Application.Features.OfficeBranch.Handlers.Queries
             {
                 Id = x.DesignationId,
                 Name = x.DesignationSetup.Name,
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return SelectedModel;
         }
     }

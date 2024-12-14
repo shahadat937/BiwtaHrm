@@ -14,6 +14,7 @@ export class UserModule {
   isActive : boolean;
   canEditProfile : boolean = false;
   departmentName : string = '';
+  sectionName : string = '';
   designationName : string = '';
   
   constructor() {

@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.CourseDurations.Handlers.Queries
             {
                 Name = x.Duration.ToString(),
                 Id = x.Id
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

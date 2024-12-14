@@ -29,7 +29,7 @@ namespace Hrm.Application.Features.Upazila.Handlers.Queries
             {
                 Id = x.UpazilaId,
                 Name = x.UpazilaName
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             //   var DivisionDtos = _mapper.Map<List<DivisionDto>>(DivisionNames);
             return SelectedModel;
         }

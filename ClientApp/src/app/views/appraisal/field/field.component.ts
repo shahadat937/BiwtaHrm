@@ -9,6 +9,7 @@ import { ThanaService } from '../../basic-setup/service/thana.service';
 import { EmpTrainingInfoService } from '../../employee/service/emp-training-info.service';
 import { HttpParams } from '@angular/common/http';
 import {InputFieldSyncService} from '../services/input-field-sync.service'
+import { EmpWorkHistoryService } from '../../employee/service/emp-work-history.service';
 
 @Component({
   selector: 'app-field',
@@ -55,6 +56,7 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
     private inputFieldSyncService: InputFieldSyncService, 
     private empTrainingInfoService: EmpTrainingInfoService,
     private empEducationInfoService: EmpEducationInfoService,
+    private empWorkHistoryService: EmpWorkHistoryService,
     private formRecordService: FormRecordService, 
   ) {
     this.fieldUniqueName = "default";
@@ -71,9 +73,9 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
 
     this.getEducationInfo(false);
     this.getEmpTrainingInfo();
-    this.getJobHistory();
+    //this.getJobHistory();
     const subs = this.inputFieldSyncService.valueChange$.subscribe(data => {
-      console.log(data);
+      //console.log(data);
     })
 
     this.subscription.push(subs);
@@ -135,14 +137,16 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
     }
     let startDate = "2002-01-01";
     let endDate = "2025-01-01";
-    this.subscription.push(
-      this.formRecordService.getJobHistory(this.empId,startDate,endDate).subscribe({
+    
+    let params = new HttpParams();
+    params = params.set('empId',9);
+    params = params.set('startDate',startDate);
+    params = params.set('endDate', endDate);
+    const subs = this.empWorkHistoryService.findCombinedDateRangeEmpHistory(params).subscribe({
       next: response => {
-        this.jobHistory = response;
+        //console.log(response);
       }
     })
-    )
-    
   }
 
   getEmpTrainingInfo() {

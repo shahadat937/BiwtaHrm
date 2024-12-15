@@ -41,6 +41,7 @@ import { EmpTransferPostingService } from 'src/app/views/transferPosting/service
 import { JobDetailsSetupService } from 'src/app/views/basic-setup/service/job-details-setup.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { EmpRewardPunishmentService } from '../../service/emp-reward-punishment.service';
 
 @Component({
   selector: 'app-emp-profile',
@@ -101,6 +102,9 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
   
   workHistoryColumns: string[] = ['slNo', 'departmentName', 'sectionName', 'designationName', 'joiningDate', 'releaseDate'];
   workHistorySource = new MatTableDataSource<any>();
+  
+  rewardPunishmentColumns: string[] = ['slNo', 'type', 'orderDate','priority', 'withdrawStatus', 'withdrawDate'];
+  rewardPunishmentsSource = new MatTableDataSource<any>();
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -125,6 +129,7 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     public empTrainingInfoService: EmpTrainingInfoService,
     public empTransferPostingService: EmpTransferPostingService,
     public jobDetailsSetupService: JobDetailsSetupService,
+    public empRewardPunishmentService: EmpRewardPunishmentService,
     private bsModalRef: BsModalRef,
     private el: ElementRef, 
     private renderer: Renderer2
@@ -171,6 +176,7 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
       // this.getEmpOtherResponsibility();
       // this.getEmpTransferPostingInfo();
       this.getPrlAndRetirmentDate();
+      this.getRewardPunishmentInfo();
     }
 
     getEmpBasicInfoByEmpId(){
@@ -372,6 +378,15 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
         })
       )
       
+    }
+
+    getRewardPunishmentInfo(){
+      this.subscription.push(
+        this.empRewardPunishmentService.findByEmpId(this.id).subscribe((res) => {
+            this.rewardPunishmentsSource = new MatTableDataSource(res);
+          // }
+        })
+      )
     }
     
     getEmpTransferPostingInfo(){

@@ -60,6 +60,12 @@
                             #empName="ngModel" cFormControl id="empName" readonly />
                     </c-col>
 
+
+                    <c-col [md]="4">
+                        <label cLabel for="departmentName">Department<span class="text-danger"></span></label>
+                        <input [(ngModel)]="empTransferPostingService.empTransferPosting.departmentName"
+                            name="departmentName" #departmentName="ngModel" cFormControl id="departmentName" readonly />
+                    </c-col>
                     @if(empTransferPostingService.empTransferPosting.sectionName) {
                     <c-col [md]="4">
                         <label cLabel for="sectionName">Section<span class="text-danger"></span></label>
@@ -67,12 +73,6 @@
                             #sectionName="ngModel" cFormControl id="sectionName" readonly />
                     </c-col>
                     }
-
-                    <c-col [md]="4">
-                        <label cLabel for="departmentName">Department<span class="text-danger"></span></label>
-                        <input [(ngModel)]="empTransferPostingService.empTransferPosting.departmentName"
-                            name="departmentName" #departmentName="ngModel" cFormControl id="departmentName" readonly />
-                    </c-col>
 
                     <c-col [md]="4">
                         <label cLabel for="designationName">Designation<span class="text-danger"></span></label>

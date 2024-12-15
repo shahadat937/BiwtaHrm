@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.Results.Handlers.Queries
             {
                 Name = x.ResultName,
                 Id = x.ResultId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

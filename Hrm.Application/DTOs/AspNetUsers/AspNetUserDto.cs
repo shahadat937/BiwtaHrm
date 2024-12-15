@@ -28,6 +28,7 @@ namespace Hrm.Application.DTOs.AspNetUsers
         public bool? CanEditProfile { get; set; }
 
         public string? DepartmentName { get; set; }
+        public string? SectionName { get; set; }
         public string? DesignationName { get; set; }
     }
 }

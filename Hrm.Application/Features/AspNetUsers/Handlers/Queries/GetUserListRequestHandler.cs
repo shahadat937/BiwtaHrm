@@ -31,11 +31,13 @@ namespace Hrm.Application.Features.AspNetUsers.Handlers.Queries
             IQueryable<Domain.AspNetUsers> aspNetUsers = _aspNetUserRepository.Where(x => true)
                 .Include(x => x.EmpBasicInfo)
                 .ThenInclude(ebi => ebi.EmpJobDetail)
-                .ThenInclude(ejd => ejd.Department)
-                .Include(x => x.EmpBasicInfo)
+                    .ThenInclude(ejd => ejd.Department)
                 .ThenInclude(ebi => ebi.EmpJobDetail)
-                .ThenInclude(ejd => ejd.Designation)
-                   .ThenInclude(ds => ds.DesignationSetup);
+                    .ThenInclude(ejd => ejd.Section)
+                .Include(x => x.EmpBasicInfo)
+                    .ThenInclude(ebi => ebi.EmpJobDetail)
+                    .ThenInclude(ejd => ejd.Designation)
+                        .ThenInclude(ds => ds.DesignationSetup);
 
             aspNetUsers = aspNetUsers.OrderByDescending(x => x.DateCreated);
 

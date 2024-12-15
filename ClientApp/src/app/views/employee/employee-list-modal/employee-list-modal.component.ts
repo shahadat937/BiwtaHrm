@@ -97,7 +97,6 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(filterValue: string) {
-    console.log(filterValue)
     filterValue = filterValue.toLowerCase();
     this.pagination.pageIndex = 1;
     this.pagination.searchText = filterValue;
@@ -111,7 +110,6 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
   }
 
   onGlobalFilter(event: Event) {
-    console.log(event)
     const inputValue = (event.target as HTMLInputElement).value;
     this.dt!.filterGlobal(inputValue, 'contains');
   }
@@ -125,7 +123,6 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
 
   onSelectEmployee(idCardNo: string) {
     this.employeeSelected.emit(idCardNo);
-    console.log("Id : ",idCardNo)
     this.closeModal();
   }
 

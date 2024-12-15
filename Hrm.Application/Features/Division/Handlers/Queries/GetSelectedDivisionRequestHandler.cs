@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.Division.Handlers.Queries
             {
                 Name = x.DivisionName,
                 Id = x.DivisionId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

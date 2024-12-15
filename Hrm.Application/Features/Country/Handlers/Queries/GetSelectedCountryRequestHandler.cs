@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.Countrys.Handlers.Queries
             {
                 Name = x.CountryName,
                 Id = x.CountryId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

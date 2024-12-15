@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.Department.Handlers.Queries
             {
                 Name = x.DepartmentName,
                 Id = x.DepartmentId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

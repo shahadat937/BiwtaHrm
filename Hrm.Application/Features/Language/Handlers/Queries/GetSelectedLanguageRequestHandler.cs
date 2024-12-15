@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.Language.Handlers.Queries
             {
                 Name = x.LanguageName,
                 Id = x.LanguageId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

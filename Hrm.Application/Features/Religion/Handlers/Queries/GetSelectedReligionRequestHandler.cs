@@ -28,7 +28,7 @@ namespace Hrm.Application.Features.Religion.Handlers.Queries
             {
                 Name = x.ReligionName,
                 Id = x.ReligionId
-            }).ToList();
+            }).OrderBy(x => x.Name).ToList();
             return selectModels;
         }
     }

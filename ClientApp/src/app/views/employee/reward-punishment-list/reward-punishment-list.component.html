@@ -56,7 +56,7 @@
                 <th mat-header-cell *matHeaderCellDef>Withdraw Status</th>
                 <td mat-cell *matCellDef="let element">
                   <span *ngIf="element.withdrawStatus">Yes</span>
-                  <span *ngIf="!element.withdrawStatus">No</span>
+                  <span *ngIf="element.withdrawStatus == false">No</span>
                 </td>
             </ng-container>
             
@@ -67,7 +67,7 @@
                 <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary" (click)="editInfo(element.id, 'Edit')">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button cTooltip="Withdraw" cTooltipPlacement="bottom" mat-icon-button class="text-info" (click)="editInfo(element.id, 'Withdraw')">
+                <button *ngIf="element.withdrawStatus == false" cTooltip="Withdraw" cTooltipPlacement="bottom" mat-icon-button class="text-info" (click)="editInfo(element.id, 'Withdraw')">
                     <mat-icon>how_to_reg</mat-icon>
                 </button>
                 <button cTooltip="Delete" cTooltipPlacement="bottom" mat-icon-button color="warn" (click)="delete(element)">

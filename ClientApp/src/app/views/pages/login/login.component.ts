@@ -155,7 +155,7 @@ export class LoginComponent extends UnsubscribeOnDestroyAdapter implements OnIni
       remember: [false]
     });
     this.generateCaptcha();
-    this.pathRememberValue();
+    // this.pathRememberValue();
     this.getSiteSetting();
 
     this.ngParticlesService.init(async (engine) => {

@@ -28,8 +28,6 @@ export class AuthService {
   }
 
   login(email: string, password: string, remember: boolean) {
-
-    console.log(remember);
     return this.http
       .post<any>(`${environment.securityUrl}/account/login`, {
         email,
@@ -53,6 +51,7 @@ export class AuthService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('encryptedUser');
     this.currentUserSubject.next(null!);
     return of({ success: false });
   }

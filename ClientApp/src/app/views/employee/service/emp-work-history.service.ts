@@ -3,6 +3,7 @@ import { EmpWorkHistory } from '../model/emp-work-history';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { JobHistoryModel } from '../../appraisal/models/job-history-model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class EmpWorkHistoryService {
     return this.http.get<EmpWorkHistory[]>(this.baseUrl + '/empWorkHistory/get-CombinedEmpWorkHistoryByEmpId/' + id);
   }
 
-  findCombinedDateRangeEmpHistory(params: HttpParams) : Observable<EmpWorkHistory[]> {
-    return this.http.get<EmpWorkHistory[]>(this.baseUrl+"/empWorkHistory/get-CombinedDateRangeEmpWorkHistoryByEmpId", {params: params});
+  findCombinedDateRangeEmpHistory(params: HttpParams) : Observable<JobHistoryModel[]> {
+    return this.http.get<JobHistoryModel[]>(this.baseUrl+"/empWorkHistory/get-CombinedDateRangeEmpWorkHistoryByEmpId", {params: params});
   }
 }

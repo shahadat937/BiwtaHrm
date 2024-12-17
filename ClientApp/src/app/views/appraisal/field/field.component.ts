@@ -73,9 +73,12 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
 
     this.getEducationInfo(false);
     this.getEmpTrainingInfo();
-    //this.getJobHistory();
+    this.getJobHistory(false);
     const subs = this.inputFieldSyncService.valueChange$.subscribe(data => {
-      //console.log(data);
+      if(data==null||data.value==null||data.value.associateFieldId==null||data.value.associateFieldId!=this.fieldData.fieldId) {
+        return;
+      }
+      this.getJobHistory(data);
     })
 
     this.subscription.push(subs);
@@ -130,21 +133,29 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
     this.selectedEduInfos = this.educationInfos.filter(x=>ids.includes(x.id));
   }
 
-  getJobHistory() {
+  getJobHistory(data:any) {
 
     if(this.fieldData.htmlTagName!="table"||this.fieldData.htmlInputType!="jobhistory") {
       return;
     }
-    let startDate = "2002-01-01";
-    let endDate = "2025-01-01";
-    
+
+    if(data==null||data.value==null||data.value.childFields==null||data.value.childFields.length<2) {
+      return;
+    }
+
+    let startDate = data.value.childFields[0].fieldValue;
+    let endDate = data.value.childFields[1].fieldValue;
+
+    if(startDate==null||startDate==''||endDate==null||endDate==''||this.empId==0) {
+      return;
+    }
     let params = new HttpParams();
-    params = params.set('empId',9);
+    params = params.set('id', this.empId);
     params = params.set('startDate',startDate);
     params = params.set('endDate', endDate);
     const subs = this.empWorkHistoryService.findCombinedDateRangeEmpHistory(params).subscribe({
       next: response => {
-        //console.log(response);
+        this.jobHistory = response;
       }
     })
   }

@@ -70,6 +70,7 @@ namespace Hrm.Application.Features.Form.Handlers.Queries
                     HasMultipleValue=(bool)x.HasMultipleValue,
                     HasSelectable=(bool)x.HasSelectable,
                     TotalSubquestion = x.TotalSubquestion,
+                    AssociateFieldId = x.AssociateFieldId,
                     FieldValue = "",
                     Remark = ""
                 }).ToList();

@@ -35,6 +35,8 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   showHeader: boolean;
   @Input()
   updateRole: number;
+  @Input()
+  IsUpdate: boolean;
   appraisalRole = AppraisalRole;
   IdCardNo:string;
   formId:number;
@@ -68,6 +70,8 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   @Input()
   lastSection:number;
   
+  imageUrl = environment.imageUrl;
+  
   constructor(
     private authService: AuthService,
     private empService: EmpBasicInfoService,
@@ -89,6 +93,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     this.showHeader = true
     this.department = "ICT"
     this.updateRole = AppraisalRole.User
+    this.IsUpdate = false;
     this.formId = environment.staffFormId
     this.firstSection = 0;
     this.lastSection = 3;
@@ -142,6 +147,18 @@ export class StaffFormComponent implements OnInit, OnDestroy {
       next: response => {
         this.formData=null;
         this.formData = response;
+        this.authService.currentUser.subscribe(user => {
+          if(user&&user.empId) {
+            let empId = parseInt(user.empId);
+            this.empService.findByEmpId(empId).subscribe({
+              next: response => {
+                this.IdCardNo = response.idCardNo;
+                this.getEmpInfo();
+                this.getPhotoInfo(response.id);
+              }
+            })
+          }
+        })
       },
       error: err => {
         console.log(err);
@@ -163,7 +180,12 @@ export class StaffFormComponent implements OnInit, OnDestroy {
 
   onReset() {
     this.officerForm.form.reset();
-    this.getFormInfo();
+
+    if(!this.IsUpdate) {
+      this.getFormInfo();
+    } else {
+      this.getFormData();
+    }
     this.reportDates = [];
   }
 
@@ -305,15 +327,32 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   }
 
   getPhotoInfo(empId:number) {
-    let signature;
 
+    let signature;
     this.empPhotoSignService.findByEmpId(empId).subscribe({
       next: response => {
-        signature = response;
+        if(response) {
+          console.log("------------------------------")
+          console.log(response)
+          signature = response.signatureUrl;
+          if(signature==null||signature=="")
+            return;
+          console.log(this.formData)
+          for(let i = 0;i<this.formData.sections.length;i++) {
+            for(let j = 0; j<this.formData.sections[i].fields.length;j++) {
+              let field = this.formData.sections[i].fields[j];
+              if(field.fieldTypeName=="signaturePhoto"&&this.ActiveSection[i]&&(field.fieldValue==null||field.fieldValue=='')) {
+                field.fieldValue = signature;
+              }
+            }
+          }
+
+        }
       }
     })
-  }
 
+    return signature;
+  }
 
   updateFormData() {
     this.submitLoading=true;

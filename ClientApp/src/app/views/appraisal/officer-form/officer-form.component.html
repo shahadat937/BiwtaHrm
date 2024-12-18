@@ -119,17 +119,20 @@
                               <input cFormControl [(ngModel)]="item.fieldValue" type="date" name="signatureDate" id="signatureDate">
                             </c-card>
                           }
-                        }
-                        @if (item.empId==null) {
-                          <c-card class="p-1 d-flex justify-content-center align-items-center me-2">
-                            <button cButton color="primary">
-                              Signature
-                            </button>
-                          </c-card>
-                        } @else {
-                          <c-card class="p-1">
-                            <img src="https://placehold.co/150x50" width="150" height="52" alt="" srcset="">
-                          </c-card>
+
+                          @if (item.fieldTypeName=="signaturePhoto") {
+                            @if (item.fieldValue==null||item.fieldValue=='') {
+                              <c-card class="p-1 d-flex justify-content-center align-items-center me-2">
+                                <button cButton color="primary">
+                                  Signature
+                                </button>
+                              </c-card>
+                            } @else {
+                              <c-card class="p-1">
+                                <img [src]="imageUrl+'EmpSignature/'+item.fieldValue" width="150" height="52" alt="" srcset="">
+                              </c-card>
+                            }
+                          }
                         }
 
                       </div>

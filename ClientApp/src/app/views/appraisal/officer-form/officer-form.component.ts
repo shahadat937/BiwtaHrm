@@ -17,7 +17,8 @@ import { HttpParams } from '@angular/common/http';
 import {AppraisalRole} from '../enum/appraisal-role';
 import { environment } from 'src/environments/environment';
 import { cilArrowLeft } from '@coreui/icons';
-import { AuthService } from 'src/app/core/service/auth.service';
+import { AuthService } from 'src/app/core/service/auth.service';;
+import {EmpPhotoSignComponent} from './../../employee/add-employee/employee-informations/emp-photo-sign/emp-photo-sign.component';
 
 @Component({
   selector: 'app-officer-form',
@@ -34,8 +35,11 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   showHeader: boolean;
   @Input()
   updateRole: number;
+  @Input()
+  IsUpdate: boolean
   appraisalRole = AppraisalRole;
   IdCardNo:string;
+  currentEmp: number;
   formId:number;
   loading: boolean;
   submitLoading: boolean;
@@ -65,7 +69,9 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   firstSection:number;
   @Input()
   lastSection:number;
-  
+
+  currentEmpSignatureUrl: string | null;
+  imageUrl = environment.imageUrl 
   constructor(
     private authService: AuthService,
     private empService: EmpBasicInfoService,
@@ -76,7 +82,9 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     private confirmService: ConfirmService,
     private modalService: BsModalService
   ) {
-    
+   
+    this.currentEmp = 0;
+    this.currentEmpSignatureUrl = null;
     this.IdCardNo = "";
     this.loading = false;
     this.submitLoading = false;
@@ -86,6 +94,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.showHeader = false
     this.department = "ICT"
     this.updateRole = AppraisalRole.User
+    this.IsUpdate = false;
     this.formId = environment.officerFormId
     this.firstSection = 0;
     this.lastSection = 6;
@@ -140,6 +149,18 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       next: response => {
         this.formData=null;
         this.formData = response;
+        this.authService.currentUser.subscribe(user => {
+          if(user&&user.empId) {
+            let empId = parseInt(user.empId);
+            this.empService.findByEmpId(empId).subscribe({
+              next: response => {
+                this.IdCardNo = response.idCardNo;
+                this.getEmpInfo();
+                this.getPhotoInfo(response.id);
+              }
+            })
+          }
+        })
       },
       error: err => {
         console.log(err);
@@ -163,7 +184,13 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   onReset() {
     this.officerForm.form.reset();
-    this.getFormInfo();
+
+
+    if(!this.IsUpdate) {
+      this.getFormInfo();
+    } else {
+      this.getFormData();
+    }
     this.reportDates = [];
   }
 
@@ -311,13 +338,31 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   }
 
   getPhotoInfo(empId:number) {
-    let signature;
 
+    let signature;
     this.empPhotoSignService.findByEmpId(empId).subscribe({
       next: response => {
-        signature = response;
+        if(response) {
+          console.log("------------------------------")
+          console.log(response)
+          signature = response.signatureUrl;
+          if(signature==null||signature=="")
+            return;
+          console.log(this.formData)
+          for(let i = 0;i<this.formData.sections.length;i++) {
+            for(let j = 0; j<this.formData.sections[i].fields.length;j++) {
+              let field = this.formData.sections[i].fields[j];
+              if(field.fieldTypeName=="signaturePhoto"&&this.ActiveSection[i]&&(field.fieldValue==null||field.fieldValue=='')) {
+                field.fieldValue = signature;
+              }
+            }
+          }
+
+        }
       }
     })
+
+    return signature;
   }
 
 

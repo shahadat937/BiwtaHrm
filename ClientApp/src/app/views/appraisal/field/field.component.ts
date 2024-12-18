@@ -9,6 +9,7 @@ import { ThanaService } from '../../basic-setup/service/thana.service';
 import { EmpTrainingInfoService } from '../../employee/service/emp-training-info.service';
 import { HttpParams } from '@angular/common/http';
 import {InputFieldSyncService} from '../services/input-field-sync.service'
+import { EmpWorkHistoryService } from '../../employee/service/emp-work-history.service';
 
 @Component({
   selector: 'app-field',
@@ -55,6 +56,7 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
     private inputFieldSyncService: InputFieldSyncService, 
     private empTrainingInfoService: EmpTrainingInfoService,
     private empEducationInfoService: EmpEducationInfoService,
+    private empWorkHistoryService: EmpWorkHistoryService,
     private formRecordService: FormRecordService, 
   ) {
     this.fieldUniqueName = "default";
@@ -71,9 +73,12 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
 
     this.getEducationInfo(false);
     this.getEmpTrainingInfo();
-    this.getJobHistory();
+    this.getJobHistory(false);
     const subs = this.inputFieldSyncService.valueChange$.subscribe(data => {
-      console.log(data);
+      if(data==null||data.value==null||data.value.associateFieldId==null||data.value.associateFieldId!=this.fieldData.fieldId) {
+        return;
+      }
+      this.getJobHistory(data);
     })
 
     this.subscription.push(subs);
@@ -128,21 +133,31 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
     this.selectedEduInfos = this.educationInfos.filter(x=>ids.includes(x.id));
   }
 
-  getJobHistory() {
+  getJobHistory(data:any) {
 
     if(this.fieldData.htmlTagName!="table"||this.fieldData.htmlInputType!="jobhistory") {
       return;
     }
-    let startDate = "2002-01-01";
-    let endDate = "2025-01-01";
-    this.subscription.push(
-      this.formRecordService.getJobHistory(this.empId,startDate,endDate).subscribe({
+
+    if(data==null||data.value==null||data.value.childFields==null||data.value.childFields.length<2) {
+      return;
+    }
+
+    let startDate = data.value.childFields[0].fieldValue;
+    let endDate = data.value.childFields[1].fieldValue;
+
+    if(startDate==null||startDate==''||endDate==null||endDate==''||this.empId==0) {
+      return;
+    }
+    let params = new HttpParams();
+    params = params.set('id', this.empId);
+    params = params.set('startDate',startDate);
+    params = params.set('endDate', endDate);
+    const subs = this.empWorkHistoryService.findCombinedDateRangeEmpHistory(params).subscribe({
       next: response => {
         this.jobHistory = response;
       }
     })
-    )
-    
   }
 
   getEmpTrainingInfo() {

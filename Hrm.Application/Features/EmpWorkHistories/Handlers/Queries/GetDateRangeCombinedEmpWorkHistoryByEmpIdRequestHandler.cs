@@ -200,7 +200,7 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                 combinedWorkHistory.Add(currentJobDetailsInfo);
             }
 
-            var sortedCombinedWorkHistory = combinedWorkHistory.Where(x => x.JoiningDate !> request.EndDate && x.ReleaseDate !< request.StartDate).OrderBy(x => x.JoiningDate).ToList();
+            var sortedCombinedWorkHistory = combinedWorkHistory.Where(x => x.JoiningDate <= request.EndDate && x.ReleaseDate >= request.StartDate).OrderBy(x => x.JoiningDate).ToList();
 
             return sortedCombinedWorkHistory;
         }

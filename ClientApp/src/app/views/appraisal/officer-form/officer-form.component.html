@@ -113,9 +113,13 @@
 
                       <hr>
                       <div class="d-flex justify-content-between">
-                        <c-card class="p-1 d-flex justify-content-center align-items-center">
-                          <input type="date" name="date" id="" cFormControl>
-                        </c-card>
+                        @for (item of item.fields; track $index) {
+                          @if (item.fieldTypeName=="signatureDate") {
+                            <c-card class="p-1 d-flex justify-content-center align-items-center">
+                              <input cFormControl [(ngModel)]="item.fieldValue" type="date" name="signatureDate" id="signatureDate">
+                            </c-card>
+                          }
+                        }
                         @if (item.empId==null) {
                           <c-card class="p-1 d-flex justify-content-center align-items-center me-2">
                             <button cButton color="primary">

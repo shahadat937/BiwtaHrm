@@ -16,6 +16,7 @@ namespace Hrm.Application.DTOs.FormField
         public bool? HasSelectable { get; set; }
         public int FieldTypeId { get; set; }
         public int? TotalSubquestion {  get; set; }
+        public int? AssociateFieldId { get; set; }
         public bool IsActive { get; set; }
 
         public string? Remark { get; set; }

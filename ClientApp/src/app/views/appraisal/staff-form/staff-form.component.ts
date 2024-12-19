@@ -7,16 +7,17 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { delay, of, Subscription } from 'rxjs';
 import { FieldComponent } from '../field/field.component';
 import { FormRecordService } from '../services/form-record.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { UpdateFormComponent } from '../update-form/update-form.component';
 import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
 import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
 import { HttpParams } from '@angular/common/http';
 import {AppraisalRole} from '../enum/appraisal-role';
 import { environment } from 'src/environments/environment';
-import { cilArrowLeft } from '@coreui/icons';
+import { cilArrowLeft, cilSearch } from '@coreui/icons';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { OfficerFormService } from '../officer-form/service/officer-form.service';
+import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
 
 @Component({
   selector: 'app-staff-form',
@@ -58,7 +59,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     {fieldName: "Birthdate", MapTo: "birthDate", Transform: "DateFormat"},
     {fieldName: "Joining Date Of Current Designation", MapTo: "currentDesignationJoiningDate", Transform: "DateFormat"}
   ]
-  icons = {cilArrowLeft};
+  icons = {cilArrowLeft,cilSearch};
 
   EmpOption: any[] = []
 
@@ -71,8 +72,15 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   lastSection:number;
   
   imageUrl = environment.imageUrl;
+
+
+  // Reporting Officer And Counter Signatory Officer Name 
+  reportingOfficerName: string = "";
+  counterSignatoryOfficername: string = "";
   
   constructor(
+    private empBasicInfoService: EmpBasicInfoService,
+    private bsModalService: BsModalService,
     private authService: AuthService,
     private empService: EmpBasicInfoService,
     private empPhotoSignService: EmpPhotoSignService,
@@ -405,6 +413,55 @@ export class StaffFormComponent implements OnInit, OnDestroy {
         this.loading=false;
       }
     })
+  }
+
+  openReportingOfficerModal() {
+
+    const modalRef: BsModalRef = this.bsModalService.show(EmployeeListModalComponent,{backdrop: 'static', class: 'modal-xl'});
+
+    if(modalRef.content) {
+      modalRef.content?.employeeSelected.subscribe((idCardNo:string)=> {
+        this.empBasicInfoService.getEmpInfoByCard(idCardNo).subscribe({
+          next: response => {
+            if(response) {
+              this.formData.reportingOfficerId = response.id;
+              this.reportingOfficerName = [response.firstName,response.lastName].join(' ');
+            } else {
+              this.formData.reportingOfficerId = null;
+              this.reportingOfficerName = "";
+            }
+          },
+          error: (err) => {
+            this.formData.reportingOfficerId = null;
+            this.reportingOfficerName = "";
+          }
+        })
+      })
+    }
+  }
+
+  openCounterSignatoryOfficerModal() {
+    const modalRef: BsModalRef = this.bsModalService.show(EmployeeListModalComponent,{backdrop: 'static', class: 'modal-xl'});
+
+    if(modalRef.content) {
+      modalRef.content?.employeeSelected.subscribe((idCardNo:string)=> {
+        this.empBasicInfoService.getEmpInfoByCard(idCardNo).subscribe({
+          next: response => {
+            if(response) {
+              this.formData.counterSignatoryId = response.id;
+              this.counterSignatoryOfficername = [response.firstName,response.lastName].join(' ');
+            } else {
+              this.formData.counterSignatoryId = null;
+              this.counterSignatoryOfficername = "";
+            }
+          },
+          error: (err) => {
+            this.formData.counterSignatoryId = null;
+            this.counterSignatoryOfficername = "";
+          }
+        })
+      })
+    }
   }
 
   goBack() {

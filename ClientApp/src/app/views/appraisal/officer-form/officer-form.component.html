@@ -16,9 +16,9 @@
       #officerForm="ngForm"
       (submit)="saveFormData()">
         <p-stepper>
-            @for (item of formData.sections; track $index) {
+            @for (item of formData.sections; let sectionId=$index; track $index) {
 
-              @if (ActiveSection[$index]) {
+              @if (sectionId<=lastSection) {
               <p-stepperPanel >
                 <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback" let-ind="index">
                   <c-card>
@@ -74,7 +74,26 @@
                         <c-row class="mt-3" [gutter]="3">
                           <c-col md="3">
                             <label for="reportingOfficer" cLabel><strong>Reporting Officer</strong></label>
-                            <select 
+
+                            <c-input-group>
+                              <button color="secondary"
+                              (click)="openReportingOfficerModal()"
+                              type="button" 
+                              cTooltip="Search Employee" 
+                              cTooltipPlacement="bottom" cButton>
+                                <svg [cIcon]="icons.cilSearch"></svg>
+                              </button>
+                              <input type="text" 
+                              cFormControl
+                              readonly
+                              name="reportingOfficer"
+                              [(ngModel)]="reportingOfficerName"
+                              placeholder="Reporting Officer"
+                              id="reportingOfficer">
+                            </c-input-group>
+
+
+                            <!--<select 
                             name="reportingOfficer" id="reportingOfficer"
                             cSelect
                             [(ngModel)]="formData.reportingOfficerId"
@@ -83,11 +102,30 @@
                               @for(option of EmpOption; track $index) {
                                 <option [ngValue]="option.id">{{option.name}}</option>
                               } 
-                            </select>
+                            </select>-->
                           </c-col>
                           <c-col md="3">
                             <label for="counterSignatory" cLabel><strong>Counter Signatory</strong></label>
-                            <select 
+                            <c-input-group>
+                              <button color="secondary"
+                              (click)="openCounterSignatoryOfficerModal()"
+                              type="button" 
+                              cTooltip="Search Employee" 
+                              cTooltipPlacement="bottom" cButton>
+                                <svg [cIcon]="icons.cilSearch"></svg>
+                              </button>
+                              <input type="text" 
+                              cFormControl
+                              readonly
+                              name="counterySignatoryOfficer"
+                              [(ngModel)]="counterSignatoryOfficername"
+                              placeholder="Counter Signatory Officer"
+                              id="counterySignatoryOfficer">
+                            </c-input-group>
+
+
+
+                            <!--<select 
                             name="counterSignatory" id="counterSignatory"
                             cSelect
                             [(ngModel)]="formData.counterSignatoryId"
@@ -96,7 +134,7 @@
                               @for(option of EmpOption; track $index) {
                                 <option [ngValue]="option.id">{{option.name}}</option>
                               } 
-                            </select>
+                            </select>-->
                           </c-col>
                         </c-row>
                         <hr class="mb-3">
@@ -107,7 +145,8 @@
                         [(field)]="field.fieldValue"
                         (change) = "onChange()"
                         [fieldData]="field"
-                        [Index]="$index+1+'. '" 
+                        [Index]="$index+1+'. '"
+                        [IsReadonly]="ActiveSection[sectionId]==false" 
                         [fieldUniqueName]="field.fieldName+item.sectionId+field.fieldId"></app-field>
                       }
 

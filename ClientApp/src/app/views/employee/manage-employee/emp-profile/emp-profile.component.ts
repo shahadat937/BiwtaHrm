@@ -173,7 +173,7 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
       this.getEmpLanguageInfoByEmpId();
       this.getEmpForeignTourInfoByEmpId();
       this.getEmpWorkHistory();
-      // this.getEmpOtherResponsibility();
+      this.getEmpOtherResponsibility();
       // this.getEmpTransferPostingInfo();
       this.getPrlAndRetirmentDate();
       this.getRewardPunishmentInfo();
@@ -362,8 +362,8 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     getEmpOtherResponsibility(){
       this.subscription.push(
         this.empOtherResponsibilityService.findAllByEmpId(this.id).subscribe((res) => {
-        this.empOtherResponsibility = res;
-      })
+          this.empOtherResponsibility = res;
+        })
       )
       
     }

@@ -26,6 +26,6 @@ namespace Hrm.Domain
         public bool? IsActive { get; set; }
 
         //public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
-        //public virtual Relation? Relation { get; set; }
+        public virtual Relation? Relation { get; set; }
     }
 }

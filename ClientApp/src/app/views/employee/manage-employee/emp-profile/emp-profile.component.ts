@@ -21,6 +21,7 @@ import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 import { EmpChildInfoService } from '../../service/emp-child-info.service';
 import { EmpEducationInfoService } from '../../service/emp-education-info.service';
 import { EmpForeignTourInfoService } from '../../service/emp-foreign-tour-info.service';
+import { EmpNomineeInfoService } from '../../service/emp-nominee-info.service';
 import { EmpJobDetailsService } from '../../service/emp-job-details.service';
 import { EmpLanguageInfoService } from '../../service/emp-language-info.service';
 import { EmpPermanentAddressService } from '../../service/emp-permanent-address.service';
@@ -42,6 +43,7 @@ import { JobDetailsSetupService } from 'src/app/views/basic-setup/service/job-de
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { EmpRewardPunishmentService } from '../../service/emp-reward-punishment.service';
+import { EmpNomineeInfoModel } from '../../model/emp-nominee-info-model';
 
 @Component({
   selector: 'app-emp-profile',
@@ -62,6 +64,7 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
   empPsiTrainingInfo : EmpPsiTrainingInfoModule[] = [];
   empTrainingInfo : EmpTrainingInfo[] = [];
   empBankInfo : EmpBankInfoModule[] = [];
+  empNomineeInfo : EmpNomineeInfoModel[] = [];
   empLanguageInfo : EmpLanguageInfoModule[] = [];
   empForeignTourInfo : EmpForeignTourInfoModule[] = [];
   empOtherResponsibility : EmpOtherResponsibility[] = [];
@@ -105,6 +108,9 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
   
   rewardPunishmentColumns: string[] = ['slNo', 'type', 'orderDate','priority', 'withdrawStatus', 'withdrawDate'];
   rewardPunishmentsSource = new MatTableDataSource<any>();
+  
+  nomineeInfoColumns: string[] = ['slNo', 'nomineeName', 'relationName','percentage'];
+  nomineeInfoSource = new MatTableDataSource<any>();
 
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
@@ -130,6 +136,7 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     public empTransferPostingService: EmpTransferPostingService,
     public jobDetailsSetupService: JobDetailsSetupService,
     public empRewardPunishmentService: EmpRewardPunishmentService,
+    public empNomineeInfoService: EmpNomineeInfoService,
     private bsModalRef: BsModalRef,
     private el: ElementRef, 
     private renderer: Renderer2
@@ -170,6 +177,7 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
       // this.getEmpPsiTrainingInfoByEmpId(); 
       this.getEmpTrainingInfoByEmpId();
       this.getEmpBankInfoByEmpId();
+      this.getEmployeeNomineeInfoByEmpId();
       this.getEmpLanguageInfoByEmpId();
       this.getEmpForeignTourInfoByEmpId();
       this.getEmpWorkHistory();
@@ -327,6 +335,21 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
         })
       )
       
+    }
+
+    getEmployeeNomineeInfoByEmpId() {
+      this.subscription.push(
+        this.empNomineeInfoService.findByEmpId(this.id).subscribe((res) => {
+          // if(res && res.length > 0){
+            this.empNomineeInfo = res;
+            this.nomineeInfoSource = new MatTableDataSource(res);
+          // }
+          // else {
+          //   this.empNomineeInfo = [new EmpNomineeInfoModule()];
+          // }
+        })
+      )
+     
     }
     
     getEmpLanguageInfoByEmpId(){

@@ -111,8 +111,6 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.firstSection);
-    console.log(this.lastSection);
     this.loading=true;
 
     this.empService.getFilteredSelectedEmp(new HttpParams()).subscribe({
@@ -180,12 +178,8 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   }
 
   onChange() {
-    console.log(this.formData);
   }
 
-  onSubmit() {
-    console.log("Hello World");
-  }
 
   onReset() {
     this.officerForm.form.reset();
@@ -341,12 +335,10 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     this.empPhotoSignService.findByEmpId(empId).subscribe({
       next: response => {
         if(response) {
-          console.log("------------------------------")
-          console.log(response)
           signature = response.signatureUrl;
           if(signature==null||signature=="")
             return;
-          console.log(this.formData)
+          
           for(let i = 0;i<this.formData.sections.length;i++) {
             for(let j = 0; j<this.formData.sections[i].fields.length;j++) {
               let field = this.formData.sections[i].fields[j];

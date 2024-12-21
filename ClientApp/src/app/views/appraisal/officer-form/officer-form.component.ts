@@ -83,6 +83,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     private empBasicInfoService: EmpBasicInfoService,
     private bsModalService: BsModalService,
     private authService: AuthService,
+    private router: Router,
     private empService: EmpBasicInfoService,
     private empPhotoSignService: EmpPhotoSignService,
     private formRecordService: FormRecordService,
@@ -234,8 +235,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
           this.toastr.success('',`${response.message}`, {
             positionClass: 'toast-top-right'
           })
-
           this.formRecordService.cachedData = [];
+          this.router.navigate(['/appraisal/MyFormRecord']);
         } else {
           this.toastr.warning('',`${response.message}`, {
             positionClass: 'toast-top-right'

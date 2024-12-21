@@ -414,6 +414,18 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
         let dateto = new Date(this.formData.reportTo);
         this.reportDates.push(datefrom);
         this.reportDates.push(dateto);
+        this.authService.currentUser.subscribe(user => {
+          if(user&&user.empId) {
+            let empId = parseInt(user.empId);
+            this.empService.findByEmpId(empId).subscribe({
+              next: response => {
+                //this.IdCardNo = response.idCardNo;
+                //this.getEmpInfo();
+                this.getPhotoInfo(response.id);
+              }
+            })
+          }
+        })
         this.loading=false;
       },
       error: (err)=> {

@@ -217,6 +217,7 @@
 
             @for (field of fieldData.childFields; track $index) {
                 <app-field
+                [IsReadonly]="IsReadonly"
                 [empId]="empId"
                 [(field)]="field.fieldValue"
                 [fieldData]="field"

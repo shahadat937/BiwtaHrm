@@ -46,6 +46,7 @@ import { ApplyComponent } from './apply/apply.component';
 import { GradeService } from '../basic-setup/service/Grade.service';
 import { FieldPrintComponent } from './field-print/field-print.component';
 import { NgxPrintModule } from 'ngx-print';
+import { MyFormRecordComponent } from './manage-form/my-form-record/my-form-record.component';
 // import { NgxPrintModule } from 'ngx-print';
 
 
@@ -67,6 +68,7 @@ import { NgxPrintModule } from 'ngx-print';
     ManageFormOfficerRComponent,
     ApplyComponent,
     FieldPrintComponent,
+    MyFormRecordComponent,
   ],
   imports: [
     TabViewModule,

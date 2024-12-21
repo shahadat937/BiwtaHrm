@@ -1,4 +1,3 @@
-
 import { ManageFormComponent } from './manage-form/manage-form.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -12,6 +11,7 @@ import {ManageFormOfficerRfComponent} from './manage-form/manage-form-officer-rf
 import { ManageFormOfficerCsComponent } from './manage-form/manage-form-officer-cs/manage-form-officer-cs.component';
 import { ManageFormOfficerRComponent } from './manage-form/manage-form-officer-r/manage-form-officer-r.component';
 import { ApplyComponent } from './apply/apply.component';
+import {MyFormRecordComponent} from './manage-form/my-form-record/my-form-record.component';
 
 
 const routes: Routes = [
@@ -55,6 +55,10 @@ const routes: Routes = [
    {
     path: 'manageFormOfficerR',
     component: ManageFormOfficerRComponent
+   },
+   {
+    path: 'MyFormRecord',
+    component: MyFormRecordComponent
    }
 ];
 

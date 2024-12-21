@@ -17,6 +17,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ManageLeaveService } from '../service/manage-leave.service';
 import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
 import { LeaveStatus } from '../enum/leave-status';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addleave',
@@ -62,6 +63,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     private empBasicInfoService: EmpBasicInfoService,
     private modalService: BsModalService,
     private manageLeaveService: ManageLeaveService,
+    private router : Router,
     public addLeaveService: AddLeaveService,
     private leaveBalanceService: LeaveBalanceService, 
     private toastr: ToastrService,
@@ -309,6 +311,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
             positionClass: 'toast-top-right'
           })
           this.onReset();
+          this.router.navigate(['/leave/personalleave']);
         } else {
           this.toastr.warning('',`${response.message}`, {
             positionClass: 'toast-top-right'

@@ -6,6 +6,7 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { EmpNomineeInfoService } from '../../../service/emp-nominee-info.service';
 import { EmpPersonalInfoService } from '../../../service/emp-personal-info.service';
+import { EmpPhotoSignService } from '../../../service/emp-photo-sign.service';
 
 @Component({
   selector: 'app-emp-nominee-info',
@@ -31,6 +32,7 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     public empNomineeInfoService: EmpNomineeInfoService,
     public empPersonalInfoService: EmpPersonalInfoService,
+        public empPhotoSignService: EmpPhotoSignService,
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -84,8 +86,8 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
         isActive: [nomineeInfo.isActive],
         photoFile: new FormControl(undefined),
         signatureFile: new FormControl(undefined),
-        photoPreviewUrl: new FormControl(nomineeInfo.photoUrl ? `assets/Images/EmpPhoto/${nomineeInfo.photoUrl}` : ''),
-        signaturePreviewUrl: new FormControl(nomineeInfo.signatureUrl ? `assets/Images/EmpSignature/${nomineeInfo.signatureUrl}` : '')
+        photoPreviewUrl: new FormControl(nomineeInfo.photoUrl ? `${this.empPhotoSignService.imageUrl}EmpNomineePhoto/${nomineeInfo.photoUrl}` : ''),
+        signaturePreviewUrl: new FormControl(nomineeInfo.signatureUrl ? `${this.empPhotoSignService.imageUrl}EmpNomineePhoto/${nomineeInfo.signatureUrl}` : '')
       }));
     });
   }

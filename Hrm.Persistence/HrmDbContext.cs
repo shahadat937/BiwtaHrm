@@ -1303,6 +1303,13 @@ namespace Hrm.Persistence
                 .HasForeignKey(rd => rd.EmpId);
             });
 
+            modelBuilder.Entity<EmpNomineeInfo>(entity =>
+            {
+                entity.HasOne(rd => rd.Relation)
+                .WithMany(rd => rd.EmpNomineeInfo)
+                .HasForeignKey(rd => rd.RelationId);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;

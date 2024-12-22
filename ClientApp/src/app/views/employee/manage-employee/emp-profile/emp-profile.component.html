@@ -1061,6 +1061,46 @@
                         </c-card-body>
                     </c-card>
                     <!-- } -->
+
+
+                    <!-- EmpNomineeInfo -->
+                    <c-card class="shadow mb-4">
+                        <c-card-header>
+                            <h5 class="text-center text-light">Employee Nominee Information</h5>
+                        </c-card-header>
+                        <c-card-body><div class="table-responsive">
+                            <table mat-table [dataSource]="nomineeInfoSource">
+                            <ng-container matColumnDef="slNo">
+                                <th mat-header-cell *matHeaderCellDef>SL</th>
+                                <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="nomineeName">
+                                <th mat-header-cell *matHeaderCellDef>Name</th>
+                                <td mat-cell *matCellDef="let element">
+                                {{ element.nomineeName }}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="relationName">
+                                <th mat-header-cell *matHeaderCellDef>Relation Name</th>
+                                <td mat-cell *matCellDef="let element">
+                                {{ element.relationName }}
+                                </td>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="percentage">
+                                <th mat-header-cell *matHeaderCellDef>Percentage</th>
+                                <td mat-cell *matCellDef="let element">
+                                {{ element.percentage }}%
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="nomineeInfoColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: nomineeInfoColumns"></tr>
+                            </table>
+                        </div>
+                        </c-card-body>
+                    </c-card>
             
                     <!-- Employee Language Information -->
                     <!-- @if(empLanguageInfo.length>0){ -->
@@ -2321,6 +2361,46 @@
                 </c-card-body>
             </c-card>
             <!-- } -->
+
+            
+            <!-- EmpNomineeInfo -->
+            <c-card class="shadow mb-4">
+                <c-card-header>
+                    <h5 class="text-center text-light">Employee Nominee Information</h5>
+                </c-card-header>
+                <c-card-body><div class="table-responsive">
+                    <table mat-table [dataSource]="nomineeInfoSource">
+                    <ng-container matColumnDef="slNo">
+                        <th mat-header-cell *matHeaderCellDef>SL</th>
+                        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="nomineeName">
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef="let element">
+                        {{ element.nomineeName }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="relationName">
+                        <th mat-header-cell *matHeaderCellDef>Relation Name</th>
+                        <td mat-cell *matCellDef="let element">
+                        {{ element.relationName }}
+                        </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="percentage">
+                        <th mat-header-cell *matHeaderCellDef>Percentage</th>
+                        <td mat-cell *matCellDef="let element">
+                        {{ element.percentage }}%
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="nomineeInfoColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: nomineeInfoColumns"></tr>
+                    </table>
+                </div>
+                </c-card-body>
+            </c-card>
     
             <!-- Employee Language Information -->
             <!-- @if(empLanguageInfo.length>0){ -->

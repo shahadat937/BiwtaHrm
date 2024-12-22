@@ -225,6 +225,53 @@
                 </div>
             </c-col>
 
+            
+            <c-col [md]="3">
+                <label cLabel for="firstDepartmentInput"
+                >First Department<span class="text-danger"></span></label>
+                <input
+                    [(ngModel)]="empJobDetailsService.empJobDetails.firstDepartmentInput"
+                    name="firstDepartmentInput" 
+                    #firstDepartmentInput="ngModel"
+                    placeholder="First Department"
+                    cFormControl
+                    id="firstDepartmentInput"
+                    type="text"
+                    [value]=""
+                    [disabled]="firstDepartmentId.value"
+                />
+            </c-col>
+            
+            <c-col [md]="3">
+                <label cLabel for="firstSectionInput"
+                >First Section<span class="text-danger"></span></label>
+                <input
+                    [(ngModel)]="empJobDetailsService.empJobDetails.firstSectionInput"
+                    name="firstSectionInput" 
+                    #firstSectionInput="ngModel"
+                    placeholder="First Section"
+                    cFormControl
+                    id="firstSectionInput"
+                    type="text"
+                    [disabled]="firstSectionId.value"
+                />
+            </c-col>
+            
+            <c-col [md]="3">
+                <label cLabel for="firstDesignationInput"
+                >First Designation<span class="text-danger"></span></label>
+                <input
+                    [(ngModel)]="empJobDetailsService.empJobDetails.firstDesignationInput"
+                    name="firstDesignationInput" 
+                    #firstDesignationInput="ngModel"
+                    placeholder="First Designation"
+                    cFormControl
+                    id="firstDesignationInput"
+                    type="text"
+                    [disabled]="firstDesignationId.value"
+                />
+            </c-col>
+            
             <c-col [md]="3" [hidden]="firstSectionView == false">
                 <label cLabel for="firstSectionId">First Section<span class="text-danger"></span></label>
                 <div class="input-wrapper">
@@ -264,6 +311,7 @@
                 }
                 </div>
             </c-col>
+
             
             <c-col [md]="3">
                 <label cLabel for="firstGradeId">First Grade<span class="text-danger"></span></label>

@@ -51,6 +51,8 @@
 
 		<ProjectReference Include="..\Hrm.Domain\Hrm.Domain.csproj" />
 
+		<ProjectReference Include="..\Hrm.Infrastructure\Hrm.Infrastructure.csproj" />
+
 		<ProjectReference Include="..\Hrm.Shared\Hrm.Shared.csproj" />
 	</ItemGroup>
 

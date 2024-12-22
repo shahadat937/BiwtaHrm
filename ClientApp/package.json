@@ -36,6 +36,7 @@
     "@coreui/icons": "^3.0.1",
     "@coreui/icons-angular": "~4.7.14",
     "@coreui/utils": "^2.0.2",
+    "@microsoft/signalr": "^8.0.7",
     "@ng-bootstrap/ng-bootstrap": "^16.0.0",
     "@tsparticles/angular": "^3.0.0",
     "@tsparticles/engine": "^3.5.0",

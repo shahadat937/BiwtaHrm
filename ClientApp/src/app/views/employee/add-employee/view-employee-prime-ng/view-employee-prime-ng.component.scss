@@ -9,3 +9,6 @@ th, td {
     white-space: nowrap; /* Prevent text from wrapping */
     overflow: hidden;    /* Hide overflow text */
 }
+label {
+    cursor: pointer;
+}

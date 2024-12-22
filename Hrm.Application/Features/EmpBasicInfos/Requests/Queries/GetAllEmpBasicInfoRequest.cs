@@ -13,5 +13,7 @@ namespace Hrm.Application.Features.EmpBasicInfos.Requests.Queries
     public class GetAllEmpBasicInfoRequest : IRequest<PagedResult<EmpBasicInfoDto>>
     {
         public QueryParams QueryParams { get; set; }
+        public int DepartmentId { get; set; }
+        public int SectionId { get; set; }
     }
 }

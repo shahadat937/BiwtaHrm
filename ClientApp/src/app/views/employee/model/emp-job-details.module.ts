@@ -16,6 +16,11 @@ export class EmpJobDetailsModule {
   firstDepartmentId: any;
   firstSectionId: any;
   firstDesignationId: any;
+  firstGradeInput: any = null;
+  firstScaleInput: any = null;
+  firstDepartmentInput: any = null;
+  firstSectionInput: any = null;
+  firstDesignationInput: any = null;
   prlDate:  Date | null;
   retirementDate:  Date | null;
   serviceStatus: boolean;

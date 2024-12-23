@@ -7,6 +7,7 @@ export const environment = {
   apiUrl: 'http://localhost:25971/api/hrm',
   securityUrl: 'http://localhost:25971/api',
   fileUrl: 'http://localhost:25971/Content/',
+  signalREndpoint: 'http://localhost:25971/notification',
   imageUrl: 'http://localhost:25971/assets/images/',
   companyTitle :"Bangladesh Inland Water Transport Authority",
   companyAddress : "141-143, Motijheel Commerial Area, Dhaka-1000",

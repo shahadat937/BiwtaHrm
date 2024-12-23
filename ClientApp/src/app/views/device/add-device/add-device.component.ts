@@ -18,7 +18,6 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   pendingDevice: PendingDeviceModel[];
   loading: boolean
-  hubConnection: signalR.HubConnection | null;
 
   icons = {cilReload, cilTrash, cilPlus}
   
@@ -31,34 +30,8 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
   ) {
     this.pendingDevice = [];
     this.loading = false
-    this.hubConnection = null
-    this.startSignalRConnection();
   }
 
-  private startSignalRConnection(): void {
-    this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('http://localhost:25971/notification') 
-      .build();
-
-    // Start the connection
-    this.hubConnection
-      .start()
-      .then(() => {
-        console.log('SignalR connection established');
-      })
-      .catch((err:any) => console.error('Error while starting connection: ' + err));
-
-    // Listen for messages from the SignalR server
-    this.hubConnection.on('newDevice', (message:string) => {
-      this.toastr.success("",`${message}`,{
-        positionClass: 'toast-top-right'
-      })
-    });
-
-    this.hubConnection.on("notification",(message:string)=> {
-      console.log(`Notification triggered: ${message}`);
-    })
-  }
 
 
   ngOnInit(): void {
@@ -69,9 +42,6 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
     if(this.subscription) {
       this.subscription.unsubscribe();
     }
-
-    if(this.hubConnection)
-    this.hubConnection.stop();
   }
 
 

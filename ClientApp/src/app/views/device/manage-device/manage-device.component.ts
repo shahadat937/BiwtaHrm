@@ -9,6 +9,9 @@ import { setThrowInvalidWriteToSignalError } from '@angular/core/primitives/sign
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DeviceModalComponent } from '../device-modal/device-modal.component';
 import {CustomCommandModalComponent} from '../custom-command-modal/custom-command-modal.component'
+import { SignalREventBusService } from 'src/app/core/service/signal-revent-bus.service';
+import { SignalRService } from 'src/app/core/service/signal-r.service';
+import { RealTimeService } from 'src/app/core/service/real-time.service';
 
 @Component({
   selector: 'app-manage-device',
@@ -23,6 +26,7 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
 
   icons = {cilReload, cilPencil , cilFingerprint, cilTrash, cilCommand}
   constructor(
+    private realTimeService: RealTimeService,
     private AttendanceDeviceService: AttendanceDeviceService,
     private confirmService: ConfirmService,
     private toastr: ToastrService,
@@ -36,6 +40,12 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAttendanceDevice();
+    this.subscription = this.realTimeService.eventBus.getEvent('newDevice').subscribe(data => {
+      this.toastr.success('','New Device Available',{
+        positionClass: 'toast-top-right'
+      })
+      console.log(data);
+    })
   }
 
   ngOnDestroy(): void {

@@ -48,7 +48,9 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
                 x.EmpJobDetail.FirstOrDefault().Department.DepartmentName.ToLower().Contains(request.QueryParams.SearchText) || 
                 x.EmpJobDetail.FirstOrDefault().Section.SectionName.ToLower().Contains(request.QueryParams.SearchText) ||
                 x.EmpJobDetail.FirstOrDefault().Designation.DesignationSetup.Name.ToLower().Contains(request.QueryParams.SearchText) ||
-                String.IsNullOrEmpty(request.QueryParams.SearchText)))
+                String.IsNullOrEmpty(request.QueryParams.SearchText)) &&
+                (request.DepartmentId == 0 || x.EmpJobDetail.Any(x => x.DepartmentId == request.DepartmentId)) &&
+                (request.SectionId == 0 || x.EmpJobDetail.Any(x => x.SectionId == request.SectionId)))
                 .Include(x => x.EmployeeType)
                 .Include(x => x.EmpJobDetail)
                     .ThenInclude(ejd => ejd.Department)

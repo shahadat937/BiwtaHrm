@@ -25,6 +25,8 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
   modalOpened: boolean = false;
   @Output() employeeSelected = new EventEmitter<string>();
   employees: BasicInfoModule[] = [];
+  selectedDepartment: number = 0;
+  selectedSection: number = 0;
   departments: any[] = [];
   sections!: any[];
   imageLinkUrl: any;
@@ -72,7 +74,7 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
   getAllEmpBasicInfo(queryParams: any) {
     // this.subscription = 
     this.subscription.push(
-      this.empBasicInfoService.getAllPagination(queryParams).subscribe((employees: any) => {
+      this.empBasicInfoService.getAllPagination(queryParams, this.selectedDepartment, this.selectedSection).subscribe((employees: any) => {
       this.totalRecords = employees.totalItemsCount;
       this.employees = employees.items;
       this.loading = false;

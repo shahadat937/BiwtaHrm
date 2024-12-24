@@ -9,9 +9,7 @@ import { setThrowInvalidWriteToSignalError } from '@angular/core/primitives/sign
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DeviceModalComponent } from '../device-modal/device-modal.component';
 import {CustomCommandModalComponent} from '../custom-command-modal/custom-command-modal.component'
-import { SignalREventBusService } from 'src/app/core/service/signal-revent-bus.service';
-import { SignalRService } from 'src/app/core/service/signal-r.service';
-import { RealTimeService } from 'src/app/core/service/real-time.service';
+import { RealTimeService } from '../../../core/service/real-time.service';
 
 @Component({
   selector: 'app-manage-device',
@@ -45,6 +43,12 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
         positionClass: 'toast-top-right'
       })
       console.log(data);
+    });
+
+    const subs = this.realTimeService.eventBus.getEvent('AttDeviceUpdate').subscribe({
+      next: (data: any) => {
+        this.onDeviceUpdateEvent(data);
+      }
     })
   }
 
@@ -59,24 +63,7 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
     this.attLoading = true;
    this.subscription = this.AttendanceDeviceService.getDevice().subscribe({
     next: response => {
-      this.attendanceDevices = response.map(item => {
-        let status2;
-        if(item.status == false) {
-          status2 = {value: "Deactive", color:"danger"}
-        } else {
-          const now = new Date();
-          now.setSeconds(now.getSeconds()-15)
-          if(item.lastOnline == null || (new Date(item.lastOnline)).getTime() < now.getTime()) {
-            status2 = {value:"Offline", color: "warning"}
-          } else {
-            status2 = {value:"Online", color: "success"}
-          }
-        }
-        return {
-          ...item,
-          status2: status2
-        }
-      }) 
+      this.attendanceDevices = this.transformAttRecord(response);
     },
     error: (err) => {
       this.loading = false;
@@ -116,6 +103,29 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
         })
       }
     })
+  }
+
+  transformAttRecord(data:any[]) {
+      let result = data.map(item => {
+        let status2;
+        if(item.status == false) {
+          status2 = {value: "Deactive", color:"danger"}
+        } else {
+          const now = new Date();
+          now.setSeconds(now.getSeconds()-15)
+          if(item.lastOnline == null || (new Date(item.lastOnline)).getTime() < now.getTime()) {
+            status2 = {value:"Offline", color: "warning"}
+          } else {
+            status2 = {value:"Online", color: "success"}
+          }
+        }
+        return {
+          ...item,
+          status2: status2
+        }
+      })
+
+      return result
   }
 
   rebootDevice(deviceId:number) {
@@ -172,5 +182,21 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
 
     const modalRef: BsModalRef = this.modalService.show(CustomCommandModalComponent,{initialState:initialState});
 
+  }
+
+  onDeviceUpdateEvent(data:any) {
+    if(data.op=="update") {
+      let device = [data.data];
+      let IsNewDevice = true;
+
+      let index = this.attendanceDevices.findIndex(item => item.id == data.data.id);
+
+      if(index!=-1) {
+        this.attendanceDevices[index] = device[0];
+      } else {
+        device = this.transformAttRecord(device);
+        this.attendanceDevices = [...device,...this.attendanceDevices];
+      }
+    }
   }
 }

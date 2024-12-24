@@ -3,13 +3,13 @@ export class PendingDeviceModel {
     sn: string;
     deviceType: string;
     deviceIp: string;
-    expireTime: Date | null;
+    expireTime: Date;
 
     constructor() {
         this.id = 0;
         this.sn = "";
         this.deviceType = "";
         this.deviceIp = "";
-        this.expireTime = null;
+        this.expireTime = new Date();
     }
 }

@@ -18,7 +18,8 @@ export class SignalRService {
   EventLists: string [] = [
     'newDevice',
     'notification',
-    'newAtd'
+    'newAtd',
+    'AttDeviceUpdate'
   ]
 
 
@@ -67,7 +68,6 @@ export class SignalRService {
   private RegisterEvent() {
     this.EventLists.forEach(event => {
       if(this.hubConnection) {
-        console.log(event);
         this.hubConnection.on(event,(data:any)=> {
           this.SignalREventBusService.emitEvent(event,data);
         })

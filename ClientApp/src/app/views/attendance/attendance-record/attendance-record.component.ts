@@ -17,6 +17,7 @@ import { SectionService } from '../../basic-setup/service/section.service';
 import { HttpParams } from '@angular/common/http';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { trigger } from '@angular/animations';
+import { RealTimeService } from 'src/app/core/service/real-time.service';
 
 
 @Component({
@@ -59,6 +60,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   isUser: boolean
 
   constructor(
+    private realTimeService: RealTimeService,
     private authService: AuthService,
     private sectionService: SectionService,
     private departmentService: DepartmentService,
@@ -91,6 +93,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
         this.isUser = true;
       }
     })
+
   }
 
   ngOnInit(): void {
@@ -101,6 +104,13 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     this.AtdRecordService.getAttendanceStatusOption().subscribe(option=> {
       this.AtdStatusOption = option;
     });
+
+    const subs = this.realTimeService.eventBus.getEvent('newAtd').subscribe(data => {
+      
+      this.getFilteredAttendance(false);
+    })
+
+    this.subscription.push(subs);
   }
 
 
@@ -147,7 +157,6 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     this.getFilteredAttendance(false);
   }
   getFilteredAttendance(resetPage: boolean) {
-    console.log("triggered");
     let params = new HttpParams();
     let pageSize = this.pageSize;
     let pageIndex = this.pageIndex+1;

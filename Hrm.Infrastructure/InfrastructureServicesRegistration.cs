@@ -11,6 +11,10 @@ namespace Hrm.Infrastructure
 {
     public static class InfrastructureServicesRegistration
     {
-        
+        public static IServiceCollection ConfigureInfrastructureService(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSignalR();
+            return services;
+        }
     }
 }

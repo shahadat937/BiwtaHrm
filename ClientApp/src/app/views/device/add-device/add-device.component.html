@@ -9,7 +9,7 @@
         styleClass="p-datatable-sm"
         [value]="pendingDevice">
             <ng-template pTemplate="caption">
-                <button cButton color="light" shape="rounded-pill" (click)="getPendingDevice()">
+                <button cButton color="light" shape="rounded-pill" (click)="getPendingDevice(true)">
                     <svg [cIcon]="icons.cilReload" size="sm" title="Refresh"></svg>
                 </button>
             </ng-template>

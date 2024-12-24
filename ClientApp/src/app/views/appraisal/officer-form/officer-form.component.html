@@ -29,7 +29,7 @@
                       </div>
                       <hr>
                       @if (ind==0&&showHeader&&updateRole == appraisalRole.User) {
-                        <c-row class="mt-3" [gutter]="3">
+                        <c-row class="mt-3" [gutter]="3" [hidden]="true">
                           <c-col md="3">
                             <label for="empId" cLabel><strong>Employee PMS:</strong></label>
                             <input type="text" 

@@ -13,7 +13,9 @@ using Hrm.Application.Enum;
 using Hrm.Application.Features.AttendanceDevice.Interfaces;
 using Hrm.Application.Features.AttendanceDevice.Requests.Commands;
 using Hrm.Application.Helpers;
+using Hrm.Infrastructure.SignalRHub;
 using MediatR;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
@@ -26,6 +28,7 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
         private readonly IHrmRepository<Hrm.Domain.CancelledWeekend> _cancelledWeekendRepo;
         private readonly IHrmRepository<Hrm.Domain.Shift> _shiftRepo;
         private readonly IAttendanceDevice _attendanceDevice;
+        private readonly IHubContext<NotificationHub> _notificationHub;
         private readonly IMapper _mapper;
 
         public DeviceTableDataCommandHandler(IUnitOfWork unitOfWork,
@@ -33,7 +36,9 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
             IHrmRepository<Hrm.Domain.Holidays> holidayRepo,
             IHrmRepository<Hrm.Domain.CancelledWeekend> cancelledWeekendRepo,
             IHrmRepository<Hrm.Domain.Shift> shiftRepo,
-            IMapper mapper, IAttendanceDevice attendanceDevice)
+            IMapper mapper, IAttendanceDevice attendanceDevice,
+            IHubContext<NotificationHub> notificationHub
+            )
         {
             _unitOfWork = unitOfWork;
             _workDayRepo = workDayRepo;
@@ -42,6 +47,7 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
             _shiftRepo = shiftRepo;
             _attendanceDevice = attendanceDevice;
             _mapper = mapper;
+            _notificationHub = notificationHub;
         }
 
         public async Task<object> Handle(DeviceTableDataCommand request, CancellationToken cancellationToken)
@@ -67,6 +73,8 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
                     count = count + 1;
                 }
             }
+
+            await _notificationHub.Clients.All.SendAsync("newAtd", "new attendance available");
             //await _unitOfWork.Save();
 
             return $"OK:{count}\n";

@@ -119,6 +119,14 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
+        [Route("delete-PendingDevice/{PendingDeviceId}")]
+        [HttpDelete]
+        public async Task<ActionResult<BaseCommandResponse>> DeletePendingDevice(int PendingDeviceId)
+        {
+            var command = new DeletePendingDeviceCommand { PendingDeviceId = PendingDeviceId };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
 
         [Route("TestNotification")]
         [HttpGet]

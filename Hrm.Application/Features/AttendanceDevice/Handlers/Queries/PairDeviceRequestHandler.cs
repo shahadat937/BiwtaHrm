@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Features.AttendanceDevice.Requests.Queries;
 using Hrm.Domain;
+using Hrm.Infrastructure.SignalRHub;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
@@ -16,12 +18,14 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IHttpContextAccessor _httpContext;
+        private readonly IHubContext<NotificationHub> _notificationHub;
         private readonly string UnauthorizedDeviceResponse = "Not Authorized Terminal";
 
-        public PairDeviceRequestHandler(IUnitOfWork unitOfWork, IHttpContextAccessor httpContext)
+        public PairDeviceRequestHandler(IUnitOfWork unitOfWork, IHttpContextAccessor httpContext, IHubContext<NotificationHub> notificationHub)
         {
             _unitOfWork = unitOfWork;
             _httpContext = httpContext;
+            _notificationHub = notificationHub;
         }
 
         public async Task<object> Handle(PairDeviceRequest request, CancellationToken cancellationToken)
@@ -38,6 +42,7 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
                 device.ExpireTime = DateTime.Now.AddSeconds(25);
                 await _unitOfWork.Repository<Hrm.Domain.PendingDevice>().Add(device);
                 await _unitOfWork.Save();
+                await _notificationHub.Clients.All.SendAsync("newDevice", "Available");
                 return UnauthorizedDeviceResponse;
             } else if(pairedDevice == null && pendingDevice != null)
             {
@@ -46,6 +51,7 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Queries
                 pendingDevice.ExpireTime = DateTime.Now.AddSeconds(25);
                 await _unitOfWork.Repository<Hrm.Domain.PendingDevice>().Update(pendingDevice);
                 await _unitOfWork.Save();
+                await _notificationHub.Clients.All.SendAsync("newDevice", "Available");
                 return UnauthorizedDeviceResponse;
             }
 

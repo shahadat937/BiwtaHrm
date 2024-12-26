@@ -71,6 +71,21 @@
                         </c-row>
 
 
+                        <hr class="mb-3">
+                      }
+                      @for (field of item.fields; track $index) {
+                        <app-field
+                        [empId]="formData.empId"
+                        [(field)]="field.fieldValue"
+                        (change) = "onChange()"
+                        [fieldData]="field"
+                        [Index]="$index+1+'. '"
+                        [IsReadonly]="ActiveSection[sectionId]==false" 
+                        [fieldUniqueName]="field.fieldName+item.sectionId+field.fieldId"></app-field>
+                      }
+
+                      @if (ind==0&&showHeader&&updateRole==appraisalRole.User) {
+                        <hr>
                         <c-row class="mt-3" [gutter]="3">
                           <c-col md="3">
                             <label for="reportingOfficer" cLabel><strong>Reporting Officer</strong></label>
@@ -137,17 +152,6 @@
                             </select>-->
                           </c-col>
                         </c-row>
-                        <hr class="mb-3">
-                      }
-                      @for (field of item.fields; track $index) {
-                        <app-field
-                        [empId]="formData.empId"
-                        [(field)]="field.fieldValue"
-                        (change) = "onChange()"
-                        [fieldData]="field"
-                        [Index]="$index+1+'. '"
-                        [IsReadonly]="ActiveSection[sectionId]==false" 
-                        [fieldUniqueName]="field.fieldName+item.sectionId+field.fieldId"></app-field>
                       }
 
                       <hr>
@@ -155,14 +159,14 @@
                         @for (item of item.fields; track $index) {
                           @if (item.fieldTypeName=="signatureDate") {
                             <c-card class="p-1 d-flex justify-content-center align-items-center">
-                              <input cFormControl [(ngModel)]="item.fieldValue" type="date" name="signatureDate" id="signatureDate">
+                              <input [readOnly]="ActiveSection[sectionId]==false" cFormControl [(ngModel)]="item.fieldValue" type="date" name="signatureDate" id="signatureDate">
                             </c-card>
                           }
 
                           @if (item.fieldTypeName=="signaturePhoto") {
                             @if (item.fieldValue==null||item.fieldValue=='') {
                               <c-card class="p-1 d-flex justify-content-center align-items-center me-2">
-                                <button cButton color="primary">
+                                <button (click)="uploadSignature()" [disabled]="ActiveSection[sectionId]==false" cButton color="primary">
                                   Signature
                                 </button>
                               </c-card>

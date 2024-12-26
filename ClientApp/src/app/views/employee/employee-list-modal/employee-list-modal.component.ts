@@ -12,6 +12,8 @@ import { UserModule } from '../../usermanagement/model/user.module';
 import { EmpBasicInfoService } from '../service/emp-basic-info.service';
 import { EmpPhotoSignService } from '../service/emp-photo-sign.service';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
+import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
+import { SectionService } from 'src/app/views/basic-setup/service/section.service';
 
 @Component({
   selector: 'app-employee-list-modal',
@@ -54,12 +56,15 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     public empBasicInfoService: EmpBasicInfoService,
     public empPhotoSign: EmpPhotoSignService,
+    public departmentService: DepartmentService,
+    public sectionService : SectionService,
   ) {
     this.userForm = new UserModule;
   }
 
   ngOnInit(): void {
     this.getAllEmpBasicInfo(this.pagination);
+    this.getAllSelectedDepartments();
     setTimeout(() => {
       this.modalOpened = true;
     }, 0);
@@ -121,6 +126,27 @@ export class EmployeeListModalComponent implements OnInit, OnDestroy {
     } else {
       this.dt!.filterGlobal(selectedValue, 'contains');
     }
+  }
+  
+  getAllSelectedDepartments(){
+    this.subscription.push(
+      this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+          this.departments = res;
+    })
+    )
+  }
+
+  onDepartmentSelectGetSection(departmentId : number){
+    this.sections = [];
+    this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
+      this.sections = res;
+    });
+    this.selectedDepartment = departmentId;
+    this.getAllEmpBasicInfo(this.pagination);
+  }
+  onSectionChange(sectionId: number){
+    this.selectedSection = sectionId;
+    this.getAllEmpBasicInfo(this.pagination);
   }
 
   onSelectEmployee(idCardNo: string) {

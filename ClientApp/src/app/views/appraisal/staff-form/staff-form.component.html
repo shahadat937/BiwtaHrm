@@ -71,9 +71,25 @@
                         </c-row>
 
 
+                        <hr class="mb-3">
+                      }
+                      @for (field of item.fields; track $index) {
+                        <app-field
+                        [IsReadonly]="ReadonlySection[sectionNo]||ActiveSection[sectionNo]==false"
+                        [empId]="formData.empId"
+                        [(field)]="field.fieldValue"
+                        (change) = "onChange()"
+                        [fieldData]="field"
+                        [Index]="$index+1+'. '" 
+                        [fieldUniqueName]="field.fieldName+item.sectionId+field.fieldId"></app-field>
+                      }
+
+                      @if (ind==0&&showHeader&&updateRole==appraisalRole.User) {
+                        <hr>
                         <c-row class="mt-3" [gutter]="3">
                           <c-col md="3">
                             <label for="reportingOfficer" cLabel><strong>Reporting Officer</strong></label>
+
                             <c-input-group>
                               <button color="secondary"
                               (click)="openReportingOfficerModal()"
@@ -90,6 +106,7 @@
                               placeholder="Reporting Officer"
                               id="reportingOfficer">
                             </c-input-group>
+
 
                             <!--<select 
                             name="reportingOfficer" id="reportingOfficer"
@@ -121,6 +138,8 @@
                               id="counterySignatoryOfficer">
                             </c-input-group>
 
+
+
                             <!--<select 
                             name="counterSignatory" id="counterSignatory"
                             cSelect
@@ -133,17 +152,6 @@
                             </select>-->
                           </c-col>
                         </c-row>
-                        <hr class="mb-3">
-                      }
-                      @for (field of item.fields; track $index) {
-                        <app-field
-                        [IsReadonly]="ReadonlySection[sectionNo]||ActiveSection[sectionNo]==false"
-                        [empId]="formData.empId"
-                        [(field)]="field.fieldValue"
-                        (change) = "onChange()"
-                        [fieldData]="field"
-                        [Index]="$index+1+'. '" 
-                        [fieldUniqueName]="field.fieldName+item.sectionId+field.fieldId"></app-field>
                       }
 
                       <hr>
@@ -151,14 +159,14 @@
                         @for (item of item.fields; track $index) {
                           @if (item.fieldTypeName=="signatureDate") {
                             <c-card class="p-1 d-flex justify-content-center align-items-center">
-                              <input cFormControl [(ngModel)]="item.fieldValue" type="date" name="signatureDate" id="signatureDate">
+                              <input cFormControl [readOnly]="ActiveSection[sectionNo]==false" [(ngModel)]="item.fieldValue" type="date" name="signatureDate" id="signatureDate">
                             </c-card>
                           }
 
                           @if (item.fieldTypeName=="signaturePhoto") {
                             @if (item.fieldValue==null||item.fieldValue=='') {
                               <c-card class="p-1 d-flex justify-content-center align-items-center me-2">
-                                <button cButton color="primary">
+                                <button cButton [disabled]="ActiveSection[sectionNo]==false" (click)="uploadSignature()" color="primary">
                                   Signature
                                 </button>
                               </c-card>

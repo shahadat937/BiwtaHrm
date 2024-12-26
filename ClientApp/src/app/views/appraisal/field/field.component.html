@@ -1,4 +1,4 @@
-@if(fieldData.fieldTypeName=="signatureDate") {
+@if(fieldData.fieldTypeName=="signatureDate"||fieldData.fieldTypeName=="signaturePhoto") {
 
 } @else if (fieldData.htmlTagName=="input") {
     
@@ -217,6 +217,7 @@
 
             @for (field of fieldData.childFields; track $index) {
                 <app-field
+                [IsReadonly]="IsReadonly"
                 [empId]="empId"
                 [(field)]="field.fieldValue"
                 [fieldData]="field"

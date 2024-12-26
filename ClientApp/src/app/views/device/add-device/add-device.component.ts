@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { cilPlus, cilReload, cilTrash } from '@coreui/icons';
-import { Subscription } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 import { AttendanceDeviceService } from '../service/attendance-device.service';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { ToastrService } from 'ngx-toastr';
@@ -8,19 +8,23 @@ import {PendingDeviceModel} from '../model/pending-device-model'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DeviceModalComponent } from '../device-modal/device-modal.component';
 import { NotExpr } from '@angular/compiler';
+import * as signalR from '@microsoft/signalr'
+import {RealTimeService} from '../../../core/service/real-time.service';
 @Component({
   selector: 'app-add-device',
   templateUrl: './add-device.component.html',
   styleUrl: './add-device.component.scss'
 })
 export class AddDeviceComponent implements OnInit, OnDestroy {
-  subscription: Subscription = new Subscription();
+  subscription: Subscription[] = [];
   pendingDevice: PendingDeviceModel[];
   loading: boolean
+  checkDeviceInterval: Subscription = new Subscription();
 
   icons = {cilReload, cilTrash, cilPlus}
   
   constructor(
+    private realTimeService: RealTimeService,
     private AttendanceDeviceService: AttendanceDeviceService,
     private confirmService: ConfirmService,
     private toastr: ToastrService,
@@ -31,21 +35,58 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
     this.loading = false
   }
 
+
+
   ngOnInit(): void {
-    this.getPendingDevice(); 
+    this.getPendingDevice(true);
+    this.deleteExpireDevice(); 
+    this.checkNewDevice();
   }
 
   ngOnDestroy(): void {
-    if(this.subscription) {
-      this.subscription.unsubscribe();
+
+    this.subscription.forEach(subscription => {
+      subscription.unsubscribe();
+    })
+
+    if(this.checkDeviceInterval) {
+      this.checkDeviceInterval.unsubscribe();
     }
   }
 
 
+  deleteExpireDevice(): void {
+    if(this.checkDeviceInterval) {
+      this.checkDeviceInterval.unsubscribe();
+    }
+    const checkDeviceInterval = interval(15000);
+    this.checkDeviceInterval = checkDeviceInterval.subscribe({
+      next: () => {
+        let currentDatetime = new Date();
+        this.pendingDevice = this.pendingDevice.filter(device => {
+          let targetDate = new Date(device.expireTime);
+          if(targetDate.getTime() >= currentDatetime.getTime()) {
+            return true;
+          } else {
+            return false;
+          }
+        })
+      }
+    })
+  }
 
-  getPendingDevice() {
-    this.loading = true;
-    this.subscription = this.AttendanceDeviceService.getPendingDevice().subscribe({
+  checkNewDevice() {
+    this.realTimeService.eventBus.getEvent('newDevice').subscribe({
+      next: (data:any) => {
+        this.getPendingDevice(false); 
+      }
+    })
+  }
+
+
+  getPendingDevice(showLoader:boolean) {
+    this.loading = showLoader;
+    const subs = this.AttendanceDeviceService.getPendingDevice().subscribe({
       next: response => {
         this.pendingDevice = response;
       },
@@ -56,6 +97,8 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
     })
+
+    this.subscription.push(subs);
   }
 
   addDevice(pendingDevice: PendingDeviceModel) {
@@ -66,9 +109,11 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
     const modalRef: BsModalRef = this.modalService.show(DeviceModalComponent, { initialState, backdrop: 'static' });
 
     if(modalRef&&modalRef.onHide) {
-      this.subscription = modalRef.onHide.subscribe(()=> {
-        this.getPendingDevice();
+      const subs = modalRef.onHide.subscribe(()=> {
+        this.getPendingDevice(true);
       });
+
+      this.subscription.push(subs);
     }
   }
 }

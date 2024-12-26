@@ -7,16 +7,18 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { delay, of, Subscription } from 'rxjs';
 import { FieldComponent } from '../field/field.component';
 import { FormRecordService } from '../services/form-record.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { UpdateFormComponent } from '../update-form/update-form.component';
 import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
 import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
 import { HttpParams } from '@angular/common/http';
 import {AppraisalRole} from '../enum/appraisal-role';
 import { environment } from 'src/environments/environment';
-import { cilArrowLeft } from '@coreui/icons';
+import { cilArrowLeft, cilSearch } from '@coreui/icons';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { OfficerFormService } from '../officer-form/service/officer-form.service';
+import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
+import { ChangeProfileComponent } from '../../profile/change-profile/change-profile.component';
 
 @Component({
   selector: 'app-staff-form',
@@ -35,6 +37,8 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   showHeader: boolean;
   @Input()
   updateRole: number;
+  @Input()
+  IsUpdate: boolean;
   appraisalRole = AppraisalRole;
   IdCardNo:string;
   formId:number;
@@ -56,7 +60,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     {fieldName: "Birthdate", MapTo: "birthDate", Transform: "DateFormat"},
     {fieldName: "Joining Date Of Current Designation", MapTo: "currentDesignationJoiningDate", Transform: "DateFormat"}
   ]
-  icons = {cilArrowLeft};
+  icons = {cilArrowLeft,cilSearch};
 
   EmpOption: any[] = []
 
@@ -68,8 +72,18 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   @Input()
   lastSection:number;
   
+  imageUrl = environment.imageUrl;
+
+
+  // Reporting Officer And Counter Signatory Officer Name 
+  reportingOfficerName: string = "";
+  counterSignatoryOfficername: string = "";
+  
   constructor(
+    private empBasicInfoService: EmpBasicInfoService,
+    private bsModalService: BsModalService,
     private authService: AuthService,
+    private router: Router,
     private empService: EmpBasicInfoService,
     private empPhotoSignService: EmpPhotoSignService,
     private formRecordService: FormRecordService,
@@ -89,6 +103,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     this.showHeader = true
     this.department = "ICT"
     this.updateRole = AppraisalRole.User
+    this.IsUpdate = false;
     this.formId = environment.staffFormId
     this.firstSection = 0;
     this.lastSection = 3;
@@ -97,8 +112,6 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.firstSection);
-    console.log(this.lastSection);
     this.loading=true;
 
     this.empService.getFilteredSelectedEmp(new HttpParams()).subscribe({
@@ -142,6 +155,18 @@ export class StaffFormComponent implements OnInit, OnDestroy {
       next: response => {
         this.formData=null;
         this.formData = response;
+        this.authService.currentUser.subscribe(user => {
+          if(user&&user.empId) {
+            let empId = parseInt(user.empId);
+            this.empService.findByEmpId(empId).subscribe({
+              next: response => {
+                this.IdCardNo = response.idCardNo;
+                this.getEmpInfo();
+                this.getPhotoInfo(response.id);
+              }
+            })
+          }
+        })
       },
       error: err => {
         console.log(err);
@@ -154,16 +179,17 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   }
 
   onChange() {
-    console.log(this.formData);
   }
 
-  onSubmit() {
-    console.log("Hello World");
-  }
 
   onReset() {
     this.officerForm.form.reset();
-    this.getFormInfo();
+
+    if(!this.IsUpdate) {
+      this.getFormInfo();
+    } else {
+      this.getFormData();
+    }
     this.reportDates = [];
   }
 
@@ -197,8 +223,8 @@ export class StaffFormComponent implements OnInit, OnDestroy {
           this.toastr.success('',`${response.message}`, {
             positionClass: 'toast-top-right'
           })
-
           this.formRecordService.cachedData = [];
+          this.router.navigate(['/appraisal/MyFormRecord']);
         } else {
           this.toastr.warning('',`${response.message}`, {
             positionClass: 'toast-top-right'
@@ -305,15 +331,30 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   }
 
   getPhotoInfo(empId:number) {
-    let signature;
 
+    let signature;
     this.empPhotoSignService.findByEmpId(empId).subscribe({
       next: response => {
-        signature = response;
+        if(response) {
+          signature = response.signatureUrl;
+          if(signature==null||signature=="")
+            return;
+          
+          for(let i = 0;i<this.formData.sections.length;i++) {
+            for(let j = 0; j<this.formData.sections[i].fields.length;j++) {
+              let field = this.formData.sections[i].fields[j];
+              if(field.fieldTypeName=="signaturePhoto"&&this.ActiveSection[i]&&(field.fieldValue==null||field.fieldValue=='')) {
+                field.fieldValue = signature;
+              }
+            }
+          }
+
+        }
       }
     })
-  }
 
+    return signature;
+  }
 
   updateFormData() {
     this.submitLoading=true;
@@ -366,6 +407,74 @@ export class StaffFormComponent implements OnInit, OnDestroy {
         this.loading=false;
       }
     })
+  }
+
+  openReportingOfficerModal() {
+
+    const modalRef: BsModalRef = this.bsModalService.show(EmployeeListModalComponent,{backdrop: 'static', class: 'modal-xl'});
+
+    if(modalRef.content) {
+      modalRef.content?.employeeSelected.subscribe((idCardNo:string)=> {
+        this.empBasicInfoService.getEmpInfoByCard(idCardNo).subscribe({
+          next: response => {
+            if(response) {
+              this.formData.reportingOfficerId = response.id;
+              this.reportingOfficerName = [response.firstName,response.lastName].join(' ');
+            } else {
+              this.formData.reportingOfficerId = null;
+              this.reportingOfficerName = "";
+            }
+          },
+          error: (err) => {
+            this.formData.reportingOfficerId = null;
+            this.reportingOfficerName = "";
+          }
+        })
+      })
+    }
+  }
+
+  openCounterSignatoryOfficerModal() {
+    const modalRef: BsModalRef = this.bsModalService.show(EmployeeListModalComponent,{backdrop: 'static', class: 'modal-xl'});
+
+    if(modalRef.content) {
+      modalRef.content?.employeeSelected.subscribe((idCardNo:string)=> {
+        this.empBasicInfoService.getEmpInfoByCard(idCardNo).subscribe({
+          next: response => {
+            if(response) {
+              this.formData.counterSignatoryId = response.id;
+              this.counterSignatoryOfficername = [response.firstName,response.lastName].join(' ');
+            } else {
+              this.formData.counterSignatoryId = null;
+              this.counterSignatoryOfficername = "";
+            }
+          },
+          error: (err) => {
+            this.formData.counterSignatoryId = null;
+            this.counterSignatoryOfficername = "";
+          }
+        })
+      })
+    }
+  }
+
+  uploadSignature(): void {
+
+    let empId = parseInt(this.authService.currentUserValue.empId)
+    if(empId==null||empId==undefined) {
+      return;
+    }
+    const initialState = {
+      id: empId,
+      clickedButton: 'ChangeSignature'
+    };
+    const modalRef: BsModalRef = this.modalService.show(ChangeProfileComponent, { initialState, backdrop: 'static' });
+
+    if (modalRef.onHide) {
+      modalRef.onHide.subscribe(() => {
+        this.getPhotoInfo(empId);
+      });
+    }
   }
 
   goBack() {

@@ -118,5 +118,23 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+        [Route("delete-PendingDevice/{PendingDeviceId}")]
+        [HttpDelete]
+        public async Task<ActionResult<BaseCommandResponse>> DeletePendingDevice(int PendingDeviceId)
+        {
+            var command = new DeletePendingDeviceCommand { PendingDeviceId = PendingDeviceId };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [Route("TestNotification")]
+        [HttpGet]
+        public async Task<ActionResult> SendNotification()
+        {
+            var command = new SendNotificationCommand { };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
     }
 }

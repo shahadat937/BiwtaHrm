@@ -17,6 +17,8 @@ import { EmpPhotoSignService } from '../../service/emp-photo-sign.service';
 import { UploadEmpBasicInfoComponent } from '../upload-emp-basic-info/upload-emp-basic-info.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
+import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
+import { SectionService } from 'src/app/views/basic-setup/service/section.service';
 
 @Component({
   selector: 'app-view-employee-prime-ng',
@@ -29,8 +31,10 @@ export class ViewEmployeePrimeNgComponent implements OnDestroy {
   subscription: Subscription[]=[]
 
   employees: BasicInfoModule[] = [];
-  departments: any[] = [];
-  sections!: any[];
+  departments: any;
+  sections: any;
+  selectedDepartment: number = 0;
+  selectedSection: number = 0;
   imageLinkUrl: any;
   defaultImage: any;
   maleImage: any;
@@ -60,6 +64,8 @@ export class ViewEmployeePrimeNgComponent implements OnDestroy {
     public roleFeatureService: RoleFeatureService,
     public empPhotoSign: EmpPhotoSignService,
     private modalService: BsModalService,
+    public departmentService: DepartmentService,
+    public sectionService : SectionService,
 
   ) {
     this.userForm = new UserModule;
@@ -81,6 +87,7 @@ export class ViewEmployeePrimeNgComponent implements OnDestroy {
       this.roleFeatureService.featurePermission.add == true;
       if(item.viewStatus == true){
         this.getAllEmpBasicInfo(this.pagination);
+        this.getAllSelectedDepartments();
       }
       else{
         this.unauthorizeAccress()
@@ -98,7 +105,7 @@ export class ViewEmployeePrimeNgComponent implements OnDestroy {
   getAllEmpBasicInfo(queryParams: any) {
     // this.subscription = 
     this.subscription.push(
-      this.empBasicInfoService.getAllPagination(queryParams).subscribe((employees: any) => {
+      this.empBasicInfoService.getAllPagination(queryParams, this.selectedDepartment, this.selectedSection).subscribe((employees: any) => {
       this.totalRecords = employees.totalItemsCount;
       this.employees = employees.items;
       this.loading = false;
@@ -239,4 +246,25 @@ export class ViewEmployeePrimeNgComponent implements OnDestroy {
     this.showUpdateUserInfo = false;
   }
 
+  
+  getAllSelectedDepartments(){
+    this.subscription.push(
+      this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+          this.departments = res;
+    })
+    )
+  }
+
+  onDepartmentSelectGetSection(departmentId : number){
+    this.sections = [];
+    this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
+      this.sections = res;
+    });
+    this.selectedDepartment = departmentId;
+    this.getAllEmpBasicInfo(this.pagination);
+  }
+  onSectionChange(sectionId: number){
+    this.selectedSection = sectionId;
+    this.getAllEmpBasicInfo(this.pagination);
+  }
 }

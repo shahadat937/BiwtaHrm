@@ -62,14 +62,18 @@
                                     
                                     
                                     <c-col [md]="4">
-                                        <img *ngIf="empNomineeListArray.controls[i].get('photoPreviewUrl')?.value" [src]="empNomineeListArray.controls[i].get('photoPreviewUrl')?.value" alt="Photo Preview" width="100"/>
+                                        <div *ngIf="empNomineeListArray.controls[i].get('photoPreviewUrl')?.value">
+                                            <img [src]="empNomineeListArray.controls[i].get('photoPreviewUrl')?.value" alt="Photo Preview" width="100"/>
+                                        </div>
                                         <label class="col-form-label" for="photoFile{{i}}">Photo</label>
                                         <input type="file" formControlName="photoFile" class="form-control" id="photoFile{{i}}" (change)="onPhotoSelected($event, i)"/>
   
                                     </c-col>
                                     
                                     <c-col [md]="4">
-                                        <img *ngIf="empNomineeListArray.controls[i].get('signaturePreviewUrl')?.value" [src]="empNomineeListArray.controls[i].get('signaturePreviewUrl')?.value" alt="Signature Preview" width="100"/>
+                                        <div *ngIf="empNomineeListArray.controls[i].get('signaturePreviewUrl')?.value">
+                                            <img [src]="empNomineeListArray.controls[i].get('signaturePreviewUrl')?.value" alt="Signature Preview" width="100"/>
+                                        </div>
                                         <label class="col-form-label" for="signatureFile{{i}}">Signature</label>
                                         <input type="file" formControlName="signatureFile" class="form-control" id="signatureFile{{i}}" (change)="onSignatureSelected($event, i)"/>
   

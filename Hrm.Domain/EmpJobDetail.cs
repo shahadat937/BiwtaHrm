@@ -26,6 +26,11 @@ namespace Hrm.Domain
         public int? FirstDepartmentId { get; set; }
         public int? FirstSectionId { get; set; }
         public int? FirstDesignationId { get; set; }
+        public string? FirstDepartmentInput { get; set; }
+        public string? FirstSectionInput { get; set; }
+        public string? FirstDesignationInput { get; set; }
+        public string? FirstGradeInput { get; set; }
+        public string? FirstScaleInput { get; set; }
         public DateOnly? PRLDate { get; set; }
         public DateOnly? RetirementDate { get; set; }
         public bool? ServiceStatus { get; set; }

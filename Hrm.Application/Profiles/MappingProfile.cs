@@ -486,6 +486,8 @@ namespace Hrm.Application.Profiles
 
             CreateMap<EmpNomineeInfo, EmpNomineeInfoDto>().ReverseMap();
             CreateMap<EmpNomineeInfo, CreateEmpNomineeInfoDto>().ReverseMap();
+            CreateMap<EmpNomineeInfo, EmpNomineeInfoDto>()
+            .ForMember(dest => dest.RelationName, opt => opt.MapFrom(src => src.Relation.RelationName));
 
 
             CreateMap<EmpTransferPosting, EmpTransferPostingDto>().ReverseMap();

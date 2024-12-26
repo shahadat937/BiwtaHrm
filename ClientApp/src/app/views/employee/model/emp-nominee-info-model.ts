@@ -7,6 +7,7 @@ export class EmpNomineeInfoModel {
     birthRegNo : string = "";
     nid : string = "";
     relationId : any = null;
+    relationName : any = null;
     percentage : number = 0;
     address : string = "";
     photoUrl: string = "";

@@ -9,6 +9,9 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EmployeeInformationComponent } from '../employee-information/employee-information.component';
 import { EmpProfileComponent } from '../emp-profile/emp-profile.component';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
+import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
+import { SectionService } from 'src/app/views/basic-setup/service/section.service';
+import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -37,10 +40,17 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort)
   matSort!: MatSort;
   pagination: PaginatorModel = new PaginatorModel();
+  departments: any;
+  sections: any;
+  selectedDepartment: number = 0;
+  selectedSection: number = 0;
 
   constructor(
     public manageEmployeeService: ManageEmployeeService,
     private modalService: BsModalService,
+    public departmentService: DepartmentService,
+    public sectionService : SectionService,
+    public empBasicInfoService: EmpBasicInfoService,
   ) {
   }
 
@@ -49,6 +59,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // this.getAllEmpBasicInfo();
     this.getAllEmpBasicInfoQueryPerams(this.pagination);
+    this.getAllSelectedDepartments();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -66,6 +77,28 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     )
    
 
+  }
+
+  
+  getAllSelectedDepartments(){
+    this.subscription.push(
+      this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+          this.departments = res;
+    })
+    )
+  }
+
+  onDepartmentSelectGetSection(departmentId : number){
+    this.sections = [];
+    this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
+      this.sections = res;
+    });
+    this.selectedDepartment = departmentId;
+    this.getAllEmpBasicInfoQueryPerams(this.pagination);
+  }
+  onSectionChange(sectionId: number){
+    this.selectedSection = sectionId;
+    this.getAllEmpBasicInfoQueryPerams(this.pagination);
   }
 
   viewEmployeeInformation(id: number, clickedButton: string){
@@ -102,10 +135,10 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   getAllEmpBasicInfoQueryPerams(queryParams: any){
     // this.subscription = 
     this.subscription.push(
-    this.manageEmployeeService.getAllPagination(queryParams).subscribe((res: any) => {
-      this.dataSource.data = res.items;
+      this.empBasicInfoService.getAllPagination(queryParams, this.selectedDepartment, this.selectedSection).subscribe((employees: any) => {
+      this.dataSource.data = employees.items;
       // this.dataSource.paginator = this.paginator;
-      this.pagination.length = res.totalItemsCount;
+      this.pagination.length = employees.totalItemsCount;
     })
     )
     

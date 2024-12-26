@@ -54,6 +54,8 @@ import { SharedCustomModule } from './shared/shared.module';
 import { FormRecordService } from './views/appraisal/services/form-record.service';
 import { YearSetupService } from './views/basic-setup/service/year-setup.service';
 import { NavbarSettingService } from './views/featureManagement/service/navbar-setting.service';
+import { DepartmentService } from './views/basic-setup/service/department.service';
+import { SectionService } from './views/basic-setup/service/section.service';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
@@ -114,7 +116,9 @@ const APP_CONTAINERS = [
     FormRecordService ,
     YearSetupService,
     ToastrService,
-    NavbarSettingService
+    NavbarSettingService,
+    DepartmentService,
+    SectionService,
   ],
   bootstrap: [AppComponent],
 })

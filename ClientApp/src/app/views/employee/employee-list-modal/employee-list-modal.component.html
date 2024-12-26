@@ -11,7 +11,7 @@
               <p-table
               [value]="employees"
               dataKey="id"
-              [rows]="5"
+              [rows]="pagination.pageSize"
               [paginator]="true"
               (onPage)="onPageChange($event)"
               [lazy]="true"
@@ -26,7 +26,7 @@
         <!-- Search Input -->
         <ng-template pTemplate="caption">
           <div class="row">
-            <p-iconField iconPosition="right" class="ml-auto col-xl pb-2">
+            <p-iconField iconPosition="right" class="col-xl-4 pb-2">
               <p-inputIcon>
                 <mat-icon>search</mat-icon>
               </p-inputIcon>
@@ -38,24 +38,47 @@
                 placeholder="Search Here.."
               />
             </p-iconField>
-            <!-- <p-dropdown
-              class="col-xl pb-2"
-              [options]="departments" 
-              optionLabel="name" 
-              placeholder="Select Departments"
-              display="chip" 
-              [showClear]="true"
-              (onChange)="onSelect($event.value ? $event.value.name : null)" />
-
-            <p-dropdown
-              class="col-xl pb-2"
-              [options]="sections"
-              optionLabel="name" 
-              placeholder="Select Section"
-              display="chip" 
-              [showClear]="true"
-              (onChange)="onSelect($event.value ? $event.value.name : null)" /> -->
+            <p-dropdown 
+                  class="col-md pb-2"
+                  [options]="departments"
+                  optionLabel="name"
+                  [filter]="true"
+                  filterBy="name"
+                  [showClear]="true"
+                  (onClear)="onDepartmentSelectGetSection(0)"
+                  placeholder="Select a Department">
+                      <ng-template pTemplate="departmetSelectedItem" let-selectedOption>
+                          <div class="flex align-items-center gap-2" (click)="onDepartmentSelectGetSection(selectedOption.id)">
+                              <label>{{ selectedOption.name }}</label>
+                          </div>
+                      </ng-template>
+                      <ng-template let-department pTemplate="item">
+                          <div class="flex align-items-center gap-2" (click)="onDepartmentSelectGetSection(department.id)">
+                              <label>{{ department.name }}</label>
+                          </div>
+                      </ng-template>
+              </p-dropdown>
               
+              <p-dropdown 
+                class="col-md pb-2"
+                [options]="sections"
+                optionLabel="name"
+                [filter]="true"
+                filterBy="name"
+                [showClear]="true"
+                (onClear)="onSectionChange(0)"
+                placeholder="Select a Section">
+                    <ng-template pTemplate="sectionSelectedItem" let-selectedOption>
+                        <div class="flex align-items-center gap-2" (click)="onSectionChange(selectedOption.id)">
+                            <label>{{ selectedOption.name }}</label>
+                        </div>
+                    </ng-template>
+                    <ng-template let-section pTemplate="item">
+                        <div class="flex align-items-center gap-2" (click)="onSectionChange(section.id)">
+                            <label>{{ section.name }}</label>
+                        </div>
+                    </ng-template>
+            </p-dropdown>
           </div>
         </ng-template>
     

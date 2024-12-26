@@ -18,6 +18,7 @@ import { cilArrowLeft, cilSearch } from '@coreui/icons';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { OfficerFormService } from '../officer-form/service/officer-form.service';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
+import { ChangeProfileComponent } from '../../profile/change-profile/change-profile.component';
 
 @Component({
   selector: 'app-staff-form',
@@ -454,6 +455,25 @@ export class StaffFormComponent implements OnInit, OnDestroy {
           }
         })
       })
+    }
+  }
+
+  uploadSignature(): void {
+
+    let empId = parseInt(this.authService.currentUserValue.empId)
+    if(empId==null||empId==undefined) {
+      return;
+    }
+    const initialState = {
+      id: empId,
+      clickedButton: 'ChangeSignature'
+    };
+    const modalRef: BsModalRef = this.modalService.show(ChangeProfileComponent, { initialState, backdrop: 'static' });
+
+    if (modalRef.onHide) {
+      modalRef.onHide.subscribe(() => {
+        this.getPhotoInfo(empId);
+      });
     }
   }
 

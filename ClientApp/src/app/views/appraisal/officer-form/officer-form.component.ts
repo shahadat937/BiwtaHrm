@@ -20,6 +20,7 @@ import { cilArrowLeft, cilSearch } from '@coreui/icons';
 import {AuthService} from '../../../core/service/auth.service'
 import {EmpPhotoSignComponent} from './../../employee/add-employee/employee-informations/emp-photo-sign/emp-photo-sign.component';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
+import { ChangeProfileComponent } from '../../profile/change-profile/change-profile.component';
 
 @Component({
   selector: 'app-officer-form',
@@ -159,7 +160,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       next: response => {
         this.formData=null;
         this.formData = response;
-        this.authService.currentUser.subscribe(user => {
+        const subs = this.authService.currentUser.subscribe(user => {
           if(user&&user.empId) {
             let empId = parseInt(user.empId);
             this.empService.findByEmpId(empId).subscribe({
@@ -171,6 +172,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
             })
           }
         })
+
+        this.subscription.push(subs);
       },
       error: err => {
         console.log(err);
@@ -485,6 +488,26 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
           }
         })
       })
+    }
+  }
+
+
+  uploadSignature(): void {
+
+    let empId = parseInt(this.authService.currentUserValue.empId)
+    if(empId==null||empId==undefined) {
+      return;
+    }
+    const initialState = {
+      id: empId,
+      clickedButton: 'ChangeSignature'
+    };
+    const modalRef: BsModalRef = this.modalService.show(ChangeProfileComponent, { initialState, backdrop: 'static' });
+
+    if (modalRef.onHide) {
+      modalRef.onHide.subscribe(() => {
+        this.getPhotoInfo(empId);
+      });
     }
   }
 

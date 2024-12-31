@@ -18,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { OfficeService } from '../service/office.service';
+import { RealTimeService } from 'src/app/core/service/real-time.service';
 
 @Component({
   selector: 'app-department',
@@ -60,6 +61,7 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
     private confirmService: ConfirmService,
     private toastr: ToastrService,
     public officeService : OfficeService,
+    private realTimeService: RealTimeService,
   ) {
   }
   ngOnInit(): void {
@@ -68,6 +70,13 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleRouteParams();
     this.loadOffice();
     this.getAllSelectedDepartments();
+
+    const subs = this.realTimeService.eventBus.getEvent('Department').subscribe(data => {
+      this.departmentService.cachedData = [];
+      this.getALlDepartments();
+    })
+
+    this.subscription.push(subs);
   }
 
   handleRouteParams() {
@@ -213,7 +222,6 @@ export class DepartmentComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dataSource.sort = this.matSort;
     })
     )
-    
   }
   
   loadOffice() { 

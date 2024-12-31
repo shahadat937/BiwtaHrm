@@ -32,33 +32,27 @@
 .idNo{
   font-weight: bold;
   margin: 115px auto 0 auto;
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
 }
 .empPhoto img {
   width: auto;
-  height: 80px;
+  height: 70px;
 }
 
-.EmpInfo p {
-  margin: 0;
-  font-size: 12px;
+table {
+  font-size: 10px;
 }
 
-.EmpInfo .title {
-  width: 35%;
-  float: left;
-  font-weight: bold;
-}
-.EmpInfo .text {
-  width: 65%;
-  float: left;
+table th {
+  vertical-align: top;
 }
 
 .signature {
   font-size: 4.5px;
-  float: inline-end;
-  margin: 36px 13px 0 0;
+  position: absolute;
+  bottom: -2px;
+  right: 22px;
 }
 
 .back-id p {

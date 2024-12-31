@@ -19,7 +19,25 @@
                         <p class="idNo">ID: {{empBasicInfo.idCardNo}}</p>
                         <p class="empPhoto text-center mb-3"><img src="{{photoPreviewUrl}}"></p>
                         <div class="EmpInfo">
-                            <div class="title">
+                            <table>
+                                <tr>
+                                    <th>নাম</th>
+                                    <td>: {{empBasicInfo.firstNameBangla}} {{empBasicInfo.lastNameBangla}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Name</th>
+                                    <td>: {{empBasicInfo.firstName}} {{empBasicInfo.lastName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>পদবী</th>
+                                    <td>: {{empJobDetails.designationNameBangla}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Designation</th>
+                                    <td>: {{empJobDetails.designationName}}</td>
+                                </tr>
+                            </table>
+                            <!-- <div class="title">
                                 <p>নাম</p>
                                 <p class="mb-1">Name</p>
                                 <p>পদবী</p>
@@ -30,7 +48,7 @@
                                 <p class="mb-1">: {{empBasicInfo.firstName}} {{empBasicInfo.lastName}}</p>
                                 <p>: {{empJobDetails.designationNameBangla}}</p>
                                 <p>: {{empJobDetails.designationName}}</p>
-                                <!-- <div>
+                                <div>
                                     <p *ngIf="empJobDetails?.designationNameBangla; else emptyText">
                                         : {{ empJobDetails.designationNameBangla }}
                                     </p>
@@ -47,12 +65,11 @@
                                     <ng-template #emptyDesignation>
                                         <p> </p>
                                     </ng-template>
-                                </div> -->
-                            </div>
+                                </div>
+                            </div> -->
                         </div>
-                        <p class="signature">পরিচালক (প্রশাসন ও মানব সম্পদ)</p>
                     </div>
-                    
+                    <p class="signature">পরিচালক (প্রশাসন ও মানব সম্পদ)</p>
                 </div>
             </div>
             <div class="mb-4">

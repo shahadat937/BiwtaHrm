@@ -7,7 +7,9 @@ using Hrm.Application.DTOs.DepartmentDepartment.Validators;
 using Hrm.Application.Features.Department.Requests.Commands;
 using Hrm.Application.Responses;
 using Hrm.Domain;
+using Hrm.Infrastructure.SignalRHub;
 using MediatR;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +23,14 @@ namespace Hrm.Application.Features.Department.Handlers.Commands
         private readonly IHrmRepository<Hrm.Domain.Department> _DepartmentRepository; 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IHubContext<NotificationHub> _notificationHub;
 
-        public CreateDepartmentCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Department> DepartmentRepository)
+        public CreateDepartmentCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<Hrm.Domain.Department> DepartmentRepository, IHubContext<NotificationHub> notificationHub)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _DepartmentRepository = DepartmentRepository;
+            _notificationHub = notificationHub;
         }
 
 
@@ -72,6 +76,8 @@ namespace Hrm.Application.Features.Department.Handlers.Commands
                 //}
             }
 
+
+            await _notificationHub.Clients.All.SendAsync("Department", response);
             return response;
         }
     }

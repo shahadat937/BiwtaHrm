@@ -24,5 +24,6 @@ namespace Hrm.Domain
         public virtual EmpBasicInfo? FromEmpBasicInfo { get; set; }
         public virtual EmpBasicInfo? ToEmpBasicInfo { get; set; }
         public virtual Department? Department { get; set; }
+        public virtual ICollection<NotificationReadBy>? NotificationReadBy { get; set; }
     }
 }

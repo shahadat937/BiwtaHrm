@@ -29,12 +29,12 @@
       </c-nav-item> -->
     </c-header-nav>
 
-    <c-header-nav class="d-none d-lg-flex">
+    <!-- <c-header-nav class="d-none d-lg-flex">
       <c-nav-item>
         <a cNavLink>
           <svg cIcon name="cilBell" size="lg"></svg>
         </a>
-      </c-nav-item>
+      </c-nav-item> -->
       <!-- <c-nav-item>
         <a routerLink="./" cNavLink>
           <svg cIcon name="cilList" size="lg"></svg>
@@ -45,8 +45,13 @@
           <svg cIcon name="cilEnvelopeOpen" size="lg"></svg>
         </a>
       </c-nav-item> -->
-    </c-header-nav>
+    <!-- </c-header-nav> -->
     <c-header-nav class="ms-3">
+      <c-nav-item>
+      <a cNavLink>
+        <label *ngTemplateOutlet="notificationDropdown"></label>
+      </a>
+    </c-nav-item>
       <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
     </c-header-nav>
 
@@ -57,6 +62,41 @@
   </c-container> -->
 </ng-container>
 <!--</c-header>-->
+
+<ng-template #notificationDropdown>
+  <c-dropdown alignment="end" variant="nav-item">
+    <button
+      cButton
+      color=""
+      [caret]="false"
+      cDropdownToggle
+      class="py-0"
+    >
+    <c-badge color="danger" position="top-end" shape="rounded-pill" *ngIf="totalNotification > 0 && totalNotification < 10">{{totalNotification}}</c-badge>
+    <c-badge color="danger" position="top-end" shape="rounded-pill" *ngIf="totalNotification > 9">9+</c-badge>
+    <svg cIcon name="cilBell" size="lg"></svg>
+    </button>
+    <ul cDropdownMenu class="pt-0 pr-5 notificationDropdown">
+      <li>
+        <h6 cDropdownHeader class="bg-light fw-semibold py-2">Notifications</h6>
+      </li>
+      <li *ngFor="let notification of userNoftification | slice:0:4">
+        <label cDropdownItem class="dropdownCursor">
+          <p class="m-0"><b>{{notification.title}}</b></p>
+          <p class="m-0">{{notification.message}}</p>
+        </label>
+      </li>
+      <li *ngIf="!userNoftification.length">
+        <span class="text-muted d-block text-center">No new notifications</span>
+      </li>
+      <li *ngIf="userNoftification.length > 4" class="dropdownFooter">
+        <a cDropdownItem class="d-block text-center">
+          View all notifications <label  class="text-muted">({{totalNotification}})</label>
+        </a>
+      </li>
+    </ul>
+  </c-dropdown>
+</ng-template>
 
 <ng-template #userDropdown>
   <c-dropdown alignment="end" variant="nav-item">
@@ -83,7 +123,7 @@
       <li>
         <a cDropdownItem class="dropdownCursor">
           <svg cIcon class="me-2" name="cilBell"></svg>
-          Updates
+          Notifications
           <c-badge class="ms-2 float-end" color="info">
             
           </c-badge>

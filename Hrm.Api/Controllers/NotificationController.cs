@@ -12,7 +12,7 @@ using Hrm.Application.Features.Notifications.Requests.Commands;
 
 namespace Hrm.Api.Controllers
 {
-    [Route(HrmRoutePrefix.EmpBasicInfo)]
+    [Route(HrmRoutePrefix.Notification)]
     [ApiController]
     //[Authorize]
     public class NotificationController : ControllerBase

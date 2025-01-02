@@ -24,8 +24,9 @@ namespace Hrm.Application.Features.Notifications.Handlers.Queries
         private readonly IHrmRepository<Domain.AspNetUsers> _AspNetUsersRepository;
         private readonly IHrmRepository<Domain.AspNetUserRoles> _AspNetUserRolesRepository;
         private readonly IHrmRepository<RoleFeature> _RoleFeatureRepository;
+        private readonly IHrmRepository<NotificationReadBy> _NotificationReadByRepository;
         private readonly IMapper _mapper;
-        public GetNotificationForUserRequestHandler(IHrmRepository<Notification> NotificationRepository, IMapper mapper, IHrmRepository<EmpJobDetail> EmpJobDetailRepository, IHrmRepository<Feature> FeatureRepository, IHrmRepository<Domain.AspNetUsers> aspNetUsersRepository, IHrmRepository<AspNetUserRoles> aspNetUserRolesRepository, IHrmRepository<RoleFeature> roleFeatureRepository)
+        public GetNotificationForUserRequestHandler(IHrmRepository<Notification> NotificationRepository, IMapper mapper, IHrmRepository<EmpJobDetail> EmpJobDetailRepository, IHrmRepository<Feature> FeatureRepository, IHrmRepository<Domain.AspNetUsers> aspNetUsersRepository, IHrmRepository<AspNetUserRoles> aspNetUserRolesRepository, IHrmRepository<RoleFeature> roleFeatureRepository, IHrmRepository<NotificationReadBy> notificationReadByRepository)
         {
             _NotificationRepository = NotificationRepository;
             _mapper = mapper;
@@ -34,6 +35,7 @@ namespace Hrm.Application.Features.Notifications.Handlers.Queries
             _AspNetUsersRepository = aspNetUsersRepository;
             _AspNetUserRolesRepository = aspNetUserRolesRepository;
             _RoleFeatureRepository = roleFeatureRepository;
+            _NotificationReadByRepository = notificationReadByRepository;
         }
 
         public async Task<PagedResult<NotificationDto>> Handle(GetNotificationForUserRequest request, CancellationToken cancellationToken)
@@ -64,15 +66,20 @@ namespace Hrm.Application.Features.Notifications.Handlers.Queries
             var query = _NotificationRepository
                 .Where(n => n.ToEmpId == request.EmpId || (n.ToDeptId == empDeptId && accessibleFeatureIds.Contains(n.FeatureId.Value)) || n.ForAllUsers == true);
 
-            var unreadCount = await query
-                .Where(n => n.ReadStatus == false)
-                .CountAsync(cancellationToken);
+            var readNotificationIds = await _NotificationReadByRepository
+                .Where(nrb => nrb.EmpId == request.EmpId)
+                .Select(nrb => nrb.NotificationId.Value)
+                .ToListAsync();
+
 
             var totalRecords = await query.CountAsync(cancellationToken);
 
+            var unreadCount = totalRecords - readNotificationIds.Count();
+
 
             var notifications = await query
-                .OrderByDescending(n => n.Id)
+                .OrderBy(n => readNotificationIds.Contains(n.Id))
+                    .ThenByDescending(n => n.Id)
                 .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
                 .Take(request.QueryParams.PageSize)
                 .ToListAsync(cancellationToken);
@@ -83,6 +90,7 @@ namespace Hrm.Application.Features.Notifications.Handlers.Queries
             foreach (var notificationDto in notificationDtos)
             {
                 notificationDto.UnreadCount = unreadCount;
+                notificationDto.ReadStatus = readNotificationIds.Contains(notificationDto.Id);
             }
 
 

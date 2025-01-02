@@ -1327,6 +1327,21 @@ namespace Hrm.Persistence
                     .HasForeignKey(e => e.ToDeptId);
             });
 
+
+
+            modelBuilder.Entity<NotificationReadBy>(entity =>
+            {
+
+                entity.HasOne(e => e.Notification)
+                    .WithMany(e => e.NotificationReadBy)
+                    .HasForeignKey(e => e.NotificationId);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(e => e.NotificationReadBy)
+                    .HasForeignKey(e => e.EmpId);
+
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;

@@ -72,8 +72,8 @@
       cDropdownToggle
       class="py-0"
     >
-    <c-badge color="danger" position="top-end" shape="rounded-pill" *ngIf="totalNotification > 0 && totalNotification < 10">{{totalNotification}}</c-badge>
-    <c-badge color="danger" position="top-end" shape="rounded-pill" *ngIf="totalNotification > 9">9+</c-badge>
+    <c-badge color="danger" position="top-end" shape="rounded-pill" *ngIf="unreadNotification > 0 && unreadNotification < 10">{{unreadNotification}}</c-badge>
+    <c-badge color="danger" position="top-end" shape="rounded-pill" *ngIf="unreadNotification > 9">9+</c-badge>
     <svg cIcon name="cilBell" size="lg"></svg>
     </button>
     <ul cDropdownMenu class="pt-0 pr-5 notificationDropdown">

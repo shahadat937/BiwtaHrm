@@ -20,6 +20,7 @@ import { RealTimeService } from 'src/app/core/service/real-time.service';
 import { NotificationService } from '../../../views/notifications/service/notification.service';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
 import { UserNotification } from 'src/app/views/notifications/models/user-notification';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-default-header',
   templateUrl: './default-header.component.html',
@@ -53,7 +54,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
     private modalService: BsModalService,
     private userService: UserService,
     private realTimeService: RealTimeService,
-    public notificationService: NotificationService
+    public notificationService: NotificationService,
+    private toastr: ToastrService,
   ) {
     super();
   }
@@ -77,7 +79,10 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.getUserNotifications();
     this.getUserId();
     const subs = this.realTimeService.eventBus.getEvent('userNotification').subscribe(data => {
-      this.getUserNotifications()
+      this.getUserNotifications();
+      this.toastr.info('', `New Notification`, {
+        positionClass: 'toast-bottom-right',
+      });
     })
 
     this.subscription.push(subs);

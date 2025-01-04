@@ -764,6 +764,8 @@ namespace Hrm.Application.Profiles
 
             CreateMap<Notification, NotificationDto>().ReverseMap();
             CreateMap<Notification, CreateNotificationDto>().ReverseMap();
+            CreateMap<Notification, NotificationDto>()
+                .ForMember(dest => dest.FromEmplName, opt => opt.MapFrom(src => src.FromEmpBasicInfo.FirstName + ' ' + src.FromEmpBasicInfo.LastName)).ReverseMap();
 
         }
     }

@@ -83,7 +83,7 @@
       <li *ngFor="let notification of userNoftification | slice:0:4">
         <label cDropdownItem class="dropdownCursor">
           <p class="m-0"><b>{{notification.title}}</b></p>
-          <p class="m-0">{{notification.message}}</p>
+          <p class="m-0"><b>{{notification.fromEmplName}}</b> {{notification.message}}</p>
         </label>
       </li>
       <li *ngIf="!userNoftification.length">

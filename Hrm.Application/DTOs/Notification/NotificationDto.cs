@@ -20,5 +20,6 @@ namespace Hrm.Application.DTOs.Notification
         public string? Message { get; set; }
         public string? NevigateLink { get; set; }
         public bool? ReadStatus { get; set; }
+        public string? FromEmplName { get; set; }
     }
 }

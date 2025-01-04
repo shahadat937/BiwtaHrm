@@ -95,6 +95,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
           this.userNoftification = res.items;
           this.unreadNotification = res.items[0].unreadCount;
           this.totalNotification = res.totalItemsCount;
+          console.log(res.items)
         }
       })
     )

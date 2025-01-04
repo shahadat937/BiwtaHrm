@@ -64,7 +64,8 @@ namespace Hrm.Application.Features.Notifications.Handlers.Queries
                 .ToListAsync();
 
             var query = _NotificationRepository
-                .Where(n => n.ToEmpId == request.EmpId || (n.ToDeptId == empDeptId && accessibleFeatureIds.Contains(n.FeatureId.Value)) || n.ForAllUsers == true);
+                .Where(n => n.ToEmpId == request.EmpId || (n.ToDeptId == empDeptId && accessibleFeatureIds.Contains(n.FeatureId.Value)) || n.ForAllUsers == true)
+                .Include(x => x.FromEmpBasicInfo);
 
             var readNotificationIds = await _NotificationReadByRepository
                 .Where(nrb => nrb.EmpId == request.EmpId)

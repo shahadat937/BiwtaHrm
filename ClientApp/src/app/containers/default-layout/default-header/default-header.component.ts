@@ -20,6 +20,7 @@ import { RealTimeService } from 'src/app/core/service/real-time.service';
 import { NotificationService } from '../../../views/notifications/service/notification.service';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
 import { UserNotification } from 'src/app/views/notifications/models/user-notification';
+import { NotificationReadBy } from 'src/app/views/notifications/models/notification-read-by';
 import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-default-header',
@@ -40,7 +41,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   empBasicInfo: BasicInfoModule = new BasicInfoModule;
   designationName : string = "";
   userNoftification : UserNotification[] = [];
-  unreadNotification: any;
+  unreadNotification: number = 0;
   totalNotification: any;
 
   constructor(
@@ -76,30 +77,41 @@ export class DefaultHeaderComponent extends HeaderComponent {
     const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
     this.empId = currentUserJSON.empId;
     this.getEmployeeByEmpId();
-    this.getUserNotifications();
+    this.getUserNotifications(false);
     this.getUserId();
     const subs = this.realTimeService.eventBus.getEvent('userNotification').subscribe(data => {
-      this.getUserNotifications();
-      this.toastr.info('', `New Notification`, {
-        positionClass: 'toast-bottom-right',
-      });
+      this.getUserNotifications(true);
     })
 
     this.subscription.push(subs);
   }
 
-  getUserNotifications(){
+  getUserNotifications(isNew : boolean){
     this.subscription.push(
       this.notificationService.getUserNotification(this.pagination, this.empId).subscribe((res) => {
         if(res){
+          if(isNew && this.totalNotification < res.totalItemsCount){
+            this.toastr.info('', `New Notification`, {
+              positionClass: 'toast-bottom-right',
+            });
+          }
           this.userNoftification = res.items;
           this.unreadNotification = res.items[0].unreadCount;
           this.totalNotification = res.totalItemsCount;
-          console.log(res.items)
         }
       })
     )
   }
+
+  notificationNevigate(notificationId: number, nevigateLink: string){
+    const notificationReadBy = new NotificationReadBy();
+    notificationReadBy.empId = this.empId;
+    notificationReadBy.notificationId =  notificationId;
+    this.subscription.push(this.notificationService.updateNotificationStatus(notificationReadBy).subscribe((res) => {}))
+
+    this.router.navigate([nevigateLink]);
+  }
+  
 
   ngOnDestroy() {
     if (this.subscription) {

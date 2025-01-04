@@ -40,5 +40,15 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+
+        [HttpPost]
+        [Route("update-notificationStatus")]
+        public async Task<ActionResult<BaseCommandResponse>> UpdateNotificationStatus([FromBody] CreateNotificationReadByDto createNotificationReadByDto)
+        {
+            var command = new UpdateNotificationStatusCommand { NotificationReadByDto = createNotificationReadByDto };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
     }
 }

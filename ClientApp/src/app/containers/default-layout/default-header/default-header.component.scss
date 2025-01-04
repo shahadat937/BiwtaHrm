@@ -21,9 +21,14 @@
 }
 
 .notificationDropdown {
-    max-width: 300px; 
+    width: 300px; 
+}
+
+.notificationText {
     overflow: hidden;
     white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .dropdownFooter {

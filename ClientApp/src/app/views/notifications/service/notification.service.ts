@@ -20,5 +20,9 @@ export class NotificationService {
   submit(model: any) {
     return this.http.post(this.baseUrl + '/notification/save-notification', model);
   }
+  
+  updateNotificationStatus(model: any) {
+    return this.http.post(this.baseUrl + '/notification/update-notificationStatus', model);
+  }
 
 }

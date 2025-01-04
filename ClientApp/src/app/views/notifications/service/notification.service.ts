@@ -16,4 +16,9 @@ export class NotificationService {
     params = params.append('empId', empId);
     return this.http.get<any>(`${this.baseUrl}/notification/get-notificationForUser`, { params });
   }
+
+  submit(model: any) {
+    return this.http.post(this.baseUrl + '/notification/save-notification', model);
+  }
+
 }

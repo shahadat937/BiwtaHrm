@@ -11,6 +11,7 @@ export class UserNotification {
     title : string = '';
     message : string = '';
     nevigateLink : string = '';
+    forEntryId : any;
     readStatus : boolean = false;
     fromEmplName : string = '';
 }

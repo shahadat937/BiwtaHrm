@@ -320,6 +320,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
           userNotification.toEmpId = this.addLeaveService.addLeaveModel.reviewedBy;
           userNotification.featurePath = 'reviewleave';
           userNotification.nevigateLink = '/leave/reviewleave';
+          userNotification.forEntryId = response.id;
           userNotification.title = 'Leave Application';
           userNotification.message = 'submitted leave application, Review pending.';
           this.notificationService.submit(userNotification).subscribe((res) => {});

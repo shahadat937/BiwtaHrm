@@ -30,6 +30,9 @@ import { DepartmentService } from '../basic-setup/service/department.service';
 import { GradeService } from '../basic-setup/service/Grade.service';
 import { SectionService } from '../basic-setup/service/section.service';
 import { ReleaseTypeService } from '../basic-setup/service/release-type.service';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -76,7 +79,10 @@ import { ReleaseTypeService } from '../basic-setup/service/release-type.service'
     PopoverModule,
     AlertComponent,
     TooltipModule,
-    BadgeComponent
+    BadgeComponent,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
   ],
   providers:[
     OfficeService,

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { cilArrowLeft, cilPlus, cilBell, cilViewModule } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { EmpTransferPostingService } from '../../service/emp-transfer-posting.se
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TransferPostingInfoComponent } from '../../transfer-posting-info/transfer-posting-info.component';
 import { DepartmentApprovalComponent } from '../department-approval/department-approval.component';
+import { PaginatorModel } from 'src/app/core/models/paginator-model';
 
 @Component({
   selector: 'app-department-approval-list',
@@ -34,12 +35,15 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort)
   matSort!: MatSort;
   loginEmpId: number = 0;
+  noticeForEntryId: number = 0;
+  pagination: PaginatorModel = new PaginatorModel();
   
   constructor(
     private toastr: ToastrService,
     public empTransferPostingService: EmpTransferPostingService,
     private route: ActivatedRoute,
     private modalService: BsModalService,
+    private router: Router,
   ) {
 
   }
@@ -51,31 +55,43 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
     const currentUserString = localStorage.getItem('currentUser');
     const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
     this.loginEmpId = currentUserJSON.empId ?? 0;
-
-    this.getAllEmpTransferPostingDeptApproveInfo();
+    this.route.queryParams.subscribe((params) => {
+      this.noticeForEntryId = params['formNotificationId'] || 0;
+      this.getAllEmpTransferPostingDeptApproveInfo(this.pagination);
+    });
   }
 
-  getAllEmpTransferPostingDeptApproveInfo() {
+  cancle(){
+    this.router.navigate(['/transferPosting/departmentApprovalList']);
+  }
+
+  getAllEmpTransferPostingDeptApproveInfo(queryParams: any) {
     this.subscription.push(
-    this.empTransferPostingService.getAllEmpTransferPostingDeptApproveInfo(this.loginEmpId).subscribe((item) => {
-      this.dataSource = new MatTableDataSource(item);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.matSort;
+    this.empTransferPostingService.getAllEmpTransferPostingDeptApproveInfo(queryParams, this.loginEmpId, this.noticeForEntryId).subscribe((item) => {
+      this.dataSource.data = item.items;
+      // this.dataSource.paginator = this.paginator;
+      this.pagination.length = item.totalItemsCount;
     })
     )
    
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+    this.pagination.searchText = filterValue;
+    this.getAllEmpTransferPostingDeptApproveInfo(this.pagination);
   }
   
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.forEach(subs=>subs.unsubscribe())
     }
+  }
+  
+  onPageChange(event: any){
+    this.pagination.pageSize = event.pageSize;
+    event.pageIndex = event.pageIndex + 1;
+    this.getAllEmpTransferPostingDeptApproveInfo(event);
   }
 
   
@@ -97,7 +113,7 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
     if (modalRef.onHide) {
       this.subscription.push(
         modalRef.onHide.subscribe(() => {
-          this.getAllEmpTransferPostingDeptApproveInfo();
+          this.getAllEmpTransferPostingDeptApproveInfo(this.pagination);
         })
       )
      

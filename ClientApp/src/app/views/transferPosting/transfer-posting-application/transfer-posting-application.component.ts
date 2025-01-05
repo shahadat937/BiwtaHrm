@@ -16,6 +16,8 @@ import { TransferPostingInfoComponent } from '../transfer-posting-info/transfer-
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
 import { ReleaseTypeService } from '../../basic-setup/service/release-type.service';
 import { GradeService } from '../../basic-setup/service/Grade.service';
+import { UserNotification } from '../../notifications/models/user-notification';
+import { NotificationService } from '../../notifications/service/notification.service';
 
 @Component({
   selector: 'app-transfer-posting-application',
@@ -57,6 +59,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     public releaseTypeService: ReleaseTypeService,
     private gradeService: GradeService,
+    public notificationService: NotificationService,
   ) {
 
   }
@@ -672,7 +675,6 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm): void {
-    console.log(form.value)
     this.loading = true;
     this.empTransferPostingService.cachedData = [];
     const id = form.value.id;
@@ -686,6 +688,34 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
+
+        // Notification Start
+        if(id == 0) {
+          if(this.empTransferPostingService.empTransferPosting.isDepartmentApprove && !this.empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo){
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.empTransferPostingService.empTransferPosting.empId
+            userNotification.toDeptId = this.empTransferPostingService.empTransferPosting.currentDepartmentId;
+            userNotification.featurePath = 'departmentApprovalList';
+            userNotification.nevigateLink = '/transferPosting/departmentApprovalList';
+            userNotification.forEntryId = response.id;
+            userNotification.title = 'Transfer and Posting';
+            userNotification.message = 'new Transfer & and Posting application, Department Release Pending.';
+            this.notificationService.submit(userNotification).subscribe((res) => {});
+          }
+          else if(this.empTransferPostingService.empTransferPosting.isJoining && !this.empTransferPostingService.empTransferPosting.provideJoiningInfo){
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.empTransferPostingService.empTransferPosting.empId
+            userNotification.toDeptId = this.empTransferPostingService.empTransferPosting.transferDepartmentId;
+            userNotification.featurePath = 'joiningReportingList';
+            userNotification.nevigateLink = '/transferPosting/joiningReportingList';
+            userNotification.forEntryId = response.id;
+            userNotification.title = 'Transfer and Posting';
+            userNotification.message = ' Transfer & and Posting application, Joining Info Pending.';
+            this.notificationService.submit(userNotification).subscribe((res) => {});
+          }
+        }
+        // Notification End
+
         this.loading = false;
         this.router.navigate(['/transferPosting/transferPostingList']);
       } else {

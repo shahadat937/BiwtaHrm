@@ -1,4 +1,8 @@
-﻿using MediatR;
+﻿using Hrm.Application.DTOs.Common;
+using Hrm.Application.DTOs.EmpBasicInfo;
+using Hrm.Application.DTOs.EmpTransferPosting;
+using Hrm.Application.Models;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +11,10 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpTransferPostings.Requests.Queries
 {
-    public class GetEmpTransferPostingDeptApprovalRequest : IRequest<object>
+    public class GetEmpTransferPostingDeptApprovalRequest : IRequest<PagedResult<EmpTransferPostingDto>>
     {
-        public int Id { get; set; }
+        public QueryParams QueryParams { get; set; }
+        public int? Id { get; set; }
+        public int? EmpId { get; set; }
     }
 }

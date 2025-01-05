@@ -71,7 +71,7 @@
               
               <ng-container matColumnDef="Action">
                 <th mat-header-cell *matHeaderCellDef>Action</th>
-                <td mat-cell *matCellDef="let element">
+                <td mat-cell *matCellDef="let element" class="row">
                     <button cTooltip="Approve" cTooltipPlacement="bottom" mat-icon-button class="text-success" *ngIf="element.deptApproveStatus == null" (click)="transferPostingDeptApproval(element.id, 'Approve')">
                         <mat-icon>check</mat-icon>
                     </button>

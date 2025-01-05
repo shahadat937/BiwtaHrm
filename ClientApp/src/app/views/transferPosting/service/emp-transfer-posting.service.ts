@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EmpTransferPosting } from '../model/emp-transfer-posting';
 import { Observable, of, map } from 'rxjs';
 import { BasicInfoModule } from '../../employee/model/basic-info.module';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +38,11 @@ export class EmpTransferPostingService {
     return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-AllEmpTransferPostingApproveInfo');
   }
   
-  getAllEmpTransferPostingDeptApproveInfo(id: number){
-    return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingDeptApprove/' + id);
+  getAllEmpTransferPostingDeptApproveInfo(queryParams: any, empId:any, id: any){
+        let params = new HttpParams({ fromObject: queryParams }); 
+        params = params.append('empId', empId);
+        params = params.append('id', id);
+        return this.http.get<any>(`${this.baseUrl}/empTransferPosting/get-EmpTransferPostingDeptApprove`, { params });
   }
   
   getAllEmpTransferPostingJoiningInfo(id: number){

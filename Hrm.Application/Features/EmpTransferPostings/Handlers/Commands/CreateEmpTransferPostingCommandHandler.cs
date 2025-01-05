@@ -128,6 +128,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
 
             response.Success = true;
             response.Message = "Creation Successful";
+            response.Id = empTransferPostings.Id;
 
             return response;
         }

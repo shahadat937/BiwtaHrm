@@ -1,4 +1,5 @@
 ﻿using Hrm.Application;
+using Hrm.Application.DTOs.EmpBasicInfo;
 using Hrm.Application.DTOs.EmpTransferPosting;
 using Hrm.Application.Features.EmpSpouseInfos.Requests.Commands;
 using Hrm.Application.Features.EmpTransferPostings.Handlers.Queries;
@@ -82,17 +83,17 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-AllEmpTransferPostingApproveInfo")]
-        public async Task<ActionResult> GetAllEmpTransferPostingApproveInfo()
+        public async Task<ActionResult<List<EmpTransferPostingDto>>> GetAllEmpTransferPostingApproveInfo()
         {
             var EmpTransferPosting = await _mediator.Send(new GetEmpTransferPostingApprovalListRequest { });
             return Ok(EmpTransferPosting);
         }
 
         [HttpGet]
-        [Route("get-EmpTransferPostingDeptApprove/{id}")]
-        public async Task<ActionResult> EmpTransferPostingDeptApprove(int id)
+        [Route("get-EmpTransferPostingDeptApprove")]
+        public async Task<ActionResult> EmpTransferPostingDeptApprove([FromQuery] QueryParams queryParams, int? empId, int? id)
         {
-            var command = new GetEmpTransferPostingDeptApprovalRequest { Id = id };
+            var command = new GetEmpTransferPostingDeptApprovalRequest { QueryParams = queryParams, EmpId = empId ,Id = id };
             var EmpTransferPosting = await _mediator.Send(command);
             return Ok(EmpTransferPosting);
         }

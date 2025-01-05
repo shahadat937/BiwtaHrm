@@ -143,5 +143,6 @@ namespace Hrm.Application
         public const string EmpFingerPrint = HRMRoutePrefixBase + "empFingerPrint";
         public const string DeviceController = "iclock";
         public const string DeviceUserController = HRMRoutePrefixBase + "AttendanceDevice";
+        public const string Notification = HRMRoutePrefixBase + "notification";
     }
 }

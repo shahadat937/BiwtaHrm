@@ -20,7 +20,8 @@ export class SignalRService {
     'notification',
     'newAtd',
     'AttDeviceUpdate',
-    'Department'
+    'Department',
+    'userNotification'
   ]
 
 

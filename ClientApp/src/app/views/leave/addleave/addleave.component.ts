@@ -18,6 +18,8 @@ import { ManageLeaveService } from '../service/manage-leave.service';
 import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
 import { LeaveStatus } from '../enum/leave-status';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../notifications/service/notification.service';
+import { UserNotification } from '../../notifications/models/user-notification';
 
 @Component({
   selector: 'app-addleave',
@@ -68,7 +70,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     private leaveBalanceService: LeaveBalanceService, 
     private toastr: ToastrService,
     private confirmService: ConfirmService,
-    private authService: AuthService
+    private authService: AuthService,
+    public notificationService: NotificationService,
   ) {
     this.loading = false;
     this.empCardNo ="";
@@ -310,6 +313,19 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
           this.toastr.success('',`${response.message}`, {
             positionClass: 'toast-top-right'
           })
+
+          // For User Notification
+          const userNotification = new UserNotification();
+          userNotification.fromEmpId = this.addLeaveService.addLeaveModel.empId;
+          userNotification.toEmpId = this.addLeaveService.addLeaveModel.reviewedBy;
+          userNotification.featurePath = 'reviewleave';
+          userNotification.nevigateLink = '/leave/reviewleave';
+          userNotification.forEntryId = response.id;
+          userNotification.title = 'Leave Application';
+          userNotification.message = 'submitted leave application, Review pending.';
+          this.notificationService.submit(userNotification).subscribe((res) => {});
+
+          
           this.onReset();
           this.router.navigate(['/leave/personalleave']);
         } else {

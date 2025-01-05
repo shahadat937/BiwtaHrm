@@ -70,5 +70,8 @@ namespace Hrm.Domain
         public virtual ICollection<CancelledWeekend> CancelledWeekends { get; } = new List<CancelledWeekend>();
         public virtual ICollection<EmpTrainingInfo>? EmpTrainingInfo { get; set; }
         public virtual ICollection<EmpFingerPrint>? EmpFingerPrint { get; set; }
+        public virtual ICollection<Notification>? FromNotification { get; set; }
+        public virtual ICollection<Notification>? ToNotification { get; set; }
+        public virtual ICollection<NotificationReadBy>? NotificationReadBy { get; set; }
     }
 }

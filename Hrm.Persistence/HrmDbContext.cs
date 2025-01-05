@@ -1310,6 +1310,38 @@ namespace Hrm.Persistence
                 .HasForeignKey(rd => rd.RelationId);
             });
 
+
+            modelBuilder.Entity<Notification>(entity =>
+            {
+
+                entity.HasOne(e => e.FromEmpBasicInfo)
+                    .WithMany(e => e.FromNotification)
+                    .HasForeignKey(e => e.FromEmpId);
+
+                entity.HasOne(e => e.ToEmpBasicInfo)
+                    .WithMany(e => e.ToNotification)
+                    .HasForeignKey(e => e.ToEmpId);
+
+                entity.HasOne(e => e.Department)
+                    .WithMany(e => e.Notification)
+                    .HasForeignKey(e => e.ToDeptId);
+            });
+
+
+
+            modelBuilder.Entity<NotificationReadBy>(entity =>
+            {
+
+                entity.HasOne(e => e.Notification)
+                    .WithMany(e => e.NotificationReadBy)
+                    .HasForeignKey(e => e.NotificationId);
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                    .WithMany(e => e.NotificationReadBy)
+                    .HasForeignKey(e => e.EmpId);
+
+            });
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -1447,6 +1479,7 @@ namespace Hrm.Persistence
         public virtual DbSet<DeviceParameters> DeviceParameters { get; set; } = null!;
         public virtual DbSet<AttDevices> AttDevices { get; set; } = null!;
         public virtual DbSet<AttDeviceCommands> AttDeviceCommands { get; set; } = null!;
+        public virtual DbSet<Notification> Notification { get; set; } = null!;
 
     }
 }

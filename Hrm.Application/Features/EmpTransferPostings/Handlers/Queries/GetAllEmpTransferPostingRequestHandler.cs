@@ -2,6 +2,7 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.EmpTransferPosting;
 using Hrm.Application.Features.EmpTransferPostings.Requests.Queries;
+using Hrm.Application.Models;
 using Hrm.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
 {
-    public class GetAllEmpTransferPostingRequestHandler : IRequestHandler<GetAllEmpTransferPostingRequest, object>
+    public class GetAllEmpTransferPostingRequestHandler : IRequestHandler<GetAllEmpTransferPostingRequest, PagedResult<EmpTransferPostingDto>>
     {
 
         private readonly IHrmRepository<EmpTransferPosting> _EmpTransferPostingRepository;
@@ -24,9 +25,13 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
             _mapper = mapper;
         }
 
-        public async Task<object> Handle(GetAllEmpTransferPostingRequest request, CancellationToken cancellationToken)
+        public async Task<PagedResult<EmpTransferPostingDto>> Handle(GetAllEmpTransferPostingRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<EmpTransferPosting> EmpTransferPostings = _EmpTransferPostingRepository.Where(x => true)
+            IQueryable<EmpTransferPosting> query = _EmpTransferPostingRepository.FilterWithInclude(x => (x.EmpBasicInfo.IdCardNo.ToLower().Contains(request.QueryParams.SearchText) ||
+                    x.EmpBasicInfo.FirstName.ToLower().Contains(request.QueryParams.SearchText) ||
+                    x.EmpBasicInfo.LastName.ToLower().Contains(request.QueryParams.SearchText) ||
+                    String.IsNullOrEmpty(request.QueryParams.SearchText))
+                    && (request.Id == 0 || x.Id == request.Id))
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.ApplicationBy)
                 .Include(x => x.OrderOfficeBy)
@@ -50,11 +55,20 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
                 .Include(x => x.ReleaseType)
                 .Include(x => x.DeptReleaseType);
 
-            EmpTransferPostings = EmpTransferPostings.OrderByDescending(x => x.Id);
 
-            var EmpTransferPostingDtos = _mapper.Map<List<EmpTransferPostingDto>>(EmpTransferPostings);
+            var totalCount = await query.CountAsync();
 
-            return EmpTransferPostingDtos;
+            var queryFilter = await query.OrderByDescending(x => x.Id)
+                .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
+                .Take(request.QueryParams.PageSize)
+                .ToListAsync(cancellationToken);
+
+
+            var EmpTransferPostingDtos = _mapper.Map<List<EmpTransferPostingDto>>(queryFilter);
+
+            var result = new PagedResult<EmpTransferPostingDto>(EmpTransferPostingDtos, totalCount, request.QueryParams.PageIndex, request.QueryParams.PageSize);
+
+            return result;
         }
     }
 }

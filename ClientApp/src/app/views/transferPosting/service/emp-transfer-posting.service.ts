@@ -19,12 +19,15 @@ export class EmpTransferPostingService {
     this.empTransferPosting = new EmpTransferPosting();
   }
 
-  getAll(): Observable<EmpTransferPosting[]> {
+  getAll(queryParams: any, id: any): Observable<any> {
     if (this.cachedData.length > 0) {
       return of (this.cachedData);
     } else {
+
+      let params = new HttpParams({ fromObject: queryParams });
+      params = params.append('id', id);
       return this.http
-        .get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-allEmpTransferPosting')
+        .get<any>(this.baseUrl + '/empTransferPosting/get-allEmpTransferPosting', {params})
         .pipe(
           map((data) => {
             this.cachedData = data; 

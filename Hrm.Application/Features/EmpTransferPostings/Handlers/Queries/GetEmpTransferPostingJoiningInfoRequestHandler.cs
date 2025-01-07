@@ -2,6 +2,7 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.EmpTransferPosting;
 using Hrm.Application.Features.EmpTransferPostings.Requests.Queries;
+using Hrm.Application.Models;
 using Hrm.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
 {
-    public class GetEmpTransferPostingJoiningInfoRequestHandler : IRequestHandler<GetEmpTransferPostingJoiningInfoRequest, object>
+    public class GetEmpTransferPostingJoiningInfoRequestHandler : IRequestHandler<GetEmpTransferPostingJoiningInfoRequest, PagedResult<EmpTransferPostingDto>>
     {
 
         private readonly IHrmRepository<EmpTransferPosting> _EmpTransferPostingRepository;
@@ -26,45 +27,63 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
             _EmpJobDetailRepository = empJobDetailRepository;
         }
 
-        public async Task<object> Handle(GetEmpTransferPostingJoiningInfoRequest request, CancellationToken cancellationToken)
+        public async Task<PagedResult<EmpTransferPostingDto>> Handle(GetEmpTransferPostingJoiningInfoRequest request, CancellationToken cancellationToken)
         {
-            if (request.Id != 0)
+            if (request.EmpId != 0)
             {
-                var empJobDetail = await _EmpJobDetailRepository.FindOneAsync(x => x.EmpId == request.Id);
+                var empDepartmentId = await _EmpJobDetailRepository.Where(x => x.EmpId == request.EmpId).Select(x => x.DepartmentId).FirstOrDefaultAsync();
 
-                IQueryable<EmpTransferPosting> EmpTransferPostings = _EmpTransferPostingRepository.Where(x => (x.DeptApproveStatus == true || x.IsDepartmentApprove == false) && (x.TransferApproveStatus == true || x.IsTransferApprove == false) && x.IsJoining == true && x.TransferDepartmentId == empJobDetail.DepartmentId)
-                .Include(x => x.EmpBasicInfo)
-                .Include(x => x.ApplicationBy)
-                .Include(x => x.OrderOfficeBy)
-                .Include(x => x.CurrentGrade)
-                .Include(x => x.UpdateGrade)
-                .Include(x => x.CurrentScale)
-                .Include(x => x.UpdateScale)
-                .Include(x => x.TransferApproveBy)
-                .Include(x => x.DeptReleaseBy)
-                .Include(x => x.JoiningReportingBy)
-                .Include(x => x.CurrentOffice)
-                .Include(x => x.TransferOffice)
-                .Include(x => x.CurrentDepartment)
-                .Include(x => x.TransferDepartment)
-                .Include(x => x.CurrentDesignation)
-                    .ThenInclude(x => x.DesignationSetup)
-                .Include(x => x.TransferDesignation)
-                    .ThenInclude(x => x.DesignationSetup)
-                .Include(x => x.CurrentSection)
-                .Include(x => x.TransferSection)
-                .Include(x => x.ReleaseType)
-                .Include(x => x.DeptReleaseType);
+                IQueryable<EmpTransferPosting> query = _EmpTransferPostingRepository.FilterWithInclude(x => (x.EmpBasicInfo.IdCardNo.ToLower().Contains(request.QueryParams.SearchText) ||
+                    x.EmpBasicInfo.FirstName.ToLower().Contains(request.QueryParams.SearchText) ||
+                    x.EmpBasicInfo.LastName.ToLower().Contains(request.QueryParams.SearchText) ||
+                    String.IsNullOrEmpty(request.QueryParams.SearchText))
+                    && (request.Id == 0 || x.Id == request.Id) &&
+                    (x.DeptApproveStatus == true || x.IsDepartmentApprove == false) && (x.TransferApproveStatus == true || x.IsTransferApprove == false) && x.IsJoining == true && x.TransferDepartmentId == empDepartmentId)
+                    .Include(x => x.EmpBasicInfo)
+                    .Include(x => x.ApplicationBy)
+                    .Include(x => x.OrderOfficeBy)
+                    .Include(x => x.CurrentGrade)
+                    .Include(x => x.UpdateGrade)
+                    .Include(x => x.CurrentScale)
+                    .Include(x => x.UpdateScale)
+                    .Include(x => x.TransferApproveBy)
+                    .Include(x => x.DeptReleaseBy)
+                    .Include(x => x.JoiningReportingBy)
+                    .Include(x => x.CurrentOffice)
+                    .Include(x => x.TransferOffice)
+                    .Include(x => x.CurrentDepartment)
+                    .Include(x => x.TransferDepartment)
+                    .Include(x => x.CurrentDesignation)
+                        .ThenInclude(x => x.DesignationSetup)
+                    .Include(x => x.TransferDesignation)
+                        .ThenInclude(x => x.DesignationSetup)
+                    .Include(x => x.CurrentSection)
+                    .Include(x => x.TransferSection)
+                    .Include(x => x.ReleaseType)
+                    .Include(x => x.DeptReleaseType);
 
-                EmpTransferPostings = EmpTransferPostings.OrderBy(x => x.JoiningStatus).ThenByDescending(x => x.DateCreated);
+                var totalCount = await query.CountAsync();
 
-                var EmpTransferPostingDtos = _mapper.Map<List<EmpTransferPostingDto>>(EmpTransferPostings);
+                var queryFilter = await query.OrderByDescending(x => x.Id)
+                    .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
+                    .Take(request.QueryParams.PageSize)
+                    .ToListAsync(cancellationToken);
 
-                return EmpTransferPostingDtos;
+
+                var EmpTransferPostingDtos = _mapper.Map<List<EmpTransferPostingDto>>(queryFilter);
+
+                var result = new PagedResult<EmpTransferPostingDto>(EmpTransferPostingDtos, totalCount, request.QueryParams.PageIndex, request.QueryParams.PageSize);
+
+                return result;
             }
             else
             {
-                IQueryable<EmpTransferPosting> EmpTransferPostings = _EmpTransferPostingRepository.Where(x => (x.DeptApproveStatus == true || x.IsDepartmentApprove == false) && (x.TransferApproveStatus == true || x.IsTransferApprove == false) && x.IsJoining == true)
+                IQueryable<EmpTransferPosting> query = _EmpTransferPostingRepository.FilterWithInclude(x => (x.EmpBasicInfo.IdCardNo.ToLower().Contains(request.QueryParams.SearchText) ||
+                    x.EmpBasicInfo.FirstName.ToLower().Contains(request.QueryParams.SearchText) ||
+                    x.EmpBasicInfo.LastName.ToLower().Contains(request.QueryParams.SearchText) ||
+                    String.IsNullOrEmpty(request.QueryParams.SearchText))
+                    && (request.Id == 0 || x.Id == request.Id) &&
+                    (x.DeptApproveStatus == true || x.IsDepartmentApprove == false) && (x.TransferApproveStatus == true || x.IsTransferApprove == false) && x.IsJoining == true)
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.ApplicationBy)
                 .Include(x => x.OrderOfficeBy)
@@ -88,11 +107,19 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
                 .Include(x => x.ReleaseType)
                 .Include(x => x.DeptReleaseType);
 
-                EmpTransferPostings = EmpTransferPostings.OrderBy(x => x.JoiningStatus).ThenByDescending(x => x.DateCreated);
+                var totalCount = await query.CountAsync();
 
-                var EmpTransferPostingDtos = _mapper.Map<List<EmpTransferPostingDto>>(EmpTransferPostings);
+                var queryFilter = await query.OrderByDescending(x => x.Id)
+                    .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
+                    .Take(request.QueryParams.PageSize)
+                    .ToListAsync(cancellationToken);
 
-                return EmpTransferPostingDtos;
+
+                var EmpTransferPostingDtos = _mapper.Map<List<EmpTransferPostingDto>>(queryFilter);
+
+                var result = new PagedResult<EmpTransferPostingDto>(EmpTransferPostingDtos, totalCount, request.QueryParams.PageIndex, request.QueryParams.PageSize);
+
+                return result;
             }
         }
     }

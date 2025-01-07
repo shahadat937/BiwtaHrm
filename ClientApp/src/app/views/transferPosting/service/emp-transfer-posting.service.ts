@@ -48,8 +48,11 @@ export class EmpTransferPostingService {
         return this.http.get<any>(`${this.baseUrl}/empTransferPosting/get-EmpTransferPostingDeptApprove`, { params });
   }
   
-  getAllEmpTransferPostingJoiningInfo(id: number){
-    return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-EmpTransferPostingJoiningInfo/' + id);
+  getAllEmpTransferPostingJoiningInfo(queryParams: any, empId:any, id: any){
+    let params = new HttpParams({ fromObject: queryParams }); 
+    params = params.append('empId', empId);
+    params = params.append('id', id);
+    return this.http.get<any>(`${this.baseUrl}/empTransferPosting/get-EmpTransferPostingJoiningInfo`, { params });
   }
   
   findById(id: number) {

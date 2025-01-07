@@ -201,9 +201,9 @@
                         <select [(ngModel)]="empTransferPostingService.empTransferPosting.deptApproveStatus"
                         name="deptApproveStatus" #deptApproveStatus="ngModel"
                         cSelect id="deptApproveStatus">
-                        <option value="">Pending</option>
-                        <option value="true">Release</option>
-                        <option value="false">No-Release</option>
+                        <option [ngValue]=null>Pending</option>
+                        <option [ngValue]=true>Release</option>
+                        <option [ngValue]=false>No-Release</option>
                         </select>
                     </c-col>
                     

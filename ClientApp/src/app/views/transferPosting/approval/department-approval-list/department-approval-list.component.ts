@@ -56,7 +56,7 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
     const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
     this.loginEmpId = currentUserJSON.empId ?? 0;
     this.route.queryParams.subscribe((params) => {
-      this.noticeForEntryId = params['formNotificationId'] || 0;
+      this.noticeForEntryId = params['forNotificationId'] || 0;
       this.getAllEmpTransferPostingDeptApproveInfo(this.pagination);
     });
   }

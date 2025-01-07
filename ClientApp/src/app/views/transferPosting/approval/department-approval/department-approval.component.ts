@@ -9,6 +9,8 @@ import { EmpJobDetailsService } from 'src/app/views/employee/service/emp-job-det
 import { EmpTransferPosting } from '../../model/emp-transfer-posting';
 import { EmpTransferPostingService } from '../../service/emp-transfer-posting.service';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { UserNotification } from 'src/app/views/notifications/models/user-notification';
+import { NotificationService } from 'src/app/views/notifications/service/notification.service';
 
 @Component({
   selector: 'app-department-approval',
@@ -36,7 +38,8 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private bsModalRef: BsModalRef,
     private el: ElementRef, 
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    public notificationService: NotificationService,
   ) {
 
   }
@@ -149,6 +152,8 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
       });
     }
     else{
+      let prevDeptApproveStatus = this.empTransferPosting.deptApproveStatus;
+
       if(deptApproveStatus == true || deptApproveStatus == false){
         this.empTransferPosting.deptApproveStatus = deptApproveStatus;
       }
@@ -166,19 +171,68 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
       this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, this.empTransferPosting).subscribe((response: any) => {
         if (response.success) {
           if(deptApproveStatus == true){
-            this.toastr.success('', `Application Approved Successfull`, {
+            this.toastr.success('', `Application Approved Successfully`, {
               positionClass: 'toast-top-right',
             });
+
+            //Notification
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.empTransferPosting.empId;
+            userNotification.toDeptId = this.empTransferPosting.transferDepartmentId;
+            userNotification.featurePath = 'joiningReportingList';
+            userNotification.nevigateLink = '/transferPosting/joiningReportingList';
+            userNotification.forEntryId = this.empTransferPosting.id;
+            userNotification.title = 'Transfer and Posting';
+            userNotification.message = 'released from Department, Joining Information Pending.';
+            this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
+          
           }
           else if(deptApproveStatus == false){
-            this.toastr.error('', `Application Rejected Successfull`, {
+            this.toastr.error('', `Application Rejected Successfully`, {
               positionClass: 'toast-top-right',
             });
+            
+            //Notification
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.empTransferPosting.deptReleaseById;
+            userNotification.toEmpId = this.empTransferPosting.applicationById;
+            userNotification.featurePath = 'transferPostingList';
+            userNotification.nevigateLink = '/transferPosting/transferPostingList';
+            userNotification.forEntryId = this.empTransferPosting.id;
+            userNotification.title = 'Transfer and Posting';
+            userNotification.message = 'rejected your application.';
+            this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
           }
           else{
             this.toastr.success('', `${response.message}`, {
               positionClass: 'toast-top-right',
             });
+            
+            //Notification
+            if(prevDeptApproveStatus != this.empTransferPosting.deptApproveStatus && this.empTransferPosting.deptApproveStatus == true){
+              console.log("Hitted True")
+              const userNotification = new UserNotification();
+              userNotification.fromEmpId = this.empTransferPosting.empId;
+              userNotification.toDeptId = this.empTransferPosting.transferDepartmentId;
+              userNotification.featurePath = 'joiningReportingList';
+              userNotification.nevigateLink = '/transferPosting/joiningReportingList';
+              userNotification.forEntryId = this.empTransferPosting.id;
+              userNotification.title = 'Transfer and Posting';
+              userNotification.message = 'released from Department, Joining Information Pending.';
+              this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
+            }
+            else if(prevDeptApproveStatus != this.empTransferPosting.deptApproveStatus && this.empTransferPosting.deptApproveStatus == false){
+              console.log("Hitted False")
+              const userNotification = new UserNotification();
+              userNotification.fromEmpId = this.empTransferPosting.deptReleaseById;
+              userNotification.toEmpId = this.empTransferPosting.applicationById;
+              userNotification.featurePath = 'transferPostingList';
+              userNotification.nevigateLink = '/transferPosting/transferPostingList';
+              userNotification.forEntryId = this.empTransferPosting.id;
+              userNotification.title = 'Transfer and Posting';
+              userNotification.message = 'rejected your application.';
+              this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
+            }
           }
         } else {
           this.toastr.warning('', `${response.message}`, {

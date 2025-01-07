@@ -30,7 +30,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
 
         public async Task<PagedResult<EmpTransferPostingDto>> Handle(GetEmpTransferPostingDeptApprovalRequest request, CancellationToken cancellationToken)
         {
-            if (request.Id != 0)
+            if (request.EmpId != 0)
             {
                 var empDepartmentId = await _EmpJobDetailRepository.Where(x => x.EmpId == request.EmpId).Select(x => x.DepartmentId).FirstOrDefaultAsync();
 

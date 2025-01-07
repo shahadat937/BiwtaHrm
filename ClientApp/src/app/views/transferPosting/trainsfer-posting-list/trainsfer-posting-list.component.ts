@@ -10,6 +10,7 @@ import { MatSort } from '@angular/material/sort';
 import { TransferPostingInfoComponent } from '../transfer-posting-info/transfer-posting-info.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { PaginatorModel } from 'src/app/core/models/paginator-model';
 
 @Component({
   selector: 'app-trainsfer-posting-list',
@@ -36,6 +37,8 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
+  pagination: PaginatorModel = new PaginatorModel();
+  noticeForEntryId: number = 0;
   
   constructor(
     private toastr: ToastrService,
@@ -51,24 +54,33 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.getAllTransferPostingInfo();
+    this.route.queryParams.subscribe((params) => {
+      this.noticeForEntryId = params['forNotificationId'] || 0;
+      this.getAllTransferPostingInfo(this.pagination);
+    });
+    this.getAllTransferPostingInfo(this.pagination);
   }
 
-  getAllTransferPostingInfo() {
+  getAllTransferPostingInfo(queryParams: any) {
     this.subscription.push(
-    this.empTransferPostingService.getAll().subscribe((item) => {
-      this.dataSource = new MatTableDataSource(item);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.matSort;
+    this.empTransferPostingService.getAll(queryParams, this.noticeForEntryId).subscribe((item) => {
+      this.dataSource.data = item.items;
+      this.pagination.length = item.totalItemsCount;
     })
     )
     
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+    this.pagination.searchText = filterValue;
+    this.getAllTransferPostingInfo(this.pagination);
+  }
+
+  onPageChange(event: any){
+    this.pagination.pageSize = event.pageSize;
+    event.pageIndex = event.pageIndex + 1;
+    this.getAllTransferPostingInfo(event);
   }
   
   ngOnDestroy(): void {

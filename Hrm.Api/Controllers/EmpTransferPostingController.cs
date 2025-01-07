@@ -50,9 +50,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-allEmpTransferPosting")]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> Get([FromQuery] QueryParams queryParams, int? id)
         {
-            var command = new GetAllEmpTransferPostingRequest { };
+            var command = new GetAllEmpTransferPostingRequest { QueryParams = queryParams, Id = id };
             var EmpTransferPosting = await _mediator.Send(command);
             return Ok(EmpTransferPosting);
         }

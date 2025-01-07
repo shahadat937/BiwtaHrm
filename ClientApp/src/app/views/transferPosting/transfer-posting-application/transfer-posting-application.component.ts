@@ -67,10 +67,10 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   icons = { cilArrowLeft, cilSearch };
 
   ngOnInit(): void {
-    this.initaialForm();
     const currentUserString = localStorage.getItem('currentUser');
     const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
     this.loginEmpId = currentUserJSON.empId;
+    this.initaialForm();
     this.getEmployeeByEmpId();
     this.loadOffice();
     this.getAllDepartment();
@@ -164,7 +164,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       designationName: null,
       sectionName: null,
       orderByOffice: '',
-      applicationById: null,
+      applicationById: this.loginEmpId,
       currentOfficeId: null,
       currentDeptJoinDate: null,
       currentDepartmentId: null,
@@ -250,7 +250,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       designationName: null,
       sectionName: null,
       orderByOffice: '',
-      applicationById: null,
+      applicationById: this.loginEmpId,
       currentOfficeId: null,
       currentDeptJoinDate: null,
       currentDepartmentId: null,
@@ -557,7 +557,6 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     });
   }
   withPromotion(){
-    console.log(this.empTransferPostingService.empTransferPosting.empId)
     this.getEmpJobDetailsByEmpId(this.empTransferPostingService.empTransferPosting.empId || 0);
   }
 

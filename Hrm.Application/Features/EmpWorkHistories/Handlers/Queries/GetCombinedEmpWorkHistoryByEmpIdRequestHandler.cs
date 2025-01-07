@@ -96,7 +96,7 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                     //SectionId = transferPosting.CurrentSectionId,
                     //DesignationId = transferPosting.CurrentDesignationId,
                     JoiningDate = transferPosting.CurrentDeptJoinDate,
-                    ReleaseDate = transferPosting.JoiningDate?.AddDays(-1),
+                    ReleaseDate = transferPosting.DeptReleaseDate,
                     Remark = transferPosting.Remark,
                     IsActive = transferPosting.IsActive,
                     //OfficeName = transferPosting.CurrentOffice?.OfficeName,

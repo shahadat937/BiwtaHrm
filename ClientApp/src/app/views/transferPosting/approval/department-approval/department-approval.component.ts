@@ -200,17 +200,16 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
             userNotification.nevigateLink = '/transferPosting/transferPostingList';
             userNotification.forEntryId = this.empTransferPosting.id;
             userNotification.title = 'Transfer and Posting';
-            userNotification.message = 'rejected your application.';
+            userNotification.message = 'rejected your application from Department Release.';
             this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
           }
           else{
             this.toastr.success('', `${response.message}`, {
               positionClass: 'toast-top-right',
             });
-            
+
             //Notification
             if(prevDeptApproveStatus != this.empTransferPosting.deptApproveStatus && this.empTransferPosting.deptApproveStatus == true){
-              console.log("Hitted True")
               const userNotification = new UserNotification();
               userNotification.fromEmpId = this.empTransferPosting.empId;
               userNotification.toDeptId = this.empTransferPosting.transferDepartmentId;
@@ -222,7 +221,6 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
               this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
             }
             else if(prevDeptApproveStatus != this.empTransferPosting.deptApproveStatus && this.empTransferPosting.deptApproveStatus == false){
-              console.log("Hitted False")
               const userNotification = new UserNotification();
               userNotification.fromEmpId = this.empTransferPosting.deptReleaseById;
               userNotification.toEmpId = this.empTransferPosting.applicationById;

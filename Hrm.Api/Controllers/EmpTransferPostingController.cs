@@ -99,10 +99,10 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-EmpTransferPostingJoiningInfo/{id}")]
-        public async Task<ActionResult> EmpTransferPostingJoiningInfo(int id)
+        [Route("get-EmpTransferPostingJoiningInfo")]
+        public async Task<ActionResult> EmpTransferPostingJoiningInfo([FromQuery] QueryParams queryParams, int? empId, int? id)
         {
-            var command = new GetEmpTransferPostingJoiningInfoRequest { Id = id };
+            var command = new GetEmpTransferPostingJoiningInfoRequest { QueryParams = queryParams, EmpId = empId, Id = id };
             var EmpTransferPosting = await _mediator.Send(command);
             return Ok(EmpTransferPosting);
         }

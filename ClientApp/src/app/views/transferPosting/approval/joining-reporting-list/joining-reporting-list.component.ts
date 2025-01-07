@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { EmpTransferPostingService } from '../../service/emp-transfer-posting.se
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TransferPostingInfoComponent } from '../../transfer-posting-info/transfer-posting-info.component';
 import { JoiningReportingComponent } from '../joining-reporting/joining-reporting.component';
+import { PaginatorModel } from 'src/app/core/models/paginator-model';
 
 @Component({
   selector: 'app-joining-reporting-list',
@@ -34,12 +35,15 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
   @ViewChild(MatSort)
   matSort!: MatSort;
   loginEmpId: number = 0;
+  noticeForEntryId: number = 0;
+  pagination: PaginatorModel = new PaginatorModel();
   
   constructor(
     private toastr: ToastrService,
     public empTransferPostingService: EmpTransferPostingService,
     private route: ActivatedRoute,
     private modalService: BsModalService,
+    private router: Router,
   ) {
 
   }
@@ -51,25 +55,37 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
     const currentUserString = localStorage.getItem('currentUser');
     const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
     this.loginEmpId = currentUserJSON.empId ?? 0;
+    this.route.queryParams.subscribe((params) => {
+      this.noticeForEntryId = params['forNotificationId'] || 0;
+      this.getAllEmpTransferPostingJoiningInfo(this.pagination);
+    });
 
-    this.getAllEmpTransferPostingJoiningInfo();
+    this.getAllEmpTransferPostingJoiningInfo(this.pagination);
   }
 
-  getAllEmpTransferPostingJoiningInfo() {
+  getAllEmpTransferPostingJoiningInfo(queryParams: any) {
     this.subscription.push(
-    this.empTransferPostingService.getAllEmpTransferPostingJoiningInfo(this.loginEmpId).subscribe((item) => {
-      this.dataSource = new MatTableDataSource(item);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.matSort;
+    this.empTransferPostingService.getAllEmpTransferPostingJoiningInfo(queryParams, this.loginEmpId, this.noticeForEntryId).subscribe((item) => {
+      this.dataSource.data = item.items;
+      this.pagination.length = item.totalItemsCount;
     })
     )
     
   }
 
+  cancle(){
+    this.router.navigate(['/transferPosting/joiningReportingList']);
+  }
+
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+    this.pagination.searchText = filterValue;
+    this.getAllEmpTransferPostingJoiningInfo(this.pagination);
+  }
+  onPageChange(event: any){
+    this.pagination.pageSize = event.pageSize;
+    event.pageIndex = event.pageIndex + 1;
+    this.getAllEmpTransferPostingJoiningInfo(event);
   }
   
   ngOnDestroy(): void {
@@ -95,7 +111,7 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
 
     if (modalRef.onHide) {
       modalRef.onHide.subscribe(() => {
-        this.getAllEmpTransferPostingJoiningInfo();
+        this.getAllEmpTransferPostingJoiningInfo(this.pagination);
       });
     }
   }

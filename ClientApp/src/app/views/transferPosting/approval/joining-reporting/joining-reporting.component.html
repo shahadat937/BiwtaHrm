@@ -211,9 +211,9 @@
                         <select [(ngModel)]="empTransferPostingService.empTransferPosting.joiningStatus"
                         name="joiningStatus" #joiningStatus="ngModel"
                         cSelect id="joiningStatus">
-                        <option value="">Pending</option>
-                        <option value="true">Joined</option>
-                        <option value="false">Not-Joined</option>
+                        <option [ngValue]=null>Pending</option>
+                        <option [ngValue]=true>Joined</option>
+                        <option [ngValue]=false>Not-Joined</option>
                         </select>
                     </c-col>
                     

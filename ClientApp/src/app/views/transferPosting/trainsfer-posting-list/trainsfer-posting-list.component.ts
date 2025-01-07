@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
 import { EmpTransferPostingService } from '../service/emp-transfer-posting.service';
@@ -46,6 +46,7 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private modalService: BsModalService,
     private confirmService: ConfirmService,
+    private router: Router,
   ) {
 
   }
@@ -81,6 +82,10 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     this.pagination.pageSize = event.pageSize;
     event.pageIndex = event.pageIndex + 1;
     this.getAllTransferPostingInfo(event);
+  }
+  
+  cancle(){
+    this.router.navigate(['/transferPosting/transferPostingList']);
   }
   
   ngOnDestroy(): void {

@@ -6,24 +6,25 @@
                   '/transferPosting/transferPostingApplication']"><svg [cIcon]="icons.cilPlus"></svg> Add New Order</button></div>
     </c-card-header>
     <c-card-body>
-      <div class="example-header">
-
-
-        <mat-form-field>
+      <div class="row d-flex justify-content-between">
+        <p-iconField iconPosition="right" class="col-md pb-2">
+          <p-inputIcon>
+            <mat-icon>search</mat-icon>
+          </p-inputIcon>
           <input
-            matInput
+            pInputText
+            type="text"
             #filter
             (keyup)="applyFilter(filter.value)"
             placeholder="Search Here.."
           />
-          <button
-            mat-icon-button
-            matSuffix
-            aria-label="clear"
-            *ngIf="filter.value"
-            (click)="filter.value = ''; applyFilter('')"
-          ></button>
-        </mat-form-field>
+        </p-iconField>
+        
+        <div class="col-md pb-2 text-end">
+          <button mat-raised-button class="bg-danger text-light" *ngIf="noticeForEntryId != 0" (click)="cancle()">
+            <mat-icon>layers_clear</mat-icon> Cancle
+        </button>
+        </div>
       </div>
         <div class="mat-elevation-z8 table-responsive">
           <table mat-table [dataSource]="dataSource">

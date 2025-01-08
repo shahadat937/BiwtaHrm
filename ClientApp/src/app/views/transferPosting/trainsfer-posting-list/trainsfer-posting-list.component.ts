@@ -13,6 +13,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
 import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { AuthService } from '../../../core/service/auth.service';
 
 @Component({
   selector: 'app-trainsfer-posting-list',
@@ -42,6 +43,7 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
   pagination: PaginatorModel = new PaginatorModel();
   noticeForEntryId: number = 0;
   featurePermission : FeaturePermission = new FeaturePermission;
+  loginEmpId: number = 0;
   
   constructor(
     private toastr: ToastrService,
@@ -51,6 +53,7 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     private confirmService: ConfirmService,
     private router: Router,
     public roleFeatureService: RoleFeatureService,
+    private authService: AuthService,
   ) {
 
   }
@@ -67,11 +70,11 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     this.roleFeatureService.getFeaturePermission('transferPostingList').subscribe((item) => {
       this.featurePermission = item;
       if(item.viewStatus == true){
+        this.loginEmpId = this.authService.userInformation.empId || 0;
         this.route.queryParams.subscribe((params) => {
           this.noticeForEntryId = params['forNotificationId'] || 0;
           this.getAllTransferPostingInfo(this.pagination);
         });
-        this.getAllTransferPostingInfo(this.pagination);
       }
       else{
         this.roleFeatureService.unauthorizeAccress();
@@ -129,8 +132,8 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     const modalRef: BsModalRef = this.modalService.show(TransferPostingInfoComponent, { initialState, backdrop: 'static' });
   }
 
-  updateInformation(id: number){
-    if(this.featurePermission.update == true){
+  updateInformation(id: number, applicationById: number){
+    if(this.featurePermission.update == true || (this.featurePermission.update == false && applicationById == this.loginEmpId)){
       this.router.navigate([`transferPosting/update-transferPostingApplication/${id}`]);
     }
     else {
@@ -138,8 +141,8 @@ export class TrainsferPostingListComponent implements OnInit, OnDestroy {
     }
   }
 
-  delete(element: any) {
-    if(this.featurePermission.delete == true){
+  delete(element: any, applicationById: number) {
+    if(this.featurePermission.delete == true || (this.featurePermission.delete == false && applicationById == this.loginEmpId)){
       this.subscription.push(
         this.confirmService
           .confirm('Confirm delete message', 'Are You Sure Delete This  Item')

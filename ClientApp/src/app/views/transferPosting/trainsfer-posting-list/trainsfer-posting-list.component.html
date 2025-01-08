@@ -111,10 +111,10 @@
                   <button cTooltip="View" cTooltipPlacement="bottom" mat-icon-button class="text-info" (click)="transferPostingInfo(element.id)">
                       <mat-icon>remove_red_eye</mat-icon>
                   </button>
-                  <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary" (click)="updateInformation(element.id)">
+                  <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary" (click)="updateInformation(element.id, element.applicationById)">
                       <mat-icon>edit</mat-icon>
                   </button>
-                  <button cTooltip="Delete" cTooltipPlacement="bottom" mat-icon-button color="warn" (click)="delete(element)">
+                  <button cTooltip="Delete" cTooltipPlacement="bottom" mat-icon-button color="warn" (click)="delete(element, element.applicationById)">
                       <mat-icon>delete</mat-icon>
                   </button>
               </td>

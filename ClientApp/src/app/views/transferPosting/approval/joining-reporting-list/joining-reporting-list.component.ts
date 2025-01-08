@@ -11,6 +11,9 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TransferPostingInfoComponent } from '../../transfer-posting-info/transfer-posting-info.component';
 import { JoiningReportingComponent } from '../joining-reporting/joining-reporting.component';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
+import { AuthService } from '../../../../core/service/auth.service';
+import { FeaturePermission } from '../../../featureManagement/model/feature-permission';
+import { RoleFeatureService } from '../../../featureManagement/service/role-feature.service';
 
 @Component({
   selector: 'app-joining-reporting-list',
@@ -37,6 +40,7 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
   loginEmpId: number = 0;
   noticeForEntryId: number = 0;
   pagination: PaginatorModel = new PaginatorModel();
+  featurePermission : FeaturePermission = new FeaturePermission;
   
   constructor(
     private toastr: ToastrService,
@@ -44,6 +48,8 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private modalService: BsModalService,
     private router: Router,
+    public roleFeatureService: RoleFeatureService,
+    private authService: AuthService,
   ) {
 
   }
@@ -52,15 +58,26 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    const currentUserString = localStorage.getItem('currentUser');
-    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-    this.loginEmpId = currentUserJSON.empId ?? 0;
-    this.route.queryParams.subscribe((params) => {
-      this.noticeForEntryId = params['forNotificationId'] || 0;
-      this.getAllEmpTransferPostingJoiningInfo(this.pagination);
-    });
+    this.getPermission();
+  }
 
-    this.getAllEmpTransferPostingJoiningInfo(this.pagination);
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('joiningReportingList').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        this.loginEmpId = this.authService.userInformation.empId || 0;
+        this.route.queryParams.subscribe((params) => {
+          this.noticeForEntryId = params['forNotificationId'] || 0;
+          this.getAllEmpTransferPostingJoiningInfo(this.pagination);
+        });
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
   }
 
   getAllEmpTransferPostingJoiningInfo(queryParams: any) {
@@ -103,16 +120,21 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
 
   
   transferPostingJoiningReporting(id: number, clickedButton: string){
-    const initialState = {
-      id: id,
-      clickedButton: clickedButton
-    };
-    const modalRef: BsModalRef = this.modalService.show(JoiningReportingComponent, { initialState, backdrop: 'static' });
-
-    if (modalRef.onHide) {
-      modalRef.onHide.subscribe(() => {
-        this.getAllEmpTransferPostingJoiningInfo(this.pagination);
-      });
+    if(this.featurePermission.update == true){
+      const initialState = {
+        id: id,
+        clickedButton: clickedButton
+      };
+      const modalRef: BsModalRef = this.modalService.show(JoiningReportingComponent, { initialState, backdrop: 'static' });
+  
+      if (modalRef.onHide) {
+        modalRef.onHide.subscribe(() => {
+          this.getAllEmpTransferPostingJoiningInfo(this.pagination);
+        });
+      }
+    }
+    else {
+      this.roleFeatureService.unauthorizeAccress();
     }
   }
 

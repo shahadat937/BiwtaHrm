@@ -11,6 +11,9 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TransferPostingInfoComponent } from '../../transfer-posting-info/transfer-posting-info.component';
 import { DepartmentApprovalComponent } from '../department-approval/department-approval.component';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
+import { FeaturePermission } from '../../../featureManagement/model/feature-permission';
+import { RoleFeatureService } from '../../../featureManagement/service/role-feature.service';
+import { AuthService } from '../../../../core/service/auth.service';
 
 @Component({
   selector: 'app-department-approval-list',
@@ -37,6 +40,7 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
   loginEmpId: number = 0;
   noticeForEntryId: number = 0;
   pagination: PaginatorModel = new PaginatorModel();
+  featurePermission : FeaturePermission = new FeaturePermission;
   
   constructor(
     private toastr: ToastrService,
@@ -44,6 +48,8 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private modalService: BsModalService,
     private router: Router,
+    public roleFeatureService: RoleFeatureService,
+    private authService: AuthService,
   ) {
 
   }
@@ -52,14 +58,28 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    const currentUserString = localStorage.getItem('currentUser');
-    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-    this.loginEmpId = currentUserJSON.empId ?? 0;
-    this.route.queryParams.subscribe((params) => {
-      this.noticeForEntryId = params['forNotificationId'] || 0;
-      this.getAllEmpTransferPostingDeptApproveInfo(this.pagination);
-    });
+    this.getPermission();
   }
+
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('departmentApprovalList').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        this.loginEmpId = this.authService.userInformation.empId || 0;
+        this.route.queryParams.subscribe((params) => {
+          this.noticeForEntryId = params['forNotificationId'] || 0;
+          this.getAllEmpTransferPostingDeptApproveInfo(this.pagination);
+        });
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
+  }
+
 
   cancle(){
     this.router.navigate(['/transferPosting/departmentApprovalList']);
@@ -104,19 +124,24 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
 
   
   transferPostingDeptApproval(id: number, clickedButton: string){
-    const initialState = {
-      id: id,
-      clickedButton: clickedButton
-    };
-    const modalRef: BsModalRef = this.modalService.show(DepartmentApprovalComponent, { initialState, backdrop: 'static' });
-
-    if (modalRef.onHide) {
-      this.subscription.push(
-        modalRef.onHide.subscribe(() => {
-          this.getAllEmpTransferPostingDeptApproveInfo(this.pagination);
-        })
-      )
-     
+    if(this.featurePermission.update == true){
+      const initialState = {
+        id: id,
+        clickedButton: clickedButton
+      };
+      const modalRef: BsModalRef = this.modalService.show(DepartmentApprovalComponent, { initialState, backdrop: 'static' });
+  
+      if (modalRef.onHide) {
+        this.subscription.push(
+          modalRef.onHide.subscribe(() => {
+            this.getAllEmpTransferPostingDeptApproveInfo(this.pagination);
+          })
+        )
+       
+      }
+    }
+    else {
+      this.roleFeatureService.unauthorizeAccress();
     }
   }
 

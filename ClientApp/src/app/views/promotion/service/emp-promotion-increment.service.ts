@@ -29,8 +29,11 @@ export class EmpPromotionIncrementService {
       );
   }
 
-  getAllEmpPromotionIncrementApproveInfo(id: number){
-    return this.http.get<EmpPromotionIncrement[]>(this.baseUrl + '/empPromotionIncrement/get-AllEmpPromotionIncrementApproveInfo/' + id);
+  getAllEmpPromotionIncrementApproveInfo(queryParams: any, empId:any, id: any){
+    let params = new HttpParams({ fromObject: queryParams }); 
+    params = params.append('empId', empId);
+    params = params.append('id', id);
+    return this.http.get<any>(this.baseUrl + '/empPromotionIncrement/get-AllEmpPromotionIncrementApproveInfo',{params});
   }
   
   

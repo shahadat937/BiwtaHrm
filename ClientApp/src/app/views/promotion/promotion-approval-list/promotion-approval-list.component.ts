@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,10 @@ import { Subscription } from 'rxjs';
 import { PromotionIncrementInfoComponent } from '../promotion-increment-info/promotion-increment-info.component';
 import { EmpPromotionIncrementService } from '../service/emp-promotion-increment.service';
 import { IncrementAndPromotionApprovalComponent } from '../increment-and-promotion-approval/increment-and-promotion-approval.component';
+import { AuthService } from '../../../core/service/auth.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { PaginatorModel } from 'src/app/core/models/paginator-model';
 
 @Component({
   selector: 'app-promotion-approval-list',
@@ -36,12 +40,18 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
   @ViewChild(MatSort)
   matSort!: MatSort;
   loginEmpId: number = 0;
+  noticeForEntryId: number = 0;
+  pagination: PaginatorModel = new PaginatorModel();
+  featurePermission : FeaturePermission = new FeaturePermission;
   
   constructor(
     private toastr: ToastrService,
     public empPromotionIncrementService: EmpPromotionIncrementService,
     private route: ActivatedRoute,
     private modalService: BsModalService,
+    private router: Router,
+    public roleFeatureService: RoleFeatureService,
+    private authService: AuthService,
   ) {
 
   }
@@ -50,34 +60,59 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    const currentUserString = localStorage.getItem('currentUser');
-    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-    this.loginEmpId = currentUserJSON.empId ?? 0;
-    this.getAllPromotionIncrementInfo();
+    this.getPermission();
   }
 
-  getAllPromotionIncrementInfo() {
-    // this.subscription = 
+  getPermission(){
     this.subscription.push(
-    this.empPromotionIncrementService.getAllEmpPromotionIncrementApproveInfo(this.loginEmpId).subscribe((item) => {
-      this.dataSource = new MatTableDataSource(item);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.matSort;
+    this.roleFeatureService.getFeaturePermission('incrementAndPromotionApproval').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        this.loginEmpId = this.authService.userInformation.empId || 0;
+        this.route.queryParams.subscribe((params) => {
+          this.noticeForEntryId = params['forNotificationId'] || 0;
+          this.getAllPromotionIncrementInfo(this.pagination);
+        });
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
     })
     )
-    
   }
 
+  cancle(){
+    this.router.navigate(['/promotion/incrementAndPromotionApproval']);
+  }
+
+  getAllPromotionIncrementInfo(queryParams: any) {
+    // this.subscription = 
+    this.subscription.push(
+    this.empPromotionIncrementService.getAllEmpPromotionIncrementApproveInfo(queryParams, this.loginEmpId, this.noticeForEntryId).subscribe((item) => {
+      this.dataSource.data = item.items;
+      // this.dataSource.paginator = this.paginator;
+      this.pagination.length = item.totalItemsCount;
+    })
+    )
+  }
+  
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+    this.pagination.searchText = filterValue;
+    this.getAllPromotionIncrementInfo(this.pagination);
   }
   
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.forEach(subs=>subs.unsubscribe())
     }
+  }
+  
+  onPageChange(event: any){
+    this.pagination.pageSize = event.pageSize;
+    event.pageIndex = event.pageIndex + 1;
+    this.getAllPromotionIncrementInfo(event);
   }
 
   promotionIncrementInfo(id: number) {
@@ -88,19 +123,24 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
   }
   
   promotionIncrementApproval(id: number, clickedButton: string){
-    const initialState = {
-      id: id,
-      clickedButton: clickedButton
-    };
-    const modalRef: BsModalRef = this.modalService.show(IncrementAndPromotionApprovalComponent, { initialState, backdrop: 'static' });
-
-    if (modalRef.onHide) {
-      this.subscription.push(
-      modalRef.onHide.subscribe(() => {
-        this.getAllPromotionIncrementInfo();
-      })
-      )
-      
+    if(this.featurePermission.update == true){
+      const initialState = {
+        id: id,
+        clickedButton: clickedButton
+      };
+      const modalRef: BsModalRef = this.modalService.show(IncrementAndPromotionApprovalComponent, { initialState, backdrop: 'static' });
+  
+      if (modalRef.onHide) {
+        this.subscription.push(
+        modalRef.onHide.subscribe(() => {
+          this.getAllPromotionIncrementInfo(event);
+        })
+        )
+        
+      }
+    }
+    else {
+      this.roleFeatureService.unauthorizeAccress();
     }
   }
 }

@@ -2,6 +2,7 @@
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.EmpPromotionIncrement;
 using Hrm.Application.Features.EmpPromotionIncrements.Requests.Queries;
+using Hrm.Application.Models;
 using Hrm.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
 {
-    public class GetEmpPromotionIncrementApprovalListRequestHandler : IRequestHandler<GetEmpPromotionIncrementApprovalListRequest, object>
+    public class GetEmpPromotionIncrementApprovalListRequestHandler : IRequestHandler<GetEmpPromotionIncrementApprovalListRequest, PagedResult<EmpPromotionIncrementDto>>
     {
 
         private readonly IHrmRepository<EmpPromotionIncrement> _EmpPromotionIncrementRepository;
@@ -26,13 +28,18 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
             _EmpJobDetailRepository = empJobDetailRepository;
         }
 
-        public async Task<object> Handle(GetEmpPromotionIncrementApprovalListRequest request, CancellationToken cancellationToken)
+        public async Task<PagedResult<EmpPromotionIncrementDto>> Handle(GetEmpPromotionIncrementApprovalListRequest request, CancellationToken cancellationToken)
         {
-            if (request.Id != 0)
+            if (request.EmpId != 0)
             {
-                var empJobDetail = await _EmpJobDetailRepository.FindOneAsync(x => x.EmpId == request.Id);
+                var empDepartmentId = await _EmpJobDetailRepository.Where(x => x.EmpId == request.EmpId).Select(x => x.DepartmentId).FirstOrDefaultAsync();
 
-                IQueryable<EmpPromotionIncrement> EmpPromotionIncrements = _EmpPromotionIncrementRepository.Where(x => x.IsApproval == true && x.CurrentDepartmentId == empJobDetail.DepartmentId)
+                IQueryable<EmpPromotionIncrement> query = _EmpPromotionIncrementRepository.FilterWithInclude(x => (x.EmpBasicInfo.IdCardNo.ToLower().Contains(request.QueryParams.SearchText) ||
+                    x.EmpBasicInfo.FirstName.ToLower().Contains(request.QueryParams.SearchText) ||
+                    x.EmpBasicInfo.LastName.ToLower().Contains(request.QueryParams.SearchText) ||
+                    String.IsNullOrEmpty(request.QueryParams.SearchText))
+                    && (request.Id == 0 || x.Id == request.Id) && 
+                    (x.IsApproval == true && x.CurrentDepartmentId == empDepartmentId))
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.ApplicationBy)
                 .Include(x => x.OrderBy)
@@ -48,15 +55,26 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
                 .Include(x => x.UpdateGrade)
                 .Include(x => x.UpdateScale);
 
-                EmpPromotionIncrements = EmpPromotionIncrements.OrderBy(x => x.ApproveStatus);
+                var totalCount = await query.CountAsync();
 
-                var EmpPromotionIncrementDtos = _mapper.Map<List<EmpPromotionIncrementDto>>(EmpPromotionIncrements);
+                var queryFilter = await query.OrderByDescending(x => x.Id)
+                    .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
+                    .Take(request.QueryParams.PageSize)
+                    .ToListAsync(cancellationToken);
 
-                return EmpPromotionIncrementDtos;
+                var EmpPromotionIncrementDtos = _mapper.Map<List<EmpPromotionIncrementDto>>(queryFilter);
+
+                var result = new PagedResult<EmpPromotionIncrementDto>(EmpPromotionIncrementDtos, totalCount, request.QueryParams.PageIndex, request.QueryParams.PageSize);
+
+                return result;
             }
             else
             {
-                IQueryable<EmpPromotionIncrement> EmpPromotionIncrements = _EmpPromotionIncrementRepository.Where(x => x.IsApproval == true)
+                IQueryable<EmpPromotionIncrement> query = _EmpPromotionIncrementRepository.FilterWithInclude(x => (x.EmpBasicInfo.IdCardNo.ToLower().Contains(request.QueryParams.SearchText) ||
+                    x.EmpBasicInfo.FirstName.ToLower().Contains(request.QueryParams.SearchText) ||
+                    x.EmpBasicInfo.LastName.ToLower().Contains(request.QueryParams.SearchText) ||
+                    String.IsNullOrEmpty(request.QueryParams.SearchText))
+                    && (request.Id == 0 || x.Id == request.Id) && x.IsApproval == true)
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.ApplicationBy)
                 .Include(x => x.OrderBy)
@@ -72,11 +90,18 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
                 .Include(x => x.UpdateGrade)
                 .Include(x => x.UpdateScale);
 
-                EmpPromotionIncrements = EmpPromotionIncrements.OrderBy(x => x.ApproveStatus);
+                var totalCount = await query.CountAsync();
 
-                var EmpPromotionIncrementDtos = _mapper.Map<List<EmpPromotionIncrementDto>>(EmpPromotionIncrements);
+                var queryFilter = await query.OrderByDescending(x => x.Id)
+                    .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
+                    .Take(request.QueryParams.PageSize)
+                    .ToListAsync(cancellationToken);
 
-                return EmpPromotionIncrementDtos;
+                var EmpPromotionIncrementDtos = _mapper.Map<List<EmpPromotionIncrementDto>>(queryFilter);
+
+                var result = new PagedResult<EmpPromotionIncrementDto>(EmpPromotionIncrementDtos, totalCount, request.QueryParams.PageIndex, request.QueryParams.PageSize);
+
+                return result;
             }
             
         }

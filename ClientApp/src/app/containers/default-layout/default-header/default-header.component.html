@@ -91,7 +91,7 @@
       <li *ngIf="unreadNotification == 0">
         <span class="text-muted d-block text-center">No new notifications</span>
       </li>
-      <li *ngIf="userNoftification.length > 4 || unreadNotification < totalNotification" class="dropdownFooter">
+      <li *ngIf="userNoftification.length > 4 || unreadNotification < totalNotification" class="dropdownFooter" [routerLink]="['/notifications/notificationList']">
         <a cDropdownItem class="d-block text-center">
           View all notifications <label  class="text-muted">({{totalNotification}})</label>
         </a>

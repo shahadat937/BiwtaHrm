@@ -16,6 +16,11 @@ import { EmpRewardPunishmentService } from '../../employee/service/emp-reward-pu
 import { EmpRewardPunishment } from '../../employee/model/emp-reward-punishment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
+import { AuthService } from '../../../core/service/auth.service';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { NotificationService } from '../../notifications/service/notification.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { UserNotification } from '../../notifications/models/user-notification';
 
 @Component({
   selector: 'app-increment-and-promotion',
@@ -43,6 +48,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
   empJobDetailsId: number = 0;
   empPromotionIncrement: EmpPromotionIncrement = new EmpPromotionIncrement;
   @ViewChild('EmpPromotionIncrementForm', { static: true }) EmpPromotionIncrementForm!: NgForm;
+  featurePermission : FeaturePermission = new FeaturePermission;
 
   constructor(
     private toastr: ToastrService,
@@ -56,6 +62,9 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     private router: Router,
     public empRewardPunishmentService: EmpRewardPunishmentService,
     private modalService: BsModalService,
+    public notificationService: NotificationService,
+    private authService: AuthService,
+    public roleFeatureService: RoleFeatureService,
   ) {
 
   }
@@ -63,13 +72,35 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
   icons = { cilArrowLeft, cilSearch };
 
   ngOnInit(): void {
-    this.initaialForm();
-    const currentUserString = localStorage.getItem('currentUser');
-    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-    this.loginEmpId = currentUserJSON.empId;
-    this.SelectedModelGrade();
-    this.getEmployeeByEmpId();
+    if(this.authService.userInformation != null){
+      this.getPermission();
+    }
+    else {
+      this.toastr.warning('', 'Please Login First', {
+        positionClass: 'toast-top-right',
+      });
+    }
   }
+
+  
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('transferPostingApplication').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        this.loginEmpId = this.authService.userInformation.empId;;
+        this.initaialForm();
+        this.SelectedModelGrade();
+        this.getEmployeeByEmpId();
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
+  }
+
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.forEach(subs=>subs.unsubscribe())
@@ -97,7 +128,6 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
     this.subscription.push(
        this.empPromotionIncrementService.findById(this.id).subscribe((res) => {
       if (res) {
-        console.log(res)
         this.empPromotionIncrement = res;
         this.patchEmpInfo();
         this.getEmpRewardPunishmentByEmpId(res.empId || 0);
@@ -152,7 +182,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       orderDate : null,
       orderNo: "",
       effectiveDate : null,
-      applicationById : null,
+      applicationById : this.loginEmpId,
       isApproval : true,
       provideApprovalInfo: false,
       approveByIdCardNo: null,
@@ -201,7 +231,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       orderDate : null,
       orderNo: "",
       effectiveDate : null,
-      applicationById : null,
+      applicationById : this.loginEmpId,
       isApproval : true,
       provideApprovalInfo: false,
       approveByIdCardNo: null,
@@ -374,13 +404,9 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
   
 
   onSubmit(form: NgForm): void {
-    console.log("Form Value : ", form.value)
     this.loading = true;
     if(form.value.provideApprovalInfo == true){
       form.value.approveById = this.loginEmpId;
-    }
-    if(form.value.approveStatus == 'null'){
-      form.value.approveStatus = null;
     }
     this.empPromotionIncrementService.cachedData = [];
     const id = form.value.id;
@@ -395,6 +421,34 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
+        
+        // Notification Start
+        if(id == 0) {
+          if(this.empPromotionIncrementService.empPromotionIncrement.isApproval && !this.empPromotionIncrementService.empPromotionIncrement.provideApprovalInfo){
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.empPromotionIncrementService.empPromotionIncrement.empId
+            userNotification.toDeptId = this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentId;
+            userNotification.featurePath = 'incrementAndPromotionApproval';
+            userNotification.nevigateLink = '/promotion/incrementAndPromotionApproval';
+            userNotification.forEntryId = response.id;
+            userNotification.title = 'Promotion and Increment';
+            userNotification.message = 'new Increment and Promotion application, Approval Pending.';
+            this.notificationService.submit(userNotification).subscribe((res) => {});
+          }
+          else if(!this.empPromotionIncrementService.empPromotionIncrement.isApproval || this.empPromotionIncrementService.empPromotionIncrement.provideApprovalInfo){
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.empPromotionIncrementService.empPromotionIncrement.empId;
+            userNotification.toEmpId = this.empPromotionIncrementService.empPromotionIncrement.empId;
+            userNotification.featurePath = 'profile';
+            userNotification.nevigateLink = '/employee/profile';
+            userNotification.forEntryId = response.id;
+            userNotification.title = 'Promotion and Increment';
+            userNotification.message = 'your promotion and increment have been approved.';
+            this.notificationService.submit(userNotification).subscribe((res) => {});
+          }
+        }
+        // Notification End
+        
         this.loading = false;
         this.router.navigate(['/promotion/manage-incrementAndPromotion']);
       } else {

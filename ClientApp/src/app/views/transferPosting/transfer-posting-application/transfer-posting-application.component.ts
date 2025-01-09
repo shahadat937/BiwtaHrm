@@ -726,7 +726,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
             userNotification.nevigateLink = '/transferPosting/departmentApprovalList';
             userNotification.forEntryId = response.id;
             userNotification.title = 'Transfer and Posting';
-            userNotification.message = 'new Transfer & and Posting application, Department Release Pending.';
+            userNotification.message = 'new Transfer and Posting application, Department Release Pending.';
             this.notificationService.submit(userNotification).subscribe((res) => {});
           }
           else if(this.empTransferPostingService.empTransferPosting.isJoining && !this.empTransferPostingService.empTransferPosting.provideJoiningInfo){
@@ -737,8 +737,19 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
             userNotification.nevigateLink = '/transferPosting/joiningReportingList';
             userNotification.forEntryId = response.id;
             userNotification.title = 'Transfer and Posting';
-            userNotification.message = ' Transfer & and Posting application, Joining Info Pending.';
+            userNotification.message = ' Transfer and Posting application, Joining Info Pending.';
             this.notificationService.submit(userNotification).subscribe((res) => {});
+          }
+          else if((!this.empTransferPostingService.empTransferPosting.isDepartmentApprove && !this.empTransferPostingService.empTransferPosting.isJoining) || (this.empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo && this.empTransferPostingService.empTransferPosting.provideJoiningInfo)){
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.empTransferPostingService.empTransferPosting.empId;
+            userNotification.toEmpId = this.empTransferPostingService.empTransferPosting.empId;
+            userNotification.featurePath = 'profile';
+            userNotification.nevigateLink = '/employee/profile';
+            userNotification.forEntryId = response.id;
+            userNotification.title = 'Transfer and Posting';
+            userNotification.message = 'you have been transfered into '+ this.empTransferPosting.transferDepartmentName + ' department';
+            this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
           }
         }
         // Notification End

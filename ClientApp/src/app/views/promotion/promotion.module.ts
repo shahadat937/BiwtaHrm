@@ -44,6 +44,9 @@ import { PromotionApprovalListComponent } from './promotion-approval-list/promot
 import { GradeService } from '../basic-setup/service/Grade.service';
 import { OfficeService } from '../basic-setup/service/office.service';
 import { DepartmentService } from '../basic-setup/service/department.service';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 @NgModule({
@@ -105,6 +108,9 @@ import { DepartmentService } from '../basic-setup/service/department.service';
     PopoverModule,
     AlertComponent,
     TooltipModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
   ],
   providers:[
     GradeService,

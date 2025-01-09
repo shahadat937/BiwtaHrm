@@ -7,23 +7,26 @@
     </c-card-header>
     <c-card-body>
       <div class="example-header">
-
-
-        <mat-form-field>
-          <input
-            matInput
-            #filter
-            (keyup)="applyFilter(filter.value)"
-            placeholder="Search Here.."
-          />
-          <button
-            mat-icon-button
-            matSuffix
-            aria-label="clear"
-            *ngIf="filter.value"
-            (click)="filter.value = ''; applyFilter('')"
-          ></button>
-        </mat-form-field>
+        <div class="row d-flex justify-content-between">
+          <p-iconField iconPosition="right" class="col-md pb-2">
+            <p-inputIcon>
+              <mat-icon>search</mat-icon>
+            </p-inputIcon>
+            <input
+              pInputText
+              type="text"
+              #filter
+              (keyup)="applyFilter(filter.value)"
+              placeholder="Search Here.."
+            />
+          </p-iconField>
+          
+          <div class="col-md pb-2 text-end">
+            <button mat-raised-button class="bg-danger text-light" *ngIf="noticeForEntryId != 0" (click)="cancle()">
+              <mat-icon>layers_clear</mat-icon> Cancle
+          </button>
+          </div>
+        </div>
       </div>
         <div class="mat-elevation-z8 table-responsive">
           <table mat-table [dataSource]="dataSource">
@@ -101,13 +104,10 @@
                   <button cTooltip="View" cTooltipPlacement="bottom" mat-icon-button class="text-info" (click)="promotionIncrementInfo(element.id)">
                       <mat-icon>remove_red_eye</mat-icon>
                   </button>
-                  <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary" [routerLink]="[
-                  '/promotion/update-incrementAndPromotion/',
-                  element.id
-                ]">
+                  <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary" (click)="updateInformation(element.id, element.applicationById)">
                       <mat-icon>edit</mat-icon>
                   </button>
-                  <button cTooltip="Delete" cTooltipPlacement="bottom" mat-icon-button color="warn" (click)="delete(element)">
+                  <button cTooltip="Delete" cTooltipPlacement="bottom" mat-icon-button color="warn" (click)="delete(element, element.applicationById)">
                       <mat-icon>delete</mat-icon>
                   </button>
               </td>
@@ -119,13 +119,12 @@
         </div>
     </c-card-body>
     <c-card-footer class="text-medium-emphasis">
-      <mat-paginator
-        appBubblePagination
-        [length]="dataSource.data.length"
-        [pageSize]="10"
+      <mat-paginator 
+        [length]="pagination.length"
+        [pageSize]="pagination.pageSize"
+        [pageSizeOptions]="pagination.pageSizeOptions"
         [showFirstLastButtons]="true"
-        aria-label="Select page"
-      >
-      </mat-paginator>
+        (page)="onPageChange($event)">
+      </mat-paginator>    
     </c-card-footer>
   </c-card>

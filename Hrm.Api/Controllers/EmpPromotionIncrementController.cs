@@ -40,9 +40,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-allEmpPromotionIncrement")]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> Get([FromQuery] QueryParams queryParams, int? id)
         {
-            var command = new GetAllEmpPromotionIncrementRequest { };
+            var command = new GetAllEmpPromotionIncrementRequest { QueryParams = queryParams, Id = id };
             var EmpPromotionIncrement = await _mediator.Send(command);
             return Ok(EmpPromotionIncrement);
         }

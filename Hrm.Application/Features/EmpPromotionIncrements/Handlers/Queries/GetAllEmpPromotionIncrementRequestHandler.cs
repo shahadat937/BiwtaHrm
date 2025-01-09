@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.EmpPromotionIncrement;
+using Hrm.Application.DTOs.EmpTransferPosting;
 using Hrm.Application.Features.EmpPromotionIncrements.Requests.Queries;
+using Hrm.Application.Models;
 using Hrm.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
 {
-    public class GetAllEmpPromotionIncrementRequestHandler : IRequestHandler<GetAllEmpPromotionIncrementRequest, object>
+    public class GetAllEmpPromotionIncrementRequestHandler : IRequestHandler<GetAllEmpPromotionIncrementRequest, PagedResult<EmpPromotionIncrementDto>>
     {
 
         private readonly IHrmRepository<EmpPromotionIncrement> _EmpPromotionIncrementRepository;
@@ -24,9 +26,13 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
             _mapper = mapper;
         }
 
-        public async Task<object> Handle(GetAllEmpPromotionIncrementRequest request, CancellationToken cancellationToken)
+        public async Task<PagedResult<EmpPromotionIncrementDto>> Handle(GetAllEmpPromotionIncrementRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<EmpPromotionIncrement> EmpPromotionIncrements = _EmpPromotionIncrementRepository.Where(x => true)
+            IQueryable<EmpPromotionIncrement> query = _EmpPromotionIncrementRepository.FilterWithInclude(x => (x.EmpBasicInfo.IdCardNo.ToLower().Contains(request.QueryParams.SearchText) ||
+                    x.EmpBasicInfo.FirstName.ToLower().Contains(request.QueryParams.SearchText) ||
+                    x.EmpBasicInfo.LastName.ToLower().Contains(request.QueryParams.SearchText) ||
+                    String.IsNullOrEmpty(request.QueryParams.SearchText))
+                    && (request.Id == 0 || x.Id == request.Id))
                 .Include(x => x.EmpBasicInfo)
                 .Include(x => x.ApplicationBy)
                 .Include(x => x.OrderBy)
@@ -42,11 +48,18 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Queries
                 .Include(x => x.UpdateGrade)
                 .Include(x => x.UpdateScale);
 
-            EmpPromotionIncrements = EmpPromotionIncrements.OrderBy(x => x.ApproveStatus);
+            var totalCount = await query.CountAsync();
 
-            var EmpPromotionIncrementDtos = _mapper.Map<List<EmpPromotionIncrementDto>>(EmpPromotionIncrements);
+            var queryFilter = await query.OrderByDescending(x => x.Id)
+                .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
+                .Take(request.QueryParams.PageSize)
+                .ToListAsync(cancellationToken);
 
-            return EmpPromotionIncrementDtos;
+            var EmpPromotionIncrementDtos = _mapper.Map<List<EmpPromotionIncrementDto>>(queryFilter);
+
+            var result = new PagedResult<EmpPromotionIncrementDto>(EmpPromotionIncrementDtos, totalCount, request.QueryParams.PageIndex, request.QueryParams.PageSize);
+
+            return result;
         }
     }
 }

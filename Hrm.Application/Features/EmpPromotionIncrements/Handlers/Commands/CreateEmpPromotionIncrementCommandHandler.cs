@@ -71,7 +71,7 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Commands
             await _unitOfWork.Repository<EmpPromotionIncrement>().Add(EmpPromotionIncrements);
             await _unitOfWork.Save();
 
-
+            response.Id = EmpPromotionIncrements.Id;
             response.Success = true;
             response.Message = "Creation Successful";
 

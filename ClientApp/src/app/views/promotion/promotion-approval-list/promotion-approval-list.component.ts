@@ -133,7 +133,7 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
       if (modalRef.onHide) {
         this.subscription.push(
         modalRef.onHide.subscribe(() => {
-          this.getAllPromotionIncrementInfo(event);
+          this.getAllPromotionIncrementInfo(this.pagination);
         })
         )
         

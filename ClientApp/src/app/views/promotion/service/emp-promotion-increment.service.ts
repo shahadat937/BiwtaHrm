@@ -20,7 +20,7 @@ export class EmpPromotionIncrementService {
     let params = new HttpParams({ fromObject: queryParams });
     params = params.append('id', id);
     return this.http
-      .get<EmpPromotionIncrement[]>(this.baseUrl + '/empPromotionIncrement/get-allEmpPromotionIncrement', {params})
+      .get<any>(this.baseUrl + '/empPromotionIncrement/get-allEmpPromotionIncrement', {params})
       .pipe(
         map((data) => {
           this.cachedData = data; 

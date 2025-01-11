@@ -8,6 +8,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
 import { EmpPromotionIncrement } from '../model/emp-promotion-increment';
+import { UserNotification } from 'src/app/views/notifications/models/user-notification';
+import { NotificationService } from 'src/app/views/notifications/service/notification.service';
 
 @Component({
   selector: 'app-increment-and-promotion-approval',
@@ -34,7 +36,8 @@ export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy
     private route: ActivatedRoute,
     private bsModalRef: BsModalRef,
     private el: ElementRef, 
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    public notificationService: NotificationService,
   ) {
 
   }
@@ -103,7 +106,9 @@ export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy
     }
   }
 
-  onSubmit(ApproveStatus?: boolean){
+  onSubmit(ApproveStatus?: boolean){    
+      let prevApproveStatus = this.empPromotionIncrement.approveStatus;
+
       this.empPromotionIncrementService.cachedData = [];
       if(ApproveStatus == true || ApproveStatus == false){
         this.empPromotionIncrement.approveStatus = ApproveStatus;
@@ -125,16 +130,62 @@ export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy
             this.toastr.success('', `Application Approved Successfull`, {
               positionClass: 'toast-top-right',
             });
+            
+            //Notification
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.empPromotionIncrement.approveById;
+            userNotification.toEmpId = this.empPromotionIncrement.empId;
+            userNotification.featurePath = 'profile';
+            userNotification.nevigateLink = '/employee/profile';
+            userNotification.forEntryId = this.empPromotionIncrement.id;
+            userNotification.title = 'Transfer and Posting';
+            userNotification.message = 'approved your '+ this.empPromotionIncrement.promotionIncrementType;
+            this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
           }
           else if(ApproveStatus == false){
             this.toastr.error('', `Application Rejected Successfull`, {
               positionClass: 'toast-top-right',
             });
+            
+            //Notification
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.empPromotionIncrement.approveById;
+            userNotification.toEmpId = this.empPromotionIncrement.applicationById;
+            userNotification.featurePath = 'manage-incrementAndPromotion';
+            userNotification.nevigateLink = '/promotion/manage-incrementAndPromotion';
+            userNotification.forEntryId = this.empPromotionIncrement.id;
+            userNotification.title = 'Transfer and Posting';
+            userNotification.message = 'rejected your application for '+ this.empPromotionIncrement.promotionIncrementType;
+            this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
           }
           else{
             this.toastr.success('', `${response.message}`, {
               positionClass: 'toast-top-right',
             });
+
+            //Notifications
+            if(prevApproveStatus != this.empPromotionIncrement.approveStatus && this.empPromotionIncrement.approveStatus == true){
+              const userNotification = new UserNotification();
+              userNotification.fromEmpId = this.empPromotionIncrement.approveById;
+              userNotification.toEmpId = this.empPromotionIncrement.empId;
+              userNotification.featurePath = 'profile';
+              userNotification.nevigateLink = '/employee/profile';
+              userNotification.forEntryId = this.empPromotionIncrement.id;
+              userNotification.title = 'Transfer and Posting';
+              userNotification.message = 'approved your '+ this.empPromotionIncrement.promotionIncrementType;
+              this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
+            }
+            else if(prevApproveStatus != this.empPromotionIncrement.approveStatus && this.empPromotionIncrement.approveStatus == false){
+              const userNotification = new UserNotification();
+              userNotification.fromEmpId = this.empPromotionIncrement.approveById;
+              userNotification.toEmpId = this.empPromotionIncrement.applicationById;
+              userNotification.featurePath = 'manage-incrementAndPromotion';
+              userNotification.nevigateLink = '/promotion/manage-incrementAndPromotion';
+              userNotification.forEntryId = this.empPromotionIncrement.id;
+              userNotification.title = 'Transfer and Posting';
+              userNotification.message = 'rejected your application for '+ this.empPromotionIncrement.promotionIncrementType;
+              this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
+            }
           }
         } else {
           this.toastr.warning('', `${response.message}`, {

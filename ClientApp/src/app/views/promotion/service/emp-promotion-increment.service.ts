@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -16,23 +16,24 @@ export class EmpPromotionIncrementService {
     this.empPromotionIncrement = new EmpPromotionIncrement();
   }
 
-  getAll(): Observable<EmpPromotionIncrement[]> {
-    if (this.cachedData.length > 0) {
-      return of (this.cachedData);
-    } else {
-      return this.http
-        .get<EmpPromotionIncrement[]>(this.baseUrl + '/empPromotionIncrement/get-allEmpPromotionIncrement')
-        .pipe(
-          map((data) => {
-            this.cachedData = data; 
-            return data;
-          })
-        );
-    }
+  getAll(queryParams: any, id: any): Observable<any> {
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('id', id);
+    return this.http
+      .get<any>(this.baseUrl + '/empPromotionIncrement/get-allEmpPromotionIncrement', {params})
+      .pipe(
+        map((data) => {
+          this.cachedData = data; 
+          return data;
+        })
+      );
   }
 
-  getAllEmpPromotionIncrementApproveInfo(id: number){
-    return this.http.get<EmpPromotionIncrement[]>(this.baseUrl + '/empPromotionIncrement/get-AllEmpPromotionIncrementApproveInfo/' + id);
+  getAllEmpPromotionIncrementApproveInfo(queryParams: any, empId:any, id: any){
+    let params = new HttpParams({ fromObject: queryParams }); 
+    params = params.append('empId', empId);
+    params = params.append('id', id);
+    return this.http.get<any>(this.baseUrl + '/empPromotionIncrement/get-AllEmpPromotionIncrementApproveInfo',{params});
   }
   
   

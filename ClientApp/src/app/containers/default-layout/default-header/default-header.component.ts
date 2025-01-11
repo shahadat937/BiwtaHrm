@@ -22,6 +22,8 @@ import { PaginatorModel } from 'src/app/core/models/paginator-model';
 import { UserNotification } from 'src/app/views/notifications/models/user-notification';
 import { NotificationReadBy } from 'src/app/views/notifications/models/notification-read-by';
 import { ToastrService } from 'ngx-toastr';
+import * as CryptoJS from 'crypto-js';
+
 @Component({
   selector: 'app-default-header',
   templateUrl: './default-header.component.html',
@@ -73,15 +75,24 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
 
   ngOnInit(): void {
-    const currentUserString = localStorage.getItem('currentUser');
-    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-    this.empId = currentUserJSON.empId;
+    const currentEncryptedUser =  localStorage.getItem('encryptedUser');
+    if(currentEncryptedUser){
+      const bytes = CryptoJS.AES.decrypt(currentEncryptedUser, 'secret-key');
+      const roleName = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).role;
+      const empId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).empId || 0;
+      const userId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).id;
+      const userName = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).username;
+      this.empId = empId;
+      
+      this.authService.userInformation = {roleName: roleName, empId: empId, userId: userId, userName: userName};
+    }
     this.getEmployeeByEmpId();
     this.getUserNotifications(false);
     this.getUserId();
     const subs = this.realTimeService.eventBus.getEvent('userNotification').subscribe(data => {
       this.getUserNotifications(true);
     })
+
 
     this.subscription.push(subs);
   }

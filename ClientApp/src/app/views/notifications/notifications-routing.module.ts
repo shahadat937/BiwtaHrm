@@ -5,6 +5,7 @@ import { BadgesComponent } from './badges/badges.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import { ModalsComponent } from './modals/modals.component';
 import { ToastersComponent } from './toasters/toasters.component';
+import { NotificationListComponent } from './notification-list/notification-list.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,13 @@ const routes: Routes = [
         component: ToastersComponent,
         data: {
           title: 'Toasts'
+        }
+      },
+      {
+        path: 'notificationList',
+        component: NotificationListComponent,
+        data: {
+          title: 'Notifications'
         }
       }
     ]

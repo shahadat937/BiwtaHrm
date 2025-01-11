@@ -18,6 +18,9 @@ import { ReleaseTypeService } from '../../basic-setup/service/release-type.servi
 import { GradeService } from '../../basic-setup/service/Grade.service';
 import { UserNotification } from '../../notifications/models/user-notification';
 import { NotificationService } from '../../notifications/service/notification.service';
+import { AuthService } from '../../../core/service/auth.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 
 @Component({
   selector: 'app-transfer-posting-application',
@@ -46,6 +49,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   empJobDetailsId: number = 0;
   empTransferPosting: EmpTransferPosting = new EmpTransferPosting;
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
+  featurePermission : FeaturePermission = new FeaturePermission;
 
   constructor(
     private toastr: ToastrService,
@@ -60,6 +64,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     public releaseTypeService: ReleaseTypeService,
     private gradeService: GradeService,
     public notificationService: NotificationService,
+    private authService: AuthService,
+    public roleFeatureService: RoleFeatureService,
   ) {
 
   }
@@ -67,16 +73,37 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   icons = { cilArrowLeft, cilSearch };
 
   ngOnInit(): void {
-    const currentUserString = localStorage.getItem('currentUser');
-    const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
-    this.loginEmpId = currentUserJSON.empId;
-    this.initaialForm();
-    this.getEmployeeByEmpId();
-    this.loadOffice();
-    this.getAllDepartment();
-    // this.getSelectedSection();
-    this.getSelectedReleaseType();
-    this.SelectModelGrade();
+    if(this.authService.userInformation != null){
+      this.getPermission();
+    }
+    else {
+      this.toastr.warning('', 'Please Login First', {
+        positionClass: 'toast-top-right',
+      });
+    }
+  }
+
+
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('transferPostingApplication').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        this.loginEmpId = this.authService.userInformation.empId;
+        this.initaialForm();
+        this.getEmployeeByEmpId();
+        this.loadOffice();
+        this.getAllDepartment();
+        // this.getSelectedSection();
+        this.getSelectedReleaseType();
+        this.SelectModelGrade();
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -674,7 +701,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm): void {
-    this.loading = true;
+    if(this.featurePermission.add == true){
+      this.loading = true;
     this.empTransferPostingService.cachedData = [];
     const id = form.value.id;
     const action$ = id
@@ -698,7 +726,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
             userNotification.nevigateLink = '/transferPosting/departmentApprovalList';
             userNotification.forEntryId = response.id;
             userNotification.title = 'Transfer and Posting';
-            userNotification.message = 'new Transfer & and Posting application, Department Release Pending.';
+            userNotification.message = 'new Transfer and Posting application, Department Release Pending.';
             this.notificationService.submit(userNotification).subscribe((res) => {});
           }
           else if(this.empTransferPostingService.empTransferPosting.isJoining && !this.empTransferPostingService.empTransferPosting.provideJoiningInfo){
@@ -709,8 +737,19 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
             userNotification.nevigateLink = '/transferPosting/joiningReportingList';
             userNotification.forEntryId = response.id;
             userNotification.title = 'Transfer and Posting';
-            userNotification.message = ' Transfer & and Posting application, Joining Info Pending.';
+            userNotification.message = ' Transfer and Posting application, Joining Info Pending.';
             this.notificationService.submit(userNotification).subscribe((res) => {});
+          }
+          else if((!this.empTransferPostingService.empTransferPosting.isDepartmentApprove && !this.empTransferPostingService.empTransferPosting.isJoining) || (this.empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo && this.empTransferPostingService.empTransferPosting.provideJoiningInfo)){
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.empTransferPostingService.empTransferPosting.empId;
+            userNotification.toEmpId = this.empTransferPostingService.empTransferPosting.empId;
+            userNotification.featurePath = 'profile';
+            userNotification.nevigateLink = '/employee/profile';
+            userNotification.forEntryId = response.id;
+            userNotification.title = 'Transfer and Posting';
+            userNotification.message = 'you have been transfered into '+ this.empTransferPosting.transferDepartmentName + ' department';
+            this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
           }
         }
         // Notification End
@@ -726,6 +765,10 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       this.loading = false;
     })
       )
+    }
+    else {
+      this.roleFeatureService.unauthorizeAccress();
+    }
      
   }
 }

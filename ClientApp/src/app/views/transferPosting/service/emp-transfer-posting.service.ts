@@ -20,21 +20,16 @@ export class EmpTransferPostingService {
   }
 
   getAll(queryParams: any, id: any): Observable<any> {
-    if (this.cachedData.length > 0) {
-      return of (this.cachedData);
-    } else {
-
-      let params = new HttpParams({ fromObject: queryParams });
-      params = params.append('id', id);
-      return this.http
-        .get<any>(this.baseUrl + '/empTransferPosting/get-allEmpTransferPosting', {params})
-        .pipe(
-          map((data) => {
-            this.cachedData = data; 
-            return data;
-          })
-        );
-    }
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('id', id);
+    return this.http
+      .get<any>(this.baseUrl + '/empTransferPosting/get-allEmpTransferPosting', {params})
+      .pipe(
+        map((data) => {
+          this.cachedData = data; 
+          return data;
+        })
+      );
   }
 
   getAllEmpTransferPostingApproveInfo(){

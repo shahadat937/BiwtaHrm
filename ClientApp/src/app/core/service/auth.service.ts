@@ -13,6 +13,9 @@ import * as CryptoJS from 'crypto-js';
 })
 export class AuthService {
   baseUrl = environment.apiUrl;
+
+  userInformation : any;
+
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
@@ -53,6 +56,7 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('encryptedUser');
     this.currentUserSubject.next(null!);
+    this.userInformation = null;
     return of({ success: false });
   }
 

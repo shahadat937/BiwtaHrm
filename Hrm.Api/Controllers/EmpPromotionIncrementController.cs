@@ -40,9 +40,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-allEmpPromotionIncrement")]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> Get([FromQuery] QueryParams queryParams, int? id)
         {
-            var command = new GetAllEmpPromotionIncrementRequest { };
+            var command = new GetAllEmpPromotionIncrementRequest { QueryParams = queryParams, Id = id };
             var EmpPromotionIncrement = await _mediator.Send(command);
             return Ok(EmpPromotionIncrement);
         }
@@ -64,10 +64,10 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get-AllEmpPromotionIncrementApproveInfo/{id}")]
-        public async Task<ActionResult> GetAllEmpPromotionIncrementApproveInfo(int id)
+        [Route("get-AllEmpPromotionIncrementApproveInfo")]
+        public async Task<ActionResult> GetAllEmpPromotionIncrementApproveInfo([FromQuery] QueryParams queryParams, int? empId, int? id)
         {
-            var EmpPromotionIncrement = await _mediator.Send(new GetEmpPromotionIncrementApprovalListRequest {Id = id });
+            var EmpPromotionIncrement = await _mediator.Send(new GetEmpPromotionIncrementApprovalListRequest { QueryParams = queryParams, EmpId = empId, Id = id });
             return Ok(EmpPromotionIncrement);
         }
 

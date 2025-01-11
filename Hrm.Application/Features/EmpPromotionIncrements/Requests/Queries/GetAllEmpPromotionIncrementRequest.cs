@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using Hrm.Application.DTOs.Common;
+using Hrm.Application.DTOs.EmpPromotionIncrement;
+using Hrm.Application.Models;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +10,9 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.EmpPromotionIncrements.Requests.Queries
 {
-    public class GetAllEmpPromotionIncrementRequest : IRequest<object>
+    public class GetAllEmpPromotionIncrementRequest : IRequest<PagedResult<EmpPromotionIncrementDto>>
     {
+        public QueryParams QueryParams { get; set; }
+        public int? Id { get; set; }
     }
 }

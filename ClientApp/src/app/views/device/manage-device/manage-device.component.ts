@@ -179,7 +179,6 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
   }
 
   onDeviceUpdateEvent(data:any) {
-    console.log(data);
     if(data.op=="update") {
       let device = [data.data];
       let IsNewDevice = true;

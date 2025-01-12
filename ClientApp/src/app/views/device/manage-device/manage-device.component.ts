@@ -38,12 +38,6 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAttendanceDevice();
-    this.subscription = this.realTimeService.eventBus.getEvent('newDevice').subscribe(data => {
-      this.toastr.success('','New Device Available',{
-        positionClass: 'toast-top-right'
-      })
-      console.log(data);
-    });
 
     const subs = this.realTimeService.eventBus.getEvent('AttDeviceUpdate').subscribe({
       next: (data: any) => {
@@ -185,6 +179,7 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
   }
 
   onDeviceUpdateEvent(data:any) {
+    console.log(data);
     if(data.op=="update") {
       let device = [data.data];
       let IsNewDevice = true;
@@ -192,7 +187,7 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
       let index = this.attendanceDevices.findIndex(item => item.id == data.data.id);
 
       if(index!=-1) {
-        this.attendanceDevices[index] = device[0];
+        this.attendanceDevices[index] = this.transformAttRecord(device)[0];
       } else {
         device = this.transformAttRecord(device);
         this.attendanceDevices = [...device,...this.attendanceDevices];

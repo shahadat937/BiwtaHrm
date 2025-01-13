@@ -14,4 +14,5 @@ export class UserNotification {
     forEntryId : any;
     readStatus : boolean = false;
     fromEmplName : string = '';
+    dateCreated : string = '';
 }

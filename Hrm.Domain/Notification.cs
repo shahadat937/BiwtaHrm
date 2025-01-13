@@ -21,6 +21,7 @@ namespace Hrm.Domain
         public string? NevigateLink { get; set; }
         public int? ForEntryId { get; set; }
         public bool? ReadStatus { get; set; }
+        public bool? IsActive { get; set; }
 
         public virtual EmpBasicInfo? FromEmpBasicInfo { get; set; }
         public virtual EmpBasicInfo? ToEmpBasicInfo { get; set; }

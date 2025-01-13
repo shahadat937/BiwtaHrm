@@ -15,4 +15,5 @@ export class UserNotification {
     readStatus : boolean = false;
     fromEmplName : string = '';
     dateCreated : string = '';
+    isActive : boolean = true;
 }

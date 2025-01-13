@@ -22,6 +22,7 @@ namespace Hrm.Application.DTOs.Notification
         public int? ForEntryId { get; set; }
         public bool? ReadStatus { get; set; }
         public string? FromEmplName { get; set; }
+        public bool? IsActive { get; set; }
         public DateTime? DateCreated { get; set; }
     }
 }

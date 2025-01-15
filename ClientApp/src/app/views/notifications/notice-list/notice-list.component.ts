@@ -16,11 +16,11 @@ import { NotificationReadBy } from 'src/app/views/notifications/models/notificat
 import { RealTimeService } from 'src/app/core/service/real-time.service';
 
 @Component({
-  selector: 'app-notification-list',
-  templateUrl: './notification-list.component.html',
-  styleUrl: './notification-list.component.scss'
+  selector: 'app-notice-list',
+  templateUrl: './notice-list.component.html',
+  styleUrl: './notice-list.component.scss'
 })
-export class NotificationListComponent implements OnInit, OnDestroy {
+export class NoticeListComponent implements OnInit, OnDestroy {
 
    subscription: Subscription[]=[]
     displayedColumns: string[] = [
@@ -134,23 +134,19 @@ export class NotificationListComponent implements OnInit, OnDestroy {
     notificationReadBy.notificationId =  notificationId;
     if(readStatus == false){
       this.subscription.push(this.notificationService.updateNotificationStatus(notificationReadBy).subscribe((res) => {
-        if(nevigateLink != null){
-          this.router.navigate([nevigateLink], {
-            queryParams: { forNotificationId: forNotificationId },
-            queryParamsHandling: 'merge', // Merge with existing queryParams
-            relativeTo: this.router.routerState.root, // Ensure relative routing works
-          });
-        }
-      }))
-    }
-    else {
-      if(nevigateLink != null){
         this.router.navigate([nevigateLink], {
           queryParams: { forNotificationId: forNotificationId },
           queryParamsHandling: 'merge', // Merge with existing queryParams
           relativeTo: this.router.routerState.root, // Ensure relative routing works
         });
-      }
+      }))
+    }
+    else {
+      this.router.navigate([nevigateLink], {
+        queryParams: { forNotificationId: forNotificationId },
+        queryParamsHandling: 'merge', // Merge with existing queryParams
+        relativeTo: this.router.routerState.root, // Ensure relative routing works
+      });
     }
 
   }

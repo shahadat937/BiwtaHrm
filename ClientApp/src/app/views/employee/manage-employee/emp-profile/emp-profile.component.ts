@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -262,13 +262,8 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     getEmpSpouseInfoByEmpId(){
       this.subscription.push(
         this.empSpouseInfoService.findByEmpId(this.id).subscribe((res) => {
-        // if(res && res.length > 0){
           this.empSpouseInfo = res;
           this.spouseSource = new MatTableDataSource(res);
-        // }
-        // else {
-        //   this.empSpouseInfo = [new EmpSpouseInfoModule()];
-        // }
       })
       )
       
@@ -277,13 +272,8 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     getEmpChildInfoByEmpId(){
       this.subscription.push(
         this.empChildInfoService.findByEmpId(this.id).subscribe((res) => {
-        // if(res && res.length > 0){
           this.empChildInfo = res;
           this.childsSource = new MatTableDataSource(res);
-        // }
-        // else {
-        //   this.empChildInfo = [new EmpChildInfoModule()];
-        // }
       })
       )
       
@@ -292,12 +282,8 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     getEmpEducationInfoByEmpId(){
       this.subscription.push(
       this.empEducationInfoService.findByEmpId(this.id).subscribe((res) => {
-        // if(res && res.length > 0) {
           this.empEducationInfo = res;
           this.educationSource = new MatTableDataSource(res);
-        // } else {
-        //   this.empEducationInfo = [new EmpEducationInfoModule()];
-        // }
       })
       )
       
@@ -311,12 +297,8 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     getEmpTrainingInfoByEmpId(){
       this.subscription.push(
       this.empTrainingInfoService.findByEmpId(this.id).subscribe((res) => {
-        // if(res && res.length > 0) {
           this.empTrainingInfo = res;
           this.trainingSource = new MatTableDataSource(res);
-        // } else {
-        //   this.empTrainingInfo = [new EmpTrainingInfo()];
-        // }
       })
       )
      
@@ -325,13 +307,8 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     getEmpBankInfoByEmpId(){
       this.subscription.push(
         this.empBankInfoService.findByEmpId(this.id).subscribe((res) => {
-          // if(res && res.length > 0){
             this.empBankInfo = res;
             this.bankSource = new MatTableDataSource(res);
-          // }
-          // else {
-          //   this.empBankInfo = [new EmpBankInfoModule()];
-          // }
         })
       )
       
@@ -340,13 +317,8 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     getEmployeeNomineeInfoByEmpId() {
       this.subscription.push(
         this.empNomineeInfoService.findByEmpId(this.id).subscribe((res) => {
-          // if(res && res.length > 0){
             this.empNomineeInfo = res;
             this.nomineeInfoSource = new MatTableDataSource(res);
-          // }
-          // else {
-          //   this.empNomineeInfo = [new EmpNomineeInfoModule()];
-          // }
         })
       )
      
@@ -355,13 +327,8 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     getEmpLanguageInfoByEmpId(){
       this.subscription.push(
       this.empLanguageInfoService.findByEmpId(this.id).subscribe((res) => {
-        // if(res && res.length > 0){
           this.empLanguageInfo = res;
           this.languageSource = new MatTableDataSource(res);
-        // }
-        // else {
-        //   this.empLanguageInfo = [new EmpLanguageInfoModule()];
-        // }
       })
       )
       
@@ -370,13 +337,8 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     getEmpForeignTourInfoByEmpId(){
       this.subscription.push(
       this.empForeignTourInfoService.findByEmpId(this.id).subscribe((res) => {
-        // if(res && res.length > 0){
           this.empForeignTourInfo = res;
           this.foreignTourSource = new MatTableDataSource(res);
-        // }
-        // else {
-        //   this.empForeignTourInfo = [new EmpForeignTourInfoModule()];
-        // }
       })
       )
       
@@ -394,10 +356,8 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     getEmpWorkHistory(){
       this.subscription.push(
         this.empWorkHistoryService.findCombinedById(this.id).subscribe((res) => {
-          // if(res && res.length > 0){
             this.empWorkHistory = res;
             this.workHistorySource = new MatTableDataSource(res);
-          // }
         })
       )
       
@@ -407,7 +367,6 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
       this.subscription.push(
         this.empRewardPunishmentService.findByEmpId(this.id).subscribe((res) => {
             this.rewardPunishmentsSource = new MatTableDataSource(res);
-          // }
         })
       )
     }
@@ -449,6 +408,5 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
           }
         })
       )
-      
     }
 }

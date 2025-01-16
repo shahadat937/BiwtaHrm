@@ -61,7 +61,7 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
                 leaveAmount.LeaveTypeName = type.LeaveTypeName;
                 leaveAmount.TotalAmount = leaveAmountAndDue[0];
                 leaveAmount.LeaveDue = leaveAmountAndDue[1];
-                leaveAmount.Availed = await _leaveValidator.GetAvailedLeave(request.EmpId, type.LeaveTypeId);
+                leaveAmount.Availed = await _leaveValidator.GetAvailedLeave(request.EmpId, type.LeaveTypeId,startDate.Year);
                 leaveAmount.Applied = await _leaveValidator.GetTotalApplied(request.EmpId, type.LeaveTypeId);
                 leaveAmounts.Add(leaveAmount);
             }

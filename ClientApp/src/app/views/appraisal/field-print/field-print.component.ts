@@ -147,4 +147,13 @@ export class FieldPrintComponent {
       
     }
   }
+
+  indexToAlpha(index:number) {
+    let result = '';
+    while (index >= 0) {
+        result = String.fromCharCode(index % 26 + 97) + result;  
+        index = Math.floor(index / 26) - 1;
+    }
+    return result;
+  }
 }

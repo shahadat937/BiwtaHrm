@@ -9,7 +9,7 @@
             @for (option of fieldData.options; track $index) {
                 <div class="row ms-3">
                     <div class="col-5">
-                    {{$index+1}}. {{option.optionName}}
+                    {{indexToAlpha($index)}}. {{option.optionName}}
                     </div>
                     <div class="col-3 mt-1">
                         @if (option.optionValue==fieldData.fieldValue) {

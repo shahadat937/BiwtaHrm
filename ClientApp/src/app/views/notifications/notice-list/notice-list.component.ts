@@ -62,11 +62,11 @@ export class NoticeListComponent implements OnInit, OnDestroy {
 
   getPermission(){
     this.subscription.push(
-    this.roleFeatureService.getFeaturePermission('notificationList').subscribe((item) => {
+    this.roleFeatureService.getFeaturePermission('noticeList').subscribe((item) => {
       this.featurePermission = item;
       if(item.viewStatus == true){
         this.loginEmpId = this.authService.userInformation.empId || 0;
-        this.getAllNotifications(this.pagination);
+        this.getAllNotice(this.pagination);
       }
       else{
         this.roleFeatureService.unauthorizeAccress();
@@ -80,13 +80,13 @@ export class NoticeListComponent implements OnInit, OnDestroy {
   applyFilter(filterValue: string) {
     filterValue = filterValue.toLowerCase();
     this.pagination.searchText = filterValue;
-    this.getAllNotifications(this.pagination);
+    this.getAllNotice(this.pagination);
   }
 
   onPageChange(event: any){
     this.pagination.pageSize = event.pageSize;
     event.pageIndex = event.pageIndex + 1;
-    this.getAllNotifications(event);
+    this.getAllNotice(event);
   }
   
   ngOnDestroy(): void {
@@ -96,9 +96,9 @@ export class NoticeListComponent implements OnInit, OnDestroy {
   }
 
   
-  getAllNotifications(queryParams: any) {
+  getAllNotice(queryParams: any) {
     this.subscription.push(
-    this.notificationService.getUserNotification(queryParams, this.loginEmpId).subscribe((item) => {
+    this.notificationService.getNoticeList(queryParams, this.loginEmpId).subscribe((item) => {
       this.dataSource.data = item.items;
       this.pagination.length = item.totalItemsCount;
     })
@@ -128,27 +128,14 @@ export class NoticeListComponent implements OnInit, OnDestroy {
   }
 
   
-  notificationNevigate(notificationId: number, nevigateLink: string, forNotificationId: number, readStatus: boolean){
+  notificationNevigate(notificationId: number, readStatus: boolean){
     const notificationReadBy = new NotificationReadBy();
     notificationReadBy.empId = this.loginEmpId;
     notificationReadBy.notificationId =  notificationId;
     if(readStatus == false){
       this.subscription.push(this.notificationService.updateNotificationStatus(notificationReadBy).subscribe((res) => {
-        this.router.navigate([nevigateLink], {
-          queryParams: { forNotificationId: forNotificationId },
-          queryParamsHandling: 'merge', // Merge with existing queryParams
-          relativeTo: this.router.routerState.root, // Ensure relative routing works
-        });
       }))
     }
-    else {
-      this.router.navigate([nevigateLink], {
-        queryParams: { forNotificationId: forNotificationId },
-        queryParamsHandling: 'merge', // Merge with existing queryParams
-        relativeTo: this.router.routerState.root, // Ensure relative routing works
-      });
-    }
-
   }
 
 }

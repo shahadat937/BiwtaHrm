@@ -19,16 +19,23 @@ namespace Hrm.Application.Features.Notifications.Handlers.Queries
 
         private readonly IHrmRepository<Notification> _NotificationRepository;
         private readonly IMapper _mapper;
+        private readonly IHrmRepository<NotificationReadBy> _NotificationReadByRepository;
 
-        public GetNoticeListRequestHandler(IHrmRepository<Notification> NotificationRepository, IMapper mapper)
+        public GetNoticeListRequestHandler(IHrmRepository<Notification> NotificationRepository, IMapper mapper, IHrmRepository<NotificationReadBy> notificationReadByRepository)
         {
             _NotificationRepository = NotificationRepository;
             _mapper = mapper;
+            _NotificationReadByRepository = notificationReadByRepository;
         }
         public async Task<PagedResult<NotificationDto>> Handle(GetNoticeListRequest request, CancellationToken cancellationToken)
         {
             var query = _NotificationRepository
                 .Where(x => x.IsNotice == true);
+
+            var readNotificationIds = await _NotificationReadByRepository
+                .Where(nrb => nrb.EmpId == request.EmpId)
+                .Select(nrb => nrb.NotificationId.Value)
+                .ToListAsync();
 
             var totalRecords = await query.CountAsync(cancellationToken);
 
@@ -40,6 +47,11 @@ namespace Hrm.Application.Features.Notifications.Handlers.Queries
 
 
             var notificationDtos = _mapper.Map<List<NotificationDto>>(notifications);
+
+            foreach (var notificationDto in notificationDtos)
+            {
+                notificationDto.ReadStatus = readNotificationIds.Contains(notificationDto.Id);
+            }
 
             var result = new PagedResult<NotificationDto>(notificationDtos, totalRecords, request.QueryParams.PageIndex, request.QueryParams.PageSize);
 

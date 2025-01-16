@@ -6,6 +6,7 @@ import { AlertsComponent } from './alerts/alerts.component';
 import { ModalsComponent } from './modals/modals.component';
 import { ToastersComponent } from './toasters/toasters.component';
 import { NotificationListComponent } from './notification-list/notification-list.component';
+import { NoticeListComponent } from './notice-list/notice-list.component';
 
 const routes: Routes = [
   {
@@ -53,7 +54,14 @@ const routes: Routes = [
         data: {
           title: 'Notifications'
         }
-      }
+      },
+      {
+        path: 'noticeList',
+        component: NoticeListComponent,
+        data: {
+          title: 'Notice List'
+        }
+      },
     ]
   }
 ];

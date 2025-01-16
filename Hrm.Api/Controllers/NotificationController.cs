@@ -34,9 +34,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-noticeList")]
-        public async Task<ActionResult<List<EmpBasicInfoDto>>> GetNoticeList([FromQuery] QueryParams queryParams)
+        public async Task<ActionResult<List<EmpBasicInfoDto>>> GetNoticeList([FromQuery] QueryParams queryParams, int empId)
         {
-            var notifications = await _mediator.Send(new GetNoticeListRequest { QueryParams = queryParams });
+            var notifications = await _mediator.Send(new GetNoticeListRequest { QueryParams = queryParams, EmpId = empId });
             return Ok(notifications);
         }
 

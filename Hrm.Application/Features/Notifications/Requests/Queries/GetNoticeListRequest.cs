@@ -13,5 +13,6 @@ namespace Hrm.Application.Features.Notifications.Requests.Queries
     public class GetNoticeListRequest : IRequest<PagedResult<NotificationDto>>
     {
         public QueryParams QueryParams { get; set; }
+        public int EmpId { get; set; }
     }
 }

@@ -141,6 +141,9 @@ export class NotificationListComponent implements OnInit, OnDestroy {
             relativeTo: this.router.routerState.root, // Ensure relative routing works
           });
         }
+        else {
+          this.router.navigate(['/notifications/noticeList']);
+        }
       }))
     }
     else {
@@ -150,6 +153,9 @@ export class NotificationListComponent implements OnInit, OnDestroy {
           queryParamsHandling: 'merge', // Merge with existing queryParams
           relativeTo: this.router.routerState.root, // Ensure relative routing works
         });
+      }
+      else {
+        this.router.navigate(['/notifications/noticeList']);
       }
     }
 

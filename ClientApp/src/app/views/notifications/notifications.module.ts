@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import {
   AlertComponent,
@@ -54,6 +55,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { TransferPostingRoutingModule } from '../transferPosting/transfer-routing.module';
 import { NoticeListComponent } from './notice-list/notice-list.component';
+import { AddNoticeComponent } from './add-notice/add-notice.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,7 @@ import { NoticeListComponent } from './notice-list/notice-list.component';
     AppToastComponent,
     NotificationListComponent,
     NoticeListComponent,
+    AddNoticeComponent,
   ],
   imports: [
     CommonModule,
@@ -120,6 +123,7 @@ import { NoticeListComponent } from './notice-list/notice-list.component';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    MatButtonToggleModule
   ],
 })
 export class NotificationsModule {

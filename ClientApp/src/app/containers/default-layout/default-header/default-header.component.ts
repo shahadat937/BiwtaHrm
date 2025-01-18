@@ -119,18 +119,18 @@ export class DefaultHeaderComponent extends HeaderComponent {
     notificationReadBy.empId = this.empId;
     notificationReadBy.notificationId =  notificationId;
     if(this.empId != 0){
-      if(isNotice != true){
         this.subscription.push(this.notificationService.updateNotificationStatus(notificationReadBy).subscribe((res) => {
+          if(isNotice != true){
             this.router.navigate([nevigateLink], {
               queryParams: { forNotificationId: forNotificationId },
               queryParamsHandling: 'merge', // Merge with existing queryParams
               relativeTo: this.router.routerState.root, // Ensure relative routing works
             });
+          }
+          else {
+            this.router.navigate(['/notifications/noticeList']);
+          }
         }))
-      }
-      else {
-        this.router.navigate(['/notifications/notificationList']);
-      }
     }
 
   }

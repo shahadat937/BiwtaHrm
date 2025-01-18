@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../core/service/auth.service';
@@ -12,6 +12,7 @@ import { RoleFeatureService } from '../../featureManagement/service/role-feature
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
 import { NotificationService } from '../service/notification.service';
+import { AddNoticeComponent } from '../add-notice/add-notice.component';
 import { NotificationReadBy } from 'src/app/views/notifications/models/notification-read-by';
 import { RealTimeService } from 'src/app/core/service/real-time.service';
 
@@ -136,6 +137,25 @@ export class NoticeListComponent implements OnInit, OnDestroy {
       this.subscription.push(this.notificationService.updateNotificationStatus(notificationReadBy).subscribe((res) => {
       }))
     }
+  }
+
+  addNoticeModal(id: number, clickedButton: string){
+      if(clickedButton == "Create" && this.featurePermission.add == true || clickedButton == "Edit" && this.featurePermission.update == true){
+        const initialState = {
+          id: id,
+          clickedButton: clickedButton
+        };
+        const modalRef: BsModalRef = this.modalService.show(AddNoticeComponent, { initialState, backdrop: 'static' });
+    
+        if (modalRef.onHide) {
+          modalRef.onHide.subscribe(() => {
+            this.getAllNotice(this.pagination);
+          });
+        }
+      }
+      else {
+        this.roleFeatureService.unauthorizeAccress();
+      }
   }
 
 }

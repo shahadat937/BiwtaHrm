@@ -9,7 +9,10 @@ import { UserNotification } from '../models/user-notification';
 export class NotificationService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
-  constructor(private http: HttpClient) { }
+  userNotification : UserNotification;
+  constructor(private http: HttpClient) { 
+    this.userNotification = new UserNotification();
+  }
 
   getUserNotification(queryParams: any, empId:any){
     let params = new HttpParams({ fromObject: queryParams }); 

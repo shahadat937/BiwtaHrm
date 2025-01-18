@@ -144,5 +144,6 @@ namespace Hrm.Application
         public const string DeviceController = "iclock";
         public const string DeviceUserController = HRMRoutePrefixBase + "AttendanceDevice";
         public const string Notification = HRMRoutePrefixBase + "notification";
+        public const string FormGroup = HRMRoutePrefixBase + "formGroup";
     }
 }

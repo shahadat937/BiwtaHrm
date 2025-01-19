@@ -30,7 +30,8 @@ namespace Hrm.Application.Features.Notifications.Handlers.Queries
         public async Task<PagedResult<NotificationDto>> Handle(GetNoticeListRequest request, CancellationToken cancellationToken)
         {
             var query = _NotificationRepository
-                .Where(x => x.IsNotice == true);
+                .Where(x => x.IsNotice == true)
+                .Include(x => x.FromEmpBasicInfo); ;
 
             var readNotificationIds = await _NotificationReadByRepository
                 .Where(nrb => nrb.EmpId == request.EmpId)
@@ -40,7 +41,7 @@ namespace Hrm.Application.Features.Notifications.Handlers.Queries
             var totalRecords = await query.CountAsync(cancellationToken);
 
             var notifications = await query
-                .OrderBy(x => x.Id)
+                .OrderByDescending(x => x.Id)
                 .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
                 .Take(request.QueryParams.PageSize)
                 .ToListAsync(cancellationToken);

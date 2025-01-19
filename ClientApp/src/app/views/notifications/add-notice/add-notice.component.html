@@ -11,24 +11,25 @@
                 <form #UserNotificationForm="ngForm" [gutter]="3" novalidate cForm cRow
                     class="needs-validation">
 
-                    <c-col [md]="6">
-                        <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-                            <mat-button-toggle value="toAll" selected>To All Employee</mat-button-toggle>
-                            <mat-button-toggle value="toEmployee">Specific Employee</mat-button-toggle>
-                            <mat-button-toggle value="toDepartment">To Department</mat-button-toggle>
+                    <c-col [md]="12" class="ms-2">
+                        <mat-button-toggle-group value="toAll" (change)="selectToNotice($event.value)" class="row">
+                            <mat-button-toggle value="toAll" class="col-lg-4">To All Employee</mat-button-toggle>
+                            <mat-button-toggle value="toEmployee" class="col-lg-4">Specific Employee</mat-button-toggle>
+                            <mat-button-toggle value="toDepartment" class="col-lg-4">To Department</mat-button-toggle>
                         </mat-button-toggle-group>
                     </c-col>
 
                     <div cRow [gutter]="3">
-                        <c-col [md]="4">
-                            <label cLabel for="idCardNo">Employee PMS No<span class="text-danger">*</span></label>
+                        <c-col [lg]="4" *ngIf="toEmployee">
+                            <input type="hidden" [(ngModel)]="notificationService.userNotification.toEmpId" name="toEmpId" />
+                            <label cLabel for="empIdCard">PMIS No<span class="text-danger"></span></label>
                             <c-input-group>
                             <button cButton color="secondary" type="button" cTooltip="Search Employee" cTooltipPlacement="bottom" (click)="EmployeeListModal()">
                                 <svg [cIcon]="icons.cilSearch"></svg>
                             </button>
-                                <input aria-describedby="idCardNo" cFormControl
-                                    [(ngModel)]="notificationService.userNotification.toEmpId" name="empIdCardNo"
-                                    #idCardNo="ngModel" required placeholder="Enter Employee PMS No" id="idCardNo"
+                                <input aria-describedby="empIdCard" cFormControl
+                                    [(ngModel)]="notificationService.userNotification.empIdCard" name="empIdCard"
+                                    #idCardNo="ngModel" placeholder="PMIS No" id="empIdCard"
                                     type="text" #idCardNoInput />
                                 <button cButton color="primary" type="button"
                                     (click)="getEmpInfoByIdCardNo(idCardNoInput.value)">
@@ -36,12 +37,17 @@
                                 </button>
                             </c-input-group>
                             @if(!idCardNo.valid&&idCardNo.touched){
-                            <div class="text-left text-danger">PMS No is required</div>
+                            <div class="text-left text-danger">PMIS No is required</div>
                             }
                         </c-col>
+                        
+                        <c-col [lg]="4" *ngIf="isValidEmp">
+                            <label cLabel for="name">Name<span class="text-danger"></span></label>
+                            <input name="name" cFormControl id="name" type="text" [value]="toEmpName" disabled/>
+                        </c-col>
                             
-                        <c-col [md]="4">
-                            <label cLabel for="toDeptId">Transfer Department<span
+                        <c-col [lg]="4" *ngIf="toDepartment">
+                            <label cLabel for="toDeptId">Department<span
                                     class="text-danger">*</span></label>
                             <div class="input-wrapper">
                                 <select [(ngModel)]="notificationService.userNotification.toDeptId"
@@ -63,6 +69,11 @@
 
                     <c-col [md]="6">
                         <input type="hidden" [(ngModel)]="notificationService.userNotification.id" name="id" />
+                        <input type="hidden" [(ngModel)]="notificationService.userNotification.fromEmpId" name="fromEmpId" />
+                        <input type="hidden" [(ngModel)]="notificationService.userNotification.forAllUsers" name="forAllUsers" />
+                        <input type="hidden" [(ngModel)]="notificationService.userNotification.isNotice" name="isNotice" />
+                        <input type="hidden" [(ngModel)]="notificationService.userNotification.readStatus" name="readStatus" />
+
                         <label cLabel for="title">Notice Title<span class="text-danger">*</span></label>
                         <input [(ngModel)]="notificationService.userNotification.title" name="title" #title="ngModel"
                             placeholder="Enter Notice Title" cFormControl id="title" required type="text"
@@ -74,7 +85,7 @@
                     </c-col>
                     <c-col [md]="12">
                         <label cLabel for="message">Notice Message<span class="text-danger">*</span></label>
-                        <textarea [(ngModel)]="notificationService.userNotification.message" name="message" #message="ngModel" cFormControl id="message" placeholder="Message"
+                        <textarea [(ngModel)]="notificationService.userNotification.message" name="message" #message="ngModel" cFormControl id="message" placeholder="Message" required
                         ></textarea>
 
                         @if(!message.valid&&message.touched){

@@ -30,6 +30,10 @@ export class NotificationService {
     return this.http.post(this.baseUrl + '/notification/save-notification', model);
   }
   
+  update(id: number, model: any) {
+    return this.http.post(this.baseUrl + '/notification/update-notification', model);
+  }
+  
   updateNotificationStatus(model: any) {
     return this.http.post(this.baseUrl + '/notification/update-notificationStatus', model);
   }

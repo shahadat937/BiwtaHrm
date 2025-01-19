@@ -10,6 +10,7 @@ import { EmployeeListModalComponent } from '../../employee/employee-list-modal/e
 import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
 import { EmpTransferPostingService } from '../../transferPosting/service/emp-transfer-posting.service';
 import { SelectedModel } from '../../../core/models/selectedModel';
+import { AuthService } from '../../../core/service/auth.service';
 
 @Component({
   selector: 'app-add-notice',
@@ -28,6 +29,10 @@ export class AddNoticeComponent  implements OnInit, OnDestroy {
   modalOpened: boolean = false;
   
   isValidEmp: boolean = false;
+  toEmpName: string = '';
+  toEmpDeptName: string = '';
+  toEmpSectionName: string = '';
+  toEmpDesignationName: string = '';
   loginEmpId: number = 0;
 
   departments: SelectedModel[] = [];
@@ -47,6 +52,7 @@ export class AddNoticeComponent  implements OnInit, OnDestroy {
     public empTransferPostingService: EmpTransferPostingService,
     public empJobDetailsService: EmpJobDetailsService,
     private modalService: BsModalService,
+    private authService: AuthService,
   ) {
 
   }
@@ -54,10 +60,11 @@ export class AddNoticeComponent  implements OnInit, OnDestroy {
     icons = { cilArrowLeft, cilPlus, cilBell, cilSearch };
   
     ngOnInit(): void {
+      this.loginEmpId = this.authService.userInformation.empId || null;
       this.getAllDepartment();
-      this.initaialModule();
       this.handleText();
       this.getModuleInfo();
+      this.initaialForm();
       setTimeout(() => {
         this.modalOpened = true;
       }, 0);
@@ -86,24 +93,25 @@ export class AddNoticeComponent  implements OnInit, OnDestroy {
       }
     }
   
-    initaialModule(form?: NgForm) {
+    initaialForm(form?: NgForm) {
       if (form != null) form.resetForm();
       this.notificationService.userNotification = {
         id : 0,
-        fromEmpId : null,
+        fromEmpId : this.loginEmpId,
         toEmpId : null,
+        empIdCard : null,
         toDeptId : null,
         featureId : null,
         featurePath : '',
         UnreadCount : 0,
-        isNotice : false,
-        forAllUsers : false,
+        isNotice : true,
+        forAllUsers : true,
         title : '',
         message : '',
         nevigateLink : '',
         forEntryId : null,
         readStatus : false,
-        fromEmplName : '',
+        fromEmpName : '',
         dateCreated : '',
         isActive : true,
       };
@@ -124,11 +132,14 @@ export class AddNoticeComponent  implements OnInit, OnDestroy {
     this.subscription.push(
       this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
       if (res) {
+        this.isValidEmp = true;
+        this.notificationService.userNotification.toEmpId = res.id;
+        this.toEmpName = res.firstName + ' ' + res.lastName;
         this.getEmpJobDetailsNewByEmpId(res.id);  
       }
       else {
         this.isValidEmp = false;
-        this.toastr.warning('', 'Invalid Employee PMS No', {
+        this.toastr.warning('', 'Invalid Employee PMIS No', {
                 positionClass: 'toast-top-right',
         });
       }
@@ -179,32 +190,44 @@ export class AddNoticeComponent  implements OnInit, OnDestroy {
     )
   }
 
-    selectToNotice(value: string){
-
+  selectToNotice(value: string): void {
+    if (value === 'toAll') {
+      this.notificationService.userNotification.forAllUsers = true;
+      this.toEmployee = false;
+      this.toDepartment = false;
+    } else if (value === 'toEmployee') {
+      this.notificationService.userNotification.forAllUsers = false;
+      this.toEmployee = true;
+      this.toDepartment = false;
+    } else if (value === 'toDepartment') {
+      this.notificationService.userNotification.forAllUsers = false;
+      this.toEmployee = false;
+      this.toDepartment = true;
     }
+  }
   
     onSubmit(form: NgForm): void {
-      // this.notificationService.cachedData = [];
-      // const id = form.value.moduleId;
-      // const action$ = id
-      //   ? this.notificationService.update(id, form.value)
-      //   : this.notificationService.submit(form.value);
+      console.log(form.value)
+      this.notificationService.cachedData = [];
+      const id = form.value.id;
+      const action$ = id
+        ? this.notificationService.update(id, form.value)
+        : this.notificationService.submit(form.value);
   
-      // // this.subscription = 
-      // this.subscription.push(
-      //   action$.subscribe((response: any) => {
-      //     if (response.success) {
-      //       this.toastr.success('', `${response.message}`, {
-      //         positionClass: 'toast-top-right',
-      //       });
-      //       this.closeModal();
-      //     } else {
-      //       this.toastr.warning('', `${response.message}`, {
-      //         positionClass: 'toast-top-right',
-      //       });
-      //     }
-      //   })
-      // )
-      
+      // this.subscription = 
+      this.subscription.push(
+        action$.subscribe((response: any) => {
+          if (response.success) {
+            this.toastr.success('', `${response.message}`, {
+              positionClass: 'toast-top-right',
+            });
+            this.closeModal();
+          } else {
+            this.toastr.warning('', `${response.message}`, {
+              positionClass: 'toast-top-right',
+            });
+          }
+        })
+      )
     }
   }

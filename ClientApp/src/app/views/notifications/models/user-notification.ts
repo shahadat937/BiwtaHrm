@@ -2,6 +2,7 @@ export class UserNotification {
     id : number = 0;
     fromEmpId : any;
     toEmpId : any;
+    empIdCard: any;
     toDeptId : any;
     featureId : any;
     featurePath : string = '';
@@ -13,7 +14,7 @@ export class UserNotification {
     nevigateLink : string = '';
     forEntryId : any;
     readStatus : boolean = false;
-    fromEmplName : string = '';
+    fromEmpName : string = '';
     dateCreated : string = '';
     isActive : boolean = true;
 }

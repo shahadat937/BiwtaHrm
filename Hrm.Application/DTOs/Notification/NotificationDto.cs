@@ -11,6 +11,7 @@ namespace Hrm.Application.DTOs.Notification
         public int Id { get; set; }
         public int? FromEmpId { get; set; }
         public int? ToEmpId { get; set; }
+        public string? EmpIdCard { get; set; }
         public int? ToDeptId { get; set; }
         public int? FeatureId { get; set; }
         public int? UnreadCount { get; set; }
@@ -21,7 +22,7 @@ namespace Hrm.Application.DTOs.Notification
         public string? NevigateLink { get; set; }
         public int? ForEntryId { get; set; }
         public bool? ReadStatus { get; set; }
-        public string? FromEmplName { get; set; }
+        public string? FromEmpName { get; set; }
         public bool? IsActive { get; set; }
         public DateTime? DateCreated { get; set; }
     }

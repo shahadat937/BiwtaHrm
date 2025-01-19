@@ -20,7 +20,7 @@
               <th mat-header-cell *matHeaderCellDef>Notification</th>
               <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': !element.readStatus ? 'lavender' : 'transparent', 'cursor': 'pointer' }"  (click)="notificationNevigate(element.id, element.readStatus)">
                 <p class="m-0"><b>{{ element.title }}</b></p>
-                <b>{{element.fromEmplName}}</b> {{element.message}}
+                <b>{{element.fromEmpName}}</b> {{element.message}}
               </td>
             </ng-container>
 

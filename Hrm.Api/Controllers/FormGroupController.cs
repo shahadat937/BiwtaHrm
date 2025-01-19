@@ -45,7 +45,7 @@ namespace Hrm.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("delete-FormGrou/{FromGroupId}")]
+        [Route("delete-FormGroup/{FromGroupId}")]
         public async Task<ActionResult<BaseCommandResponse>> DeleteFormGroup(int FromGroupId)
         {
             var command = new DeleteFormGroupByIdCommand { FormGroupId = FromGroupId };

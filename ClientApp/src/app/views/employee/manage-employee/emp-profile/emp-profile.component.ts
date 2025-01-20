@@ -112,6 +112,8 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
   nomineeInfoColumns: string[] = ['slNo', 'nomineeName', 'relationName','percentage'];
   nomineeInfoSource = new MatTableDataSource<any>();
 
+  @ViewChild('printSection', { static: false }) printSection!: ElementRef;
+
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
     private route: ActivatedRoute,
@@ -201,6 +203,25 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
       })
       )
       
+    }
+
+    preparePrintContent() {
+      const basicInfoElement = document.getElementById('basicInformation')?.innerHTML;
+      const personalInfoElement = document.getElementById('empPersonalInfo')?.innerHTML;
+    
+      if (basicInfoElement && personalInfoElement) {
+        const printSection = this.printSection.nativeElement;
+    
+        // Clear existing content to avoid appending to previous data
+        this.renderer.setProperty(printSection, 'innerHTML', '');
+    
+        // Add the new content
+        this.renderer.setProperty(
+          printSection,
+          'innerHTML',
+          `<div>${basicInfoElement}</div><div>${personalInfoElement}</div>`
+        );
+      }
     }
     
     getEmpPersonalInfoByEmpId(){

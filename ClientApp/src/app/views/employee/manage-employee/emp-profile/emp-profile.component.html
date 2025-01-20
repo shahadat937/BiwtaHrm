@@ -11,7 +11,7 @@
                 <h4 *ngIf="!empProfileView" class="text-center">Please login with Valid Employee Information</h4>
         
                 <div *ngIf="empProfileView">
-                    <div cRow>
+                    <div cRow id="basicInformation">
                         <c-col [lg]="3">
                             <img src="{{photoPreviewUrl}}" style="max-width: auto; max-height: 150px;">
                         </c-col>
@@ -82,7 +82,7 @@
                     </div>
             
                     <!-- Employee Personal Information -->
-                    <c-card class="shadow mb-4 mt-3">
+                    <c-card class="shadow mb-4 mt-3" id="empPersonalInfo">
                     <!-- <c-card class="shadow mb-4 mt-3" *ngIf="empPersonalInfo"> -->
                         <c-card-header>
                             <h5 class="text-center text-light">Employee Personal Information</h5>
@@ -175,6 +175,15 @@
                                 </tbody>
                             </table>
                         </c-card-body>
+
+                        <div class="d-flex justify-content-end">
+                            <button [closeWindow]="false" cButton color="primary" printTitle="Attendance Report" [useExistingCss]="true" ngxPrint printSectionId="printEmpPersonalInfo" (click)="preparePrintContent()">Print</button>
+                        </div>
+
+                        <div id="printEmpPersonalInfo"  #printSection  class="d-none">
+                            <!-- <div [innerHTML]="document.getElementById('basicInformation').innerHTML"></div>
+                            <div [innerHTML]="document.getElementById('empPersonalInfo').innerHTML"></div> -->
+                        </div>
                     </c-card>
             
                     <!-- Employee Job Details Information -->

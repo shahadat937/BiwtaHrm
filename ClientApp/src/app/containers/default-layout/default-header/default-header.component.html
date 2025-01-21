@@ -81,10 +81,10 @@
         <h6 cDropdownHeader class="bg-light fw-semibold py-2">Notifications</h6>
       </li>
       <li *ngFor="let notification of userNoftification | slice:0:4">
-        <label *ngIf="!notification.readStatus" cDropdownItem class="dropdownCursor border-top" (click)="notificationNevigate(notification.id, notification.nevigateLink, notification.forEntryId)">
+        <label *ngIf="!notification.readStatus" cDropdownItem class="dropdownCursor border-top" (click)="notificationNevigate(notification.id, notification.nevigateLink, notification.forEntryId, notification.isNotice)">
           <div class="notificationText">
             <p class="m-0"><b>{{notification.title}}</b></p>
-            <p class="m-0"><b>{{notification.fromEmplName}}</b> {{notification.message}}</p>
+            <p class="m-0"><b>{{notification.fromEmpName}}</b> {{notification.message}}</p>
           </div>
         </label>
       </li>

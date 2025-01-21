@@ -37,7 +37,10 @@ namespace Hrm.Application.Features.Notifications.Handlers.Commands
 
             var notificationDto = _mapper.Map<Notification>(request.NotificationDto);
 
-            notificationDto.FeatureId = featureId;
+            if (featureId != 0)
+            {
+                notificationDto.FeatureId = featureId;
+            }
 
             notificationDto = await _unitOfWork.Repository<Notification>().Add(notificationDto);
             await _unitOfWork.Save();

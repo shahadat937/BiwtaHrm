@@ -1,0 +1,107 @@
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{heading}}</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                <form #UserNotificationForm="ngForm" [gutter]="3" novalidate cForm cRow
+                    class="needs-validation">
+
+                    <c-col [md]="12" class="ms-2">
+                        <mat-button-toggle-group value="toAll" (change)="selectToNotice($event.value)" class="row">
+                            <mat-button-toggle value="toAll" class="col-lg-4">To All Employee</mat-button-toggle>
+                            <mat-button-toggle value="toEmployee" class="col-lg-4">Specific Employee</mat-button-toggle>
+                            <mat-button-toggle value="toDepartment" class="col-lg-4">To Department</mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </c-col>
+
+                    <div cRow [gutter]="3">
+                        <c-col [lg]="4" *ngIf="toEmployee">
+                            <input type="hidden" [(ngModel)]="notificationService.userNotification.toEmpId" name="toEmpId" />
+                            <label cLabel for="empIdCard">PMIS No<span class="text-danger"></span></label>
+                            <c-input-group>
+                            <button cButton color="secondary" type="button" cTooltip="Search Employee" cTooltipPlacement="bottom" (click)="EmployeeListModal()">
+                                <svg [cIcon]="icons.cilSearch"></svg>
+                            </button>
+                                <input aria-describedby="empIdCard" cFormControl
+                                    [(ngModel)]="notificationService.userNotification.empIdCard" name="empIdCard"
+                                    #idCardNo="ngModel" placeholder="PMIS No" id="empIdCard"
+                                    type="text" #idCardNoInput />
+                                <button cButton color="primary" type="button"
+                                    (click)="getEmpInfoByIdCardNo(idCardNoInput.value)">
+                                    Select
+                                </button>
+                            </c-input-group>
+                            @if(!idCardNo.valid&&idCardNo.touched){
+                            <div class="text-left text-danger">PMIS No is required</div>
+                            }
+                        </c-col>
+                        
+                        <c-col [lg]="4" *ngIf="isValidEmp">
+                            <label cLabel for="name">Name<span class="text-danger"></span></label>
+                            <input name="name" cFormControl id="name" type="text" [value]="toEmpName" disabled/>
+                        </c-col>
+                            
+                        <c-col [lg]="4" *ngIf="toDepartment">
+                            <label cLabel for="toDeptId">Department<span
+                                    class="text-danger">*</span></label>
+                            <div class="input-wrapper">
+                                <select [(ngModel)]="notificationService.userNotification.toDeptId"
+                                    name="toDeptId" #toDeptId="ngModel" [required]="toDepartment"  cFormControl id="toDeptId" aria-label="Default select example" cSelect>
+                                    <option [ngValue]="null">Select Department</option>
+
+                                    @for(department of departments; track department.id;let index=$index) {
+                                    <option [value]="department.id">
+                                        {{ department.name }}
+                                    </option>
+                                    }
+                                </select>
+                                @if(!toDeptId.valid && toDeptId.touched){
+                                <div class="text-left text-danger">Department is required</div>
+                                }
+                            </div>
+                        </c-col>
+                    </div>
+
+                    <c-col [md]="6">
+                        <input type="hidden" [(ngModel)]="notificationService.userNotification.id" name="id" />
+                        <input type="hidden" [(ngModel)]="notificationService.userNotification.fromEmpId" name="fromEmpId" />
+                        <input type="hidden" [(ngModel)]="notificationService.userNotification.forAllUsers" name="forAllUsers" />
+                        <input type="hidden" [(ngModel)]="notificationService.userNotification.isNotice" name="isNotice" />
+                        <input type="hidden" [(ngModel)]="notificationService.userNotification.readStatus" name="readStatus" />
+
+                        <label cLabel for="title">Notice Title<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="notificationService.userNotification.title" name="title" #title="ngModel"
+                            placeholder="Enter Notice Title" cFormControl id="title" required type="text"
+                            />
+
+                        @if(!title.valid&&title.touched){
+                        <div class="text-left text-danger">Notice Title is required</div>
+                        }
+                    </c-col>
+                    <c-col [md]="12">
+                        <label cLabel for="message">Notice Message<span class="text-danger">*</span></label>
+                        <textarea [(ngModel)]="notificationService.userNotification.message" name="message" #message="ngModel" cFormControl id="message" placeholder="Message" required
+                        ></textarea>
+
+                        @if(!message.valid&&message.touched){
+                        <div class="text-left text-danger">Notice Message is required</div>
+                        }
+                    </c-col>
+                 </form>
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button color="warn" type="button" (click)="closeModal()">
+                        <mat-icon>cancel</mat-icon> Close
+                    </button>
+                    <button [disabled]="UserNotificationForm.invalid" mat-raised-button class="me-1" color="primary" type="submit" (click)="onSubmit(UserNotificationForm)">
+                        <mat-icon>{{btnIcon}}</mat-icon> {{ btnText }}
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>

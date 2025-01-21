@@ -32,6 +32,14 @@ namespace Hrm.Api.Controllers
             return Ok(notifications);
         }
 
+        [HttpGet]
+        [Route("get-noticeList")]
+        public async Task<ActionResult<List<EmpBasicInfoDto>>> GetNoticeList([FromQuery] QueryParams queryParams, int empId)
+        {
+            var notifications = await _mediator.Send(new GetNoticeListRequest { QueryParams = queryParams, EmpId = empId });
+            return Ok(notifications);
+        }
+
         [HttpPost]
         [Route("save-notification")]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateNotificationDto createNotificationDto)

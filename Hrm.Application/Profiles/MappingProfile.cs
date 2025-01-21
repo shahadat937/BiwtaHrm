@@ -130,6 +130,7 @@ using Hrm.Application.DTOs.EmpFingerPrint;
 using Hrm.Application.DTOs.PendingDevice;
 using Hrm.Application.DTOs.AttDevice;
 using Hrm.Application.DTOs.Notification;
+using Hrm.Application.DTOs.FormSection;
 
 
 
@@ -744,6 +745,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<FormGroup,FormGroupDto>().ReverseMap();
             CreateMap<FormGroup, CreateFormGroupDto>().ReverseMap();
+
+            CreateMap<FormSection, GetFormSectionDto>().ReverseMap();
+            CreateMap<FormSection, CreateFormSectionDto>().ReverseMap();
 
             CreateMap<RoleDashboard, RoleDashboardDto>()
                 .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.AspNetRoles.Name));

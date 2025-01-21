@@ -221,7 +221,7 @@
                 [empId]="empId"
                 [(field)]="field.fieldValue"
                 [fieldData]="field"
-                [Index]="$index+1+'. '" 
+                [Index]="indexToAlpha($index)+'. '" 
                 [fieldUniqueName]="fieldUniqueName+field.fieldName+field.fieldId"></app-field>
             }
         </div>

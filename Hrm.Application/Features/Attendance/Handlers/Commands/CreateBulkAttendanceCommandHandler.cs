@@ -16,6 +16,7 @@ using System.Runtime.InteropServices;
 using Hrm.Application.DTOs.Attendance;
 using Microsoft.EntityFrameworkCore;
 using Hrm.Domain;
+using Hrm.Application.Enum;
 
 namespace Hrm.Application.Features.Attendance.Handlers.Commands
 {
@@ -162,7 +163,31 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
 
             var attendances = _mapper.Map<List<Hrm.Domain.Attendance>>(attendancedtos);
 
-            await _unitOfWork.Repository<Hrm.Domain.Attendance>().AddRangeAsync(attendances);
+            List<Hrm.Domain.Attendance> attendanceForadd = new List<Domain.Attendance>();
+            
+            foreach(var attendance in attendances)
+            {
+                var check = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.EmpId == attendance.EmpId
+                    && x.AttendanceDate == attendance.AttendanceDate).FirstOrDefaultAsync();
+
+                if(check==null)
+                {
+                    attendanceForadd.Add(attendance);
+                    continue;
+                }
+
+                if(check.AttendanceStatusId !=(int) AttendanceStatusOption.OnSiteVisit&&check.AttendanceStatusId!=(int)AttendanceStatusOption.OnLeave)
+                {
+                    continue;
+                }
+
+                check.InTime = attendance.InTime;
+                check.OutTime = attendance.OutTime;
+
+                await _unitOfWork.Repository<Hrm.Domain.Attendance>().Update(check);
+            }
+
+            await _unitOfWork.Repository<Hrm.Domain.Attendance>().AddRangeAsync(attendanceForadd);
             await _unitOfWork.Save();
 
             var response = new BaseCommandResponse();

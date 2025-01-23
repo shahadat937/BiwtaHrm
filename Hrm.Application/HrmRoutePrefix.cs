@@ -146,5 +146,7 @@ namespace Hrm.Application
         public const string Notification = HRMRoutePrefixBase + "notification";
         public const string FormGroup = HRMRoutePrefixBase + "formGroup";
         public const string FormSection = HRMRoutePrefixBase + "formSection";
+
+        public const string Reporting = HRMRoutePrefixBase + "reporting";
     }
 }

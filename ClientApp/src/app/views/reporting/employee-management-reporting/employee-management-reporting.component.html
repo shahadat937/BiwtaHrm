@@ -1,0 +1,50 @@
+<c-card>
+    <c-card-header class="text-center">
+        <h5>Report on Employee Management</h5>
+    </c-card-header>
+    <c-card-body>
+        <div cRow>
+            <c-col [md]="4">
+                <select cSelect class="mb-3" [(ngModel)]="informationType" name="informationType" #infoValue="ngModel" cFormControl>
+                    <option [ngValue]=0 >Select Information Type</option>
+                    <option [ngValue]=1 >Basic Information</option>
+                    <option [ngValue]=2 >Personal Information</option>
+                    <option [ngValue]=3 >Spouse Information</option>
+                    <option [ngValue]=4 >Children Information</option>
+                    <option [ngValue]=5 >Address Information</option>
+                    <option [ngValue]=6 >Job Details</option>
+                    <option [ngValue]=7 >Other Responsibility</option>
+                    <option [ngValue]=8 >Work History</option>
+                    <option [ngValue]=9 >Education Information</option>
+                    <option [ngValue]=10>Training Information</option>
+                    <option [ngValue]=11>Bank Information</option>
+                    <option [ngValue]=12>Language Details</option>
+                    <option [ngValue]=13>Foreign Trip</option>
+                </select>
+            </c-col>
+            
+            <c-col [md]="4" *ngIf="informationType == 1">
+                <select cSelect class="mb-3" [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl (change)="onQurtyTypeChange()">
+                    <option value="">Select Query Type</option>
+                    <option value="Employee Type">Employee Type</option>
+                    <option value="Shift Type">Shift Type</option>
+                </select>
+            </c-col>
+        </div>
+
+        <div cRow class="d-flex justify-content-center" *ngIf="queryTypeName">
+            <c-col [md]="4">
+                <div class="ps-3 pe-3 text-light bg-success p-2 rounded">
+                    <h6 class="m-0">All {{queryTypeName}}<label *ngIf="queryCount.totalAssigned > 0">s</label></h6>
+                    <p>{{queryCount.totalAssigned}} Employee<label *ngIf="queryCount.totalAssigned > 0">s</label></p>
+                </div>
+            </c-col>
+            <c-col [md]="4">
+                <div class="ps-3 pe-3 text-light bg-warning p-2 rounded">
+                    <h6 class="m-0">No {{queryTypeName}}<label *ngIf="queryCount.totalNull > 0">s</label></h6>
+                    <p>{{queryCount.totalNull}} Employee<label *ngIf="queryCount.totalNull > 0">s</label></p>
+                </div>
+            </c-col>
+        </div>
+    </c-card-body>
+</c-card>

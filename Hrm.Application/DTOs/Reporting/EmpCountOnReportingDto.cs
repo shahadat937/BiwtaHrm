@@ -14,7 +14,7 @@ namespace Hrm.Application.DTOs.Reporting
     }
     public class CountReportingInfo
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string? Name { get; set; }
         public int? Count { get; set; }
     }

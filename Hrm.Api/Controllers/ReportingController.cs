@@ -30,11 +30,18 @@ namespace Hrm.Api.Controllers
             var employeeType = await _mediator.Send(new GetEmpCountOnEmployeeTypeRequest { });
             return Ok(employeeType);
         }
+        [HttpGet]
+        [Route("get-employeeTypeReportingResult")]
+        public async Task<ActionResult<List<object>>> GetEmployeeTypeReportingResult([FromQuery] QueryParams queryParams, int? id)
+        {
+            var result = await _mediator.Send(new GetEmployeeTypeReportingResultRequest { QueryParams = queryParams, Id = id });
+            return Ok(result);
+        }
 
 
         [HttpGet]
         [Route("get-bloodGroupReportingResult")]
-        public async Task<ActionResult<List<object>>> GetbloodGroupReportingResult([FromQuery] QueryParams queryParams, int? id)
+        public async Task<ActionResult<List<object>>> GetBloodGroupReportingResult([FromQuery] QueryParams queryParams, int? id)
         {
             var result = await _mediator.Send(new GetBloodGroupReportingResultRequest { QueryParams = queryParams, Id = id });
             return Ok(result);

@@ -177,7 +177,12 @@ const routes: Routes = [
         path: 'device',
         loadChildren: () => 
           import('./views/device/device.module').then((m) => m.DeviceModule)
-      }
+      },
+      {
+        path: 'report',
+        loadChildren: () =>
+          import('./views/reporting/reporting.module').then((m) => m.ReportingModule)
+      },
 
     ]
   },

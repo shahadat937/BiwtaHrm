@@ -21,5 +21,6 @@ namespace Hrm.Application.DTOs.Notification
         public string? NevigateLink { get; set; }
         public int? ForEntryId { get; set; }
         public bool? ReadStatus { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

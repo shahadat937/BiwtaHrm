@@ -114,18 +114,23 @@ export class DefaultHeaderComponent extends HeaderComponent {
     )
   }
 
-  notificationNevigate(notificationId: number, nevigateLink: string, forNotificationId: number){
+  notificationNevigate(notificationId: number, nevigateLink: string, forNotificationId: number, isNotice: boolean){
     const notificationReadBy = new NotificationReadBy();
     notificationReadBy.empId = this.empId;
     notificationReadBy.notificationId =  notificationId;
     if(this.empId != 0){
-      this.subscription.push(this.notificationService.updateNotificationStatus(notificationReadBy).subscribe((res) => {
-        this.router.navigate([nevigateLink], {
-          queryParams: { forNotificationId: forNotificationId },
-          queryParamsHandling: 'merge', // Merge with existing queryParams
-          relativeTo: this.router.routerState.root, // Ensure relative routing works
-        });
-      }))
+        this.subscription.push(this.notificationService.updateNotificationStatus(notificationReadBy).subscribe((res) => {
+          if(isNotice != true){
+            this.router.navigate([nevigateLink], {
+              queryParams: { forNotificationId: forNotificationId },
+              queryParamsHandling: 'merge', // Merge with existing queryParams
+              relativeTo: this.router.routerState.root, // Ensure relative routing works
+            });
+          }
+          else {
+            this.router.navigate(['/notifications/noticeList']);
+          }
+        }))
     }
 
   }

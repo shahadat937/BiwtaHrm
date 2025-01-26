@@ -136,7 +136,6 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
           this.getAllPromotionIncrementInfo(this.pagination);
         })
         )
-        
       }
     }
     else {

@@ -603,7 +603,6 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       this.departments = res;
     })
     )
-    
   }
   
   getTransferDesignationByDepartment(departmentId: number | null, empJobDetailsId: number) {

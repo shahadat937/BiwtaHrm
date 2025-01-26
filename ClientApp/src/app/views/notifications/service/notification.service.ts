@@ -9,7 +9,10 @@ import { UserNotification } from '../models/user-notification';
 export class NotificationService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
-  constructor(private http: HttpClient) { }
+  userNotification : UserNotification;
+  constructor(private http: HttpClient) { 
+    this.userNotification = new UserNotification();
+  }
 
   getUserNotification(queryParams: any, empId:any){
     let params = new HttpParams({ fromObject: queryParams }); 
@@ -17,8 +20,18 @@ export class NotificationService {
     return this.http.get<any>(`${this.baseUrl}/notification/get-notificationForUser`, { params });
   }
 
+  getNoticeList(queryParams: any, empId:any){
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('empId', empId);
+    return this.http.get<any>(`${this.baseUrl}/notification/get-noticeList`, { params });
+  }
+
   submit(model: any) {
     return this.http.post(this.baseUrl + '/notification/save-notification', model);
+  }
+  
+  update(id: number, model: any) {
+    return this.http.post(this.baseUrl + '/notification/update-notification', model);
   }
   
   updateNotificationStatus(model: any) {

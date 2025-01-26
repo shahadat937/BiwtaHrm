@@ -3,20 +3,11 @@
             <div>Notification List</div>
     </c-card-header>
     <c-card-body>
-      <!-- <div class="row d-flex justify-content-between">
-        <p-iconField iconPosition="right" class="col-md pb-2">
-          <p-inputIcon>
-            <mat-icon>search</mat-icon>
-          </p-inputIcon>
-          <input
-            pInputText
-            type="text"
-            #filter
-            (keyup)="applyFilter(filter.value)"
-            placeholder="Search Here.."
-          />
-        </p-iconField>
-      </div> -->
+        <div class="d-flex justify-content-end mb-3">
+          <button mat-raised-button color="primary" (click)="addNoticeModal(0, 'Create')">
+              <mat-icon>add</mat-icon> New Notice
+          </button>
+        </div>
         <div class="mat-elevation-z8 table-responsive">
           <table mat-table [dataSource]="dataSource">
             <!-- Position Column -->
@@ -27,7 +18,7 @@
   
             <ng-container matColumnDef="notification">
               <th mat-header-cell *matHeaderCellDef>Notification</th>
-              <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': !element.readStatus ? 'lavender' : 'transparent', 'cursor': 'pointer' }"  (click)="notificationNevigate(element.id, element.nevigateLink, element.forEntryId, element.readStatus)">
+              <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': !element.readStatus ? 'lavender' : 'transparent', 'cursor': 'pointer' }"  (click)="notificationNevigate(element.id, element.readStatus)">
                 <p class="m-0"><b>{{ element.title }}</b></p>
                 <b>{{element.fromEmpName}}</b> {{element.message}}
               </td>

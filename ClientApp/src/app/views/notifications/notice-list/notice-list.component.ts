@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../core/service/auth.service';
@@ -12,15 +12,16 @@ import { RoleFeatureService } from '../../featureManagement/service/role-feature
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
 import { NotificationService } from '../service/notification.service';
+import { AddNoticeComponent } from '../add-notice/add-notice.component';
 import { NotificationReadBy } from 'src/app/views/notifications/models/notification-read-by';
 import { RealTimeService } from 'src/app/core/service/real-time.service';
 
 @Component({
-  selector: 'app-notification-list',
-  templateUrl: './notification-list.component.html',
-  styleUrl: './notification-list.component.scss'
+  selector: 'app-notice-list',
+  templateUrl: './notice-list.component.html',
+  styleUrl: './notice-list.component.scss'
 })
-export class NotificationListComponent implements OnInit, OnDestroy {
+export class NoticeListComponent implements OnInit, OnDestroy {
 
    subscription: Subscription[]=[]
     displayedColumns: string[] = [
@@ -62,11 +63,11 @@ export class NotificationListComponent implements OnInit, OnDestroy {
 
   getPermission(){
     this.subscription.push(
-    this.roleFeatureService.getFeaturePermission('notificationList').subscribe((item) => {
+    this.roleFeatureService.getFeaturePermission('noticeList').subscribe((item) => {
       this.featurePermission = item;
       if(item.viewStatus == true){
         this.loginEmpId = this.authService.userInformation.empId || 0;
-        this.getAllNotifications(this.pagination);
+        this.getAllNotice(this.pagination);
       }
       else{
         this.roleFeatureService.unauthorizeAccress();
@@ -80,13 +81,13 @@ export class NotificationListComponent implements OnInit, OnDestroy {
   applyFilter(filterValue: string) {
     filterValue = filterValue.toLowerCase();
     this.pagination.searchText = filterValue;
-    this.getAllNotifications(this.pagination);
+    this.getAllNotice(this.pagination);
   }
 
   onPageChange(event: any){
     this.pagination.pageSize = event.pageSize;
     event.pageIndex = event.pageIndex + 1;
-    this.getAllNotifications(event);
+    this.getAllNotice(event);
   }
   
   ngOnDestroy(): void {
@@ -96,9 +97,9 @@ export class NotificationListComponent implements OnInit, OnDestroy {
   }
 
   
-  getAllNotifications(queryParams: any) {
+  getAllNotice(queryParams: any) {
     this.subscription.push(
-    this.notificationService.getUserNotification(queryParams, this.loginEmpId).subscribe((item) => {
+    this.notificationService.getNoticeList(queryParams, this.loginEmpId).subscribe((item) => {
       this.dataSource.data = item.items;
       this.pagination.length = item.totalItemsCount;
     })
@@ -128,37 +129,33 @@ export class NotificationListComponent implements OnInit, OnDestroy {
   }
 
   
-  notificationNevigate(notificationId: number, nevigateLink: string, forNotificationId: number, readStatus: boolean){
+  notificationNevigate(notificationId: number, readStatus: boolean){
     const notificationReadBy = new NotificationReadBy();
     notificationReadBy.empId = this.loginEmpId;
     notificationReadBy.notificationId =  notificationId;
     if(readStatus == false){
       this.subscription.push(this.notificationService.updateNotificationStatus(notificationReadBy).subscribe((res) => {
-        if(nevigateLink != null){
-          this.router.navigate([nevigateLink], {
-            queryParams: { forNotificationId: forNotificationId },
-            queryParamsHandling: 'merge', // Merge with existing queryParams
-            relativeTo: this.router.routerState.root, // Ensure relative routing works
-          });
-        }
-        else {
-          this.router.navigate(['/notifications/noticeList']);
-        }
       }))
     }
-    else {
-      if(nevigateLink != null){
-        this.router.navigate([nevigateLink], {
-          queryParams: { forNotificationId: forNotificationId },
-          queryParamsHandling: 'merge', // Merge with existing queryParams
-          relativeTo: this.router.routerState.root, // Ensure relative routing works
-        });
+  }
+
+  addNoticeModal(id: number, clickedButton: string){
+      if(clickedButton == "Create" && this.featurePermission.add == true || clickedButton == "Edit" && this.featurePermission.update == true){
+        const initialState = {
+          id: id,
+          clickedButton: clickedButton
+        };
+        const modalRef: BsModalRef = this.modalService.show(AddNoticeComponent, { initialState, backdrop: 'static' });
+    
+        if (modalRef.onHide) {
+          modalRef.onHide.subscribe(() => {
+            this.getAllNotice(this.pagination);
+          });
+        }
       }
       else {
-        this.router.navigate(['/notifications/noticeList']);
+        this.roleFeatureService.unauthorizeAccress();
       }
-    }
-
   }
 
 }

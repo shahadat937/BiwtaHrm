@@ -99,6 +99,8 @@ import { EmpWorkHistorySingleComponent } from './add-employee/employee-informati
 import { EmpOtherResponsibilitySingleComponent } from './add-employee/employee-informations/emp-other-responsibility-single/emp-other-responsibility-single.component';
 import { RewardPunishmentListComponent } from './reward-punishment-list/reward-punishment-list.component';
 import { RewardPunishmentComponent } from './reward-punishment/reward-punishment.component';
+import {NgxPrintModule} from 'ngx-print';
+
 @NgModule({
   declarations: [
     ViewUsersComponent,
@@ -187,6 +189,7 @@ import { RewardPunishmentComponent } from './reward-punishment/reward-punishment
     DropdownModule,
     ScrollingModule,
     BadgeModule,
+    NgxPrintModule
   ],
   providers:
   [

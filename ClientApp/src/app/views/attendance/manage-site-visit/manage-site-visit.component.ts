@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscribable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/service/auth.service';
 
 @Component({
@@ -6,9 +7,10 @@ import { AuthService } from 'src/app/core/service/auth.service';
   templateUrl: './manage-site-visit.component.html',
   styleUrl: './manage-site-visit.component.scss'
 })
-export class ManageSiteVisitComponent implements OnInit {
+export class ManageSiteVisitComponent implements OnInit, OnDestroy {
   IsUser = true;
   filter = {};
+  subscriptions: Subscription[] = [];
   
   constructor(
     private authService: AuthService
@@ -21,6 +23,10 @@ export class ManageSiteVisitComponent implements OnInit {
 
   ngOnInit(): void {
     
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subs => subs.unsubscribe());
   }
 
 

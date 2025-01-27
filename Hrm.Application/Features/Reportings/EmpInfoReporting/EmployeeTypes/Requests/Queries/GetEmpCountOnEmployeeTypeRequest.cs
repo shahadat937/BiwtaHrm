@@ -10,6 +10,7 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Req
 {
     public class GetEmpCountOnEmployeeTypeRequest : IRequest<EmpCountOnReportingDto>
     {
-
+        public int? DepartmentId { get; set; }
+        public int? SectionId { get; set; }
     }
 }

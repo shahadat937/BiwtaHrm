@@ -31,8 +31,12 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Han
             var employeeTypes = await _EmployeeTypeRepository.GetAll();
             var result = new EmpCountOnReportingDto();
 
-            result.TotalAssigned = await _EmpBasicInfoRepository.CountAsync(x => x.EmployeeTypeId != null);
-            result.TotalNull = await _EmpBasicInfoRepository.CountAsync(x => x.EmployeeTypeId == null);
+            result.TotalAssigned = await _EmpBasicInfoRepository.CountAsync(x => x.EmployeeTypeId != null && 
+                (request.DepartmentId == 0 || x.EmpJobDetail.FirstOrDefault().DepartmentId == request.DepartmentId) &&
+                (request.SectionId == 0 || x.EmpJobDetail.FirstOrDefault().SectionId == request.SectionId));
+            result.TotalNull = await _EmpBasicInfoRepository.CountAsync(x => x.EmployeeTypeId == null &&
+                (request.DepartmentId == 0 || x.EmpJobDetail.FirstOrDefault().DepartmentId == request.DepartmentId) &&
+                (request.SectionId == 0 || x.EmpJobDetail.FirstOrDefault().SectionId == request.SectionId));
 
             var employeeTypeInfoList = new List<CountReportingInfo>();
 
@@ -42,7 +46,9 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Han
                 {
                     Id = employeeType.EmployeeTypeId,
                     Name = employeeType.EmployeeTypeName ?? "",
-                    Count = await _EmpBasicInfoRepository.CountAsync(x => x.EmployeeTypeId == employeeType.EmployeeTypeId)
+                    Count = await _EmpBasicInfoRepository.CountAsync(x => x.EmployeeTypeId == employeeType.EmployeeTypeId &&
+                        (request.DepartmentId == 0 || x.EmpJobDetail.FirstOrDefault().DepartmentId == request.DepartmentId) &&
+                        (request.SectionId == 0 || x.EmpJobDetail.FirstOrDefault().SectionId == request.SectionId))
                 };
                 employeeTypeInfoList.Add(employeeTypeInfo);
             }

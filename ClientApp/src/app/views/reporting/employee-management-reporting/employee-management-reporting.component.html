@@ -5,7 +5,7 @@
     <c-card-body>
         <div cRow>
             <c-col [md]="4">
-                <select cSelect class="mb-3" [(ngModel)]="informationType" name="informationType" #infoValue="ngModel" cFormControl>
+                <select cSelect class="mb-3" [(ngModel)]="informationType" name="informationType" #infoValue="ngModel" cFormControl (change)="onInfoTypeChange()">
                     <option [ngValue]=0 >Select Information Type</option>
                     <option [ngValue]=1 >Basic Information</option>
                     <option [ngValue]=2 >Personal Information</option>
@@ -24,7 +24,7 @@
             </c-col>
             
             <c-col [md]="4" *ngIf="informationType == 1">
-                <select cSelect class="mb-3" [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl (change)="onQueryTypeChange()">
+                <select cSelect class="mb-3" [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl (change)="onQueryTypeChange()" (change)="resetDeptSection()">
                     <option value="">Select Query Type</option>
                     <option value="Employee Type">Employee Type</option>
                     <option value="Shift Type">Shift Type</option>
@@ -47,7 +47,7 @@
             </c-col>
         </div>
         
-        <div cRow class="d-flex justify-content-center mt-3" *ngIf="queryCount.countReportingInfo">
+        <div cRow class="d-flex justify-content-center mt-3" *ngIf="queryTypeName">
           <c-col *ngFor="let info of queryCount.countReportingInfo; index as i" [md]="3">
             <div class="ps-3 pe-3 text-light bg-danger p-2 rounded"  (click)="onTypeValueChange(info.name, info.id)">
               <h6 class="m-0">{{info.name}}</h6>

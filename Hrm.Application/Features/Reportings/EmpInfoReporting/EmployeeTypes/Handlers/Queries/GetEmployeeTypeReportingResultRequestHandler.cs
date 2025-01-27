@@ -28,16 +28,18 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Han
             if (request.UnAssigned == false)
             {
                 IQueryable<EmpBasicInfo> query = _EmpBasicInfoRepository.FilterWithInclude(x =>
-                (request.Id == 0 || x.EmployeeTypeId == request.Id))
-                .Include(x => x.EmpJobDetail)
-                    .ThenInclude(x => x.Department)
-                .ThenInclude(x => x.EmpJobDetail)
-                    .ThenInclude(x => x.Section)
-                .ThenInclude(x => x.EmpJobDetail)
-                    .ThenInclude(x => x.Designation)
-                        .ThenInclude(ds => ds.DesignationSetup)
-                .Include(x => x.EmpPersonalInfo)
-                .Include(x => x.EmployeeType);
+                    (request.Id == 0 || x.EmployeeTypeId == request.Id) &&
+                    (request.DepartmentId == 0 || x.EmpJobDetail.FirstOrDefault().DepartmentId == request.DepartmentId) &&
+                    (request.SectionId == 0 || x.EmpJobDetail.FirstOrDefault().SectionId == request.SectionId))
+                    .Include(x => x.EmpJobDetail)
+                        .ThenInclude(x => x.Department)
+                    .ThenInclude(x => x.EmpJobDetail)
+                        .ThenInclude(x => x.Section)
+                    .ThenInclude(x => x.EmpJobDetail)
+                        .ThenInclude(x => x.Designation)
+                            .ThenInclude(ds => ds.DesignationSetup)
+                    .Include(x => x.EmpPersonalInfo)
+                    .Include(x => x.EmployeeType);
 
                 var totalCount = await query.CountAsync(cancellationToken);
 
@@ -69,7 +71,9 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Han
             else
             {
                 IQueryable<EmpBasicInfo> query = _EmpBasicInfoRepository.FilterWithInclude(x =>
-                (x.EmployeeTypeId == null))
+                (x.EmployeeTypeId == null) &&
+                (request.DepartmentId == 0 || x.EmpJobDetail.FirstOrDefault().DepartmentId == request.DepartmentId) &&
+                (request.SectionId == 0 || x.EmpJobDetail.FirstOrDefault().SectionId == request.SectionId))
                 .Include(x => x.EmpJobDetail)
                     .ThenInclude(x => x.Department)
                 .ThenInclude(x => x.EmpJobDetail)

@@ -25,16 +25,16 @@ namespace Hrm.Api.Controllers
             //Employee Type
         [HttpGet]
         [Route("get-employeeTypeCount")]
-        public async Task<ActionResult<object>> GetEmployeeTypeCount()
+        public async Task<ActionResult<object>> GetEmployeeTypeCount(int? departmentId, int? sectionId)
         {
-            var employeeType = await _mediator.Send(new GetEmpCountOnEmployeeTypeRequest { });
+            var employeeType = await _mediator.Send(new GetEmpCountOnEmployeeTypeRequest { DepartmentId = departmentId, SectionId = sectionId });
             return Ok(employeeType);
         }
         [HttpGet]
         [Route("get-employeeTypeReportingResult")]
-        public async Task<ActionResult<List<object>>> GetEmployeeTypeReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned)
+        public async Task<ActionResult<List<object>>> GetEmployeeTypeReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
         {
-            var result = await _mediator.Send(new GetEmployeeTypeReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned });
+            var result = await _mediator.Send(new GetEmployeeTypeReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
 

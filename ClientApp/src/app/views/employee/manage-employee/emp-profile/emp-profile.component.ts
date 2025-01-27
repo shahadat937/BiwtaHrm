@@ -112,8 +112,6 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
   nomineeInfoColumns: string[] = ['slNo', 'nomineeName', 'relationName','percentage'];
   nomineeInfoSource = new MatTableDataSource<any>();
 
-  @ViewChild('printSection', { static: false }) printSection!: ElementRef;
-
   constructor(public dialog: MatDialog,
     private modalService: BsModalService,
     private route: ActivatedRoute,
@@ -205,25 +203,6 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
       
     }
 
-    preparePrintContent() {
-      const basicInfoElement = document.getElementById('basicInformation')?.innerHTML;
-      const personalInfoElement = document.getElementById('empPersonalInfo')?.innerHTML;
-    
-      if (basicInfoElement && personalInfoElement) {
-        const printSection = this.printSection.nativeElement;
-    
-        // Clear existing content to avoid appending to previous data
-        this.renderer.setProperty(printSection, 'innerHTML', '');
-    
-        // Add the new content
-        this.renderer.setProperty(
-          printSection,
-          'innerHTML',
-          `<div>${basicInfoElement}</div><div>${personalInfoElement}</div>`
-        );
-      }
-    }
-    
     getEmpPersonalInfoByEmpId(){
       this.subscription.push(
         this.empPersonalInfoService.findByEmpId(this.id).subscribe((res) => {
@@ -258,6 +237,50 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
       })
       )
       
+    }
+
+    printSection(sectionId: string) {
+      // Get the basic information and the specific section to print
+      const basicInfo = document.getElementById('basicInformation')?.innerHTML;
+      const sectionToPrint = document.getElementById(sectionId)?.innerHTML;
+  
+      // Create a new window for printing
+      const printWindow = window.open('', 'blank', 'width=800,height=600');
+      printWindow?.document.write(`
+        <html>
+          <head>
+            <title>Employee Information</title>
+            <style>
+              table { border-collapse: collapse; text-align: left; width: 100%}
+              th, td {border: 1px solid #000; padding: 5px; }
+              .no-print { display: none; }
+              .borderless td, .borderless th {
+                  border: none;
+              }
+              .border-left {
+                  border-left: 3px solid cadetblue;
+              }
+              c-col { 
+                float: left; 
+                padding: 5px;
+                margin-bottom: 10px;
+              }
+              c-card-header {
+                display: inline-block;
+                width: 100%;
+                text-align: center;
+                font-size: 1.5rem;
+              }
+            </style>
+          </head>
+          <body>
+            <div>${basicInfo}</div>
+            <div>${sectionToPrint}</div>
+          </body>
+        </html>
+      `);
+      printWindow?.document.close();
+      printWindow?.print();
     }
 
     

@@ -133,11 +133,9 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
 
   getAllEmpBasicInfoQueryPerams(queryParams: any){
-    // this.subscription = 
     this.subscription.push(
       this.empBasicInfoService.getAllPagination(queryParams, this.selectedDepartment, this.selectedSection).subscribe((employees: any) => {
       this.dataSource.data = employees.items;
-      // this.dataSource.paginator = this.paginator;
       this.pagination.length = employees.totalItemsCount;
     })
     )

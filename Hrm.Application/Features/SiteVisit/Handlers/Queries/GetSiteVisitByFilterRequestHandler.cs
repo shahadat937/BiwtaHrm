@@ -29,6 +29,11 @@ namespace Hrm.Application.Features.SiteVisit.Handlers.Queries
                 .Include(e => e.Employees)
                 .AsQueryable();
 
+            if(request.filters.SiteVisitId.HasValue)
+            {
+                siteVisits = siteVisits.Where(x => x.SiteVisitId == request.filters.SiteVisitId);
+            }
+
             if(request.filters.Status!=null&&request.filters.Status.Count()>0)
             {
                 siteVisits = siteVisits.Where(x => request.filters.Status.Contains(x.Status));

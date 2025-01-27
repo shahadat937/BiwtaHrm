@@ -32,9 +32,9 @@ namespace Hrm.Api.Controllers
         }
         [HttpGet]
         [Route("get-employeeTypeReportingResult")]
-        public async Task<ActionResult<List<object>>> GetEmployeeTypeReportingResult([FromQuery] QueryParams queryParams, int? id)
+        public async Task<ActionResult<List<object>>> GetEmployeeTypeReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned)
         {
-            var result = await _mediator.Send(new GetEmployeeTypeReportingResultRequest { QueryParams = queryParams, Id = id });
+            var result = await _mediator.Send(new GetEmployeeTypeReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned });
             return Ok(result);
         }
 

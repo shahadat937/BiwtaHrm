@@ -18,12 +18,16 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
   subscription: Subscription[]=[];
   informationType: number = 0;
   queryTypeName: string = '';
-  typeId: number = 0;
   queryType: SelectedModel[] = [];
   displayedColumns: string[] = [
-      'slNo',
-      'idNo',
-      'Action'];
+      // 'slNo',
+      'employee',
+      'department/section',
+      'designation',
+      'typeName',
+      'phone',
+      'status'
+    ];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -31,6 +35,9 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
   matSort!: MatSort;
   pagination: PaginatorModel = new PaginatorModel();
   queryCount: EmpCountOnReportingDto = new EmpCountOnReportingDto();
+  typeId: number = 0;
+  typeName: string = 'All';
+  unAssigned: boolean = false;
 
   constructor(
     public reportingService: ReportingService,
@@ -48,13 +55,32 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
     }
   }
 
+  onTypeValueChange(type: string, id: number){
+    if(type == 'All'){
+      this.unAssigned = false;
+      this.typeId = 0;
+      this.typeName = type;
+    }
+    else if(type == 'Unassigned'){
+      this.unAssigned = true;
+      this.typeId = 0;
+      this.typeName = type;
+    }
+    else {
+      this.unAssigned = false;
+      this.typeId = id;
+      this.typeName = type;
+    }
+    this.onQueryTypeChange();
+  }
+
   onPageChange(event: any){
     this.pagination.pageSize = event.pageSize;
     event.pageIndex = event.pageIndex + 1;
     this.getEmployeeTypeReportingResult(event);
   }
 
-  onQurtyTypeChange(){
+  onQueryTypeChange(){
     if(this.queryTypeName == 'Employee Type'){
       this.getEmployeeTypeCount();
       this.getEmployeeTypeReportingResult(this.pagination);
@@ -70,7 +96,7 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
   }
   getEmployeeTypeReportingResult(queryParams: any){
     this.subscription.push(
-      this.reportingService.getEmployeeTypeReportingResult(queryParams, this.typeId).subscribe((res: any) => {
+      this.reportingService.getEmployeeTypeReportingResult(queryParams, this.typeId, this.unAssigned).subscribe((res: any) => {
       this.dataSource.data = res.items;
       this.pagination.length = res.totalItemsCount;
     })

@@ -14,5 +14,6 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Req
     {
         public QueryParams QueryParams { get; set; }
         public int? Id { get; set; }
+        public bool? UnAssigned { get; set; }
     }
 }

@@ -13,6 +13,8 @@ import { AddLeaveService } from '../../service/add-leave.service';
 import { HttpParams } from '@angular/common/http';
 import { ThanaService } from 'src/app/views/basic-setup/service/thana.service';
 import { update } from 'lodash-es';
+import { UserNotification } from '../../../notifications/models/user-notification';
+import { NotificationService } from '../../../notifications/service/notification.service';
 
 @Component({
   selector: 'app-leave-detail-view',
@@ -37,6 +39,7 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
   IsUpdating: boolean
   constructor (
     public leaveService: ManageLeaveService,
+    private notificationService: NotificationService,
     private addLeaveService: AddLeaveService,
     private route: ActivatedRoute,
     private router: Router,
@@ -124,6 +127,17 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
             this.toastr.success('',`${response.message}`, {
               positionClass: 'toast-top-right'
             })
+
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.leaveData.approvedBy;
+            userNotification.toEmpId = this.leaveData.empId;
+            userNotification.featurePath = 'personalleave';
+            userNotification.nevigateLink = '/leave/personalleave';
+            userNotification.forEntryId = response.id;
+            userNotification.title = 'Leave Application';
+            userNotification.message = 'Your leave request is approved';
+            this.notificationService.submit(userNotification).subscribe((res) => {});
+            
             this.getLeaveRequestById();
           } else {
             this.toastr.warning('',`${response.message}`, {
@@ -148,6 +162,30 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
             this.toastr.success('',`${response.message}`, {
               positionClass: 'toast-top-right'
             })
+
+
+            // Send notification to user
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.leaveData.reviewedBy;
+            userNotification.toEmpId = this.leaveData.empId;
+            userNotification.featurePath = 'personalleave';
+            userNotification.nevigateLink = '/leave/personalleave';
+            userNotification.forEntryId = response.id;
+            userNotification.title = 'Leave Application';
+            userNotification.message = 'Your leave request is recommended';
+            this.notificationService.submit(userNotification).subscribe((res) => {});
+
+
+            //Send Notification to approver
+            userNotification.fromEmpId = this.leaveData.reviewedBy;
+            userNotification.toEmpId = this.leaveData.approvedBy;
+            userNotification.featurePath = 'finalapprove';
+            userNotification.nevigateLink = '/leave/finalapprove';
+            userNotification.forEntryId = response.id;
+            userNotification.title = 'Leave Application';
+            userNotification.message = 'recommended leave application, Approval Pending.';
+            this.notificationService.submit(userNotification).subscribe((res) => {});
+
             this.getLeaveRequestById();
           } else {
             this.toastr.warning('',`${response.message}`, {
@@ -182,6 +220,17 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
             this.toastr.success('',`${response.message}`, {
               positionClass: 'toast-top-right'
             })
+
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.leaveData.approvedBy;
+            userNotification.toEmpId = this.leaveData.empId;
+            userNotification.featurePath = 'personalleave';
+            userNotification.nevigateLink = '/leave/personalleave';
+            userNotification.forEntryId = response.id;
+            userNotification.title = 'Leave Application';
+            userNotification.message = 'Your leave request is denied';
+            this.notificationService.submit(userNotification).subscribe((res) => {});
+
             this.getLeaveRequestById();
           } else {
             this.toastr.warning('',`${response.message}`, {
@@ -207,6 +256,15 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
             this.toastr.success('',`${response.message}`, {
               positionClass: 'toast-top-right'
             })
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.leaveData.reviewedBy;
+            userNotification.toEmpId = this.leaveData.empId;
+            userNotification.featurePath = 'personalleave';
+            userNotification.nevigateLink = '/leave/personalleave';
+            userNotification.forEntryId = response.id;
+            userNotification.title = 'Leave Application';
+            userNotification.message = 'Your leave request is denied';
+            this.notificationService.submit(userNotification).subscribe((res) => {});
             this.getLeaveRequestById();
           } else {
             this.toastr.warning('',`${response.message}`, {

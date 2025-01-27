@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import {ManageLeaveService} from '../service/manage-leave.service'
 import { Subscription } from 'rxjs';
 import { deepObjectsMerge } from '@coreui/utils';
@@ -15,7 +15,7 @@ import { LeaveStatus } from '../enum/leave-status';
   templateUrl: './manageleave.component.html',
   styleUrl: './manageleave.component.scss'
 })
-export class ManageleaveComponent implements OnInit, OnDestroy {
+export class ManageleaveComponent implements OnInit, OnDestroy, OnChanges {
   icons = {cilZoom}
   loading: boolean ;
   DepartmentOption: any[] = [];
@@ -28,6 +28,7 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
   @Input() LeaveFilterParams: any;
   @Input() CanApprove: boolean;
   @Input() Role: string = "Reviewer"
+  @Input() refreshLink : string|null;
 
   leaveStatus = LeaveStatus 
 
@@ -42,6 +43,7 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
     this.selectedLeave = new LeaveModel();
     this.LeaveFilterParams = {};
     this.CanApprove = true;
+    this.refreshLink = null;
   }
 
 
@@ -57,6 +59,10 @@ export class ManageleaveComponent implements OnInit, OnDestroy {
     })
     )
    
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getLeaves();
   }
 
   getInputEventValue(event: Event) {

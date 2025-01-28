@@ -3,6 +3,7 @@ using Hrm.Application.DTOs.EmpBasicInfo;
 using Hrm.Application.Features.EmpBasicInfos.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Requests.Queries;
+using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,8 @@ namespace Hrm.Api.Controllers
         [Route("get-employeeTypeCount")]
         public async Task<ActionResult<object>> GetEmployeeTypeCount(int? departmentId, int? sectionId)
         {
-            var employeeType = await _mediator.Send(new GetEmpCountOnEmployeeTypeRequest { DepartmentId = departmentId, SectionId = sectionId });
-            return Ok(employeeType);
+            var result = await _mediator.Send(new GetEmpCountOnEmployeeTypeRequest { DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
         }
         [HttpGet]
         [Route("get-employeeTypeReportingResult")]
@@ -44,6 +45,22 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<List<object>>> GetBloodGroupReportingResult([FromQuery] QueryParams queryParams, int? id)
         {
             var result = await _mediator.Send(new GetBloodGroupReportingResultRequest { QueryParams = queryParams, Id = id });
+            return Ok(result);
+        }
+
+        //Region
+        [HttpGet]
+        [Route("get-religionCount")]
+        public async Task<ActionResult<object>> GetRegionCount(int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetEmpCountOnReligionRequest { DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("get-religionReportingResult")]
+        public async Task<ActionResult<List<object>>> GetReligionReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetReligionReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
     }

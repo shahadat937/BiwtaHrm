@@ -3,6 +3,8 @@ using Hrm.Application.DTOs.EmpBasicInfo;
 using Hrm.Application.Features.EmpBasicInfos.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Requests.Queries;
+using Hrm.Application.Features.Reportings.EmpInfoReporting.Gender.Requests.Queries;
+using Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -68,6 +70,40 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<List<object>>> GetReligionReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
         {
             var result = await _mediator.Send(new GetReligionReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+        //Gender 
+        [HttpGet]
+        [Route("get-genderCount")]
+        public async Task<ActionResult<object>> GetGenderCount(int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetEmpCountOnGenderRequest { DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("get-genderReportingResult")]
+        public async Task<ActionResult<List<object>>> GetGenderReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetGenderReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }  
+        
+        //MaritalStatus 
+        [HttpGet]
+        [Route("get-maritalStatusCount")]
+        public async Task<ActionResult<object>> GetMaritalStatusCount(int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetEmpCountOnMaritalStatusRequest { DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("get-MaritalStatusReportingResult")]
+        public async Task<ActionResult<List<object>>> GetMaritalStatusReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetMaritalStatusReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
     }

@@ -7,6 +7,8 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
 import { ReportingService } from '../service/reporting.service';
 import { EmpCountOnReportingDto } from '../models/emp-count-on-reporting-dto';
+import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
+import { SectionService } from 'src/app/views/basic-setup/service/section.service';
 
 @Component({
   selector: 'app-employee-management-reporting',
@@ -19,6 +21,8 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
   informationType: number = 0;
   queryTypeName: string = '';
   queryType: SelectedModel[] = [];
+  departments: SelectedModel[] = [];
+  sections: SelectedModel[] = [];
   displayedColumns: string[] = [
       // 'slNo',
       'employee',
@@ -38,17 +42,19 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
   typeId: number = 0;
   typeName: string = 'All';
   unAssigned: boolean = false;
-  deparmentId: number = 0;
+  departmentId: number = 0;
   sectionId: number = 0;
 
   constructor(
     public reportingService: ReportingService,
+    public departmentService: DepartmentService,
+    public sectionService : SectionService,
     ) {
   
     }
 
   ngOnInit(): void {
-
+    this.getAllSelectedDepartments();
   }
 
   ngOnDestroy(): void {
@@ -73,25 +79,51 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
       this.typeId = id;
       this.typeName = type;
     }
-    this.onQueryTypeChange();
+    this.onQueryTypeChange(false);
+  }
+
+  
+  getAllSelectedDepartments(){
+    this.subscription.push(
+      this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+          this.departments = res;
+    })
+    )
+  }
+  onDepartmentSelect(departmentId : number){
+    this.sectionId = 0;
+    this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
+      this.sections = res;
+    });
+    this.onQueryTypeChange(false);
+  }
+  onSectionSelect(){
+    this.onQueryTypeChange(false);
   }
 
   onPageChange(event: any){
     this.pagination.pageSize = event.pageSize;
-    event.pageIndex = event.pageIndex + 1;
-    this.onQueryTypeChange();
+    this.pagination.pageIndex = event.pageIndex + 1;
+    this.onQueryTypeChange(true);
   }
 
   onInfoTypeChange(){
     this.queryTypeName = "";
-    this.deparmentId = 0;
+    this.departmentId = 0;
     this.sectionId = 0;
+    this.pagination.pageIndex = 1;
   }
   resetDeptSection(){
-    this.deparmentId = 0;
+    this.departmentId = 0;
     this.sectionId = 0;
   }
-  onQueryTypeChange(){
+  onQueryTypeChange(pageChanged: boolean){
+    if(!pageChanged){
+      this.pagination.pageIndex = 1;
+      if (this.paginator) {
+        this.paginator.firstPage();
+      }
+    }
     if(this.queryTypeName == 'Employee Type'){
       this.getEmployeeTypeCount();
       this.getEmployeeTypeReportingResult(this.pagination);
@@ -100,14 +132,15 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
 
   getEmployeeTypeCount(){
     this.subscription.push(
-      this.reportingService.getEmployeeTypeCount(this.deparmentId, this.sectionId).subscribe((res: any) => {
+      this.reportingService.getEmployeeTypeCount(this.departmentId, this.sectionId).subscribe((res: any) => {
       this.queryCount = res;
     })
     )
   }
   getEmployeeTypeReportingResult(queryParams: any){
     this.subscription.push(
-      this.reportingService.getEmployeeTypeReportingResult(queryParams, this.typeId, this.unAssigned, this.deparmentId, this.sectionId).subscribe((res: any) => {
+      this.reportingService.getEmployeeTypeReportingResult(queryParams, this.typeId, this.unAssigned, this.departmentId, this.sectionId).subscribe((res: any) => {
+        console.log(res)
       this.dataSource.data = res.items;
       this.pagination.length = res.totalItemsCount;
     })

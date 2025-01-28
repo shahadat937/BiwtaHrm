@@ -15,7 +15,6 @@ export class ReportingService {
     let params = new HttpParams({ fromObject: queryParams });
     params = params.append('departmentId', departmentId);
     params = params.append('sectionId', sectionId);
-    console.log(params)
     return this.http.get<EmpCountOnReportingDto>(this.baseUrl + '/reporting/get-employeeTypeCount', { params });
   }  
   getEmployeeTypeReportingResult(queryParams: any, id:number, unAssigned: boolean, departmentId: number, sectionId: number){

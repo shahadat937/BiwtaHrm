@@ -133,6 +133,14 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
       this.getReligionCount();
       this.getReligionReportingResult(this.pagination);
     }
+    else if(this.queryTypeName == 'Gender'){
+      this.getGenderCount();
+      this.getGenderReportingResult(this.pagination);
+    }
+    else if(this.queryTypeName == 'Marital Status'){
+      this.getMaritalStatusCount();
+      this.getMaritalStatusReportingResult(this.pagination);
+    }
     else {
       this.dataSource.data = [];
       this.pagination.length = 0;
@@ -187,6 +195,40 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
   getBloodGroupReportingResult(queryParams: any){
     this.subscription.push(
       this.reportingService.getBloodGroupReportingResult(queryParams, this.typeId, this.unAssigned, this.departmentId, this.sectionId).subscribe((res: any) => {
+      this.dataSource.data = res.items;
+      this.pagination.length = res.totalItemsCount;
+    })
+    )
+  }
+  
+  // Gender
+  getGenderCount(){
+    this.subscription.push(
+      this.reportingService.getGenderCount(this.departmentId, this.sectionId).subscribe((res: any) => {
+      this.queryCount = res;
+    })
+    )
+  }
+  getGenderReportingResult(queryParams: any){
+    this.subscription.push(
+      this.reportingService.getGenderReportingResult(queryParams, this.typeId, this.unAssigned, this.departmentId, this.sectionId).subscribe((res: any) => {
+      this.dataSource.data = res.items;
+      this.pagination.length = res.totalItemsCount;
+    })
+    )
+  }
+  
+  // MaritalStatus
+  getMaritalStatusCount(){
+    this.subscription.push(
+      this.reportingService.getMaritalStatusCount(this.departmentId, this.sectionId).subscribe((res: any) => {
+      this.queryCount = res;
+    })
+    )
+  }
+  getMaritalStatusReportingResult(queryParams: any){
+    this.subscription.push(
+      this.reportingService.getMaritalStatusReportingResult(queryParams, this.typeId, this.unAssigned, this.departmentId, this.sectionId).subscribe((res: any) => {
       this.dataSource.data = res.items;
       this.pagination.length = res.totalItemsCount;
     })

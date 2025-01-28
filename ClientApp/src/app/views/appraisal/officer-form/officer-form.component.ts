@@ -6,7 +6,7 @@ import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {OfficerFormService} from './service/officer-form.service'
 import { ToastrService } from 'ngx-toastr';
 import {ConfirmService} from '../../../core/service/confirm.service'
-import { delay, of, Subscription } from 'rxjs';
+import { concat, concatMap, delay, of, Subscription } from 'rxjs';
 import { FieldComponent } from '../field/field.component';
 import { FormRecordService } from '../services/form-record.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -21,6 +21,13 @@ import {AuthService} from '../../../core/service/auth.service'
 import {EmpPhotoSignComponent} from './../../employee/add-employee/employee-informations/emp-photo-sign/emp-photo-sign.component';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
 import { ChangeProfileComponent } from '../../profile/change-profile/change-profile.component';
+import { UserNotification } from '../../notifications/models/user-notification';
+import { NotificationService } from '../../notifications/service/notification.service';
+import { EmpJobDetailsModule } from '../../employee/model/emp-job-details.module';
+import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
+
+
+
 
 @Component({
   selector: 'app-officer-form',
@@ -81,7 +88,9 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   reportingOfficerName: string = "";
   counterSignatoryOfficername: string = "";
   constructor(
+    private notificationService: NotificationService,
     private empBasicInfoService: EmpBasicInfoService,
+    private empJobDetailService: EmpJobDetailsService,
     private bsModalService: BsModalService,
     private authService: AuthService,
     private router: Router,
@@ -215,6 +224,8 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       return;
     }
 
+    console.log(this.formData);
+
     if(this.formData.reportFrom==null||this.formData.reportTo==null) {
       this.toastr.warning('',"Report Duration is required", {
         positionClass: 'toast-top-right'
@@ -238,6 +249,11 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
           this.toastr.success('',`${response.message}`, {
             positionClass: 'toast-top-right'
           })
+          
+          // Send notification to reporting officer
+          this.formData.recordId = response.id;
+          this.sendOfficerNotification(AppraisalRole.User,this.formData);
+
           this.formRecordService.cachedData = [];
           this.router.navigate(['/appraisal/MyFormRecord']);
         } else {
@@ -395,6 +411,10 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
           this.toastr.success('',`${response.message}`, {
             positionClass: 'toast-top-right'
           })
+
+          this.sendUserNotification(this.updateRole,this.formData);
+          this.sendOfficerNotification(this.updateRole,this.formData);
+          
         } else {
           this.toastr.warning('',`${response.message}`, {
             positionClass: 'toast-top-right'
@@ -537,6 +557,58 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
    return EntryDate;
   }
 
+  sendUserNotification(progress:number,formData:any) {
+    const userNotification = new UserNotification();
 
+    if(progress == AppraisalRole.ReportingOfficer) {
+      userNotification.fromEmpId=formData.reportingOfficerId;
+      userNotification.message = "Reporting Officer submission has been done."
+    } else if(progress == AppraisalRole.CounterSignatory) {
+      userNotification.fromEmpId=formData.counterSignatoryId;
+      userNotification.message = "Counter Signatory submission has been done."
+    } else if(progress == AppraisalRole.Receiver) {
+      userNotification.fromEmpId = this.authService.currentUserValue.empId || 0;
+      userNotification.message = "Appraisal is received by the receiver.";
+    }
+    userNotification.toEmpId = formData.empId;
+    userNotification.forEntryId = formData.recordId;
+    userNotification.featurePath = "MyFormRecord"
+    userNotification.nevigateLink = "/appraisal/MyFormRecord";
+    userNotification.title = "Appraisal";
 
+    this.notificationService.submit(userNotification).subscribe(()=> {});
+
+  }
+
+  sendOfficerNotification(role: number, formData:any) {
+    const userNotification = new UserNotification();
+
+    userNotification.fromEmpId = formData.empId;
+    userNotification.title = "Appraisal";
+    userNotification.message = "New Appraisal Form is available"
+    userNotification.forEntryId = formData.recordId;
+
+    if(role == AppraisalRole.User) {
+      userNotification.toEmpId = formData.reportingOfficerId;
+      userNotification.featurePath = "manageFormOfficerRF";
+      userNotification.nevigateLink ="/appraisal/manageFormOfficerRF";
+    } else if(role == AppraisalRole.ReportingOfficer) {
+      userNotification.toEmpId = formData.counterSignatoryId;
+      userNotification.featurePath = "manageFormOfficerCs";
+      userNotification.nevigateLink = "/appraisal/manageFormOfficerCs"
+    } else if(role == AppraisalRole.CounterSignatory) {
+      userNotification.featurePath = "manageFormOfficerR";
+      userNotification.nevigateLink = "/appraisal/manageFormOfficerR";
+    }
+
+    if(role == AppraisalRole.CounterSignatory) {
+      this.empJobDetailService.findByEmpId(formData.empId).subscribe(data => {
+        userNotification.toDeptId = data.departmentId;
+
+        this.notificationService.submit(userNotification).subscribe(()=> {});
+      })
+    } else {
+      this.notificationService.submit(userNotification).subscribe(()=> {});
+    }
+  }
 }

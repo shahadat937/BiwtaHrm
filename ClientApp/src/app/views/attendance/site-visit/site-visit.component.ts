@@ -82,6 +82,9 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   }
   ngOnInit(): void {
 
+    if(this.IsUser==false)
+    this.getPermission();
+
     this.route.queryParams.subscribe(data => {
       if(data['forNotificationId']) {
         this.filter['siteVisitId'] = data['forNotificationId'];
@@ -106,6 +109,18 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
       this.roleFeatureService.getFeaturePermission("siteVisit").subscribe(response=> {
       })
     }
+  }
+
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('siteVisit').subscribe((item) => {
+      //this.featurePermission = item;
+      if(item.viewStatus == false){
+        this.router.navigate(['/dashboard']);
+        this.roleFeatureService.unauthorizeAccress();
+      }
+    })
+    )
   }
 
   ngOnDestroy(): void {

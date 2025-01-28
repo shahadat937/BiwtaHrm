@@ -128,6 +128,10 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
       this.getEmployeeTypeCount();
       this.getEmployeeTypeReportingResult(this.pagination);
     }
+    else if(this.queryTypeName == 'Blood Group'){
+      this.getBloodGroupCount();
+      this.getBloodGroupReportingResult(this.pagination);
+    }
     else if(this.queryTypeName == 'Religion'){
       this.getReligionCount();
       this.getReligionReportingResult(this.pagination);
@@ -163,6 +167,24 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
   getReligionReportingResult(queryParams: any){
     this.subscription.push(
       this.reportingService.getReligionReportingResult(queryParams, this.typeId, this.unAssigned, this.departmentId, this.sectionId).subscribe((res: any) => {
+      this.dataSource.data = res.items;
+      this.pagination.length = res.totalItemsCount;
+    })
+    )
+  }
+
+  
+  // Blood Group
+  getBloodGroupCount(){
+    this.subscription.push(
+      this.reportingService.getBloodGroupCount(this.departmentId, this.sectionId).subscribe((res: any) => {
+      this.queryCount = res;
+    })
+    )
+  }
+  getBloodGroupReportingResult(queryParams: any){
+    this.subscription.push(
+      this.reportingService.getBloodGroupReportingResult(queryParams, this.typeId, this.unAssigned, this.departmentId, this.sectionId).subscribe((res: any) => {
       this.dataSource.data = res.items;
       this.pagination.length = res.totalItemsCount;
     })

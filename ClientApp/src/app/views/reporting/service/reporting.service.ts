@@ -44,5 +44,23 @@ export class ReportingService {
     return this.http.get<any>(`${this.baseUrl}/reporting/get-religionReportingResult`, { params });
   }
 
+  
+  // Blood Group
+  getBloodGroupCount(departmentId: any, sectionId: any){
+    let queryParams;
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('departmentId', departmentId);
+    params = params.append('sectionId', sectionId);
+    return this.http.get<EmpCountOnReportingDto>(this.baseUrl + '/reporting/get-BloodGroupCount', { params });
+  }  
+  getBloodGroupReportingResult(queryParams: any, id:number, unAssigned: boolean, departmentId: number, sectionId: number){
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('id', id);
+    params = params.append('unAssigned', unAssigned);
+    params = params.append('departmentId', departmentId);
+    params = params.append('sectionId', sectionId);
+    return this.http.get<any>(`${this.baseUrl}/reporting/get-BloodGroupReportingResult`, { params });
+  }
+
 
 }

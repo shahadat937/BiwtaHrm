@@ -47,6 +47,7 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   empIdCardNo: string;
   empName: string;
   isValidPMIS: boolean;
+  routelink : string = "";
 
   constructor(
     public siteVisitService : SiteVisitService,
@@ -80,6 +81,19 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     return (event.target as HTMLInputElement).value;
   }
   ngOnInit(): void {
+
+    this.route.queryParams.subscribe(data => {
+      if(data['forNotificationId']) {
+        this.filter['siteVisitId'] = data['forNotificationId'];
+        this.routelink = this.router.url.split('?')[0];
+        this.getSiteVisit();
+      } else {
+        this.filter['siteVisitId'] = null;
+        this.routelink = "";
+        this.getSiteVisit();
+      }
+    });
+
     this.getSiteVisit();
     this.getEmpOption();
 
@@ -130,6 +144,9 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
       let params = new HttpParams();
 
       for(const key of Object.keys(this.filter)) {
+        if(this.filter[key]==null) {
+          continue;
+        }
         if(key=="Status") {
           for(const item of this.filter[key]) {
             params = params.append(key, item);

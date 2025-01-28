@@ -154,23 +154,23 @@
          [globalFilterFields]="['firstName','lastName','fromDate','toDate','visitPlace','visitPurpose','status']"
          [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="caption">
-          <c-row>
-            <c-col md="3">
-              <c-input-group>
-                <span cInputGroupText class="bg-white">
-                  <svg [cIcon]="icons.cilZoom" size="lg"></svg>
-                </span>
-                <input
-                  class="border-start-0 ps-0 shadow-none"
-                  cFormControl
-                  type="text"
-                  (input)="dt2.filterGlobal(getInputEventValue($event),'contains')"
-                  placeholder="Search keyword"
-                />
-              </c-input-group>
-
-            </c-col>
-          </c-row>
+            <div class="d-md-flex justify-content-between">
+                <div>
+                    <c-input-group>
+                      <span cInputGroupText class="bg-white">
+                        <svg [cIcon]="icons.cilZoom" size="lg"></svg>
+                      </span>
+                      <input
+                        class="border-start-0 ps-0 shadow-none"
+                        cFormControl
+                        type="text"
+                        (input)="dt2.filterGlobal(getInputEventValue($event),'contains')"
+                        placeholder="Search keyword"
+                      />
+                    </c-input-group>
+                </div>
+                <button *ngIf="routelink!=''" cButton [routerLink]="[routelink]" color="danger" size="sm">Cancel</button>
+            </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>

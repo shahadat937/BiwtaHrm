@@ -375,7 +375,6 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
           signature = response.signatureUrl;
           if(signature==null||signature=="")
             return;
-          console.log(this.formData)
           for(let i = 0;i<this.formData.sections.length;i++) {
             for(let j = 0; j<this.formData.sections[i].fields.length;j++) {
               let field = this.formData.sections[i].fields[j];

@@ -128,8 +128,13 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
       this.getEmployeeTypeCount();
       this.getEmployeeTypeReportingResult(this.pagination);
     }
+    else if(this.queryTypeName == 'Religion'){
+      this.getReligionCount();
+      this.getReligionReportingResult(this.pagination);
+    }
   }
 
+      // Employee Type
   getEmployeeTypeCount(){
     this.subscription.push(
       this.reportingService.getEmployeeTypeCount(this.departmentId, this.sectionId).subscribe((res: any) => {
@@ -140,7 +145,24 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
   getEmployeeTypeReportingResult(queryParams: any){
     this.subscription.push(
       this.reportingService.getEmployeeTypeReportingResult(queryParams, this.typeId, this.unAssigned, this.departmentId, this.sectionId).subscribe((res: any) => {
-        console.log(res)
+      this.dataSource.data = res.items;
+      this.pagination.length = res.totalItemsCount;
+    })
+    )
+  }
+
+
+      // Religion
+  getReligionCount(){
+    this.subscription.push(
+      this.reportingService.getReligionCount(this.departmentId, this.sectionId).subscribe((res: any) => {
+      this.queryCount = res;
+    })
+    )
+  }
+  getReligionReportingResult(queryParams: any){
+    this.subscription.push(
+      this.reportingService.getReligionReportingResult(queryParams, this.typeId, this.unAssigned, this.departmentId, this.sectionId).subscribe((res: any) => {
       this.dataSource.data = res.items;
       this.pagination.length = res.totalItemsCount;
     })

@@ -3,10 +3,10 @@
         <h5>Report on Employee Management</h5>
     </c-card-header>
     <c-card-body>
-        <div cRow>
+        <div cRow [gutter]="2" class="mb-2">
             <c-col [md]="3">
                 <label cLabel for="informationType">Information Type<span class="text-danger"></span></label>
-                <select cSelect class="mb-3" [(ngModel)]="informationType" name="informationType" #infoValue="ngModel" cFormControl (change)="onInfoTypeChange()">
+                <select cSelect [(ngModel)]="informationType" name="informationType" #infoValue="ngModel" cFormControl (change)="onInfoTypeChange()">
                     <option [ngValue]=0 >Select Information Type</option>
                     <option [ngValue]=1 >Basic Information</option>
                     <option [ngValue]=2 >Personal Information</option>
@@ -26,19 +26,36 @@
             
             <c-col [md]="3" *ngIf="informationType == 0">
               <label cLabel for="queryType">Query Type<span class="text-danger"></span></label>
-              <select cSelect class="mb-3" [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl>
+              <select cSelect [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl>
                   <option value="">Select Query Type</option>
               </select>
             </c-col>
-            
+
+                  <!-- Employee Basic Information Dropdown List -->
             <c-col [md]="3" *ngIf="informationType == 1">
               <label cLabel for="queryType">Query Type<span class="text-danger"></span></label>
-              <select cSelect class="mb-3" [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl (change)="onQueryTypeChange(false)" (change)="resetDeptSection()">
+              <select cSelect [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl (change)="onQueryTypeChange(false)" (change)="resetDeptSection()">
                   <option value="">Select Query Type</option>
                   <option value="Employee Type">Employee Type</option>
                   <option value="Shift Type">Shift Type</option>
               </select>
             </c-col>
+
+            <!-- Employee Personal Information Dropdown List -->
+            <c-col [md]="3" *ngIf="informationType == 2">
+              <label cLabel for="queryType">Query Type<span class="text-danger"></span></label>
+              <select cSelect [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl (change)="onQueryTypeChange(false)" (change)="resetDeptSection()">
+                  <option value="">Select Query Type</option>
+                  <option value="Gender">Gender</option>
+                  <option value="Marital Status">Marital Status</option>
+                  <option value="Blood Group">Blood Group</option>
+                  <option value="Religion">Religion</option>
+                  <option value="Hair Color">Hair Color</option>
+                  <option value="Eye Color">Eye Color</option>
+                  <option value="Gurdian Relition">Gurdian Relition</option>
+              </select>
+            </c-col>
+
             <c-col [md]="3">
               <label cLabel for="Department">Department<span class="text-danger"></span></label>
               <div class="input-wrapper">
@@ -74,7 +91,7 @@
           </c-col>
         </div>
 
-        <div cRow class="d-flex justify-content-center" *ngIf="queryTypeName">
+        <div cRow class="d-flex justify-content-center" *ngIf="queryTypeName" [gutter]="2">
             <c-col [md]="4">
                 <div class="ps-3 pe-3 text-light bg-success p-2 rounded" (click)="onTypeValueChange('All', 0)">
                     <h6 class="m-0">All {{queryTypeName}}<label *ngIf="queryCount.totalAssigned > 0">s</label></h6>
@@ -89,7 +106,7 @@
             </c-col>
         </div>
         
-        <div cRow class="d-flex justify-content-center mt-3" *ngIf="queryTypeName">
+        <div cRow class="d-flex justify-content-center mt-0" *ngIf="queryTypeName" [gutter]="2">
           <c-col *ngFor="let info of queryCount.countReportingInfo; index as i" [md]="3">
             <div class="ps-3 pe-3 text-light bg-danger p-2 rounded"  (click)="onTypeValueChange(info.name, info.id)">
               <h6 class="m-0">{{info.name}}</h6>

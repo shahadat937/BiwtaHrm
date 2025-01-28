@@ -3,56 +3,17 @@
         <h5>Report on Employee Management</h5>
     </c-card-header>
     <c-card-body>
-        <div cRow [gutter]="2" class="mb-2">
-            <c-col [md]="3">
-                <label cLabel for="informationType">Information Type<span class="text-danger"></span></label>
-                <select cSelect [(ngModel)]="informationType" name="informationType" #infoValue="ngModel" cFormControl (change)="onInfoTypeChange()">
-                    <option [ngValue]=0 >Select Information Type</option>
-                    <option [ngValue]=1 >Basic Information</option>
-                    <option [ngValue]=2 >Personal Information</option>
-                    <option [ngValue]=3 >Spouse Information</option>
-                    <option [ngValue]=4 >Children Information</option>
-                    <option [ngValue]=5 >Address Information</option>
-                    <option [ngValue]=6 >Job Details</option>
-                    <option [ngValue]=7 >Other Responsibility</option>
-                    <option [ngValue]=8 >Work History</option>
-                    <option [ngValue]=9 >Education Information</option>
-                    <option [ngValue]=10>Training Information</option>
-                    <option [ngValue]=11>Bank Information</option>
-                    <option [ngValue]=12>Language Details</option>
-                    <option [ngValue]=13>Foreign Trip</option>
-                </select>
-            </c-col>
-            
-            <c-col [md]="3" *ngIf="informationType == 0">
-              <label cLabel for="queryType">Query Type<span class="text-danger"></span></label>
-              <select cSelect [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl>
-                  <option value="">Select Query Type</option>
-              </select>
-            </c-col>
+        <div cRow [gutter]="2" class="mb-2">   
 
-                  <!-- Employee Basic Information Dropdown List -->
-            <c-col [md]="3" *ngIf="informationType == 1">
+            <c-col [md]="3" >
               <label cLabel for="queryType">Query Type<span class="text-danger"></span></label>
-              <select cSelect [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl (change)="onQueryTypeChange(false)" (change)="resetDeptSection()">
+              <select cSelect [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl (change)="onTypeChange()">
                   <option value="">Select Query Type</option>
                   <option value="Employee Type">Employee Type</option>
-                  <option value="Shift Type">Shift Type</option>
-              </select>
-            </c-col>
-
-            <!-- Employee Personal Information Dropdown List -->
-            <c-col [md]="3" *ngIf="informationType == 2">
-              <label cLabel for="queryType">Query Type<span class="text-danger"></span></label>
-              <select cSelect [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl (change)="onQueryTypeChange(false)" (change)="resetDeptSection()">
-                  <option value="">Select Query Type</option>
                   <option value="Gender">Gender</option>
                   <option value="Marital Status">Marital Status</option>
                   <option value="Blood Group">Blood Group</option>
                   <option value="Religion">Religion</option>
-                  <option value="Hair Color">Hair Color</option>
-                  <option value="Eye Color">Eye Color</option>
-                  <option value="Gurdian Relition">Gurdian Relition</option>
               </select>
             </c-col>
 
@@ -117,7 +78,7 @@
 
         <c-card class="mt-2" *ngIf="queryTypeName">
             <c-card-header>
-                Employee List - {{queryTypeName}} ({{typeName}})
+                Employee List - <label class="text-danger fw-bold">{{typeName}}</label> {{queryTypeName}}
             </c-card-header>
             <c-card-body class="p-0">
                 <div class="table-responsive">

@@ -107,15 +107,12 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
     this.onQueryTypeChange(true);
   }
 
-  onInfoTypeChange(){
-    this.queryTypeName = "";
+  onTypeChange(){
     this.departmentId = 0;
     this.sectionId = 0;
-    this.pagination.pageIndex = 1;
-  }
-  resetDeptSection(){
-    this.departmentId = 0;
-    this.sectionId = 0;
+    this.typeId = 0;
+    this.typeName = 'All';
+    this.onQueryTypeChange(false);
   }
   onQueryTypeChange(pageChanged: boolean){
     if(!pageChanged){
@@ -135,6 +132,11 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
     else if(this.queryTypeName == 'Religion'){
       this.getReligionCount();
       this.getReligionReportingResult(this.pagination);
+    }
+    else {
+      this.dataSource.data = [];
+      this.pagination.length = 0;
+      this.queryCount = new EmpCountOnReportingDto();
     }
   }
 

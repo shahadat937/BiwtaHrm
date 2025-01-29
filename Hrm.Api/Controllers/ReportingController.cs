@@ -6,6 +6,7 @@ using Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Request
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Gender.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Queries;
+using Hrm.Application.Features.Reportings.EmployeeList.Requests.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -104,6 +105,15 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<object>> GetMaritalStatusReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
         {
             var result = await _mediator.Send(new GetMaritalStatusReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("get-employeeListReporting")]
+        public async Task<ActionResult<object>> GetEmployeeListReporting([FromQuery] QueryParams queryParams, int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetEmployeeListReportingRequest { QueryParams = queryParams,DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
     }

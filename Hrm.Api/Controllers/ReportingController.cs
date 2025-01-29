@@ -4,6 +4,7 @@ using Hrm.Application.Features.EmpBasicInfos.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Gender.Requests.Queries;
+using Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Queries;
 using Microsoft.AspNetCore.Authorization;
@@ -97,6 +98,23 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<List<object>>> GetMaritalStatusReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
         {
             var result = await _mediator.Send(new GetMaritalStatusReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+        //Language
+        [HttpGet]
+        [Route("get-languageCount")]
+        public async Task<ActionResult<object>> GetLanguageCount(int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetEmpCountOnLanguageRequest { DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("get-LanguageReportingResult")]
+        public async Task<ActionResult<List<object>>> GetLanguageReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetLanguageReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
     }

@@ -10,6 +10,9 @@ import { cilZoom } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { LeaveStatus } from '../enum/leave-status';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-manageleave',
   templateUrl: './manageleave.component.html',
@@ -30,10 +33,18 @@ export class ManageleaveComponent implements OnInit, OnDestroy, OnChanges {
   @Input() Role: string = "Reviewer"
   @Input() refreshLink : string|null;
 
+  @Input()
+  featureName: string;
+
+  featurePermission: FeaturePermission = new FeaturePermission();
+
   leaveStatus = LeaveStatus 
 
   constructor(
     public leaveService: ManageLeaveService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private roleFeatureService: RoleFeatureService,
     private modalService: BsModalService,
     private confirmService: ConfirmService,
     private toastr : ToastrService
@@ -44,10 +55,12 @@ export class ManageleaveComponent implements OnInit, OnDestroy, OnChanges {
     this.LeaveFilterParams = {};
     this.CanApprove = true;
     this.refreshLink = null;
+    this.featureName = "manageleave";
   }
 
 
   ngOnInit(): void {
+    this.getPermission();
     this.getDepartmentOption();
     this.getLeaves();
 
@@ -59,6 +72,21 @@ export class ManageleaveComponent implements OnInit, OnDestroy, OnChanges {
     })
     )
    
+  }
+
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission(this.featureName).subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        // To do
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -127,7 +155,7 @@ export class ManageleaveComponent implements OnInit, OnDestroy, OnChanges {
     }
     const initialState:LeaveDetailViewModalConfig = {
       leaveRequestId : leaveRequestId,
-      CanApprove: this.CanApprove,
+      CanApprove: this.CanApprove&&this.featurePermission.update,
       Role: this.Role
     };
     const modalRef: BsModalRef = this.modalService.show(LeaveDetailViewComponent, { initialState, backdrop: 'static' });
@@ -140,6 +168,11 @@ export class ManageleaveComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onDelete(leaveRequestId:number) {
+
+    if(this.featurePermission.delete==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
+    }
 
    this.subscription.push(
      this.confirmService.confirm('Delete Confirmation','Are you sure?').subscribe({

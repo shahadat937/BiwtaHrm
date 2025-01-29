@@ -15,5 +15,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Reque
     {
         public QueryParams QueryParams { get; set; }
         public int? Id { get; set; }
+        public bool? UnAssigned { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? SectionId { get; set; }
     }
 }

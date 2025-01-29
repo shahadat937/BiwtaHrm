@@ -20,6 +20,8 @@ import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.servi
 import { UserNotification } from '../../notifications/models/user-notification';
 import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
 import { NotificationService } from '../../notifications/service/notification.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { Feature } from '../../featureManagement/model/feature';
 
 
 
@@ -49,6 +51,10 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   isValidPMIS: boolean;
   routelink : string = "";
 
+  @Input()
+  featureName: string;
+  featurePermission: FeaturePermission = new FeaturePermission();
+
   constructor(
     public siteVisitService : SiteVisitService,
     private authService : AuthService,
@@ -68,6 +74,7 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     this.empIdCardNo = "";
     this.empName = "";
     this.isValidPMIS = false;
+    this.featureName = "siteVisit";
   }
 
   resetEmp() {
@@ -82,7 +89,6 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   }
   ngOnInit(): void {
 
-    if(this.IsUser==false)
     this.getPermission();
 
     this.route.queryParams.subscribe(data => {
@@ -113,8 +119,8 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
 
   getPermission(){
     this.subscription.push(
-    this.roleFeatureService.getFeaturePermission('siteVisit').subscribe((item) => {
-      //this.featurePermission = item;
+    this.roleFeatureService.getFeaturePermission(this.featureName).subscribe((item) => {
+      this.featurePermission = item;
       if(item.viewStatus == false){
         this.router.navigate(['/dashboard']);
         this.roleFeatureService.unauthorizeAccress();

@@ -29,7 +29,7 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Handlers
             {
                 IQueryable<EmpBasicInfo> query = _EmpBasicInfoRepository
                    .FilterWithInclude(x =>
-                       (request.Id == 0 || x.Id == request.Id) &&
+                       (request.Id == 0 || x.EmpLanguageInfo.Any(l => l.LanguageId == request.Id)) &&
                        (request.DepartmentId == 0 || x.EmpJobDetail.FirstOrDefault().DepartmentId == request.DepartmentId) &&
                        (request.SectionId == 0 || x.EmpJobDetail.FirstOrDefault().SectionId == request.SectionId))
                    .Include(x => x.EmpJobDetail)
@@ -44,7 +44,9 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Handlers
                    .Include(x => x.EmpPersonalInfo);
 
                 var expandedQuery = query
-                    .SelectMany(x => x.EmpLanguageInfo.DefaultIfEmpty(), (emp, lang) => new EmpReportingSearchResultDto
+                    .SelectMany(x => request.Id == 0
+                    ? x.EmpLanguageInfo.DefaultIfEmpty() // No filter when request.Id == 0
+                    : x.EmpLanguageInfo.Where(l => l.LanguageId == request.Id).DefaultIfEmpty(), (emp, lang) => new EmpReportingSearchResultDto
                     {
                         IdCardNo = emp.IdCardNo ?? "",
                         EmpName = (emp.FirstName + " " + emp.LastName) ?? "",

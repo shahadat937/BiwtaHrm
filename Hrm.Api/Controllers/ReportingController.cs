@@ -8,6 +8,8 @@ using Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Promoti
 using Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmployeeList.Requests.Queries;
+using Hrm.Application.Features.Reportings.TransferPosting.Requests.Queries;
+using Hrm.Application.Features.Reportings.TransferPostingReporting.Requests.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -131,6 +133,39 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<List<object>>> GetPromotionIncrementReportingCount([FromQuery] QueryParams queryParams, string? PromotionType, DateOnly? OrderDateFrom, DateOnly? OrderDateTo, DateOnly? ApproveFrom, DateOnly? ApproveTo)
         {
             var result = await _mediator.Send(new GetPromotionIncrementReportingCountRequest { QueryParams = queryParams, PromotionType = PromotionType, OrderDateFrom = OrderDateFrom, OrderDateTo = OrderDateTo, ApproveFrom = ApproveFrom, ApproveTo = ApproveTo});
+            return Ok(result);
+        }
+
+        //TransferPosting 
+        [HttpGet]
+        [Route("get-TransferPostingCount")]
+        public async Task<ActionResult<object>> GetTransferPostingCount(int departmentFrom, int sectionFrom, int departmentTo, int sectionTo, DateOnly dateTo, DateOnly dateFrom)
+        {
+            var result = await _mediator.Send(new GetTransferPostingReportingRequest {
+            DepartmentFrom = departmentFrom,
+            DepartmentTo = departmentTo,
+            SectionFrom = sectionFrom,
+            SectionTo = sectionTo,
+            DateTo = dateTo,
+            DateFrom = dateFrom
+            });
+            return Ok(result);
+        }
+        
+        [HttpGet]
+        [Route("get-TransferPostingReport")]
+        public async Task<ActionResult<object>> GetTransferPostingReport( [FromQuery]QueryParams queryParams, int departmentFrom, int sectionFrom, int departmentTo, int sectionTo, DateOnly dateTo, DateOnly dateFrom)
+        {
+            var result = await _mediator.Send(new GetTransferPostingResultRequest
+            {
+            DepartmentFrom = departmentFrom,
+            DepartmentTo = departmentTo,
+            SectionFrom = sectionFrom,
+            SectionTo = sectionTo,
+            DateTo = dateTo,
+            DateFrom = dateFrom,
+            QueryParams = queryParams
+            });
             return Ok(result);
         }
     }

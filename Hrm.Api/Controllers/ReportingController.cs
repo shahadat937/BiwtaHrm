@@ -118,7 +118,7 @@ namespace Hrm.Api.Controllers
             return Ok(result);
         }
 
-        //Language
+        //Promotion and increment
         [HttpGet]
         [Route("get-PromotionIncrementReportingResult")]
         public async Task<ActionResult<List<object>>> GetPromotionIncrementRepotingResult([FromQuery] QueryParams queryParams, string? PromotionIncrementType)

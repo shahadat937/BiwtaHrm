@@ -1,5 +1,4 @@
 ﻿using Hrm.Application.DTOs.Common;
-using Hrm.Application.DTOs.EmpBasicInfo;
 using Hrm.Application.DTOs.Reporting;
 using Hrm.Application.Models;
 using MediatR;
@@ -9,13 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Requests.Queries
+namespace Hrm.Application.Features.Reportings.EmployeeList.Requests.Queries
 {
-    public class GetBloodGroupReportingResultRequest : IRequest<PagedResult<EmpReportingSearchResultDto>>
+    public class GetEmployeeListReportingRequest : IRequest<object>
     {
         public QueryParams QueryParams { get; set; }
-        public int? Id { get; set; }
-        public bool? UnAssigned { get; set; }
         public int? DepartmentId { get; set; }
         public int? SectionId { get; set; }
     }

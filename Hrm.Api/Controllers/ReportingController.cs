@@ -4,8 +4,10 @@ using Hrm.Application.Features.EmpBasicInfos.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Gender.Requests.Queries;
+using Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Queries;
+using Hrm.Application.Features.Reportings.EmployeeList.Requests.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,32 +37,39 @@ namespace Hrm.Api.Controllers
         }
         [HttpGet]
         [Route("get-employeeTypeReportingResult")]
-        public async Task<ActionResult<List<object>>> GetEmployeeTypeReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        public async Task<ActionResult<object>> GetEmployeeTypeReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
         {
             var result = await _mediator.Send(new GetEmployeeTypeReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
 
-
+        //Blood Group
         [HttpGet]
-        [Route("get-bloodGroupReportingResult")]
-        public async Task<ActionResult<List<object>>> GetBloodGroupReportingResult([FromQuery] QueryParams queryParams, int? id)
+        [Route("get-BloodGroupCount")]
+        public async Task<ActionResult<object>> GetBloodGroupCount(int? departmentId, int? sectionId)
         {
-            var result = await _mediator.Send(new GetBloodGroupReportingResultRequest { QueryParams = queryParams, Id = id });
+            var result = await _mediator.Send(new GetEmpCountOnBloodGroupRequest { DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("get-BloodGroupReportingResult")]
+        public async Task<ActionResult<object>> GetBloodGroupReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetBloodGroupReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
 
-        //Region
+        //Religion
         [HttpGet]
         [Route("get-religionCount")]
-        public async Task<ActionResult<object>> GetRegionCount(int? departmentId, int? sectionId)
+        public async Task<ActionResult<object>> GetReligionCount(int? departmentId, int? sectionId)
         {
             var result = await _mediator.Send(new GetEmpCountOnReligionRequest { DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
         [HttpGet]
         [Route("get-religionReportingResult")]
-        public async Task<ActionResult<List<object>>> GetReligionReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        public async Task<ActionResult<object>> GetReligionReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
         {
             var result = await _mediator.Send(new GetReligionReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
@@ -77,7 +86,7 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-genderReportingResult")]
-        public async Task<ActionResult<List<object>>> GetGenderReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        public async Task<ActionResult<object>> GetGenderReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
         {
             var result = await _mediator.Send(new GetGenderReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
@@ -94,9 +103,35 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-MaritalStatusReportingResult")]
-        public async Task<ActionResult<List<object>>> GetMaritalStatusReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        public async Task<ActionResult<object>> GetMaritalStatusReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
         {
             var result = await _mediator.Send(new GetMaritalStatusReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("get-employeeListReporting")]
+        public async Task<ActionResult<object>> GetEmployeeListReporting([FromQuery] QueryParams queryParams, int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetEmployeeListReportingRequest { QueryParams = queryParams,DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+        //Language
+        [HttpGet]
+        [Route("get-languageCount")]
+        public async Task<ActionResult<object>> GetLanguageCount(int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetEmpCountOnLanguageRequest { DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("get-LanguageReportingResult")]
+        public async Task<ActionResult<List<object>>> GetLanguageReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetLanguageReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
     }

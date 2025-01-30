@@ -61,6 +61,40 @@ export class ReportingService {
     params = params.append('sectionId', sectionId);
     return this.http.get<any>(`${this.baseUrl}/reporting/get-BloodGroupReportingResult`, { params });
   }
+  
+  // Gender
+  getGenderCount(departmentId: any, sectionId: any){
+    let queryParams;
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('departmentId', departmentId);
+    params = params.append('sectionId', sectionId);
+    return this.http.get<EmpCountOnReportingDto>(this.baseUrl + '/reporting/get-genderCount', { params });
+  }  
+  getGenderReportingResult(queryParams: any, id:number, unAssigned: boolean, departmentId: number, sectionId: number){
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('id', id);
+    params = params.append('unAssigned', unAssigned);
+    params = params.append('departmentId', departmentId);
+    params = params.append('sectionId', sectionId);
+    return this.http.get<any>(`${this.baseUrl}/reporting/get-genderReportingResult`, { params });
+  }
+  
+  // Marital Status
+  getMaritalStatusCount(departmentId: any, sectionId: any){
+    let queryParams;
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('departmentId', departmentId);
+    params = params.append('sectionId', sectionId);
+    return this.http.get<EmpCountOnReportingDto>(this.baseUrl + '/reporting/get-maritalStatusCount', { params });
+  }  
+  getMaritalStatusReportingResult(queryParams: any, id:number, unAssigned: boolean, departmentId: number, sectionId: number){
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('id', id);
+    params = params.append('unAssigned', unAssigned);
+    params = params.append('departmentId', departmentId);
+    params = params.append('sectionId', sectionId);
+    return this.http.get<any>(`${this.baseUrl}/reporting/get-maritalStatusReportingResult`, { params });
+  }
 
 
 }

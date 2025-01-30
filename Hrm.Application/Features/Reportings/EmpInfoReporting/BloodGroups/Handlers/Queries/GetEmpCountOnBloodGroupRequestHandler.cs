@@ -49,7 +49,7 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Handl
                 };
                 BloodGroupInfoList.Add(BloodGroupInfo);
             }
-
+            BloodGroupInfoList.OrderBy(x => x.Name);
             result.CountReportingInfo = BloodGroupInfoList;
 
             return result;

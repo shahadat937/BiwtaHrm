@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Internal;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.EmpBasicInfo;
 using Hrm.Application.DTOs.Reporting;
@@ -43,12 +44,13 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Handl
                             .ThenInclude(ds => ds.DesignationSetup)
                     .Include(x => x.EmpPersonalInfo)
                     .Include(x => x.EmpPersonalInfo)
-                        .ThenInclude(x => x.BloodGroup);
+                        .ThenInclude(x => x.BloodGroup)
+                    .OrderBy(x => x.EmpPersonalInfo.FirstOrDefault().BloodGroup.BloodGroupName);
 
                 var totalCount = await query.CountAsync(cancellationToken);
 
                 query = query
-                    .OrderByDescending(x => x.Id)
+                    //.OrderByDescending(x => x.EmpPersonalInfo.FirstOrDefault().BloodGroup.BloodGroupName)
                     .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
                     .Take(request.QueryParams.PageSize);
 

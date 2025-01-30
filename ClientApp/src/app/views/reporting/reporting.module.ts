@@ -35,12 +35,14 @@ import { ReportingRoutingModule } from './reporting-routing.module';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { EmployeeManagementReportingComponent } from './employee-management-reporting/employee-management-reporting.component';
+import { EmployeeListReportingComponent } from './employee-list-reporting/employee-list-reporting.component';
 
 
 
 @NgModule({
   declarations: [
-    EmployeeManagementReportingComponent
+    EmployeeManagementReportingComponent,
+    EmployeeListReportingComponent
   ],
   imports: [
     CommonModule,

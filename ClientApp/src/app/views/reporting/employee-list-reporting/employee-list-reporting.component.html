@@ -1,23 +1,9 @@
 <c-card>
     <c-card-header class="text-center">
-        <h5>Report on Employee Management</h5>
+        <h5>Report on Employee List</h5>
     </c-card-header>
     <c-card-body>
         <div cRow [gutter]="2" class="mb-2">   
-
-            <c-col [md]="3" >
-              <label cLabel for="queryType">Query Type<span class="text-danger"></span></label>
-              <select cSelect [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl (change)="onTypeChange()">
-                  <option value="">Select Query Type</option>
-                  <option value="Employee Type">Employee Type</option>
-                  <option value="Gender">Gender</option>
-                  <option value="Marital Status">Marital Status</option>
-                  <option value="Blood Group">Blood Group</option>
-                  <option value="Religion">Religion</option>
-                  <option value="Language">Language</option>
-              </select>
-            </c-col>
-
             <c-col [md]="3">
               <label cLabel for="Department">Department<span class="text-danger"></span></label>
               <div class="input-wrapper">
@@ -53,38 +39,13 @@
           </c-col>
         </div>
 
-        <div cRow class="d-flex justify-content-center" *ngIf="queryTypeName" [gutter]="2">
-            <c-col [md]="4">
-                <div class="ps-3 pe-3 text-light bg-success p-2 rounded" (click)="onTypeValueChange('All', 0)">
-                    <h6 class="m-0">All {{queryTypeName}}<label *ngIf="queryCount.totalAssigned > 0">s</label></h6>
-                    <p>{{queryCount.totalAssigned}} Employee<label *ngIf="queryCount.totalAssigned > 0">s</label></p>
-                </div>
-            </c-col>
-            <c-col [md]="4">
-                <div class="ps-3 pe-3 text-light bg-warning p-2 rounded" (click)="onTypeValueChange('Unassigned', 0)">
-                    <h6 class="m-0">No {{queryTypeName}}<label *ngIf="queryCount.totalNull > 0">s</label></h6>
-                    <p>{{queryCount.totalNull}} Employee<label *ngIf="queryCount.totalNull > 0">s</label></p>
-                </div>
-            </c-col>
-        </div>
-        
-        <div cRow class="d-flex justify-content-center mt-0" *ngIf="queryTypeName" [gutter]="2">
-          <c-col *ngFor="let info of queryCount.countReportingInfo; index as i" [md]="3">
-            <div class="ps-3 pe-3 text-light bg-danger p-2 rounded"  (click)="onTypeValueChange(info.name, info.id)">
-              <h6 class="m-0">{{info.name}}</h6>
-              <p>{{info.count}} Employee<label *ngIf="info.count > 0">s</label></p>
-            </div>
-          </c-col>
-        </div>
-
-        <c-card class="mt-2" *ngIf="queryTypeName">
-            <c-card-header>
-                Employee List - <label class="text-danger fw-bold">{{typeName}}</label> {{queryTypeName}}
+        <c-card class="mt-2" >
+            <c-card-header class="text-end">
+                Total Employee = {{totalEmployee}}
             </c-card-header>
             <c-card-body class="p-0">
-                <div class="table-responsive">
-                    <table mat-table [dataSource]="dataSource">
-                      <!-- Position Column -->
+                <!-- <div class="table-responsive">
+                    <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
                       <ng-container matColumnDef="slNo">
                         <th mat-header-cell *matHeaderCellDef>SL</th>
                         <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
@@ -97,10 +58,10 @@
                         </td>
                       </ng-container>
             
-                      <ng-container matColumnDef="department/section">
-                        <th mat-header-cell *matHeaderCellDef>Department/Section</th>
+                      <ng-container matColumnDef="section">
+                        <th mat-header-cell *matHeaderCellDef>Section</th>
                         <td mat-cell *matCellDef="let element">
-                          {{ element.departmentName ?? "" }}<label *ngIf="element.sectionName">, {{ element.sectionName}}</label>
+                          <label *ngIf="element.sectionName">{{ element.sectionName}}</label>
                         </td>
                       </ng-container>
                       
@@ -110,33 +71,70 @@
                           {{ element.designationName }}
                         </td>
                       </ng-container>
-                      
-                      <ng-container matColumnDef="typeName">
-                        <th mat-header-cell *matHeaderCellDef>{{queryTypeName}}</th>
-                        <td mat-cell *matCellDef="let element">
-                          <c-badge color="primary">{{ element.typeName }}</c-badge>
-                        </td>
-                      </ng-container>
+
                       
                       <ng-container matColumnDef="phone">
-                        <th mat-header-cell *matHeaderCellDef>Contact Number</th>
+                        <th mat-header-cell *matHeaderCellDef>Mobile</th>
                         <td mat-cell *matCellDef="let element">
-                          {{ element.contactNumber }}
+                          {{ element.mobile }}
                         </td>
                       </ng-container>
                       
-                      <ng-container matColumnDef="status">
-                        <th mat-header-cell *matHeaderCellDef>Status</th>
+                      <ng-container matColumnDef="joinDate">
+                        <th mat-header-cell *matHeaderCellDef>Join Date</th>
                         <td mat-cell *matCellDef="let element">
-                          <c-badge color="success" *ngIf="element.status">Active</c-badge>
-                          <c-badge color="warning" *ngIf="!element.status">Inactive</c-badge>
+                          {{ element.joinDate }}
                         </td>
                       </ng-container>
-            
+                      
                       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                     </table>
-                  </div>
+                </div> -->
+
+                <div class="card">
+                    <p-table 
+                        [value]="employees"
+                        [scrollable]="true" 
+                        rowGroupMode="subheader" 
+                        groupRowsBy="departmentName">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Designation</th>
+                                    <th>Section</th>
+                                    <th>Mobile</th>
+                                    <th>Join Date</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="groupheader" let-customer>
+                                <tr pRowGroupHeader>
+                                    <td colspan="5">
+                                        <span><b>{{customer.departmentName}}<span *ngIf="customer.sectionName">, {{customer.sectionName}}</span></b></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-customer let-rowIndex="rowIndex">
+                                <tr>
+                                    <td>
+                                        {{customer.empName}}
+                                    </td>
+                                    <td>
+                                        {{customer.designationName}}
+                                    </td>
+                                    <td>
+                                        {{customer.sectionName}}
+                                    </td>
+                                    <td>
+                                        {{customer.mobile}}
+                                    </td>
+                                    <td>
+                                        {{customer.joinDate}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                    </p-table>
+                </div>
             </c-card-body>
             <c-card-footer class="text-medium-emphasis p-0">
                 <mat-paginator 

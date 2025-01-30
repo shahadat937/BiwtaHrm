@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { EmployeeManagementReportingComponent } from './employee-management-reporting/employee-management-reporting.component';
+import { EmployeeListReportingComponent } from './employee-list-reporting/employee-list-reporting.component';
 
 
 
@@ -22,6 +23,13 @@ const routes: Routes = [
         component: EmployeeManagementReportingComponent,
         data: {
           title: 'Employee Management Reporting',
+        },
+      },
+      {
+        path: 'employee-list',
+        component: EmployeeListReportingComponent,
+        data: {
+          title: 'Employee Reporting Reporting',
         },
       },
     ]

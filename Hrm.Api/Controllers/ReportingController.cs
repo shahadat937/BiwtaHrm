@@ -4,7 +4,7 @@ using Hrm.Application.Features.EmpBasicInfos.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Gender.Requests.Queries;
-using Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Requests.Queries;
+using Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Promotion.Request.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmployeeList.Requests.Queries;
@@ -45,7 +45,7 @@ namespace Hrm.Api.Controllers
             return Ok(result);
         }
 
-        //Blood Group
+
         [HttpGet]
         [Route("get-BloodGroupCount")]
         public async Task<ActionResult<object>> GetBloodGroupCount(int? departmentId, int? sectionId)
@@ -57,14 +57,14 @@ namespace Hrm.Api.Controllers
         [Route("get-BloodGroupReportingResult")]
         public async Task<ActionResult<object>> GetBloodGroupReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
         {
-            var result = await _mediator.Send(new GetBloodGroupReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
+            var result = await _mediator.Send(new GetBloodGroupReportingResultRequest { QueryParams = queryParams, Id = id });
             return Ok(result);
         }
 
-        //Religion
+        //Region
         [HttpGet]
         [Route("get-religionCount")]
-        public async Task<ActionResult<object>> GetReligionCount(int? departmentId, int? sectionId)
+        public async Task<ActionResult<object>> GetRegionCount(int? departmentId, int? sectionId)
         {
             var result = await _mediator.Send(new GetEmpCountOnReligionRequest { DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
@@ -120,20 +120,19 @@ namespace Hrm.Api.Controllers
             return Ok(result);
         }
 
-        //Language
+        //Promotion and increment
         [HttpGet]
-        [Route("get-languageCount")]
-        public async Task<ActionResult<object>> GetLanguageCount(int? departmentId, int? sectionId)
+        [Route("get-PromotionIncrementReportingResult")]
+        public async Task<ActionResult<List<object>>> GetPromotionIncrementRepotingResult([FromQuery] QueryParams queryParams, string? PromotionIncrementType)
         {
-            var result = await _mediator.Send(new GetEmpCountOnLanguageRequest { DepartmentId = departmentId, SectionId = sectionId });
+            var result = await _mediator.Send(new GetPromotionIncrementReportingRequest { QueryParams = queryParams, PromotionIncrementType = PromotionIncrementType });
             return Ok(result);
         }
-
         [HttpGet]
-        [Route("get-LanguageReportingResult")]
-        public async Task<ActionResult<List<object>>> GetLanguageReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        [Route("get-PromotionIncrementReportingCountResult")]
+        public async Task<ActionResult<List<object>>> GetPromotionIncrementReportingCount([FromQuery] QueryParams queryParams, string? PromotionType, DateOnly? OrderDateFrom, DateOnly? OrderDateTo, DateOnly? ApproveFrom, DateOnly? ApproveTo)
         {
-            var result = await _mediator.Send(new GetLanguageReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
+            var result = await _mediator.Send(new GetPromotionIncrementReportingCountRequest { QueryParams = queryParams, PromotionType = PromotionType, OrderDateFrom = OrderDateFrom, OrderDateTo = OrderDateTo, ApproveFrom = ApproveFrom, ApproveTo = ApproveTo});
             return Ok(result);
         }
 

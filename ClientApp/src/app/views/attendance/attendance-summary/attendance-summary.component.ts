@@ -129,6 +129,21 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     
   }
 
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('attendanceSummary').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        // To do
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
+  }
+
   setEmployee() {
     const subs = this.authService.currentUser.subscribe(user => {
       if(user!=null&&user.empId!=null) {
@@ -146,11 +161,6 @@ export class AttendanceSummaryComponent implements OnInit, OnDestroy, AfterViewI
     })
   }
 
-  getPermission() {
-    const subs = this.roleFeatureService.getFeaturePermission("attendanceSummary").subscribe(item => {
-      this.featurePermission = item;
-    })
-  }
 
   setSummary() {
     this.summary = {

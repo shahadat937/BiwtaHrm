@@ -29,6 +29,9 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
   subscription: Subscription[]=[]
   @ViewChild('holidayForm', {static:true}) holidayForm!:NgForm;
 
+  @Input()
+  featurePermission: FeaturePermission;
+
   constructor(
     private toastr: ToastrService,
     private confirmService: ConfirmService,
@@ -38,6 +41,7 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
     this.isVisible=false;
     this.isUpdate = false;
     this.Holidays = []
+    this.featurePermission = new FeaturePermission();
   }
 
   ngOnInit(): void {
@@ -158,6 +162,11 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
 
   onCreate(form:NgForm) {
 
+    if(this.featurePermission.add==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
+    }
+
     let element = form.value;
     element['holidayId']=0;
     element.holidayDate = element.holidayFrom;
@@ -200,6 +209,11 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
 
   onDelete(groupId:number) {
 
+    if(this.featurePermission.delete) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
+    }
+
     this.confirmService.confirm("Confirm Delete Message","Are you sure?").subscribe((result)=> {
       if(!result) {
         return;
@@ -240,6 +254,11 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
   }
 
   onUpdate() {
+    if(this.featurePermission.update==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
+    }
+
     this.loading = true;
     this.holidayService.updateHolidayGroup(this.holidayService.model).subscribe({
       next: (response)=> {

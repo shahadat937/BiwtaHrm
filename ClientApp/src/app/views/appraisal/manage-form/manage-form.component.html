@@ -14,24 +14,25 @@
         [tableStyle]="{ 'min-width': '50rem' }"
       >
         <ng-template pTemplate="caption">
-          <c-row>
-            <c-col md="3">
-              <c-input-group>
-                <span cInputGroupText class="bg-white">
-                  <svg [cIcon]="icons.cilZoom" size="lg"></svg>
-                </span>
-                <input
-                  class="border-start-0 ps-0 shadow-none"
-                  cFormControl
-                  type="text"
-                  [(ngModel)]="globalFilter"
-                  (input)="dt2.filterGlobal(globalFilter,'contains')"
-                  placeholder="Search keyword"
-                />
-              </c-input-group>
+          <div class="d-md-flex justify-content-between">
+            <div>
+                <c-input-group>
+                  <span cInputGroupText class="bg-white">
+                    <svg [cIcon]="icons.cilZoom" size="lg"></svg>
+                  </span>
+                  <input
+                    class="border-start-0 ps-0 shadow-none"
+                    cFormControl
+                    type="text"
+                    [(ngModel)]="globalFilter"
+                    (input)="dt2.filterGlobal(globalFilter,'contains')"
+                    placeholder="Search keyword"
+                  />
+                </c-input-group>
+            </div>
 
-            </c-col>
-          </c-row>
+            <button *ngIf="routelink!=''" cButton color="danger" [routerLink]="[routelink]" size="sm">Cancel</button>
+          </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr>

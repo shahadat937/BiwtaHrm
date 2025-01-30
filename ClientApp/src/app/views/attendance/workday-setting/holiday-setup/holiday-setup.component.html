@@ -4,7 +4,7 @@
             <div class="p-1">
                 Holiday Setup
             </div>
-            <div>
+            <div *ngIf="featurePermission.add">
                 <button cButton 
                 color="primary" 
                 (click)="toggleAddHoliday()"
@@ -172,10 +172,10 @@
                             <c-badge *ngIf="!holiday.isActive" color="danger">Deactive</c-badge>
                         </td>
                         <td>
-                        <button class="custom-button me-1" (click)="toggleUpdate(holiday)" cTooltip="Update">
+                        <button *ngIf="featurePermission.update" class="custom-button me-1" (click)="toggleUpdate(holiday)" cTooltip="Update">
                             <svg [cIcon]="icons.cilPencil" size="lg" title="Update"></svg>
                         </button>
-                        <button class="custom-button me-1" (click)="onDelete(holiday.groupId)" cTooltip="Delete">
+                        <button *ngIf="featurePermission.delete" class="custom-button me-1" (click)="onDelete(holiday.groupId)" cTooltip="Delete">
                             <svg [cIcon]="icons.cilTrash" size="lg" title="Delete"></svg>
                         </button>
                         </td>

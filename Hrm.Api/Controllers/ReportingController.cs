@@ -8,6 +8,7 @@ using Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Requests.Que
 using Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmployeeList.Requests.Queries;
+using Hrm.Application.Features.Reportings.TransferPosting.Requests.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -132,6 +133,20 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<List<object>>> GetLanguageReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
         {
             var result = await _mediator.Send(new GetLanguageReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+        //TransferPosting 
+        [HttpGet]
+        [Route("get-TransferPostingCount")]
+        public async Task<ActionResult<object>> GetTransferCount(int departmentFrom, int sectionFrom, int departmentTo, int sectionTo)
+        {
+            var result = await _mediator.Send(new GetTransferPostingReportingRequest {
+            DepartmentFrom = departmentFrom,
+            DepartmentTo = departmentTo,
+            SectionFrom = sectionFrom,
+            SectionTo = sectionTo
+            });
             return Ok(result);
         }
     }

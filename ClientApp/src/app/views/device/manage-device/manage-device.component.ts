@@ -10,6 +10,9 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DeviceModalComponent } from '../device-modal/device-modal.component';
 import {CustomCommandModalComponent} from '../custom-command-modal/custom-command-modal.component'
 import { RealTimeService } from '../../../core/service/real-time.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 
 @Component({
   selector: 'app-manage-device',
@@ -20,16 +23,23 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
   loading: boolean
   attLoading: boolean
   attendanceDevices: AttendanceDeviceModel[];
-  subscription: Subscription = new Subscription;
+  subscription: Subscription[] = []; 
 
   icons = {cilReload, cilPencil , cilFingerprint, cilTrash, cilCommand}
+
+  //authentication
+  featurePermission: FeaturePermission = new FeaturePermission();
+
   constructor(
     private realTimeService: RealTimeService,
     private AttendanceDeviceService: AttendanceDeviceService,
     private confirmService: ConfirmService,
     private toastr: ToastrService,
     private modalService: BsModalService,
-    private bsModalRef: BsModalRef
+    private bsModalRef: BsModalRef,
+    private route: ActivatedRoute,
+    private router: Router,
+    private roleFeatureService: RoleFeatureService
   ) {
     this.attendanceDevices = []
     this.loading = false;
@@ -46,16 +56,30 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
     })
   }
 
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('manageDevice').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        // To do
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
+  }
+
+
   ngOnDestroy(): void {
-    if(this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscription.forEach(subs => subs.unsubscribe());
   }
 
   getAttendanceDevice() {
     this.loading = true;
     this.attLoading = true;
-   this.subscription = this.AttendanceDeviceService.getDevice().subscribe({
+    const subs = this.AttendanceDeviceService.getDevice().subscribe({
     next: response => {
       this.attendanceDevices = this.transformAttRecord(response);
     },
@@ -68,13 +92,20 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
       this.attLoading = false;
     }
    }) 
+
+   this.subscription.push(subs);
   }
 
   deleteDevice(deviceId:number) {
+    if(this.featurePermission.delete==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
+    }
+
     this.confirmService.confirm("Delete Confirmation", "Are You Sure?").subscribe(response=> {
       if(response) {
         this.loading = true;
-        this.subscription = this.AttendanceDeviceService.deleteDevice(deviceId).subscribe({
+        const subs = this.AttendanceDeviceService.deleteDevice(deviceId).subscribe({
           next: response => {
             if(response.success) {
               this.toastr.success('', `${response.message}`, {
@@ -95,6 +126,8 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
             this.loading = false;
           }
         })
+
+        this.subscription.push(subs);
       }
     })
   }
@@ -124,10 +157,10 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
 
   rebootDevice(deviceId:number) {
 
-    this.subscription = this.confirmService.confirm("Reboot The Device", "Are You Sure?").subscribe(response=> {
+    const subs = this.confirmService.confirm("Reboot The Device", "Are You Sure?").subscribe(response=> {
       if(response) {
         this.loading = true;
-        this.subscription = this.AttendanceDeviceService.rebootDevice(deviceId).subscribe({
+        this.subscription.push(this.AttendanceDeviceService.rebootDevice(deviceId).subscribe({
           next: response => {
             if(response.success) {
               this.toastr.success("",`${response.message}`, {
@@ -145,13 +178,19 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
           complete: () => {
             this.loading = false;
           }
-        })
+        }));
 
       }
     })
+
+    this.subscription.push(subs);
   }
 
   onUpdate(device: AttendanceDeviceModel) {
+    if(this.featurePermission.update==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
+    }
     const initialState = {
       deviceModel: device,
       IsUpdate: true,
@@ -162,9 +201,9 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
     const modalRef: BsModalRef = this.modalService.show(DeviceModalComponent,{initialState: initialState});
 
     if(modalRef&&modalRef.onHide) {
-      this.subscription = modalRef.onHide.subscribe(()=> {
+      this.subscription.push(modalRef.onHide.subscribe(()=> {
         this.getAttendanceDevice();
-      })
+      }));
     }
   }
 

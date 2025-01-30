@@ -10,6 +10,9 @@ import { DeviceModalComponent } from '../device-modal/device-modal.component';
 import { NotExpr } from '@angular/compiler';
 import * as signalR from '@microsoft/signalr'
 import {RealTimeService} from '../../../core/service/real-time.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 @Component({
   selector: 'app-add-device',
   templateUrl: './add-device.component.html',
@@ -22,6 +25,9 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
   checkDeviceInterval: Subscription = new Subscription();
 
   icons = {cilReload, cilTrash, cilPlus}
+
+  //Authentication
+  featurePermission: FeaturePermission = new FeaturePermission();
   
   constructor(
     private realTimeService: RealTimeService,
@@ -29,7 +35,10 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
     private confirmService: ConfirmService,
     private toastr: ToastrService,
     private modalService: BsModalService,
-    private bsModalRef: BsModalRef
+    private bsModalRef: BsModalRef,
+    private route: ActivatedRoute,
+    private router: Router,
+    private roleFeatureService: RoleFeatureService
   ) {
     this.pendingDevice = [];
     this.loading = false
@@ -38,6 +47,7 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.getPermission();
     this.getPendingDevice(true);
     this.deleteExpireDevice(); 
     this.checkNewDevice();
@@ -52,6 +62,21 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
     if(this.checkDeviceInterval) {
       this.checkDeviceInterval.unsubscribe();
     }
+  }
+
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('addDevice').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        // To do
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
   }
 
 
@@ -102,6 +127,11 @@ export class AddDeviceComponent implements OnInit, OnDestroy {
   }
 
   addDevice(pendingDevice: PendingDeviceModel) {
+
+    if(this.featurePermission.add==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
+    }
 
     const initialState = {
       pendingDevice: pendingDevice

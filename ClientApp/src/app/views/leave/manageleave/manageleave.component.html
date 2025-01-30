@@ -1,7 +1,16 @@
 <div class="container mt-4">
   <c-card>
     <c-card-body>
-      <h5 class="mb-3">Manage Leave</h5>
+
+
+
+      <div class="d-flex justify-content-between" *ngIf="refreshLink!=null">
+        <h5 class="mb-3">Manage Leave</h5>
+        <button cButton [routerLink]="[refreshLink]" color="danger" size="sm">Refresh</button>
+      </div>
+      <div class="d-flex justify-content-starty" *ngIf="refreshLink==null">
+        <h5 class="mb-3">Manage Leave</h5>
+      </div>
       <form cForm class="mb-4" *ngIf="false">
         <c-row>
           <c-col [md]="3">

@@ -17,6 +17,8 @@ import { AuthService } from 'src/app/core/service/auth.service';
 import { Role } from 'src/app/core/models/role';
 import { LeaveTypeService } from '../../basic-setup/service/leave-type.service';
 import { xor } from 'lodash-es';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 
 
 @Component({
@@ -61,7 +63,10 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   isUser: boolean ;
   reportDate: Date;
 
+  featurePermission: FeaturePermission = new FeaturePermission();
+
   constructor(
+    private roleFeatureService: RoleFeatureService,
     private authService: AuthService,
     private departmentService: DepartmentService,
     private SectionService: SectionService,
@@ -104,10 +109,22 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
         this.EmployeeOption = response;
       }
     });
-
-
   }
 
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('attendanceReport').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        // To do
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
+  }
 
   onOfficeChange() {
     if(this.selectedOffice!=null) {

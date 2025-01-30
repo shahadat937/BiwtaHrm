@@ -17,6 +17,11 @@ import { HttpParams } from '@angular/common/http';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
 import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
+import { UserNotification } from '../../notifications/models/user-notification';
+import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
+import { NotificationService } from '../../notifications/service/notification.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { Feature } from '../../featureManagement/model/feature';
 
 
 
@@ -44,9 +49,17 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   empIdCardNo: string;
   empName: string;
   isValidPMIS: boolean;
+  routelink : string = "";
+
+  @Input()
+  featureName: string;
+  featurePermission: FeaturePermission = new FeaturePermission();
 
   constructor(
     public siteVisitService : SiteVisitService,
+    private authService : AuthService,
+    private notificationService: NotificationService,
+    private empJobDetailService: EmpJobDetailsService,
     private modalService: BsModalService,
     private empBasicInfoService: EmpBasicInfoService,
     private route: ActivatedRoute,
@@ -61,6 +74,7 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     this.empIdCardNo = "";
     this.empName = "";
     this.isValidPMIS = false;
+    this.featureName = "siteVisit";
   }
 
   resetEmp() {
@@ -74,6 +88,21 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     return (event.target as HTMLInputElement).value;
   }
   ngOnInit(): void {
+
+    this.getPermission();
+
+    this.route.queryParams.subscribe(data => {
+      if(data['forNotificationId']) {
+        this.filter['siteVisitId'] = data['forNotificationId'];
+        this.routelink = this.router.url.split('?')[0];
+        this.getSiteVisit();
+      } else {
+        this.filter['siteVisitId'] = null;
+        this.routelink = "";
+        this.getSiteVisit();
+      }
+    });
+
     this.getSiteVisit();
     this.getEmpOption();
 
@@ -86,6 +115,18 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
       this.roleFeatureService.getFeaturePermission("siteVisit").subscribe(response=> {
       })
     }
+  }
+
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission(this.featureName).subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == false){
+        this.router.navigate(['/dashboard']);
+        this.roleFeatureService.unauthorizeAccress();
+      }
+    })
+    )
   }
 
   ngOnDestroy(): void {
@@ -124,6 +165,9 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
       let params = new HttpParams();
 
       for(const key of Object.keys(this.filter)) {
+        if(this.filter[key]==null) {
+          continue;
+        }
         if(key=="Status") {
           for(const item of this.filter[key]) {
             params = params.append(key, item);
@@ -161,6 +205,8 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
 
           var index = this.tableData.findIndex(item=>item.siteVisitId===siteVisitId);
           this.tableData[index].status = "Approved";
+          this.notifyUser(true,index);
+
         } else {
           this.toastr.error('',`${response.message}`, {
             positionClass: 'toast-top-right'
@@ -185,6 +231,7 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
           });
           var index = this.tableData.findIndex(item=>item.siteVisitId===siteVisitId);
           this.tableData[index].status = "Declined";
+          this.notifyUser(false,index);
         } else {
           this.toastr.error('',`${response.message}`, {
             positionClass: 'toast-top-right'
@@ -286,6 +333,11 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
           this.toastr.success("",`${result.message}`, {
             positionClass:'toast-top-right'
           })
+
+          //Notify the approver
+          if(this.siteVisitService.model.empId)
+          this.notifyApprover(this.siteVisitService.model.empId,result.id);
+
           this.siteVisitService.cachedData = [];
           this.getSiteVisit();
           this.siteVisitForm.reset();
@@ -307,6 +359,42 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
       }
     });
   }
+
+  notifyApprover(empId:number,responseId:number) {
+    const userNotification = new UserNotification;
+    userNotification.fromEmpId = empId;
+    userNotification.toDeptId = 0;
+    userNotification.featurePath = "siteVisit";
+    userNotification.nevigateLink = "/attendance/siteVisit";
+    userNotification.forEntryId = responseId;
+    userNotification.title = "Site Visit"
+    userNotification.message = "requested sitevisit, Approval pending.";
+    console.log(userNotification);
+    this.empJobDetailService.findByEmpId(empId).subscribe(response => {
+      userNotification.toDeptId = response.departmentId;
+      this.notificationService.submit(userNotification).subscribe(()=> {});
+    })
+
+  }
+
+  notifyUser(IsApproved:boolean,index:number) {
+    const data = this.tableData[index];
+    let empId = this.authService.currentUserValue.empId || 0;
+
+    const userNotification = new UserNotification();
+    userNotification.fromEmpId = empId;
+    userNotification.toEmpId = data.empId;
+    userNotification.forEntryId = data.siteVisitId;
+    userNotification.featurePath = "manageSiteVisit";
+    userNotification.nevigateLink = "/attendance/manageSiteVisit";
+    userNotification.title = "Site Visit";
+    userNotification.message = IsApproved==true?"Your sitevisit is approved.":"Your sitevisit is denied";
+
+    this.notificationService.submit(userNotification).subscribe(()=>{});
+  }
+
+
+
 
   onSiteVisitUpdate(form:NgForm) {
     this.loading = true;

@@ -30,7 +30,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Pro
             IQueryable<EmpPromotionIncrement> query = _EmpPromotionIncrementRepository.FilterWithInclude(x =>
                 (request.EmpId == null || x.EmpId == request.EmpId) &&  
                 (request.CurrentDepartmentId == null || x.CurrentDepartmentId == request.CurrentDepartmentId) && 
-                (request.CurrentDesignationId == null || x.CurrentDesignationId == request.CurrentDesignationId) && 
+                (request.CurrentDesignationId == null || x.CurrentDesignationId == request.CurrentDesignationId) &&
+                (request.UpdateDesignationId == null || x.UpdateDesignationId == request.UpdateDesignationId)&&
                 (request.PromotionIncrementType == null || x.PromotionIncrementType == request.PromotionIncrementType) &&
                 //(request.OrderDate == null || x.OrderDate == request.OrderDate) && 
                 //(request.EffectiveDate == null || x.EffectiveDate == request.EffectiveDate) && 
@@ -64,6 +65,7 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Pro
                     UpdateGradeId = x.UpdateGradeId,
                     UpdateScaleId = x.UpdateScaleId,
                     UpdateBasicPay = x.UpdateBasicPay,
+                    UpdateDesignationId = x.UpdateDesignationId,
                     PromotionIncrementType = x.PromotionIncrementType,
                     OrderById = x.OrderById,
                     OrderDate = x.OrderDate,

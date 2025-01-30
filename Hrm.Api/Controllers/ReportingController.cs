@@ -7,6 +7,7 @@ using Hrm.Application.Features.Reportings.EmpInfoReporting.Gender.Requests.Queri
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Promotion.Request.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Queries;
+using Hrm.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -106,6 +107,13 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<List<object>>> GetPromotionIncrementRepotingResult([FromQuery] QueryParams queryParams, string? PromotionIncrementType)
         {
             var result = await _mediator.Send(new GetPromotionIncrementReportingRequest { QueryParams = queryParams, PromotionIncrementType = PromotionIncrementType });
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("get-PromotionIncrementReportingCountResult")]
+        public async Task<ActionResult<List<object>>> GetPromotionIncrementReportingCount([FromQuery] QueryParams queryParams, string? PromotionType, DateOnly? OrderDateFrom, DateOnly? OrderDateTo, DateOnly? ApproveFrom, DateOnly? ApproveTo)
+        {
+            var result = await _mediator.Send(new GetPromotionIncrementReportingCountRequest { QueryParams = queryParams, PromotionType = PromotionType, OrderDateFrom = OrderDateFrom, OrderDateTo = OrderDateTo, ApproveFrom = ApproveFrom, ApproveTo = ApproveTo});
             return Ok(result);
         }
     }

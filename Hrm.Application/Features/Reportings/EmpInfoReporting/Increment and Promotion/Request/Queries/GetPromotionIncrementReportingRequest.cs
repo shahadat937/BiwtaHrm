@@ -18,12 +18,15 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Pro
         public int? CurrentDepartmentId { get; set; }
         public int? CurrentDesignationId { get; set; }
         public int? CurrentGradeId { get; set; }
+
+        public int? UpdateDesignationId { get; set; }
         public int? CurrentScaleId { get; set; }
         public int? UpdateGradeId { get; set; }
         public int? UpdateScaleId { get; set; }
         public string? PromotionIncrementType { get; set; }
         public DateTime? OrderDate { get; set; }
         public DateTime? EffectiveDate { get; set; }
+        public DateTime? CurrentDeptJoinDate { get; set; }
         public bool? isApproval { get; set; }
 
     }

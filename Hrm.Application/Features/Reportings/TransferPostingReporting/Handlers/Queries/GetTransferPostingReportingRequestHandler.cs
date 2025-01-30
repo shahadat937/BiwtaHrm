@@ -41,6 +41,14 @@ namespace Hrm.Application.Features.Reportings.TransferPosting.Handlers.Queries
 
             if (request.SectionTo != 0)
                 query = query.Where(tp => tp.TransferSectionId == request.SectionTo);
+            if(request.DateFrom != null && request.DateTo != null && request.DateFrom != DateOnly.MinValue && request.DateTo != DateOnly.MinValue)
+            {
+               query = query.Where(tp => (tp.JoiningDate <= request.DateFrom && tp.JoiningDate >= request.DateTo) || 
+                                         (tp.OfficeOrderDate <= request.DateFrom && tp.OfficeOrderDate >= request.DateTo) 
+                                      
+    ); 
+            }
+           
 
             var transferPostings = await query.ToListAsync(); // Single DB call
 
@@ -53,7 +61,10 @@ namespace Hrm.Application.Features.Reportings.TransferPosting.Handlers.Queries
                 TotalDepartmentReject = transferPostings.Count(tp => tp.IsDepartmentApprove == false),
                 JoingingPending = transferPostings.Count(tp => tp.JoiningStatus == null),
                 JoingingApproved = transferPostings.Count(tp => tp.JoiningStatus == true),
-                JoingRejected = transferPostings.Count(tp => tp.JoiningStatus == false)
+                JoingRejected = transferPostings.Count(tp => tp.JoiningStatus == false),
+                WithoutPromotion = transferPostings.Count(tp => tp.WithPromotion == false),
+                WithPromotion = transferPostings.Count(tp => tp.WithPromotion == true),
+
             };
 
         }

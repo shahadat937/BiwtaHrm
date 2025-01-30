@@ -17,8 +17,9 @@ namespace Hrm.Application.DTOs.Reporting
         public string? PreviousSectionName { get; set; }
         public string? CurrentSectionName { get; set; }
         public string? OrderBy { get; set; }
-        public DateTime? OfficeOrderDate { get; set; }
-        public DateTime? DeptReleseDate { get; set; }
+        public DateOnly? OfficeOrderDate { get; set; }
+        public DateOnly? DeptReleseDate { get; set; }
+        public DateOnly? JoiningDate { get; set; }
         public string? ContactNumber { get; set; }
         public string? Email { get; set; }
         public bool? Status { get; set; }

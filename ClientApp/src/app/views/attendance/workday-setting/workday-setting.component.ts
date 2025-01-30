@@ -8,6 +8,8 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 import { cilZoom } from '@coreui/icons';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-workday-setting',
@@ -30,10 +32,16 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
   yearLoaded : boolean;
   filterForWeekend:string = "";
   loading: boolean = false;
+
+
+  featurePermission: FeaturePermission = new FeaturePermission();
+
   constructor(
     private workdayService: WorkdayService,
     private toastr : ToastrService,
     private confirmService: ConfirmService,
+    private route: ActivatedRoute,
+    private router: Router,
     private authService: AuthService,        
     public roleFeatureService: RoleFeatureService
   ) {
@@ -44,8 +52,24 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
     this.yearLoaded = false;
   }
   ngOnInit(): void {
+    this.getPermission();
     this.getYear();
     this.getDay();
+  }
+
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('workdaySetting').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        // To do
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
   }
 
 
@@ -110,6 +134,11 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
 
 
   toggleWeekendStatus(weekend:any) {
+
+    if(this.featurePermission.update==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
+    }
     let empId : number = parseInt(this.authService.currentUserValue.empId);
     this.loading = true;
     if(weekend.isActive) {
@@ -245,13 +274,14 @@ export class WorkdaySettingComponent implements OnInit, OnDestroy {
   }
 
   onWorkdayDelete(workdayId:number) {
-    console.log(this.roleFeatureService.featurePermission);
-    if(this.roleFeatureService.featurePermission.delete==false) {
-      this.toastr.warning("", "Unauthorized Access", {
-        positionClass: 'toast-top-right'
-      });
-      return; 
+
+
+    if(this.featurePermission.delete==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
     }
+
+
     this.confirmService.confirm('Confirm Deletion',"Are you sure?").subscribe(response=> {
       if(response) {
         this.workdayService.deleteWorkday(workdayId).subscribe({

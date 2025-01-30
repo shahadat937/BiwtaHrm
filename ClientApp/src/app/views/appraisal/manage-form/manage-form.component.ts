@@ -13,6 +13,7 @@ import {FormRecordFilter} from '../models/form-record-filter'
 import { AppraisalRole } from '../enum/appraisal-role';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { environment } from 'src/environments/environment';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-form',
@@ -35,6 +36,7 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   globalFilter:string;
   officerFormEditRoute: any;
   appraisalRole = AppraisalRole;
+  routelink: string = "";
 
 
   constructor(
@@ -43,7 +45,9 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     private officerService: OfficerFormService,
     private toastr: ToastrService,
     private confirmService: ConfirmService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.officerFormId = environment.officerFormId;
     this.staffFormId = environment.staffFormId;
@@ -80,9 +84,22 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     )
     
 
+
   }
 
   ngOnInit(): void {
+      this.route.queryParams.subscribe(data => {
+      console.log(data);
+      if(data['forNotificationId']) {
+        this.filters['recordId'] = data['forNotificationId'];
+        this.routelink = this.router.url.split('?')[0];
+        this.getFormRecord();
+      } else if(this.filters['recordId']) {
+        this.filters['recordId'] = null;
+        this.routelink= "";
+        this.getFormRecord();
+      }
+    })
     this.getFormRecord();
   }
 

@@ -47,7 +47,7 @@
                 </select>
             </c-col>
             <c-col md="3" class="p-1">
-                <button (click)="togglePlusButton()" cButton size="sm" color="{{showAddDay?'danger':'success'}}" shape="rounded-pill">
+                <button [disabled]="featurePermission.add==false" (click)="togglePlusButton()" cButton size="sm" color="{{showAddDay?'danger':'success'}}" shape="rounded-pill">
                     @if (!showAddDay) {
                         <svg [cIcon]="icons.cilPlus" size="sm" title="delete"></svg>
                     } @else {
@@ -110,7 +110,7 @@
                             <span *ngIf="!rowData['isActive']"><c-badge color="danger">Deactive</c-badge></span>
                         </td>
                         <td>
-                            <button [disabled]="loading" (click)="toggleWeekendStatus(rowData)" size="sm" variant="outline" cButton>Toggle</button>
+                            <button *ngIf="featurePermission.update" [disabled]="loading" (click)="toggleWeekendStatus(rowData)" size="sm" variant="outline" cButton>Toggle</button>
                         </td>
                     </tr>
                 </ng-template>
@@ -121,6 +121,6 @@
 
 
 @if (this.yearLoaded) {
-    <app-holiday-setup>
+    <app-holiday-setup [featurePermission]="featurePermission">
     </app-holiday-setup>
 }

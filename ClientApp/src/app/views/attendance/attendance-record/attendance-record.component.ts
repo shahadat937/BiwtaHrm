@@ -18,6 +18,9 @@ import { HttpParams } from '@angular/common/http';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { trigger } from '@angular/animations';
 import { RealTimeService } from 'src/app/core/service/real-time.service';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { Feature } from '../../featureManagement/model/feature';
 
 
 @Component({
@@ -59,7 +62,11 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   empId: number | null;
   isUser: boolean
 
+  // Feature Permission
+  featurePermission: FeaturePermission = new FeaturePermission();
+
   constructor(
+    private roleFeatureService: RoleFeatureService,
     private realTimeService: RealTimeService,
     private authService: AuthService,
     private sectionService: SectionService,
@@ -97,6 +104,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   ngOnInit(): void {
+    this.getPermission();
     this.getFilteredAttendance(true);
     //this.getAllAttendance();
     this.getSelectedDepartment();
@@ -111,6 +119,21 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     })
 
     this.subscription.push(subs);
+  }
+
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('attendanceRecord').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        // To do
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
   }
 
 
@@ -205,6 +228,12 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
 
 
     delete(element: any){
+
+      if(this.featurePermission.delete==false) {
+        this.roleFeatureService.unauthorizeAccress();
+        return;
+      }
+
       this.confirmService
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
@@ -231,6 +260,12 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   update(element:any) {
+
+    if(this.featurePermission.update==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
+    }
+
     this.subscription.push(
       this.AtdRecordService.getAttendanceById(element.attendanceId).subscribe(res=> {
       this.AtdRecordService.UpdateAtdModel.attendanceId = res.attendanceId;

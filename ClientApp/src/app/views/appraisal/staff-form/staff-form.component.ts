@@ -19,6 +19,9 @@ import { AuthService } from 'src/app/core/service/auth.service';
 import { OfficerFormService } from '../officer-form/service/officer-form.service';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
 import { ChangeProfileComponent } from '../../profile/change-profile/change-profile.component';
+import { UserNotification } from '../../notifications/models/user-notification';
+import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
+import { NotificationService } from '../../notifications/service/notification.service';
 
 @Component({
   selector: 'app-staff-form',
@@ -80,7 +83,9 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   counterSignatoryOfficername: string = "";
   
   constructor(
+    private notificationService: NotificationService,
     private empBasicInfoService: EmpBasicInfoService,
+    private empJobDetailService: EmpJobDetailsService,
     private bsModalService: BsModalService,
     private authService: AuthService,
     private router: Router,
@@ -223,6 +228,8 @@ export class StaffFormComponent implements OnInit, OnDestroy {
           this.toastr.success('',`${response.message}`, {
             positionClass: 'toast-top-right'
           })
+
+          this.sendOfficerNotification(this.updateRole,this.formData);
           this.formRecordService.cachedData = [];
           this.router.navigate(['/appraisal/MyFormRecord']);
         } else {
@@ -374,6 +381,10 @@ export class StaffFormComponent implements OnInit, OnDestroy {
           this.toastr.success('',`${response.message}`, {
             positionClass: 'toast-top-right'
           })
+
+          this.sendUserNotification(this.updateRole,this.formData);
+          this.sendOfficerNotification(this.updateRole,this.formData);
+
         } else {
           this.toastr.warning('',`${response.message}`, {
             positionClass: 'toast-top-right'
@@ -501,5 +512,58 @@ export class StaffFormComponent implements OnInit, OnDestroy {
    return EntryDate;
   }
 
+  sendUserNotification(progress:number,formData:any) {
+    const userNotification = new UserNotification();
 
+    if(progress == AppraisalRole.ReportingOfficer) {
+      userNotification.fromEmpId=formData.reportingOfficerId;
+      userNotification.message = "Reporting Officer submission has been done."
+    } else if(progress == AppraisalRole.CounterSignatory) {
+      userNotification.fromEmpId=formData.counterSignatoryId;
+      userNotification.message = "Counter Signatory submission has been done."
+    } else if(progress == AppraisalRole.Receiver) {
+      userNotification.fromEmpId = this.authService.currentUserValue.empId || 0;
+      userNotification.message = "Appraisal is received by the receiver.";
+    }
+    userNotification.toEmpId = formData.empId;
+    userNotification.forEntryId = formData.formId;
+    userNotification.featurePath = "MyFormRecord"
+    userNotification.nevigateLink = "/appraisal/MyFormRecord";
+    userNotification.title = "Appraisal";
+
+    this.notificationService.submit(userNotification).subscribe(()=> {});
+
+  }
+
+  sendOfficerNotification(role: number, formData:any) {
+    const userNotification = new UserNotification();
+
+    userNotification.fromEmpId = formData.empId;
+    userNotification.title = "Appraisal";
+    userNotification.message = "New Appraisal Form is available"
+    userNotification.forEntryId = formData.formId;
+
+    if(role == AppraisalRole.User) {
+      userNotification.toEmpId = formData.reportingOfficerId;
+      userNotification.featurePath = "manageFormOfficerRF";
+      userNotification.nevigateLink ="/appraisal/manageFormOfficerRF";
+    } else if(role == AppraisalRole.ReportingOfficer) {
+      userNotification.toEmpId = formData.counterSignatoryId;
+      userNotification.featurePath = "manageFormOfficerCs";
+      userNotification.nevigateLink = "/appraisal/manageFormOfficerCs"
+    } else if(role == AppraisalRole.CounterSignatory) {
+      userNotification.featurePath = "manageFormOfficerR";
+      userNotification.nevigateLink = "/appraisal/manageFormOfficerR";
+    }
+
+    if(role == AppraisalRole.CounterSignatory) {
+      this.empJobDetailService.findByEmpId(formData.empId).subscribe(data => {
+        userNotification.toDeptId = data.departmentId;
+
+        this.notificationService.submit(userNotification).subscribe(()=> {});
+      })
+    } else {
+      this.notificationService.submit(userNotification).subscribe(()=> {});
+    }
+  }
 }

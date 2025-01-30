@@ -12,6 +12,8 @@ import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.servi
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
 import { Attendances } from '../models/attendances';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 
 @Component({
   selector: 'app-manual-attendance',
@@ -46,9 +48,11 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   EmpName: string;
   validPMIS: boolean;
 
+  featurePermission: FeaturePermission = new FeaturePermission();
 
 
   constructor(
+    private roleFeatureService: RoleFeatureService,
     private empBasicInfoService: EmpBasicInfoService,
     private modalService: BsModalService,
     public manualAtdService: ManualAttendanceService,
@@ -97,6 +101,21 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
       option=> this.EmpOption = option
     );
     
+  }
+
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('manualAttendance').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        // To do
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
   }
 
   ResetForm() {
@@ -151,6 +170,12 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   onSubmit(form:NgForm) {
+
+    if(this.featurePermission.add==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
+    }
+
     this.loading = true;
     
   
@@ -182,6 +207,11 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   onSubmitBulk(form:NgForm) {
+
+    if(this.featurePermission.add==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
+    }
 
     this.loadingBulk = true;
 

@@ -37,6 +37,17 @@ namespace Hrm.Application.Features.Reportings.TransferPostingReporting.Handlers.
                 .ThenInclude(x => x.EmpJobDetail)
                 .ThenInclude(x => x.Section);
 
+            bool hasValidDateRange = request.DateFrom != null && request.DateFrom != DateOnly.MinValue &&
+                          request.DateTo != null && request.DateTo != DateOnly.MinValue;
+
+            if (hasValidDateRange)
+            {
+                query = query.Where(tp =>
+                    (tp.JoiningDate >= request.DateFrom && tp.JoiningDate <= request.DateTo) ||
+                    (tp.OfficeOrderDate >= request.DateFrom && tp.OfficeOrderDate <= request.DateTo)
+                );
+            }
+
 
 
             var totalCount = await query.CountAsync(cancellationToken);
@@ -62,7 +73,7 @@ namespace Hrm.Application.Features.Reportings.TransferPostingReporting.Handlers.
                         JoiningDate = x.JoiningDate,
                         ContactNumber = x.EmpBasicInfo.EmpPersonalInfo.FirstOrDefault().MobileNumber,
                         Email = x.EmpBasicInfo.EmpPersonalInfo.FirstOrDefault().Email ?? "",
-                        Status = x.EmpBasicInfo.UserStatus
+                        ApprovedStatus = x.ApplicationStatus
 
 
                     })

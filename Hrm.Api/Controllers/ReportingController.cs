@@ -154,7 +154,7 @@ namespace Hrm.Api.Controllers
         
         [HttpGet]
         [Route("get-TransferPostingReport")]
-        public async Task<ActionResult<object>> GetTransferPostingReport( [FromQuery]QueryParams queryParams, int departmentFrom, int sectionFrom, int departmentTo, int sectionTo, DateOnly dateTo, DateOnly dateFrom)
+        public async Task<ActionResult<object>> GetTransferPostingReport( [FromQuery]QueryParams queryParams, int departmentFrom, int sectionFrom, int departmentTo, int sectionTo,  DateOnly dateFrom, DateOnly dateTo)
         {
             var result = await _mediator.Send(new GetTransferPostingResultRequest
             {

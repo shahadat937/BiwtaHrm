@@ -22,6 +22,6 @@ namespace Hrm.Application.DTOs.Reporting
         public DateOnly? JoiningDate { get; set; }
         public string? ContactNumber { get; set; }
         public string? Email { get; set; }
-        public bool? Status { get; set; }
+        public bool? ApprovedStatus { get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace Hrm.Application.DTOs.Reporting
         public int? SectionId { get; set; }
         public string? SectionName { get; set; }
         public int? Total { get; set; }
+        public int? AllTotal { get; set; }
         public int? EmpId { get; set; }
         public string? IdCardNo { get; set; }
         public string? EmpName { get; set; }

@@ -141,6 +141,10 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
       this.getMaritalStatusCount();
       this.getMaritalStatusReportingResult(this.pagination);
     }
+    else if(this.queryTypeName == 'Language'){
+      this.getLanguageCount();
+      this.getLanguageReportingResult(this.pagination);
+    }
     else {
       this.dataSource.data = [];
       this.pagination.length = 0;
@@ -229,6 +233,24 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
   getMaritalStatusReportingResult(queryParams: any){
     this.subscription.push(
       this.reportingService.getMaritalStatusReportingResult(queryParams, this.typeId, this.unAssigned, this.departmentId, this.sectionId).subscribe((res: any) => {
+      this.dataSource.data = res.items;
+      this.pagination.length = res.totalItemsCount;
+    })
+    )
+  }
+
+  
+  // Language
+  getLanguageCount(){
+    this.subscription.push(
+      this.reportingService.getLanguageCount(this.departmentId, this.sectionId).subscribe((res: any) => {
+      this.queryCount = res;
+    })
+    )
+  }
+  getLanguageReportingResult(queryParams: any){
+    this.subscription.push(
+      this.reportingService.getLanguageReportingResult(queryParams, this.typeId, this.unAssigned, this.departmentId, this.sectionId).subscribe((res: any) => {
       this.dataSource.data = res.items;
       this.pagination.length = res.totalItemsCount;
     })

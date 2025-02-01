@@ -15,20 +15,19 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Reportings.TransferPosting.Handlers.Queries
 {
-    public class GetTransferPostingReportingRequestHandler : IRequestHandler<GetTransferPostingReportingRequest, EmpTransferPostingCountDto>
+    public class GetTransferPostingCountRequestHandler : IRequestHandler<GetTransferPostingCountRequest, EmpTransferPostingCountDto>
     {
 
         private readonly IHrmRepository<EmpTransferPosting> _EmpTransferPostingRepository;
 
-        public GetTransferPostingReportingRequestHandler(IHrmRepository<EmpTransferPosting> EmpTransferPostingRepository)
+        public GetTransferPostingCountRequestHandler(IHrmRepository<EmpTransferPosting> EmpTransferPostingRepository)
         {
             _EmpTransferPostingRepository = EmpTransferPostingRepository;
         }
 
-        public async Task<EmpTransferPostingCountDto> Handle(GetTransferPostingReportingRequest request, CancellationToken cancellationToken)
+        public async Task<EmpTransferPostingCountDto> Handle(GetTransferPostingCountRequest request, CancellationToken cancellationToken)
         {
 
-            //var query = await _EmpTransferPostingRepository.GetAll();
             IQueryable <EmpTransferPosting> query = _EmpTransferPostingRepository.FilterWithInclude(x=> true);
             if (request.DepartmentFrom != 0)
                 query = query.Where(tp => tp.CurrentDepartmentId == request.DepartmentFrom);

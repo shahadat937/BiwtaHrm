@@ -141,7 +141,7 @@ namespace Hrm.Api.Controllers
         [Route("get-TransferPostingCount")]
         public async Task<ActionResult<object>> GetTransferPostingCount(int departmentFrom, int sectionFrom, int departmentTo, int sectionTo, DateOnly dateTo, DateOnly dateFrom)
         {
-            var result = await _mediator.Send(new GetTransferPostingReportingRequest {
+            var result = await _mediator.Send(new GetTransferPostingCountRequest {
             DepartmentFrom = departmentFrom,
             DepartmentTo = departmentTo,
             SectionFrom = sectionFrom,

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Reportings.TransferPosting.Requests.Queries
 {
-    public class GetTransferPostingReportingRequest : IRequest<EmpTransferPostingCountDto>
+    public class GetTransferPostingCountRequest : IRequest<EmpTransferPostingCountDto>
     {
         public int? DepartmentFrom { get; set; }
         public int? DepartmentTo { get; set; }

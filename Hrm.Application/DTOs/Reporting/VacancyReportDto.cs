@@ -21,5 +21,9 @@ namespace Hrm.Application.DTOs.Reporting
         public int? TotalPost { get; set; }
         public int? TotalInService { get; set; }
         public int? TotalVacantPost { get; set; }
+
+        public int? DepartmentId { get; set; }
+        public int? SectionSequence { get; set; }
+        public int? DesignationPosition { get; set; }
     }
 }

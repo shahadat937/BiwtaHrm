@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.Reportings.EmployeeList.Handlers.Queries
 {
-    public class GetEmployeeListReportingRequestHandler : IRequestHandler<GetEmployeeListReportingRequest, object>
+    public class GetEmployeeListReportingRequestHandler : IRequestHandler<GetEmployeeListReportingRequest, PagedResult<EmployeeListReportingDto>>
     {
 
         private readonly IHrmRepository<EmpBasicInfo> _EmpBasicInfoRepository;
@@ -25,7 +25,7 @@ namespace Hrm.Application.Features.Reportings.EmployeeList.Handlers.Queries
             _EmpBasicInfoRepository = EmpBasicInfoRepository;
         }
 
-        public async Task<object> Handle(GetEmployeeListReportingRequest request, CancellationToken cancellationToken)
+        public async Task<PagedResult<EmployeeListReportingDto>> Handle(GetEmployeeListReportingRequest request, CancellationToken cancellationToken)
         {
             var totalEmployee = await _EmpBasicInfoRepository.CountAsync(x => true);
             IQueryable<EmpBasicInfo> query = _EmpBasicInfoRepository.FilterWithInclude(x =>

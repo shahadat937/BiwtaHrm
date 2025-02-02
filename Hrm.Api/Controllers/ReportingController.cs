@@ -11,6 +11,7 @@ using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Qu
 using Hrm.Application.Features.Reportings.EmployeeList.Requests.Queries;
 using Hrm.Application.Features.Reportings.TransferPosting.Requests.Queries;
 using Hrm.Application.Features.Reportings.TransferPostingReporting.Requests.Queries;
+using Hrm.Application.Features.Reportings.VacancyReport.Requests.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -185,6 +186,16 @@ namespace Hrm.Api.Controllers
             DateFrom = dateFrom,
             QueryParams = queryParams
             });
+            return Ok(result);
+        }
+
+
+        //Vacant Reporting
+        [HttpGet]
+        [Route("get-vacantReportingResult")]
+        public async Task<ActionResult<object>> GetVacantReportingResult([FromQuery] QueryParams queryParams,int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetVacancyReportRequest { QueryParams = queryParams, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
     }

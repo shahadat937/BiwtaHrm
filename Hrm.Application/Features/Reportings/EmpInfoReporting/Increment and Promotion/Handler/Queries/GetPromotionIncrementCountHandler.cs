@@ -32,6 +32,10 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Pro
 
             (request.ApproveFrom == null || x.ApproveDate >= request.ApproveFrom) &&
             (request.ApproveTo == null || x.ApproveDate <= request.ApproveTo) &&
+
+            (request.EffectiveDateFrom == null || x.EffectiveDate >= request.EffectiveDateFrom) &&
+            (request.EffectiveDateTo == null || x.EffectiveDate <= request.EffectiveDateTo) &&
+
            //(request.ApproveDate == null || x.ApproveDate.Date == request.ApproveDate.Value.Date) &&
            //(request.EffectiveDate == null || x.EffectiveDate.Date == request.EffectiveDate.Value.Date) &&
            (string.IsNullOrEmpty(request.PromotionType) || x.PromotionIncrementType == request.PromotionType)

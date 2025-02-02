@@ -14,6 +14,8 @@ import { AppraisalRole } from '../enum/appraisal-role';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 
 @Component({
   selector: 'app-manage-form',
@@ -38,6 +40,10 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   appraisalRole = AppraisalRole;
   routelink: string = "";
 
+  //authentication
+  @Input()
+  featureName: string;
+  featurePermission: FeaturePermission = new FeaturePermission();
 
   constructor(
     private authService: AuthService,
@@ -47,7 +53,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     private confirmService: ConfirmService,
     private modalService: BsModalService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private roleFeatureService: RoleFeatureService
   ) {
     this.officerFormId = environment.officerFormId;
     this.staffFormId = environment.staffFormId;
@@ -83,13 +90,13 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     })
     )
     
-
+    this.featureName = "";
 
   }
 
   ngOnInit(): void {
+    this.getPermission();
       this.route.queryParams.subscribe(data => {
-      console.log(data);
       if(data['forNotificationId']) {
         this.filters['recordId'] = data['forNotificationId'];
         this.routelink = this.router.url.split('?')[0];
@@ -101,6 +108,21 @@ export class ManageFormComponent implements OnInit, OnDestroy {
       }
     })
     this.getFormRecord();
+  }
+
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission(this.featureName).subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        // To do
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
   }
 
   ngOnDestroy(): void {
@@ -130,6 +152,12 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   }
 
   onDelete(recordId:number, index:number) {
+
+    if(this.featurePermission.delete==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      return;
+    }
+
     this.subscription.push(
       this.confirmService.confirm('Delete Confirmation', 'Are you sure?').subscribe({
       next:(response)=> {
@@ -176,7 +204,6 @@ export class ManageFormComponent implements OnInit, OnDestroy {
       formName = environment.staffFormName;
     }
     const department = this.formRecord.find(x=>x.recordId == formRecordId)?.department;
-    console.log(department);
     const initialState = {
       formRecordId: formRecordId,
       department: department,

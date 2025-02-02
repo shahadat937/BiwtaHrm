@@ -29,7 +29,7 @@
                     <td>{{device.deviceIp}}</td>
                     <td>{{device.deviceType}}</td>
                     <td>
-                        <button class="custom-button" title="Add New Device" (click)="addDevice(device)">
+                        <button [disabled]="featurePermission.add==false" class="custom-button" title="Add New Device" (click)="addDevice(device)">
                             <svg [cIcon]="icons.cilPlus" size="xl" title="Add New Device"></svg>
                         </button>
                     </td>

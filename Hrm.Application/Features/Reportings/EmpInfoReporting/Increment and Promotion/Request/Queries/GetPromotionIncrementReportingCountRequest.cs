@@ -19,6 +19,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Pro
         public DateOnly? ApproveFrom { get; set; }
         public DateOnly? ApproveTo { get; set; }
         public DateTime? EffectiveDate { get; set; }
+        public DateOnly? EffectiveDateFrom { get; set; }
+        public DateOnly? EffectiveDateTo { get; set; }
         public String? PromotionType {  get; set; }
     }
 }

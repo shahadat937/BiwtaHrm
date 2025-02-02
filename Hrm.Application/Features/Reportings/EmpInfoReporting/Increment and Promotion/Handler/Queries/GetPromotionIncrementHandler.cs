@@ -33,8 +33,13 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Pro
                 (request.CurrentDesignationId == null || x.CurrentDesignationId == request.CurrentDesignationId) &&
                 (request.UpdateDesignationId == null || x.UpdateDesignationId == request.UpdateDesignationId)&&
                 (request.PromotionIncrementType == null || x.PromotionIncrementType == request.PromotionIncrementType) &&
-                //(request.OrderDate == null || x.OrderDate == request.OrderDate) && 
-                //(request.EffectiveDate == null || x.EffectiveDate == request.EffectiveDate) && 
+                 (request.OrderDateFrom == null || x.OrderDate >= request.OrderDateFrom) &&
+            (request.OrderDateTo == null || x.OrderDate <= request.OrderDateTo) &&
+
+             (request.EffectiveDateFrom == null || x.OrderDate >= request.EffectiveDateFrom) &&
+            (request.EffectiveDateTo == null || x.OrderDate <= request.EffectiveDateTo) &&
+
+                //(request.EffectiveDate == null || x.EffectiveDate == request.EffectiveDate) &&
                 (request.isApproval == null || x.IsApproval == request.isApproval) 
             )
             .Include(x => x.CurrentDesignation) 

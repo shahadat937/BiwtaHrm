@@ -1,0 +1,103 @@
+<c-card>
+  <c-card-header class="text-center">
+      <h5>Report on Employee List</h5>
+  </c-card-header>
+  <c-card-body>
+      <div cRow [gutter]="2" class="mb-2">   
+          <c-col [md]="3">
+            <label cLabel for="Department">Department<span class="text-danger"></span></label>
+            <div class="input-wrapper">
+              <select (change)="onDepartmentSelect(departmentId)"
+                  [(ngModel)]="departmentId" name="departmentId" #Department="ngModel"
+                  cFormControl id="Department" aria-label="Default select example" cSelect>
+                  <option [ngValue]=0>Select Department</option>
+      
+                  @for(department of departments; track department.id;let index=$index) {
+                  <option [value]="department.id">
+                  {{ department.name }}
+                  </option>
+                  }
+              </select>
+            </div>
+        </c-col>
+        
+        <c-col [md]="3">
+            <label cLabel for="sectionId">Section<span class="text-danger"></span></label>
+            <div class="input-wrapper">
+              <select [(ngModel)]="sectionId" name="sectionId" #Section="ngModel"
+                  cFormControl id="sectionId" aria-label="Default select example" cSelect
+                  (change)="onSectionSelect()">
+                  <option [ngValue]=0>Select Section</option>
+      
+                  @for(section of sections; track section.id;let index=$index) {
+                  <option [value]="section.id">
+                  {{ section.name }}
+                  </option>
+                  }
+              </select>
+            </div>
+        </c-col>
+      </div>
+
+      <c-card class="mt-2" >
+          <c-card-header class="text-end">
+              Total Employee = {{totalEmployee}}
+          </c-card-header>
+          <c-card-body class="p-0">
+              
+              <div class="card">
+                  <p-table 
+                      [value]="employees"
+                      [scrollable]="true" 
+                      rowGroupMode="subheader" 
+                      groupRowsBy="groupKey">
+                          <ng-template pTemplate="header">
+                              <tr>
+                                  <th>Name</th>
+                                  <th>Designation</th>
+                                  <th>Section</th>
+                                  <th>Mobile</th>
+                                  <th>Join Date</th>
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="groupheader" let-employee>
+                              <tr pRowGroupHeader>
+                                  <td colspan="5" class="group-header">
+                                      <span><b>Department: </b>{{employee.departmentName || 'Unassigned'}}<span *ngIf="employee.sectionName"><b> Section: </b>{{employee.sectionName}}</span> <b> Total: </b>{{employee.total}}</span>
+                                  </td>
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-employee let-rowIndex="rowIndex">
+                              <tr>
+                                  <td>
+                                      {{employee.empName}}
+                                  </td>
+                                  <td>
+                                      {{employee.designationName}}
+                                  </td>
+                                  <td>
+                                      {{employee.sectionName}}
+                                  </td>
+                                  <td>
+                                      {{employee.mobile}}
+                                  </td>
+                                  <td width="130px">
+                                      {{employee.joinDate | date:'dd-MM-yyyy'}}
+                                  </td>
+                              </tr>
+                          </ng-template>
+                  </p-table>
+              </div>
+          </c-card-body>
+          <c-card-footer class="text-medium-emphasis p-0">
+              <mat-paginator 
+                [length]="pagination.length"
+                [pageSize]="pagination.pageSize"
+                [pageSizeOptions]="pagination.pageSizeOptions"
+                [showFirstLastButtons]="true"
+                (page)="onPageChange($event)">
+              </mat-paginator>    
+          </c-card-footer>
+      </c-card>
+  </c-card-body>
+</c-card>

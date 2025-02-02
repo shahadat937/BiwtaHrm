@@ -50,7 +50,7 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Han
                 MaritalStatusInfoList.Add(MaritalStatusInfo);
             }
 
-            result.CountReportingInfo = MaritalStatusInfoList;
+            result.CountReportingInfo = MaritalStatusInfoList.OrderBy(x => x.Name).ToList();
 
             return result;
         }

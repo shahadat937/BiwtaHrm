@@ -1,5 +1,5 @@
 import { Division } from './../../basic-setup/model/division';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from './service/shared.service';
 import { NgForm } from '@angular/forms';
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -25,6 +25,8 @@ import { UserNotification } from '../../notifications/models/user-notification';
 import { NotificationService } from '../../notifications/service/notification.service';
 import { EmpJobDetailsModule } from '../../employee/model/emp-job-details.module';
 import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 
 
 
@@ -87,13 +89,21 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   // Reporting Officer And Counter Signatory Officer Name 
   reportingOfficerName: string = "";
   counterSignatoryOfficername: string = "";
+
+  // authentication
+  @Input()
+  featureName: string;
+  featurePermission: FeaturePermission = new FeaturePermission();
+
   constructor(
     private notificationService: NotificationService,
     private empBasicInfoService: EmpBasicInfoService,
     private empJobDetailService: EmpJobDetailsService,
     private bsModalService: BsModalService,
     private authService: AuthService,
+    private route: ActivatedRoute,
     private router: Router,
+    private roleFeatureService: RoleFeatureService,
     private empService: EmpBasicInfoService,
     private empPhotoSignService: EmpPhotoSignService,
     private formRecordService: FormRecordService,
@@ -119,9 +129,11 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.firstSection = 0;
     this.lastSection = 6;
     this.submitButtonText = "Submit";
+    this.featureName = "";
   }
 
   ngOnInit(): void {
+    this.getPermission();
     console.log(this.firstSection);
     console.log(this.lastSection);
     this.loading=true;
@@ -154,6 +166,22 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       this.getFormData();
     }
 
+  }
+
+
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission(this.featureName).subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        // To do
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
   }
 
 
@@ -220,11 +248,21 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.submitLoading=true;
 
     if(this.formRecordId!=0) {
+      if(this.featurePermission.update==false) {
+        this.roleFeatureService.unauthorizeAccress();
+        this.submitLoading=false;
+        return;
+      }
       this.updateFormData();
       return;
     }
 
-    console.log(this.formData);
+    if(this.featurePermission.add==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      this.submitLoading = false;
+      return;
+    }
+
 
     if(this.formData.reportFrom==null||this.formData.reportTo==null) {
       this.toastr.warning('',"Report Duration is required", {

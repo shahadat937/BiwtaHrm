@@ -66,14 +66,14 @@
                 <mat-icon fontIcon="visibility"></mat-icon>
               </button>
 
-              @if (appraisalUserRole!=-1) {
+              @if (appraisalUserRole!=-1&&featurePermission.update) {
                 <button class="custom-button me-1" [routerLink]="officerFormEditRoute[appraisalUserRole]+formRecord.recordId+'/'+formRecord.formId" title="Edit The Record">
                   <mat-icon fontIcon="edit"></mat-icon>
                 </button>
               }
               
               <button
-                *ngIf="formRecord[formRecordHeader[5].field]==false"
+                *ngIf="formRecord[formRecordHeader[5].field]==false&&featurePermission.delete"
                 class="custom-button me-1"
                 title="Delete The Record"
                 (click)="onDelete(formRecord.recordId, index)"

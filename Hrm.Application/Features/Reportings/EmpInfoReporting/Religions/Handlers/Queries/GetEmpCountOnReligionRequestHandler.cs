@@ -50,8 +50,7 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Handler
                 };
                 ReligionInfoList.Add(ReligionInfo);
             }
-
-            result.CountReportingInfo = ReligionInfoList;
+            result.CountReportingInfo = ReligionInfoList.OrderBy(x => x.Name).ToList();
 
             return result;
         }

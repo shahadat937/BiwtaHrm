@@ -1,5 +1,5 @@
 import { Division } from './../../basic-setup/model/division';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -22,6 +22,8 @@ import { ChangeProfileComponent } from '../../profile/change-profile/change-prof
 import { UserNotification } from '../../notifications/models/user-notification';
 import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
 import { NotificationService } from '../../notifications/service/notification.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 
 @Component({
   selector: 'app-staff-form',
@@ -81,6 +83,11 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   // Reporting Officer And Counter Signatory Officer Name 
   reportingOfficerName: string = "";
   counterSignatoryOfficername: string = "";
+
+  //Authentication
+  @Input()
+  featureName: string;
+  featurePermission: FeaturePermission = new FeaturePermission();
   
   constructor(
     private notificationService: NotificationService,
@@ -88,7 +95,9 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     private empJobDetailService: EmpJobDetailsService,
     private bsModalService: BsModalService,
     private authService: AuthService,
+    private route: ActivatedRoute,
     private router: Router,
+    private roleFeatureService: RoleFeatureService,
     private empService: EmpBasicInfoService,
     private empPhotoSignService: EmpPhotoSignService,
     private formRecordService: FormRecordService,
@@ -114,9 +123,11 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     this.lastSection = 3;
     this.submitButtonText = "Submit";
     this.formName = environment.staffFormName;
+    this.featureName = "";
   }
 
   ngOnInit(): void {
+    this.getPermission();
     this.loading=true;
 
     this.empService.getFilteredSelectedEmp(new HttpParams()).subscribe({
@@ -146,6 +157,21 @@ export class StaffFormComponent implements OnInit, OnDestroy {
       this.getFormData();
     }
 
+  }
+
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission(this.featureName).subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        // To do
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
   }
 
 
@@ -203,6 +229,12 @@ export class StaffFormComponent implements OnInit, OnDestroy {
 
     if(this.formRecordId!=0) {
       this.updateFormData();
+      return;
+    }
+
+    if(this.featurePermission.add==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      this.submitLoading = false;
       return;
     }
 
@@ -365,6 +397,14 @@ export class StaffFormComponent implements OnInit, OnDestroy {
 
   updateFormData() {
     this.submitLoading=true;
+
+    //Check permission if allowed to update
+    if(this.featurePermission.update==false) {
+      this.roleFeatureService.unauthorizeAccress();
+      this.submitLoading = false;
+      return;
+    }
+
     if(this.reportDates.length<2) {
       this.toastr.warning('',"Report Duration is required", {
         positionClass: 'toast-top-right'

@@ -7,13 +7,16 @@ import {AssignEmployeeModel} from '../model/assign-employee-model'
 import { NgForm } from '@angular/forms';
 import { AttendanceDeviceService } from '../service/attendance-device.service';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 @Component({
   selector: 'app-assign-employee-to-device',
   templateUrl: './assign-employee-to-device.component.html',
   styleUrl: './assign-employee-to-device.component.scss'
 })
 export class AssignEmployeeToDeviceComponent implements OnInit, OnDestroy {
-  subscription: Subscription = new Subscription()
+  subscription: Subscription[] = []; 
   @ViewChild("assignForm",{static:true}) assignForm!: NgForm
   employeeAssignModel: AssignEmployeeModel;
   devices: any[];
@@ -43,10 +46,16 @@ export class AssignEmployeeToDeviceComponent implements OnInit, OnDestroy {
 
   icons = {cilSearch, cilFingerprint}
 
+  //Authentication
+  featurePermission: FeaturePermission = new FeaturePermission();
+
   constructor(
     private modalService: BsModalService,
     private attendanceDeviceService: AttendanceDeviceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private roleFeatureService: RoleFeatureService
   ) {
     this.employeeAssignModel = new AssignEmployeeModel();
     this.loading = false;
@@ -56,30 +65,48 @@ export class AssignEmployeeToDeviceComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getPermission();
     this.getDevice();
   }
 
+  getPermission(){
+    this.subscription.push(
+    this.roleFeatureService.getFeaturePermission('assignEmployee').subscribe((item) => {
+      this.featurePermission = item;
+      if(item.viewStatus == true){
+        // To do
+      }
+      else{
+        this.roleFeatureService.unauthorizeAccress();
+        this.router.navigate(['/dashboard']);
+      }
+    })
+    )
+  }
+
   ngOnDestroy(): void {
-    if(this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscription.forEach(subs => subs.unsubscribe());
   }
 
   getDevice() {
-    this.subscription = this.attendanceDeviceService.getSelectedDevice().subscribe({
+    const subs = this.attendanceDeviceService.getSelectedDevice().subscribe({
       next: response => {
         this.devices = response;
       }
-    })
+    });
+
+    this.subscription.push(subs);
   }
 
   openEmployeeModal() {
     const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
 
     if(modalRef) {
-      this.subscription = modalRef.content.employeeSelected.subscribe((idCardNo:string) => {
+      const subs = modalRef.content.employeeSelected.subscribe((idCardNo:string) => {
         this.employeeAssignModel.idCardNo = idCardNo
-      })
+      });
+
+      this.subscription.push(subs);
     }
   }
 
@@ -97,7 +124,7 @@ export class AssignEmployeeToDeviceComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.loading = true;
 
-    this.subscription = this.attendanceDeviceService.assignEmployee(this.employeeAssignModel).subscribe({
+    const subs = this.attendanceDeviceService.assignEmployee(this.employeeAssignModel).subscribe({
       next: response => {
         if(response.success) {
           this.toastr.success('',`${response.message}`, {
@@ -116,6 +143,8 @@ export class AssignEmployeeToDeviceComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
     })
+
+    this.subscription.push(subs);
   }
 
   onFingerprintEnroll() {
@@ -131,7 +160,7 @@ export class AssignEmployeeToDeviceComponent implements OnInit, OnDestroy {
     fingerprint.append('idCardNo', this.employeeAssignModel.idCardNo?.toString());
     fingerprint.append("deviceId", this.employeeAssignModel.deviceId?.toString());
     fingerprint.append("fid", this.FID.toString());
-    this.subscription = this.attendanceDeviceService.enrollFingerprint(fingerprint).subscribe({
+    const subs = this.attendanceDeviceService.enrollFingerprint(fingerprint).subscribe({
       next: response => {
         if(response.success) {
           this.toastr.success('',`${response.message}`, {
@@ -150,5 +179,7 @@ export class AssignEmployeeToDeviceComponent implements OnInit, OnDestroy {
         this.loadingEnroll = false;
       }
     })
+
+    this.subscription.push(subs);
   }
 }

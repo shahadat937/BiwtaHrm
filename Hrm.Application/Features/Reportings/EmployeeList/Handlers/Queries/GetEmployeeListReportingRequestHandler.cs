@@ -27,7 +27,7 @@ namespace Hrm.Application.Features.Reportings.EmployeeList.Handlers.Queries
 
         public async Task<object> Handle(GetEmployeeListReportingRequest request, CancellationToken cancellationToken)
         {
-            var totalEmployee = await _EmpBasicInfoRepository.CountAsync(x => x.EmpJobDetail.FirstOrDefault().ServiceStatus == true);
+            var totalEmployee = await _EmpBasicInfoRepository.CountAsync(x => true);
             IQueryable<EmpBasicInfo> query = _EmpBasicInfoRepository.FilterWithInclude(x =>
                     (request.DepartmentId == 0 || x.EmpJobDetail.FirstOrDefault().DepartmentId == request.DepartmentId) &&
                     (request.SectionId == 0 || x.EmpJobDetail.FirstOrDefault().SectionId == request.SectionId))

@@ -57,7 +57,7 @@ namespace Hrm.Api.Controllers
         [Route("get-BloodGroupReportingResult")]
         public async Task<ActionResult<object>> GetBloodGroupReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
         {
-            var result = await _mediator.Send(new GetBloodGroupReportingResultRequest { QueryParams = queryParams, Id = id });
+            var result = await _mediator.Send(new GetBloodGroupReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
 

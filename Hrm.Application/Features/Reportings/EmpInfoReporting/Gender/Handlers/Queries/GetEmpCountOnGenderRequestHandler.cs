@@ -49,8 +49,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Gender.Handlers.Q
                 };
                 GenderInfoList.Add(GenderInfo);
             }
-
-            result.CountReportingInfo = GenderInfoList;
+            
+            result.CountReportingInfo = GenderInfoList.OrderBy(x => x.Name).ToList();
 
             return result;
         }

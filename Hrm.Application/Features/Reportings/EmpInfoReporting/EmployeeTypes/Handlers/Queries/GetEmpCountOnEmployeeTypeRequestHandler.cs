@@ -52,8 +52,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Han
                 };
                 employeeTypeInfoList.Add(employeeTypeInfo);
             }
-
-            result.CountReportingInfo = employeeTypeInfoList;
+            
+            result.CountReportingInfo = employeeTypeInfoList.OrderBy(x => x.Name).ToList();
 
             return result;
         }

@@ -93,11 +93,13 @@ export class EmployeeListReportingComponent implements OnInit, OnDestroy {
       this.reportingService.getEmployeeListReportingResult(queryParams, this.departmentId, this.sectionId).subscribe((res: any) => {
       this.dataSource.data = res.items;
       this.employees = res.items;
+      this.employees = this.employees.map(emp => ({
+        ...emp,
+        groupKey: `${emp.departmentName} - ${emp.sectionName || 'No Section'}`
+      }));
       this.pagination.length = res.totalItemsCount;
       this.totalEmployee = res.items[0].allTotal;
     })
     )
   }
-  
-
 }

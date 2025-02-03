@@ -19,10 +19,12 @@ namespace Hrm.Application.Features.Reportings.EmployeeList.Handlers.Queries
     {
 
         private readonly IHrmRepository<EmpBasicInfo> _EmpBasicInfoRepository;
+        private readonly IHrmRepository<EmpOtherResponsibility> _EmpOtherResponsibilityRepository;
 
-        public GetEmployeeListReportingRequestHandler(IHrmRepository<EmpBasicInfo> EmpBasicInfoRepository)
+        public GetEmployeeListReportingRequestHandler(IHrmRepository<EmpBasicInfo> EmpBasicInfoRepository, IHrmRepository<EmpOtherResponsibility> empOtherResponsibilityRepository)
         {
             _EmpBasicInfoRepository = EmpBasicInfoRepository;
+            _EmpOtherResponsibilityRepository = empOtherResponsibilityRepository;
         }
 
         public async Task<PagedResult<EmployeeListReportingDto>> Handle(GetEmployeeListReportingRequest request, CancellationToken cancellationToken)
@@ -38,20 +40,43 @@ namespace Hrm.Application.Features.Reportings.EmployeeList.Handlers.Queries
                     .Include(x => x.EmpJobDetail)
                         .ThenInclude(x => x.Designation)
                             .ThenInclude(ds => ds.DesignationSetup)
-                    .Include(x => x.EmpPersonalInfo)
-                    .OrderByDescending(x => x.EmpJobDetail.FirstOrDefault().DepartmentId.HasValue) 
-                        .ThenBy(x => x.EmpJobDetail.FirstOrDefault().DepartmentId)
-                            .ThenBy(x => x.EmpJobDetail.FirstOrDefault().Section.Sequence)
-                                .ThenBy(x => x.EmpJobDetail.FirstOrDefault().Designation.MenuPosition);
+                    .Include(x => x.EmpPersonalInfo);
+
+            IQueryable<EmpOtherResponsibility> empOtherResponsibility = _EmpOtherResponsibilityRepository.FilterWithInclude(x =>
+                (request.DepartmentId == 0 || x.DepartmentId == request.DepartmentId) &&
+                    (request.SectionId == 0 || x.SectionId == request.SectionId) && x.ServiceStatus == true)
+                    .Include(x => x.Department)
+                    .Include(x => x.Section)
+                    .Include(x => x.Designation)
+                        .ThenInclude(x => x.DesignationSetup)
+                    .Include(x => x.EmpBasicInfo)
+                    .Include(x => x.EmpBasicInfo)
+                        .ThenInclude(x => x.EmpPersonalInfo);
+
+            var totalCount = await query.CountAsync(cancellationToken) + await empOtherResponsibility.CountAsync(cancellationToken);
 
 
 
-            var totalCount = await query.CountAsync(cancellationToken);
-
-            query = query
-                    .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
-                    .Take(request.QueryParams.PageSize);
-
+            var otherResponsibilityResultDate = await empOtherResponsibility
+                .Select(x => new EmployeeListReportingDto
+                {
+                    DepartmentId = x.DepartmentId,
+                    SectionId = x.SectionId,
+                    DepartmentName = x.Department.DepartmentName ?? "",
+                    SectionName = x.Section.SectionName ?? "",
+                    DesignationName = x.ResponsibilityType != null && !string.IsNullOrEmpty(x.ResponsibilityType.Name)
+                        ? $"{x.Designation.DesignationSetup.Name} ({x.ResponsibilityType.Name})"
+                        : x.Designation.DesignationSetup.Name,
+                    IdCardNo = x.EmpBasicInfo.IdCardNo ?? "",
+                    EmpName = (x.EmpBasicInfo.FirstName + " " + x.EmpBasicInfo.LastName) ?? "",
+                    Total = 0,
+                    AllTotal = totalEmployee,
+                    Mobile = x.EmpBasicInfo.EmpPersonalInfo.FirstOrDefault().MobileNumber ?? "",
+                    JoinDate = x.EmpBasicInfo.EmpJobDetail.FirstOrDefault().JoiningDate ?? null,
+                    SectionSequence = x.Section.Sequence ?? 0,
+                    DesignationSequence = x.Designation.MenuPosition ?? 0,
+                })
+                .ToListAsync(cancellationToken);
 
             var resultData = await query
                 .Select(x => new EmployeeListReportingDto
@@ -67,23 +92,40 @@ namespace Hrm.Application.Features.Reportings.EmployeeList.Handlers.Queries
                     AllTotal = totalEmployee,
                     Mobile = x.EmpPersonalInfo.FirstOrDefault().MobileNumber ?? "",
                     JoinDate = x.EmpJobDetail.FirstOrDefault().JoiningDate ?? null,
+                    SectionSequence = x.EmpJobDetail.FirstOrDefault().Section.Sequence ?? 0,
+                    DesignationSequence = x.EmpJobDetail.FirstOrDefault().Designation.MenuPosition ?? 0
                 })
                 .ToListAsync(cancellationToken);
 
-            foreach (var item in resultData)
+            var combinedResult = resultData
+                .Concat(otherResponsibilityResultDate)
+                .OrderByDescending(x => x.DepartmentId.HasValue)
+                    .ThenBy(x => x.DepartmentId)
+                        .ThenBy(x => x.SectionSequence)
+                            .ThenBy(x => x.DesignationSequence)
+                .ToList();
+
+            var pagedResult = combinedResult
+               .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
+               .Take(request.QueryParams.PageSize)
+               .ToList();
+
+            foreach (var item in pagedResult)
             {
                 if (item.SectionId != null) // If SectionId exists, count by Section
                 {
-                    item.Total = await _EmpBasicInfoRepository.CountAsync(b => b.EmpJobDetail.FirstOrDefault().SectionId == item.SectionId);
+                    item.Total = await _EmpBasicInfoRepository.CountAsync(b => b.EmpJobDetail.FirstOrDefault().SectionId == item.SectionId)+
+                        await _EmpOtherResponsibilityRepository.CountAsync(x => x.SectionId == item.SectionId);
                 }
                 else // Otherwise, count by Department
                 {
-                    item.Total = await _EmpBasicInfoRepository.CountAsync(b => b.EmpJobDetail.FirstOrDefault().DepartmentId == item.DepartmentId && b.EmpJobDetail.FirstOrDefault().SectionId == null);
+                    item.Total = await _EmpBasicInfoRepository.CountAsync(b => b.EmpJobDetail.FirstOrDefault().DepartmentId == item.DepartmentId && b.EmpJobDetail.FirstOrDefault().SectionId == null) + 
+                        await _EmpOtherResponsibilityRepository.CountAsync(x => x.DepartmentId == item.DepartmentId && x.SectionId == null && x.ServiceStatus == true);
                 }
             }
 
 
-            var result = new PagedResult<EmployeeListReportingDto>(resultData, totalCount, request.QueryParams.PageIndex, request.QueryParams.PageSize);
+            var result = new PagedResult<EmployeeListReportingDto>(pagedResult, totalCount, request.QueryParams.PageIndex, request.QueryParams.PageSize);
 
 
             return result;

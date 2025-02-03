@@ -21,5 +21,8 @@ namespace Hrm.Application.DTOs.Reporting
         public string? DesignationName { get; set; }
         public string? Mobile { get; set; }
         public DateOnly? JoinDate { get; set; }
+
+        public int? SectionSequence { get; set; }
+        public int? DesignationSequence { get; set; }
     }
 }

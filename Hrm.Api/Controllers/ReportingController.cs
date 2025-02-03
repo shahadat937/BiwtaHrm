@@ -5,11 +5,13 @@ using Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Requests.
 using Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Gender.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Promotion.Request.Queries;
+using Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmployeeList.Requests.Queries;
 using Hrm.Application.Features.Reportings.TransferPosting.Requests.Queries;
 using Hrm.Application.Features.Reportings.TransferPostingReporting.Requests.Queries;
+using Hrm.Application.Features.Reportings.VacancyReport.Requests.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -112,6 +114,24 @@ namespace Hrm.Api.Controllers
         }
 
 
+        //Language 
+        [HttpGet]
+        [Route("get-languageCount")]
+        public async Task<ActionResult<object>> GetLanguageCount(int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetEmpCountOnLanguageRequest { DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("get-LanguageReportingResult")]
+        public async Task<ActionResult<object>> GetLanguageReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetLanguageReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+
         [HttpGet]
         [Route("get-employeeListReporting")]
         public async Task<ActionResult<object>> GetEmployeeListReporting([FromQuery] QueryParams queryParams, int? departmentId, int? sectionId)
@@ -166,6 +186,16 @@ namespace Hrm.Api.Controllers
             DateFrom = dateFrom,
             QueryParams = queryParams
             });
+            return Ok(result);
+        }
+
+
+        //Vacant Reporting
+        [HttpGet]
+        [Route("get-vacantReportingResult")]
+        public async Task<ActionResult<object>> GetVacantReportingResult([FromQuery] QueryParams queryParams,int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetVacancyReportRequest { QueryParams = queryParams, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
     }

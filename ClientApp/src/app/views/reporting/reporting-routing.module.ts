@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { EmployeeManagementReportingComponent } from './employee-management-reporting/employee-management-reporting.component';
 import { EmployeeListReportingComponent } from './employee-list-reporting/employee-list-reporting.component';
+import { VacancyReportComponent } from './vacancy-report/vacancy-report.component';
 
 
 
@@ -30,6 +31,13 @@ const routes: Routes = [
         component: EmployeeListReportingComponent,
         data: {
           title: 'Employee Reporting Reporting',
+        },
+      },
+      {
+        path: 'vacancy-report',
+        component: VacancyReportComponent,
+        data: {
+          title: 'Vacancy Report',
         },
       },
     ]

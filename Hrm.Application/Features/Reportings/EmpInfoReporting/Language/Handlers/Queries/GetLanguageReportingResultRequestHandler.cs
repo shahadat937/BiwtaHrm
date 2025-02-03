@@ -41,7 +41,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Handlers
                        .ThenInclude(ds => ds.DesignationSetup)
                    .Include(x => x.EmpLanguageInfo) 
                        .ThenInclude(x => x.Language)
-                   .Include(x => x.EmpPersonalInfo);
+                   .Include(x => x.EmpPersonalInfo)
+                   .OrderBy(x => x.EmpLanguageInfo.FirstOrDefault().Language.LanguageName);
 
                 var expandedQuery = query
                     .SelectMany(x => request.Id == 0
@@ -62,7 +63,6 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Handlers
                 var totalCount = await expandedQuery.CountAsync(cancellationToken);
 
                 var resultData = await expandedQuery
-                    .OrderByDescending(x => x.IdCardNo)
                     .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
                     .Take(request.QueryParams.PageSize)
                     .ToListAsync(cancellationToken);
@@ -86,7 +86,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Handlers
                     .ThenInclude(x => x.Designation)
                         .ThenInclude(ds => ds.DesignationSetup)
                 .Include(x => x.EmpLanguageInfo)
-                        .ThenInclude(x => x.Language);
+                        .ThenInclude(x => x.Language)
+                .OrderBy(x => x.EmpLanguageInfo.FirstOrDefault().Language.LanguageName);
 
                 var totalCount = await query.CountAsync(cancellationToken);
 

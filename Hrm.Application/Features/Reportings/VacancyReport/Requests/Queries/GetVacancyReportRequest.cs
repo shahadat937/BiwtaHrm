@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.Features.Reportings.EmployeeList.Requests.Queries
+namespace Hrm.Application.Features.Reportings.VacancyReport.Requests.Queries
 {
-    public class GetEmployeeListReportingRequest : IRequest<PagedResult<EmployeeListReportingDto>>
+    public class GetVacancyReportRequest : IRequest<PagedResult<VacancyReportDto>>
     {
         public QueryParams QueryParams { get; set; }
         public int? DepartmentId { get; set; }

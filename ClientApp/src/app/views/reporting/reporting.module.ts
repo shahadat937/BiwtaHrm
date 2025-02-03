@@ -36,13 +36,15 @@ import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { EmployeeManagementReportingComponent } from './employee-management-reporting/employee-management-reporting.component';
 import { EmployeeListReportingComponent } from './employee-list-reporting/employee-list-reporting.component';
+import { VacancyReportComponent } from './vacancy-report/vacancy-report.component';
 
 
 
 @NgModule({
   declarations: [
     EmployeeManagementReportingComponent,
-    EmployeeListReportingComponent
+    EmployeeListReportingComponent,
+    VacancyReportComponent
   ],
   imports: [
     CommonModule,

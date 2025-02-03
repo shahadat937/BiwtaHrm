@@ -50,7 +50,7 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Handlers
                 LanguageInfoList.Add(LanguageInfo);
             }
 
-            result.CountReportingInfo = LanguageInfoList;
+            result.CountReportingInfo = LanguageInfoList.OrderBy(x => x.Name).ToList();
 
             return result;
         }

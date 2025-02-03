@@ -122,5 +122,14 @@ export class ReportingService {
     return this.http.get<any>(`${this.baseUrl}/reporting/get-employeeListReporting`, { params });
   }
 
+  
+  // Vacant List
+  getVacantListReportingResult(queryParams: any, departmentId: number, sectionId: number){
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('departmentId', departmentId);
+    params = params.append('sectionId', sectionId);
+    return this.http.get<any>(`${this.baseUrl}/reporting/get-vacantReportingResult`, { params });
+  }
+
 
 }

@@ -291,8 +291,16 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
     printWindow?.document.write(`
       <html>
         <head>
-          <title>Employee Information</title>
+          <title>${this.queryTypeName} Report</title>
           <style>
+            @media print {
+              @page {
+                margin-top: 0;
+              }
+              header {
+                display: none !important;
+              }
+            }
             table { border-collapse: collapse; text-align: left; width: 100%}
             th, td {border: 1px solid #000; padding: 5px; font-size: 13px;}
             c-col { 

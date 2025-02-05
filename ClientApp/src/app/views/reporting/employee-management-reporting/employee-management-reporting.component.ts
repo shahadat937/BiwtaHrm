@@ -118,7 +118,6 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
       if(res){
         this.sectionName = res.sectionName;
       }
-      console.log(res)
     });
     this.onQueryTypeChange(false);
   }

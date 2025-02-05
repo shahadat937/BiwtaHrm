@@ -9,6 +9,7 @@ import { SectionService } from 'src/app/views/basic-setup/service/section.servic
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
 import { EmployeeListReporting } from '../models/employee-list-reporting';
+import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
 
 @Component({
   selector: 'app-employee-list-reporting',
@@ -36,12 +37,16 @@ export class EmployeeListReportingComponent implements OnInit, OnDestroy {
   pagination: PaginatorModel = new PaginatorModel();
   departmentId: number = 0;
   sectionId: number = 0;
+  departmentName: string = "";
+  sectionName: string = "";
   totalEmployee: number = 0;
+  biwtaLogo : string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta-logo.png`;
   employees!: EmployeeListReporting[];
   constructor(
     public reportingService: ReportingService,
     public departmentService: DepartmentService,
     public sectionService : SectionService,
+    public empPhotoSignService: EmpPhotoSignService,
     ) {
   
     }
@@ -64,12 +69,19 @@ export class EmployeeListReportingComponent implements OnInit, OnDestroy {
     )
   }
   onDepartmentSelect(departmentId : number){
+    this.departmentName = "";
+    this.sectionName = "";
     if (this.paginator) {
       this.paginator.firstPage();
     }
     this.sectionId = 0;
     this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
       this.sections = res;
+    });
+    this.departmentService.getById(+departmentId).subscribe((res) => {
+      if(res){
+        this.departmentName = res.departmentName;
+      }
     });
     this.getEmployeeListReportingResult(this.pagination);
   }
@@ -78,6 +90,12 @@ export class EmployeeListReportingComponent implements OnInit, OnDestroy {
     if (this.paginator) {
       this.paginator.firstPage();
     }
+    this.sectionName = "";
+    this.sectionService.find(this.sectionId).subscribe((res) => {
+      if(res){
+        this.sectionName = res.sectionName;
+      }
+    });
     this.getEmployeeListReportingResult(this.pagination);
   }
 
@@ -101,5 +119,39 @@ export class EmployeeListReportingComponent implements OnInit, OnDestroy {
       this.totalEmployee = res.items[0].allTotal;
     })
     )
+  }
+
+  
+  printSection() {
+    // Get the basic information and the specific section to print
+    const tableData = document.getElementById('tableData')?.innerHTML;
+    const heading = document.getElementById('report_heading')?.innerHTML;
+
+    // Create a new window for printing
+    const printWindow = window.open('', 'blank', 'width=800,height=600');
+    printWindow?.document.write(`
+      <html>
+        <head>
+          <title>Employee Information</title>
+          <style>
+            table { border-collapse: collapse; text-align: left; width: 100%}
+            th, td {border: 1px solid #000; padding: 5px; font-size: 13px;}
+            c-col { 
+              float: left; 
+            }
+            c-card-footer {display: none;}
+            c-card-header {text-align: end; margin-bottom: 10px;}
+            .joinDate {width: 70px;}
+            .group-header {background: #add8e6;}
+          </style>
+        </head>
+        <body>
+          <div>${heading}</div>
+          <div>${tableData}</div>
+        </body>
+      </html>
+    `);
+    printWindow?.document.close();
+    printWindow?.print();
   }
 }

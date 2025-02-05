@@ -143,16 +143,16 @@ namespace Hrm.Api.Controllers
         //Promotion and increment
         [HttpGet]
         [Route("get-PromotionIncrementReportingResult")]
-        public async Task<ActionResult<List<object>>> GetPromotionIncrementRepotingResult([FromQuery] QueryParams queryParams, string? PromotionIncrementType)
+        public async Task<ActionResult<List<object>>> GetPromotionIncrementRepotingResult([FromQuery] QueryParams queryParams, string? PromotionIncrementType, DateOnly? OrderDateFrom, DateOnly? OrderDateTo, DateOnly? EffectiveDateFrom, DateOnly? EffectiveDateTo, int? CurrentDepartmentId)
         {
-            var result = await _mediator.Send(new GetPromotionIncrementReportingRequest { QueryParams = queryParams, PromotionIncrementType = PromotionIncrementType });
+            var result = await _mediator.Send(new GetPromotionIncrementReportingRequest { QueryParams = queryParams,CurrentDepartmentId=CurrentDepartmentId, PromotionIncrementType = PromotionIncrementType, OrderDateFrom=OrderDateFrom, OrderDateTo = OrderDateTo, EffectiveDateFrom= EffectiveDateFrom, EffectiveDateTo = EffectiveDateTo });
             return Ok(result);
         }
         [HttpGet]
         [Route("get-PromotionIncrementReportingCountResult")]
-        public async Task<ActionResult<List<object>>> GetPromotionIncrementReportingCount([FromQuery] QueryParams queryParams, string? PromotionType, DateOnly? OrderDateFrom, DateOnly? OrderDateTo, DateOnly? ApproveFrom, DateOnly? ApproveTo)
+        public async Task<ActionResult<List<object>>> GetPromotionIncrementReportingCount([FromQuery] QueryParams queryParams, string? PromotionType, DateOnly? OrderDateFrom, DateOnly? OrderDateTo, DateOnly? ApproveFrom, DateOnly? ApproveTo, DateOnly? EffectiveDateFrom, DateOnly? EffectiveDateTo)
         {
-            var result = await _mediator.Send(new GetPromotionIncrementReportingCountRequest { QueryParams = queryParams, PromotionType = PromotionType, OrderDateFrom = OrderDateFrom, OrderDateTo = OrderDateTo, ApproveFrom = ApproveFrom, ApproveTo = ApproveTo});
+            var result = await _mediator.Send(new GetPromotionIncrementReportingCountRequest { QueryParams = queryParams, PromotionType = PromotionType, OrderDateFrom = OrderDateFrom, OrderDateTo = OrderDateTo, ApproveFrom = ApproveFrom, ApproveTo = ApproveTo, EffectiveDateFrom=EffectiveDateFrom, EffectiveDateTo=EffectiveDateTo});
             return Ok(result);
         }
 

@@ -79,6 +79,7 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   ngOnInit(): void {
+    this.getPermission();
     this.btnText = "Add Attendance"; 
     this.buttonIcon = "cilPencil"
 

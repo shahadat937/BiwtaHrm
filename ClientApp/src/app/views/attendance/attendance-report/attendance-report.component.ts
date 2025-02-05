@@ -102,6 +102,7 @@ export class AttendanceReportComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getPermission();
     this.getAllDepartment();
     this.getLeaveTypeForReport();
     this.AtdReportService.getEmpOption().subscribe({

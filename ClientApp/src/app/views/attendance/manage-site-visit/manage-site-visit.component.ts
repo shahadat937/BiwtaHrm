@@ -27,7 +27,7 @@ export class ManageSiteVisitComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    
+    this.getPermission(); 
   }
 
 

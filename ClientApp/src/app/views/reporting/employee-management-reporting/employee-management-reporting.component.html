@@ -1,10 +1,12 @@
 <c-card>
-    <c-card-header class="text-center">
+    <c-card-header class="d-flex justify-content-between">
         <h5>Report on Employee Management</h5>
+        <button mat-raised-button color="primary" type="button" (click)="printSection()" [disabled]="this.pagination.length == 0">
+          <mat-icon>print</mat-icon> Print
+        </button>
     </c-card-header>
     <c-card-body>
         <div cRow [gutter]="2" class="mb-2">   
-
             <c-col [md]="3" >
               <label cLabel for="queryType">Query Type<span class="text-danger"></span></label>
               <select cSelect [(ngModel)]="queryTypeName" name="queryTypeName" #queryValue="ngModel" cFormControl (change)="onTypeChange()">
@@ -33,7 +35,7 @@
                     }
                 </select>
               </div>
-          </c-col>
+            </c-col>
           
           <c-col [md]="3">
               <label cLabel for="sectionId">Section<span class="text-danger"></span></label>
@@ -51,6 +53,21 @@
                 </select>
               </div>
           </c-col>
+        </div>
+
+        
+        <div id="report_heading" class="d-none">
+          <div cRow class="justify-content-center">
+            <c-col [md]="1" style="margin-top: 25px; margin-right: 20px;">
+              <img src="{{biwtaLogo}}" width="75px">
+            </c-col>
+            <c-col [md]="9" style="text-align: center;">
+              <h4 style="font-size: 20px;">BANGLADESH INLAND WATER TRANSPORT AUTHORITY</h4>
+              <p style="font-size: 13px;">BIWTA BHABAN, 141-143, MOTIJHEEL C/A, POST BOX 76, DHAKA-1000, BANGLADESH</p>
+              <h5>{{queryTypeName}} Report: <label *ngIf="departmentName">{{departmentName}}/</label><label *ngIf="sectionName">{{sectionName}}/</label>{{typeName}}</h5>
+            </c-col>
+            <div style="border-bottom: 1px solid black; margin-bottom: 20px; display: inline-block; width: 100%;"></div>
+          </div>
         </div>
 
         <div cRow class="d-flex justify-content-center" *ngIf="queryTypeName" [gutter]="2">
@@ -82,7 +99,7 @@
                 Employee List - <label class="text-danger fw-bold">{{typeName}}</label> {{queryTypeName}}
             </c-card-header>
             <c-card-body class="p-0">
-                <div class="table-responsive">
+                <div class="table-responsive" id="tableData">
                     <table mat-table [dataSource]="dataSource">
                       <!-- Position Column -->
                       <ng-container matColumnDef="slNo">

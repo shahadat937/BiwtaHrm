@@ -137,6 +137,7 @@ export class EmployeeListReportingComponent implements OnInit, OnDestroy {
             @media print {
               @page {
                 margin-top: 0;
+                padding-top: 40px;
               }
               header {
                 display: none !important;

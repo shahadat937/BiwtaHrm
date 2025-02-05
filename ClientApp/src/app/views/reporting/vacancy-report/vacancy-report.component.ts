@@ -9,6 +9,7 @@ import { DepartmentService } from 'src/app/views/basic-setup/service/department.
 import { SectionService } from 'src/app/views/basic-setup/service/section.service';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { PaginatorModel } from 'src/app/core/models/paginator-model';
+import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
 
 @Component({
   selector: 'app-vacancy-report',
@@ -36,14 +37,18 @@ export class VacancyReportComponent implements OnInit, OnDestroy {
   pagination: PaginatorModel = new PaginatorModel();
   departmentId: number = 0;
   sectionId: number = 0;
+  departmentName: string = "";
+  sectionName: string = "";
   totalPost: number = 0;
   totalInService: number = 0;
   totalVacant: number = 0;
   employees!: VacancyDetailsDto[];
+  biwtaLogo : string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta-logo.png`;
   constructor(
     public reportingService: ReportingService,
     public departmentService: DepartmentService,
     public sectionService : SectionService,
+    public empPhotoSignService: EmpPhotoSignService,
     ) {
   
     }
@@ -66,12 +71,19 @@ export class VacancyReportComponent implements OnInit, OnDestroy {
     )
   }
   onDepartmentSelect(departmentId : number){
+    this.departmentName = "";
+    this.sectionName = "";
     if (this.paginator) {
       this.paginator.firstPage();
     }
     this.sectionId = 0;
     this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
       this.sections = res;
+    });
+    this.departmentService.getById(+departmentId).subscribe((res) => {
+      if(res){
+        this.departmentName = res.departmentName;
+      }
     });
     this.getVacantListReportingResult(this.pagination);
   }
@@ -80,6 +92,12 @@ export class VacancyReportComponent implements OnInit, OnDestroy {
     if (this.paginator) {
       this.paginator.firstPage();
     }
+    this.sectionName = "";
+    this.sectionService.find(this.sectionId).subscribe((res) => {
+      if(res){
+        this.sectionName = res.sectionName;
+      }
+    });
     this.getVacantListReportingResult(this.pagination);
   }
 
@@ -146,6 +164,52 @@ export class VacancyReportComponent implements OnInit, OnDestroy {
       }
     }
     return total;
+  }
+
+  printSection() {
+    // Get the basic information and the specific section to print
+    const tableData = document.getElementById('tableData')?.innerHTML;
+    const heading = document.getElementById('report_heading')?.innerHTML;
+
+    // Create a new window for printing
+    const printWindow = window.open('', '_blank', 'width=800,height=600');
+    printWindow?.document.write(`
+      <html>
+        <head>
+          <title>Vacancy Report</title>
+          <style>
+            @media print {
+              @page {
+                margin-top: 0;
+              }
+              header {
+                display: none !important;
+              }
+            }
+            table { border-collapse: collapse; text-align: left; width: 100%}
+            th, td {border: 1px solid #000; padding: 5px; font-size: 13px;}
+            c-col { 
+              float: left; 
+            }
+            c-card-footer {display: none;}
+            c-card-header {text-align: end; margin: 20px 0; display: block;}
+            c-card-header label {border: 1px solid black; padding: 5px;}
+            .joinDate {width: 70px;}
+            .group-header {background: #add8e6;}
+            .groupfooter {
+                background-color: azure;
+                border-bottom: 1px solid gray;
+            }
+          </style>
+        </head>
+        <body>
+          <div>${heading}</div>
+          <div>${tableData}</div>
+        </body>
+      </html>
+    `);
+    printWindow?.document.close();
+    printWindow?.print();
   }
 
 }

@@ -1,6 +1,9 @@
 <c-card>
-    <c-card-header class="text-center">
+    <c-card-header class="d-flex justify-content-between">
         <h5>Report on Employee List</h5>
+        <button mat-raised-button color="primary" type="button" (click)="printSection()" [disabled]="this.pagination.length == 0">
+          <mat-icon>print</mat-icon> Print
+        </button>
     </c-card-header>
     <c-card-body>
         <div cRow [gutter]="2" class="mb-2">   
@@ -38,10 +41,24 @@
               </div>
           </c-col>
         </div>
+        
+      <div id="report_heading" class="d-none">
+        <div cRow class="justify-content-center">
+          <c-col [md]="1" style="margin-top: 25px; margin-right: 20px;">
+            <img src="{{biwtaLogo}}" width="75px">
+          </c-col>
+          <c-col [md]="9" style="text-align: center;">
+            <h4 style="font-size: 20px;">BANGLADESH INLAND WATER TRANSPORT AUTHORITY</h4>
+            <p style="font-size: 13px;">BIWTA BHABAN, 141-143, MOTIJHEEL C/A, POST BOX 76, DHAKA-1000, BANGLADESH</p>
+            <h5>Vacancy Report: <label *ngIf="departmentName">{{departmentName}}</label><label *ngIf="sectionName">/{{sectionName}}</label><label *ngIf="!departmentName && !sectionName">All</label></h5>
+          </c-col>
+          <div style="border-bottom: 1px solid black; display: inline-block; width: 100%;"></div>
+        </div>
+      </div>
   
-        <c-card class="mt-2" >
+        <c-card class="mt-2" id="tableData">
             <c-card-header class="text-end">
-                Total Post = {{totalPost}}, In Service = {{totalInService}}, Vacant = {{totalVacant}}
+                <label><b>Total Post = {{totalPost}}, In Service = {{totalInService}}, Vacant = {{totalVacant}}</b></label>
             </c-card-header>
             <c-card-body class="p-0">
                 

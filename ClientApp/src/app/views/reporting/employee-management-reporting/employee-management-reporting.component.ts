@@ -9,6 +9,7 @@ import { ReportingService } from '../service/reporting.service';
 import { EmpCountOnReportingDto } from '../models/emp-count-on-reporting-dto';
 import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
 import { SectionService } from 'src/app/views/basic-setup/service/section.service';
+import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
 
 @Component({
   selector: 'app-employee-management-reporting',
@@ -44,11 +45,16 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
   unAssigned: boolean = false;
   departmentId: number = 0;
   sectionId: number = 0;
+  departmentName: string = "";
+  sectionName: string = "";
+  
+  biwtaLogo : string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta-logo.png`;
 
   constructor(
     public reportingService: ReportingService,
     public departmentService: DepartmentService,
     public sectionService : SectionService,
+    public empPhotoSignService: EmpPhotoSignService,
     ) {
   
     }
@@ -91,13 +97,28 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
     )
   }
   onDepartmentSelect(departmentId : number){
+    this.departmentName = "";
+    this.sectionName = "";
     this.sectionId = 0;
     this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
-      this.sections = res;
+      if(res){
+        this.sections = res;
+      }
+    });
+    this.departmentService.getById(+departmentId).subscribe((res) => {
+      if(res){
+        this.departmentName = res.departmentName;
+      }
     });
     this.onQueryTypeChange(false);
   }
   onSectionSelect(){
+    this.sectionName = "";
+    this.sectionService.find(this.sectionId).subscribe((res) => {
+      if(res){
+        this.sectionName = res.sectionName;
+      }
+    });
     this.onQueryTypeChange(false);
   }
 
@@ -108,6 +129,8 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
   }
 
   onTypeChange(){
+    this.departmentName = "";
+    this.sectionName = "";
     this.departmentId = 0;
     this.sectionId = 0;
     this.typeId = 0;
@@ -255,6 +278,44 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
       this.pagination.length = res.totalItemsCount;
     })
     )
+  }
+
+
+  printSection() {
+    // Get the basic information and the specific section to print
+    const tableData = document.getElementById('tableData')?.innerHTML;
+    const heading = document.getElementById('report_heading')?.innerHTML;
+
+    // Create a new window for printing
+    const printWindow = window.open('', 'blank', 'width=800,height=600');
+    printWindow?.document.write(`
+      <html>
+        <head>
+          <title>${this.queryTypeName} Report</title>
+          <style>
+            @media print {
+              @page {
+                margin-top: 0;
+              }
+              header {
+                display: none !important;
+              }
+            }
+            table { border-collapse: collapse; text-align: left; width: 100%}
+            th, td {border: 1px solid #000; padding: 5px; font-size: 13px;}
+            c-col { 
+              float: left; 
+            }
+          </style>
+        </head>
+        <body>
+          <div>${heading}</div>
+          <div>${tableData}</div>
+        </body>
+      </html>
+    `);
+    printWindow?.document.close();
+    printWindow?.print();
   }
 
 }

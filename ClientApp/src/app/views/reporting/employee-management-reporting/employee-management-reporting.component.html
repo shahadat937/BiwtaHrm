@@ -17,6 +17,7 @@
                   <option value="Blood Group">Blood Group</option>
                   <option value="Religion">Religion</option>
                   <option value="Language">Language</option>
+                  <option value="Training Type">Training Type</option>
               </select>
             </c-col>
 
@@ -131,7 +132,8 @@
                       <ng-container matColumnDef="typeName">
                         <th mat-header-cell *matHeaderCellDef>{{queryTypeName}}</th>
                         <td mat-cell *matCellDef="let element">
-                          <c-badge color="primary">{{ element.typeName }}</c-badge>
+                          <c-badge color="primary">{{ element.typeName }}</c-badge><br>
+                          <c-badge color="primary" *ngIf="element.typeDetails">{{ element.typeDetails }}</c-badge>
                         </td>
                       </ng-container>
                       

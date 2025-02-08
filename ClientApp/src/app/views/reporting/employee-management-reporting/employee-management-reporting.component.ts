@@ -168,6 +168,10 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
       this.getLanguageCount();
       this.getLanguageReportingResult(this.pagination);
     }
+    else if(this.queryTypeName == 'Training Type'){
+      this.getTrainingTypeCount();
+      this.getTrainingTypeReportingResult(this.pagination);
+    }
     else {
       this.dataSource.data = [];
       this.pagination.length = 0;
@@ -274,6 +278,24 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
   getLanguageReportingResult(queryParams: any){
     this.subscription.push(
       this.reportingService.getLanguageReportingResult(queryParams, this.typeId, this.unAssigned, this.departmentId, this.sectionId).subscribe((res: any) => {
+      this.dataSource.data = res.items;
+      this.pagination.length = res.totalItemsCount;
+    })
+    )
+  }
+
+  
+  // TrainingType
+  getTrainingTypeCount(){
+    this.subscription.push(
+      this.reportingService.getTrainingTypeCount(this.departmentId, this.sectionId).subscribe((res: any) => {
+      this.queryCount = res;
+    })
+    )
+  }
+  getTrainingTypeReportingResult(queryParams: any){
+    this.subscription.push(
+      this.reportingService.getTrainingTypeReportingResult(queryParams, this.typeId, this.unAssigned, this.departmentId, this.sectionId).subscribe((res: any) => {
       this.dataSource.data = res.items;
       this.pagination.length = res.totalItemsCount;
     })

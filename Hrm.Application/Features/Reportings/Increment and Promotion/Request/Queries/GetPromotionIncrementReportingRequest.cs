@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Promotion.Request.Queries
+namespace Hrm.Application.Features.Reportings.Increment_and_Promotion.Request.Queries
 {
     public class GetPromotionIncrementReportingRequest : IRequest<PagedResult<EmpPromotionIncrementDto>>
     {

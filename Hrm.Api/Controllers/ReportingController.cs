@@ -4,7 +4,7 @@ using Hrm.Application.Features.EmpBasicInfos.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Gender.Requests.Queries;
-using Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Promotion.Request.Queries;
+using Hrm.Application.Features.Reportings.Increment_and_Promotion.Request.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Queries;

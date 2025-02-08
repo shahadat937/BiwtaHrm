@@ -1,6 +1,6 @@
 ﻿using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Reporting;
-using Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Promotion.Request.Queries;
+using Hrm.Application.Features.Reportings.Increment_and_Promotion.Request.Queries;
 using Hrm.Application.Models;
 using Hrm.Domain;
 using MediatR;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Promotion.Handler.Queries
+namespace Hrm.Application.Features.Reportings.Increment_and_Promotion.Handler.Queries
 {
     public class GetPromotionIncrementCountHandler : IRequestHandler<GetPromotionIncrementReportingCountRequest, PagedResult<IncrementPromotionCountDto>>
     {

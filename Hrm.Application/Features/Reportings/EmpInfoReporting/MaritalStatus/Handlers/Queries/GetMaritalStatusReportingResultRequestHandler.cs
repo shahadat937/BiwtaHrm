@@ -40,7 +40,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Han
                     .Include(x => x.EmpPersonalInfo)
                     .Include(x => x.EmpPersonalInfo)
                         .ThenInclude(x => x.MaritalStatus)
-                    .OrderBy(x => x.EmpPersonalInfo.FirstOrDefault().MaritalStatus.MaritalStatusName);
+                    .OrderByDescending(x => x.EmpPersonalInfo.FirstOrDefault().MaritalStatusId.HasValue)
+                        .ThenBy(x => x.EmpPersonalInfo.FirstOrDefault().MaritalStatus.MaritalStatusName);
 
                 var totalCount = await query.CountAsync(cancellationToken);
 

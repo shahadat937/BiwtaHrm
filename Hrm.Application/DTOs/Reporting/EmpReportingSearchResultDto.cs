@@ -17,5 +17,6 @@ namespace Hrm.Application.DTOs.Reporting
         public string? Email { get; set; }
         public bool? Status { get; set; }
         public string? TypeName { get; set; }
+        public string? TypeDetails { get; set; }
     }
 }

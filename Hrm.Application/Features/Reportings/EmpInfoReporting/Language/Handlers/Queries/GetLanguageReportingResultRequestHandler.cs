@@ -42,7 +42,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Handlers
                    .Include(x => x.EmpLanguageInfo) 
                        .ThenInclude(x => x.Language)
                    .Include(x => x.EmpPersonalInfo)
-                   .OrderBy(x => x.EmpLanguageInfo.FirstOrDefault().Language.LanguageName);
+                   .OrderByDescending(x => x.EmpLanguageInfo.FirstOrDefault().LanguageId.HasValue)
+                    .ThenBy(x => x.EmpLanguageInfo.FirstOrDefault().Language.LanguageName);
 
                 var expandedQuery = query
                     .SelectMany(x => request.Id == 0

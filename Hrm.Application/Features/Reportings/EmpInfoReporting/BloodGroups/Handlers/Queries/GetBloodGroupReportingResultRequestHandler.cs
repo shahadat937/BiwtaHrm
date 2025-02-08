@@ -45,7 +45,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Handl
                     .Include(x => x.EmpPersonalInfo)
                     .Include(x => x.EmpPersonalInfo)
                         .ThenInclude(x => x.BloodGroup)
-                    .OrderBy(x => x.EmpPersonalInfo.FirstOrDefault().BloodGroup.BloodGroupName);
+                    .OrderByDescending(x => x.EmpPersonalInfo.FirstOrDefault().BloodGroupId.HasValue)
+                        .ThenBy(x => x.EmpPersonalInfo.FirstOrDefault().BloodGroup.BloodGroupName);
 
                 var totalCount = await query.CountAsync(cancellationToken);
 

@@ -41,7 +41,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Handler
                     .Include(x => x.EmpPersonalInfo)
                     .Include(x => x.EmpPersonalInfo)
                         .ThenInclude(x => x.Religion)
-                    .OrderBy(x => x.EmpPersonalInfo.FirstOrDefault().Religion.ReligionName);
+                    .OrderByDescending(x => x.EmpPersonalInfo.FirstOrDefault().ReligionId.HasValue)
+                        .ThenBy(x => x.EmpPersonalInfo.FirstOrDefault().Religion.ReligionName);
 
                 var totalCount = await query.CountAsync(cancellationToken);
 

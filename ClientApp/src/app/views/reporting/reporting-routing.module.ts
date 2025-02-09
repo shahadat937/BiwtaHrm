@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { EmployeeManagementReportingComponent } from './employee-management-reporting/employee-management-reporting.component';
 import { EmployeeListReportingComponent } from './employee-list-reporting/employee-list-reporting.component';
 import { VacancyReportComponent } from './vacancy-report/vacancy-report.component';
+import { TransferPostingReportComponent } from './transfer-posting-report/transfer-posting-report.component';
 
 
 
@@ -38,6 +39,13 @@ const routes: Routes = [
         component: VacancyReportComponent,
         data: {
           title: 'Vacancy Report',
+        },
+      },
+      {
+        path: 'transfer-posting-report',
+        component: TransferPostingReportComponent,
+        data: {
+          title: 'Transfer & Posting Report',
         },
       },
     ]

@@ -177,7 +177,7 @@ namespace Hrm.Api.Controllers
         //TransferPosting 
         [HttpGet]
         [Route("get-TransferPostingCount")]
-        public async Task<ActionResult<object>> GetTransferPostingCount(int departmentFrom, int sectionFrom, int departmentTo, int sectionTo, DateOnly dateTo, DateOnly dateFrom)
+        public async Task<ActionResult<object>> GetTransferPostingCount(int departmentFrom, int sectionFrom, int departmentTo, int sectionTo, DateOnly? dateTo, DateOnly? dateFrom)
         {
             var result = await _mediator.Send(new GetTransferPostingCountRequest {
             DepartmentFrom = departmentFrom,
@@ -192,7 +192,7 @@ namespace Hrm.Api.Controllers
         
         [HttpGet]
         [Route("get-TransferPostingReport")]
-        public async Task<ActionResult<object>> GetTransferPostingReport( [FromQuery]QueryParams queryParams, int departmentFrom, int sectionFrom, int departmentTo, int sectionTo,  DateOnly dateFrom, DateOnly dateTo)
+        public async Task<ActionResult<object>> GetTransferPostingReport( [FromQuery]QueryParams queryParams, int departmentFrom, int sectionFrom, int departmentTo, int sectionTo,  DateOnly? dateFrom, DateOnly? dateTo, bool? departmentStatus, bool? joiningStatus)
         {
             var result = await _mediator.Send(new GetTransferPostingResultRequest
             {
@@ -202,7 +202,9 @@ namespace Hrm.Api.Controllers
             SectionTo = sectionTo,
             DateTo = dateTo,
             DateFrom = dateFrom,
-            QueryParams = queryParams
+            QueryParams = queryParams,
+            DepartmentStatus = departmentStatus,
+            JoiningStatus = joiningStatus
             });
             return Ok(result);
         }

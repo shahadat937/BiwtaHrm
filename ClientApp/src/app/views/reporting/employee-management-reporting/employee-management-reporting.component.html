@@ -1,9 +1,14 @@
 <c-card>
     <c-card-header class="d-flex justify-content-between">
         <h5>Report on Employee Management</h5>
-        <button mat-raised-button color="primary" type="button" (click)="printSection()" [disabled]="this.pagination.length == 0">
-          <mat-icon>print</mat-icon> Print
-        </button>
+        <div>
+          <button mat-raised-button color="primary" type="button" (click)="printSection()" [disabled]="this.pagination.length == 0">
+            <mat-icon>print</mat-icon> Print
+          </button> &nbsp;
+          <button mat-raised-button color="warn" type="button" (click)="downloadSection()" [disabled]="this.pagination.length == 0">
+            <mat-icon>download</mat-icon> Download
+          </button>
+        </div>
     </c-card-header>
     <c-card-body>
         <div cRow [gutter]="2" class="mb-2">   

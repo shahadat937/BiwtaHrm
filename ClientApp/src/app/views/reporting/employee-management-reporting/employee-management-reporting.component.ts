@@ -10,6 +10,8 @@ import { EmpCountOnReportingDto } from '../models/emp-count-on-reporting-dto';
 import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
 import { SectionService } from 'src/app/views/basic-setup/service/section.service';
 import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-employee-management-reporting',
@@ -301,6 +303,47 @@ export class EmployeeManagementReportingComponent  implements OnInit, OnDestroy 
     })
     )
   }
+
+  downloadSection() {
+    const data = document.getElementById('tableData');
+    html2canvas(data!).then(canvas => {
+        const imgWidth = 208;
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+
+        const contentDataURL = canvas.toDataURL('image/png');
+
+        // Define margin values (in mm)
+        const marginTop = 30; // Adjusted for header space
+        const marginLeft = 10; // Left margin for the content
+        const marginBottom = 10;
+
+        const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+
+        // Add the heading and paragraph manually
+        pdf.setFontSize(20); // Set font size for the header
+        pdf.text('BANGLADESH INLAND WATER TRANSPORT AUTHORITY', marginLeft, marginTop);
+        
+        pdf.setFontSize(13); // Set font size for the paragraph
+        pdf.text('BIWTA BHABAN, 141-143, MOTIJHEEL C/A, POST BOX 76, DHAKA-1000, BANGLADESH', marginLeft, marginTop + 10);
+
+        let departmentName = this.departmentName ? this.departmentName + '/' : '';
+        let sectionName = this.sectionName ? this.sectionName + '/' : '';
+
+        pdf.setFontSize(11); // Set font size for the paragraph
+        pdf.text(this.queryTypeName + ' Report: ' + departmentName + sectionName + this.typeName, marginLeft, marginTop + 20);
+
+        // Adjust position for the table content after the header
+        const position = marginTop + 30; // Adjusted to leave space for header and paragraph
+
+        // Add image of the table data to the PDF with margin adjustments
+        // Ensure that the image is not cropped by properly adjusting its position and size
+        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+
+        // Save the generated PDF
+        pdf.save('exported-file.pdf');
+    });
+}
+
 
 
   printSection() {

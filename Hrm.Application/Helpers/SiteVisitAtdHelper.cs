@@ -3,6 +3,7 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Attendance;
 using Hrm.Application.Enum;
 using Hrm.Application.Features.SiteVisit.Requests.Queries;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +64,16 @@ namespace Hrm.Application.Helpers
 
             for(DateOnly curDate = from; curDate <= to; curDate = curDate.AddDays(1))
             {
+                var attendance = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.EmpId == empId && x.AttendanceDate == curDate).FirstOrDefaultAsync();
+
+                if(attendance!=null&&(attendance.AttendanceStatusId == (int) AttendanceStatusOption.Present || attendance.AttendanceStatusId == (int) AttendanceStatusOption.Late || attendance.AttendanceStatusId == (int) AttendanceStatusOption.Absent))
+                {
+                    attendance.SiteVisitId = siteVisitId;
+                    attendance.AttendanceStatusId = (int) AttendanceStatusOption.OnSiteVisit;
+                    await _unitOfWork.Repository<Hrm.Domain.Attendance>().Update(attendance);
+                    continue;
+                }
+
                 list.Add(new CreateAttendanceDto
                 {
                     EmpId = empId,

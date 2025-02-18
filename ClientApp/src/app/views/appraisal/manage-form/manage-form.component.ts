@@ -16,6 +16,9 @@ import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { PaginatorModel } from 'src/app/core/models/paginator-model';
+import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
+import { SectionService } from 'src/app/views/basic-setup/service/section.service';
 
 @Component({
   selector: 'app-manage-form',
@@ -39,6 +42,14 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   officerFormEditRoute: any;
   appraisalRole = AppraisalRole;
   routelink: string = "";
+  pagination: PaginatorModel = new PaginatorModel();
+  departments: any;
+  sections: any;
+  selectedDepartment: any = null;
+  selectedSection: any = null;
+  totalRecords: number = 0;
+  reportFrom: any = null;
+  reportTo: any = null;
 
   //authentication
   @Input()
@@ -54,7 +65,9 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     private route: ActivatedRoute,
     private router: Router,
-    private roleFeatureService: RoleFeatureService
+    private roleFeatureService: RoleFeatureService,
+    public departmentService: DepartmentService,
+    public sectionService : SectionService,
   ) {
     this.officerFormId = environment.officerFormId;
     this.staffFormId = environment.staffFormId;
@@ -108,6 +121,7 @@ export class ManageFormComponent implements OnInit, OnDestroy {
       }
     })
     this.getFormRecord();
+    this.getAllSelectedDepartments();
   }
 
   getPermission(){
@@ -124,6 +138,52 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     })
     )
   }
+  
+  getAllSelectedDepartments(){
+    this.subscription.push(
+      this.departmentService.getSelectedAllDepartment().subscribe((res) => {
+          this.departments = res;
+    })
+    )
+  }
+
+  onDateSelect(){
+    if(this.reportFrom && this.reportTo){
+      this.filters.reportFrom = this.reportFrom;
+      this.filters.reportTo = this.reportTo;
+      this.getFormRecord();
+    }
+  }
+
+  onDepartmentSelectGetSection(){
+    this.selectedSection = null;
+    this.sections = [];
+    this.filters.departmentId = this.selectedDepartment;
+    this.filters.sectionId = this.selectedSection;
+    this.sectionService.getSectionByOfficeDepartment(this.selectedDepartment).subscribe((res) => {
+      this.sections = res;
+    });
+    this.getFormRecord();
+  }
+  
+  onSectionChange(){
+    this.filters.sectionId = this.selectedSection;
+    this.getFormRecord();
+  }
+
+  
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.toLowerCase();
+    this.filters.pageIndex = 1;
+    this.filters.searchText = filterValue;
+    this.getFormRecord();
+  }
+
+  onPageChange(event: any){
+    this.filters.pageSize = event.rows;
+    this.filters.pageIndex = (event.first / event.rows) + 1;
+    this.getFormRecord();
+  }
 
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -135,7 +195,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.formRecordService.getFormRecordFiltered(this.filters).subscribe({
       next: (response)=> {
-        this.formRecord = response;
+        this.formRecord = response.items;
+        this.totalRecords = response.totalItemsCount;
         this.formRecord.forEach(item=> {
           item.fullName = `${item.empFirstName} ${item.empLastName}`;
         })

@@ -10,8 +10,13 @@ export class FormRecordFilter {
     receiverId: number|null;
     reportingOfficerApproval: boolean|null;
     counterSignatoryApproval: boolean|null;
+    reportFrom: any = null;
+    reportTo: any = null;
     receiverApproval: boolean|null;
     isActive: boolean|null;
+    pageSize : number = 10;
+    pageIndex : number = 1;
+    searchText : string = '';
 
     constructor() {
         this.keywords = null;

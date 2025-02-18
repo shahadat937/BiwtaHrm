@@ -37,6 +37,7 @@ import { SharedCustomModule } from 'src/app/shared/shared.module';
 import { EmployeeManagementReportingComponent } from './employee-management-reporting/employee-management-reporting.component';
 import { EmployeeListReportingComponent } from './employee-list-reporting/employee-list-reporting.component';
 import { VacancyReportComponent } from './vacancy-report/vacancy-report.component';
+import { TransferPostingReportComponent } from './transfer-posting-report/transfer-posting-report.component';
 
 
 
@@ -44,7 +45,8 @@ import { VacancyReportComponent } from './vacancy-report/vacancy-report.componen
   declarations: [
     EmployeeManagementReportingComponent,
     EmployeeListReportingComponent,
-    VacancyReportComponent
+    VacancyReportComponent,
+    TransferPostingReportComponent
   ],
   imports: [
     CommonModule,

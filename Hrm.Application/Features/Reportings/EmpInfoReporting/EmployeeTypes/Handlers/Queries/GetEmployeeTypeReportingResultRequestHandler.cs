@@ -40,7 +40,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Han
                             .ThenInclude(ds => ds.DesignationSetup)
                     .Include(x => x.EmpPersonalInfo)
                     .Include(x => x.EmployeeType)
-                    .OrderBy(x => x.EmployeeType.EmployeeTypeName);
+                    .OrderByDescending(x => x.EmployeeTypeId.HasValue)
+                        .ThenBy(x => x.EmployeeType.EmployeeTypeName);
 
                 var totalCount = await query.CountAsync(cancellationToken);
 

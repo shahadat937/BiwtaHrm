@@ -40,7 +40,8 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Gender.Handlers.Q
                             .ThenInclude(ds => ds.DesignationSetup)
                     .Include(x => x.EmpPersonalInfo)
                         .ThenInclude(x => x.Gender)
-                    .OrderBy(x => x.EmpPersonalInfo.FirstOrDefault().Gender.GenderName);
+                    .OrderByDescending(x => x.EmpPersonalInfo.FirstOrDefault().GenderId.HasValue)
+                        .ThenBy(x => x.EmpPersonalInfo.FirstOrDefault().Gender.GenderName);
 
                 var totalCount = await query.CountAsync(cancellationToken);
 

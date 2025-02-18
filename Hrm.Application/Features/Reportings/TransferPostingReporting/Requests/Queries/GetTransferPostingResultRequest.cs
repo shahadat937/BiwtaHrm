@@ -18,6 +18,8 @@ namespace Hrm.Application.Features.Reportings.TransferPostingReporting.Requests.
         public int? DepartmentTo { get; set; }
         public int? SectionFrom { get; set; }
         public int? SectionTo { get; set; }
+        public bool? DepartmentStatus { get; set; }
+        public bool? JoiningStatus { get; set; }
         public DateOnly? DateFrom { get; set; }
         public DateOnly? DateTo { get; set; }
     }

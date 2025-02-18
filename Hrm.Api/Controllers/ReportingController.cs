@@ -4,8 +4,9 @@ using Hrm.Application.Features.EmpBasicInfos.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.BloodGroups.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Gender.Requests.Queries;
-using Hrm.Application.Features.Reportings.EmpInfoReporting.Increment_and_Promotion.Request.Queries;
+using Hrm.Application.Features.Reportings.Increment_and_Promotion.Request.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Requests.Queries;
+using Hrm.Application.Features.Reportings.EmpInfoReporting.TrainingTypes.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.MaritalStatus.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmpInfoReporting.Religions.Requests.Queries;
 using Hrm.Application.Features.Reportings.EmployeeList.Requests.Queries;
@@ -131,6 +132,23 @@ namespace Hrm.Api.Controllers
             return Ok(result);
         }
 
+        //TrainingType 
+        [HttpGet]
+        [Route("get-TrainingTypeCount")]
+        public async Task<ActionResult<object>> GetTrainingTypeCount(int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetEmpCountOnTrainingTypeRequest { DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("get-TrainingTypeReportingResult")]
+        public async Task<ActionResult<object>> GetTrainingTypeReportingResult([FromQuery] QueryParams queryParams, int? id, bool? unAssigned, int? departmentId, int? sectionId)
+        {
+            var result = await _mediator.Send(new GetTrainingTypeReportingResultRequest { QueryParams = queryParams, Id = id, UnAssigned = unAssigned, DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(result);
+        }
+
 
         [HttpGet]
         [Route("get-employeeListReporting")]
@@ -159,7 +177,7 @@ namespace Hrm.Api.Controllers
         //TransferPosting 
         [HttpGet]
         [Route("get-TransferPostingCount")]
-        public async Task<ActionResult<object>> GetTransferPostingCount(int departmentFrom, int sectionFrom, int departmentTo, int sectionTo, DateOnly dateTo, DateOnly dateFrom)
+        public async Task<ActionResult<object>> GetTransferPostingCount(int departmentFrom, int sectionFrom, int departmentTo, int sectionTo, DateOnly? dateTo, DateOnly? dateFrom)
         {
             var result = await _mediator.Send(new GetTransferPostingCountRequest {
             DepartmentFrom = departmentFrom,
@@ -174,7 +192,7 @@ namespace Hrm.Api.Controllers
         
         [HttpGet]
         [Route("get-TransferPostingReport")]
-        public async Task<ActionResult<object>> GetTransferPostingReport( [FromQuery]QueryParams queryParams, int departmentFrom, int sectionFrom, int departmentTo, int sectionTo,  DateOnly dateFrom, DateOnly dateTo)
+        public async Task<ActionResult<object>> GetTransferPostingReport( [FromQuery]QueryParams queryParams, int departmentFrom, int sectionFrom, int departmentTo, int sectionTo,  DateOnly? dateFrom, DateOnly? dateTo, bool? departmentStatus, bool? joiningStatus)
         {
             var result = await _mediator.Send(new GetTransferPostingResultRequest
             {
@@ -184,7 +202,9 @@ namespace Hrm.Api.Controllers
             SectionTo = sectionTo,
             DateTo = dateTo,
             DateFrom = dateFrom,
-            QueryParams = queryParams
+            QueryParams = queryParams,
+            DepartmentStatus = departmentStatus,
+            JoiningStatus = joiningStatus
             });
             return Ok(result);
         }

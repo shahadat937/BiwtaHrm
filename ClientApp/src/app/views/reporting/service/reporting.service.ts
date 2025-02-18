@@ -11,7 +11,7 @@ export class ReportingService {
   constructor(private http: HttpClient) { }
 
       // Employee Type
-  getEmployeeTypeCount(departmentId: any, sectionId: any){
+  getEmployeeTypeCount(departmentId: number, sectionId: number){
     let queryParams;
     let params = new HttpParams({ fromObject: queryParams });
     params = params.append('departmentId', departmentId);
@@ -28,7 +28,7 @@ export class ReportingService {
   }
 
       // Religion
-  getReligionCount(departmentId: any, sectionId: any){
+  getReligionCount(departmentId: number, sectionId: number){
     let queryParams;
     let params = new HttpParams({ fromObject: queryParams });
     params = params.append('departmentId', departmentId);
@@ -46,7 +46,7 @@ export class ReportingService {
 
   
   // Blood Group
-  getBloodGroupCount(departmentId: any, sectionId: any){
+  getBloodGroupCount(departmentId: number, sectionId: number){
     let queryParams;
     let params = new HttpParams({ fromObject: queryParams });
     params = params.append('departmentId', departmentId);
@@ -63,7 +63,7 @@ export class ReportingService {
   }
   
   // Gender
-  getGenderCount(departmentId: any, sectionId: any){
+  getGenderCount(departmentId: number, sectionId: number){
     let queryParams;
     let params = new HttpParams({ fromObject: queryParams });
     params = params.append('departmentId', departmentId);
@@ -80,7 +80,7 @@ export class ReportingService {
   }
   
   // Marital Status
-  getMaritalStatusCount(departmentId: any, sectionId: any){
+  getMaritalStatusCount(departmentId: number, sectionId: number){
     let queryParams;
     let params = new HttpParams({ fromObject: queryParams });
     params = params.append('departmentId', departmentId);
@@ -98,7 +98,7 @@ export class ReportingService {
 
   
   // Language
-  getLanguageCount(departmentId: any, sectionId: any){
+  getLanguageCount(departmentId: number, sectionId: number){
     let queryParams;
     let params = new HttpParams({ fromObject: queryParams });
     params = params.append('departmentId', departmentId);
@@ -113,6 +113,25 @@ export class ReportingService {
     params = params.append('sectionId', sectionId);
     return this.http.get<any>(`${this.baseUrl}/reporting/get-LanguageReportingResult`, { params });
   }
+  
+  
+  // TrainingType
+  getTrainingTypeCount(departmentId: number, sectionId: number){
+    let queryParams;
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('departmentId', departmentId);
+    params = params.append('sectionId', sectionId);
+    return this.http.get<EmpCountOnReportingDto>(this.baseUrl + '/reporting/get-TrainingTypeCount', { params });
+  }  
+  getTrainingTypeReportingResult(queryParams: any, id:number, unAssigned: boolean, departmentId: number, sectionId: number){
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('id', id);
+    params = params.append('unAssigned', unAssigned);
+    params = params.append('departmentId', departmentId);
+    params = params.append('sectionId', sectionId);
+    return this.http.get<any>(`${this.baseUrl}/reporting/get-TrainingTypeReportingResult`, { params });
+  }
+  
 
   // Employee List
   getEmployeeListReportingResult(queryParams: any, departmentId: number, sectionId: number){
@@ -131,5 +150,30 @@ export class ReportingService {
     return this.http.get<any>(`${this.baseUrl}/reporting/get-vacantReportingResult`, { params });
   }
 
+  
+  // Transfer & Posting
+  getTransferPostingCount(departmentFrom: number, sectionFrom: number, departmentTo: number, sectionTo: number, dateTo: any, dateFrom: any){
+    let queryParams;
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('departmentFrom', departmentFrom);
+    params = params.append('sectionFrom', sectionFrom);
+    params = params.append('departmentTo', departmentTo);
+    params = params.append('sectionTo', sectionTo);
+    params = params.append('dateTo', dateTo);
+    params = params.append('dateFrom', dateFrom);
+    return this.http.get<EmpCountOnReportingDto>(this.baseUrl + '/reporting/get-TransferPostingCount', { params });
+  }  
+  getTransferPostingReportingResult(queryParams: any, departmentFrom: number, sectionFrom: number, departmentTo: number, sectionTo: number, dateTo: any, dateFrom: any, departmentStatus: any, joiningStatus: any){
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('departmentFrom', departmentFrom);
+    params = params.append('sectionFrom', sectionFrom);
+    params = params.append('departmentTo', departmentTo);
+    params = params.append('sectionTo', sectionTo);
+    params = params.append('dateTo', dateTo);
+    params = params.append('dateFrom', dateFrom);
+    params = params.append('departmentStatus', departmentStatus);
+    params = params.append('joiningStatus', joiningStatus);
+    return this.http.get<any>(`${this.baseUrl}/reporting/get-TransferPostingReport`, { params });
+  }
 
 }

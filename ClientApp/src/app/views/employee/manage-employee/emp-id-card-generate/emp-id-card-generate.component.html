@@ -76,34 +76,26 @@
                 <div class="back-id">
                     <img src="{{IdCardBack}}" alt="Back Image" class="back-image">
                     <div class="content-overlay">
-                        <div class="title">
-                            <p>জাতীয় পরিচয়পত্র নং</p>
-                            <p>জন্ম তারিখ</p>
-                            <p>রক্তের গ্রুপ</p>
-                        </div>
-                        <div class="text">
-                            <!-- <p>: {{empBasicInfo.nid | bengaliDigit}}</p> -->
-                            <p *ngIf="empBasicInfo?.nid; else emptyNID">
-                                : {{ empBasicInfo.nid | bengaliDigit }}
-                              </p>
-                              <ng-template #emptyNID>
-                                <p></p>
-                              </ng-template>
-                            <!-- <p>: {{empBasicInfo.dateOfBirth ? (empBasicInfo.dateOfBirth | bengaliDate) : ''}}</p> -->
-                            <p *ngIf="empBasicInfo?.dateOfBirth; else emptyDOB">
-                                : {{ empBasicInfo.dateOfBirth | bengaliDate }}
-                              </p>
-                              <ng-template #emptyDOB>
-                                <p></p>
-                              </ng-template>
-                            <!-- <p>: {{empPersonalInfo.bloodGroupName}}</p> -->
-                            <p *ngIf="empPersonalInfo?.bloodGroupName; else emptyBloodGroup">
-                                : {{ empPersonalInfo.bloodGroupName }}
-                              </p>
-                              <ng-template #emptyBloodGroup>
-                                <p></p>
-                              </ng-template>
-                        </div>
+                        <table>
+                            <tr>
+                                <th>জাতীয় পরিচয়পত্র নং</th>
+                                <td *ngIf="empBasicInfo?.nid; else emptyTd">
+                                    : {{ empBasicInfo.nid | bengaliDigit }}</td>
+                            </tr>
+                            <tr>
+                                <th>জন্ম তারিখ</th>
+                                <td *ngIf="empBasicInfo?.dateOfBirth; else emptyTd">
+                                    : {{ empBasicInfo.dateOfBirth | bengaliDate }}</td>
+                            </tr>
+                            <tr>
+                                <th>রক্তের গ্রুপ</th>
+                                <td *ngIf="empPersonalInfo?.bloodGroupName; else emptyTd">
+                                    : {{ empPersonalInfo.bloodGroupName }}</td>
+                            </tr>
+                            <ng-template #emptyTd>
+                                <td></td>
+                            </ng-template>
+                        </table>
                     </div>
                     
                 </div>

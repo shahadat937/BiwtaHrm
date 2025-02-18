@@ -1,7 +1,6 @@
 ﻿using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.Reporting;
-using Hrm.Application.Features.Reportings.EmpInfoReporting.EmployeeTypes.Requests.Queries;
-using Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Requests.Queries;
+using Hrm.Application.Features.Reportings.EmpInfoReporting.TrainingTypes.Requests.Queries;
 using Hrm.Application.Models;
 using Hrm.Domain;
 using MediatR;
@@ -12,24 +11,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Handlers.Queries
+namespace Hrm.Application.Features.Reportings.EmpInfoReporting.TrainingType.Handlers.Queries
 {
-    public class GetLanguageReportingResultRequestHandler : IRequestHandler<GetLanguageReportingResultRequest, PagedResult<EmpReportingSearchResultDto>>
+    public class GetTrainingTypeReportingResultRequestHandler : IRequestHandler<GetTrainingTypeReportingResultRequest, PagedResult<EmpReportingSearchResultDto>>
     {
 
         private readonly IHrmRepository<EmpBasicInfo> _EmpBasicInfoRepository;
-        public GetLanguageReportingResultRequestHandler(IHrmRepository<EmpBasicInfo> EmpBasicInfoRepository)
+        public GetTrainingTypeReportingResultRequestHandler(IHrmRepository<EmpBasicInfo> EmpBasicInfoRepository)
         {
             _EmpBasicInfoRepository = EmpBasicInfoRepository;
         }
 
-        public async Task<PagedResult<EmpReportingSearchResultDto>> Handle(GetLanguageReportingResultRequest request, CancellationToken cancellationToken)
+        public async Task<PagedResult<EmpReportingSearchResultDto>> Handle(GetTrainingTypeReportingResultRequest request, CancellationToken cancellationToken)
         {
             if (request.UnAssigned == false)
             {
                 IQueryable<EmpBasicInfo> query = _EmpBasicInfoRepository
                    .FilterWithInclude(x =>
-                       (request.Id == 0 || x.EmpLanguageInfo.Any(l => l.LanguageId == request.Id)) &&
+                       (request.Id == 0 || x.EmpTrainingInfo.Any(l => l.TrainingTypeId == request.Id)) &&
                        (request.DepartmentId == 0 || x.EmpJobDetail.FirstOrDefault().DepartmentId == request.DepartmentId) &&
                        (request.SectionId == 0 || x.EmpJobDetail.FirstOrDefault().SectionId == request.SectionId))
                    .Include(x => x.EmpJobDetail)
@@ -39,23 +38,24 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Handlers
                    .Include(x => x.EmpJobDetail)
                        .ThenInclude(x => x.Designation)
                        .ThenInclude(ds => ds.DesignationSetup)
-                   .Include(x => x.EmpLanguageInfo) 
-                       .ThenInclude(x => x.Language)
+                   .Include(x => x.EmpTrainingInfo) 
+                       .ThenInclude(x => x.TrainingType)
                    .Include(x => x.EmpPersonalInfo)
-                   .OrderByDescending(x => x.EmpLanguageInfo.FirstOrDefault().LanguageId.HasValue)
-                    .ThenBy(x => x.EmpLanguageInfo.FirstOrDefault().Language.LanguageName);
+                   .OrderByDescending(x => x.EmpTrainingInfo.FirstOrDefault().TrainingTypeId.HasValue)
+                        .ThenBy(x => x.EmpTrainingInfo.FirstOrDefault().TrainingType.TrainingTypeName);
 
                 var expandedQuery = query
                     .SelectMany(x => request.Id == 0
-                    ? x.EmpLanguageInfo.DefaultIfEmpty() // No filter when request.Id == 0
-                    : x.EmpLanguageInfo.Where(l => l.LanguageId == request.Id).DefaultIfEmpty(), (emp, lang) => new EmpReportingSearchResultDto
+                    ? x.EmpTrainingInfo.DefaultIfEmpty() // No filter when request.Id == 0
+                    : x.EmpTrainingInfo.Where(l => l.TrainingTypeId == request.Id).DefaultIfEmpty(), (emp, train) => new EmpReportingSearchResultDto
                     {
                         IdCardNo = emp.IdCardNo ?? "",
                         EmpName = (emp.FirstName + " " + emp.LastName) ?? "",
                         DepartmentName = emp.EmpJobDetail.FirstOrDefault().Department.DepartmentName ?? "",
                         SectionName = emp.EmpJobDetail.FirstOrDefault().Section.SectionName ?? "",
                         DesignationName = emp.EmpJobDetail.FirstOrDefault().Designation.DesignationSetup.Name ?? "",
-                        TypeName = lang != null ? lang.Language.LanguageName : "", 
+                        TypeName = train != null ? train.TrainingType.TrainingTypeName : "", 
+                        TypeDetails = emp.EmpTrainingInfo.FirstOrDefault().TrainingName ?? "",
                         ContactNumber = emp.EmpPersonalInfo.FirstOrDefault().MobileNumber ?? "",
                         Email = emp.EmpPersonalInfo.FirstOrDefault().Email ?? "" ?? "",
                         Status = emp.EmpJobDetail.FirstOrDefault().ServiceStatus ?? false,
@@ -76,7 +76,7 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Handlers
             else
             {
                 IQueryable<EmpBasicInfo> query = _EmpBasicInfoRepository.FilterWithInclude(x =>
-                (x.EmpLanguageInfo.FirstOrDefault().LanguageId == null) &&
+                (x.EmpTrainingInfo.FirstOrDefault().TrainingTypeId == null) &&
                 (request.DepartmentId == 0 || x.EmpJobDetail.FirstOrDefault().DepartmentId == request.DepartmentId) &&
                 (request.SectionId == 0 || x.EmpJobDetail.FirstOrDefault().SectionId == request.SectionId))
                 .Include(x => x.EmpJobDetail)
@@ -86,9 +86,9 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Handlers
                 .ThenInclude(x => x.EmpJobDetail)
                     .ThenInclude(x => x.Designation)
                         .ThenInclude(ds => ds.DesignationSetup)
-                .Include(x => x.EmpLanguageInfo)
-                        .ThenInclude(x => x.Language)
-                .OrderBy(x => x.EmpLanguageInfo.FirstOrDefault().Language.LanguageName);
+                .Include(x => x.EmpTrainingInfo)
+                        .ThenInclude(x => x.TrainingType)
+                .OrderBy(x => x.EmpTrainingInfo.FirstOrDefault().TrainingType.TrainingTypeName);
 
                 var totalCount = await query.CountAsync(cancellationToken);
 
@@ -105,7 +105,7 @@ namespace Hrm.Application.Features.Reportings.EmpInfoReporting.Language.Handlers
                         DepartmentName = x.EmpJobDetail.FirstOrDefault().Department.DepartmentName ?? "",
                         SectionName = x.EmpJobDetail.FirstOrDefault().Section.SectionName ?? "",
                         DesignationName = x.EmpJobDetail.FirstOrDefault().Designation.DesignationSetup.Name ?? "",
-                        TypeName = x.EmpLanguageInfo.FirstOrDefault().Language.LanguageName ?? "",
+                        TypeName = x.EmpTrainingInfo.FirstOrDefault().TrainingType.TrainingTypeName ?? "",
                         ContactNumber = x.EmpPersonalInfo.FirstOrDefault().MobileNumber ?? "",
                         Email = x.EmpPersonalInfo.FirstOrDefault().Email ?? "",
                         Status = x.EmpJobDetail.FirstOrDefault().ServiceStatus ?? false,

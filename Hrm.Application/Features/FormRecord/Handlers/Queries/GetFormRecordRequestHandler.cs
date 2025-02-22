@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
+using Hrm.Application.DTOs.EmpBasicInfo;
 using Hrm.Application.DTOs.FormRecord;
 using Hrm.Application.Features.FormRecord.Requests.Queries;
+using Hrm.Application.Models;
+using Hrm.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Hrm.Application.Features.FormRecord.Handlers.Queries
 {
-    public class GetFormRecordRequestHandler: IRequestHandler<GetFormRecordRequest,List<FormRecordDto>>
+    public class GetFormRecordRequestHandler: IRequestHandler<GetFormRecordRequest, PagedResult<FormRecordDto>>
     {
         private readonly IHrmRepository<Hrm.Domain.FormRecord> _repository;
         private readonly IHrmRepository<Hrm.Domain.EmpJobDetail> _jobDetailRepository;
@@ -27,7 +30,7 @@ namespace Hrm.Application.Features.FormRecord.Handlers.Queries
             _mapper = mapper;
         }
 
-        public async Task<List<FormRecordDto>> Handle(GetFormRecordRequest request, CancellationToken cancellationToken)
+        public async Task<PagedResult<FormRecordDto>> Handle(GetFormRecordRequest request, CancellationToken cancellationToken)
         {
             var formRecords = _repository.Where(x => true)
                 .Include(x => x.Form)
@@ -89,9 +92,23 @@ namespace Hrm.Application.Features.FormRecord.Handlers.Queries
             {
                 formRecords = formRecords.Where(x => x.ReceiverApproval == request.Filters.ReceiverApproval);
             }
+            
 
+            if (request.Filters.ReportFrom.HasValue && request.Filters.ReportTo.HasValue)
+            {
+                var fromDate = request.Filters.ReportFrom.Value.ToDateTime(TimeOnly.MinValue);
+                var toDate = request.Filters.ReportTo.Value.ToDateTime(TimeOnly.MaxValue);
 
-            formRecords = formRecords.OrderByDescending(x => x.RecordId);
+                formRecords = formRecords.Where(x =>
+                    x.ReportFrom <= toDate &&
+                    x.ReportTo >= fromDate
+                );
+            }
+
+            var totalCount = formRecords.Count();
+
+            formRecords = formRecords.OrderByDescending(x => x.RecordId).Skip((request.Filters.PageIndex - 1) * request.Filters.PageSize).Take(request.Filters.PageSize);
+
             var formRecordDtos = _mapper.Map<List<FormRecordDto>>(formRecords);
 
             foreach (var formRecordDto in formRecordDtos)
@@ -108,7 +125,10 @@ namespace Hrm.Application.Features.FormRecord.Handlers.Queries
                 formRecordDto.Department = empDetail.Department.DepartmentName;
             }
 
-            return formRecordDtos;
+
+            var result = new PagedResult<FormRecordDto>(formRecordDtos, totalCount, request.Filters.PageIndex, request.Filters.PageSize);
+
+            return result;
         }
     }
 }

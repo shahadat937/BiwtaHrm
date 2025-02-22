@@ -22,6 +22,9 @@ namespace Hrm.Application.DTOs.FormRecord
         public bool? ReceiverApproval {  get; set; }
         public DateOnly? ReportFrom {  get; set; }
         public DateOnly? ReportTo { get; set; }
+        public int PageSize { get; set; }
+        public int PageIndex { get; set; }
+        public string? SearchText { get; set; }
         public bool? IsActive { get; set; }
     }
 }

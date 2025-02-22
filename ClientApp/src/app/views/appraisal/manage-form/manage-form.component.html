@@ -5,17 +5,35 @@
     <div [gutter]="3">
       <p-table
         #dt2
-        [paginator]="true"
-        [rows]="5"
-        [rowsPerPageOptions]="[5, 10, 20, 50]"
         [value]="formRecord"
+        [rows]="pagination.pageSize"
+        [paginator]="true"
+        [lazy]="true"
+        [totalRecords]='totalRecords'
+        [rowsPerPageOptions]="pagination.pageSizeOptions"
         [columns]="formRecordHeader"
         styleClass="p-datatable-striped p-datatable-gridlines"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+        [scrollable]="true" 
         [tableStyle]="{ 'min-width': '50rem' }"
       >
         <ng-template pTemplate="caption">
-          <div class="d-md-flex justify-content-between">
-            <div>
+          <div cRow [gutter]="3">
+            <c-col [md]="4">
+              <!-- <p-iconField iconPosition="right">
+                <p-inputIcon>
+                  <svg [cIcon]="icons.cilZoom" size="lg"></svg>
+                </p-inputIcon>
+                <input
+                  pInputText
+                  type="text"
+                  [(ngModel)]="globalFilter"
+                  (input)="dt2.filterGlobal(globalFilter,'contains')"
+                  placeholder="Search keyword"
+                />
+              </p-iconField> -->
+                <label cLabel for="search" class="fw-normal">Search Keyword</label>
                 <c-input-group>
                   <span cInputGroupText class="bg-white">
                     <svg [cIcon]="icons.cilZoom" size="lg"></svg>
@@ -25,13 +43,75 @@
                     cFormControl
                     type="text"
                     [(ngModel)]="globalFilter"
-                    (input)="dt2.filterGlobal(globalFilter,'contains')"
+                    id="search"
+                    #filter
+                    (keyup)="applyFilter(filter.value)"
                     placeholder="Search keyword"
                   />
                 </c-input-group>
-            </div>
+            </c-col>
+            
+            <c-col [md]="3">
+              <label cLabel for="fromDate" class="fw-normal">From Date</label>
+              <input
+                (change)="onDateSelect()"
+                cFormControl
+                type="date"
+                id="fromDate"
+                [(ngModel)]="reportFrom"
+              />
+            </c-col>
+            
+            <c-col [md]="3">
+              <label cLabel for="toDate" class="fw-normal">To Date</label>
+              <input
+                (change)="onDateSelect()"
+                cFormControl
+                type="date"
+                id="toDate"
+                [(ngModel)]="reportTo"
+              />
+            </c-col>
 
             <button *ngIf="routelink!=''" cButton color="danger" [routerLink]="[routelink]" size="sm">Cancel</button>
+
+            <c-col [md]="4">
+              <label cLabel for="selectedDepartment">Department</label>
+              <div class="input-wrapper">
+                <select 
+                  (change)="onDepartmentSelectGetSection()"
+                  [(ngModel)]="selectedDepartment" name="selectedDepartment" #Department="ngModel"
+                  cFormControl id="selectedDepartment" aria-label="Default select example" cSelect>
+                  <option [ngValue]=null>Select Department</option>
+      
+                  @for(department of departments; track department.id;let index=$index) {
+                  <option [value]="department.id">
+                    {{ department.name }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </c-col>
+            
+            <c-col [md]="4">
+              <label cLabel for="selectedSection">Section</label>
+              <div class="input-wrapper">
+                <select 
+                  (change)="onSectionChange()"
+                  [(ngModel)]="selectedSection" name="selectedSection" #Section="ngModel"
+                  cFormControl id="selectedSection" aria-label="Default select example" cSelect>
+                  <option [ngValue]=null>Select Section</option>
+      
+                  @for(section of sections; track section.id;let index=$index) {
+                  <option [value]="section.id">
+                    {{ section.name }}
+                  </option>
+                  }
+                </select>
+              </div>
+            </c-col>
+
+            
           </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>

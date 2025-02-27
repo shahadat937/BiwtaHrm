@@ -174,8 +174,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   logSort() {
-    console.log(this.sort.active);
-    console.log(this.sort.direction);
+
   }
 
 
@@ -374,6 +373,23 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
         this.getFilteredAttendance(true);
       })
     
+  }
+
+  nevigateToApplication(leaveRequestId: number, siteVisitId: number){
+    if(leaveRequestId){
+      this.router.navigate(['leave/reviewleave'], {
+        queryParams: { forNotificationId: leaveRequestId },
+        queryParamsHandling: 'merge', // Merge with existing queryParams
+        relativeTo: this.router.routerState.root, // Ensure relative routing works
+      });
+    }
+    if(siteVisitId){
+      this.router.navigate(['attendance/siteVisit'], {
+        queryParams: { forNotificationId: siteVisitId },
+        queryParamsHandling: 'merge', // Merge with existing queryParams
+        relativeTo: this.router.routerState.root, // Ensure relative routing works
+      });
+    }
   }
 
 }

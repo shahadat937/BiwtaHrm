@@ -123,7 +123,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
 
                 if(employee == null)
                 {
-                    throw new NotFoundException("Employee",attendance.EmpId);
+                    throw new NotFoundException("Employee",attendance.Pmis);
                 }
 
                 attendance.EmpId = employee.Id;

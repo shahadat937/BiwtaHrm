@@ -149,44 +149,30 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   }
 
   getSiteVisit() {
+    let params = new HttpParams();
 
-    if(this.IsUser==false) {
-   
-      this.subscription.push(
-        this.siteVisitService.getSiteVisitAll().subscribe(data=> {
-          this.tableData=data;
-        }, error=> {
-          console.log(error);
-        })
-      )
-
-    } else {
-
-      let params = new HttpParams();
-
-      for(const key of Object.keys(this.filter)) {
-        if(this.filter[key]==null) {
-          continue;
-        }
-        if(key=="Status") {
-          for(const item of this.filter[key]) {
-            params = params.append(key, item);
-          }
-          continue;
-        }
-        params = params.set(key, this.filter[key]);
+    for(const key of Object.keys(this.filter)) {
+      if(this.filter[key]==null) {
+        continue;
       }
-
-
-      if(!params.get('EmpId')) {
-        return;
-      }
-      this.siteVisitService.getSiteVisitByFilter(params).subscribe({
-        next:response => {
-          this.tableData = response;
+      if(key=="Status") {
+        for(const item of this.filter[key]) {
+          params = params.append(key, item);
         }
-      });
+        continue;
+      }
+      params = params.set(key, this.filter[key]);
     }
+
+
+    if(!params.get('EmpId')&&this.IsUser) {
+      return;
+    }
+    this.siteVisitService.getSiteVisitByFilter(params).subscribe({
+      next:response => {
+        this.tableData = response;
+      }
+    });
   }
 
   onApprove(siteVisitId:number) {

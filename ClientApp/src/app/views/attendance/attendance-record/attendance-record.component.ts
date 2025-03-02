@@ -40,6 +40,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   selectedDepartment:number|null;
   // subscription: Subscription = new Subscription();
   subscription: Subscription[]=[]
+  debounceSubs: Subscription = new Subscription();
   selectedOffice:number|null;
   selectedShift:number|null;
   selectedUpdateShift: any|null;
@@ -156,6 +157,10 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
 
   ngOnDestroy(): void {
     this.subscription.forEach(subs=>subs.unsubscribe())
+    
+    if(this.debounceSubs) {
+      this.debounceSubs.unsubscribe();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -356,19 +361,17 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   onSearch() {
-    if(this.subscription) {
-      this.subscription.forEach(subs=>subs.unsubscribe());
+    if(this.debounceSubs) {
+      this.debounceSubs.unsubscribe();
     }
 
     const source$ = of (this.searchKeyword).pipe(
       delay(700)
     );
 
-    this.subscription.push(
-      source$.subscribe(data=> {
+    this.debounceSubs =  source$.subscribe(data=> {
         this.getFilteredAttendance(true);
       })
-    )
     
   }
 

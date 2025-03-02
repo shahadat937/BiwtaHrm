@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
+using Hrm.Application.Features.Reportings.AddressReporting.Requests.Queries;
 
 namespace Hrm.Api.Controllers
 {
@@ -218,5 +219,15 @@ namespace Hrm.Api.Controllers
             var result = await _mediator.Send(new GetVacancyReportRequest { QueryParams = queryParams, DepartmentId = departmentId, SectionId = sectionId });
             return Ok(result);
         }
+
+
+        [HttpGet]
+        [Route("get-addressReportingResult")]
+        public async Task<ActionResult<object>> GetAddressReportingResult([FromQuery] QueryParams queryParams, bool isPresentAddress, int? departmentId, int? sectionId, int? countryId, int? divisionId, int? districtId, int? thanaId)
+        {
+            var result = await _mediator.Send(new GetAddressReportingRequest { QueryParams = queryParams, IsPresentAddress = isPresentAddress, DepartmentId = departmentId, SectionId = sectionId, CountryId = countryId, DivisionId = divisionId, DistrictId = districtId, ThanaId = thanaId });
+            return Ok(result);
+        }
+
     }
 }

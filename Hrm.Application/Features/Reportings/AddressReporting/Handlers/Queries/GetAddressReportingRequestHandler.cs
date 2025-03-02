@@ -33,7 +33,7 @@ namespace Hrm.Application.Features.Reportings.AddressReporting.Handlers.Queries
                     (request.CountryId == 0 || x.EmpPresentAddress.FirstOrDefault().CountryId == request.CountryId) &&
                     (request.DivisionId == 0 || x.EmpPresentAddress.FirstOrDefault().DivisionId == request.DivisionId) &&
                     (request.DistrictId == 0 || x.EmpPresentAddress.FirstOrDefault().DistrictId == request.DistrictId) &&
-                    (request.ThanaId == 0 || x.EmpPresentAddress.FirstOrDefault().CountryId == request.ThanaId))
+                    (request.UpazilaId == 0 || x.EmpPresentAddress.FirstOrDefault().UpazilaId == request.UpazilaId))
                     .Include(x => x.EmpJobDetail)
                         .ThenInclude(x => x.Department)
                     .ThenInclude(x => x.EmpJobDetail)
@@ -49,7 +49,11 @@ namespace Hrm.Application.Features.Reportings.AddressReporting.Handlers.Queries
                         .ThenInclude(x => x.District)
                     .Include(x => x.EmpPresentAddress)
                         .ThenInclude(x => x.Thana)
-                    .OrderBy(x => x.Id);
+                    .OrderByDescending(x => x.EmpPresentAddress.FirstOrDefault().CountryId.HasValue)
+                        .ThenBy(x => x.EmpPresentAddress.FirstOrDefault().Country.CountryName)
+                        .ThenBy(x => x.EmpPresentAddress.FirstOrDefault().Division.DivisionName)
+                        .ThenBy(x => x.EmpPresentAddress.FirstOrDefault().District.DistrictName)
+                        .ThenBy(x => x.EmpPresentAddress.FirstOrDefault().Thana.ThanaName);
 
                 var totalCount = await query.CountAsync(cancellationToken);
 
@@ -68,7 +72,7 @@ namespace Hrm.Application.Features.Reportings.AddressReporting.Handlers.Queries
                             CountryName = x.EmpPresentAddress.FirstOrDefault().Country.CountryName ?? "",
                             DivisionName = x.EmpPresentAddress.FirstOrDefault().Division.DivisionName ?? "",
                             DistricName = x.EmpPresentAddress.FirstOrDefault().District.DistrictName ?? "",
-                            ThanaName = x.EmpPresentAddress.FirstOrDefault().Thana.ThanaName ?? "",
+                            UpazilaName = x.EmpPresentAddress.FirstOrDefault().Upazila.UpazilaName ?? "",
                             ContactNumber = x.EmpPersonalInfo.FirstOrDefault().MobileNumber ?? "",
                             Email = x.EmpPersonalInfo.FirstOrDefault().Email ?? "",
                             Status = x.EmpJobDetail.FirstOrDefault().ServiceStatus ?? false,
@@ -89,7 +93,7 @@ namespace Hrm.Application.Features.Reportings.AddressReporting.Handlers.Queries
                     (request.CountryId == 0 || x.EmpPermanentAddress.FirstOrDefault().CountryId == request.CountryId) &&
                     (request.DivisionId == 0 || x.EmpPermanentAddress.FirstOrDefault().DivisionId == request.DivisionId) &&
                     (request.DistrictId == 0 || x.EmpPermanentAddress.FirstOrDefault().DistrictId == request.DistrictId) &&
-                    (request.ThanaId == 0 || x.EmpPermanentAddress.FirstOrDefault().CountryId == request.ThanaId))
+                    (request.UpazilaId == 0 || x.EmpPermanentAddress.FirstOrDefault().UpazilaId == request.UpazilaId))
                     .Include(x => x.EmpJobDetail)
                         .ThenInclude(x => x.Department)
                     .ThenInclude(x => x.EmpJobDetail)
@@ -105,7 +109,11 @@ namespace Hrm.Application.Features.Reportings.AddressReporting.Handlers.Queries
                         .ThenInclude(x => x.District)
                     .Include(x => x.EmpPermanentAddress)
                         .ThenInclude(x => x.Thana)
-                    .OrderBy(x => x.Id);
+                    .OrderByDescending(x => x.EmpPermanentAddress.FirstOrDefault().CountryId.HasValue)
+                        .ThenBy(x => x.EmpPermanentAddress.FirstOrDefault().Country.CountryName)
+                        .ThenBy(x => x.EmpPermanentAddress.FirstOrDefault().Division.DivisionName)
+                        .ThenBy(x => x.EmpPermanentAddress.FirstOrDefault().District.DistrictName)
+                        .ThenBy(x => x.EmpPermanentAddress.FirstOrDefault().Thana.ThanaName);
 
                 var totalCount = await query.CountAsync(cancellationToken);
 
@@ -124,7 +132,7 @@ namespace Hrm.Application.Features.Reportings.AddressReporting.Handlers.Queries
                             CountryName = x.EmpPermanentAddress.FirstOrDefault().Country.CountryName ?? "",
                             DivisionName = x.EmpPermanentAddress.FirstOrDefault().Division.DivisionName ?? "",
                             DistricName = x.EmpPermanentAddress.FirstOrDefault().District.DistrictName ?? "",
-                            ThanaName = x.EmpPermanentAddress.FirstOrDefault().Thana.ThanaName ?? "",
+                            UpazilaName = x.EmpPermanentAddress.FirstOrDefault().Upazila.UpazilaName ?? "",
                             ContactNumber = x.EmpPersonalInfo.FirstOrDefault().MobileNumber ?? "",
                             Email = x.EmpPersonalInfo.FirstOrDefault().Email ?? "",
                             Status = x.EmpJobDetail.FirstOrDefault().ServiceStatus ?? false,

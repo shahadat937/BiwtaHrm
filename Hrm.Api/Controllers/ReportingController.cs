@@ -221,11 +221,12 @@ namespace Hrm.Api.Controllers
         }
 
 
+        //Address Reporting
         [HttpGet]
         [Route("get-addressReportingResult")]
-        public async Task<ActionResult<object>> GetAddressReportingResult([FromQuery] QueryParams queryParams, bool isPresentAddress, int? departmentId, int? sectionId, int? countryId, int? divisionId, int? districtId, int? thanaId)
+        public async Task<ActionResult<object>> GetAddressReportingResult([FromQuery] QueryParams queryParams, bool isPresentAddress, int? departmentId, int? sectionId, int? countryId, int? divisionId, int? districtId, int? upazilaId)
         {
-            var result = await _mediator.Send(new GetAddressReportingRequest { QueryParams = queryParams, IsPresentAddress = isPresentAddress, DepartmentId = departmentId, SectionId = sectionId, CountryId = countryId, DivisionId = divisionId, DistrictId = districtId, ThanaId = thanaId });
+            var result = await _mediator.Send(new GetAddressReportingRequest { QueryParams = queryParams, IsPresentAddress = isPresentAddress, DepartmentId = departmentId, SectionId = sectionId, CountryId = countryId, DivisionId = divisionId, DistrictId = districtId, UpazilaId = upazilaId });
             return Ok(result);
         }
 

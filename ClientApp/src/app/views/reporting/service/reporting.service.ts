@@ -176,4 +176,18 @@ export class ReportingService {
     return this.http.get<any>(`${this.baseUrl}/reporting/get-TransferPostingReport`, { params });
   }
 
+
+  
+  // Address Reporting
+  getAddressReportingResult(queryParams: any, isPresentAddress: boolean, departmentId: number, sectionId: number, countryId: number, divisionId: number, districtId: number, upazilaId: number){
+    let params = new HttpParams({ fromObject: queryParams });
+    params = params.append('departmentId', departmentId);
+    params = params.append('sectionId', sectionId);
+    params = params.append('isPresentAddress', isPresentAddress);
+    params = params.append('countryId', countryId);
+    params = params.append('divisionId', divisionId);
+    params = params.append('districtId', districtId);
+    params = params.append('upazilaId', upazilaId);
+    return this.http.get<any>(`${this.baseUrl}/reporting/get-addressReportingResult`, { params });
+  }
 }

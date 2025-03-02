@@ -19,6 +19,6 @@ namespace Hrm.Application.DTOs.Reporting
         public string? CountryName { get; set; }
         public string? DivisionName { get; set; }
         public string? DistricName { get; set; }
-        public string? ThanaName { get; set; }
+        public string? UpazilaName { get; set; }
     }
 }

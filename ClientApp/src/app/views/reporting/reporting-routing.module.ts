@@ -5,6 +5,7 @@ import { EmployeeManagementReportingComponent } from './employee-management-repo
 import { EmployeeListReportingComponent } from './employee-list-reporting/employee-list-reporting.component';
 import { VacancyReportComponent } from './vacancy-report/vacancy-report.component';
 import { TransferPostingReportComponent } from './transfer-posting-report/transfer-posting-report.component';
+import { AddressReportingComponent } from './address-reporting/address-reporting.component';
 
 
 
@@ -46,6 +47,13 @@ const routes: Routes = [
         component: TransferPostingReportComponent,
         data: {
           title: 'Transfer & Posting Report',
+        },
+      },
+      {
+        path: 'address-report',
+        component: AddressReportingComponent,
+        data: {
+          title: 'Address Report',
         },
       },
     ]

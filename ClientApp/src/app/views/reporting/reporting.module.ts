@@ -38,6 +38,14 @@ import { EmployeeManagementReportingComponent } from './employee-management-repo
 import { EmployeeListReportingComponent } from './employee-list-reporting/employee-list-reporting.component';
 import { VacancyReportComponent } from './vacancy-report/vacancy-report.component';
 import { TransferPostingReportComponent } from './transfer-posting-report/transfer-posting-report.component';
+import { AddressReportingComponent } from './address-reporting/address-reporting.component';
+import { CountryService } from '../basic-setup/service/Country.service';
+import { DepartmentService } from '../basic-setup/service/department.service';
+import { DesignationService } from '../basic-setup/service/designation.service';
+import { DistrictService } from '../basic-setup/service/district.service';
+import { DivisionService } from '../basic-setup/service/division.service';
+import { SectionService } from '../basic-setup/service/section.service';
+import { UapzilaService } from '../basic-setup/service/uapzila.service';
 
 
 
@@ -46,7 +54,8 @@ import { TransferPostingReportComponent } from './transfer-posting-report/transf
     EmployeeManagementReportingComponent,
     EmployeeListReportingComponent,
     VacancyReportComponent,
-    TransferPostingReportComponent
+    TransferPostingReportComponent,
+    AddressReportingComponent
   ],
   imports: [
     CommonModule,
@@ -97,6 +106,16 @@ import { TransferPostingReportComponent } from './transfer-posting-report/transf
     BadgeModule,
     NgxPrintModule,
     WidgetStatFComponent
-  ]
+  ],
+  providers:
+  [
+    DepartmentService,
+    SectionService,
+    DesignationService,
+    CountryService,
+    UapzilaService,
+    DistrictService,
+    DivisionService,
+  ],
 })
 export class ReportingModule { }

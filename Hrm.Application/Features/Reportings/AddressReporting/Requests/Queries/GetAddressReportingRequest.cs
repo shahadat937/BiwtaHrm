@@ -18,7 +18,7 @@ namespace Hrm.Application.Features.Reportings.AddressReporting.Requests.Queries
         public int? CountryId { get; set; }
         public int? DivisionId { get; set; }
         public int? DistrictId { get; set; }
-        public int? ThanaId { get; set; }
+        public int? UpazilaId { get; set; }
         public bool IsPresentAddress { get; set; }
     }
 }

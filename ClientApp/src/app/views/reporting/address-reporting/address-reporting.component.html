@@ -1,0 +1,241 @@
+<c-card>
+    <c-card-header class="d-flex justify-content-between">
+        <h5>Report on Employee Address</h5>
+        <div>
+          <button mat-raised-button color="primary" type="button" (click)="printSection()" [disabled]="this.pagination.length == 0">
+            <mat-icon>print</mat-icon> Print
+          </button> &nbsp;
+          <!-- <button mat-raised-button color="warn" type="button" (click)="downloadSection()" [disabled]="this.pagination.length == 0">
+            <mat-icon>download</mat-icon> Download
+          </button> -->
+        </div>
+    </c-card-header>
+    <c-card-body>
+        <div cRow [gutter]="2" class="mb-2">   
+            <c-col [md]="3" >
+              <label cLabel for="queryType">Query Type<span class="text-danger"></span></label>
+              <select cSelect [(ngModel)]="addressType" name="addressType" #IsPresentAddress="ngModel" cFormControl id="queryType" (change)="getAddressReport(false)">
+                  <option value="Present Address">Present Address</option>
+                  <option value="Permanent Address">Permanent Address</option>
+              </select>
+            </c-col>
+
+            <c-col [md]="3">
+              <label cLabel for="Department">Department<span class="text-danger"></span></label>
+              <div class="input-wrapper">
+                <select (change)="onDepartmentSelect(departmentId)"
+                    [(ngModel)]="departmentId" name="departmentId" #Department="ngModel"
+                    cFormControl id="Department" aria-label="Default select example" cSelect>
+                    <option [ngValue]=0>Select Department</option>
+        
+                    @for(department of departments; track department.id;let index=$index) {
+                    <option [value]="department.id">
+                    {{ department.name }}
+                    </option>
+                    }
+                </select>
+              </div>
+            </c-col>
+          
+          <c-col [md]="3">
+              <label cLabel for="sectionId">Section<span class="text-danger"></span></label>
+              <div class="input-wrapper">
+                <select [(ngModel)]="sectionId" name="sectionId" #Section="ngModel"
+                    cFormControl id="sectionId" aria-label="Default select example" cSelect
+                    (change)="onSectionSelect()">
+                    <option [ngValue]=0>Select Section</option>
+        
+                    @for(section of sections; track section.id;let index=$index) {
+                    <option [value]="section.id">
+                    {{ section.name }}
+                    </option>
+                    }
+                </select>
+              </div>
+          </c-col>
+
+            <c-col [md]="3">
+                <label cLabel for="validationCustom03">Country<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                    <select
+                        (change)="onCounterChange(countryId)"
+                        [(ngModel)]="countryId" name="countryId"
+                        #Country="ngModel" cFormControl id="validationCustom03"
+                        aria-label="Default select example" cSelect>
+                        <option [ngValue]=0>Select Country</option>
+
+                        @for(country of countris; track country.id;let index=$index) {
+                        <option [value]="country.id">
+                            {{ country.name }}
+                        </option>
+                        }
+                    </select>
+                </div>
+            </c-col>
+
+            <c-col [md]="3">
+                <label cLabel for="validationCustom04">Division<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                    <select
+                        (change)="onDivisionChange(divisionId)"
+                        [(ngModel)]="divisionId" name="divisionId"
+                        #Division="ngModel" cFormControl id="validationCustom04"
+                        aria-label="Default select example" cSelect>
+                        <option [ngValue]=0>Select Division</option>
+                        @for(division of divisions; track division.id;let index=$index) {
+                        <option [value]="division.id">
+                            {{ division.name }}
+                        </option>
+                        }
+                    </select>
+                </div>
+            </c-col>
+
+            <c-col [md]="3">
+                <label cLabel for="validationCustom05">District<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                    <select
+                        (change)="onDistrictChange(districtId)"
+                        [(ngModel)]="districtId" name="districtId"
+                        #District="ngModel" cFormControl id="validationCustom05"
+                        aria-label="Default select example" cSelect>
+                        <option [ngValue]=0>Select District</option>
+
+                        @for(district of districts; track district.id;let index=$index) {
+                        <option [value]="district.id">
+                            {{ district.name }}
+                        </option>
+                        }
+                    </select>
+                </div>
+            </c-col>
+
+            <c-col [md]="3">
+                <label cLabel for="validationCustom06">Upazila/Thana<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                    <select 
+                        (change)="onUpazilaChange()"
+                        [(ngModel)]="upazilaId" name="upazilaId"
+                        #Upazila="ngModel" cFormControl id="validationCustom06"
+                        aria-label="Default select example" cSelect>
+                        <option [ngValue]=0>Select Upazila/Thana</option>
+
+                        @for(upazila of upazilas; track upazila.id;let index=$index) {
+                        <option [value]="upazila.id">
+                            {{ upazila.name }}
+                        </option>
+                        }
+                    </select>
+                </div>
+            </c-col>
+        </div>
+
+        
+        <div id="report_heading" class="d-none">
+          <div cRow class="justify-content-center">
+            <c-col [md]="1" style="margin-top: 25px; margin-right: 20px;">
+              <img src="{{biwtaLogo}}" width="75px">
+            </c-col>
+            <c-col [md]="9" style="text-align: center;">
+              <h4 style="font-size: 20px;">BANGLADESH INLAND WATER TRANSPORT AUTHORITY</h4>
+              <p style="font-size: 13px;">BIWTA BHABAN, 141-143, MOTIJHEEL C/A, POST BOX 76, DHAKA-1000, BANGLADESH</p>
+              <h5>{{addressType}} Report: <label *ngIf="!departmentName">All</label><label *ngIf="departmentName">{{departmentName}}</label><label *ngIf="sectionName">/{{sectionName}}</label></h5>
+            </c-col>
+            <div style="border-bottom: 1px solid black; margin-bottom: 20px; display: inline-block; width: 100%;"></div>
+          </div>
+        </div>
+
+        <c-card class="mt-2">
+            <c-card-header>
+                Employee List - <label class="text-danger fw-bold">{{addressType}}</label>
+            </c-card-header>
+            <c-card-body class="p-0">
+                <div class="table-responsive" id="tableData">
+                    <table mat-table [dataSource]="dataSource">
+                      <!-- Position Column -->
+                      <ng-container matColumnDef="slNo">
+                        <th mat-header-cell *matHeaderCellDef>SL</th>
+                        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="employee">
+                        <th mat-header-cell *matHeaderCellDef>Employee</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.empName }} ({{ element.idCardNo }})
+                        </td>
+                      </ng-container>
+            
+                      <ng-container matColumnDef="department/section">
+                        <th mat-header-cell *matHeaderCellDef>Department/Section</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.departmentName ?? "" }}<label *ngIf="element.sectionName">, {{ element.sectionName}}</label>
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="designation">
+                        <th mat-header-cell *matHeaderCellDef>Designation</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.designationName }}
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="country">
+                        <th mat-header-cell *matHeaderCellDef>Country</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.countryName }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="divisionName">
+                        <th mat-header-cell *matHeaderCellDef>Division</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.divisionName }}
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="districtName">
+                        <th mat-header-cell *matHeaderCellDef>District</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.districName }}
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="upazilaName">
+                        <th mat-header-cell *matHeaderCellDef>Upazila/Thana</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.upazilaName }}
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="phone">
+                        <th mat-header-cell *matHeaderCellDef>Contact Number</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.contactNumber }}
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>Status</th>
+                        <td mat-cell *matCellDef="let element">
+                          <c-badge color="success" *ngIf="element.status">Active</c-badge>
+                          <c-badge color="warning" *ngIf="!element.status">Inactive</c-badge>
+                        </td>
+                      </ng-container>
+            
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                  </div>
+            </c-card-body>
+            <c-card-footer class="text-medium-emphasis p-0">
+                <mat-paginator 
+                  [length]="pagination.length"
+                  [pageSize]="pagination.pageSize"
+                  [pageSizeOptions]="pagination.pageSizeOptions"
+                  [showFirstLastButtons]="true"
+                  (page)="onPageChange($event)">
+                </mat-paginator>    
+            </c-card-footer>
+        </c-card>
+    </c-card-body>
+</c-card>

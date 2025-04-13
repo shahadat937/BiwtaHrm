@@ -3,6 +3,7 @@ using Hrm.Application.DTOs.Department;
 using Hrm.Application.DTOs.Designation;
 using Hrm.Application.DTOs.Office;
 using Hrm.Application.DTOs.Organograms;
+using Hrm.Application.Features.Organogram.Requests.Queries;
 using Hrm.Domain;
 using Hrm.Persistence;
 using Microsoft.AspNetCore.Authorization;
@@ -19,9 +20,11 @@ namespace Hrm.Api.Controllers
     public class OrganogramController : ControllerBase
     {
         private readonly HrmDbContext _context;
-        public OrganogramController(HrmDbContext context)
+        private readonly IMediator _mediator;
+        public OrganogramController(HrmDbContext context, IMediator mediator)
         {
             _context = context;
+            _mediator = mediator;
         }
 
 
@@ -212,6 +215,18 @@ namespace Hrm.Api.Controllers
 
             return null;
         }
+
+
+        [HttpGet]
+        [Route("get-topLavelDept")]
+        public async Task<ActionResult<List<DepartmentDto>>> GetTopLavelDept()
+        {
+            var result = await _mediator.Send(new GetTopLavelDepartmentsRequest { });
+            return result;
+
+        }
+
+
 
     }
 }

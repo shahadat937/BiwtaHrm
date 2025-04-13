@@ -30,6 +30,10 @@ export class OrganogramService {
   getOrganogramNamesOnly(): Observable<OrganogramDepartmentNameDto[]>{
         return this.http.get<OrganogramDepartmentNameDto[]>(this.baseUrl + '/organogram/get-organogramNamesOnly');
   }
+
+  getTopLavelDept(): Observable<any>{
+    return this.http.get<any>(this.baseUrl + '/organogram/get-topLavelDept');
+  }
 }
 
 export interface OrganogramOfficeNameDto {

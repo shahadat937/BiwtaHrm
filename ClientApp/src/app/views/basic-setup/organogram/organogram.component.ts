@@ -20,6 +20,7 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   organograms:any[] = [];
   offices: OrganogramOfficeNameDto[] = [];
   departments: OrganogramDepartmentNameDto[] = [];
+  // departments: any[] = [];
   expandedOffices: { [key: string]: boolean } = {};
   expandedDesignations: { [key: string]: boolean } = {};
   expandedDepartments: { [key: string]: boolean } = {};
@@ -32,6 +33,7 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   }
   ngOnInit(): void {
     this.getOrganogram();
+    // this.getTopLavelDept();
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -90,6 +92,15 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
       isModal: isModal
     };
     const modalRef: BsModalRef = this.modalService.show(EmpProfileComponent, { initialState});
+  }
+
+
+  //--------------------------------
+
+  getTopLavelDept(){
+    this.organogramService.getTopLavelDept().subscribe(res=>{
+      this.departments = res;
+    })
   }
 }
 

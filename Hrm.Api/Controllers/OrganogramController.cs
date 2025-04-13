@@ -219,12 +219,117 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-topLavelDept")]
-        public async Task<ActionResult<List<DepartmentDto>>> GetTopLavelDept()
+        public async Task<ActionResult<List<DepartmentDto>>> GetTopLavelDept(int departmentId)
         {
-            var result = await _mediator.Send(new GetTopLavelDepartmentsRequest { });
+            var result = await _mediator.Send(new GetTopLavelDepartmentsRequest { DepartmentId = departmentId });
             return result;
 
         }
+
+        [HttpGet]
+        [Route("get-deparmentDetails")]
+        public async Task<ActionResult<IEnumerable<OrganogramDepartmentNameDto>>> GetDeparmentDetails(int id)
+        {
+            var departments = await _context.Department
+                .Include(d => d.SubDepartments) // Include SubDepartments under Departments
+                .Include(d => d.Designations) // Include Designations under Departments
+                    .ThenInclude(de => de.DesignationSetup) // Include DesignationSetup for Designations
+                .Include(d => d.Designations)
+                    .ThenInclude(de => de.EmpJobDetail)
+                    .ThenInclude(ejd => ejd.EmpBasicInfo)
+                .Include(d => d.Designations) // Include EmpOtherResponsibility
+                    .ThenInclude(de => de.EmpOtherResponsibility)
+                    .ThenInclude(eor => eor.EmpBasicInfo)
+                .Include(d => d.Section) // Include Sections under Departments
+                    .ThenInclude(s => s.SubSections) // Include SubSections under Sections
+                .Include(d => d.Section)
+                    .ThenInclude(s => s.Designations) // Include Designations under Sections
+                        .ThenInclude(de => de.DesignationSetup) // Include DesignationSetup for Section Designations
+                .ToListAsync();
+
+            var result = departments
+                .Where(d => d.UpperDepartmentId == id) // Only top-level departments
+                .Select(d => MapDepartment(d))
+                .ToList();
+
+            return Ok(result);
+        } 
+
+
+        private OrganogramDepartmentNameDto MapDepartment(Department department)
+        {
+            var departmentNameDto = new OrganogramDepartmentNameDto
+            {
+                Name = department.DepartmentName,
+                Designations = department.Designations
+                    .Where(x => x.SectionId == null)
+                    .OrderBy(x => x.MenuPosition)
+                    .Select(de => new OrganogramDesignationNameDto
+                    {
+                        Name = de.DesignationSetup.Name,
+                        EmployeeInfo = GetEmployeeInformation(de)
+                    }).ToList(),
+                Sections = department.Section != null
+                    ? department.Section
+                        .Where(s => s.UpperSectionId == null)
+                        .OrderBy(s => s.Sequence)
+                        .Select(s => MapSectionName(s))
+                        .ToList()
+                    : new List<OrganogramSectionNameDto>(),
+                SubDepartments = department.SubDepartments?.Select(sd => MapDepartmentName(sd)).ToList()
+                    ?? new List<OrganogramDepartmentNameDto>()
+            };
+
+            return departmentNameDto;
+        }
+
+        [HttpGet]
+        [Route("get-countDeparmentDesignationSection")]
+        public async Task<ActionResult<OrganogramDesignationDepartmentAndSectionCount>>  CountDeparmentDesignationSection(int departmentId)
+        {
+           var result = await _mediator.Send( new GetCountOfDepartmentDesignationSectionRequest{ DepartmentId = departmentId });
+           return result;
+        }
+
+        public async Task<ActionResult<OrganogramEmployeeInfoDto>>  GetEmployee(Designation designation)
+        {
+            var empJobDetail = designation.EmpJobDetail?.FirstOrDefault(x => x.ServiceStatus == true)?.EmpBasicInfo;
+            if (empJobDetail != null)
+            {
+                var empInfo = new OrganogramEmployeeInfoDto
+                {
+                    EmpId = empJobDetail.Id,
+                    EmployeeName = $"{empJobDetail.FirstName} {empJobDetail.LastName}"
+                };
+
+                return empInfo;
+            }
+
+            var empOtherResponsibility = designation.EmpOtherResponsibility?.FirstOrDefault(x => x.ServiceStatus == true);
+            if (empOtherResponsibility != null)
+            {
+                var empBasicInfo = empOtherResponsibility.EmpBasicInfo;
+                var responsibilityTypeName = _context.ResponsibilityType.FirstOrDefault(x => x.Id == empOtherResponsibility.ResponsibilityTypeId).Name;
+
+                if (empBasicInfo != null)
+                {
+                    var empInfo = new OrganogramEmployeeInfoDto
+                    {
+                        EmpId = empBasicInfo.Id,
+                        EmployeeName = responsibilityTypeName != null
+                        ? $"{empBasicInfo.FirstName} {empBasicInfo.LastName} ({responsibilityTypeName})"
+                        : $"{empBasicInfo.FirstName} {empBasicInfo.LastName}"
+                    };
+
+                    return empInfo;
+                }
+            }
+
+            return null;
+        }
+
+
+
 
 
 

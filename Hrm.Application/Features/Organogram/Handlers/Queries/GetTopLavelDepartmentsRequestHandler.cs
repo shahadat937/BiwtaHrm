@@ -26,8 +26,10 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
 
         public async Task<List<DepartmentDto>> Handle(GetTopLavelDepartmentsRequest request, CancellationToken cancellationToken)
         {
-            var topLavelDept = _DepartmentRepository.FilterWithInclude(x => x.UpperDepartmentId == null);
-            var departmentDtos = _mapper.Map<List<DepartmentDto>>(topLavelDept);
+            var departments = request.DepartmentId == 0
+      ? _DepartmentRepository.FilterWithInclude(x => x.UpperDepartmentId == null)
+      : _DepartmentRepository.FilterWithInclude(x => x.UpperDepartmentId == request.DepartmentId);
+            var departmentDtos = _mapper.Map<List<DepartmentDto>>(departments);
             return departmentDtos;
         }
     }

@@ -2,11 +2,12 @@ import { AfterViewInit, Component, Injectable, OnDestroy, OnInit } from '@angula
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { ConfirmService } from '../../../../../src/app/core/service/confirm.service';
 import { OrganogramDepartmentNameDto, OrganogramOfficeNameDto, OrganogramService } from '../service/organogram.service';
 import { Subscription } from 'rxjs';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { EmpProfileComponent } from '../../employee/manage-employee/emp-profile/emp-profile.component';
+import { SubDepartment } from '../model/sub-department';
 
 @Component({
   selector: 'app-organogram',
@@ -19,12 +20,15 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   subscription: Subscription[]=[]
   organograms:any[] = [];
   offices: OrganogramOfficeNameDto[] = [];
-  departments: OrganogramDepartmentNameDto[] = [];
-  // departments: any[] = [];
+  // departments: OrganogramDepartmentNameDto[] = [];
+  departments: any[] = [];
   expandedOffices: { [key: string]: boolean } = {};
   expandedDesignations: { [key: string]: boolean } = {};
   expandedDepartments: { [key: string]: boolean } = {};
   expandedSections: { [key: string]: boolean } = {};
+  isApiCalled : boolean = false;
+  toggleIcon = "+";
+  departmentToggleIcon = "+";
 
   constructor(
     public organogramService: OrganogramService,
@@ -32,8 +36,8 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   ) {
   }
   ngOnInit(): void {
-    this.getOrganogram();
-    // this.getTopLavelDept();
+    // this.getOrganogram();
+    this.getTopLavelDept(0);
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -55,8 +59,16 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     this.expandedOffices[officeName] = !this.expandedOffices[officeName];
   }
 
-  isOfficeExpanded(officeName: string): boolean {
-    return this.expandedOffices[officeName];
+  isOfficeExpanded(officeName: string, departmentId: number){
+   if(this.toggleIcon === '+'){
+    this.toggleIcon = '-'
+    this.deparmentDesignationSectionCountAvaialable(departmentId);
+   }
+   else{
+    this.toggleIcon = '+'
+    this.resetDepartmentCountById(departmentId);
+   }
+
   }
   
   toggleDesignationExpand(officeName: string): void {
@@ -71,7 +83,15 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     this.expandedDepartments[officeName] = !this.expandedDepartments[officeName];
   }
 
-  isDepartmentExpanded(officeName: string): boolean {
+  isDepartmentExpanded(officeName: string, departmentId : any) {
+    if(this.departmentToggleIcon === '+'){
+      this.getSubDepartment(departmentId);
+      this.departmentToggleIcon = '-'
+    }
+    else{
+      this.resetSubDepartments(departmentId);
+      this.departmentToggleIcon = '+'
+    }
     return this.expandedDepartments[officeName];
   }
   
@@ -97,10 +117,76 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
 
   //--------------------------------
 
-  getTopLavelDept(){
-    this.organogramService.getTopLavelDept().subscribe(res=>{
-      this.departments = res;
-    })
+  getTopLavelDept(deptId :any) {
+    this.organogramService.getTopLavelDept(deptId).subscribe(res => {
+
+      if (res && Array.isArray(res)) {
+        this.departments = res.map(dept => ({
+          departmentId: dept.departmentId,
+          departmentName: dept.departmentName,
+          designationCount: 0, // Initialize
+          departmentCount: 0,  // Initialize
+          sectionCount : 0,
+          subDepartments : []
+        }));
+      } 
+    });
   }
+
+  getSubDepartment(deptId: any) {
+    this.organogramService.getSubDept(deptId).subscribe(res => {
+      if (res && Array.isArray(res)) {
+        const index = this.departments.findIndex(d => d.departmentId === deptId);
+        if (index !== -1) {
+          this.departments[index].subDepartments = res.map(sub => ({
+            departmentId: sub.departmentId,
+            name: sub.departmentName
+          }));
+
+        }
+      }
+    });
+  }
+  
+
+  deparmentDesignationSectionCountAvaialable(departmentId: number) {
+  
+      this.organogramService.getDesiginationDepartmentSectionCount(departmentId).subscribe(res => {
+        const index = this.departments.findIndex(d => d.departmentId === departmentId);
+  
+        if (index !== -1) {
+          this.departments[index] = {
+            ...this.departments[index],
+            designationCount: res.designationCount,
+            departmentCount: res.departmentCount
+          };
+        }
+
+        console.log(this.departments);
+      });
+    
+  }
+
+  resetDepartmentCountById(departmentId: number) {
+    const index = this.departments.findIndex(d => d.departmentId === departmentId);
+    if (index !== -1) {
+      this.departments[index] = {
+        ...this.departments[index],
+        designationCount: 0,
+        departmentCount: 0
+      };
+    }
+  }
+
+  resetSubDepartments(deptId: number) {
+    const index = this.departments.findIndex(dept => dept.departmentId === deptId);
+    console.log(index);
+    if (index !== -1) {
+      this.departments[index].subDepartments = [];
+    }
+  }
+  
+  
+    
 }
 

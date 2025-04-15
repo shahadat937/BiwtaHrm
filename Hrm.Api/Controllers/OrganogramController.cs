@@ -291,42 +291,42 @@ namespace Hrm.Api.Controllers
            return result;
         }
 
-        public async Task<ActionResult<OrganogramEmployeeInfoDto>>  GetEmployee(Designation designation)
-        {
-            var empJobDetail = designation.EmpJobDetail?.FirstOrDefault(x => x.ServiceStatus == true)?.EmpBasicInfo;
-            if (empJobDetail != null)
-            {
-                var empInfo = new OrganogramEmployeeInfoDto
-                {
-                    EmpId = empJobDetail.Id,
-                    EmployeeName = $"{empJobDetail.FirstName} {empJobDetail.LastName}"
-                };
+        //public async Task<ActionResult<OrganogramEmployeeInfoDto>>  GetEmployee(Designation designation)
+        //{
+        //    var empJobDetail = designation.EmpJobDetail?.FirstOrDefault(x => x.ServiceStatus == true)?.EmpBasicInfo;
+        //    if (empJobDetail != null)
+        //    {
+        //        var empInfo = new OrganogramEmployeeInfoDto
+        //        {
+        //            EmpId = empJobDetail.Id,
+        //            EmployeeName = $"{empJobDetail.FirstName} {empJobDetail.LastName}"
+        //        };
 
-                return empInfo;
-            }
+        //        return empInfo;
+        //    }
 
-            var empOtherResponsibility = designation.EmpOtherResponsibility?.FirstOrDefault(x => x.ServiceStatus == true);
-            if (empOtherResponsibility != null)
-            {
-                var empBasicInfo = empOtherResponsibility.EmpBasicInfo;
-                var responsibilityTypeName = _context.ResponsibilityType.FirstOrDefault(x => x.Id == empOtherResponsibility.ResponsibilityTypeId).Name;
+        //    var empOtherResponsibility = designation.EmpOtherResponsibility?.FirstOrDefault(x => x.ServiceStatus == true);
+        //    if (empOtherResponsibility != null)
+        //    {
+        //        var empBasicInfo = empOtherResponsibility.EmpBasicInfo;
+        //        var responsibilityTypeName = _context.ResponsibilityType.FirstOrDefault(x => x.Id == empOtherResponsibility.ResponsibilityTypeId).Name;
 
-                if (empBasicInfo != null)
-                {
-                    var empInfo = new OrganogramEmployeeInfoDto
-                    {
-                        EmpId = empBasicInfo.Id,
-                        EmployeeName = responsibilityTypeName != null
-                        ? $"{empBasicInfo.FirstName} {empBasicInfo.LastName} ({responsibilityTypeName})"
-                        : $"{empBasicInfo.FirstName} {empBasicInfo.LastName}"
-                    };
+        //        if (empBasicInfo != null)
+        //        {
+        //            var empInfo = new OrganogramEmployeeInfoDto
+        //            {
+        //                EmpId = empBasicInfo.Id,
+        //                EmployeeName = responsibilityTypeName != null
+        //                ? $"{empBasicInfo.FirstName} {empBasicInfo.LastName} ({responsibilityTypeName})"
+        //                : $"{empBasicInfo.FirstName} {empBasicInfo.LastName}"
+        //            };
 
-                    return empInfo;
-                }
-            }
+        //            return empInfo;
+        //        }
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
 
 

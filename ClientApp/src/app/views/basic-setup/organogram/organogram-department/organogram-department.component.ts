@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { OrganogramDepartmentNameDto } from '../../service/organogram.service';
+import { OrganogramDepartmentNameDto, OrganogramService } from '../../service/organogram.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { EmpProfileComponent } from 'src/app/views/employee/manage-employee/emp-profile/emp-profile.component';
+import { EmpProfileComponent } from '../../../../../../src/app/views/employee/manage-employee/emp-profile/emp-profile.component';
 
 @Component({
   selector: 'app-organogram-department',
@@ -16,7 +16,7 @@ export class OrganogramDepartmentComponent {
   isSectionExpanded: boolean = false;
   
   constructor(
-    private modalService: BsModalService,
+    private modalService: BsModalService, public organogramService: OrganogramService
   ) {
   }
 
@@ -35,6 +35,37 @@ export class OrganogramDepartmentComponent {
   toggleSectionExpand(): void {
     this.isSectionExpanded = !this.isSectionExpanded;
   }
+
+  isSubDeparmentExtends(departmentId : number){
+
+    this.organogramService.getDesiginationDepartmentSectionCount(departmentId).subscribe(res=>{
+    this.department.subDepartmentCount = res.departmentCount;
+    this.department.designationCount = res.designationCount;
+    this.department.sectionCount = res.sectionCount;
+    console.log(res);
+    })
+
+  }
+  updateSubDepartments(departmentId: any) {
+    this.organogramService.getSubDept(departmentId).subscribe(res => {
+      if (res && Array.isArray(res)) {
+        this.department.subDepartments = res.map(sub => ({
+          departmentId: sub.departmentId,
+          name: sub.departmentName,
+          designations: [],         // Default value
+          subDepartments: [],       // Default value
+          sections: [],             // Default value
+          subDepartmentCount: 0,    // Default value
+          designationCount: 0,      // Default value
+          sectionCount: 0           // Default value
+        }));
+      }
+    });
+  }
+  
+  
+
+
 
   viewEmployeeProfile(id: number){
     const isModal = true;

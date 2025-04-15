@@ -31,8 +31,15 @@ export class OrganogramService {
         return this.http.get<OrganogramDepartmentNameDto[]>(this.baseUrl + '/organogram/get-organogramNamesOnly');
   }
 
-  getTopLavelDept(): Observable<any>{
-    return this.http.get<any>(this.baseUrl + '/organogram/get-topLavelDept');
+  getTopLavelDept(deptId : number){
+    return this.http.get<any>(this.baseUrl + '/organogram/get-topLavelDept?departmentId='+deptId);
+  }
+  getSubDept(deptId : number){
+    return this.http.get<any>(this.baseUrl + '/organogram/get-topLavelDept?departmentId='+deptId);
+  }
+
+  getDesiginationDepartmentSectionCount(departmentId : number){
+    return this.http.get<any>(this.baseUrl + '/organogram/get-countDeparmentDesignationSection?departmentId='+departmentId);
   }
 }
 
@@ -48,6 +55,10 @@ export interface OrganogramDepartmentNameDto {
   designations: OrganogramDesignationNameDto[];
   subDepartments: OrganogramDepartmentNameDto[];
   sections: OrganogramSectionNameDto[];
+  departmentId: number
+  subDepartmentCount : number,
+  designationCount : number,
+  sectionCount : number
 }
 
 export interface OrganogramDesignationNameDto {

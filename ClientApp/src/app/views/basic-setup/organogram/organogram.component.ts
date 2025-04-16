@@ -29,6 +29,7 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   isApiCalled : boolean = false;
   toggleIcon = "+";
   departmentToggleIcon = "+";
+  designationToggleIcon = "+"
 
   constructor(
     public organogramService: OrganogramService,
@@ -59,10 +60,10 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     this.expandedOffices[officeName] = !this.expandedOffices[officeName];
   }
 
-  isOfficeExpanded(officeName: string, departmentId: number){
+  isOfficeExpanded(officeName: string, departmentId: number, sectionId: number){
    if(this.toggleIcon === '+'){
     this.toggleIcon = '-'
-    this.deparmentDesignationSectionCountAvaialable(departmentId);
+    this.deparmentDesignationSectionCountAvaialable(departmentId, sectionId);
    }
    else{
     this.toggleIcon = '+'
@@ -127,7 +128,8 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
           designationCount: 0, // Initialize
           departmentCount: 0,  // Initialize
           sectionCount : 0,
-          subDepartments : []
+          subDepartments : [],
+          designations : []
         }));
       } 
     });
@@ -149,9 +151,9 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   }
   
 
-  deparmentDesignationSectionCountAvaialable(departmentId: number) {
+  deparmentDesignationSectionCountAvaialable(departmentId: number, sectionId: number) {
   
-      this.organogramService.getDesiginationDepartmentSectionCount(departmentId).subscribe(res => {
+      this.organogramService.getDesiginationDepartmentSectionCount(departmentId, sectionId).subscribe(res => {
         const index = this.departments.findIndex(d => d.departmentId === departmentId);
   
         if (index !== -1) {
@@ -185,6 +187,33 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
       this.departments[index].subDepartments = [];
     }
   }
+  
+  getEmployeeWithDesignation(departmentId: any, sectionId: any) {
+    if(this.designationToggleIcon === '+'){
+      this.organogramService.getEmployeeWithDesignation(departmentId, sectionId).subscribe((res: any[]) => {
+        const index = this.departments.findIndex(d => d.departmentId === departmentId);
+        if (index !== -1) {
+          this.departments[index].designations = res.map((item: any) => ({
+            name: item.name,
+            employeeInfo: item.employeeInfo
+          }));
+        }
+        this.designationToggleIcon = "-"
+      });
+    }
+    else{
+      this.designationToggleIcon = "+"
+      this.resetDesignations(departmentId);
+    }
+  }
+  
+  resetDesignations(departmentId: any) {
+    const index = this.departments.findIndex(d => d.departmentId === departmentId);
+    if (index !== -1) {
+      this.departments[index].designations = [];
+    }
+  }
+  
   
   
     

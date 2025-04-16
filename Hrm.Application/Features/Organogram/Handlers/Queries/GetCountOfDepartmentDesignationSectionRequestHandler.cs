@@ -29,7 +29,7 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
         public async Task<OrganogramDesignationDepartmentAndSectionCount> Handle(GetCountOfDepartmentDesignationSectionRequest request, CancellationToken cancellationToken)
         {
             var departmentCount = await _DepartmentRepository.Where(x => x.UpperDepartmentId == request.DepartmentId).CountAsync();
-            var designationCount = await _DesignationRepository.Where(x => x.DepartmentId == request.DepartmentId).CountAsync();
+            var designationCount = await _DesignationRepository.Where(x => x.DepartmentId == request.DepartmentId && (request.SectionId == 0 ? x.SectionId == null : x.SectionId == request.SectionId)).CountAsync();
             var sectionCount = await _SectionRepository.Where(x => x.DepartmentId == request.DepartmentId).CountAsync();
 
             var count = new OrganogramDesignationDepartmentAndSectionCount

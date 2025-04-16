@@ -38,8 +38,12 @@ export class OrganogramService {
     return this.http.get<any>(this.baseUrl + '/organogram/get-topLavelDept?departmentId='+deptId);
   }
 
-  getDesiginationDepartmentSectionCount(departmentId : number){
+  getDesiginationDepartmentSectionCount(departmentId : number, sectionId: number){
     return this.http.get<any>(this.baseUrl + '/organogram/get-countDeparmentDesignationSection?departmentId='+departmentId);
+  }
+
+  getEmployeeWithDesignation(departmentId : any, sectionId: any){
+    return this.http.get<any>(this.baseUrl + `/organogram/get-employeeInfoByDepartmentId?departmentId=${departmentId}&sectionId=${sectionId}`);
   }
 }
 

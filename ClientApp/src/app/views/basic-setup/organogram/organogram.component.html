@@ -7,7 +7,7 @@
             <ul>
                 <li class="office-view" *ngFor="let office of departments">
                     <div class="office-header">
-                        <label (click)="toggleOfficeExpand(office.departmentName)"><span class="toggle-icon" (click)="isOfficeExpanded(office.departmentName, office.departmentId)">{{toggleIcon}}</span>
+                        <label (click)="toggleOfficeExpand(office.departmentName)"><span class="toggle-icon" (click)="isOfficeExpanded(office.departmentName, office.departmentId,0)">{{toggleIcon}}</span>
                         <!-- <span class="toggle-icon">{{
                                 isOfficeExpanded(office.departmentName, office.departmentId) ? '-' : '+' }}</span> -->
                             <span class="office-text">&nbsp;{{ office.departmentName }}</span></label>
@@ -16,11 +16,11 @@
                         <li *ngIf="office.designationCount > 0">
                             <div class="designation-header">
                                 <label (click)="toggleDesignationExpand(office.departmentName)">
-                                    &nbsp;&nbsp;<span class="toggle-icon"></span>
+                                    &nbsp;&nbsp;<span class="toggle-icon" (click)="getEmployeeWithDesignation(office.departmentId,0)">{{designationToggleIcon}}</span>
                                     &nbsp;<span>Designation</span>
                                 </label>
                             </div>
-                            <ul *ngIf="isDesignationExpanded(office.name)">
+                            <ul>
                                 <li *ngFor="let designation of office.designations" class="designation-text">
                                     {{ designation.name }}
                                 <ul>

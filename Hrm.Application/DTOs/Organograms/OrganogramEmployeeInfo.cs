@@ -9,6 +9,12 @@ namespace Hrm.Application.DTOs.Organograms
     public class OrganogramEmployeeInfo
     {
         public string Name { get; set; }
-        public string? EmployeeInfo { get; set; }
+        public  EmployeeInfo? EmployeeInfo { get; set; }
+    }
+
+    public class EmployeeInfo
+    {
+        public int EmpId { get; set; }
+        public string? EmployeeName { get; set; }
     }
 }

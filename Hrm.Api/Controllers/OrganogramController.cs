@@ -142,9 +142,9 @@ namespace Hrm.Api.Controllers
                     .Where(x => x.SectionId == null)
                     .OrderBy(x => x.MenuPosition)
                     .Select(de => new OrganogramDesignationNameDto
-                {
-                    Name = de.DesignationSetup.Name,
-                    EmployeeInfo = GetEmployeeInformation(de)
+                    {
+                        Name = de.DesignationSetup.Name,
+                        EmployeeInfo = GetEmployeeInformation(de)
                     }).ToList(),
                 Sections = department.Section != null
                     ? department.Section
@@ -253,7 +253,7 @@ namespace Hrm.Api.Controllers
                 .ToList();
 
             return Ok(result);
-        } 
+        }
 
 
         private OrganogramDepartmentNameDto MapDepartment(Department department)
@@ -285,10 +285,13 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-countDeparmentDesignationSection")]
-        public async Task<ActionResult<OrganogramDesignationDepartmentAndSectionCount>>  CountDeparmentDesignationSection(int departmentId)
+        public async Task<ActionResult<OrganogramDesignationDepartmentAndSectionCount>> CountDeparmentDesignationSection(int departmentId, int sectionId)
         {
-           var result = await _mediator.Send( new GetCountOfDepartmentDesignationSectionRequest{ DepartmentId = departmentId });
-           return result;
+            var result = await _mediator.Send(new GetCountOfDepartmentDesignationSectionRequest { 
+                DepartmentId = departmentId,
+                SectionId = sectionId
+            });
+            return result;
         }
 
         //public async Task<ActionResult<OrganogramEmployeeInfoDto>>  GetEmployee(Designation designation)
@@ -328,10 +331,17 @@ namespace Hrm.Api.Controllers
         //    return null;
         //}
 
+        [HttpGet]
+        [Route("get-employeeInfoByDepartmentId")]
+        public async Task<ActionResult<List<OrganogramEmployeeInfo>>> GetEmployee(int departmentId, int sectionId)
+        {
+            var result = await _mediator.Send(new GetOrganogramEmployeeInfoRequest { 
+                DepartmentId = departmentId,
+                SectionId = sectionId
+            
+            });
+            return result;
 
-
-
-
-
+        }
     }
 }

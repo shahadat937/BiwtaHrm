@@ -1,7 +1,7 @@
 <li class="tree">
   <div class="department-header">
     <label (click)="toggleExpand()">
-      &nbsp;&nbsp;<span class="toggle-icon" (click)="isSubDeparmentExtends(department.departmentId)">{{ isExpanded ? '-' : '+' }}</span>
+      &nbsp;&nbsp;<span class="toggle-icon" (click)="isSubDeparmentExtends(department.departmentId, 0)">{{ isExpanded ? '-' : '+' }}</span>
       <span class="department-text">&nbsp;{{ department.name }}</span>
     </label>
   </div>
@@ -9,7 +9,7 @@
     <li *ngIf="department.designationCount > 0">
       <div class="designation-header">
         <label (click)="toggleDesignationExpand()">
-          &nbsp;&nbsp;<span class="toggle-icon">{{ isDesignationExpanded ? '-' : '+' }}</span>
+          &nbsp;&nbsp;<span class="toggle-icon" (click)="getEmployeeWithDesignation(department.departmentId, 0)">{{ isDesignationExpanded ? '-' : '+' }}</span>
           &nbsp;<span>Designation</span>
         </label>
       </div>

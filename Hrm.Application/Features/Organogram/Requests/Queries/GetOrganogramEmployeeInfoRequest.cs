@@ -12,5 +12,6 @@ namespace Hrm.Application.Features.Organogram.Requests.Queries
     public class GetOrganogramEmployeeInfoRequest : IRequest<List<OrganogramEmployeeInfo>>
     {
         public int? DepartmentId { get; set; }
+        public int? SectionId { get; set; }
     }
 }

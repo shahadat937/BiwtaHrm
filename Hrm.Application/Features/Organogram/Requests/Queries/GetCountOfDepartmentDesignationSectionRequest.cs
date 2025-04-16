@@ -11,6 +11,7 @@ namespace Hrm.Application.Features.Organogram.Requests.Queries
     public class GetCountOfDepartmentDesignationSectionRequest: IRequest<OrganogramDesignationDepartmentAndSectionCount>
     {
         public int DepartmentId { get; set; }
+        public int? SectionId { get; set; }
 
     }
 }

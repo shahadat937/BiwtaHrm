@@ -36,9 +36,9 @@ export class OrganogramDepartmentComponent {
     this.isSectionExpanded = !this.isSectionExpanded;
   }
 
-  isSubDeparmentExtends(departmentId : number){
+  isSubDeparmentExtends(departmentId : number, sectionId: number){
 
-    this.organogramService.getDesiginationDepartmentSectionCount(departmentId).subscribe(res=>{
+    this.organogramService.getDesiginationDepartmentSectionCount(departmentId, sectionId).subscribe(res=>{
     this.department.subDepartmentCount = res.departmentCount;
     this.department.designationCount = res.designationCount;
     this.department.sectionCount = res.sectionCount;
@@ -62,6 +62,19 @@ export class OrganogramDepartmentComponent {
       }
     });
   }
+
+  getEmployeeWithDesignation(departmentId: any, sectionId: any) {
+    console.log(this.department);
+  
+    this.organogramService.getEmployeeWithDesignation(departmentId, sectionId).subscribe((res: any[]) => {
+      this.department.designations = res.map((item: any) => ({
+        name: item.name,
+        employeeInfo: item.employeeInfo
+      }));
+    });
+  }
+  
+   
   
   
 

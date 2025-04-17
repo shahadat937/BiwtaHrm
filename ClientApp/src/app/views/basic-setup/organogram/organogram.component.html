@@ -7,16 +7,14 @@
             <ul>
                 <li class="office-view" *ngFor="let office of departments">
                     <div class="office-header">
-                        <label (click)="toggleOfficeExpand(office.departmentName)"><span class="toggle-icon" (click)="isOfficeExpanded(office.departmentName, office.departmentId,0)">{{toggleIcon}}</span>
-                        <!-- <span class="toggle-icon">{{
-                                isOfficeExpanded(office.departmentName, office.departmentId) ? '-' : '+' }}</span> -->
+                        <label (click)="isOfficeExpanded(office.departmentName, office.departmentId,0)"><span class="toggle-icon">{{toggleIcon}}</span>
                             <span class="office-text">&nbsp;{{ office.departmentName }}</span></label>
                     </div>
                     <ul>
                         <li *ngIf="office.designationCount > 0">
                             <div class="designation-header">
-                                <label (click)="toggleDesignationExpand(office.departmentName)">
-                                    &nbsp;&nbsp;<span class="toggle-icon" (click)="getEmployeeWithDesignation(office.departmentId,0)">{{designationToggleIcon}}</span>
+                                <label  (click)="getEmployeeWithDesignation(office.departmentId,0)">
+                                    &nbsp;&nbsp;<span class="toggle-icon">{{designationToggleIcon}}</span>
                                     &nbsp;<span>Designation</span>
                                 </label>
                             </div>
@@ -32,8 +30,8 @@
                         <li *ngIf="office.departmentCount > 0">
                           
                             <div class="designation-header">
-                                <label (click)="toggleDepartmentExpand(office.name)">
-                                    &nbsp;&nbsp;<span class="toggle-icon" (click)="isDepartmentExpanded(office.departmentName, office.departmentId)">{{departmentToggleIcon}}</span>
+                                <label (click)="isDepartmentExpanded(office.departmentName, office.departmentId)">
+                                    &nbsp;&nbsp;<span class="toggle-icon">{{departmentToggleIcon}}</span>
                                     &nbsp;<span>Department</span>
                                 </label>
                             </div>
@@ -45,8 +43,8 @@
                         
                         <li *ngIf="office.sectionCount > 0">
                             <div class="designation-header">
-                                <label (click)="toggleSectionExpand(office.departmentId)">
-                                    &nbsp;&nbsp;<span class="toggle-icon"></span>
+                                <label (click)="toggleSectionExpand(office.departmentId,0)">
+                                    &nbsp;&nbsp;<span class="toggle-icon">{{sectionToggleIcon}}</span>
                                     &nbsp;<span>Section</span>
                                 </label>
                             </div>

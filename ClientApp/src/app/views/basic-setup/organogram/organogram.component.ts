@@ -30,6 +30,7 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   toggleIcon = "+";
   departmentToggleIcon = "+";
   designationToggleIcon = "+"
+  sectionToggleIcon = "+"
 
   constructor(
     public organogramService: OrganogramService,
@@ -97,9 +98,15 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   }
   
 
-  toggleSectionExpand(departmentId : number): void {
-    console.log(departmentId);
-    // this.expandedSections[officeName] = !this.expandedSections[officeName];
+  toggleSectionExpand(departmentId : number,  sectionId: number): void {
+    if(this.sectionToggleIcon === '+'){
+      this.getSectionByDepartmentId(departmentId,sectionId);
+      this.sectionToggleIcon = '-'
+    }
+    else{
+      this.sectionToggleIcon = '+'
+      this.resetSectionsByDepartmentId(departmentId);
+    }
   }
 
   isSectionExpanded(officeName: string): boolean {
@@ -130,7 +137,8 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
           departmentCount: 0,  // Initialize
           sectionCount : 0,
           subDepartments : [],
-          designations : []
+          designations : [],
+          sections: []
         }));
       } 
     });
@@ -161,7 +169,8 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
           this.departments[index] = {
             ...this.departments[index],
             designationCount: res.designationCount,
-            departmentCount: res.departmentCount
+            departmentCount: res.departmentCount,
+            sectionCount : res.sectionCount
           };
         }
 
@@ -176,7 +185,8 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
       this.departments[index] = {
         ...this.departments[index],
         designationCount: 0,
-        departmentCount: 0
+        departmentCount: 0,
+        sectionCount : 0
       };
     }
   }
@@ -212,6 +222,29 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     const index = this.departments.findIndex(d => d.departmentId === departmentId);
     if (index !== -1) {
       this.departments[index].designations = [];
+    }
+  }
+
+
+  getSectionByDepartmentId(departmentId: number, sectionId: number){
+    const index = this.departments.findIndex(dept => dept.departmentId === departmentId);
+    this.organogramService.getSectionByDepartmentId(departmentId,sectionId).subscribe(res=>{
+      if (index !== -1) {
+        this.departments[index].sections = res.map((item: any) => ({
+          name: item.sectionName,
+          sectionId : item.sectionId,
+          departmentId : item.departmentId
+        }));
+      }
+    })
+
+  }
+  
+
+  resetSectionsByDepartmentId(departmentId: number) {
+    const index = this.departments.findIndex(dept => dept.departmentId === departmentId);
+    if (index !== -1) {
+      this.departments[index].sections = [];
     }
   }
   

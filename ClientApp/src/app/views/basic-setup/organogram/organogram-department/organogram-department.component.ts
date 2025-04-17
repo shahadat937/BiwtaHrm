@@ -23,14 +23,17 @@ export class OrganogramDepartmentComponent {
 
   toggleExpand(): void {
     this.isExpanded = !this.isExpanded;
+    this.isSubDeparmentExtends(this.department.departmentId, 0)
   }
 
   toggleDesignationExpand(): void {
     this.isDesignationExpanded = !this.isDesignationExpanded;
+    this.getEmployeeWithDesignation(this.department.departmentId, 0)
   }
   
   toggleDepartmentExpand(): void {
     this.isDepartmentExpanded = !this.isDepartmentExpanded;
+    this.updateSubDepartments(this.department.departmentId)
   }
   
   toggleSectionExpand(): void {

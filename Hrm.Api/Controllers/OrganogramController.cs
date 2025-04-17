@@ -3,6 +3,7 @@ using Hrm.Application.DTOs.Department;
 using Hrm.Application.DTOs.Designation;
 using Hrm.Application.DTOs.Office;
 using Hrm.Application.DTOs.Organograms;
+using Hrm.Application.DTOs.Section;
 using Hrm.Application.Features.Organogram.Requests.Queries;
 using Hrm.Domain;
 using Hrm.Persistence;
@@ -343,5 +344,20 @@ namespace Hrm.Api.Controllers
             return result;
 
         }
+
+        [HttpGet]
+        [Route("get-sectionByDeparmentId")]
+        public async Task<ActionResult<List<SectionDto>>> GetSection(int departmentId, int upperSectionId)
+        {
+            var result = await _mediator.Send(new GetSectionsByDepatmentIdRequest
+            {
+                DepartmentId = departmentId,
+                UpperSectionId = upperSectionId
+
+            });
+            return result;
+
+        }
+
     }
 }

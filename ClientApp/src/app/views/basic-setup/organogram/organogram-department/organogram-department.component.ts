@@ -3,6 +3,7 @@ import { OrganogramDepartmentNameDto, OrganogramService } from '../../service/or
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { EmpProfileComponent } from '../../../../../../src/app/views/employee/manage-employee/emp-profile/emp-profile.component';
 
+
 @Component({
   selector: 'app-organogram-department',
   templateUrl: './organogram-department.component.html',
@@ -34,15 +35,14 @@ export class OrganogramDepartmentComponent {
   
   toggleSectionExpand(): void {
     this.isSectionExpanded = !this.isSectionExpanded;
+    this.getSectionByDepartment(this.department.departmentId,0);
   }
 
   isSubDeparmentExtends(departmentId : number, sectionId: number){
-
     this.organogramService.getDesiginationDepartmentSectionCount(departmentId, sectionId).subscribe(res=>{
     this.department.subDepartmentCount = res.departmentCount;
     this.department.designationCount = res.designationCount;
     this.department.sectionCount = res.sectionCount;
-    console.log(res);
     })
 
   }
@@ -63,9 +63,7 @@ export class OrganogramDepartmentComponent {
     });
   }
 
-  getEmployeeWithDesignation(departmentId: any, sectionId: any) {
-    console.log(this.department);
-  
+  getEmployeeWithDesignation(departmentId: any, sectionId: any) { 
     this.organogramService.getEmployeeWithDesignation(departmentId, sectionId).subscribe((res: any[]) => {
       this.department.designations = res.map((item: any) => ({
         name: item.name,
@@ -73,12 +71,17 @@ export class OrganogramDepartmentComponent {
       }));
     });
   }
-  
-   
-  
-  
 
-
+  getSectionByDepartment(departmentId: number, upperSectionId: any){
+    this.organogramService.getSectionByDepartmentId(departmentId, upperSectionId).subscribe(res=>{
+     console.log(res);
+      this.department.sections = res.map((item: any)=>({        
+        name: item.sectionName,
+        sectionId : item.sectionId,
+        departmentId : item.departmentId
+      }))
+    })
+  }
 
   viewEmployeeProfile(id: number){
     const isModal = true;

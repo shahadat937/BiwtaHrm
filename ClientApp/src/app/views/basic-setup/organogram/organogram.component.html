@@ -45,12 +45,12 @@
                         
                         <li *ngIf="office.sectionCount > 0">
                             <div class="designation-header">
-                                <label (click)="toggleSectionExpand(office.name)">
+                                <label (click)="toggleSectionExpand(office.departmentId)">
                                     &nbsp;&nbsp;<span class="toggle-icon"></span>
                                     &nbsp;<span>Section</span>
                                 </label>
                             </div>
-                            <ul *ngIf="isSectionExpanded(office.name)">
+                            <ul>
                                 <app-organogram-section *ngFor="let section of office.sections"
                                     [section]="section"></app-organogram-section>
                             </ul>

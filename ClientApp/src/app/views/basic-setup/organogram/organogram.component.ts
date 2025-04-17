@@ -97,8 +97,9 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   }
   
 
-  toggleSectionExpand(officeName: string): void {
-    this.expandedSections[officeName] = !this.expandedSections[officeName];
+  toggleSectionExpand(departmentId : number): void {
+    console.log(departmentId);
+    // this.expandedSections[officeName] = !this.expandedSections[officeName];
   }
 
   isSectionExpanded(officeName: string): boolean {
@@ -214,7 +215,8 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     }
   }
   
-  
+
+ 
   
     
 }

@@ -6,7 +6,7 @@
       </label>
     </div>
     <ul *ngIf="isExpanded">
-      <li *ngIf="section.designations.length">
+      <li *ngIf="section.designationCount > 0">
         <div class="designation-header">
           <label (click)="toggleDesignationExpand()">
             &nbsp;&nbsp;<span class="toggle-icon">{{ isDesignationExpanded ? '-' : '+' }}</span>
@@ -22,7 +22,7 @@
           </li>
         </ul>
       </li>
-      <div *ngIf="section.subSections.length">
+      <div *ngIf="section.sectionCount > 0">
         <li>
           <div class="sub-department-header">
             <label (click)="toggleSectionExpand()">

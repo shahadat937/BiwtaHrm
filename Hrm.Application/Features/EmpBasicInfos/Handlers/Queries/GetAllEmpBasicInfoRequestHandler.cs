@@ -85,19 +85,25 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
                 FirstName = x.EmpBasicInfo.FirstName,
                 LastName = x.EmpBasicInfo.LastName,
                 DepartmentName = x.Department.DepartmentName,
+                DepartmentId = x.DepartmentId,
                 SectionName = x.Section.SectionName,
+                SectionId = x.SectionId,
                 DesignationName = x.ResponsibilityType != null && !string.IsNullOrEmpty(x.ResponsibilityType.Name)
                         ? $"{x.Designation.DesignationSetup.Name} ({x.ResponsibilityType.Name})"
                         : x.Designation.DesignationSetup.Name,
+                DesignationId = x.DesignationId,
+                AdditionalResponsibilityId = x.ResponsibilityTypeId,
+                AdditionalResponsibilityName = x.ResponsibilityType.Name,
                 EmpPhotoName = x.EmpBasicInfo.EmpPhotoSign.FirstOrDefault().PhotoUrl,
                 UserStatus = true,
             }).ToListAsync(cancellationToken);
 
             var combinedResult = empBasicInfoResultData
                 .Concat(empOtherResponsibilityResultData)
-                .OrderBy(x => x.DepartmentName)
-                    .ThenBy(x => x.SectionName)
-                        .ThenBy(x => x.DesignationName)
+                .OrderByDescending(x => x.DepartmentId.HasValue)
+                    .ThenBy(x => x.DepartmentName)
+                        .ThenBy(x => x.SectionName)
+                            .ThenBy(x => x.DesignationName)
                 .ToList();
 
 

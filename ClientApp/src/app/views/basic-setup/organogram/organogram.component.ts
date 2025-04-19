@@ -32,6 +32,10 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
   designationToggleIcon = "+"
   sectionToggleIcon = "+"
 
+  toggleIcons: { [key: number]: string } = {};
+departmentToggleIcons: { [key: number]: string } = {};
+designationToggleIcons: { [key: number]: string } = {};
+sectionToggleIcons: { [key: number]: string } = {};
   constructor(
     public organogramService: OrganogramService,
     private modalService: BsModalService,
@@ -61,17 +65,18 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     this.expandedOffices[officeName] = !this.expandedOffices[officeName];
   }
 
-  isOfficeExpanded(officeName: string, departmentId: number, sectionId: number){
-   if(this.toggleIcon === '+'){
-    this.toggleIcon = '-'
-    this.deparmentDesignationSectionCountAvaialable(departmentId, sectionId);
-   }
-   else{
-    this.toggleIcon = '+'
-    this.resetDepartmentCountById(departmentId);
-   }
-
+  isOfficeExpanded(officeName: string, departmentId: number, sectionId: number) {
+    const currentIcon = this.toggleIcons[departmentId] || '+';
+  
+    if (currentIcon === '+') {
+      this.toggleIcons[departmentId] = '-';
+      this.deparmentDesignationSectionCountAvaialable(departmentId, sectionId);
+    } else {
+      this.toggleIcons[departmentId] = '+';
+      this.resetDepartmentCountById(departmentId);
+    }
   }
+  
   
   toggleDesignationExpand(officeName: string): void {
     this.expandedDesignations[officeName] = !this.expandedDesignations[officeName];
@@ -85,29 +90,33 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     this.expandedDepartments[officeName] = !this.expandedDepartments[officeName];
   }
 
-  isDepartmentExpanded(officeName: string, departmentId : any) {
-    if(this.departmentToggleIcon === '+'){
+  isDepartmentExpanded(officeName: string, departmentId: number) {
+    const currentIcon = this.departmentToggleIcons[departmentId] || '+';
+  
+    if (currentIcon === '+') {
       this.getSubDepartment(departmentId);
-      this.departmentToggleIcon = '-'
-    }
-    else{
+      this.departmentToggleIcons[departmentId] = '-';
+    } else {
       this.resetSubDepartments(departmentId);
-      this.departmentToggleIcon = '+'
+      this.departmentToggleIcons[departmentId] = '+';
     }
+  
     return this.expandedDepartments[officeName];
   }
   
 
-  toggleSectionExpand(departmentId : number,  sectionId: number): void {
-    if(this.sectionToggleIcon === '+'){
-      this.getSectionByDepartmentId(departmentId,sectionId);
-      this.sectionToggleIcon = '-'
-    }
-    else{
-      this.sectionToggleIcon = '+'
+  toggleSectionExpand(departmentId: number, sectionId: number): void {
+    const currentIcon = this.sectionToggleIcons[departmentId] || '+';
+  
+    if (currentIcon === '+') {
+      this.getSectionByDepartmentId(departmentId, sectionId);
+      this.sectionToggleIcons[departmentId] = '-';
+    } else {
       this.resetSectionsByDepartmentId(departmentId);
+      this.sectionToggleIcons[departmentId] = '+';
     }
   }
+  
 
   isSectionExpanded(officeName: string): boolean {
     return this.expandedSections[officeName];
@@ -199,8 +208,11 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
     }
   }
   
-  getEmployeeWithDesignation(departmentId: any, sectionId: any) {
-    if(this.designationToggleIcon === '+'){
+
+  getEmployeeWithDesignation(departmentId: number, sectionId: number) {
+    const currentIcon = this.designationToggleIcons[departmentId] || '+';
+  
+    if (currentIcon === '+') {
       this.organogramService.getEmployeeWithDesignation(departmentId, sectionId).subscribe((res: any[]) => {
         const index = this.departments.findIndex(d => d.departmentId === departmentId);
         if (index !== -1) {
@@ -209,14 +221,14 @@ export class OrganogramComponent implements OnInit, OnDestroy  {
             employeeInfo: item.employeeInfo
           }));
         }
-        this.designationToggleIcon = "-"
+        this.designationToggleIcons[departmentId] = '-';
       });
-    }
-    else{
-      this.designationToggleIcon = "+"
+    } else {
+      this.designationToggleIcons[departmentId] = '+';
       this.resetDesignations(departmentId);
     }
   }
+  
   
   resetDesignations(departmentId: any) {
     const index = this.departments.findIndex(d => d.departmentId === departmentId);

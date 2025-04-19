@@ -7,14 +7,14 @@
             <ul>
                 <li class="office-view" *ngFor="let office of departments">
                     <div class="office-header">
-                        <label (click)="isOfficeExpanded(office.departmentName, office.departmentId,0)"><span class="toggle-icon">{{toggleIcon}}</span>
+                        <label (click)="isOfficeExpanded(office.departmentName, office.departmentId,0)"><span class="toggle-icon">{{ toggleIcons[office.departmentId] || '+' }}</span>
                             <span class="office-text">&nbsp;{{ office.departmentName }}</span></label>
                     </div>
                     <ul>
                         <li *ngIf="office.designationCount > 0">
                             <div class="designation-header">
                                 <label  (click)="getEmployeeWithDesignation(office.departmentId,0)">
-                                    &nbsp;&nbsp;<span class="toggle-icon">{{designationToggleIcon}}</span>
+                                    &nbsp;&nbsp;<span class="toggle-icon">{{ designationToggleIcons[office.departmentId] || '+' }}</span>
                                     &nbsp;<span>Designation</span>
                                 </label>
                             </div>
@@ -31,7 +31,7 @@
                           
                             <div class="designation-header">
                                 <label (click)="isDepartmentExpanded(office.departmentName, office.departmentId)">
-                                    &nbsp;&nbsp;<span class="toggle-icon">{{departmentToggleIcon}}</span>
+                                    &nbsp;&nbsp;<span class="toggle-icon">{{ departmentToggleIcons[office.departmentId] || '+' }}</span>
                                     &nbsp;<span>Department</span>
                                 </label>
                             </div>
@@ -44,7 +44,7 @@
                         <li *ngIf="office.sectionCount > 0">
                             <div class="designation-header">
                                 <label (click)="toggleSectionExpand(office.departmentId,0)">
-                                    &nbsp;&nbsp;<span class="toggle-icon">{{sectionToggleIcon}}</span>
+                                    &nbsp;&nbsp;<span class="toggle-icon">{{ sectionToggleIcons[office.departmentId] || '+' }}</span>
                                     &nbsp;<span>Section</span>
                                 </label>
                             </div>

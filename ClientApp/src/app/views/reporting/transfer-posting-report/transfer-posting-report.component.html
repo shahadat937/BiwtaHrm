@@ -1,1 +1,178 @@
-<p>transfer-posting-report works!</p>
+<c-card>
+    <c-card-header class="d-flex justify-content-between">
+        <h5>Report on Employee Transfer & Posting</h5>
+        <button mat-raised-button color="primary" type="button" (click)="printSection()" [disabled]="this.pagination.length == 0">
+          <mat-icon>print</mat-icon> Print
+        </button>
+    </c-card-header>
+    <c-card-body>
+        <div cRow [gutter]="2" class="mb-2">   
+            
+            <c-col [md]="3">
+                <label cLabel for="departmentStatus">Department Status<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                <select [(ngModel)]="departmentStatus" name="departmentStatus" #DepartmentStatus="ngModel"
+                    cFormControl id="departmentStatus" aria-label="Default select example" cSelect
+                    (change)="onDepartmentSelect(fromDepartmentId, true)">
+                    <option [ngValue]=0>Select Status</option>
+                    <option [ngValue]=null>Pending</option>
+                    <option [ngValue]=true>Released</option>
+                    <option [ngValue]=false>Not Release</option>
+                </select>
+                </div>
+            </c-col>
+            <c-col [md]="3">
+                <label cLabel for="sectionStatus">Section Status<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                <select [(ngModel)]="sectionStatus" name="sectionStatus" #SectionStatus="ngModel"
+                    cFormControl id="sectionStatus" aria-label="Default select example" cSelect
+                    (change)="onDepartmentSelect(fromDepartmentId, true)">
+                    <option [ngValue]=0>Select Status</option>
+                    <option [ngValue]=null>Pending</option>
+                    <option [ngValue]=true>Joined</option>
+                    <option [ngValue]=false>Not Joined</option>
+                </select>
+                </div>
+            </c-col>
+
+            <c-col [md]="3">
+              <label cLabel for="Department">From Department<span class="text-danger"></span></label>
+              <div class="input-wrapper">
+                <select (change)="onDepartmentSelect(fromDepartmentId, true)"
+                    [(ngModel)]="fromDepartmentId" name="fromDepartmentId" #Department="ngModel"
+                    cFormControl id="Department" aria-label="Default select example" cSelect>
+                    <option [ngValue]=0>Select Department</option>
+        
+                    @for(department of departments; track department.id;let index=$index) {
+                    <option [value]="department.id">
+                    {{ department.name }}
+                    </option>
+                    }
+                </select>
+              </div>
+          </c-col>
+          
+          <c-col [md]="3">
+              <label cLabel for="sectionId">From Section<span class="text-danger"></span></label>
+              <div class="input-wrapper">
+                <select [(ngModel)]="fromSectionId" name="fromSectionId" #Section="ngModel"
+                    cFormControl id="sectionId" aria-label="Default select example" cSelect
+                    (change)="onSectionSelect(true)">
+                    <option [ngValue]=0>Select Section</option>
+        
+                    @for(section of fromSections; track section.id;let index=$index) {
+                    <option [value]="section.id">
+                    {{ section.name }}
+                    </option>
+                    }
+                </select>
+              </div>
+          </c-col>
+          
+            <c-col [md]="3">
+                <label cLabel for="ToDepartment">To Department<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                <select (change)="onDepartmentSelect(toDepartmentId, false)"
+                    [(ngModel)]="toDepartmentId" name="toDepartmentId" #ToDepartment="ngModel"
+                    cFormControl id="ToDepartment" aria-label="Default select example" cSelect>
+                    <option [ngValue]=0>Select Department</option>
+        
+                    @for(department of departments; track department.id;let index=$index) {
+                    <option [value]="department.id">
+                    {{ department.name }}
+                    </option>
+                    }
+                </select>
+                </div>
+            </c-col>
+            
+            <c-col [md]="3">
+                <label cLabel for="tosectionId">To Section<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                <select [(ngModel)]="toSectionId" name="toSectionId" #Section="ngModel"
+                    cFormControl id="tosectionId" aria-label="Default select example" cSelect
+                    (change)="onSectionSelect(false)">
+                    <option [ngValue]=0>Select Section</option>
+        
+                    @for(section of toSections; track section.id;let index=$index) {
+                    <option [value]="section.id">
+                    {{ section.name }}
+                    </option>
+                    }
+                </select>
+                </div>
+            </c-col>
+        </div>
+        
+        <div id="report_heading" class="d-none">
+          <div cRow class="justify-content-center">
+            <c-col [md]="1" style="margin-top: 25px; margin-right: 20px;">
+              <img src="{{biwtaLogo}}" width="75px">
+            </c-col>
+            <c-col [md]="9" style="text-align: center;">
+              <h4 style="font-size: 20px;">BANGLADESH INLAND WATER TRANSPORT AUTHORITY</h4>
+              <p style="font-size: 13px;">BIWTA BHABAN, 141-143, MOTIJHEEL C/A, POST BOX 76, DHAKA-1000, BANGLADESH</p>
+              <!-- <h5>Employee List: <label *ngIf="departmentName">{{departmentName}}</label><label *ngIf="sectionName">/{{sectionName}}</label><label *ngIf="!departmentName && !sectionName">All</label></h5> -->
+            </c-col>
+            <div style="border-bottom: 1px solid black; display: inline-block; width: 100%;"></div>
+          </div>
+        </div>
+  
+        <c-card class="mt-2" id="tableData">
+            <c-card-body class="p-0">
+                <div class="card">
+                    <p-table 
+                        [value]="employees"
+                        [scrollable]="true" 
+                        rowGroupMode="subheader" 
+                        groupRowsBy="groupKey">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Designation</th>
+                                    <th>Section</th>
+                                    <th>Mobile</th>
+                                    <th>Join Date</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="groupheader" let-employee>
+                                <tr pRowGroupHeader>
+                                    <td colspan="5" class="group-header">
+                                        <span><b>Department: </b>{{employee.departmentName || 'Unassigned'}}<span *ngIf="employee.sectionName"><b> Section: </b>{{employee.sectionName}}</span> <b> Total: </b>{{employee.total}}</span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-employee let-rowIndex="rowIndex">
+                                <tr>
+                                    <td>
+                                        {{employee.empName}}
+                                    </td>
+                                    <td>
+                                        {{employee.designationName}}
+                                    </td>
+                                    <td>
+                                        {{employee.sectionName}}
+                                    </td>
+                                    <td>
+                                        {{employee.mobile}}
+                                    </td>
+                                    <td class="joinDate">
+                                        {{employee.joinDate | date:'dd-MM-yyyy'}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                    </p-table>
+                </div>
+            </c-card-body>
+            <c-card-footer class="text-medium-emphasis p-0">
+                <mat-paginator 
+                  [length]="pagination.length"
+                  [pageSize]="pagination.pageSize"
+                  [pageSizeOptions]="pagination.pageSizeOptions"
+                  [showFirstLastButtons]="true"
+                  (page)="onPageChange($event)">
+                </mat-paginator>    
+            </c-card-footer>
+        </c-card>
+    </c-card-body>
+  </c-card>

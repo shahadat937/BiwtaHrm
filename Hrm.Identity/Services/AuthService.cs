@@ -27,11 +27,12 @@ namespace Hrm.Identity.Services
         private readonly IHrmRepository<Domain.AspNetUsers> _aspNetUserRepository;
         private readonly IHrmRepository<Domain.AspNetUserRoles> _aspNetUserRolesRepository;
         private readonly IHrmRepository<Domain.AspNetRoles> _aspNetRolesRepository;
+        private readonly IHrmRepository<Domain.EmpJobDetail> _empJobDetailsRepository;
         private readonly JwtSettings _jwtSettings;
 
         public AuthService(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager,
             IOptions<JwtSettings> jwtSettings,
-            SignInManager<ApplicationUser> signInManager, IHrmRepository<Domain.AspNetUsers> aspNetUserRepository, IHrmRepository<Domain.AspNetUserRoles> aspNetUserRolesRepository, IHrmRepository<Domain.AspNetRoles> aspNetRolesRepository)
+            SignInManager<ApplicationUser> signInManager, IHrmRepository<Domain.AspNetUsers> aspNetUserRepository, IHrmRepository<Domain.AspNetUserRoles> aspNetUserRolesRepository, IHrmRepository<Domain.AspNetRoles> aspNetRolesRepository, IHrmRepository<Domain.EmpJobDetail> empJobDetailsRepository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -40,6 +41,7 @@ namespace Hrm.Identity.Services
             _aspNetUserRepository = aspNetUserRepository;
             _aspNetUserRolesRepository = aspNetUserRolesRepository;
             _aspNetRolesRepository = aspNetRolesRepository;
+            _empJobDetailsRepository = empJobDetailsRepository;
         }
 
         public async Task<AuthResponse> Login(AuthRequest request)
@@ -73,6 +75,23 @@ namespace Hrm.Identity.Services
 
             string roleName = _aspNetRolesRepository.Where(x => x.Id == role).Select(x => x.Name).FirstOrDefault();
 
+            int? departmentId = null;
+            int? designationId = null;
+            int? sectionId = null;
+
+            var jobDetails = _empJobDetailsRepository
+                 .Where(x => x.EmpId == user.EmpId)
+                 .Select(x => new { x.DepartmentId, x.DesignationId, x.SectionId })
+                 .FirstOrDefault();
+
+            if (jobDetails != null)
+            {
+                 departmentId = jobDetails.DepartmentId;
+                 designationId = jobDetails.DesignationId;
+                 sectionId = jobDetails.SectionId;
+            }
+
+
             JwtSecurityToken jwtSecurityToken = await GenerateToken(user,request.Remember);
 
             AuthResponse response = new AuthResponse
@@ -83,7 +102,10 @@ namespace Hrm.Identity.Services
                 Username = user.UserName,
                 Role = roleName,
                 BranchId = user.BranchId,
-                EmpId = user.EmpId
+                EmpId = user.EmpId,
+                DepartmentId = departmentId,
+                DesignationId = departmentId,
+                SectionId = sectionId
             };
 
             return response;

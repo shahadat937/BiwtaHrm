@@ -131,6 +131,8 @@ using Hrm.Application.DTOs.PendingDevice;
 using Hrm.Application.DTOs.AttDevice;
 using Hrm.Application.DTOs.Notification;
 using Hrm.Application.DTOs.FormSection;
+using Hrm.Application.DTOs.ShiftType;
+using Hrm.Application.DTOs.ShiftSetting;
 
 
 
@@ -775,6 +777,14 @@ namespace Hrm.Application.Profiles
             CreateMap<Notification, NotificationDto>()
                 .ForMember(dest => dest.FromEmpName, opt => opt.MapFrom(src => src.FromEmpBasicInfo.FirstName + ' ' + src.FromEmpBasicInfo.LastName))
                 .ForMember(dest => dest.EmpIdCard, opt => opt.MapFrom(src => src.FromEmpBasicInfo.IdCardNo)).ReverseMap();
+
+
+            CreateMap<ShiftType, CreateShiftTypeDto>().ReverseMap();
+            CreateMap<ShiftType, ShiftTypeDto>().ReverseMap();
+
+            CreateMap<ShiftSetting, CreateShiftSettingDto>().ReverseMap();
+            CreateMap<ShiftSetting, ShiftSettingDto>().ReverseMap();
+
 
         }
     }

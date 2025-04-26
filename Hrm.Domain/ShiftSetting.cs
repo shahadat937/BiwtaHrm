@@ -20,5 +20,7 @@ namespace Hrm.Domain
         public DateOnly? EndDate { get; set; }
         public bool? IsActive { get; set; }
         public string? Remark { get; set; }
+
+        public virtual ShiftType? ShiftType { get; set; }
     }
 }

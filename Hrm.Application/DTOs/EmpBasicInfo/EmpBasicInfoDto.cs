@@ -31,8 +31,13 @@ namespace Hrm.Application.DTOs.EmpBasicInfo
 
         public string? EmployeeTypeName { get; set; }
         public string? DepartmentName { get; set; }
-        public string? DesignationName { get; set; }
+        public int? DepartmentId { get; set; }
         public string? SectionName { get; set; }
+        public int? SectionId { get; set; }
+        public string? DesignationName { get; set; }
+        public int? DesignationId { get; set; }
+        public int? AdditionalResponsibilityId { get; set; }
+        public string? AdditionalResponsibilityName { get; set; }
         public string? EmpPhotoName { get; set; }
         public string? EmpGenderName { get; set; }
     }

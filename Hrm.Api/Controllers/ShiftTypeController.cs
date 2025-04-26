@@ -5,6 +5,7 @@ using Hrm.Application;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Hrm.Shared.Models;
 
 namespace Hrm.Api.Controllers
 {
@@ -25,6 +26,14 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<List<ShiftTypeDto>>> Get()
         {
             var ShiftTypes = await _mediator.Send(new GetShiftTypeListRequest { });
+            return Ok(ShiftTypes);
+        }
+
+        [HttpGet]
+        [Route("get-selectedShiftTypes")]
+        public async Task<ActionResult<List<SelectedModel>>> GetSelectedShiftType()
+        {
+            var ShiftTypes = await _mediator.Send(new GetSelectedShiftTypeRequest { });
             return Ok(ShiftTypes);
         }
 

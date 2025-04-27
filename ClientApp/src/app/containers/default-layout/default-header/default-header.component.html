@@ -47,6 +47,7 @@
       </c-nav-item> -->
     <!-- </c-header-nav> -->
     <c-header-nav class="ms-3">
+      <ng-container *ngTemplateOutlet="department"></ng-container>
       <c-nav-item>
       <a cNavLink>
         <label *ngTemplateOutlet="notificationDropdown"></label>
@@ -162,6 +163,64 @@
         </a>
       </li>
       
+    </ul>
+  </c-dropdown>
+</ng-template>
+
+<ng-template #department>
+  <c-dropdown alignment="end" variant="nav-item">
+    <button
+      cButton
+      color=""
+      [caret]="false"
+      cDropdownToggle
+      class="py-1"
+    >
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+      <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+    </svg>
+    </button>
+
+    <ul cDropdownMenu class="pt-0 pr-5" style="width: 400px;">
+      <li>
+        <h6 cDropdownHeader class="bg-light fw-semibold py-2">
+          Department Info
+        </h6>
+      </li>
+
+      <li class="px-3 py-1" (click)="$event.stopPropagation()">
+        <label>Department</label>
+        <select class="form-select" (change)="onDepartmentChange($event)">
+          @for(department of departments; track department.id;let index=$index) {
+            <option [value]="department.id">
+              {{ department.name }}
+            </option>
+          }
+        </select>
+      </li>
+      <li *ngIf="filteredSections.length" class="px-3 py-1" (click)="$event.stopPropagation()">
+        <label>Section</label>
+        <select class="form-select">
+          <option *ngIf="!currentSectionCheck">-</option>
+          @for(section of filteredSections; track section.id;let index=$index) {
+            <option [value]="section.id">
+              {{ section.name }}
+            </option>
+          }
+        </select>
+      </li>
+      <li class="px-3 py-1" (click)="$event.stopPropagation()">
+        <label>Designation</label>
+        <select class="form-select">
+
+          @for(section of designations; track section.id;let index=$index) {
+            <option [value]="section.id">
+              {{ section.name }}
+            </option>
+          }
+        </select>
+      </li>
     </ul>
   </c-dropdown>
 </ng-template>

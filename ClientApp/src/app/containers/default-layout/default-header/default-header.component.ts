@@ -4,25 +4,26 @@ import { Router } from '@angular/router';
 
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/core/service/auth.service';
-import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
-import { EmpPhotoSignService } from 'src/app/views/employee/service/emp-photo-sign.service';
+import { AuthService } from '../../../../../src/app/core/service/auth.service';
+import { UnsubscribeOnDestroyAdapter } from '../../../../../src/app/shared/UnsubscribeOnDestroyAdapter';
+import { EmpPhotoSignService } from '../../../../../src/app/views/employee/service/emp-photo-sign.service';
 import { cilAccountLogout, cilPlus } from '@coreui/icons';
-import { BasicInfoModule } from 'src/app/views/employee/model/basic-info.module';
-import { EmpBasicInfoService } from 'src/app/views/employee/service/emp-basic-info.service';
-import { EmpJobDetailsService } from 'src/app/views/employee/service/emp-job-details.service';
+import { BasicInfoModule } from '../../../../../src/app/views/employee/model/basic-info.module';
+import { EmpBasicInfoService } from '../../../../../src/app/views/employee/service/emp-basic-info.service';
+import { EmpJobDetailsService } from '../../../../../src/app/views/employee/service/emp-job-details.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { UpdateUserComponent } from 'src/app/views/usermanagement/update-user/update-user.component';
-import { UserService } from 'src/app/views/usermanagement/service/user.service';
-import { ChangeProfileComponent } from 'src/app/views/profile/change-profile/change-profile.component';
-import { EmployeeInformationComponent } from 'src/app/views/employee/manage-employee/employee-information/employee-information.component';
-import { RealTimeService } from 'src/app/core/service/real-time.service';
+import { UpdateUserComponent } from '../../../../../src/app/views/usermanagement/update-user/update-user.component';
+import { UserService } from '../../../../../src/app/views/usermanagement/service/user.service';
+import { ChangeProfileComponent } from '../../../../../src/app/views/profile/change-profile/change-profile.component';
+import { EmployeeInformationComponent } from '../../../../../src/app/views/employee/manage-employee/employee-information/employee-information.component';
+import { RealTimeService } from '../../../../../src/app/core/service/real-time.service';
 import { NotificationService } from '../../../views/notifications/service/notification.service';
-import { PaginatorModel } from 'src/app/core/models/paginator-model';
-import { UserNotification } from 'src/app/views/notifications/models/user-notification';
-import { NotificationReadBy } from 'src/app/views/notifications/models/notification-read-by';
+import { PaginatorModel } from '../../../../../src/app/core/models/paginator-model';
+import { UserNotification } from '../../../../../src/app/views/notifications/models/user-notification';
+import { NotificationReadBy } from '../../../../../src/app/views/notifications/models/notification-read-by';
 import { ToastrService } from 'ngx-toastr';
 import * as CryptoJS from 'crypto-js';
+import { SelectedModel } from '../../../core/models/selectedModel';
 
 @Component({
   selector: 'app-default-header',
@@ -45,6 +46,14 @@ export class DefaultHeaderComponent extends HeaderComponent {
   userNoftification : UserNotification[] = [];
   unreadNotification: number = 0;
   totalNotification: any;
+  departments  : SelectedModel [] = [];
+  sections : SelectedModel [] = [];
+  departmentId: any;
+  designations: SelectedModel [] = [];
+  sectionId:any
+  filteredSections  : SelectedModel [] = [];
+  currentSectionCheck: boolean = true;
+  userData: any;
 
   constructor(
     private classToggler: ClassToggleService,
@@ -82,9 +91,14 @@ export class DefaultHeaderComponent extends HeaderComponent {
       const empId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).empId || 0;
       const userId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).id;
       const userName = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).username;
+      const departmentId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).departmentId;
+      const sectionId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).sectionId;
       this.empId = empId;
-      
+      this.departmentId = departmentId;
+      this.sectionId = sectionId;
       this.authService.userInformation = {roleName: roleName, empId: empId, userId: userId, userName: userName};
+      this.userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
     }
     this.getEmployeeByEmpId();
     this.getUserNotifications(false);
@@ -92,6 +106,17 @@ export class DefaultHeaderComponent extends HeaderComponent {
     const subs = this.realTimeService.eventBus.getEvent('userNotification').subscribe(data => {
       this.getUserNotifications(true);
     })
+
+    if(this.empId){
+      console.log(this.departmentId);
+      this.getDepartmentInfoByEmpId(this.empId)
+
+      if(this.departmentId){
+        this.getSelectedSectionByEmpIdAndDepartmentID(this.empId,this.departmentId);
+        console.log(this.empId,this.departmentId);
+        this.getSelectedDesignationByEmpIdAndDepartmentIdAndSection(this.empId,this.departmentId, this.sectionId || 0)
+      } 
+    }
 
 
     this.subscription.push(subs);
@@ -223,4 +248,57 @@ export class DefaultHeaderComponent extends HeaderComponent {
     };
     const modalRef: BsModalRef = this.modalService.show(EmployeeInformationComponent, { initialState, backdrop: 'static' });
   }
+
+  getDepartmentInfoByEmpId(id:number){
+    this.subscription.push(
+      this.empBasicInfoService.getSelectedEmployeeDeparmentByEmpId(id).subscribe(data=>{
+        this.departments = data;
+      })
+    )
+  }
+  getSelectedSectionByEmpIdAndDepartmentID(empId:number, departmentId:number){
+    this.subscription.push(
+      this.empBasicInfoService.getSelectedSelectionByEmpIdAndDepartmentId(empId,departmentId).subscribe(data=>{
+        this.sections = data;
+        if(this.sections[0]?.id != this.userData.sectionId){
+          this.userData.sectionId = this.sections[0]?.id;
+          localStorage.setItem('currentUser', JSON.stringify(this.userData));
+          this.isCurrentSectionSelected(Number(this.sections[0]?.id))
+        }
+        this.filteredSections = this.sections.filter(el=> el.name!=null)
+      })
+    )
+  }
+  getSelectedDesignationByEmpIdAndDepartmentIdAndSection(empId:number, departmentId:number, sectionId:number){
+    this.subscription.push(
+      this.empBasicInfoService.getSelectedDesignationByEmpIdAndDepartmentIdAndSection(empId,departmentId, sectionId).subscribe(data=>{
+        this.designations = data;
+        console.log(this.designations)
+      })
+    )
+  }
+
+  isCurrentSectionSelected(currentSectionId:number){
+    console.log("test", this.sections[0]?.id)
+    if (this.sections[0]?.id !== currentSectionId)
+      this.currentSectionCheck = false;
+    else  
+      this.currentSectionCheck = true;
+
+      console.log(this.currentSectionCheck)
+  }
+
+  onDepartmentChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const departmentId = selectElement.value;
+    this.getSelectedSectionByEmpIdAndDepartmentID(this.empId, Number(departmentId))
+    if(this.userData.departmentId != departmentId ){
+      this.userData.departmentId = Number(departmentId);
+      localStorage.setItem('currentUser', JSON.stringify(this.userData));
+      
+    }
+
+  }
+  
+  
 }

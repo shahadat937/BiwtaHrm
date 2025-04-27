@@ -104,7 +104,7 @@ namespace Hrm.Identity.Services
                 BranchId = user.BranchId,
                 EmpId = user.EmpId,
                 DepartmentId = departmentId,
-                DesignationId = departmentId,
+                DesignationId = designationId,
                 SectionId = sectionId
             };
 

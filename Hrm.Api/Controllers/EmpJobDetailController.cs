@@ -46,5 +46,40 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("get-selectedDepatmentNameById/{empId}")]
+        public async Task<ActionResult> SelectedDepartmentByEmpId(int empId)
+        {
+            var command = new GetSelectedDepartmentByEmpIdRequest { EmpId = empId };
+            var EmpJobDetails = await _mediator.Send(command);
+            return Ok(EmpJobDetails);
+        }
+
+        [HttpGet]
+        [Route("get-selectedSelectionNameByEmpIdAndDpepartmentId")]
+        public async Task<ActionResult> SelectedSectionByEmpIdAndDepartmentId(int empId, int departmentId)
+        {
+            var command = new GetSelectedSectionByEmpIdAndDepartmentIdRequest {
+                EmpId = empId,
+                DepartmentId = departmentId
+            };
+            var EmpJobDetails = await _mediator.Send(command);
+            return Ok(EmpJobDetails);
+        }
+
+        [HttpGet]
+        [Route("get-selectedDesignationByEmpIdAndDpepartmentIdAndSectionId")]
+        public async Task<ActionResult> SelectedSectionByEmpIdAndDepartmentIdAndSectionId(int empId, int departmentId, int sectionId)
+        {
+            var command = new GetSelectedDesignationByEmpIdAndDepartmentIdAndSectionIdRequest
+            {
+                EmpId = empId,
+                DepartmentId = departmentId,
+                SectionId = sectionId
+            };
+            var EmpJobDetails = await _mediator.Send(command);
+            return Ok(EmpJobDetails);
+        }
     }
 }

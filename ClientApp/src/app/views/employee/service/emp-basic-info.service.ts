@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../../src/environments/environment';
 import { BasicInfoModule } from '../model/basic-info.module';
 import { Observable, of, map, filter } from 'rxjs';
 import { EmployeesModule } from '../model/employees.module';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { SelectedModel } from '../../../../../src/app/core/models/selectedModel';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +71,16 @@ export class EmpBasicInfoService {
 
   getEmpInfoByCard(cardNo:string):Observable<any> {
     return this.http.get<any>(this.baseUrl+`/empBasicInfo/get-empBasicInfoByIdCardNo/${cardNo}`);
+  }
+
+  getSelectedEmployeeDeparmentByEmpId(empId:number){
+    return this.http.get<SelectedModel[]>(this.baseUrl + '/empJobDetail/get-selectedDepatmentNameById/'+empId);
+  }
+  getSelectedSelectionByEmpIdAndDepartmentId(empId:number, departmentId: number){
+    return this.http.get<SelectedModel[]>(this.baseUrl + `/empJobDetail/get-selectedSelectionNameByEmpIdAndDpepartmentId?empId=${empId}&departmentId=${departmentId}`);
+  }
+  getSelectedDesignationByEmpIdAndDepartmentIdAndSection(empId:number, departmentId: number, sectionId:number){
+    return this.http.get<SelectedModel[]>(this.baseUrl + `/empJobDetail/get-selectedDesignationByEmpIdAndDpepartmentIdAndSectionId?empId=${empId}&departmentId=${departmentId}&sectionId=${sectionId}`);
   }
 
 }

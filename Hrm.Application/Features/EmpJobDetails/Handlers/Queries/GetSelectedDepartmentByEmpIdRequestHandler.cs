@@ -41,14 +41,19 @@ namespace Hrm.Application.Features.EmpJobDetails.Handlers.Queries
                 })
                 .ToListAsync(cancellationToken);
 
+            // Remove duplicates inside selectDepartmentOther
+            var distinctDepartmentOther = selectDepartmentOther
+                .GroupBy(x => x.Id)
+                .Select(g => g.First())
+                .ToList();
+
             var combined = selectDepartment
-                .Concat(selectDepartmentOther
-                    .Where(x => !selectDepartment.Any(d => d.Id == x.Id))) // only add if not already in selectDepartment
+                .Concat(distinctDepartmentOther
+                    .Where(x => !selectDepartment.Any(d => d.Id == x.Id)))
                 .ToList();
 
             return combined;
         }
-
 
 
     }

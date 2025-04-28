@@ -32,7 +32,7 @@ namespace Hrm.Application.Features.EmpJobDetails.Handlers.Queries
                 });
 
             var selectDepartementOther = _OtherResponsibility
-                .Where(x => x.EmpId == request.EmpId && x.DepartmentId == request.DepartmentId &&  (request.SectionId == 0 ? x.SectionId == null : x.SectionId == request.SectionId))  
+                .Where(x => x.EmpId == request.EmpId && x.DepartmentId == request.DepartmentId && (request.SectionId == null ? x.SectionId == null : (x.SectionId == null || x.SectionId == request.SectionId)))  
                 .Select(x => new SelectedModel
                 {
                     Id = x.SectionId,

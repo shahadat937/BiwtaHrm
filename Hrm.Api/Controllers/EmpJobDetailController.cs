@@ -81,5 +81,18 @@ namespace Hrm.Api.Controllers
             var EmpJobDetails = await _mediator.Send(command);
             return Ok(EmpJobDetails);
         }
+
+        [HttpGet]
+        [Route("get-empDepartmentSectionDesignation")]
+        public async Task<ActionResult> GetEmpDepartmentSectionDesignation(int empId)
+        {
+            var command = new GetEmpDepartmentSectionDesignationRequest
+            {
+                EmpId = empId
+            };
+            var EmpJobDetails = await _mediator.Send(command);
+            return Ok(EmpJobDetails);
+        }
+
     }
 }

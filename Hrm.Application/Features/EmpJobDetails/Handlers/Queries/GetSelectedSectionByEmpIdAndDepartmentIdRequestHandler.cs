@@ -23,26 +23,37 @@ namespace Hrm.Application.Features.EmpJobDetails.Handlers.Queries
         }
         public async Task<List<SelectedModel>> Handle(GetSelectedSectionByEmpIdAndDepartmentIdRequest request, CancellationToken cancellationToken)
         {
-            var selectDepartement = _JobDetailsRepository
+            var selectDepartement = await _JobDetailsRepository
                 .Where(x => x.EmpId == request.EmpId && x.DepartmentId == request.DepartmentId)
                 .Select(x => new SelectedModel
                 {
                     Id = x.SectionId,
                     Name = x.Section.SectionName
-                });
+                })
+                .ToListAsync(cancellationToken);
 
-            var selectDepartementOther = _OtherResponsibility
+            var selectDepartementOther = await _OtherResponsibility
                 .Where(x => x.EmpId == request.EmpId && x.DepartmentId == request.DepartmentId)
                 .Select(x => new SelectedModel
                 {
                     Id = x.SectionId,
                     Name = x.Section.SectionName
-                });
+                })
+                .ToListAsync(cancellationToken);
 
-  
-            var combined = selectDepartement.Concat(selectDepartementOther);
-            return await combined.ToListAsync(cancellationToken);
+            var distinctDepartementOther = selectDepartementOther
+                                          .GroupBy(x => x.Id)
+                                          .Select(g => g.First())
+                                          .ToList();
+
+            var combined = selectDepartement
+                .Concat(distinctDepartementOther
+                    .Where(x => !selectDepartement.Any(d => d.Id == x.Id)))
+                .ToList();
+
+            return combined;
         }
+
 
     }
 }

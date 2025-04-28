@@ -46,8 +46,8 @@
         </a>
       </c-nav-item> -->
     <!-- </c-header-nav> -->
-    <c-header-nav class="ms-3">
-      <ng-container *ngTemplateOutlet="department"></ng-container>
+    <c-header-nav class="ms-3" >
+      <ng-container *ngTemplateOutlet="departmentOption"></ng-container>
       <c-nav-item>
       <a cNavLink>
         <label *ngTemplateOutlet="notificationDropdown"></label>
@@ -64,7 +64,7 @@
 </ng-container>
 <!--</c-header>-->
 
-<ng-template #notificationDropdown>
+<ng-template  #notificationDropdown>
   <c-dropdown alignment="end" variant="nav-item">
     <button
       cButton
@@ -192,16 +192,14 @@
       <li class="px-3 py-1" (click)="$event.stopPropagation()">
         <label>Department</label>
         <select class="form-select" (change)="onDepartmentChange($event)">
-          @for(department of departments; track department.id;let index=$index) {
-            <option [value]="department.id">
-              {{ department.name }}
-            </option>
-          }
+          <option *ngFor="let department of empDepartmentSectionDesignation; let index = index" [value]="department.combainedIds">
+            {{ department.name }}
+          </option>
         </select>
       </li>
-      <li *ngIf="filteredSections.length" class="px-3 py-1" (click)="$event.stopPropagation()">
+      <!-- <li *ngIf="filteredSections.length" class="px-3 py-1" (click)="$event.stopPropagation()">
         <label>Section</label>
-        <select class="form-select">
+        <select class="form-select" (change)="onSectionChange($event)">
           <option *ngIf="!currentSectionCheck">-</option>
           @for(section of filteredSections; track section.id;let index=$index) {
             <option [value]="section.id">
@@ -220,10 +218,21 @@
             </option>
           }
         </select>
-      </li>
+      </li> -->
     </ul>
   </c-dropdown>
 </ng-template>
+
+<ng-template #departmentOption>
+  <c-nav-item class="me-2"> <!-- Add margin-end for spacing -->
+    <select style="max-width: 400px;" class="form-select" (change)="onDepartmentChange($event)">
+      <option *ngFor="let department of empDepartmentSectionDesignation; let index = index" [value]="department.combainedIds">
+        {{ department.name }}
+      </option>
+    </select>
+  </c-nav-item>
+</ng-template>
+
 
 
 

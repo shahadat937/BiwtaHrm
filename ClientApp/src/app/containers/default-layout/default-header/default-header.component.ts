@@ -54,6 +54,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   filteredSections  : SelectedModel [] = [];
   currentSectionCheck: boolean = true;
   userData: any;
+  empDepartmentSectionDesignation : any;
 
   constructor(
     private classToggler: ClassToggleService,
@@ -108,14 +109,15 @@ export class DefaultHeaderComponent extends HeaderComponent {
     })
 
     if(this.empId){
-      console.log(this.departmentId);
-      this.getDepartmentInfoByEmpId(this.empId)
+      // console.log(this.departmentId);
+      // this.getDepartmentInfoByEmpId(this.empId)
 
-      if(this.departmentId){
-        this.getSelectedSectionByEmpIdAndDepartmentID(this.empId,this.departmentId);
-        console.log(this.empId,this.departmentId);
-        this.getSelectedDesignationByEmpIdAndDepartmentIdAndSection(this.empId,this.departmentId, this.sectionId || 0)
-      } 
+      // if(this.departmentId){
+      //   this.getSelectedSectionByEmpIdAndDepartmentID(this.empId,this.departmentId);
+      //   console.log(this.empId,this.departmentId);
+      //   this.getSelectedDesignationByEmpIdAndDepartmentIdAndSection(this.empId,this.departmentId, this.sectionId || 0)
+      // } 
+      this.getEmpDepartmentSectionAndDesignation(this.empId)
     }
 
 
@@ -249,55 +251,92 @@ export class DefaultHeaderComponent extends HeaderComponent {
     const modalRef: BsModalRef = this.modalService.show(EmployeeInformationComponent, { initialState, backdrop: 'static' });
   }
 
-  getDepartmentInfoByEmpId(id:number){
-    this.subscription.push(
-      this.empBasicInfoService.getSelectedEmployeeDeparmentByEmpId(id).subscribe(data=>{
-        this.departments = data;
-      })
-    )
-  }
-  getSelectedSectionByEmpIdAndDepartmentID(empId:number, departmentId:number){
-    this.subscription.push(
-      this.empBasicInfoService.getSelectedSelectionByEmpIdAndDepartmentId(empId,departmentId).subscribe(data=>{
-        this.sections = data;
-        if(this.sections[0]?.id != this.userData.sectionId){
-          this.userData.sectionId = this.sections[0]?.id;
-          localStorage.setItem('currentUser', JSON.stringify(this.userData));
-          this.isCurrentSectionSelected(Number(this.sections[0]?.id))
-        }
-        this.filteredSections = this.sections.filter(el=> el.name!=null)
-      })
-    )
-  }
-  getSelectedDesignationByEmpIdAndDepartmentIdAndSection(empId:number, departmentId:number, sectionId:number){
-    this.subscription.push(
-      this.empBasicInfoService.getSelectedDesignationByEmpIdAndDepartmentIdAndSection(empId,departmentId, sectionId).subscribe(data=>{
-        this.designations = data;
-        console.log(this.designations)
-      })
-    )
-  }
+  // getDepartmentInfoByEmpId(id:number){
+  //   this.subscription.push(
+  //     this.empBasicInfoService.getSelectedEmployeeDeparmentByEmpId(id).subscribe(data=>{
+  //       this.departments = data;
+  //     })
+  //   )
+  // }
+  // getSelectedSectionByEmpIdAndDepartmentID(empId:number, departmentId:number){
+  //   this.subscription.push(
+  //     this.empBasicInfoService.getSelectedSelectionByEmpIdAndDepartmentId(empId,departmentId).subscribe(data=>{
+  //       this.sections = data;
+  //       if(this.sections[0]?.id != this.userData.sectionId){
+  //         this.userData.sectionId = this.sections[0]?.id;
+  //         localStorage.setItem('currentUser', JSON.stringify(this.userData));
+  //         this.isCurrentSectionSelected(Number(this.sections[0]?.id))
+  //       }
+  //       this.filteredSections = this.sections.filter(el=> el.name!=null)
+  //     })
+  //   )
+  // }
+  // getSelectedDesignationByEmpIdAndDepartmentIdAndSection(empId:number, departmentId:number, sectionId:number){
+  //   this.subscription.push(
+  //     this.empBasicInfoService.getSelectedDesignationByEmpIdAndDepartmentIdAndSection(empId,departmentId, sectionId).subscribe(data=>{
+  //       this.designations = data;
+  //       console.log(this.designations)
+  //     })
+  //   )
+  // }
 
-  isCurrentSectionSelected(currentSectionId:number){
-    console.log("test", this.sections[0]?.id)
-    if (this.sections[0]?.id !== currentSectionId)
-      this.currentSectionCheck = false;
-    else  
-      this.currentSectionCheck = true;
+  // isCurrentSectionSelected(currentSectionId:number){
+  //   console.log("test", this.sections[0]?.id)
+  //   if (this.sections[0]?.id !== currentSectionId)
+  //     this.currentSectionCheck = false;
+  //   else  
+  //     this.currentSectionCheck = true;
 
-      console.log(this.currentSectionCheck)
-  }
+  //     console.log(this.currentSectionCheck)
+  // }
 
-  onDepartmentChange(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    const departmentId = selectElement.value;
-    this.getSelectedSectionByEmpIdAndDepartmentID(this.empId, Number(departmentId))
-    if(this.userData.departmentId != departmentId ){
-      this.userData.departmentId = Number(departmentId);
+  onDepartmentChange(event: any): void {
+    const selectedDepartmentId = event.target.value;  // This will be the department.id
+    const selectedDepartment = this.empDepartmentSectionDesignation.find(
+      (department: any) => department.combainedIds === selectedDepartmentId
+    );
+  
+    const { departmentId, sectionId, designationId } = selectedDepartment;
+
+    if(departmentId !== this.userData.departmentId || sectionId !== this.userData.sectionId || designationId !== this.userData.designationId){
+      this.userData.departmentId = departmentId;
+      this.userData.sectionId = sectionId;
+      this.userData.designationId = designationId;
+      console.log(this.userData)
       localStorage.setItem('currentUser', JSON.stringify(this.userData));
-      
     }
-
+ 
+  }
+  
+  
+  
+  // onSectionChange(event: Event){
+  //   const selectElement = event.target as HTMLSelectElement;
+  //   const SectionId = selectElement.value; 
+  //   this.getSelectedDesignationByEmpIdAndDepartmentIdAndSection(this.empId, this.departmentId,Number(SectionId));
+  // }
+  
+  getEmpDepartmentSectionAndDesignation(empId: number) {
+    this.subscription.push(
+      this.empBasicInfoService.getEmpDepartmentSectionAndDesignation(empId).subscribe((data: { departmentId: number; sectionId: number; designationId: number }[]) => {
+        // Separate items that match the specific criteria
+        const matchingItems = data.filter(item =>
+          item.departmentId === this.userData.departmentId &&
+          item.sectionId === this.userData.sectionId &&
+          item.designationId === this.userData.designationId
+        );
+  
+        // Separate items that do not match the specific criteria
+        const nonMatchingItems = data.filter(item =>
+          item.departmentId !== this.userData.departmentId ||
+          item.sectionId !== this.userData.sectionId ||
+          item.designationId !== this.userData.designationId
+        );
+  
+        // Combine the matching and non-matching items
+        this.empDepartmentSectionDesignation = [...matchingItems, ...nonMatchingItems];
+      })
+    );
   }
   
   

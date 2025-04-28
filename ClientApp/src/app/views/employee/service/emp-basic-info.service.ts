@@ -83,4 +83,7 @@ export class EmpBasicInfoService {
     return this.http.get<SelectedModel[]>(this.baseUrl + `/empJobDetail/get-selectedDesignationByEmpIdAndDpepartmentIdAndSectionId?empId=${empId}&departmentId=${departmentId}&sectionId=${sectionId}`);
   }
 
+  getEmpDepartmentSectionAndDesignation(empId:number){
+    return this.http.get<any>(this.baseUrl + `/empJobDetail/get-empDepartmentSectionDesignation?empId=${empId}`);
+  }
 }

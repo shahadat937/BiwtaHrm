@@ -11,7 +11,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.ShiftType)]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ShiftTypeController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -26,6 +26,14 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<List<ShiftTypeDto>>> Get()
         {
             var ShiftTypes = await _mediator.Send(new GetShiftTypeListRequest { });
+            return Ok(ShiftTypes);
+        }
+
+        [HttpGet]
+        [Route("get-TreeShiftTypes")]
+        public async Task<ActionResult<List<TreeShiftTypeDto>>> GetTreeShiftType()
+        {
+            var ShiftTypes = await _mediator.Send(new GetTreeShiftTypeRequest { });
             return Ok(ShiftTypes);
         }
 

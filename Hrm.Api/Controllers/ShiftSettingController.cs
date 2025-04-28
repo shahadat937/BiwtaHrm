@@ -11,7 +11,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.ShiftSetting)]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ShiftSettingController : ControllerBase
     {
         private readonly IMediator _mediator;

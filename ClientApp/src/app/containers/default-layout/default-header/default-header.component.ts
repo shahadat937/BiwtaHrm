@@ -85,45 +85,45 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
 
   ngOnInit(): void {
-    const currentEncryptedUser =  localStorage.getItem('encryptedUser');
-    if(currentEncryptedUser){
+    const currentEncryptedUser = localStorage.getItem('encryptedUser');
+  
+    if (currentEncryptedUser) {
       const bytes = CryptoJS.AES.decrypt(currentEncryptedUser, 'secret-key');
-      const roleName = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).role;
-      const empId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).empId || 0;
-      const userId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).id;
-      const userName = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).username;
-      const departmentId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).departmentId;
-      const sectionId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).sectionId;
-      const designationId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).designationId;
-      this.empId = empId;
-      this.departmentId = departmentId;
-      this.sectionId = sectionId;
-      this.authService.userInformation = {roleName: roleName, empId: empId, userId: userId, userName: userName, departmentId: departmentId, sectionId: sectionId, designationId : designationId};
+      const decryptedUser = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  
+      this.empId = decryptedUser.empId || 0;
+      
+      this.authService.userInformation = {
+        roleName: decryptedUser.role,
+        empId: decryptedUser.empId,
+        userId: decryptedUser.id,
+        userName: decryptedUser.username,
+        departmentId: decryptedUser.departmentId,
+        sectionId: decryptedUser.sectionId,
+        designationId: decryptedUser.designationId
+      };
+  
       this.userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
-
     }
+  
     this.getEmployeeByEmpId();
     this.getUserNotifications(false);
     this.getUserId();
-    const subs = this.realTimeService.eventBus.getEvent('userNotification').subscribe(data => {
-      this.getUserNotifications(true);
-    })
-
-    if(this.empId){
-      // console.log(this.departmentId);
-      // this.getDepartmentInfoByEmpId(this.empId)
-
-      // if(this.departmentId){
-      //   this.getSelectedSectionByEmpIdAndDepartmentID(this.empId,this.departmentId);
-      //   console.log(this.empId,this.departmentId);
-      //   this.getSelectedDesignationByEmpIdAndDepartmentIdAndSection(this.empId,this.departmentId, this.sectionId || 0)
-      // } 
-      this.getEmpDepartmentSectionAndDesignation(this.empId)
+  
+    const subs = this.realTimeService.eventBus
+      .getEvent('userNotification')
+      .subscribe(() => {
+        this.getUserNotifications(true);
+      });
+  
+    if (this.empId) {
+      this.getEmpDepartmentSectionAndDesignation(this.empId);
     }
-
-
+  
     this.subscription.push(subs);
   }
+  
+ 
 
   getUserNotifications(isNew : boolean){
     this.subscription.push(
@@ -292,22 +292,49 @@ export class DefaultHeaderComponent extends HeaderComponent {
   // }
 
   onDepartmentChange(event: any): void {
-    const selectedDepartmentId = event.target.value;  // This will be the department.id
+    const selectedDepartmentId = event.target.value;
     const selectedDepartment = this.empDepartmentSectionDesignation.find(
       (department: any) => department.combainedIds === selectedDepartmentId
     );
   
     const { departmentId, sectionId, designationId } = selectedDepartment;
-
-    if(departmentId !== this.userData.departmentId || sectionId !== this.userData.sectionId || designationId !== this.userData.designationId){
+  
+    if (
+      departmentId !== this.userData.departmentId ||
+      sectionId !== this.userData.sectionId ||
+      designationId !== this.userData.designationId
+    ) {
       this.userData.departmentId = departmentId;
       this.userData.sectionId = sectionId;
       this.userData.designationId = designationId;
-      console.log(this.userData)
+  
+      // Update authService
+      this.authService.userInformation.departmentId = departmentId;
+      this.authService.userInformation.sectionId = sectionId;
+      this.authService.userInformation.designationId = designationId;
+  
+      // Update localStorage for currentUser
       localStorage.setItem('currentUser', JSON.stringify(this.userData));
+  
+      // 🔒 Also update encryptedUser in localStorage
+      const decrypted = JSON.parse(
+        CryptoJS.AES.decrypt(localStorage.getItem('encryptedUser')!, 'secret-key')
+          .toString(CryptoJS.enc.Utf8)
+      );
+  
+      decrypted.departmentId = departmentId;
+      decrypted.sectionId = sectionId;
+      decrypted.designationId = designationId;
+  
+      const updatedEncrypted = CryptoJS.AES.encrypt(
+        JSON.stringify(decrypted),
+        'secret-key'
+      ).toString();
+  
+      localStorage.setItem('encryptedUser', updatedEncrypted);
     }
+  
     window.location.reload();
- 
   }
   
   

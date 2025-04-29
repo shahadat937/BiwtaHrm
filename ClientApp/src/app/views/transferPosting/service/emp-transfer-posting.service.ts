@@ -36,9 +36,9 @@ export class EmpTransferPostingService {
     return this.http.get<EmpTransferPosting[]>(this.baseUrl + '/empTransferPosting/get-AllEmpTransferPostingApproveInfo');
   }
   
-  getAllEmpTransferPostingDeptApproveInfo(queryParams: any, empId:any, id: any){
+  getAllEmpTransferPostingDeptApproveInfo(queryParams: any, departmentId:any, id: any){
         let params = new HttpParams({ fromObject: queryParams }); 
-        params = params.append('empId', empId);
+        params = params.append('departmentId', departmentId);
         params = params.append('id', id);
         return this.http.get<any>(`${this.baseUrl}/empTransferPosting/get-EmpTransferPostingDeptApprove`, { params });
   }

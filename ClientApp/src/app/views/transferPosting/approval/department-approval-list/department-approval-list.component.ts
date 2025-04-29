@@ -68,6 +68,7 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
       this.featurePermission = item;
       if(item.viewStatus == true){
         this.loginEmpId = this.authService.userInformation.empId || 0;
+    
         this.currentDepartmentId = this.authService.userInformation.departmentId || 0
         console.log(this.currentDepartmentId);
         this.route.queryParams.subscribe((params) => {
@@ -90,7 +91,7 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
 
   getAllEmpTransferPostingDeptApproveInfo(queryParams: any) {
     this.subscription.push(
-    this.empTransferPostingService.getAllEmpTransferPostingDeptApproveInfo(queryParams, this.loginEmpId, this.noticeForEntryId).subscribe((item) => {
+    this.empTransferPostingService.getAllEmpTransferPostingDeptApproveInfo(queryParams, this.currentDepartmentId, this.noticeForEntryId).subscribe((item) => {
       this.dataSource.data = item.items;
       // this.dataSource.paginator = this.paginator;
       this.pagination.length = item.totalItemsCount;

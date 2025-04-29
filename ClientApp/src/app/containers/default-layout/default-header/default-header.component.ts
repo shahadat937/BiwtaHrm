@@ -305,6 +305,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
       console.log(this.userData)
       localStorage.setItem('currentUser', JSON.stringify(this.userData));
     }
+    window.location.reload();
  
   }
   

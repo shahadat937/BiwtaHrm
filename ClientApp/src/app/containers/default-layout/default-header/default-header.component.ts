@@ -94,10 +94,11 @@ export class DefaultHeaderComponent extends HeaderComponent {
       const userName = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).username;
       const departmentId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).departmentId;
       const sectionId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).sectionId;
+      const designationId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).designationId;
       this.empId = empId;
       this.departmentId = departmentId;
       this.sectionId = sectionId;
-      this.authService.userInformation = {roleName: roleName, empId: empId, userId: userId, userName: userName};
+      this.authService.userInformation = {roleName: roleName, empId: empId, userId: userId, userName: userName, departmentId: departmentId, sectionId: sectionId, designationId : designationId};
       this.userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
     }

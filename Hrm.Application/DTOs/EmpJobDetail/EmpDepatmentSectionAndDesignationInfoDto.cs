@@ -13,5 +13,6 @@ namespace Hrm.Application.DTOs.EmpJobDetail
         public int? SectionId   { get; set; }
         public int? DesignationId { get; set; }
         public string? CombainedIds { get; set; }
+        public int? ResponsibilityTypeId { get; set; }
     }
 }

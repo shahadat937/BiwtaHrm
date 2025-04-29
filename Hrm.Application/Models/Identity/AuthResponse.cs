@@ -12,5 +12,6 @@
         public int? DepartmentId { get; set; }
         public int? SectionId { get; set; }
         public int? DesignationId { get; set; }
+        public int? ResponsibilityTypeId { get; set; }
     }
 }

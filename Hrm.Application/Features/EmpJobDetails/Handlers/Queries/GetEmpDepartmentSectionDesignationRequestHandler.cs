@@ -75,6 +75,7 @@ namespace Hrm.Application.Features.EmpJobDetails.Handlers.Queries
                     DepartmentId = responsibility.DepartmentId,
                     SectionId = responsibility.SectionId,
                     DesignationId = responsibility.DesignationId,
+                    ResponsibilityTypeId = responsibility.ResponsibilityTypeId,
                     CombainedIds = $"D{responsibility.DepartmentId}-S{responsibility.SectionId}-Dg{responsibility.DesignationId}"
                 });
             }

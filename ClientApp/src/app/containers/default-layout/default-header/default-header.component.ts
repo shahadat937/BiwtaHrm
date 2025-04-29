@@ -100,7 +100,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
         userName: decryptedUser.username,
         departmentId: decryptedUser.departmentId,
         sectionId: decryptedUser.sectionId,
-        designationId: decryptedUser.designationId
+        designationId: decryptedUser.designationId,
+        responsibilityTypeId: decryptedUser.responsibilityTypeId
       };
   
       this.userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
@@ -252,52 +253,13 @@ export class DefaultHeaderComponent extends HeaderComponent {
     const modalRef: BsModalRef = this.modalService.show(EmployeeInformationComponent, { initialState, backdrop: 'static' });
   }
 
-  // getDepartmentInfoByEmpId(id:number){
-  //   this.subscription.push(
-  //     this.empBasicInfoService.getSelectedEmployeeDeparmentByEmpId(id).subscribe(data=>{
-  //       this.departments = data;
-  //     })
-  //   )
-  // }
-  // getSelectedSectionByEmpIdAndDepartmentID(empId:number, departmentId:number){
-  //   this.subscription.push(
-  //     this.empBasicInfoService.getSelectedSelectionByEmpIdAndDepartmentId(empId,departmentId).subscribe(data=>{
-  //       this.sections = data;
-  //       if(this.sections[0]?.id != this.userData.sectionId){
-  //         this.userData.sectionId = this.sections[0]?.id;
-  //         localStorage.setItem('currentUser', JSON.stringify(this.userData));
-  //         this.isCurrentSectionSelected(Number(this.sections[0]?.id))
-  //       }
-  //       this.filteredSections = this.sections.filter(el=> el.name!=null)
-  //     })
-  //   )
-  // }
-  // getSelectedDesignationByEmpIdAndDepartmentIdAndSection(empId:number, departmentId:number, sectionId:number){
-  //   this.subscription.push(
-  //     this.empBasicInfoService.getSelectedDesignationByEmpIdAndDepartmentIdAndSection(empId,departmentId, sectionId).subscribe(data=>{
-  //       this.designations = data;
-  //       console.log(this.designations)
-  //     })
-  //   )
-  // }
-
-  // isCurrentSectionSelected(currentSectionId:number){
-  //   console.log("test", this.sections[0]?.id)
-  //   if (this.sections[0]?.id !== currentSectionId)
-  //     this.currentSectionCheck = false;
-  //   else  
-  //     this.currentSectionCheck = true;
-
-  //     console.log(this.currentSectionCheck)
-  // }
-
   onDepartmentChange(event: any): void {
     const selectedDepartmentId = event.target.value;
     const selectedDepartment = this.empDepartmentSectionDesignation.find(
       (department: any) => department.combainedIds === selectedDepartmentId
     );
   
-    const { departmentId, sectionId, designationId } = selectedDepartment;
+    const { departmentId, sectionId, designationId,responsibilityTypeId } = selectedDepartment;
   
     if (
       departmentId !== this.userData.departmentId ||
@@ -307,16 +269,18 @@ export class DefaultHeaderComponent extends HeaderComponent {
       this.userData.departmentId = departmentId;
       this.userData.sectionId = sectionId;
       this.userData.designationId = designationId;
+      this.userData.responsibilityTypeId = responsibilityTypeId
   
       // Update authService
       this.authService.userInformation.departmentId = departmentId;
       this.authService.userInformation.sectionId = sectionId;
       this.authService.userInformation.designationId = designationId;
+      this.authService.userInformation.responsibilityTypeId = responsibilityTypeId;
   
       // Update localStorage for currentUser
       localStorage.setItem('currentUser', JSON.stringify(this.userData));
   
-      // 🔒 Also update encryptedUser in localStorage
+      // Also update encryptedUser in localStorage
       const decrypted = JSON.parse(
         CryptoJS.AES.decrypt(localStorage.getItem('encryptedUser')!, 'secret-key')
           .toString(CryptoJS.enc.Utf8)
@@ -337,13 +301,6 @@ export class DefaultHeaderComponent extends HeaderComponent {
     window.location.reload();
   }
   
-  
-  
-  // onSectionChange(event: Event){
-  //   const selectElement = event.target as HTMLSelectElement;
-  //   const SectionId = selectElement.value; 
-  //   this.getSelectedDesignationByEmpIdAndDepartmentIdAndSection(this.empId, this.departmentId,Number(SectionId));
-  // }
   
   getEmpDepartmentSectionAndDesignation(empId: number) {
     this.subscription.push(

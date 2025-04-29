@@ -78,6 +78,7 @@ namespace Hrm.Identity.Services
             int? departmentId = null;
             int? designationId = null;
             int? sectionId = null;
+            int? responsibilityTypeId = null;
 
             var jobDetails = _empJobDetailsRepository
                  .Where(x => x.EmpId == user.EmpId)
@@ -105,7 +106,8 @@ namespace Hrm.Identity.Services
                 EmpId = user.EmpId,
                 DepartmentId = departmentId,
                 DesignationId = designationId,
-                SectionId = sectionId
+                SectionId = sectionId,
+                ResponsibilityTypeId = responsibilityTypeId
             };
 
             return response;

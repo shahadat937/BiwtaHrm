@@ -131,6 +131,8 @@ using Hrm.Application.DTOs.PendingDevice;
 using Hrm.Application.DTOs.AttDevice;
 using Hrm.Application.DTOs.Notification;
 using Hrm.Application.DTOs.FormSection;
+using Hrm.Application.DTOs.ShiftType;
+using Hrm.Application.DTOs.ShiftSetting;
 
 
 
@@ -379,6 +381,9 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpBasicInfo, EmpBasicInfoDto>()
             .ForMember(dest => dest.EmployeeTypeName, opt => opt.MapFrom(src => src.EmployeeType.EmployeeTypeName))
             .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().Department.DepartmentName))
+            .ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().DepartmentId))
+            .ForMember(dest => dest.SectionId, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().SectionId))
+            .ForMember(dest => dest.DesignationId, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().DesignationId))
             .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().Designation.DesignationSetup.Name))
             .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.EmpJobDetail.FirstOrDefault().Section.SectionName))
             .ForMember(dest => dest.EmpPhotoName, opt => opt.MapFrom(src => src.EmpPhotoSign.FirstOrDefault().PhotoUrl))
@@ -772,6 +777,14 @@ namespace Hrm.Application.Profiles
             CreateMap<Notification, NotificationDto>()
                 .ForMember(dest => dest.FromEmpName, opt => opt.MapFrom(src => src.FromEmpBasicInfo.FirstName + ' ' + src.FromEmpBasicInfo.LastName))
                 .ForMember(dest => dest.EmpIdCard, opt => opt.MapFrom(src => src.FromEmpBasicInfo.IdCardNo)).ReverseMap();
+
+
+            CreateMap<ShiftType, CreateShiftTypeDto>().ReverseMap();
+            CreateMap<ShiftType, ShiftTypeDto>().ReverseMap();
+
+            CreateMap<ShiftSetting, CreateShiftSettingDto>().ReverseMap();
+            CreateMap<ShiftSetting, ShiftSettingDto>().ReverseMap();
+
 
         }
     }

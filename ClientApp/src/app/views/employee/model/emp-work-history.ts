@@ -12,4 +12,6 @@ export class EmpWorkHistory {
     departmentNameBangla : string = '';
     sectionNameBangla : string = '';
     designationNameBangla : string = '';
+    workPlace : string = '';
+    workPlaceBangla : string = '';
 }

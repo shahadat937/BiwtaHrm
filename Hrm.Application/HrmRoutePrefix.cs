@@ -148,5 +148,8 @@ namespace Hrm.Application
         public const string FormSection = HRMRoutePrefixBase + "formSection";
 
         public const string Reporting = HRMRoutePrefixBase + "reporting";
+
+        public const string ShiftType = HRMRoutePrefixBase + "shiftType";
+        public const string ShiftSetting = HRMRoutePrefixBase + "shiftSetting";
     }
 }

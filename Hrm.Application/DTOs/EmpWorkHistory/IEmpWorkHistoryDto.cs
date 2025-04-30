@@ -21,6 +21,8 @@ namespace Hrm.Application.DTOs.EmpWorkHistory
         public string? SectionNameBangla { get; set; }
         public string? DesignationName { get; set; }
         public string? DesignationNameBangla { get; set; }
+        public string? WorkPlace { get; set; }
+        public string? WorkPlaceBangla { get; set; }
         public DateOnly? JoiningDate { get; set; }
         public DateOnly? ReleaseDate { get; set; }
         public string? Remark { get; set; }

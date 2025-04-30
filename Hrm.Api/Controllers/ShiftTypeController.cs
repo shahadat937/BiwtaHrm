@@ -63,7 +63,7 @@ namespace Hrm.Api.Controllers
 
         [HttpPost]
         [Route("save-ShiftType")]
-        public async Task<ActionResult<BaseCommandResponse>> Post([FromForm] CreateShiftTypeDto ShiftType)
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateShiftTypeDto ShiftType)
         {
             var command = new CreateShiftTypeCommand { ShiftTypeDto = ShiftType };
             var response = await _mediator.Send(command);
@@ -72,7 +72,7 @@ namespace Hrm.Api.Controllers
 
         [HttpPut]
         [Route("update-ShiftType/{id}")]
-        public async Task<ActionResult> Put([FromForm] CreateShiftTypeDto ShiftType)
+        public async Task<ActionResult> Put([FromBody] CreateShiftTypeDto ShiftType)
         {
             var command = new UpdateShiftTypeCommand { ShiftTypeDto = ShiftType };
             var response = await _mediator.Send(command);

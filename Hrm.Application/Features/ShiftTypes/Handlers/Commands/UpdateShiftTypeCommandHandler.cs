@@ -37,7 +37,10 @@ namespace Hrm.Application.Features.ShiftTypes.Handlers.Commands
             }
 
 
-            await _unitOfWork.Repository<ShiftType>().Update(ShiftType);
+            var shiftTypesDto = _mapper.Map(request.ShiftTypeDto, ShiftType);
+
+
+            await _unitOfWork.Repository<ShiftType>().Update(shiftTypesDto);
             await _unitOfWork.Save();
 
 

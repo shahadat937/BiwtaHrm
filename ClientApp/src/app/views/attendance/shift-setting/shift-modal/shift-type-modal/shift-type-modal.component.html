@@ -1,0 +1,80 @@
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{heading}}</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                    <form #ShiftTypeForm="ngForm" [gutter]="3" novalidate cForm cRow
+                        class="needs-validation">
+                    <c-col [md]="4">
+                        <input type="hidden" [(ngModel)]="shiftSettingService.shiftType.id" name="id" />
+                        <label cLabel for="shiftName">Shift Name<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="shiftSettingService.shiftType.shiftName" name="shiftName" #shiftName="ngModel"
+                            placeholder="Enter Shift Name" cFormControl id="shiftName" required type="text"
+                            />
+
+                        @if(!shiftName.valid&&shiftName.touched){
+                        <div class="text-left text-danger">Shift Name is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="remark">Remark<span class="text-danger"></span></label>
+                        <input [(ngModel)]="shiftSettingService.shiftType.remark" name="remark" #remark="ngModel"
+                            placeholder="Enter Remark" cFormControl id="remark" type="text"
+                            />
+
+                        @if(!remark.valid&&remark.touched){
+                        <div class="text-left text-danger">Remark is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="menuPosition">Menu Position<span class="text-danger"></span></label>
+                        <input [(ngModel)]="shiftSettingService.shiftType.menuPosition" name="menuPosition" #menuPosition="ngModel"
+                            placeholder="Enter Menu Position" cFormControl id="menuPosition" type="number"/>
+
+                        @if(!menuPosition.valid&&menuPosition.touched){
+                        <div class="text-left text-danger">Menu Position is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="isDefault">Default Shift</label>
+                        <select [(ngModel)]="shiftSettingService.shiftType.isDefault"
+                        name="isDefault"
+                        cSelect
+                        id="isDefault">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                        </select>
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="isActive">Active Status</label>
+                        <select [(ngModel)]="shiftSettingService.shiftType.isActive"
+                        name="isActive"
+                        cSelect
+                        id="isActive">
+                        <option value="true">Active</option>
+                        <option value="false">De-Active</option>
+                        </select>
+                    </c-col>
+
+            </form>
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button color="warn" type="button" (click)="closeModal()">
+                        <mat-icon>cancel</mat-icon> Close
+                    </button>
+                    <button [disabled]="ShiftTypeForm.invalid" mat-raised-button class="me-1" color="primary" type="submit" (click)="onSubmit(ShiftTypeForm)">
+                        <mat-icon>{{btnIcon}}</mat-icon> {{ btnText }}
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>

@@ -36,8 +36,10 @@ namespace Hrm.Application.Features.ShiftSettings.Handlers.Commands
                 await _unitOfWork.Repository<ShiftSetting>().Update(findActive);
             }
 
+            var shiftSettingDto = _mapper.Map(request.ShiftSettingDto, ShiftSetting);
 
-            await _unitOfWork.Repository<ShiftSetting>().Update(ShiftSetting);
+
+            await _unitOfWork.Repository<ShiftSetting>().Update(shiftSettingDto);
             await _unitOfWork.Save();
 
 

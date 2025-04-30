@@ -784,6 +784,8 @@ namespace Hrm.Application.Profiles
 
             CreateMap<ShiftSetting, CreateShiftSettingDto>().ReverseMap();
             CreateMap<ShiftSetting, ShiftSettingDto>().ReverseMap();
+            CreateMap<ShiftSetting, ShiftSettingDto>()
+                .ForMember(dest => dest.ShiftTypeName, opt => opt.MapFrom(src => src.ShiftType.ShiftName)).ReverseMap();
 
 
         }

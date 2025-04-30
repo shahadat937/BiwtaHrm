@@ -19,5 +19,6 @@ namespace Hrm.Application.DTOs.ShiftSetting
         public DateOnly? EndDate { get; set; }
         public bool? IsActive { get; set; }
         public string? Remark { get; set; }
+        public string? ShiftTypeName { get; set; }
     }
 }

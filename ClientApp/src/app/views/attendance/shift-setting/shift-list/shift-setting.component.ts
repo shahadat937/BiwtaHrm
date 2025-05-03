@@ -11,6 +11,7 @@ import { FeaturePermission } from 'src/app/views/featureManagement/model/feature
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ShiftTypeModalComponent } from '../shift-modal/shift-type-modal/shift-type-modal.component';
 import { ShiftSettingModalComponent } from '../shift-modal/shift-setting-modal/shift-setting-modal.component';
+import { ShiftSetting } from '../../models/shift-setting';
 
 @Component({
   selector: 'app-shift-setting',
@@ -89,8 +90,17 @@ export class ShiftSettingComponent implements OnInit, OnDestroy {
   
   manageShiftSettingModal(id: number, clickedButton: string){
     if(clickedButton == "Create" && this.featurePermission.add == true || clickedButton == "Edit" && this.featurePermission.update == true){
+      var entryId = 0;
+      var shiftType = 0;
+      if(clickedButton == "Create"){
+        shiftType = id;
+      }
+      else {
+        entryId = id;
+      }
       const initialState = {
-        id: id,
+        id: entryId,
+        selectedShiftType: shiftType,
         clickedButton: clickedButton
       };
       const modalRef: BsModalRef = this.modalService.show(ShiftSettingModalComponent, { initialState, backdrop: 'static' });
@@ -117,6 +127,37 @@ export class ShiftSettingComponent implements OnInit, OnDestroy {
             (res: any) => {
               if(res.success){
                 this.treeShiftInfo = this.treeShiftInfo.filter((val) => val.id !== shiftType.id);
+              }
+            },
+            (err) => {
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+            }
+          );
+        }
+      })
+      )
+    }
+    else {
+      this.roleFeatureService.unauthorizeAccress();
+    }
+  }
+
+  deleteShiftSetting(shiftSetting: ShiftSetting) {
+    if(this.featurePermission.delete == true){
+      this.subscription.push(
+        this.confirmService
+      .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+      .subscribe((result) => {
+        if (result) {
+          this.shiftSettingService.deleteShiftSetting(shiftSetting.id).subscribe(
+            (res: any) => {
+              if(res.success){
+                this.treeShiftInfo = this.treeShiftInfo.map(tree => ({
+                  ...tree,
+                  shiftSettingDto: tree.shiftSettingDto.filter(s => s.id !== shiftSetting.id)
+                }));
               }
             },
             (err) => {

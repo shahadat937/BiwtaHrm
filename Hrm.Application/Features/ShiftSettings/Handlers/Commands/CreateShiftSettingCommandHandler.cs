@@ -26,7 +26,7 @@ namespace Hrm.Application.Features.ShiftSettings.Handlers.Commands
         {
             var response = new BaseCommandResponse();
 
-            var findActive = await _unitOfWork.Repository<ShiftSetting>().FindOneAsync(x => x.IsActive == true);
+            var findActive = await _unitOfWork.Repository<ShiftSetting>().FindOneAsync(x => x.IsActive == true && x.ShiftTypeId == request.ShiftSettingDto.ShiftTypeId);
             if (findActive != null && request.ShiftSettingDto.IsActive == true)
             {
                 findActive.IsActive = false;

@@ -13,7 +13,7 @@ import { EmpTransferPosting } from '../model/emp-transfer-posting';
 import { SectionService } from '../../basic-setup/service/section.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TransferPostingInfoComponent } from '../transfer-posting-info/transfer-posting-info.component';
-import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
+import { EmployeeInfoListModalComponent } from '../../employee/employee-info-list-modal/employee-info-list-modal.component';
 import { ReleaseTypeService } from '../../basic-setup/service/release-type.service';
 import { GradeService } from '../../basic-setup/service/Grade.service';
 import { UserNotification } from '../../notifications/models/user-notification';
@@ -573,8 +573,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     }
   }
 
-  EmployeeListModal() {
-    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
+  EmployeeInfoListModal() {
+    const modalRef: BsModalRef = this.modalService.show(EmployeeInfoListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
 
     modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
       if(idCardNo){

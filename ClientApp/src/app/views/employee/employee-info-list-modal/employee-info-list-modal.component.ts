@@ -83,7 +83,6 @@ export class EmployeeInfoListModalComponent implements OnInit, OnDestroy {
       this.totalRecords = employees.totalItemsCount;
       this.employees = employees.items;
       this.loading = false;
-
       // this.departments = [...new Set(employees
       //   .map(emp => emp.departmentName)
       //   .filter(departmentName => departmentName !== null && departmentName.trim() !== '')
@@ -149,8 +148,8 @@ export class EmployeeInfoListModalComponent implements OnInit, OnDestroy {
     this.getAllEmpBasicInfo(this.pagination);
   }
 
-  onSelectEmployee(idCardNo: string) {
-    this.employeeSelected.emit(idCardNo);
+  onSelectEmployee(employee: any) {
+    this.employeeSelected.emit(employee);
     this.closeModal();
   }
 

@@ -12,6 +12,11 @@ namespace Hrm.Domain
         public int Id { get; set; }
         public int? EmpId { get; set; }
         public int? ApplicationById { get; set; }
+        public int? ApplicantDepartmentId { get; set; }
+        public int? ApplicantSectionId { get; set; }
+        public int? ApplicantDesignationId { get; set; }
+        public int? ApplicantJobResponsibilityTypeId { get; set; }
+        public int? CurrentResponsibiltyTypeId { get; set; }
         public int? CurrentOfficeId { get; set; }
         public DateOnly? CurrentDeptJoinDate { get; set; }
         public int? CurrentDepartmentId { get; set; }
@@ -42,6 +47,10 @@ namespace Hrm.Domain
         public bool? IsDepartmentApprove { get; set; }
         public int? DeptReleaseTypeId { get; set; }
         public int? DeptReleaseById { get; set; }
+        public int? DeptReleaseByDepartmentId { get; set; }
+        public int? DeptReleaseBySectionId { get; set; }
+        public int? DeptReleaseByResponsibilityTypeId { get; set; }
+        public int? DeptReleaseByDesignationId { get; set; }
         public DateOnly? DeptReleaseDate { get; set; }
         public int? ReferenceNo { get; set; }
         public bool? DeptClearance { get; set; }
@@ -50,6 +59,10 @@ namespace Hrm.Domain
 
         public bool? IsJoining { get; set; }
         public int? JoiningReportingById { get; set; }
+        public int? DeptJoiningReportingByDepartmentId { get; set; }
+        public int? DeptJoiningReportingBySectionId { get; set; }
+        public int? DeptJoiningReportingByResponsibilityTypeId { get; set; }
+        public int? DeptJoiningReportingByDesignationId { get; set; }
         public DateOnly? JoiningDate { get; set; }
         public string? JoiningRemark { get; set; }
         public bool? JoiningStatus { get; set; }

@@ -59,10 +59,10 @@ namespace Hrm.Domain
 
         public bool? IsJoining { get; set; }
         public int? JoiningReportingById { get; set; }
-        public int? DeptJoiningReportingByDepartmentId { get; set; }
-        public int? DeptJoiningReportingBySectionId { get; set; }
-        public int? DeptJoiningReportingByResponsibilityTypeId { get; set; }
-        public int? DeptJoiningReportingByDesignationId { get; set; }
+        public int? JoiningReportingByDepartmentId { get; set; }
+        public int? JoiningReportingBySectionId { get; set; }
+        public int? JoiningReportingByResponsibilityTypeId { get; set; }
+        public int? JoiningReportingByDesignationId { get; set; }
         public DateOnly? JoiningDate { get; set; }
         public string? JoiningRemark { get; set; }
         public bool? JoiningStatus { get; set; }

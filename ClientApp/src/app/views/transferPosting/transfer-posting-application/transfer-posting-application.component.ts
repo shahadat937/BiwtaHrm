@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } 
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { from, Subscription } from 'rxjs';
-import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { SelectedModel } from '../../../../../src/app/core/models/selectedModel';
 import { DepartmentService } from '../../basic-setup/service/department.service';
 import { OfficeService } from '../../basic-setup/service/office.service';
 import { EmpTransferPostingService } from '../service/emp-transfer-posting.service';
@@ -46,7 +46,11 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   isValidOrderByEmp: boolean = false;
   isApproveByEmp: boolean = false;
   loginEmpId: number = 0;
-  empJobDetailsId: number = 0;
+  loginEmpCurrentDepartmentId : any;  
+  loginEmpCurrentSectionId : any;
+  loginEmpCurrentDesignationId : any;
+  loginEmpResponsibilityTypeId : any;
+  empJobDetailsId: any;
   empTransferPosting: EmpTransferPosting = new EmpTransferPosting;
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
   featurePermission: FeaturePermission = new FeaturePermission;
@@ -89,7 +93,12 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       this.roleFeatureService.getFeaturePermission('transferPostingApplication').subscribe((item) => {
         this.featurePermission = item;
         if (item.viewStatus == true) {
+          console.log(this.authService.userInformation.sectionId);
           this.loginEmpId = this.authService.userInformation.empId;
+          this.loginEmpCurrentDepartmentId = this.authService.userInformation.departmentId;
+          this.loginEmpCurrentSectionId = this.authService.userInformation.sectionId;
+          this.loginEmpCurrentDesignationId = this.authService.userInformation.designationId;
+          this.loginEmpResponsibilityTypeId = this.authService.userInformation.responsibilityTypeId;
           this.initaialForm();
           this.getEmployeeByEmpId();
           this.loadOffice();
@@ -192,6 +201,10 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       sectionName: null,
       orderByOffice: '',
       applicationById: this.loginEmpId,
+      applicantDepartmentId: this.loginEmpCurrentDepartmentId,
+      applicantSectionId: this.loginEmpCurrentSectionId,
+      applicantDesignationId: this.loginEmpCurrentDesignationId,
+      applicantJobResponsibilityTypeId: this.loginEmpResponsibilityTypeId,
       currentOfficeId: null,
       currentDeptJoinDate: null,
       currentDepartmentId: null,
@@ -218,11 +231,19 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       deptReleaseByDepartmentName: null,
       deptReleaseByDesignationName: null,
       deptReleaseBySectionName: null,
+      deptReleaseByDepartmentId:  null,
+      deptReleaseBySectionId:  null,
+      deptReleaseByResponsibilityTypeId:  null,
+      deptReleaseByDesignationId:  null,
       joiningReportingByIdCardNo: null,
       joiningReportingByEmpName: null,
       joiningReportingByDepartmentName: null,
       joiningReportingByDesignationName: null,
       joiningReportingBySectionName: null,
+      joiningReportingByDepartmentId: null,
+      joiningReportingBySectionId: null,
+      joiningReportingByResponsibilityTypeId: null,
+      joiningReportingByDesignationId: null,
       releaseTypeName: null,
       deptReleaseTypeName: null,
       transferDepartmentName: null,
@@ -278,6 +299,10 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       sectionName: null,
       orderByOffice: '',
       applicationById: this.loginEmpId,
+      applicantDepartmentId: this.loginEmpCurrentDepartmentId,
+      applicantSectionId: this.loginEmpCurrentSectionId,
+      applicantDesignationId: this.loginEmpCurrentDesignationId,
+      applicantJobResponsibilityTypeId: this.loginEmpResponsibilityTypeId,
       currentOfficeId: null,
       currentDeptJoinDate: null,
       currentDepartmentId: null,
@@ -786,6 +811,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm): void {
+    console.log(form.setValue);
     if (this.featurePermission.add == true) {
       this.loading = true;
       this.empTransferPostingService.cachedData = [];

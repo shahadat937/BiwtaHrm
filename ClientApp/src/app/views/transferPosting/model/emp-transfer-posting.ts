@@ -19,17 +19,30 @@ export class EmpTransferPosting {
     deptReleaseByDepartmentName: string | null = null;
     deptReleaseByDesignationName: string | null = null;
     deptReleaseBySectionName: string | null = null;
+    deptReleaseByDepartmentId:  number | null  = null;
+    deptReleaseBySectionId:  number | null  = null;
+    deptReleaseByResponsibilityTypeId:  number | null  = null;
+    deptReleaseByDesignationId:  number | null  = null;
     
     joiningReportingByIdCardNo: string | null = null;
     joiningReportingByEmpName: string | null = null;
     joiningReportingByDepartmentName: string | null = null;
     joiningReportingByDesignationName: string | null = null;
     joiningReportingBySectionName: string | null = null;
+    joiningReportingByDepartmentId: number | null  = null;
+    joiningReportingBySectionId: number | null  = null;
+    joiningReportingByResponsibilityTypeId: number | null  = null;
+    joiningReportingByDesignationId: number | null  = null;
+  
 
     releaseTypeName: string | null = null;
     deptReleaseTypeName: string | null = null;
 
     applicationById: number | null = null;
+    applicantDepartmentId:  number | null  = null;
+  applicantSectionId:  number | null  = null;
+  applicantDesignationId:  number | null  = null;
+  applicantJobResponsibilityTypeId:  number | null  = null;
     currentOfficeId: number | null = null;
     currentDeptJoinDate: Date | null = null;
     currentDepartmentId: number | null = null;

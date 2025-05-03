@@ -11,9 +11,9 @@ import { BasicInfoModule } from '../model/basic-info.module';
 import { UserModule } from '../../usermanagement/model/user.module';
 import { EmpBasicInfoService } from '../service/emp-basic-info.service';
 import { EmpPhotoSignService } from '../service/emp-photo-sign.service';
-import { PaginatorModel } from 'src/app/core/models/paginator-model';
-import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
-import { SectionService } from 'src/app/views/basic-setup/service/section.service';
+import { PaginatorModel } from '../../../../../src/app/core/models/paginator-model';
+import { DepartmentService } from '../../../../../src/app/views/basic-setup/service/department.service';
+import { SectionService } from '../../../../../src/app/views/basic-setup/service/section.service';
 
 @Component({
   selector: 'app-employee-info-list-modal',

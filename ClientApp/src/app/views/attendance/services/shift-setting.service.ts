@@ -13,8 +13,12 @@ import { ShiftSetting } from '../models/shift-setting';
 export class ShiftSettingService {
   cachedData: any[] = [];
   baseUrl = environment.apiUrl;
+  shiftType: ShiftType;
+  shiftSetting: ShiftSetting;
 
   constructor(private http: HttpClient) {
+    this.shiftType = new ShiftType();
+    this.shiftSetting = new ShiftSetting();
   }
 
 
@@ -27,14 +31,14 @@ export class ShiftSettingService {
   getActiveShiftSetting() {
     return this.http.get<any>(this.baseUrl + '/shiftSetting/get-ActiveShiftSettings');
   }
-  findShiftSetting(id: string) {
+  findShiftSetting(id: number) {
     return this.http.get<ShiftSetting>(this.baseUrl + '/shiftSetting/get-ShiftSettingDetail/' + id);
   }
 
   submitShiftSetting(model: any) {
     return this.http.post(this.baseUrl + '/shiftSetting/save-ShiftSetting', model);
   }
-  updateShiftSetting(id: string, model: any) {
+  updateShiftSetting(id: number, model: any) {
     return this.http.put(this.baseUrl + '/shiftSetting/update-ShiftSetting/' + id, model);
   }
   deleteShiftSetting(id: number) {
@@ -54,14 +58,14 @@ export class ShiftSettingService {
   getActiveShiftType() {
     return this.http.get<any>(this.baseUrl + '/shiftType/get-ActiveShiftTypes');
   }
-  findShiftType(id: string) {
+  findShiftType(id: number) {
     return this.http.get<ShiftType>(this.baseUrl + '/shiftType/get-ShiftTypeDetail/' + id);
   }
 
   submitShiftType(model: any) {
     return this.http.post(this.baseUrl + '/shiftType/save-ShiftType', model);
   }
-  updateShiftType(id: string, model: any) {
+  updateShiftType(id: number, model: any) {
     return this.http.put(this.baseUrl + '/shiftType/update-ShiftType/' + id, model);
   }
   deleteShiftType(id: number) {

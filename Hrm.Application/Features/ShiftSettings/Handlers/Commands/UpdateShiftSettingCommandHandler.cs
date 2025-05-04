@@ -29,15 +29,17 @@ namespace Hrm.Application.Features.ShiftSettings.Handlers.Commands
             var ShiftSetting = await _unitOfWork.Repository<ShiftSetting>().Get(request.ShiftSettingDto.Id);
 
 
-            var findActive = await _unitOfWork.Repository<ShiftSetting>().FindOneAsync(x => x.IsActive == true);
+            var findActive = await _unitOfWork.Repository<ShiftSetting>().FindOneAsync(x => x.IsActive == true && x.ShiftTypeId == request.ShiftSettingDto.ShiftTypeId);
             if (findActive != null && request.ShiftSettingDto.IsActive == true)
             {
                 findActive.IsActive = false;
                 await _unitOfWork.Repository<ShiftSetting>().Update(findActive);
             }
 
+            var shiftSettingDto = _mapper.Map(request.ShiftSettingDto, ShiftSetting);
 
-            await _unitOfWork.Repository<ShiftSetting>().Update(ShiftSetting);
+
+            await _unitOfWork.Repository<ShiftSetting>().Update(shiftSettingDto);
             await _unitOfWork.Save();
 
 

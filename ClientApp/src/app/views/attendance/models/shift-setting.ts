@@ -10,4 +10,5 @@ export class ShiftSetting {
     endDate: Date | null = null;
     isActive: boolean = true;
     remark: string | null = null;
+    shiftTypeName: string | null = null;
 }

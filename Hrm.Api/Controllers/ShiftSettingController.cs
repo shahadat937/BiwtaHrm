@@ -55,7 +55,7 @@ namespace Hrm.Api.Controllers
 
         [HttpPost]
         [Route("save-ShiftSetting")]
-        public async Task<ActionResult<BaseCommandResponse>> Post([FromForm] CreateShiftSettingDto ShiftSetting)
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateShiftSettingDto ShiftSetting)
         {
             var command = new CreateShiftSettingCommand { ShiftSettingDto = ShiftSetting };
             var response = await _mediator.Send(command);
@@ -64,7 +64,7 @@ namespace Hrm.Api.Controllers
 
         [HttpPut]
         [Route("update-ShiftSetting/{id}")]
-        public async Task<ActionResult> Put([FromForm] CreateShiftSettingDto ShiftSetting)
+        public async Task<ActionResult> Put([FromBody] CreateShiftSettingDto ShiftSetting)
         {
             var command = new UpdateShiftSettingCommand { ShiftSettingDto = ShiftSetting };
             var response = await _mediator.Send(command);

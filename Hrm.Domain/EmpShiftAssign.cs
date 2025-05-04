@@ -15,6 +15,6 @@ namespace Hrm.Domain
         public bool IsActive { get; set; }
 
         public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
-        public virtual Shift? Shift { get; set; }
+        public virtual ShiftType? ShiftType { get; set; }
     }
 }

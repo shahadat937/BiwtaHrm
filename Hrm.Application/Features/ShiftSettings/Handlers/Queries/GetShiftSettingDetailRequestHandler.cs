@@ -20,8 +20,11 @@ namespace Hrm.Application.Features.ShiftSettings.Handlers.Queries
         }
         public async Task<ShiftSettingDto> Handle(GetShiftSettingDetailRequest request, CancellationToken cancellationToken)
         {
-            var ShiftSetting = _ShiftSettingRepository.FilterWithInclude(x => x.Id == request.Id).Include(x => x.ShiftType);
-            return _mapper.Map<ShiftSettingDto>(ShiftSetting);
+            var ShiftSetting = await _ShiftSettingRepository.FindOneAsync(x => x.Id == request.Id);
+
+            var ShiftSettingsDtos = _mapper.Map<ShiftSettingDto>(ShiftSetting);
+
+            return ShiftSettingsDtos;
         }
     }
 }

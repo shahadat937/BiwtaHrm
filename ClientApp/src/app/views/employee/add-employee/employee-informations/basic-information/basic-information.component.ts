@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { UserModule } from 'src/app/views/usermanagement/model/user.module';
 import { ShiftService } from 'src/app/views/attendance/services/shift.service';
+import { ShiftSettingService } from '../../../../attendance/services/shift-setting.service';
 import { EmpShiftAssign } from '../../../model/emp-shift-assign';
 import { EmpShiftAssignService } from '../../../service/emp-shift-assign.service';
 
@@ -33,6 +34,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   loading: boolean = false;
   userForm : UserModule = new UserModule;
   empShiftForm : EmpShiftAssign = new EmpShiftAssign;
+  activeShiftId : number = 0;
   @ViewChild('BasicInfoForm', { static: true }) BasicInfoForm!: NgForm;
   
   constructor(
@@ -44,9 +46,11 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
     private toastr: ToastrService,
     public shiftService: ShiftService,
     public empShiftAssignService: EmpShiftAssignService,
+    public shiftSettingService: ShiftSettingService,
   ){}
 
   ngOnInit(): void {
+    this.getActiveShiftType();
     // this.getEmployeeByAspNetUserId();
     this.getSelectedEmployeeType();
     // this.getUserDetails();
@@ -58,6 +62,14 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
     if (this.subscription) {
       this.subscription.forEach(subs=>subs.unsubscribe());
     }
+  }
+
+  getActiveShiftType(){
+    this.subscription.push(
+      this.shiftSettingService.getActiveShiftType().subscribe((res) => {
+        this.activeShiftId = res.id;
+      })
+    )
   }
 
 
@@ -80,7 +92,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
       departmentName: '',
       designationName: '',
       sectionName: '',
-      shiftId: 1,
+      shiftId: this.activeShiftId,
       empPhotoName : '',
       empGenderName : '',
     };
@@ -104,7 +116,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
         idCardNo: null,
         departmentName: '',
         designationName: '',
-        shiftId: 1
+        shiftId: this.activeShiftId
       });
   }
   

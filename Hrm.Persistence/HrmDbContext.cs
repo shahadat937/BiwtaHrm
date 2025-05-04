@@ -1081,7 +1081,7 @@ namespace Hrm.Persistence
                     .WithMany(e => e.EmpShiftAssign)
                     .HasForeignKey(e => e.EmpId);
 
-                entity.HasOne(e => e.Shift)
+                entity.HasOne(e => e.ShiftType)
                     .WithMany(e => e.EmpShiftAssign)
                     .HasForeignKey(e => e.ShiftId);
             });

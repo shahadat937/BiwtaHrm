@@ -10,6 +10,7 @@ import { EmpBasicInfoService } from '../../service/emp-basic-info.service';
 import { ShiftService } from 'src/app/views/attendance/services/shift.service';
 import * as XLSX from 'xlsx';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { ShiftSettingService } from '../../../attendance/services/shift-setting.service';
 
 @Component({
   selector: 'app-upload-emp-basic-info',
@@ -41,6 +42,7 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
     public empBasicInfoService: EmpBasicInfoService,
     public shiftService: ShiftService,
     private confirmService: ConfirmService,
+    public shiftSettingService: ShiftSettingService,
   ) { }
 
   
@@ -76,16 +78,13 @@ export class UploadEmpBasicInfoComponent implements OnInit, OnDestroy {
     
   }
   getSelectedShift(){
-    // this.subscription = 
     this.subscription.push(
-      this.empBasicInfoService.getFirstShiftId().subscribe((res) => {
-      this.empShiftId = res;
+      this.shiftSettingService.getActiveShiftType().subscribe((res) => {
+      this.empShiftId = res.id;
     })
     )
-    
-    // this.subscription = 
     this.subscription.push(
-      this.shiftService.getSelectedShift().subscribe((data) => { 
+      this.shiftSettingService.getSelectedShiftType().subscribe((data) => { 
       this.shifts = data;
     })
     )

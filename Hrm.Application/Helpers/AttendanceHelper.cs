@@ -41,6 +41,31 @@ namespace Hrm.Application.Helpers
             return (int)AttendanceStatusOption.Present;
         }
 
+        public static int? SetAttendanceStatusByShiftSetting(CreateAttendanceDto dto, IHrmRepository<Hrm.Domain.ShiftSetting> _shiftSettingRepository)
+        {
+            if (dto.ShiftId == null || dto.InTime == null)
+            {
+                return null;
+            }
+
+
+            var shiftSetting = _shiftSettingRepository.Where(x => x.ShiftTypeId == dto.ShiftId && x.IsActive == true).FirstOrDefault();
+
+
+
+            if (dto.InTime > shiftSetting.AbsentTime)
+            {
+                return (int)AttendanceStatusOption.Absent;
+            }
+
+            if (dto.InTime > shiftSetting.BufferTime)
+            {
+                return (int)AttendanceStatusOption.Late;
+            }
+
+            return (int)AttendanceStatusOption.Present;
+        }
+
         public static bool IsHoliday(DateOnly GivenDate, IHrmRepository<Hrm.Domain.Holidays> _HolidayRepository)
         {
             var IsHoliday = _HolidayRepository.Where(x => x.Year.YearName == GivenDate.Year && x.IsActive == true && x.HolidayDate == GivenDate).Any();

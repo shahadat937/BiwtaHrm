@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { delay, of, Subscription } from 'rxjs';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
-import {ManualAttendanceService} from '../services/manual-attendance.service'
+import { ManualAttendanceService } from '../services/manual-attendance.service'
 import { HttpParams } from '@angular/common/http';
 import { cilSearch, cilZoom } from '@coreui/icons';
 import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
@@ -14,6 +14,7 @@ import { EmployeeListModalComponent } from '../../employee/employee-list-modal/e
 import { Attendances } from '../models/attendances';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 import { FeaturePermission } from '../../featureManagement/model/feature-permission';
+import { ShiftSettingService } from '../services/shift-setting.service';
 
 @Component({
   selector: 'app-manual-attendance',
@@ -27,24 +28,24 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   @ViewChild('manualAtdform', { static: true }) manualAtdForm!: NgForm;
   @ViewChild('manualAtdBulkForm', { static: true }) manualAtdBulkForm!: NgForm;
   // subscription: Subscription = new Subscription();
-  displayedColumnName: string[] = ["Attendance Id", "Attendance Date", "Shift", "Employee Name","InTime","OutTime", "Attendance Type", "Attendance Status"];
+  displayedColumnName: string[] = ["Attendance Id", "Attendance Date", "Shift", "Employee Name", "InTime", "OutTime", "Attendance Type", "Attendance Status"];
   dataSource = new MatTableDataSource<any>();
   HeaderText: string | undefined;
   visible = true;
-  buttonIcon:string = '';
-  OfficeOption:any;
-  DepartmentOption:any;
-  subscription: Subscription[]=[]
+  buttonIcon: string = '';
+  OfficeOption: any;
+  DepartmentOption: any;
+  subscription: Subscription[] = []
   ShiftOption: any;
-  EmpOption:any;
-  AtdStatusOption:any;
-  selectedOffice:number|null;
-  selectedShift:number|null;
-  selectedDepartment:number|null;
-  selectedEmp:number;
+  EmpOption: any;
+  AtdStatusOption: any;
+  selectedOffice: number | null;
+  selectedShift: number | null;
+  selectedDepartment: number | null;
+  selectedEmp: number;
   atdFile: File | null;
-  icons = {cilZoom, cilSearch}
-  PMIS:string;
+  icons = { cilZoom, cilSearch }
+  PMIS: string;
   EmpName: string;
   validPMIS: boolean;
 
@@ -59,28 +60,29 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public shiftSettingService: ShiftSettingService,
   ) {
-      this.selectedOffice = null;
-      this.selectedDepartment=null;
-      this.selectedShift = null;
-      this.selectedEmp = 0;
-      this.atdFile = null;
+    this.selectedOffice = null;
+    this.selectedDepartment = null;
+    this.selectedShift = null;
+    this.selectedEmp = 0;
+    this.atdFile = null;
 
-      this.HeaderText = "Manual Attendance ";
-      this.OfficeOption = []
-      this.DepartmentOption = []
-      this.ShiftOption = []
-      this.EmpOption = []
-      this.AtdStatusOption = []
-      this.PMIS = "";
-      this.EmpName = "";
-      this.validPMIS = false;
+    this.HeaderText = "Manual Attendance ";
+    this.OfficeOption = []
+    this.DepartmentOption = []
+    this.ShiftOption = []
+    this.EmpOption = []
+    this.AtdStatusOption = []
+    this.PMIS = "";
+    this.EmpName = "";
+    this.validPMIS = false;
   }
 
   ngOnInit(): void {
     this.getPermission();
-    this.btnText = "Add Attendance"; 
+    this.btnText = "Add Attendance";
     this.buttonIcon = "cilPencil"
 
     // Get selection option for offices
@@ -89,7 +91,7 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
     );
 
     // Get selection option for Shift
-    this.manualAtdService.getShiftOption().subscribe(
+    this.shiftSettingService.getSelectedShiftType().subscribe(
       option => this.ShiftOption = option
     );
 
@@ -97,36 +99,36 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
     this.manualAtdService.getAttendanceStatusOption().subscribe(
       option => this.AtdStatusOption = option
     );
-    
+
     this.manualAtdService.getEmpOption().subscribe(
-      option=> this.EmpOption = option
+      option => this.EmpOption = option
     );
-    
+
   }
 
-  getPermission(){
+  getPermission() {
     this.subscription.push(
-    this.roleFeatureService.getFeaturePermission('manualAttendance').subscribe((item) => {
-      this.featurePermission = item;
-      if(item.viewStatus == true){
-        // To do
-      }
-      else{
-        this.roleFeatureService.unauthorizeAccress();
-        this.router.navigate(['/dashboard']);
-      }
-    })
+      this.roleFeatureService.getFeaturePermission('manualAttendance').subscribe((item) => {
+        this.featurePermission = item;
+        if (item.viewStatus == true) {
+          // To do
+        }
+        else {
+          this.roleFeatureService.unauthorizeAccress();
+          this.router.navigate(['/dashboard']);
+        }
+      })
     )
   }
 
   ResetForm() {
     //console.log("Reset Form Attempt");
-    if(this.manualAtdForm?.form==null) {
+    if (this.manualAtdForm?.form == null) {
       return;
     }
     this.manualAtdForm.reset();
     this.manualAtdBulkForm.form.patchValue({
-      empId:null
+      empId: null
 
     })
     this.manualAtdService.attendances = new Attendances();
@@ -135,68 +137,68 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   ResetBulkForm() {
-    if(this.manualAtdBulkForm?.form==null) {
+    if (this.manualAtdBulkForm?.form == null) {
       return;
-    } 
+    }
 
-    this.atdFile=null;
+    this.atdFile = null;
     this.manualAtdBulkForm.reset();
   }
 
   onOfficeChange() {
     //console.log(this.selectedDepartment);
 
-    if(this.selectedOffice!=null)
-    this.manualAtdService.getDepartmentOption(this.selectedOffice).subscribe(
-      option => this.DepartmentOption = option,
-    );
+    if (this.selectedOffice != null)
+      this.manualAtdService.getDepartmentOption(this.selectedOffice).subscribe(
+        option => this.DepartmentOption = option,
+      );
 
-    if(this.selectedOffice==null) {
-      this.DepartmentOption=[];
+    if (this.selectedOffice == null) {
+      this.DepartmentOption = [];
     }
 
     let params = new HttpParams();
-    if(this.selectedDepartment!=0) {
-      params = params.set('DepartmentId',this.selectedDepartment==null?"":this.selectedDepartment);
+    if (this.selectedDepartment != 0) {
+      params = params.set('DepartmentId', this.selectedDepartment == null ? "" : this.selectedDepartment);
     }
-    if(this.selectedOffice!=0) {
-      params = params.set("OfficeId",this.selectedOffice==null?"":this.selectedOffice);
+    if (this.selectedOffice != 0) {
+      params = params.set("OfficeId", this.selectedOffice == null ? "" : this.selectedOffice);
     }
 
 
 
-    this.manualAtdService.getFilteredEmpOption(params).subscribe(response=> {
+    this.manualAtdService.getFilteredEmpOption(params).subscribe(response => {
       this.EmpOption = response;
     });
   }
 
-  onSubmit(form:NgForm) {
+  onSubmit(form: NgForm) {
 
-    if(this.featurePermission.add==false) {
+    if (this.featurePermission.add == false) {
       this.roleFeatureService.unauthorizeAccress();
       return;
     }
 
     this.loading = true;
-    
-  
+
+
     this.subscription.push(
       this.manualAtdService.submit(this.manualAtdService.attendances).subscribe({
-        next: (response:any) => {
-          if(response.success) {
+        next: (response: any) => {
+          if (response.success) {
             this.ResetForm();
-            this.toastr.success('',`${response.message}`, {
+            this.toastr.success('', `${response.message}`, {
               positionClass: 'toast-top-right',
             });
           } else {
-            this.toastr.warning('',`${response.message}`, {
+            this.toastr.warning('', `${response.message}`, {
               positionClass: 'toast-top-right'
             });
-          } 
-          
+          }
+
         },
-        error: err=> {
-          this.loading= false;
+        error: err => {
+          this.loading = false;
         },
         complete: () => {
           this.ResetForm();
@@ -204,12 +206,12 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
         }
       })
     )
-    
+
   }
 
-  onSubmitBulk(form:NgForm) {
+  onSubmitBulk(form: NgForm) {
 
-    if(this.featurePermission.add==false) {
+    if (this.featurePermission.add == false) {
       this.roleFeatureService.unauthorizeAccress();
       return;
     }
@@ -218,23 +220,23 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
 
     this.subscription.push(
       this.manualAtdService.submitBulk(this.atdFile).subscribe({
-        next: (response:any) => {
-          if(response.success) {
+        next: (response: any) => {
+          if (response.success) {
             this.ResetBulkForm();
-            this.toastr.success('',`${response.message}`,{
-              positionClass:'toast-top-right'
+            this.toastr.success('', `${response.message}`, {
+              positionClass: 'toast-top-right'
             });
           } else {
-            this.loadingBulk=false;
-            this.toastr.warning('',`${response.message}`, {
-              positionClass:'toast-top-right'
+            this.loadingBulk = false;
+            this.toastr.warning('', `${response.message}`, {
+              positionClass: 'toast-top-right'
             });
           }
-  
+
           this.ResetBulkForm();
-  
+
         },
-        error: err=> {
+        error: err => {
           this.loadingBulk = false;
         },
         complete: () => {
@@ -242,32 +244,32 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
         }
       })
     )
-   
+
   }
 
   onEmpIdChange() {
-    if(this.PMIS.trim() == "") {
+    if (this.PMIS.trim() == "") {
       this.resetEmp();
       return;
     }
-    const source$ = of (this.PMIS).pipe(
+    const source$ = of(this.PMIS).pipe(
       delay(700)
     );
 
-    if(this.subscription) {
-      this.subscription.forEach(subs=>subs.unsubscribe());
+    if (this.subscription) {
+      this.subscription.forEach(subs => subs.unsubscribe());
     }
 
 
-    
+
     this.subscription.push(
       source$.subscribe(data => {
         this.empBasicInfoService.getEmpInfoByCard(data).subscribe({
           next: response => {
-            if(response) {
-             this.manualAtdService.attendances.empId = response.id;
-             this.EmpName = [response.firstName,response.lastName].join(' ');
-             this.validPMIS = true;
+            if (response) {
+              this.manualAtdService.attendances.empId = response.id;
+              this.EmpName = [response.firstName, response.lastName].join(' ');
+              this.validPMIS = true;
             } else {
               this.resetEmp();
             }
@@ -278,7 +280,7 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
         })
       })
     )
-   
+
 
   }
 
@@ -290,27 +292,27 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
 
 
   openEmployeeModal() {
-    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl' });
 
     modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
-      if(idCardNo){
-          this.PMIS = idCardNo;
-          this.onEmpIdChange();
+      if (idCardNo) {
+        this.PMIS = idCardNo;
+        this.onEmpIdChange();
       }
     });
   }
 
-  onAtdFileChange(event:any) {
+  onAtdFileChange(event: any) {
     this.atdFile = event.target.files[0];
   }
 
   ngOnDestroy(): void {
-    if(this.subscription) {
-      this.subscription.forEach(subs=>subs.unsubscribe())
+    if (this.subscription) {
+      this.subscription.forEach(subs => subs.unsubscribe())
     }
   }
 
   ngAfterViewInit(): void {
-    
+
   }
 }

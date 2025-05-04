@@ -76,7 +76,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
 
             if(!request.Attendancedto.OverTime.HasValue)
             {
-                request.Attendancedto.OverTime = AttendanceHelper.SetOverTime(request.Attendancedto, _ShiftRepository);
+                request.Attendancedto.OverTime = AttendanceHelper.SetOverTimeByShiftSetting(request.Attendancedto, _shiftSettingRepository);
             }
 
             var attendance = _mapper.Map<Hrm.Domain.Attendance>(request.Attendancedto);

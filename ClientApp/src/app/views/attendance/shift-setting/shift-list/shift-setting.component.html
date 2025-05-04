@@ -21,7 +21,8 @@
             <ng-template pTemplate="body" let-treeShiftInfo let-expanded="expanded">
                 <tr>
                     <td>
-                        <button pButton [pRowToggler]="treeShiftInfo" [text]="true" [rounded]="true">
+                        <button pButton [pRowToggler]="treeShiftInfo" [text]="true" [rounded]="true"
+                            class="shiftToggleButton">
                             <mat-icon *ngIf="!expanded">keyboard_arrow_down</mat-icon>
                             <mat-icon *ngIf="expanded">keyboard_arrow_up</mat-icon>
                         </button>
@@ -82,7 +83,8 @@
                             (click)="manageShiftSettingModal(shiftSetting.id, 'Edit')">
                             <svg [cIcon]="icons.cilPencil"></svg>
                         </button>&nbsp;
-                        <button class="custom-button" cTooltip="Delete" cTooltipPlacement="bottom" (click)="deleteShiftSetting(shiftSetting)">
+                        <button class="custom-button" cTooltip="Delete" cTooltipPlacement="bottom"
+                            (click)="deleteShiftSetting(shiftSetting)">
                             <svg [cIcon]="icons.cilTrash"></svg>
                         </button>
                     </td>

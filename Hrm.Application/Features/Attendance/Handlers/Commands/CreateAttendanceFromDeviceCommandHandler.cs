@@ -22,6 +22,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
         private readonly IHrmRepository<Hrm.Domain.Workday> _WorkdayRepository;
         private readonly IHrmRepository<Hrm.Domain.Holidays> _HolidayRepository;
         private readonly IHrmRepository<Hrm.Domain.Shift> _ShiftRepository;
+        private readonly IHrmRepository<Hrm.Domain.ShiftSetting> _shiftSettingRepository;
         private readonly IHrmRepository<Hrm.Domain.CancelledWeekend> _cancelledWeekendRepo;
         private readonly IMapper _mapper;
 
@@ -29,7 +30,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
             IHrmRepository<Hrm.Domain.Workday> WorkdayRepository,
             IHrmRepository<Hrm.Domain.Holidays> HolidayRepository,
             IHrmRepository<Hrm.Domain.CancelledWeekend> cancelledWeekendRepo,
-            IHrmRepository<Hrm.Domain.Shift> ShiftRepository, IMapper mapper)
+            IHrmRepository<Hrm.Domain.Shift> ShiftRepository, IMapper mapper, IHrmRepository<Domain.ShiftSetting> shiftSettingRepository)
         {
             _unitOfWork = unitOfWork;
             _WorkdayRepository = WorkdayRepository;
@@ -37,6 +38,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
             _cancelledWeekendRepo = cancelledWeekendRepo;
             _ShiftRepository = ShiftRepository;
             _mapper = mapper;
+            _shiftSettingRepository = shiftSettingRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(CreateAttendanceFromDeviceCommand request, CancellationToken cancellationToken)
@@ -56,13 +58,13 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
             request.Attendancedto.DayTypeId = AttendanceHelper.SetDayTypeId(request.Attendancedto, _WorkdayRepository, _HolidayRepository, _cancelledWeekendRepo);
 
             // Set Attendance Status
-            request.Attendancedto.AttendanceStatusId = AttendanceHelper.SetAttendanceStatus(request.Attendancedto, _ShiftRepository);
+            request.Attendancedto.AttendanceStatusId = AttendanceHelper.SetAttendanceStatusByShiftSetting(request.Attendancedto, _shiftSettingRepository);
 
             // Set Work Hour
             request.Attendancedto.WorkHour = AttendanceHelper.SetWorkHour(request.Attendancedto);
 
             // Set OverTime
-            request.Attendancedto.OverTime = AttendanceHelper.SetOverTime(request.Attendancedto, _ShiftRepository);
+            request.Attendancedto.OverTime = AttendanceHelper.SetOverTimeByShiftSetting(request.Attendancedto, _shiftSettingRepository);
 
 
             var attendance = _mapper.Map<Hrm.Domain.Attendance>(request.Attendancedto);

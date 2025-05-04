@@ -105,5 +105,6 @@ namespace Hrm.Application.DTOs.EmpTransferPosting
         public string? UpdateGradeName { get; set; }
         public string? CurrentScaleName { get; set; }
         public string? UpdateScaleName { get; set; }
+        public bool? IsAdditionalDesignation { get; set; }
     }
 }

@@ -71,6 +71,7 @@ namespace Hrm.Domain
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+        public bool? IsAdditionalDesignation { get; set; }
 
         public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
         public virtual EmpBasicInfo? ApplicationBy { get; set; }
@@ -92,5 +93,6 @@ namespace Hrm.Domain
         public virtual Grade? UpdateGrade { get; set; }
         public virtual Scale? CurrentScale { get; set; }
         public virtual Scale? UpdateScale { get; set; }
+    
     }
 }

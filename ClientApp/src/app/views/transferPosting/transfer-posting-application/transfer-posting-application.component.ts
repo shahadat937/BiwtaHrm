@@ -21,6 +21,7 @@ import { NotificationService } from '../../notifications/service/notification.se
 import { AuthService } from '../../../core/service/auth.service';
 import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { ResponsibilityTypeService } from '../../../../../src/app/views/basic-setup/service/responsibility-type.service';
 
 @Component({
   selector: 'app-transfer-posting-application',
@@ -39,6 +40,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   releaseTypes: SelectedModel[] = [];
   grades: SelectedModel[] = [];
   scales: SelectedModel[] = [];
+  responsibilities: SelectedModel[] = [];
   // subscription: Subscription = new Subscription();
   subscription: Subscription[] = []
   loading: boolean = false;
@@ -51,6 +53,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   loginEmpCurrentDesignationId : any;
   loginEmpResponsibilityTypeId : any;
   empJobDetailsId: any;
+  isMainDesignation : boolean = true;
   empTransferPosting: EmpTransferPosting = new EmpTransferPosting;
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
   featurePermission: FeaturePermission = new FeaturePermission;
@@ -70,6 +73,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     public notificationService: NotificationService,
     private authService: AuthService,
     public roleFeatureService: RoleFeatureService,
+    public responsibilityTypeService : ResponsibilityTypeService
   ) {
 
   }
@@ -106,6 +110,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
           // this.getSelectedSection();
           this.getSelectedReleaseType();
           this.SelectModelGrade();
+          this.getSelectedResponsibilityType();
         }
         else {
           this.roleFeatureService.unauthorizeAccress();
@@ -284,6 +289,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       currentScaleName: '',
       updateGradeName: '',
       updateScaleName: '',
+      isAdditionalDesignation: null,
+      responsibilityTypeId : null
     };
   }
 
@@ -353,6 +360,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       currentScaleName: '',
       updateGradeName: '',
       updateScaleName: '',
+      isAddtionalDesignation: null
     });
   }
 
@@ -481,11 +489,9 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         }
       })
     )
+    this.isMainDesignation = true;
    }
    else{
-
-    console.log(employee);
-
           this.empJobDetailsId = employee.id;
           this.empTransferPostingService.empTransferPosting.sectionName = employee.sectionName;
           this.empTransferPostingService.empTransferPosting.departmentName = employee.departmentName;
@@ -499,6 +505,9 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
           this.empTransferPostingService.empTransferPosting.currentBasicPay = employee.basicPay;
           this.empTransferPostingService.empTransferPosting.currentGradeName = employee.presentGradeName;
           this.empTransferPostingService.empTransferPosting.currentScaleName = employee.presentScaleName;
+          this.empTransferPostingService.empTransferPosting.isAdditionalDesignation = employee.isAdditionalDesignation;
+
+          this.isMainDesignation = this.empTransferPostingService.empTransferPosting.isAdditionalDesignation? false : true;       
    
    }
 
@@ -781,6 +790,15 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       )
 
     }
+  }
+
+  getSelectedResponsibilityType(){
+    this.subscription.push(
+      this.responsibilityTypeService.getSelectedResponsibilityType().subscribe((res) => {
+      this.responsibilities = res;
+    })
+    )
+    
   }
 
   SelectModelGrade() {

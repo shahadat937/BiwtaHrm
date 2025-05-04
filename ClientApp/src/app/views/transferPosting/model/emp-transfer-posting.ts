@@ -104,4 +104,6 @@ export class EmpTransferPosting {
     remark: string | null = null;
     menuPosition: number | null = null;
     isActive: boolean | null = null;
+    isAdditionalDesignation : boolean | null = null;
+    responsibilityTypeId : number | null = null
 }

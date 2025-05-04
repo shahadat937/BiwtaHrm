@@ -164,10 +164,10 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
         this.empTransferPosting.joiningStatus = this.empTransferPostingService.empTransferPosting.joiningStatus;
       }
       this.empTransferPosting.joiningReportingById = this.loginEmpId;
-      this.empTransferPosting.joiningReleaseByDepartmentId = this.loginEmpCurrentDepartmentId;
-      this.empTransferPosting.joiningReleaseByDesignationId = this.loginEmpCurrentDesignationId;
-      this.empTransferPosting.joiningReleaseByResponsibilityTypeId = this.loginEmpResponsibilityTypeId;      
-      this.empTransferPosting.joiningReleaseBySectionId = this.loginEmpCurrentSectionId;
+      this.empTransferPosting.joiningReportingByDepartmentId = this.loginEmpCurrentDepartmentId;
+      this.empTransferPosting.joiningReportingByDesignationId = this.loginEmpCurrentDesignationId;
+      this.empTransferPosting.joiningReportingByResponsibilityTypeId = this.loginEmpResponsibilityTypeId;      
+      this.empTransferPosting.joiningReportingBySectionId = this.loginEmpCurrentSectionId;
 
       this.empTransferPosting.joiningRemark = this.empTransferPostingService.empTransferPosting.joiningRemark;
       this.empTransferPosting.joiningDate = this.empTransferPostingService.empTransferPosting.joiningDate;

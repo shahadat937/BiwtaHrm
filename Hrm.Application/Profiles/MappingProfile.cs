@@ -665,7 +665,7 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpShiftAssign, EmpShiftAssignDto>().ReverseMap();
             CreateMap<EmpShiftAssign, CreateEmpShiftAssignDto>().ReverseMap();
             CreateMap<EmpShiftAssign, EmpShiftAssignDto>()
-            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.Shift.ShiftName))
+            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.ShiftType.ShiftName))
             .ForMember(dest => dest.PMISNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
             .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName + " " + src.EmpBasicInfo.LastName))
             .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.EmpBasicInfo.EmpJobDetail.FirstOrDefault().Department.DepartmentName))

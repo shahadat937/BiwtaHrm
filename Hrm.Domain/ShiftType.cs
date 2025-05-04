@@ -17,5 +17,6 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
 
         public virtual ICollection<ShiftSetting>? ShiftSetting { get; set; }
+        public virtual ICollection<EmpShiftAssign>? EmpShiftAssign { get; set; }
     }
 }

@@ -175,38 +175,4 @@ export class ShiftSettingComponent implements OnInit, OnDestroy {
     }
   }
 
-  // delete(element: any) {
-  //     if(this.featurePermission.delete == true){
-  //       this.subscription.push(
-  //         this.confirmService
-  //       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
-  //       .subscribe((result) => {
-  //         if (result) {
-  //           this.featureManagementService.delete(element.moduleId).subscribe(
-  //             (res) => {
-  //               const index = this.dataSource.data.indexOf(element);
-  //               this.toastr.warning('Delete Successfull', ` `, {
-  //                 positionClass: 'toast-top-right',
-  //               });
-  //               if (index !== -1) {
-  //                 this.dataSource.data.splice(index, 1);
-  //                 this.dataSource = new MatTableDataSource(this.dataSource.data);
-  //               }
-  //             },
-  //             (err) => {
-  //               this.toastr.error('Somethig Wrong ! ', ` `, {
-  //                 positionClass: 'toast-top-right',
-  //               });
-  //             }
-  //           );
-  //         }
-  //       })
-  //       )
-        
-  //     }
-  //     else {
-  //       this.roleFeatureService.unauthorizeAccress();
-  //     }
-  //   }
-
 }

@@ -36,7 +36,7 @@ namespace Hrm.Application.Features.EmpShiftAssigns.Handlers.Queries
                 .ThenInclude(ebi => ebi.EmpJobDetail)
                 .ThenInclude(ejd => ejd.Designation)
                     .ThenInclude(ds => ds.DesignationSetup)
-            .Include(x => x.Shift);
+            .Include(x => x.ShiftType);
 
             EmpShiftAssign = EmpShiftAssign.OrderByDescending(x => x.Id);
 

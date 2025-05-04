@@ -30,7 +30,7 @@ namespace Hrm.Application.Features.ShiftTypes.Handlers.Queries
         {
             var validator = new QueryParamsValidator();
 
-            var ShiftTypes = await _ShiftTypeRepository.FindOneAsync(x => x.IsActive == true);
+            var ShiftTypes = await _ShiftTypeRepository.FindOneAsync(x => x.IsDefault == true);
 
 
             var ShiftTypesDtos = _mapper.Map<ShiftTypeDto>(ShiftTypes);

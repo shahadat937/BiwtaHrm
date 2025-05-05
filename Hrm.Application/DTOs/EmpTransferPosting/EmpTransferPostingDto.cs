@@ -23,6 +23,7 @@ namespace Hrm.Application.DTOs.EmpTransferPosting
         public int? CurrentGradeId { get; set; }
         public int? CurrentScaleId { get; set; }
         public int? CurrentBasicPay { get; set; }
+        public int? CurrentResponsibiltyTypeId { get; set; }
         public string? OfficeOrderNo { get; set; }
         public DateOnly? OfficeOrderDate { get; set; }
         public int? OrderOfficeById { get; set; }
@@ -106,5 +107,6 @@ namespace Hrm.Application.DTOs.EmpTransferPosting
         public string? CurrentScaleName { get; set; }
         public string? UpdateScaleName { get; set; }
         public bool? IsAdditionalDesignation { get; set; }
+        public int? TransferResponsibilityTypeId { get; set; }
     }
 }

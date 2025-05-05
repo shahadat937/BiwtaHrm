@@ -72,6 +72,7 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsAdditionalDesignation { get; set; }
+        public int? TransferResponsibilityTypeId { get; set; }
 
         public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
         public virtual EmpBasicInfo? ApplicationBy { get; set; }

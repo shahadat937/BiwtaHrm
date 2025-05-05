@@ -15,6 +15,7 @@
             <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.applicantDesignationId" name="applicantDesignationId" />
             <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.applicantJobResponsibilityTypeId" name="applicantJobResponsibilityTypeId" />
             <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.isAdditionalDesignation" name="isAdditionalDesignation" />
+            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentResponsibiltyTypeId" name="currentResponsibiltyTypeId" />
 
             <!-- ************* Employee Information ************** -->
             <c-card class="mt-3 mb-3 shadow">
@@ -246,13 +247,13 @@
                     </c-col>
 
                     <c-col [md]="3" *ngIf="!isMainDesignation">
-                        <label cLabel for="transferDepartmentId">Other Responsibility Type<span
+                        <label cLabel for="transferDepartmentId">Responsibility Type<span
                                 class="text-danger">*</span></label>
                         <div class="input-wrapper">
-                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.responsibilityTypeId"
-                                name="responsibilityTypeId" #responsibilityTypeId="ngModel" 
+                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.transferResponsibilityTypeId"
+                                name="transferResponsibilityTypeId" #transferResponsibilityTypeId="ngModel" 
                             
-                                cFormControl id="responsibilityTypeId" aria-label="Default select example" cSelect>
+                                cFormControl id="transferResponsibilityTypeId" aria-label="Default select example" cSelect>
                                 <option [ngValue]="null">Select Responsibility Type</option>
 
                                 @for(responsibilitie of responsibilities; track responsibilitie.id;let index=$index) {

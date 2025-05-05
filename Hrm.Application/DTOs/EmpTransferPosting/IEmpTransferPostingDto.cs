@@ -70,5 +70,6 @@ namespace Hrm.Application.DTOs.EmpTransferPosting
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsAdditionalDesignation { get; set; }
+        public int? TransferResponsibilityTypeId { get; set; }
     }
 }

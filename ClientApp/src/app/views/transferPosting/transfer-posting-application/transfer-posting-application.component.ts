@@ -54,6 +54,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   loginEmpResponsibilityTypeId : any;
   empJobDetailsId: any;
   isMainDesignation : boolean = true;
+  tranferDesignation: any;
+  responsibilityTypeId : any;
   empTransferPosting: EmpTransferPosting = new EmpTransferPosting;
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
   featurePermission: FeaturePermission = new FeaturePermission;
@@ -97,7 +99,6 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       this.roleFeatureService.getFeaturePermission('transferPostingApplication').subscribe((item) => {
         this.featurePermission = item;
         if (item.viewStatus == true) {
-          console.log(this.authService.userInformation.sectionId);
           this.loginEmpId = this.authService.userInformation.empId;
           this.loginEmpCurrentDepartmentId = this.authService.userInformation.departmentId;
           this.loginEmpCurrentSectionId = this.authService.userInformation.sectionId;
@@ -131,12 +132,17 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.id = Number(params.get('id'));
       })
     )
+
     this.subscription.push(
       this.empTransferPostingService.findById(this.id).subscribe((res) => {
         if (res) {
           this.empTransferPosting = res;
+          this.tranferDesignation = res.transferDesignationId;
+          this.responsibilityTypeId = res.responsibilityTypeId;
+          console.log(res)
+     
           if (res.transferSectionId) {
-            this.onSectionSelectGetDesignation(res.transferSectionId, this.empJobDetailsId);
+            this.getEmpJobDetailsInfoSectionSelectGetDesignation(res.empId, res.transferDepartmentId,res.transferSectionId)       
           }
           else {
             this.getEmpJobDetailsInfo(res.empId, res.transferDepartmentId);
@@ -179,11 +185,21 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
             this.empTransferPostingService.empTransferPosting.departmentName = res.departmentName;
             this.empTransferPostingService.empTransferPosting.designationName = res.designationName;
             this.empTransferPostingService.empTransferPosting.sectionName = res.sectionName;
-            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res.currentDeptJoinDate;
+            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res.currentDeptJoinDate;          
           }
-          // if(res.orderByIdCardNo){
-          //   this.getOrderByInfoByIdCardNo(res.orderByIdCardNo);
-          // }
+
+          if(res.transferSectionId){
+            this.empTransferPostingService.empTransferPosting.transferSectionId = res.transferSectionId;
+          }
+
+          if(res.transferDesignationId){
+            this.empTransferPostingService.empTransferPosting.transferDesignationId = res.transferDesignationId;
+          }
+          if(res.isAdditionalDesignation){
+            this.isMainDesignation = false;
+            this.empTransferPostingService.empTransferPosting.transferResponsibilityTypeId = res.transferResponsibilityTypeId;
+  
+          }
         }
         else {
           this.headerText = 'Add New Transfer and Posting Order';
@@ -215,6 +231,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       currentDepartmentId: null,
       currentDesignationId: null,
       currentSectionId: null,
+      currentResponsibiltyTypeId: null,
       officeOrderNo: null,
       officeOrderDate: null,
       orderOfficeById: null,
@@ -290,7 +307,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       updateGradeName: '',
       updateScaleName: '',
       isAdditionalDesignation: null,
-      responsibilityTypeId : null
+      responsibilityTypeId : null,
+      transferResponsibilityTypeId : null
     };
   }
 
@@ -314,6 +332,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       currentDeptJoinDate: null,
       currentDepartmentId: null,
       currentDesignationId: null,
+      currentResponsibiltyTypeId: null,
       currentSectionId: null,
       officeOrderNo: null,
       officeOrderDate: null,
@@ -360,7 +379,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       currentScaleName: '',
       updateGradeName: '',
       updateScaleName: '',
-      isAddtionalDesignation: null
+      isAddtionalDesignation: null,
+      transferResponsibilityTypeId : null
     });
   }
 
@@ -468,7 +488,6 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   }
 
   getEmpJobDetailsByEmpId(employee: any) {
-    console.log(this.isNumber(employee))
    if(this.isNumber(employee)){
     this.subscription.push(
       this.empJobDetailsService.findByEmpId(employee).subscribe((res) => {
@@ -492,6 +511,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.isMainDesignation = true;
    }
    else{
+    console.log(employee);
           this.empJobDetailsId = employee.id;
           this.empTransferPostingService.empTransferPosting.sectionName = employee.sectionName;
           this.empTransferPostingService.empTransferPosting.departmentName = employee.departmentName;
@@ -506,6 +526,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
           this.empTransferPostingService.empTransferPosting.currentGradeName = employee.presentGradeName;
           this.empTransferPostingService.empTransferPosting.currentScaleName = employee.presentScaleName;
           this.empTransferPostingService.empTransferPosting.isAdditionalDesignation = employee.isAdditionalDesignation;
+          this.empTransferPostingService.empTransferPosting.currentResponsibiltyTypeId = employee.additionalResponsibilityId;
 
           this.isMainDesignation = this.empTransferPostingService.empTransferPosting.isAdditionalDesignation? false : true;       
    
@@ -522,8 +543,6 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         }
       })
     )
-
-
   }
 
   gerReleaseTypeInfo(id: number) {
@@ -571,6 +590,19 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   //     }
   //   })
   // }
+
+
+  getEmpJobDetailsInfoSectionSelectGetDesignation(id: number | null, departmentId: number | null, transferSectionId: number | null) {
+    this.subscription.push(
+      this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+        if (res) {
+          this.empJobDetailsId = res.id;
+          this.onSectionSelectGetDesignation(transferSectionId, this.empJobDetailsId);
+        }
+      })
+    )
+  }
+
 
   getApproveByInfoByIdCardNo(idCardNo: string) {
 
@@ -785,9 +817,10 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     else {
       this.subscription.push(
         this.empJobDetailsService.getDesignationBySectionId(+sectionId, +empJobDetailsId).subscribe((res) => {
-          this.designations = res;
+          this.designations = res; 
         })
       )
+      this.empTransferPostingService.empTransferPosting.transferDesignationId = this.tranferDesignation;
 
     }
   }
@@ -796,6 +829,9 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.responsibilityTypeService.getSelectedResponsibilityType().subscribe((res) => {
       this.responsibilities = res;
+      if(this.responsibilityTypeId){
+        this.empTransferPostingService.empTransferPosting.responsibilityTypeId = this.responsibilityTypeId
+      }
     })
     )
     
@@ -829,7 +865,6 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm): void {
-    console.log(form.setValue);
     if (this.featurePermission.add == true) {
       this.loading = true;
       this.empTransferPostingService.cachedData = [];

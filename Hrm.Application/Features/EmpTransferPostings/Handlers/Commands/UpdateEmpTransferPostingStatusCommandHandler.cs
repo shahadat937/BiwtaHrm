@@ -83,7 +83,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                     if(otherDesignation != null)
                     {
                         otherDesignation.DepartmentId = EmpTransferPosting.TransferDepartmentId;
-                        otherDesignation.SectionId = EmpTransferPosting.TransferDesignationId;
+                        otherDesignation.SectionId = EmpTransferPosting.TransferSectionId;
                         otherDesignation.DesignationId = EmpTransferPosting.TransferDesignationId;
                         otherDesignation.ResponsibilityTypeId = EmpTransferPosting.CurrentResponsibiltyTypeId;
                         await _unitOfWork.Repository<EmpOtherResponsibility>().Update(otherDesignation);
@@ -162,14 +162,8 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                 }
             }
 
-            await _unitOfWork.Repository<EmpTransferPosting>().Update(updateEmptransferPosting);
-            try
-            {
-
-            }catch(Exception ex)
-            {
-                await _unitOfWork.Save();
-            }
+            await _unitOfWork.Repository<EmpTransferPosting>().Update(updateEmptransferPosting);           
+            await _unitOfWork.Save();           
     
 
             response.Success = true;

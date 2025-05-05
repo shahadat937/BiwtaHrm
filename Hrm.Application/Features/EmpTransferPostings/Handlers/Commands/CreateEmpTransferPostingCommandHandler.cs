@@ -130,7 +130,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                         otherDesignation.DepartmentId = empTransferPostings.TransferDepartmentId;
                         otherDesignation.DesignationId = empTransferPostings.TransferDesignationId;
                         otherDesignation.SectionId = empTransferPostings.TransferSectionId;
-                        otherDesignation.ResponsibilityTypeId = request.EmpTransferPostingDto.ResponsibilityTypeId;
+                        otherDesignation.ResponsibilityTypeId = request.EmpTransferPostingDto.TransferResponsibilityTypeId;
 
                 }
                 else if (otherDesignation != null && request.EmpTransferPostingDto.TransferApproveStatus == false || request.EmpTransferPostingDto.DeptApproveStatus == false || (request.EmpTransferPostingDto.JoiningStatus == false && request.EmpTransferPostingDto.JoiningDate == null))
@@ -139,7 +139,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                     otherDesignation.DepartmentId = empTransferPostings.TransferDepartmentId;
                     otherDesignation.DesignationId = empTransferPostings.TransferDesignationId;
                     otherDesignation.SectionId = empTransferPostings.TransferSectionId;
-                    otherDesignation.ResponsibilityTypeId = request.EmpTransferPostingDto.ResponsibilityTypeId;
+                    otherDesignation.ResponsibilityTypeId = request.EmpTransferPostingDto.TransferResponsibilityTypeId;
                     
                 }
                 empTransferPostings.IsAdditionalDesignation = true;

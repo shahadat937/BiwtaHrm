@@ -20,6 +20,7 @@ namespace Hrm.Application.DTOs.EmpTransferPosting
         public int? CurrentDepartmentId { get; set; }
         public int? CurrentSectionId { get; set; }
         public int? CurrentDesignationId { get; set; }
+        public int? CurrentResponsibiltyTypeId { get; set; }
         public int? CurrentGradeId { get; set; }
         public int? CurrentScaleId { get; set; }
         public int? CurrentBasicPay { get; set; }
@@ -71,5 +72,6 @@ namespace Hrm.Application.DTOs.EmpTransferPosting
         public bool? IsActive { get; set; }
         public bool? IsAdditionalDesignation { get; set; }
         public int? ResponsibilityTypeId { get; set; }
+        public int? TransferResponsibilityTypeId { get; set; }
     }
 }

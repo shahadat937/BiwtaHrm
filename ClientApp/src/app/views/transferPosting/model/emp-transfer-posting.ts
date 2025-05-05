@@ -105,5 +105,7 @@ export class EmpTransferPosting {
     menuPosition: number | null = null;
     isActive: boolean | null = null;
     isAdditionalDesignation : boolean | null = null;
-    responsibilityTypeId : number | null = null
+    responsibilityTypeId : number | null = null;
+    transferResponsibilityTypeId: number | null = null;
+    currentResponsibiltyTypeId: number | null = null;
 }

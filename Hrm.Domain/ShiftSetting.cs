@@ -22,5 +22,6 @@ namespace Hrm.Domain
         public string? Remark { get; set; }
 
         public virtual ShiftType? ShiftType { get; set; }
+        public virtual ICollection<Attendance>? Attendances { get; set; }
     }
 }

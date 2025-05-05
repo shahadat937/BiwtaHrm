@@ -101,7 +101,9 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
 
             var attendance = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.EmpId == employee.Id && x.AttendanceDate == PunchDto.PunchDate).FirstOrDefaultAsync();
 
-            if(attendance == null)
+
+
+            if (attendance == null)
             {
                 var createAtdDto = new CreateAttendanceDto();
                 createAtdDto.EmpId = employee.Id;
@@ -111,6 +113,10 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
                 createAtdDto.DayTypeId = AttendanceHelper.SetDayTypeId(createAtdDto, _workDayRepo, _holidayRepo, _cancelledWeekendRepo);
                 createAtdDto.AttendanceStatusId = AttendanceHelper.SetAttendanceStatusByShiftSetting(createAtdDto, _shiftSettingRepository);
                 var attendanceRecord = _mapper.Map<Hrm.Domain.Attendance>(createAtdDto);
+
+
+                attendanceRecord.ShiftSettingId = _shiftSettingRepository.Where(x => x.IsActive == true && x.ShiftTypeId == attendanceRecord.ShiftId).Select(x => x.Id).FirstOrDefault();
+
                 await _unitOfWork.Repository<Hrm.Domain.Attendance>().Add(attendanceRecord);
                 await _unitOfWork.Save();
             } else
@@ -141,6 +147,10 @@ namespace Hrm.Application.Features.AttendanceDevice.Handlers.Commands
                     attendance.InTime = PunchDto.PunchTime;
                     attendance.AttendanceStatusId = GetAttendanceStatus(attendance);
                 }
+
+
+                attendance.ShiftSettingId = _shiftSettingRepository.Where(x => x.IsActive == true && x.ShiftTypeId == attendance.ShiftId).Select(x => x.Id).FirstOrDefault();
+
                 await _unitOfWork.Repository<Hrm.Domain.Attendance>().Update(attendance);
                 await _unitOfWork.Save();
                 return true;

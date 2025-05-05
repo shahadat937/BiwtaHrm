@@ -16,6 +16,7 @@ namespace Hrm.Domain
         public int? OfficeId { get; set; }
         public int? OfficeBranchId { get; set; }
         public int? ShiftId { get; set; }
+        public int? ShiftSettingId { get; set; }
         public int? DayTypeId { get; set; }
         public TimeOnly? InTime { get; set; }
         public TimeOnly? OutTime { get; set; }
@@ -35,7 +36,8 @@ namespace Hrm.Domain
         public EmpBasicInfo EmpBasicInfo { get; set; }
         public Office Office { get; set; }
         public OfficeBranch OfficeBranch { get; set; }
-        public Shift Shift { get; set; }
+        public ShiftType ShiftType { get; set; }
+        public ShiftSetting ShiftSetting { get; set; }
         public DayType DayType { get; set; }
         public AttendanceStatus AttendanceStatus { get; set; }
         public SiteVisit SiteVisit { get; set; }

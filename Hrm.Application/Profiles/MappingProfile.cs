@@ -593,12 +593,15 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.IdCardNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
             .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
             .ForMember(dest => dest.OfficeBranchName, opt => opt.MapFrom(src => src.OfficeBranch.BranchName))
-            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.Shift.ShiftName))
+            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.ShiftType.ShiftName))
             .ForMember(dest => dest.DayTypeName, opt => opt.MapFrom(src => src.DayType.DayTypeName))
             .ForMember(dest => dest.AttendanceStatusName, opt => opt.MapFrom(src => src.AttendanceStatus.AttendanceStatusName))
+            //.ForMember(dest => dest.LateTime, opt => opt.MapFrom(src =>
+            //    src.ShiftType.ShiftSetting.FirstOrDefault().Id
+            //));
             .ForMember(dest => dest.LateTime, opt => opt.MapFrom(src => Math.Max(0,
-            (int)((src.Shift!=null&&src.InTime.HasValue ? src.InTime.Value.ToTimeSpan() : TimeSpan.Zero) -
-                  (src.Shift!=null&&src.Shift.StartTime.HasValue == true ? src.Shift.StartTime.Value.ToTimeSpan() : TimeSpan.Zero)).TotalMinutes)));
+            (int)((src.ShiftType != null && src.InTime.HasValue ? src.InTime.Value.ToTimeSpan() : TimeSpan.Zero) -
+                  (src.ShiftType != null && src.ShiftSetting.StartTime.HasValue == true ? src.ShiftSetting.StartTime.Value.ToTimeSpan() : TimeSpan.Zero)).TotalMinutes)));
 
 
             CreateMap<LeaveType, LeaveTypeDto>().ReverseMap();

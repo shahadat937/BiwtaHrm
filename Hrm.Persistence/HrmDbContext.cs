@@ -646,6 +646,14 @@ namespace Hrm.Persistence
             {
                 entity.HasKey(at => at.AttendanceId)
                 .HasName("[[PK_Attendance]]");
+
+                entity.HasOne(e => e.ShiftType)
+                    .WithMany(e => e.Attendances)
+                    .HasForeignKey(e => e.ShiftId);
+
+                entity.HasOne(e => e.ShiftSetting)
+                    .WithMany(e => e.Attendances)
+                    .HasForeignKey(e => e.ShiftSettingId);
             });
 
             modelBuilder.Entity<AttendanceType>(entity =>
@@ -676,12 +684,6 @@ namespace Hrm.Persistence
                 .HasForeignKey(ad => ad.OfficeBranchId);
             });
 
-            modelBuilder.Entity<Shift>(entity =>
-            {
-                entity.HasMany(sf => sf.Attendances)
-                .WithOne(ad => ad.Shift)
-                .HasForeignKey(ad => ad.ShiftId);
-            });
 
             modelBuilder.Entity<DayType>(entity =>
             {
@@ -1085,6 +1087,9 @@ namespace Hrm.Persistence
                     .WithMany(e => e.EmpShiftAssign)
                     .HasForeignKey(e => e.ShiftId);
             });
+
+
+
 
             modelBuilder.Entity<Section>(entity =>
             {

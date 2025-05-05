@@ -215,6 +215,7 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     this.subscription.push(
       this.AtdRecordService.getAttendance(params).subscribe({
         next: response => {
+          console.log(response)
           this.dataSource =new MatTableDataSource (response.result.map(x=>({
             ...x,
             fullName: [x.empFirstName,x.empLastName].join(' ')

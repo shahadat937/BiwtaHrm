@@ -131,6 +131,8 @@ using Hrm.Application.DTOs.PendingDevice;
 using Hrm.Application.DTOs.AttDevice;
 using Hrm.Application.DTOs.Notification;
 using Hrm.Application.DTOs.FormSection;
+using Hrm.Application.DTOs.ShiftType;
+using Hrm.Application.DTOs.ShiftSetting;
 
 
 
@@ -663,7 +665,7 @@ namespace Hrm.Application.Profiles
             CreateMap<EmpShiftAssign, EmpShiftAssignDto>().ReverseMap();
             CreateMap<EmpShiftAssign, CreateEmpShiftAssignDto>().ReverseMap();
             CreateMap<EmpShiftAssign, EmpShiftAssignDto>()
-            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.Shift.ShiftName))
+            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.ShiftType.ShiftName))
             .ForMember(dest => dest.PMISNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
             .ForMember(dest => dest.EmpName, opt => opt.MapFrom(src => src.EmpBasicInfo.FirstName + " " + src.EmpBasicInfo.LastName))
             .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.EmpBasicInfo.EmpJobDetail.FirstOrDefault().Department.DepartmentName))
@@ -775,6 +777,16 @@ namespace Hrm.Application.Profiles
             CreateMap<Notification, NotificationDto>()
                 .ForMember(dest => dest.FromEmpName, opt => opt.MapFrom(src => src.FromEmpBasicInfo.FirstName + ' ' + src.FromEmpBasicInfo.LastName))
                 .ForMember(dest => dest.EmpIdCard, opt => opt.MapFrom(src => src.FromEmpBasicInfo.IdCardNo)).ReverseMap();
+
+
+            CreateMap<ShiftType, CreateShiftTypeDto>().ReverseMap();
+            CreateMap<ShiftType, ShiftTypeDto>().ReverseMap();
+
+            CreateMap<ShiftSetting, CreateShiftSettingDto>().ReverseMap();
+            CreateMap<ShiftSetting, ShiftSettingDto>().ReverseMap();
+            CreateMap<ShiftSetting, ShiftSettingDto>()
+                .ForMember(dest => dest.ShiftTypeName, opt => opt.MapFrom(src => src.ShiftType.ShiftName)).ReverseMap();
+
 
         }
     }

@@ -1081,7 +1081,7 @@ namespace Hrm.Persistence
                     .WithMany(e => e.EmpShiftAssign)
                     .HasForeignKey(e => e.EmpId);
 
-                entity.HasOne(e => e.Shift)
+                entity.HasOne(e => e.ShiftType)
                     .WithMany(e => e.EmpShiftAssign)
                     .HasForeignKey(e => e.ShiftId);
             });
@@ -1342,6 +1342,18 @@ namespace Hrm.Persistence
 
             });
 
+
+            modelBuilder.Entity<ShiftSetting>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                .HasName("[[PK_ShiftSetting]]");
+
+                entity.HasOne(e => e.ShiftType)
+                .WithMany(e => e.ShiftSetting)
+                .HasForeignKey(e => e.ShiftTypeId);
+            });
+
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -1480,6 +1492,8 @@ namespace Hrm.Persistence
         public virtual DbSet<AttDevices> AttDevices { get; set; } = null!;
         public virtual DbSet<AttDeviceCommands> AttDeviceCommands { get; set; } = null!;
         public virtual DbSet<Notification> Notification { get; set; } = null!;
+        public virtual DbSet<ShiftType> ShiftType { get; set; } = null!;
+        public virtual DbSet<ShiftSetting> ShiftSetting { get; set; } = null!;
 
     }
 }

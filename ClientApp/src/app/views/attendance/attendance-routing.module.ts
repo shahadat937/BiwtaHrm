@@ -7,14 +7,15 @@ import { ManageShiftComponent } from './manage-shift/manage-shift.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AttendanceSummaryComponent } from './attendance-summary/attendance-summary.component';
-import {ManageSiteVisitComponent} from './manage-site-visit/manage-site-visit.component'
+import { ManageSiteVisitComponent } from './manage-site-visit/manage-site-visit.component';
+import { ShiftSettingComponent } from './shift-setting/shift-list/shift-setting.component';
 
 const routes: Routes = [
   {
     path: 'manageShift',
     component: ManageShiftComponent,
   },
-  
+
   {
     path: 'update-shift/:shiftId',
     component: ManageShiftComponent,
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path: 'attendanceSummary',
     component: AttendanceSummaryComponent
+  },
+  {
+    path: 'shift-setting',
+    component: ShiftSettingComponent
   }
 ];
 

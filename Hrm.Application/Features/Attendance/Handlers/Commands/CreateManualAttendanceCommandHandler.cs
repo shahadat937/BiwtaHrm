@@ -23,13 +23,15 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
         private readonly IHrmRepository<Hrm.Domain.Workday> _WorkdayRepository;
         private readonly IHrmRepository<Hrm.Domain.Holidays> _HolidaysRepository;
         private readonly IHrmRepository<Hrm.Domain.Shift> _ShiftRepository;
+        private readonly IHrmRepository<Hrm.Domain.ShiftSetting> _shiftSettingRepository;
         private readonly IHrmRepository<Hrm.Domain.CancelledWeekend> _CancelledWeekendRepo;
 
         public CreateManualAttendanceCommandHandler (IUnitOfWork unitOfWork, IMapper mapper, 
             IHrmRepository<Domain.Workday> workdayRepository, 
             IHrmRepository<Domain.Holidays> holidaysRepository,
             IHrmRepository<Domain.CancelledWeekend> cancelledWeekendRepo,
-            IHrmRepository<Domain.Shift> shiftRepository)
+            IHrmRepository<Domain.Shift> shiftRepository,
+            IHrmRepository<Hrm.Domain.ShiftSetting> shiftSettingRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -37,6 +39,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
             _HolidaysRepository = holidaysRepository;
             _ShiftRepository = shiftRepository;
             _CancelledWeekendRepo = cancelledWeekendRepo;
+            _shiftSettingRepository = shiftSettingRepository;
         }
 
         public async Task<BaseCommandResponse> Handle(CreateManualAttendanceCommand request, CancellationToken cancellationToken)
@@ -63,7 +66,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
 
             if(!request.Attendancedto.AttendanceStatusId.HasValue)
             {
-                request.Attendancedto.AttendanceStatusId = AttendanceHelper.SetAttendanceStatus(request.Attendancedto, _ShiftRepository);
+                request.Attendancedto.AttendanceStatusId = AttendanceHelper.SetAttendanceStatusByShiftSetting(request.Attendancedto, _shiftSettingRepository);
             }
 
             if(!request.Attendancedto.WorkHour.HasValue)
@@ -73,7 +76,7 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
 
             if(!request.Attendancedto.OverTime.HasValue)
             {
-                request.Attendancedto.OverTime = AttendanceHelper.SetOverTime(request.Attendancedto, _ShiftRepository);
+                request.Attendancedto.OverTime = AttendanceHelper.SetOverTimeByShiftSetting(request.Attendancedto, _shiftSettingRepository);
             }
 
             var attendance = _mapper.Map<Hrm.Domain.Attendance>(request.Attendancedto);

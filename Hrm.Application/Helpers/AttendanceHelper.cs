@@ -41,6 +41,31 @@ namespace Hrm.Application.Helpers
             return (int)AttendanceStatusOption.Present;
         }
 
+        public static int? SetAttendanceStatusByShiftSetting(CreateAttendanceDto dto, IHrmRepository<Hrm.Domain.ShiftSetting> _shiftSettingRepository)
+        {
+            if (dto.ShiftId == null || dto.InTime == null)
+            {
+                return null;
+            }
+
+
+            var shiftSetting = _shiftSettingRepository.Where(x => x.ShiftTypeId == dto.ShiftId && x.IsActive == true).FirstOrDefault();
+
+
+
+            if (dto.InTime > shiftSetting.AbsentTime)
+            {
+                return (int)AttendanceStatusOption.Absent;
+            }
+
+            if (dto.InTime > shiftSetting.BufferTime)
+            {
+                return (int)AttendanceStatusOption.Late;
+            }
+
+            return (int)AttendanceStatusOption.Present;
+        }
+
         public static bool IsHoliday(DateOnly GivenDate, IHrmRepository<Hrm.Domain.Holidays> _HolidayRepository)
         {
             var IsHoliday = _HolidayRepository.Where(x => x.Year.YearName == GivenDate.Year && x.IsActive == true && x.HolidayDate == GivenDate).Any();
@@ -118,6 +143,38 @@ namespace Hrm.Application.Helpers
             }
 
             TimeOnly time1 = (TimeOnly)shift.EndTime;
+            TimeOnly time2 = (TimeOnly)dto.OutTime;
+
+            DateTime datetime1 = DateTime.Today.AddHours(time1.Hour).AddMinutes(time1.Minute);
+            DateTime datetime2 = DateTime.Today.AddHours(time2.Hour).AddMinutes(time2.Minute);
+
+            TimeSpan timespan = datetime2 - datetime1;
+
+            return (int)timespan.TotalMinutes;
+        }
+
+
+        public static int? SetOverTimeByShiftSetting(CreateAttendanceDto dto, IHrmRepository<Hrm.Domain.ShiftSetting> _shiftSettingRepository)
+        {
+            if ((!dto.ShiftId.HasValue) || (!dto.OutTime.HasValue))
+            {
+                return null;
+            }
+
+
+            var shiftSetting = _shiftSettingRepository.Where(x => x.ShiftTypeId == dto.ShiftId && x.IsActive == true).FirstOrDefault();
+
+            if (shiftSetting == null)
+            {
+                return null;
+            }
+
+            if (shiftSetting.EndTime >= dto.OutTime)
+            {
+                return 0;
+            }
+
+            TimeOnly time1 = (TimeOnly)shiftSetting.EndTime;
             TimeOnly time2 = (TimeOnly)dto.OutTime;
 
             DateTime datetime1 = DateTime.Today.AddHours(time1.Hour).AddMinutes(time1.Minute);

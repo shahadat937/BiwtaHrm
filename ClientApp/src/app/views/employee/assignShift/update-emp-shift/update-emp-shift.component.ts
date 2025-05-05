@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { ShiftService } from 'src/app/views/attendance/services/shift.service';
 import { EmpShiftAssignService } from '../../service/emp-shift-assign.service';
+import { ShiftSettingService } from '../../../attendance/services/shift-setting.service';
 
 @Component({
   selector: 'app-update-emp-shift',
@@ -30,6 +31,7 @@ export class UpdateEmpShiftComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     public empShiftAssignService: EmpShiftAssignService,
     private ShiftService: ShiftService,
+    public shiftSettingService: ShiftSettingService,
   ) { }
 
 
@@ -74,7 +76,7 @@ export class UpdateEmpShiftComponent implements OnInit, OnDestroy {
 
   getSelectedShift(){
     this.subscription.push(
-      this.ShiftService.getSelectedShift().subscribe((res) => {
+      this.shiftSettingService.getSelectedShiftType().subscribe((res) => {
       this.shifts = res;
     })
     )

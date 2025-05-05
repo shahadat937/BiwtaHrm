@@ -55,6 +55,9 @@ import { PrintAttReportComponent } from './attendance-report/print-att-report/pr
 import {NgxPrintModule} from 'ngx-print'
 import { LeaveTypeService } from '../basic-setup/service/leave-type.service';
 import { PrintEmpAttReportComponent } from './attendance-summary/print-emp-att-report/print-emp-att-report.component';
+import {ShiftSettingComponent} from './shift-setting/shift-list/shift-setting.component';
+import { ShiftTypeModalComponent } from './shift-setting/shift-modal/shift-type-modal/shift-type-modal.component';
+import { ShiftSettingModalComponent } from './shift-setting/shift-modal/shift-setting-modal/shift-setting-modal.component';
 
 
 
@@ -71,7 +74,10 @@ import { PrintEmpAttReportComponent } from './attendance-summary/print-emp-att-r
     TimeFormatPipe,
     ManageSiteVisitComponent,
     PrintAttReportComponent,
-    PrintEmpAttReportComponent
+    PrintEmpAttReportComponent,
+    ShiftSettingComponent,
+    ShiftTypeModalComponent,
+    ShiftSettingModalComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,192 @@
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{heading}}</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                <form #ShiftSettingForm="ngForm" [gutter]="3" novalidate cForm cRow class="needs-validation">
+                    <c-col [md]="4">
+                        <input type="hidden" [(ngModel)]="shiftSettingService.shiftSetting.id" name="id" />
+                        <label cLabel for="settingName">Setting Name<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="shiftSettingService.shiftSetting.settingName" name="settingName"
+                            #settingName="ngModel" placeholder="Enter Setting Name" cFormControl id="settingName" required
+                            type="text" />
+
+                        @if(!settingName.valid&&settingName.touched){
+                        <div class="text-left text-danger">Setting Name is required</div>
+                        }
+                    </c-col>
+
+                    <c-col [md]="4">
+                        <label cLabel for="shiftTypeId">Shift Type<span class="text-danger">*</span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="shiftSettingService.shiftSetting.shiftTypeId"
+                                name="shiftTypeId" #shiftTypeId="ngModel" cFormControl id="shiftTypeId"
+                                aria-label="Default select example" required cSelect>
+                                <option [ngValue]="0">Select Shift Type</option>
+
+                                @for(shiftType of shiftTypes; track shiftType.id;let index=$index) {
+                                <option [value]="shiftType.id">
+                                    {{ shiftType.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!shiftTypeId.valid && shiftTypeId.touched){
+                            <div class="text-left text-danger">Shift Type is required</div>
+                            }
+                        </div>
+                    </c-col>
+
+                    <c-col [md]="4">
+                        <label cLabel for="validationCustom02"
+                        >Shift Start Time<span class="text-danger">*</span></label
+                      >
+                      <input
+                        [(ngModel)]="shiftSettingService.shiftSetting.startTime"
+                        name="startTime"
+                        #StartTime="ngModel"
+                        placeholder="Enter Shift Start Time"
+                        cFormControl
+                        id="validationCustom02"
+                        required
+                        type="time"
+                      />
+                      @if(!StartTime.valid&&StartTime.touched){
+                      <div class="text-left text-danger">Shift Start Time is required</div>
+                      }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="validationCustom03"
+                        >Shift End Time<span class="text-danger">*</span></label>
+                      <input
+                        [(ngModel)]="shiftSettingService.shiftSetting.endTime"
+                        name="endTime"
+                        #EndTime="ngModel"
+                        placeholder="Enter Shift End Time"
+                        cFormControl
+                        id="validationCustom03"
+                        required
+                        type="time"
+                      />
+                      @if(!EndTime.valid&&EndTime.touched){
+                      <div class="text-left text-danger">Shift End Time is required</div>
+                      }
+                    </c-col>
+                    
+                  
+                  <c-col [md]="4">
+                      <label cLabel for="validationCustom06"
+                      >Buffer Time<span class="text-danger">*</span></label>
+                    <input
+                      [(ngModel)]="shiftSettingService.shiftSetting.bufferTime"
+                      name="bufferTime" 
+                      #BufferTime="ngModel"
+                      placeholder="Enter Buffer Time"
+                      cFormControl
+                      required
+                      id="validationCustom06"
+                      type="time"
+                    />
+                    @if(!BufferTime.valid&&BufferTime.touched){
+                    <div class="text-left text-danger">Buffer Time is required</div>
+                    }
+                  </c-col>
+                  
+                  <c-col [md]="4">
+                      <label cLabel for="validationCustom07"
+                      >Absent Time<span class="text-danger">*</span></label>
+                    <input
+                      [(ngModel)]="shiftSettingService.shiftSetting.absentTime"
+                      name="absentTime" 
+                      #AbsentTime="ngModel"
+                      placeholder="Enter Absent Time"
+                      cFormControl
+                      required
+                      id="validationCustom07"
+                      type="time"
+                    />
+                    @if(!AbsentTime.valid&&AbsentTime.touched){
+                    <div class="text-left text-danger">Buffer Time is required</div>
+                    }
+                  </c-col>
+                  
+                  <c-col [md]="4">
+                    <label cLabel for="validationCustom04"
+                    >Shift Start Date<span class="text-danger"></span></label>
+                  <input
+                    [(ngModel)]="shiftSettingService.shiftSetting.startDate"
+                    name="startDate" 
+                    #StartDate="ngModel"
+                    placeholder="Enter Shift Start Date"
+                    cFormControl
+                    id="validationCustom04"
+                    type="date"
+                  />
+                  @if(!StartDate.valid&&StartDate.touched){
+                  <div class="text-left text-danger">Shift Start Date is required</div>
+                  }
+                </c-col>
+                
+                <c-col [md]="4">
+                    <label cLabel for="validationCustom05"
+                    >Shift End Date<span class="text-danger"></span></label>
+                  <input
+                    [(ngModel)]="shiftSettingService.shiftSetting.endDate"
+                    name="endDate" 
+                    #EndDate="ngModel"
+                    placeholder="Enter Shift End Date"
+                    cFormControl
+                    id="validationCustom05"
+                    type="date"
+                  />
+                  @if(!EndDate.valid&&EndDate.touched){
+                  <div class="text-left text-danger">Shift End Date is required</div>
+                  }
+                </c-col>
+
+                    <c-col [md]="4">
+                        <label cLabel for="isActive">Active Status</label>
+                        <select [(ngModel)]="shiftSettingService.shiftSetting.isActive" name="isActive" cSelect
+                            id="isActive">
+                            <option value="true">Active</option>
+                            <option value="false">De-Active</option>
+                        </select>
+                    </c-col>
+
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="validationCustom08"
+                        >Remark<span class="text-danger"></span></label>
+                    <input
+                        [(ngModel)]="shiftSettingService.shiftSetting.remark"
+                        name="remark" 
+                        #Remark="ngModel"
+                        placeholder="Remark"
+                        cFormControl
+                        id="validationCustom08"
+                        type="text"
+                    />
+                    @if(!Remark.valid&&Remark.touched){
+                    <div class="text-left text-danger">Buffer Time is required</div>
+                    }
+                    </c-col>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button mat-raised-button color="warn" type="button" (click)="closeModal()">
+                    <mat-icon>cancel</mat-icon> Close
+                </button>
+                <button [disabled]="ShiftSettingForm.invalid" mat-raised-button class="me-1" color="primary"
+                    type="submit" (click)="onSubmit(ShiftSettingForm)">
+                    <mat-icon>{{btnIcon}}</mat-icon> {{ btnText }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

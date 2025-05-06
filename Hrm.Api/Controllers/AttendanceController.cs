@@ -125,6 +125,17 @@ namespace Hrm.Api.Controllers
 
         }
 
+
+        [HttpGet]
+        [Route("update-AttendanceQuery")]
+        public async Task<ActionResult<BaseCommandResponse>> UpdateAttendanceQuery([FromQuery] DateOnly fromDate, DateOnly toDate)
+        {
+            var command = new UpdateAttendanceQueryRequest { FromDate = fromDate, ToDate = toDate };
+            var response = await _mediator.Send(command);
+            return Ok(response);
+
+        }
+
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

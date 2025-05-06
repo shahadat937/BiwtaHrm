@@ -51,5 +51,15 @@ namespace Hrm.Application.DTOs.EmpPromotionIncrement
         public string? ApproveByName { get; set; }
         public string? ApproveByDepartmentName { get; set; }
         public string? ApproveByDesignationName { get; set; }
+        public int? ApplicationByDepartmentId { get; set; }
+        public int? ApplicationBySectionId { get; set; }
+        public int? ApplicationByDesignationId { get; set; }
+        public int? ApplicationByResponsibityTypeId { get; set; }
+
+        public int? ApproveByDepartmentId { get; set; }
+        public int? ApproveBySectionId { get; set; }
+        public int? ApproveByDesignationId { get; set; }
+        public int? ApproveByResponsibityTypeId { get; set; }
+
     }
 }

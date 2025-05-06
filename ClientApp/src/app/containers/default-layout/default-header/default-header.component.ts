@@ -85,11 +85,12 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
 
   ngOnInit(): void {
-    const currentEncryptedUser = localStorage.getItem('encryptedUser');
-  
+    const currentEncryptedUser = localStorage.getItem('encryptedUser');  
     if (currentEncryptedUser) {
+
       const bytes = CryptoJS.AES.decrypt(currentEncryptedUser, 'secret-key');
       const decryptedUser = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      this.userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
   
       this.empId = decryptedUser.empId || 0;
       
@@ -101,10 +102,9 @@ export class DefaultHeaderComponent extends HeaderComponent {
         departmentId: decryptedUser.departmentId,
         sectionId: decryptedUser.sectionId,
         designationId: decryptedUser.designationId,
-        responsibilityTypeId: decryptedUser.responsibilityTypeId
+        responsibilityTypeId: decryptedUser.responsibilityTypeId || this.userData.responsibilityTypeId
       };
-  
-      this.userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
     }
   
     this.getEmployeeByEmpId();
@@ -258,7 +258,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
     const selectedDepartment = this.empDepartmentSectionDesignation.find(
       (department: any) => department.combainedIds === selectedDepartmentId
     );
-  
+
     const { departmentId, sectionId, designationId,responsibilityTypeId } = selectedDepartment;
   
     if (
@@ -296,8 +296,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
       ).toString();
   
       localStorage.setItem('encryptedUser', updatedEncrypted);
-    }
-  
+    }  
     window.location.reload();
   }
   

@@ -245,26 +245,6 @@
                             }
                         </div>
                     </c-col>
-
-                    <c-col [md]="3" *ngIf="!isMainDesignation">
-                        <label cLabel for="transferDepartmentId">Responsibility Type<span
-                                class="text-danger">*</span></label>
-                        <div class="input-wrapper">
-                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.transferResponsibilityTypeId"
-                                name="transferResponsibilityTypeId" #transferResponsibilityTypeId="ngModel" 
-                            
-                                cFormControl id="transferResponsibilityTypeId" aria-label="Default select example" cSelect>
-                                <option [ngValue]="null">Select Responsibility Type</option>
-
-                                @for(responsibilitie of responsibilities; track responsibilitie.id;let index=$index) {
-                                <option [value]="responsibilitie.id">
-                                    {{ responsibilitie.name }}
-                                </option>
-                                }
-                            </select>
-                        
-                        </div>
-                    </c-col>
                     
                     <c-col [md]="3" *ngIf="sections.length > 0">
                         <label cLabel for="transferSectionId">Transfer Section<span class="text-danger"></span></label>
@@ -307,6 +287,25 @@
                         </div>
                     </c-col>
 
+                    <c-col [md]="3" *ngIf="!isMainDesignation">
+                        <label cLabel for="transferDepartmentId">Responsibility Type<span
+                                class="text-danger">*</span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.transferResponsibilityTypeId"
+                                name="transferResponsibilityTypeId" #transferResponsibilityTypeId="ngModel" 
+                            
+                                cFormControl id="transferResponsibilityTypeId" aria-label="Default select example" cSelect>
+                                <option [ngValue]="null">Select Responsibility Type</option>
+
+                                @for(responsibilitie of responsibilities; track responsibilitie.id;let index=$index) {
+                                <option [value]="responsibilitie.id">
+                                    {{ responsibilitie.name }}
+                                </option>
+                                }
+                            </select>
+                        
+                        </div>
+                    </c-col>
                 
 
 

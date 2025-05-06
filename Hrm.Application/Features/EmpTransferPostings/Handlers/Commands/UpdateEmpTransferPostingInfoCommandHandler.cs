@@ -35,11 +35,6 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
 
             var EmpTransferPosting = await _unitOfWork.Repository<EmpTransferPosting>().Get(request.UpdateEmpTransferPostingDto.Id);
 
-            var updateEmptransferPosting = _mapper.Map(request.UpdateEmpTransferPostingDto, EmpTransferPosting);
-
-
-       
-
             var empJobDetailsInfo = await _EmpEmpJobDetailsRepository.FindOneAsync(x => x.EmpId == request.UpdateEmpTransferPostingDto.EmpId);
             var empJobDetails = await _unitOfWork.Repository<EmpJobDetail>().Get(empJobDetailsInfo.Id);
 
@@ -62,9 +57,10 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                     x.DepartmentId == EmpTransferPosting.CurrentDepartmentId
                 );
             }
+            var updateEmptransferPosting = _mapper.Map(request.UpdateEmpTransferPostingDto, EmpTransferPosting);
 
             if ((request.UpdateEmpTransferPostingDto.TransferApproveDate != null || request.UpdateEmpTransferPostingDto.IsTransferApprove == false) && (request.UpdateEmpTransferPostingDto.TransferApproveStatus == true || request.UpdateEmpTransferPostingDto.TransferApproveStatus == null))
-            {
+            z{
                 updateEmptransferPosting.TransferApproveStatus = true;
             }
             if ((request.UpdateEmpTransferPostingDto.TransferApproveDate == null || request.UpdateEmpTransferPostingDto.IsTransferApprove == true) && (request.UpdateEmpTransferPostingDto.TransferApproveStatus == null))
@@ -93,7 +89,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
             {
                 updateEmptransferPosting.JoiningStatus = true;
             }
-            if ((request.UpdateEmpTransferPostingDto.JoiningDate == null || request.UpdateEmpTransferPostingDto.IsJoining == true) && (request.UpdateEmpTransferPostingDto.JoiningStatus == null))
+            else if ((request.UpdateEmpTransferPostingDto.JoiningDate == null || request.UpdateEmpTransferPostingDto.IsJoining == true) && (request.UpdateEmpTransferPostingDto.JoiningStatus == null))
             {
                 updateEmptransferPosting.JoiningStatus = null;
             }
@@ -102,7 +98,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                 updateEmptransferPosting.JoiningStatus = false;
             }
 
-            if (updateEmptransferPosting.TransferApproveStatus == true && updateEmptransferPosting.DeptApproveStatus == true && updateEmptransferPosting.JoiningStatus == true)
+            if (updateEmptransferPosting.TransferApproveStatus == true && (updateEmptransferPosting.DeptApproveStatus == true || updateEmptransferPosting.JoiningStatus == true))
             {
                 updateEmptransferPosting.ApplicationStatus = true;
 
@@ -239,17 +235,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                     }
                     await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
                 }
-                else
-                {
-                    if (otherDesignation != null)
-                    {
-                        otherDesignation.DepartmentId = updateEmptransferPosting.TransferDepartmentId;
-                        otherDesignation.SectionId = updateEmptransferPosting.TransferSectionId;
-                        otherDesignation.DesignationId = updateEmptransferPosting.TransferDesignationId;
-                        otherDesignation.ResponsibilityTypeId = updateEmptransferPosting.CurrentResponsibiltyTypeId;
-                        await _unitOfWork.Repository<EmpOtherResponsibility>().Update(otherDesignation);
-                    }
-                }
+                
             }
 
 

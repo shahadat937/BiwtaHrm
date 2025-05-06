@@ -40,5 +40,7 @@ namespace Hrm.Application.DTOs.EmpBasicInfo
         public string? AdditionalResponsibilityName { get; set; }
         public string? EmpPhotoName { get; set; }
         public string? EmpGenderName { get; set; }
+        public bool?  IsAdditionalDesignation { get; set; }
+        public DateOnly? JoiningDate { get; set; }
     }
 }

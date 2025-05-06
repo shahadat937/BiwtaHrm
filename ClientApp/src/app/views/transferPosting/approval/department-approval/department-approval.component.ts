@@ -5,12 +5,12 @@ import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { EmpJobDetailsService } from 'src/app/views/employee/service/emp-job-details.service';
+import { EmpJobDetailsService } from '../../../../../../src/app/views/employee/service/emp-job-details.service';
 import { EmpTransferPosting } from '../../model/emp-transfer-posting';
 import { EmpTransferPostingService } from '../../service/emp-transfer-posting.service';
-import { SelectedModel } from 'src/app/core/models/selectedModel';
-import { UserNotification } from 'src/app/views/notifications/models/user-notification';
-import { NotificationService } from 'src/app/views/notifications/service/notification.service';
+import { SelectedModel } from '../../../../../../src/app/core/models/selectedModel';
+import { UserNotification } from '../../../../../../src/app/views/notifications/models/user-notification';
+import { NotificationService } from '../../../../../../src/app/views/notifications/service/notification.service';
 
 @Component({
   selector: 'app-department-approval',
@@ -27,6 +27,10 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
   heading: string = '';
   modalOpened: boolean = false;
   loginEmpId : number = 0;
+  loginEmpCurrentDepartmentId : any;  
+  loginEmpCurrentSectionId : any;
+  loginEmpCurrentDesignationId : any;
+  loginEmpResponsibilityTypeId : any;
   releaseTypes: SelectedModel[] = [];
 
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
@@ -57,6 +61,10 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
     const currentUserString = localStorage.getItem('currentUser');
     const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
     this.loginEmpId = currentUserJSON.empId;
+    this.loginEmpCurrentDepartmentId = currentUserJSON.departmentId;
+    this.loginEmpCurrentDesignationId = currentUserJSON.designationId;
+    this.loginEmpCurrentSectionId = currentUserJSON.sectionId;
+    this.loginEmpResponsibilityTypeId = currentUserJSON.responsibilityTypeId;
   }
 
   handleText(){
@@ -161,6 +169,11 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
         this.empTransferPosting.deptApproveStatus = this.empTransferPostingService.empTransferPosting.deptApproveStatus;
       }
       this.empTransferPosting.deptReleaseById = this.loginEmpId;
+      this.empTransferPosting.deptReleaseByDepartmentId = this.loginEmpCurrentDepartmentId;
+      this.empTransferPosting.deptReleaseByDesignationId = this.loginEmpCurrentDesignationId;
+      this.empTransferPosting.deptReleaseByResponsibilityTypeId = this.loginEmpResponsibilityTypeId;      
+      this.empTransferPosting.deptReleaseBySectionId = this.loginEmpCurrentSectionId;
+      
       this.empTransferPosting.deptReleaseTypeId = this.empTransferPostingService.empTransferPosting.deptReleaseTypeId;
       this.empTransferPosting.deptReleaseDate = this.empTransferPostingService.empTransferPosting.deptReleaseDate;
       this.empTransferPosting.referenceNo = this.empTransferPostingService.empTransferPosting.referenceNo;

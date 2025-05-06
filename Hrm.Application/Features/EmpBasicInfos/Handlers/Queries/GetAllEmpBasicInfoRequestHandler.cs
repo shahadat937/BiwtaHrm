@@ -96,6 +96,8 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Queries
                 AdditionalResponsibilityName = x.ResponsibilityType.Name,
                 EmpPhotoName = x.EmpBasicInfo.EmpPhotoSign.FirstOrDefault().PhotoUrl,
                 UserStatus = true,
+                IsAdditionalDesignation = true,
+                JoiningDate = x.StartDate
             }).ToListAsync(cancellationToken);
 
             var combinedResult = empBasicInfoResultData

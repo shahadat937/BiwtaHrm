@@ -38,6 +38,7 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
   @ViewChild(MatSort)
   matSort!: MatSort;
   loginEmpId: number = 0;
+  currentDepartmentId: number = 0;
   noticeForEntryId: number = 0;
   pagination: PaginatorModel = new PaginatorModel();
   featurePermission : FeaturePermission = new FeaturePermission;
@@ -67,6 +68,7 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
       this.featurePermission = item;
       if(item.viewStatus == true){
         this.loginEmpId = this.authService.userInformation.empId || 0;
+        this.currentDepartmentId = this.authService.userInformation.departmentId || 0;
         this.route.queryParams.subscribe((params) => {
           this.noticeForEntryId = params['forNotificationId'] || 0;
           this.getAllEmpTransferPostingJoiningInfo(this.pagination);
@@ -82,7 +84,7 @@ export class JoiningReportingListComponent  implements OnInit, OnDestroy {
 
   getAllEmpTransferPostingJoiningInfo(queryParams: any) {
     this.subscription.push(
-    this.empTransferPostingService.getAllEmpTransferPostingJoiningInfo(queryParams, this.loginEmpId, this.noticeForEntryId).subscribe((item) => {
+    this.empTransferPostingService.getAllEmpTransferPostingJoiningInfo(queryParams, this.currentDepartmentId, this.noticeForEntryId).subscribe((item) => {
       this.dataSource.data = item.items;
       this.pagination.length = item.totalItemsCount;
     })

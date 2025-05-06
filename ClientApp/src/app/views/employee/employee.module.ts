@@ -93,6 +93,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { EmpTrainingInfoComponent } from './add-employee/employee-informations/emp-training-info/emp-training-info.component';
 import { ResultService } from '../basic-setup/service/result.service';
 import { EmployeeListModalComponent } from './employee-list-modal/employee-list-modal.component';
+import { EmployeeInfoListModalComponent } from './employee-info-list-modal/employee-info-list-modal.component';
 import { UploadFingerPrintComponent } from './add-employee/employee-informations/upload-finger-print/upload-finger-print.component';
 import { DesignationService } from '../basic-setup/service/designation.service';
 import { EmpWorkHistorySingleComponent } from './add-employee/employee-informations/emp-work-history-single/emp-work-history-single.component';
@@ -136,6 +137,7 @@ import {NgxPrintModule} from 'ngx-print';
     EmpOtherResponsibilityComponent,
     EmpTrainingInfoComponent,
     EmployeeListModalComponent,
+    EmployeeInfoListModalComponent,
     UploadFingerPrintComponent,
     EmpWorkHistorySingleComponent,
     EmpOtherResponsibilitySingleComponent,

@@ -35,6 +35,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
 
             var EmpTransferPosting = await _unitOfWork.Repository<EmpTransferPosting>().Get(request.UpdateEmpTransferPostingDto.Id);
 
+
             var empJobDetailsInfo = await _EmpEmpJobDetailsRepository.FindOneAsync(x => x.EmpId == request.UpdateEmpTransferPostingDto.EmpId);
             var empJobDetails = await _unitOfWork.Repository<EmpJobDetail>().Get(empJobDetailsInfo.Id);
 
@@ -60,7 +61,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
             var updateEmptransferPosting = _mapper.Map(request.UpdateEmpTransferPostingDto, EmpTransferPosting);
 
             if ((request.UpdateEmpTransferPostingDto.TransferApproveDate != null || request.UpdateEmpTransferPostingDto.IsTransferApprove == false) && (request.UpdateEmpTransferPostingDto.TransferApproveStatus == true || request.UpdateEmpTransferPostingDto.TransferApproveStatus == null))
-            z{
+            {
                 updateEmptransferPosting.TransferApproveStatus = true;
             }
             if ((request.UpdateEmpTransferPostingDto.TransferApproveDate == null || request.UpdateEmpTransferPostingDto.IsTransferApprove == true) && (request.UpdateEmpTransferPostingDto.TransferApproveStatus == null))

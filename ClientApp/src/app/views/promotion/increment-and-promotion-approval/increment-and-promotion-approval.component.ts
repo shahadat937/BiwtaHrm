@@ -26,6 +26,10 @@ export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy
   heading: string = '';
   modalOpened: boolean = false;
   loginEmpId : number = 0;
+  loginEmpCurrentDepartmentId: any = null;
+  loginEmpCurrentSectionId: any = null;
+  loginEmpCurrentDesignationId : any = null;
+  loginEmpCurrentResponsibilityTypeId : any = null;
 
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
 
@@ -54,6 +58,10 @@ export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy
     const currentUserString = localStorage.getItem('currentUser');
     const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
     this.loginEmpId = currentUserJSON.empId;
+    this.loginEmpCurrentDepartmentId = currentUserJSON.departmentId;
+    this.loginEmpCurrentSectionId = currentUserJSON.sectionId;
+    this.loginEmpCurrentDesignationId = currentUserJSON.designationId;
+    this.loginEmpCurrentResponsibilityTypeId = currentUserJSON.responsibilityTypeId;
   }
 
   handleText(){
@@ -120,6 +128,10 @@ export class IncrementAndPromotionApprovalComponent implements OnInit, OnDestroy
       //   this.empPromotionIncrement.approveStatus = null;  
       // }
       this.empPromotionIncrement.approveById = this.loginEmpId;
+      this.empPromotionIncrement.approveByDepartmentId = this.loginEmpCurrentDepartmentId;
+      this.empPromotionIncrement.approveBySectionId = this.loginEmpCurrentSectionId;
+      this.empPromotionIncrement.approveByDesignationId = this.loginEmpCurrentDesignationId;
+      this.empPromotionIncrement.approveByResponsibityTypeId = this.loginEmpCurrentResponsibilityTypeId;
       this.empPromotionIncrement.approveDate = new Date().toISOString().split('T')[0] as any as Date;
       this.empPromotionIncrement.approveRemark = this.empPromotionIncrementService.empPromotionIncrement.approveRemark;
       // this.subscription = 

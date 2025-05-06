@@ -246,6 +246,12 @@
             }
           </select>
         </c-col>
+
+        <c-col *ngIf="!isUser" md="3">
+          <button mat-raised-button color="primary" type="button" (click)="UpdateAttendanceModal()">
+            <mat-icon>fingerprint</mat-icon> Update Attendance
+          </button>
+        </c-col>
       </c-row>
       <div class="mt-3 mat-elevation-z8 table-responsive">
         <table class="mt-4" mat-table matSort [dataSource]="dataSource">

@@ -247,7 +247,7 @@
           </select>
         </c-col>
 
-        <c-col *ngIf="!isUser" md="3">
+        <c-col *ngIf="!isUser && featurePermission.report" md="3">
           <button mat-raised-button color="primary" type="button" (click)="UpdateAttendanceModal()">
             <mat-icon>fingerprint</mat-icon> Update Attendance
           </button>

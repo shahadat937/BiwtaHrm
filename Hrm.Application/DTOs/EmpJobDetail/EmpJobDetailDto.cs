@@ -49,5 +49,8 @@ namespace Hrm.Application.DTOs.EmpJobDetail
         public string? FirstDesignationName { get; set; }
         public string? FirstGradeName { get; set; }
         public string? FirstScaleName { get; set; }
+
+        public int? RetiredReasonId { get; set; }
+        public string? RetirmentId { get; set; }
     }
 }

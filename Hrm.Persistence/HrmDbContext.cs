@@ -604,6 +604,10 @@ namespace Hrm.Persistence
                     .WithMany(eb => eb.FirstEmpJobDetail)
                     .HasForeignKey(e => e.FirstScaleId);
 
+                entity.HasOne(e => e.RetiredReason)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.RetiredReasonId);
+
             });
 
             modelBuilder.Entity<EmpSpouseInfo>(entity =>

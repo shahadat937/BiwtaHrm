@@ -52,6 +52,7 @@ import { BoardComponent } from './board/board.component';
 import { group } from '@angular/animations';
 
 import { SectionComponent } from './section/section.component';
+import { RetiredReasonComponent } from './retired-reason/retired-reason.component';
 
 import { SubBranchComponent } from './sub-branch/sub-branch.component';
 import { YearSetupComponent } from './year-setup/year-setup.component';
@@ -470,6 +471,20 @@ const routes: Routes = [
         component: JobDetailsSetupComponent,
         data: {
           title: 'Update Job Details Setup',
+        },
+      },
+      {
+        path: 'retired-reason',
+        component: RetiredReasonComponent,
+        data: {
+          title: 'Retired Reason',
+        },
+      },
+      {
+        path: 'update-retired-reason/:id',
+        component: RetiredReasonComponent,
+        data: {
+          title: 'Update Retired Reason',
         },
       },
 

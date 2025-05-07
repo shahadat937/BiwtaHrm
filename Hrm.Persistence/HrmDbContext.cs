@@ -1499,6 +1499,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Notification> Notification { get; set; } = null!;
         public virtual DbSet<ShiftType> ShiftType { get; set; } = null!;
         public virtual DbSet<ShiftSetting> ShiftSetting { get; set; } = null!;
+        public virtual DbSet<RetiredReason> RetiredReason { get; set; } = null!;
 
     }
 }

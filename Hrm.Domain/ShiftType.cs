@@ -18,5 +18,7 @@ namespace Hrm.Domain
 
         public virtual ICollection<ShiftSetting>? ShiftSetting { get; set; }
         public virtual ICollection<EmpShiftAssign>? EmpShiftAssign { get; set; }
+        public virtual ICollection<Attendance>? Attendances { get; set; }
+        //public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
     }
 }

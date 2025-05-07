@@ -61,7 +61,7 @@ import { EmpIdCardGenerateComponent } from './manage-employee/emp-id-card-genera
 import { MatCardModule } from '@angular/material/card';
 import { BengaliDigitPipe } from './manage-employee/emp-id-card-generate/bangali-digit.pipe';
 import { BengaliDatePipe } from './manage-employee/emp-id-card-generate/bengali-date.pipe';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { EmpAddressComponent } from './add-employee/employee-informations/emp-address/emp-address.component';
 import { EmpShiftListComponent } from './assignShift/emp-shift-list/emp-shift-list.component';
 import { UpdateEmpShiftComponent } from './assignShift/update-emp-shift/update-emp-shift.component';
@@ -99,7 +99,8 @@ import { EmpWorkHistorySingleComponent } from './add-employee/employee-informati
 import { EmpOtherResponsibilitySingleComponent } from './add-employee/employee-informations/emp-other-responsibility-single/emp-other-responsibility-single.component';
 import { RewardPunishmentListComponent } from './reward-punishment-list/reward-punishment-list.component';
 import { RewardPunishmentComponent } from './reward-punishment/reward-punishment.component';
-import {NgxPrintModule} from 'ngx-print';
+import { NgxPrintModule } from 'ngx-print';
+import { RetiredReasonService } from '../basic-setup/service/retired-reason.service';
 
 @NgModule({
   declarations: [
@@ -180,33 +181,34 @@ import {NgxPrintModule} from 'ngx-print';
     MatCardModule,
     TooltipModule,
     MatTabsModule,
-    TagModule, 
-    IconFieldModule, 
-    InputTextModule, 
-    InputIconModule, 
-    MultiSelectModule, 
-    HttpClientModule, 
+    TagModule,
+    IconFieldModule,
+    InputTextModule,
+    InputIconModule,
+    MultiSelectModule,
+    HttpClientModule,
     DropdownModule,
     ScrollingModule,
     BadgeModule,
     NgxPrintModule
   ],
   providers:
-  [
-    CountryService,
-    ShiftService,
-    WardService,
-    UnionService,
-    DepartmentService,
-    UapzilaService,
-    DistrictService,
-    ThanaService,
-    DivisionService,
-    OfficeService,
-    GradeService,
-    SectionService,
-    ResultService,
-    DesignationService
-  ],
+    [
+      CountryService,
+      ShiftService,
+      WardService,
+      UnionService,
+      DepartmentService,
+      UapzilaService,
+      DistrictService,
+      ThanaService,
+      DivisionService,
+      OfficeService,
+      GradeService,
+      SectionService,
+      ResultService,
+      DesignationService,
+      RetiredReasonService
+    ],
 })
 export class EmployeeModule { }

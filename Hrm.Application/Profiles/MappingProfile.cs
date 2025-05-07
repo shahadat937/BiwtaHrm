@@ -133,6 +133,7 @@ using Hrm.Application.DTOs.Notification;
 using Hrm.Application.DTOs.FormSection;
 using Hrm.Application.DTOs.ShiftType;
 using Hrm.Application.DTOs.ShiftSetting;
+using Hrm.Application.DTOs.RetiredReason;
 
 
 
@@ -437,7 +438,8 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.FirstSectionName, opt => opt.MapFrom(src => src.FirstSection.SectionName))
             .ForMember(dest => dest.FirstDesignationName, opt => opt.MapFrom(src => src.FirstDesignation.DesignationSetup.Name))
             .ForMember(dest => dest.FirstGradeName, opt => opt.MapFrom(src => src.FirstGrade.GradeName))
-            .ForMember(dest => dest.FirstScaleName, opt => opt.MapFrom(src => src.FirstScale.ScaleName));
+            .ForMember(dest => dest.FirstScaleName, opt => opt.MapFrom(src => src.FirstScale.ScaleName))
+            .ForMember(dest => dest.RetiredReasonName, opt => opt.MapFrom(src => src.RetiredReason.Name));
 
             CreateMap<EmpSpouseInfo, EmpSpouseInfoDto>().ReverseMap();
             CreateMap<EmpSpouseInfo, CreateEmpSpouseInfoDto>().ReverseMap();
@@ -593,12 +595,15 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.IdCardNo, opt => opt.MapFrom(src => src.EmpBasicInfo.IdCardNo))
             .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
             .ForMember(dest => dest.OfficeBranchName, opt => opt.MapFrom(src => src.OfficeBranch.BranchName))
-            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.Shift.ShiftName))
+            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.ShiftType.ShiftName))
             .ForMember(dest => dest.DayTypeName, opt => opt.MapFrom(src => src.DayType.DayTypeName))
             .ForMember(dest => dest.AttendanceStatusName, opt => opt.MapFrom(src => src.AttendanceStatus.AttendanceStatusName))
+            //.ForMember(dest => dest.LateTime, opt => opt.MapFrom(src =>
+            //    src.ShiftType.ShiftSetting.FirstOrDefault().Id
+            //));
             .ForMember(dest => dest.LateTime, opt => opt.MapFrom(src => Math.Max(0,
-            (int)((src.Shift!=null&&src.InTime.HasValue ? src.InTime.Value.ToTimeSpan() : TimeSpan.Zero) -
-                  (src.Shift!=null&&src.Shift.StartTime.HasValue == true ? src.Shift.StartTime.Value.ToTimeSpan() : TimeSpan.Zero)).TotalMinutes)));
+            (int)((src.ShiftType != null && src.InTime.HasValue ? src.InTime.Value.ToTimeSpan() : TimeSpan.Zero) -
+                  (src.ShiftType != null && src.ShiftSetting.StartTime.HasValue == true ? src.ShiftSetting.StartTime.Value.ToTimeSpan() : TimeSpan.Zero)).TotalMinutes)));
 
 
             CreateMap<LeaveType, LeaveTypeDto>().ReverseMap();
@@ -787,6 +792,9 @@ namespace Hrm.Application.Profiles
             CreateMap<ShiftSetting, ShiftSettingDto>()
                 .ForMember(dest => dest.ShiftTypeName, opt => opt.MapFrom(src => src.ShiftType.ShiftName)).ReverseMap();
 
+
+            CreateMap<RetiredReason, CreateRetiredReasonDto>().ReverseMap();
+            CreateMap<RetiredReason, RetiredReasonDto>().ReverseMap();
 
         }
     }

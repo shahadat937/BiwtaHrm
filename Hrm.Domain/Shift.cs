@@ -21,6 +21,5 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
 
-        public ICollection<Attendance> Attendances { get; } = new List<Attendance>();
     }
 }

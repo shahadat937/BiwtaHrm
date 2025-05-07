@@ -604,6 +604,10 @@ namespace Hrm.Persistence
                     .WithMany(eb => eb.FirstEmpJobDetail)
                     .HasForeignKey(e => e.FirstScaleId);
 
+                entity.HasOne(e => e.RetiredReason)
+                    .WithMany(eb => eb.EmpJobDetail)
+                    .HasForeignKey(e => e.RetiredReasonId);
+
             });
 
             modelBuilder.Entity<EmpSpouseInfo>(entity =>
@@ -646,6 +650,14 @@ namespace Hrm.Persistence
             {
                 entity.HasKey(at => at.AttendanceId)
                 .HasName("[[PK_Attendance]]");
+
+                entity.HasOne(e => e.ShiftType)
+                    .WithMany(e => e.Attendances)
+                    .HasForeignKey(e => e.ShiftId);
+
+                entity.HasOne(e => e.ShiftSetting)
+                    .WithMany(e => e.Attendances)
+                    .HasForeignKey(e => e.ShiftSettingId);
             });
 
             modelBuilder.Entity<AttendanceType>(entity =>
@@ -676,12 +688,6 @@ namespace Hrm.Persistence
                 .HasForeignKey(ad => ad.OfficeBranchId);
             });
 
-            modelBuilder.Entity<Shift>(entity =>
-            {
-                entity.HasMany(sf => sf.Attendances)
-                .WithOne(ad => ad.Shift)
-                .HasForeignKey(ad => ad.ShiftId);
-            });
 
             modelBuilder.Entity<DayType>(entity =>
             {
@@ -1085,6 +1091,9 @@ namespace Hrm.Persistence
                     .WithMany(e => e.EmpShiftAssign)
                     .HasForeignKey(e => e.ShiftId);
             });
+
+
+
 
             modelBuilder.Entity<Section>(entity =>
             {
@@ -1494,6 +1503,7 @@ namespace Hrm.Persistence
         public virtual DbSet<Notification> Notification { get; set; } = null!;
         public virtual DbSet<ShiftType> ShiftType { get; set; } = null!;
         public virtual DbSet<ShiftSetting> ShiftSetting { get; set; } = null!;
+        public virtual DbSet<RetiredReason> RetiredReason { get; set; } = null!;
 
     }
 }

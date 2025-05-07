@@ -36,5 +36,8 @@ namespace Hrm.Application.DTOs.EmpJobDetail
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
+
+        public int? RetiredReasonId { get; set; }
+        public string? RetirmentId { get; set; }
     }
 }

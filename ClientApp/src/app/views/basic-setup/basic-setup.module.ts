@@ -144,6 +144,8 @@ import { ResponsibilityTypeComponent } from './responsibility-type/responsibilit
 import { CourseDurationComponent } from './course-duration/course-duration.component';
 import { DesignationSetupComponent } from './designation-setup/designation-setup.component';
 import { JobDetailsSetupComponent } from './job-details-setup/job-details-setup.component';
+import { RetiredReasonComponent } from './retired-reason/retired-reason.component';
+import { RetiredReasonService } from './service/retired-reason.service';
 
 
 
@@ -219,6 +221,7 @@ import { JobDetailsSetupComponent } from './job-details-setup/job-details-setup.
     CourseDurationComponent,
     DesignationSetupComponent,
     JobDetailsSetupComponent,
+    RetiredReasonComponent,
   ],
   imports: [
     CommonModule,
@@ -299,7 +302,8 @@ import { JobDetailsSetupComponent } from './job-details-setup/job-details-setup.
     GradeClassService,
     GradeService,
     ScaleService,
-    DesignationService
+    DesignationService,
+    RetiredReasonService
   ],
 })
 export class BasicSetupModule {}

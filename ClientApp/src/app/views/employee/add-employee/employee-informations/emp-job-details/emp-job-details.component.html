@@ -383,11 +383,44 @@
                 <label cLabel for="serviceStatus">Service Status</label>
                 <select [(ngModel)]="empJobDetailsService.empJobDetails.serviceStatus"
                 name="serviceStatus"
-                cSelect
+                cSelect (change)="onServiceStatusSelect()"
                 id="serviceStatus">
-                  <option value="true">In Service</option>
-                  <option value="false">Out of Service</option>
+                  <option [ngValue]="true">In Service</option>
+                  <option [ngValue]="false">Out of Service</option>
                 </select>
+            </c-col>
+
+            
+            <c-col [md]="3" *ngIf="isRetiredReasonNeeded">
+                <label cLabel for="retiredReasonId">Retired Reason<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                <select (change)="getRetirmentReasonDetails(empJobDetailsService.empJobDetails.retiredReasonId)"
+                    [(ngModel)]="empJobDetailsService.empJobDetails.retiredReasonId" name="retiredReasonId" #retiredReasonId="ngModel" 
+                    cFormControl id="retiredReasonId" aria-label="Default select example" cSelect>
+                    <option [ngValue]="null">Select Retired Reason</option>
+        
+                    @for(retiredReason of retiredReasons; track retiredReason.id;let index=$index) {
+                    <option [value]="retiredReason.id">
+                    {{ retiredReason.name }}
+                    </option>
+                    }
+                </select>
+                </div>
+            </c-col>
+
+            
+            <c-col [md]="3" *ngIf="isRetirementIdNeeded">
+                <label cLabel for="retirmentId"
+                >Retirment Id<span class="text-danger"></span></label>
+                <input
+                    [(ngModel)]="empJobDetailsService.empJobDetails.retirmentId"
+                    name="retirmentId" 
+                    #RetirmentId="ngModel"
+                    placeholder="Retirment Id"
+                    cFormControl
+                    id="retirmentId"
+                    type="text"
+                />
             </c-col>
             
             <c-col [md]="3">

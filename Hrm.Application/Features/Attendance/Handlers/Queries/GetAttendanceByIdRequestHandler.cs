@@ -31,7 +31,9 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
                 .Include(at => at.EmpBasicInfo)
                 .Include(at => at.Office)
                 .Include(at => at.OfficeBranch)
-                .Include(at => at.Shift)
+                .Include(at => at.ShiftType)
+                .Include(at => at.ShiftType)
+                    .ThenInclude(ss => ss.ShiftSetting)
                 .Include(at => at.DayType)
                 .Include(at => at.AttendanceStatus)
                 .FirstOrDefaultAsync();

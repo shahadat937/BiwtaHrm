@@ -38,6 +38,9 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
 
+        public int? RetiredReasonId { get; set; }
+        public string? RetirmentId { get; set; }
+
         public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
         public virtual Office? Office { get; set; }
         public virtual Department? Department { get; set; }
@@ -50,5 +53,6 @@ namespace Hrm.Domain
         public virtual Designation? FirstDesignation { get; set; }
         public virtual Grade? FirstGrade { get; set; }
         public virtual Scale? FirstScale { get; set; }
+        public virtual RetiredReason? RetiredReason { get; set; }
     }
 }

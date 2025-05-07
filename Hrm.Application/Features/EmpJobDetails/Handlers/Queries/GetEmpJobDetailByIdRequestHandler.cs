@@ -40,6 +40,7 @@ namespace Hrm.Application.Features.EmpJobDetails.Handlers.Queries
                 .Include(x => x.FirstDesignation)
                 .Include(x => x.FirstGrade)
                 .Include(x => x.FirstScale)
+                .Include(x => x.RetiredReason)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (EmpJobDetails == null)

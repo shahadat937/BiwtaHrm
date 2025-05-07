@@ -27,6 +27,8 @@ export class EmpJobDetailsModule {
   remark: string;
   menuPosition: number;
   isActive: boolean;
+  retiredReasonId: any = null;
+  retirmentId: string = "";
 
   officeName: string = '';
   departmentName: string = '';
@@ -40,6 +42,7 @@ export class EmpJobDetailsModule {
   firstDesignationName: string = '';
   firstGradeName: string = '';
   firstScaleName: string = '';
+  retiredReasonName: string = '';
 
   constructor() {
     this.id= 0;

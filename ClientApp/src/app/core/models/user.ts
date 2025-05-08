@@ -14,7 +14,8 @@ export class User {
   token?: string;
   departmentId: string;
   sectionId : string;
-  designationId: string
+  designationId: string;
+  responsibilityTypeId: string
   constructor() {
     this.id = 0;
     this.img = '';
@@ -30,5 +31,6 @@ export class User {
     this.departmentId = '';
     this.sectionId = '';
     this.designationId = '';
+    this.responsibilityTypeId = ''
   }
 }

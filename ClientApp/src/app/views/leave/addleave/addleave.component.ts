@@ -1,15 +1,15 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { ConfirmService } from '../../../../../src/app/core/service/confirm.service';
 import {AddLeaveService} from '../service/add-leave.service';
 import { delay, of, Subscription } from 'rxjs';
 import { NgFor } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { AddLeaveModel } from '../models/add-leave-model';
-import { AuthService } from 'src/app/core/service/auth.service';
+import { AuthService } from '../../../../../src/app/core/service/auth.service';
 import { LeaveBalanceService } from '../service/leave-balance.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../../src/environments/environment';
 import { forEach } from 'lodash-es';
 import { cilSearch } from '@coreui/icons';
 import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
@@ -20,6 +20,8 @@ import { LeaveStatus } from '../enum/leave-status';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../notifications/service/notification.service';
 import { UserNotification } from '../../notifications/models/user-notification';
+import { DepartmentService } from '../../basic-setup/service/department.service';
+import { ResponsibilityTypeService } from '../../../../../src/app/views/basic-setup/service/responsibility-type.service';
 
 @Component({
   selector: 'app-addleave',
@@ -37,6 +39,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   defaultPhoto: string;
   employeePhoto: string;
   department: string;
+  otherResponsibilityType : string ;
   designation: string;
   empSubs: Subscription = new Subscription();
   empReqSub: Subscription = new Subscription();
@@ -71,6 +74,8 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     private toastr: ToastrService,
     private confirmService: ConfirmService,
     private authService: AuthService,
+    private departmentService: DepartmentService,
+    private responsibilityTypeService : ResponsibilityTypeService,
     public notificationService: NotificationService,
   ) {
     this.loading = false;
@@ -92,6 +97,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     this.leaveData = null;
     this.buttonTitle = "Submit";
     this.baseImageUrl = environment.imageUrl;
+    this.otherResponsibilityType = ""
   }
 
   ngOnInit(): void {
@@ -137,7 +143,10 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
           this.isValidPMS = true;
           this.addLeaveService.addLeaveModel.empId = parseInt(this.authService.currentUserValue.empId);
           this.employeeName = [response.firstName,response.lastName].join(' ');
-          this.department = response.departmentName;
+          // this.department = response.departmentName;
+          this.getDepartmentById(Number(this.authService.currentUserValue.departmentId))
+          this.getDesignationByIdDesignationId(Number(this.authService.currentUserValue.designationId));
+          this.getResponsibilityTypeById(Number(this.authService.currentUserValue.responsibilityTypeId))
           this.designation = response.designationName;
 
           if(response.empPhotoName!="") {
@@ -465,6 +474,31 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       })
     })
   }
+
+  getDepartmentById(departmentid: number) {
+    this.departmentService.getById(departmentid).subscribe({
+      next: response => {
+        this.department = response.departmentName
+      }
+    }); 
+  }
+  getDesignationByIdDesignationId(designationId: number) {
+    this.departmentService.getDesignationByDesignationId(designationId).subscribe({
+      next: response => {
+        this.designation = response.designationName
+      }
+    }); 
+  }
+  getResponsibilityTypeById(responsibiltyTypeId: number) {
+    this.responsibilityTypeService.find(responsibiltyTypeId).subscribe({
+      next: response => {
+        this.otherResponsibilityType = response.name;
+      }
+    }); 
+  }
+  
+
+
   onApproverChange() {
     if(this.reviewerPMIS.trim()=="") {
       this.addLeaveService.addLeaveModel.approvedBy = null;
@@ -498,11 +532,18 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
     })
   }
 
-  onImageError(event:any) {
+  // onImageError(event:any) {
+  //   const target = event.target as HTMLImageElement;
+  //   target.src = this.defaultPhoto;
+  // }
+  onImageError(event: any): void {
     const target = event.target as HTMLImageElement;
-    target.src = this.defaultPhoto;
+  
+    if (!target.dataset['fallbackUsed']) {
+      target.src = this.defaultPhoto;
+      target.dataset['fallbackUsed'] = 'true';
+    } 
   }
-
   filterLeaveBalance() {
     this.filteredLeaveBalances = this.leaveBalances.filter(data => {
       return data.leaveTypeId == this.addLeaveService.addLeaveModel.leaveTypeId || this.addLeaveService.addLeaveModel.leaveTypeId == null;

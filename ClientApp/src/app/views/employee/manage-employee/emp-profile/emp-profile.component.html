@@ -246,18 +246,24 @@
                                         <td *ngIf="empJobDetails?.firstScaleName; else emptyTd">{{empJobDetails.firstScaleName}}</td>
                                     </tr>
                                     <tr>
+                                        <th>PRL Date</th>
+                                        <td *ngIf="prlDate; else emptyTd">{{prlDate}}</td>
+                                        <th>Retirement Date</th>
+                                        <td *ngIf="retirementDate; else emptyTd">{{retirementDate}}</td>
+                                    </tr>
+                                    <tr>
                                         <th>Service Status</th>
                                         <td *ngIf="empJobDetails?.serviceStatus !== null; else emptyTd">
                                             {{ empJobDetails.serviceStatus === true ? 'In Service' : 'Out of Service' }}
                                         </td>
-                                        <th>PRL Date</th>
-                                        <td *ngIf="prlDate; else emptyTd">{{prlDate}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Retirement Date</th>
-                                        <td *ngIf="retirementDate; else emptyTd">{{retirementDate}}</td>
                                         <th>Remark</th>
                                         <td *ngIf="empJobDetails?.remark; else emptyTd">{{empJobDetails.remark}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th *ngIf="empJobDetails.retiredReasonName">Retired Reason</th>
+                                        <td *ngIf="empJobDetails.retiredReasonName">{{empJobDetails.retiredReasonName}}</td>
+                                        <th *ngIf="empJobDetails.retirmentId">Retirment Id</th>
+                                        <td *ngIf="empJobDetails.retirmentId">{{empJobDetails.retirmentId}}</td>
                                     </tr>
                                 </tbody>                        
                             </table>
@@ -1616,18 +1622,24 @@
                                 <td *ngIf="empJobDetails?.firstScaleName; else emptyTd">{{empJobDetails.firstScaleName}}</td>
                             </tr>
                             <tr>
+                                <th>PRL Date</th>
+                                <td *ngIf="prlDate; else emptyTd">{{prlDate}}</td>
+                                <th>Retirement Date</th>
+                                <td *ngIf="retirementDate; else emptyTd">{{retirementDate}}</td>
+                            </tr>
+                            <tr>
                                 <th>Service Status</th>
                                 <td *ngIf="empJobDetails?.serviceStatus !== null; else emptyTd">
                                     {{ empJobDetails.serviceStatus === true ? 'In Service' : 'Out of Service' }}
                                 </td>
-                                <th>PRL Date</th>
-                                <td *ngIf="prlDate; else emptyTd">{{prlDate}}</td>
-                            </tr>
-                            <tr>
-                                <th>Retirement Date</th>
-                                <td *ngIf="retirementDate; else emptyTd">{{retirementDate}}</td>
                                 <th>Remark</th>
                                 <td *ngIf="empJobDetails?.remark; else emptyTd">{{empJobDetails.remark}}</td>
+                            </tr>
+                            <tr>
+                                <th *ngIf="empJobDetails.retiredReasonName">Retired Reason</th>
+                                <td *ngIf="empJobDetails.retiredReasonName">{{empJobDetails.retiredReasonName}}</td>
+                                <th *ngIf="empJobDetails.retirmentId">Retirment Id</th>
+                                <td *ngIf="empJobDetails.retirmentId">{{empJobDetails.retirmentId}}</td>
                             </tr>
                         </tbody>                        
                     </table>

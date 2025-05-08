@@ -58,6 +58,7 @@ import { PrintEmpAttReportComponent } from './attendance-summary/print-emp-att-r
 import {ShiftSettingComponent} from './shift-setting/shift-list/shift-setting.component';
 import { ShiftTypeModalComponent } from './shift-setting/shift-modal/shift-type-modal/shift-type-modal.component';
 import { ShiftSettingModalComponent } from './shift-setting/shift-modal/shift-setting-modal/shift-setting-modal.component';
+import { UpdateAttendanceQueryComponent } from './update-attendance-query/update-attendance-query.component';
 
 
 
@@ -77,7 +78,8 @@ import { ShiftSettingModalComponent } from './shift-setting/shift-modal/shift-se
     PrintEmpAttReportComponent,
     ShiftSettingComponent,
     ShiftTypeModalComponent,
-    ShiftSettingModalComponent
+    ShiftSettingModalComponent,
+    UpdateAttendanceQueryComponent
   ],
   imports: [
     CommonModule,

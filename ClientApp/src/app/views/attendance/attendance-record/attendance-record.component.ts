@@ -21,6 +21,8 @@ import { RealTimeService } from 'src/app/core/service/real-time.service';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 import { Feature } from '../../featureManagement/model/feature';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { UpdateAttendanceQueryComponent } from '../update-attendance-query/update-attendance-query.component';
 
 
 @Component({
@@ -76,7 +78,8 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modalService: BsModalService,
   ) {
     this.selectedOffice=null;
     this.selectedDepartment=null;
@@ -388,6 +391,17 @@ export class AttendanceRecordComponent implements OnInit, OnDestroy, AfterViewIn
         queryParams: { forNotificationId: siteVisitId },
         queryParamsHandling: 'merge', // Merge with existing queryParams
         relativeTo: this.router.routerState.root, // Ensure relative routing works
+      });
+    }
+  }
+
+  UpdateAttendanceModal(){
+    const initialState = {
+    };
+    const modalRef: BsModalRef = this.modalService.show(UpdateAttendanceQueryComponent, { initialState, backdrop: 'static' });
+    if (modalRef.onHide) {
+      modalRef.onHide.subscribe(() => {
+        this.getFilteredAttendance(true);
       });
     }
   }

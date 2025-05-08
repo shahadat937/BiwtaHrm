@@ -1,0 +1,63 @@
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Attendance</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()" [disabled]="loading">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                <form #UpdateAttendance="ngForm" novalidate cRow [gutter]="3">
+                    <c-col [md]="6">
+                        <label cLabel for="fromDate"
+                        >From Date<span class="text-danger">*</span></label
+                      >
+                      <input
+                        [(ngModel)]="fromDate"
+                        name="fromDate"
+                        #FromDate="ngModel"
+                        cFormControl
+                        id="fromDate"
+                        required
+                        type="date"
+                      />
+                      @if(!FromDate.valid&&FromDate.touched){
+                      <div class="text-left text-danger">From Date is required</div>
+                      }
+                    </c-col>
+
+                    <c-col [md]="6">
+                        <label cLabel for="toDate"
+                        >To Date<span class="text-danger">*</span></label
+                      >
+                      <input
+                        [(ngModel)]="toDate"
+                        name="toDate"
+                        #ToDate="ngModel"
+                        cFormControl
+                        id="toDate"
+                        required
+                        type="date"
+                      />
+                      @if(!ToDate.valid&&ToDate.touched){
+                      <div class="text-left text-danger">To Date is required</div>
+                      }
+                    </c-col>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button mat-raised-button color="warn" type="button" (click)="closeModal()" [disabled]="loading">
+                    <mat-icon>cancel</mat-icon> Close
+                </button>
+                <button [disabled]="UpdateAttendance.invalid" [disabled]="loading" mat-raised-button class="me-1" color="primary" type="submit" (click)="onSubmit()">
+                    <c-spinner
+                      [hidden]="!loading"
+                      size="sm"
+                    ></c-spinner>
+                    <mat-icon [hidden]="loading">update</mat-icon> Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

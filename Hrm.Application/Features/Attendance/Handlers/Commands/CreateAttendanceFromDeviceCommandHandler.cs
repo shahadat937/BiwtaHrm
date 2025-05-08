@@ -68,6 +68,10 @@ namespace Hrm.Application.Features.Attendance.Handlers.Commands
 
 
             var attendance = _mapper.Map<Hrm.Domain.Attendance>(request.Attendancedto);
+
+
+            attendance.ShiftSettingId = _shiftSettingRepository.Where(x => x.IsActive == true && x.ShiftTypeId == request.Attendancedto.ShiftId).Select(x => x.Id).FirstOrDefault();
+
             attendance = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Add(attendance);
             await _unitOfWork.Save();
 

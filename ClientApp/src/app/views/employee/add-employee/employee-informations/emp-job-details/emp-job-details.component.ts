@@ -10,6 +10,7 @@ import { GradeService } from 'src/app/views/basic-setup/service/Grade.service';
 import { SectionService } from 'src/app/views/basic-setup/service/section.service';
 import { EmpBasicInfoService } from '../../../service/emp-basic-info.service';
 import { JobDetailsSetupService } from '../../../../basic-setup/service/job-details-setup.service';
+import { RetiredReasonService } from 'src/app/views/basic-setup/service/retired-reason.service';
 
 @Component({
   selector: 'app-emp-job-details',
@@ -35,11 +36,14 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   grades: SelectedModel[] = [];
   scales: SelectedModel[] = [];
   sections: SelectedModel[] = [];
+  retiredReasons: SelectedModel[] = [];
+  isRetiredReasonNeeded: boolean = true;
+  isRetirementIdNeeded: boolean = true;
   empJobDetailsId: number = 0;
   sectionView: boolean = false;
   firstSectionView: boolean = false;
   // subscription: Subscription = new Subscription();
-  subscription: Subscription[]=[]
+  subscription: Subscription[] = []
   loading: boolean = false;
   prlDate: string = '';
   retirementDate: string = '';
@@ -53,22 +57,24 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     public officeService: OfficeService,
     public departmentService: DepartmentService,
     private gradeService: GradeService,
-    public sectionService : SectionService,
+    public sectionService: SectionService,
+    public retiredReasonService: RetiredReasonService,
   ) {
 
   }
 
   ngOnInit(): void {
-    this.getEmployeeByEmpId();
     this.loadOffice();
     this.SelectModelGrade();
     this.getAllDepartment();
     this.getAllSelectedDepartments();
+    this.getSelectedRetirmentReason();
     this.getPrlAndRetirmentDate();
+    this.getEmployeeByEmpId();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.forEach(subs=>subs.unsubscribe());
+      this.subscription.forEach(subs => subs.unsubscribe());
     }
   }
 
@@ -78,11 +84,10 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   }
 
   getEmployeeByEmpId() {
-    this.initaialForm();
     this.empJobDetailsService.findByEmpId(this.empId).subscribe((res) => {
       if (res) {
         this.empJobDetailsId = res.id;
-        if(res.sectionId){
+        if (res.sectionId) {
           this.onSectionSelectGetDesignation(res.sectionId, res.id);
         }
         else if (res.departmentId) {
@@ -92,21 +97,23 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
           this.onOfficeSelectGetDesignation(res.officeId, res.id);
         }
         this.onChangeGradeGetScale(res.presentGradeId);
-        if(res.firstGradeId){
+        if (res.firstGradeId) {
           this.onChangeFirstGradeGetFirstScale(res.firstGradeId);
         }
-        if(res.firstSectionId){
+        if (res.firstSectionId) {
           this.getOldDesignationBySection(res.firstSectionId);
         }
-        else if(res.firstDepartmentId){
+        else if (res.firstDepartmentId) {
           this.getOldDesignationByDepartment(res.firstDepartmentId);
         }
+        this.getRetirmentReasonDetails(res.retiredReasonId ?? 0);
         this.onOfficeAndDepartmentSelect(res.departmentId);
         this.onOfficeAndDepartmentSelectFirstSection(res.firstDepartmentId);
         this.EmpJobDetailsForm?.form.patchValue(res);
         this.headerText = 'Update Job Details';
         this.btnText = 'Update';
         this.getAllSelectedDepartments();
+        this.onServiceStatusSelect();
       }
       else {
         this.headerText = 'Add Job Details';
@@ -116,25 +123,56 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     })
   }
 
-  getPrlAndRetirmentDate(){
+  getSelectedRetirmentReason(){
+    this.subscription.push(
+      this.retiredReasonService.getSelectedRetiredReason().subscribe((res) => {
+        this.retiredReasons = res;
+      })
+    )
+  }
+
+  getRetirmentReasonDetails(id: number){
+    this.subscription.push(
+      this.retiredReasonService.find(id).subscribe((res) => {
+        if(res){
+          this.isRetirementIdNeeded = res.idNeeded;
+        }
+        else {
+          this.isRetirementIdNeeded = false;
+        }
+      })
+    )
+  }
+
+  onServiceStatusSelect(){
+    if(this.empJobDetailsService.empJobDetails.serviceStatus){
+      this.isRetiredReasonNeeded = false;
+      this.isRetirementIdNeeded = false;
+    }
+    else {
+      this.isRetiredReasonNeeded = true;
+    }
+  }
+
+  getPrlAndRetirmentDate() {
     // this.subscription = 
     this.subscription.push(
       this.empBasicInfoService.findByEmpId(this.empId).subscribe((res) => {
-    
-        this.jobDetailsSetupService.getActive().subscribe((response) =>{
-         if(res.dateOfBirth && response){
-           let prlDate = new Date(res.dateOfBirth);
-           prlDate.setFullYear(prlDate.getFullYear() + (response.prlAge || 0));
-           this.prlDate = prlDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
- 
-           let retirementDate = new Date(res.dateOfBirth);
-           retirementDate.setFullYear(retirementDate.getFullYear() + (response.retirmentAge || 0));
-           this.retirementDate = retirementDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-       }
-       })
-     })
+
+        this.jobDetailsSetupService.getActive().subscribe((response) => {
+          if (res.dateOfBirth && response) {
+            let prlDate = new Date(res.dateOfBirth);
+            prlDate.setFullYear(prlDate.getFullYear() + (response.prlAge || 0));
+            this.prlDate = prlDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+            let retirementDate = new Date(res.dateOfBirth);
+            retirementDate.setFullYear(retirementDate.getFullYear() + (response.retirmentAge || 0));
+            this.retirementDate = retirementDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+          }
+        })
+      })
     )
-    
+
   }
 
   initaialForm(form?: NgForm) {
@@ -168,6 +206,8 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       remark: '',
       menuPosition: 0,
       isActive: true,
+      retiredReasonId: null,
+      retirmentId: '',
 
       officeName: '',
       departmentName: '',
@@ -181,6 +221,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       firstDesignationName: '',
       firstGradeName: '',
       firstScaleName: '',
+      retiredReasonName: '',
     };
   }
 
@@ -214,6 +255,8 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       remark: '',
       menuPosition: 0,
       isActive: true,
+      retiredReasonId: null,
+      retirmentId: '',
     });
   }
 
@@ -221,48 +264,47 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     // this.subscription = 
     this.subscription.push(
       this.officeService.selectGetoffice().subscribe((data) => {
-      this.offices = data;
-    })
+        this.offices = data;
+      })
     )
-    
+
   }
 
-  
-  onOfficeAndDepartmentSelect(departmentId : number){
+  onOfficeAndDepartmentSelect(departmentId: number) {
     this.empJobDetailsService.empJobDetails.sectionId = null;
     this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
       this.sections = res;
-      if(res.length>0){
+      if (res.length > 0) {
         this.sectionView = true;
       }
-      else{
+      else {
         this.sectionView = false;
       }
     });
   }
-  
-  onOfficeAndDepartmentSelectFirstSection(departmentId : number){
+
+  onOfficeAndDepartmentSelectFirstSection(departmentId: number) {
     this.empJobDetailsService.empJobDetails.sectionId = null;
     this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
       this.firstSections = res;
-      if(res.length>0){
+      if (res.length > 0) {
         this.firstSectionView = true;
       }
-      else{
+      else {
         this.firstSectionView = false;
       }
     });
   }
 
-  
-  getAllSelectedDepartments(){
+
+  getAllSelectedDepartments() {
     // this.subscription = 
     this.subscription.push(
       this.departmentService.getSelectedAllDepartment().subscribe((res) => {
-          this.departments = res;
-    })
+        this.departments = res;
+      })
     )
-    
+
   }
 
   onOfficeSelect(officeId: number) {
@@ -285,13 +327,13 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     if (departmentId == null) {
       this.onOfficeSelectGetDesignation(this.empJobDetailsService.empJobDetails.officeId, this.empJobDetailsId);
     }
-    else{
+    else {
       this.empJobDetailsService.getDesignationByDepartmentId(departmentId, empJobDetailsId).subscribe((res) => {
         this.designations = res;
       });
     }
   }
-  
+
   onSectionSelectGetDesignation(sectionId: number, empJobDetailsId: number) {
     this.designations = [];
     this.empJobDetailsService.empJobDetails.designationId = null;
@@ -300,8 +342,8 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     }
     else {
       this.empJobDetailsService.getDesignationBySectionId(+sectionId, +empJobDetailsId).subscribe((res) => {
-      this.designations = res;
-    });
+        this.designations = res;
+      });
     }
   }
 
@@ -318,7 +360,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       this.firstDesignations = res;
     });
   }
-  getOldDesignationBySection(sectionId: number){
+  getOldDesignationBySection(sectionId: number) {
     this.firstDesignations = [];
     this.empJobDetailsService.empJobDetails.firstDesignationId = null;
     this.empJobDetailsService.getOldDesignationBySection(sectionId).subscribe((res) => {
@@ -368,23 +410,23 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     // this.subscription = 
     this.subscription.push(
       action$.subscribe((response: any) => {
-      if (response.success) {
-        this.toastr.success('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
+        if (response.success) {
+          this.toastr.success('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.loading = false;
+          // this.cancel();
+          this.getEmployeeByEmpId();
+        } else {
+          this.toastr.warning('', `${response.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.loading = false;
+        }
         this.loading = false;
-        // this.cancel();
-        this.getEmployeeByEmpId();
-      } else {
-        this.toastr.warning('', `${response.message}`, {
-          positionClass: 'toast-top-right',
-        });
-        this.loading = false;
-      }
-      this.loading = false;
-    })
+      })
     )
-    
+
   }
 
 }

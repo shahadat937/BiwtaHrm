@@ -43,7 +43,10 @@ namespace Hrm.Application.Features.Attendance.Handlers.Queries
             var attendance = _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.EmpId == request.EmpId &&
                 x.AttendanceDate >= DateOnly.FromDateTime(request.StartDate) &&
                 x.AttendanceDate <= DateOnly.FromDateTime(request.EndDate)
-            ).Include(x => x.AttendanceStatus).OrderBy(x=>x.AttendanceDate).Include(x => x.Shift);
+            ).Include(x => x.AttendanceStatus).OrderBy(x=>x.AttendanceDate)
+                .Include(x => x.ShiftType)
+                .Include(at => at.ShiftType)
+                    .ThenInclude(ss => ss.ShiftSetting);
             var attendanceDto = _mapper.Map<List<AttendanceDto>>(await attendance.ToListAsync());
 
             List<AttendanceDto> attendanceHolidayDto = new List<AttendanceDto>();

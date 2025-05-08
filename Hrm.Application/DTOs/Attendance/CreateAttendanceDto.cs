@@ -29,5 +29,6 @@ namespace Hrm.Application.DTOs.Attendance
         public int? LeaveRequestId { get; set; }
         public int? Done { get; set; }
         public string? Remark { get; set; }
+        public int? ShiftSettingId { get; set; }
     }
 }

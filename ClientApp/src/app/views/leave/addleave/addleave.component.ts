@@ -12,7 +12,7 @@ import { LeaveBalanceService } from '../service/leave-balance.service';
 import { environment } from '../../../../../src/environments/environment';
 import { forEach } from 'lodash-es';
 import { cilSearch } from '@coreui/icons';
-import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
+import { EmployeeInfoListModalComponent } from '../../employee/employee-info-list-modal/employee-info-list-modal.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ManageLeaveService } from '../service/manage-leave.service';
 import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
@@ -146,7 +146,10 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
           // this.department = response.departmentName;
           this.getDepartmentById(Number(this.authService.currentUserValue.departmentId))
           this.getDesignationByIdDesignationId(Number(this.authService.currentUserValue.designationId));
-          this.getResponsibilityTypeById(Number(this.authService.currentUserValue.responsibilityTypeId))
+          if(this.authService.currentUserValue.responsibilityTypeId){
+            this.getResponsibilityTypeById(Number(this.authService.currentUserValue.responsibilityTypeId))
+          }
+         
           this.designation = response.designationName;
 
           if(response.empPhotoName!="") {
@@ -180,6 +183,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
       this.employeeName = "";
       this.department = "";
       this.designation = "";
+      this.otherResponsibilityType = ""
       this.addLeaveService.addLeaveModel.empId = null;
       this.getLeaveAmount();
       this.leaveBalances = [];
@@ -492,7 +496,10 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   getResponsibilityTypeById(responsibiltyTypeId: number) {
     this.responsibilityTypeService.find(responsibiltyTypeId).subscribe({
       next: response => {
-        this.otherResponsibilityType = response.name;
+        if(response){
+          this.otherResponsibilityType ="("+response.name+")";
+        }
+       
       }
     }); 
   }
@@ -551,18 +558,29 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   }
 
   openEmployeeModal() {
-    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
+    const modalRef: BsModalRef = this.modalService.show(EmployeeInfoListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
 
-    modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
-      if(idCardNo){
-          this.empCardNo = idCardNo;
-          this.onEmpIdChange();
+    modalRef.content.employeeSelected.subscribe((employee: any) => {
+      console.log(employee);
+      if(employee){
+          this.empCardNo = employee.idCardNo;
+          // this.onEmpIdChange();
+          if(this.empSubs) {
+            this.empSubs.unsubscribe();
+          }
+      
+          if(this.empReqSub) {
+            this.empReqSub.unsubscribe();
+          }
+          this.designation = employee.designationName;
+          this.department = employee.departmentName;
+          this.otherResponsibilityType = ""
       }
     });
   }
 
   openReviewerModal() {
-    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, {backdrop: 'static', class: 'modal-xl'});
+    const modalRef: BsModalRef = this.modalService.show(EmployeeInfoListModalComponent, {backdrop: 'static', class: 'modal-xl'});
 
     modalRef.content.employeeSelected.subscribe((idCardNo:string) => {
       if(idCardNo) {
@@ -573,7 +591,7 @@ export class AddleaveComponent  implements OnInit, OnDestroy{
   }
 
   openApproverModal() {
-    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, {backdrop: 'static', class: 'modal-xl'});
+    const modalRef: BsModalRef = this.modalService.show(EmployeeInfoListModalComponent, {backdrop: 'static', class: 'modal-xl'});
 
     modalRef.content.employeeSelected.subscribe((idCardNo:string) => {
       if(idCardNo) {

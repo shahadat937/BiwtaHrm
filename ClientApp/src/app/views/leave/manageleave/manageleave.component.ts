@@ -8,11 +8,12 @@ import { LeaveDetailViewComponent } from './leave-detail-view/leave-detail-view.
 import { HttpParams } from '@angular/common/http';
 import { cilZoom } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmService } from 'src/app/core/service/confirm.service';
+import { ConfirmService } from '../../../../../src/app/core/service/confirm.service';
 import { LeaveStatus } from '../enum/leave-status';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../../../src/app/core/service/auth.service';
 @Component({
   selector: 'app-manageleave',
   templateUrl: './manageleave.component.html',
@@ -47,7 +48,8 @@ export class ManageleaveComponent implements OnInit, OnDestroy, OnChanges {
     private roleFeatureService: RoleFeatureService,
     private modalService: BsModalService,
     private confirmService: ConfirmService,
-    private toastr : ToastrService
+    private toastr : ToastrService,
+    private authService : AuthService
   ) {
     this.loading = false;
     this.selectedDepartment = null;
@@ -115,8 +117,9 @@ export class ManageleaveComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   getLeaves() {
+    const departmentId = this.authService.currentUserValue.departmentId || 0;
     let params = new HttpParams();
-
+    params = params.set('departmentId', departmentId.toString());
     for(const key of Object.keys(this.LeaveFilterParams)) {
       if(key=="Status") {
         for(const item of this.LeaveFilterParams[key]) {

@@ -27,7 +27,7 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
 
         public async Task<object> Handle(GetLeaveRequestByFilterRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<Hrm.Domain.LeaveRequest> leaveRequesQuery = _LeaveRequestRepository.Where(x => true)
+            IQueryable<Hrm.Domain.LeaveRequest> leaveRequesQuery = _LeaveRequestRepository.Where(x => true )
                 .Include(l => l.Employee)
                 .Include(l => l.Country)
                 .Include(l => l.LeaveType)
@@ -60,12 +60,12 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
 
             if(request.filterDto.ReviewedBy.HasValue)
             {
-                leaveRequesQuery = leaveRequesQuery.Where(x=>x.ReviewedBy == request.filterDto.ReviewedBy || x.ReviewedBy == null);
+                leaveRequesQuery = leaveRequesQuery.Where(x=>x.ReviewedBy == request.filterDto.ReviewedBy || x.EmpCurrentDepartmentId == request.filterDto.DepartmentId);
             }
 
             if(request.filterDto.ApprovedBy.HasValue)
             {
-                leaveRequesQuery = leaveRequesQuery.Where(x=>x.ApprovedBy == request.filterDto.ApprovedBy || x.ApprovedBy == null);
+                leaveRequesQuery = leaveRequesQuery.Where(x=>x.ApprovedBy == request.filterDto.ApprovedBy || x.EmpCurrentDepartmentId == request.filterDto.DepartmentId);
             }
 
             if(request.filterDto.Status!=null&&request.filterDto.Status.Count>0)

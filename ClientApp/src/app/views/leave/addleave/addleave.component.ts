@@ -578,7 +578,8 @@ export class AddleaveComponent implements OnInit, OnDestroy {
         this.addLeaveService.addLeaveModel.empCurrentSectionId = employee.sectionId;
         this.addLeaveService.addLeaveModel.empCurrentDesignationId = employee.designationId;
         this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId = employee.responsibilityTypeId;
-
+        this.addLeaveService.addLeaveModel.empId = employee.id;
+        
         if (this.empSubs) {
           this.empSubs.unsubscribe();
         }

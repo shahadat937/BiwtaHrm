@@ -134,6 +134,7 @@ using Hrm.Application.DTOs.FormSection;
 using Hrm.Application.DTOs.ShiftType;
 using Hrm.Application.DTOs.ShiftSetting;
 using Hrm.Application.DTOs.RetiredReason;
+using Hrm.Application.DTOs.OrderType;
 
 
 
@@ -795,6 +796,9 @@ namespace Hrm.Application.Profiles
 
             CreateMap<RetiredReason, CreateRetiredReasonDto>().ReverseMap();
             CreateMap<RetiredReason, RetiredReasonDto>().ReverseMap();
+
+            CreateMap<OrderType, CreateOrderTypeDto>().ReverseMap();
+            CreateMap<OrderType, OrderTypeDto>().ReverseMap();
 
         }
     }

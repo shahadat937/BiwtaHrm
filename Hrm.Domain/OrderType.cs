@@ -15,5 +15,6 @@ namespace Hrm.Domain
         public bool? IsActive { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
+        public virtual ICollection<OfficeOrder>? OfficeOrder { get; set; }
     }
 }

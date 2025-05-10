@@ -153,5 +153,6 @@ namespace Hrm.Application
         public const string ShiftSetting = HRMRoutePrefixBase + "shiftSetting";
         public const string RetiredReason = HRMRoutePrefixBase + "retiredReason";
         public const string OrderType = HRMRoutePrefixBase + "orderType";
+        public const string OfficeOrder = HRMRoutePrefixBase + "officeOrder";
     }
 }

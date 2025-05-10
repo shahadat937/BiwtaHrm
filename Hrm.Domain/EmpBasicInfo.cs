@@ -73,5 +73,6 @@ namespace Hrm.Domain
         public virtual ICollection<Notification>? FromNotification { get; set; }
         public virtual ICollection<Notification>? ToNotification { get; set; }
         public virtual ICollection<NotificationReadBy>? NotificationReadBy { get; set; }
+        public virtual ICollection<OfficeOrder>? OfficeOrder { get; set; }
     }
 }

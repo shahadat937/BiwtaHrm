@@ -146,6 +146,7 @@ import { DesignationSetupComponent } from './designation-setup/designation-setup
 import { JobDetailsSetupComponent } from './job-details-setup/job-details-setup.component';
 import { RetiredReasonComponent } from './retired-reason/retired-reason.component';
 import { RetiredReasonService } from './service/retired-reason.service';
+import { OrderTypeComponent } from './order-type/order-type.component';
 
 
 
@@ -222,6 +223,7 @@ import { RetiredReasonService } from './service/retired-reason.service';
     DesignationSetupComponent,
     JobDetailsSetupComponent,
     RetiredReasonComponent,
+    OrderTypeComponent,
   ],
   imports: [
     CommonModule,

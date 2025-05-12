@@ -56,6 +56,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TransferPostingRoutingModule } from '../transferPosting/transfer-routing.module';
 import { NoticeListComponent } from './notice-list/notice-list.component';
 import { AddNoticeComponent } from './add-notice/add-notice.component';
+import { OfficeOrderComponent } from './office-order/office-order.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -68,6 +71,7 @@ import { AddNoticeComponent } from './add-notice/add-notice.component';
     NotificationListComponent,
     NoticeListComponent,
     AddNoticeComponent,
+    OfficeOrderComponent,
   ],
   imports: [
     CommonModule,
@@ -123,7 +127,9 @@ import { AddNoticeComponent } from './add-notice/add-notice.component';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatTabsModule,
+    CalendarModule
   ],
 })
 export class NotificationsModule {

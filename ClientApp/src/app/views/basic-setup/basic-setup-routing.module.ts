@@ -475,14 +475,14 @@ const routes: Routes = [
         },
       },
       {
-        path: 'retired-reason',
+        path: 'release-reason',
         component: RetiredReasonComponent,
         data: {
           title: 'Retired Reason',
         },
       },
       {
-        path: 'update-retired-reason/:id',
+        path: 'update-release-reason/:id',
         component: RetiredReasonComponent,
         data: {
           title: 'Update Retired Reason',

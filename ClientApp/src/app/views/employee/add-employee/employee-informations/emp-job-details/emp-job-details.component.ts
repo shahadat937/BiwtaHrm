@@ -110,10 +110,11 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
         this.onOfficeAndDepartmentSelect(res.departmentId);
         this.onOfficeAndDepartmentSelectFirstSection(res.firstDepartmentId);
         this.EmpJobDetailsForm?.form.patchValue(res);
+        this.onServiceStatusSelect();
         this.headerText = 'Update Job Details';
         this.btnText = 'Update';
+        console.log(res)
         this.getAllSelectedDepartments();
-        this.onServiceStatusSelect();
       }
       else {
         this.headerText = 'Add Job Details';

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import {
   AlertComponent,
@@ -57,8 +57,15 @@ import { TransferPostingRoutingModule } from '../transferPosting/transfer-routin
 import { NoticeListComponent } from './notice-list/notice-list.component';
 import { AddNoticeComponent } from './add-notice/add-notice.component';
 import { OfficeOrderComponent } from './office-order/office-order.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { CalendarModule } from 'primeng/calendar';
+import { OfficeOrderModalComponent } from './office-order-modal/office-order-modal.component';
+import { DepartmentService } from '../basic-setup/service/department.service';
+import { DesignationService } from '../basic-setup/service/designation.service';
+import { OrderTypeService } from '../basic-setup/service/order-type.service';
+import { SectionService } from '../basic-setup/service/section.service';
+import { OfficeOrderService } from './service/office-order.service';
+import { RoleFeatureService } from '../featureManagement/service/role-feature.service';
 
 @NgModule({
   declarations: [
@@ -72,6 +79,7 @@ import { CalendarModule } from 'primeng/calendar';
     NoticeListComponent,
     AddNoticeComponent,
     OfficeOrderComponent,
+    OfficeOrderModalComponent,
   ],
   imports: [
     CommonModule,
@@ -130,6 +138,9 @@ import { CalendarModule } from 'primeng/calendar';
     MatButtonToggleModule,
     MatTabsModule,
     CalendarModule
+  ],
+  providers: [
+    
   ],
 })
 export class NotificationsModule {

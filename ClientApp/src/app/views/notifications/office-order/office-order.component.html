@@ -1,0 +1,72 @@
+<c-card>
+    <c-card-header class="d-flex justify-content-center">
+            <div>Office Order List</div>
+    </c-card-header>
+    <c-card-body>
+        <mat-tab-group>
+            <mat-tab>
+                <ng-template mat-tab-label>All</ng-template>
+            </mat-tab>
+            <mat-tab *ngFor="let orderType of orderTypes" [label]="orderType.name || 'NULL'">
+            </mat-tab>
+        </mat-tab-group>
+
+        <div [gutter]="3" cRow class="mt-2">
+            
+            <c-col [md]="3">
+                <label cLabel for="selectedDeptId">Department<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                    <select [(ngModel)]="selectedDeptId"
+                        name="selectedDeptId" cFormControl id="selectedDeptId" cSelect>
+                        <option [ngValue]="null">Select Department</option>
+
+                        @for(department of departments; track department.id;let index=$index) {
+                        <option [value]="department.id">
+                            {{ department.name }}
+                        </option>
+                        }
+                    </select>
+                </div>
+            </c-col>
+
+
+            <c-col [md]="3">
+                <label cLabel for="orderNo"
+                >Order No<span class="text-danger"></span></label>
+                <input [(ngModel)]="selectedDeptId" name="orderNo" placeholder="Search Order No" cFormControl id="orderNo" type="text"
+                    />
+            </c-col>
+
+            <c-col [md]="3">
+                <label cLabel for="fromDate"
+                >From Date<span class="text-danger"></span></label>
+              <input
+                [(ngModel)]="fromDate"
+                name="fromDate" 
+                #fromDate="ngModel"
+                cFormControl
+                id="fromDate"
+                type="date"
+              />
+            </c-col>
+
+            <c-col [md]="3">
+                <label cLabel for="toDate"
+                >To Date<span class="text-danger"></span></label>
+              <input
+                [(ngModel)]="toDate"
+                name="toDate" 
+                #toDate="ngModel"
+                cFormControl
+                id="toDate"
+                type="date"
+              />
+            </c-col>
+        </div>
+
+
+        
+    </c-card-body>
+    <c-card-footer class="text-medium-emphasis">
+    </c-card-footer>
+</c-card>

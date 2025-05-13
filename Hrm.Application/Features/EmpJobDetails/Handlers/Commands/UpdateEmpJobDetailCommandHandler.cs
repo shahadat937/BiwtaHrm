@@ -32,9 +32,9 @@ namespace Hrm.Application.Features.EmpJobDetails.Handlers.Commands
 
             var EmpJobDetail = await _unitOfWork.Repository<EmpJobDetail>().Get(request.EmpJobDetailDto.Id);
 
-            _mapper.Map(request.EmpJobDetailDto, EmpJobDetail);
+            var empJobDetails = _mapper.Map(request.EmpJobDetailDto, EmpJobDetail);
 
-            await _unitOfWork.Repository<EmpJobDetail>().Update(EmpJobDetail);
+            await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
             await _unitOfWork.Save();
 
             response.Success = true;

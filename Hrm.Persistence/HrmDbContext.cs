@@ -1363,6 +1363,37 @@ namespace Hrm.Persistence
             });
 
 
+            modelBuilder.Entity<OfficeOrder>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                .HasName("[[PK_OfficeOrder]]");
+
+                entity.HasOne(e => e.EmpBasicInfo)
+                .WithMany(e => e.OfficeOrder)
+                .HasForeignKey(e => e.EmpId);
+
+                entity.HasOne(e => e.OrderType)
+                .WithMany(e => e.OfficeOrder)
+                .HasForeignKey(e => e.OrderTypeId);
+
+                entity.HasOne(e => e.Office)
+                .WithMany(e => e.OfficeOrder)
+                .HasForeignKey(e => e.OfficeId);
+
+                entity.HasOne(e => e.Department)
+                .WithMany(e => e.OfficeOrder)
+                .HasForeignKey(e => e.DepartmentId);
+
+                entity.HasOne(e => e.Section)
+                .WithMany(e => e.OfficeOrder)
+                .HasForeignKey(e => e.SectionId);
+
+                entity.HasOne(e => e.DesignationSetup)
+                .WithMany(e => e.OfficeOrder)
+                .HasForeignKey(e => e.DesignationId);
+            });
+
+
             base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<UserRole> UserRole { get; set; } = null!;
@@ -1504,6 +1535,8 @@ namespace Hrm.Persistence
         public virtual DbSet<ShiftType> ShiftType { get; set; } = null!;
         public virtual DbSet<ShiftSetting> ShiftSetting { get; set; } = null!;
         public virtual DbSet<RetiredReason> RetiredReason { get; set; } = null!;
+        public virtual DbSet<OrderType> OrderType { get; set; } = null!;
+        public virtual DbSet<OfficeOrder> OfficeOrder { get; set; } = null!;
 
     }
 }

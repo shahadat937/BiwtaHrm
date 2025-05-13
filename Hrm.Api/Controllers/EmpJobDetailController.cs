@@ -40,7 +40,7 @@ namespace Hrm.Api.Controllers
 
         [HttpPut]
         [Route("update-EmpJobDetails/{id}")]
-        public async Task<ActionResult> Put([FromBody] EmpJobDetailDto EmpJobDetails)
+        public async Task<ActionResult> Put([FromBody] CreateEmpJobDetailDto EmpJobDetails)
         {
             var command = new UpdateEmpJobDetailCommand { EmpJobDetailDto = EmpJobDetails };
             var response = await _mediator.Send(command);

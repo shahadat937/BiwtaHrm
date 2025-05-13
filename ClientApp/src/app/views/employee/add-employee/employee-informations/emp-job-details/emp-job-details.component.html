@@ -392,12 +392,12 @@
 
             
             <c-col [md]="3" *ngIf="isRetiredReasonNeeded">
-                <label cLabel for="retiredReasonId">Retired Reason<span class="text-danger"></span></label>
+                <label cLabel for="retiredReasonId">Release Reason<span class="text-danger"></span></label>
                 <div class="input-wrapper">
                 <select (change)="getRetirmentReasonDetails(empJobDetailsService.empJobDetails.retiredReasonId)"
                     [(ngModel)]="empJobDetailsService.empJobDetails.retiredReasonId" name="retiredReasonId" #retiredReasonId="ngModel" 
                     cFormControl id="retiredReasonId" aria-label="Default select example" cSelect>
-                    <option [ngValue]="null">Select Retired Reason</option>
+                    <option [ngValue]="null">Select Release Reason</option>
         
                     @for(retiredReason of retiredReasons; track retiredReason.id;let index=$index) {
                     <option [value]="retiredReason.id">

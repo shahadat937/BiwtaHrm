@@ -44,7 +44,7 @@ export class RetiredReasonComponent  implements OnInit, OnDestroy, AfterViewInit
       const id = params.get('id');
       if (id) {
         this.btnText = 'Update';
-        this.headerText = 'Update Retired Reason';
+        this.headerText = 'Update Release Reason';
         this.subscription.push(
         this.retiredReasonService.find(+id).subscribe((res) => {
           this.RetiredReasonForm?.form.patchValue(res);
@@ -53,7 +53,7 @@ export class RetiredReasonComponent  implements OnInit, OnDestroy, AfterViewInit
         
       } else {
         this.resetForm();
-        this.headerText = 'Add Retired Reason';
+        this.headerText = 'Add Release Reason';
         this.btnText = 'Submit';
       }
     });
@@ -89,13 +89,15 @@ export class RetiredReasonComponent  implements OnInit, OnDestroy, AfterViewInit
     if (this.RetiredReasonForm?.form != null) {
       this.RetiredReasonForm.form.reset();
       this.RetiredReasonForm.form.patchValue({
-        RetiredReasonId: 0,
-        RetiredReasonName: '',
+        id: 0,
+        name: '',
+        idNeeded: false,
+        remark: '',
         menuPosition: 0,
         isActive: true,
       });
     }
-    this.router.navigate(['/personalInfoSetup/retired-reason']);
+    this.router.navigate(['/personalInfoSetup/release-reason']);
   }
 
   getAllRetiredReasons() {
@@ -127,7 +129,7 @@ export class RetiredReasonComponent  implements OnInit, OnDestroy, AfterViewInit
         this.getAllRetiredReasons();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/personalInfoSetup/retired-reason']);
+          this.router.navigate(['/personalInfoSetup/release-reason']);
         }
     this.loading = false;
       } else {

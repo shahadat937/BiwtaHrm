@@ -12,7 +12,7 @@ namespace Hrm.Application.Features.EmpJobDetails.Requests.Commands
 {
     public class UpdateEmpJobDetailCommand : IRequest<BaseCommandResponse>
     {
-        public EmpJobDetailDto EmpJobDetailDto { get; set; }
+        public CreateEmpJobDetailDto EmpJobDetailDto { get; set; }
     }
 }
 

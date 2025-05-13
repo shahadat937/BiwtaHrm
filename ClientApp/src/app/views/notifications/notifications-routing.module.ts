@@ -7,6 +7,7 @@ import { ModalsComponent } from './modals/modals.component';
 import { ToastersComponent } from './toasters/toasters.component';
 import { NotificationListComponent } from './notification-list/notification-list.component';
 import { NoticeListComponent } from './notice-list/notice-list.component';
+import { OfficeOrderComponent } from './office-order/office-order.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,13 @@ const routes: Routes = [
         component: NoticeListComponent,
         data: {
           title: 'Notice List'
+        }
+      },
+      {
+        path: 'offce-order',
+        component: OfficeOrderComponent,
+        data: {
+          title: 'Office Order List'
         }
       },
     ]

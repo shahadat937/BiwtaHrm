@@ -134,6 +134,8 @@ using Hrm.Application.DTOs.FormSection;
 using Hrm.Application.DTOs.ShiftType;
 using Hrm.Application.DTOs.ShiftSetting;
 using Hrm.Application.DTOs.RetiredReason;
+using Hrm.Application.DTOs.OrderType;
+using Hrm.Application.DTOs.OfficeOrder;
 
 
 
@@ -795,6 +797,18 @@ namespace Hrm.Application.Profiles
 
             CreateMap<RetiredReason, CreateRetiredReasonDto>().ReverseMap();
             CreateMap<RetiredReason, RetiredReasonDto>().ReverseMap();
+
+            CreateMap<OrderType, CreateOrderTypeDto>().ReverseMap();
+            CreateMap<OrderType, OrderTypeDto>().ReverseMap();
+
+            CreateMap<OfficeOrder, CreateOfficeOrderDto>().ReverseMap();
+            CreateMap<OfficeOrder, OfficeOrderDto>().ReverseMap();
+            CreateMap<OfficeOrder, OfficeOrderDto>()
+                .ForMember(dest => dest.OrderTypeName, opt => opt.MapFrom(src => src.OrderType.TypeName))
+                .ForMember(dest => dest.OfficeName, opt => opt.MapFrom(src => src.Office.OfficeName))
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
+                .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Section.SectionName))
+                .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.DesignationSetup.Name)).ReverseMap();
 
         }
     }

@@ -80,6 +80,7 @@ export class OfficeOrderModalComponent implements OnInit, OnDestroy {
       if(res){
         this.getSelectedSection(res.departmentId || 0);
         this.officeOrderForm = res;
+        console.log(res)
       }
     })
     )
@@ -153,7 +154,7 @@ export class OfficeOrderModalComponent implements OnInit, OnDestroy {
       departmentId: null,
       sectionId: null,
       designationId: null,
-      orderDate: new Date,
+      orderDate: null,
       orderNo: "",
       orderFile: null,
       fileUrl: "",

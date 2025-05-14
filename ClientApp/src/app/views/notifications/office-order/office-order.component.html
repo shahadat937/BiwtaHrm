@@ -104,7 +104,15 @@
               <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef>Action</th>
                 <td mat-cell *matCellDef="let element">
-                  
+                  <button cTooltip="Open File" cTooltipPlacement="bottom" mat-icon-button color="accent" *ngIf="element.fileUrl" (click)="openFile(element.fileUrl)">
+                    <mat-icon>open_in_new</mat-icon>
+                  </button>
+                  <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary" (click)="openOfficeOrderModal(element.id, 'Edit')">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button cTooltip="Delete" cTooltipPlacement="bottom" mat-icon-button color="warn" (click)="delete(element)">
+                      <mat-icon>delete</mat-icon>
+                  </button>
                 </td>
               </ng-container>
       

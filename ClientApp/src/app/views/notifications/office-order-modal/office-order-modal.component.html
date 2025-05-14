@@ -34,11 +34,11 @@
                     </c-col>
 
                     <c-col [md]="4">
-                        <label cLabel for="designationId">Order Designation<span class="text-danger"></span></label>
+                        <label cLabel for="designationId">Order Designation<span class="text-danger">*</span></label>
                         <div class="input-wrapper">
                             <select [(ngModel)]="officeOrderForm.designationId"
                                 name="designationId" #designationId="ngModel" cFormControl id="designationId"
-                                aria-label="Default select example" cSelect>
+                                aria-label="Default select example" required cSelect>
                                 <option [ngValue]="null">Select Designation</option>
 
                                 @for(item of designations; track item.id;let index=$index) {
@@ -54,12 +54,12 @@
                     </c-col>
                     
                     <c-col [md]="4">
-                        <label cLabel for="departmentId">Order By Department<span class="text-danger"></span></label>
+                        <label cLabel for="departmentId">Order By Department<span class="text-danger">*</span></label>
                         <div class="input-wrapper">
                             <select [(ngModel)]="officeOrderForm.departmentId"
                                 (change)="getSelectedSection(officeOrderForm.departmentId || 0)"
                                 name="departmentId" #departmentId="ngModel" cFormControl id="departmentId"
-                                aria-label="Default select example" cSelect>
+                                aria-label="Default select example" required cSelect>
                                 <option [ngValue]="null">Select Department</option>
 
                                 @for(item of departments; track item.id;let index=$index) {
@@ -75,11 +75,11 @@
                     </c-col>
                     
                     <c-col [md]="4">
-                        <label cLabel for="sectionId">Order By Section<span class="text-danger"></span></label>
+                        <label cLabel for="sectionId">Order By Section<span class="text-danger">*</span></label>
                         <div class="input-wrapper">
                             <select [(ngModel)]="officeOrderForm.sectionId"
                                 name="sectionId" #sectionId="ngModel" cFormControl id="sectionId"
-                                aria-label="Default select example" cSelect>
+                                aria-label="Default select example" required cSelect>
                                 <option [ngValue]="null">Select Section</option>
 
                                 @for(item of sections; track item.id;let index=$index) {
@@ -95,9 +95,9 @@
                     </c-col>
 
                     <c-col [md]="4">
-                        <label cLabel for="orderDate">Order Date<span class="text-danger"></span></label>
+                        <label cLabel for="orderDate">Order Date<span class="text-danger">*</span></label>
                         <input [(ngModel)]="officeOrderForm.orderDate" name="orderDate" #orderDate="ngModel"
-                            placeholder="Enter Feature Name" cFormControl id="orderDate" type="date"
+                            placeholder="Enter Feature Name" cFormControl id="orderDate" type="date" required
                             />
                         @if(!orderDate.valid&&orderDate.touched){
                         <div class="text-left text-danger">Order Date is required</div>

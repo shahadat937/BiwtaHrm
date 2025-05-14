@@ -17,6 +17,7 @@ import { DepartmentService } from '../../basic-setup/service/department.service'
 import { OfficeOrderService } from '../service/office-order.service';
 import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 import { OfficeOrderModalComponent } from '../office-order-modal/office-order-modal.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-office-order',
@@ -48,6 +49,8 @@ export class OfficeOrderComponent implements OnInit, OnDestroy {
     orderNo : string = "";
     fromDate : any = "";
     toDate : any = "";
+
+    filePath = environment.imageUrl;
         
     constructor(
       private router: Router,
@@ -142,6 +145,10 @@ export class OfficeOrderComponent implements OnInit, OnDestroy {
     )
   }
 
+  openFile(url: string): void {
+    window.open(this.filePath + 'OfficeOrder/' + url, '_blank');
+  }
+
   openOfficeOrderModal(id: number, clickedButton: string){
       const initialState = {
         id: id,
@@ -155,5 +162,39 @@ export class OfficeOrderComponent implements OnInit, OnDestroy {
         });
       }
     }
+
+    delete(element: any) {
+    if(this.featurePermission.delete == true){
+      this.subscription.push(
+        this.confirmService
+      .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+      .subscribe((result) => {
+        if (result) {
+          this.officeOrderService.delete(element.id).subscribe(
+            (res) => {
+              const index = this.dataSource.data.indexOf(element);
+              this.toastr.warning('Delete Successfull', ` `, {
+                positionClass: 'toast-top-right',
+              });
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+                this.dataSource = new MatTableDataSource(this.dataSource.data);
+              }
+            },
+            (err) => {
+              this.toastr.error('Somethig Wrong ! ', ` `, {
+                positionClass: 'toast-top-right',
+              });
+            }
+          );
+        }
+      })
+      )
+      
+    }
+    else {
+      this.roleFeatureService.unauthorizeAccress();
+    }
+  }
 
 }

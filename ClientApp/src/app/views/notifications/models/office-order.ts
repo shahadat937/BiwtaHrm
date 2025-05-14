@@ -6,7 +6,7 @@ export class OfficeOrder {
     departmentId: number | null = null;
     sectionId: number | null = null;
     designationId: number | null = null;
-    orderDate: Date = new Date;
+    orderDate: Date | null = null;
     orderNo: string = "";
     orderFile: File | null = null;
     fileUrl: string = "";

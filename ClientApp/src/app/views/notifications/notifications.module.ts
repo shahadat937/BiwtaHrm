@@ -66,6 +66,7 @@ import { OrderTypeService } from '../basic-setup/service/order-type.service';
 import { SectionService } from '../basic-setup/service/section.service';
 import { OfficeOrderService } from './service/office-order.service';
 import { RoleFeatureService } from '../featureManagement/service/role-feature.service';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -137,7 +138,8 @@ import { RoleFeatureService } from '../featureManagement/service/role-feature.se
     InputTextModule,
     MatButtonToggleModule,
     MatTabsModule,
-    CalendarModule
+    CalendarModule,
+    MatBadgeModule
   ],
   providers: [
     

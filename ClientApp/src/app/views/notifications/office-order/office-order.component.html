@@ -10,9 +10,18 @@
     <c-card-body>
         <mat-tab-group (selectedIndexChange)="onTabChange($event)">
             <mat-tab>
-                <ng-template mat-tab-label>All</ng-template>
+                <ng-template mat-tab-label>
+                  <label>
+                    All <c-badge color="danger" shape="rounded-pill" *ngIf="totalOfficeOrder > 0">{{totalOfficeOrder}}</c-badge>
+                  </label>
+                </ng-template>
             </mat-tab>
-            <mat-tab *ngFor="let orderType of orderTypes" [label]="orderType.name || 'NULL'">
+            <mat-tab *ngFor="let orderType of orderTypes">
+              <ng-template mat-tab-label>
+                  <label>
+                    {{orderType.name}} <c-badge color="danger" shape="rounded-pill" *ngIf="orderType.count > 0">{{orderType.count}}</c-badge>
+                  </label>
+              </ng-template>
             </mat-tab>
         </mat-tab-group>
 
@@ -71,10 +80,13 @@
 
         <div class="mt-2 table-responsive">
             <table mat-table [dataSource]="dataSource">
-              <!-- Position Column -->
+
               <ng-container matColumnDef="slNo">
                 <th mat-header-cell *matHeaderCellDef>SL</th>
-                <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                <td mat-cell *matCellDef="let element; let i = index">
+                  {{ i + 1 }}
+                  <c-badge color="danger" class="customBadge" *ngIf="isNewOrder(element.orderDate)">New</c-badge>
+                </td>
               </ng-container>
       
               <ng-container matColumnDef="designation">

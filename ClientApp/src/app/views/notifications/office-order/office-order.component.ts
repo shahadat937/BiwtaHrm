@@ -41,7 +41,8 @@ export class OfficeOrderComponent implements OnInit, OnDestroy {
     pagination: PaginatorModel = new PaginatorModel();
     featurePermission : FeaturePermission = new FeaturePermission;
     loginEmpId: number = 0;
-    orderTypes : SelectedModel[] = [];
+    orderTypes : any[] = [];
+    totalOfficeOrder: number = 0;
     departments : SelectedModel[] = [];
 
     selectedOrderType : number = 0;
@@ -124,6 +125,7 @@ export class OfficeOrderComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.orderTypeService.getSelectedOrderType().subscribe((res) => {
         this.orderTypes = res;
+        this.totalOfficeOrder = res[0].count;
       })
     )
   }
@@ -159,8 +161,21 @@ export class OfficeOrderComponent implements OnInit, OnDestroy {
       if (modalRef.onHide) {
         modalRef.onHide.subscribe(() => {
           this.getAllOfficeOrderList(this.pagination)
+          this.getSelectedOrderType();
         });
       }
+    }
+
+    isNewOrder(orderDate: string | Date | null | undefined): boolean {
+      if (!orderDate) return false;
+
+      const today = new Date();
+      const order = new Date(orderDate);
+      
+      const diffTime = Math.abs(today.getTime() - order.getTime());
+      const diffDays = diffTime / (1000 * 3600 * 24);
+
+      return diffDays <= 7 && order <= today;
     }
 
     delete(element: any) {

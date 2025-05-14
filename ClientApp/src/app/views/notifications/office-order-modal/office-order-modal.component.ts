@@ -198,6 +198,9 @@ export class OfficeOrderModalComponent implements OnInit, OnDestroy {
   onSubmit(form: NgForm): void {
     const id = form.value.id;
     form.value.orderFile = this.associatefile;
+    form.value.orderNo = this.officeOrderForm.orderNo == null ? "" : this.officeOrderForm.orderNo;
+    form.value.remark = this.officeOrderForm.remark == null ? "" : this.officeOrderForm.remark;
+    form.value.fileUrl = this.officeOrderForm.fileUrl == null ? "" : this.officeOrderForm.fileUrl;
     const action$ = id
       ? this.officeOrderService.update(id, form.value)
       : this.officeOrderService.save(form.value);

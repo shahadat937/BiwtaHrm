@@ -106,15 +106,16 @@
                     
                     <c-col [md]="4">
                         <label cLabel for="orderNo">Order No<span class="text-danger"></span></label>
-                        <input [(ngModel)]="officeOrderForm.orderNo" name="orderNo" #orderNo="ngModel"
-                            placeholder="Enter Feature Name" cFormControl id="orderNo" type="text"
+                        <input [(ngModel)]="officeOrderForm.orderNo" name="orderNo" #OrderNo="ngModel"
+                            placeholder="Enter Order No" cFormControl id="orderNo" type="text"
                             />
-                        @if(!orderNo.valid&&orderNo.touched){
+                        @if(!OrderNo.valid&&OrderNo.touched){
                         <div class="text-left text-danger">Order No is required</div>
                         }
                     </c-col>
                     
                     <c-col [md]="4">
+                        <input type="hidden" [(ngModel)]="officeOrderForm.fileUrl" name="fileUrl" />
                         <label cLabel for="orderFile">Associate File<span class="text-danger"></span></label>
                         <input [(ngModel)]="officeOrderForm.orderFile" name="orderFile" #orderFile="ngModel"
                             placeholder="Enter Feature Name" cFormControl id="orderFile" type="file"
@@ -127,10 +128,10 @@
                     
                     <c-col [md]="4">
                         <label cLabel for="remark">Remark<span class="text-danger"></span></label>
-                        <input [(ngModel)]="officeOrderForm.remark" name="remark" #remark="ngModel"
+                        <input [(ngModel)]="officeOrderForm.remark" name="remark" #Remark="ngModel"
                             placeholder="Enter Remark" cFormControl id="remark" type="text"
                             />
-                        @if(!remark.valid&&remark.touched){
+                        @if(!Remark.valid&&Remark.touched){
                         <div class="text-left text-danger">Remark is required</div>
                         }
                     </c-col>

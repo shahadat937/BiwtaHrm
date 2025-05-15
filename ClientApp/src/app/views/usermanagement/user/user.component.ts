@@ -19,30 +19,32 @@ import { IncrementAndPromotionApprovalComponent } from '../../promotion/incremen
 import { UpdateRoleComponent } from '../update-role/update-role.component';
 import { UpdateUserComponent } from '../update-user/update-user.component';
 import { UserModule } from '../model/user.module';
+import { SiteSettingService } from '../../featureManagement/service/site-setting.service';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })
-export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
+export class UserComponent implements OnInit, OnDestroy, AfterViewInit {
 
   btnText: string | undefined;
   @ViewChild('UserForm', { static: true }) UserForm!: NgForm;
   loading = false;
   // subscription: Subscription = new Subscription();
-  subscription: Subscription[]=[]
-  displayedColumns: string[] = ['slNo', 'fullName', 'userName', 'department', 'section','designation','isActive', 'Action'];
+  subscription: Subscription[] = []
+  displayedColumns: string[] = ['slNo', 'fullName', 'userName', 'department', 'section', 'designation', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
-  userBtnText : string | undefined;
-  userHeaderText : string | undefined;
-  buttonIcon : string = '';
-  visible : boolean | undefined;
-  resetPasswordUser : UserModule = new UserModule;
+  userBtnText: string | undefined;
+  userHeaderText: string | undefined;
+  buttonIcon: string = '';
+  visible: boolean | undefined;
+  resetPasswordUser: UserModule = new UserModule;
+  defaultPassword: string = "";
 
   constructor(
     public userService: UserService,
@@ -51,44 +53,46 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     private confirmService: ConfirmService,
     private toastr: ToastrService,
     private modalService: BsModalService,
+    public siteSettingService: SiteSettingService,
   ) {
   }
 
   ngOnInit(): void {
     this.buttonIcon = "cilPencil";
+    this.getActiveSiteSetting();
     this.handleRouteParams();
     this.getAllUsers();
   }
   handleRouteParams() {
     this.subscription.push(
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      if (id) {
-        this.visible = true;
-        this.btnText = 'Update';
-        this.userHeaderText = "Update User";
-        this.userBtnText = " Hide Form";
-        this.buttonIcon = "cilTrash";
-        this.subscription.push(
-        this.userService.find(id).subscribe((res) => {
-          this.UserForm?.form.patchValue(res);
-        })
-        )
-        
-      } else {
-        this.btnText = 'Submit';
-        this.userHeaderText = "User List"
-        this.userBtnText = " Add User"; 
-        this.visible = false;
-        this.initaialUser();
-      }
-    })
+      this.route.paramMap.subscribe((params) => {
+        const id = params.get('id');
+        if (id) {
+          this.visible = true;
+          this.btnText = 'Update';
+          this.userHeaderText = "Update User";
+          this.userBtnText = " Hide Form";
+          this.buttonIcon = "cilTrash";
+          this.subscription.push(
+            this.userService.find(id).subscribe((res) => {
+              this.UserForm?.form.patchValue(res);
+            })
+          )
+
+        } else {
+          this.btnText = 'Submit';
+          this.userHeaderText = "User List"
+          this.userBtnText = " Add User";
+          this.visible = false;
+          this.initaialUser();
+        }
+      })
     )
-    
+
   }
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.forEach(subs=>subs.unsubscribe())
+      this.subscription.forEach(subs => subs.unsubscribe())
     }
   }
   ngAfterViewInit(): void {
@@ -102,8 +106,8 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.dataSource.filter = filterValue;
   }
 
-  UserFormView() : void {
-    if(this.userBtnText == " Add User"){
+  UserFormView(): void {
+    if (this.userBtnText == " Add User") {
       this.userBtnText = " Hide Form";
       this.buttonIcon = "cilTrash";
       this.userHeaderText = "Add New User";
@@ -118,41 +122,41 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.initaialUser();
   }
 
-  toggleCollapse(){
+  toggleCollapse() {
     this.handleRouteParams();
     this.userHeaderText = "Update User";
     this.visible = true;
   }
 
-  cancelUpdate(){
+  cancelUpdate() {
     this.router.navigate(['/usermanagement/user']);
     this.resetForm();
   }
-  
+
   initaialUser(form?: NgForm) {
     if (form != null) form.resetForm();
     this.userService.users = {
       id: '',
       userName: '',
-      oldPassword : '',
+      oldPassword: '',
       password: '',
       rePassword: '',
       firstName: '',
       lastName: '',
       email: '',
-      phoneNumber : '',
-      pNo : '',
+      phoneNumber: '',
+      pNo: '',
       empId: null,
       menuPosition: 0,
-      isActive : true,
-      canEditProfile : false,
+      isActive: true,
+      canEditProfile: false,
       departmentName: '',
       sectionName: '',
       designationName: '',
     };
   }
 
-  resetForm(){
+  resetForm() {
     // this.btnText = 'Submit';
     if (this.UserForm?.form != null) {
       this.UserForm.form.reset();
@@ -164,12 +168,12 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
         firstName: '',
         lastName: '',
         email: '',
-        phoneNumber : '',
-        pNo : '',
-        empId : null,
+        phoneNumber: '',
+        pNo: '',
+        empId: null,
         menuPosition: 0,
-        isActive : true,
-        canEditProfile : false,
+        isActive: true,
+        canEditProfile: false,
         departmentName: '',
         sectionName: '',
         designationName: '',
@@ -178,18 +182,26 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
     // this.router.navigate(['/usermanagement/user']);
   }
 
-  getAllUsers(){
-    this,this.subscription.push(
-    this.userService.getAll().subscribe((item) => {
-      this.dataSource = new MatTableDataSource(item);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.matSort;
-    })
+  getActiveSiteSetting() {
+    this.subscription.push(
+      this.siteSettingService.getActive().subscribe((res) => {
+        this.defaultPassword = res.defaultPassword;
+      })
     )
-    
   }
 
-  updateUserInformation(id: string, clickedButton: string){
+  getAllUsers() {
+    this, this.subscription.push(
+      this.userService.getAll().subscribe((item) => {
+        this.dataSource = new MatTableDataSource(item);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.matSort;
+      })
+    )
+
+  }
+
+  updateUserInformation(id: string, clickedButton: string) {
     const initialState = {
       id: id,
       clickedButton: clickedButton
@@ -198,15 +210,15 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
 
     if (modalRef.onHide) {
       this.subscription.push(
-      modalRef.onHide.subscribe(() => {
-        this.getAllUsers();
-      })
+        modalRef.onHide.subscribe(() => {
+          this.getAllUsers();
+        })
       )
-      
+
     }
   }
-  
-  updateRole(id: string){
+
+  updateRole(id: string) {
     const initialState = {
       id: id
     };
@@ -214,83 +226,83 @@ export class UserComponent implements OnInit, OnDestroy, AfterViewInit  {
 
     if (modalRef.onHide) {
       this.subscription.push(
-      modalRef.onHide.subscribe(() => {
-        this.getAllUsers();
-      })
+        modalRef.onHide.subscribe(() => {
+          this.getAllUsers();
+        })
       )
-      
+
     }
   }
 
-  resetPassword(id: string){
+  resetPassword(id: string) {
     this.subscription.push(
-    this.confirmService
-    .confirm('Confirm Reset Password', 'Are You Sure Reset Password')
-    .subscribe((result) => {
-      if (result) {
-        this.resetPasswordUser.id = id;
-        this.resetPasswordUser.password = "Admin@123"
-        this.userService.resetUserPassword(id, this.resetPasswordUser).subscribe(
-          (res: any) => {
-            if(res.success){
-              this.toastr.success('', `${res.message}`, {
-                positionClass: 'toast-top-right',
-              });
-            }
-            else {
-              this.toastr.error('', `${res.message}`, {
-                positionClass: 'toast-top-right',
-              });
-            }
+      this.confirmService
+        .confirm('Confirm Reset Password', 'Are You Sure Reset Password')
+        .subscribe((result) => {
+          if (result) {
+            this.resetPasswordUser.id = id;
+            this.resetPasswordUser.password = this.defaultPassword ?? "Admin@123"
+            this.userService.resetUserPassword(id, this.resetPasswordUser).subscribe(
+              (res: any) => {
+                if (res.success) {
+                  this.toastr.success('', `${res.message}`, {
+                    positionClass: 'toast-top-right',
+                  });
+                }
+                else {
+                  this.toastr.error('', `${res.message}`, {
+                    positionClass: 'toast-top-right',
+                  });
+                }
+              }
+            );
           }
-        );
-      }
-    })
+        })
     )
-    
-  }
-  
 
-  onSubmit(form: NgForm): void{
+  }
+
+
+  onSubmit(form: NgForm): void {
     this.loading = true;
     this.userService.cachedData = [];
     this.subscription.push(
-    this.route.paramMap.subscribe((params) => {
-      const id = form.value.id;
-      const oldPassword = form.value.oldPassword;
-      const currentPassword = form.value.password;
+      this.route.paramMap.subscribe((params) => {
+        const id = form.value.id;
+        const oldPassword = form.value.oldPassword;
+        const currentPassword = form.value.password;
 
-    let action$;
+        let action$;
 
-      if (id && oldPassword && currentPassword) {
-        action$ = this.userService.updatePassword(id, form.value);
-      } else if (id && !oldPassword && !currentPassword) {
-        action$ = this.userService.update(id, form.value);
-      } else {
-        action$ = this.userService.submit(form.value);
-      }
-
-      this.subscription.push(
-      action$.subscribe((response: any)  => {
-        if (response.success) {
-          this.toastr.success('', `${response.message}`, {
-            positionClass: 'toast-top-right',
-          });
-          this.loading = false;
-          this.getAllUsers();
-          this.resetForm();
-          this.router.navigate(['/usermanagement/user']);
+        if (id && oldPassword && currentPassword) {
+          action$ = this.userService.updatePassword(id, form.value);
+        } else if (id && !oldPassword && !currentPassword) {
+          action$ = this.userService.update(id, form.value);
         } else {
-          this.toastr.warning('', `${response.message}`, {
-            positionClass: 'toast-top-right',
-          });
+          action$ = this.userService.submit(form.value);
         }
-        this.loading = false;
+
+        this.subscription.push(
+          action$.subscribe((response: any) => {
+            if (response.success) {
+              this.toastr.success('', `${response.message}`, {
+                positionClass: 'toast-top-right',
+              });
+              this.loading = false;
+              this.getAllUsers();
+              this.resetForm();
+              this.router.navigate(['/usermanagement/user']);
+            } else {
+              this.toastr.warning('', `${response.message}`, {
+                positionClass: 'toast-top-right',
+              });
+            }
+            this.loading = false;
+          })
+        )
+
       })
-      )
-      
-    })
     )
-    
+
   }
 }

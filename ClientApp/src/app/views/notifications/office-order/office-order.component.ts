@@ -125,7 +125,7 @@ export class OfficeOrderComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.orderTypeService.getSelectedOrderType().subscribe((res) => {
         this.orderTypes = res;
-        this.totalOfficeOrder = res[0].count;
+        this.totalOfficeOrder = res[0].totalCount;
       })
     )
   }

@@ -39,8 +39,13 @@
       </c-nav-item> -->
     <!-- </c-header-nav> -->
     <c-header-nav class="ms-3">
-      <ng-container *ngIf="empId !== 0">
+      <ng-container *ngIf="!isMobile && empId !== 0">
         <ng-container *ngTemplateOutlet="departmentOption"></ng-container>
+      </ng-container>
+
+      <!-- Shown only on small (mobile) screens -->
+      <ng-container *ngIf="isMobile && empId !== 0">
+        <ng-container *ngTemplateOutlet="departmentOptionMovileView"></ng-container>
       </ng-container>
       <c-nav-item>
         <a cNavLink>
@@ -146,7 +151,7 @@
   </c-dropdown>
 </ng-template>
 
-<ng-template #department>
+<ng-template #departmentOptionMovileView>
   <c-dropdown alignment="end" variant="nav-item">
     <button cButton color="" [caret]="false" cDropdownToggle class="py-1">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor"

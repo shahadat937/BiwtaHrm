@@ -55,6 +55,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   currentSectionCheck: boolean = true;
   userData: any;
   empDepartmentSectionDesignation : any;
+  isMobile: boolean = false;
 
   constructor(
     private classToggler: ClassToggleService,
@@ -110,6 +111,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.getEmployeeByEmpId();
     this.getUserNotifications(false);
     this.getUserId();
+    this.checkScreenSize();
+    window.addEventListener('resize', this.checkScreenSize.bind(this));
   
     const subs = this.realTimeService.eventBus
       .getEvent('userNotification')
@@ -124,7 +127,9 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.subscription.push(subs);
   }
   
- 
+ checkScreenSize() {
+  this.isMobile = window.innerWidth < 768; 
+}
 
   getUserNotifications(isNew : boolean){
     this.subscription.push(

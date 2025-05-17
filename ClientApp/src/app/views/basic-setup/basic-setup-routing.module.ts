@@ -64,6 +64,7 @@ import { ResponsibilityTypeComponent } from './responsibility-type/responsibilit
 import { CourseDurationComponent } from './course-duration/course-duration.component';
 import { DesignationSetupComponent } from './designation-setup/designation-setup.component';
 import { JobDetailsSetupComponent } from './job-details-setup/job-details-setup.component';
+import { OrderTypeComponent } from './order-type/order-type.component';
 
 
 const routes: Routes = [
@@ -474,14 +475,14 @@ const routes: Routes = [
         },
       },
       {
-        path: 'retired-reason',
+        path: 'release-reason',
         component: RetiredReasonComponent,
         data: {
           title: 'Retired Reason',
         },
       },
       {
-        path: 'update-retired-reason/:id',
+        path: 'update-release-reason/:id',
         component: RetiredReasonComponent,
         data: {
           title: 'Update Retired Reason',
@@ -931,6 +932,20 @@ const routes: Routes = [
         component: DesignationSetupComponent,
         data: {
           title: 'Designation Setup',
+        },
+      },
+      {
+        path: 'order-type',
+        component: OrderTypeComponent,
+        data: {
+          title: 'Order Type',
+        },
+      },
+      {
+        path: 'update-order-type/:id',
+        component: OrderTypeComponent,
+        data: {
+          title: 'Order Type',
         },
       },
 

@@ -123,7 +123,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     this.lastSection = 1;
     this.submitButtonText = "Submit";
     this.formName = environment.staffFormName;
-    this.featureName = "staffForm";
+    this.featureName = "";
   }
 
   ngOnInit(): void {
@@ -465,6 +465,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   openReportingOfficerModal() {
 
     const modalRef: BsModalRef = this.bsModalService.show(EmployeeInfoListModalComponent, { backdrop: 'static', class: 'modal-xl' });
+    console.log(modalRef.content);
 
     if (modalRef.content) {
       modalRef.content?.employeeSelected.subscribe((employee: any) => {
@@ -500,6 +501,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
 
   openCounterSignatoryOfficerModal() {
     const modalRef: BsModalRef = this.bsModalService.show(EmployeeInfoListModalComponent, { backdrop: 'static', class: 'modal-xl' });
+    console.log(modalRef.content);
 
     if (modalRef.content) {
       modalRef.content?.employeeSelected.subscribe((employee: any) => {

@@ -13,6 +13,7 @@ import { ShiftService } from 'src/app/views/attendance/services/shift.service';
 import { ShiftSettingService } from '../../../../attendance/services/shift-setting.service';
 import { EmpShiftAssign } from '../../../model/emp-shift-assign';
 import { EmpShiftAssignService } from '../../../service/emp-shift-assign.service';
+import { SiteSettingService } from '../../../../featureManagement/service/site-setting.service';
 
 @Component({
   selector: 'app-basic-information',
@@ -35,6 +36,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   userForm : UserModule = new UserModule;
   empShiftForm : EmpShiftAssign = new EmpShiftAssign;
   activeShiftId : number = 0;
+  defaultPassword: string = "";
   @ViewChild('BasicInfoForm', { static: true }) BasicInfoForm!: NgForm;
   
   constructor(
@@ -47,10 +49,12 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
     public shiftService: ShiftService,
     public empShiftAssignService: EmpShiftAssignService,
     public shiftSettingService: ShiftSettingService,
+    public siteSettingService: SiteSettingService,
   ){}
 
   ngOnInit(): void {
     this.getActiveShiftType();
+    this.getActiveSiteSetting();
     // this.getEmployeeByAspNetUserId();
     this.getSelectedEmployeeType();
     // this.getUserDetails();
@@ -118,6 +122,14 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
         designationName: '',
         shiftId: this.activeShiftId
       });
+  }
+
+  getActiveSiteSetting(){
+    this.subscription.push(
+      this.siteSettingService.getActive().subscribe((res) => {
+        this.defaultPassword = res.defaultPassword;
+      })
+    )
   }
   
   UserFormView(): void{
@@ -207,7 +219,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
           this.userForm.firstName = form.value.firstName;
           this.userForm.lastName = form.value.lastName;
           this.userForm.userName = form.value.idCardNo;
-          this.userForm.password = "Admin@123";
+          this.userForm.password = this.defaultPassword ?? "Admin@123";
           this.userForm.empId = response.id;
           this.userService.submit(this.userForm).subscribe(((res: any) => {
             if(res.success){

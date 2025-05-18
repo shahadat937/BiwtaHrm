@@ -53,6 +53,10 @@ namespace Hrm.Application.Features.OfficeOrders.Handlers.Commands
                 officeOrderDto.FileUrl = uniqueImageName;
 
             }
+            else
+            {
+                officeOrderDto.FileUrl = request.OfficeOrderDto.FileUrl;
+            }
 
 
 

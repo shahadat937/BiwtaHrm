@@ -81,6 +81,7 @@ export class CreateSiteSettingComponent implements OnInit, OnDestroy {
       siteTitle: '',
       siteLogo :  '',
       footerTitle :  '',
+      defaultPassword : '',
       remark :  '',
       siteLogoFile: null,
       isActive :  true,
@@ -127,7 +128,6 @@ export class CreateSiteSettingComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm): void {
-    console.log(form.value)
     this.siteSettingService.cachedData = [];
     form.value.siteLogoFile = this.siteLogo;
     const id = form.value.id;

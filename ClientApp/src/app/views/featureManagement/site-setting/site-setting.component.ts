@@ -28,6 +28,7 @@ export class SiteSettingComponent implements OnInit, OnDestroy {
     'siteName',
     'siteTitle',
     'siteLogo',
+    'defaultPassword',
     'isActive',
     'Action'];
   dataSource = new MatTableDataSource<any>();

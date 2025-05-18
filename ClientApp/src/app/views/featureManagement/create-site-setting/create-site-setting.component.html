@@ -57,6 +57,17 @@
                         <div class="text-left text-danger">Footer Title is required</div>
                         }
                     </c-col>
+
+                    <c-col [md]="4">
+                        <label cLabel for="defaultPassword">Default Password<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="siteSettingService.siteSetting.defaultPassword" name="defaultPassword" #DefaultPassword="ngModel"
+                            placeholder="Enter Default Password" cFormControl id="defaultPassword" required type="text"
+                            />
+
+                        @if(!DefaultPassword.valid&&DefaultPassword.touched){
+                        <div class="text-left text-danger">Default Password is required</div>
+                        }
+                    </c-col>
                     
                     <c-col [md]="4">
                         <label cLabel for="remark">Remark<span class="text-danger"></span></label>

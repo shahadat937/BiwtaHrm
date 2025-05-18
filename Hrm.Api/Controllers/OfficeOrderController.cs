@@ -22,7 +22,7 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-OfficeOrders")]
-        public async Task<ActionResult<List<OfficeOrderDto>>> Get([FromQuery] QueryParams queryParams, int orderTypeId, int departmentId, int sectionId, int designationId, string? orderNo, DateOnly fromDate, DateOnly toDate)
+        public async Task<ActionResult<List<OfficeOrderDto>>> Get([FromQuery] QueryParams queryParams, int?  orderTypeId, int? departmentId, int? sectionId, int? designationId, string? orderNo, DateOnly? fromDate, DateOnly? toDate)
         {
             var OfficeOrders = await _mediator.Send(new GetOfficeOrderListRequest {
                 QueryParams = queryParams,

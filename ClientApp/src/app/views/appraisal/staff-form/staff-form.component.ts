@@ -486,6 +486,10 @@ export class StaffFormComponent implements OnInit, OnDestroy {
         if (employee) {
           this.formData.reportingOfficerId = employee.id;
           this.reportingOfficerName = [employee.firstName, employee.lastName].join(' ');
+          this.formData.reportingOfficerDepartmentId = employee.departmentId;
+          this.formData.reportingOfficerSectionId = employee.sectionId;
+          this.formData.reportingOfficerDesignationId = employee.designationId;
+          this.formData.reportingOfficerResponsibilityTypeId = employee.additionalResponsibilityId;
         } else {
           this.formData.reportingOfficerId = null;
           this.reportingOfficerName = "";
@@ -514,9 +518,14 @@ export class StaffFormComponent implements OnInit, OnDestroy {
         //     this.counterSignatoryOfficername = "";
         //   }
         // })
+        console.log(employee)
         if (employee) {
           this.formData.counterSignatoryId = employee.id;
           this.counterSignatoryOfficername = [employee.firstName, employee.lastName].join(' ');
+          this.formData.counterSignatoryDepartmentId = employee.departmentId;
+          this.formData.counterSignatorySectionId = employee.sectionId;
+          this.formData.counterSignatoryDesignationId = employee.designationId;
+          this.formData.counterSignatoryResponsibilityTypeId = employee.additionalResponsibilityId;
         }
         else {
           this.formData.counterSignatoryId = null;

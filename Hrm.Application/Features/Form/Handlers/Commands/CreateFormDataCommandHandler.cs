@@ -49,7 +49,18 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
             formRecordDto.ReportingOfficerId = request.formData.ReportingOfficerId;
             formRecordDto.CounterSignatoryId = request.formData.CounterSignatoryId;
             formRecordDto.ReceiverId = request.formData.ReceiverId;
-            
+
+            formRecordDto.ReportingOfficerDepartmentId = request.formData.ReportingOfficerDepartmentId;
+            formRecordDto.ReportingOfficerSectionId = request.formData.ReportingOfficerSectionId;
+            formRecordDto.ReportingOfficerDesignationId = request.formData.ReportingOfficerDesignationId;
+            formRecordDto.ReportingOfficerResponsibilityTypeId = request.formData.ReportingOfficerResponsibilityTypeId;
+
+            formRecordDto.CounterSignatoryDepartmentId = request.formData.CounterSignatoryDepartmentId;
+            formRecordDto.CounterSignatorySectionId = request.formData.CounterSignatorySectionId;
+            formRecordDto.CounterSignatoryDesignationId = request.formData.CounterSignatoryDesignationId;
+            formRecordDto.CounterSignatoryResponsibilityTypeId = request.formData.CounterSignatoryResponsibilityTypeId;
+
+
             formRecordDto.EmpId = (int)request.formData.EmpId;
             formRecordDto.IsActive = true;
 

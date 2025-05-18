@@ -26,5 +26,15 @@ namespace Hrm.Application.DTOs.FormRecord
         public bool IsActive { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
+        public int? ReportingOfficerDepartmentId { get; set; }
+        public int? ReportingOfficerSectionId { get; set; }
+        public int? ReportingOfficerDesignationId { get; set; }
+        public int? ReportingOfficerResponsibilityTypeId { get; set; }
+
+        public int? CounterSignatoryDepartmentId { get; set; }
+        public int? CounterSignatorySectionId { get; set; }
+        public int? CounterSignatoryDesignationId { get; set; }
+        public int? CounterSignatoryResponsibilityTypeId { get; set; }
+
     }
 }

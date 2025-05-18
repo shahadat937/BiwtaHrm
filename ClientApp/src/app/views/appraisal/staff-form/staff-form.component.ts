@@ -120,10 +120,10 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     this.IsUpdate = false;
     this.formId = environment.staffFormId
     this.firstSection = 0;
-    this.lastSection = 3;
+    this.lastSection = 1;
     this.submitButtonText = "Submit";
     this.formName = environment.staffFormName;
-    this.featureName = "";
+    this.featureName = "staffForm";
   }
 
   ngOnInit(): void {
@@ -231,6 +231,8 @@ export class StaffFormComponent implements OnInit, OnDestroy {
       this.updateFormData();
       return;
     }
+
+    console.log(this.featurePermission);
 
     if(this.featurePermission.add==false) {
       this.roleFeatureService.unauthorizeAccress();

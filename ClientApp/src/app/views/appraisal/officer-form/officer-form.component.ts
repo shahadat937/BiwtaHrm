@@ -440,8 +440,11 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     //this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]);
     //this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
     if(this.updateRole == this.appraisalRole.Receiver){
-      this.formData.ReceiverId = this.authService.currentUserValue.departmentId;
-      console.log(this.formData.ReceiverId)
+      this.formData.ReceiverId = this.authService.currentUserValue.empId;
+      this.formData.receiverDepartmentId = this.authService.currentUserValue.departmentId;
+      this.formData.receiverSectionId = this.authService.currentUserValue.sectionId;
+      this.formData.ReceiverDesignationId = this.authService.currentUserValue.designationId;
+      this.formData.ReceiverResponsibilityTypeId = this.authService.currentUserValue.responsibilityTypeId;
     }
     this.formData.ReceiverId = this.authService.currentUserValue.departmentId;
     

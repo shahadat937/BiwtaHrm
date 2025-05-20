@@ -34,6 +34,12 @@ namespace Hrm.Domain
         public int? CounterSignatoryDesignationId { get; set; }
         public int? CounterSignatoryResponsibilityTypeId { get; set; }
 
+        public int? ReceiverDepartmentId { get; set; }
+        public int? ReceiverSectionId { get; set; }
+        public int? ReceiverDesignationId { get; set; }
+        public int? ReceiverResponsibilityTypeId { get; set; }
+
+
         public Form Form { get; set; }
         public EmpBasicInfo Employee {  get; set; }
         public virtual ICollection<FieldRecord> FieldRecords { get; } = new List<FieldRecord>();

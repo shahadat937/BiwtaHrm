@@ -36,5 +36,8 @@ namespace Hrm.Application.DTOs.FormRecord
         public int? CounterSignatoryDesignationId { get; set; }
         public int? CounterSignatoryResponsibilityTypeId { get; set; }
 
+        public int? ReporterDepartmentId { get; set; }
+        public int? CounterSignatureDepatmentId { get; set; }
+
     }
 }

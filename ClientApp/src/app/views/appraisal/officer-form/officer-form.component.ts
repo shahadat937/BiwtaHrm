@@ -439,6 +439,11 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
     //this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]);
     //this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
+    if(this.updateRole == this.appraisalRole.Receiver){
+      this.formData.ReceiverId = this.authService.currentUserValue.departmentId;
+      console.log(this.formData.ReceiverId)
+    }
+    this.formData.ReceiverId = this.authService.currentUserValue.departmentId;
     
     this.formRecordService.updateFormData(this.formData, this.updateRole).subscribe({
       next: response=> {
@@ -553,7 +558,6 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
         //     this.counterSignatoryOfficername = "";
         //   }
         // })
-        console.log(employee)
         if (employee) {
           this.formData.counterSignatoryId = employee.id;
           this.counterSignatoryOfficername = [employee.firstName, employee.lastName].join(' ');

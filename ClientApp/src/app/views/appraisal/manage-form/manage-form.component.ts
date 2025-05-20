@@ -104,10 +104,11 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     )
     
     this.featureName = "";
-
+  
   }
 
   ngOnInit(): void {
+    
     this.getPermission();
       this.route.queryParams.subscribe(data => {
       if(data['forNotificationId']) {
@@ -192,6 +193,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   }
 
   getFormRecord() {
+     this.filters.reporterDepartmentId = parseInt(this.authService.currentUserValue.departmentId);
+     this.filters.counterSignatoryDepartmentId = parseInt(this.authService.currentUserValue.departmentId);
     this.subscription.push(
       this.formRecordService.getFormRecordFiltered(this.filters).subscribe({
       next: (response)=> {

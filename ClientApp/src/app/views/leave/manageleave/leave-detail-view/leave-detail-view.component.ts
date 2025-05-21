@@ -81,6 +81,7 @@ export class LeaveDetailViewComponent implements OnInit, OnDestroy{
       this.leaveService.getLeaveById(this.leaveRequestId).subscribe({
       next: response=> {
         this.leaveData = response;
+        console.log(this.leaveData);
         this.updateLeaveData = this.leaveData;
         this.getWorkingDays();
       },

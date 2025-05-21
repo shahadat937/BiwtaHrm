@@ -39,7 +39,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
   defaultPhoto: string;
   employeePhoto: string;
   department: string;
-  otherResponsibilityType: string;
+  otherResponsibilityType: any;
   designation: string;
   empSubs: Subscription = new Subscription();
   empReqSub: Subscription = new Subscription();
@@ -102,9 +102,9 @@ export class AddleaveComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.IsReadonly) {
+      console.log("A");
       this.addLeaveService.addLeaveModel = this.FillLeaveDataToAddLeaveModel(this.addLeaveService.addLeaveModel);
       this.filterLeaveBalance();
-
       if (this.leaveData.reviewedBy) {
         this.empBasicInfoService.findByEmpId(this.leaveData.reviewedBy).subscribe({
           next: response => {
@@ -112,6 +112,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
             this.reviewerName = [response.firstName, response.lastName].join(' ');
           }
         })
+        console.log("B");
       }
 
       if (this.leaveData.approvedBy) {
@@ -121,6 +122,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
             this.approverName = [response.firstName, response.lastName].join(' ');
           }
         })
+        console.log("C");
       }
 
       this.getLeaveFiles();
@@ -134,6 +136,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
 
     if (this.IsReadonly) {
       this.buttonTitle = "Update";
+      console.log("D");
     }
 
     if (this.authService.currentUserValue.empId != null && this.IsReadonly == false) {
@@ -143,14 +146,14 @@ export class AddleaveComponent implements OnInit, OnDestroy {
           this.isValidPMS = true;
           this.addLeaveService.addLeaveModel.empId = parseInt(this.authService.currentUserValue.empId);
 
-             this.addLeaveService.addLeaveModel.empCurrentDepartmentId = this.authService.currentUserValue.departmentId? parseInt(this.authService.currentUserValue.departmentId) : null;
+          // this.addLeaveService.addLeaveModel.empCurrentDepartmentId = this.authService.currentUserValue.departmentId ? parseInt(this.authService.currentUserValue.departmentId) : null;
 
-            this.addLeaveService.addLeaveModel.empCurrentSectionId = this.authService.currentUserValue.sectionId?  parseInt(this.authService.currentUserValue.sectionId) : null;
+          // this.addLeaveService.addLeaveModel.empCurrentSectionId = this.authService.currentUserValue.sectionId ? parseInt(this.authService.currentUserValue.sectionId) : null;
 
-            this.addLeaveService.addLeaveModel.empCurrentDesignationId = this.authService.currentUserValue.designationId? parseInt(this.authService.currentUserValue.designationId) : null;
+          // this.addLeaveService.addLeaveModel.empCurrentDesignationId = this.authService.currentUserValue.designationId ? parseInt(this.authService.currentUserValue.designationId) : null;
 
-            this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId = this.authService.currentUserValue.responsibilityTypeId? parseInt(this.authService.currentUserValue.responsibilityTypeId) : null;
-            
+          // this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId = this.authService.currentUserValue.responsibilityTypeId ? parseInt(this.authService.currentUserValue.responsibilityTypeId) : null;
+
           this.employeeName = [response.firstName, response.lastName].join(' ');
           // this.department = response.departmentName;
           this.getDepartmentById(Number(this.authService.currentUserValue.departmentId))
@@ -169,12 +172,14 @@ export class AddleaveComponent implements OnInit, OnDestroy {
           this.getLeaveBalanceForAllType(response.id);
         }
       })
+      console.log("E");
     }
 
     this.getCountry();
   }
 
   onEmpIdChange() {
+    this.otherResponsibilityType = '';
     const source$ = of(this.empCardNo);
     const delay$ = source$.pipe(
       delay(800)
@@ -206,12 +211,6 @@ export class AddleaveComponent implements OnInit, OnDestroy {
           if (response != null) {
             this.employeeName = [response.firstName, response.lastName].join(' ');
             this.addLeaveService.addLeaveModel.empId = response.id;
-
-            this.addLeaveService.addLeaveModel.empCurrentDepartmentId = Number(this.authService.currentUserValue.departmentId)
-            this.addLeaveService.addLeaveModel.empCurrentSectionId = Number(this.authService.currentUserValue.sectionId)
-            this.addLeaveService.addLeaveModel.empCurrentDesignationId = Number(this.authService.currentUserValue.designationId)
-            this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId = Number(this.authService.currentUserValue.responsibilityTypeId)
-
             this.isValidPMS = true;
             if (response.empPhotoName != "") {
               this.employeePhoto = this.imageUrl + "EmpPhoto/" + response.empPhotoName;
@@ -220,8 +219,16 @@ export class AddleaveComponent implements OnInit, OnDestroy {
             }
             this.getLeaveAmount();
             this.getLeaveBalanceForAllType(response.id);
-            this.department = response.departmentName;
-            this.designation = response.designationName;
+            this.department =   this.addLeaveService.addLeaveModel.empCurrentDepartmentId? this.getDepartmentById(this.addLeaveService.addLeaveModel.empCurrentDepartmentId) :  response.departmentName;
+
+            this.designation =  this.addLeaveService.addLeaveModel.empCurrentDesignationId? this.getDesignationByIdDesignationId(this.addLeaveService.addLeaveModel.empCurrentDesignationId) : response.designationName;
+
+            this.otherResponsibilityType = this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId? this.getResponsibilityTypeById(this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId) : "";
+
+            
+            this.addLeaveService.addLeaveModel.empCurrentDepartmentId = response.departmentId
+            this.addLeaveService.addLeaveModel.empCurrentSectionId = response.sectionId
+            this.addLeaveService.addLeaveModel.empCurrentDesignationId = response.designationId
           } else {
             this.employeeName = "";
             this.addLeaveService.addLeaveModel.empId = null;
@@ -231,6 +238,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
             this.department = "";
             this.designation = "";
           }
+
         },
         error: err => {
           this.isValidPMS = false;
@@ -331,13 +339,32 @@ export class AddleaveComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if(this.addLeaveService.addLeaveModel.empId != Number(this.authService.currentUserValue.empId)){
+    if (this.addLeaveService.addLeaveModel.empId != Number(this.authService.currentUserValue.empId)) {
       this.addLeaveService.addLeaveModel.applicationById = Number(this.authService.currentUserValue.empId);
     }
 
     if (this.addLeaveService.addLeaveModel.countryId != null) {
       this.addLeaveService.addLeaveModel.isForeignLeave = true;
     }
+
+    if (this.addLeaveService.addLeaveModel.empId === Number(this.authService.currentUserValue.empId)) {
+      if (!this.addLeaveService.addLeaveModel.empCurrentDepartmentId && this.authService.currentUserValue.departmentId) {
+        this.addLeaveService.addLeaveModel.empCurrentDepartmentId = Number(this.authService.currentUserValue.departmentId);
+      }
+
+      if (!this.addLeaveService.addLeaveModel.empCurrentSectionId && this.authService.currentUserValue.sectionId) {
+        this.addLeaveService.addLeaveModel.empCurrentSectionId = Number(this.authService.currentUserValue.sectionId);
+      }
+
+      if (!this.addLeaveService.addLeaveModel.empCurrentDesignationId && this.authService.currentUserValue.designationId) {
+        this.addLeaveService.addLeaveModel.empCurrentDesignationId = Number(this.authService.currentUserValue.designationId);
+      }
+
+      if (!this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId && this.authService.currentUserValue.responsibilityTypeId) {
+        this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId = Number(this.authService.currentUserValue.responsibilityTypeId);
+      }
+    }
+
     let formData = this.convertToFormData(this.addLeaveService.addLeaveModel, ["AssociatedFiles"]);
     this.addLeaveService.createLeaveRequest(formData).subscribe({
       next: response => {
@@ -586,9 +613,9 @@ export class AddleaveComponent implements OnInit, OnDestroy {
         this.addLeaveService.addLeaveModel.empCurrentDepartmentId = employee.departmentId;
         this.addLeaveService.addLeaveModel.empCurrentSectionId = employee.sectionId;
         this.addLeaveService.addLeaveModel.empCurrentDesignationId = employee.designationId;
-        this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId = employee.responsibilityTypeId;
+        this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId = employee.additionalResponsibilityId;
         this.addLeaveService.addLeaveModel.empId = employee.id;
-        
+
         if (this.empSubs) {
           this.empSubs.unsubscribe();
         }
@@ -599,13 +626,13 @@ export class AddleaveComponent implements OnInit, OnDestroy {
         this.designation = employee.designationName;
         this.department = employee.departmentName;
         this.otherResponsibilityType = ""
-        if(employee.empPhotoName){
-          this.employeePhoto =  this.employeePhoto = this.imageUrl + "EmpPhoto/" + employee.empPhotoName;
+        if (employee.empPhotoName) {
+          this.employeePhoto = this.employeePhoto = this.imageUrl + "EmpPhoto/" + employee.empPhotoName;
         }
-        else{
-          this.employeePhoto =  ""
+        else {
+          this.employeePhoto = ""
         }
-    
+
         this.employeeName = this.employeeName = [employee.firstName, employee.lastName].join(' ');
       }
     });
@@ -616,12 +643,15 @@ export class AddleaveComponent implements OnInit, OnDestroy {
 
     modalRef.content.employeeSelected.subscribe((reviewer: any) => {
 
-      if (typeof reviewer === 'object')  {
+      if (typeof reviewer === 'object') {
+        console.log(reviewer)
         this.addLeaveService.addLeaveModel.reviewerCurrentDepartmentId = reviewer.departmentId;
         this.addLeaveService.addLeaveModel.reviewerCurrentSectionId = reviewer.sectionId;
         this.addLeaveService.addLeaveModel.reviewerCurrentDesignationId = reviewer.designationId;
-        this.addLeaveService.addLeaveModel.reviewerCurrentResponsibilityTypeId = reviewer.responsibilityTypeId;
+        this.addLeaveService.addLeaveModel.reviewerCurrentResponsibilityTypeId = reviewer.additionalResponsibilityId;
         this.addLeaveService.addLeaveModel.reviewedBy = reviewer.id;
+
+        console.log(reviewer.additionalResponsibilityId);
 
         this.reviewerPMIS = reviewer.idCardNo
         this.reviewerName = [reviewer.firstName, reviewer.lastName].join(' ');
@@ -638,14 +668,15 @@ export class AddleaveComponent implements OnInit, OnDestroy {
 
     modalRef.content.employeeSelected.subscribe((approver: any) => {
 
-      if(typeof approver === 'object' ){
+      if (typeof approver === 'object') {
+        console.log("_A", approver)
         this.approverPMIS = approver.idCardNo;
         this.addLeaveService.addLeaveModel.approverCurrentDepartmentId = approver.departmentId;
         this.addLeaveService.addLeaveModel.approverCurrentSectionId = approver.sectionId;
         this.addLeaveService.addLeaveModel.approverCurrentDesignationId = approver.designationId;
-        this.addLeaveService.addLeaveModel.approverCurrentResponsibilityTypeId = approver.responsibilityTypeId;
+        this.addLeaveService.addLeaveModel.approverCurrentResponsibilityTypeId = approver.additionalResponsibilityId;
         this.addLeaveService.addLeaveModel.approvedBy = approver.id;
-        
+
         this.approverPMIS = approver.idCardNo
         this.approverName = [approver.firstName, approver.lastName].join(' ');
       }

@@ -65,7 +65,7 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
 
             if(request.filterDto.ApprovedBy.HasValue)
             {
-                leaveRequesQuery = leaveRequesQuery.Where(x=>(x.ApprovedBy == request.filterDto.ApprovedBy && x.ApproverCurrentDepartmentId == request.filterDto.DepartmentId) || (x.EmpCurrentDepartmentId == request.filterDto.DepartmentId) && x.EmpCurrentDepartmentId == request.filterDto.DepartmentId);
+                leaveRequesQuery = leaveRequesQuery.Where(x=>(x.ApprovedBy == request.filterDto.ApprovedBy && x.ApproverCurrentDepartmentId == request.filterDto.DepartmentId) || (x.ApprovedBy == null && x.EmpCurrentDepartmentId == request.filterDto.DepartmentId));
             }
 
             if(request.filterDto.Status!=null&&request.filterDto.Status.Count>0)

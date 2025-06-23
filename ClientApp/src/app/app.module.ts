@@ -57,6 +57,10 @@ import { YearSetupService } from './views/basic-setup/service/year-setup.service
 import { NavbarSettingService } from './views/featureManagement/service/navbar-setting.service';
 import { DepartmentService } from './views/basic-setup/service/department.service';
 import { SectionService } from './views/basic-setup/service/section.service';
+import { RoleFeatureService } from './views/featureManagement/service/role-feature.service';
+import { DesignationService } from './views/basic-setup/service/designation.service';
+import { OrderTypeService } from './views/basic-setup/service/order-type.service';
+import { OfficeOrderService } from './views/notifications/service/office-order.service';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,
@@ -121,6 +125,9 @@ const APP_CONTAINERS = [
     NavbarSettingService,
     DepartmentService,
     SectionService,
+    RoleFeatureService,
+    DesignationService,
+    OfficeOrderService,
   ],
   bootstrap: [AppComponent],
 })

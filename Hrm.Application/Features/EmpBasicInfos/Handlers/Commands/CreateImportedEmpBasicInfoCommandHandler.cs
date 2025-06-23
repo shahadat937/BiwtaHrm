@@ -4,6 +4,7 @@ using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.DTOs.EmpShiftAssign;
 using Hrm.Application.Features.EmpBasicInfos.Requests.Commands;
 using Hrm.Application.Features.EmpBasicInfos.Requests.Commands;
+using Hrm.Application.Features.SiteSettings.Requests.Queries;
 using Hrm.Application.Models.Identity;
 using Hrm.Application.Responses;
 using Hrm.Domain;
@@ -24,14 +25,16 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Commands
         private readonly IAuthService _authenticationService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IHrmRepository<SiteSetting> _SiteSettingRepository;
 
-        public CreateImportedEmpBasicInfoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<EmpBasicInfo> EmpBasicInfoRepository, IHrmRepository<EmpShiftAssign> empShiftAssignRepository, IAuthService authenticationService)
+        public CreateImportedEmpBasicInfoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHrmRepository<EmpBasicInfo> EmpBasicInfoRepository, IHrmRepository<EmpShiftAssign> empShiftAssignRepository, IAuthService authenticationService, IHrmRepository<SiteSetting> siteSettingRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _EmpBasicInfoRepository = EmpBasicInfoRepository;
             _EmpShiftAssignRepository = empShiftAssignRepository;
             _authenticationService = authenticationService;
+            _SiteSettingRepository = siteSettingRepository;
         }
         public async Task<BaseCommandResponse> Handle(CreateImportedEmpBasicInfoCommand request, CancellationToken cancellationToken)
         {
@@ -70,12 +73,15 @@ namespace Hrm.Application.Features.EmpBasicInfos.Handlers.Commands
                     var empShiftAssigned = _mapper.Map<EmpShiftAssign>(empShiftAssignDto);
                     await _unitOfWork.Repository<EmpShiftAssign>().Add(empShiftAssigned);
 
+                    var activeSiteSetting = await _SiteSettingRepository.FindOneAsync(x => x.IsActive == true);
+
+
                     var userRegistration = new RegistrationRequest
                     {
                         FirstName = item.FirstName,
                         LastName = item.LastName ?? "",
                         UserName = item.IdCardNo,
-                        Password = "Admin@123",
+                        Password = activeSiteSetting.DefaultPassword ?? "Admin@123",
                         EmpId = EmpBasicInfoDto.Id,
                         Email = "",
                         PhoneNumber = "",

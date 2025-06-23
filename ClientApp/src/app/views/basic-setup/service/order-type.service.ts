@@ -22,7 +22,7 @@ export class OrderTypeService {
   }
    //Coustom
   getSelectedOrderType(){
-    return this.http.get<SelectedModel[]>(this.baseUrl + '/orderType/get-selectedOrderTypes');
+    return this.http.get<any>(this.baseUrl + '/orderType/get-selectedOrderTypes');
   }
 
   getAll(): Observable<OrderType[]> {

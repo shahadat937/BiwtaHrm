@@ -4,6 +4,7 @@ export class SiteSetting {
     siteLogo : string = '';
     siteTitle : string = '';
     footerTitle : string = '';
+    defaultPassword : string = '';
     siteLogoFile: File | null = null;
     remark : string = '';
     isActive : boolean = true;

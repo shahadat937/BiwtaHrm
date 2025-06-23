@@ -66,6 +66,7 @@ namespace Hrm.Application.Features.SiteSettings.Handlers.Commands
             siteSetting.SiteTitle = request.SiteSettingDto.SiteTitle;
             siteSetting.FooterTitle = request.SiteSettingDto.FooterTitle;
             siteSetting.Remark = request.SiteSettingDto.Remark ?? "";
+            siteSetting.DefaultPassword = request.SiteSettingDto.DefaultPassword ?? "";
             siteSetting.IsActive = request.SiteSettingDto.IsActive;
 
 

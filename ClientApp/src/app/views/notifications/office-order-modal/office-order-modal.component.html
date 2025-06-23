@@ -1,0 +1,162 @@
+<div class="modal fade show" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{heading}}</h5>
+                <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body scrollable-modal-body">
+                    <form #OfficeOrderForm="ngForm" [gutter]="3" novalidate cForm cRow
+                        class="needs-validation">
+                        
+                    <c-col [md]="4">
+                        <input type="hidden" [(ngModel)]="officeOrderForm.id" name="id" />
+                        <input type="hidden" [(ngModel)]="officeOrderForm.empId" name="empId" />
+                        <label cLabel for="orderTypeId">Order Type<span class="text-danger">*</span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="officeOrderForm.orderTypeId"
+                                name="orderTypeId" #orderTypeId="ngModel" cFormControl id="orderTypeId"
+                                aria-label="Default select example" required cSelect>
+                                <option [ngValue]="null">Select Order Type</option>
+
+                                @for(orderType of orderTypes; track orderType.id;let index=$index) {
+                                <option [value]="orderType.id">
+                                    {{ orderType.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!orderTypeId.valid && orderTypeId.touched){
+                            <div class="text-left text-danger">Order Type is required</div>
+                            }
+                        </div>
+                    </c-col>
+
+                    <c-col [md]="4">
+                        <label cLabel for="designationId">Order Designation<span class="text-danger">*</span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="officeOrderForm.designationId"
+                                name="designationId" #designationId="ngModel" cFormControl id="designationId"
+                                aria-label="Default select example" required cSelect>
+                                <option [ngValue]="null">Select Designation</option>
+
+                                @for(item of designations; track item.id;let index=$index) {
+                                <option [value]="item.id">
+                                    {{ item.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!designationId.valid && designationId.touched){
+                            <div class="text-left text-danger">Order Department is required</div>
+                            }
+                        </div>
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="departmentId">Order By Department<span class="text-danger">*</span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="officeOrderForm.departmentId"
+                                (change)="getSelectedSection(officeOrderForm.departmentId || 0)"
+                                name="departmentId" #departmentId="ngModel" cFormControl id="departmentId"
+                                aria-label="Default select example" required cSelect>
+                                <option [ngValue]="null">Select Department</option>
+
+                                @for(item of departments; track item.id;let index=$index) {
+                                <option [value]="item.id">
+                                    {{ item.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!departmentId.valid && departmentId.touched){
+                            <div class="text-left text-danger">Order By Department is required</div>
+                            }
+                        </div>
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="sectionId">Order By Section<span class="text-danger">*</span></label>
+                        <div class="input-wrapper">
+                            <select [(ngModel)]="officeOrderForm.sectionId"
+                                name="sectionId" #sectionId="ngModel" cFormControl id="sectionId"
+                                aria-label="Default select example" required cSelect>
+                                <option [ngValue]="null">Select Section</option>
+
+                                @for(item of sections; track item.id;let index=$index) {
+                                <option [value]="item.id">
+                                    {{ item.name }}
+                                </option>
+                                }
+                            </select>
+                            @if(!sectionId.valid && sectionId.touched){
+                            <div class="text-left text-danger">Order By Section is required</div>
+                            }
+                        </div>
+                    </c-col>
+
+                    <c-col [md]="4">
+                        <label cLabel for="orderDate">Order Date<span class="text-danger">*</span></label>
+                        <input [(ngModel)]="officeOrderForm.orderDate" name="orderDate" #orderDate="ngModel"
+                            placeholder="Enter Feature Name" cFormControl id="orderDate" type="date" required
+                            />
+                        @if(!orderDate.valid&&orderDate.touched){
+                        <div class="text-left text-danger">Order Date is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="orderNo">Order No<span class="text-danger"></span></label>
+                        <input [(ngModel)]="officeOrderForm.orderNo" name="orderNo" #OrderNo="ngModel"
+                            placeholder="Enter Order No" cFormControl id="orderNo" type="text"
+                            />
+                        @if(!OrderNo.valid&&OrderNo.touched){
+                        <div class="text-left text-danger">Order No is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <input type="hidden" [(ngModel)]="officeOrderForm.fileUrl" name="fileUrl" />
+                        <label cLabel for="orderFile">Associate File<span class="text-danger"></span></label>
+                        <input [(ngModel)]="officeOrderForm.orderFile" name="orderFile" #orderFile="ngModel"
+                            placeholder="Enter Feature Name" cFormControl id="orderFile" type="file"
+                            (change)="onPhotoSelected($event)"
+                            />
+                        @if(!orderFile.valid&&orderFile.touched){
+                        <div class="text-left text-danger">Associate File is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="remark">Remark<span class="text-danger"></span></label>
+                        <input [(ngModel)]="officeOrderForm.remark" name="remark" #Remark="ngModel"
+                            placeholder="Enter Remark" cFormControl id="remark" type="text"
+                            />
+                        @if(!Remark.valid&&Remark.touched){
+                        <div class="text-left text-danger">Remark is required</div>
+                        }
+                    </c-col>
+                    
+                    <c-col [md]="4">
+                        <label cLabel for="isActive">Active Status</label>
+                        <select [(ngModel)]="officeOrderForm.isActive"
+                        name="isActive"
+                        cSelect
+                        id="isActive">
+                        <option value="true">Active</option>
+                        <option value="false">De-Active</option>
+                        </select>
+                    </c-col>
+
+            </form>
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button color="warn" type="button" (click)="closeModal()">
+                        <mat-icon>cancel</mat-icon> Close
+                    </button>
+                    <button [disabled]="OfficeOrderForm.invalid" mat-raised-button class="me-1" color="primary" type="submit" (click)="onSubmit(OfficeOrderForm)">
+                        <mat-icon>{{btnIcon}}</mat-icon> {{ btnText }}
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>

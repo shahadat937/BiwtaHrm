@@ -35,21 +35,21 @@ namespace Hrm.Application.Features.OfficeOrders.Handlers.Queries
                 (request.SectionId == 0 || x.SectionId == request.SectionId) &&
                 (request.DesignationId == 0 || x.DesignationId == request.DesignationId) &&
                 (request.OrderTypeId == 0 || x.OrderTypeId == request.OrderTypeId) &&
-                (request.OrderNo == null || x.OrderNo == request.OrderNo) &&
+                (request.OrderNo == null || x.OrderNo.ToLower().Contains(request.OrderNo.ToLower())) &&
                 (request.FromDate == null || x.OrderDate >= request.FromDate) && 
                 (request.ToDate == null || x.OrderDate <= request.ToDate))
                 .Include(x => x.OrderType)
                 .Include(x => x.Office)
                 .Include(x => x.Department)
                 .Include(x => x.Section)
-                .Include(x => x.DesignationSetup);
+                .Include(x => x.DesignationSetup)
+                .OrderByDescending(x => x.OrderDate);
 
             var totalCount = await officeOrders.CountAsync(cancellationToken);
 
             var pagedResult = officeOrders
                .Skip((request.QueryParams.PageIndex - 1) * request.QueryParams.PageSize)
                .Take(request.QueryParams.PageSize)
-               .OrderByDescending(x => x.OrderDate)
                .ToList();
 
             var officeOrdersDto = _mapper.Map<List<OfficeOrderDto>>(pagedResult);

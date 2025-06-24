@@ -135,43 +135,6 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                 combinedWorkHistory.AddRange(mappedPromotionIncrement);
             }
 
-            var transferPostings = _EmpTransferPostingRepository
-                .Where(tp => tp.EmpId == request.EmpId && tp.ApplicationStatus == true);
-
-            var workHistories = _EmpWorkHistoryRepository
-                .Where(wh => wh.EmpId == request.EmpId);
-
-            var jobDetails = _EmpJobDetailRepository
-                .Where(jd => jd.EmpId == request.EmpId);
-
-            var promotionIncrements = _EmpPromotionIncrementRepository
-                .Where(pi => pi.EmpId == request.EmpId && pi.UpdateDesignationId != null);
-
-            var latestTransferPostingJoiningDate = transferPostings
-                .OrderByDescending(tp => tp.JoiningDate)
-                .Select(tp => tp.JoiningDate)
-                .FirstOrDefault();
-
-            var latestWorkHistoryReleaseDate = workHistories
-                .OrderByDescending(wh => wh.ReleaseDate)
-                .Select(wh => wh.ReleaseDate)
-                .FirstOrDefault();
-
-            var extendedlatestWorkHistoryReleaseDate = latestWorkHistoryReleaseDate?.AddDays(1);
-
-            var latestJobDetailJoiningDate = jobDetails
-                .OrderByDescending(jd => jd.JoiningDate)
-                .Select(jd => jd.JoiningDate)
-                .FirstOrDefault();
-
-            var latestPromotionIncrementsDate = promotionIncrements
-                .OrderByDescending(wh => wh.EffectiveDate)
-                .Select(wh => wh.EffectiveDate)
-                .FirstOrDefault();
-
-            var latestDate = new[] { latestTransferPostingJoiningDate, extendedlatestWorkHistoryReleaseDate, latestJobDetailJoiningDate, latestPromotionIncrementsDate }
-                .Where(d => d != null).Max();
-
 
             var jobDetailsInfo = await _EmpJobDetailRepository
                 .Where(jd => jd.EmpId == request.EmpId)
@@ -189,7 +152,7 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                     //DepartmentId = promotionIncrement.CurrentDepartmentId,
                     //SectionId = promotionIncrement.CurrentSectionId,
                     //DesignationId = promotionIncrement.CurrentDesignationId,
-                    JoiningDate = latestDate,
+                    JoiningDate = jobDetailsInfo.CurrentPositionJoinDate,
                     Remark = jobDetailsInfo.Remark,
                     IsActive = jobDetailsInfo.IsActive,
                     DepartmentName = jobDetailsInfo.Department?.DepartmentName,

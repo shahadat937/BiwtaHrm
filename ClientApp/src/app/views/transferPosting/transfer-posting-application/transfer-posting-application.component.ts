@@ -385,6 +385,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   }
 
   getEmpInfoByIdCardNo(employeeInfo: any) {
+    this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = null;
     if (this.isNumber(employeeInfo)) {
       if (employeeInfo) {
         this.subscription.push(
@@ -447,9 +448,9 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
                     this.getEmpJobDetailsByEmpId(employeeInfo);
                     if (!employeeInfo.isAdditionalDesignation) {
                       this.subscription.push(
-                        this.empTransferPostingService.CurrentDeptJoinDateByEmpId(employeeInfo.id).subscribe((res: any) => {
+                        this.empJobDetailsService.findByEmpId(employeeInfo).subscribe((res: any) => {
                           if (res) {
-                            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res;
+                            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res.currentPositionJoinDate ?? null;
                           }
                         })
                       )
@@ -505,7 +506,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
             this.empTransferPostingService.empTransferPosting.currentBasicPay = res.basicPay;
             this.empTransferPostingService.empTransferPosting.currentGradeName = res.presentGradeName;
             this.empTransferPostingService.empTransferPosting.currentScaleName = res.presentScaleName;
-            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res.currentPositionJoinDate;
+            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res.currentPositionJoinDate ?? null;
           }
         })
       )

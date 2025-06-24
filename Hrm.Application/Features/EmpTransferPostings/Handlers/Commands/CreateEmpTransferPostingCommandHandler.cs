@@ -81,6 +81,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                 {
                     empJobDetails.BasicPay = empTransferPostings.UpdateBasicPay;
                 }
+                empJobDetails.CurrentPositionJoinDate = empTransferPostings.JoiningDate;
                 await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
 
             }
@@ -114,6 +115,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                 {
                     empJobDetails.BasicPay = empTransferPostings.CurrentBasicPay;
                 }
+                empJobDetails.CurrentPositionJoinDate = empTransferPostings.CurrentDeptJoinDate;
                 await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
             }
             else

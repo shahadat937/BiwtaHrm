@@ -108,6 +108,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                 {
                     empJobDetails.BasicPay = updateEmptransferPosting.UpdateBasicPay;
                 }
+                empJobDetails.CurrentPositionJoinDate = updateEmptransferPosting.JoiningDate;
                 await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
             }
             else if (updateEmptransferPosting.TransferApproveStatus == false || updateEmptransferPosting.DeptApproveStatus == false || updateEmptransferPosting.JoiningStatus == false)
@@ -140,6 +141,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                 {
                     empJobDetails.BasicPay = updateEmptransferPosting.CurrentBasicPay;
                 }
+                empJobDetails.CurrentPositionJoinDate = updateEmptransferPosting.CurrentDeptJoinDate;
                 await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
             }
             else
@@ -172,6 +174,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                 {
                     empJobDetails.BasicPay = updateEmptransferPosting.CurrentBasicPay;
                 }
+                empJobDetails.CurrentPositionJoinDate = updateEmptransferPosting.CurrentDeptJoinDate;
                 await _unitOfWork.Repository<EmpJobDetail>().Update(empJobDetails);
             }
 

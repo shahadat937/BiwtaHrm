@@ -350,11 +350,11 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
               this.empTransferPostingService.empTransferPosting.empId = res.id;
               this.getEmpJobDetailsByEmpId(res.id);
               this.subscription.push(
-              this.empTransferPostingService.CurrentDeptJoinDateByEmpId(res.id).subscribe((res:any) => {
-                if(res){
-                  this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res;
-                }
-              })
+              // this.empTransferPostingService.CurrentDeptJoinDateByEmpId(res.id).subscribe((res:any) => {
+              //   if(res){
+              //     this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res;
+              //   }
+              // })
               )
               
             }
@@ -391,6 +391,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.empTransferPostingService.empTransferPosting.currentBasicPay = res.basicPay;
         this.empTransferPostingService.empTransferPosting.currentGradeName = res.presentGradeName;
         this.empTransferPostingService.empTransferPosting.currentScaleName = res.presentScaleName;
+        this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res.currentPositionJoinDate;
       }
     })
     )

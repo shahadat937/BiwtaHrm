@@ -17,6 +17,7 @@ namespace Hrm.Application.DTOs.EmpJobDetail
         public int? PresentGradeId { get; set; }
         public int? PresentScaleId { get; set; }
         public DateOnly? JoiningDate { get; set; }
+        public DateOnly? CurrentPositionJoinDate { get; set; }
         public string? CodeNo { get; set; }
         public DateOnly? ConfirmationDate { get; set; }
         public int? FirstGradeId { get; set; }

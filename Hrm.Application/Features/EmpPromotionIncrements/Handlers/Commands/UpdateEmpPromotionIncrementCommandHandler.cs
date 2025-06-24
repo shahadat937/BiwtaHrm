@@ -46,6 +46,7 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Commands
                 if (updateEmpPromotionIncrement.UpdateDesignationId != null)
                 {
                     empJobDetails.DesignationId = updateEmpPromotionIncrement.UpdateDesignationId;
+                    empJobDetails.CurrentPositionJoinDate = updateEmpPromotionIncrement.EffectiveDate;
                 }
                 if (updateEmpPromotionIncrement.UpdateGradeId != null)
                 {
@@ -69,6 +70,7 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Commands
                 if (empJobDetails.DesignationId != updateEmpPromotionIncrement.CurrentDesignationId)
                 {
                     empJobDetails.DesignationId = updateEmpPromotionIncrement.CurrentDesignationId;
+                    empJobDetails.CurrentPositionJoinDate = updateEmpPromotionIncrement.CurrentDeptJoinDate;
                 }
                 if (empJobDetails.PresentGradeId != updateEmpPromotionIncrement.CurrentGradeId)
                 {
@@ -92,6 +94,7 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Commands
                 if (empJobDetails.DesignationId != updateEmpPromotionIncrement.CurrentDesignationId)
                 {
                     empJobDetails.DesignationId = updateEmpPromotionIncrement.CurrentDesignationId;
+                    empJobDetails.CurrentPositionJoinDate = updateEmpPromotionIncrement.CurrentDeptJoinDate;
                 }
                 if (empJobDetails.PresentGradeId != updateEmpPromotionIncrement.CurrentGradeId)
                 {

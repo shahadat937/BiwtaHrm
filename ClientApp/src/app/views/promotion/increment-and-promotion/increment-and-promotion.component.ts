@@ -282,11 +282,11 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
             this.empPromotionIncrementService.empPromotionIncrement.empId = res.id;
             this.getEmpJobDetailsNewByEmpId(res.id);
             this.getEmpRewardPunishmentByEmpId(res.id);
-            this.subscription.push(
-              this.empTransferPostingService.CurrentDeptJoinDateByEmpId(res.id).subscribe((res:any) => {
-              this.empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate = res;
-            })
-            )
+            // this.subscription.push(
+            //   this.empTransferPostingService.CurrentDeptJoinDateByEmpId(res.id).subscribe((res:any) => {
+            //   this.empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate = res;
+            // })
+            // )
             
           }
         })
@@ -357,6 +357,7 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
           this.empPromotionIncrementService.empPromotionIncrement.currentScaleId = res.presentScaleId;
           this.empPromotionIncrementService.empPromotionIncrement.currentScaleName = res.presentScaleName;
           this.empPromotionIncrementService.empPromotionIncrement.currentBasicPay = res.basicPay;
+          this.empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate = res.currentPositionJoinDate;
       }
     })
     )

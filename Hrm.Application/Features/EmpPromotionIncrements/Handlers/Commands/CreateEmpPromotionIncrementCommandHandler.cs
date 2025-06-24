@@ -44,6 +44,7 @@ namespace Hrm.Application.Features.EmpPromotionIncrements.Handlers.Commands
                 if (EmpPromotionIncrements.UpdateDesignationId != null)
                 {
                     empJobDetails.DesignationId = EmpPromotionIncrements.UpdateDesignationId;
+                    empJobDetails.CurrentPositionJoinDate = EmpPromotionIncrements.EffectiveDate;
                 }
                 if (EmpPromotionIncrements.UpdateGradeId != null)
                 {

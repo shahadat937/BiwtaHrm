@@ -189,6 +189,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
       presentScaleId: null,
       basicPay: 0,
       joiningDate: null,
+      currentPositionJoinDate: null,
       codeNo: '',
       confirmationDate: null,
       firstGradeId: null,

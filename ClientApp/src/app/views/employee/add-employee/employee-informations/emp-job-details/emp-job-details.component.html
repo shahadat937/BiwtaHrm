@@ -203,6 +203,24 @@
             }
             </c-col>
 
+            
+            <c-col [md]="3">
+                <label cLabel for="currentPositionJoinDate"
+                >Current Position Joining Date<span class="text-danger"></span></label
+            >
+            <input
+                [(ngModel)]="empJobDetailsService.empJobDetails.currentPositionJoinDate"
+                name="currentPositionJoinDate"
+                #currentPositionJoinDate="ngModel"
+                cFormControl
+                id="currentPositionJoinDate"
+                type="date"
+            />
+            @if(!currentPositionJoinDate.valid&&currentPositionJoinDate.touched){
+            <div class="text-left text-danger">Joining Date is required</div>
+            }
+            </c-col>
+
             <c-col [md]="3">
                 <label cLabel for="firstDepartmentId">First Department<span class="text-danger"></span></label>
                 <div class="input-wrapper">

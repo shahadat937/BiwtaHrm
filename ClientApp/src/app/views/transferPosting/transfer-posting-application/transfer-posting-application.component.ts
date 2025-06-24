@@ -48,14 +48,14 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   isValidOrderByEmp: boolean = false;
   isApproveByEmp: boolean = false;
   loginEmpId: number = 0;
-  loginEmpCurrentDepartmentId : any;  
-  loginEmpCurrentSectionId : any;
-  loginEmpCurrentDesignationId : any;
-  loginEmpResponsibilityTypeId : any;
+  loginEmpCurrentDepartmentId: any;
+  loginEmpCurrentSectionId: any;
+  loginEmpCurrentDesignationId: any;
+  loginEmpResponsibilityTypeId: any;
   empJobDetailsId: any;
-  isMainDesignation : boolean = true;
+  isMainDesignation: boolean = true;
   tranferDesignation: any;
-  responsibilityTypeId : any;
+  responsibilityTypeId: any;
   empTransferPosting: EmpTransferPosting = new EmpTransferPosting;
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
   featurePermission: FeaturePermission = new FeaturePermission;
@@ -75,7 +75,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     public notificationService: NotificationService,
     private authService: AuthService,
     public roleFeatureService: RoleFeatureService,
-    public responsibilityTypeService : ResponsibilityTypeService
+    public responsibilityTypeService: ResponsibilityTypeService
   ) {
 
   }
@@ -140,9 +140,9 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
           this.tranferDesignation = res.transferDesignationId;
           this.responsibilityTypeId = res.responsibilityTypeId;
           console.log(res)
-     
+
           if (res.transferSectionId) {
-            this.getEmpJobDetailsInfoSectionSelectGetDesignation(res.empId, res.transferDepartmentId,res.transferSectionId)       
+            this.getEmpJobDetailsInfoSectionSelectGetDesignation(res.empId, res.transferDepartmentId, res.transferSectionId)
           }
           else {
             this.getEmpJobDetailsInfo(res.empId, res.transferDepartmentId);
@@ -185,20 +185,20 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
             this.empTransferPostingService.empTransferPosting.departmentName = res.departmentName;
             this.empTransferPostingService.empTransferPosting.designationName = res.designationName;
             this.empTransferPostingService.empTransferPosting.sectionName = res.sectionName;
-            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res.currentDeptJoinDate;          
+            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res.currentDeptJoinDate;
           }
 
-          if(res.transferSectionId){
+          if (res.transferSectionId) {
             this.empTransferPostingService.empTransferPosting.transferSectionId = res.transferSectionId;
           }
 
-          if(res.transferDesignationId){
+          if (res.transferDesignationId) {
             this.empTransferPostingService.empTransferPosting.transferDesignationId = res.transferDesignationId;
           }
-          if(res.isAdditionalDesignation){
+          if (res.isAdditionalDesignation) {
             this.isMainDesignation = false;
             this.empTransferPostingService.empTransferPosting.transferResponsibilityTypeId = res.transferResponsibilityTypeId;
-  
+
           }
         }
         else {
@@ -253,10 +253,10 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       deptReleaseByDepartmentName: null,
       deptReleaseByDesignationName: null,
       deptReleaseBySectionName: null,
-      deptReleaseByDepartmentId:  null,
-      deptReleaseBySectionId:  null,
-      deptReleaseByResponsibilityTypeId:  null,
-      deptReleaseByDesignationId:  null,
+      deptReleaseByDepartmentId: null,
+      deptReleaseBySectionId: null,
+      deptReleaseByResponsibilityTypeId: null,
+      deptReleaseByDesignationId: null,
       joiningReportingByIdCardNo: null,
       joiningReportingByEmpName: null,
       joiningReportingByDepartmentName: null,
@@ -307,8 +307,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       updateGradeName: '',
       updateScaleName: '',
       isAdditionalDesignation: null,
-      responsibilityTypeId : null,
-      transferResponsibilityTypeId : null
+      responsibilityTypeId: null,
+      transferResponsibilityTypeId: null
     };
   }
 
@@ -380,104 +380,104 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
       updateGradeName: '',
       updateScaleName: '',
       isAddtionalDesignation: null,
-      transferResponsibilityTypeId : null
+      transferResponsibilityTypeId: null
     });
   }
 
   getEmpInfoByIdCardNo(employeeInfo: any) {
-   if(this.isNumber(employeeInfo)){
-    if (employeeInfo) {
-      this.subscription.push(
-        this.empTransferPostingService.getEmpBasicInfoByIdCardNo(employeeInfo).subscribe((res) => {
-          if (res) {
-            this.subscription.push(
-              this.empTransferPostingService.findByEmpId(res.id).subscribe((response) => {
-                if (response) {
-                  this.isValidEmp = false;
-                  this.toastr.warning('', 'Employee have pending Application', {
-                    positionClass: 'toast-top-right',
-                  });
-                }
-                else {
-                  this.isValidEmp = true;
-                  this.empTransferPostingService.empTransferPosting.empName = res.firstName + " " + res.lastName;
-                  this.empTransferPostingService.empTransferPosting.empId = res.id;
-                  this.getEmpJobDetailsByEmpId(res.id);
-                  this.subscription.push(
-                    this.empTransferPostingService.CurrentDeptJoinDateByEmpId(res.id).subscribe((res: any) => {
-                      if (res) {
-                        this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res;
-                      }
-                    })
-                  )
-
-                }
-              })
-            )
-
-          }
-          else {
-            this.isValidEmp = false;
-            this.toastr.warning('', 'Invalid Employee PMS No', {
-              positionClass: 'toast-top-right',
-            });
-          }
-        })
-      )
-
-    }
-   }
-   else{
-    if (employeeInfo) {
-      this.subscription.push(
-        this.empTransferPostingService.getEmpBasicInfoByIdCardNo(employeeInfo.idCardNo).subscribe((res) => {
-          if (res) {
-            this.subscription.push(
-              this.empTransferPostingService.findByEmpId(res.id).subscribe((response) => {
-                if (response) {
-                  this.isValidEmp = false;
-                  this.toastr.warning('', 'Employee have pending Application', {
-                    positionClass: 'toast-top-right',
-                  });
-                }
-                else {
-                  this.isValidEmp = true;
-                  this.empTransferPostingService.empTransferPosting.empName = employeeInfo.firstName + " " + employeeInfo.lastName;
-                  this.empTransferPostingService.empTransferPosting.empId = employeeInfo.id;
-                  this.getEmpJobDetailsByEmpId(employeeInfo);
-                  if(!employeeInfo.isAdditionalDesignation){
-                    this.subscription.push(
-                    this.empTransferPostingService.CurrentDeptJoinDateByEmpId(employeeInfo.id).subscribe((res: any) => {
-                      if (res) {
-                        this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res;
-                      }
-                    })
-                  )
+    if (this.isNumber(employeeInfo)) {
+      if (employeeInfo) {
+        this.subscription.push(
+          this.empTransferPostingService.getEmpBasicInfoByIdCardNo(employeeInfo).subscribe((res) => {
+            if (res) {
+              this.subscription.push(
+                this.empTransferPostingService.findByEmpId(res.id).subscribe((response) => {
+                  if (response) {
+                    this.isValidEmp = false;
+                    this.toastr.warning('', 'Employee have pending Application', {
+                      positionClass: 'toast-top-right',
+                    });
                   }
-                  else{
-                    if(employeeInfo.joiningDate)
-                      this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = employeeInfo.joiningDate;
-                    else 
-                    this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = null
+                  else {
+                    this.isValidEmp = true;
+                    this.empTransferPostingService.empTransferPosting.empName = res.firstName + " " + res.lastName;
+                    this.empTransferPostingService.empTransferPosting.empId = res.id;
+                    this.getEmpJobDetailsByEmpId(res.id);
+                    // this.subscription.push(
+                    //   this.empTransferPostingService.CurrentDeptJoinDateByEmpId(res.id).subscribe((res: any) => {
+                    //     if (res) {
+                    //       this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res;
+                    //     }
+                    //   })
+                    // )
 
                   }
+                })
+              )
 
-                }
-              })
-            )
+            }
+            else {
+              this.isValidEmp = false;
+              this.toastr.warning('', 'Invalid Employee PMS No', {
+                positionClass: 'toast-top-right',
+              });
+            }
+          })
+        )
 
-          }
-          else {
-            this.isValidEmp = false;
-            this.toastr.warning('', 'Invalid Employee PMS No', {
-              positionClass: 'toast-top-right',
-            });
-          }
-        })
-      )
-
+      }
     }
-   }
+    else {
+      if (employeeInfo) {
+        this.subscription.push(
+          this.empTransferPostingService.getEmpBasicInfoByIdCardNo(employeeInfo.idCardNo).subscribe((res) => {
+            if (res) {
+              this.subscription.push(
+                this.empTransferPostingService.findByEmpId(res.id).subscribe((response) => {
+                  if (response) {
+                    this.isValidEmp = false;
+                    this.toastr.warning('', 'Employee have pending Application', {
+                      positionClass: 'toast-top-right',
+                    });
+                  }
+                  else {
+                    this.isValidEmp = true;
+                    this.empTransferPostingService.empTransferPosting.empName = employeeInfo.firstName + " " + employeeInfo.lastName;
+                    this.empTransferPostingService.empTransferPosting.empId = employeeInfo.id;
+                    this.getEmpJobDetailsByEmpId(employeeInfo);
+                    if (!employeeInfo.isAdditionalDesignation) {
+                      this.subscription.push(
+                        this.empTransferPostingService.CurrentDeptJoinDateByEmpId(employeeInfo.id).subscribe((res: any) => {
+                          if (res) {
+                            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res;
+                          }
+                        })
+                      )
+                    }
+                    else {
+                      if (employeeInfo.joiningDate)
+                        this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = employeeInfo.joiningDate;
+                      else
+                        this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = null
+
+                    }
+
+                  }
+                })
+              )
+
+            }
+            else {
+              this.isValidEmp = false;
+              this.toastr.warning('', 'Invalid Employee PMS No', {
+                positionClass: 'toast-top-right',
+              });
+            }
+          })
+        )
+
+      }
+    }
 
   }
 
@@ -488,49 +488,50 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
   }
 
   getEmpJobDetailsByEmpId(employee: any) {
-   if(this.isNumber(employee)){
-    this.subscription.push(
-      this.empJobDetailsService.findByEmpId(employee).subscribe((res) => {
-        if (res) {
-          this.empJobDetailsId = res.id;
-          this.empTransferPostingService.empTransferPosting.sectionName = res.sectionName;
-          this.empTransferPostingService.empTransferPosting.departmentName = res.departmentName;
-          this.empTransferPostingService.empTransferPosting.designationName = res.designationName;
-          this.empTransferPostingService.empTransferPosting.currentDepartmentId = res.departmentId;
-          this.empTransferPostingService.empTransferPosting.currentDesignationId = res.designationId;
-          this.empTransferPostingService.empTransferPosting.currentSectionId = res.sectionId;
-          this.empTransferPostingService.empTransferPosting.currentOfficeId = res.officeId;
-          this.empTransferPostingService.empTransferPosting.currentGradeId = res.presentGradeId;
-          this.empTransferPostingService.empTransferPosting.currentScaleId = res.presentScaleId;
-          this.empTransferPostingService.empTransferPosting.currentBasicPay = res.basicPay;
-          this.empTransferPostingService.empTransferPosting.currentGradeName = res.presentGradeName;
-          this.empTransferPostingService.empTransferPosting.currentScaleName = res.presentScaleName;
-        }
-      })
-    )
-    this.isMainDesignation = true;
-   }
-   else{
-    console.log(employee);
-          this.empJobDetailsId = employee.id;
-          this.empTransferPostingService.empTransferPosting.sectionName = employee.sectionName;
-          this.empTransferPostingService.empTransferPosting.departmentName = employee.departmentName;
-          this.empTransferPostingService.empTransferPosting.designationName = employee.designationName;
-          this.empTransferPostingService.empTransferPosting.currentDepartmentId = employee.departmentId;
-          this.empTransferPostingService.empTransferPosting.currentDesignationId = employee.designationId;
-          this.empTransferPostingService.empTransferPosting.currentSectionId = employee.sectionId;
-          this.empTransferPostingService.empTransferPosting.currentOfficeId = employee.officeId;
-          this.empTransferPostingService.empTransferPosting.currentGradeId = employee.presentGradeId;
-          this.empTransferPostingService.empTransferPosting.currentScaleId = employee.presentScaleId;
-          this.empTransferPostingService.empTransferPosting.currentBasicPay = employee.basicPay;
-          this.empTransferPostingService.empTransferPosting.currentGradeName = employee.presentGradeName;
-          this.empTransferPostingService.empTransferPosting.currentScaleName = employee.presentScaleName;
-          this.empTransferPostingService.empTransferPosting.isAdditionalDesignation = employee.isAdditionalDesignation;
-          this.empTransferPostingService.empTransferPosting.currentResponsibiltyTypeId = employee.additionalResponsibilityId;
+    if (this.isNumber(employee)) {
+      this.subscription.push(
+        this.empJobDetailsService.findByEmpId(employee).subscribe((res) => {
+          if (res) {
+            this.empJobDetailsId = res.id;
+            this.empTransferPostingService.empTransferPosting.sectionName = res.sectionName;
+            this.empTransferPostingService.empTransferPosting.departmentName = res.departmentName;
+            this.empTransferPostingService.empTransferPosting.designationName = res.designationName;
+            this.empTransferPostingService.empTransferPosting.currentDepartmentId = res.departmentId;
+            this.empTransferPostingService.empTransferPosting.currentDesignationId = res.designationId;
+            this.empTransferPostingService.empTransferPosting.currentSectionId = res.sectionId;
+            this.empTransferPostingService.empTransferPosting.currentOfficeId = res.officeId;
+            this.empTransferPostingService.empTransferPosting.currentGradeId = res.presentGradeId;
+            this.empTransferPostingService.empTransferPosting.currentScaleId = res.presentScaleId;
+            this.empTransferPostingService.empTransferPosting.currentBasicPay = res.basicPay;
+            this.empTransferPostingService.empTransferPosting.currentGradeName = res.presentGradeName;
+            this.empTransferPostingService.empTransferPosting.currentScaleName = res.presentScaleName;
+            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res.currentPositionJoinDate;
+          }
+        })
+      )
+      this.isMainDesignation = true;
+    }
+    else {
+      console.log(employee);
+      this.empJobDetailsId = employee.id;
+      this.empTransferPostingService.empTransferPosting.sectionName = employee.sectionName;
+      this.empTransferPostingService.empTransferPosting.departmentName = employee.departmentName;
+      this.empTransferPostingService.empTransferPosting.designationName = employee.designationName;
+      this.empTransferPostingService.empTransferPosting.currentDepartmentId = employee.departmentId;
+      this.empTransferPostingService.empTransferPosting.currentDesignationId = employee.designationId;
+      this.empTransferPostingService.empTransferPosting.currentSectionId = employee.sectionId;
+      this.empTransferPostingService.empTransferPosting.currentOfficeId = employee.officeId;
+      this.empTransferPostingService.empTransferPosting.currentGradeId = employee.presentGradeId;
+      this.empTransferPostingService.empTransferPosting.currentScaleId = employee.presentScaleId;
+      this.empTransferPostingService.empTransferPosting.currentBasicPay = employee.basicPay;
+      this.empTransferPostingService.empTransferPosting.currentGradeName = employee.presentGradeName;
+      this.empTransferPostingService.empTransferPosting.currentScaleName = employee.presentScaleName;
+      this.empTransferPostingService.empTransferPosting.isAdditionalDesignation = employee.isAdditionalDesignation;
+      this.empTransferPostingService.empTransferPosting.currentResponsibiltyTypeId = employee.additionalResponsibilityId;
 
-          this.isMainDesignation = this.empTransferPostingService.empTransferPosting.isAdditionalDesignation? false : true;       
-   
-   }
+      this.isMainDesignation = this.empTransferPostingService.empTransferPosting.isAdditionalDesignation ? false : true;
+
+    }
 
   }
 
@@ -729,7 +730,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
         this.getEmpInfoByIdCardNo(employee);
         this.empTransferPostingService.empTransferPosting.empIdCardNo = employee;
       }
-      else{
+      else {
         this.getEmpInfoByIdCardNo(employee);
         this.empTransferPostingService.empTransferPosting.empIdCardNo = employee.idCardNo;
       }
@@ -817,7 +818,7 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     else {
       this.subscription.push(
         this.empJobDetailsService.getDesignationBySectionId(+sectionId, +empJobDetailsId).subscribe((res) => {
-          this.designations = res; 
+          this.designations = res;
         })
       )
       this.empTransferPostingService.empTransferPosting.transferDesignationId = this.tranferDesignation;
@@ -825,16 +826,16 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     }
   }
 
-  getSelectedResponsibilityType(){
+  getSelectedResponsibilityType() {
     this.subscription.push(
       this.responsibilityTypeService.getSelectedResponsibilityType().subscribe((res) => {
-      this.responsibilities = res;
-      if(this.responsibilityTypeId){
-        this.empTransferPostingService.empTransferPosting.responsibilityTypeId = this.responsibilityTypeId
-      }
-    })
+        this.responsibilities = res;
+        if (this.responsibilityTypeId) {
+          this.empTransferPostingService.empTransferPosting.responsibilityTypeId = this.responsibilityTypeId
+        }
+      })
     )
-    
+
   }
 
   SelectModelGrade() {

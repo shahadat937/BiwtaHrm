@@ -65,7 +65,9 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                    empJobDetails.DepartmentId = empTransferPostings.TransferDepartmentId;
                    empJobDetails.DesignationId = empTransferPostings.TransferDesignationId;
                    empJobDetails.SectionId = empTransferPostings.TransferSectionId;
-                    
+                    empJobDetails.CurrentPositionJoinDate = empTransferPostings.JoiningDate;
+
+
 
                     if (empTransferPostings.UpdateGradeId != null)
                     {
@@ -94,7 +96,8 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Commands
                         empJobDetails.DepartmentId = empTransferPostings.CurrentDepartmentId;                   
                         empJobDetails.DesignationId = empTransferPostings.CurrentDesignationId;                    
                         empJobDetails.SectionId = empTransferPostings.CurrentSectionId;
-                    
+                    empJobDetails.CurrentPositionJoinDate = empTransferPostings.CurrentDeptJoinDate;
+
 
                     if (empJobDetails.PresentGradeId != empTransferPostings.CurrentGradeId)
                     {

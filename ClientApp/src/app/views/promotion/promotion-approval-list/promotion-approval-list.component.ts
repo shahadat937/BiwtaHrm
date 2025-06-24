@@ -40,6 +40,7 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
   @ViewChild(MatSort)
   matSort!: MatSort;
   loginEmpId: number = 0;
+  loginEmpCurrentDepartmentId = 0;
   noticeForEntryId: number = 0;
   pagination: PaginatorModel = new PaginatorModel();
   featurePermission : FeaturePermission = new FeaturePermission;
@@ -69,6 +70,7 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
       this.featurePermission = item;
       if(item.viewStatus == true){
         this.loginEmpId = this.authService.userInformation.empId || 0;
+        this.loginEmpCurrentDepartmentId = this.authService.userInformation.departmentId || 0;
         this.route.queryParams.subscribe((params) => {
           this.noticeForEntryId = params['forNotificationId'] || 0;
           this.getAllPromotionIncrementInfo(this.pagination);
@@ -89,7 +91,7 @@ export class PromotionApprovalListComponent  implements OnInit, OnDestroy {
   getAllPromotionIncrementInfo(queryParams: any) {
     // this.subscription = 
     this.subscription.push(
-    this.empPromotionIncrementService.getAllEmpPromotionIncrementApproveInfo(queryParams, this.loginEmpId, this.noticeForEntryId).subscribe((item) => {
+    this.empPromotionIncrementService.getAllEmpPromotionIncrementApproveInfo(queryParams, this.loginEmpCurrentDepartmentId, this.noticeForEntryId).subscribe((item) => {
       this.dataSource.data = item.items;
       // this.dataSource.paginator = this.paginator;
       this.pagination.length = item.totalItemsCount;

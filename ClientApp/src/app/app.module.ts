@@ -49,6 +49,7 @@ import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ErrorInterceptor } from './core/interceptor/error.interceptor';
 import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
+import {AuthInterceptor} from './core/interceptor/auth.interceptor';
 import { AuthService } from './core/service/auth.service';
 import { SharedCustomModule } from './shared/shared.module';
 import { FormRecordService } from './views/appraisal/services/form-record.service';
@@ -112,6 +113,7 @@ const APP_CONTAINERS = [
     },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: {dateFormat:"mediumDate"}},
     //{provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: {dateFormat:"dd/MM/YYYY"}},
     IconSetService,

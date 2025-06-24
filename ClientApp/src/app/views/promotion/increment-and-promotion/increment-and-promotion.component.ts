@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { cilArrowLeft, cilSearch } from '@coreui/icons';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { SelectedModel } from '../../../../../src/app/core/models/selectedModel';
 import { DepartmentService } from '../../basic-setup/service/department.service';
 import { OfficeService } from '../../basic-setup/service/office.service';
 import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
@@ -45,6 +45,10 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
   isValidOrderByEmp: boolean = false;
   isApproveByEmp: boolean = false;
   loginEmpId: number = 0;
+  loginEmpCurrentDepartmentId: any = null;
+  loginEmpCurrentSectionId: any = null;
+  loginEmpCurrentDesignationId : any = null;
+  loginEmpCurrentResponsibilityTypeId : any = null;
   empJobDetailsId: number = 0;
   empPromotionIncrement: EmpPromotionIncrement = new EmpPromotionIncrement;
   @ViewChild('EmpPromotionIncrementForm', { static: true }) EmpPromotionIncrementForm!: NgForm;
@@ -89,6 +93,10 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       this.featurePermission = item;
       if(item.viewStatus == true){
         this.loginEmpId = this.authService.userInformation.empId;;
+        this.loginEmpCurrentDepartmentId = this.authService.userInformation.departmentId;;
+        this.loginEmpCurrentSectionId = this.authService.userInformation.sectionId;;
+        this.loginEmpCurrentDesignationId = this.authService.userInformation.designationId;;
+        this.loginEmpCurrentResponsibilityTypeId = this.authService.userInformation.responsibilityTypeId;;
         this.initaialForm();
         this.SelectedModelGrade();
         this.getEmployeeByEmpId();
@@ -197,6 +205,17 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       remark : null,
       menuPosition : null,
       isActive : true,
+
+      applicationByDepartmentId: this.loginEmpCurrentDepartmentId,
+      applicationBySectionId: this.loginEmpCurrentSectionId,
+      applicationByDesignationId: this.loginEmpCurrentSectionId,
+      applicationByResponsibityTypeId: this.loginEmpCurrentResponsibilityTypeId,
+
+      approveByDepartmentId: null,
+      approveBySectionId: null,
+      approveByDesignationId: null,
+      approveByResponsibityTypeId: null,
+
     };
   }
 
@@ -246,6 +265,17 @@ export class IncrementAndPromotionComponent  implements OnInit, OnDestroy {
       remark : null,
       menuPosition : null,
       isActive : true,
+      applicationByDepartmentId: null,
+
+      applicationBySectionId: null,
+      applicationByDesignationId: null,
+      applicationByResponsibityTypeId: null,
+
+      approveByDepartmentId: null,
+      approveBySectionId: null,
+      approveByDesignationId: null,
+      approveByResponsibityTypeId: null,
+
     });
   }
 

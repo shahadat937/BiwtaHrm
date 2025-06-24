@@ -47,6 +47,7 @@ export class ManageDeviceComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getPermission();
     this.getAttendanceDevice();
 
     const subs = this.realTimeService.eventBus.getEvent('AttDeviceUpdate').subscribe({

@@ -91,18 +91,18 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-EmpTransferPostingDeptApprove")]
-        public async Task<ActionResult> EmpTransferPostingDeptApprove([FromQuery] QueryParams queryParams, int? empId, int? id)
+        public async Task<ActionResult> EmpTransferPostingDeptApprove([FromQuery] QueryParams queryParams, int? departmentId, int? id)
         {
-            var command = new GetEmpTransferPostingDeptApprovalRequest { QueryParams = queryParams, EmpId = empId ,Id = id };
+            var command = new GetEmpTransferPostingDeptApprovalRequest { QueryParams = queryParams, DepartmentId = departmentId ,Id = id };
             var EmpTransferPosting = await _mediator.Send(command);
             return Ok(EmpTransferPosting);
         }
 
         [HttpGet]
         [Route("get-EmpTransferPostingJoiningInfo")]
-        public async Task<ActionResult> EmpTransferPostingJoiningInfo([FromQuery] QueryParams queryParams, int? empId, int? id)
+        public async Task<ActionResult> EmpTransferPostingJoiningInfo([FromQuery] QueryParams queryParams, int? departmentId, int? id)
         {
-            var command = new GetEmpTransferPostingJoiningInfoRequest { QueryParams = queryParams, EmpId = empId, Id = id };
+            var command = new GetEmpTransferPostingJoiningInfoRequest { QueryParams = queryParams, DepartmentId = departmentId, Id = id };
             var EmpTransferPosting = await _mediator.Send(command);
             return Ok(EmpTransferPosting);
         }

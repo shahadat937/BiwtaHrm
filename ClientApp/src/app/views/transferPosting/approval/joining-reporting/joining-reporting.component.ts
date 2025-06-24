@@ -5,11 +5,11 @@ import { cilArrowLeft, cilPlus, cilBell } from '@coreui/icons';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { EmpJobDetailsService } from 'src/app/views/employee/service/emp-job-details.service';
+import { EmpJobDetailsService } from '../../../../../../src/app/views/employee/service/emp-job-details.service';
 import { EmpTransferPosting } from '../../model/emp-transfer-posting';
 import { EmpTransferPostingService } from '../../service/emp-transfer-posting.service';
-import { UserNotification } from 'src/app/views/notifications/models/user-notification';
-import { NotificationService } from 'src/app/views/notifications/service/notification.service';
+import { UserNotification } from '../../../../../../src/app/views/notifications/models/user-notification';
+import { NotificationService } from '../../../../../../src/app/views/notifications/service/notification.service';
 
 @Component({
   selector: 'app-joining-reporting',
@@ -26,6 +26,10 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
   heading: string = '';
   modalOpened: boolean = false;
   loginEmpId : number = 0;
+  loginEmpCurrentDepartmentId : any;  
+  loginEmpCurrentSectionId : any;
+  loginEmpCurrentDesignationId : any;
+  loginEmpResponsibilityTypeId : any;
 
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
 
@@ -54,6 +58,10 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
     const currentUserString = localStorage.getItem('currentUser');
     const currentUserJSON = currentUserString ? JSON.parse(currentUserString) : null;
     this.loginEmpId = currentUserJSON.empId;
+    this.loginEmpCurrentDepartmentId = currentUserJSON.departmentId;
+    this.loginEmpCurrentDesignationId = currentUserJSON.designationId;
+    this.loginEmpCurrentSectionId = currentUserJSON.sectionId;
+    this.loginEmpResponsibilityTypeId = currentUserJSON.responsibilityTypeId;
   }
 
   handleText(){
@@ -156,6 +164,11 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
         this.empTransferPosting.joiningStatus = this.empTransferPostingService.empTransferPosting.joiningStatus;
       }
       this.empTransferPosting.joiningReportingById = this.loginEmpId;
+      this.empTransferPosting.joiningReportingByDepartmentId = this.loginEmpCurrentDepartmentId;
+      this.empTransferPosting.joiningReportingByDesignationId = this.loginEmpCurrentDesignationId;
+      this.empTransferPosting.joiningReportingByResponsibilityTypeId = this.loginEmpResponsibilityTypeId;      
+      this.empTransferPosting.joiningReportingBySectionId = this.loginEmpCurrentSectionId;
+
       this.empTransferPosting.joiningRemark = this.empTransferPostingService.empTransferPosting.joiningRemark;
       this.empTransferPosting.joiningDate = this.empTransferPostingService.empTransferPosting.joiningDate;
       

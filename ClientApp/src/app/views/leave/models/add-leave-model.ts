@@ -1,6 +1,6 @@
 export class AddLeaveModel {
     leaveRequestId: number;
-    empId: number|null;
+    empId: number | null;
     leaveTypeId: number | null;
     fromDate: string | null;
     toDate: string | null;
@@ -18,6 +18,24 @@ export class AddLeaveModel {
     approverRemark: string;
     isOldLeave: boolean;
 
+    applicationById: number | null;
+
+    empCurrentDepartmentId: number | null;
+    empCurrentSectionId: number | null;
+    empCurrentDesignationId: number | null;
+    empCurrentResponsibilityTypeId: number | null;
+
+    reviewerCurrentDepartmentId: number | null;
+    reviewerCurrentSectionId: number | null;
+    reviewerCurrentDesignationId: number | null;
+    reviewerCurrentResponsibilityTypeId: number | null;
+
+    approverCurrentDepartmentId: number | null;
+    approverCurrentSectionId: number | null;
+    approverCurrentDesignationId: number | null;
+    approverCurrentResponsibilityTypeId: number | null;
+
+
 
 
     constructor() {
@@ -33,12 +51,29 @@ export class AddLeaveModel {
         this.accompanyBy = "";
         this.isActive = true;
         this.remark = "";
-        this.associatedFiles= null;
+        this.associatedFiles = null;
         this.reviewedBy = null;
         this.approvedBy = null;
         this.reviewerRemark = "";
         this.approverRemark = "";
         this.isOldLeave = false;
+        this.applicationById = null;
+
+        this.empCurrentDepartmentId = null;
+        this.empCurrentSectionId = null;
+        this.empCurrentDesignationId = null;
+        this.empCurrentResponsibilityTypeId = null;
+
+        this.reviewerCurrentDepartmentId = null;
+        this.reviewerCurrentSectionId = null;
+        this.reviewerCurrentDesignationId = null;
+        this.reviewerCurrentResponsibilityTypeId = null;
+
+        this.approverCurrentDepartmentId = null;
+        this.approverCurrentSectionId = null;
+        this.approverCurrentDesignationId = null;
+        this.approverCurrentResponsibilityTypeId = null;
+
     }
 
 }

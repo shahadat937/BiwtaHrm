@@ -14,6 +14,7 @@ namespace Hrm.Application.Features.EmpTransferPostings.Requests.Queries
     {
         public QueryParams QueryParams { get; set; }
         public int? Id { get; set; }
-        public int? EmpId { get; set; }
+        //public int? EmpId { get; set; }
+        public int? DepartmentId { get; set; }
     }
 }

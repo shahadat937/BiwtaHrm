@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EmpJobDetailsService } from '../../employee/service/emp-job-details.service';
 import { GradeService } from '../../basic-setup/service/Grade.service';
-import { environment } from 'src/environments/environment';
-import { AuthService } from 'src/app/core/service/auth.service';
+import { environment } from '../../../../../src/environments/environment';
+import { AuthService } from '../../../../../src/app/core/service/auth.service';
 import { Subscription } from 'rxjs';
 import { AppraisalRole } from '../enum/appraisal-role';
 

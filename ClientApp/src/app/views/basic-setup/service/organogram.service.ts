@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../../src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -30,6 +30,25 @@ export class OrganogramService {
   getOrganogramNamesOnly(): Observable<OrganogramDepartmentNameDto[]>{
         return this.http.get<OrganogramDepartmentNameDto[]>(this.baseUrl + '/organogram/get-organogramNamesOnly');
   }
+
+  getTopLavelDept(deptId : number){
+    return this.http.get<any>(this.baseUrl + '/organogram/get-topLavelDept?departmentId='+deptId);
+  }
+  getSubDept(deptId : number){
+    return this.http.get<any>(this.baseUrl + '/organogram/get-topLavelDept?departmentId='+deptId);
+  }
+
+  getDesiginationDepartmentSectionCount(departmentId : number, sectionId: number){
+    return this.http.get<any>(this.baseUrl + '/organogram/get-countDeparmentDesignationSection?departmentId='+departmentId+'&sectionId='+sectionId);
+  }
+
+  getEmployeeWithDesignation(departmentId : any, sectionId: any){
+    return this.http.get<any>(this.baseUrl + `/organogram/get-employeeInfoByDepartmentId?departmentId=${departmentId}&sectionId=${sectionId}`);
+  }
+
+  getSectionByDepartmentId(departmentId : any, upperSectionId: any){
+    return this.http.get<any>(this.baseUrl + `/organogram/get-sectionByDeparmentId?departmentId=${departmentId}`+'&upperSectionId='+upperSectionId);
+  }
 }
 
 export interface OrganogramOfficeNameDto {
@@ -44,6 +63,10 @@ export interface OrganogramDepartmentNameDto {
   designations: OrganogramDesignationNameDto[];
   subDepartments: OrganogramDepartmentNameDto[];
   sections: OrganogramSectionNameDto[];
+  departmentId: number
+  subDepartmentCount : number,
+  designationCount : number,
+  sectionCount : number
 }
 
 export interface OrganogramDesignationNameDto {
@@ -58,4 +81,9 @@ export interface OrganogramSectionNameDto {
   name: string;
   designations: OrganogramDesignationNameDto[];
   subSections: OrganogramSectionNameDto[];
+  subDepartmentCount : number,
+  designationCount : number,
+  sectionCount : number,
+  departmentId : number,
+  sectionId : number
 }

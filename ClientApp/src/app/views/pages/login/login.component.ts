@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Role } from 'src/app/core/models/role';
-import { AuthService } from 'src/app/core/service/auth.service';
-import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
+import { Role } from '../../../../../src/app/core/models/role';
+import { AuthService } from '../../../../../src/app/core/service/auth.service';
+import { UnsubscribeOnDestroyAdapter } from '../../../../../src/app/shared/UnsubscribeOnDestroyAdapter';
 import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
 import {
   MoveDirection,

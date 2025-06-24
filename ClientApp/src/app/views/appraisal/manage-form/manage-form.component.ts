@@ -11,14 +11,14 @@ import { UpdateFormComponent } from '../update-form/update-form.component';
 import {ViewFormRecordComponent} from './view-form-record/view-form-record.component'
 import {FormRecordFilter} from '../models/form-record-filter'
 import { AppraisalRole } from '../enum/appraisal-role';
-import { AuthService } from 'src/app/core/service/auth.service';
-import { environment } from 'src/environments/environment';
+import { AuthService } from '../../../../../src/app/core/service/auth.service';
+import { environment } from '../../../../../src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
-import { PaginatorModel } from 'src/app/core/models/paginator-model';
-import { DepartmentService } from 'src/app/views/basic-setup/service/department.service';
-import { SectionService } from 'src/app/views/basic-setup/service/section.service';
+import { PaginatorModel } from '../../../../../src/app/core/models/paginator-model';
+import { DepartmentService } from '../../../../../src/app/views/basic-setup/service/department.service';
+import { SectionService } from '../../../../../src/app/views/basic-setup/service/section.service';
 
 @Component({
   selector: 'app-manage-form',
@@ -104,10 +104,11 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     )
     
     this.featureName = "";
-
+  
   }
 
   ngOnInit(): void {
+    
     this.getPermission();
       this.route.queryParams.subscribe(data => {
       if(data['forNotificationId']) {
@@ -192,6 +193,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
   }
 
   getFormRecord() {
+     this.filters.reporterDepartmentId = parseInt(this.authService.currentUserValue.departmentId);
+     this.filters.counterSignatoryDepartmentId = parseInt(this.authService.currentUserValue.departmentId);
     this.subscription.push(
       this.formRecordService.getFormRecordFiltered(this.filters).subscribe({
       next: (response)=> {

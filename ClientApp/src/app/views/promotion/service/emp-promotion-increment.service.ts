@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, map } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../../src/environments/environment';
 import { EmpPromotionIncrement } from '../model/emp-promotion-increment';
 
 @Injectable({
@@ -29,9 +29,9 @@ export class EmpPromotionIncrementService {
       );
   }
 
-  getAllEmpPromotionIncrementApproveInfo(queryParams: any, empId:any, id: any){
+  getAllEmpPromotionIncrementApproveInfo(queryParams: any, departmentId:any, id: any){
     let params = new HttpParams({ fromObject: queryParams }); 
-    params = params.append('empId', empId);
+    params = params.append('departmentId', departmentId);
     params = params.append('id', id);
     return this.http.get<any>(this.baseUrl + '/empPromotionIncrement/get-AllEmpPromotionIncrementApproveInfo',{params});
   }

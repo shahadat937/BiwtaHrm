@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Department } from './../model/department';
-import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { SelectedModel } from '../../../../../src/app/core/models/selectedModel';
 @Injectable()
 export class DepartmentService {
   cachedData: any[] = [];
@@ -19,6 +19,11 @@ export class DepartmentService {
   getById(id: number) {
     return this.http.get<Department>(
       this.baseUrl + '/Department/get-departmentbyid/' + id
+    );
+  }
+  getDesignationByDesignationId(id: number) {
+    return this.http.get<any>(
+      this.baseUrl + '/designation/get-designationNameByDesignationById?designationId=' + id
     );
   }
   getAll(): Observable<Department[]> {

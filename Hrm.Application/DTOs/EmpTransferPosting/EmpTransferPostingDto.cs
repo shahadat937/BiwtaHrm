@@ -11,6 +11,10 @@ namespace Hrm.Application.DTOs.EmpTransferPosting
         public int Id { get; set; }
         public int? EmpId { get; set; }
         public int? ApplicationById { get; set; }
+        public int? ApplicantDepartmentId { get; set; }
+        public int? ApplicantSectionId { get; set; }
+        public int? ApplicantDesignationId { get; set; }
+        public int? ApplicantJobResponsibilityTypeId { get; set; }
         public int? CurrentOfficeId { get; set; }
         public DateOnly? CurrentDeptJoinDate { get; set; }
         public int? CurrentDepartmentId { get; set; }
@@ -19,6 +23,7 @@ namespace Hrm.Application.DTOs.EmpTransferPosting
         public int? CurrentGradeId { get; set; }
         public int? CurrentScaleId { get; set; }
         public int? CurrentBasicPay { get; set; }
+        public int? CurrentResponsibiltyTypeId { get; set; }
         public string? OfficeOrderNo { get; set; }
         public DateOnly? OfficeOrderDate { get; set; }
         public int? OrderOfficeById { get; set; }
@@ -41,6 +46,10 @@ namespace Hrm.Application.DTOs.EmpTransferPosting
         public bool? IsDepartmentApprove { get; set; }
         public int? DeptReleaseTypeId { get; set; }
         public int? DeptReleaseById { get; set; }
+        public int? DeptReleaseByDepartmentId { get; set; }
+        public int? DeptReleaseBySectionId { get; set; }
+        public int? DeptReleaseByResponsibilityTypeId { get; set; }
+        public int? DeptReleaseByDesignationId { get; set; }
         public DateOnly? DeptReleaseDate { get; set; }
         public int? ReferenceNo { get; set; }
         public bool? DeptClearance { get; set; }
@@ -49,6 +58,10 @@ namespace Hrm.Application.DTOs.EmpTransferPosting
 
         public bool? IsJoining { get; set; }
         public int? JoiningReportingById { get; set; }
+        public int? JoiningReportingByDepartmentId { get; set; }
+        public int? JoiningReportingBySectionId { get; set; }
+        public int? JoiningReportingByResponsibilityTypeId { get; set; }
+        public int? JoiningReportingByDesignationId { get; set; }
         public DateOnly? JoiningDate { get; set; }
         public string? JoiningRemark { get; set; }
         public bool? JoiningStatus { get; set; }
@@ -93,5 +106,7 @@ namespace Hrm.Application.DTOs.EmpTransferPosting
         public string? UpdateGradeName { get; set; }
         public string? CurrentScaleName { get; set; }
         public string? UpdateScaleName { get; set; }
+        public bool? IsAdditionalDesignation { get; set; }
+        public int? TransferResponsibilityTypeId { get; set; }
     }
 }

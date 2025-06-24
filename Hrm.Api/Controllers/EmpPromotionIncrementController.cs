@@ -65,9 +65,9 @@ namespace Hrm.Api.Controllers
 
         [HttpGet]
         [Route("get-AllEmpPromotionIncrementApproveInfo")]
-        public async Task<ActionResult> GetAllEmpPromotionIncrementApproveInfo([FromQuery] QueryParams queryParams, int? empId, int? id)
+        public async Task<ActionResult> GetAllEmpPromotionIncrementApproveInfo([FromQuery] QueryParams queryParams, int? departmentId, int? id)
         {
-            var EmpPromotionIncrement = await _mediator.Send(new GetEmpPromotionIncrementApprovalListRequest { QueryParams = queryParams, EmpId = empId, Id = id });
+            var EmpPromotionIncrement = await _mediator.Send(new GetEmpPromotionIncrementApprovalListRequest { QueryParams = queryParams, DepartmentId = departmentId, Id = id });
             return Ok(EmpPromotionIncrement);
         }
 

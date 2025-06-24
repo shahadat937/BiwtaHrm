@@ -35,5 +35,23 @@ namespace Hrm.Application.DTOs.LeaveRequest
         public string? LeaveTypeName { get; set; }
         public string? CountryName { get; set; }
 
+        public int? ApplicationById { get; set; }
+
+        public int? EmpCurrentDepartmentId { get; set; }
+        public int? EmpCurrentSectionId { get; set; }
+        public int? EmpCurrentDesignationId { get; set; }
+        public int? EmpCurrentResponsibilityTypeId { get; set; }
+
+        public int? ReviewerCurrentDepartmentId { get; set; }
+        public int? ReviewerCurrentSectionId { get; set; }
+        public int? ReviewerCurrentDesignationId { get; set; }
+        public int? ReviewerCurrentResponsibilityTypeId { get; set; }
+
+        public int? ApproverCurrentDepartmentId { get; set; }
+        public int? ApproverCurrentSectionId { get; set; }
+        public int? ApproverCurrentDesignationId { get; set; }
+        public int? ApproverCurrentResponsibilityTypeId { get; set; }
+
+
     }
 }

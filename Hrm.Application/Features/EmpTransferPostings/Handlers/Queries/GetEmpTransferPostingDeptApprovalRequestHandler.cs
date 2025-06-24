@@ -30,16 +30,16 @@ namespace Hrm.Application.Features.EmpTransferPostings.Handlers.Queries
 
         public async Task<PagedResult<EmpTransferPostingDto>> Handle(GetEmpTransferPostingDeptApprovalRequest request, CancellationToken cancellationToken)
         {
-            if (request.EmpId != 0)
+            if (request.DepartmentId != 0)
             {
-                var empDepartmentId = await _EmpJobDetailRepository.Where(x => x.EmpId == request.EmpId).Select(x => x.DepartmentId).FirstOrDefaultAsync();
+                //var empDepartmentId = await _EmpJobDetailRepository.Where(x => x.EmpId == request.EmpId).Select(x => x.DepartmentId).FirstOrDefaultAsync();
 
                 IQueryable<EmpTransferPosting> query = _EmpTransferPostingRepository.FilterWithInclude(x => (x.EmpBasicInfo.IdCardNo.ToLower().Contains(request.QueryParams.SearchText) ||
                     x.EmpBasicInfo.FirstName.ToLower().Contains(request.QueryParams.SearchText) ||
                     x.EmpBasicInfo.LastName.ToLower().Contains(request.QueryParams.SearchText) ||
                     String.IsNullOrEmpty(request.QueryParams.SearchText))
                     && (request.Id == 0 || x.Id == request.Id)
-                    && (x.TransferApproveStatus == true || x.IsTransferApprove == false) && x.IsDepartmentApprove == true && x.CurrentDepartmentId == empDepartmentId)
+                    && (x.TransferApproveStatus == true || x.IsTransferApprove == false) && x.IsDepartmentApprove == true && x.CurrentDepartmentId == request.DepartmentId)
                     .Include(x => x.EmpBasicInfo)
                     .Include(x => x.ApplicationBy)
                     .Include(x => x.OrderOfficeBy)

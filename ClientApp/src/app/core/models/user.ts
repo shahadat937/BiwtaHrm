@@ -12,7 +12,10 @@ export class User {
   traineeId: string;
   role: Role;
   token?: string;
-  
+  departmentId: string;
+  sectionId : string;
+  designationId: string;
+  responsibilityTypeId: string
   constructor() {
     this.id = 0;
     this.img = '';
@@ -25,5 +28,9 @@ export class User {
     this.traineeId = '';
     this.role = Role.All; // You need to replace 'Role.Default' with the default role value
     // this.token = ''; // Optionally initialize token if it's not always provided
+    this.departmentId = '';
+    this.sectionId = '';
+    this.designationId = '';
+    this.responsibilityTypeId = ''
   }
 }

@@ -1,17 +1,9 @@
 <!--<c-header class="mb-4 d-print-none" position="sticky">-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <ng-container>
   <c-container [fluid]="true">
-    <button
-      toggle="visible"
-      cHeaderToggler
-      [cSidebarToggle]="sidebarId"
-      class="ps-1"
-    >
-      <svg cIcon
-        name="cilMenu"
-        size="lg"
-      ></svg>
+    <button toggle="visible" cHeaderToggler [cSidebarToggle]="sidebarId" class="ps-1">
+      <svg cIcon name="cilMenu" size="lg"></svg>
     </button>
     <c-header-nav class="d-none d-lg-flex me-auto">
       <c-nav-item>
@@ -35,7 +27,7 @@
           <svg cIcon name="cilBell" size="lg"></svg>
         </a>
       </c-nav-item> -->
-      <!-- <c-nav-item>
+    <!-- <c-nav-item>
         <a routerLink="./" cNavLink>
           <svg cIcon name="cilList" size="lg"></svg>
         </a>
@@ -47,11 +39,19 @@
       </c-nav-item> -->
     <!-- </c-header-nav> -->
     <c-header-nav class="ms-3">
+      <ng-container *ngIf="!isMobile && empId !== 0">
+        <ng-container *ngTemplateOutlet="departmentOption"></ng-container>
+      </ng-container>
+
+      <!-- Shown only on small (mobile) screens -->
+      <ng-container *ngIf="isMobile && empId !== 0">
+        <ng-container *ngTemplateOutlet="departmentOptionMovileView"></ng-container>
+      </ng-container>
       <c-nav-item>
-      <a cNavLink>
-        <label *ngTemplateOutlet="notificationDropdown"></label>
-      </a>
-    </c-nav-item>
+        <a cNavLink>
+          <label *ngTemplateOutlet="notificationDropdown"></label>
+        </a>
+      </c-nav-item>
       <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
     </c-header-nav>
 
@@ -65,23 +65,19 @@
 
 <ng-template #notificationDropdown>
   <c-dropdown alignment="end" variant="nav-item">
-    <button
-      cButton
-      color=""
-      [caret]="false"
-      cDropdownToggle
-      class="py-0"
-    >
-    <c-badge color="danger" position="top-end" shape="rounded-pill" *ngIf="unreadNotification > 0 && unreadNotification < 10">{{unreadNotification}}</c-badge>
-    <c-badge color="danger" position="top-end" shape="rounded-pill" *ngIf="unreadNotification > 9">9+</c-badge>
-    <svg cIcon name="cilBell" size="lg"></svg>
+    <button cButton color="" [caret]="false" cDropdownToggle class="py-0">
+      <c-badge color="danger" position="top-end" shape="rounded-pill"
+        *ngIf="unreadNotification > 0 && unreadNotification < 10">{{unreadNotification}}</c-badge>
+      <c-badge color="danger" position="top-end" shape="rounded-pill" *ngIf="unreadNotification > 9">9+</c-badge>
+      <svg cIcon name="cilBell" size="lg"></svg>
     </button>
     <ul cDropdownMenu class="pt-0 pr-5 notificationDropdown">
       <li>
         <h6 cDropdownHeader class="bg-light fw-semibold py-2">Notifications</h6>
       </li>
       <li *ngFor="let notification of userNoftification | slice:0:4">
-        <label *ngIf="!notification.readStatus" cDropdownItem class="dropdownCursor border-top" (click)="notificationNevigate(notification.id, notification.nevigateLink, notification.forEntryId, notification.isNotice)">
+        <label *ngIf="!notification.readStatus" cDropdownItem class="dropdownCursor border-top"
+          (click)="notificationNevigate(notification.id, notification.nevigateLink, notification.forEntryId, notification.isNotice)">
           <div class="notificationText">
             <p class="m-0"><b>{{notification.title}}</b></p>
             <p class="m-0"><b>{{notification.fromEmpName}}</b> {{notification.message}}</p>
@@ -91,9 +87,10 @@
       <li *ngIf="unreadNotification == 0">
         <span class="text-muted d-block text-center">No new notifications</span>
       </li>
-      <li *ngIf="userNoftification.length > 4 || unreadNotification < totalNotification" class="dropdownFooter" [routerLink]="['/notifications/notificationList']">
+      <li *ngIf="userNoftification.length > 4 || unreadNotification < totalNotification" class="dropdownFooter"
+        [routerLink]="['/notifications/notificationList']">
         <a cDropdownItem class="d-block text-center">
-          View all notifications <label  class="text-muted">({{totalNotification}})</label>
+          View all notifications <label class="text-muted">({{totalNotification}})</label>
         </a>
       </li>
     </ul>
@@ -102,20 +99,8 @@
 
 <ng-template #userDropdown>
   <c-dropdown alignment="end" variant="nav-item">
-    <button
-      cButton
-      color=""
-      [caret]="false"
-      cDropdownToggle
-      class="py-0"
-    >
-      <c-avatar
-        cTextColor="primary"
-        shape="rounded-1"
-        size="md"
-        src="{{photoPreviewUrl}}"
-        status="success"
-      >
+    <button cButton color="" [caret]="false" cDropdownToggle class="py-0">
+      <c-avatar cTextColor="primary" shape="rounded-1" size="md" src="{{photoPreviewUrl}}" status="success">
       </c-avatar>
     </button>
     <ul cDropdownMenu class="pt-0 pr-5 w-auto">
@@ -127,7 +112,7 @@
           <svg cIcon class="me-2" name="cilBell"></svg>
           Notifications
           <c-badge class="ms-2 float-end" color="info">
-            
+
           </c-badge>
         </a>
       </li>
@@ -146,7 +131,7 @@
           Profile
         </a>
       </li>
-      
+
       <!-- <li>
         <a cDropdownItem>
           <svg cIcon class="me-2" name="cilSettings"></svg>
@@ -154,32 +139,92 @@
         </a>
       </li> -->
       <li>
-        <hr cDropdownDivider/>
+        <hr cDropdownDivider />
       </li>
       <li>
-        <a  (click)="logout()" cDropdownItem class="dropdownCursor">
+        <a (click)="logout()" cDropdownItem class="dropdownCursor">
           <svg [cIcon]="icons.cilAccountLogout"> </svg>&nbsp;&nbsp;&nbsp;Logout
         </a>
       </li>
-      
+
     </ul>
   </c-dropdown>
 </ng-template>
 
+<ng-template #departmentOptionMovileView>
+  <c-dropdown alignment="end" variant="nav-item">
+    <button cButton color="" [caret]="false" cDropdownToggle class="py-1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor"
+        class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+        <path fill-rule="evenodd"
+          d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+      </svg>
+    </button>
+
+    <ul cDropdownMenu class="pt-0 pr-5" style="width: 400px;">
+      <li>
+        <h6 cDropdownHeader class="bg-light fw-semibold py-2">
+          Department Info
+        </h6>
+      </li>
+
+      <li class="px-3 py-1" (click)="$event.stopPropagation()">
+        <label>Department</label>
+        <select class="form-select" (change)="onDepartmentChange($event)">
+          <option *ngFor="let department of empDepartmentSectionDesignation; let index = index"
+            [value]="department.combainedIds">
+            {{ department.name }}
+          </option>
+        </select>
+      </li>
+      <!-- <li *ngIf="filteredSections.length" class="px-3 py-1" (click)="$event.stopPropagation()">
+        <label>Section</label>
+        <select class="form-select" (change)="onSectionChange($event)">
+          <option *ngIf="!currentSectionCheck">-</option>
+          @for(section of filteredSections; track section.id;let index=$index) {
+            <option [value]="section.id">
+              {{ section.name }}
+            </option>
+          }
+        </select>
+      </li>
+      <li class="px-3 py-1" (click)="$event.stopPropagation()">
+        <label>Designation</label>
+        <select class="form-select">
+
+          @for(section of designations; track section.id;let index=$index) {
+            <option [value]="section.id">
+              {{ section.name }}
+            </option>
+          }
+        </select>
+      </li> -->
+    </ul>
+  </c-dropdown>
+</ng-template>
+
+<ng-template #departmentOption>
+  <c-nav-item class="me-2"> <!-- Add margin-end for spacing -->
+    <select style="max-width: 400px;" class="form-select" (change)="onDepartmentChange($event)">
+      <option *ngFor="let department of empDepartmentSectionDesignation; let index = index"
+        [value]="department.combainedIds">
+        {{ department.name }}
+      </option>
+    </select>
+  </c-nav-item>
+</ng-template>
 
 
-<c-offcanvas
-  id="OffcanvasNoBackdrop"
-  [backdrop]="false"
-  [scroll]="false"
-  placement="end"
-  #offcanvasNoBackdrop
->
+
+
+<c-offcanvas id="OffcanvasNoBackdrop" [backdrop]="false" [scroll]="false" placement="end" #offcanvasNoBackdrop>
   <c-offcanvas-header>
     <h5 cOffcanvasTitle>Profile</h5>
     <button mat-mini-fab color="warn" class="close" aria-label="Close" [cOffcanvasToggle]="offcanvasNoBackdrop.id">
       <mat-icon>close</mat-icon>
-  </button>
+    </button>
   </c-offcanvas-header>
   <c-offcanvas-body class="canvas-body">
     <div class="text-center">
@@ -196,11 +241,13 @@
     <div>
       <c-button-group [vertical]="true" aria-label="Vertical button group" role="group" class="d-flex">
         <!-- <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="viewUserProfile(empId, 'viewProfile')" *ngIf="empId">Profile Information</button> -->
-        <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="updatePhotoSign(empId, 'ChangeProfile')" *ngIf="empId">Change Profile Picture</button>
-        <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="updatePhotoSign(empId, 'ChangeSignature')" *ngIf="empId">Change Signature</button>
-        <button cButton color="dark" shape="rounded-0" class="profile_button" (click)="updateUserInformation(userId, 'ChangePassword')">Change Password</button>
+        <button cButton color="dark" shape="rounded-0" class="profile_button"
+          (click)="updatePhotoSign(empId, 'ChangeProfile')" *ngIf="empId">Change Profile Picture</button>
+        <button cButton color="dark" shape="rounded-0" class="profile_button"
+          (click)="updatePhotoSign(empId, 'ChangeSignature')" *ngIf="empId">Change Signature</button>
+        <button cButton color="dark" shape="rounded-0" class="profile_button"
+          (click)="updateUserInformation(userId, 'ChangePassword')">Change Password</button>
       </c-button-group>
     </div>
   </c-offcanvas-body>
 </c-offcanvas>
-

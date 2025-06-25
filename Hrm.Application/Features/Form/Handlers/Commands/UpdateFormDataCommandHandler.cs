@@ -74,6 +74,12 @@ namespace Hrm.Application.Features.Form.Handlers.Commands
             } else if(request.UpdateRole == (int) AppraisalRole.Receiver)
             {
                 formRecord.ReceiverApproval = true;
+                formRecord.ReceiverId = request.formData.ReceiverId;
+                formRecord.ReceiverDepartmentId = request.formData.ReceiverDepartmentId;
+                formRecord.ReceiverSectionId = request.formData.ReceiverSectionId;
+                formRecord.ReceiverDesignationId = request.formData.ReceiverDesignationId;
+                formRecord.ReceiverResponsibilityTypeId = request.formData.ReceiverResponsibilityTypeId;
+
             }
 
             if(request.UpdateRole != (int) AppraisalRole.User)

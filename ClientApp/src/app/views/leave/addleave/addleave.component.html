@@ -208,11 +208,11 @@
           <c-col md="3">
             <div class="p-4">
               <c-card>
-                <img [src]="employeePhoto" (error)="onImageError($event)" alt="Image Of Something" cCardImg="top">
+                <img [src]="employeePhoto" (error)="onImageError($event)" alt="Emp Image" cCardImg="top">
                 <c-card-body>
                   <p>{{empCardNo}}</p>
                   <p cCardTitle>{{employeeName}}</p>
-                  <p>{{designation}}</p>
+                  <p>{{designation}} {{otherResponsibilityType}}</p>
 
                 </c-card-body>
               </c-card>

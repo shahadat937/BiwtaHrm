@@ -16,5 +16,6 @@ namespace Hrm.Application.DTOs.LeaveRequest
         public int? ReviewedBy { get; set; }
         public int? ApprovedBy { get; set; }
         public List<int>? Status { get; set; }
+        public int? DepartmentId { get; set; }
     }
 }

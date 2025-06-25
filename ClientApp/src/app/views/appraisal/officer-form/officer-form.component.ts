@@ -19,7 +19,7 @@ import { environment } from '../../../../environments/environment';
 import { cilArrowLeft, cilSearch } from '@coreui/icons';
 import {AuthService} from '../../../core/service/auth.service'
 import {EmpPhotoSignComponent} from './../../employee/add-employee/employee-informations/emp-photo-sign/emp-photo-sign.component';
-import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
+import { EmployeeInfoListModalComponent } from '../../employee/employee-info-list-modal/employee-info-list-modal.component';
 import { ChangeProfileComponent } from '../../profile/change-profile/change-profile.component';
 import { UserNotification } from '../../notifications/models/user-notification';
 import { NotificationService } from '../../notifications/service/notification.service';
@@ -129,13 +129,11 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.firstSection = 0;
     this.lastSection = 6;
     this.submitButtonText = "Submit";
-    this.featureName = "";
+    this.featureName = "officerForm";
   }
 
   ngOnInit(): void {
     this.getPermission();
-    console.log(this.firstSection);
-    console.log(this.lastSection);
     this.loading=true;
     this.subscription.push(
       this.empService.getFilteredSelectedEmp(new HttpParams()).subscribe({
@@ -264,7 +262,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     }
 
 
-    if(this.formData.reportFrom==null||this.formData.reportTo==null) {
+    if(this.formData.reportFrom ==null||this.formData.reportTo==null) {
       this.toastr.warning('',"Report Duration is required", {
         positionClass: 'toast-top-right'
       });
@@ -441,6 +439,14 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
     //this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]);
     //this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
+    if(this.updateRole == this.appraisalRole.Receiver){
+      this.formData.ReceiverId = this.authService.currentUserValue.empId;
+      this.formData.receiverDepartmentId = this.authService.currentUserValue.departmentId;
+      this.formData.receiverSectionId = this.authService.currentUserValue.sectionId;
+      this.formData.ReceiverDesignationId = this.authService.currentUserValue.designationId;
+      this.formData.ReceiverResponsibilityTypeId = this.authService.currentUserValue.responsibilityTypeId;
+    }
+    this.formData.ReceiverId = this.authService.currentUserValue.departmentId;
     
     this.formRecordService.updateFormData(this.formData, this.updateRole).subscribe({
       next: response=> {
@@ -501,49 +507,72 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   openReportingOfficerModal() {
 
-    const modalRef: BsModalRef = this.bsModalService.show(EmployeeListModalComponent,{backdrop: 'static', class: 'modal-xl'});
+    const modalRef: BsModalRef = this.bsModalService.show(EmployeeInfoListModalComponent,{backdrop: 'static', class: 'modal-xl'});
 
-    if(modalRef.content) {
-      modalRef.content?.employeeSelected.subscribe((idCardNo:string)=> {
-        this.empBasicInfoService.getEmpInfoByCard(idCardNo).subscribe({
-          next: response => {
-            if(response) {
-              this.formData.reportingOfficerId = response.id;
-              this.reportingOfficerName = [response.firstName,response.lastName].join(' ');
-            } else {
-              this.formData.reportingOfficerId = null;
-              this.reportingOfficerName = "";
-            }
-          },
-          error: (err) => {
-            this.formData.reportingOfficerId = null;
-            this.reportingOfficerName = "";
-          }
-        })
+      if (modalRef.content) {
+      modalRef.content?.employeeSelected.subscribe((employee: any) => {
+        // this.empBasicInfoService.getEmpInfoByCard(idCardNo).subscribe({
+        //   next: response => {
+        //     if(response) {
+        //       this.formData.reportingOfficerId = response.id;
+        //       this.reportingOfficerName = [response.firstName,response.lastName].join(' ');
+        //     } else {
+        //       this.formData.reportingOfficerId = null;
+        //       this.reportingOfficerName = "";
+        //     }
+        //   },
+        //   error: (err) => {
+        //     this.formData.reportingOfficerId = null;
+        //     this.reportingOfficerName = "";
+        //   }
+        // })
+        if (employee) {
+          this.formData.reportingOfficerId = employee.id;
+          this.reportingOfficerName = [employee.firstName, employee.lastName].join(' ');
+          this.formData.reportingOfficerDepartmentId = employee.departmentId;
+          this.formData.reportingOfficerSectionId = employee.sectionId;
+          this.formData.reportingOfficerDesignationId = employee.designationId;
+          this.formData.reportingOfficerResponsibilityTypeId = employee.additionalResponsibilityId;
+        } else {
+          this.formData.reportingOfficerId = null;
+          this.reportingOfficerName = "";
+        }
       })
     }
   }
 
   openCounterSignatoryOfficerModal() {
-    const modalRef: BsModalRef = this.bsModalService.show(EmployeeListModalComponent,{backdrop: 'static', class: 'modal-xl'});
+    const modalRef: BsModalRef = this.bsModalService.show(EmployeeInfoListModalComponent,{backdrop: 'static', class: 'modal-xl'});
 
-    if(modalRef.content) {
-      modalRef.content?.employeeSelected.subscribe((idCardNo:string)=> {
-        this.empBasicInfoService.getEmpInfoByCard(idCardNo).subscribe({
-          next: response => {
-            if(response) {
-              this.formData.counterSignatoryId = response.id;
-              this.counterSignatoryOfficername = [response.firstName,response.lastName].join(' ');
-            } else {
-              this.formData.counterSignatoryId = null;
-              this.counterSignatoryOfficername = "";
-            }
-          },
-          error: (err) => {
-            this.formData.counterSignatoryId = null;
-            this.counterSignatoryOfficername = "";
-          }
-        })
+    if (modalRef.content) {
+      modalRef.content?.employeeSelected.subscribe((employee: any) => {
+        // this.empBasicInfoService.getEmpInfoByCard(idCardNo).subscribe({
+        //   next: response => {
+        //     if(response) {
+        //       this.formData.counterSignatoryId = response.id;
+        //       this.counterSignatoryOfficername = [response.firstName,response.lastName].join(' ');
+        //     } else {
+        //       this.formData.counterSignatoryId = null;
+        //       this.counterSignatoryOfficername = "";
+        //     }
+        //   },
+        //   error: (err) => {
+        //     this.formData.counterSignatoryId = null;
+        //     this.counterSignatoryOfficername = "";
+        //   }
+        // })
+        if (employee) {
+          this.formData.counterSignatoryId = employee.id;
+          this.counterSignatoryOfficername = [employee.firstName, employee.lastName].join(' ');
+          this.formData.counterSignatoryDepartmentId = employee.departmentId;
+          this.formData.counterSignatorySectionId = employee.sectionId;
+          this.formData.counterSignatoryDesignationId = employee.designationId;
+          this.formData.counterSignatoryResponsibilityTypeId = employee.additionalResponsibilityId;
+        }
+        else {
+          this.formData.counterSignatoryId = null;
+          this.counterSignatoryOfficername = "";
+        }
       })
     }
   }

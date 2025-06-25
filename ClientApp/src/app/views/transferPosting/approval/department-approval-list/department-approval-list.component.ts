@@ -10,7 +10,7 @@ import { EmpTransferPostingService } from '../../service/emp-transfer-posting.se
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TransferPostingInfoComponent } from '../../transfer-posting-info/transfer-posting-info.component';
 import { DepartmentApprovalComponent } from '../department-approval/department-approval.component';
-import { PaginatorModel } from 'src/app/core/models/paginator-model';
+import { PaginatorModel } from '../../../../../../src/app/core/models/paginator-model';
 import { FeaturePermission } from '../../../featureManagement/model/feature-permission';
 import { RoleFeatureService } from '../../../featureManagement/service/role-feature.service';
 import { AuthService } from '../../../../core/service/auth.service';
@@ -38,6 +38,7 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort)
   matSort!: MatSort;
   loginEmpId: number = 0;
+  currentDepartmentId : any;
   noticeForEntryId: number = 0;
   pagination: PaginatorModel = new PaginatorModel();
   featurePermission : FeaturePermission = new FeaturePermission;
@@ -67,6 +68,9 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
       this.featurePermission = item;
       if(item.viewStatus == true){
         this.loginEmpId = this.authService.userInformation.empId || 0;
+    
+        this.currentDepartmentId = this.authService.userInformation.departmentId || 0
+        console.log(this.currentDepartmentId);
         this.route.queryParams.subscribe((params) => {
           this.noticeForEntryId = params['forNotificationId'] || 0;
           this.getAllEmpTransferPostingDeptApproveInfo(this.pagination);
@@ -87,7 +91,7 @@ export class DepartmentApprovalListComponent implements OnInit, OnDestroy {
 
   getAllEmpTransferPostingDeptApproveInfo(queryParams: any) {
     this.subscription.push(
-    this.empTransferPostingService.getAllEmpTransferPostingDeptApproveInfo(queryParams, this.loginEmpId, this.noticeForEntryId).subscribe((item) => {
+    this.empTransferPostingService.getAllEmpTransferPostingDeptApproveInfo(queryParams, this.currentDepartmentId, this.noticeForEntryId).subscribe((item) => {
       this.dataSource.data = item.items;
       // this.dataSource.paginator = this.paginator;
       this.pagination.length = item.totalItemsCount;

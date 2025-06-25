@@ -204,12 +204,6 @@
                                         <td *ngIf="empJobDetails?.codeNo; else emptyTd">{{empJobDetails.codeNo}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Joining Date</th>
-                                        <td *ngIf="empJobDetails?.joiningDate; else emptyTd">{{empJobDetails.joiningDate}}</td>
-                                        <th>Confirmation Date</th>
-                                        <td *ngIf="empJobDetails?.confirmationDate; else emptyTd">{{empJobDetails.confirmationDate}}</td>
-                                    </tr>
-                                    <tr>
                                         <th>Employee Type</th>
                                         <td *ngIf="empBasicInfo?.employeeTypeName; else emptyTd">{{empBasicInfo.employeeTypeName}}</td>
                                         <th>Designation</th>
@@ -220,6 +214,12 @@
                                         <td *ngIf="empBasicInfo?.sectionName; else emptyTd">{{empBasicInfo.sectionName}}</td>
                                         <th>Department</th>
                                         <td *ngIf="empJobDetails?.departmentName; else emptyTd">{{empJobDetails.departmentName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Joining Date</th>
+                                        <td *ngIf="empJobDetails?.joiningDate; else emptyTd">{{empJobDetails.joiningDate}}</td>
+                                        <th>Confirmation Date</th>
+                                        <td *ngIf="empJobDetails?.confirmationDate; else emptyTd">{{empJobDetails.confirmationDate}}</td>
                                     </tr>
                                     <tr>
                                         <th>First Designation</th>
@@ -264,6 +264,10 @@
                                         <td *ngIf="empJobDetails.retiredReasonName">{{empJobDetails.retiredReasonName}}</td>
                                         <th *ngIf="empJobDetails.retirmentId">Retirment Id</th>
                                         <td *ngIf="empJobDetails.retirmentId">{{empJobDetails.retirmentId}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2">Current Position Joining Date</th>
+                                        <td colspan="2" *ngIf="empJobDetails?.currentPositionJoinDate; else emptyTd">{{empJobDetails.currentPositionJoinDate}}</td>
                                     </tr>
                                 </tbody>                        
                             </table>
@@ -1580,12 +1584,6 @@
                                 <td *ngIf="empJobDetails?.codeNo; else emptyTd">{{empJobDetails.codeNo}}</td>
                             </tr>
                             <tr>
-                                <th>Joining Date</th>
-                                <td *ngIf="empJobDetails?.joiningDate; else emptyTd">{{empJobDetails.joiningDate}}</td>
-                                <th>Confirmation Date</th>
-                                <td *ngIf="empJobDetails?.confirmationDate; else emptyTd">{{empJobDetails.confirmationDate}}</td>
-                            </tr>
-                            <tr>
                                 <th>Employee Type</th>
                                 <td *ngIf="empBasicInfo?.employeeTypeName; else emptyTd">{{empBasicInfo.employeeTypeName}}</td>
                                 <th>Designation</th>
@@ -1596,6 +1594,12 @@
                                 <td *ngIf="empBasicInfo?.sectionName; else emptyTd">{{empBasicInfo.sectionName}}</td>
                                 <th>Department</th>
                                 <td *ngIf="empJobDetails?.departmentName; else emptyTd">{{empJobDetails.departmentName}}</td>
+                            </tr>
+                            <tr>
+                                <th>Joining Date</th>
+                                <td *ngIf="empJobDetails?.joiningDate; else emptyTd">{{empJobDetails.joiningDate}}</td>
+                                <th>Confirmation Date</th>
+                                <td *ngIf="empJobDetails?.confirmationDate; else emptyTd">{{empJobDetails.confirmationDate}}</td>
                             </tr>
                             <tr>
                                 <th>First Designation</th>
@@ -1640,6 +1644,10 @@
                                 <td *ngIf="empJobDetails.retiredReasonName">{{empJobDetails.retiredReasonName}}</td>
                                 <th *ngIf="empJobDetails.retirmentId">Retirment Id</th>
                                 <td *ngIf="empJobDetails.retirmentId">{{empJobDetails.retirmentId}}</td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">Current Position Joining Date</th>
+                                <td colspan="2" *ngIf="empJobDetails?.currentPositionJoinDate; else emptyTd">{{empJobDetails.currentPositionJoinDate}}</td>
                             </tr>
                         </tbody>                        
                     </table>

@@ -17,6 +17,8 @@ export class FormRecordFilter {
     pageSize : number = 10;
     pageIndex : number = 1;
     searchText : string = '';
+    reporterDepartmentId = 0;
+    counterSignatoryDepartmentId = 0;
 
     constructor() {
         this.keywords = null;
@@ -32,5 +34,7 @@ export class FormRecordFilter {
         this.counterSignatoryApproval = null;
         this.receiverApproval = null;
         this.isActive = null;
+        this.reporterDepartmentId = 0;
+        this.counterSignatoryDepartmentId = 0;
     }
 }

@@ -71,6 +71,7 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
                              .Where(d => d.DepartmentId == request.DepartmentId
                               && (request.SectionId == 0 ? d.SectionId == null : d.SectionId == request.SectionId))
                              .Include(d => d.DesignationSetup)
+                             .OrderBy(d => d.MenuPosition ?? int.MaxValue)
                              .ToListAsync(cancellationToken);
 
             var result = new List<OrganogramEmployeeInfo>();

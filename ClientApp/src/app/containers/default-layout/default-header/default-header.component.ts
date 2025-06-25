@@ -4,25 +4,26 @@ import { Router } from '@angular/router';
 
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/core/service/auth.service';
-import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
-import { EmpPhotoSignService } from 'src/app/views/employee/service/emp-photo-sign.service';
+import { AuthService } from '../../../../../src/app/core/service/auth.service';
+import { UnsubscribeOnDestroyAdapter } from '../../../../../src/app/shared/UnsubscribeOnDestroyAdapter';
+import { EmpPhotoSignService } from '../../../../../src/app/views/employee/service/emp-photo-sign.service';
 import { cilAccountLogout, cilPlus } from '@coreui/icons';
-import { BasicInfoModule } from 'src/app/views/employee/model/basic-info.module';
-import { EmpBasicInfoService } from 'src/app/views/employee/service/emp-basic-info.service';
-import { EmpJobDetailsService } from 'src/app/views/employee/service/emp-job-details.service';
+import { BasicInfoModule } from '../../../../../src/app/views/employee/model/basic-info.module';
+import { EmpBasicInfoService } from '../../../../../src/app/views/employee/service/emp-basic-info.service';
+import { EmpJobDetailsService } from '../../../../../src/app/views/employee/service/emp-job-details.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { UpdateUserComponent } from 'src/app/views/usermanagement/update-user/update-user.component';
-import { UserService } from 'src/app/views/usermanagement/service/user.service';
-import { ChangeProfileComponent } from 'src/app/views/profile/change-profile/change-profile.component';
-import { EmployeeInformationComponent } from 'src/app/views/employee/manage-employee/employee-information/employee-information.component';
-import { RealTimeService } from 'src/app/core/service/real-time.service';
+import { UpdateUserComponent } from '../../../../../src/app/views/usermanagement/update-user/update-user.component';
+import { UserService } from '../../../../../src/app/views/usermanagement/service/user.service';
+import { ChangeProfileComponent } from '../../../../../src/app/views/profile/change-profile/change-profile.component';
+import { EmployeeInformationComponent } from '../../../../../src/app/views/employee/manage-employee/employee-information/employee-information.component';
+import { RealTimeService } from '../../../../../src/app/core/service/real-time.service';
 import { NotificationService } from '../../../views/notifications/service/notification.service';
-import { PaginatorModel } from 'src/app/core/models/paginator-model';
-import { UserNotification } from 'src/app/views/notifications/models/user-notification';
-import { NotificationReadBy } from 'src/app/views/notifications/models/notification-read-by';
+import { PaginatorModel } from '../../../../../src/app/core/models/paginator-model';
+import { UserNotification } from '../../../../../src/app/views/notifications/models/user-notification';
+import { NotificationReadBy } from '../../../../../src/app/views/notifications/models/notification-read-by';
 import { ToastrService } from 'ngx-toastr';
 import * as CryptoJS from 'crypto-js';
+import { SelectedModel } from '../../../core/models/selectedModel';
 
 @Component({
   selector: 'app-default-header',
@@ -45,6 +46,16 @@ export class DefaultHeaderComponent extends HeaderComponent {
   userNoftification : UserNotification[] = [];
   unreadNotification: number = 0;
   totalNotification: any;
+  departments  : SelectedModel [] = [];
+  sections : SelectedModel [] = [];
+  departmentId: any;
+  designations: SelectedModel [] = [];
+  sectionId:any
+  filteredSections  : SelectedModel [] = [];
+  currentSectionCheck: boolean = true;
+  userData: any;
+  empDepartmentSectionDesignation : any;
+  isMobile: boolean = false;
 
   constructor(
     private classToggler: ClassToggleService,
@@ -75,27 +86,50 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
 
   ngOnInit(): void {
-    const currentEncryptedUser =  localStorage.getItem('encryptedUser');
-    if(currentEncryptedUser){
+    const currentEncryptedUser = localStorage.getItem('encryptedUser');  
+    if (currentEncryptedUser) {
+
       const bytes = CryptoJS.AES.decrypt(currentEncryptedUser, 'secret-key');
-      const roleName = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).role;
-      const empId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).empId || 0;
-      const userId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).id;
-      const userName = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).username;
-      this.empId = empId;
+      const decryptedUser = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      this.userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  
+      this.empId = decryptedUser.empId || 0;
       
-      this.authService.userInformation = {roleName: roleName, empId: empId, userId: userId, userName: userName};
+      this.authService.userInformation = {
+        roleName: decryptedUser.role,
+        empId: decryptedUser.empId,
+        userId: decryptedUser.id,
+        userName: decryptedUser.username,
+        departmentId: decryptedUser.departmentId,
+        sectionId: decryptedUser.sectionId,
+        designationId: decryptedUser.designationId,
+        responsibilityTypeId: decryptedUser.responsibilityTypeId || this.userData.responsibilityTypeId
+      };
+
     }
+  
     this.getEmployeeByEmpId();
     this.getUserNotifications(false);
     this.getUserId();
-    const subs = this.realTimeService.eventBus.getEvent('userNotification').subscribe(data => {
-      this.getUserNotifications(true);
-    })
-
-
+    this.checkScreenSize();
+    window.addEventListener('resize', this.checkScreenSize.bind(this));
+  
+    const subs = this.realTimeService.eventBus
+      .getEvent('userNotification')
+      .subscribe(() => {
+        this.getUserNotifications(true);
+      });
+  
+    if (this.empId) {
+      this.getEmpDepartmentSectionAndDesignation(this.empId);
+    }
+  
     this.subscription.push(subs);
   }
+  
+ checkScreenSize() {
+  this.isMobile = window.innerWidth < 768; 
+}
 
   getUserNotifications(isNew : boolean){
     this.subscription.push(
@@ -223,4 +257,77 @@ export class DefaultHeaderComponent extends HeaderComponent {
     };
     const modalRef: BsModalRef = this.modalService.show(EmployeeInformationComponent, { initialState, backdrop: 'static' });
   }
+
+  onDepartmentChange(event: any): void {
+    const selectedDepartmentId = event.target.value;
+    const selectedDepartment = this.empDepartmentSectionDesignation.find(
+      (department: any) => department.combainedIds === selectedDepartmentId
+    );
+
+    const { departmentId, sectionId, designationId,responsibilityTypeId } = selectedDepartment;
+  
+    if (
+      departmentId !== this.userData.departmentId ||
+      sectionId !== this.userData.sectionId ||
+      designationId !== this.userData.designationId
+    ) {
+      this.userData.departmentId = departmentId;
+      this.userData.sectionId = sectionId;
+      this.userData.designationId = designationId;
+      this.userData.responsibilityTypeId = responsibilityTypeId
+  
+      // Update authService
+      this.authService.userInformation.departmentId = departmentId;
+      this.authService.userInformation.sectionId = sectionId;
+      this.authService.userInformation.designationId = designationId;
+      this.authService.userInformation.responsibilityTypeId = responsibilityTypeId;
+  
+      // Update localStorage for currentUser
+      localStorage.setItem('currentUser', JSON.stringify(this.userData));
+  
+      // Also update encryptedUser in localStorage
+      const decrypted = JSON.parse(
+        CryptoJS.AES.decrypt(localStorage.getItem('encryptedUser')!, 'secret-key')
+          .toString(CryptoJS.enc.Utf8)
+      );
+  
+      decrypted.departmentId = departmentId;
+      decrypted.sectionId = sectionId;
+      decrypted.designationId = designationId;
+  
+      const updatedEncrypted = CryptoJS.AES.encrypt(
+        JSON.stringify(decrypted),
+        'secret-key'
+      ).toString();
+  
+      localStorage.setItem('encryptedUser', updatedEncrypted);
+    }  
+    window.location.reload();
+  }
+  
+  
+  getEmpDepartmentSectionAndDesignation(empId: number) {
+    this.subscription.push(
+      this.empBasicInfoService.getEmpDepartmentSectionAndDesignation(empId).subscribe((data: { departmentId: number; sectionId: number; designationId: number }[]) => {
+        // Separate items that match the specific criteria
+        const matchingItems = data.filter(item =>
+          item.departmentId === this.userData.departmentId &&
+          item.sectionId === this.userData.sectionId &&
+          item.designationId === this.userData.designationId
+        );
+  
+        // Separate items that do not match the specific criteria
+        const nonMatchingItems = data.filter(item =>
+          item.departmentId !== this.userData.departmentId ||
+          item.sectionId !== this.userData.sectionId ||
+          item.designationId !== this.userData.designationId
+        );
+  
+        // Combine the matching and non-matching items
+        this.empDepartmentSectionDesignation = [...matchingItems, ...nonMatchingItems];
+      })
+    );
+  }
+  
+  
 }

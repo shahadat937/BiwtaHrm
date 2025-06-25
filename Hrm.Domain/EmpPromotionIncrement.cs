@@ -38,6 +38,17 @@ namespace Hrm.Domain
         public int? MenuPosition { get; set; }
         public bool? IsActive { get; set; }
 
+        public int? ApplicationByDepartmentId { get; set; }
+        public int? ApplicationBySectionId { get; set; }
+        public int? ApplicationByDesignationId { get; set; }
+        public int? ApplicationByResponsibityTypeId { get; set; }
+
+        public int? ApproveByDepartmentId { get; set; }
+        public int? ApproveBySectionId { get; set; }
+        public int? ApproveByDesignationId { get; set; }
+        public int? ApproveByResponsibityTypeId { get; set; }
+
+
         public virtual EmpBasicInfo? EmpBasicInfo { get; set; }
         public virtual EmpBasicInfo? ApplicationBy { get; set; }
         public virtual EmpBasicInfo? OrderBy { get; set; }

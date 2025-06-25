@@ -65,12 +65,13 @@ namespace Hrm.Application.Features.FormRecord.Handlers.Queries
 
             if (request.Filters.ReporterId.HasValue)
             {
-                formRecords = formRecords.Where(x => x.ReportingOfficerId == request.Filters.ReporterId);
+                formRecords = formRecords.Where(x => x.ReportingOfficerId == request.Filters.ReporterId && x.ReportingOfficerDepartmentId == request.Filters.ReporterDepartmentId);
             }
 
             if (request.Filters.CounterSignatureId.HasValue)
             {
-                formRecords = formRecords.Where(x => x.CounterSignatoryId == request.Filters.CounterSignatureId);
+                formRecords = formRecords.Where(x => x.CounterSignatoryId == request.Filters.CounterSignatureId &&
+                x.CounterSignatoryDepartmentId == request.Filters.CounterSignatoryDepartmentId);
             }
 
             if (request.Filters.ReceiverId.HasValue)

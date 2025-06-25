@@ -22,5 +22,8 @@
 		<ProjectReference Include="..\Hrm.Infrastructure\Hrm.Infrastructure.csproj" />
 		<ProjectReference Include="..\Hrm.Persistence\Hrm.Persistence.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="wwwroot\assets\Images\EmpSignature\" />
+	</ItemGroup>
 
 </Project>

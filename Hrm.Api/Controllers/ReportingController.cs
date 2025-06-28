@@ -23,7 +23,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Reporting)]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ReportingController : Controller
     {
         private readonly IMediator _mediator;
@@ -227,6 +227,24 @@ namespace Hrm.Api.Controllers
         public async Task<ActionResult<object>> GetAddressReportingResult([FromQuery] QueryParams queryParams, bool isPresentAddress, int? departmentId, int? sectionId, int? countryId, int? divisionId, int? districtId, int? upazilaId)
         {
             var result = await _mediator.Send(new GetAddressReportingRequest { QueryParams = queryParams, IsPresentAddress = isPresentAddress, DepartmentId = departmentId, SectionId = sectionId, CountryId = countryId, DivisionId = divisionId, DistrictId = districtId, UpazilaId = upazilaId });
+            return Ok(result);
+        }
+
+
+        //Leave Reporting
+        [HttpGet]
+        [Route("get-leaveReportingResult")]
+        public async Task<ActionResult<object>> GetLeaveReportingResult([FromQuery] QueryParams queryParams, int? departmentId, int? sectionId, int? designationId, int? leaveType, DateTime? fromDate, DateTime? toDate)
+        {
+            var result = await _mediator.Send(new GetLeaveReportRequest { 
+                QueryParams = queryParams, 
+                DepartmentId = departmentId,
+                SectionId = sectionId,
+                DesignationId = designationId,
+                LeaveTypeId = leaveType,
+                FromDate = fromDate,
+                ToDate = toDate
+            });
             return Ok(result);
         }
 

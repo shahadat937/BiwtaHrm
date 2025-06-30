@@ -27,7 +27,7 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
 
         public async Task<List<SectionDto>> Handle(GetSectionsByDepatmentIdRequest request, CancellationToken cancellationToken)
         {
-            var Sections = _SectionRepository.FilterWithInclude(x => x.DepartmentId == request.DepartmentId && (request.UpperSectionId == 0? x.UpperSectionId == null : x.UpperSectionId == request.UpperSectionId));
+            var Sections = _SectionRepository.FilterWithInclude(x => x.DepartmentId == request.DepartmentId && (request.UpperSectionId == 0? x.UpperSectionId == null : x.UpperSectionId == request.UpperSectionId)).OrderBy(x=> x.Sequence?? int.MaxValue);
             var SectionDtos = _mapper.Map<List<SectionDto>>(Sections);
             return SectionDtos;
         }

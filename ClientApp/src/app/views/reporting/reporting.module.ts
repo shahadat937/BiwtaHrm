@@ -46,6 +46,7 @@ import { DistrictService } from '../basic-setup/service/district.service';
 import { DivisionService } from '../basic-setup/service/division.service';
 import { SectionService } from '../basic-setup/service/section.service';
 import { UapzilaService } from '../basic-setup/service/uapzila.service';
+import { LeaveReportingComponent } from './leave-reporting/leave-reporting.component';
 
 
 
@@ -55,7 +56,8 @@ import { UapzilaService } from '../basic-setup/service/uapzila.service';
     EmployeeListReportingComponent,
     VacancyReportComponent,
     TransferPostingReportComponent,
-    AddressReportingComponent
+    AddressReportingComponent,
+    LeaveReportingComponent
   ],
   imports: [
     CommonModule,

@@ -37,7 +37,7 @@ namespace Hrm.Application.Features.Reportings.VacancyReport.Handlers.Queries
                     (request.SectionId == 0 || x.Employee.EmpJobDetail.FirstOrDefault().SectionId == request.SectionId) &&
                     (request.DesignationId == 0 || x.Employee.EmpJobDetail.FirstOrDefault().Designation.DesignationSetupId == request.DesignationId) &&
                     (request.LeaveTypeId == 0 || x.LeaveTypeId == request.LeaveTypeId) &&
-                    (request.FromDate <= x.ToDate && request.ToDate >= x.FromDate))
+                    ((request.FromDate == null || request.ToDate == null) || request.FromDate <= x.ToDate && request.ToDate >= x.FromDate))
                     .Include(x => x.Employee)
                     .Include(x => x.Employee)
                         .ThenInclude(x => x.EmpJobDetail)

@@ -1,4 +1,4 @@
-export class LeaveModel {
+export class LeaveReportingModal {
     leaveRequestId: number;
     empId: number;
     idCardNo: string;
@@ -23,6 +23,10 @@ export class LeaveModel {
     empLastName: string;
     leaveTypeName: string;
     countryName: string;
+
+    departmentName: string;
+    sectionName: string;
+    designationName: string;
 
     constructor() {
         this.leaveRequestId = 0;
@@ -49,5 +53,8 @@ export class LeaveModel {
         this.empLastName = "";
         this.leaveTypeName = "";
         this.countryName = "";
+        this.departmentName = "";
+        this.sectionName = "";
+        this.designationName = "";
     }
 }

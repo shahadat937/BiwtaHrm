@@ -136,6 +136,7 @@ using Hrm.Application.DTOs.ShiftSetting;
 using Hrm.Application.DTOs.RetiredReason;
 using Hrm.Application.DTOs.OrderType;
 using Hrm.Application.DTOs.OfficeOrder;
+using Hrm.Application.DTOs.FinancialYear;
 
 
 
@@ -812,6 +813,10 @@ namespace Hrm.Application.Profiles
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
                 .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Section.SectionName))
                 .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.DesignationSetup.Name)).ReverseMap();
+
+
+            CreateMap<FinancialYear, CreateFinancialYearDto>().ReverseMap();
+            CreateMap<FinancialYear, FinancialYearDto>().ReverseMap();
 
         }
     }

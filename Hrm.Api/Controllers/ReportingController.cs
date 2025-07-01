@@ -234,10 +234,11 @@ namespace Hrm.Api.Controllers
         //Leave Reporting
         [HttpGet]
         [Route("get-leaveReportingResult")]
-        public async Task<ActionResult<object>> GetLeaveReportingResult([FromQuery] QueryParams queryParams, int? departmentId, int? sectionId, int? designationId, int? leaveType, DateTime? fromDate, DateTime? toDate)
+        public async Task<ActionResult<object>> GetLeaveReportingResult([FromQuery] QueryParams queryParams, int? employeeId, int? departmentId, int? sectionId, int? designationId, int? leaveType, string? fromDate, string? toDate)
         {
             var result = await _mediator.Send(new GetLeaveReportRequest { 
                 QueryParams = queryParams, 
+                EmployeeId = employeeId,
                 DepartmentId = departmentId,
                 SectionId = sectionId,
                 DesignationId = designationId,

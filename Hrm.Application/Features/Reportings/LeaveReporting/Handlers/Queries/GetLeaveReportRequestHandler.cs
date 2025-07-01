@@ -32,12 +32,24 @@ namespace Hrm.Application.Features.Reportings.VacancyReport.Handlers.Queries
 
         public async Task<PagedResult<LeaveRequestDto>> Handle(GetLeaveReportRequest request, CancellationToken cancellationToken)
         {
+            DateTime? fromDate = request.FromDate != "null"
+                ? DateTime.Parse(request.FromDate)
+                : (DateTime?)null;
+
+            DateTime? toDate = request.ToDate != "null"
+                ? DateTime.Parse(request.ToDate)
+                : (DateTime?)null;
+
+
+
             IQueryable<Domain.LeaveRequest> query = _LeaveRequestRepository.FilterWithInclude(x =>
                     (request.DepartmentId == 0 || x.Employee.EmpJobDetail.FirstOrDefault().DepartmentId == request.DepartmentId) &&
                     (request.SectionId == 0 || x.Employee.EmpJobDetail.FirstOrDefault().SectionId == request.SectionId) &&
                     (request.DesignationId == 0 || x.Employee.EmpJobDetail.FirstOrDefault().Designation.DesignationSetupId == request.DesignationId) &&
                     (request.LeaveTypeId == 0 || x.LeaveTypeId == request.LeaveTypeId) &&
-                    ((request.FromDate == null || request.ToDate == null) || request.FromDate <= x.ToDate && request.ToDate >= x.FromDate))
+                    (x.Status == 3) &&
+                    (request.EmployeeId == 0 || x.Employee.Id == request.EmployeeId) &&
+                    ((request.FromDate == "null" || request.ToDate == "null") || fromDate <= x.ToDate && toDate >= x.FromDate))
                     .Include(x => x.Employee)
                     .Include(x => x.Employee)
                         .ThenInclude(x => x.EmpJobDetail)
@@ -50,9 +62,7 @@ namespace Hrm.Application.Features.Reportings.VacancyReport.Handlers.Queries
                             .ThenInclude(x => x.Designation)
                                 .ThenInclude(x => x.DesignationSetup)
                     .Include(x => x.LeaveType)
-                    .OrderBy(x => x.Employee.EmpJobDetail.FirstOrDefault().Department.DepartmentName)
-                        .ThenBy(x => x.Employee.EmpJobDetail.FirstOrDefault().Section.SectionName)
-                        .ThenBy(x => x.Employee.EmpJobDetail.FirstOrDefault().Designation.DesignationSetup.Name);
+                    .OrderByDescending(x => x.FromDate);
 
             var totalCount = await query.CountAsync(cancellationToken);
 

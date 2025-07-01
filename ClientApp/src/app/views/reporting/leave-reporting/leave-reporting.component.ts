@@ -11,6 +11,13 @@ import { PaginatorModel } from 'src/app/core/models/paginator-model';
 import { EmployeeListReporting } from '../models/employee-list-reporting';
 import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
 import { LeaveReportingService } from '../service/leave-reporting.service';
+import { DesignationService } from '../../basic-setup/service/designation.service';
+import { DesignationSetupService } from '../../basic-setup/service/designation-setup.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EmployeeListModalComponent } from '../../employee/employee-list-modal/employee-list-modal.component';
+import { ToastrService } from 'ngx-toastr';
+import { EmpTransferPostingService } from '../../transferPosting/service/emp-transfer-posting.service';
+import { cilSearch } from '@coreui/icons';
 
 @Component({
   selector: 'app-leave-reporting',
@@ -19,19 +26,21 @@ import { LeaveReportingService } from '../service/leave-reporting.service';
 })
 export class LeaveReportingComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription[]=[];
+  subscription: Subscription[] = [];
   departments: SelectedModel[] = [];
   sections: SelectedModel[] = [];
   designations: SelectedModel[] = [];
   leaveTypes: SelectedModel[] = [];
+
   displayedColumns: string[] = [
-      // 'slNo',
-      'employee',
-      'designation',
-      'section',
-      'phone',
-      'joinDate'
-    ];
+    // 'slNo',
+    'employee',
+    'department/section',
+    'designation',
+    'leaveType',
+    'fromDate',
+    'toDate',
+  ];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -42,41 +51,53 @@ export class LeaveReportingComponent implements OnInit, OnDestroy {
   sectionId: number = 0;
   designationId: number = 0;
   leaveTypeId: number = 0;
+  employeeId: number = 0;
+  employeeIdCard: any;
+  empName: any;
   departmentName: string = "";
   sectionName: string = "";
   designationName: string = "";
   leaveTypeName: string = "";
   totalEmployee: number = 0;
-  fromDate: any;
-  toDate: any;
-  biwtaLogo : string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta-logo.png`;
+  fromDate: any = null;
+  toDate: any = null;
+  biwtaLogo: string = `${this.empPhotoSignService.imageUrl}TempleteImage/biwta-logo.png`;
   employees!: EmployeeListReporting[];
   constructor(
     public leaveReportingService: LeaveReportingService,
     public departmentService: DepartmentService,
-    public sectionService : SectionService,
+    public sectionService: SectionService,
     public empPhotoSignService: EmpPhotoSignService,
-    ) {
-  
-    }
+    public designationService: DesignationService,
+    public designationSetupService: DesignationSetupService,
+    private modalService: BsModalService,
+    public empTransferPostingService: EmpTransferPostingService,
+    private toastr: ToastrService,
+  ) {
+
+  }
+
+  icons = { cilSearch };
 
   ngOnInit(): void {
     this.getAllSelectedDepartments();
+    this.getSelectDesignationSetupName();
+    this.getSelectLeaveType();
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.forEach(subs=>subs.unsubscribe());
+      this.subscription.forEach(subs => subs.unsubscribe());
     }
   }
-  getAllSelectedDepartments(){
+  getAllSelectedDepartments() {
     this.subscription.push(
       this.departmentService.getSelectedAllDepartment().subscribe((res) => {
-          this.departments = res;
-    })
+        this.departments = res;
+      })
     )
   }
-  onDepartmentSelect(departmentId : number){
+  onDepartmentSelect(departmentId: number) {
     this.departmentName = "";
     this.sectionName = "";
     if (this.paginator) {
@@ -87,48 +108,139 @@ export class LeaveReportingComponent implements OnInit, OnDestroy {
       this.sections = res;
     });
     this.departmentService.getById(+departmentId).subscribe((res) => {
-      if(res){
+      if (res) {
         this.departmentName = res.departmentName;
       }
     });
     this.getLeaveReportingResult(this.pagination);
   }
 
-  onSectionSelect(){
+  onSectionSelect() {
     if (this.paginator) {
       this.paginator.firstPage();
     }
     this.sectionName = "";
     this.sectionService.find(this.sectionId).subscribe((res) => {
-      if(res){
+      if (res) {
         this.sectionName = res.sectionName;
       }
     });
     this.getLeaveReportingResult(this.pagination);
   }
 
-  onPageChange(event: any){
+  onDesignationSelect() {
+    if (this.paginator) {
+      this.paginator.firstPage();
+    }
+    this.designationName = "";
+    this.designationSetupService.find(this.designationId).subscribe((res) => {
+      if (res) {
+        this.designationName = res.name;
+      }
+    });
+    this.getLeaveReportingResult(this.pagination);
+  }
+
+  onLeaveTypeSelect() {
+    if (this.paginator) {
+      this.paginator.firstPage();
+    }
+    this.leaveTypeName = "";
+    if(this.leaveTypeId != 0){
+      this.leaveReportingService.getLeaveTypeById(this.leaveTypeId).subscribe((res) => {
+      if (res) {
+        this.leaveTypeName = res.leaveTypeName;
+      }
+    });
+    }
+    this.getLeaveReportingResult(this.pagination);
+  }
+
+  onDateChange() {
+    if(this.fromDate && this.toDate){
+      if (this.paginator) {
+      this.paginator.firstPage();
+      }
+      this.getLeaveReportingResult(this.pagination);
+    }
+  }
+
+  getSelectDesignationSetupName() {
+    this.subscription.push(
+      this.designationService.getSelectDesignationSetupName().subscribe((data) => {
+        this.designations = data;
+      })
+    )
+  }
+
+  getSelectLeaveType() {
+    this.subscription.push(
+      this.leaveReportingService.getSelectedLeaveType().subscribe((data) => {
+        this.leaveTypes = data;
+      })
+    )
+  }
+
+  onPageChange(event: any) {
     this.pagination.pageSize = event.pageSize;
     this.pagination.pageIndex = event.pageIndex + 1;
     this.getLeaveReportingResult(this.pagination);
   }
 
-  getLeaveReportingResult(queryParams: any){
+  getLeaveReportingResult(queryParams: any) {
     this.subscription.push(
-      this.leaveReportingService.getLeaveReporting(queryParams, this.departmentId, this.sectionId, this.designationId, this.leaveTypeId, this.fromDate, this.toDate).subscribe((res: any) => {
-      this.dataSource.data = res.items;
-      this.employees = res.items;
-      this.employees = this.employees.map(emp => ({
-        ...emp,
-        groupKey: `${emp.departmentName} - ${emp.sectionName || 'No Section'}`
-      }));
-      this.pagination.length = res.totalItemsCount;
-      this.totalEmployee = res.items[0].allTotal;
-    })
+      this.leaveReportingService.getLeaveReporting(queryParams, this.employeeId, this.departmentId, this.sectionId, this.designationId, this.leaveTypeId, this.fromDate, this.toDate).subscribe((res: any) => {
+        this.dataSource.data = res.items;
+        this.pagination.length = res.totalItemsCount;
+      })
     )
   }
 
-  
+
+  EmployeeListModal() {
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl' });
+
+    modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
+      if (idCardNo) {
+        this.getEmpInfoByIdCardNo(idCardNo);
+      }
+    });
+  }
+
+  getEmpInfoByIdCardNo(idCardNo: string) {
+    if (idCardNo) {
+      this.subscription.push(
+        this.empTransferPostingService.getEmpBasicInfoByIdCardNo(idCardNo).subscribe((res) => {
+          if (res) {
+            this.employeeId = res.id;
+            this.employeeIdCard = res.idCardNo;
+            this.empName = res.firstName + " " + res.lastName;
+            if (this.paginator) {
+              this.paginator.firstPage();
+            }
+            this.getLeaveReportingResult(this.pagination);
+          }
+          else {
+            this.toastr.warning('', 'Invalid Employee PMIS No', {
+              positionClass: 'toast-top-right',
+            });
+            this.employeeId = 0;
+            this.employeeIdCard = null;
+          }
+        })
+      )
+    }
+    else {
+      this.employeeId = 0;
+      this.employeeIdCard = null;
+      if (this.paginator) {
+        this.paginator.firstPage();
+      }
+      this.getLeaveReportingResult(this.pagination);
+    }
+  }
+
+
   printSection() {
     // Get the basic information and the specific section to print
     const tableData = document.getElementById('tableData')?.innerHTML;
@@ -139,7 +251,7 @@ export class LeaveReportingComponent implements OnInit, OnDestroy {
     printWindow?.document.write(`
       <html>
         <head>
-          <title>Employee List</title>
+          <title>Leave Report</title>
           <style>
             @media print {
               @page {

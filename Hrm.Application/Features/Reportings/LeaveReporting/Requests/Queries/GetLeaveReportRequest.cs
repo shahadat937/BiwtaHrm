@@ -13,11 +13,12 @@ namespace Hrm.Application.Features.Reportings.VacancyReport.Requests.Queries
     public class GetLeaveReportRequest : IRequest<PagedResult<LeaveRequestDto>>
     {
         public QueryParams QueryParams { get; set; }
+        public int? EmployeeId { get; set; }
         public int? DepartmentId { get; set; }
         public int? SectionId { get; set; }
         public int? DesignationId { get; set; }
         public int? LeaveTypeId { get; set; }
-        public DateTime? FromDate { get; set; }
-        public DateTime? ToDate { get; set; }
+        public string? FromDate { get; set; }
+        public string? ToDate { get; set; }
     }
 }

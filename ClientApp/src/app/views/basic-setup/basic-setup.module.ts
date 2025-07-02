@@ -147,6 +147,7 @@ import { JobDetailsSetupComponent } from './job-details-setup/job-details-setup.
 import { RetiredReasonComponent } from './retired-reason/retired-reason.component';
 import { RetiredReasonService } from './service/retired-reason.service';
 import { OrderTypeComponent } from './order-type/order-type.component';
+import { FinancialYearComponent } from './financial-year/financial-year.component';
 
 
 
@@ -224,6 +225,7 @@ import { OrderTypeComponent } from './order-type/order-type.component';
     JobDetailsSetupComponent,
     RetiredReasonComponent,
     OrderTypeComponent,
+    FinancialYearComponent,
   ],
   imports: [
     CommonModule,

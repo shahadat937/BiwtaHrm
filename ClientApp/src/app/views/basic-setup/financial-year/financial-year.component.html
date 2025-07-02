@@ -1,33 +1,38 @@
 <c-card>
     <c-card-header>{{headerText}}</c-card-header>
     <c-card-body>
-        <form #OrderTypeForm="ngForm" (submit)="onSubmit(OrderTypeForm)" [gutter]="3" novalidate cForm cRow
+        <form #FinancialYearForm="ngForm" (submit)="onSubmit(FinancialYearForm)" [gutter]="3" novalidate cForm cRow
             class="needs-validation">
             <c-col [md]="4">
-                <input type="hidden" [(ngModel)]="orderTypeService.OrderType.id" name="id" />
-                <label cLabel for="typeName">Order Type Name<span class="text-danger">*</span></label>
-                <input [(ngModel)]="orderTypeService.OrderType.typeName" name="typeName" #typeName="ngModel"
-                    placeholder="Enter Order Type Name" cFormControl id="typeName" required type="text"
+                <input type="hidden" [(ngModel)]="FinancialYearService.FinancialYear.id" name="id" />
+                <label cLabel for="yearName">Year Name<span class="text-danger">*</span></label>
+                <input [(ngModel)]="FinancialYearService.FinancialYear.yearName" name="yearName" #yearName="ngModel"
+                    placeholder="Enter Year Name" cFormControl id="yearName" required type="text"
                     value="Mark" />
-                @if(!typeName.valid&&typeName.touched){
-                <div class="text-left text-danger">Order Type Name is required</div>
+                @if(!yearName.valid&&yearName.touched){
+                <div class="text-left text-danger">Year Name is required</div>
                 }
             </c-col>
 
+            <c-col [md]="4">
+                <label cLabel for="startDate">Start Date<span class="text-danger">*</span></label>
+                <input [(ngModel)]="FinancialYearService.FinancialYear.startDate" name="startDate" #startDate="ngModel" required cFormControl id="startDate" type="date"/>
+                @if(!startDate.valid&&startDate.touched){
+                <div class="text-left text-danger">Start Date is required</div>
+                }
+            </c-col>
             
             <c-col [md]="4">
-                <label cLabel for="typeNameBangla">Order Type Name Bangla<span class="text-danger"></span></label>
-                <input [(ngModel)]="orderTypeService.OrderType.typeNameBangla" name="typeNameBangla" #typeNameBangla="ngModel"
-                    placeholder="Enter Order Type Name Bangla" cFormControl id="typeNameBangla" type="text"
-                    value="Mark" />
-                @if(!typeNameBangla.valid&&typeNameBangla.touched){
-                <div class="text-left text-danger">Order Type Name Bangla is required</div>
+                <label cLabel for="endDate">End Date<span class="text-danger">*</span></label>
+                <input [(ngModel)]="FinancialYearService.FinancialYear.endDate" name="endDate" #endDate="ngModel" required cFormControl id="endDate" type="date"/>
+                @if(!endDate.valid&&endDate.touched){
+                <div class="text-left text-danger">End Date is required</div>
                 }
             </c-col>
             
             <c-col [md]="4">
                 <label cLabel for="validationCustom02">Remark<span class="text-danger"></span></label>
-                <input [(ngModel)]="orderTypeService.OrderType.remark" name="remark" #Remark="ngModel"
+                <input [(ngModel)]="FinancialYearService.FinancialYear.remark" name="remark" #Remark="ngModel"
                     placeholder="Enter Remark" cFormControl id="validationCustom02" type="text"
                     value="Mark" />
                 @if(!Remark.valid&&Remark.touched){
@@ -37,7 +42,7 @@
 
             <c-col [md]="4">
               <label cLabel for="activeStatus">Active Status</label>
-              <select [(ngModel)]="orderTypeService.OrderType.isActive"
+              <select [(ngModel)]="FinancialYearService.FinancialYear.isActive"
               name="isActive"
               cSelect
               id="activeStatus">
@@ -48,7 +53,7 @@
             
 
             <c-col [xs]="12">
-                <button [disabled]="loading" [disabled]="OrderTypeForm.invalid" cButton class="me-1" color="primary"
+                <button [disabled]="loading" [disabled]="FinancialYearForm.invalid" cButton class="me-1" color="primary"
                     type="submit">
                     <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
                     {{ btnText }}
@@ -60,7 +65,7 @@
 </c-card>
 
 <c-card class="mt-3">
-    <c-card-header>Order Type List</c-card-header>
+    <c-card-header>Financial Year List</c-card-header>
     <c-card-body>
         <div class="example-header">
             <mat-form-field>
@@ -77,16 +82,23 @@
                     <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
                 </ng-container>
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef>Order Type</th>
+                    <th mat-header-cell *matHeaderCellDef>Year Name</th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.typeName }}
+                        {{ element.yearName }}
                     </td>
                 </ng-container>
                 
-                <ng-container matColumnDef="nameBangla">
-                    <th mat-header-cell *matHeaderCellDef>Order Type Bangla</th>
+                <ng-container matColumnDef="startDate">
+                    <th mat-header-cell *matHeaderCellDef>Start Date</th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.typeNameBangla }}
+                        {{ element.startDate | date: 'dd MMM yyyy' }}
+                    </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="endDate">
+                    <th mat-header-cell *matHeaderCellDef>End Date</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.endDate | date: 'dd MMM yyyy' }}
                     </td>
                 </ng-container>
 
@@ -102,7 +114,7 @@
                     <th mat-header-cell *matHeaderCellDef>Action</th>
                     <td mat-cell *matCellDef="let element">
                         <button class="custom-button" [routerLink]="[
-                  '/officeSetup/update-order-type',
+                  '/personalInfoSetup/update-order-type',
                   element.id
                 ]">
                             <svg cIcon name="cilPencil"></svg>

@@ -253,7 +253,7 @@ namespace Hrm.Api.Controllers
         //Leave Reporting
         [HttpGet]
         [Route("get-prlReportingResult")]
-        public async Task<ActionResult<object>> GetPrlReportingResult([FromQuery] QueryParams QueryParams ,string? CurrentDate, DateOnly? StartDate, DateOnly? EndDate,int? DepartmentId, int? SectionId, int? DesignationId, bool IsPRL, bool IsRetirment, bool IsGone, bool IsWillGone)
+        public async Task<ActionResult<object>> GetPrlReportingResult([FromQuery] QueryParams QueryParams , DateOnly? CurrentDate, DateOnly? StartDate, DateOnly? EndDate,int? DepartmentId, int? SectionId, int? DesignationId, bool IsPRL, bool IsRetirment, bool IsGone, bool IsWillGone)
         {
             var result = await _mediator.Send(new GetPRLReportRequest
             {

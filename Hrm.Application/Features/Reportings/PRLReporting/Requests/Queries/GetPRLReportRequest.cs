@@ -13,7 +13,7 @@ namespace Hrm.Application.Features.Reportings.VacancyReport.Requests.Queries
     public class GetPRLReportRequest : IRequest<object>
     {
         public QueryParams QueryParams { get; set; }
-        public string? CurrentDate { get; set; }
+        public DateOnly? CurrentDate { get; set; }
         public DateOnly? StartDate { get; set; }
         public DateOnly? EndDate { get; set; }
         public int? DepartmentId { get; set; }

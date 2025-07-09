@@ -30,11 +30,33 @@ namespace Hrm.Application.Features.Reportings.VacancyReport.Handlers.Queries
 
         public async Task<object> Handle(GetPRLReportRequest request, CancellationToken cancellationToken)
         {
+            try
+            {
+                string query = $@"
+            EXEC [dbo].[GetEmpListByPRLAgeWithFilters] 
+                @CurrentDate = '{request.CurrentDate}', 
+                @StartDate = '{request.StartDate}', 
+                @EndDate = '{request.EndDate}', 
+                @DepartmentId = {request.DepartmentId}, 
+                @SectionId = {request.SectionId}, 
+                @DesignationId = {request.DesignationId}, 
+                @IsPRL = {request.IsPRL}, 
+                @IsRetirment = {request.IsRetirment}, 
+                @IsGone = {request.IsGone}, 
+                @IsWillGone = {request.IsWillGone}, 
+                @PageIndex = {request.QueryParams.PageIndex}, 
+                @PageSize = {request.QueryParams.PageSize}";
 
-            string query = $"EXEC [dbo].[GetEmpListByPRLAgeWithFilters] @CurrentDate='{request.CurrentDate}', @StartDate='{request.StartDate}', @EndDate={request.EndDate}, @DepartmentId={request.DepartmentId}, @SectionId={request.SectionId}, @DesignationId={request.DesignationId}, @IsPRL={request.IsPRL}, @IsRetirment={request.IsRetirment}, @IsGone={request.IsGone}, @IsWillGone={request.IsWillGone}, @PageIndex={request.QueryParams.PageIndex}, @PageSize={request.QueryParams.PageSize}";
+                var result = _PRLReportRepository.ExecWithSqlQuery(query);
 
+                return result;
 
-            return _PRLReportRepository.ExecWithSqlQuery(query);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error executing PRL Report Handler: {ex.Message}", ex);
+            }
         }
+
     }
 }

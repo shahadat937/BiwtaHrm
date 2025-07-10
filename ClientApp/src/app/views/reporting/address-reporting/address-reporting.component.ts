@@ -178,7 +178,6 @@ export class AddressReportingComponent implements OnInit, OnDestroy {
       this.reportingService.getAddressReportingResult(this.pagination, this.isPresentAddress, this.departmentId, this.sectionId, this.countryId, this.divisionId, this.districtId, this.upazilaId).subscribe((res: any) => {
       this.dataSource.data = res.items;
       this.pagination.length = res.totalItemsCount;
-      console.log(res.items)
     })
     )
   }

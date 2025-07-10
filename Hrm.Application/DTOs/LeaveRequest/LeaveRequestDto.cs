@@ -41,6 +41,9 @@ namespace Hrm.Application.DTOs.LeaveRequest
         public int? EmpCurrentSectionId { get; set; }
         public int? EmpCurrentDesignationId { get; set; }
         public int? EmpCurrentResponsibilityTypeId { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? SectionName { get; set; }
+        public string? DesignationName { get; set; }
 
         public int? ReviewerCurrentDepartmentId { get; set; }
         public int? ReviewerCurrentSectionId { get; set; }

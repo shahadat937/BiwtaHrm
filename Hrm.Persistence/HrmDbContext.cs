@@ -1537,6 +1537,7 @@ namespace Hrm.Persistence
         public virtual DbSet<RetiredReason> RetiredReason { get; set; } = null!;
         public virtual DbSet<OrderType> OrderType { get; set; } = null!;
         public virtual DbSet<OfficeOrder> OfficeOrder { get; set; } = null!;
+        public virtual DbSet<FinancialYear> FinancialYear { get; set; } = null!;
 
     }
 }

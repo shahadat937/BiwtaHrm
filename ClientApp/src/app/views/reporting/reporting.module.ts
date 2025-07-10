@@ -17,7 +17,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { CardModule, FormModule, GridModule, ButtonGroupModule, ListGroupModule, ProgressModule, SpinnerModule, CollapseDirective, BadgeModule, WidgetStatFComponent } from '@coreui/angular';
+import { CardModule, FormModule, GridModule, ButtonGroupModule, ListGroupModule, ProgressModule, SpinnerModule, CollapseDirective, BadgeModule, WidgetStatFComponent, InputGroupComponent, ButtonDirective } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxPrintModule } from 'ngx-print';
@@ -46,6 +46,8 @@ import { DistrictService } from '../basic-setup/service/district.service';
 import { DivisionService } from '../basic-setup/service/division.service';
 import { SectionService } from '../basic-setup/service/section.service';
 import { UapzilaService } from '../basic-setup/service/uapzila.service';
+import { LeaveReportingComponent } from './leave-reporting/leave-reporting.component';
+import { PrlRetirementReportingComponent } from './prl-retirement-reporting/prl-retirement-reporting.component';
 
 
 
@@ -55,7 +57,9 @@ import { UapzilaService } from '../basic-setup/service/uapzila.service';
     EmployeeListReportingComponent,
     VacancyReportComponent,
     TransferPostingReportComponent,
-    AddressReportingComponent
+    AddressReportingComponent,
+    LeaveReportingComponent,
+    PrlRetirementReportingComponent
   ],
   imports: [
     CommonModule,
@@ -105,7 +109,9 @@ import { UapzilaService } from '../basic-setup/service/uapzila.service';
     ScrollingModule,
     BadgeModule,
     NgxPrintModule,
-    WidgetStatFComponent
+    WidgetStatFComponent,
+    InputGroupComponent,
+    ButtonDirective
   ],
   providers:
   [

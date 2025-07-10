@@ -1,0 +1,218 @@
+<c-card>
+  <c-card-header class="d-flex justify-content-between">
+      <h5>Leave Report</h5>
+      <button mat-raised-button color="primary" type="button" (click)="printSection()" [disabled]="this.pagination.length == 0">
+        <mat-icon>print</mat-icon> Print
+      </button>
+  </c-card-header>
+  <c-card-body>
+      <div cRow [gutter]="2" class="mb-2">   
+
+            <c-col [md]="3">
+                <label cLabel for="idCardNo">Employee PMIS No<span class="text-danger"></span></label>
+                <c-input-group>
+                <button cButton color="secondary" type="button" cTooltip="Search Employee" cTooltipPlacement="bottom" (click)="EmployeeListModal()">
+                    <svg [cIcon]="icons.cilSearch"></svg>
+                </button>
+                    <input aria-describedby="idCardNo" cFormControl
+                        [(ngModel)]="employeeIdCard" name="empIdCardNo"
+                        #idCardNo="ngModel" placeholder="PMIS Id" id="idCardNo"
+                        type="text" #idCardNoInput />
+                    <button cButton color="primary" type="button"
+                        (click)="getEmpInfoByIdCardNo(idCardNoInput.value)">
+                        Select
+                    </button>
+                </c-input-group>
+            </c-col>
+
+
+          <c-col [md]="3">
+            <label cLabel for="Department">Department<span class="text-danger"></span></label>
+            <div class="input-wrapper">
+              <select (change)="onDepartmentSelect(departmentId)"
+                  [(ngModel)]="departmentId" name="departmentId" #Department="ngModel"
+                  cFormControl id="Department" aria-label="Default select example" cSelect>
+                  <option [ngValue]=0>Select Department</option>
+      
+                  @for(department of departments; track department.id;let index=$index) {
+                  <option [value]="department.id">
+                  {{ department.name }}
+                  </option>
+                  }
+              </select>
+            </div>
+        </c-col>
+        
+        <c-col [md]="3">
+            <label cLabel for="sectionId">Section<span class="text-danger"></span></label>
+            <div class="input-wrapper">
+              <select [(ngModel)]="sectionId" name="sectionId" #Section="ngModel"
+                  cFormControl id="sectionId" aria-label="Default select example" cSelect
+                  (change)="onSectionSelect()">
+                  <option [ngValue]=0>Select Section</option>
+      
+                  @for(section of sections; track section.id;let index=$index) {
+                  <option [value]="section.id">
+                  {{ section.name }}
+                  </option>
+                  }
+              </select>
+            </div>
+        </c-col>
+        
+        <c-col [md]="3">
+            <label cLabel for="designationId">Designation<span class="text-danger"></span></label>
+            <div class="input-wrapper">
+              <select [(ngModel)]="designationId" name="designationId" #Designation="ngModel"
+                  cFormControl id="designationId" aria-label="Default select example" cSelect
+                  (change)="onDesignationSelect()">
+                  <option [ngValue]=0>Select Desigation</option>
+      
+                  @for(item of designations; track item.id;let index=$index) {
+                  <option [value]="item.id">
+                  {{ item.name }}
+                  </option>
+                  }
+              </select>
+            </div>
+        </c-col>
+
+        
+        <c-col [md]="3">
+            <label cLabel for="leaveTypeId">Leave Type<span class="text-danger"></span></label>
+            <div class="input-wrapper">
+              <select [(ngModel)]="leaveTypeId" name="leaveTypeId" #LeaveType="ngModel"
+                  cFormControl id="leaveTypeId" aria-label="Default select example" cSelect
+                  (change)="onLeaveTypeSelect()">
+                  <option [ngValue]=0>Select Leave Type</option>
+      
+                  @for(item of leaveTypes; track item.id;let index=$index) {
+                  <option [value]="item.id">
+                  {{ item.name }}
+                  </option>
+                  }
+              </select>
+            </div>
+        </c-col>
+
+        <c-col [md]="3">
+            <label cLabel for="fromDate"
+            >From Date<span class="text-danger"></span></label
+            >
+            <input
+                [(ngModel)]="fromDate"
+                name="fromDate"
+                #FromDate="ngModel"
+                cFormControl
+                id="fromDate"
+                type="date"
+                (change)="onDateChange()"
+            />
+        </c-col>
+        
+        <c-col [md]="3">
+            <label cLabel for="toDate"
+            >To Date<span class="text-danger"></span></label
+            >
+            <input
+                [(ngModel)]="toDate"
+                name="toDate"
+                #ToDate="ngModel"
+                cFormControl
+                id="toDate"
+                type="date"
+                (change)="onDateChange()"
+            />
+        </c-col>
+
+
+      </div>
+      
+      <div id="report_heading" class="d-none">
+        <div cRow class="justify-content-center">
+          <c-col [md]="1" style="margin-top: 25px; margin-right: 20px;">
+            <img src="{{biwtaLogo}}" width="75px">
+          </c-col>
+          <c-col [md]="9" style="text-align: center;">
+            <h4 style="font-size: 20px;">BANGLADESH INLAND WATER TRANSPORT AUTHORITY</h4>
+            <p style="font-size: 13px;">BIWTA BHABAN, 141-143, MOTIJHEEL C/A, POST BOX 76, DHAKA-1000, BANGLADESH</p>
+            <h5>Leave Report: <label *ngIf="empName">{{empName}} ({{employeeIdCard}})</label><label *ngIf="departmentName">{{departmentName}}</label><label *ngIf="sectionName">/{{sectionName}}</label><label *ngIf="!departmentName && !sectionName && !empName">All</label><label *ngIf="designationName">/{{designationName}}</label><label *ngIf="leaveTypeName">/{{leaveTypeName}}</label><br>
+            <label *ngIf="fromDate && toDate">From: {{fromDate | date: 'dd MMM yyyy'}} to {{toDate | date: 'dd MMM yyyy'}}</label></h5>
+            
+          </c-col>
+          <div style="border-bottom: 1px solid black; display: inline-block; width: 100%;"></div>
+        </div>
+      </div>
+
+      <c-card class="mt-2">
+            <c-card-header>
+                Employee List <label class="text-danger fw-bold" *ngIf="leaveTypeName">- {{leaveTypeName}}</label>
+            </c-card-header>
+            <c-card-body class="p-0">
+                <div class="table-responsive" id="tableData">
+                    <table mat-table [dataSource]="dataSource">
+                      <!-- Position Column -->
+                      <ng-container matColumnDef="slNo">
+                        <th mat-header-cell *matHeaderCellDef>SL</th>
+                        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="employee">
+                        <th mat-header-cell *matHeaderCellDef>Employee</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.empFirstName }} {{element.empLastName}} ({{ element.idCardNo }})
+                        </td>
+                      </ng-container>
+            
+                      <ng-container matColumnDef="department/section">
+                        <th mat-header-cell *matHeaderCellDef>Department/Section</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.departmentName ?? "" }}<label *ngIf="element.sectionName">, {{ element.sectionName}}</label>
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="designation">
+                        <th mat-header-cell *matHeaderCellDef>Designation</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.designationName }}
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="leaveType">
+                        <th mat-header-cell *matHeaderCellDef>Leave Type</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.leaveTypeName }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="fromDate">
+                        <th mat-header-cell *matHeaderCellDef>From Date</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.fromDate | date: 'dd MMM yyyy' }}
+                        </td>
+                      </ng-container>
+                      
+                      <ng-container matColumnDef="toDate">
+                        <th mat-header-cell *matHeaderCellDef>To Date</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.toDate | date: 'dd MMM yyyy' }}
+                        </td>
+                      </ng-container>
+                      
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                  </div>
+            </c-card-body>
+            <c-card-footer class="text-medium-emphasis p-0">
+                <mat-paginator 
+                  [length]="pagination.length"
+                  [pageSize]="pagination.pageSize"
+                  [pageSizeOptions]="pagination.pageSizeOptions"
+                  [showFirstLastButtons]="true"
+                  (page)="onPageChange($event)">
+                </mat-paginator>    
+            </c-card-footer>
+        </c-card>
+  </c-card-body>
+</c-card>

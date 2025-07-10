@@ -6,29 +6,29 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { OrderTypeService } from '../service/order-type.service';
+import { FinancialYearService } from '../service/financial-year.service';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 
 @Component({
-  selector: 'app-order-type',
-  templateUrl: './order-type.component.html',
-  styleUrl: './order-type.component.scss'
+  selector: 'app-financial-year',
+  templateUrl: './financial-year.component.html',
+  styleUrl: './financial-year.component.scss'
 })
-export class OrderTypeComponent implements OnInit, OnDestroy, AfterViewInit {
+export class FinancialYearComponent  implements OnInit, OnDestroy, AfterViewInit {
   btnText: string | undefined;
   headerText: string | undefined;
-  @ViewChild('OrderTypeForm', { static: true }) OrderTypeForm!: NgForm;
+  @ViewChild('FinancialYearForm', { static: true }) FinancialYearForm!: NgForm;
   loading = false;
   // subscription: Subscription = new Subscription();
   subscription: Subscription[]=[]
-  displayedColumns: string[] = ['slNo', 'name', 'nameBangla', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'name', 'startDate', 'endDate', 'isActive', 'Action'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   matSort!: MatSort;
   constructor(
-    public orderTypeService: OrderTypeService,
+    public FinancialYearService: FinancialYearService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
@@ -36,7 +36,7 @@ export class OrderTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
   }
   ngOnInit(): void {
-    this.getAllOrderTypes();
+    this.getAllFinancialYears();
     this.handleRouteParams();
   }
   handleRouteParams() {
@@ -44,16 +44,16 @@ export class OrderTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       const id = params.get('id');
       if (id) {
         this.btnText = 'Update';
-        this.headerText = 'Update Order Type';
+        this.headerText = 'Update Financial Year';
         this.subscription.push(
-        this.orderTypeService.find(+id).subscribe((res) => {
-          this.OrderTypeForm?.form.patchValue(res);
+        this.FinancialYearService.find(+id).subscribe((res) => {
+          this.FinancialYearForm?.form.patchValue(res);
         })
         )
         
       } else {
         this.resetForm();
-        this.headerText = 'Add Order Type';
+        this.headerText = 'Add Financial Year';
         this.btnText = 'Submit';
       }
     });
@@ -73,36 +73,38 @@ export class OrderTypeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  initaialOrderType(form?: NgForm) {
+  initaialFinancialYear(form?: NgForm) {
     if (form != null) form.resetForm();
-    this.orderTypeService.OrderType = {
-        id: 0,
-        typeName: '',
-        typeNameBangla: '',
-        remark: '',
-        menuPosition: 0,
-        isActive: true,
+    this.FinancialYearService.FinancialYear = {
+      id: 0,
+      yearName: '',
+      startDate: null,
+      endDate: null,
+      remark: '',
+      menuPosition: 0,
+      isActive: true,
     };
   }
   resetForm() {
     this.btnText = 'Submit';
-    if (this.OrderTypeForm?.form != null) {
-      this.OrderTypeForm.form.reset();
-      this.OrderTypeForm.form.patchValue({
-        id: 0,
-        typeName: '',
-        typeNameBangla: '',
-        remark: '',
-        menuPosition: 0,
-        isActive: true,
+    if (this.FinancialYearForm?.form != null) {
+      this.FinancialYearForm.form.reset();
+      this.FinancialYearForm.form.patchValue({
+         id: 0,
+      yearName: '',
+      startDate: null,
+      endDate: null,
+      remark: '',
+      menuPosition: 0,
+      isActive: true,
       });
     }
-    this.router.navigate(['/officeSetup/order-type']);
+    this.router.navigate(['/officeSetup/financial-year']);
   }
 
-  getAllOrderTypes() {
+  getAllFinancialYears() {
     this.subscription.push(
-    this.orderTypeService.getAll().subscribe((item) => {
+    this.FinancialYearService.getAll().subscribe((item) => {
       this.dataSource = new MatTableDataSource(item);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -113,11 +115,11 @@ export class OrderTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   
   onSubmit(form: NgForm): void {
     this.loading = true;
-    this.orderTypeService.cachedData = [];
+    this.FinancialYearService.cachedData = [];
     const id = form.value.id;
     const action$ = id
-      ? this.orderTypeService.update(id, form.value)
-      : this.orderTypeService.submit(form.value);
+      ? this.FinancialYearService.update(id, form.value)
+      : this.FinancialYearService.submit(form.value);
     
     this.subscription.push(
     action$.subscribe((response: any) => {
@@ -126,10 +128,10 @@ export class OrderTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.toastr.success('', `${response.message}`, {
           positionClass: 'toast-top-right',
         });
-        this.getAllOrderTypes();
+        this.getAllFinancialYears();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/officeSetup/order-type']);
+          this.router.navigate(['/officeSetup/financial-year']);
         }
     this.loading = false;
       } else {
@@ -148,7 +150,7 @@ export class OrderTypeComponent implements OnInit, OnDestroy, AfterViewInit {
       .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
       .subscribe((result) => {
         if (result) {
-          this.orderTypeService.delete(element.id).subscribe(
+          this.FinancialYearService.delete(element.id).subscribe(
             (res) => {
               const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {

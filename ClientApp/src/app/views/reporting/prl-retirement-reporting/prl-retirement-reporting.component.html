@@ -1,35 +1,25 @@
 <c-card>
   <c-card-header class="d-flex justify-content-between">
-      <h5>Leave Report</h5>
+      <h5>PRL & Retirment Report</h5>
       <button mat-raised-button color="primary" type="button" (click)="printSection()" [disabled]="this.pagination.length == 0">
         <mat-icon>print</mat-icon> Print
       </button>
   </c-card-header>
   <c-card-body>
-      <div cRow [gutter]="2" class="mb-2">   
+      <div cRow [gutter]="2" class="mb-3">   
+            
+        <c-col [md]="12">
+            <c-form-check [switch]="true">
+            <input cFormCheckInput type="checkbox" id="isCustom" name="isCustom"
+                [(ngModel)]="isCustom"/>
+            <label cFormCheckLabel for="isCustom">Custom Date</label>
+            </c-form-check>
+        </c-col>
 
-            <c-col [md]="3">
-                <label cLabel for="idCardNo">Employee PMIS No<span class="text-danger"></span></label>
-                <c-input-group>
-                <button cButton color="secondary" type="button" cTooltip="Search Employee" cTooltipPlacement="bottom" (click)="EmployeeListModal()">
-                    <svg [cIcon]="icons.cilSearch"></svg>
-                </button>
-                    <input aria-describedby="idCardNo" cFormControl
-                        [(ngModel)]="employeeIdCard" name="empIdCardNo"
-                        #idCardNo="ngModel" placeholder="PMIS Id" id="idCardNo"
-                        type="text" #idCardNoInput />
-                    <button cButton color="primary" type="button"
-                        (click)="getEmpInfoByIdCardNo(idCardNoInput.value)">
-                        Select
-                    </button>
-                </c-input-group>
-            </c-col>
-
-
-          <c-col [md]="3">
+        <c-col [md]="3">
             <label cLabel for="Department">Department<span class="text-danger"></span></label>
             <div class="input-wrapper">
-              <select (change)="onDepartmentSelect(departmentId)"
+              <select (change)="onDepartmentSelect()"
                   [(ngModel)]="departmentId" name="departmentId" #Department="ngModel"
                   cFormControl id="Department" aria-label="Default select example" cSelect>
                   <option [ngValue]=0>Select Department</option>
@@ -79,14 +69,14 @@
 
         
         <c-col [md]="3">
-            <label cLabel for="leaveTypeId">Leave Type<span class="text-danger"></span></label>
+            <label cLabel for="financialYearId">Financial Year<span class="text-danger"></span></label>
             <div class="input-wrapper">
-              <select [(ngModel)]="leaveTypeId" name="leaveTypeId" #LeaveType="ngModel"
-                  cFormControl id="leaveTypeId" aria-label="Default select example" cSelect
-                  (change)="onLeaveTypeSelect()">
-                  <option [ngValue]=0>Select Leave Type</option>
+              <select [(ngModel)]="financialYearId" name="financialYearId" [disabled]="isCustom"
+                  cFormControl id="financialYearId" aria-label="Default select example" cSelect
+                  (change)="onFinancialYearSelect()">
+                  <option [ngValue]=0>Select Financial Year</option>
       
-                  @for(item of leaveTypes; track item.id;let index=$index) {
+                  @for(item of financialYears; track item.id;let index=$index) {
                   <option [value]="item.id">
                   {{ item.name }}
                   </option>
@@ -95,17 +85,47 @@
             </div>
         </c-col>
 
+        
+        <c-col [md]="3">
+            <label cLabel for="typeName">Report Type<span class="text-danger"></span></label>
+            <div class="input-wrapper">
+              <select [(ngModel)]="typeName" name="typeName"
+                  cFormControl id="typeName" aria-label="Default select example" cSelect
+                  (change)="onReportTypeChange()">
+                  <option ngValue="All">All</option>
+                  <option ngValue="PRL">PRL</option>
+                  <option ngValue="Retirment">Retirment</option>
+              </select>
+            </div>
+        </c-col>
+        
+        <c-col [md]="3">
+            <label cLabel for="statusName">Status<span class="text-danger"></span></label>
+            <div class="input-wrapper">
+              <select [(ngModel)]="statusName" name="statusName"
+                  cFormControl id="statusName" aria-label="Default select example" cSelect
+                  (change)="onStatusChange()">
+                  <option ngValue="All">All</option>
+                  <option ngValue="Gone">Gone</option>
+                  <option ngValue="Will Go">Will Go</option>
+              </select>
+            </div>
+        </c-col>
+
+        
+
         <c-col [md]="3">
             <label cLabel for="fromDate"
             >From Date<span class="text-danger"></span></label
             >
             <input
-                [(ngModel)]="fromDate"
+                [(ngModel)]="startDate"
                 name="fromDate"
                 #FromDate="ngModel"
                 cFormControl
                 id="fromDate"
                 type="date"
+                [disabled]="!isCustom"
                 (change)="onDateChange()"
             />
         </c-col>
@@ -115,12 +135,13 @@
             >To Date<span class="text-danger"></span></label
             >
             <input
-                [(ngModel)]="toDate"
+                [(ngModel)]="endDate"
                 name="toDate"
                 #ToDate="ngModel"
                 cFormControl
                 id="toDate"
                 type="date"
+                [disabled]="!isCustom"
                 (change)="onDateChange()"
             />
         </c-col>
@@ -136,8 +157,9 @@
           <c-col [md]="9" style="text-align: center;">
             <h4 style="font-size: 20px;">BANGLADESH INLAND WATER TRANSPORT AUTHORITY</h4>
             <p style="font-size: 13px;">BIWTA BHABAN, 141-143, MOTIJHEEL C/A, POST BOX 76, DHAKA-1000, BANGLADESH</p>
-            <h5>Leave Report: <label *ngIf="empName">{{empName}} ({{employeeIdCard}})</label><label *ngIf="departmentName">{{departmentName}}</label><label *ngIf="sectionName">/{{sectionName}}</label><label *ngIf="!departmentName && !sectionName && !empName">All</label><label *ngIf="designationName">/{{designationName}}</label><label *ngIf="leaveTypeName">/{{leaveTypeName}}</label><br>
-            <label *ngIf="fromDate && toDate">From: {{fromDate | date: 'dd MMM yyyy'}} to {{toDate | date: 'dd MMM yyyy'}}</label></h5>
+            <h5>{{headingType}} Report: <label *ngIf="departmentName">{{departmentName}}</label><label *ngIf="sectionName">/{{sectionName}}</label><label *ngIf="!departmentName && !sectionName">All</label><label *ngIf="designationName">/{{designationName}}</label><br>
+            <!-- <label *ngIf="fromDate && toDate">From: {{fromDate | date: 'dd MMM yyyy'}} to {{toDate | date: 'dd MMM yyyy'}}</label> -->
+        </h5>
             
           </c-col>
           <div style="border-bottom: 1px solid black; display: inline-block; width: 100%;"></div>
@@ -146,7 +168,8 @@
 
       <c-card class="mt-2">
             <c-card-header>
-                Employee List <label class="text-danger fw-bold" *ngIf="leaveTypeName">- {{leaveTypeName}}</label>
+                Employee List 
+                <!-- <label class="text-danger fw-bold" *ngIf="leaveTypeName">- {{leaveTypeName}}</label> -->
             </c-card-header>
             <c-card-body class="p-0">
                 <div class="table-responsive" id="tableData">
@@ -160,7 +183,7 @@
                       <ng-container matColumnDef="employee">
                         <th mat-header-cell *matHeaderCellDef>Employee</th>
                         <td mat-cell *matCellDef="let element">
-                            {{ element.empFirstName }} {{element.empLastName}} ({{ element.idCardNo }})
+                            {{ element.firstName }} {{element.lastName}} ({{ element.idCardNo }})
                         </td>
                       </ng-container>
             
@@ -178,24 +201,35 @@
                         </td>
                       </ng-container>
                       
-                      <ng-container matColumnDef="leaveType">
-                        <th mat-header-cell *matHeaderCellDef>Leave Type</th>
+                      <ng-container matColumnDef="prlDate">
+                        <th mat-header-cell *matHeaderCellDef>PRL Date</th>
                         <td mat-cell *matCellDef="let element">
-                            {{ element.leaveTypeName }}
-                        </td>
-                      </ng-container>
-
-                      <ng-container matColumnDef="fromDate">
-                        <th mat-header-cell *matHeaderCellDef>From Date</th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.fromDate | date: 'dd MMM yyyy' }}
+                            {{ element.prlAge | date: 'dd MMM yyyy' }}
                         </td>
                       </ng-container>
                       
-                      <ng-container matColumnDef="toDate">
-                        <th mat-header-cell *matHeaderCellDef>To Date</th>
+                      <ng-container matColumnDef="retirmentDate">
+                        <th mat-header-cell *matHeaderCellDef>Retirment Date</th>
                         <td mat-cell *matCellDef="let element">
-                            {{ element.toDate | date: 'dd MMM yyyy' }}
+                            {{ element.retirmentAge | date: 'dd MMM yyyy' }}
+                        </td>
+                      </ng-container>
+
+                      
+                      <ng-container matColumnDef="prlStatus">
+                        <th mat-header-cell *matHeaderCellDef>PRL Status</th>
+                        <td mat-cell *matCellDef="let element">
+                            <c-badge color="warning" *ngIf="element.prlGone">Gone</c-badge>
+                            <c-badge color="success" *ngIf="element.prlWillGone">Will Be Gone</c-badge>
+                        </td>
+                      </ng-container>
+
+                      
+                      <ng-container matColumnDef="retirmentStatus">
+                        <th mat-header-cell *matHeaderCellDef>Retirment Status</th>
+                        <td mat-cell *matCellDef="let element">
+                            <c-badge color="warning" *ngIf="element.retirmentGone">Gone</c-badge>
+                            <c-badge color="success" *ngIf="element.retirmentWillGone">Will Be Gone</c-badge>
                         </td>
                       </ng-container>
                       

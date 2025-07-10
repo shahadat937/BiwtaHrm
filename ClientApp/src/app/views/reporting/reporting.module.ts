@@ -47,6 +47,7 @@ import { DivisionService } from '../basic-setup/service/division.service';
 import { SectionService } from '../basic-setup/service/section.service';
 import { UapzilaService } from '../basic-setup/service/uapzila.service';
 import { LeaveReportingComponent } from './leave-reporting/leave-reporting.component';
+import { PrlRetirementReportingComponent } from './prl-retirement-reporting/prl-retirement-reporting.component';
 
 
 
@@ -57,7 +58,8 @@ import { LeaveReportingComponent } from './leave-reporting/leave-reporting.compo
     VacancyReportComponent,
     TransferPostingReportComponent,
     AddressReportingComponent,
-    LeaveReportingComponent
+    LeaveReportingComponent,
+    PrlRetirementReportingComponent
   ],
   imports: [
     CommonModule,

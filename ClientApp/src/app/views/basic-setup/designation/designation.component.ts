@@ -360,21 +360,23 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         if (result) {
           this.subscription.push(
           this.designationService.delete(element.designationId).subscribe(
-            (res) => {
-              const index = this.dataSource.data.indexOf(element);
-              if (index !== -1) {
-                this.dataSource.data.splice(index, 1);
-                this.dataSource = new MatTableDataSource(this.dataSource.data);
+            (res : any) => {
+              if(res.success){
+                const index = this.dataSource.data.indexOf(element);
+                if (index !== -1) {
+                  this.dataSource.data.splice(index, 1);
+                  this.dataSource = new MatTableDataSource(this.dataSource.data);
+                  this.dataSource.paginator = this.paginator
+                }
+                this.toastr.success('Delete sucessfully ! ', ` `, {
+                  positionClass: 'toast-top-right',
+                });
               }
-              this.toastr.success('Delete sucessfully ! ', ` `, {
+              else {
+                this.toastr.warning('', `${res.message}`, {
                 positionClass: 'toast-top-right',
               });
-            },
-            (err) => {
-              this.toastr.error('Somethig Wrong ! ', ` `, {
-                positionClass: 'toast-top-right',
-              });
-              console.log(err);
+              }
             }
           )
           )

@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
 using Hrm.Application.Contracts.Persistence;
 using Hrm.Application.Exceptions;
-using MediatR;
-
 using Hrm.Application.Features.Stores.Requests.Commands;
+using Hrm.Application.Responses;
 using Hrm.Domain;
+using MediatR;
+using SendGrid;
 
 namespace hrm.Application.Features.Sections.Handlers.Commands
 {
-    public class DeleteSectionCommandHandler : IRequestHandler<DeleteSectionCommand>
+    public class DeleteSectionCommandHandler : IRequestHandler<DeleteSectionCommand, BaseCommandResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -19,26 +20,24 @@ namespace hrm.Application.Features.Sections.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(DeleteSectionCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(DeleteSectionCommand request, CancellationToken cancellationToken)
         {
+            var response = new BaseCommandResponse();
+
             var Section = await _unitOfWork.Repository<Section>().Get(request.SectionId);
 
             if (Section == null)
                 throw new NotFoundException(nameof(Section), request.SectionId);
 
-            await _unitOfWork.Repository<Section>().Delete(Section);
-            try
-            {
-                await _unitOfWork.Save();
-            }
-            catch (Exception ex)
-            {
 
-                Console.WriteLine(ex);
-            }
-            //await _unitOfWork.Save();
+            await _unitOfWork.Repository<Hrm.Domain.Section>().Delete(Section);
+            await _unitOfWork.Save();
 
-            return Unit.Value;
+            response.Success = true;
+            response.Message = "Delete Successfull";
+            response.Id = Section.SectionId;
+
+            return response;
         }
     }
 }

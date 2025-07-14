@@ -1,5 +1,5 @@
 export class LeaveModel {
-    leaveRequestId:number;
+    leaveRequestId: number;
     empId: number;
     idCardNo: string;
     leaveTypeId: number;

@@ -12,6 +12,11 @@
         
                 <div *ngIf="empProfileView">
                     <div cRow id="basicInformation" class="basicInformation">
+                        <div class="d-flex justify-content-end mb-2">
+                            <button mat-raised-button color="primary" class="no-print" type="button" (click)="printFullProfile()">
+                                <mat-icon>print</mat-icon> Print Profile
+                            </button>
+                        </div>
                         <c-col [lg]="3">
                             <img src="{{photoPreviewUrl}}" style="max-width: auto; max-height: 150px;">
                         </c-col>
@@ -1401,7 +1406,12 @@
         <h4 *ngIf="!empProfileView" class="text-center">Please login with Valid Employee Information</h4>
         
         <div *ngIf="empProfileView">
-            <div cRow>
+            <div cRow id="basicInformation" class="basicInformation">
+                <div class="d-flex justify-content-end mb-2">
+                    <button mat-raised-button color="primary" class="no-print" type="button" (click)="printFullProfile()">
+                        <mat-icon>print</mat-icon> Print Profile
+                    </button>
+                </div>
                 <c-col [lg]="3">
                     <img src="{{photoPreviewUrl}}" style="max-width: auto; max-height: 150px;">
                 </c-col>
@@ -1472,12 +1482,17 @@
             </div>
     
             <!-- Employee Personal Information -->
-            <c-card class="shadow mb-4 mt-3">
-            <!-- <c-card class="shadow mb-4 mt-3" *ngIf="empPersonalInfo"> -->
+            <c-card class="shadow mb-4 mt-3" id="empPersonalInfo">
+                    <!-- <c-card class="shadow mb-4 mt-3" *ngIf="empPersonalInfo"> -->
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Personal Information</h5>
                 </c-card-header>
                 <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empPersonalInfo')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
                     <table class="table">
                         <tbody>
                             <tr>
@@ -1568,12 +1583,17 @@
             </c-card>
     
             <!-- Employee Job Details Information -->
-            <c-card class="shadow mb-4">
-            <!-- <c-card class="shadow mb-4" *ngIf="empJobDetails"> -->
+            <c-card class="shadow mb-4" id="empJobDetails">
+                    <!-- <c-card class="shadow mb-4" *ngIf="empJobDetails"> -->
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Job Details</h5>
                 </c-card-header>
                 <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empJobDetails')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
                     <table class="table">
                         <tbody>
                             <tr>
@@ -1655,12 +1675,17 @@
             </c-card>
     
             <!-- Employee Present Address Information -->
-            <c-card class="shadow mb-4">
-            <!-- <c-card class="shadow mb-4" *ngIf="empPresentAddress"> -->
+            <c-card class="shadow mb-4" id="empPresentAddress">
+                    <!-- <c-card class="shadow mb-4" *ngIf="empPresentAddress"> -->
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Present Address Information</h5>
                 </c-card-header>
                 <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empPresentAddress')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
                     <table class="table">
                         <tbody>
                             <tr>
@@ -1705,12 +1730,17 @@
             </c-card>
     
             <!-- Employee Permanent Address Information -->
-            <c-card class="shadow mb-4">
-            <!-- <c-card class="shadow mb-4" *ngIf="empPermanentAddress"> -->
+            <c-card class="shadow mb-4" id="empPermanentAddress">
+                    <!-- <c-card class="shadow mb-4" *ngIf="empPermanentAddress"> -->
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Permanent Address Information</h5>
                 </c-card-header>
                 <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empPermanentAddress')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
                     <table class="table">
                         <tbody>
                             <tr>
@@ -1755,12 +1785,17 @@
     
             <!-- Employee Education Information -->
             <!-- @if(empEducationInfo.length>0){ -->
-            <c-card class="shadow mb-4">
+            <c-card class="shadow mb-4" id="empEducationInfo">
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Education Information</h5>
                 </c-card-header>
                 <c-card-body>
                 <div class="table-responsive">
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empEducationInfo')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
                     <table mat-table [dataSource]="educationSource">
                       <ng-container matColumnDef="slNo">
                         <th mat-header-cell *matHeaderCellDef>SL</th>
@@ -1855,11 +1890,17 @@
             </c-card>
             <!-- } -->
 
-            <c-card class="shadow mb-4">
+            <!-- Employee Work History -->
+            <c-card class="shadow mb-4" id="empWorkHistory">
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Work History</h5>
                 </c-card-header>
                 <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empWorkHistory')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
                     <div class="table-responsive">
                         <table mat-table [dataSource]="workHistorySource">
                         <ng-container matColumnDef="slNo">
@@ -2010,11 +2051,16 @@
     
             <!-- Employee Spouse Information -->
             <!-- @if(empSpouseInfo.length>0){ -->
-            <c-card class="shadow mb-4">
+            <c-card class="shadow mb-4" id="empSpouseInfo">
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Spouse Information</h5>
                 </c-card-header>
                 <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empSpouseInfo')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
                     <div class="table-responsive">
                         <table mat-table [dataSource]="spouseSource">
                           <ng-container matColumnDef="slNo">
@@ -2104,11 +2150,16 @@
     
             <!-- Employee Child Information -->
             <!-- @if(empChildInfo.length>0){ -->
-            <c-card class="shadow mb-4">
+            <c-card class="shadow mb-4" id="empChildInfo">
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Child Information</h5>
                 </c-card-header>
                 <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empChildInfo')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
                     <div class="table-responsive">
                         <table mat-table [dataSource]="childsSource">
                         <ng-container matColumnDef="slNo">
@@ -2231,11 +2282,16 @@
 
              <!-- Employee Training Information -->
             <!-- @if(empTrainingInfo.length>0){ -->
-            <c-card class="shadow mb-4">
+            <c-card class="shadow mb-4" id="empTrainingInfo">
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Training Information</h5>
                 </c-card-header>
                 <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empTrainingInfo')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
                     <div class="table-responsive">
                         <table mat-table [dataSource]="trainingSource">
                         <ng-container matColumnDef="slNo">
@@ -2372,11 +2428,17 @@
     
             <!-- Employee Bank Information -->
             <!-- @if(empBankInfo.length>0){ -->
-            <c-card class="shadow mb-4">
+            <c-card class="shadow mb-4" id="empBankInfo">
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Bank Information</h5>
                 </c-card-header>
-                <c-card-body><div class="table-responsive">
+                <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empBankInfo')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
+                    <div class="table-responsive">
                     <table mat-table [dataSource]="bankSource">
                     <ng-container matColumnDef="slNo">
                         <th mat-header-cell *matHeaderCellDef>SL</th>
@@ -2470,11 +2532,17 @@
 
             
             <!-- EmpNomineeInfo -->
-            <c-card class="shadow mb-4">
+             <c-card class="shadow mb-4" id="EmpNomineeInfo">
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Nominee Information</h5>
                 </c-card-header>
-                <c-card-body><div class="table-responsive">
+                <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('EmpNomineeInfo')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
+                <div class="table-responsive">
                     <table mat-table [dataSource]="nomineeInfoSource">
                     <ng-container matColumnDef="slNo">
                         <th mat-header-cell *matHeaderCellDef>SL</th>
@@ -2510,11 +2578,16 @@
     
             <!-- Employee Language Information -->
             <!-- @if(empLanguageInfo.length>0){ -->
-            <c-card class="shadow mb-4">
+            <c-card class="shadow mb-4" id="empLanguageInfo">
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Language Information</h5>
                 </c-card-header>
                 <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empLanguageInfo')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
                     <div class="table-responsive">
                         <table mat-table [dataSource]="languageSource">
                         <ng-container matColumnDef="slNo">
@@ -2569,11 +2642,16 @@
     
             <!-- Employee Foreign Tour Information -->
             <!-- @if(empForeignTourInfo.length>0){ -->
-            <c-card class="shadow mb-4">
+            <c-card class="shadow mb-4" id="empForeignTourInfo">
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Foreign Tour Information</h5>
                 </c-card-header>
                 <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empForeignTourInfo')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
                     <div class="table-responsive">
                         <table mat-table [dataSource]="trainingSource">
                         <ng-container matColumnDef="slNo">
@@ -2645,11 +2723,16 @@
             </c-card>
             <!-- } -->
 
-            <c-card class="shadow mb-4">
+            <c-card class="shadow mb-4" id="empRewardPunishment">
                 <c-card-header>
                     <h5 class="text-center text-light">Employee Reward/Punishment Information</h5>
                 </c-card-header>
                 <c-card-body>
+                    <div class="d-flex justify-content-end mb-2">
+                        <button mat-raised-button color="primary" class="no-print" type="button" (click)="printSection('empRewardPunishment')">
+                            <mat-icon>print</mat-icon> Print
+                        </button>
+                    </div>
                     <div class="table-responsive">
                         <table mat-table [dataSource]="rewardPunishmentsSource">
                         <ng-container matColumnDef="slNo">

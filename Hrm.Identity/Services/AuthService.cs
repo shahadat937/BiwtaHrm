@@ -119,11 +119,11 @@ namespace Hrm.Identity.Services
 
             var user = new ApplicationUser
             {
-                Email = request.Email,
+                Email = request.Email ?? "",
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 UserName = request.UserName,
-                PhoneNumber = request.PhoneNumber,
+                PhoneNumber = request.PhoneNumber ?? "",
                 EmpId = request.EmpId,
                 IsActive = request.IsActive,
                 EmailConfirmed = true,

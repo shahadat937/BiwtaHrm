@@ -49,13 +49,13 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
         public async Task<List<DepartmentDto>> Handle(GetTopLavelDepartmentsRequest request, CancellationToken cancellationToken)
         {
             var departments = request.DepartmentId == 0
-                ? _DepartmentRepository.FilterWithInclude(x => x.UpperDepartmentId == null)
-                : _DepartmentRepository.FilterWithInclude(x => x.UpperDepartmentId == request.DepartmentId);
+                ? _DepartmentRepository.FilterWithInclude(x => x.UpperDepartmentId == null && x.IsActive == true)
+                : _DepartmentRepository.FilterWithInclude(x => x.UpperDepartmentId == request.DepartmentId && x.IsActive == true);
 
             var departmentList = await departments.ToListAsync(cancellationToken);
 
             // Load all departments once (to traverse tree)
-            var allDepartments =  _DepartmentRepository.FilterWithInclude(x=>true).ToList(); // or FilterWithInclude(x => true)
+            var allDepartments =  _DepartmentRepository.FilterWithInclude(x=>true).ToList(); 
 
             foreach (var dept in departmentList)
             {
@@ -64,7 +64,7 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
                 allDeptIds.Add(dept.DepartmentId); // include self
 
                 // Count designations for all relevant departments
-                int count = await _DesignationRepository.CountAsync(x => allDeptIds.Contains(x.DepartmentId?? 0));
+                int count = await _DesignationRepository.CountAsync(x => allDeptIds.Contains(x.DepartmentId?? 0) && (x.SectionId == null ||x.Section.IsActive == true) && x.DesignationSetup.IsActive == true); 
 
                 dept.DepartmentName = $"{dept.DepartmentName} ({count})";
             }
@@ -77,7 +77,7 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
         private List<int> GetAllChildDepartmentIds(List<Hrm.Domain.Department> allDepartments, int parentId)
         {
             var result = new List<int>();
-            var children = allDepartments.Where(d => d.UpperDepartmentId == parentId).ToList();
+            var children = allDepartments.Where(d => d.UpperDepartmentId == parentId && d.IsActive == true).ToList();
 
             foreach (var child in children)
             {

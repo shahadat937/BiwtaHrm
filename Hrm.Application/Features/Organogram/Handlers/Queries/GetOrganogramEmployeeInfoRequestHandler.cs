@@ -69,7 +69,7 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
         {
             var designations = await _DesignationRepository
                              .Where(d => d.DepartmentId == request.DepartmentId
-                              && (request.SectionId == 0 ? d.SectionId == null : d.SectionId == request.SectionId))
+                              && (request.SectionId == 0 ? d.SectionId == null : d.SectionId == request.SectionId) && d.DesignationSetup.IsActive == true)
                              .Include(d => d.DesignationSetup)
                              .OrderBy(d => d.MenuPosition ?? int.MaxValue)
                              .ToListAsync(cancellationToken);
@@ -86,6 +86,7 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
                                 && e.DepartmentId == request.DepartmentId
                                 && e.ServiceStatus == true
                                 && (request.SectionId == 0 ? e.SectionId == null : e.SectionId == request.SectionId)
+                                && e.Designation.DesignationSetup.IsActive == true
                                 )
                     .Include(e => e.EmpBasicInfo)
                     .Select(e => new EmployeeInfo

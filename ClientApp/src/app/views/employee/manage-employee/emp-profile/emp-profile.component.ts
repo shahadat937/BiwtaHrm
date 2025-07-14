@@ -284,6 +284,76 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
     }
 
     
+  printFullProfile() {
+    // Get the basic information and the specific section to print
+    const basicInfo = document.getElementById('basicInformation')?.innerHTML;
+    const empPersonalInfo = document.getElementById('empPersonalInfo')?.innerHTML;
+    const empJobDetails = document.getElementById('empJobDetails')?.innerHTML;
+    const empPresentAddress = document.getElementById('empPresentAddress')?.innerHTML;
+    const empPermanentAddress = document.getElementById('empPermanentAddress')?.innerHTML;
+    const empEducationInfo = document.getElementById('empEducationInfo')?.innerHTML;
+    const empWorkHistory = document.getElementById('empWorkHistory')?.innerHTML;
+    const empSpouseInfo = document.getElementById('empSpouseInfo')?.innerHTML;
+    const empChildInfo = document.getElementById('empChildInfo')?.innerHTML;
+    const empTrainingInfo = document.getElementById('empTrainingInfo')?.innerHTML;
+    const empBankInfo = document.getElementById('empBankInfo')?.innerHTML;
+    const EmpNomineeInfo = document.getElementById('EmpNomineeInfo')?.innerHTML;
+    const empLanguageInfo = document.getElementById('empLanguageInfo')?.innerHTML;
+    const empForeignTourInfo = document.getElementById('empForeignTourInfo')?.innerHTML;
+    const empRewardPunishment = document.getElementById('empRewardPunishment')?.innerHTML;
+
+    // Create a new window for printing
+    const printWindow = window.open('', 'blank', 'width=800,height=600');
+    printWindow?.document.write(`
+      <html>
+        <head>
+          <title>Employee Information</title>
+          <style>
+            table { border-collapse: collapse; text-align: left; width: 100%}
+            th, td {border: 1px solid #000; padding: 5px; }
+            .no-print { display: none; }
+            .borderless td, .borderless th {
+                border: none;
+            }
+            .border-left {
+                border-left: 3px solid cadetblue;
+            }
+            c-col { 
+              float: left; 
+              padding: 5px;
+              margin-bottom: 10px;
+            }
+            c-card-header {
+              display: inline-block;
+              width: 100%;
+              text-align: center;
+              font-size: 1.5rem;
+            }
+          </style>
+        </head>
+        <body>
+          <div>${basicInfo}</div>
+          <div>${empPersonalInfo}</div>
+          <div>${empJobDetails}</div>
+          <div>${empPresentAddress}</div>
+          <div>${empPermanentAddress}</div>
+          <div>${empEducationInfo}</div>
+          <div>${empWorkHistory}</div>
+          <div>${empSpouseInfo}</div>
+          <div>${empChildInfo}</div>
+          <div>${empTrainingInfo}</div>
+          <div>${empBankInfo}</div>
+          <div>${EmpNomineeInfo}</div>
+          <div>${empLanguageInfo}</div>
+          <div>${empForeignTourInfo}</div>
+          <div>${empRewardPunishment}</div>
+        </body>
+      </html>
+    `);
+    printWindow?.document.close();
+    printWindow?.print();
+  }
+    
   getPrlAndRetirmentDate(){
     this.subscription.push(
       this.empBasicInfoService.findByEmpId(this.id).subscribe((res) => {

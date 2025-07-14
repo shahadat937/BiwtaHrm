@@ -325,21 +325,24 @@ export class SectionComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe((result) => {
         if (result) {
           this.sectionService.delete(element.sectionId).subscribe(
-            (res) => {
-              const index = this.dataSource.data.indexOf(element);
+            (res : any) => {
+              if(res.success){
+                const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {
                 this.dataSource.data.splice(index, 1);
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
+                this.dataSource.paginator = this.paginator;
               }
               this.toastr.success('Delete sucessfully ! ', ` `, {
                 positionClass: 'toast-top-right',
               });
-            },
-            (err) => {
-              this.toastr.error('Somethig Wrong ! ', ` `, {
+              }
+              else {
+                this.toastr.warning('', `${res.message}`, {
                 positionClass: 'toast-top-right',
-              });
-            }
+                });
+              }
+            },
           );
         }
       })

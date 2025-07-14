@@ -141,18 +141,19 @@ export class DesignationSetupComponent implements OnInit, OnDestroy, AfterViewIn
         if (result) {
           this.subscription.push(
           this.designationSetupService.delete(element.id).subscribe(
-            (res) => {
-              const index = this.dataSource.data.indexOf(element);
+            (res : any) => {
+              if(res.success){
+                const index = this.dataSource.data.indexOf(element);
               if (index !== -1) {
                 this.dataSource.data.splice(index, 1);
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
               }
-            },
-            (err) => {
-              this.toastr.error('Somethig Wrong ! ', ` `, {
+              }
+              else {
+                this.toastr.warning('', `${res.message}`, {
                 positionClass: 'toast-top-right',
-              });
-              console.log(err);
+                });
+              }
             }
           )
           )

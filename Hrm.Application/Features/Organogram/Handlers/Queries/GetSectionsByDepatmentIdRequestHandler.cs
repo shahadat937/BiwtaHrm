@@ -30,14 +30,14 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
 
         public async Task<List<SectionDto>> Handle(GetSectionsByDepatmentIdRequest request, CancellationToken cancellationToken)
         {
-            var Sections = _SectionRepository.FilterWithInclude(x => x.DepartmentId == request.DepartmentId && (request.UpperSectionId == 0 ? x.UpperSectionId == null : x.UpperSectionId == request.UpperSectionId)).OrderBy(x => x.Sequence ?? int.MaxValue);
+            var Sections = _SectionRepository.FilterWithInclude(x => x.DepartmentId == request.DepartmentId && (request.UpperSectionId == 0 ? x.UpperSectionId == null && x.IsActive == true : x.UpperSectionId == request.UpperSectionId && x.IsActive == true)).OrderBy(x => x.Sequence ?? int.MaxValue);
 
             var SectionList = await Sections.ToListAsync(cancellationToken);
 
             foreach (var section in SectionList)
             {
                 // Count designations for each department
-                int count = await _DesignationRepository.CountAsync(x => x.DepartmentId == section.DepartmentId && x.SectionId == section.SectionId);
+                int count = await _DesignationRepository.CountAsync(x => x.DepartmentId == section.DepartmentId && x.SectionId == section.SectionId && x.IsActive==true);
 
                 // Append count to the department name
                 section.SectionName = $"{section.SectionName} ({count})";

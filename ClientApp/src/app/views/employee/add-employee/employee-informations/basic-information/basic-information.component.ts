@@ -228,7 +228,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
           }));
           this.empShiftAssignService.cachedData = []
           this.empShiftForm.empId = response.id;
-          this.empShiftForm.shiftId = form.value.shiftId;
+          this.empShiftForm.shiftId = this.activeShiftId;
           this.empShiftAssignService.saveEmpShiftAssign(this.empShiftForm).subscribe((res) =>{});
         }
           this.toastr.success('', `${response.message}`, {

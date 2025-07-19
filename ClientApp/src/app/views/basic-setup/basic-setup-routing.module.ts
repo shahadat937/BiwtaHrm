@@ -65,6 +65,7 @@ import { CourseDurationComponent } from './course-duration/course-duration.compo
 import { DesignationSetupComponent } from './designation-setup/designation-setup.component';
 import { JobDetailsSetupComponent } from './job-details-setup/job-details-setup.component';
 import { OrderTypeComponent } from './order-type/order-type.component';
+import { FinancialYearComponent } from './financial-year/financial-year.component';
 
 
 const routes: Routes = [
@@ -946,6 +947,20 @@ const routes: Routes = [
         component: OrderTypeComponent,
         data: {
           title: 'Order Type',
+        },
+      },
+      {
+        path: 'financial-year',
+        component: FinancialYearComponent,
+        data: {
+          title: 'Financial Year',
+        },
+      },
+      {
+        path: 'update-financial-year/:id',
+        component: FinancialYearComponent,
+        data: {
+          title: 'FinancialYear',
         },
       },
 

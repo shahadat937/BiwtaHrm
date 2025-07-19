@@ -6,6 +6,8 @@ import { EmployeeListReportingComponent } from './employee-list-reporting/employ
 import { VacancyReportComponent } from './vacancy-report/vacancy-report.component';
 import { TransferPostingReportComponent } from './transfer-posting-report/transfer-posting-report.component';
 import { AddressReportingComponent } from './address-reporting/address-reporting.component';
+import { LeaveReportingComponent } from './leave-reporting/leave-reporting.component';
+import { PrlRetirementReportingComponent } from './prl-retirement-reporting/prl-retirement-reporting.component';
 
 
 
@@ -54,6 +56,20 @@ const routes: Routes = [
         component: AddressReportingComponent,
         data: {
           title: 'Address Report',
+        },
+      },
+      {
+        path: 'leave-report',
+        component: LeaveReportingComponent,
+        data: {
+          title: 'Leave Report',
+        },
+      },
+      {
+        path: 'prl-retirement-report',
+        component: PrlRetirementReportingComponent,
+        data: {
+          title: 'PRL & Retirment Report',
         },
       },
     ]

@@ -76,12 +76,12 @@ export class OrderTypeComponent implements OnInit, OnDestroy, AfterViewInit {
   initaialOrderType(form?: NgForm) {
     if (form != null) form.resetForm();
     this.orderTypeService.OrderType = {
-      id: 0,
-      typeName: '',
-      typeNameBangla: '',
-      remark: '',
-      menuPosition: 0,
-      isActive: true,
+        id: 0,
+        typeName: '',
+        typeNameBangla: '',
+        remark: '',
+        menuPosition: 0,
+        isActive: true,
     };
   }
   resetForm() {
@@ -97,7 +97,7 @@ export class OrderTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         isActive: true,
       });
     }
-    this.router.navigate(['/personalInfoSetup/order-type']);
+    this.router.navigate(['/officeSetup/order-type']);
   }
 
   getAllOrderTypes() {
@@ -129,7 +129,7 @@ export class OrderTypeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getAllOrderTypes();
         this.resetForm();
         if (!id) {
-          this.router.navigate(['/personalInfoSetup/order-type']);
+          this.router.navigate(['/officeSetup/order-type']);
         }
     this.loading = false;
       } else {

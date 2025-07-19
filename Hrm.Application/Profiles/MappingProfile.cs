@@ -136,6 +136,7 @@ using Hrm.Application.DTOs.ShiftSetting;
 using Hrm.Application.DTOs.RetiredReason;
 using Hrm.Application.DTOs.OrderType;
 using Hrm.Application.DTOs.OfficeOrder;
+using Hrm.Application.DTOs.FinancialYear;
 
 
 
@@ -621,6 +622,9 @@ namespace Hrm.Application.Profiles
             CreateMap<LeaveRequest, LeaveRequestDto>()
              .ForMember(dest => dest.EmpFirstName, opt => opt.MapFrom(src => src.Employee.FirstName))
              .ForMember(dest => dest.EmpLastName, opt => opt.MapFrom(src => src.Employee.LastName))
+             .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Employee.EmpJobDetail.FirstOrDefault().Department.DepartmentName))
+             .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Employee.EmpJobDetail.FirstOrDefault().Section.SectionName))
+             .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.Employee.EmpJobDetail.FirstOrDefault().Designation.DesignationSetup.Name))
              .ForMember(dest => dest.LeaveTypeName, opt => opt.MapFrom(src => src.LeaveType.LeaveTypeName))
              .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.CountryName))
              .ForMember(dest => dest.IdCardNo, opt => opt.MapFrom(src => src.Employee.IdCardNo));
@@ -809,6 +813,10 @@ namespace Hrm.Application.Profiles
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
                 .ForMember(dest => dest.SectionName, opt => opt.MapFrom(src => src.Section.SectionName))
                 .ForMember(dest => dest.DesignationName, opt => opt.MapFrom(src => src.DesignationSetup.Name)).ReverseMap();
+
+
+            CreateMap<FinancialYear, CreateFinancialYearDto>().ReverseMap();
+            CreateMap<FinancialYear, FinancialYearDto>().ReverseMap();
 
         }
     }

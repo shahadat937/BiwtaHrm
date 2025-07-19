@@ -229,22 +229,22 @@ const payload = {
     this.subscription.push(
       action$.subscribe((response: any) => {
         if (response.success) {
-          if (!id) {
-            this.userForm.firstName = form.value.firstName;
-            this.userForm.lastName = form.value.lastName;
-            this.userForm.userName = form.value.idCardNo;
-            this.userForm.password = this.defaultPassword ?? "Admin@123";
-            this.userForm.empId = response.id;
-            this.userService.submit(this.userForm).subscribe(((res: any) => {
-              if (res.success) {
-                this.empBasicInfoService.updateUserStatus(response.id).subscribe((res) => { })
-              }
-            }));
-            this.empShiftAssignService.cachedData = []
-            this.empShiftForm.empId = response.id;
-            this.empShiftForm.shiftId = form.value.shiftId;
-            this.empShiftAssignService.saveEmpShiftAssign(this.empShiftForm).subscribe((res) => { });
-          }
+        if(!id){
+          this.userForm.firstName = form.value.firstName;
+          this.userForm.lastName = form.value.lastName;
+          this.userForm.userName = form.value.idCardNo;
+          this.userForm.password = this.defaultPassword ?? "Admin@123";
+          this.userForm.empId = response.id;
+          this.userService.submit(this.userForm).subscribe(((res: any) => {
+            if(res.success){
+              this.empBasicInfoService.updateUserStatus(response.id).subscribe((res) =>{})
+            }
+          }));
+          this.empShiftAssignService.cachedData = []
+          this.empShiftForm.empId = response.id;
+          this.empShiftForm.shiftId = this.activeShiftId;
+          this.empShiftAssignService.saveEmpShiftAssign(this.empShiftForm).subscribe((res) =>{});
+        }
           this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right',
           });

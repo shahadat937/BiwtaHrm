@@ -23,7 +23,7 @@ namespace Hrm.Api.Controllers
 {
     [Route(HrmRoutePrefix.Reporting)]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ReportingController : Controller
     {
         private readonly IMediator _mediator;
@@ -230,5 +230,46 @@ namespace Hrm.Api.Controllers
             return Ok(result);
         }
 
+
+        //Leave Reporting
+        [HttpGet]
+        [Route("get-leaveReportingResult")]
+        public async Task<ActionResult<object>> GetLeaveReportingResult([FromQuery] QueryParams queryParams, int? employeeId, int? departmentId, int? sectionId, int? designationId, int? leaveType, string? fromDate, string? toDate)
+        {
+            var result = await _mediator.Send(new GetLeaveReportRequest { 
+                QueryParams = queryParams, 
+                EmployeeId = employeeId,
+                DepartmentId = departmentId,
+                SectionId = sectionId,
+                DesignationId = designationId,
+                LeaveTypeId = leaveType,
+                FromDate = fromDate,
+                ToDate = toDate
+            });
+            return Ok(result);
+        }
+
+
+        //Leave Reporting
+        [HttpGet]
+        [Route("get-prlReportingResult")]
+        public async Task<ActionResult<object>> GetPrlReportingResult([FromQuery] QueryParams QueryParams , string? CurrentDate, string? StartDate, string? EndDate,int? DepartmentId, int? SectionId, int? DesignationId, bool IsPRL, bool IsRetirment, bool IsGone, bool IsWillGone)
+        {
+            var result = await _mediator.Send(new GetPRLReportRequest
+            {
+                QueryParams = QueryParams,
+                CurrentDate = CurrentDate,
+                StartDate = StartDate,
+                EndDate = EndDate,
+                DepartmentId = DepartmentId,
+                SectionId = SectionId,
+                DesignationId = DesignationId,
+                IsPRL = IsPRL,
+                IsRetirment = IsRetirment,
+                IsGone = IsGone,
+                IsWillGone = IsWillGone
+            });
+            return Ok(result);
+        }
     }
 }

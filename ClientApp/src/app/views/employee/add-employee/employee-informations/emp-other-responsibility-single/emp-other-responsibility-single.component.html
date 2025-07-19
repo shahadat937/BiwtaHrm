@@ -5,197 +5,165 @@
         </div>
     </c-card-header>
     <c-card-body [visible]="visible" cCollapse>
-        <form #EmpOtherResponsibilityForm="ngForm" (submit)="onSubmit(EmpOtherResponsibilityForm)" [gutter]="3" novalidate cForm cRow
-            class="needs-validation">
-        <input [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.id" name="id" type="hidden">
-        <input [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.empId" name="empId" type="hidden">
+        <form #EmpOtherResponsibilityForm="ngForm" (submit)="onSubmit(EmpOtherResponsibilityForm)" [gutter]="3"
+            novalidate cForm cRow class="needs-validation">
+            <input [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.id" name="id" type="hidden">
+            <input [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.empId" name="empId" type="hidden">
 
-        <c-col [md]="3">
-            <label cLabel for="orderNo"
-            >Order No<span class="text-danger"></span></label>
-            <input
-                [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.orderNo"
-                name="orderNo" 
-                #orderNo="ngModel"
-                placeholder="orderNo"
-                cFormControl
-                id="orderNo"
-                type="text"
-            />
-        </c-col>
-        
-        <c-col [md]="3">
-            <label cLabel for="orderDate"
-            >Order Date<span class="text-danger"></span></label
-        >
-        <input
-            [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.orderDate"
-            name="orderDate"
-            #orderDate="ngModel"
-            cFormControl
-            id="orderDate"
-            type="date"
-        />
-        @if(!orderDate.valid&&orderDate.touched){
-        <div class="text-left text-danger">Release Date is required</div>
-        }
-        </c-col>
+            <c-col [md]="3">
+                <label cLabel for="orderNo">Order No<span class="text-danger"></span></label>
+                <input [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.orderNo" name="orderNo"
+                    #orderNo="ngModel" placeholder="orderNo" cFormControl id="orderNo" type="text" />
+            </c-col>
 
-        <c-col [md]="3">
-            <label cLabel for="responsibilityTypeId">Select Responsibility<span class="text-danger"></span></label>
-            <div class="input-wrapper">
-            <select [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.responsibilityTypeId" name="responsibilityTypeId" #responsibilityTypeId="ngModel"
-                cFormControl id="responsibilityTypeId" aria-label="Default select example" cSelect>
-                <option [ngValue]="null">Select Responsibility</option>
-    
-                @for(responsibilitie of responsibilities; track responsibilitie.id;let index=$index) {
-                <option [value]="responsibilitie.id">
-                {{ responsibilitie.name }}
-                </option>
+            <c-col [md]="3">
+                <label cLabel for="orderDate">Order Date<span class="text-danger"></span></label>
+                <p-calendar [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.orderDate"
+                    name="orderDate" #orderDate="ngModel" id="orderDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy"
+                    [showIcon]="true" [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                </p-calendar>
+                @if(!orderDate.valid&&orderDate.touched){
+                <div class="text-left text-danger">Release Date is required</div>
                 }
-            </select>
-            @if(!responsibilityTypeId.valid && responsibilityTypeId.touched){
-            <div class="text-left text-danger">Responsibility is required</div>
-            }
-            </div>
-        </c-col>
+            </c-col>
 
-        
-        <c-col [md]="3">
-            <label cLabel for="departmentId">Select Department<span class="text-danger">*</span></label>
-            <div class="input-wrapper">
-            <select (change)="onDepartmentSelectGetDesignation(empOtherResponsibilityService.empOtherResponsibility.departmentId, empJobDetailsId)"
-            (change)="onDepartmentSelectGetSection(empOtherResponsibilityService.empOtherResponsibility.departmentId)"
-            [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.departmentId" name="departmentId" #departmentId="ngModel" required
-                cFormControl id="departmentId" aria-label="Default select example" cSelect>
-                <option [ngValue]="null">Select Department</option>
-    
-                @for(department of departments; track department.id;let index=$index) {
-                <option [value]="department.id">
-                {{ department.name }}
-                </option>
-                }
-            </select>
-            @if(!departmentId.valid && departmentId.touched){
-            <div class="text-left text-danger">Department is required</div>
-            }
-            </div>
-        </c-col>
+            <c-col [md]="3">
+                <label cLabel for="responsibilityTypeId">Select Responsibility<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                    <select [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.responsibilityTypeId"
+                        name="responsibilityTypeId" #responsibilityTypeId="ngModel" cFormControl
+                        id="responsibilityTypeId" aria-label="Default select example" cSelect>
+                        <option [ngValue]="null">Select Responsibility</option>
 
-        <c-col [md]="3">
-            <label cLabel for="sectionId">Section<span class="text-danger"></span></label>
-            <div class="input-wrapper">
-            <select (change)="onSectionSelectGetDesignation(empOtherResponsibilityService.empOtherResponsibility.sectionId, empJobDetailsId)"
-                [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.sectionId" name="sectionId" #sectionId="ngModel"
-                cFormControl id="sectionId" aria-label="Default select example" cSelect>
-                <option [ngValue]="null">Select Section</option>
-    
-                @for(section of sections; track section.id;let index=$index) {
-                <option [value]="section.id">
-                {{ section.name }}
-                </option>
-                }
-            </select>
-            @if(!sectionId.valid && sectionId.touched){
-            <div class="text-left text-danger">Section is required</div>
-            }
-            </div>
-        </c-col>
-        
-        <c-col [md]="3">
-            <label cLabel for="Designation">Designation<span class="text-danger"></span></label>
-            <div class="input-wrapper">
-            <select
-                [(ngModel)]="empJobDetailsService.empJobDetails.designationId" name="designationId" #designationId="ngModel"
-                cFormControl id="Designation" aria-label="Default select example" cSelect>
-                <option [ngValue]="null">Select Designation</option>
-    
-                @for(designation of designations; track designation.id;let index=$index) {
-                <option [value]="designation.id">
-                {{ designation.name }}
-                </option>
-                }
-            </select>
-            @if(!designationId.valid && designationId.touched){
-            <div class="text-left text-danger">Designation is required</div>
-            }
-            </div>
-        </c-col>
-
-        <c-col [md]="3">
-            <label cLabel for="startDate"
-            >Joining Date<span class="text-danger"></span></label
-        >
-        <input
-            [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.startDate"
-            name="startDate"
-            #startDate="ngModel"
-            cFormControl
-            id="startDate"
-            type="date"
-        />
-        @if(!startDate.valid&&startDate.touched){
-        <div class="text-left text-danger">Start Date is required</div>
-        }
-        </c-col>
-        
-        <c-col [md]="3">
-            <label cLabel for="endDate"
-            >Release Date<span class="text-danger"></span></label
-        >
-        <input
-            [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.endDate"
-            name="endDate"
-            #endDate="ngModel"
-            cFormControl
-            id="endDate"
-            type="date"
-        />
-        @if(!endDate.valid&&endDate.touched){
-        <div class="text-left text-danger">Release Date is required</div>
-        }
-        </c-col>
-        
-        <c-col [md]="3">
-            <label cLabel for="serviceStatus">Status</label>
-            <select [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.serviceStatus"
-            name="serviceStatus"
-            cSelect
-            id="serviceStatus">
-              <option value="true">Running</option>
-              <option value="false">Released</option>
-            </select>
-        </c-col>
-        
-        <c-col [md]="4">
-            <label cLabel for="remark"
-            >Remark<span class="text-danger"></span></label>
-            <input
-                [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.remark"
-                name="remark" 
-                #Remark="ngModel"
-                placeholder="Remark"
-                cFormControl
-                id="remark"
-                type="text"
-            />
-        </c-col>
-        
-        <c-col [xs]="12">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <button [disabled]="loading" [disabled]="EmpOtherResponsibilityForm.invalid" cButton class="me-1"
-                        color="primary" type="submit">
-                        <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-                        {{ btnText }}
-                    </button>
-                    <button cButton color="secondary" (click)="resetForm()">Reset</button>
+                        @for(responsibilitie of responsibilities; track responsibilitie.id;let index=$index) {
+                        <option [value]="responsibilitie.id">
+                            {{ responsibilitie.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(!responsibilityTypeId.valid && responsibilityTypeId.touched){
+                    <div class="text-left text-danger">Responsibility is required</div>
+                    }
                 </div>
-                <div>
-                    <button cButton color="danger" (click)="cancel()">Cancle</button>
+            </c-col>
+
+
+            <c-col [md]="3">
+                <label cLabel for="departmentId">Select Department<span class="text-danger">*</span></label>
+                <div class="input-wrapper">
+                    <select
+                        (change)="onDepartmentSelectGetDesignation(empOtherResponsibilityService.empOtherResponsibility.departmentId, empJobDetailsId)"
+                        (change)="onDepartmentSelectGetSection(empOtherResponsibilityService.empOtherResponsibility.departmentId)"
+                        [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.departmentId"
+                        name="departmentId" #departmentId="ngModel" required cFormControl id="departmentId"
+                        aria-label="Default select example" cSelect>
+                        <option [ngValue]="null">Select Department</option>
+
+                        @for(department of departments; track department.id;let index=$index) {
+                        <option [value]="department.id">
+                            {{ department.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(!departmentId.valid && departmentId.touched){
+                    <div class="text-left text-danger">Department is required</div>
+                    }
                 </div>
-            </div>
-        </c-col>
+            </c-col>
+
+            <c-col [md]="3">
+                <label cLabel for="sectionId">Section<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                    <select
+                        (change)="onSectionSelectGetDesignation(empOtherResponsibilityService.empOtherResponsibility.sectionId, empJobDetailsId)"
+                        [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.sectionId" name="sectionId"
+                        #sectionId="ngModel" cFormControl id="sectionId" aria-label="Default select example" cSelect>
+                        <option [ngValue]="null">Select Section</option>
+
+                        @for(section of sections; track section.id;let index=$index) {
+                        <option [value]="section.id">
+                            {{ section.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(!sectionId.valid && sectionId.touched){
+                    <div class="text-left text-danger">Section is required</div>
+                    }
+                </div>
+            </c-col>
+
+            <c-col [md]="3">
+                <label cLabel for="Designation">Designation<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                    <select [(ngModel)]="empJobDetailsService.empJobDetails.designationId" name="designationId"
+                        #designationId="ngModel" cFormControl id="Designation" aria-label="Default select example"
+                        cSelect>
+                        <option [ngValue]="null">Select Designation</option>
+
+                        @for(designation of designations; track designation.id;let index=$index) {
+                        <option [value]="designation.id">
+                            {{ designation.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(!designationId.valid && designationId.touched){
+                    <div class="text-left text-danger">Designation is required</div>
+                    }
+                </div>
+            </c-col>
+
+            <c-col [md]="3">
+                <label cLabel for="startDate">Joining Date<span class="text-danger"></span></label>
+                <p-calendar [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.startDate"
+                    name="startDate" #startDate="ngModel" id="startDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy"
+                    [showIcon]="true" [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                </p-calendar>
+                @if(!startDate.valid&&startDate.touched){
+                <div class="text-left text-danger">Start Date is required</div>
+                }
+            </c-col>
+
+            <c-col [md]="3">
+                <label cLabel for="endDate">Release Date<span class="text-danger"></span></label>
+                <p-calendar [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.endDate" name="endDate"
+                    #endDate="ngModel" id="endDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                    [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                </p-calendar>
+                @if(!endDate.valid&&endDate.touched){
+                <div class="text-left text-danger">Release Date is required</div>
+                }
+            </c-col>
+
+            <c-col [md]="3">
+                <label cLabel for="serviceStatus">Status</label>
+                <select [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.serviceStatus"
+                    name="serviceStatus" cSelect id="serviceStatus">
+                    <option value="true">Running</option>
+                    <option value="false">Released</option>
+                </select>
+            </c-col>
+
+            <c-col [md]="4">
+                <label cLabel for="remark">Remark<span class="text-danger"></span></label>
+                <input [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.remark" name="remark"
+                    #Remark="ngModel" placeholder="Remark" cFormControl id="remark" type="text" />
+            </c-col>
+
+            <c-col [xs]="12">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <button [disabled]="loading" [disabled]="EmpOtherResponsibilityForm.invalid" cButton
+                            class="me-1" color="primary" type="submit">
+                            <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                            {{ btnText }}
+                        </button>
+                        <button cButton color="secondary" (click)="resetForm()">Reset</button>
+                    </div>
+                    <div>
+                        <button cButton color="danger" (click)="cancel()">Cancle</button>
+                    </div>
+                </div>
+            </c-col>
 
         </form>
     </c-card-body>
@@ -208,77 +176,76 @@
     <c-card-body>
         <div class="example-header">
             <mat-form-field>
-              <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here.." />
-              <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
-                (click)="filter.value = ''; applyFilter('')"></button>
+                <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here.." />
+                <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
+                    (click)="filter.value = ''; applyFilter('')"></button>
             </mat-form-field>
-          </div>
-          <div class="mat-elevation-z8 table-responsive">
+        </div>
+        <div class="mat-elevation-z8 table-responsive">
             <table mat-table [dataSource]="dataSource">
-              <ng-container matColumnDef="slNo">
-                <th mat-header-cell *matHeaderCellDef>SL</th>
-                <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-              </ng-container>
-              <ng-container matColumnDef="responsibilityName">
-                <th mat-header-cell *matHeaderCellDef>Responsibility</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.responsibilityName }}
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="department">
-                <th mat-header-cell *matHeaderCellDef>Department</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.departmentName }}
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="section">
-                <th mat-header-cell *matHeaderCellDef>Section</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.sectionName }}
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="designation">
-                <th mat-header-cell *matHeaderCellDef>Designation</th>
-                <td mat-cell *matCellDef="let element">
-                    <label *ngIf="element.designationName">{{ element.designationName }}</label>
-                    <label *ngIf="element.designationSetupName">{{ element.designationSetupName }}</label>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="joiningDate">
-                <th mat-header-cell *matHeaderCellDef>Joining Date</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.startDate }}
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="releaseDate">
-                <th mat-header-cell *matHeaderCellDef>Release Date</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.endDate }}
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef>Status</th>
-                <td mat-cell *matCellDef="let element">
-                    <c-badge *ngIf="element.serviceStatus" color="warning">Running</c-badge>
-                    <c-badge *ngIf="!element.serviceStatus" color="success">Released</c-badge>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="Action">
-                <th mat-header-cell *matHeaderCellDef>Action</th>
-                <td mat-cell *matCellDef="let element">
-                    <button class="custom-button" type="button" (click)="find(element.id)">
-                        <svg cIcon name="cilPencil"></svg>
-                    </button>
-                    <button class="custom-button" type="button" (click)="delete(element)">
-                        <svg cIcon name="cilTrash"></svg>
-                    </button>
-                </td>
-              </ng-container>
-      
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                <ng-container matColumnDef="slNo">
+                    <th mat-header-cell *matHeaderCellDef>SL</th>
+                    <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                </ng-container>
+                <ng-container matColumnDef="responsibilityName">
+                    <th mat-header-cell *matHeaderCellDef>Responsibility</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.responsibilityName }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="department">
+                    <th mat-header-cell *matHeaderCellDef>Department</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.departmentName }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="section">
+                    <th mat-header-cell *matHeaderCellDef>Section</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.sectionName }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="designation">
+                    <th mat-header-cell *matHeaderCellDef>Designation</th>
+                    <td mat-cell *matCellDef="let element">
+                        <label *ngIf="element.designationName">{{ element.designationName }}</label>
+                        <label *ngIf="element.designationSetupName">{{ element.designationSetupName }}</label>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="joiningDate">
+                    <th mat-header-cell *matHeaderCellDef>Joining Date</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.startDate }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="releaseDate">
+                    <th mat-header-cell *matHeaderCellDef>Release Date</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.endDate }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let element">
+                        <c-badge *ngIf="element.serviceStatus" color="warning">Running</c-badge>
+                        <c-badge *ngIf="!element.serviceStatus" color="success">Released</c-badge>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button class="custom-button" type="button" (click)="find(element.id)">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                        <button class="custom-button" type="button" (click)="delete(element)">
+                            <svg cIcon name="cilTrash"></svg>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
-          </div>
+        </div>
     </c-card-body>
 </c-card>
-

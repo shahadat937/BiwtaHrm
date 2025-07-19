@@ -7,6 +7,7 @@ import { EmpPersonalInfoService } from '../../../service/emp-personal-info.servi
 import { UserService } from 'src/app/views/usermanagement/service/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { CountryService } from 'src/app/views/basic-setup/service/Country.service';
+import {SharedService } from '../../../../../shared/shared.service'
 
 @Component({
   selector: 'app-personal-information',
@@ -38,7 +39,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     public empPersonalInfoService: EmpPersonalInfoService,
     public userService: UserService,
     private toastr: ToastrService,
-    public countryService: CountryService,) { }
+    public countryService: CountryService,
+    public sharedService: SharedService
+  ) { }
 
   ngOnInit(): void {
     this.getEmployeeByEmpId();
@@ -70,6 +73,9 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       if (res) {
         this.headerText = 'Update Personal Information';
         this.btnText = 'Update';
+        res.drivingLicenceDate = this.sharedService.parseDate(res.drivingLicenceDate)
+        res.passportExpireDate = this.sharedService.parseDate(res.passportExpireDate)
+        this.empPersonalInfoService.personalInfo = res;
       }
       else {
         this.headerText = 'Add Personal Information';
@@ -248,12 +254,26 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm): void {
+
+    const formatedDrivingLicenceDate = this.sharedService.formatDateOnly(this.empPersonalInfoService.personalInfo.drivingLicenceDate!);
+    const formatedpassportExpireDate = this.sharedService.formatDateOnly(this.empPersonalInfoService.personalInfo.passportExpireDate!);
+
+const payload = {
+  ...form.value,
+  drivingLicenceDate: formatedDrivingLicenceDate,
+  passportExpireDate : formatedpassportExpireDate
+  
+};
+
     this.loading = true;
     this.empPersonalInfoService.cachedData = [];
     const id = form.value.id;
     const action$ = id
-      ? this.empPersonalInfoService.updateEmpPersonalInfo(id, form.value)
-      : this.empPersonalInfoService.saveEmpPersonalInfo(form.value);
+      ? this.empPersonalInfoService.updateEmpPersonalInfo(id, payload)
+      : this.empPersonalInfoService.saveEmpPersonalInfo(payload);
+    // const action$ = id
+    //   ? this.empPersonalInfoService.updateEmpPersonalInfo(id, form.value)
+    //   : this.empPersonalInfoService.saveEmpPersonalInfo(form.value);
 
     // this.subscription = 
     this.subscription.push(

@@ -7,7 +7,7 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { EmpSpouseInfoService } from '../../../service/emp-spouse-info.service';
 import { EmpSpouseInfoModule } from '../../../model/emp-spouse-info.module';
-
+import { SharedService } from '../../../../../shared/shared.service'
 @Component({
   selector: 'app-emp-spouse-info',
   templateUrl: './emp-spouse-info.component.html',
@@ -21,7 +21,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
   btnText: string = '';
   occupations: SelectedModel[] = [];
   // subscription: Subscription = new Subscription();
-  subscription: Subscription[]=[]
+  subscription: Subscription[] = []
   loading: boolean = false;
   empSpouse: EmpSpouseInfoModule[] = [];
 
@@ -31,7 +31,9 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
     private confirmService: ConfirmService,
     private toastr: ToastrService,
     public empSpouseInfoService: EmpSpouseInfoService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    public sharedService: SharedService
+  ) { }
 
 
   ngOnInit(): void {
@@ -41,7 +43,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.forEach(subs=>subs.unsubscribe());
+      this.subscription.forEach(subs => subs.unsubscribe());
     }
   }
 
@@ -53,7 +55,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
   get empSpouseListArray() {
     return this.EmpSpouseInfoForm.controls["empSpouseList"] as FormArray;
   }
-  
+
   addSpouse() {
     this.empSpouseListArray.push(new FormGroup({
       id: new FormControl(0),
@@ -72,30 +74,30 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
     if (id != 0) {
       this.subscription.push(
         this.confirmService
-        .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
-        .subscribe((result) => {
-          if (result) {
-            this.empSpouseInfoService.deleteEmpSpouseInfo(id).subscribe(
-              (res) => {
-                this.toastr.warning('Delete sucessfully ! ', ` `, {
-                  positionClass: 'toast-top-right',
-                });
+          .confirm('Confirm delete message', 'Are You Sure Delete This  Item')
+          .subscribe((result) => {
+            if (result) {
+              this.empSpouseInfoService.deleteEmpSpouseInfo(id).subscribe(
+                (res) => {
+                  this.toastr.warning('Delete sucessfully ! ', ` `, {
+                    positionClass: 'toast-top-right',
+                  });
 
-                if (this.empSpouseListArray.controls.length > 0)
-                  this.empSpouseListArray.removeAt(index);
-                this.getEmployeeSpouseInfoByEmpId();
-              },
-              (err) => {
-                this.toastr.error('Somethig Wrong ! ', ` `, {
-                  positionClass: 'toast-top-right',
-                });
-                console.log(err);
-              }
-            );
-          }
-        })
+                  if (this.empSpouseListArray.controls.length > 0)
+                    this.empSpouseListArray.removeAt(index);
+                  this.getEmployeeSpouseInfoByEmpId();
+                },
+                (err) => {
+                  this.toastr.error('Somethig Wrong ! ', ` `, {
+                    positionClass: 'toast-top-right',
+                  });
+                  console.log(err);
+                }
+              );
+            }
+          })
       )
-      
+
     }
     else if (id == 0) {
       if (this.empSpouseListArray.controls.length > 0)
@@ -111,6 +113,11 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
           this.headerText = 'Update Spouse Information';
           this.btnText = 'Update';
           this.empSpouse = res;
+          res.forEach(item => {
+            item.dateOfBirth = this.sharedService.parseDate(item.dateOfBirth);
+          });
+
+          console.log(res);
           this.patchSpouseInfo(res);
         }
         else {
@@ -120,7 +127,7 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
         }
       })
     )
-    
+
   }
 
   patchSpouseInfo(spouseInfoList: any[]) {
@@ -151,10 +158,10 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
   getSelectedOccupation() {
     this.subscription.push(
       this.empSpouseInfoService.getSelectedOccupation().subscribe((res) => {
-      this.occupations = res;
-    })
+        this.occupations = res;
+      })
     )
-    
+
   }
 
   cancel() {
@@ -163,26 +170,32 @@ export class EmpSpouseInfoComponent implements OnInit, OnDestroy {
 
   insertSpouse() {
     this.loading = true;
+
+    const spouseList = this.EmpSpouseInfoForm.get("empSpouseList")?.value.map((item: any) => ({
+      ...item,
+      dateOfBirth: this.sharedService.formatDateOnly(item.dateOfBirth),
+    }));
+
     this.subscription.push(
-      this.empSpouseInfoService.saveEmpSpouseInfo(this.EmpSpouseInfoForm.get("empSpouseList")?.value).subscribe(((res: any) => {
-      if (res.success) {
-        this.toastr.success('', `${res.message}`, {
-          positionClass: 'toast-top-right',
-        });
+      this.empSpouseInfoService.saveEmpSpouseInfo(spouseList).subscribe(((res: any) => {
+        if (res.success) {
+          this.toastr.success('', `${res.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.loading = false;
+          this.getEmployeeSpouseInfoByEmpId();
+          this.cancel();
+        } else {
+          this.toastr.warning('', `${res.message}`, {
+            positionClass: 'toast-top-right',
+          });
+          this.loading = false;
+        }
         this.loading = false;
-        this.getEmployeeSpouseInfoByEmpId();
-        this.cancel();
-      } else {
-        this.toastr.warning('', `${res.message}`, {
-          positionClass: 'toast-top-right',
-        });
-        this.loading = false;
-      }
-      this.loading = false;
-    })
+      })
+      )
     )
-    )
-    
+
   }
 
 

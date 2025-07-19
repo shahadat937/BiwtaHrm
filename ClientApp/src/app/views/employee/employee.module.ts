@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CalendarModule } from 'primeng/calendar';
 import {
   BadgeModule,
   ButtonGroupModule,
@@ -146,6 +147,7 @@ import { RetiredReasonService } from '../basic-setup/service/retired-reason.serv
     RewardPunishmentComponent,
   ],
   imports: [
+    CalendarModule,
     CommonModule,
     EmployeeRoutingModule,
     DocsComponentsModule,
@@ -192,7 +194,7 @@ import { RetiredReasonService } from '../basic-setup/service/retired-reason.serv
     DropdownModule,
     ScrollingModule,
     BadgeModule,
-    NgxPrintModule
+    NgxPrintModule,
   ],
   providers:
     [

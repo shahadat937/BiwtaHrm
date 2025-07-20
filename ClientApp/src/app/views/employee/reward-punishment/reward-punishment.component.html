@@ -31,15 +31,18 @@
                         <c-card-body>
                             <div cRow [gutter]="3">
                                 <c-col [md]="4">
-                                    <label cLabel for="idCardNo">Employee PMS No<span class="text-danger">*</span></label>
+                                    <label cLabel for="idCardNo">Employee PMS No<span
+                                            class="text-danger">*</span></label>
                                     <c-input-group>
-                                        <button cButton color="secondary" type="button" cTooltip="Search Employee" cTooltipPlacement="bottom" (click)="EmployeeListModal()">
+                                        <button cButton color="secondary" type="button" cTooltip="Search Employee"
+                                            cTooltipPlacement="bottom" (click)="EmployeeListModal()">
                                             <svg [cIcon]="icons.cilSearch"></svg>
                                         </button>
                                         <input aria-describedby="idCardNo" cFormControl
-                                            [(ngModel)]="empTransferPostingService.empTransferPosting.empIdCardNo" name="empIdCardNo"
-                                            #idCardNo="ngModel" required placeholder="Enter Employee PMIS No" id="idCardNo"
-                                            type="text" #idCardNoInput />
+                                            [(ngModel)]="empTransferPostingService.empTransferPosting.empIdCardNo"
+                                            name="empIdCardNo" #idCardNo="ngModel" required
+                                            placeholder="Enter Employee PMIS No" id="idCardNo" type="text"
+                                            #idCardNoInput />
                                         <button cButton color="primary" type="button"
                                             (click)="getEmpInfoByIdCardNo(idCardNoInput.value)">
                                             Select
@@ -49,37 +52,33 @@
                                     <div class="text-left text-danger">PMS No is required</div>
                                     }
                                 </c-col>
-    
+
                                 @if(isValidEmp) {
                                 <c-col [md]="4">
                                     <label cLabel for="empName">Employee Name<span class="text-danger"></span></label>
                                     <input [(ngModel)]="empRewardPunishmentService.empRewardPunishment.empName"
                                         name="empName" #empName="ngModel" cFormControl id="empName" readonly />
                                 </c-col>
-    
+
                                 <c-col [md]="4">
                                     <label cLabel for="departmentName">Department<span
                                             class="text-danger"></span></label>
-                                    <input
-                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.departmentName"
-                                        name="departmentName" #departmentName="ngModel" cFormControl
-                                        id="departmentName" readonly />
+                                    <input [(ngModel)]="empRewardPunishmentService.empRewardPunishment.departmentName"
+                                        name="departmentName" #departmentName="ngModel" cFormControl id="departmentName"
+                                        readonly />
                                 </c-col>
-                                
+
                                 <c-col [md]="4" *ngIf="empRewardPunishmentService.empRewardPunishment.sectionName">
-                                    <label cLabel for="sectionName">Section<span
-                                            class="text-danger"></span></label>
-                                    <input
-                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.sectionName"
-                                        name="sectionName" #sectionName="ngModel" cFormControl
-                                        id="sectionName" readonly />
+                                    <label cLabel for="sectionName">Section<span class="text-danger"></span></label>
+                                    <input [(ngModel)]="empRewardPunishmentService.empRewardPunishment.sectionName"
+                                        name="sectionName" #sectionName="ngModel" cFormControl id="sectionName"
+                                        readonly />
                                 </c-col>
-    
+
                                 <c-col [md]="4">
                                     <label cLabel for="designationName">Designation<span
                                             class="text-danger"></span></label>
-                                    <input
-                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.designationName"
+                                    <input [(ngModel)]="empRewardPunishmentService.empRewardPunishment.designationName"
                                         name="designationName" #designationName="ngModel" cFormControl
                                         id="designationName" readonly />
                                 </c-col>
@@ -95,34 +94,42 @@
                         </c-card-header>
                         <c-card-body>
                             <div cRow [gutter]="3">
-                                
+
                                 <c-col [md]="4">
-                                    <label cLabel for="orderNo">Order No<span
-                                            class="text-danger"></span></label>
-                                    <input
-                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.orderNo"
+                                    <label cLabel for="orderNo">Order No<span class="text-danger"></span></label>
+                                    <input [(ngModel)]="empRewardPunishmentService.empRewardPunishment.orderNo"
                                         name="orderNo" #orderNo="ngModel" cFormControl placeholder="Order No"
                                         id="orderNo" type="text" />
                                 </c-col>
-                                
+
                                 <c-col [md]="4">
-                                    <label cLabel for="orderDate">Order Date<span
-                                            class="text-danger"></span></label>
-                                    <input
-                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.orderDate"
+                                    <label cLabel for="orderDate">Order Date<span class="text-danger"></span></label>
+                                    <!-- <input [(ngModel)]="empRewardPunishmentService.empRewardPunishment.orderDate"
                                         name="orderDate" #orderDate="ngModel" cFormControl placeholder="Order No"
-                                        id="orderDate" type="date" />
+                                        id="orderDate" type="date" /> -->
+
+                                    <p-calendar [(ngModel)]="empRewardPunishmentService.empRewardPunishment.orderDate"
+                                        name="orderDate" #orderDate="ngModel" cFormControl placeholder="dd/mm/yyyy"
+                                        id="orderDate" dateFormat="dd/mm/yy" [showIcon]="true" [showOnFocus]="false"
+                                        class="coreui-datepicker w-100" appendTo="body">
+                                    </p-calendar>
+
+
+
                                 </c-col>
 
                                 <c-col [md]="4">
-                                    <label cLabel for="rewardPunishmentTypeId">Reward/Punishment Type<span class="text-danger">*</span></label>
+                                    <label cLabel for="rewardPunishmentTypeId">Reward/Punishment Type<span
+                                            class="text-danger">*</span></label>
                                     <div class="input-wrapper">
-                                        <select (change)="getWithdrawAndPriorityStatus(empRewardPunishmentService.empRewardPunishment.rewardPunishmentTypeId)"
-                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.rewardPunishmentTypeId"
+                                        <select
+                                            (change)="getWithdrawAndPriorityStatus(empRewardPunishmentService.empRewardPunishment.rewardPunishmentTypeId)"
+                                            [(ngModel)]="empRewardPunishmentService.empRewardPunishment.rewardPunishmentTypeId"
                                             name="rewardPunishmentTypeId" #rewardPunishmentTypeId="ngModel" cFormControl
-                                            id="rewardPunishmentTypeId" aria-label="Default select example" required cSelect>
+                                            id="rewardPunishmentTypeId" aria-label="Default select example" required
+                                            cSelect>
                                             <option [ngValue]="null">Reward/Punishment Type</option>
-                    
+
                                             @for(rewardType of rewardType; track rewardType.id;let index=$index) {
                                             <option [value]="rewardType.id">
                                                 {{ rewardType.name }}
@@ -134,16 +141,20 @@
                                         }
                                     </div>
                                 </c-col>
-                                
+
                                 <c-col [md]="4" *ngIf="isPriority">
-                                    <label cLabel for="rewardPunishmentPriorityId">Reward/Punishment Priority<span class="text-danger"></span></label>
+                                    <label cLabel for="rewardPunishmentPriorityId">Reward/Punishment Priority<span
+                                            class="text-danger"></span></label>
                                     <div class="input-wrapper">
-                                        <select [(ngModel)]="empRewardPunishmentService.empRewardPunishment.rewardPunishmentPriorityId"
-                                            name="rewardPunishmentPriorityId" #rewardPunishmentPriorityId="ngModel" cFormControl
-                                            id="rewardPunishmentPriorityId" aria-label="Default select example" cSelect>
+                                        <select
+                                            [(ngModel)]="empRewardPunishmentService.empRewardPunishment.rewardPunishmentPriorityId"
+                                            name="rewardPunishmentPriorityId" #rewardPunishmentPriorityId="ngModel"
+                                            cFormControl id="rewardPunishmentPriorityId"
+                                            aria-label="Default select example" cSelect>
                                             <option [ngValue]="null">Reward/Punishment Priority</option>
-                    
-                                            @for(rewardPriority of rewardPriority; track rewardPriority.id;let index=$index) {
+
+                                            @for(rewardPriority of rewardPriority; track rewardPriority.id;let
+                                            index=$index) {
                                             <option [value]="rewardPriority.id">
                                                 {{ rewardPriority.name }}
                                             </option>
@@ -154,11 +165,13 @@
                                         }
                                     </div>
                                 </c-col>
-                                
+
                                 <c-col [md]="4" *ngIf="isWithdraw">
-                                    <label cLabel for="withdrawStatus">Withdraw Status<span class="text-danger"></span></label>
+                                    <label cLabel for="withdrawStatus">Withdraw Status<span
+                                            class="text-danger"></span></label>
                                     <div class="input-wrapper">
-                                        <select [(ngModel)]="empRewardPunishmentService.empRewardPunishment.withdrawStatus"
+                                        <select
+                                            [(ngModel)]="empRewardPunishmentService.empRewardPunishment.withdrawStatus"
                                             name="withdrawStatus" #withdrawStatus="ngModel" cFormControl
                                             id="withdrawStatus" aria-label="Default select example" required cSelect>
                                             <option [ngValue]="true">Yes</option>
@@ -169,30 +182,35 @@
                                         }
                                     </div>
                                 </c-col>
-                                
+
                                 <c-col [md]="4" *ngIf="isWithdraw">
                                     <label cLabel for="withdrawOrderNo">Withdraw Order No<span
                                             class="text-danger"></span></label>
-                                    <input
-                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.withdrawOrderNo"
-                                        name="withdrawOrderNo" #withdrawOrderNo="ngModel" cFormControl placeholder="Withdraw Order No"
-                                        id="withdrawOrderNo" type="text" />
+                                    <input [(ngModel)]="empRewardPunishmentService.empRewardPunishment.withdrawOrderNo"
+                                        name="withdrawOrderNo" #withdrawOrderNo="ngModel" cFormControl
+                                        placeholder="Withdraw Order No" id="withdrawOrderNo" type="text" />
                                 </c-col>
 
                                 <c-col [md]="4" *ngIf="isWithdraw">
                                     <label cLabel for="withdrawDate">Withdraw Date<span
                                             class="text-danger"></span></label>
-                                    <input
+                                    <!-- <input
                                         [(ngModel)]="empRewardPunishmentService.empRewardPunishment.withdrawDate"
                                         name="withdrawDate" #withdrawDate="ngModel" cFormControl placeholder="Withdraw Date"
-                                        id="withdrawDate" type="date" />
+                                        id="withdrawDate" type="date" /> -->
+
+                                    <p-calendar
+                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.withdrawDate"
+                                        name="withdrawDate" #withdrawDate="ngModel" cFormControl id="withdrawDate"
+                                        dateFormat="dd/mm/yy" placeholder="Withdraw Date" [showIcon]="true"
+                                        [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                                    </p-calendar>
+
                                 </c-col>
 
                                 <c-col [md]="12">
-                                    <label cLabel for="description">Description<span
-                                            class="text-danger"></span></label>
-                                    <textarea
-                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.description"
+                                    <label cLabel for="description">Description<span class="text-danger"></span></label>
+                                    <textarea [(ngModel)]="empRewardPunishmentService.empRewardPunishment.description"
                                         name="description" #description="ngModel" cFormControl
                                         id="description"></textarea>
                                 </c-col>
@@ -206,8 +224,8 @@
                 <button mat-raised-button color="warn" type="button" (click)="closeModal()">
                     <mat-icon>cancel</mat-icon> Close
                 </button>
-                <button [disabled]="EmpRewardPunishmentFrom.invalid" mat-raised-button class="me-1" color="primary" type="submit"
-                    (click)="onSubmit(EmpRewardPunishmentFrom)">
+                <button [disabled]="EmpRewardPunishmentFrom.invalid" mat-raised-button class="me-1" color="primary"
+                    type="submit" (click)="onSubmit(EmpRewardPunishmentFrom)">
                     <mat-icon>{{btnIcon}}</mat-icon> {{ btnText }}
                 </button>
             </div>

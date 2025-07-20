@@ -14,46 +14,53 @@
                                 <div class="form-group mb-2" cRow [gutter]="3">
                                     <input type="hidden" formControlName="id" />
                                     <input type="hidden" formControlName="empId" />
-                                    
+
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="trainingTypeId{{i}}">Select Training Type</label>
+                                        <label class="col-form-label" for="trainingTypeId{{i}}">Select Training
+                                            Type</label>
                                         <select formControlName="trainingTypeId" class="form-select">
                                             <option value="null" disabled>Select Training Type</option>
                                             <option *ngFor="let item of trainingTypes" value="{{item.id}}">{{item.name}}
                                             </option>
                                         </select>
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="trainingName{{i}}">Training Name</label>
                                         <input formControlName="trainingName" class="form-control"
                                             id="trainingName{{i}}" placeholder="Training Name" type="text">
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="instituteName{{i}}">Training Institute</label>
+                                        <label class="col-form-label" for="instituteName{{i}}">Training
+                                            Institute</label>
                                         <input formControlName="instituteName" class="form-control"
                                             id="instituteName{{i}}" placeholder="Training Institute" type="text">
                                     </c-col>
 
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="fromDate{{i}}">From Date</label>
-                                        <input type="date" formControlName="fromDate" class="form-control"
-                                            id="fromDate{{i}}" />
+                                        <p-calendar formControlName="fromDate" id="fromDate{{i}}" dateFormat="dd/mm/yy"
+                                            placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+                                            class="coreui-datepicker w-100" appendTo="body">
+                                        </p-calendar>
                                     </c-col>
 
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="toDate{{i}}">To Date</label>
-                                        <input type="date" formControlName="toDate" class="form-control"
-                                            id="toDate{{i}}" />
+                                        <p-calendar formControlName="toDate" id="toDate{{i}}" dateFormat="dd/mm/yy"
+                                            placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+                                            class="coreui-datepicker w-100" appendTo="body">
+                                        </p-calendar>
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="trainingDuration{{i}}">Training Duration</label>
+                                        <label class="col-form-label" for="trainingDuration{{i}}">Training
+                                            Duration</label>
                                         <input formControlName="trainingDuration" class="form-control"
                                             id="trainingDuration{{i}}" placeholder="Training Duration" type="text">
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="countryId{{i}}">Select Country</label>
                                         <select formControlName="countryId" class="form-select">
@@ -63,7 +70,7 @@
                                         </select>
                                     </c-col>
 
-                            
+
                                     <c-col [md]="8">
                                         <label class="col-form-label" for="remark{{i}}">Remark/Purpose</label>
                                         <textarea formControlName="remark" class="form-control" rows="1"
@@ -71,7 +78,8 @@
                                     </c-col>
 
                                     <c-col [md]="12" class="d-flex justify-content-end">
-                                        <button cTooltip="Delete" cTooltipPlacement="bottom" mat-mini-fab color="warn" type="button"
+                                        <button cTooltip="Delete" cTooltipPlacement="bottom" mat-mini-fab color="warn"
+                                            type="button"
                                             (click)="removeTrainingList(i, p.get('id')?.value ?? null)"><mat-icon>delete</mat-icon></button>
                                     </c-col>
                                 </div>
@@ -81,8 +89,8 @@
                 </ng-container>
             </ng-container>
             <c-col [md]="12" class="d-flex justify-content-end">
-                <button cTooltip="Add" cTooltipPlacement="bottom" mat-mini-fab class="bg-success text-light mb-3" type="button"
-                    (click)="addTraining()"><mat-icon>add</mat-icon></button>
+                <button cTooltip="Add" cTooltipPlacement="bottom" mat-mini-fab class="bg-success text-light mb-3"
+                    type="button" (click)="addTraining()"><mat-icon>add</mat-icon></button>
             </c-col>
             <div class="form-group">
                 <c-col [xs]="12">
@@ -95,7 +103,8 @@
                             </button>
                         </div>
                         <div>
-                            <button cButton color="danger" class="text-light" (click)="cancel()" type="button">Cancel</button>
+                            <button cButton color="danger" class="text-light" (click)="cancel()"
+                                type="button">Cancel</button>
                         </div>
                     </div>
                 </c-col>
@@ -104,4 +113,3 @@
 
     </c-card-body>
 </c-card>
-

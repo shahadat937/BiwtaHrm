@@ -8,6 +8,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { EmpTrainingInfoService } from '../../../service/emp-training-info.service';
 import { EmpTrainingInfo } from '../../../model/emp-training-info';
 import { CountryService } from 'src/app/views/basic-setup/service/Country.service';
+import { SharedService } from '../../../../../shared/shared.service'
 
 @Component({
   selector: 'app-emp-training-info',
@@ -37,7 +38,9 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     public empTrainingInfoService: EmpTrainingInfoService,
     public countryService: CountryService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    public sharedService: SharedService
+  ) { }
 
 
   ngOnInit(): void {
@@ -121,6 +124,10 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
       if (res.length > 0) {
         this.headerText = 'Update Training Information';
         this.btnText = 'Update';
+           res.forEach(item => {
+            item.toDate = this.sharedService.parseDate(item.toDate);
+            item.fromDate = this.sharedService.parseDate(item.fromDate);
+          });
         this.empTrainingInfo = res;
         this.patchTrainingInfo(res);
       }
@@ -215,8 +222,15 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
 
   insertTraining() {
     this.loading = true;
+
+    const triningList = this.EmpTrainingInfoForm.get("empTrainingInfoList")?.value.map((item: any) => ({
+      ...item,
+      fromDate: this.sharedService.formatDateOnly(item.fromDate),
+      toDate: this.sharedService.formatDateOnly(item.toDate),
+    }));
+
     this.subscription.push(
-      this.empTrainingInfoService.save(this.EmpTrainingInfoForm.get("empTrainingInfoList")?.value).subscribe(((res: any) => {
+      this.empTrainingInfoService.save(triningList).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',

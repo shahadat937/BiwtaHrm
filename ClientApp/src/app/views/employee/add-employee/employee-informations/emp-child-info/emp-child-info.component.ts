@@ -9,6 +9,7 @@ import { EmpChildInfoModule } from '../../../model/emp-child-info.module';
 import { EmpChildInfoService } from '../../../service/emp-child-info.service';
 import { EmpSpouseInfoService } from '../../../service/emp-spouse-info.service';
 import { EmpPersonalInfoService } from '../../../service/emp-personal-info.service';
+import {SharedService } from '../../../../../shared/shared.service'
 
 @Component({
   selector: 'app-emp-child-info',
@@ -39,7 +40,9 @@ export class EmpChildInfoComponent implements OnInit, OnDestroy {
     public empChildInfoService: EmpChildInfoService,
     public empSpouseInfoService: EmpSpouseInfoService,
     public empPersonalInfoService: EmpPersonalInfoService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    public sharedService: SharedService
+  ) { }
 
 
   ngOnInit(): void {
@@ -63,6 +66,10 @@ export class EmpChildInfoComponent implements OnInit, OnDestroy {
         console.log("Child Info: ", res)
         this.headerText = 'Update Child Information';
         this.btnText = 'Update';
+         res.forEach(item => {
+          item.dateOfBirth = this.sharedService.parseDate(item.dateOfBirth);
+        });
+
         this.empChild = res;
         this.patchChildInfo(res);
       }
@@ -194,7 +201,14 @@ export class EmpChildInfoComponent implements OnInit, OnDestroy {
 
   saveChild() {
     this.loading = true;
-    this.empChildInfoService.saveEmpChildInfo(this.EmpChildInfoForm.get("empChildList")?.value).subscribe(((res: any) => {
+
+     const childList = this.EmpChildInfoForm.get("empChildList")?.value.map((item: any) => ({
+    ...item,
+    dateOfBirth: this.sharedService.formatDateOnly(item.dateOfBirth),
+
+  }));
+
+    this.empChildInfoService.saveEmpChildInfo(childList).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',

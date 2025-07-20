@@ -4,87 +4,40 @@
     <div><button cButton color="primary" shape="rounded-pill" (click)="UserFormView()">{{headerBtnText}}</button></div>
   </c-card-header>
   <c-card-body [visible]="visible" cCollapse>
-    <form #BasicInfoForm="ngForm" (submit)="onSubmit(BasicInfoForm)" [gutter]="3" novalidate cForm cRow class="needs-validation">
+    <form #BasicInfoForm="ngForm" (submit)="onSubmit(BasicInfoForm)" [gutter]="3" novalidate cForm cRow
+      class="needs-validation">
 
-      
+
       <c-col [md]="4">
-        <label cLabel for="idCardNo"
-        >PMIS No<span class="text-danger">*</span></label
-      >
-        <input
-          [(ngModel)]="empBasicInfoService.basicInfo.idCardNo"
-          name="idCardNo"
-          #idCardNo="ngModel"
-          placeholder="Enter Id Card"
-          cFormControl
-          id="idCardNo"
-          required
-          type="text"
-        />
+        <label cLabel for="idCardNo">PMIS No<span class="text-danger">*</span></label>
+        <input [(ngModel)]="empBasicInfoService.basicInfo.idCardNo" name="idCardNo" #idCardNo="ngModel"
+          placeholder="Enter Id Card" cFormControl id="idCardNo" required type="text" />
         @if(!idCardNo.valid&&idCardNo.touched){
         <div class="text-left text-danger">Id Card No is required</div>
         }
       </c-col>
 
       <c-col [md]="4">
-        
-        <input
-          type="hidden"
-          [(ngModel)]="empBasicInfoService.basicInfo.userStatus"
-          name="userStatus"
-        />
-        <input
-          type="hidden"
-          [(ngModel)]="empBasicInfoService.basicInfo.aspNetUserId"
-          name="aspNetUserId"
-        />
-        <input
-          type="hidden"
-          [(ngModel)]="empBasicInfoService.basicInfo.id"
-          name="id"
-        />
-        <label cLabel for="validationCustom01"
-          >First Name<span class="text-danger">*</span></label
-        >
-        <input
-          [(ngModel)]="empBasicInfoService.basicInfo.firstName"
-          name="firstName"
-          #firstName="ngModel"
-          cFormControl
-          placeholder="Enter First Name"
-          id="validationCustom01"
-          type="text"
-        />
-      </c-col>
-      
-      <c-col [md]="4">
-        <label cLabel for="validationCustom02"
-        >Last Name<span class="text-danger"></span></label
-      >
-        <input
-        [(ngModel)]="empBasicInfoService.basicInfo.lastName"
-        name="lastName"
-        #lastName="ngModel"
-        cFormControl
-        placeholder="Enter Last Name"
-        id="validationCustom02"
-        type="text"
-        />
+
+        <input type="hidden" [(ngModel)]="empBasicInfoService.basicInfo.userStatus" name="userStatus" />
+        <input type="hidden" [(ngModel)]="empBasicInfoService.basicInfo.aspNetUserId" name="aspNetUserId" />
+        <input type="hidden" [(ngModel)]="empBasicInfoService.basicInfo.id" name="id" />
+        <label cLabel for="validationCustom01">First Name<span class="text-danger">*</span></label>
+        <input [(ngModel)]="empBasicInfoService.basicInfo.firstName" name="firstName" #firstName="ngModel" cFormControl
+          placeholder="Enter First Name" id="validationCustom01" type="text" />
       </c-col>
 
       <c-col [md]="4">
-        <label cLabel for="validationCustom03"
-        >First Name Bangla<span class="text-danger"></span></label
-      >
-        <input
-          [(ngModel)]="empBasicInfoService.basicInfo.firstNameBangla"
-          name="firstNameBangla"
-          #firstNameBangla="ngModel"
-          placeholder="Enter First Name Bangla"
-          cFormControl
-          id="validationCustom03"
-          type="text"
-        />
+        <label cLabel for="validationCustom02">Last Name<span class="text-danger"></span></label>
+        <input [(ngModel)]="empBasicInfoService.basicInfo.lastName" name="lastName" #lastName="ngModel" cFormControl
+          placeholder="Enter Last Name" id="validationCustom02" type="text" />
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom03">First Name Bangla<span class="text-danger"></span></label>
+        <input [(ngModel)]="empBasicInfoService.basicInfo.firstNameBangla" name="firstNameBangla"
+          #firstNameBangla="ngModel" placeholder="Enter First Name Bangla" cFormControl id="validationCustom03"
+          type="text" />
         @if(!firstNameBangla.valid&&firstNameBangla.touched){
         <div class="text-left text-danger">First Name Bangla is required</div>
         }
@@ -92,20 +45,12 @@
         <div class="text-left text-danger">First Name and Last Name Can't be same</div>
         }
       </c-col>
-      
+
       <c-col [md]="4">
-        <label cLabel for="validationCustom04"
-        >Last Name Bangla<span class="text-danger"></span></label
-      >
-        <input
-          [(ngModel)]="empBasicInfoService.basicInfo.lastNameBangla"
-          name="lastNameBangla"
-          #lastNameBangla="ngModel"
-          placeholder="Enter Last Name Bangla"
-          cFormControl
-          id="validationCustom04"
-          type="text"
-        />
+        <label cLabel for="validationCustom04">Last Name Bangla<span class="text-danger"></span></label>
+        <input [(ngModel)]="empBasicInfoService.basicInfo.lastNameBangla" name="lastNameBangla"
+          #lastNameBangla="ngModel" placeholder="Enter Last Name Bangla" cFormControl id="validationCustom04"
+          type="text" />
         @if(!lastNameBangla.valid&&lastNameBangla.touched){
         <div class="text-left text-danger">Last Name Bangla is required</div>
         }
@@ -114,124 +59,96 @@
         }
       </c-col>
 
-        <c-col [md]="4">
-          <label cLabel for="validationCustom05"
-          >Date of Birth<span class="text-danger"></span></label
-        >
-          <input
-            [(ngModel)]="empBasicInfoService.basicInfo.dateOfBirth"
-            name="dateOfBirth"
-            #DateOfBirth="ngModel"
-            cFormControl
-            id="validationCustom05"
-            type="date"
-          />
-          @if(!DateOfBirth.valid&&DateOfBirth.touched){
+      <c-col [md]="4">
+        <label cLabel for="dateOfBirth">Date of Birth<span class="text-danger"></span></label>
+        <div class="input-group">
+          <p-calendar id="dateOfBirth" name="dateOfBirth" [(ngModel)]="empBasicInfoService.basicInfo.dateOfBirth"
+            #dateOfBirth="ngModel" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+            [showOnFocus]="false" inputId="dateOfBirth" class="coreui-datepicker w-100" cFormControl
+            appendTo="body"></p-calendar>
+          @if (!dateOfBirth.valid && dateOfBirth.touched) {
           <div class="text-left text-danger">Date of Birth is required</div>
           }
-        </c-col>
-      
-        <c-col [md]="4">
-          <label cLabel for="validationCustom06"
-          >NID Number<span class="text-danger"></span></label
-        >
-          <input
-            [(ngModel)]="empBasicInfoService.basicInfo.nid"
-            name="nid"
-            #NID="ngModel"
-            placeholder="Enter NID Number"
-            cFormControl
-            id="validationCustom06"
-            type="text"
-            pattern="[0-9]*"
-          />
-          @if(!NID.valid&&NID.touched){
-          <div class="text-left text-danger">NID Number is required</div>
-          }
-          @if(!NID.valid&&NID.touched&&NID.value){
-          <div class="text-left text-danger">Invalid NID Number</div>
-          }
-        </c-col>
+        </div>
+      </c-col>
 
-        <c-col [md]="4">
-          <label cLabel for="validationCustom07"
-          >Personal File No.<span class="text-danger"></span></label>
-          <input
-            [(ngModel)]="empBasicInfoService.basicInfo.personalFileNo"
-            name="personalFileNo"
-            #PersonalFileNo="ngModel"
-            placeholder="Enter Personal File No."
-            cFormControl
-            id="validationCustom07"
-            type="text"
-          />
-          @if(!PersonalFileNo.valid&&PersonalFileNo.touched){
-          <div class="text-left text-danger">Personal File No. is required</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="validationCustom08">Employee Type<span class="text-danger">*</span></label>
-          <div class="input-wrapper">
-            <select 
-              [(ngModel)]="empBasicInfoService.basicInfo.employeeTypeId" name="employeeTypeId" #EmployeeTypeId="ngModel"
-              cFormControl id="validationCustom08" aria-label="Default select example" required cSelect>
-              <option [ngValue]="null">Select Employee Type</option>
-  
-              @for(employee of employeeType; track employee.id;let index=$index) {
-              <option [value]="employee.id">
-                {{ employee.name }}
-              </option>
-              }
-            </select>
-            @if(!EmployeeTypeId.valid && EmployeeTypeId.touched){
-            <div class="text-left text-danger">Employee Type is required</div>
+      <c-col [md]="4">
+        <label cLabel for="validationCustom06">NID Number<span class="text-danger"></span></label>
+        <input [(ngModel)]="empBasicInfoService.basicInfo.nid" name="nid" #NID="ngModel" placeholder="Enter NID Number"
+          cFormControl id="validationCustom06" type="text" pattern="[0-9]*" />
+        @if(!NID.valid&&NID.touched){
+        <div class="text-left text-danger">NID Number is required</div>
+        }
+        @if(!NID.valid&&NID.touched&&NID.value){
+        <div class="text-left text-danger">Invalid NID Number</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom07">Personal File No.<span class="text-danger"></span></label>
+        <input [(ngModel)]="empBasicInfoService.basicInfo.personalFileNo" name="personalFileNo"
+          #PersonalFileNo="ngModel" placeholder="Enter Personal File No." cFormControl id="validationCustom07"
+          type="text" />
+        @if(!PersonalFileNo.valid&&PersonalFileNo.touched){
+        <div class="text-left text-danger">Personal File No. is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom08">Employee Type<span class="text-danger">*</span></label>
+        <div class="input-wrapper">
+          <select [(ngModel)]="empBasicInfoService.basicInfo.employeeTypeId" name="employeeTypeId"
+            #EmployeeTypeId="ngModel" cFormControl id="validationCustom08" aria-label="Default select example" required
+            cSelect>
+            <option [ngValue]="null">Select Employee Type</option>
+
+            @for(employee of employeeType; track employee.id;let index=$index) {
+            <option [value]="employee.id">
+              {{ employee.name }}
+            </option>
             }
-          </div>
-        </c-col>
+          </select>
+          @if(!EmployeeTypeId.valid && EmployeeTypeId.touched){
+          <div class="text-left text-danger">Employee Type is required</div>
+          }
+        </div>
+      </c-col>
 
-        
-        <c-col [md]="4" [hidden]="true">
-          <label cLabel for="shiftId">Shift<span class="text-danger"></span></label>
-          <div class="input-wrapper">
-            <select 
-              [(ngModel)]="empBasicInfoService.basicInfo.shiftId" name="shiftId" #shiftId="ngModel"
-              cFormControl id="shiftId" aria-label="Default select example" cSelect>
-              <!-- <option [ngValue]="null">Select Shift</option> -->
-  
-              @for(shift of shifts; track shift.id;let index=$index) {
-              <option [value]="shift.id">
-                {{ shift.name }}
-              </option>
-              }
-            </select>
-            @if(!shiftId.valid && shiftId.touched){
-            <div class="text-left text-danger">Shift is required</div>
+
+      <c-col [md]="4" [hidden]="true">
+        <label cLabel for="shiftId">Shift<span class="text-danger"></span></label>
+        <div class="input-wrapper">
+          <select [(ngModel)]="empBasicInfoService.basicInfo.shiftId" name="shiftId" #shiftId="ngModel" cFormControl
+            id="shiftId" aria-label="Default select example" cSelect>
+            <!-- <option [ngValue]="null">Select Shift</option> -->
+
+            @for(shift of shifts; track shift.id;let index=$index) {
+            <option [value]="shift.id">
+              {{ shift.name }}
+            </option>
             }
-          </div>
-        </c-col>
+          </select>
+          @if(!shiftId.valid && shiftId.touched){
+          <div class="text-left text-danger">Shift is required</div>
+          }
+        </div>
+      </c-col>
 
-        <c-col [xs]="12">
-          <div class="d-flex justify-content-between">
-            <div>
-              <button
-                [disabled]="loading"
-                [disabled]="BasicInfoForm.invalid"
-                cButton
-                class="me-1"
-                color="primary"
-                type="submit"
-              >
-                <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-                {{ btnText }}
-                </button>
-                <button cButton color="secondary" (click)="resetForm()">Reset</button>
-            </div>
-            <div>
-              <button cButton color="danger" class="text-light" (click)="cancel()">Cancel</button>
-            </div>
+      <c-col [xs]="12">
+        <div class="d-flex justify-content-between">
+          <div>
+            <button [disabled]="loading" [disabled]="BasicInfoForm.invalid" cButton class="me-1" color="primary"
+              type="submit">
+              <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+              {{ btnText }}
+            </button>
+            <button cButton color="secondary" (click)="resetForm()">Reset</button>
           </div>
-        </c-col>
+          <div>
+            <button cButton color="danger" class="text-light" (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </c-col>
 
     </form>
   </c-card-body>

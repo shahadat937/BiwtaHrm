@@ -27,12 +27,20 @@
                                             id="childNameBangla{{i}}" placeholder="Enter Child Bangla Name" />
                                     </c-col>
 
-                                    <c-col [md]="4">
+                                    <!-- <c-col [md]="4">
                                         <label class="col-form-label" for="dateOfBirth{{i}}">Date of Birth</label>
                                         <input type="date" formControlName="dateOfBirth" class="form-control"
                                             id="dateOfBirth{{i}}" />
-                                    </c-col>
+                                    </c-col> -->
 
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="dateOfBirth{{i}}">Date of Birth</label>
+                                        <p-calendar formControlName="dateOfBirth" id="dateOfBirth{{i}}"
+                                            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                                            [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                                        </p-calendar>
+                                    </c-col>
+                                    
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="birthRegNo{{i}}">Birth Reg. No</label>
                                         <input type="text" formControlName="birthRegNo" class="form-control"
@@ -62,25 +70,28 @@
                                             </option>
                                         </select>
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="maritalStatusId{{i}}">Select Marital Status</label>
+                                        <label class="col-form-label" for="maritalStatusId{{i}}">Select Marital
+                                            Status</label>
                                         <select formControlName="maritalStatusId" class="form-select">
                                             <option value="null" disabled>Select Marital Status</option>
-                                            <option *ngFor="let item of maritalStatuses" value="{{item.id}}">{{item.name}}
+                                            <option *ngFor="let item of maritalStatuses" value="{{item.id}}">
+                                                {{item.name}}
                                             </option>
                                         </select>
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="childStatusId{{i}}">Select Child Status</label>
+                                        <label class="col-form-label" for="childStatusId{{i}}">Select Child
+                                            Status</label>
                                         <select formControlName="childStatusId" class="form-select">
                                             <option value="null" disabled>Select Child Status</option>
                                             <option *ngFor="let item of childStatuses" value="{{item.id}}">{{item.name}}
                                             </option>
                                         </select>
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="remark{{i}}">Remark</label>
                                         <input type="text" formControlName="remark" class="form-control"
@@ -112,7 +123,8 @@
                             </button>
                         </div>
                         <div>
-                            <button cButton color="danger" class="text-light" (click)="cancel()" type="button">Cancel</button>
+                            <button cButton color="danger" class="text-light" (click)="cancel()"
+                                type="button">Cancel</button>
                         </div>
                     </div>
                 </c-col>
@@ -121,4 +133,3 @@
 
     </c-card-body>
 </c-card>
-

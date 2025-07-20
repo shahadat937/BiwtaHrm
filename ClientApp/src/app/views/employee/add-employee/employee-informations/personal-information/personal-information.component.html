@@ -4,487 +4,317 @@
     <div><button cButton color="primary" shape="rounded-pill" (click)="UserFormView()">{{headerBtnText}}</button></div>
   </c-card-header>
   <c-card-body [visible]="visible" cCollapse>
-    <form #PersonalInfoForm="ngForm" (submit)="onSubmit(PersonalInfoForm)" [gutter]="3" novalidate cForm cRow class="needs-validation">
-        <input
-          type="hidden"
-          [(ngModel)]="empPersonalInfoService.personalInfo.id"
-          name="id"
-        />
-        <input
-          type="hidden"
-          [(ngModel)]="empPersonalInfoService.personalInfo.empId"
-          name="empId"
-        />
+    <form #PersonalInfoForm="ngForm" (submit)="onSubmit(PersonalInfoForm)" [gutter]="3" novalidate cForm cRow
+      class="needs-validation">
+      <input type="hidden" [(ngModel)]="empPersonalInfoService.personalInfo.id" name="id" />
+      <input type="hidden" [(ngModel)]="empPersonalInfoService.personalInfo.empId" name="empId" />
 
-        <c-col [md]="4">
-          <label cLabel for="validationCustom01">Gender<span class="text-danger"></span></label>
-          <div class="input-wrapper">
-            <select 
-              [(ngModel)]="empPersonalInfoService.personalInfo.genderId" 
-              name="genderId" 
-              #genderId="ngModel"
-              cFormControl id="validationCustom01" 
-              aria-label="Default select example" 
-              cSelect>
-              <option [ngValue]="null">Select Gender</option>
-  
-              @for(gender of genders; track gender.id;let index=$index) {
-              <option [value]="gender.id">
-                {{ gender.name }}
-              </option>
-              }
-            </select>
-            @if(!genderId.valid && genderId.touched){
-            <div class="text-left text-danger">Gender is required</div>
-            }
-          </div>
-        </c-col>
+      <c-col [md]="4">
+        <label cLabel for="validationCustom01">Gender<span class="text-danger"></span></label>
+        <div class="input-wrapper">
+          <select [(ngModel)]="empPersonalInfoService.personalInfo.genderId" name="genderId" #genderId="ngModel"
+            cFormControl id="validationCustom01" aria-label="Default select example" cSelect>
+            <option [ngValue]="null">Select Gender</option>
 
-        <c-col [md]="4">
-          <label cLabel for="validationCustom02">Marital Status<span class="text-danger"></span></label>
-          <div class="input-wrapper">
-            <select 
-              [(ngModel)]="empPersonalInfoService.personalInfo.maritalStatusId" 
-              name="maritalStatusId" 
-              #maritalStatusId="ngModel"
-              cFormControl id="validationCustom02" 
-              aria-label="Default select example" 
-              cSelect>
-              <option [ngValue]="null">Select Marital Status</option>
-  
-              @for(maritalStatus of maritalStatuses; track maritalStatus.id;let index=$index) {
-              <option [value]="maritalStatus.id">
-                {{ maritalStatus.name }}
-              </option>
-              }
-            </select>
-            @if(!maritalStatusId.valid && maritalStatusId.touched){
-            <div class="text-left text-danger">Marital Status is required</div>
+            @for(gender of genders; track gender.id;let index=$index) {
+            <option [value]="gender.id">
+              {{ gender.name }}
+            </option>
             }
-          </div>
-        </c-col>
+          </select>
+          @if(!genderId.valid && genderId.touched){
+          <div class="text-left text-danger">Gender is required</div>
+          }
+        </div>
+      </c-col>
 
-        <c-col [md]="4">
-          <label cLabel for="validationCustom03">Blood Group<span class="text-danger"></span></label>
-          <div class="input-wrapper">
-            <select 
-              [(ngModel)]="empPersonalInfoService.personalInfo.bloodGroupId" 
-              name="bloodGroupId" 
-              #bloodGroupId="ngModel"
-              cFormControl id="validationCustom03" 
-              aria-label="Default select example" 
-              cSelect>
-              <option [ngValue]="null">Select Blood Group</option>
-  
-              @for(bloodGroup of bloodGroups; track bloodGroup.id;let index=$index) {
-              <option [value]="bloodGroup.id">
-                {{ bloodGroup.name }}
-              </option>
-              }
-            </select>
-            @if(!bloodGroupId.valid && bloodGroupId.touched){
-            <div class="text-left text-danger">Blood Group is required</div>
-            }
-          </div>
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="nationalityId">Nationality<span class="text-danger"></span></label>
-          <div class="input-wrapper">
-            <select 
-              [(ngModel)]="empPersonalInfoService.personalInfo.nationalityId" 
-              name="nationalityId" 
-              #nationalityId="ngModel"
-              cFormControl id="nationalityId" 
-              aria-label="Default select example" 
-              cSelect>
-              <option [ngValue]="null">Select Nationality</option>
-  
-              @for(countrie of countries; track countrie.id;let index=$index) {
-              <option [value]="countrie.id">
-                {{ countrie.name }}
-              </option>
-              }
-            </select>
-            @if(!nationalityId.valid && nationalityId.touched){
-            <div class="text-left text-danger">Blood Group is required</div>
-            }
-          </div>
-        </c-col>
+      <c-col [md]="4">
+        <label cLabel for="validationCustom02">Marital Status<span class="text-danger"></span></label>
+        <div class="input-wrapper">
+          <select [(ngModel)]="empPersonalInfoService.personalInfo.maritalStatusId" name="maritalStatusId"
+            #maritalStatusId="ngModel" cFormControl id="validationCustom02" aria-label="Default select example" cSelect>
+            <option [ngValue]="null">Select Marital Status</option>
 
-        <c-col [md]="4">
-          <label cLabel for="validationCustom04">Religion<span class="text-danger"></span></label>
-          <div class="input-wrapper">
-            <select 
-              [(ngModel)]="empPersonalInfoService.personalInfo.religionId" 
-              name="religionId" 
-              #religionId="ngModel"
-              cFormControl id="validationCustom04" 
-              aria-label="Default select example" 
-              cSelect>
-              <option [ngValue]="null">Select Religion</option>
-  
-              @for(religion of religions; track religion.id;let index=$index) {
-              <option [value]="religion.id">
-                {{ religion.name }}
-              </option>
-              }
-            </select>
-            @if(!religionId.valid && religionId.touched){
-            <div class="text-left text-danger">Religion is required</div>
+            @for(maritalStatus of maritalStatuses; track maritalStatus.id;let index=$index) {
+            <option [value]="maritalStatus.id">
+              {{ maritalStatus.name }}
+            </option>
             }
-          </div>
-        </c-col>
+          </select>
+          @if(!maritalStatusId.valid && maritalStatusId.touched){
+          <div class="text-left text-danger">Marital Status is required</div>
+          }
+        </div>
+      </c-col>
 
-        <c-col [md]="4">
-          <label cLabel for="validationCustom05">Hair Color<span class="text-danger"></span></label>
-          <div class="input-wrapper">
-            <select 
-              [(ngModel)]="empPersonalInfoService.personalInfo.hairColorId" 
-              name="hairColorId" 
-              #hairColorId="ngModel"
-              cFormControl id="validationCustom05" 
-              aria-label="Default select example" 
-              cSelect>
-              <option [ngValue]="null">Select Hair Color</option>
-  
-              @for(hairColor of hairColors; track hairColor.id;let index=$index) {
-              <option [value]="hairColor.id">
-                {{ hairColor.name }}
-              </option>
-              }
-            </select>
-            @if(!hairColorId.valid && hairColorId.touched){
-            <div class="text-left text-danger">Hair Color is required</div>
-            }
-          </div>
-        </c-col>
+      <c-col [md]="4">
+        <label cLabel for="validationCustom03">Blood Group<span class="text-danger"></span></label>
+        <div class="input-wrapper">
+          <select [(ngModel)]="empPersonalInfoService.personalInfo.bloodGroupId" name="bloodGroupId"
+            #bloodGroupId="ngModel" cFormControl id="validationCustom03" aria-label="Default select example" cSelect>
+            <option [ngValue]="null">Select Blood Group</option>
 
-        <c-col [md]="4">
-          <label cLabel for="validationCustom06">Eye Color<span class="text-danger"></span></label>
-          <div class="input-wrapper">
-            <select 
-              [(ngModel)]="empPersonalInfoService.personalInfo.eyesColorId" 
-              name="eyesColorId" 
-              #eyesColor="ngModel"
-              cFormControl id="validationCustom06" 
-              aria-label="Default select example" 
-              cSelect>
-              <option [ngValue]="null">Select Eye Color</option>
-  
-              @for(eyeColor of eyeColors; track eyeColor.id;let index=$index) {
-              <option [value]="eyeColor.id">
-                {{ eyeColor.name }}
-              </option>
-              }
-            </select>
-            @if(!eyesColor.valid && eyesColor.touched){
-            <div class="text-left text-danger">Eye Color is required</div>
+            @for(bloodGroup of bloodGroups; track bloodGroup.id;let index=$index) {
+            <option [value]="bloodGroup.id">
+              {{ bloodGroup.name }}
+            </option>
             }
-          </div>
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="validationCustom07"
-          >Phone Number<span class="text-danger"></span></label
-        >
-        <input
-          [(ngModel)]="empPersonalInfoService.personalInfo.mobileNumber"
-          name="mobileNumber"
-          #mobileNumber="ngModel"
-          placeholder="Enter Phone Number"
-          cFormControl
-          id="validationCustom07"
-          type="text"
-          pattern="[0-9]*"
-          />
-          <!-- @if(!mobileNumber.value&&mobileNumber.touched){
+          </select>
+          @if(!bloodGroupId.valid && bloodGroupId.touched){
+          <div class="text-left text-danger">Blood Group is required</div>
+          }
+        </div>
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="nationalityId">Nationality<span class="text-danger"></span></label>
+        <div class="input-wrapper">
+          <select [(ngModel)]="empPersonalInfoService.personalInfo.nationalityId" name="nationalityId"
+            #nationalityId="ngModel" cFormControl id="nationalityId" aria-label="Default select example" cSelect>
+            <option [ngValue]="null">Select Nationality</option>
+
+            @for(countrie of countries; track countrie.id;let index=$index) {
+            <option [value]="countrie.id">
+              {{ countrie.name }}
+            </option>
+            }
+          </select>
+          @if(!nationalityId.valid && nationalityId.touched){
+          <div class="text-left text-danger">Blood Group is required</div>
+          }
+        </div>
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom04">Religion<span class="text-danger"></span></label>
+        <div class="input-wrapper">
+          <select [(ngModel)]="empPersonalInfoService.personalInfo.religionId" name="religionId" #religionId="ngModel"
+            cFormControl id="validationCustom04" aria-label="Default select example" cSelect>
+            <option [ngValue]="null">Select Religion</option>
+
+            @for(religion of religions; track religion.id;let index=$index) {
+            <option [value]="religion.id">
+              {{ religion.name }}
+            </option>
+            }
+          </select>
+          @if(!religionId.valid && religionId.touched){
+          <div class="text-left text-danger">Religion is required</div>
+          }
+        </div>
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom05">Hair Color<span class="text-danger"></span></label>
+        <div class="input-wrapper">
+          <select [(ngModel)]="empPersonalInfoService.personalInfo.hairColorId" name="hairColorId"
+            #hairColorId="ngModel" cFormControl id="validationCustom05" aria-label="Default select example" cSelect>
+            <option [ngValue]="null">Select Hair Color</option>
+
+            @for(hairColor of hairColors; track hairColor.id;let index=$index) {
+            <option [value]="hairColor.id">
+              {{ hairColor.name }}
+            </option>
+            }
+          </select>
+          @if(!hairColorId.valid && hairColorId.touched){
+          <div class="text-left text-danger">Hair Color is required</div>
+          }
+        </div>
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom06">Eye Color<span class="text-danger"></span></label>
+        <div class="input-wrapper">
+          <select [(ngModel)]="empPersonalInfoService.personalInfo.eyesColorId" name="eyesColorId" #eyesColor="ngModel"
+            cFormControl id="validationCustom06" aria-label="Default select example" cSelect>
+            <option [ngValue]="null">Select Eye Color</option>
+
+            @for(eyeColor of eyeColors; track eyeColor.id;let index=$index) {
+            <option [value]="eyeColor.id">
+              {{ eyeColor.name }}
+            </option>
+            }
+          </select>
+          @if(!eyesColor.valid && eyesColor.touched){
+          <div class="text-left text-danger">Eye Color is required</div>
+          }
+        </div>
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom07">Phone Number<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.mobileNumber" name="mobileNumber"
+          #mobileNumber="ngModel" placeholder="Enter Phone Number" cFormControl id="validationCustom07" type="text"
+          pattern="[0-9]*" />
+        <!-- @if(!mobileNumber.value&&mobileNumber.touched){
           <div class="text-left text-danger">Phone Number is required</div>
           } -->
-          @if(!mobileNumber.valid&&mobileNumber.touched&&mobileNumber.value){
-          <div class="text-left text-danger">Invalid Phone Number</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="validationCustom08"
-          >Email<span class="text-danger"></span></label>
-          <input
-            [(ngModel)]="empPersonalInfoService.personalInfo.email"
-            name="email"
-            #Email="ngModel"
-            placeholder="Enter Email Address"
-            cFormControl
-            id="validationCustom08"
-            type="email"
-            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-          />
-          <!-- @if(!Email.value&&Email.touched){
+        @if(!mobileNumber.valid&&mobileNumber.touched&&mobileNumber.value){
+        <div class="text-left text-danger">Invalid Phone Number</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom08">Email<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.email" name="email" #Email="ngModel"
+          placeholder="Enter Email Address" cFormControl id="validationCustom08" type="email"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
+        <!-- @if(!Email.value&&Email.touched){
           <div class="text-left text-danger">Email is required</div>
           } -->
-          @if(!Email.valid&&Email.touched&&Email.value){
-            <div class="text-left text-danger">Email is not valid</div>
-            }
-        </c-col>
+        @if(!Email.valid&&Email.touched&&Email.value){
+        <div class="text-left text-danger">Email is not valid</div>
+        }
+      </c-col>
 
-        <c-col [md]="4">
-          <label cLabel for="validationCustom09"
-          >Birth Registration Number<span class="text-danger"></span></label
-        >
-        <input
-          [(ngModel)]="empPersonalInfoService.personalInfo.birthRegNo"
-          name="birthRegNo"
-          #birthRegNo="ngModel"
-          placeholder="Enter Birth Registration Number"
-          cFormControl
-          id="validationCustom09"
-          type="text"
-          pattern="[0-9]*"
-          />
-          @if(!birthRegNo.valid&&birthRegNo.touched){
-          <div class="text-left text-danger">Birth Registration Number is required</div>
-          }
-        </c-col>
+      <c-col [md]="4">
+        <label cLabel for="validationCustom09">Birth Registration Number<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.birthRegNo" name="birthRegNo" #birthRegNo="ngModel"
+          placeholder="Enter Birth Registration Number" cFormControl id="validationCustom09" type="text"
+          pattern="[0-9]*" />
+        @if(!birthRegNo.valid&&birthRegNo.touched){
+        <div class="text-left text-danger">Birth Registration Number is required</div>
+        }
+      </c-col>
 
-        <c-col [md]="4">
-          <label cLabel for="validationCustom10"
-          >Place of Birth<span class="text-danger"></span></label>
-          <input
-            [(ngModel)]="empPersonalInfoService.personalInfo.placeOfBirth"
-            name="placeOfBirth"
-            #placeOfBirth="ngModel"
-            placeholder="Enter Place of Birth"
-            cFormControl
-            id="validationCustom10"
-            type="text"
-          />
-          @if(!placeOfBirth.valid&&placeOfBirth.touched){
-          <div class="text-left text-danger">Place of Birth is required</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="fatherName"
-          >Father Name<span class="text-danger"></span></label>
-          <input
-            [(ngModel)]="empPersonalInfoService.personalInfo.fatherName"
-            name="fatherName"
-            #fatherName="ngModel"
-            placeholder="Enter Father Name"
-            cFormControl
-            id="fatherName"
-            type="text"
-          />
-          @if(!fatherName.valid&&fatherName.touched){
-          <div class="text-left text-danger">Father Name required</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="fatherNameBangla"
-          >Father Name Bangla<span class="text-danger"></span></label>
-          <input
-            [(ngModel)]="empPersonalInfoService.personalInfo.fatherNameBangla"
-            name="fatherNameBangla"
-            #fatherNameBangla="ngModel"
-            placeholder="Enter Father Name Bangla"
-            cFormControl
-            id="fatherNameBangla"
-            type="text"
-          />
-          @if(!fatherNameBangla.valid&&fatherNameBangla.touched){
-          <div class="text-left text-danger">Father Name Bangla is required</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="motherName"
-          >Mother Name<span class="text-danger"></span></label>
-          <input
-            [(ngModel)]="empPersonalInfoService.personalInfo.motherName"
-            name="motherName"
-            #motherName="ngModel"
-            placeholder="Enter Mother Name"
-            cFormControl
-            id="motherName"
-            type="text"
-          />
-          @if(!motherName.valid&&motherName.touched){
-          <div class="text-left text-danger">Mother Name required</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="motherNameBangla"
-          >Mother Name Bangla<span class="text-danger"></span></label>
-          <input
-            [(ngModel)]="empPersonalInfoService.personalInfo.motherNameBangla"
-            name="motherNameBangla"
-            #motherNameBangla="ngModel"
-            placeholder="Enter Mother Name Bangla"
-            cFormControl
-            id="motherNameBangla"
-            type="text"
-          />
-          @if(!motherNameBangla.valid&&motherNameBangla.touched){
-          <div class="text-left text-danger">Father Mother Bangla is required</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="gurdianName"
-          >Gurdian Name<span class="text-danger"></span></label>
-          <input
-            [(ngModel)]="empPersonalInfoService.personalInfo.gurdianName"
-            name="gurdianName"
-            #gurdianName="ngModel"
-            placeholder="Enter Gurdian Name"
-            cFormControl
-            id="gurdianName"
-            type="text"
-          />
-          @if(!gurdianName.valid&&gurdianName.touched){
-          <div class="text-left text-danger">Gurdian Name is required</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="gurdianNameBangla"
-          >Gurdian Name Bangla<span class="text-danger"></span></label>
-          <input
-            [(ngModel)]="empPersonalInfoService.personalInfo.gurdianNameBangla"
-            name="gurdianNameBangla"
-            #gurdianNameBangla="ngModel"
-            placeholder="Enter Gurdian Name Bangla"
-            cFormControl
-            id="gurdianNameBangla"
-            type="text"
-          />
-          @if(!gurdianNameBangla.valid&&gurdianNameBangla.touched){
-          <div class="text-left text-danger">Gurdian Name Bangla is required</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="validationCustom04">Relation With Gurdian<span class="text-danger"></span></label>
-          <div class="input-wrapper">
-            <select 
-              [(ngModel)]="empPersonalInfoService.personalInfo.gurdianRelationId" 
-              name="gurdianRelationId" 
-              #gurdianRelationId="ngModel"
-              cFormControl id="validationCustom04" 
-              aria-label="Default select example" 
-              cSelect>
-              <option [ngValue]="null">Select Relation</option>
-  
-              @for(relation of relations; track relation.id;let index=$index) {
-              <option [value]="relation.id">
-                {{ relation.name }}
-              </option>
-              }
-            </select>
-            @if(!gurdianRelationId.valid && gurdianRelationId.touched){
-            <div class="text-left text-danger">Religion is required</div>
+      <c-col [md]="4">
+        <label cLabel for="validationCustom10">Place of Birth<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.placeOfBirth" name="placeOfBirth"
+          #placeOfBirth="ngModel" placeholder="Enter Place of Birth" cFormControl id="validationCustom10" type="text" />
+        @if(!placeOfBirth.valid&&placeOfBirth.touched){
+        <div class="text-left text-danger">Place of Birth is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="fatherName">Father Name<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.fatherName" name="fatherName" #fatherName="ngModel"
+          placeholder="Enter Father Name" cFormControl id="fatherName" type="text" />
+        @if(!fatherName.valid&&fatherName.touched){
+        <div class="text-left text-danger">Father Name required</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="fatherNameBangla">Father Name Bangla<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.fatherNameBangla" name="fatherNameBangla"
+          #fatherNameBangla="ngModel" placeholder="Enter Father Name Bangla" cFormControl id="fatherNameBangla"
+          type="text" />
+        @if(!fatherNameBangla.valid&&fatherNameBangla.touched){
+        <div class="text-left text-danger">Father Name Bangla is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="motherName">Mother Name<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.motherName" name="motherName" #motherName="ngModel"
+          placeholder="Enter Mother Name" cFormControl id="motherName" type="text" />
+        @if(!motherName.valid&&motherName.touched){
+        <div class="text-left text-danger">Mother Name required</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="motherNameBangla">Mother Name Bangla<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.motherNameBangla" name="motherNameBangla"
+          #motherNameBangla="ngModel" placeholder="Enter Mother Name Bangla" cFormControl id="motherNameBangla"
+          type="text" />
+        @if(!motherNameBangla.valid&&motherNameBangla.touched){
+        <div class="text-left text-danger">Father Mother Bangla is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="gurdianName">Gurdian Name<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.gurdianName" name="gurdianName" #gurdianName="ngModel"
+          placeholder="Enter Gurdian Name" cFormControl id="gurdianName" type="text" />
+        @if(!gurdianName.valid&&gurdianName.touched){
+        <div class="text-left text-danger">Gurdian Name is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="gurdianNameBangla">Gurdian Name Bangla<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.gurdianNameBangla" name="gurdianNameBangla"
+          #gurdianNameBangla="ngModel" placeholder="Enter Gurdian Name Bangla" cFormControl id="gurdianNameBangla"
+          type="text" />
+        @if(!gurdianNameBangla.valid&&gurdianNameBangla.touched){
+        <div class="text-left text-danger">Gurdian Name Bangla is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom04">Relation With Gurdian<span class="text-danger"></span></label>
+        <div class="input-wrapper">
+          <select [(ngModel)]="empPersonalInfoService.personalInfo.gurdianRelationId" name="gurdianRelationId"
+            #gurdianRelationId="ngModel" cFormControl id="validationCustom04" aria-label="Default select example"
+            cSelect>
+            <option [ngValue]="null">Select Relation</option>
+
+            @for(relation of relations; track relation.id;let index=$index) {
+            <option [value]="relation.id">
+              {{ relation.name }}
+            </option>
             }
-          </div>
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="emergencyContact"
-          >Emergency Contact Number<span class="text-danger"></span></label
-        >
-        <input
-          [(ngModel)]="empPersonalInfoService.personalInfo.emergencyContact"
-          name="emergencyContact"
-          #emergencyContact="ngModel"
-          placeholder="Enter Emergency Contact Number"
-          cFormControl
-          id="emergencyContact"
-          type="text"
-          pattern="[0-9]*"
-          />
-          <!-- @if(!mobileNumber.value&&mobileNumber.touched){
+          </select>
+          @if(!gurdianRelationId.valid && gurdianRelationId.touched){
+          <div class="text-left text-danger">Religion is required</div>
+          }
+        </div>
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="emergencyContact">Emergency Contact Number<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.emergencyContact" name="emergencyContact"
+          #emergencyContact="ngModel" placeholder="Enter Emergency Contact Number" cFormControl id="emergencyContact"
+          type="text" pattern="[0-9]*" />
+        <!-- @if(!mobileNumber.value&&mobileNumber.touched){
           <div class="text-left text-danger">Phone Number is required</div>
           } -->
-          @if(!emergencyContact.valid&&emergencyContact.touched&&emergencyContact.value){
-          <div class="text-left text-danger">Invalid Contact Number</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="validationCustom11"
-          >Tin Number<span class="text-danger"></span></label
-        >
-        <input
-          [(ngModel)]="empPersonalInfoService.personalInfo.tinNo"
-          name="tinNo"
-          #tinNo="ngModel"
-          placeholder="Enter Tin Number"
-          cFormControl
-          id="validationCustom11"
-          type="text"
-          pattern="[0-9]*"
-          />
-          @if(!tinNo.valid&&tinNo.touched){
-          <div class="text-left text-danger">Tin Number is required</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="validationCustom12"
-          >Height<span class="text-danger"></span></label
-        >
-        <input
-          [(ngModel)]="empPersonalInfoService.personalInfo.height"
-          name="height"
-          #height="ngModel"
-          placeholder="Enter Height"
-          cFormControl
-          id="validationCustom11"
-          type="text"
-          />
-          @if(!height.valid&&height.touched){
-          <div class="text-left text-danger">Height is required</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="validationCustom13"
-          >Weight<span class="text-danger"></span></label
-        >
-        <input
-          [(ngModel)]="empPersonalInfoService.personalInfo.weight"
-          name="weight"
-          #weight="ngModel"
-          placeholder="Enter Weight"
-          cFormControl
-          id="validationCustom13"
-          type="text"
-          />
-          @if(!weight.valid&&weight.touched){
-          <div class="text-left text-danger">Weight is required</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="validationCustom14"
-          >Driving License Number<span class="text-danger"></span></label
-        >
-        <input
-          [(ngModel)]="empPersonalInfoService.personalInfo.drivingLicenceNo"
-          name="drivingLicenceNo"
-          #drivingLicenceNo="ngModel"
-          placeholder="Enter Driving License Number"
-          cFormControl
-          id="validationCustom14"
-          type="text"
-          />
-          @if(!drivingLicenceNo.valid&&drivingLicenceNo.touched){
-          <div class="text-left text-danger">Driving License Number is required</div>
-          }
-        </c-col>
-        
-        <c-col [md]="4">
+        @if(!emergencyContact.valid&&emergencyContact.touched&&emergencyContact.value){
+        <div class="text-left text-danger">Invalid Contact Number</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom11">Tin Number<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.tinNo" name="tinNo" #tinNo="ngModel"
+          placeholder="Enter Tin Number" cFormControl id="validationCustom11" type="text" pattern="[0-9]*" />
+        @if(!tinNo.valid&&tinNo.touched){
+        <div class="text-left text-danger">Tin Number is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom12">Height<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.height" name="height" #height="ngModel"
+          placeholder="Enter Height" cFormControl id="validationCustom11" type="text" />
+        @if(!height.valid&&height.touched){
+        <div class="text-left text-danger">Height is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom13">Weight<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.weight" name="weight" #weight="ngModel"
+          placeholder="Enter Weight" cFormControl id="validationCustom13" type="text" />
+        @if(!weight.valid&&weight.touched){
+        <div class="text-left text-danger">Weight is required</div>
+        }
+      </c-col>
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom14">Driving License Number<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.drivingLicenceNo" name="drivingLicenceNo"
+          #drivingLicenceNo="ngModel" placeholder="Enter Driving License Number" cFormControl id="validationCustom14"
+          type="text" />
+        @if(!drivingLicenceNo.valid&&drivingLicenceNo.touched){
+        <div class="text-left text-danger">Driving License Number is required</div>
+        }
+      </c-col>
+
+      <!-- <c-col [md]="4">
           <label cLabel for="validationCustom15"
           >Driving License Expire Date<span class="text-danger"></span></label
         >
@@ -499,27 +329,33 @@
           @if(!drivingLicenceDate.valid&&drivingLicenceDate.touched){
           <div class="text-left text-danger">Driving License Expire Date is required</div>
           }
-        </c-col>
-        
-        <c-col [md]="4">
-          <label cLabel for="validationCustom16"
-          >Passport Number<span class="text-danger"></span></label
-        >
-        <input
-          [(ngModel)]="empPersonalInfoService.personalInfo.passportNo"
-          name="passportNo"
-          #passportNo="ngModel"
-          placeholder="Enter Passport Number"
-          cFormControl
-          id="validationCustom16"
-          type="text"
-          />
-          @if(!passportNo.valid&&passportNo.touched){
-          <div class="text-left text-danger">Passport Number is required</div>
+        </c-col> -->
+
+      <c-col [md]="4">
+        <label cLabel for="drivingLicenceDate">Driving License Expire Date<span class="text-danger"></span></label>
+        <div class="input-group">
+          <p-calendar id="drivingLicenceDate" name="drivingLicenceDate"
+            [(ngModel)]="empPersonalInfoService.personalInfo.drivingLicenceDate" #drivingLicenceDate="ngModel"
+            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+            inputId="drivingLicenceDate" class="coreui-datepicker w-100" cFormControl appendTo="body">
+          </p-calendar>
+          @if (!drivingLicenceDate.valid && drivingLicenceDate.touched) {
+          <div class="text-left text-danger">Driving License Expire Date is required</div>
           }
-        </c-col>
-        
-        <c-col [md]="4">
+        </div>
+      </c-col>
+
+
+      <c-col [md]="4">
+        <label cLabel for="validationCustom16">Passport Number<span class="text-danger"></span></label>
+        <input [(ngModel)]="empPersonalInfoService.personalInfo.passportNo" name="passportNo" #passportNo="ngModel"
+          placeholder="Enter Passport Number" cFormControl id="validationCustom16" type="text" />
+        @if(!passportNo.valid&&passportNo.touched){
+        <div class="text-left text-danger">Passport Number is required</div>
+        }
+      </c-col>
+
+      <!-- <c-col [md]="4">
           <label cLabel for="validationCustom16"
           >Passport Expire Date<span class="text-danger"></span></label
         >
@@ -534,29 +370,37 @@
           @if(!passportExpireDate.valid&&passportExpireDate.touched){
           <div class="text-left text-danger">Passport Expire Date is required</div>
           }
-        </c-col>
+        </c-col> -->
 
-        <c-col [xs]="12">
-          <div class="d-flex justify-content-between">
-            <div>
-              <button
-                [disabled]="loading"
-                [disabled]="PersonalInfoForm.invalid"
-                cButton
-                class="me-1"
-                color="primary"
-                type="submit"
-              >
-                <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-                {{ btnText }}
-                </button>
-                <button cButton color="secondary" (click)="resetForm()">Reset</button>
-            </div>
-            <div>
-              <button cButton color="danger" class="text-light" (click)="cancel()">Cancel</button>
-            </div>
+      <c-col [md]="4">
+        <label cLabel for="passportExpireDate">Passport Expire Date<span class="text-danger"></span></label>
+        <div class="input-group">
+          <p-calendar id="passportExpireDate" name="passportExpireDate"
+            [(ngModel)]="empPersonalInfoService.personalInfo.passportExpireDate" #passportExpireDate="ngModel"
+            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+            inputId="passportExpireDate" class="coreui-datepicker w-100" cFormControl appendTo="body">
+          </p-calendar>
+          @if (!passportExpireDate.valid && passportExpireDate.touched) {
+          <div class="text-left text-danger">Passport Expire Date is required</div>
+          }
+        </div>
+      </c-col>
+
+      <c-col [xs]="12">
+        <div class="d-flex justify-content-between">
+          <div>
+            <button [disabled]="loading" [disabled]="PersonalInfoForm.invalid" cButton class="me-1" color="primary"
+              type="submit">
+              <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+              {{ btnText }}
+            </button>
+            <button cButton color="secondary" (click)="resetForm()">Reset</button>
           </div>
-        </c-col>
+          <div>
+            <button cButton color="danger" class="text-light" (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </c-col>
 
     </form>
   </c-card-body>

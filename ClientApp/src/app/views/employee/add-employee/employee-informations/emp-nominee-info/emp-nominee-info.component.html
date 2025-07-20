@@ -16,15 +16,18 @@
                                     <input type="hidden" formControlName="empId" />
                                     <input type="hidden" formControlName="pNo" />
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="nomineeName{{i}}">Nominee Name<span class="text-danger">*</span></label>
+                                        <label class="col-form-label" for="nomineeName{{i}}">Nominee Name<span
+                                                class="text-danger">*</span></label>
                                         <input type="text" formControlName="nomineeName" class="form-control"
                                             id="nomineeName{{i}}" placeholder="Enter Nominee Name" />
                                     </c-col>
 
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="dateOfBirth{{i}}">Date of Birth</label>
-                                        <input type="date" formControlName="dateOfBirth" class="form-control"
-                                            id="dateOfBirth{{i}}" />
+                                        <p-calendar formControlName="dateOfBirth" id="dateOfBirth{{i}}"
+                                            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                                            [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                                        </p-calendar>
                                     </c-col>
 
                                     <c-col [md]="4">
@@ -38,51 +41,56 @@
                                         <input type="number" formControlName="nid" class="form-control" id="nid{{i}}"
                                             placeholder="NID No" />
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="relationId{{i}}">Relation Type<span class="text-danger"></span></label>
+                                        <label class="col-form-label" for="relationId{{i}}">Relation Type<span
+                                                class="text-danger"></span></label>
                                         <select formControlName="relationId" class="form-select">
                                             <option value="null">Select Relation</option>
                                             <option *ngFor="let item of relationType" value="{{item.id}}">{{item.name}}
                                             </option>
                                         </select>
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="percentage{{i}}">Percentage</label>
-                                        <input type="number" formControlName="percentage" class="form-control" id="percentage{{i}}"
-                                            placeholder="Percentage" />
+                                        <input type="number" formControlName="percentage" class="form-control"
+                                            id="percentage{{i}}" placeholder="Percentage" />
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="address{{i}}">Address</label>
-                                        <input type="text" formControlName="address" class="form-control" id="address{{i}}"
-                                            placeholder="Enter Address" />
+                                        <input type="text" formControlName="address" class="form-control"
+                                            id="address{{i}}" placeholder="Enter Address" />
                                     </c-col>
-                                    
-                                    
+
+
                                     <c-col [md]="4">
                                         <div *ngIf="empNomineeListArray.controls[i].get('photoPreviewUrl')?.value">
-                                            <img [src]="empNomineeListArray.controls[i].get('photoPreviewUrl')?.value" alt="Photo Preview" width="100"/>
+                                            <img [src]="empNomineeListArray.controls[i].get('photoPreviewUrl')?.value"
+                                                alt="Photo Preview" width="100" />
                                         </div>
                                         <label class="col-form-label" for="photoFile{{i}}">Photo</label>
-                                        <input type="file" formControlName="photoFile" class="form-control" id="photoFile{{i}}" (change)="onPhotoSelected($event, i)"/>
-  
+                                        <input type="file" formControlName="photoFile" class="form-control"
+                                            id="photoFile{{i}}" (change)="onPhotoSelected($event, i)" />
+
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
                                         <div *ngIf="empNomineeListArray.controls[i].get('signaturePreviewUrl')?.value">
-                                            <img [src]="empNomineeListArray.controls[i].get('signaturePreviewUrl')?.value" alt="Signature Preview" width="100"/>
+                                            <img [src]="empNomineeListArray.controls[i].get('signaturePreviewUrl')?.value"
+                                                alt="Signature Preview" width="100" />
                                         </div>
                                         <label class="col-form-label" for="signatureFile{{i}}">Signature</label>
-                                        <input type="file" formControlName="signatureFile" class="form-control" id="signatureFile{{i}}" (change)="onSignatureSelected($event, i)"/>
-  
+                                        <input type="file" formControlName="signatureFile" class="form-control"
+                                            id="signatureFile{{i}}" (change)="onSignatureSelected($event, i)" />
+
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="uniqueIdentity{{i}}">Unique Identity</label>
-                                        <input type="text" formControlName="uniqueIdentity" class="form-control" id="uniqueIdentity{{i}}"
-                                            placeholder="Enter Unique Identity" />
+                                        <input type="text" formControlName="uniqueIdentity" class="form-control"
+                                            id="uniqueIdentity{{i}}" placeholder="Enter Unique Identity" />
                                     </c-col>
 
                                     <c-col [md]="4">
@@ -90,7 +98,7 @@
                                         <input type="text" formControlName="remark" class="form-control"
                                             id="remark{{i}}" placeholder="Enter Remark" />
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="isActive{{i}}">Active Status</label>
                                         <select formControlName="isActive" class="form-select">
@@ -124,7 +132,8 @@
                             </button>
                         </div>
                         <div>
-                            <button cButton color="danger" class="text-light" (click)="cancel()" type="button">Cancel</button>
+                            <button cButton color="danger" class="text-light" (click)="cancel()"
+                                type="button">Cancel</button>
                         </div>
                     </div>
                 </c-col>
@@ -133,4 +142,3 @@
 
     </c-card-body>
 </c-card>
-

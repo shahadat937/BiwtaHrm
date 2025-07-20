@@ -7,6 +7,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { EmpNomineeInfoService } from '../../../service/emp-nominee-info.service';
 import { EmpPersonalInfoService } from '../../../service/emp-personal-info.service';
 import { EmpPhotoSignService } from '../../../service/emp-photo-sign.service';
+import { SharedService } from '../../../../../shared/shared.service'
 
 @Component({
   selector: 'app-emp-nominee-info',
@@ -32,8 +33,10 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     public empNomineeInfoService: EmpNomineeInfoService,
     public empPersonalInfoService: EmpPersonalInfoService,
-        public empPhotoSignService: EmpPhotoSignService,
-    private fb: FormBuilder) { }
+    public empPhotoSignService: EmpPhotoSignService,
+    private fb: FormBuilder,
+    public sharedService: SharedService
+  ) { }
 
   ngOnInit(): void {
     this.getEmployeeNomineeInfoByEmpId();
@@ -52,6 +55,9 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
       if (res.length > 0) {
         this.headerText = 'Update Nominee Information';
         this.btnText = 'Update';
+           res.forEach(item => {
+            item.dateOfBirth = this.sharedService.parseDate(item.dateOfBirth);
+          });
         this.patchNomineeInfo(res);
       } else {
         this.headerText = 'Add Nominee Information';
@@ -227,9 +233,17 @@ export class EmpNomineeInfoComponent implements OnInit, OnDestroy {
     const empNomineeList = this.EmpNomineeInfoForm.get('empNomineeList')?.value as any[]; // Replace 'any' with the 
     empNomineeList.forEach((nominee) => {
       this.loading = true;
+
+         const formattedDateOfBirth = this.sharedService.formatDateOnly(nominee.dateOfBirth);
+    
+    const payload = {
+      ...nominee,
+      dateOfBirth: formattedDateOfBirth
+    };
+
       const success = false;
       this.subscription.push(
-        this.empNomineeInfoService.saveEmpNomineeInfo(nominee).subscribe({
+        this.empNomineeInfoService.saveEmpNomineeInfo(payload).subscribe({
           next: (response:any) => {
             if(response.success) {
               this.toastr.success('',`${response.message}`, {

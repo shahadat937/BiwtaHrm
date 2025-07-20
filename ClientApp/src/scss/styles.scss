@@ -37,3 +37,97 @@ $enable-rtl: true;
     font: inherit;
     margin-left: 2px;
   }
+
+
+
+/* Define layer order: reset < primeng < app */
+@layer reset, primeng, app;
+
+/* Reset CSS (if you have one, wrap it here) */
+// @layer reset {
+//   button,
+//   input {
+//     margin: 0;
+//     padding: 0;
+//     border: none;
+//     font: inherit;
+//     background: none;
+//   }
+// }
+
+/* Custom styles for p-calendar in app layer */
+@layer app {
+  .coreui-datepicker .p-inputtext {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem 0 0 0.25rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    height: calc(1.5em + 0.75rem + 2px);
+  }
+
+  .coreui-datepicker {
+    width: 100% !important;
+    display: flex;
+    
+  }
+
+   .p-datepicker {
+    transform: scale(0.80);        
+    transform-origin: top left;
+      z-index: 9999 !important;
+  }
+
+  .coreui-datepicker .p-calendar {
+    flex: 1;
+    width: 100%;
+  }
+
+  .coreui-datepicker .p-inputtext {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    height: calc(1.5em + 0.75rem + 2px);
+    border-radius: 0.375rem;
+    border: 1px solid #ced4da;
+  }
+
+  .coreui-datepicker .p-button {
+    background: #fff;
+    border: 1px solid #ced4da;
+    border-left: none;
+    border-radius: 0 0.375rem 0.375rem 0 !important;
+    color: #495057;
+    height: calc(1.5em + 0.75rem + 2px);
+  }
+
+
+  .coreui-datepicker .p-button:focus {
+    box-shadow: none;
+    outline: none;
+  }
+
+  .coreui-datepicker .p-datepicker {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    background: #fff;
+  }
+
+  .coreui-datepicker .p-invalid .p-inputtext {
+    border-color: #dc3545;
+  }
+
+  .coreui-datepicker .p-invalid .p-inputtext:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  }
+
+    .coreui-datepicker .p-inputtext:focus {
+    box-shadow: 0 0 0 0.2rem #cbc4f0;
+  }
+}
+

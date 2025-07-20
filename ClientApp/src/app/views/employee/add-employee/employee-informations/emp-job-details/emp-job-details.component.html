@@ -10,7 +10,7 @@
             <input type="hidden" [(ngModel)]="empJobDetailsService.empJobDetails.id" name="id" />
             <input type="hidden" [(ngModel)]="empJobDetailsService.empJobDetails.empId" name="empId" />
 
-            
+
             <!-- <c-col [md]="3">
                 <label cLabel for="office">Office<span class="text-danger">*</span></label>
                 <div class="input-wrapper">
@@ -32,429 +32,340 @@
                 }
                 </div>
             </c-col> -->
-            
+
             <c-col [md]="3">
                 <label cLabel for="Department">Department<span class="text-danger"></span></label>
                 <div class="input-wrapper">
-                <select (change)="onDepartmentSelectGetDesignation(empJobDetailsService.empJobDetails.departmentId, empJobDetailsId)"
-                (change)="onOfficeAndDepartmentSelect(empJobDetailsService.empJobDetails.departmentId)"
-                    [(ngModel)]="empJobDetailsService.empJobDetails.departmentId" name="departmentId" #Department="ngModel"
-                    cFormControl id="Department" aria-label="Default select example" cSelect>
-                    <option [ngValue]="null">Select Department</option>
-        
-                    @for(department of departments; track department.id;let index=$index) {
-                    <option [value]="department.id">
-                    {{ department.name }}
-                    </option>
+                    <select
+                        (change)="onDepartmentSelectGetDesignation(empJobDetailsService.empJobDetails.departmentId, empJobDetailsId)"
+                        (change)="onOfficeAndDepartmentSelect(empJobDetailsService.empJobDetails.departmentId)"
+                        [(ngModel)]="empJobDetailsService.empJobDetails.departmentId" name="departmentId"
+                        #Department="ngModel" cFormControl id="Department" aria-label="Default select example" cSelect>
+                        <option [ngValue]="null">Select Department</option>
+
+                        @for(department of departments; track department.id;let index=$index) {
+                        <option [value]="department.id">
+                            {{ department.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(!Department.valid && Department.touched){
+                    <div class="text-left text-danger">Department is required</div>
                     }
-                </select>
-                @if(!Department.valid && Department.touched){
-                <div class="text-left text-danger">Department is required</div>
-                }
                 </div>
             </c-col>
-            
+
             <c-col [md]="3" [hidden]="sectionView == false">
                 <label cLabel for="sectionId">Section<span class="text-danger"></span></label>
                 <div class="input-wrapper">
-                <select (change)="onSectionSelectGetDesignation(empJobDetailsService.empJobDetails.sectionId, empJobDetailsId)"
-                    [(ngModel)]="empJobDetailsService.empJobDetails.sectionId" name="sectionId" #sectionId="ngModel"
-                    cFormControl id="sectionId" aria-label="Default select example" cSelect>
-                    <option [ngValue]="null">Select Section</option>
-        
-                    @for(section of sections; track section.id;let index=$index) {
-                    <option [value]="section.id">
-                    {{ section.name }}
-                    </option>
+                    <select
+                        (change)="onSectionSelectGetDesignation(empJobDetailsService.empJobDetails.sectionId, empJobDetailsId)"
+                        [(ngModel)]="empJobDetailsService.empJobDetails.sectionId" name="sectionId" #sectionId="ngModel"
+                        cFormControl id="sectionId" aria-label="Default select example" cSelect>
+                        <option [ngValue]="null">Select Section</option>
+
+                        @for(section of sections; track section.id;let index=$index) {
+                        <option [value]="section.id">
+                            {{ section.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(!sectionId.valid && sectionId.touched){
+                    <div class="text-left text-danger">Section is required</div>
                     }
-                </select>
-                @if(!sectionId.valid && sectionId.touched){
-                <div class="text-left text-danger">Section is required</div>
-                }
                 </div>
             </c-col>
-            
+
             <c-col [md]="3">
                 <label cLabel for="Designation">Designation<span class="text-danger"></span></label>
                 <div class="input-wrapper">
-                <select
-                    [(ngModel)]="empJobDetailsService.empJobDetails.designationId" name="designationId" #designationId="ngModel"
-                    cFormControl id="Designation" aria-label="Default select example" cSelect>
-                    <option [ngValue]="null">Select Designation</option>
-        
-                    @for(designation of designations; track designation.id;let index=$index) {
-                    <option [value]="designation.id">
-                    {{ designation.name }}
-                    </option>
+                    <select [(ngModel)]="empJobDetailsService.empJobDetails.designationId" name="designationId"
+                        #designationId="ngModel" cFormControl id="Designation" aria-label="Default select example"
+                        cSelect>
+                        <option [ngValue]="null">Select Designation</option>
+
+                        @for(designation of designations; track designation.id;let index=$index) {
+                        <option [value]="designation.id">
+                            {{ designation.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(!designationId.valid && designationId.touched){
+                    <div class="text-left text-danger">Designation is required</div>
                     }
-                </select>
-                @if(!designationId.valid && designationId.touched){
-                <div class="text-left text-danger">Designation is required</div>
-                }
                 </div>
             </c-col>
-            
-            
+
+
             <c-col [md]="3">
-                <label cLabel for="presentGradeId"
-                >Present Grade<span class="text-danger"></span></label
-                >
+                <label cLabel for="presentGradeId">Present Grade<span class="text-danger"></span></label>
                 <select (change)="onChangeGradeGetScale(empJobDetailsService.empJobDetails.presentGradeId)"
-                [(ngModel)]="empJobDetailsService.empJobDetails.presentGradeId"
-                name="presentGradeId"
-                #presentGradeId="ngModel"
-                id="presentGradeId"
-                aria-label="Default select example"
-                cSelect
-                >
-                <option [ngValue]="null">Select Grade</option>
-                @for(grade of grades; track grade.id;let index=$index) {
-                <option [value]="grade.id">
-                    {{ grade.name }}
-                </option>
-                }
+                    [(ngModel)]="empJobDetailsService.empJobDetails.presentGradeId" name="presentGradeId"
+                    #presentGradeId="ngModel" id="presentGradeId" aria-label="Default select example" cSelect>
+                    <option [ngValue]="null">Select Grade</option>
+                    @for(grade of grades; track grade.id;let index=$index) {
+                    <option [value]="grade.id">
+                        {{ grade.name }}
+                    </option>
+                    }
                 </select>
 
                 @if(!presentGradeId.valid && presentGradeId.touched){
                 <div class="text-left text-danger">Grade Type is required</div>
                 }
             </c-col>
-            
+
             <c-col [md]="3">
                 <label cLabel for="presentScaleId">Present Scale<span class="text-danger"></span></label>
                 <div class="input-wrapper">
-                <select (change)="onChangeScaleGetBasicPay(empJobDetailsService.empJobDetails.presentScaleId)"
-                [(ngModel)]="empJobDetailsService.empJobDetails.presentScaleId" name="presentScaleId" #presentScaleId="ngModel"
-                    cFormControl id="presentScaleId" aria-label="Default select example" cSelect>
-                    <option [ngValue]="null">Select Scale</option>
-        
-                    @for(scale of scales; track scale.id;let index=$index) {
-                    <option [value]="scale.id">
-                    {{ scale.name }}
-                    </option>
+                    <select (change)="onChangeScaleGetBasicPay(empJobDetailsService.empJobDetails.presentScaleId)"
+                        [(ngModel)]="empJobDetailsService.empJobDetails.presentScaleId" name="presentScaleId"
+                        #presentScaleId="ngModel" cFormControl id="presentScaleId" aria-label="Default select example"
+                        cSelect>
+                        <option [ngValue]="null">Select Scale</option>
+
+                        @for(scale of scales; track scale.id;let index=$index) {
+                        <option [value]="scale.id">
+                            {{ scale.name }}
+                        </option>
+                        }
+                    </select>
+
+                    @if(!presentScaleId.valid && presentScaleId.touched){
+                    <div class="text-left text-danger">Present Scale is required</div>
                     }
-                </select>
-        
-                @if(!presentScaleId.valid && presentScaleId.touched){
-                <div class="text-left text-danger">Present Scale is required</div>
-                }
                 </div>
             </c-col>
-            
+
             <c-col [md]="3">
-                <label cLabel for="basicPay"
-                >Basic Pay<span class="text-danger"></span></label>
-                <input
-                [(ngModel)]="empJobDetailsService.empJobDetails.basicPay"
-                name="basicPay"
-                #basicPay="ngModel"
-                placeholder="Basic Pay"
-                cFormControl
-                id="basicPay"
-                type="text"
-                />
-            </c-col>
-            
-            <c-col [md]="3">
-                <label cLabel for="codeNo"
-                >GPF Code<span class="text-danger"></span></label>
-                <input
-                [(ngModel)]="empJobDetailsService.empJobDetails.codeNo"
-                name="codeNo"
-                #codeNo="ngModel"
-                placeholder="GPF Code"
-                cFormControl
-                id="codeNo"
-                type="text"
-                />
+                <label cLabel for="basicPay">Basic Pay<span class="text-danger"></span></label>
+                <input [(ngModel)]="empJobDetailsService.empJobDetails.basicPay" name="basicPay" #basicPay="ngModel"
+                    placeholder="Basic Pay" cFormControl id="basicPay" type="text" />
             </c-col>
 
             <c-col [md]="3">
-                <label cLabel for="joiningDate"
-                >Joining Date<span class="text-danger"></span></label
-            >
-            <input
-                [(ngModel)]="empJobDetailsService.empJobDetails.joiningDate"
-                name="joiningDate"
-                #joiningDate="ngModel"
-                cFormControl
-                id="joiningDate"
-                type="date"
-            />
-            @if(!joiningDate.valid&&joiningDate.touched){
-            <div class="text-left text-danger">Joining Date is required</div>
-            }
+                <label cLabel for="codeNo">GPF Code<span class="text-danger"></span></label>
+                <input [(ngModel)]="empJobDetailsService.empJobDetails.codeNo" name="codeNo" #codeNo="ngModel"
+                    placeholder="GPF Code" cFormControl id="codeNo" type="text" />
             </c-col>
 
             <c-col [md]="3">
-                <label cLabel for="confirmationDate"
-                >Confirmation Date<span class="text-danger"></span></label
-            >
-            <input
-                [(ngModel)]="empJobDetailsService.empJobDetails.confirmationDate"
-                name="confirmationDate"
-                #confirmationDate="ngModel"
-                cFormControl
-                id="confirmationDate"
-                type="date"
-            />
-            @if(!confirmationDate.valid&&confirmationDate.touched){
-            <div class="text-left text-danger">Confirmation Date is required</div>
-            }
+                <label cLabel for="joiningDate">Joining Date<span class="text-danger"></span></label>
+                <p-calendar [(ngModel)]="empJobDetailsService.empJobDetails.joiningDate" name="joiningDate"
+                    #joiningDate="ngModel" id="joiningDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy"
+                    [showIcon]="true" [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                </p-calendar>
+                <div *ngIf="!joiningDate.valid && joiningDate.touched" class="text-left text-danger">
+                    Joining Date is required
+                </div>
             </c-col>
 
-            
+
             <c-col [md]="3">
-                <label cLabel for="currentPositionJoinDate"
-                >Current Position Joining Date<span class="text-danger"></span></label
-            >
-            <input
-                [(ngModel)]="empJobDetailsService.empJobDetails.currentPositionJoinDate"
-                name="currentPositionJoinDate"
-                #currentPositionJoinDate="ngModel"
-                cFormControl
-                id="currentPositionJoinDate"
-                type="date"
-            />
-            @if(!currentPositionJoinDate.valid&&currentPositionJoinDate.touched){
-            <div class="text-left text-danger">Joining Date is required</div>
-            }
+                <label cLabel for="confirmationDate">Confirmation Date<span class="text-danger"></span></label>
+                <p-calendar [(ngModel)]="empJobDetailsService.empJobDetails.confirmationDate" name="confirmationDate"
+                    #confirmationDate="ngModel" id="confirmationDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy"
+                    [showIcon]="true" [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                </p-calendar>
+                <div *ngIf="!confirmationDate.valid && confirmationDate.touched" class="text-left text-danger">
+                    Confirmation Date is required
+                </div>
+            </c-col>
+
+
+            <c-col [md]="3">
+                <label cLabel for="currentPositionJoinDate">Current Position Joining Date<span
+                        class="text-danger"></span></label>
+                <p-calendar [(ngModel)]="empJobDetailsService.empJobDetails.currentPositionJoinDate"
+                    name="currentPositionJoinDate" #currentPositionJoinDate="ngModel" id="currentPositionJoinDate"
+                    dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+                    class="coreui-datepicker w-100" appendTo="body" required>
+                </p-calendar>
+                <!-- <div *ngIf="!currentPositionJoinDate.valid && currentPositionJoinDate.touched"
+                    class="text-left text-danger">
+                    Joining Date is required
+                </div> -->
+
             </c-col>
 
             <c-col [md]="3">
                 <label cLabel for="firstDepartmentId">First Department<span class="text-danger"></span></label>
                 <div class="input-wrapper">
-                <select 
-                    [(ngModel)]="empJobDetailsService.empJobDetails.firstDepartmentId" name="firstDepartmentId" #firstDepartmentId="ngModel"
-                    (change)="onOfficeAndDepartmentSelectFirstSection(empJobDetailsService.empJobDetails.firstDepartmentId)"
-                    (change)="getOldDesignationByDepartment(empJobDetailsService.empJobDetails.firstDepartmentId)"
-                    cFormControl id="firstDepartmentId" aria-label="Default select example" cSelect>
-                    <option [ngValue]="null">Select First Department</option>
-        
-                    @for(department of firstDepartments; track department.id;let index=$index) {
-                    <option [value]="department.id">
-                    {{ department.name }}
-                    </option>
+                    <select [(ngModel)]="empJobDetailsService.empJobDetails.firstDepartmentId" name="firstDepartmentId"
+                        #firstDepartmentId="ngModel"
+                        (change)="onOfficeAndDepartmentSelectFirstSection(empJobDetailsService.empJobDetails.firstDepartmentId)"
+                        (change)="getOldDesignationByDepartment(empJobDetailsService.empJobDetails.firstDepartmentId)"
+                        cFormControl id="firstDepartmentId" aria-label="Default select example" cSelect>
+                        <option [ngValue]="null">Select First Department</option>
+
+                        @for(department of firstDepartments; track department.id;let index=$index) {
+                        <option [value]="department.id">
+                            {{ department.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(!firstDepartmentId.valid && firstDepartmentId.touched){
+                    <div class="text-left text-danger">First Department is required</div>
                     }
-                </select>
-                @if(!firstDepartmentId.valid && firstDepartmentId.touched){
-                <div class="text-left text-danger">First Department is required</div>
-                }
                 </div>
             </c-col>
 
-            
+
             <c-col [md]="3">
-                <label cLabel for="firstDepartmentInput"
-                >First Department<span class="text-danger"></span></label>
-                <input
-                    [(ngModel)]="empJobDetailsService.empJobDetails.firstDepartmentInput"
-                    name="firstDepartmentInput" 
-                    #firstDepartmentInput="ngModel"
-                    placeholder="First Department"
-                    cFormControl
-                    id="firstDepartmentInput"
-                    type="text"
-                    [value]=""
-                    [disabled]="firstDepartmentId.value"
-                />
+                <label cLabel for="firstDepartmentInput">First Department<span class="text-danger"></span></label>
+                <input [(ngModel)]="empJobDetailsService.empJobDetails.firstDepartmentInput" name="firstDepartmentInput"
+                    #firstDepartmentInput="ngModel" placeholder="First Department" cFormControl
+                    id="firstDepartmentInput" type="text" [value]="" [disabled]="firstDepartmentId.value" />
             </c-col>
-            
+
             <c-col [md]="3">
-                <label cLabel for="firstSectionInput"
-                >First Section<span class="text-danger"></span></label>
-                <input
-                    [(ngModel)]="empJobDetailsService.empJobDetails.firstSectionInput"
-                    name="firstSectionInput" 
-                    #firstSectionInput="ngModel"
-                    placeholder="First Section"
-                    cFormControl
-                    id="firstSectionInput"
-                    type="text"
-                    [disabled]="firstSectionId.value"
-                />
+                <label cLabel for="firstSectionInput">First Section<span class="text-danger"></span></label>
+                <input [(ngModel)]="empJobDetailsService.empJobDetails.firstSectionInput" name="firstSectionInput"
+                    #firstSectionInput="ngModel" placeholder="First Section" cFormControl id="firstSectionInput"
+                    type="text" [disabled]="firstSectionId.value" />
             </c-col>
-            
+
             <c-col [md]="3">
-                <label cLabel for="firstDesignationInput"
-                >First Designation<span class="text-danger"></span></label>
-                <input
-                    [(ngModel)]="empJobDetailsService.empJobDetails.firstDesignationInput"
-                    name="firstDesignationInput" 
-                    #firstDesignationInput="ngModel"
-                    placeholder="First Designation"
-                    cFormControl
-                    id="firstDesignationInput"
-                    type="text"
-                    [disabled]="firstDesignationId.value"
-                />
+                <label cLabel for="firstDesignationInput">First Designation<span class="text-danger"></span></label>
+                <input [(ngModel)]="empJobDetailsService.empJobDetails.firstDesignationInput"
+                    name="firstDesignationInput" #firstDesignationInput="ngModel" placeholder="First Designation"
+                    cFormControl id="firstDesignationInput" type="text" [disabled]="firstDesignationId.value" />
             </c-col>
-            
+
             <c-col [md]="3" [hidden]="firstSectionView == false">
                 <label cLabel for="firstSectionId">First Section<span class="text-danger"></span></label>
                 <div class="input-wrapper">
-                <select (change)="getOldDesignationBySection(empJobDetailsService.empJobDetails.firstSectionId)"
-                    [(ngModel)]="empJobDetailsService.empJobDetails.firstSectionId" name="firstSectionId" #firstSectionId="ngModel"
-                    cFormControl id="firstSectionId" aria-label="Default select example" cSelect>
-                    <option [ngValue]="null">Select First Section</option>
-        
-                    @for(section of firstSections; track section.id;let index=$index) {
-                    <option [value]="section.id">
-                    {{ section.name }}
-                    </option>
+                    <select (change)="getOldDesignationBySection(empJobDetailsService.empJobDetails.firstSectionId)"
+                        [(ngModel)]="empJobDetailsService.empJobDetails.firstSectionId" name="firstSectionId"
+                        #firstSectionId="ngModel" cFormControl id="firstSectionId" aria-label="Default select example"
+                        cSelect>
+                        <option [ngValue]="null">Select First Section</option>
+
+                        @for(section of firstSections; track section.id;let index=$index) {
+                        <option [value]="section.id">
+                            {{ section.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(!firstSectionId.valid && firstSectionId.touched){
+                    <div class="text-left text-danger">Section is required</div>
                     }
-                </select>
-                @if(!firstSectionId.valid && firstSectionId.touched){
-                <div class="text-left text-danger">Section is required</div>
-                }
-                </div>
-            </c-col>
-            
-            <c-col [md]="3">
-                <label cLabel for="firstDesignationId">First Designation<span class="text-danger"></span></label>
-                <div class="input-wrapper">
-                <select
-                    [(ngModel)]="empJobDetailsService.empJobDetails.firstDesignationId" name="firstDesignationId" #firstDesignationId="ngModel"
-                    cFormControl id="firstDesignationId" aria-label="Default select example" cSelect>
-                    <option [ngValue]="null">Select First Designation</option>
-        
-                    @for(designation of firstDesignations; track designation.id;let index=$index) {
-                    <option [value]="designation.id">
-                    {{ designation.name }}
-                    </option>
-                    }
-                </select>
-                @if(!firstDesignationId.valid && firstDesignationId.touched){
-                <div class="text-left text-danger">Designation is required</div>
-                }
                 </div>
             </c-col>
 
-            
+            <c-col [md]="3">
+                <label cLabel for="firstDesignationId">First Designation<span class="text-danger"></span></label>
+                <div class="input-wrapper">
+                    <select [(ngModel)]="empJobDetailsService.empJobDetails.firstDesignationId"
+                        name="firstDesignationId" #firstDesignationId="ngModel" cFormControl id="firstDesignationId"
+                        aria-label="Default select example" cSelect>
+                        <option [ngValue]="null">Select First Designation</option>
+
+                        @for(designation of firstDesignations; track designation.id;let index=$index) {
+                        <option [value]="designation.id">
+                            {{ designation.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(!firstDesignationId.valid && firstDesignationId.touched){
+                    <div class="text-left text-danger">Designation is required</div>
+                    }
+                </div>
+            </c-col>
+
+
             <c-col [md]="3">
                 <label cLabel for="firstGradeId">First Grade<span class="text-danger"></span></label>
                 <div class="input-wrapper">
-                <select (change)="onChangeFirstGradeGetFirstScale(empJobDetailsService.empJobDetails.firstGradeId)"
-                    [(ngModel)]="empJobDetailsService.empJobDetails.firstGradeId" name="firstGradeId" #firstGradeId="ngModel"
-                    cFormControl id="firstGradeId" aria-label="Default select example" cSelect>
-                    <option [ngValue]="null">Select First Grade</option>
-        
-                    @for(grade of grades; track grade.id;let index=$index) {
+                    <select (change)="onChangeFirstGradeGetFirstScale(empJobDetailsService.empJobDetails.firstGradeId)"
+                        [(ngModel)]="empJobDetailsService.empJobDetails.firstGradeId" name="firstGradeId"
+                        #firstGradeId="ngModel" cFormControl id="firstGradeId" aria-label="Default select example"
+                        cSelect>
+                        <option [ngValue]="null">Select First Grade</option>
+
+                        @for(grade of grades; track grade.id;let index=$index) {
                         <option [value]="grade.id">
                             {{ grade.name }}
                         </option>
                         }
-                </select>
-                @if(!firstGradeId.valid && firstGradeId.touched){
-                <div class="text-left text-danger">First Department is required</div>
-                }
+                    </select>
+                    @if(!firstGradeId.valid && firstGradeId.touched){
+                    <div class="text-left text-danger">First Department is required</div>
+                    }
                 </div>
             </c-col>
-            
+
             <c-col [md]="3">
                 <label cLabel for="firstScaleId">First Scale<span class="text-danger"></span></label>
                 <div class="input-wrapper">
-                <select 
-                    [(ngModel)]="empJobDetailsService.empJobDetails.firstScaleId" name="firstScaleId" #firstScaleId="ngModel"
-                    cFormControl id="firstScaleId" aria-label="Default select example" cSelect>
-                    <option [ngValue]="null">Select First Scale</option>
-        
-                    @for(scale of firstScale; track scale.id;let index=$index) {
-                    <option [value]="scale.id">
-                    {{ scale.name }}
-                    </option>
+                    <select [(ngModel)]="empJobDetailsService.empJobDetails.firstScaleId" name="firstScaleId"
+                        #firstScaleId="ngModel" cFormControl id="firstScaleId" aria-label="Default select example"
+                        cSelect>
+                        <option [ngValue]="null">Select First Scale</option>
+
+                        @for(scale of firstScale; track scale.id;let index=$index) {
+                        <option [value]="scale.id">
+                            {{ scale.name }}
+                        </option>
+                        }
+                    </select>
+                    @if(!firstScaleId.valid && firstScaleId.touched){
+                    <div class="text-left text-danger">First Department is required</div>
                     }
-                </select>
-                @if(!firstScaleId.valid && firstScaleId.touched){
-                <div class="text-left text-danger">First Department is required</div>
-                }
                 </div>
             </c-col>
-            
+
             <c-col [md]="3">
-                <label cLabel for="prlDate"
-                >PRL Date<span class="text-danger"></span></label
-            >
-            <input
-                value="{{prlDate}}"
-                cFormControl
-                id="prlDate"
-                type="text"
-                disabled
-            />
+                <label cLabel for="prlDate">PRL Date<span class="text-danger"></span></label>
+                <input value="{{prlDate}}" cFormControl id="prlDate" type="text" disabled />
             </c-col>
-            
+
             <c-col [md]="3">
-                <label cLabel for="retirementDate"
-                >Retirement Date<span class="text-danger"></span></label
-            >
-            <input
-                value="{{retirementDate}}"
-                cFormControl
-                id="retirementDate"
-                type="text"
-                disabled
-            />
+                <label cLabel for="retirementDate">Retirement Date<span class="text-danger"></span></label>
+                <input value="{{retirementDate}}" cFormControl id="retirementDate" type="text" disabled />
             </c-col>
-            
+
             <c-col [md]="3">
                 <label cLabel for="serviceStatus">Service Status</label>
-                <select [(ngModel)]="empJobDetailsService.empJobDetails.serviceStatus"
-                name="serviceStatus"
-                cSelect (change)="onServiceStatusSelect()"
-                id="serviceStatus">
-                  <option [ngValue]="true">In Service</option>
-                  <option [ngValue]="false">Out of Service</option>
+                <select [(ngModel)]="empJobDetailsService.empJobDetails.serviceStatus" name="serviceStatus" cSelect
+                    (change)="onServiceStatusSelect()" id="serviceStatus">
+                    <option [ngValue]="true">In Service</option>
+                    <option [ngValue]="false">Out of Service</option>
                 </select>
             </c-col>
 
-            
+
             <c-col [md]="3" *ngIf="isRetiredReasonNeeded">
                 <label cLabel for="retiredReasonId">Release Reason<span class="text-danger"></span></label>
                 <div class="input-wrapper">
-                <select (change)="getRetirmentReasonDetails(empJobDetailsService.empJobDetails.retiredReasonId)"
-                    [(ngModel)]="empJobDetailsService.empJobDetails.retiredReasonId" name="retiredReasonId" #retiredReasonId="ngModel" 
-                    cFormControl id="retiredReasonId" aria-label="Default select example" cSelect>
-                    <option [ngValue]="null">Select Release Reason</option>
-        
-                    @for(retiredReason of retiredReasons; track retiredReason.id;let index=$index) {
-                    <option [value]="retiredReason.id">
-                    {{ retiredReason.name }}
-                    </option>
-                    }
-                </select>
+                    <select (change)="getRetirmentReasonDetails(empJobDetailsService.empJobDetails.retiredReasonId)"
+                        [(ngModel)]="empJobDetailsService.empJobDetails.retiredReasonId" name="retiredReasonId"
+                        #retiredReasonId="ngModel" cFormControl id="retiredReasonId" aria-label="Default select example"
+                        cSelect>
+                        <option [ngValue]="null">Select Release Reason</option>
+
+                        @for(retiredReason of retiredReasons; track retiredReason.id;let index=$index) {
+                        <option [value]="retiredReason.id">
+                            {{ retiredReason.name }}
+                        </option>
+                        }
+                    </select>
                 </div>
             </c-col>
 
-            
+
             <c-col [md]="3" *ngIf="isRetirementIdNeeded">
-                <label cLabel for="retirmentId"
-                >Retirment Id<span class="text-danger"></span></label>
-                <input
-                    [(ngModel)]="empJobDetailsService.empJobDetails.retirmentId"
-                    name="retirmentId" 
-                    #RetirmentId="ngModel"
-                    placeholder="Retirment Id"
-                    cFormControl
-                    id="retirmentId"
-                    type="text"
-                />
+                <label cLabel for="retirmentId">Retirment Id<span class="text-danger"></span></label>
+                <input [(ngModel)]="empJobDetailsService.empJobDetails.retirmentId" name="retirmentId"
+                    #RetirmentId="ngModel" placeholder="Retirment Id" cFormControl id="retirmentId" type="text" />
             </c-col>
-            
+
             <c-col [md]="3">
-                <label cLabel for="remark"
-                >Remark<span class="text-danger"></span></label>
-                <input
-                    [(ngModel)]="empJobDetailsService.empJobDetails.remark"
-                    name="remark" 
-                    #Remark="ngModel"
-                    placeholder="Remark"
-                    cFormControl
-                    id="remark"
-                    type="text"
-                />
+                <label cLabel for="remark">Remark<span class="text-danger"></span></label>
+                <input [(ngModel)]="empJobDetailsService.empJobDetails.remark" name="remark" #Remark="ngModel"
+                    placeholder="Remark" cFormControl id="remark" type="text" />
             </c-col>
-            
+
             <c-col [xs]="12">
                 <div class="d-flex justify-content-between">
                     <div>

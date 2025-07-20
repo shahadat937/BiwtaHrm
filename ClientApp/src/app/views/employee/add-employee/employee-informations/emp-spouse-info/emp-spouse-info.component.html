@@ -27,10 +27,17 @@
                                             id="spouseNameBangla{{i}}" placeholder="Enter Spouse Bangla Name" />
                                     </c-col>
 
-                                    <c-col [md]="4">
+                                    <!-- <c-col [md]="4">
                                         <label class="col-form-label" for="dateOfBirth{{i}}">Date of Birth</label>
                                         <input type="date" formControlName="dateOfBirth" class="form-control"
                                             id="dateOfBirth{{i}}" />
+                                    </c-col> -->
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="dateOfBirth{{i}}">Date of Birth</label>
+                                        <p-calendar formControlName="dateOfBirth" id="dateOfBirth{{i}}"
+                                            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                                            [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                                        </p-calendar>
                                     </c-col>
 
                                     <c-col [md]="4">
@@ -53,7 +60,7 @@
                                             </option>
                                         </select>
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="remark{{i}}">Remark</label>
                                         <input type="text" formControlName="remark" class="form-control"
@@ -61,7 +68,8 @@
                                     </c-col>
 
                                     <c-col [md]="12" class="d-flex justify-content-end">
-                                        <button cTooltip="Delete" cTooltipPlacement="bottom" mat-mini-fab color="warn" type="button"
+                                        <button cTooltip="Delete" cTooltipPlacement="bottom" mat-mini-fab color="warn"
+                                            type="button"
                                             (click)="removeSpouselList(i, p.get('id')?.value ?? null)"><mat-icon>delete</mat-icon></button>
                                     </c-col>
                                 </div>
@@ -71,8 +79,8 @@
                 </ng-container>
             </ng-container>
             <c-col [md]="12" class="d-flex justify-content-end">
-                <button cTooltip="Add" cTooltipPlacement="bottom" mat-mini-fab class="bg-success text-light mb-3" type="button"
-                    (click)="addSpouse()"><mat-icon>add</mat-icon></button>
+                <button cTooltip="Add" cTooltipPlacement="bottom" mat-mini-fab class="bg-success text-light mb-3"
+                    type="button" (click)="addSpouse()"><mat-icon>add</mat-icon></button>
             </c-col>
             <div class="form-group">
                 <c-col [xs]="12">
@@ -85,7 +93,8 @@
                             </button>
                         </div>
                         <div>
-                            <button cButton color="danger" class="text-light" (click)="cancel()" type="button">Cancel</button>
+                            <button cButton color="danger" class="text-light" (click)="cancel()"
+                                type="button">Cancel</button>
                         </div>
                     </div>
                 </c-col>
@@ -94,4 +103,3 @@
 
     </c-card-body>
 </c-card>
-

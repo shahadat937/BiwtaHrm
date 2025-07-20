@@ -14,31 +14,32 @@ import { ShiftSettingService } from '../../../../attendance/services/shift-setti
 import { EmpShiftAssign } from '../../../model/emp-shift-assign';
 import { EmpShiftAssignService } from '../../../service/emp-shift-assign.service';
 import { SiteSettingService } from '../../../../featureManagement/service/site-setting.service';
+import {SharedService } from '../../../../../shared/shared.service'
 
 @Component({
   selector: 'app-basic-information',
   templateUrl: './basic-information.component.html',
   styleUrl: './basic-information.component.scss'
 })
-export class BasicInformationComponent implements OnInit, OnDestroy  {
+export class BasicInformationComponent implements OnInit, OnDestroy {
 
   @Input() empId!: number;
   @Output() close = new EventEmitter<void>();
-  visible:boolean = true;
+  visible: boolean = true;
   headerText: string = '';
   headerBtnText: string = 'Hide From';
-  btnText:string='';
+  btnText: string = '';
   employeeType: SelectedModel[] = [];
   shifts: SelectedModel[] = [];
   // subscription: Subscription = new Subscription();
-  subscription: Subscription[]=[]
+  subscription: Subscription[] = []
   loading: boolean = false;
-  userForm : UserModule = new UserModule;
-  empShiftForm : EmpShiftAssign = new EmpShiftAssign;
-  activeShiftId : number = 0;
+  userForm: UserModule = new UserModule;
+  empShiftForm: EmpShiftAssign = new EmpShiftAssign;
+  activeShiftId: number = 0;
   defaultPassword: string = "";
   @ViewChild('BasicInfoForm', { static: true }) BasicInfoForm!: NgForm;
-  
+
   constructor(
     public userService: UserService,
     public empBasicInfoService: EmpBasicInfoService,
@@ -50,7 +51,8 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
     public empShiftAssignService: EmpShiftAssignService,
     public shiftSettingService: ShiftSettingService,
     public siteSettingService: SiteSettingService,
-  ){}
+    public sharedService : SharedService
+  ) { }
 
   ngOnInit(): void {
     this.getActiveShiftType();
@@ -64,11 +66,11 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.forEach(subs=>subs.unsubscribe());
+      this.subscription.forEach(subs => subs.unsubscribe());
     }
   }
 
-  getActiveShiftType(){
+  getActiveShiftType() {
     this.subscription.push(
       this.shiftSettingService.getActiveShiftType().subscribe((res) => {
         this.activeShiftId = res.id;
@@ -81,10 +83,10 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
     if (form != null) form.resetForm();
     this.empBasicInfoService.basicInfo = {
       id: this.empId,
-      firstName : '',
-      lastName : '',
-      firstNameBangla : '',
-      lastNameBangla : '',
+      firstName: '',
+      lastName: '',
+      firstNameBangla: '',
+      lastNameBangla: '',
       dateOfBirth: null,
       personalFileNo: '',
       nid: null,
@@ -97,42 +99,42 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
       designationName: '',
       sectionName: '',
       shiftId: this.activeShiftId,
-      empPhotoName : '',
-      empGenderName : '',
+      empPhotoName: '',
+      empGenderName: '',
     };
   }
 
-  resetForm(){
+  resetForm() {
     this.router.navigate(['/employee/create-new-employee']);
-      this.BasicInfoForm.form.reset();
-      this.BasicInfoForm.form.patchValue({
-        id: this.empId,
-        firstName : '',
-        lastName : '',
-        firstNameBangla : '',
-        lastNameBangla : '',
-        dateOfBirth: undefined,
-        personalFileNo: '',
-        nid: null,
-        employeeTypeId: null,
-        aspNetUserId: null,
-        userStatus: false,
-        idCardNo: null,
-        departmentName: '',
-        designationName: '',
-        shiftId: this.activeShiftId
-      });
+    this.BasicInfoForm.form.reset();
+    this.BasicInfoForm.form.patchValue({
+      id: this.empId,
+      firstName: '',
+      lastName: '',
+      firstNameBangla: '',
+      lastNameBangla: '',
+      dateOfBirth: undefined,
+      personalFileNo: '',
+      nid: null,
+      employeeTypeId: null,
+      aspNetUserId: null,
+      userStatus: false,
+      idCardNo: null,
+      departmentName: '',
+      designationName: '',
+      shiftId: this.activeShiftId
+    });
   }
 
-  getActiveSiteSetting(){
+  getActiveSiteSetting() {
     this.subscription.push(
       this.siteSettingService.getActive().subscribe((res) => {
         this.defaultPassword = res.defaultPassword;
       })
     )
   }
-  
-  UserFormView(): void{
+
+  UserFormView(): void {
     this.visible = !this.visible;
     this.headerBtnText = this.visible ? 'Hide Form' : 'Show Form';
   }
@@ -148,7 +150,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   //     });
   //   });
   // }
-  
+
   // getEmployeeByAspNetUserId(){
   //   this.empBasicInfoService.findByAspNetUserId(this.userId).subscribe((res) => {
   //     if(res){
@@ -164,56 +166,68 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
   //     }
   //   });
   // }
-  
-  getEmployeeByEmpId(){
+
+
+  getEmployeeByEmpId() {
     this.empBasicInfoService.findByEmpId(this.empId).subscribe((res) => {
-      if(res){
+      if (res) {
         this.headerText = 'Update Basic Information';
+      res.dateOfBirth = this.sharedService.parseDate(res.dateOfBirth);
         this.BasicInfoForm?.form.patchValue(res);
-        this.btnText='Update';
+        this.btnText = 'Update';
       }
-      else{
+      else {
         this.headerText = 'Add Basic Information';
-        this.btnText='Submit';
+        this.btnText = 'Submit';
         this.initaialForm();
       }
     });
   }
 
-  getSelectedEmployeeType(){
+  getSelectedEmployeeType() {
     // this.subscription=
     this.subscription.push(
-      this.empBasicInfoService.getSelectedEmployeeType().subscribe((data) => { 
-      this.employeeType = data;
-    })
+      this.empBasicInfoService.getSelectedEmployeeType().subscribe((data) => {
+        this.employeeType = data;
+      })
     )
-    
+
   }
-  getSelectedShift(){
+  getSelectedShift() {
     this.subscription.push(
-      this.shiftService.getSelectedShift().subscribe((data) => { 
+      this.shiftService.getSelectedShift().subscribe((data) => {
         this.shifts = data;
       })
     )
     // this.subscription=
   }
 
-  cancel(){
+  cancel() {
     this.router.navigate(['/employee/create-new-employee']);
     this.close.emit();
   }
 
-  onSubmit(form: NgForm): void{
+onSubmit(form: NgForm): void {
+
+const formattedDob = this.sharedService.formatDateOnly(this.empBasicInfoService.basicInfo.dateOfBirth!);
+const payload = {
+  ...form.value,
+  dateOfBirth: formattedDob
+};
+
     this.loading = true;
     this.empBasicInfoService.cachedData = [];
     const id = form.value.id;
     const action$ = id
-      ? this.empBasicInfoService.updateEmpBasicInfo(id, form.value)
-      : this.empBasicInfoService.saveEmpBasicInfo(form.value);
-    
-   
-      this.subscription.push(
-        action$.subscribe((response: any) => {
+      ? this.empBasicInfoService.updateEmpBasicInfo(id, payload)
+      : this.empBasicInfoService.saveEmpBasicInfo(payload);
+// const action$ = id
+//       ? this.empBasicInfoService.updateEmpBasicInfo(id, form.value)
+//       : this.empBasicInfoService.saveEmpBasicInfo(form.value);
+
+
+    this.subscription.push(
+      action$.subscribe((response: any) => {
         if (response.success) {
         if(!id){
           this.userForm.firstName = form.value.firstName;
@@ -246,7 +260,7 @@ export class BasicInformationComponent implements OnInit, OnDestroy  {
         }
         this.loading = false;
       })
-      )
-      
+    )
+
   }
 }

@@ -11,6 +11,7 @@ import { SectionService } from 'src/app/views/basic-setup/service/section.servic
 import { EmpBasicInfoService } from '../../../service/emp-basic-info.service';
 import { JobDetailsSetupService } from '../../../../basic-setup/service/job-details-setup.service';
 import { RetiredReasonService } from 'src/app/views/basic-setup/service/retired-reason.service';
+import {SharedService } from '../../../../../shared/shared.service'
 
 @Component({
   selector: 'app-emp-job-details',
@@ -59,6 +60,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
     private gradeService: GradeService,
     public sectionService: SectionService,
     public retiredReasonService: RetiredReasonService,
+    public sharedService: SharedService
   ) {
 
   }
@@ -113,7 +115,10 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
         this.onServiceStatusSelect();
         this.headerText = 'Update Job Details';
         this.btnText = 'Update';
-        console.log(res)
+        res.joiningDate = this.sharedService.parseDate(res.joiningDate);
+        res.confirmationDate = this.sharedService.parseDate(res.confirmationDate);
+        res.currentPositionJoinDate = this.sharedService.parseDate(res.currentPositionJoinDate);
+        this.empJobDetailsService.empJobDetails = res
         this.getAllSelectedDepartments();
       }
       else {
@@ -401,13 +406,29 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
 
 
   onSubmit(form: NgForm): void {
-    console.log(form.value)
+
+        const formatedjoiningDate = this.sharedService.formatDateOnly(this.empJobDetailsService.empJobDetails.joiningDate!);
+        const formatedconfirmationDate = this.sharedService.formatDateOnly(this.empJobDetailsService.empJobDetails.confirmationDate!);
+        const formatedcurrentPositionJoinDate = this.sharedService.formatDateOnly(this.empJobDetailsService.empJobDetails.currentPositionJoinDate!);
+
+
+const payload = {
+  ...form.value,
+  joiningDate: formatedjoiningDate,
+  confirmationDate: formatedconfirmationDate,
+  currentPositionJoinDate: formatedcurrentPositionJoinDate
+  
+};
+
     this.loading = true;
     this.empJobDetailsService.cachedData = [];
     const id = form.value.id;
     const action$ = id
-      ? this.empJobDetailsService.updateEmpJobDetails(id, form.value)
-      : this.empJobDetailsService.saveEmpJobDetails(form.value);
+      ? this.empJobDetailsService.updateEmpJobDetails(id, payload)
+      : this.empJobDetailsService.saveEmpJobDetails(payload);
+    // const action$ = id
+    //   ? this.empJobDetailsService.updateEmpJobDetails(id, form.value)
+    //   : this.empJobDetailsService.saveEmpJobDetails(form.value);
 
     // this.subscription = 
     this.subscription.push(

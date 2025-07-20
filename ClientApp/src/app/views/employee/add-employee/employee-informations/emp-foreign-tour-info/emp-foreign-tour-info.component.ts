@@ -8,6 +8,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { EmpForeignTourInfoModule } from '../../../model/emp-foreign-tour-info.module';
 import { EmpForeignTourInfoService } from '../../../service/emp-foreign-tour-info.service';
 import { CountryService } from 'src/app/views/basic-setup/service/Country.service';
+import { SharedService } from '../../../../../shared/shared.service'
 
 @Component({
   selector: 'app-emp-foreign-tour-info',
@@ -33,7 +34,9 @@ export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     public empForeignTourInfoService: EmpForeignTourInfoService,
     public countryService: CountryService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    public sharedService: SharedService
+  ) { }
 
 
   ngOnInit(): void {
@@ -53,6 +56,10 @@ export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
       if (res.length > 0) {
         this.headerText = 'Updat Foreign Tour Information';
         this.btnText = 'Update';
+           res.forEach(item => {
+            item.toDate = this.sharedService.parseDate(item.toDate);
+            item.fromDate = this.sharedService.parseDate(item.fromDate);
+          });
         this.patchForeignTourInfo(res);
       }
       else {
@@ -153,7 +160,15 @@ export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
 
   insertForeignTour() {
     this.loading = true;
-    this.empForeignTourInfoService.saveEmpForeignTourInfo(this.EmpForeignTourInfoForm.get("empForeignTourList")?.value).subscribe(((res: any) => {
+
+    
+    const toreList = this.EmpForeignTourInfoForm.get("empForeignTourList")?.value.map((item: any) => ({
+      ...item,
+      toDate: this.sharedService.formatDateOnly(item.toDate),
+      fromDate: this.sharedService.formatDateOnly(item.fromDate),
+    }));
+
+    this.empForeignTourInfoService.saveEmpForeignTourInfo(toreList).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',

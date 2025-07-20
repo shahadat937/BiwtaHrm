@@ -6,16 +6,25 @@
         </button> -->
     </c-card-header>
     <c-card-body>
-        <form #EmpTransferPostingForm="ngForm" (submit)="onSubmit(EmpTransferPostingForm)" [gutter]="3" novalidate cForm class="needs-validation">
+        <form #EmpTransferPostingForm="ngForm" (submit)="onSubmit(EmpTransferPostingForm)" [gutter]="3" novalidate cForm
+            class="needs-validation">
             <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.id" name="id" />
             <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.empId" name="empId" />
-            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.applicationById" name="applicationById" />
-            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.applicantDepartmentId" name="applicantDepartmentId" />
-            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.applicantSectionId" name="applicantSectionId" />
-            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.applicantDesignationId" name="applicantDesignationId" />
-            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.applicantJobResponsibilityTypeId" name="applicantJobResponsibilityTypeId" />
-            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.isAdditionalDesignation" name="isAdditionalDesignation" />
-            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentResponsibiltyTypeId" name="currentResponsibiltyTypeId" />
+            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.applicationById"
+                name="applicationById" />
+            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.applicantDepartmentId"
+                name="applicantDepartmentId" />
+            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.applicantSectionId"
+                name="applicantSectionId" />
+            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.applicantDesignationId"
+                name="applicantDesignationId" />
+            <input type="hidden"
+                [(ngModel)]="empTransferPostingService.empTransferPosting.applicantJobResponsibilityTypeId"
+                name="applicantJobResponsibilityTypeId" />
+            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.isAdditionalDesignation"
+                name="isAdditionalDesignation" />
+            <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentResponsibiltyTypeId"
+                name="currentResponsibiltyTypeId" />
 
             <!-- ************* Employee Information ************** -->
             <c-card class="mt-3 mb-3 shadow">
@@ -27,7 +36,8 @@
                         name="currentDepartmentId" />
                     <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.isTransferApprove"
                         name="isTransferApprove" />
-                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.transferApproveStatus"
+                    <input type="hidden"
+                        [(ngModel)]="empTransferPostingService.empTransferPosting.transferApproveStatus"
                         name="transferApproveStatus" />
                     <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentDesignationId"
                         name="currentDesignationId" />
@@ -36,19 +46,23 @@
                     <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentOfficeId"
                         name="currentOfficeId" />
 
-                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentGradeId" name="currentGradeId" />
-                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentScaleId"  name="currentScaleId" />
-                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentScaleName" name="currentScaleName"/>
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentGradeId"
+                        name="currentGradeId" />
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentScaleId"
+                        name="currentScaleId" />
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.currentScaleName"
+                        name="currentScaleName" />
                     <c-col [md]="4">
                         <label cLabel for="idCardNo">Employee PMIS No<span class="text-danger">*</span></label>
                         <c-input-group>
-                            <button cButton color="secondary" type="button" cTooltip="Search Employee" cTooltipPlacement="bottom" (click)="EmployeeInfoListModal()">
+                            <button cButton color="secondary" type="button" cTooltip="Search Employee"
+                                cTooltipPlacement="bottom" (click)="EmployeeInfoListModal()">
                                 <svg [cIcon]="icons.cilSearch"></svg>
                             </button>
                             <input aria-describedby="idCardNo" cFormControl
-                                [(ngModel)]="empTransferPostingService.empTransferPosting.empIdCardNo" name="empIdCardNo"
-                                #idCardNo="ngModel" required placeholder="Enter Employee PMIS No" id="idCardNo"
-                                type="text" #idCardNoInput />
+                                [(ngModel)]="empTransferPostingService.empTransferPosting.empIdCardNo"
+                                name="empIdCardNo" #idCardNo="ngModel" required placeholder="Enter Employee PMIS No"
+                                id="idCardNo" type="text" #idCardNoInput />
                             <button cButton color="primary" type="button"
                                 (click)="getEmpInfoByIdCardNo(idCardNoInput.value)">
                                 Select
@@ -88,10 +102,14 @@
                     </c-col>
 
                     <c-col [md]="4">
-                        <label cLabel for="currentDeptJoinDate">Current Department Joining Date<span class="text-danger"></span></label>
-                        <input [(ngModel)]="empTransferPostingService.empTransferPosting.currentDeptJoinDate"
-                            name="currentDeptJoinDate" #currentDeptJoinDate="ngModel" cFormControl id="currentDeptJoinDate"
-                            type="date" />
+                        <label cLabel for="currentDeptJoinDate">Current Department Joining Date<span
+                                class="text-danger"></span></label>
+                        <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.currentDeptJoinDate"
+                            name="currentDeptJoinDate" #currentDeptJoinDate="ngModel" cFormControl
+                            id="currentDeptJoinDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                            [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                        </p-calendar>
+
                         @if(!currentDeptJoinDate.valid&&currentDeptJoinDate.touched){
                         <div class="text-left text-danger">Current Department Joining Date is required</div>
                         }
@@ -120,20 +138,23 @@
 
                     <c-col [md]="3">
                         <label cLabel for="officeOrderDate">Office Order Date<span class="text-danger"></span></label>
-                        <input [(ngModel)]="empTransferPostingService.empTransferPosting.officeOrderDate"
+                        <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.officeOrderDate"
                             name="officeOrderDate" #officeOrderDate="ngModel" cFormControl id="officeOrderDate"
-                            type="date" />
+                            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+                            class="coreui-datepicker w-100" appendTo="body">
+                        </p-calendar>
+
                         @if(!officeOrderDate.valid&&officeOrderDate.touched){
                         <div class="text-left text-danger">Office Order No is required</div>
                         }
                     </c-col>
 
                     <c-col [md]="3">
-                        <label cLabel for="orderOfficeById">Order Office/By<span
-                                class="text-danger"></span></label>
+                        <label cLabel for="orderOfficeById">Order Office/By<span class="text-danger"></span></label>
                         <div class="input-wrapper">
                             <select [(ngModel)]="empTransferPostingService.empTransferPosting.orderOfficeById"
-                                name="orderOfficeById" #orderOfficeById="ngModel" cFormControl id="orderOfficeById" aria-label="Default select example" cSelect>
+                                name="orderOfficeById" #orderOfficeById="ngModel" cFormControl id="orderOfficeById"
+                                aria-label="Default select example" cSelect>
                                 <option [ngValue]="null">Select Order Office/By</option>
 
                                 @for(department of departments; track department.id;let index=$index) {
@@ -201,7 +222,7 @@
                     </c-col>
                     } -->
 
-                    
+
                     <c-col [md]="3">
                         <label cLabel for="releaseTypeId">Release Type<span class="text-danger"></span></label>
                         <div class="input-wrapper">
@@ -245,11 +266,12 @@
                             }
                         </div>
                     </c-col>
-                    
+
                     <c-col [md]="3" *ngIf="sections.length > 0">
                         <label cLabel for="transferSectionId">Transfer Section<span class="text-danger"></span></label>
                         <div class="input-wrapper">
-                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.transferSectionId" (change)="onSectionSelectGetDesignation(empTransferPostingService.empTransferPosting.transferSectionId, empJobDetailsId)"
+                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.transferSectionId"
+                                (change)="onSectionSelectGetDesignation(empTransferPostingService.empTransferPosting.transferSectionId, empJobDetailsId)"
                                 name="transferSectionId" #transferSectionId="ngModel" cFormControl
                                 id="transferSectionId" aria-label="Default select example" cSelect>
                                 <option [ngValue]="null">Select Section</option>
@@ -265,7 +287,7 @@
                             }
                         </div>
                     </c-col>
-                    
+
                     <c-col [md]="3">
                         <label cLabel for="transferDesignationId">Transfer Designation<span
                                 class="text-danger"></span></label>
@@ -291,10 +313,10 @@
                         <label cLabel for="transferDepartmentId">Responsibility Type<span
                                 class="text-danger">*</span></label>
                         <div class="input-wrapper">
-                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.transferResponsibilityTypeId"
-                                name="transferResponsibilityTypeId" #transferResponsibilityTypeId="ngModel" 
-                            
-                                cFormControl id="transferResponsibilityTypeId" aria-label="Default select example" cSelect>
+                            <select
+                                [(ngModel)]="empTransferPostingService.empTransferPosting.transferResponsibilityTypeId"
+                                name="transferResponsibilityTypeId" #transferResponsibilityTypeId="ngModel" cFormControl
+                                id="transferResponsibilityTypeId" aria-label="Default select example" cSelect>
                                 <option [ngValue]="null">Select Responsibility Type</option>
 
                                 @for(responsibilitie of responsibilities; track responsibilitie.id;let index=$index) {
@@ -303,10 +325,10 @@
                                 </option>
                                 }
                             </select>
-                        
+
                         </div>
                     </c-col>
-                
+
 
 
                     <c-col [md]="3">
@@ -319,92 +341,87 @@
                     </c-col>
 
                     <div *ngIf="isMainDesignation">
-                        <c-form-check  [switch]="true" class="mb-3">
+                        <c-form-check [switch]="true" class="mb-3">
                             <input cFormCheckInput type="checkbox" id="withPromotion" name="withPromotion"
-                                [(ngModel)]="empTransferPostingService.empTransferPosting.withPromotion" (change)="withPromotion()"/>
+                                [(ngModel)]="empTransferPostingService.empTransferPosting.withPromotion"
+                                (change)="withPromotion()" />
                             <label cFormCheckLabel for="withPromotion">With Promotion</label>
                         </c-form-check>
 
                         <div cRow [gutter]="3" *ngIf="empTransferPostingService.empTransferPosting.withPromotion">
                             <c-col [md]="4">
-                                <label cLabel for="currentGradeName">Current Grade<span class="text-danger"></span></label>
+                                <label cLabel for="currentGradeName">Current Grade<span
+                                        class="text-danger"></span></label>
                                 <input [(ngModel)]="empTransferPostingService.empTransferPosting.currentGradeName"
-                                    name="currentGradeName" #currentGradeName="ngModel" cFormControl id="currentGradeName"
-                                    type="text" readonly />
+                                    name="currentGradeName" #currentGradeName="ngModel" cFormControl
+                                    id="currentGradeName" type="text" readonly />
                             </c-col>
                             <c-col [md]="4">
-                                <label cLabel for="currentScaleName">Current Scale Lavel<span class="text-danger"></span></label>
+                                <label cLabel for="currentScaleName">Current Scale Lavel<span
+                                        class="text-danger"></span></label>
                                 <input [(ngModel)]="empTransferPostingService.empTransferPosting.currentScaleName"
-                                    name="currentScaleName" #currentScaleName="ngModel" cFormControl id="currentScaleName"
-                                    type="text" readonly />
+                                    name="currentScaleName" #currentScaleName="ngModel" cFormControl
+                                    id="currentScaleName" type="text" readonly />
                             </c-col>
                             <c-col [md]="4">
-                                <label cLabel for="currentBasicPay">Current Basic Pay<span class="text-danger"></span></label>
+                                <label cLabel for="currentBasicPay">Current Basic Pay<span
+                                        class="text-danger"></span></label>
                                 <input [(ngModel)]="empTransferPostingService.empTransferPosting.currentBasicPay"
                                     name="currentBasicPay" #currentBasicPay="ngModel" cFormControl id="currentBasicPay"
                                     type="text" readonly />
                             </c-col>
-                            
+
                             <c-col [md]="4">
-                                <label cLabel for="updateGradeId"
-                                >Update Grade<span class="text-danger"></span></label
-                                >
-                                <select (change)="onChangeGradeGetScale(empTransferPostingService.empTransferPosting.updateGradeId || 0)"
-                                [(ngModel)]="empTransferPostingService.empTransferPosting.updateGradeId"
-                                name="updateGradeId"
-                                #updateGradeId="ngModel"
-                                id="updateGradeId"
-                                aria-label="Default select example"
-                                cSelect
-                                >
-                                <option [ngValue]="null" disabled>Select Grade</option>
-                                @for(grade of grades; track grade.id;let index=$index) {
-                                <option [value]="grade.id">
-                                    {{ grade.name }}
-                                </option>
-                                }
+                                <label cLabel for="updateGradeId">Update Grade<span class="text-danger"></span></label>
+                                <select
+                                    (change)="onChangeGradeGetScale(empTransferPostingService.empTransferPosting.updateGradeId || 0)"
+                                    [(ngModel)]="empTransferPostingService.empTransferPosting.updateGradeId"
+                                    name="updateGradeId" #updateGradeId="ngModel" id="updateGradeId"
+                                    aria-label="Default select example" cSelect>
+                                    <option [ngValue]="null" disabled>Select Grade</option>
+                                    @for(grade of grades; track grade.id;let index=$index) {
+                                    <option [value]="grade.id">
+                                        {{ grade.name }}
+                                    </option>
+                                    }
                                 </select>
-                
+
                                 @if(!updateGradeId.valid && updateGradeId.touched){
                                 <div class="text-left text-danger">Grade Type is required</div>
                                 }
                             </c-col>
-                            
+
                             <c-col [md]="4">
                                 <label cLabel for="updateScaleId">Update Scale<span class="text-danger"></span></label>
                                 <div class="input-wrapper">
-                                <select (change)="onChangeScaleGetBasicPay(empTransferPostingService.empTransferPosting.updateScaleId || 0)"
-                                [(ngModel)]="empTransferPostingService.empTransferPosting.updateScaleId" name="updateScaleId" #updateScaleId="ngModel"
-                                    cFormControl id="updateScaleId" aria-label="Default select example" cSelect>
-                                    <option [ngValue]="null">Select Scale</option>
-                        
-                                    @for(scale of scales; track scale.id;let index=$index) {
-                                    <option [value]="scale.id">
-                                    {{ scale.name }}
-                                    </option>
+                                    <select
+                                        (change)="onChangeScaleGetBasicPay(empTransferPostingService.empTransferPosting.updateScaleId || 0)"
+                                        [(ngModel)]="empTransferPostingService.empTransferPosting.updateScaleId"
+                                        name="updateScaleId" #updateScaleId="ngModel" cFormControl id="updateScaleId"
+                                        aria-label="Default select example" cSelect>
+                                        <option [ngValue]="null">Select Scale</option>
+
+                                        @for(scale of scales; track scale.id;let index=$index) {
+                                        <option [value]="scale.id">
+                                            {{ scale.name }}
+                                        </option>
+                                        }
+                                    </select>
+
+                                    @if(!updateScaleId.valid && updateScaleId.touched){
+                                    <div class="text-left text-danger">Present Scale is required</div>
                                     }
-                                </select>
-                        
-                                @if(!updateScaleId.valid && updateScaleId.touched){
-                                <div class="text-left text-danger">Present Scale is required</div>
-                                }
                                 </div>
                             </c-col>
-                            
+
                             <c-col [md]="4">
-                                <label cLabel for="updateBasicPay"
-                                >Update Basic Pay<span class="text-danger"></span></label>
-                                <input
-                                [(ngModel)]="empTransferPostingService.empTransferPosting.updateBasicPay"
-                                name="updateBasicPay"
-                                #updateBasicPay="ngModel"
-                                placeholder="Update Basic Pay"
-                                cFormControl
-                                id="updateBasicPay"
-                                type="text"
-                                />
+                                <label cLabel for="updateBasicPay">Update Basic Pay<span
+                                        class="text-danger"></span></label>
+                                <input [(ngModel)]="empTransferPostingService.empTransferPosting.updateBasicPay"
+                                    name="updateBasicPay" #updateBasicPay="ngModel" placeholder="Update Basic Pay"
+                                    cFormControl id="updateBasicPay" type="text" />
                             </c-col>
-                    </div>
+                        </div>
 
                     </div>
                 </c-card-body>
@@ -529,30 +546,38 @@
                     <div>Department Release Information</div>
                 </c-card-header>
                 <c-card-body>
-                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseById" name="deptReleaseById" />
-                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeId" name="deptReleaseTypeId" />
-                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptApproveStatus" name="deptApproveStatus" />
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseById"
+                        name="deptReleaseById" />
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeId"
+                        name="deptReleaseTypeId" />
+                    <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.deptApproveStatus"
+                        name="deptApproveStatus" />
                     <div class="mb-3">
                         <c-form-check [switch]="true">
                             <input cFormCheckInput type="checkbox" id="isDepartmentApprove" name="isDepartmentApprove"
-                                [(ngModel)]="empTransferPostingService.empTransferPosting.isDepartmentApprove" (change)="isDeptApproveNeed(empTransferPostingService.empTransferPosting.isDepartmentApprove)"/>
+                                [(ngModel)]="empTransferPostingService.empTransferPosting.isDepartmentApprove"
+                                (change)="isDeptApproveNeed(empTransferPostingService.empTransferPosting.isDepartmentApprove)" />
                             <label cFormCheckLabel for="isDepartmentApprove">Department Release Needed</label>
                         </c-form-check>
                     </div>
                     <div class="mb-3" *ngIf="empTransferPostingService.empTransferPosting.isDepartmentApprove">
                         <c-form-check [switch]="true">
-                            <input cFormCheckInput type="checkbox" id="provideDepartmentApproveInfo" name="provideDepartmentApproveInfo"
-                            [(ngModel)]="empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo" (change)="provideDeptApproveInfo(empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo)"/>
-                            <label cFormCheckLabel for="provideDepartmentApproveInfo">Provide Department Release Info</label>
+                            <input cFormCheckInput type="checkbox" id="provideDepartmentApproveInfo"
+                                name="provideDepartmentApproveInfo"
+                                [(ngModel)]="empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo"
+                                (change)="provideDeptApproveInfo(empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo)" />
+                            <label cFormCheckLabel for="provideDepartmentApproveInfo">Provide Department Release
+                                Info</label>
                         </c-form-check>
                     </div>
-                    <div cRow [gutter]="3" *ngIf="empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo">
-                            <c-col [md]="3">
-                                <label cLabel for="deptReleaseTypeId">Release Type<span class="text-danger"></span></label>
-                                <input [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeName"
-                                    name="deptReleaseTypeName" #deptReleaseTypeName="ngModel" cFormControl id="deptReleaseTypeName"
-                                    type="text" disabled />
-                                <!-- <div class="input-wrapper">
+                    <div cRow [gutter]="3"
+                        *ngIf="empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo">
+                        <c-col [md]="3">
+                            <label cLabel for="deptReleaseTypeId">Release Type<span class="text-danger"></span></label>
+                            <input [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeName"
+                                name="deptReleaseTypeName" #deptReleaseTypeName="ngModel" cFormControl
+                                id="deptReleaseTypeName" type="text" disabled />
+                            <!-- <div class="input-wrapper">
                                     <select [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseTypeId"
                                         name="deptReleaseTypeId" #deptReleaseTypeId="ngModel" cFormControl id="deptReleaseTypeId"
                                         aria-label="Default select example" cSelect>
@@ -568,47 +593,51 @@
                                     <div class="text-left text-danger">Release Type is required</div>
                                     }
                                 </div> -->
-                            </c-col>
-                            
-                            <c-col [md]="3">
-                                <label cLabel for="deptReleaseDate">Release Date<span class="text-danger"></span></label>
-                                <input [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseDate"
-                                    name="deptReleaseDate" #deptReleaseDate="ngModel" cFormControl id="deptReleaseDate"
-                                    type="date" />
-                                @if(!deptReleaseDate.valid&&deptReleaseDate.touched){
-                                <div class="text-left text-danger">Release Date is required</div>
-                                }
-                            </c-col>
-                            
-                            <c-col [md]="3">
-                                <label cLabel for="referenceNo">Reference No<span class="text-danger"></span></label>
-                                <input [(ngModel)]="empTransferPostingService.empTransferPosting.referenceNo"
-                                    name="referenceNo" #referenceNo="ngModel" cFormControl id="referenceNo"
-                                    type="text" placeholder="Enter Reference No"/>
-                                @if(!referenceNo.valid&&referenceNo.touched){
-                                <div class="text-left text-danger">Reference No is required</div>
-                                }
-                            </c-col>
-                            
-                            <c-col [md]="3">
-                                <label cLabel for="deptClearance">Departmental Clearance</label>
-                                <select [(ngModel)]="empTransferPostingService.empTransferPosting.deptClearance"
-                                name="deptClearance" #deptClearance="ngModel"
-                                cSelect [required]="empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo"
+                        </c-col>
+
+                        <c-col [md]="3">
+                            <label cLabel for="deptReleaseDate">Release Date<span class="text-danger"></span></label>
+                            <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseDate"
+                                name="deptReleaseDate" #deptReleaseDate="ngModel" cFormControl id="deptReleaseDate"
+                                dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+                                class="coreui-datepicker w-100" appendTo="body">
+                            </p-calendar>
+
+                            @if(!deptReleaseDate.valid&&deptReleaseDate.touched){
+                            <div class="text-left text-danger">Release Date is required</div>
+                            }
+                        </c-col>
+
+                        <c-col [md]="3">
+                            <label cLabel for="referenceNo">Reference No<span class="text-danger"></span></label>
+                            <input [(ngModel)]="empTransferPostingService.empTransferPosting.referenceNo"
+                                name="referenceNo" #referenceNo="ngModel" cFormControl id="referenceNo" type="text"
+                                placeholder="Enter Reference No" />
+                            @if(!referenceNo.valid&&referenceNo.touched){
+                            <div class="text-left text-danger">Reference No is required</div>
+                            }
+                        </c-col>
+
+                        <c-col [md]="3">
+                            <label cLabel for="deptClearance">Departmental Clearance</label>
+                            <select [(ngModel)]="empTransferPostingService.empTransferPosting.deptClearance"
+                                name="deptClearance" #deptClearance="ngModel" cSelect
+                                [required]="empTransferPostingService.empTransferPosting.provideDepartmentApproveInfo"
                                 id="deptClearance">
                                 <option value="true">Yes</option>
                                 <option value="false">No</option>
-                                </select>
-                            </c-col>
-                            
-                            <c-col [md]="3">
-                                <label cLabel for="deptRemark">Remark<span class="text-danger"></span></label>
-                                <input [(ngModel)]="empTransferPostingService.empTransferPosting.deptRemark" name="deptRemark"
-                                    #deptRemark="ngModel" cFormControl id="deptRemark" placeholder="Enter Remark" type="text" />
-                                @if(!deptRemark.valid&&deptRemark.touched){
-                                <div class="text-left text-danger">Remark is required</div>
-                                }
-                            </c-col>
+                            </select>
+                        </c-col>
+
+                        <c-col [md]="3">
+                            <label cLabel for="deptRemark">Remark<span class="text-danger"></span></label>
+                            <input [(ngModel)]="empTransferPostingService.empTransferPosting.deptRemark"
+                                name="deptRemark" #deptRemark="ngModel" cFormControl id="deptRemark"
+                                placeholder="Enter Remark" type="text" />
+                            @if(!deptRemark.valid&&deptRemark.touched){
+                            <div class="text-left text-danger">Remark is required</div>
+                            }
+                        </c-col>
                     </div>
                 </c-card-body>
             </c-card>
@@ -621,40 +650,50 @@
                 </c-card-header>
                 <c-card-body>
                     <div class="mb-3">
-                        <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.joiningReportingById" name="joiningReportingById" />
-                        <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.joiningStatus" name="joiningStatus" />
+                        <input type="hidden"
+                            [(ngModel)]="empTransferPostingService.empTransferPosting.joiningReportingById"
+                            name="joiningReportingById" />
+                        <input type="hidden" [(ngModel)]="empTransferPostingService.empTransferPosting.joiningStatus"
+                            name="joiningStatus" />
                         <c-form-check [switch]="true">
                             <input cFormCheckInput type="checkbox" id="isJoining" name="isJoining"
-                                [(ngModel)]="empTransferPostingService.empTransferPosting.isJoining" (change)="isJoiningApproveNeed(empTransferPostingService.empTransferPosting.isJoining)"/>
+                                [(ngModel)]="empTransferPostingService.empTransferPosting.isJoining"
+                                (change)="isJoiningApproveNeed(empTransferPostingService.empTransferPosting.isJoining)" />
                             <label cFormCheckLabel for="isJoining">Transfer/Posting Joining Info Needed</label>
                         </c-form-check>
                     </div>
                     <div class="mb-3" *ngIf="empTransferPostingService.empTransferPosting.isJoining">
                         <c-form-check [switch]="true">
                             <input cFormCheckInput type="checkbox" id="provideJoiningInfo" name="provideJoiningInfo"
-                            [(ngModel)]="empTransferPostingService.empTransferPosting.provideJoiningInfo" (change)="provideJoiningApproveInfo(empTransferPostingService.empTransferPosting.provideJoiningInfo)"/>
-                            <label cFormCheckLabel for="provideJoiningInfo">Provide Transfer/Posting Joining Info</label>
+                                [(ngModel)]="empTransferPostingService.empTransferPosting.provideJoiningInfo"
+                                (change)="provideJoiningApproveInfo(empTransferPostingService.empTransferPosting.provideJoiningInfo)" />
+                            <label cFormCheckLabel for="provideJoiningInfo">Provide Transfer/Posting Joining
+                                Info</label>
                         </c-form-check>
                     </div>
                     <div cRow [gutter]="3" *ngIf="empTransferPostingService.empTransferPosting.provideJoiningInfo">
-                            <c-col [md]="3">
-                                <label cLabel for="joiningDate">Joining Date<span class="text-danger"></span></label>
-                                <input [(ngModel)]="empTransferPostingService.empTransferPosting.joiningDate"
-                                    name="joiningDate" #joiningDate="ngModel" cFormControl id="deptReleaseDate"
-                                    type="date" />
-                                @if(!joiningDate.valid&&joiningDate.touched){
-                                <div class="text-left text-danger">Joining Date is required</div>
-                                }
-                            </c-col>
-                            
-                            <c-col [md]="3">
-                                <label cLabel for="joiningRemark">Remark<span class="text-danger"></span></label>
-                                <input [(ngModel)]="empTransferPostingService.empTransferPosting.joiningRemark" name="joiningRemark"
-                                    #joiningRemark="ngModel" cFormControl id="joiningRemark" placeholder="Enter Remark" type="text" />
-                                @if(!joiningRemark.valid&&joiningRemark.touched){
-                                <div class="text-left text-danger">Remark is required</div>
-                                }
-                            </c-col>
+                        <c-col [md]="3">
+                            <label cLabel for="joiningDate">Joining Date<span class="text-danger"></span></label>
+                            <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.joiningDate"
+                                name="joiningDate" #joiningDate="ngModel" cFormControl id="joiningDate"
+                                dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+                                class="coreui-datepicker w-100" appendTo="body">
+                            </p-calendar>
+
+                            @if(!joiningDate.valid&&joiningDate.touched){
+                            <div class="text-left text-danger">Joining Date is required</div>
+                            }
+                        </c-col>
+
+                        <c-col [md]="3">
+                            <label cLabel for="joiningRemark">Remark<span class="text-danger"></span></label>
+                            <input [(ngModel)]="empTransferPostingService.empTransferPosting.joiningRemark"
+                                name="joiningRemark" #joiningRemark="ngModel" cFormControl id="joiningRemark"
+                                placeholder="Enter Remark" type="text" />
+                            @if(!joiningRemark.valid&&joiningRemark.touched){
+                            <div class="text-left text-danger">Remark is required</div>
+                            }
+                        </c-col>
                     </div>
                 </c-card-body>
             </c-card>

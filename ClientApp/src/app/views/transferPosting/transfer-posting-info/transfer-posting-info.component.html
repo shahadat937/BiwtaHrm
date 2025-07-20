@@ -30,7 +30,7 @@
                             <label><b>Section: </b>{{empTransferPosting.sectionName}}</label>
                         </c-col>
                         <c-col [md]="6">
-                            <label><b>Current Department Joining Date: </b>{{empTransferPosting.currentDeptJoinDate}}</label>
+                            <label><b>Current Department Joining Date: </b>{{empTransferPosting.currentDeptJoinDate | date: "dd-MM-YYYY"}}</label>
                         </c-col>
                     </c-card-body>
                 </c-card>
@@ -45,7 +45,7 @@
                             <label><b>Office Order No: </b>{{empTransferPosting.officeOrderNo}}</label>
                         </c-col>
                         <c-col [md]="6">
-                            <label><b>Office Order Date: </b>{{empTransferPosting.officeOrderDate}}</label>
+                            <label><b>Office Order Date: </b>{{empTransferPosting.officeOrderDate | date: "dd-MM-YYYY"}}</label>
                         </c-col>
                         <c-col [md]="6">
                             <label><b>Order By: </b>{{empTransferPosting.orderByOffice}}</label>
@@ -163,7 +163,7 @@
                                 <label><b>Release Type: </b>{{empTransferPosting.deptReleaseTypeName}}</label>
                             </c-col>
                             <c-col [md]="6">
-                                <label><b>Release Date: </b>{{empTransferPosting.deptReleaseDate}}</label>
+                                <label><b>Release Date: </b>{{empTransferPosting.deptReleaseDate | date: "dd-MM-YYYY"}}</label>
                             </c-col>
                             <c-col [md]="6">
                                 <label><b>Reference No: </b>{{empTransferPosting.referenceNo}}</label>
@@ -211,7 +211,7 @@
                         </div>
                         <div *ngIf="empTransferPosting.joiningStatus != null && empTransferPosting.isJoining" cRow>
                             <c-col [md]="6">
-                                <label><b>Joining Date: </b>{{empTransferPosting.joiningDate}}</label>
+                                <label><b>Joining Date: </b>{{empTransferPosting.joiningDate | date: "dd-MM-YYYY"}}</label> 
                             </c-col>
                             <c-col [md]="6">
                                 <label><b>Reporting By: </b>{{empTransferPosting.joiningReportingByEmpName}}</label>

@@ -22,6 +22,7 @@ import { AuthService } from '../../../core/service/auth.service';
 import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 import { ResponsibilityTypeService } from '../../../../../src/app/views/basic-setup/service/responsibility-type.service';
+import { SharedService } from '../../../shared/shared.service'
 
 @Component({
   selector: 'app-transfer-posting-application',
@@ -75,7 +76,8 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     public notificationService: NotificationService,
     private authService: AuthService,
     public roleFeatureService: RoleFeatureService,
-    public responsibilityTypeService: ResponsibilityTypeService
+    public responsibilityTypeService: ResponsibilityTypeService,
+    public sharedService: SharedService
   ) {
 
   }
@@ -136,6 +138,10 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.empTransferPostingService.findById(this.id).subscribe((res) => {
         if (res) {
+          res.currentDeptJoinDate = this.sharedService.parseDate(res.currentDeptJoinDate)
+          res.officeOrderDate = this.sharedService.parseDate(res.officeOrderDate)
+          res.deptReleaseDate = this.sharedService.parseDate(res.deptReleaseDate)
+          res.joiningDate = this.sharedService.parseDate(res.joiningDate)
           this.empTransferPosting = res;
           this.tranferDesignation = res.transferDesignationId;
           this.responsibilityTypeId = res.responsibilityTypeId;
@@ -870,10 +876,29 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
     if (this.featurePermission.add == true) {
       this.loading = true;
       this.empTransferPostingService.cachedData = [];
+
+      const formatedCurrentDeptJoinDate = this.sharedService.formatDateOnly(this.empTransferPostingService.empTransferPosting.currentDeptJoinDate)
+      const formatedOfficeOrderDate = this.sharedService.formatDateOnly(this.empTransferPostingService.empTransferPosting.officeOrderDate)
+      const formatedDeptReleaseDate = this.sharedService.formatDateOnly(this.empTransferPostingService.empTransferPosting.deptReleaseDate)
+      const formatedJoiningDate = this.sharedService.formatDateOnly(this.empTransferPostingService.empTransferPosting.joiningDate)
+
+
+      const payload = {
+        ...form.value,
+        currentDeptJoinDate: formatedCurrentDeptJoinDate,
+        officeOrderDate: formatedOfficeOrderDate,
+        deptReleaseDate: formatedDeptReleaseDate,
+        joiningDate: formatedJoiningDate
+      }
+
+
       const id = form.value.id;
       const action$ = id
-        ? this.empTransferPostingService.updateEmpTransferPosting(id, form.value)
-        : this.empTransferPostingService.saveEmpTransferPosting(form.value);
+        ? this.empTransferPostingService.updateEmpTransferPosting(id, payload)
+        : this.empTransferPostingService.saveEmpTransferPosting(payload);
+      // const action$ = id
+      //   ? this.empTransferPostingService.updateEmpTransferPosting(id, form.value)
+      //   : this.empTransferPostingService.saveEmpTransferPosting(form.value);
 
       this.subscription.push(
         action$.subscribe((response: any) => {

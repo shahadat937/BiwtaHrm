@@ -11,6 +11,7 @@ import { EmpTransferPostingService } from '../../service/emp-transfer-posting.se
 import { SelectedModel } from '../../../../../../src/app/core/models/selectedModel';
 import { UserNotification } from '../../../../../../src/app/views/notifications/models/user-notification';
 import { NotificationService } from '../../../../../../src/app/views/notifications/service/notification.service';
+import { SharedService } from '../../../../shared/shared.service';
 
 @Component({
   selector: 'app-department-approval',
@@ -44,6 +45,7 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
     private el: ElementRef, 
     private renderer: Renderer2,
     public notificationService: NotificationService,
+    public sharedService : SharedService
   ) {
 
   }
@@ -78,6 +80,7 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
     this.subscription.push(
     this.empTransferPostingService.findById(this.id).subscribe((res) => {
       if(res){
+        res.deptReleaseDate = this.sharedService.parseDate(res.deptReleaseDate)
         this.empTransferPosting = res;
         // this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
         this.getEmpJobDetailsByEmpIdOfTransferApproveBy( res.transferApproveById ||0 );
@@ -179,9 +182,17 @@ export class DepartmentApprovalComponent implements OnInit, OnDestroy {
       this.empTransferPosting.referenceNo = this.empTransferPostingService.empTransferPosting.referenceNo;
       this.empTransferPosting.deptClearance = this.empTransferPostingService.empTransferPosting.deptClearance;
       this.empTransferPosting.deptRemark = this.empTransferPostingService.empTransferPosting.deptRemark;
+
+      const formatedDepartmentReleaseDate = this.sharedService.formatDateOnly(this.empTransferPostingService.empTransferPosting.deptReleaseDate)
       
+      const payload = {
+        ...this.empTransferPosting,
+        deptReleaseDate: formatedDepartmentReleaseDate
+
+      }
+
       this.subscription.push(
-      this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, this.empTransferPosting).subscribe((response: any) => {
+      this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, payload).subscribe((response: any) => {
         if (response.success) {
           if(deptApproveStatus == true){
             this.toastr.success('', `Application Approved Successfully`, {

@@ -26,7 +26,7 @@
 
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="fromDate{{i}}">Form Date</label>
-                                        <p-calendar formControlName="fromDate" id="fromDate{{i}}" dateFormat="dd/mm/yy"
+                                        <p-calendar formControlName="fromDate" id="fromDate{{i}}" dateFormat="dd/mm/yy" [iconDisplay]="'input'"
                                             placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
                                             class="coreui-datepicker w-100" appendTo="body">
                                         </p-calendar>
@@ -34,7 +34,7 @@
 
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="toDate{{i}}">To Date</label>
-                                        <p-calendar formControlName="toDate" id="toDate{{i}}" dateFormat="dd/mm/yy"
+                                        <p-calendar formControlName="toDate" id="toDate{{i}}" dateFormat="dd/mm/yy" [iconDisplay]="'input'"
                                             placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
                                             class="coreui-datepicker w-100" appendTo="body">
                                         </p-calendar>

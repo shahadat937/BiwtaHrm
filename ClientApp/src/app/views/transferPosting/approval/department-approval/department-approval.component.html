@@ -172,7 +172,7 @@
 
                         <c-col [md]="4">
                             <label cLabel for="deptReleaseDate">Release Date<span class="text-danger"></span></label>
-                            <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseDate"
+                            <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseDate" [iconDisplay]="'input'"
                                 name="deptReleaseDate" #deptReleaseDate="ngModel" cFormControl id="deptReleaseDate"
                                 dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
                                 class="coreui-datepicker w-100" appendTo="body">

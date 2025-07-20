@@ -104,7 +104,7 @@
                     <c-col [md]="4">
                         <label cLabel for="currentDeptJoinDate">Current Department Joining Date<span
                                 class="text-danger"></span></label>
-                        <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.currentDeptJoinDate"
+                        <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.currentDeptJoinDate" [iconDisplay]="'input'"
                             name="currentDeptJoinDate" #currentDeptJoinDate="ngModel" cFormControl
                             id="currentDeptJoinDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
                             [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
@@ -138,7 +138,7 @@
 
                     <c-col [md]="3">
                         <label cLabel for="officeOrderDate">Office Order Date<span class="text-danger"></span></label>
-                        <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.officeOrderDate"
+                        <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.officeOrderDate" [iconDisplay]="'input'"
                             name="officeOrderDate" #officeOrderDate="ngModel" cFormControl id="officeOrderDate"
                             dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
                             class="coreui-datepicker w-100" appendTo="body">
@@ -597,7 +597,7 @@
 
                         <c-col [md]="3">
                             <label cLabel for="deptReleaseDate">Release Date<span class="text-danger"></span></label>
-                            <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseDate"
+                            <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.deptReleaseDate" [iconDisplay]="'input'"
                                 name="deptReleaseDate" #deptReleaseDate="ngModel" cFormControl id="deptReleaseDate"
                                 dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
                                 class="coreui-datepicker w-100" appendTo="body">
@@ -674,7 +674,7 @@
                     <div cRow [gutter]="3" *ngIf="empTransferPostingService.empTransferPosting.provideJoiningInfo">
                         <c-col [md]="3">
                             <label cLabel for="joiningDate">Joining Date<span class="text-danger"></span></label>
-                            <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.joiningDate"
+                            <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.joiningDate" [iconDisplay]="'input'"
                                 name="joiningDate" #joiningDate="ngModel" cFormControl id="joiningDate"
                                 dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
                                 class="coreui-datepicker w-100" appendTo="body">

@@ -18,7 +18,7 @@
 
             <c-col [md]="3">
                 <label cLabel for="orderDate">Order Date<span class="text-danger"></span></label>
-                <p-calendar [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.orderDate"
+                <p-calendar [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.orderDate" [iconDisplay]="'input'"
                     name="orderDate" #orderDate="ngModel" id="orderDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy"
                     [showIcon]="true" [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
                 </p-calendar>
@@ -114,7 +114,7 @@
 
             <c-col [md]="3">
                 <label cLabel for="startDate">Joining Date<span class="text-danger"></span></label>
-                <p-calendar [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.startDate"
+                <p-calendar [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.startDate" [iconDisplay]="'input'"
                     name="startDate" #startDate="ngModel" id="startDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy"
                     [showIcon]="true" [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
                 </p-calendar>
@@ -125,7 +125,7 @@
 
             <c-col [md]="3">
                 <label cLabel for="endDate">Release Date<span class="text-danger"></span></label>
-                <p-calendar [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.endDate" name="endDate"
+                <p-calendar [(ngModel)]="empOtherResponsibilityService.empOtherResponsibility.endDate" name="endDate" [iconDisplay]="'input'"
                     #endDate="ngModel" id="endDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
                     [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
                 </p-calendar>

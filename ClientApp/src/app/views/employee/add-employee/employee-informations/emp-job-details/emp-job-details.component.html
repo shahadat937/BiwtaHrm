@@ -151,7 +151,7 @@
 
             <c-col [md]="3">
                 <label cLabel for="joiningDate">Joining Date<span class="text-danger"></span></label>
-                <p-calendar [(ngModel)]="empJobDetailsService.empJobDetails.joiningDate" name="joiningDate"
+                <p-calendar [(ngModel)]="empJobDetailsService.empJobDetails.joiningDate" name="joiningDate" [iconDisplay]="'input'"
                     #joiningDate="ngModel" id="joiningDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy"
                     [showIcon]="true" [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
                 </p-calendar>
@@ -163,7 +163,7 @@
 
             <c-col [md]="3">
                 <label cLabel for="confirmationDate">Confirmation Date<span class="text-danger"></span></label>
-                <p-calendar [(ngModel)]="empJobDetailsService.empJobDetails.confirmationDate" name="confirmationDate"
+                <p-calendar [(ngModel)]="empJobDetailsService.empJobDetails.confirmationDate" name="confirmationDate" [iconDisplay]="'input'"
                     #confirmationDate="ngModel" id="confirmationDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy"
                     [showIcon]="true" [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
                 </p-calendar>
@@ -177,7 +177,7 @@
                 <label cLabel for="currentPositionJoinDate">Current Position Joining Date<span
                         class="text-danger"></span></label>
                 <p-calendar [(ngModel)]="empJobDetailsService.empJobDetails.currentPositionJoinDate"
-                    name="currentPositionJoinDate" #currentPositionJoinDate="ngModel" id="currentPositionJoinDate"
+                    name="currentPositionJoinDate" #currentPositionJoinDate="ngModel" id="currentPositionJoinDate"  [iconDisplay]="'input'"
                     dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
                     class="coreui-datepicker w-100" appendTo="body" required>
                 </p-calendar>

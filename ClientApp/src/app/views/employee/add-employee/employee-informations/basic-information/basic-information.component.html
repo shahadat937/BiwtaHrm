@@ -62,7 +62,7 @@
       <c-col [md]="4">
         <label cLabel for="dateOfBirth">Date of Birth<span class="text-danger"></span></label>
         <div class="input-group">
-          <p-calendar id="dateOfBirth" name="dateOfBirth" [(ngModel)]="empBasicInfoService.basicInfo.dateOfBirth"
+          <p-calendar id="dateOfBirth" name="dateOfBirth" [(ngModel)]="empBasicInfoService.basicInfo.dateOfBirth" [iconDisplay]="'input'"
             #dateOfBirth="ngModel" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
             [showOnFocus]="false" inputId="dateOfBirth" class="coreui-datepicker w-100" cFormControl
             appendTo="body"></p-calendar>

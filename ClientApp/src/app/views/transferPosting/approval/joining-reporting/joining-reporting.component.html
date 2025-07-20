@@ -210,7 +210,7 @@
                         <c-col [md]="4">
                             <label cLabel for="joiningDate">Joining Date<span class="text-danger"></span></label>
                             <p-calendar [(ngModel)]="empTransferPostingService.empTransferPosting.joiningDate"
-                                name="joiningDate" #joiningDate="ngModel" cFormControl id="deptReleaseDate"
+                                name="joiningDate" #joiningDate="ngModel" cFormControl id="deptReleaseDate" [iconDisplay]="'input'"
                                 dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
                                 class="coreui-datepicker w-100" appendTo="body">
                             </p-calendar>

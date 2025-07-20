@@ -108,7 +108,7 @@
                                         name="orderDate" #orderDate="ngModel" cFormControl placeholder="Order No"
                                         id="orderDate" type="date" /> -->
 
-                                    <p-calendar [(ngModel)]="empRewardPunishmentService.empRewardPunishment.orderDate"
+                                    <p-calendar [(ngModel)]="empRewardPunishmentService.empRewardPunishment.orderDate" [iconDisplay]="'input'"
                                         name="orderDate" #orderDate="ngModel" cFormControl placeholder="dd/mm/yyyy"
                                         id="orderDate" dateFormat="dd/mm/yy" [showIcon]="true" [showOnFocus]="false"
                                         class="coreui-datepicker w-100" appendTo="body">
@@ -200,7 +200,7 @@
                                         id="withdrawDate" type="date" /> -->
 
                                     <p-calendar
-                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.withdrawDate"
+                                        [(ngModel)]="empRewardPunishmentService.empRewardPunishment.withdrawDate" [iconDisplay]="'input'"
                                         name="withdrawDate" #withdrawDate="ngModel" cFormControl id="withdrawDate"
                                         dateFormat="dd/mm/yy" placeholder="Withdraw Date" [showIcon]="true"
                                         [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">

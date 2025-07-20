@@ -100,7 +100,7 @@
 
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="joiningDate{{i}}">Joining Date</label>
-                                        <p-calendar formControlName="joiningDate" id="joiningDate{{i}}"
+                                        <p-calendar formControlName="joiningDate" id="joiningDate{{i}}" [iconDisplay]="'input'"
                                             dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
                                             [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
                                         </p-calendar>
@@ -108,7 +108,7 @@
 
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="releaseDate{{i}}">Release Date</label>
-                                        <p-calendar formControlName="releaseDate" id="releaseDate{{i}}"
+                                        <p-calendar formControlName="releaseDate" id="releaseDate{{i}}" [iconDisplay]="'input'"
                                             dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
                                             [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
                                         </p-calendar>

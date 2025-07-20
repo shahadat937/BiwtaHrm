@@ -93,7 +93,7 @@
                     <c-col [md]="4">
                         <label cLabel for="currentDeptJoinDate">Current Department Joining Date<span
                                 class="text-danger"></span></label>
-                        <p-calendar [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate"
+                        <p-calendar [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate" [iconDisplay]="'input'"
                             name="currentDeptJoinDate" #currentDeptJoinDate="ngModel" cFormControl
                             id="currentDeptJoinDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
                             [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
@@ -206,7 +206,7 @@
 
                     <c-col [md]="4">
                         <label cLabel for="orderDate">Order Date<span class="text-danger"></span></label>
-                        <p-calendar [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.orderDate"
+                        <p-calendar [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.orderDate" [iconDisplay]="'input'"
                             name="orderDate" #orderDate="ngModel" cFormControl id="orderDate" dateFormat="dd/mm/yy"
                             placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
                             class="coreui-datepicker w-100" appendTo="body">
@@ -216,7 +216,7 @@
 
                     <c-col [md]="4">
                         <label cLabel for="effectiveDate">Effective Date<span class="text-danger"></span></label>
-                        <p-calendar [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.effectiveDate"
+                        <p-calendar [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.effectiveDate" [iconDisplay]="'input'"
                             name="effectiveDate" #effectiveDate="ngModel" cFormControl id="effectiveDate"
                             dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
                             class="coreui-datepicker w-100" appendTo="body">
@@ -341,7 +341,7 @@
                         </c-col>
                         <c-col [md]="4">
                             <label cLabel for="approveDate">Approve Date<span class="text-danger"></span></label>
-                            <p-calendar [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.approveDate"
+                            <p-calendar [(ngModel)]="empPromotionIncrementService.empPromotionIncrement.approveDate" [iconDisplay]="'input'"
                                 name="approveDate" #approveDate="ngModel" cFormControl id="deptReleaseDate"
                                 dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
                                 class="coreui-datepicker w-100" appendTo="body">

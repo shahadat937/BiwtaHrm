@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ShiftSettingService } from '../../../services/shift-setting.service';
 import { SelectedModel } from 'src/app/core/models/selectedModel';
+import { SharedService } from '../../../../../shared/shared.service';
 
 @Component({
   selector: 'app-shift-setting-modal',
@@ -33,7 +34,8 @@ export class ShiftSettingModalComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private bsModalRef: BsModalRef,
     private el: ElementRef, 
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private sharedService: SharedService
   ) {
 
   }
@@ -60,6 +62,8 @@ export class ShiftSettingModalComponent implements OnInit, OnDestroy {
       this.shiftSettingService.findShiftSetting(this.id).subscribe((res) => {
         if(res){
           this.ShiftSettingForm?.form.patchValue(res);
+          this.shiftSettingService.shiftSetting.startDate = this.sharedService.parseDate(res.startDate);
+          this.shiftSettingService.shiftSetting.endDate = this.sharedService.parseDate(res.endDate);
         }
       })
       )
@@ -126,7 +130,9 @@ export class ShiftSettingModalComponent implements OnInit, OnDestroy {
     }
   
     onSubmit(form: NgForm): void {
-      console.log(form.value);
+      form.value.startDate = this.sharedService.formatDateOnly(form.value.startDate);
+      form.value.endDate = this.sharedService.formatDateOnly(form.value.endDate);
+
       const id = form.value.id;
       const action$ = id
         ? this.shiftSettingService.updateShiftSetting(id, form.value)

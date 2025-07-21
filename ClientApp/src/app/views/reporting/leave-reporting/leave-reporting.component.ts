@@ -18,6 +18,8 @@ import { EmployeeListModalComponent } from '../../employee/employee-list-modal/e
 import { ToastrService } from 'ngx-toastr';
 import { EmpTransferPostingService } from '../../transferPosting/service/emp-transfer-posting.service';
 import { cilSearch } from '@coreui/icons';
+import { SharedService } from '../../../shared/shared.service'
+
 
 @Component({
   selector: 'app-leave-reporting',
@@ -31,6 +33,8 @@ export class LeaveReportingComponent implements OnInit, OnDestroy {
   sections: SelectedModel[] = [];
   designations: SelectedModel[] = [];
   leaveTypes: SelectedModel[] = [];
+  calenderFromDate : Date | null = null;
+  calenderToDate : Date | null = null;
 
   displayedColumns: string[] = [
     // 'slNo',
@@ -73,6 +77,7 @@ export class LeaveReportingComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     public empTransferPostingService: EmpTransferPostingService,
     private toastr: ToastrService,
+    public sharedService: SharedService
   ) {
 
   }
@@ -157,6 +162,13 @@ export class LeaveReportingComponent implements OnInit, OnDestroy {
   }
 
   onDateChange() {
+    if(this.calenderFromDate){
+      this.fromDate = this.sharedService.formatDateOnly(this.calenderFromDate)
+
+    }
+    if(this.calenderToDate){
+      this.toDate = this.sharedService.formatDateOnly(this.calenderToDate)
+    }
     if(this.fromDate && this.toDate){
       if (this.paginator) {
       this.paginator.firstPage();

@@ -48,6 +48,7 @@ import { SectionService } from '../basic-setup/service/section.service';
 import { UapzilaService } from '../basic-setup/service/uapzila.service';
 import { LeaveReportingComponent } from './leave-reporting/leave-reporting.component';
 import { PrlRetirementReportingComponent } from './prl-retirement-reporting/prl-retirement-reporting.component';
+import { CalendarModule } from 'primeng/calendar';
 
 
 
@@ -111,7 +112,8 @@ import { PrlRetirementReportingComponent } from './prl-retirement-reporting/prl-
     NgxPrintModule,
     WidgetStatFComponent,
     InputGroupComponent,
-    ButtonDirective
+    ButtonDirective,
+    CalendarModule
   ],
   providers:
   [

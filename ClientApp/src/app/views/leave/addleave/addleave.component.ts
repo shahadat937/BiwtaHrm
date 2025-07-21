@@ -22,6 +22,7 @@ import { NotificationService } from '../../notifications/service/notification.se
 import { UserNotification } from '../../notifications/models/user-notification';
 import { DepartmentService } from '../../basic-setup/service/department.service';
 import { ResponsibilityTypeService } from '../../../../../src/app/views/basic-setup/service/responsibility-type.service';
+import { SharedService } from '../../../shared/shared.service'
 
 @Component({
   selector: 'app-addleave',
@@ -57,6 +58,10 @@ export class AddleaveComponent implements OnInit, OnDestroy {
   @Input()
   IsReadonly: boolean
   buttonTitle: string;
+  calendarFromDate: Date | null = null;
+  calendarToDate: Date | null = null;
+  
+
 
   leaveStatus = LeaveStatus;
   reviewerPMIS: string;
@@ -77,6 +82,8 @@ export class AddleaveComponent implements OnInit, OnDestroy {
     private departmentService: DepartmentService,
     private responsibilityTypeService: ResponsibilityTypeService,
     public notificationService: NotificationService,
+    public sharedService: SharedService
+
   ) {
     this.loading = false;
     this.empCardNo = "";
@@ -102,7 +109,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.IsReadonly) {
-      console.log("A");
+      //console.log("A");
       this.addLeaveService.addLeaveModel = this.FillLeaveDataToAddLeaveModel(this.addLeaveService.addLeaveModel);
       this.filterLeaveBalance();
       if (this.leaveData.reviewedBy) {
@@ -112,7 +119,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
             this.reviewerName = [response.firstName, response.lastName].join(' ');
           }
         })
-        console.log("B");
+        //console.log("B");
       }
 
       if (this.leaveData.approvedBy) {
@@ -122,7 +129,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
             this.approverName = [response.firstName, response.lastName].join(' ');
           }
         })
-        console.log("C");
+        //console.log("C");
       }
 
       this.getLeaveFiles();
@@ -136,7 +143,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
 
     if (this.IsReadonly) {
       this.buttonTitle = "Update";
-      console.log("D");
+      //console.log("D");
     }
 
     if (this.authService.currentUserValue.empId != null && this.IsReadonly == false) {
@@ -172,7 +179,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
           this.getLeaveBalanceForAllType(response.id);
         }
       })
-      console.log("E");
+      //console.log("E");
     }
 
     this.getCountry();
@@ -219,13 +226,13 @@ export class AddleaveComponent implements OnInit, OnDestroy {
             }
             this.getLeaveAmount();
             this.getLeaveBalanceForAllType(response.id);
-            this.department =   this.addLeaveService.addLeaveModel.empCurrentDepartmentId? this.getDepartmentById(this.addLeaveService.addLeaveModel.empCurrentDepartmentId) :  response.departmentName;
+            this.department = this.addLeaveService.addLeaveModel.empCurrentDepartmentId ? this.getDepartmentById(this.addLeaveService.addLeaveModel.empCurrentDepartmentId) : response.departmentName;
 
-            this.designation =  this.addLeaveService.addLeaveModel.empCurrentDesignationId? this.getDesignationByIdDesignationId(this.addLeaveService.addLeaveModel.empCurrentDesignationId) : response.designationName;
+            this.designation = this.addLeaveService.addLeaveModel.empCurrentDesignationId ? this.getDesignationByIdDesignationId(this.addLeaveService.addLeaveModel.empCurrentDesignationId) : response.designationName;
 
-            this.otherResponsibilityType = this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId? this.getResponsibilityTypeById(this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId) : "";
+            this.otherResponsibilityType = this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId ? this.getResponsibilityTypeById(this.addLeaveService.addLeaveModel.empCurrentResponsibilityTypeId) : "";
 
-            
+
             this.addLeaveService.addLeaveModel.empCurrentDepartmentId = response.departmentId
             this.addLeaveService.addLeaveModel.empCurrentSectionId = response.sectionId
             this.addLeaveService.addLeaveModel.empCurrentDesignationId = response.designationId
@@ -269,6 +276,15 @@ export class AddleaveComponent implements OnInit, OnDestroy {
   }
 
   onDateChange() {
+
+     this.addLeaveService.addLeaveModel.fromDate = this.calendarFromDate
+    ? this.sharedService.formatDateTime(this.calendarFromDate)
+    : null;
+     this.addLeaveService.addLeaveModel.toDate = this.calendarFromDate
+    ? this.sharedService.formatDateTime(this.calendarToDate)
+    : null;
+
+
     this.getLeaveAmount();
     this.getWorkingDays();
     if (this.addLeaveService.addLeaveModel.empId != null) {
@@ -279,13 +295,18 @@ export class AddleaveComponent implements OnInit, OnDestroy {
   getLeaveAmount() {
     this.filterLeaveBalance();
     this.IsForeignLeave();
-    console.log(this.addLeaveService.addLeaveModel);
     if (this.addLeaveService.addLeaveModel.empId == null || this.addLeaveService.addLeaveModel.leaveTypeId == null || this.addLeaveService.addLeaveModel.fromDate == null || this.addLeaveService.addLeaveModel.toDate == null) {
       this.totalDue = null;
       return;
     }
+    
 
     let params = new HttpParams();
+
+    const fromDate = this.sharedService.formatDateOnly(new Date(this.addLeaveService.addLeaveModel.fromDate));
+
+    //console.log(fromDate);
+
     params = params.set("empId", this.addLeaveService.addLeaveModel.empId);
     params = params.set("leaveTypeId", this.addLeaveService.addLeaveModel.leaveTypeId);
     params = params.set("fromDate", this.addLeaveService.addLeaveModel.fromDate);
@@ -299,6 +320,10 @@ export class AddleaveComponent implements OnInit, OnDestroy {
         this.totalDue = null;
       }
     })
+
+    this.calendarFromDate = this.sharedService.parseDate(this.addLeaveService.addLeaveModel.fromDate);
+    this.calendarToDate = this.sharedService.parseDate(this.addLeaveService.addLeaveModel.toDate);
+
 
     this.getWorkingDays();
   }
@@ -318,11 +343,26 @@ export class AddleaveComponent implements OnInit, OnDestroy {
       this.totalLeave = null;
     }
     let params = new HttpParams();
-    params = params.set("From", this.addLeaveService.addLeaveModel.fromDate);
-    params = params.set("To", this.addLeaveService.addLeaveModel.toDate);
+
+    const fromDate = this.sharedService.formatDateOnly(
+      this.addLeaveService.addLeaveModel.fromDate
+        ? new Date(this.addLeaveService.addLeaveModel.fromDate)
+        : null
+    );
+
+    const toDate = this.sharedService.formatDateOnly(
+      this.addLeaveService.addLeaveModel.toDate
+        ? new Date(this.addLeaveService.addLeaveModel.toDate)
+        : null
+    );
+
+    params = params.set("From", fromDate || '');
+    params = params.set("To", toDate ?? '');
+
     if (this.addLeaveService.addLeaveModel.leaveTypeId != null) {
       params = params.set("leaveTypeId", this.addLeaveService.addLeaveModel.leaveTypeId);
     }
+
     this.subcription = this.addLeaveService.getWorkingDays(params).subscribe({
       next: response => {
         this.totalLeave = response;
@@ -365,7 +405,13 @@ export class AddleaveComponent implements OnInit, OnDestroy {
       }
     }
 
+
+    this.addLeaveService.addLeaveModel.fromDate = this.sharedService.formatDateTime(this.addLeaveService.addLeaveModel.fromDate);
+    this.addLeaveService.addLeaveModel.toDate = this.sharedService.formatDateTime(this.addLeaveService.addLeaveModel.toDate);
+
     let formData = this.convertToFormData(this.addLeaveService.addLeaveModel, ["AssociatedFiles"]);
+
+
     this.addLeaveService.createLeaveRequest(formData).subscribe({
       next: response => {
         if (response.success == true) {
@@ -413,7 +459,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
     });
 
     // Print the form data to the console
-    console.log(output);
+    //console.log(output);
   }
 
   onReset() {
@@ -475,12 +521,20 @@ export class AddleaveComponent implements OnInit, OnDestroy {
     let params = new HttpParams();
     params = params.set('empId', empId);
 
-    if (this.addLeaveService.addLeaveModel.fromDate != null) {
-      params = params.set('leaveStartDate', this.addLeaveService.addLeaveModel.fromDate);
+    const fromDateValue = this.addLeaveService.addLeaveModel.fromDate;
+    const toDateValue = this.addLeaveService.addLeaveModel.toDate;
+
+    const fromDate = fromDateValue ? this.sharedService.formatDateOnly(new Date(fromDateValue)) : null;
+    const toDate = toDateValue ? this.sharedService.formatDateOnly(new Date(toDateValue)) : null;
+    //console.log(fromDate)
+    //console.log(toDate)
+
+    if (fromDate != null) {
+      params = params.set('leaveStartDate', fromDate);
     }
 
-    if (this.addLeaveService.addLeaveModel.toDate != null) {
-      params = params.set('leaveEndDate', this.addLeaveService.addLeaveModel.toDate);
+    if (toDate != null) {
+      params = params.set('leaveEndDate', toDate);
     }
 
     this.leaveBalanceService.getLeaveBalance(params).subscribe({
@@ -607,7 +661,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
     const modalRef: BsModalRef = this.modalService.show(EmployeeInfoListModalComponent, { backdrop: 'static', class: 'modal-xl' });
 
     modalRef.content.employeeSelected.subscribe((employee: any) => {
-      console.log(employee)
+      //console.log(employee)
       if (employee) {
         this.empCardNo = employee.idCardNo;
         this.addLeaveService.addLeaveModel.empCurrentDepartmentId = employee.departmentId;
@@ -644,14 +698,14 @@ export class AddleaveComponent implements OnInit, OnDestroy {
     modalRef.content.employeeSelected.subscribe((reviewer: any) => {
 
       if (typeof reviewer === 'object') {
-        console.log(reviewer)
+        //console.log(reviewer)
         this.addLeaveService.addLeaveModel.reviewerCurrentDepartmentId = reviewer.departmentId;
         this.addLeaveService.addLeaveModel.reviewerCurrentSectionId = reviewer.sectionId;
         this.addLeaveService.addLeaveModel.reviewerCurrentDesignationId = reviewer.designationId;
         this.addLeaveService.addLeaveModel.reviewerCurrentResponsibilityTypeId = reviewer.additionalResponsibilityId;
         this.addLeaveService.addLeaveModel.reviewedBy = reviewer.id;
 
-        console.log(reviewer.additionalResponsibilityId);
+        //console.log(reviewer.additionalResponsibilityId);
 
         this.reviewerPMIS = reviewer.idCardNo
         this.reviewerName = [reviewer.firstName, reviewer.lastName].join(' ');
@@ -669,7 +723,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
     modalRef.content.employeeSelected.subscribe((approver: any) => {
 
       if (typeof approver === 'object') {
-        console.log("_A", approver)
+        //console.log("_A", approver)
         this.approverPMIS = approver.idCardNo;
         this.addLeaveService.addLeaveModel.approverCurrentDepartmentId = approver.departmentId;
         this.addLeaveService.addLeaveModel.approverCurrentSectionId = approver.sectionId;
@@ -739,7 +793,6 @@ export class AddleaveComponent implements OnInit, OnDestroy {
     this.manageLeaveService.getLeaveFiles(this.leaveData.leaveRequestId).subscribe({
       next: response => {
         this.leaveFiles = response;
-        console.log(this.leaveFiles);
       }
     })
   }

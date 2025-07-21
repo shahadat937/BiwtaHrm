@@ -15,6 +15,7 @@ import { Attendances } from '../models/attendances';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
 import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 import { ShiftSettingService } from '../services/shift-setting.service';
+import { SharedService } from '../../../shared/shared.service';
 
 @Component({
   selector: 'app-manual-attendance',
@@ -62,6 +63,7 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
     private confirmService: ConfirmService,
     private toastr: ToastrService,
     public shiftSettingService: ShiftSettingService,
+    private sharedService: SharedService
   ) {
     this.selectedOffice = null;
     this.selectedDepartment = null;
@@ -173,7 +175,7 @@ export class ManualAttendanceComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   onSubmit(form: NgForm) {
-
+    this.manualAtdService.attendances.attendanceDate = this.sharedService.formatDateOnly(form.value.attendanceDate);
     if (this.featurePermission.add == false) {
       this.roleFeatureService.unauthorizeAccress();
       return;

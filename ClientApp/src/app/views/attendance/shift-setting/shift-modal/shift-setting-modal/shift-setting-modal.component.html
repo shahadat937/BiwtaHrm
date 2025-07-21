@@ -120,7 +120,7 @@
                       <p-calendar [(ngModel)]="shiftSettingService.shiftSetting.startDate"
                           #StartDate="ngModel"
                           id="fromDate"
-                          name="startDate" 
+                          name="startDate"  [iconDisplay]="'input'"
                           dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
                           [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
                       </p-calendar>
@@ -135,7 +135,7 @@
                     <p-calendar [(ngModel)]="shiftSettingService.shiftSetting.endDate"
                         #EndDate="ngModel"
                         id="fromDate"
-                        name="endDate" 
+                        name="endDate"  [iconDisplay]="'input'"
                         dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
                         [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
                     </p-calendar>

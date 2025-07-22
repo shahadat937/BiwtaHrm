@@ -59,32 +59,41 @@
                             </c-input-group>
                         </c-col>
                     </c-row>
+
+                    
                     <c-col md="3">
                         <label cLabel for="fromDate">From<span class="text-danger">*</span></label>
-                        <input type="date" 
-                        [(ngModel)]="this.siteVisitService.model.fromDate"
-                        name="fromDate" 
-                        id="fromDate" 
-                        required
-                        #fromDate = "ngModel"
-                        cFormControl>
+                        <p-calendar [(ngModel)]="this.siteVisitService.model.fromDate"
+                            name="fromDate" 
+                            id="fromDate" 
+                            required
+                            #fromDate = "ngModel"
+                            [iconDisplay]="'input'"
+                            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                            [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                        </p-calendar>
                         @if(fromDate.invalid&&fromDate.touched) {
                             <div class="text-left text-danger">From Date is required</div>
                         }
                     </c-col>
+
+                    
                     <c-col md="3">
-                        <label for="toDate" cLabel>To<span class="text-danger">*</span></label>
-                        <input type="date" 
-                        [(ngModel)]="this.siteVisitService.model.toDate"
-                        name="toDate" 
-                        required
-                        id="toDate" 
-                        #toDate = "ngModel" 
-                        cFormControl>
+                        <label cLabel for="toDate">To<span class="text-danger">*</span></label>
+                        <p-calendar [(ngModel)]="this.siteVisitService.model.toDate"
+                            name="toDate" 
+                            required
+                            id="toDate" 
+                            #toDate = "ngModel"
+                            [iconDisplay]="'input'"
+                            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                            [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                        </p-calendar>
                         @if(toDate.invalid&&toDate.touched) {
                             <div class="text-left text-danger">To Date is required</div>
                         }
                     </c-col>
+
                     <c-col md="3">
                         <label for="visitPlace" cLabel>Visiting Place<span class="text-danger">*</span></label>
                         <input type="text" 

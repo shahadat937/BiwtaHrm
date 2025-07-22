@@ -22,6 +22,7 @@ import { EmpJobDetailsService } from '../../employee/service/emp-job-details.ser
 import { NotificationService } from '../../notifications/service/notification.service';
 import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 import { Feature } from '../../featureManagement/model/feature';
+import { SharedService } from '../../../shared/shared.service';
 
 
 
@@ -67,6 +68,7 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     private confirmService: ConfirmService,
     private toastr: ToastrService,
     public roleFeatureService: RoleFeatureService,
+    private sharedService: SharedService
 
   ) {
     this.IsUser = false;
@@ -228,7 +230,6 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
   }
 
   onSubmit(form:NgForm) {
-    console.log(this.siteVisitService.model);
     form.control.removeControl("empIdCardNo");
     form.control.removeControl("empName");
     this.isUpdate?this.onSiteVisitUpdate(form):this.onSiteVisitCreate(form);
@@ -248,6 +249,8 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
     this.isUpdate = true;
     this.isVisible = true;
     this.isValidPMIS = true;
+    element.fromDate = this.sharedService.parseDate(element.fromDate);
+    element.toDate = this.sharedService.parseDate(element.toDate);
     this.siteVisitForm?.form.patchValue(element);
     this.siteVisitService.model.empId = element.empId;
     this.empName = [element.firstName,element.lastName].join(' ');
@@ -307,11 +310,16 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
 
   onSiteVisitCreate(form:NgForm) {
     this.loading = true;
+    
+    form.value.fromDate = this.sharedService.formatDateOnly(form.value.fromDate);
+    form.value.toDate = this.sharedService.formatDateOnly(form.value.toDate);
 
     const formData = {
       ...form.value,
       "empId": this.siteVisitService.model.empId
     }
+
+    console.log(formData)
 
     this.siteVisitService.submit(formData).subscribe({
       next: (result)=> {
@@ -384,6 +392,10 @@ export class SiteVisitComponent implements OnInit, OnDestroy{
 
   onSiteVisitUpdate(form:NgForm) {
     this.loading = true;
+    
+    form.value.fromDate = this.sharedService.formatDateOnly(form.value.fromDate);
+    form.value.toDate = this.sharedService.formatDateOnly(form.value.toDate);
+
     let updateValue= form.value;
     updateValue['empId'] = this.siteVisitService.model.empId;
     this.siteVisitService.update(updateValue).subscribe({

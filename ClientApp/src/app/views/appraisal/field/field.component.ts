@@ -10,6 +10,7 @@ import { EmpTrainingInfoService } from '../../employee/service/emp-training-info
 import { HttpParams } from '@angular/common/http';
 import {InputFieldSyncService} from '../services/input-field-sync.service'
 import { EmpWorkHistoryService } from '../../employee/service/emp-work-history.service';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
   selector: 'app-field',
@@ -24,20 +25,32 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
   @Input() empId: number;
   @Input() IsChild: boolean;
 
-  fieldValue: string = "";
+  fieldValue: string | Date | null = "";
   @Output() fieldChange = new EventEmitter();
   @Output() change = new EventEmitter();
 
   @Input()
   get field() {
+
     return this.fieldValue;
   }
 
-  set field(value) {
+set field(value: any) {
+  if (this.fieldData?.htmlInputType === 'date' && typeof value === 'string') {
+    setTimeout(() => {
+      const parsedDate = this.sharedService.parseDate(value);
+      this.fieldValue = parsedDate ?? null;
+      this.fieldChange.emit(this.fieldValue);
+      this.inputFieldSyncService.emitValueChange(this.fieldUniqueName, this.fieldData);
+    });
+  } else {
     this.fieldValue = value;
     this.fieldChange.emit(this.fieldValue);
-    this.inputFieldSyncService.emitValueChange(this.fieldUniqueName,this.fieldData);
+    this.inputFieldSyncService.emitValueChange(this.fieldUniqueName, this.fieldData);
   }
+
+}
+
 
   onFieldChange(event:any) {
     this.change.emit(event);
@@ -58,6 +71,7 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
     private empEducationInfoService: EmpEducationInfoService,
     private empWorkHistoryService: EmpWorkHistoryService,
     private formRecordService: FormRecordService, 
+    public sharedService: SharedService
   ) {
     this.fieldUniqueName = "default";
     this.Index = "";
@@ -95,6 +109,7 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
       this.getEducationInfo(true);
       this.getEmpTrainingInfo();
     }
+    
 
   }
 
@@ -128,10 +143,15 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
     this.fieldChange.emit(this.fieldValue);
   }
 
-  getSelectedEducationInfo() {
-    let ids =this.field.trim().split(',').map(x=>parseInt(x));
-    this.selectedEduInfos = this.educationInfos.filter(x=>ids.includes(x.id));
+getSelectedEducationInfo() {
+  if (typeof this.field === 'string') {
+    let ids = this.field.trim().split(',').map(x => parseInt(x, 10));
+    this.selectedEduInfos = this.educationInfos.filter(x => ids.includes(x.id));
+  } else {
+    this.selectedEduInfos = []; // or keep previous, or handle another way
   }
+}
+
 
   getJobHistory(data:any) {
 
@@ -143,8 +163,8 @@ export class FieldComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    let startDate = data.value.childFields[0].fieldValue;
-    let endDate = data.value.childFields[1].fieldValue;
+    let startDate = this.sharedService.formatDateOnly(data.value.childFields[0].fieldValue);
+    let endDate = this.sharedService.formatDateOnly(data.value.childFields[1].fieldValue);
 
     if(startDate==null||startDate==''||endDate==null||endDate==''||this.empId==0) {
       return;

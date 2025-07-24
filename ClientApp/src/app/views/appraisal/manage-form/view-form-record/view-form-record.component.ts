@@ -5,6 +5,7 @@ import { ConfirmService } from 'src/app/core/service/confirm.service';
 import { Subscription } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { environment } from 'src/environments/environment';
+import { SharedService } from 'src/app/shared/shared.service';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class ViewFormRecordComponent implements OnInit, OnDestroy{
     private toastr: ToastrService,
     private confirmService: ConfirmService,
     private modalService: BsModalService,
-    private modalRef: BsModalRef
+    private modalRef: BsModalRef,
+    public sharedService : SharedService
   ) {
     this.loading = false;
     this.formRecordId = 0;
@@ -53,10 +55,60 @@ export class ViewFormRecordComponent implements OnInit, OnDestroy{
     this.subscription.push(
       this.formRecordService.getFormData(this.formRecordId).subscribe({
       next: (response)=> {
+
+           // format Applyer signiture date 
+        if (response.sections[0]?.fields[13]?.fieldValue) {
+          response.sections[0].fields[13].fieldValue = this.sharedService.parseDate(response.sections[0].fields[13].fieldValue)
+        }
+
+          // format Joining date 
+        if (response.sections[0]?.fields[6]?.fieldValue) {
+          response.sections[0].fields[6].fieldValue = this.sharedService.parseDate(response.sections[0].fields[6].fieldValue)
+        }
+          // format Joining Date Of Current Designation:
+        if (response.sections[0]?.fields[7]?.fieldValue) {
+          response.sections[0].fields[7].fieldValue = this.sharedService.parseDate(response.sections[0].fields[7].fieldValue)
+        }
+          // format Birth Date Of Current Designation:
+        if (response.sections[0]?.fields[8]?.fieldValue) {
+          response.sections[0].fields[8].fieldValue = this.sharedService.parseDate(response.sections[0].fields[8].fieldValue)
+        }
+
+        // format Repoting Office Signiture Date
+        if (response.sections[4]?.fields[11]?.fieldValue) {
+          response.sections[4].fields[11].fieldValue = this.sharedService.parseDate(response.sections[4].fields[11].fieldValue)
+        }
+
+          // format Counter Office Signiture Date
+        if (response.sections[5]?.fields[4]?.fieldValue) {
+          response.sections[5].fields[4].fieldValue = this.sharedService.parseDate(response.sections[5].fields[4].fieldValue)
+        }
+
+
+                     // format Joining Date Of Current Designation:
+        if (response.sections[0]?.fields[11]?.childFields[0]?.fieldValue) {
+          response.sections[0].fields[11].childFields[0].fieldValue = this.sharedService.parseDate( response.sections[0].fields[11].childFields[0].fieldValue)
+        }
+          // format Birth Date Of Current Designation:
+        if ( response?.sections[0]?.fields[11]?.childFields[1]?.fieldValue) {
+           response.sections[0].fields[11].childFields[1].fieldValue= this.sharedService.parseDate( response.sections[0].fields[11].childFields[1].fieldValue)
+        }
+
+            if (response.sections[5]?.fields[0]?.childFields[0]?.fieldValue) {
+          response.sections[5].fields[0].childFields[0].fieldValue = this.sharedService.parseDate( response.sections[5].fields[0].childFields[0].fieldValue)
+        }
+          // format Birth Date Of Current Designation:
+        if ( response?.sections[5]?.fields[0]?.childFields[1]?.fieldValue) {
+           response.sections[5].fields[0].childFields[1].fieldValue= this.sharedService.parseDate( response.sections[5].fields[0].childFields[1].fieldValue)
+        }
+
+
+
+
         this.formData = response;
         console.log(this.formData)
       },
-      error: (err)=> {
+      error: (err)=> { 
         console.log(err);
         this.loading=false;
       },

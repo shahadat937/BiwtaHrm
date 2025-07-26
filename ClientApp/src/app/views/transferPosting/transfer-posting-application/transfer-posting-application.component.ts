@@ -145,7 +145,6 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
           this.empTransferPosting = res;
           this.tranferDesignation = res.transferDesignationId;
           this.responsibilityTypeId = res.responsibilityTypeId;
-          console.log(res)
 
           if (res.transferSectionId) {
             this.getEmpJobDetailsInfoSectionSelectGetDesignation(res.empId, res.transferDepartmentId, res.transferSectionId)
@@ -454,9 +453,11 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
                     this.getEmpJobDetailsByEmpId(employeeInfo);
                     if (!employeeInfo.isAdditionalDesignation) {
                       this.subscription.push(
-                        this.empJobDetailsService.findByEmpId(employeeInfo).subscribe((res: any) => {
+                        this.empJobDetailsService.findByEmpId(employeeInfo.id).subscribe((res: any) => {
                           if (res) {
-                            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res.currentPositionJoinDate ?? null;
+                         
+                            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate =
+                              res.currentPositionJoinDate ? new Date(res.currentPositionJoinDate) : null;
                           }
                         })
                       )
@@ -512,14 +513,16 @@ export class TransferPostingApplicationComponent implements OnInit, OnDestroy {
             this.empTransferPostingService.empTransferPosting.currentBasicPay = res.basicPay;
             this.empTransferPostingService.empTransferPosting.currentGradeName = res.presentGradeName;
             this.empTransferPostingService.empTransferPosting.currentScaleName = res.presentScaleName;
-            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate = res.currentPositionJoinDate ?? null;
+
+            this.empTransferPostingService.empTransferPosting.currentDeptJoinDate =
+              res.currentPositionJoinDate ? new Date(res.currentPositionJoinDate) : null;
+
           }
         })
       )
       this.isMainDesignation = true;
     }
     else {
-      console.log(employee);
       this.empJobDetailsId = employee.id;
       this.empTransferPostingService.empTransferPosting.sectionName = employee.sectionName;
       this.empTransferPostingService.empTransferPosting.departmentName = employee.departmentName;

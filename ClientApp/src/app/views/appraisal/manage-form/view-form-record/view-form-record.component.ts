@@ -104,6 +104,37 @@ export class ViewFormRecordComponent implements OnInit, OnDestroy{
 
 
 
+          // Staff Form Date Format
+
+
+          // format Joining date 
+          if (response.sections[0]?.fields[8]?.fieldValue) {
+            response.sections[0].fields[8].fieldValue = this.sharedService.parseDate(response.sections[0].fields[8].fieldValue)
+          }
+          // format Joining Date Of Current Designation:
+          if (response.sections[0]?.fields[9]?.fieldValue) {
+            response.sections[0].fields[9].fieldValue = this.sharedService.parseDate(response.sections[0].fields[9].fieldValue)
+          }
+          // format Birth Date:
+          if (response.sections[0]?.fields[5]?.fieldValue) {
+            response.sections[0].fields[5].fieldValue = this.sharedService.parseDate(response.sections[0].fields[5].fieldValue)
+          }
+
+          // format Applyer Signiture dateTime to Date
+          if (response?.sections[0]?.fields[14]?.fieldValue) {
+            response.sections[0].fields[14].fieldValue = this.sharedService.parseDate(response?.sections[0]?.fields[14]?.fieldValue)
+          };
+
+          // format Tenure Of Service Under Reporting Officer From:
+          if (response.sections[0]?.fields[13]?.childFields[0]?.fieldValue) {
+            response.sections[0].fields[13].childFields[0].fieldValue = this.sharedService.parseDate(response.sections[0].fields[13].childFields[0].fieldValue)
+          }
+          //  format Tenure Of Service Under Reporting Officer To
+          if (response?.sections[0]?.fields[13]?.childFields[1]?.fieldValue) {
+            response.sections[0].fields[13].childFields[1].fieldValue = this.sharedService.parseDate(response.sections[0].fields[13].childFields[1].fieldValue)
+          }
+
+
 
         this.formData = response;
         console.log(this.formData)

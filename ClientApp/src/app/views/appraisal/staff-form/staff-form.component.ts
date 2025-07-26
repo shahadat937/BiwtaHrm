@@ -24,6 +24,7 @@ import { EmpJobDetailsService } from '../../employee/service/emp-job-details.ser
 import { NotificationService } from '../../notifications/service/notification.service';
 import { FeaturePermission } from '../../featureManagement/model/feature-permission';
 import { RoleFeatureService } from '../../featureManagement/service/role-feature.service';
+import { SharedService } from '../../../shared/shared.service';
 
 @Component({
   selector: 'app-staff-form',
@@ -104,7 +105,8 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     public officerFormService: OfficerFormService,
     private toastr: ToastrService,
     private confirmService: ConfirmService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    public sharedService: SharedService
   ) {
 
     this.IdCardNo = "";
@@ -256,6 +258,40 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     //}
     //this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]); 
     //this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
+
+    this.formData.reportFrom = this.sharedService.formatDateOnly(this.formData.reportFrom)
+    this.formData.reportTo = this.sharedService.formatDateOnly(this.formData.reportTo)
+
+
+
+    // format Joining date 
+    if (this.formData.sections[0]?.fields[8]?.fieldValue) {
+      this.formData.sections[0].fields[8].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[8].fieldValue)
+    }
+    // format Joining Date Of Current Designation:
+    if (this.formData.sections[0]?.fields[9]?.fieldValue) {
+      this.formData.sections[0].fields[9].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[9].fieldValue)
+    }
+    // format Birth Date:
+    if (this.formData.sections[0]?.fields[5]?.fieldValue) {
+      this.formData.sections[0].fields[5].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[5].fieldValue)
+    }
+
+    // format Applyer Signiture dateTime to Date
+    if (this.formData?.sections[0]?.fields[14]?.fieldValue) {
+      this.formData.sections[0].fields[14].fieldValue = this.sharedService.formatDateOnly(this.formData?.sections[0]?.fields[14]?.fieldValue)
+    };
+
+    // format Tenure Of Service Under Reporting Officer From:
+    if (this.formData.sections[0]?.fields[13]?.childFields[0]?.fieldValue) {
+      this.formData.sections[0].fields[13].childFields[0].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[13].childFields[0].fieldValue)
+    }
+    //  format Tenure Of Service Under Reporting Officer To
+    if (this.formData?.sections[0]?.fields[13]?.childFields[1]?.fieldValue) {
+      this.formData.sections[0].fields[13].childFields[1].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[13].childFields[1].fieldValue)
+    }
+
+
     this.officerFormService.saveFormData(this.formData).subscribe({
       next: (response) => {
         if (response.success) {
@@ -417,6 +453,35 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     //this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]);
     //this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
 
+
+    // format Joining date 
+    if (this.formData.sections[0]?.fields[8]?.fieldValue) {
+      this.formData.sections[0].fields[8].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[8].fieldValue)
+    }
+    // format Joining Date Of Current Designation:
+    if (this.formData.sections[0]?.fields[9]?.fieldValue) {
+      this.formData.sections[0].fields[9].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[9].fieldValue)
+    }
+    // format Birth Date:
+    if (this.formData.sections[0]?.fields[5]?.fieldValue) {
+      this.formData.sections[0].fields[5].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[5].fieldValue)
+    }
+
+    // format Applyer Signiture dateTime to Date
+    if (this.formData?.sections[0]?.fields[14]?.fieldValue) {
+      this.formData.sections[0].fields[14].fieldValue = this.sharedService.formatDateOnly(this.formData?.sections[0]?.fields[14]?.fieldValue)
+    };
+
+    // format Tenure Of Service Under Reporting Officer From:
+    if (this.formData.sections[0]?.fields[13]?.childFields[0]?.fieldValue) {
+      this.formData.sections[0].fields[13].childFields[0].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[13].childFields[0].fieldValue)
+    }
+    //  format Tenure Of Service Under Reporting Officer To
+    if (this.formData?.sections[0]?.fields[13]?.childFields[1]?.fieldValue) {
+      this.formData.sections[0].fields[13].childFields[1].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[13].childFields[1].fieldValue)
+    }
+
+
     this.formRecordService.updateFormData(this.formData, this.updateRole).subscribe({
       next: response => {
         if (response.success) {
@@ -445,6 +510,35 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   getFormData() {
     this.formRecordService.getFormData(this.formRecordId).subscribe({
       next: (response) => {
+
+
+        // format Joining date 
+        if (response.sections[0]?.fields[8]?.fieldValue) {
+          response.sections[0].fields[8].fieldValue = this.sharedService.parseDate(response.sections[0].fields[8].fieldValue)
+        }
+        // format Joining Date Of Current Designation:
+        if (response.sections[0]?.fields[9]?.fieldValue) {
+          response.sections[0].fields[9].fieldValue = this.sharedService.parseDate(response.sections[0].fields[9].fieldValue)
+        }
+        // format Birth Date:
+        if (response.sections[0]?.fields[5]?.fieldValue) {
+          response.sections[0].fields[5].fieldValue = this.sharedService.parseDate(response.sections[0].fields[5].fieldValue)
+        }
+
+        // format Applyer Signiture dateTime to Date
+        if (response?.sections[0]?.fields[14]?.fieldValue) {
+          response.sections[0].fields[14].fieldValue = this.sharedService.parseDate(response?.sections[0]?.fields[14]?.fieldValue)
+        };
+
+        // format Tenure Of Service Under Reporting Officer From:
+        if (response.sections[0]?.fields[13]?.childFields[0]?.fieldValue) {
+          response.sections[0].fields[13].childFields[0].fieldValue = this.sharedService.parseDate(response.sections[0].fields[13].childFields[0].fieldValue)
+        }
+        //  format Tenure Of Service Under Reporting Officer To
+        if (response?.sections[0]?.fields[13]?.childFields[1]?.fieldValue) {
+          response.sections[0].fields[13].childFields[1].fieldValue = this.sharedService.parseDate(response.sections[0].fields[13].childFields[1].fieldValue)
+        }
+
         this.formData = response;
         let datefrom = new Date(this.formData.reportFrom);
         let dateto = new Date(this.formData.reportTo);

@@ -283,7 +283,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.formData.reportFrom = this.sharedService.formatDateTime(this.formData.reportFrom)
     this.formData.reportTo = this.sharedService.formatDateTime(this.formData.reportTo)
 
-    // Convert Applyer Signiture dateTime to Date
+    // format Applyer Signiture dateTime to Date
     if (this.formData?.sections[0]?.fields[13]?.fieldValue) {
       this.formData.sections[0].fields[13].fieldValue = this.sharedService.formatDateOnly(this.formData?.sections[0]?.fields[13]?.fieldValue)
     };
@@ -297,32 +297,32 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     if (this.formData.sections[0]?.fields[7]?.fieldValue) {
       this.formData.sections[0].fields[7].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[7].fieldValue)
     }
-    // format Birth Date Of Current Designation:
+    // format Birth Date:
     if (this.formData.sections[0]?.fields[8]?.fieldValue) {
       this.formData.sections[0].fields[8].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[8].fieldValue)
     }
 
-    // format Joining Date Of Current Designation:
+    // format Tenure Of Service Under Reporting Officer From:
     if (this.formData.sections[0]?.fields[11]?.childFields[0]?.fieldValue) {
       this.formData.sections[0].fields[11].childFields[0].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[11].childFields[0].fieldValue)
     }
-    // format Birth Date Of Current Designation:
+    //  format Tenure Of Service Under Reporting Officer To
     if (this.formData?.sections[0]?.fields[11]?.childFields[1]?.fieldValue) {
       this.formData.sections[0].fields[11].childFields[1].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[11].childFields[1].fieldValue)
     }
 
-
+    //To be the correct tenure of employment under you From
     if (this.formData.sections[5]?.fields[0]?.childFields[0]?.fieldValue) {
       this.formData.sections[5].fields[0].childFields[0].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[5].fields[0].childFields[0].fieldValue)
     }
-    // format Birth Date Of Current Designation:
+    //  //To be the correct tenure of employment under you From
     if (this.formData?.sections[5]?.fields[0]?.childFields[1]?.fieldValue) {
       this.formData.sections[5].fields[0].childFields[1].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[5].fields[0].childFields[1].fieldValue)
     }
-
-
-    console.log(this.formData.sections)
-
+      // Repoting Officer Sigiture
+    if (this.formData?.sections[6]?.fields[3]?.fieldValue) {
+      this.formData.sections[6].fields[3].fieldValue = this.sharedService.formatDateOnly(this.formData?.sections[6]?.fields[3]?.fieldValue)
+    }
 
 
     this.subscription.push(
@@ -495,52 +495,64 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     }
     this.formData.ReceiverId = this.authService.currentUserValue.departmentId;
 
-    // format Applyer Signiture Date
-    if (this.formData.sections[0]?.fields[13]?.fieldValue) {
-      this.formData.sections[0].fields[13].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[13].fieldValue)
+    try {
+      // format Applyer Signiture Date
+      if (this.formData.sections[0]?.fields[13]?.fieldValue) {
+        this.formData.sections[0].fields[13].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[13].fieldValue)
+      }
+
+      // format Reporting Signiture Date
+      if (this.formData.sections[4]?.fields[11]?.fieldValue) {
+        this.formData.sections[4].fields[11].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[4].fields[11].fieldValue)
+      }
+
+      // format Counter Signiture Date
+      if (this.formData.sections[5]?.fields[4]?.fieldValue) {
+        this.formData.sections[5].fields[4].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[5].fields[4].fieldValue)
+      }
+
+      // format Joining date 
+      if (this.formData.sections[0]?.fields[6]?.fieldValue) {
+        this.formData.sections[0].fields[6].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[6].fieldValue)
+      }
+      // format Joining Date Of Current Designation:
+      if (this.formData.sections[0]?.fields[7]?.fieldValue) {
+        this.formData.sections[0].fields[7].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[7].fieldValue)
+      }
+      // format Birth Date:
+      if (this.formData.sections[0]?.fields[8]?.fieldValue) {
+        this.formData.sections[0].fields[8].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[8].fieldValue)
+      }
+
+
+      // format Tenure Of Service Under Reporting Officer From:
+      if (this.formData.sections[0]?.fields[11]?.childFields[0]?.fieldValue) {
+        this.formData.sections[0].fields[11].childFields[0].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[11].childFields[0].fieldValue)
+      }
+      // //To be the correct tenure of employment under you To
+      if (this.formData?.sections[0]?.fields[11]?.childFields[1]?.fieldValue) {
+        this.formData.sections[0].fields[11].childFields[1].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[11].childFields[1].fieldValue)
+      }
+      // To be the correct tenure of employment under you From
+   
+      if (this.formData.sections[5]?.fields[0]?.childFields[0]?.fieldValue) {
+        this.formData.sections[5].fields[0].childFields[0].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[5].fields[0].childFields[0].fieldValue)
+      }
+      // To be the correct tenure of employment under you To
+      if (this.formData?.sections[5]?.fields[0]?.childFields[1]?.fieldValue) {
+        this.formData.sections[5].fields[0].childFields[1].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[5].fields[0].childFields[1].fieldValue)
+      }
+
+
+      if (this.formData?.sections[6]?.fields[3]?.fieldValue) {
+        this.formData.sections[6].fields[3].fieldValue = this.sharedService.formatDateOnly(this.formData?.sections[6]?.fields[3]?.fieldValue)
+      }
+
+
+
+    } catch (e) {
+
     }
-
-    // format Reporting Signiture Date
-    if (this.formData.sections[4]?.fields[11]?.fieldValue) {
-      this.formData.sections[4].fields[11].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[4].fields[11].fieldValue)
-    }
-
-    // format Counter Signiture Date
-    if (this.formData.sections[5]?.fields[4]?.fieldValue) {
-      this.formData.sections[5].fields[4].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[5].fields[4].fieldValue)
-    }
-
-
-        if (this.formData.sections[0]?.fields[6]?.fieldValue) {
-          this.formData.sections[0].fields[6].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[6].fieldValue)
-        }
-          // format Joining Date Of Current Designation:
-        if (this.formData.sections[0]?.fields[7]?.fieldValue) {
-          this.formData.sections[0].fields[7].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[7].fieldValue)
-        }
-          // format Birth Date Of Current Designation:
-        if (this.formData.sections[0]?.fields[8]?.fieldValue) {
-          this.formData.sections[0].fields[8].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[8].fieldValue)
-        }
-
-
-             // format Joining Date Of Current Designation:
-        if (this.formData.sections[0]?.fields[11]?.childFields[0]?.fieldValue) {
-          this.formData.sections[0].fields[11].childFields[0].fieldValue = this.sharedService.formatDateOnly( this.formData.sections[0].fields[11].childFields[0].fieldValue)
-        }
-          // format Birth Date Of Current Designation:
-        if ( this.formData?.sections[0]?.fields[11]?.childFields[1]?.fieldValue) {
-           this.formData.sections[0].fields[11].childFields[1].fieldValue= this.sharedService.formatDateOnly( this.formData.sections[0].fields[11].childFields[1].fieldValue)
-        }
-
-            if (this.formData.sections[5]?.fields[0]?.childFields[0]?.fieldValue) {
-          this.formData.sections[5].fields[0].childFields[0].fieldValue = this.sharedService.formatDateOnly( this.formData.sections[5].fields[0].childFields[0].fieldValue)
-        }
-          // format Birth Date Of Current Designation:
-        if ( this.formData?.sections[5]?.fields[0]?.childFields[1]?.fieldValue) {
-           this.formData.sections[5].fields[0].childFields[1].fieldValue= this.sharedService.formatDateOnly( this.formData.sections[5].fields[0].childFields[1].fieldValue)
-        }
-
 
     this.formRecordService.updateFormData(this.formData, this.updateRole).subscribe({
       next: response => {
@@ -548,6 +560,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
           this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right'
           })
+          this.getFormData();
 
           this.sendUserNotification(this.updateRole, this.formData);
           this.sendOfficerNotification(this.updateRole, this.formData);
@@ -570,54 +583,66 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   getFormData() {
     this.formRecordService.getFormData(this.formRecordId).subscribe({
       next: (response) => {
-        // format Applyer signiture date 
-        if (response.sections[0]?.fields[13]?.fieldValue) {
-          response.sections[0].fields[13].fieldValue = this.sharedService.parseDate(response.sections[0].fields[13].fieldValue)
-        }
+
+
+        try {
+
+          if (response.sections[0]?.fields[13]?.fieldValue) {
+            response.sections[0].fields[13].fieldValue = this.sharedService.parseDate(response.sections[0].fields[13].fieldValue)
+          }
 
           // format Joining date 
-        if (response.sections[0]?.fields[6]?.fieldValue) {
-          response.sections[0].fields[6].fieldValue = this.sharedService.parseDate(response.sections[0].fields[6].fieldValue)
-        }
+          if (response.sections[0]?.fields[6]?.fieldValue) {
+            response.sections[0].fields[6].fieldValue = this.sharedService.parseDate(response.sections[0].fields[6].fieldValue)
+          }
           // format Joining Date Of Current Designation:
-        if (response.sections[0]?.fields[7]?.fieldValue) {
-          response.sections[0].fields[7].fieldValue = this.sharedService.parseDate(response.sections[0].fields[7].fieldValue)
-        }
+          if (response.sections[0]?.fields[7]?.fieldValue) {
+            response.sections[0].fields[7].fieldValue = this.sharedService.parseDate(response.sections[0].fields[7].fieldValue)
+          }
           // format Birth Date Of Current Designation:
-        if (response.sections[0]?.fields[8]?.fieldValue) {
-          response.sections[0].fields[8].fieldValue = this.sharedService.parseDate(response.sections[0].fields[8].fieldValue)
-        }
+          if (response.sections[0]?.fields[8]?.fieldValue) {
+            response.sections[0].fields[8].fieldValue = this.sharedService.parseDate(response.sections[0].fields[8].fieldValue)
+          }
 
-        // format Repoting Office Signiture Date
-        if (response.sections[4]?.fields[11]?.fieldValue) {
-          response.sections[4].fields[11].fieldValue = this.sharedService.parseDate(response.sections[4].fields[11].fieldValue)
-        }
+          // format Repoting Office Signiture Date
+          if (response.sections[4]?.fields[11]?.fieldValue) {
+            response.sections[4].fields[11].fieldValue = this.sharedService.parseDate(response.sections[4].fields[11].fieldValue)
+          }
 
           // format Counter Office Signiture Date
-        if (response.sections[5]?.fields[4]?.fieldValue) {
-          response.sections[5].fields[4].fieldValue = this.sharedService.parseDate(response.sections[5].fields[4].fieldValue)
+          if (response.sections[5]?.fields[4]?.fieldValue) {
+            response.sections[5].fields[4].fieldValue = this.sharedService.parseDate(response.sections[5].fields[4].fieldValue)
+          }
+
+
+          // format Tenure Of Service Under Reporting Officer From:
+          if (response.sections[0]?.fields[11]?.childFields[0]?.fieldValue) {
+            response.sections[0].fields[11].childFields[0].fieldValue = this.sharedService.parseDate(response.sections[0].fields[11].childFields[0].fieldValue)
+          }
+          // Tenure Of Service Under Reporting Officer To
+          if (response?.sections[0]?.fields[11]?.childFields[1]?.fieldValue) {
+            response.sections[0].fields[11].childFields[1].fieldValue = this.sharedService.parseDate(response.sections[0].fields[11].childFields[1].fieldValue)
+          }
+          
+          //To be the correct tenure of employment under you From
+
+          if (response.sections[5]?.fields[0]?.childFields[0]?.fieldValue) {
+            response.sections[5].fields[0].childFields[0].fieldValue = this.sharedService.parseDate(response.sections[5].fields[0].childFields[0].fieldValue);
+          }
+          // format To be the correct tenure of employment under you From To
+          if (response?.sections[5]?.fields[0]?.childFields[1]?.fieldValue) {
+            response.sections[5].fields[0].childFields[1].fieldValue = this.sharedService.parseDate(response.sections[5].fields[0].childFields[1].fieldValue)
+          }
+
+          // Format Reporter Signiture Date 
+          if (response?.sections[6]?.fields[3]?.fieldValue) {
+            response.sections[6].fields[3].fieldValue = this.sharedService.parseDate(response?.sections[6]?.fields[3]?.fieldValue)
+          }
+
+
+        } catch (e) {
+
         }
-
-
-                     // format Joining Date Of Current Designation:
-        if (response.sections[0]?.fields[11]?.childFields[0]?.fieldValue) {
-          response.sections[0].fields[11].childFields[0].fieldValue = this.sharedService.parseDate( response.sections[0].fields[11].childFields[0].fieldValue)
-        }
-          // format Birth Date Of Current Designation:
-        if ( response?.sections[0]?.fields[11]?.childFields[1]?.fieldValue) {
-           response.sections[0].fields[11].childFields[1].fieldValue= this.sharedService.parseDate( response.sections[0].fields[11].childFields[1].fieldValue)
-        }
-
-            if (response.sections[5]?.fields[0]?.childFields[0]?.fieldValue) {
-          response.sections[5].fields[0].childFields[0].fieldValue = this.sharedService.parseDate( response.sections[5].fields[0].childFields[0].fieldValue)
-        }
-          // format Birth Date Of Current Designation:
-        if ( response?.sections[5]?.fields[0]?.childFields[1]?.fieldValue) {
-           response.sections[5].fields[0].childFields[1].fieldValue= this.sharedService.parseDate( response.sections[5].fields[0].childFields[1].fieldValue)
-        }
-
-
-
 
 
         this.formData = response;

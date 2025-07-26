@@ -53,24 +53,20 @@
             
             <c-col [md]="3">
               <label cLabel for="fromDate" class="fw-normal">From Date</label>
-              <input
-                (change)="onDateSelect()"
-                cFormControl
-                type="date"
-                id="fromDate"
-                [(ngModel)]="reportFrom"
-              />
+              <p-calendar [(ngModel)]="reportFrom" (onSelect)="onDateSelect()" id="fromDate" name="fromDate" cFormControl
+                [iconDisplay]="'input'" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+                class="coreui-datepicker w-100" appendTo="body">
+              </p-calendar>
+
             </c-col>
             
             <c-col [md]="3">
               <label cLabel for="toDate" class="fw-normal">To Date</label>
-              <input
-                (change)="onDateSelect()"
-                cFormControl
-                type="date"
-                id="toDate"
-                [(ngModel)]="reportTo"
-              />
+            <p-calendar [(ngModel)]="reportTo" (onSelect)="onDateSelect()" id="toDate" name="toDate" cFormControl
+              [iconDisplay]="'input'" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+              class="coreui-datepicker w-100" appendTo="body">
+            </p-calendar>
+
             </c-col>
 
             <button *ngIf="routelink!=''" cButton color="danger" [routerLink]="[routelink]" size="sm">Cancel</button>

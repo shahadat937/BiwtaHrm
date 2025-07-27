@@ -292,7 +292,7 @@ export class IncrementAndPromotionComponent implements OnInit, OnDestroy {
     this.empPromotionIncrementService.empPromotionIncrement.currentSectionName = this.empPromotionIncrement.currentSectionName;
     this.empPromotionIncrementService.empPromotionIncrement.currentDepartmentName = this.empPromotionIncrement.currentDepartmentName;
     this.empPromotionIncrementService.empPromotionIncrement.currentDesignationName = this.empPromotionIncrement.currentDesignationName;
-    this.empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate = this.empPromotionIncrement.currentDeptJoinDate;
+    this.empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate = this.sharedService.parseDate( this.empPromotionIncrement.currentDeptJoinDate);
   }
   pathApproveStatusInfo() {
     this.empPromotionIncrementService.empPromotionIncrement.approveById = this.empPromotionIncrement.approveById;
@@ -394,7 +394,7 @@ export class IncrementAndPromotionComponent implements OnInit, OnDestroy {
           this.empPromotionIncrementService.empPromotionIncrement.currentScaleId = res.presentScaleId;
           this.empPromotionIncrementService.empPromotionIncrement.currentScaleName = res.presentScaleName;
           this.empPromotionIncrementService.empPromotionIncrement.currentBasicPay = res.basicPay;
-          this.empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate = res.currentPositionJoinDate;
+          this.empPromotionIncrementService.empPromotionIncrement.currentDeptJoinDate = this.sharedService.parseDate(res.currentPositionJoinDate);
         }
       })
     )

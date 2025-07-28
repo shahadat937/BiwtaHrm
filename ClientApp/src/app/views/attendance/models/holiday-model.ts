@@ -2,8 +2,8 @@ export class HolidayModel {
     holidayId: number| null;
     holidayName: string;
     holidayDate: Date| null;
-    holidayFrom: Date | null;
-    holidayTo: Date | null;
+    holidayFrom: any;
+    holidayTo: any;
     holidayTypeId: number| null;
     yearId: number | null;
     isActive: boolean = true;

@@ -57,24 +57,18 @@ export class EmpDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  hrmdateResize(formDateValue:any){
-    let EntryDate="";
-    var month;
-    var day;
-    var dateObj = new Date(formDateValue);
-    var dObj=dateObj.toLocaleDateString().split('/');
-    month=parseInt(dObj[0]);
-    day=parseInt(dObj[1]);
-    if(month<10){
-      month='0'+month;
-    }
-    if(day<10){
-      day='0'+day;
-    }
- 
-    EntryDate =dObj[2]+'-'+month+'-'+day;
-    return EntryDate;
+  hrmdateResize(formDateValue: any) {
+    if (!formDateValue) return "";
+
+    const dateObj = new Date(formDateValue);
+
+    const year = dateObj.getFullYear();
+    const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+    const day = dateObj.getDate().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
+
 
   getEmpAttendanceInfo(){
     let filter = new HttpParams();

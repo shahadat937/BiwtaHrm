@@ -50,34 +50,39 @@
                             <div class="text-left text-danger">Year is required</div>
                         }
                     </c-col>
-                    <c-col md="3">
-                        <label for="holidayFrom" cLabel> From  </label>
-                        <input type="date"
-                        required 
-                        cFormControl 
-                        [(ngModel)]="this.holidayService.model.holidayFrom"
-                        #hFromDate = "ngModel"
-                        name="holidayFrom" 
-                        id="holidayFrom">
 
+                    
+                    <c-col md="3">
+                        <label cLabel for="holidayFrom">From</label>
+                        <p-calendar required 
+                            [(ngModel)]="this.holidayService.model.holidayFrom"
+                            #hFromDate = "ngModel"
+                            name="holidayFrom" 
+                            id="holidayFrom" [iconDisplay]="'input'"
+                            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                            [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                        </p-calendar>
                         @if (hFromDate.invalid&&hFromDate.touched) {
                             <div class="text-left text-danger">From is required</div>
                         }
                     </c-col>
-                    <c-col md="3">
-                        <label for="holidayTo" cLabel> To  </label>
-                        <input type="date"
-                        required 
-                        cFormControl 
-                        [(ngModel)]="this.holidayService.model.holidayTo"
-                        #hToDate = "ngModel"
-                        name="holidayTo" 
-                        id="holidayTo">
 
+                    
+                    <c-col md="3">
+                        <label cLabel for="holidayTo">To</label>
+                        <p-calendar required 
+                            [(ngModel)]="this.holidayService.model.holidayTo"
+                            #hToDate = "ngModel"
+                            name="holidayTo" 
+                            id="holidayTo" [iconDisplay]="'input'"
+                            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                            [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                        </p-calendar>
                         @if (hToDate.invalid&&hToDate.touched) {
                             <div class="text-left text-danger">To is required</div>
                         }
                     </c-col>
+
                     <c-col md="3">
                         <label for="holidayType" cLabel>Select Holiday Type</label>
                         <select 

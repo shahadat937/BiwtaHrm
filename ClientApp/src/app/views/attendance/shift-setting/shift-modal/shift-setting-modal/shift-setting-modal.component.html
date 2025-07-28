@@ -114,41 +114,37 @@
                     <div class="text-left text-danger">Buffer Time is required</div>
                     }
                   </c-col>
-                  
+
                   <c-col [md]="4">
-                    <label cLabel for="validationCustom04"
-                    >Shift Start Date<span class="text-danger"></span></label>
-                  <input
-                    [(ngModel)]="shiftSettingService.shiftSetting.startDate"
-                    name="startDate" 
-                    #StartDate="ngModel"
-                    placeholder="Enter Shift Start Date"
-                    cFormControl
-                    id="validationCustom04"
-                    type="date"
-                  />
-                  @if(!StartDate.valid&&StartDate.touched){
-                  <div class="text-left text-danger">Shift Start Date is required</div>
-                  }
-                </c-col>
+                      <label class="col-form-label" for="fromDate">Shift Start Date</label>
+                      <p-calendar [(ngModel)]="shiftSettingService.shiftSetting.startDate"
+                          #StartDate="ngModel"
+                          id="fromDate"
+                          name="startDate"  [iconDisplay]="'input'"
+                          dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                          [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                      </p-calendar>
+                      @if(!StartDate.valid&&StartDate.touched){
+                      <div class="text-left text-danger">Shift Start Date is required</div>
+                      }
+                  </c-col>
+
                 
                 <c-col [md]="4">
-                    <label cLabel for="validationCustom05"
-                    >Shift End Date<span class="text-danger"></span></label>
-                  <input
-                    [(ngModel)]="shiftSettingService.shiftSetting.endDate"
-                    name="endDate" 
-                    #EndDate="ngModel"
-                    placeholder="Enter Shift End Date"
-                    cFormControl
-                    id="validationCustom05"
-                    type="date"
-                  />
-                  @if(!EndDate.valid&&EndDate.touched){
-                  <div class="text-left text-danger">Shift End Date is required</div>
-                  }
+                    <label class="col-form-label" for="endDate">Shift End Date</label>
+                    <p-calendar [(ngModel)]="shiftSettingService.shiftSetting.endDate"
+                        #EndDate="ngModel"
+                        id="fromDate"
+                        name="endDate"  [iconDisplay]="'input'"
+                        dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                        [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                    </p-calendar>
+                    @if(!EndDate.valid&&EndDate.touched){
+                    <div class="text-left text-danger">Shift End Date is required</div>
+                    }
                 </c-col>
-
+                
+                
                     <c-col [md]="4">
                         <label cLabel for="isActive">Active Status</label>
                         <select [(ngModel)]="shiftSettingService.shiftSetting.isActive" name="isActive" cSelect

@@ -10,6 +10,7 @@ import { RoleFeatureService } from 'src/app/views/featureManagement/service/role
 import { FeaturePermission } from 'src/app/views/featureManagement/model/feature-permission';
 import { Feature } from 'src/app/views/featureManagement/model/feature';
 import { group } from '@angular/animations';
+import { SharedService } from '../../../../shared/shared.service';
 
 @Component({
   selector: 'app-holiday-setup',
@@ -36,7 +37,8 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private confirmService: ConfirmService,
     public holidayService: HolidaySetupService,
-    public roleFeatureService: RoleFeatureService
+    public roleFeatureService: RoleFeatureService,
+    private sharedService: SharedService
   ) {
     this.isVisible=false;
     this.isUpdate = false;
@@ -167,6 +169,9 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
       return;
     }
 
+    form.value.holidayFrom = this.sharedService.formatDateOnly(form.value.holidayFrom);
+    form.value.holidayTo = this.sharedService.formatDateOnly(form.value.holidayTo);
+
     let element = form.value;
     element['holidayId']=0;
     element.holidayDate = element.holidayFrom;
@@ -245,9 +250,10 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
 
   toggleUpdate(element:any) {
     let item = JSON.parse(JSON.stringify(element)); 
+    item.holidayFrom = this.sharedService.parseDate(item.holidayFrom);
+    item.holidayTo = this.sharedService.parseDate(item.holidayTo);
     this.holidayForm.form.patchValue(item);
     this.holidayService.model = item;
-    console.log(this.holidayService.model);
     this.isUpdate = true;
     this.isVisible = true;
     console.log(element);
@@ -258,6 +264,9 @@ export class HolidaySetupComponent implements OnInit, OnDestroy {
       this.roleFeatureService.unauthorizeAccress();
       return;
     }
+    
+    this.holidayService.model.holidayFrom = this.sharedService.formatDateOnly(this.holidayService.model.holidayFrom);
+    this.holidayService.model.holidayTo = this.sharedService.formatDateOnly(this.holidayService.model.holidayTo);
 
     this.loading = true;
     this.holidayService.updateHolidayGroup(this.holidayService.model).subscribe({

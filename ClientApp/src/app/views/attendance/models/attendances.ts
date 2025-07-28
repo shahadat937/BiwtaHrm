@@ -2,7 +2,7 @@ import { Time } from "@angular/common";
 
 export class Attendances {
     attendanceId:number;
-    attendanceDate: Date| null;
+    attendanceDate: any;
     empId: Number| null;
     officeId: Number | null;
     officeBranchId: Number | null;

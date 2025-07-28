@@ -72,8 +72,8 @@
                     <td>{{ shiftSetting.endTime | timeFormat }}</td>
                     <td>{{ shiftSetting.bufferTime | timeFormat }}</td>
                     <td>{{ shiftSetting.absentTime | timeFormat }}</td>
-                    <td>{{ shiftSetting.startDate }}</td>
-                    <td>{{ shiftSetting.endDate }}</td>
+                    <td>{{ shiftSetting.startDate | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ shiftSetting.endDate | date: 'dd/MM/yyyy' }}</td>
                     <td>
                         <c-badge color="success" *ngIf="shiftSetting.isActive">Active</c-badge>
                         <c-badge color="warning" *ngIf="!shiftSetting.isActive">Inactive</c-badge>

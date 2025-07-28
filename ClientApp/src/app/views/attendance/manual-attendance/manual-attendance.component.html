@@ -111,21 +111,26 @@
             <hr>
 
             <c-row [gutter]="3">
-                <c-col md="4">
-                    <label for="AtdDate">Date<span class="text-danger">*</span></label>
-                    <input name="attendanceDate" 
-                        placeholder="Enter a date" 
-                        id="AtdDate" 
-                        type="date"
-                        required
-                        cFormControl
-                        #AtdDate = "ngModel"
-                        [(ngModel)]="this.manualAtdService.attendances.attendanceDate"
-                        >
-                        @if (AtdDate.invalid&&AtdDate.touched) {
-                            <div class="text-left text-danger">Attendance Date is required</div>
-                        }
-                </c-col>
+
+                
+                  <c-col md="4">
+                      <label for="AtdDate">Date<span class="text-danger">*</span></label>
+                      <p-calendar name="attendanceDate" 
+                            placeholder="Enter a date" 
+                            id="AtdDate" 
+                            type="date"
+                            required
+                            cFormControl
+                            #AtdDate = "ngModel"
+                            [(ngModel)]="this.manualAtdService.attendances.attendanceDate"
+                          dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                          [showOnFocus]="false" [iconDisplay]="'input'" class="coreui-datepicker w-100">
+                      </p-calendar>
+                      @if(!AtdDate.valid&&AtdDate.touched){
+                      <div class="text-left text-danger">Date is required</div>
+                      }
+                  </c-col>
+
                 <c-col md="4">
                     <label for="AtdInTime">In Time</label>
                     <input name="inTime" 

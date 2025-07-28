@@ -1,11 +1,11 @@
 import { Division } from './../../basic-setup/model/division';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SharedService } from './service/shared.service';
+import { SharedService } from '../../../shared/shared.service';
 import { NgForm } from '@angular/forms';
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {OfficerFormService} from './service/officer-form.service'
+import { OfficerFormService } from './service/officer-form.service'
 import { ToastrService } from 'ngx-toastr';
-import {ConfirmService} from '../../../core/service/confirm.service'
+import { ConfirmService } from '../../../core/service/confirm.service'
 import { concat, concatMap, delay, of, Subscription } from 'rxjs';
 import { FieldComponent } from '../field/field.component';
 import { FormRecordService } from '../services/form-record.service';
@@ -14,11 +14,11 @@ import { UpdateFormComponent } from '../update-form/update-form.component';
 import { EmpPhotoSignService } from '../../employee/service/emp-photo-sign.service';
 import { EmpBasicInfoService } from '../../employee/service/emp-basic-info.service';
 import { HttpParams } from '@angular/common/http';
-import {AppraisalRole} from '../enum/appraisal-role';
+import { AppraisalRole } from '../enum/appraisal-role';
 import { environment } from '../../../../environments/environment';
 import { cilArrowLeft, cilSearch } from '@coreui/icons';
-import {AuthService} from '../../../core/service/auth.service'
-import {EmpPhotoSignComponent} from './../../employee/add-employee/employee-informations/emp-photo-sign/emp-photo-sign.component';
+import { AuthService } from '../../../core/service/auth.service'
+import { EmpPhotoSignComponent } from './../../employee/add-employee/employee-informations/emp-photo-sign/emp-photo-sign.component';
 import { EmployeeInfoListModalComponent } from '../../employee/employee-info-list-modal/employee-info-list-modal.component';
 import { ChangeProfileComponent } from '../../profile/change-profile/change-profile.component';
 import { UserNotification } from '../../notifications/models/user-notification';
@@ -39,7 +39,7 @@ import { FeaturePermission } from '../../featureManagement/model/feature-permiss
 export class OfficerFormComponent implements OnInit, OnDestroy {
   @ViewChild('officerForm') officerForm!: NgForm;
   @Input()
-  ActiveSection:boolean[];
+  ActiveSection: boolean[];
   @Input()
   formRecordId;
   @Input()
@@ -49,41 +49,41 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   @Input()
   IsUpdate: boolean
   appraisalRole = AppraisalRole;
-  IdCardNo:string;
+  IdCardNo: string;
   currentEmp: number;
-  formId:number;
+  formId: number;
   loading: boolean;
   submitLoading: boolean;
   @Input()
   submitButtonText: string;
   formData: any;
   // subscription: Subscription = new Subscription();
-  subscription: Subscription[]=[]
-  currentSection:number ;
+  subscription: Subscription[] = []
+  currentSection: number;
   empSubs: Subscription = new Subscription();
   empReqSub: Subscription = new Subscription();
-  autoSetFields: any = [{fieldName:"Name",MapTo:"firstName"}, {fieldName: "Father Name",MapTo:"fatherName"},
-    {fieldName: "Mother Name", MapTo:"motherName"},
-    {fieldName: "Joining Date", MapTo: "joiningDate", Transform:"DateFormat"},
-    {fieldName: "Designation", MapTo: "designation"},
-    {fieldName: "Birthdate", MapTo: "birthDate", Transform: "DateFormat"},
-    {fieldName: "Joining Date Of Current Designation", MapTo: "currentDesignationJoiningDate", Transform: "DateFormat"}
+  autoSetFields: any = [{ fieldName: "Name", MapTo: "firstName" }, { fieldName: "Father Name", MapTo: "fatherName" },
+  { fieldName: "Mother Name", MapTo: "motherName" },
+  { fieldName: "Joining Date", MapTo: "joiningDate", Transform: "DateFormat" },
+  { fieldName: "Designation", MapTo: "designation" },
+  { fieldName: "Birthdate", MapTo: "birthDate", Transform: "DateFormat" },
+  { fieldName: "Joining Date Of Current Designation", MapTo: "currentDesignationJoiningDate", Transform: "DateFormat" }
   ]
-  icons = {cilArrowLeft,cilSearch};
+  icons = { cilArrowLeft, cilSearch };
 
   EmpOption: any[] = []
 
-  reportDates:any[]= [];
+  reportDates: any[] = [];
 
   department: string;
   @Input()
-  firstSection:number;
+  firstSection: number;
   @Input()
-  lastSection:number;
+  lastSection: number;
 
 
   currentEmpSignatureUrl: string | null;
-  imageUrl = environment.imageUrl 
+  imageUrl = environment.imageUrl
 
 
   // Reporting Officer And Counter Signatory Officer Name 
@@ -110,16 +110,17 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     public officerFormService: OfficerFormService,
     private toastr: ToastrService,
     private confirmService: ConfirmService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    public sharedService: SharedService
   ) {
-   
+
     this.currentEmp = 0;
     this.currentEmpSignatureUrl = null;
     this.IdCardNo = "";
     this.loading = false;
     this.submitLoading = false;
     this.currentSection = 0;
-    this.ActiveSection = [true,true,true,true,true,true,true];
+    this.ActiveSection = [true, true, true, true, true, true, true];
     this.formRecordId = 0;
     this.showHeader = false
     this.department = "ICT"
@@ -134,32 +135,32 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getPermission();
-    this.loading=true;
+    this.loading = true;
     this.subscription.push(
       this.empService.getFilteredSelectedEmp(new HttpParams()).subscribe({
-      next: response => {
-        this.EmpOption = response
-      }
-    })
-    )
-    
-
-    if(this.formRecordId==0) {
-      this.getFormInfo(); 
-      this.subscription.push(
-        this.authService.currentUser.subscribe(user => {
-        if(user&&user.empId) {
-          let empId = parseInt(user.empId);
-          this.empService.findByEmpId(empId).subscribe({
-            next: response => {
-              this.IdCardNo = response.idCardNo;
-              this.getEmpInfo();
-            }
-          })
+        next: response => {
+          this.EmpOption = response
         }
       })
+    )
+
+
+    if (this.formRecordId == 0) {
+      this.getFormInfo();
+      this.subscription.push(
+        this.authService.currentUser.subscribe(user => {
+          if (user && user.empId) {
+            let empId = parseInt(user.empId);
+            this.empService.findByEmpId(empId).subscribe({
+              next: response => {
+                this.IdCardNo = response.idCardNo;
+                this.getEmpInfo();
+              }
+            })
+          }
+        })
       )
-      
+
     } else {
       this.getFormData();
     }
@@ -167,59 +168,59 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   }
 
 
-  getPermission(){
+  getPermission() {
     this.subscription.push(
-    this.roleFeatureService.getFeaturePermission(this.featureName).subscribe((item) => {
-      this.featurePermission = item;
-      if(item.viewStatus == true){
-        // To do
-      }
-      else{
-        this.roleFeatureService.unauthorizeAccress();
-        this.router.navigate(['/dashboard']);
-      }
-    })
+      this.roleFeatureService.getFeaturePermission(this.featureName).subscribe((item) => {
+        this.featurePermission = item;
+        if (item.viewStatus == true) {
+          // To do
+        }
+        else {
+          this.roleFeatureService.unauthorizeAccress();
+          this.router.navigate(['/dashboard']);
+        }
+      })
     )
   }
 
 
   ngOnDestroy(): void {
-    if(this.subscription) {
-      this.subscription.forEach(subs=>subs.unsubscribe())
-    } 
+    if (this.subscription) {
+      this.subscription.forEach(subs => subs.unsubscribe())
+    }
   }
 
   getFormInfo() {
     this.subscription.push(
-    this.officerFormService.getFormInfo(this.formId).subscribe({
-      next: response => {
-        this.formData=null;
-        this.formData = response;
-        const subs = this.authService.currentUser.subscribe(user => {
-          if(user&&user.empId) {
-            let empId = parseInt(user.empId);
-            this.empService.findByEmpId(empId).subscribe({
-              next: response => {
-                this.IdCardNo = response.idCardNo;
-                this.getEmpInfo();
-                this.getPhotoInfo(response.id);
-              }
-            })
-          }
-        })
+      this.officerFormService.getFormInfo(this.formId).subscribe({
+        next: response => {
+          this.formData = null;
+          this.formData = response;
+          const subs = this.authService.currentUser.subscribe(user => {
+            if (user && user.empId) {
+              let empId = parseInt(user.empId);
+              this.empService.findByEmpId(empId).subscribe({
+                next: response => {
+                  this.IdCardNo = response.idCardNo;
+                  this.getEmpInfo();
+                  this.getPhotoInfo(response.id);
+                }
+              })
+            }
+          })
 
-        this.subscription.push(subs);
-      },
-      error: err => {
-        console.log(err);
-        this.loading = false;
-      },
-      complete: () => {
-        this.loading = false
-      }
-    })
+          this.subscription.push(subs);
+        },
+        error: err => {
+          console.log(err);
+          this.loading = false;
+        },
+        complete: () => {
+          this.loading = false
+        }
+      })
     )
-    
+
   }
 
   onChange() {
@@ -234,7 +235,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     this.officerForm.form.reset();
 
 
-    if(!this.IsUpdate) {
+    if (!this.IsUpdate) {
       this.getFormInfo();
     } else {
       this.getFormData();
@@ -243,30 +244,30 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   }
 
   saveFormData() {
-    this.submitLoading=true;
+    this.submitLoading = true;
 
-    if(this.formRecordId!=0) {
-      if(this.featurePermission.update==false) {
+    if (this.formRecordId != 0) {
+      if (this.featurePermission.update == false) {
         this.roleFeatureService.unauthorizeAccress();
-        this.submitLoading=false;
+        this.submitLoading = false;
         return;
       }
       this.updateFormData();
       return;
     }
 
-    if(this.featurePermission.add==false) {
+    if (this.featurePermission.add == false) {
       this.roleFeatureService.unauthorizeAccress();
       this.submitLoading = false;
       return;
     }
 
 
-    if(this.formData.reportFrom ==null||this.formData.reportTo==null) {
-      this.toastr.warning('',"Report Duration is required", {
+    if (this.formData.reportFrom == null || this.formData.reportTo == null) {
+      this.toastr.warning('', "Report Duration is required", {
         positionClass: 'toast-top-right'
       });
-      this.submitLoading=false;
+      this.submitLoading = false;
       return;
     }
     //if(this.reportDates.length<2||this.reportDates[0]==null||this.reportDates[1]==null) {
@@ -278,122 +279,168 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     //}
     //this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]); 
     //this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
+
+    this.formData.reportFrom = this.sharedService.formatDateTime(this.formData.reportFrom)
+    this.formData.reportTo = this.sharedService.formatDateTime(this.formData.reportTo)
+
+    // format Applyer Signiture dateTime to Date
+    if (this.formData?.sections[0]?.fields[13]?.fieldValue) {
+      this.formData.sections[0].fields[13].fieldValue = this.sharedService.formatDateOnly(this.formData?.sections[0]?.fields[13]?.fieldValue)
+    };
+
+
+    // format Joining date 
+    if (this.formData.sections[0]?.fields[6]?.fieldValue) {
+      this.formData.sections[0].fields[6].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[6].fieldValue)
+    }
+    // format Joining Date Of Current Designation:
+    if (this.formData.sections[0]?.fields[7]?.fieldValue) {
+      this.formData.sections[0].fields[7].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[7].fieldValue)
+    }
+    // format Birth Date:
+    if (this.formData.sections[0]?.fields[8]?.fieldValue) {
+      this.formData.sections[0].fields[8].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[8].fieldValue)
+    }
+
+    // format Tenure Of Service Under Reporting Officer From:
+    if (this.formData.sections[0]?.fields[11]?.childFields[0]?.fieldValue) {
+      this.formData.sections[0].fields[11].childFields[0].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[11].childFields[0].fieldValue)
+    }
+    //  format Tenure Of Service Under Reporting Officer To
+    if (this.formData?.sections[0]?.fields[11]?.childFields[1]?.fieldValue) {
+      this.formData.sections[0].fields[11].childFields[1].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[11].childFields[1].fieldValue)
+    }
+
+    //To be the correct tenure of employment under you From
+    if (this.formData.sections[5]?.fields[0]?.childFields[0]?.fieldValue) {
+      this.formData.sections[5].fields[0].childFields[0].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[5].fields[0].childFields[0].fieldValue)
+    }
+    //  //To be the correct tenure of employment under you From
+    if (this.formData?.sections[5]?.fields[0]?.childFields[1]?.fieldValue) {
+      this.formData.sections[5].fields[0].childFields[1].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[5].fields[0].childFields[1].fieldValue)
+    }
+      // Repoting Officer Sigiture
+    if (this.formData?.sections[6]?.fields[3]?.fieldValue) {
+      this.formData.sections[6].fields[3].fieldValue = this.sharedService.formatDateOnly(this.formData?.sections[6]?.fields[3]?.fieldValue)
+    }
+
+
     this.subscription.push(
       this.officerFormService.saveFormData(this.formData).subscribe({
-      next: (response)=> {
-        if(response.success) {
-          this.toastr.success('',`${response.message}`, {
-            positionClass: 'toast-top-right'
-          })
-          
-          // Send notification to reporting officer
-          this.formData.recordId = response.id;
-          this.sendOfficerNotification(AppraisalRole.User,this.formData);
+        next: (response) => {
+          if (response.success) {
+            this.toastr.success('', `${response.message}`, {
+              positionClass: 'toast-top-right'
+            })
 
-          this.formRecordService.cachedData = [];
-          this.router.navigate(['/appraisal/MyFormRecord']);
-        } else {
-          this.toastr.warning('',`${response.message}`, {
-            positionClass: 'toast-top-right'
-          });
+            // Send notification to reporting officer
+            this.formData.recordId = response.id;
+            this.sendOfficerNotification(AppraisalRole.User, this.formData);
+
+            this.formRecordService.cachedData = [];
+            this.router.navigate(['/appraisal/MyFormRecord']);
+          } else {
+            this.toastr.warning('', `${response.message}`, {
+              positionClass: 'toast-top-right'
+            });
+          }
+        },
+        error: (err) => {
+          this.submitLoading = false;
+        },
+        complete: () => {
+          this.submitLoading = false;
         }
-      },
-      error: (err)=> {
-        this.submitLoading=false;
-      },
-      complete: ()=> {
-        this.submitLoading=false;
-      }
-    })
+      })
     )
-    
+
   }
 
-  onUpdate(formRecordId:number) {
+  onUpdate(formRecordId: number) {
     const initialState = {
-      formRecordId : formRecordId
-    } 
+      formRecordId: formRecordId
+    }
 
-    this.modalService.show(UpdateFormComponent,{initialState:initialState});
+    this.modalService.show(UpdateFormComponent, { initialState: initialState });
   }
 
 
   getEmpInfo() {
-    const source$ = of (this.IdCardNo);
+    const source$ = of(this.IdCardNo);
     const delay$ = source$.pipe(
       delay(700)
     );
 
-    if(this.empSubs) {
+    if (this.empSubs) {
       this.empSubs.unsubscribe();
     }
 
-    if(this.empReqSub) {
+    if (this.empReqSub) {
       this.empReqSub.unsubscribe();
     }
 
-    if(this.IdCardNo.trim()=="") {
+    if (this.IdCardNo.trim() == "") {
       return;
     }
 
     this.subscription.push(
-       this.empSubs = delay$.subscribe(data=> {
-      this.empReqSub = this.formRecordService.empInfo(data).subscribe({
-        next: response=> {
-          if(response.success==true) {
-            this.processEmpInfo(response);
-          } else {
+      this.empSubs = delay$.subscribe(data => {
+        this.empReqSub = this.formRecordService.empInfo(data).subscribe({
+          next: response => {
+            if (response.success == true) {
+              this.processEmpInfo(response);
+            } else {
+              this.formData.empId = 0;
+              this.toastr.warning('', `Employee (${data}) wasn't found`, {
+                positionClass: 'toast-top-right'
+              });
+              this.resetAutofield();
+            }
+          },
+          error: (err) => {
             this.formData.empId = 0;
-            this.toastr.warning('',`Employee (${data}) wasn't found`, {
-              positionClass: 'toast-top-right'
-            });
             this.resetAutofield();
           }
-        },
-        error: (err)=> {
-          this.formData.empId = 0;
-          this.resetAutofield();
-        }
+        })
       })
-    })
     )
-   
+
 
   }
 
   resetAutofield() {
-    function findField(fieldName:string) {
-      const compare = (data:any)=> {
-        return data.fieldName == fieldName; 
+    function findField(fieldName: string) {
+      const compare = (data: any) => {
+        return data.fieldName == fieldName;
       }
 
       return compare;
     }
-    this.autoSetFields.forEach((field:any)=> {
+    this.autoSetFields.forEach((field: any) => {
       const result = this.formData.sections[0].fields.find(findField(field.fieldName))
 
-      if(result!=undefined) {
-        result.fieldValue="";
+      if (result != undefined) {
+        result.fieldValue = "";
       }
     })
   }
 
-  processEmpInfo(empInfo:any) {
+  processEmpInfo(empInfo: any) {
     this.formData.empId = empInfo.empId;
 
-    function findField(fieldName:string) {
-      const compare = (data:any)=> {
-        return data.fieldName == fieldName; 
+    function findField(fieldName: string) {
+      const compare = (data: any) => {
+        return data.fieldName == fieldName;
       }
 
       return compare;
     }
 
-    this.autoSetFields.forEach((field:any) => { 
+    this.autoSetFields.forEach((field: any) => {
       const result = this.formData.sections[0].fields.find(findField(field.fieldName));
-      if(result!=undefined) {
+      if (result != undefined) {
         let fieldValue = empInfo[field.MapTo];
-        if(field.Transform!=undefined&&field.Transform=="DateFormat"&&fieldValue!=null) {
+        if (field.Transform != undefined && field.Transform == "DateFormat" && fieldValue != null) {
           fieldValue = fieldValue.split('T')[0];
         }
         result.fieldValue = fieldValue;
@@ -402,19 +449,19 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
   }
 
-  getPhotoInfo(empId:number) {
+  getPhotoInfo(empId: number) {
 
     let signature;
     this.empPhotoSignService.findByEmpId(empId).subscribe({
       next: response => {
-        if(response) {
+        if (response) {
           signature = response.signatureUrl;
-          if(signature==null||signature=="")
+          if (signature == null || signature == "")
             return;
-          for(let i = 0;i<this.formData.sections.length;i++) {
-            for(let j = 0; j<this.formData.sections[i].fields.length;j++) {
+          for (let i = 0; i < this.formData.sections.length; i++) {
+            for (let j = 0; j < this.formData.sections[i].fields.length; j++) {
               let field = this.formData.sections[i].fields[j];
-              if(field.fieldTypeName=="signaturePhoto"&&this.ActiveSection[i]&&(field.fieldValue==null||field.fieldValue=='')) {
+              if (field.fieldTypeName == "signaturePhoto" && this.ActiveSection[i] && (field.fieldValue == null || field.fieldValue == '')) {
                 field.fieldValue = signature;
               }
             }
@@ -429,9 +476,9 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
 
   updateFormData() {
-    this.submitLoading=true;
-    if(this.reportDates.length<2) {
-      this.toastr.warning('',"Report Duration is required", {
+    this.submitLoading = true;
+    if (this.reportDates.length < 2) {
+      this.toastr.warning('', "Report Duration is required", {
         positionClass: 'toast-top-right'
       });
       return;
@@ -439,7 +486,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
 
     //this.formData.reportFrom = this.hrmdateResize(this.reportDates[0]);
     //this.formData.reportTo = this.hrmdateResize(this.reportDates[1]);
-    if(this.updateRole == this.appraisalRole.Receiver){
+    if (this.updateRole == this.appraisalRole.Receiver) {
       this.formData.ReceiverId = this.authService.currentUserValue.empId;
       this.formData.receiverDepartmentId = this.authService.currentUserValue.departmentId;
       this.formData.receiverSectionId = this.authService.currentUserValue.sectionId;
@@ -447,42 +494,164 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
       this.formData.ReceiverResponsibilityTypeId = this.authService.currentUserValue.responsibilityTypeId;
     }
     this.formData.ReceiverId = this.authService.currentUserValue.departmentId;
-    
+
+    try {
+      // format Applyer Signiture Date
+      if (this.formData.sections[0]?.fields[13]?.fieldValue) {
+        this.formData.sections[0].fields[13].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[13].fieldValue)
+      }
+
+      // format Reporting Signiture Date
+      if (this.formData.sections[4]?.fields[11]?.fieldValue) {
+        this.formData.sections[4].fields[11].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[4].fields[11].fieldValue)
+      }
+
+      // format Counter Signiture Date
+      if (this.formData.sections[5]?.fields[4]?.fieldValue) {
+        this.formData.sections[5].fields[4].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[5].fields[4].fieldValue)
+      }
+
+      // format Joining date 
+      if (this.formData.sections[0]?.fields[6]?.fieldValue) {
+        this.formData.sections[0].fields[6].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[6].fieldValue)
+      }
+      // format Joining Date Of Current Designation:
+      if (this.formData.sections[0]?.fields[7]?.fieldValue) {
+        this.formData.sections[0].fields[7].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[7].fieldValue)
+      }
+      // format Birth Date:
+      if (this.formData.sections[0]?.fields[8]?.fieldValue) {
+        this.formData.sections[0].fields[8].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[8].fieldValue)
+      }
+
+
+      // format Tenure Of Service Under Reporting Officer From:
+      if (this.formData.sections[0]?.fields[11]?.childFields[0]?.fieldValue) {
+        this.formData.sections[0].fields[11].childFields[0].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[11].childFields[0].fieldValue)
+      }
+      // //To be the correct tenure of employment under you To
+      if (this.formData?.sections[0]?.fields[11]?.childFields[1]?.fieldValue) {
+        this.formData.sections[0].fields[11].childFields[1].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[0].fields[11].childFields[1].fieldValue)
+      }
+      // To be the correct tenure of employment under you From
+   
+      if (this.formData.sections[5]?.fields[0]?.childFields[0]?.fieldValue) {
+        this.formData.sections[5].fields[0].childFields[0].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[5].fields[0].childFields[0].fieldValue)
+      }
+      // To be the correct tenure of employment under you To
+      if (this.formData?.sections[5]?.fields[0]?.childFields[1]?.fieldValue) {
+        this.formData.sections[5].fields[0].childFields[1].fieldValue = this.sharedService.formatDateOnly(this.formData.sections[5].fields[0].childFields[1].fieldValue)
+      }
+
+
+      if (this.formData?.sections[6]?.fields[3]?.fieldValue) {
+        this.formData.sections[6].fields[3].fieldValue = this.sharedService.formatDateOnly(this.formData?.sections[6]?.fields[3]?.fieldValue)
+      }
+
+
+
+    } catch (e) {
+
+    }
+
     this.formRecordService.updateFormData(this.formData, this.updateRole).subscribe({
-      next: response=> {
-        if(response.success) {
-          this.toastr.success('',`${response.message}`, {
+      next: response => {
+        if (response.success) {
+          this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right'
           })
+          this.getFormData();
 
-          this.sendUserNotification(this.updateRole,this.formData);
-          this.sendOfficerNotification(this.updateRole,this.formData);
-          
+          this.sendUserNotification(this.updateRole, this.formData);
+          this.sendOfficerNotification(this.updateRole, this.formData);
+
         } else {
-          this.toastr.warning('',`${response.message}`, {
+          this.toastr.warning('', `${response.message}`, {
             positionClass: 'toast-top-right'
           })
         }
       },
-      error: err=> {
-        this.submitLoading=false;
+      error: err => {
+        this.submitLoading = false;
       },
       complete: () => {
-        this.submitLoading=false;
+        this.submitLoading = false;
       }
     })
   }
 
   getFormData() {
     this.formRecordService.getFormData(this.formRecordId).subscribe({
-      next: (response)=> {
+      next: (response) => {
+
+
+        try {
+
+          if (response.sections[0]?.fields[13]?.fieldValue) {
+            response.sections[0].fields[13].fieldValue = this.sharedService.parseDate(response.sections[0].fields[13].fieldValue)
+          }
+
+          // format Joining date 
+          if (response.sections[0]?.fields[6]?.fieldValue) {
+            response.sections[0].fields[6].fieldValue = this.sharedService.parseDate(response.sections[0].fields[6].fieldValue)
+          }
+          // format Joining Date Of Current Designation:
+          if (response.sections[0]?.fields[7]?.fieldValue) {
+            response.sections[0].fields[7].fieldValue = this.sharedService.parseDate(response.sections[0].fields[7].fieldValue)
+          }
+          // format Birth Date Of Current Designation:
+          if (response.sections[0]?.fields[8]?.fieldValue) {
+            response.sections[0].fields[8].fieldValue = this.sharedService.parseDate(response.sections[0].fields[8].fieldValue)
+          }
+
+          // format Repoting Office Signiture Date
+          if (response.sections[4]?.fields[11]?.fieldValue) {
+            response.sections[4].fields[11].fieldValue = this.sharedService.parseDate(response.sections[4].fields[11].fieldValue)
+          }
+
+          // format Counter Office Signiture Date
+          if (response.sections[5]?.fields[4]?.fieldValue) {
+            response.sections[5].fields[4].fieldValue = this.sharedService.parseDate(response.sections[5].fields[4].fieldValue)
+          }
+
+
+          // format Tenure Of Service Under Reporting Officer From:
+          if (response.sections[0]?.fields[11]?.childFields[0]?.fieldValue) {
+            response.sections[0].fields[11].childFields[0].fieldValue = this.sharedService.parseDate(response.sections[0].fields[11].childFields[0].fieldValue)
+          }
+          // Tenure Of Service Under Reporting Officer To
+          if (response?.sections[0]?.fields[11]?.childFields[1]?.fieldValue) {
+            response.sections[0].fields[11].childFields[1].fieldValue = this.sharedService.parseDate(response.sections[0].fields[11].childFields[1].fieldValue)
+          }
+          
+          //To be the correct tenure of employment under you From
+
+          if (response.sections[5]?.fields[0]?.childFields[0]?.fieldValue) {
+            response.sections[5].fields[0].childFields[0].fieldValue = this.sharedService.parseDate(response.sections[5].fields[0].childFields[0].fieldValue);
+          }
+          // format To be the correct tenure of employment under you From To
+          if (response?.sections[5]?.fields[0]?.childFields[1]?.fieldValue) {
+            response.sections[5].fields[0].childFields[1].fieldValue = this.sharedService.parseDate(response.sections[5].fields[0].childFields[1].fieldValue)
+          }
+
+          // Format Reporter Signiture Date 
+          if (response?.sections[6]?.fields[3]?.fieldValue) {
+            response.sections[6].fields[3].fieldValue = this.sharedService.parseDate(response?.sections[6]?.fields[3]?.fieldValue)
+          }
+
+
+        } catch (e) {
+
+        }
+
+
         this.formData = response;
         let datefrom = new Date(this.formData.reportFrom);
         let dateto = new Date(this.formData.reportTo);
         this.reportDates.push(datefrom);
         this.reportDates.push(dateto);
         this.authService.currentUser.subscribe(user => {
-          if(user&&user.empId) {
+          if (user && user.empId) {
             let empId = parseInt(user.empId);
             this.empService.findByEmpId(empId).subscribe({
               next: response => {
@@ -493,23 +662,23 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
             })
           }
         })
-        this.loading=false;
+        this.loading = false;
       },
-      error: (err)=> {
+      error: (err) => {
         console.log(err);
-        this.loading=false;
+        this.loading = false;
       },
-      complete:()=>  {
-        this.loading=false;
+      complete: () => {
+        this.loading = false;
       }
     })
   }
 
   openReportingOfficerModal() {
 
-    const modalRef: BsModalRef = this.bsModalService.show(EmployeeInfoListModalComponent,{backdrop: 'static', class: 'modal-xl'});
+    const modalRef: BsModalRef = this.bsModalService.show(EmployeeInfoListModalComponent, { backdrop: 'static', class: 'modal-xl' });
 
-      if (modalRef.content) {
+    if (modalRef.content) {
       modalRef.content?.employeeSelected.subscribe((employee: any) => {
         // this.empBasicInfoService.getEmpInfoByCard(idCardNo).subscribe({
         //   next: response => {
@@ -542,7 +711,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   }
 
   openCounterSignatoryOfficerModal() {
-    const modalRef: BsModalRef = this.bsModalService.show(EmployeeInfoListModalComponent,{backdrop: 'static', class: 'modal-xl'});
+    const modalRef: BsModalRef = this.bsModalService.show(EmployeeInfoListModalComponent, { backdrop: 'static', class: 'modal-xl' });
 
     if (modalRef.content) {
       modalRef.content?.employeeSelected.subscribe((employee: any) => {
@@ -581,7 +750,7 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   uploadSignature(): void {
 
     let empId = parseInt(this.authService.currentUserValue.empId)
-    if(empId==null||empId==undefined) {
+    if (empId == null || empId == undefined) {
       return;
     }
     const initialState = {
@@ -604,35 +773,35 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
   }
 
 
- hrmdateResize(formDateValue:any){
-   let EntryDate="";
-   var month;
-   var day;
-   var dateObj = new Date(formDateValue);
-   var dObj=dateObj.toLocaleDateString().split('/');
-   month=parseInt(dObj[0]);
-   day=parseInt(dObj[1]);
-   if(month<10){
-     month='0'+month;
-   }
-   if(day<10){
-     day='0'+day;
-   }
- 
-   EntryDate =dObj[2]+'-'+month+'-'+day;
-   return EntryDate;
+  hrmdateResize(formDateValue: any) {
+    let EntryDate = "";
+    var month;
+    var day;
+    var dateObj = new Date(formDateValue);
+    var dObj = dateObj.toLocaleDateString().split('/');
+    month = parseInt(dObj[0]);
+    day = parseInt(dObj[1]);
+    if (month < 10) {
+      month = '0' + month;
+    }
+    if (day < 10) {
+      day = '0' + day;
+    }
+
+    EntryDate = dObj[2] + '-' + month + '-' + day;
+    return EntryDate;
   }
 
-  sendUserNotification(progress:number,formData:any) {
+  sendUserNotification(progress: number, formData: any) {
     const userNotification = new UserNotification();
 
-    if(progress == AppraisalRole.ReportingOfficer) {
-      userNotification.fromEmpId=formData.reportingOfficerId;
+    if (progress == AppraisalRole.ReportingOfficer) {
+      userNotification.fromEmpId = formData.reportingOfficerId;
       userNotification.message = "Reporting Officer submission has been done."
-    } else if(progress == AppraisalRole.CounterSignatory) {
-      userNotification.fromEmpId=formData.counterSignatoryId;
+    } else if (progress == AppraisalRole.CounterSignatory) {
+      userNotification.fromEmpId = formData.counterSignatoryId;
       userNotification.message = "Counter Signatory submission has been done."
-    } else if(progress == AppraisalRole.Receiver) {
+    } else if (progress == AppraisalRole.Receiver) {
       userNotification.fromEmpId = this.authService.currentUserValue.empId || 0;
       userNotification.message = "Appraisal is received by the receiver.";
     }
@@ -642,11 +811,11 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     userNotification.nevigateLink = "/appraisal/MyFormRecord";
     userNotification.title = "Appraisal";
 
-    this.notificationService.submit(userNotification).subscribe(()=> {});
+    this.notificationService.submit(userNotification).subscribe(() => { });
 
   }
 
-  sendOfficerNotification(role: number, formData:any) {
+  sendOfficerNotification(role: number, formData: any) {
     const userNotification = new UserNotification();
 
     userNotification.fromEmpId = formData.empId;
@@ -654,27 +823,27 @@ export class OfficerFormComponent implements OnInit, OnDestroy {
     userNotification.message = "New Appraisal Form is available"
     userNotification.forEntryId = formData.recordId;
 
-    if(role == AppraisalRole.User) {
+    if (role == AppraisalRole.User) {
       userNotification.toEmpId = formData.reportingOfficerId;
       userNotification.featurePath = "manageFormOfficerRF";
-      userNotification.nevigateLink ="/appraisal/manageFormOfficerRF";
-    } else if(role == AppraisalRole.ReportingOfficer) {
+      userNotification.nevigateLink = "/appraisal/manageFormOfficerRF";
+    } else if (role == AppraisalRole.ReportingOfficer) {
       userNotification.toEmpId = formData.counterSignatoryId;
       userNotification.featurePath = "manageFormOfficerCs";
       userNotification.nevigateLink = "/appraisal/manageFormOfficerCs"
-    } else if(role == AppraisalRole.CounterSignatory) {
+    } else if (role == AppraisalRole.CounterSignatory) {
       userNotification.featurePath = "manageFormOfficerR";
       userNotification.nevigateLink = "/appraisal/manageFormOfficerR";
     }
 
-    if(role == AppraisalRole.CounterSignatory) {
+    if (role == AppraisalRole.CounterSignatory) {
       this.empJobDetailService.findByEmpId(formData.empId).subscribe(data => {
         userNotification.toDeptId = data.departmentId;
 
-        this.notificationService.submit(userNotification).subscribe(()=> {});
+        this.notificationService.submit(userNotification).subscribe(() => { });
       })
     } else {
-      this.notificationService.submit(userNotification).subscribe(()=> {});
+      this.notificationService.submit(userNotification).subscribe(() => { });
     }
   }
 }

@@ -16,6 +16,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DesignationService } from 'src/app/views/basic-setup/service/designation.service';
+import { SharedService } from '../../../../../shared/shared.service'
 
 @Component({
   selector: 'app-emp-work-history',
@@ -66,7 +67,9 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
     public departmentService: DepartmentService,
     public sectionService : SectionService,
     public designationService: DesignationService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    public sharedService: SharedService
+  ) { }
 
 
   ngOnInit(): void {
@@ -178,6 +181,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
         this.headerBtnText = 'Hide From';
         this.headerText = 'Update Employment History';
         this.btnText = 'Update';
+        res.joiningDate = this.sharedService.parseDate(res.joiningDate);
+        res.releaseDate = this.sharedService.parseDate( res.releaseDate);
         const index = 0;
         const control = <FormArray>this.EmpWorkHistoryInfoForm.controls['empWorkHistoryList'];
         control.clear();
@@ -306,8 +311,35 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
 
   saveWorkHistory() {
     this.loading = true;
+
+    
+    const formattedJoiningDate = this.sharedService.formatDateOnly(this.empWorkHistoryService.empWorkHistory.joiningDate!);
+    
+    const formattedReleaseDate = this.sharedService.formatDateOnly(this.empWorkHistoryService.empWorkHistory.releaseDate!);
+
+
+        const workHistoryList = this.EmpWorkHistoryInfoForm.get("empWorkHistoryList")?.value.map((item: any) => ({
+      ...item,
+      joiningDate: this.sharedService.formatDateOnly(item.joiningDate),
+      releaseDate: this.sharedService.formatDateOnly(item.releaseDate),
+      
+    }));
+
+
+
+    // const payload = {
+    // ...this.EmpWorkHistoryInfoForm.get("empWorkHistoryList")?.value,
+    // joiningDate : formattedJoiningDate,
+    // releaseDate : formattedReleaseDate
+
+
+
+    // };
+
+    // console.log(payload)
+
     this.subscription.push(
-       this.empWorkHistoryService.saveEmpWorkHistory(this.EmpWorkHistoryInfoForm.get("empWorkHistoryList")?.value).subscribe(((res: any) => {
+       this.empWorkHistoryService.saveEmpWorkHistory(workHistoryList).subscribe(((res: any) => {
       if (res.success) {
         this.toastr.success('', `${res.message}`, {
           positionClass: 'toast-top-right',

@@ -361,11 +361,13 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
         if(res.dateOfBirth && response){
           let prlDate = new Date(res.dateOfBirth);
           prlDate.setFullYear(prlDate.getFullYear() + (response.prlAge || 0));
-          this.prlDate = prlDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+          this.prlDate = prlDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' }).replaceAll('/', '-');
 
           let retirementDate = new Date(res.dateOfBirth);
           retirementDate.setFullYear(retirementDate.getFullYear() + (response.retirmentAge || 0));
-          this.retirementDate = retirementDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+          this.retirementDate = retirementDate
+            .toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' })
+            .replaceAll('/', '-');
       }
       })
     })

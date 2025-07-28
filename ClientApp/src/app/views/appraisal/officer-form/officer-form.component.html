@@ -1,44 +1,40 @@
 <c-card>
   @if (loading==true) {
-    <div class="d-flex justify-content-center">Loading...</div>
+  <div class="d-flex justify-content-center">Loading...</div>
   } @else {
-    <c-card-header class="d-flex justify-content-between">
-      <h5>{{ formData.formName }}</h5>
+  <c-card-header class="d-flex justify-content-between">
+    <h5>{{ formData.formName }}</h5>
 
-      @if (updateRole!=appraisalRole.User) {
-        <button cButton size="sm" color="danger" (click)="goBack()">
-          <svg [cIcon]="icons.cilArrowLeft"></svg>
-        </button>
-      }
-    </c-card-header>
-    <c-card-body>
-      <form 
-      #officerForm="ngForm"
-      (submit)="saveFormData()">
-        <p-stepper>
-            @for (item of formData.sections; let sectionId=$index; track $index) {
+    @if (updateRole!=appraisalRole.User) {
+    <button cButton size="sm" color="danger" (click)="goBack()">
+      <svg [cIcon]="icons.cilArrowLeft"></svg>
+    </button>
+    }
+  </c-card-header>
+  <c-card-body>
+    <form #officerForm="ngForm" (submit)="saveFormData()">
+      <p-stepper>
+        @for (item of formData.sections; let sectionId=$index; track $index) {
 
-              @if (sectionId<=lastSection) {
-              <p-stepperPanel >
-                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback" let-ind="index">
-                  <c-card>
-                    <c-card-body [gutter]="3">
-                      <app-application-header [from]="formData.reportFrom" [to]="formData.reportTo" *ngIf="ind==0&&showHeader" [empId]="formData.empId"></app-application-header>
-                      <div class="mt-4 d-flex justify-content-center">
-                        <h5>{{item.sectionName}}</h5>
-                      </div>
-                      <hr>
-                      @if (ind==0&&showHeader&&updateRole == appraisalRole.User) {
-                        <c-row class="mt-3" [gutter]="3" [hidden]="true">
-                          <c-col md="3">
-                            <label for="empId" cLabel><strong>Employee PMS:</strong></label>
-                            <input type="text" 
-                            name="empId" 
-                            (input)="getEmpInfo()"
-                            [(ngModel)]="IdCardNo"
-                            id="empId" cFormControl>
-                          </c-col>
-                          <!--<c-col md="3">
+        @if (sectionId<=lastSection) { <p-stepperPanel>
+          <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+            let-ind="index">
+            <c-card>
+              <c-card-body [gutter]="3">
+                <app-application-header [from]="formData.reportFrom" [to]="formData.reportTo" *ngIf="ind==0&&showHeader"
+                  [empId]="formData.empId"></app-application-header>
+                <div class="mt-4 d-flex justify-content-center">
+                  <h5>{{item.sectionName}}</h5>
+                </div>
+                <hr>
+                @if (ind==0&&showHeader&&updateRole == appraisalRole.User) {
+                <c-row class="mt-3" [gutter]="3" [hidden]="true">
+                  <c-col md="3">
+                    <label for="empId" cLabel><strong>Employee PMS:</strong></label>
+                    <input type="text" name="empId" (input)="getEmpInfo()" [(ngModel)]="IdCardNo" id="empId"
+                      cFormControl>
+                  </c-col>
+                  <!--<c-col md="3">
                             <label cLabel><strong>Report Duration:</strong></label>
                             <p-calendar 
                             [style]="{height: '2.37rem'}"
@@ -49,66 +45,52 @@
                             [touchUI]="true"
                             />
                           </c-col> -->
-                        </c-row>
+                </c-row>
 
-                        <c-row class="mt-3" [gutter]="3">
-                          <c-col md="3">
-                            <label for="" cLabel>From</label>
-                            <input 
-                            type="date" 
-                            [(ngModel)]="formData.reportFrom"
-                            name="reportFrom" 
-                            id="reportFrom" cFormControl>
-                          </c-col>
-                          <c-col md="3">
-                            <label for="" cLabel class="for">To</label>
-                            <input type="date" 
-                            cFormControl 
-                            [(ngModel)]="formData.reportTo"
-                            name="reportTo" 
-                            id="reportTo">
-                          </c-col>
-                        </c-row>
+                <c-row class="mt-3" [gutter]="3">
+                  <c-col md="3">
+                    <label for="" cLabel>From</label>
+                    <p-calendar [(ngModel)]="formData.reportFrom" name="reportFrom" id="reportFrom" cFormControl
+                      dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+                      [iconDisplay]="'input'" appendTo="body" class="coreui-datepicker w-100">
+                    </p-calendar>
 
-
-                        <hr class="mb-3">
-                      }
-                      @for (field of item.fields; track $index) {
-                        <app-field
-                        [empId]="formData.empId"
-                        [(field)]="field.fieldValue"
-                        (change) = "onChange()"
-                        [fieldData]="field"
-                        [Index]="$index+1+'. '"
-                        [IsReadonly]="ActiveSection[sectionId]==false" 
-                        [fieldUniqueName]="field.fieldName+item.sectionId+field.fieldId"></app-field>
-                      }
-
-                      @if (ind==0&&showHeader&&updateRole==appraisalRole.User) {
-                        <hr>
-                        <c-row class="mt-3" [gutter]="3">
-                          <c-col md="3">
-                            <label for="reportingOfficer" cLabel><strong>Reporting Officer</strong></label>
-
-                            <c-input-group>
-                              <button color="secondary"
-                              (click)="openReportingOfficerModal()"
-                              type="button" 
-                              cTooltip="Search Employee" 
-                              cTooltipPlacement="bottom" cButton>
-                                <svg [cIcon]="icons.cilSearch"></svg>
-                              </button>
-                              <input type="text" 
-                              cFormControl
-                              readonly
-                              name="reportingOfficer"
-                              [(ngModel)]="reportingOfficerName"
-                              placeholder="Reporting Officer"
-                              id="reportingOfficer">
-                            </c-input-group>
+                  </c-col>
+                  <c-col md="3">
+                    <label for="" cLabel class="for">To</label>
+                    <p-calendar [(ngModel)]="formData.reportTo" name="reportTo" id="reportTo" cFormControl
+                      dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+                      [iconDisplay]="'input'" appendTo="body" class="coreui-datepicker w-100">
+                    </p-calendar>
+                  </c-col>
+                </c-row>
 
 
-                            <!--<select 
+                <hr class="mb-3">
+                }
+                @for (field of item.fields; track $index) {
+                <app-field [empId]="formData.empId" [(field)]="field.fieldValue" (change)="onChange()"
+                  [fieldData]="field" [Index]="$index+1+'. '" [IsReadonly]="ActiveSection[sectionId]==false"
+                  [fieldUniqueName]="field.fieldName+item.sectionId+field.fieldId"></app-field>
+                }
+
+                @if (ind==0&&showHeader&&updateRole==appraisalRole.User) {
+                <hr>
+                <c-row class="mt-3" [gutter]="3">
+                  <c-col md="3">
+                    <label for="reportingOfficer" cLabel><strong>Reporting Officer</strong></label>
+
+                    <c-input-group>
+                      <button color="secondary" (click)="openReportingOfficerModal()" type="button"
+                        cTooltip="Search Employee" cTooltipPlacement="bottom" cButton>
+                        <svg [cIcon]="icons.cilSearch"></svg>
+                      </button>
+                      <input type="text" cFormControl readonly name="reportingOfficer"
+                        [(ngModel)]="reportingOfficerName" placeholder="Reporting Officer" id="reportingOfficer">
+                    </c-input-group>
+
+
+                    <!--<select 
                             name="reportingOfficer" id="reportingOfficer"
                             cSelect
                             [(ngModel)]="formData.reportingOfficerId"
@@ -118,29 +100,22 @@
                                 <option [ngValue]="option.id">{{option.name}}</option>
                               } 
                             </select>-->
-                          </c-col>
-                          <c-col md="3">
-                            <label for="counterSignatory" cLabel><strong>Counter Signatory</strong></label>
-                            <c-input-group>
-                              <button color="secondary"
-                              (click)="openCounterSignatoryOfficerModal()"
-                              type="button" 
-                              cTooltip="Search Employee" 
-                              cTooltipPlacement="bottom" cButton>
-                                <svg [cIcon]="icons.cilSearch"></svg>
-                              </button>
-                              <input type="text" 
-                              cFormControl
-                              readonly
-                              name="counterySignatoryOfficer"
-                              [(ngModel)]="counterSignatoryOfficername"
-                              placeholder="Counter Signatory Officer"
-                              id="counterySignatoryOfficer">
-                            </c-input-group>
+                  </c-col>
+                  <c-col md="3">
+                    <label for="counterSignatory" cLabel><strong>Counter Signatory</strong></label>
+                    <c-input-group>
+                      <button color="secondary" (click)="openCounterSignatoryOfficerModal()" type="button"
+                        cTooltip="Search Employee" cTooltipPlacement="bottom" cButton>
+                        <svg [cIcon]="icons.cilSearch"></svg>
+                      </button>
+                      <input type="text" cFormControl readonly name="counterySignatoryOfficer"
+                        [(ngModel)]="counterSignatoryOfficername" placeholder="Counter Signatory Officer"
+                        id="counterySignatoryOfficer">
+                    </c-input-group>
 
 
 
-                            <!--<select 
+                    <!--<select 
                             name="counterSignatory" id="counterSignatory"
                             cSelect
                             [(ngModel)]="formData.counterSignatoryId"
@@ -150,86 +125,92 @@
                                 <option [ngValue]="option.id">{{option.name}}</option>
                               } 
                             </select>-->
-                          </c-col>
-                        </c-row>
-                      }
+                  </c-col>
+                </c-row>
+                }
 
-                      <hr>
-                      <div class="d-flex justify-content-between">
-                        @for (item of item.fields; track $index) {
-                          @if (item.fieldTypeName=="signatureDate") {
-                            <c-card class="p-1 d-flex justify-content-center align-items-center">
-                              <input [readOnly]="ActiveSection[sectionId]==false" cFormControl [(ngModel)]="item.fieldValue" type="date" name="signatureDate" id="signatureDate">
-                            </c-card>
-                          }
+                <hr>
+                <div class="d-flex justify-content-between">
+                  @for (item of item.fields; track $index) {
+                  @if (item.fieldTypeName=="signatureDate") {
+                  <c-card class="p-1 d-flex justify-content-center align-items-center">
+                    <p-calendar [(ngModel)]="item.fieldValue" name="signatureDate" id="signatureDate" cFormControl
+                      dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
+                      [iconDisplay]="'input'" appendTo="body" class="coreui-datepicker w-100"
+                      [readonlyInput]="ActiveSection[sectionId] == false"
+                      [disabled]="ActiveSection[sectionId] == false">
+                    </p-calendar>
 
-                          @if (item.fieldTypeName=="signaturePhoto") {
-                            @if (item.fieldValue==null||item.fieldValue=='') {
-                              <c-card class="p-1 d-flex justify-content-center align-items-center me-2">
-                                <button (click)="uploadSignature()" [disabled]="ActiveSection[sectionId]==false" cButton color="primary">
-                                  Signature
-                                </button>
-                              </c-card>
-                            } @else {
-                              <c-card class="p-1">
-                                <img [src]="imageUrl+'EmpSignature/'+item.fieldValue" width="150" height="52" alt="" srcset="">
-                              </c-card>
-                            }
-                          }
-                        }
+                  </c-card>
+                  }
 
-                      </div>
-                      <div class="d-flex justify-content-end mt-3">
-                        <!--<button cButton type="submit" class="me-3" [disabled]="submitLoading||!officerForm.valid">
+                  @if (item.fieldTypeName=="signaturePhoto") {
+                  @if (item.fieldValue==null||item.fieldValue=='') {
+                  <c-card class="p-1 d-flex justify-content-center align-items-center me-2">
+                    <button (click)="uploadSignature()" [disabled]="ActiveSection[sectionId]==false" cButton
+                      color="primary">
+                      Signature
+                    </button>
+                  </c-card>
+                  } @else {
+                  <c-card class="p-1">
+                    <img [src]="imageUrl+'EmpSignature/'+item.fieldValue" width="150" height="52" alt="" srcset="">
+                  </c-card>
+                  }
+                  }
+                  }
+
+                </div>
+                <div class="d-flex justify-content-end mt-3">
+                  <!--<button cButton type="submit" class="me-3" [disabled]="submitLoading||!officerForm.valid">
                           @if (submitLoading==true) {
                             <c-spinner size="sm"></c-spinner>
                           }
                           Submit</button>-->
-                        <button color="secondary" (click)="onReset()" cButton>Reset</button>
-                      </div>
-                    </c-card-body> 
-                    <c-card-footer>
-                      @if (ind==firstSection&&firstSection!=lastSection) {
-                        <div class="d-flex justify-content-end">
-                          <button cButton (click)="nextCallback.emit()" color="primary">Next</button>
-                        </div>
-                      }
-                      @if (ind==lastSection&&firstSection==lastSection) {
-                        <div class="d-flex justify-content-end">
-                          <button cButton type="submit" class="me-3" [disabled]="submitLoading||!officerForm.valid">
-                            @if (submitLoading==true) {
-                              <c-spinner size="sm"></c-spinner>
-                            }
-                            {{submitButtonText}}</button>
-                        </div>
-                      }
-                      @if (ind==lastSection&&firstSection!=lastSection){
-                        <div class="d-flex justify-content-between">
-                          <button cButton (click)="prevCallback.emit()" color="primary">Previous</button>
-                          <button cButton type="submit" class="me-3" [disabled]="submitLoading||!officerForm.valid">
-                            @if (submitLoading==true) {
-                              <c-spinner size="sm"></c-spinner>
-                            }
-                            {{submitButtonText}}</button>
-                        </div>
-                      }
+                  <button color="secondary" (click)="onReset()" cButton>Reset</button>
+                </div>
+              </c-card-body>
+              <c-card-footer>
+                @if (ind==firstSection&&firstSection!=lastSection) {
+                <div class="d-flex justify-content-end">
+                  <button cButton (click)="nextCallback.emit()" color="primary">Next</button>
+                </div>
+                }
+                @if (ind==lastSection&&firstSection==lastSection) {
+                <div class="d-flex justify-content-end">
+                  <button cButton type="submit" class="me-3" [disabled]="submitLoading||!officerForm.valid">
+                    @if (submitLoading==true) {
+                    <c-spinner size="sm"></c-spinner>
+                    }
+                    {{submitButtonText}}</button>
+                </div>
+                }
+                @if (ind==lastSection&&firstSection!=lastSection){
+                <div class="d-flex justify-content-between">
+                  <button cButton (click)="prevCallback.emit()" color="primary">Previous</button>
+                  <button cButton type="submit" class="me-3" [disabled]="submitLoading||!officerForm.valid">
+                    @if (submitLoading==true) {
+                    <c-spinner size="sm"></c-spinner>
+                    }
+                    {{submitButtonText}}</button>
+                </div>
+                }
 
-                      @if (ind>firstSection&&ind<lastSection) {
-                        <div class="d-flex justify-content-between">
-                          <button cButton (click)="prevCallback.emit()" color="primary">Previous</button>
-                          <button cButton (click)="nextCallback.emit()" color="primary">Next</button>
-                        </div>
-                      }
-                    </c-card-footer>
-                  </c-card>
-                 
-                </ng-template>
-              </p-stepperPanel>
+                @if (ind>firstSection&&ind<lastSection) { <div class="d-flex justify-content-between">
+                  <button cButton (click)="prevCallback.emit()" color="primary">Previous</button>
+                  <button cButton (click)="nextCallback.emit()" color="primary">Next</button>
+                  </div>
+                  }
+              </c-card-footer>
+            </c-card>
 
-              }
-            }
-        </p-stepper>
-      </form>
-    </c-card-body>
+          </ng-template>
+          </p-stepperPanel>
+
+          }
+          }
+      </p-stepper>
+    </form>
+  </c-card-body>
   }
 </c-card>

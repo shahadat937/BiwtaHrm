@@ -17,19 +17,20 @@ import { EmployeeListModalComponent } from '../../employee/employee-list-modal/e
 import { HttpParams } from '@angular/common/http';
 import { LeaveModel } from '../models/leave-model';
 import { LeaveDetailViewComponent } from '../manageleave/leave-detail-view/leave-detail-view.component';
+import { SharedService } from '../../../shared/shared.service'
 
 @Component({
   selector: 'app-old-leave-entry',
   templateUrl: './old-leave-entry.component.html',
   styleUrl: './old-leave-entry.component.scss'
 })
-export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
+export class OldLeaveEntryComponent implements OnInit, OnDestroy {
   baseImageUrl: string;
   subcription: Subscription = new Subscription();
   loading: boolean;
-  LeaveTypeOption:any[] = [];
-  @ViewChild("addLeaveForm",{static:true}) addLeaveForm!: NgForm;
-  empCardNo:string ;
+  LeaveTypeOption: any[] = [];
+  @ViewChild("addLeaveForm", { static: true }) addLeaveForm!: NgForm;
+  empCardNo: string;
   employeeName: string;
   defaultPhoto: string;
   employeePhoto: string;
@@ -37,11 +38,11 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
   designation: string;
   empSubs: Subscription = new Subscription();
   empReqSub: Subscription = new Subscription();
-  totalLeave:number|null;
+  totalLeave: number | null;
   CountryOption: any[] = [];
   isValidPMS: boolean;
   leaveBalances: any[] = [];
-  leaveFiles : any[] = [];
+  leaveFiles: any[] = [];
   @Input()
   leaveData: any;
   filteredLeaveBalances: any[] = [];
@@ -50,13 +51,13 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
   @Input()
   IsReadonly: boolean
   buttonTitle: string;
-  
+
   DepartmentOption: any[] = [];
   // subscription: Subscription = new Subscription();
-  subscription: Subscription[]=[]
-  selectedDepartment: number|null;
+  subscription: Subscription[] = []
+  selectedDepartment: number | null;
   leaves: any[] = [];
-  leaveStatusOptions: any [] = [];
+  leaveStatusOptions: any[] = [];
   selectedLeave: LeaveModel;
   @Input() LeaveFilterParams: any;
   @Input() CanApprove: boolean;
@@ -67,20 +68,21 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
   approverPMIS: string;
   reviewerName: string;
   approverName: string;
-  icons = {cilSearch, cilZoom}
+  icons = { cilSearch, cilZoom }
 
   constructor(
     private empBasicInfoService: EmpBasicInfoService,
     private modalService: BsModalService,
     private manageLeaveService: ManageLeaveService,
     public addLeaveService: AddLeaveService,
-    private leaveBalanceService: LeaveBalanceService, 
+    private leaveBalanceService: LeaveBalanceService,
     private toastr: ToastrService,
     private confirmService: ConfirmService,
     private authService: AuthService,
+    public sharedService: SharedService
   ) {
     this.loading = false;
-    this.empCardNo ="";
+    this.empCardNo = "";
     this.employeeName = "";
     this.totalLeave = null;
     this.isValidPMS = false;
@@ -106,18 +108,18 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.addLeaveService.getSelectedLeaveType().subscribe({
       next: option => {
-      this.LeaveTypeOption = option;
+        this.LeaveTypeOption = option;
       }
     });
-    
+
     this.getLeaves();
   }
   getLeaves() {
     let params = new HttpParams();
 
-    for(const key of Object.keys(this.LeaveFilterParams)) {
-      if(key=="Status") {
-        for(const item of this.LeaveFilterParams[key]) {
+    for (const key of Object.keys(this.LeaveFilterParams)) {
+      if (key == "Status") {
+        for (const item of this.LeaveFilterParams[key]) {
           params = params.append(key, item);
         }
         continue;
@@ -127,16 +129,16 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
 
     this.subscription.push(
       this.manageLeaveService.getOldLeaveRequest().subscribe({
-      next: response=> {
-        this.leaves = response;
-      
-      },
-      error: error=> {
-        console.log(error);
-      }
-    })
+        next: response => {
+          this.leaves = response;
+
+        },
+        error: error => {
+          console.log(error);
+        }
+      })
     )
-    
+
   }
 
   getInputEventValue(event: Event) {
@@ -144,37 +146,37 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    if(this.subcription) {
+    if (this.subcription) {
       this.subcription.unsubscribe();
     }
-    if(this.empReqSub) {
+    if (this.empReqSub) {
       this.empReqSub.unsubscribe();
     }
 
-    if(this.empSubs) {
+    if (this.empSubs) {
       this.empReqSub.unsubscribe();
     }
     this.addLeaveService.addLeaveModel = new AddLeaveModel();
   }
 
   onReviewerChange() {
-    if(this.reviewerPMIS.trim()=="") {
+    if (this.reviewerPMIS.trim() == "") {
       this.addLeaveService.addLeaveModel.reviewedBy = null;
       return;
     }
 
-    const source$ = of (this.reviewerPMIS).pipe(
+    const source$ = of(this.reviewerPMIS).pipe(
       delay(700)
     );
 
-    if(this.subcription) {
+    if (this.subcription) {
       this.subcription.unsubscribe();
     }
 
     this.subcription = source$.subscribe(data => {
       this.addLeaveService.getEmpInfoByCard(data).subscribe({
         next: response => {
-          if(response!=null) {
+          if (response != null) {
             this.addLeaveService.addLeaveModel.reviewedBy = response.id;
             this.reviewerName = [response.firstName, response.lastName].join(' ');
           } else {
@@ -190,23 +192,23 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
     })
   }
   onApproverChange() {
-    if(this.reviewerPMIS.trim()=="") {
+    if (this.reviewerPMIS.trim() == "") {
       this.addLeaveService.addLeaveModel.approvedBy = null;
       return;
     }
 
-    const source$ = of (this.approverPMIS).pipe(
+    const source$ = of(this.approverPMIS).pipe(
       delay(700)
     );
 
-    if(this.subcription) {
+    if (this.subcription) {
       this.subcription.unsubscribe();
     }
 
     this.subcription = source$.subscribe(data => {
       this.addLeaveService.getEmpInfoByCard(data).subscribe({
         next: response => {
-          if(response!=null) {
+          if (response != null) {
             this.addLeaveService.addLeaveModel.approvedBy = response.id;
             this.approverName = [response.firstName, response.lastName].join(' ');
           } else {
@@ -223,21 +225,21 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
   }
 
   openEmployeeModal() {
-    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl'  });
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl' });
 
     modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
-      if(idCardNo){
-          this.empCardNo = idCardNo;
-          this.onEmpIdChange();
+      if (idCardNo) {
+        this.empCardNo = idCardNo;
+        this.onEmpIdChange();
       }
     });
   }
 
   openReviewerModal() {
-    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, {backdrop: 'static', class: 'modal-xl'});
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl' });
 
-    modalRef.content.employeeSelected.subscribe((idCardNo:string) => {
-      if(idCardNo) {
+    modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
+      if (idCardNo) {
         this.reviewerPMIS = idCardNo;
         this.onReviewerChange();
       }
@@ -245,10 +247,10 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
   }
 
   openApproverModal() {
-    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, {backdrop: 'static', class: 'modal-xl'});
+    const modalRef: BsModalRef = this.modalService.show(EmployeeListModalComponent, { backdrop: 'static', class: 'modal-xl' });
 
-    modalRef.content.employeeSelected.subscribe((idCardNo:string) => {
-      if(idCardNo) {
+    modalRef.content.employeeSelected.subscribe((idCardNo: string) => {
+      if (idCardNo) {
         this.approverPMIS = idCardNo;
         this.onApproverChange();
       }
@@ -256,20 +258,20 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
   }
 
   onEmpIdChange() {
-    const source$ = of (this.empCardNo);
+    const source$ = of(this.empCardNo);
     const delay$ = source$.pipe(
       delay(800)
     );
 
-    if(this.empSubs) {
+    if (this.empSubs) {
       this.empSubs.unsubscribe();
     }
 
-    if(this.empReqSub) {
+    if (this.empReqSub) {
       this.empReqSub.unsubscribe();
     }
 
-    if(this.empCardNo.trim()=="") {
+    if (this.empCardNo.trim() == "") {
       this.employeeName = "";
       this.department = "";
       this.designation = "";
@@ -280,15 +282,15 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
       return;
     }
 
-    this.empSubs = delay$.subscribe(data=> {
+    this.empSubs = delay$.subscribe(data => {
       this.empReqSub = this.addLeaveService.getEmpInfoByCard(data).subscribe({
-        next: response=> {
-          if(response!=null) {
-            this.employeeName = [response.firstName,response.lastName].join(' ');
+        next: response => {
+          if (response != null) {
+            this.employeeName = [response.firstName, response.lastName].join(' ');
             this.addLeaveService.addLeaveModel.empId = response.id;
             this.isValidPMS = true;
-            if(response.empPhotoName!="") {
-              this.employeePhoto = this.imageUrl + "EmpPhoto/"+response.empPhotoName;
+            if (response.empPhotoName != "") {
+              this.employeePhoto = this.imageUrl + "EmpPhoto/" + response.empPhotoName;
             } else {
               this.employeePhoto = this.defaultPhoto;
             }
@@ -306,8 +308,8 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
             this.designation = "";
           }
         },
-        error: err=> {
-          this.isValidPMS=false;
+        error: err => {
+          this.isValidPMS = false;
           this.employeeName = "";
           this.addLeaveService.addLeaveModel.empId = null;
           // this.getLeaveAmount();
@@ -320,23 +322,23 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
 
   }
 
-  
-  onImageError(event:any) {
+
+  onImageError(event: any) {
     const target = event.target as HTMLImageElement;
     target.src = this.defaultPhoto;
   }
-  handleFile(event:any) {
+  handleFile(event: any) {
     const files: FileList = event.target.files;
-    this.addLeaveService.addLeaveModel.associatedFiles = Array.from(files); 
+    this.addLeaveService.addLeaveModel.associatedFiles = Array.from(files);
   }
-  
+
   convertToFormData(model: any, fileFields: string[] = []): FormData {
     const formData = new FormData();
     for (const key in model) {
-      if (model.hasOwnProperty(key)&&model[key]!=null) {
-        if(key=="associatedFiles") {
-          model[key].forEach((data:any)=> {
-            formData.append(key,data);
+      if (model.hasOwnProperty(key) && model[key] != null) {
+        if (key == "associatedFiles") {
+          model[key].forEach((data: any) => {
+            formData.append(key, data);
           })
           continue;
         }
@@ -347,21 +349,35 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
 
     return formData;
   }
-  
+
   onDateChange() {
     this.getWorkingDays();
   }
   getWorkingDays() {
 
-    if(this.addLeaveService.addLeaveModel.fromDate==null||this.addLeaveService.addLeaveModel.toDate==null) {
+    if (this.addLeaveService.addLeaveModel.fromDate == null || this.addLeaveService.addLeaveModel.toDate == null) {
       return;
       this.totalLeave = null;
     }
+
+    const fromDate = this.sharedService.formatDateOnly(
+      this.addLeaveService.addLeaveModel.fromDate
+        ? new Date(this.addLeaveService.addLeaveModel.fromDate)
+        : null
+    );
+
+    const toDate = this.sharedService.formatDateOnly(
+      this.addLeaveService.addLeaveModel.toDate
+        ? new Date(this.addLeaveService.addLeaveModel.toDate)
+        : null
+    );
+
+
     let params = new HttpParams();
-    params = params.set("From", this.addLeaveService.addLeaveModel.fromDate);
-    params = params.set("To", this.addLeaveService.addLeaveModel.toDate);
-    if(this.addLeaveService.addLeaveModel.leaveTypeId!=null) {
-      params = params.set("leaveTypeId",this.addLeaveService.addLeaveModel.leaveTypeId);
+    params = params.set("From", fromDate || '');
+    params = params.set("To", toDate || '');
+    if (this.addLeaveService.addLeaveModel.leaveTypeId != null) {
+      params = params.set("leaveTypeId", this.addLeaveService.addLeaveModel.leaveTypeId);
     }
     this.subcription = this.addLeaveService.getWorkingDays(params).subscribe({
       next: response => {
@@ -371,10 +387,10 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
   }
   onReset() {
     this.addLeaveForm.reset();
-    this.isValidPMS=false;
+    this.isValidPMS = false;
     this.addLeaveService.addLeaveModel = new AddLeaveModel();
     this.loading = false;
-    this.empCardNo ="";
+    this.empCardNo = "";
     this.employeeName = "";
     this.employeePhoto = this.defaultPhoto;
     this.totalLeave = null;
@@ -387,48 +403,52 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
 
   onSubmit() {
     this.loading = true;
-    let formData = this.convertToFormData(this.addLeaveService.addLeaveModel,["AssociatedFiles"]);
+
+    this.addLeaveService.addLeaveModel.fromDate = this.sharedService.formatDateOnly(this.addLeaveService.addLeaveModel.fromDate);
+    this.addLeaveService.addLeaveModel.toDate = this.sharedService.formatDateOnly(this.addLeaveService.addLeaveModel.toDate);
+
+    let formData = this.convertToFormData(this.addLeaveService.addLeaveModel, ["AssociatedFiles"]);
     formData.set('status', '3');
     formData.set('isOldLeave', 'true');
     this.addLeaveService.createLeaveRequest(formData).subscribe({
-      next: response=> {
-        if(response.success==true) {
-          this.toastr.success('',`${response.message}`, {
+      next: response => {
+        if (response.success == true) {
+          this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right'
           })
           this.onReset();
         } else {
-          this.toastr.warning('',`${response.message}`, {
+          this.toastr.warning('', `${response.message}`, {
             positionClass: 'toast-top-right'
           })
         }
       },
-      error: (error)=> {
-        this.loading=false;
+      error: (error) => {
+        this.loading = false;
         /*this.toastr.warning('',`${error}`,{
           positionClass: 'toast-top-right'
         })*/
       },
-      complete: ()=> {
-        this.loading=false;
+      complete: () => {
+        this.loading = false;
       }
     });
-    
+
     let output = '';
     formData.forEach((value, key) => {
-        output += `${key}: ${value}\n`;
+      output += `${key}: ${value}\n`;
     });
   }
 
-  onViewDetail(leaveRequestId:number) {
+  onViewDetail(leaveRequestId: number) {
 
     interface LeaveDetailViewModalConfig {
       leaveRequestId: number;
       CanApprove: boolean;
       Role: string
     }
-    const initialState:LeaveDetailViewModalConfig = {
-      leaveRequestId : leaveRequestId,
+    const initialState: LeaveDetailViewModalConfig = {
+      leaveRequestId: leaveRequestId,
       CanApprove: this.CanApprove,
       Role: this.Role
     };
@@ -441,44 +461,44 @@ export class OldLeaveEntryComponent  implements OnInit, OnDestroy{
     }
   }
 
-  onDelete(leaveRequestId:number) {
+  onDelete(leaveRequestId: number) {
 
-   this.subscription.push(
-     this.confirmService.confirm('Delete Confirmation','Are you sure?').subscribe({
-      next: response => {
-        if(response) {
-          this.loading = true;
-          this.subscription.push(
-            this.manageLeaveService.deleteLeaveRequest(leaveRequestId).subscribe({
-            next: (response) => {
-              if(response.success) {
-                this.toastr.success('',`${response.message}`, {
-                  positionClass: 'toast-top-right'
-                })
+    this.subscription.push(
+      this.confirmService.confirm('Delete Confirmation', 'Are you sure?').subscribe({
+        next: response => {
+          if (response) {
+            this.loading = true;
+            this.subscription.push(
+              this.manageLeaveService.deleteLeaveRequest(leaveRequestId).subscribe({
+                next: (response) => {
+                  if (response.success) {
+                    this.toastr.success('', `${response.message}`, {
+                      positionClass: 'toast-top-right'
+                    })
 
-                this.leaves = this.leaves.filter(item => item.leaveRequestId != leaveRequestId);
-              } else {
-                this.toastr.warning('',`${response.message}`, {
-                  positionClass: 'toast-top-right'
-                })
-              }
-            },
-            error: (err)=> {
-              console.log(err);
-              this.loading = false;
-            },
-            complete: () => {
-              this.loading = false;
-            }
-          })
-          )
-           
+                    this.leaves = this.leaves.filter(item => item.leaveRequestId != leaveRequestId);
+                  } else {
+                    this.toastr.warning('', `${response.message}`, {
+                      positionClass: 'toast-top-right'
+                    })
+                  }
+                },
+                error: (err) => {
+                  console.log(err);
+                  this.loading = false;
+                },
+                complete: () => {
+                  this.loading = false;
+                }
+              })
+            )
 
+
+          }
         }
-      }
-    })
-   )
-   
+      })
+    )
+
 
   }
 

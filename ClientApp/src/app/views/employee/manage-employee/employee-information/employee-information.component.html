@@ -163,13 +163,13 @@
                                     <th>Driving License No</th>
                                     <td>{{empPersonalInfo.drivingLicenceNo}}</td>
                                     <th>Driving License Expire Date</th>
-                                    <td>{{empPersonalInfo.drivingLicenceDate}}</td>
+                                    <td>{{empPersonalInfo.drivingLicenceDate | date: 'dd-MM-yyyy'}}</td>
                                 </tr>
                                 <tr>
                                     <th>Passport Number</th>
                                     <td>{{empPersonalInfo.passportNo}}</td>
                                     <th>Passport Expire Date</th>
-                                    <td>{{empPersonalInfo.passportExpireDate}}</td>
+                                    <td>{{empPersonalInfo.passportExpireDate | date: 'dd-MM-yyyy'}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -205,7 +205,7 @@
                                 </tr>
                                 <tr>
                                     <th>Date of Birth</th>
-                                    <td>{{item.dateOfBirth}}</td>
+                                    <td>{{item.dateOfBirth | date: 'dd-MM-yyyy'}}</td>
                                     <th>Birth Registration No</th>
                                     <td>{{item.birthRegNo}}</td>
                                 </tr>
@@ -251,7 +251,7 @@
                                 </tr>
                                 <tr>
                                     <th>Date of Birth</th>
-                                    <td>{{item.dateOfBirth}}</td>
+                                    <td>{{item.dateOfBirth | date: 'dd-MM-yyyy'}}</td>
                                     <th>Birth Registration No</th>
                                     <td>{{item.birthRegNo}}</td>
                                 </tr>
@@ -304,7 +304,7 @@
                                     <th>Office</th>
                                     <td>{{empJobDetails.officeName}}</td>
                                     <th>Joining Date</th>
-                                    <td>{{empJobDetails.joiningDate}}</td>
+                                    <td>{{empJobDetails.joiningDate | date: 'dd-MM-yyyy'}}</td>
                                 </tr>
                                 <tr>
                                     <th>Department</th>
@@ -338,9 +338,9 @@
                                 </tr>
                                 <tr>
                                     <th>PRT Date</th>
-                                    <td>{{prlDate}}</td>
+                                    <td>{{prlDate | date: 'dd-MM-yyyy'}}</td>
                                     <th>Retirment Date</th>
-                                    <td>{{retirementDate}}</td>
+                                    <td>{{retirementDate | date: 'dd-MM-yyyy'}}</td>
                                 </tr>
                                 <tr>
                                     <th>Service Status</th>
@@ -358,7 +358,7 @@
                                 </tr>
                                 <tr>
                                     <th>Current Position Joining Date</th>
-                                    <td>{{empJobDetails.currentPositionJoinDate}}</td>
+                                    <td>{{empJobDetails.currentPositionJoinDate | date: 'dd-MM-yyyy'}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -702,9 +702,9 @@
                                 </tr>
                                 <tr>
                                     <th>From Date</th>
-                                    <td>{{item.fromDate}}</td>
+                                    <td>{{item.fromDate | date: 'dd-MM-yyyy'}}</td>
                                     <th>To Date</th>
-                                    <td>{{item.toDate}}</td>
+                                    <td>{{item.toDate | date: 'dd-MM-yyyy'}}</td>
                                 </tr>
                                 <tr class="table_mergin_bottom">
                                     <th>Remark</th>

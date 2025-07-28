@@ -33,6 +33,7 @@ import { ReleaseTypeService } from '../basic-setup/service/release-type.service'
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { InputTextModule } from 'primeng/inputtext';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    CalendarModule
   ],
   providers:[
     OfficeService,

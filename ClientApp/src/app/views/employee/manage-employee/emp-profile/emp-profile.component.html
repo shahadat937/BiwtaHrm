@@ -121,7 +121,7 @@
                                     
                                     <tr>
                                         <th>Date of Birth</th>
-                                        <td *ngIf="empBasicInfo?.dateOfBirth; else emptyTd">{{empBasicInfo.dateOfBirth}}</td>
+                                        <td *ngIf="empBasicInfo?.dateOfBirth; else emptyTd">{{empBasicInfo.dateOfBirth | date: "dd-MM-yyyy"}}</td>
                                         <th>Place of Birth</th>
                                         <td *ngIf="empPersonalInfo?.placeOfBirth; else emptyTd">{{empPersonalInfo.placeOfBirth}}</td>
                                     </tr>
@@ -172,14 +172,14 @@
                                         <th>Driving License No</th>
                                         <td *ngIf="empPersonalInfo?.drivingLicenceNo; else emptyTd">{{empPersonalInfo.drivingLicenceNo}}</td>
                                         <th>Driving License Expire Date</th>
-                                        <td *ngIf="empPersonalInfo?.drivingLicenceDate; else emptyTd">{{empPersonalInfo.drivingLicenceDate}}</td>
+                                        <td *ngIf="empPersonalInfo?.drivingLicenceDate; else emptyTd">{{empPersonalInfo.drivingLicenceDate | date: "dd-MM-yyyy"}}</td>
                                     </tr>
                                     
                                     <tr>
                                         <th>Passport Number</th>
                                         <td *ngIf="empPersonalInfo?.passportNo; else emptyTd">{{empPersonalInfo.passportNo}}</td>
                                         <th>Passport Expire Date</th>
-                                        <td *ngIf="empPersonalInfo?.passportExpireDate; else emptyTd">{{empPersonalInfo.passportExpireDate}}</td>
+                                        <td *ngIf="empPersonalInfo?.passportExpireDate; else emptyTd">{{empPersonalInfo.passportExpireDate | date: "dd-MM-yyyy"}}</td>
                                     </tr>
                                     
                                 </tbody>
@@ -222,9 +222,9 @@
                                     </tr>
                                     <tr>
                                         <th>Joining Date</th>
-                                        <td *ngIf="empJobDetails?.joiningDate; else emptyTd">{{empJobDetails.joiningDate}}</td>
+                                        <td *ngIf="empJobDetails?.joiningDate; else emptyTd">{{empJobDetails.joiningDate  | date: "dd-MM-yyyy"}}</td>
                                         <th>Confirmation Date</th>
-                                        <td *ngIf="empJobDetails?.confirmationDate; else emptyTd">{{empJobDetails.confirmationDate}}</td>
+                                        <td *ngIf="empJobDetails?.confirmationDate; else emptyTd">{{empJobDetails.confirmationDate  | date: "dd-MM-yyyy"}}</td>
                                     </tr>
                                     <tr>
                                         <th>First Designation</th>
@@ -254,7 +254,7 @@
                                         <th>PRL Date</th>
                                         <td *ngIf="prlDate; else emptyTd">{{prlDate}}</td>
                                         <th>Retirement Date</th>
-                                        <td *ngIf="retirementDate; else emptyTd">{{retirementDate}}</td>
+                                        <td *ngIf="retirementDate; else emptyTd">{{retirementDate }}</td>
                                     </tr>
                                     <tr>
                                         <th>Service Status</th>
@@ -272,7 +272,7 @@
                                     </tr>
                                     <tr>
                                         <th colspan="2">Current Position Joining Date</th>
-                                        <td colspan="2" *ngIf="empJobDetails?.currentPositionJoinDate; else emptyTd">{{empJobDetails.currentPositionJoinDate}}</td>
+                                        <td colspan="2" *ngIf="empJobDetails?.currentPositionJoinDate; else emptyTd">{{empJobDetails.currentPositionJoinDate | date: "dd-MM-yyyy"}}</td>
                                     </tr>
                                 </tbody>                        
                             </table>
@@ -545,7 +545,7 @@
                                 <ng-container matColumnDef="joiningDate">
                                     <th mat-header-cell *matHeaderCellDef>Joining Date</th>
                                     <td mat-cell *matCellDef="let element">
-                                    {{ element.joiningDate }}
+                                    {{ element.joiningDate  | date: "dd-MM-yyyy"}}
                                     </td>
                                 </ng-container>
                                 
@@ -690,7 +690,7 @@
                                 <ng-container matColumnDef="dateOfBirth">
                                     <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
                                     <td mat-cell *matCellDef="let element">
-                                    {{ element.dateOfBirth }}
+                                    {{ element.dateOfBirth | date: "dd-MM-yyyy"}}
                                     </td>
                                 </ng-container>
                                 
@@ -789,7 +789,7 @@
                                 <ng-container matColumnDef="dateOfBirth">
                                     <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
                                     <td mat-cell *matCellDef="let element">
-                                    {{ element.dateOfBirth }}
+                                    {{ element.dateOfBirth | date: "dd-MM-yyyy"}}
                                     </td>
                                 </ng-container>
                                 
@@ -935,14 +935,14 @@
                                     <ng-container matColumnDef="fromDate">
                                         <th mat-header-cell *matHeaderCellDef>From Date</th>
                                         <td mat-cell *matCellDef="let element">
-                                        {{ element.fromDate }}
+                                        {{ element.fromDate | date: "dd-MM-yyyy"}}
                                         </td>
                                     </ng-container>
                                     
                                     <ng-container matColumnDef="toDate">
                                         <th mat-header-cell *matHeaderCellDef>To Date</th>
                                         <td mat-cell *matCellDef="let element">
-                                        {{ element.toDate }}
+                                        {{ element.toDate | date: "dd-MM-yyyy"}}
                                         </td>
                                     </ng-container>
                                     
@@ -1281,14 +1281,14 @@
                                 <ng-container matColumnDef="fromDate">
                                     <th mat-header-cell *matHeaderCellDef>From Date</th>
                                     <td mat-cell *matCellDef="let element">
-                                    {{ element.fromDate }}
+                                    {{ element.fromDate | date: "dd-MM-yyyy"}}
                                     </td>
                                 </ng-container>
                                 
                                 <ng-container matColumnDef="toDate">
                                     <th mat-header-cell *matHeaderCellDef>To Date</th>
                                     <td mat-cell *matCellDef="let element">
-                                    {{ element.toDate }}
+                                    {{ element.toDate | date: "dd-MM-yyyy"}}
                                     </td>
                                 </ng-container>
                                 
@@ -1516,7 +1516,7 @@
                             
                             <tr>
                                 <th>Date of Birth</th>
-                                <td *ngIf="empBasicInfo?.dateOfBirth; else emptyTd">{{empBasicInfo.dateOfBirth}}</td>
+                                <td *ngIf="empBasicInfo?.dateOfBirth; else emptyTd">{{empBasicInfo.dateOfBirth | date: "dd-MM-yyyy"}}</td>
                                 <th>Place of Birth</th>
                                 <td *ngIf="empPersonalInfo?.placeOfBirth; else emptyTd">{{empPersonalInfo.placeOfBirth}}</td>
                             </tr>
@@ -1567,14 +1567,14 @@
                                 <th>Driving License No</th>
                                 <td *ngIf="empPersonalInfo?.drivingLicenceNo; else emptyTd">{{empPersonalInfo.drivingLicenceNo}}</td>
                                 <th>Driving License Expire Date</th>
-                                <td *ngIf="empPersonalInfo?.drivingLicenceDate; else emptyTd">{{empPersonalInfo.drivingLicenceDate}}</td>
+                                <td *ngIf="empPersonalInfo?.drivingLicenceDate; else emptyTd">{{empPersonalInfo.drivingLicenceDate | date: "dd-MM-yyyy"}}</td>
                             </tr>
                             
                             <tr>
                                 <th>Passport Number</th>
                                 <td *ngIf="empPersonalInfo?.passportNo; else emptyTd">{{empPersonalInfo.passportNo}}</td>
                                 <th>Passport Expire Date</th>
-                                <td *ngIf="empPersonalInfo?.passportExpireDate; else emptyTd">{{empPersonalInfo.passportExpireDate}}</td>
+                                <td *ngIf="empPersonalInfo?.passportExpireDate; else emptyTd">{{empPersonalInfo.passportExpireDate | date: "dd-MM-yyyy"}}</td>
                             </tr>
                             
                         </tbody>
@@ -1617,9 +1617,9 @@
                             </tr>
                             <tr>
                                 <th>Joining Date</th>
-                                <td *ngIf="empJobDetails?.joiningDate; else emptyTd">{{empJobDetails.joiningDate}}</td>
+                                <td *ngIf="empJobDetails?.joiningDate; else emptyTd">{{empJobDetails.joiningDate  | date: "dd-MM-yyyy"}}</td>
                                 <th>Confirmation Date</th>
-                                <td *ngIf="empJobDetails?.confirmationDate; else emptyTd">{{empJobDetails.confirmationDate}}</td>
+                                <td *ngIf="empJobDetails?.confirmationDate; else emptyTd">{{empJobDetails.confirmationDate  | date: "dd-MM-yyyy"}}</td>
                             </tr>
                             <tr>
                                 <th>First Designation</th>
@@ -1667,7 +1667,7 @@
                             </tr>
                             <tr>
                                 <th colspan="2">Current Position Joining Date</th>
-                                <td colspan="2" *ngIf="empJobDetails?.currentPositionJoinDate; else emptyTd">{{empJobDetails.currentPositionJoinDate}}</td>
+                                <td colspan="2" *ngIf="empJobDetails?.currentPositionJoinDate; else emptyTd">{{empJobDetails.currentPositionJoinDate | date: "dd-MM-yyyy"}}</td>
                             </tr>
                         </tbody>                        
                     </table>
@@ -1940,14 +1940,14 @@
                         <ng-container matColumnDef="joiningDate">
                             <th mat-header-cell *matHeaderCellDef>Joining Date</th>
                             <td mat-cell *matCellDef="let element">
-                            {{ element.joiningDate }}
+                            {{ element.joiningDate | date: "dd-MM-yyyy" }}
                             </td>
                         </ng-container>
                         
                         <ng-container matColumnDef="releaseDate">
                             <th mat-header-cell *matHeaderCellDef>Release Date</th>
                             <td mat-cell *matCellDef="let element">
-                            {{ element.releaseDate }}
+                            {{ element.releaseDate | date: "dd-MM-yyyy" }}
                             </td>
                         </ng-container>
                         
@@ -2085,7 +2085,7 @@
                           <ng-container matColumnDef="dateOfBirth">
                             <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
                             <td mat-cell *matCellDef="let element">
-                              {{ element.dateOfBirth }}
+                              {{ element.dateOfBirth | date: "dd-MM-yyyy" }}
                             </td>
                           </ng-container>
                           
@@ -2184,7 +2184,7 @@
                         <ng-container matColumnDef="dateOfBirth">
                             <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
                             <td mat-cell *matCellDef="let element">
-                            {{ element.dateOfBirth }}
+                            {{ element.dateOfBirth | date: "dd-MM-yyyy"}}
                             </td>
                         </ng-container>
                         
@@ -2330,14 +2330,14 @@
                         <ng-container matColumnDef="fromDate">
                             <th mat-header-cell *matHeaderCellDef>From Date</th>
                             <td mat-cell *matCellDef="let element">
-                            {{ element.fromDate }}
+                            {{ element.fromDate |date: "dd-MM-yyyy"}}
                             </td>
                         </ng-container>
                         
                         <ng-container matColumnDef="toDate">
                             <th mat-header-cell *matHeaderCellDef>To Date</th>
                             <td mat-cell *matCellDef="let element">
-                            {{ element.toDate }}
+                            {{ element.toDate | date: "dd-MM-yyyy"}}
                             </td>
                         </ng-container>
                         
@@ -2676,14 +2676,14 @@
                         <ng-container matColumnDef="fromDate">
                             <th mat-header-cell *matHeaderCellDef>From Date</th>
                             <td mat-cell *matCellDef="let element">
-                            {{ element.fromDate }}
+                            {{ element.fromDate | date: "dd-MM-yyyy"}}
                             </td>
                         </ng-container>
                         
                         <ng-container matColumnDef="toDate">
                             <th mat-header-cell *matHeaderCellDef>To Date</th>
                             <td mat-cell *matCellDef="let element">
-                            {{ element.toDate }}
+                            {{ element.toDate | date: "dd-MM-yyyy"}}
                             </td>
                         </ng-container>
                         

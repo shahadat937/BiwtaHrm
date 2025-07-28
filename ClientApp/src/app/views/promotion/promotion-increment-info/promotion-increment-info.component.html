@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Transfer Posting Info</h5>
+                <h5 class="modal-title">Increment and Promotion Info</h5>
                 <button mat-mini-fab color="warn" class="close" aria-label="Close" (click)="closeModal()">
                     <mat-icon>close</mat-icon>
                 </button>
@@ -57,7 +57,7 @@
                             <label><b>Order No: </b>{{empPromotionIncrement.orderNo}}</label>
                         </c-col>
                         <c-col [md]="6">
-                            <label><b>Order Date: </b>{{empPromotionIncrement.orderDate}}</label>
+                            <label><b>Order Date: </b>{{empPromotionIncrement.orderDate | date: 'dd-MM-yyyy'}}</label>
                         </c-col>
                         <c-col [md]="6">
                             <label><b>Type: </b>{{empPromotionIncrement.promotionIncrementType}}</label>
@@ -95,7 +95,7 @@
                         </div>
                         <div *ngIf="empPromotionIncrement.approveStatus != null && empPromotionIncrement.isApproval" cRow>
                             <c-col [md]="6">
-                                <label><b>Approve Date: </b>{{empPromotionIncrement.approveDate}}</label>
+                                <label><b>Approve Date: </b>{{empPromotionIncrement.approveDate | date: 'dd-MM-yyyy'}}</label>
                             </c-col>
                             <c-col [md]="6">
                                 <label><b>Approve By: </b>{{empPromotionIncrement.approveByName}}</label>

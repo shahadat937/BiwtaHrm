@@ -10,6 +10,7 @@ import { EmpTransferPosting } from '../../model/emp-transfer-posting';
 import { EmpTransferPostingService } from '../../service/emp-transfer-posting.service';
 import { UserNotification } from '../../../../../../src/app/views/notifications/models/user-notification';
 import { NotificationService } from '../../../../../../src/app/views/notifications/service/notification.service';
+import { SharedService } from '../../../../shared/shared.service'
 
 @Component({
   selector: 'app-joining-reporting',
@@ -19,17 +20,17 @@ import { NotificationService } from '../../../../../../src/app/views/notificatio
 export class JoiningReportingComponent implements OnInit, OnDestroy {
 
   // subscription: Subscription = new Subscription();
-  subscription: Subscription[]=[]
+  subscription: Subscription[] = []
   empTransferPosting: EmpTransferPosting = new EmpTransferPosting();
   id: number = 0;
   clickedButton: string = '';
   heading: string = '';
   modalOpened: boolean = false;
-  loginEmpId : number = 0;
-  loginEmpCurrentDepartmentId : any;  
-  loginEmpCurrentSectionId : any;
-  loginEmpCurrentDesignationId : any;
-  loginEmpResponsibilityTypeId : any;
+  loginEmpId: number = 0;
+  loginEmpCurrentDepartmentId: any;
+  loginEmpCurrentSectionId: any;
+  loginEmpCurrentDesignationId: any;
+  loginEmpResponsibilityTypeId: any;
 
   @ViewChild('EmpTransferPostingForm', { static: true }) EmpTransferPostingForm!: NgForm;
 
@@ -39,9 +40,11 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
     public empJobDetailsService: EmpJobDetailsService,
     private route: ActivatedRoute,
     private bsModalRef: BsModalRef,
-    private el: ElementRef, 
+    private el: ElementRef,
     private renderer: Renderer2,
     public notificationService: NotificationService,
+    public sharedService: SharedService
+
   ) {
 
   }
@@ -64,30 +67,31 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
     this.loginEmpResponsibilityTypeId = currentUserJSON.responsibilityTypeId;
   }
 
-  handleText(){
+  handleText() {
     this.heading = this.clickedButton == 'Approve' ? 'Approve Transfer Posting Application' :
-                 this.clickedButton == 'Reject' ? 'Reject Transfer Posting Application' :
-                 this.clickedButton == 'Edit' ? 'Edit Transfer Posting Application' : '';
+      this.clickedButton == 'Reject' ? 'Reject Transfer Posting Application' :
+        this.clickedButton == 'Edit' ? 'Edit Transfer Posting Application' : '';
   }
 
   getTransferPostingInfo() {
     this.subscription.push(
-    this.empTransferPostingService.findById(this.id).subscribe((res) => {
-      if(res){
-        this.empTransferPosting = res;
-        // this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
-        this.getEmpJobDetailsByEmpIdOfTransferApproveBy( res.transferApproveById ||0 );
-        this.getEmpJobDetailsByEmpIdDeptApproveBy( res.deptReleaseById ||0 );
-        this.EmpTransferPostingForm?.form.patchValue(res);
-      }
-    })
+      this.empTransferPostingService.findById(this.id).subscribe((res) => {
+        if (res) {
+          res.joiningDate = this.sharedService.parseDate( res.joiningDate);
+          this.empTransferPosting = res;
+          // this.getEmpJobDetailsByEmpIdOfOrderOfficeBy(res.orderOfficeById || 0);
+          this.getEmpJobDetailsByEmpIdOfTransferApproveBy(res.transferApproveById || 0);
+          this.getEmpJobDetailsByEmpIdDeptApproveBy(res.deptReleaseById || 0);
+          this.EmpTransferPostingForm?.form.patchValue(res);
+        }
+      })
     )
-   
+
   }
-  
+
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.forEach(subs=>subs.unsubscribe())
+      this.subscription.forEach(subs => subs.unsubscribe())
     }
   }
 
@@ -100,38 +104,38 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
   //     }
   //   })
   // }
-  
-  getEmpJobDetailsByEmpIdOfTransferApproveBy(id: number){
-    this.subscription.push(
-       this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
-      if(res){
-        this.empTransferPosting.approveByDepartmentName = res.departmentName;
-        this.empTransferPosting.approveByDesignationName = res.designationName;
-        this.empTransferPosting.approveBySectionName = res.sectionName;
-      }
-    })
-    )
-  
-  }
-  
-  getEmpJobDetailsByEmpIdDeptApproveBy(id: number){
+
+  getEmpJobDetailsByEmpIdOfTransferApproveBy(id: number) {
     this.subscription.push(
       this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
-      if(res){
-        this.empTransferPosting.deptReleaseByDepartmentName = res.departmentName;
-        this.empTransferPosting.deptReleaseByDesignationName = res.designationName;
-        this.empTransferPosting.deptReleaseBySectionName = res.sectionName;
-      }
-    })
+        if (res) {
+          this.empTransferPosting.approveByDepartmentName = res.departmentName;
+          this.empTransferPosting.approveByDesignationName = res.designationName;
+          this.empTransferPosting.approveBySectionName = res.sectionName;
+        }
+      })
     )
-     
+
+  }
+
+  getEmpJobDetailsByEmpIdDeptApproveBy(id: number) {
+    this.subscription.push(
+      this.empJobDetailsService.findByEmpId(id).subscribe((res) => {
+        if (res) {
+          this.empTransferPosting.deptReleaseByDepartmentName = res.departmentName;
+          this.empTransferPosting.deptReleaseByDesignationName = res.designationName;
+          this.empTransferPosting.deptReleaseBySectionName = res.sectionName;
+        }
+      })
+    )
+
   }
 
 
   closeModal(): void {
     this.bsModalRef.hide();
   }
-  
+
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent): void {
     if (this.modalOpened) {
@@ -152,30 +156,39 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(joiningStatus?: boolean){
-    
+  onSubmit(joiningStatus?: boolean) {
+
     let prevJoiningStatus = this.empTransferPosting.joiningStatus;
 
     this.empTransferPostingService.cachedData = [];
-      if(joiningStatus == true || joiningStatus == false){
-        this.empTransferPosting.joiningStatus = joiningStatus;
-      }
-      else{
-        this.empTransferPosting.joiningStatus = this.empTransferPostingService.empTransferPosting.joiningStatus;
-      }
-      this.empTransferPosting.joiningReportingById = this.loginEmpId;
-      this.empTransferPosting.joiningReportingByDepartmentId = this.loginEmpCurrentDepartmentId;
-      this.empTransferPosting.joiningReportingByDesignationId = this.loginEmpCurrentDesignationId;
-      this.empTransferPosting.joiningReportingByResponsibilityTypeId = this.loginEmpResponsibilityTypeId;      
-      this.empTransferPosting.joiningReportingBySectionId = this.loginEmpCurrentSectionId;
+    if (joiningStatus == true || joiningStatus == false) {
+      this.empTransferPosting.joiningStatus = joiningStatus;
+    }
+    else {
+      this.empTransferPosting.joiningStatus = this.empTransferPostingService.empTransferPosting.joiningStatus;
+    }
+    this.empTransferPosting.joiningReportingById = this.loginEmpId;
+    this.empTransferPosting.joiningReportingByDepartmentId = this.loginEmpCurrentDepartmentId;
+    this.empTransferPosting.joiningReportingByDesignationId = this.loginEmpCurrentDesignationId;
+    this.empTransferPosting.joiningReportingByResponsibilityTypeId = this.loginEmpResponsibilityTypeId;
+    this.empTransferPosting.joiningReportingBySectionId = this.loginEmpCurrentSectionId;
 
-      this.empTransferPosting.joiningRemark = this.empTransferPostingService.empTransferPosting.joiningRemark;
-      this.empTransferPosting.joiningDate = this.empTransferPostingService.empTransferPosting.joiningDate;
-      
-      this.subscription.push(
-      this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, this.empTransferPosting).subscribe((response: any) => {
+    this.empTransferPosting.joiningRemark = this.empTransferPostingService.empTransferPosting.joiningRemark;
+    this.empTransferPosting.joiningDate = this.empTransferPostingService.empTransferPosting.joiningDate;
+    this.empTransferPosting.joiningDate = this.empTransferPostingService.empTransferPosting.joiningDate;
+
+    const formatedJoingingDate = this.sharedService.formatDateOnly(this.empTransferPostingService.empTransferPosting.joiningDate);
+
+    const payload = {
+      ...this.empTransferPosting,
+      joiningDate: formatedJoingingDate
+
+    }
+
+    this.subscription.push(
+      this.empTransferPostingService.updateEmpTransferPostingStatus(this.empTransferPosting.id, payload).subscribe((response: any) => {
         if (response.success) {
-          if(joiningStatus == true){
+          if (joiningStatus == true) {
             this.toastr.success('', `Application Approved Successfull`, {
               positionClass: 'toast-top-right',
             });
@@ -188,32 +201,32 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
             userNotification.nevigateLink = '/employee/profile';
             userNotification.forEntryId = this.empTransferPosting.id;
             userNotification.title = 'Transfer and Posting';
-            userNotification.message = 'approved you joining in '+ this.empTransferPosting.departmentName + ' department on ' + this.empTransferPosting.joiningDate;
-            this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
+            userNotification.message = 'approved you joining in ' + this.empTransferPosting.departmentName + ' department on ' + this.empTransferPosting.joiningDate;
+            this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => { }));
           }
-          else if(joiningStatus == false){
+          else if (joiningStatus == false) {
             this.toastr.error('', `Application Rejected Successfull`, {
               positionClass: 'toast-top-right',
             });
 
-             //Notification
-             const userNotification = new UserNotification();
-             userNotification.fromEmpId = this.empTransferPosting.joiningReportingById;
-             userNotification.toEmpId = this.empTransferPosting.applicationById;
-             userNotification.featurePath = 'transferPostingList';
-             userNotification.nevigateLink = '/transferPosting/transferPostingList';
-             userNotification.forEntryId = this.empTransferPosting.id;
-             userNotification.title = 'Transfer and Posting';
-             userNotification.message = 'rejected your application from Joining.';
-             this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
+            //Notification
+            const userNotification = new UserNotification();
+            userNotification.fromEmpId = this.empTransferPosting.joiningReportingById;
+            userNotification.toEmpId = this.empTransferPosting.applicationById;
+            userNotification.featurePath = 'transferPostingList';
+            userNotification.nevigateLink = '/transferPosting/transferPostingList';
+            userNotification.forEntryId = this.empTransferPosting.id;
+            userNotification.title = 'Transfer and Posting';
+            userNotification.message = 'rejected your application from Joining.';
+            this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => { }));
           }
-          else{
+          else {
             this.toastr.success('', `${response.message}`, {
               positionClass: 'toast-top-right',
             });
 
             //Notification
-            if(prevJoiningStatus != this.empTransferPosting.joiningStatus && this.empTransferPosting.joiningStatus == true){
+            if (prevJoiningStatus != this.empTransferPosting.joiningStatus && this.empTransferPosting.joiningStatus == true) {
               const userNotification = new UserNotification();
               userNotification.fromEmpId = this.empTransferPosting.joiningReportingById;
               userNotification.toEmpId = this.empTransferPosting.empId;
@@ -221,10 +234,10 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
               userNotification.nevigateLink = '/employee/profile';
               userNotification.forEntryId = this.empTransferPosting.id;
               userNotification.title = 'Transfer and Posting';
-              userNotification.message = 'approved you joining in '+ this.empTransferPosting.transferDepartmentName + ' department on ' + this.empTransferPosting.joiningDate;
-              this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
+              userNotification.message = 'approved you joining in ' + this.empTransferPosting.transferDepartmentName + ' department on ' + this.empTransferPosting.joiningDate;
+              this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => { }));
             }
-            else if(prevJoiningStatus != this.empTransferPosting.joiningStatus && this.empTransferPosting.joiningStatus == false){
+            else if (prevJoiningStatus != this.empTransferPosting.joiningStatus && this.empTransferPosting.joiningStatus == false) {
               const userNotification = new UserNotification();
               userNotification.fromEmpId = this.empTransferPosting.joiningReportingById;
               userNotification.toEmpId = this.empTransferPosting.applicationById;
@@ -233,7 +246,7 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
               userNotification.forEntryId = this.empTransferPosting.id;
               userNotification.title = 'Transfer and Posting';
               userNotification.message = 'rejected your application from Joining.';
-              this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => {}));
+              this.subscription.push(this.notificationService.submit(userNotification).subscribe((res) => { }));
             }
           }
         } else {
@@ -243,7 +256,7 @@ export class JoiningReportingComponent implements OnInit, OnDestroy {
         }
         this.closeModal();
       })
-      )
-      
+    )
+
   }
 }

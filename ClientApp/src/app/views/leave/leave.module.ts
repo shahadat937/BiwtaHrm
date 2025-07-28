@@ -18,6 +18,8 @@ import {
   SpinnerModule
 } from '@coreui/angular';
 
+import { CalendarModule } from 'primeng/calendar';
+
 import { LeaveRoutingModule } from './leave-routing.module';
 import { AddleaveComponent } from './addleave/addleave.component';
 import { ManageleaveComponent } from './manageleave/manageleave.component';
@@ -65,7 +67,8 @@ import { OldLeaveEntryComponent } from './old-leave-entry/old-leave-entry.compon
     SharedCustomModule,
     SpinnerModule,
     TableModuleN,
-    FileUploadModule
+    FileUploadModule,
+    CalendarModule
   ],providers:[
     ManageLeaveService,
     LeaveService,

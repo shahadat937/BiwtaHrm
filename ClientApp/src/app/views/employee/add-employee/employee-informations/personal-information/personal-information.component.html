@@ -335,7 +335,7 @@
         <label cLabel for="drivingLicenceDate">Driving License Expire Date<span class="text-danger"></span></label>
         <div class="input-group">
           <p-calendar id="drivingLicenceDate" name="drivingLicenceDate"
-            [(ngModel)]="empPersonalInfoService.personalInfo.drivingLicenceDate" #drivingLicenceDate="ngModel"
+            [(ngModel)]="empPersonalInfoService.personalInfo.drivingLicenceDate" #drivingLicenceDate="ngModel" [iconDisplay]="'input'"
             dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
             inputId="drivingLicenceDate" class="coreui-datepicker w-100" cFormControl appendTo="body">
           </p-calendar>
@@ -376,7 +376,7 @@
         <label cLabel for="passportExpireDate">Passport Expire Date<span class="text-danger"></span></label>
         <div class="input-group">
           <p-calendar id="passportExpireDate" name="passportExpireDate"
-            [(ngModel)]="empPersonalInfoService.personalInfo.passportExpireDate" #passportExpireDate="ngModel"
+            [(ngModel)]="empPersonalInfoService.personalInfo.passportExpireDate" #passportExpireDate="ngModel" [iconDisplay]="'input'"
             dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false"
             inputId="passportExpireDate" class="coreui-datepicker w-100" cFormControl appendTo="body">
           </p-calendar>

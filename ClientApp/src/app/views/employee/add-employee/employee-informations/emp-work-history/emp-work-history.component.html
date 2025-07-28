@@ -14,7 +14,7 @@
                                 <div class="form-group mb-2" cRow [gutter]="3">
                                     <input type="hidden" formControlName="id" />
                                     <input type="hidden" formControlName="empId" />
-<!-- 
+                                    <!-- 
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="departmentId{{i}}">Select Department</label>
                                         <select formControlName="departmentId" class="form-select" 
@@ -42,66 +42,76 @@
                                         </select>
                                     </c-col> -->
 
-                                    
+
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="departmentName{{i}}">Department<span class="text-danger">*</span></label>
+                                        <label class="col-form-label" for="departmentName{{i}}">Department<span
+                                                class="text-danger">*</span></label>
                                         <input type="text" formControlName="departmentName" class="form-control"
                                             id="departmentName{{i}}" placeholder="Enter Department Name" />
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="departmentNameBangla{{i}}">Department Bangla</label>
+                                        <label class="col-form-label" for="departmentNameBangla{{i}}">Department
+                                            Bangla</label>
                                         <input type="text" formControlName="departmentNameBangla" class="form-control"
                                             id="departmentNameBangla{{i}}" placeholder="Enter Department Name Bangla" />
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="sectionName{{i}}">Section</label>
                                         <input type="text" formControlName="sectionName" class="form-control"
                                             id="sectionName{{i}}" placeholder="Enter Section Name" />
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="sectionNameBangla{{i}}">Section Bangla</label>
+                                        <label class="col-form-label" for="sectionNameBangla{{i}}">Section
+                                            Bangla</label>
                                         <input type="text" formControlName="sectionNameBangla" class="form-control"
                                             id="sectionNameBangla{{i}}" placeholder="Enter Section Name Bangla" />
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="designationName{{i}}">Designation</label>
                                         <input type="text" formControlName="designationName" class="form-control"
                                             id="designationName{{i}}" placeholder="Enter Designation Name" />
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="designationNameBangla{{i}}">Designation Bangla</label>
+                                        <label class="col-form-label" for="designationNameBangla{{i}}">Designation
+                                            Bangla</label>
                                         <input type="text" formControlName="designationNameBangla" class="form-control"
-                                            id="designationNameBangla{{i}}" placeholder="Enter Designation Name Bangla" />
+                                            id="designationNameBangla{{i}}"
+                                            placeholder="Enter Designation Name Bangla" />
                                     </c-col>
-                                    
-                                    
+
+
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="workPlace{{i}}">Work Place</label>
                                         <input type="text" formControlName="workPlace" class="form-control"
                                             id="workPlace{{i}}" placeholder="Enter Work Place" />
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="workPlaceBangla{{i}}">Work Place Bangla</label>
+                                        <label class="col-form-label" for="workPlaceBangla{{i}}">Work Place
+                                            Bangla</label>
                                         <input type="text" formControlName="workPlaceBangla" class="form-control"
                                             id="workPlaceBangla{{i}}" placeholder="Enter Work Place Bangla" />
                                     </c-col>
 
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="joiningDate{{i}}">Joining Date</label>
-                                        <input type="date" formControlName="joiningDate" class="form-control"
-                                            id="joiningDate{{i}}" />
+                                        <p-calendar formControlName="joiningDate" id="joiningDate{{i}}" [iconDisplay]="'input'"
+                                            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                                            [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                                        </p-calendar>
                                     </c-col>
-                                    
+
                                     <c-col [md]="4">
                                         <label class="col-form-label" for="releaseDate{{i}}">Release Date</label>
-                                        <input type="date" formControlName="releaseDate" class="form-control"
-                                            id="releaseDate{{i}}" />
+                                        <p-calendar formControlName="releaseDate" id="releaseDate{{i}}" [iconDisplay]="'input'"
+                                            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                                            [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                                        </p-calendar>
                                     </c-col>
 
                                     <c-col [md]="4">
@@ -128,14 +138,15 @@
                 <c-col [xs]="12">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <button [disabled]="loading" [disabled]="EmpWorkHistoryInfoForm.invalid" cButton class="me-1"
-                                color="primary" type="submit">
+                            <button [disabled]="loading" [disabled]="EmpWorkHistoryInfoForm.invalid" cButton
+                                class="me-1" color="primary" type="submit">
                                 <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
                                 {{ btnText }}
                             </button>
                         </div>
                         <div>
-                            <button cButton color="danger" class="text-light" (click)="cancel()" type="button">Cancel</button>
+                            <button cButton color="danger" class="text-light" (click)="cancel()"
+                                type="button">Cancel</button>
                         </div>
                     </div>
                 </c-col>
@@ -151,69 +162,68 @@
     <c-card-body>
         <div class="example-header">
             <mat-form-field>
-              <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here.." />
-              <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
-                (click)="filter.value = ''; applyFilter('')"></button>
+                <input matInput #filter (keyup)="applyFilter(filter.value)" placeholder="Search Here.." />
+                <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
+                    (click)="filter.value = ''; applyFilter('')"></button>
             </mat-form-field>
-          </div>
-          <div class="mat-elevation-z8 table-responsive">
+        </div>
+        <div class="mat-elevation-z8 table-responsive">
             <table mat-table [dataSource]="dataSource">
-              <ng-container matColumnDef="slNo">
-                <th mat-header-cell *matHeaderCellDef>SL</th>
-                <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-              </ng-container>
-              <ng-container matColumnDef="department">
-                <th mat-header-cell *matHeaderCellDef>Department</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.departmentName }}
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="section">
-                <th mat-header-cell *matHeaderCellDef>Section</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.sectionName }}
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="designation">
-                <th mat-header-cell *matHeaderCellDef>Designation</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.designationName }}
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="workPlace">
-                <th mat-header-cell *matHeaderCellDef>Work Place</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.workPlace }}
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="joiningDate">
-                <th mat-header-cell *matHeaderCellDef>Joining Date</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.joiningDate }}
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="releaseDate">
-                <th mat-header-cell *matHeaderCellDef>Release Date</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.releaseDate }}
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="Action">
-                <th mat-header-cell *matHeaderCellDef>Action</th>
-                <td mat-cell *matCellDef="let element">
-                    <button class="custom-button" type="button" (click)="find(element.id)">
-                        <svg cIcon name="cilPencil"></svg>
-                    </button>
-                    <button class="custom-button" type="button" (click)="delete(element)">
-                        <svg cIcon name="cilTrash"></svg>
-                    </button>
-                </td>
-              </ng-container>
-      
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                <ng-container matColumnDef="slNo">
+                    <th mat-header-cell *matHeaderCellDef>SL</th>
+                    <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                </ng-container>
+                <ng-container matColumnDef="department">
+                    <th mat-header-cell *matHeaderCellDef>Department</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.departmentName }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="section">
+                    <th mat-header-cell *matHeaderCellDef>Section</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.sectionName }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="designation">
+                    <th mat-header-cell *matHeaderCellDef>Designation</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.designationName }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="workPlace">
+                    <th mat-header-cell *matHeaderCellDef>Work Place</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.workPlace }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="joiningDate">
+                    <th mat-header-cell *matHeaderCellDef>Joining Date</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.joiningDate | date: 'dd-MM-yyyy'}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="releaseDate">
+                    <th mat-header-cell *matHeaderCellDef>Release Date</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.releaseDate | date: 'dd-MM-yyyy'}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button class="custom-button" type="button" (click)="find(element.id)">
+                            <svg cIcon name="cilPencil"></svg>
+                        </button>
+                        <button class="custom-button" type="button" (click)="delete(element)">
+                            <svg cIcon name="cilTrash"></svg>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
-          </div>
+        </div>
     </c-card-body>
 </c-card>
-

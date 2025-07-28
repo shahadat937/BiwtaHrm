@@ -19,6 +19,7 @@ import { RoleFeatureService } from '../../featureManagement/service/role-feature
 import { PaginatorModel } from '../../../../../src/app/core/models/paginator-model';
 import { DepartmentService } from '../../../../../src/app/views/basic-setup/service/department.service';
 import { SectionService } from '../../../../../src/app/views/basic-setup/service/section.service';
+import { SharedService } from '../../../shared/shared.service';
 
 @Component({
   selector: 'app-manage-form',
@@ -68,6 +69,7 @@ export class ManageFormComponent implements OnInit, OnDestroy {
     private roleFeatureService: RoleFeatureService,
     public departmentService: DepartmentService,
     public sectionService : SectionService,
+    public sharedService: SharedService
   ) {
     this.officerFormId = environment.officerFormId;
     this.staffFormId = environment.staffFormId;
@@ -150,8 +152,8 @@ export class ManageFormComponent implements OnInit, OnDestroy {
 
   onDateSelect(){
     if(this.reportFrom && this.reportTo){
-      this.filters.reportFrom = this.reportFrom;
-      this.filters.reportTo = this.reportTo;
+      this.filters.reportFrom = this.sharedService.formatDateOnly(this.reportFrom);
+      this.filters.reportTo = this.sharedService.formatDateOnly(this.reportTo);
       this.getFormRecord();
     }
   }

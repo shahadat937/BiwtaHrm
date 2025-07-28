@@ -45,7 +45,7 @@
                         <c-row class="mt-3">
                             <c-col md="4">
                                 <div style="font-size:1.2rem" class="border-bottom border-secondary">
-                                    {{formData.reportFrom.split('T')[0]}}
+                                    {{formData.reportFrom.split('T')[0] | date: "dd/MM/yyyy"}}
                                 </div>
                             </c-col>
                             <c-col md="1">
@@ -55,7 +55,7 @@
                             </c-col>
                             <c-col md="4">
                                 <div style="font-size:1.2rem" class="border-bottom border-secondary">
-                                    {{formData.reportTo.split('T')[0]}}
+                                    {{formData.reportTo.split('T')[0] | date: "dd/MM/yyyy"}}
                                 </div>
                             </c-col>
                             <c-col>
@@ -114,9 +114,9 @@
                     <div>{{department}}</div>
                 </div>
                 <div class="formDuration">
-                    <div>{{formData.reportFrom|date}}</div>
+                    <div>{{formData.reportFrom | date: "dd/MM/yyyy"}}</div>
                     <h5 style="flex-grow: 1; padding-right: 10px;">To</h5>
-                    <div>{{formData.reportTo|date}}</div>
+                    <div>{{formData.reportTo | date: "dd/MM/yyyy"}}</div>
                     <p style="flex-grow:2;">Annual/Special Report</p>
                 </div>
 

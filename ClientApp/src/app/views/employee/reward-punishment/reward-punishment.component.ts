@@ -11,6 +11,7 @@ import { SelectedModel } from 'src/app/core/models/selectedModel';
 import { EmpTransferPostingService } from '../../transferPosting/service/emp-transfer-posting.service';
 import { EmpJobDetailsService } from '../service/emp-job-details.service';
 import { EmployeeListModalComponent } from '../employee-list-modal/employee-list-modal.component';
+import { SharedService } from '../../../shared/shared.service'
 
 @Component({
   selector: 'app-reward-punishment',
@@ -47,6 +48,7 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
     private el: ElementRef, 
     private renderer: Renderer2,
     private modalService: BsModalService,
+     public sharedService: SharedService
   ) {
 
   }
@@ -54,7 +56,6 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   icons = { cilArrowLeft, cilPlus, cilBell, cilSearch };
 
   ngOnInit(): void {
-    console.log(this.id)
     this.initaialRewardPunishment();
     this.handleText();
     this.getRewardPunishmentInfo();
@@ -88,6 +89,8 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
      this.empRewardPunishmentService.findById(this.id).subscribe((res) => {
       if(res){
         this.isValidEmp = true;
+        res.orderDate = this.sharedService.parseDate(res.orderDate)
+        res.withdrawDate = this.sharedService.parseDate(res.withdrawDate)
         // this.getEmpInfoByIdCardNo(res.empIdCardNo);
         this.getWithdrawAndPriorityStatus(res.rewardPunishmentTypeId);
         this.EmpRewardPunishmentFrom?.form.patchValue(res);
@@ -248,11 +251,24 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm): void {
     this.empRewardPunishmentService.cachedData = [];
+    const formatedOrderDate = this.sharedService.formatDateOnly(this.empRewardPunishmentService.empRewardPunishment.orderDate)
+    const formatedWithdrawDate = this.sharedService.formatDateOnly(this.empRewardPunishmentService.empRewardPunishment.withdrawDate)
+
     const id = form.value.id;
-    console.log(form.value)
+
+       const payload = {
+      ...form.value,
+      orderDate: formatedOrderDate,
+      withdrawDate: formatedWithdrawDate
+
+    };
+
     const action$ = id
-      ? this.empRewardPunishmentService.updateEmpRewardPunishment(id, form.value)
-      : this.empRewardPunishmentService.saveEmpRewardPunishment(form.value);
+      ? this.empRewardPunishmentService.updateEmpRewardPunishment(id, payload)
+      : this.empRewardPunishmentService.saveEmpRewardPunishment(payload);
+    // const action$ = id
+    //   ? this.empRewardPunishmentService.updateEmpRewardPunishment(id, form.value)
+    //   : this.empRewardPunishmentService.saveEmpRewardPunishment(form.value);
 
     
     this.subscription.push(

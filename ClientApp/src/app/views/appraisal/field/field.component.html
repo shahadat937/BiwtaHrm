@@ -59,7 +59,8 @@
         }
         {{fieldData.description}}
     } @else {
-        <c-row class="mt-2"  [gutter]="3">
+        @if(fieldData.htmlInputType !=="date"){
+            <c-row class="mt-2"  [gutter]="3">
             <c-col md="4">
                 <label class="font-weight-bold" cLabel><strong>{{Index+fieldData.fieldName}}:</strong></label>
             </c-col>
@@ -79,6 +80,38 @@
                 }
             </c-col>
         </c-row>
+        }
+        @else{
+            <c-row class="mt-2"  [gutter]="3">
+            <c-col md="4">
+                <label class="font-weight-bold" cLabel><strong>{{Index+fieldData.fieldName}}:</strong></label>
+            </c-col>
+            <c-col md="4">
+
+                  <p-calendar
+                    [name]="fieldUniqueName"
+                    [id]="fieldUniqueName"
+                    [(ngModel)]="field"
+                    #fieldRef="ngModel"
+                    (onSelect)="onFieldChange($event)"
+                    [readonlyInput]="IsReadonly"
+                    [disabled]="IsReadonly"
+                    [required]="fieldData.isRequired"
+                    dateFormat="dd/mm/yy"
+                    placeholder="dd/mm/yyyy"
+                    [showIcon]="true"
+                    [showOnFocus]="false"
+                    [iconDisplay]="'input'"
+                    appendTo="body"
+                    class="coreui-datepicker w-100"
+                    cFormControl>
+                </p-calendar>
+                @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly){
+                    <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
+                }
+            </c-col>
+        </c-row>
+        }
     }
 
 } @else if(fieldData.htmlTagName=="textarea") {
@@ -106,14 +139,22 @@
             <label cLabel><strong>{{Index+fieldData.fieldName}}: </strong></label>
         </c-col>
         <c-col md="2">
-            <input [name]="fieldUniqueName" 
-            [readOnly]="IsReadonly"
+         <p-calendar
             [id]="fieldUniqueName"
-            [(ngModel)]="this.fieldData.childFields[0].fieldValue"
-            #fieldRef = "ngModel"
-            (change)="onFieldChange($event)"
-            [type]="fieldData.childFields[0].htmlInputType"
-            [required]="fieldData.isRequired" cFormControl>
+            [name]="fieldUniqueName"
+            [(ngModel)]="fieldData.childFields[0].fieldValue"
+            [readonlyInput]="IsReadonly"
+            [required]="fieldData.isRequired"
+            [disabled]="IsReadonly"
+            [showIcon]="true"
+            [showOnFocus]="false"
+            [iconDisplay]="'input'"
+            dateFormat="dd/mm/yy"
+            placeholder="dd/mm/yyyy"
+            (onSelect)="onFieldChange($event)"
+            class="coreui-datepicker w-100"
+            cFormControl>
+            </p-calendar>
                 
             @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly){
                 <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
@@ -123,14 +164,26 @@
             To
         </c-col>
         <c-col md="2">
-            <input [name]="fieldUniqueName" 
-            [readOnly]="IsReadonly"
-            [id]="fieldUniqueName"
-            [(ngModel)]="this.fieldData.childFields[1].fieldValue"
-            #fieldRef = "ngModel"
-            (change)="onFieldChange($event)"
-            [type]="fieldData.childFields[1].htmlInputType"
-            [required]="fieldData.isRequired" cFormControl>
+            <p-calendar
+                [name]="fieldUniqueName"
+                [id]="fieldUniqueName"
+                [(ngModel)]="fieldData.childFields[1].fieldValue"
+                #fieldRef="ngModel"
+                (onSelect)="onFieldChange($event)"
+                [readonlyInput]="IsReadonly"
+                [disabled]="IsReadonly"
+                [required]="fieldData.isRequired"
+                dateFormat="dd/mm/yy"
+                placeholder="dd/mm/yyyy"
+                [showIcon]="true"
+                [showOnFocus]="false"
+                [iconDisplay]="'input'"
+                appendTo="body"
+                class="coreui-datepicker w-100"
+                cFormControl>
+                </p-calendar>
+
+
                 
             @if (fieldRef.invalid&&fieldRef.touched&&fieldData.isRequired&&!IsReadonly){
                 <div class="text-left text-danger">{{fieldData.fieldName}} is required</div>
@@ -201,8 +254,8 @@
                     <tr>
                         <td>{{ job.departmentName }}</td>
                         <td>{{ job.designationName }}</td>
-                        <td>{{ job.joiningDate | date }}</td>
-                        <td>{{ job.releaseDate | date }}</td>
+                        <td>{{ job.joiningDate | date: "dd/MM/YYYY" }}</td>
+                        <td>{{ job.releaseDate | date: "dd/MM/YYYY" }}</td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -248,8 +301,8 @@
                     <tr>
                         <td>{{ training.trainingName }}</td>
                         <td>{{ training.instituteName }}</td>
-                        <td>{{ training.fromDate }}</td>
-                        <td>{{ training.toDate }}</td>
+                        <td>{{ training.fromDate | date: "dd/MM/YYYY" }}</td>
+                        <td>{{ training.toDate | date: "dd/MM/YYYY"}}</td>
                     </tr>
                 </ng-template>
             </p-table>

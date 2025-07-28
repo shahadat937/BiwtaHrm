@@ -187,14 +187,8 @@
               <button cButton [disabled]="IsReadonly" type="button" color="secondary" (click)="openEmployeeModal()">
                 <svg [cIcon]="icons.cilSearch"></svg>
               </button>
-              <input type="text"
-              [readOnly]="IsReadonly"
-              name="empCardNo" 
-              #Pms = "ngModel"
-              placeholder="Enter PMIS"
-              [(ngModel)]="empCardNo" 
-              cFormControl id="employeeId" 
-              (input)="onEmpIdChange()"/>
+              <input type="text" [readOnly]="IsReadonly" name="empCardNo" #Pms="ngModel" placeholder="Enter PMIS"
+                [(ngModel)]="empCardNo" cFormControl id="employeeId" (input)="onEmpIdChange()" />
             </c-input-group>
           </c-col>
         </c-row>
@@ -219,103 +213,80 @@
             </div>
             <div *ngIf="!IsReadonly" class="mt-4">
               <h5 class="mb-3">Leave Associate File Upload</h5>
-              <input 
-              multiple
-              type="file"
-              (change)="handleFile($event)"
-              name="associatedFiles"
-              cFormControl />
+              <input multiple type="file" (change)="handleFile($event)" name="associatedFiles" cFormControl />
             </div>
             <div *ngIf="IsReadonly" class="mt-4" cListGroup>
               <h5>Leave Associated Files</h5>
               @for (file of leaveFiles; track $index) {
-                <a cListGroupItem target="_blank" [href]="baseImageUrl+'/leaveFile/'+file.filePath">
-                  {{file.fileTitle}}
-                  <!--<button (click)="test($event)" class="custom-button">
+              <a cListGroupItem target="_blank" [href]="baseImageUrl+'/leaveFile/'+file.filePath">
+                {{file.fileTitle}}
+                <!--<button (click)="test($event)" class="custom-button">
                     X
                   </button>-->
-                </a>
+              </a>
               }
             </div>
           </c-col>
           <c-col>
             <c-row class="mt-5 ms-md-5" [gutter]="3">
               <c-col md="6">
-                  <label cLabel for="leaveType">Leave Type<span class="text-danger">*</span></label>
-                  <select 
-                  required
-                  name="leaveTypeId"
-                  #leaveType = "ngModel"
-                  (change)="getLeaveAmount()"
-                  [(ngModel)]="this.addLeaveService.addLeaveModel.leaveTypeId"
-                  #leavType = "ngModel"
-                  cSelect 
-                  cFormControl id="leaveType">
-                    <option [ngValue]="null" selected>Select Leave Type</option>
-                    @for (leaveType of LeaveTypeOption; track $index) {
-                      <option [ngValue]="leaveType.id">{{leaveType.name}}</option>
-                    }
-                  </select>
-                  @if (leaveType.invalid&&leaveType.touched) {
-                    <div class="text-left text-danger">Leave Type is required</div>
+                <label cLabel for="leaveType">Leave Type<span class="text-danger">*</span></label>
+                <select required name="leaveTypeId" #leaveType="ngModel" (change)="getLeaveAmount()"
+                  [(ngModel)]="this.addLeaveService.addLeaveModel.leaveTypeId" #leavType="ngModel" cSelect cFormControl
+                  id="leaveType">
+                  <option [ngValue]="null" selected>Select Leave Type</option>
+                  @for (leaveType of LeaveTypeOption; track $index) {
+                  <option [ngValue]="leaveType.id">{{leaveType.name}}</option>
                   }
+                </select>
+                @if (leaveType.invalid&&leaveType.touched) {
+                <div class="text-left text-danger">Leave Type is required</div>
+                }
               </c-col>
               <c-col [md]="6">
                 <label cLabel for="startDate">Start Date<span class="text-danger">*</span></label>
-                <input type="date" 
-                required
-                #startDate = "ngModel"
-                (change)="onDateChange()"
-                name="fromDate"
-                [(ngModel)]="this.addLeaveService.addLeaveModel.fromDate"
-                cFormControl id="startDate" />
+                <p-calendar [(ngModel)]="calendarFromDate" name="fromDate" #startDate="ngModel"
+                  required (onSelect)="onDateChange()" id="startDate" cFormControl dateFormat="dd/mm/yy"
+                  placeholder="dd/mm/yyyy" [showIcon]="true" [showOnFocus]="false" [iconDisplay]="'input'"
+                  class="coreui-datepicker w-100" appendTo="body">
+                </p-calendar>
+
                 @if(startDate.invalid && startDate.touched) {
-                  <div class="text-left text-danger">Start Date is required</div>
+                <div class="text-left text-danger">Start Date is required</div>
                 }
               </c-col>
               <c-col [md]="6">
                 <label cLabel for="endDate">End Date<span class="text-danger">*</span></label>
-                <input type="date" 
-                required
-                (change)="onDateChange()"
-                name="toDate"
-                #endDate = "ngModel"
-                [(ngModel)]="this.addLeaveService.addLeaveModel.toDate"
-                cFormControl id="endDate" />
+                <p-calendar [(ngModel)]="calendarToDate" name="toDate" #endDate="ngModel" required
+                  (onSelect)="onDateChange()" id="endDate" cFormControl dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy"
+                  [showIcon]="true" [showOnFocus]="false" [iconDisplay]="'input'" class="coreui-datepicker w-100"
+                  appendTo="body">
+                </p-calendar>
+
 
                 @if(endDate.invalid&&endDate.touched) {
-                  <div class="text-left text-danger">End Date is required</div>
+                <div class="text-left text-danger">End Date is required</div>
                 }
               </c-col>
               <c-col [md]="6">
                 <label cLabel for="totalLeaveDays">Total Leave</label>
-                <input type="text" 
-                readonly
-                [(ngModel)] = "totalLeave"
-                name="totalLeaveDays" 
-                cFormControl id="totalLeaveDays" />
+                <input type="text" readonly [(ngModel)]="totalLeave" name="totalLeaveDays" cFormControl
+                  id="totalLeaveDays" />
               </c-col>
               <c-col [md]="6">
                 <label cLabel for="leavePurpose">Leave Purpose<span class="text-danger">*</span></label>
-                <textarea type="text"
-                rows="1"
-                required
-                #leavePurpose = "ngModel"
-                name="leavePurpose" 
-                [(ngModel)]="this.addLeaveService.addLeaveModel.leavePurpose"
-                cFormControl id="leavePurpose"></textarea>
+                <textarea type="text" rows="1" required #leavePurpose="ngModel" name="leavePurpose"
+                  [(ngModel)]="this.addLeaveService.addLeaveModel.leavePurpose" cFormControl
+                  id="leavePurpose"></textarea>
 
                 @if(leavePurpose.invalid&&leavePurpose.touched) {
-                  <div class="text-left text-danger">Leave Purpose is required</div>
+                <div class="text-left text-danger">Leave Purpose is required</div>
                 }
               </c-col>
               <c-col [md]="6">
                 <label cLabel for="remarks">Remarks</label>
-                <input
-                type="text" 
-                name="remark" 
-                [(ngModel)]="this.addLeaveService.addLeaveModel.remark"
-                cFormControl id="remarks" />
+                <input type="text" name="remark" [(ngModel)]="this.addLeaveService.addLeaveModel.remark" cFormControl
+                  id="remarks" />
               </c-col>
             </c-row>
             <div class="mt-4 ms-md-5" cCollapse [visible]="addLeaveService.addLeaveModel.isForeignLeave">
@@ -323,46 +294,32 @@
               <c-row [gutter]="3">
                 <c-col [md]="6">
                   <label cLabel for="country">Country</label>
-                  <select
-                  [disabled]="IsReadonly" 
-                  name="countryId"
-                  [(ngModel)]="this.addLeaveService.addLeaveModel.countryId"
-                  cSelect 
-                  cFormControl id="country">
+                  <select [disabled]="IsReadonly" name="countryId"
+                    [(ngModel)]="this.addLeaveService.addLeaveModel.countryId" cSelect cFormControl id="country">
                     <option [ngValue]="null">Select Country</option>
                     @for (country of CountryOption; track $index) {
-                      <option [ngValue]="country.id">{{country.name}}</option>
+                    <option [ngValue]="country.id">{{country.name}}</option>
                     }
                   </select>
                 </c-col>
                 <c-col [md]="6">
                   <label cLabel for="purpose">Purpose</label>
-                  <input type="text"
-                  [readOnly]="IsReadonly"
-                  name="foreignLeavePurpose"
-                  [(ngModel)] = "this.addLeaveService.addLeaveModel.foreignLeavePurpose"
-                  cFormControl id="purpose" />
+                  <input type="text" [readOnly]="IsReadonly" name="foreignLeavePurpose"
+                    [(ngModel)]="this.addLeaveService.addLeaveModel.foreignLeavePurpose" cFormControl id="purpose" />
                 </c-col>
                 <c-col [md]="6">
                   <label cLabel for="accompanyBy">Accompany by</label>
-                  <input
-                  [readOnly]="IsReadonly"
-                  type="text" 
-                  name="accompanyBy"
-                  [(ngModel)]="this.addLeaveService.addLeaveModel.accompanyBy"
-                  cFormControl 
-                  id="accompanyBy" />
+                  <input [readOnly]="IsReadonly" type="text" name="accompanyBy"
+                    [(ngModel)]="this.addLeaveService.addLeaveModel.accompanyBy" cFormControl id="accompanyBy" />
                 </c-col>
               </c-row>
             </div>
             <c-row class="mt-3">
               <c-col md="3">
-              </c-col> 
+              </c-col>
               <c-col md="9">
-                <p-table [value]="filteredLeaveBalances"
-                [scrollable]="true" 
-                scrollHeight="15rem"
-                styleClass="p-datatable-striped">
+                <p-table [value]="filteredLeaveBalances" [scrollable]="true" scrollHeight="15rem"
+                  styleClass="p-datatable-striped">
                   <ng-template pTemplate="header">
                     <tr>
                       <th>Type</th>
@@ -371,7 +328,7 @@
                       <th>Balance</th>
                       <th>Applied</th>
                     </tr>
-                  </ng-template> 
+                  </ng-template>
                   <ng-template pTemplate="body" let-leave>
                     <tr>
                       <td>{{leave.leaveTypeName}}</td>
@@ -389,64 +346,34 @@
               <label cCol cLabel="col" sm="2">Reviewer: </label>
               <c-col md="4">
                 <c-input-group>
-                  <button color="secondary"
-                  [disabled]="IsReadonly"
-                  (click)="openReviewerModal()"
-                  type="button" 
-                  cTooltip="Search Employee" 
-                  cTooltipPlacement="bottom" cButton>
+                  <button color="secondary" [disabled]="IsReadonly" (click)="openReviewerModal()" type="button"
+                    cTooltip="Search Employee" cTooltipPlacement="bottom" cButton>
                     <svg [cIcon]="icons.cilSearch"></svg>
                   </button>
-                  <input type="text" 
-                  cFormControl
-                  readonly
-                  #reviewer = "ngModel"
-                  [(ngModel)] = "reviewerName"
-                  name="reviewedBy"
-                  (input)="onReviewerChange()"
-                  placeholder="Reviewer Name"
-                  id="reviewedBy">
+                  <input type="text" cFormControl readonly #reviewer="ngModel" [(ngModel)]="reviewerName"
+                    name="reviewedBy" (input)="onReviewerChange()" placeholder="Reviewer Name" id="reviewedBy">
                 </c-input-group>
               </c-col>
               <c-col md="4">
-                <input type="text"
-                [readOnly]="IsReadonly"
-                [(ngModel)]="addLeaveService.addLeaveModel.reviewerRemark"
-                name="reviewerRemark" 
-                cFormControl
-                placeholder="Remark"
-                id="reviewerRemark">
+                <input type="text" [readOnly]="IsReadonly" [(ngModel)]="addLeaveService.addLeaveModel.reviewerRemark"
+                  name="reviewerRemark" cFormControl placeholder="Remark" id="reviewerRemark">
               </c-col>
             </c-row>
             <c-row class="mt-3 ms-md-5 mb-3" [gutter]="3">
               <label cCol cLabel="col" sm="2">Approver: </label>
               <c-col md="4">
                 <c-input-group>
-                  <button color="secondary" 
-                  [disabled]="IsReadonly"
-                  (click)="openApproverModal()"
-                  type="button" 
-                  cTooltip="Search Employee" 
-                  cTooltipPlacement="bottom" cButton>
+                  <button color="secondary" [disabled]="IsReadonly" (click)="openApproverModal()" type="button"
+                    cTooltip="Search Employee" cTooltipPlacement="bottom" cButton>
                     <svg [cIcon]="icons.cilSearch"></svg>
                   </button>
-                  <input type="text"
-                  readonly
-                  [(ngModel)]="approverName"
-                  placeholder="Approver Name"
-                  cFormControl
-                  name="approvedBy"
-                  id="approvedBy">
+                  <input type="text" readonly [(ngModel)]="approverName" placeholder="Approver Name" cFormControl
+                    name="approvedBy" id="approvedBy">
                 </c-input-group>
               </c-col>
               <c-col md="4">
-                <input type="text"
-                [readOnly]="IsReadonly"
-                [(ngModel)]="addLeaveService.addLeaveModel.approverRemark"
-                name="reviewerRemark" 
-                cFormControl
-                placeholder="Remark"
-                id="reviewerRemark">
+                <input type="text" [readOnly]="IsReadonly" [(ngModel)]="addLeaveService.addLeaveModel.approverRemark"
+                  name="reviewerRemark" cFormControl placeholder="Remark" id="reviewerRemark">
               </c-col>
             </c-row>
             <!-- <c-row clas="mt-2 ms-3">
@@ -467,20 +394,16 @@
               </p-fileUpload>
             </c-row> -->
             <div class="mt-3 d-flex justify-content-end">
-              <button 
-              cButton 
-              type="submit" 
-              color="primary" 
-              [disabled]="addLeaveForm.invalid||loading||!isValidPMS||(this.addLeaveService.addLeaveModel.isOldLeave!=true&&(leaveData!=null&&leaveData.status!=leaveStatus.Pending))"
-              class="me-2">
-              <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
-              {{buttonTitle}}</button>
+              <button cButton type="submit" color="primary"
+                [disabled]="addLeaveForm.invalid||loading||!isValidPMS||(this.addLeaveService.addLeaveModel.isOldLeave!=true&&(leaveData!=null&&leaveData.status!=leaveStatus.Pending))"
+                class="me-2">
+                <c-spinner [hidden]="loading == false" size="sm"></c-spinner>
+                {{buttonTitle}}</button>
               <button *ngIf="!IsReadonly" cButton color="dark" (click)="onReset()">Cancel</button>
             </div>
-        </c-col>
-      </c-row>
+          </c-col>
+        </c-row>
       </form>
     </c-card-body>
   </c-card>
 </div>
-  

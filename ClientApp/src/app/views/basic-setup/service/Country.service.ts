@@ -51,7 +51,7 @@ export class CountryService {
     return this.http.delete(this.baseUrl + '/country/delete-country/' + id);
   }
   
-  getDeaultCountryId() {
+  getDefaultCountryId() {
     return this.http.get<number>(
       this.baseUrl + '/country/get-defaultCountryId'
     );

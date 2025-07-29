@@ -30,6 +30,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   eyeColors: SelectedModel[] = [];
   relations: SelectedModel[] = [];
   countries: SelectedModel[] = [];
+  defaultCountryId : number = 0;
   // subscription: Subscription = new Subscription();
   subscription: Subscription[]=[]
   loading: boolean = false;
@@ -44,15 +45,16 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.getEmployeeByEmpId();
+    this.getSelectedRelation();
+    this.getDefaultCountryId();
+    this.getSelectedCountris();
     this.getSelectedGenders();
     this.getSelectedMaritalStatuses();
     this.getSelectedBloodGroups();
     this.getSelectedReligions();
     this.getSelectedHairColors();
     this.getSelectedEyeColors();
-    this.getSelectedRelation();
-    this.getSelectedCountris();
+    this.getEmployeeByEmpId();
   }
 
   ngOnDestroy(): void {
@@ -88,6 +90,16 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     
   }
 
+  getDefaultCountryId(){
+    this.subscription.push(
+      this.countryService.getDefaultCountryId().subscribe((res) => {
+        if(res){
+          this.defaultCountryId = res;
+        }
+      })
+    )
+  }
+
   // getUserDetails(){
   //   this.empPersonalInfoService.findBasicInfoByEmpId(this.empId).subscribe((res) => {
   //     this.userService.find(res.aspNetUserId).subscribe((response) =>{
@@ -107,7 +119,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       genderId : null ,
       maritalStatusId : null ,
       bloodGroupId : null ,
-      nationalityId : null ,
+      nationalityId : this.defaultCountryId,
       religionId : null ,
       hairColorId : null ,
       eyesColorId : null ,
@@ -148,7 +160,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       genderId : null ,
       maritalStatusId : null ,
       bloodGroupId : null ,
-      nationalatyId : null ,
+      nationalatyId : this.defaultCountryId,
       religionId : null ,
       hairColorId : null ,
       eyesColorId : null ,

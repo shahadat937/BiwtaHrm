@@ -13,7 +13,7 @@ namespace Hrm.Domain
         public int CountryId { get; set; }
         public string? CountryName { get; set; }
         public int? MenuPosition { get; set; }
-        public bool IsDefault { get; set; }
+        public bool? IsDefault { get; set; }
         public bool IsActive { get; set; }
 
 

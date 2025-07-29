@@ -26,7 +26,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('CountryForm', { static: true }) CountryForm!: NgForm;
   // subscription: Subscription = new Subscription();
   subscription: Subscription[]=[]
-  displayedColumns: string[] = ['slNo', 'countryName', 'isActive', 'Action'];
+  displayedColumns: string[] = ['slNo', 'countryName', 'isDefault', 'isActive', 'Action'];
   loading = false;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator)
@@ -88,6 +88,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
       countryId: 0,
       countryName: '',
       menuPosition: 0,
+      isDefault: false,
       isActive: true,
     };
   }
@@ -99,6 +100,7 @@ export class CountryComponent implements OnInit, OnDestroy, AfterViewInit {
         countryId: 0,
         countryName: '',
         menuPosition: 0,
+        isDefault: false,
         isActive: true,
       });
     }

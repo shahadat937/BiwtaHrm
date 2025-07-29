@@ -52,7 +52,7 @@ namespace Hrm.Application.Features.Country.Handlers.Commands
 
             var CountryName = request.CountryDto.CountryName.ToLower();
 
-            IQueryable<Hrm.Domain.Country> Countrys = _CountryRepository.Where(x => x.CountryName.ToLower() == CountryName);
+            IQueryable<Hrm.Domain.Country> Countrys = _CountryRepository.Where(x => x.CountryName.ToLower() == CountryName && x.CountryId != request.CountryDto.CountryId);
 
 
             if (Countrys.Any())

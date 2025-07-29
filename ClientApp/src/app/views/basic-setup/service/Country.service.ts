@@ -50,4 +50,10 @@ export class CountryService {
   delete(id: number) {
     return this.http.delete(this.baseUrl + '/country/delete-country/' + id);
   }
+  
+  getDeaultCountryId() {
+    return this.http.get<number>(
+      this.baseUrl + '/country/get-defaultCountryId'
+    );
+  }
 }

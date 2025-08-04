@@ -301,64 +301,58 @@
                         <table class="table table-bordered table-hover" *ngIf="empJobDetails">
                             <tbody>
                                 <tr>
-                                    <th>Office</th>
-                                    <td>{{empJobDetails.officeName}}</td>
-                                    <th>Joining Date</th>
-                                    <td>{{empJobDetails.joiningDate | date: 'dd-MM-yyyy'}}</td>
-                                </tr>
-                                <tr>
                                     <th>Department</th>
                                     <td>{{empJobDetails.departmentName}}</td>
-                                    <th>First Department</th>
-                                    <td>{{empJobDetails.firstDepartmentName}}</td>
-                                </tr>
-                                <tr>
                                     <th>Section</th>
                                     <td>{{empJobDetails.sectionName}}</td>
-                                    <th>First Section</th>
-                                    <td>{{empJobDetails.firstSectionName}}</td>
                                 </tr>
                                 <tr>
                                     <th>Designation</th>
                                     <td>{{empJobDetails.designationName}}</td>
-                                    <th>First Designation</th>
-                                    <td>{{empJobDetails.firstDesignationName}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Present Grade</th>
+                                    <th>Preset Grade</th>
                                     <td>{{empJobDetails.presentGradeName}}</td>
-                                    <th>First Grade</th>
-                                    <td>{{empJobDetails.firstGradeName}}</td>
                                 </tr>
                                 <tr>
                                     <th>Present Scale</th>
                                     <td>{{empJobDetails.presentScaleName}}</td>
-                                    <th>First Scale</th>
-                                    <td>{{empJobDetails.firstScaleName}}</td>
+                                    <th>Basic Pay</th>
+                                    <td>{{empJobDetails.basicPay}}</td>
                                 </tr>
                                 <tr>
-                                    <th>PRT Date</th>
-                                    <td>{{prlDate | date: 'dd-MM-yyyy'}}</td>
-                                    <th>Retirment Date</th>
-                                    <td>{{retirementDate | date: 'dd-MM-yyyy'}}</td>
+                                    <th>GPF Code</th>
+                                    <td>{{empJobDetails.codeNo}}</td>
+                                    <th>Joining Date</th>
+                                    <td>{{empJobDetails.joiningDate | date: 'dd-MM-yyyy'}}</td>
                                 </tr>
                                 <tr>
-                                    <th>Service Status</th>
-                                    <td *ngIf="empJobDetails.serviceStatus">On Service</td>
-                                    <td *ngIf="!empJobDetails.serviceStatus">Out of Service</td>
-                                    <th>Remark</th>
-                                    <td>{{empJobDetails.remark}}</td>
-                                </tr>
-                                
-                                <tr>
-                                    <th *ngIf="empJobDetails.retiredReasonName">Retired Reason</th>
-                                    <td *ngIf="empJobDetails.retiredReasonName">{{empJobDetails.retiredReasonName}}</td>
-                                    <th *ngIf="empJobDetails.retirmentId">Retirment Id</th>
-                                    <td *ngIf="empJobDetails.retirmentId">{{empJobDetails.retirmentId}}</td>
-                                </tr>
-                                <tr>
+                                    <th>Confirmation Date</th>
+                                    <td>{{empJobDetails.confirmationDate | date: 'dd-MM-yyyy'}}</td>
                                     <th>Current Position Joining Date</th>
                                     <td>{{empJobDetails.currentPositionJoinDate | date: 'dd-MM-yyyy'}}</td>
+                                </tr>
+                                <tr>
+                                    <th>First Department</th>
+                                    <td>{{empJobDetails.firstDepartmentName}}</td>
+                                    <th>First Section</th>
+                                    <td>{{empJobDetails.firstSectionName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>First Designation</th>
+                                    <td>{{empJobDetails.firstDesignationName}}</td>
+                                    <th>First Grade</th>
+                                    <td>{{empJobDetails.firstGradeName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>First Scale</th>
+                                    <td>{{empJobDetails.firstScaleName}}</td>
+                                    <th>First Grade</th>
+                                    <td>{{empJobDetails.firstGradeName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>PRL Date</th>
+                                    <td>{{prlDate}}</td>
+                                    <th>Retirment Date</th>
+                                    <td>{{retirementDate}}</td>
                                 </tr>
                             </tbody>
                         </table>

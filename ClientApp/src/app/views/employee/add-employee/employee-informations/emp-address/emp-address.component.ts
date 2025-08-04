@@ -120,6 +120,8 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
       this.countryService.getDefaultCountryId().subscribe((res) => {
         if(res){
           this.defaultCountryId = res;
+          this.onPresentAddressDivisionNamesChangeByCounterId(res);
+          this.onPermanentAddressDivisionNamesChangeByCounterId(res);
         }
       })
     )

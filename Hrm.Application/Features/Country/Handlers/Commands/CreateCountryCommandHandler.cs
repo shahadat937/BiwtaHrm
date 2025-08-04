@@ -6,6 +6,7 @@ using Hrm.Application.DTOs.TrainingType.Validators;
 using Hrm.Application.Features.Country.Requests.Commands;
 using Hrm.Application.Features.TrainingType.Requests.Commands;
 using Hrm.Application.Responses;
+using Hrm.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,13 @@ namespace Hrm.Application.Features.Country.Handlers.Commands
                 }
                 else
                 {
+                    var findActive = _unitOfWork.Repository<Domain.Country>().Where(x => x.IsDefault == true).FirstOrDefault();
+                    if (findActive != null && request.CountryDto.IsDefault == true)
+                    {
+                        findActive.IsDefault = false;
+                        await _unitOfWork.Repository<Domain.Country>().Update(findActive);
+                    }
+
                     var Country = _mapper.Map<Hrm.Domain.Country>(request.CountryDto);
 
                     Country = await _unitOfWork.Repository<Hrm.Domain.Country>().Add(Country);

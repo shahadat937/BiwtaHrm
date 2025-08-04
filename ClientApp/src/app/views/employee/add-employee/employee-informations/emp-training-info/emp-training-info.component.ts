@@ -30,6 +30,7 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
   institute: SelectedModel[] = [];
   courseDuration: SelectedModel[] = [];
   countris: SelectedModel[] = [];
+  defaultCountryId : number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,12 +45,13 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.getEmployeeTrainingInfoByEmpId();
     this.getSelectedTrainingType();
     // this.getSelectedTrainingName();
     // this.getSelectedInstitute();
     // this.getSelectedCourseDuration();
+    this.getDefaultCountryId();
     this.getSelectedCountries();
+    this.getEmployeeTrainingInfoByEmpId();
   }
 
   ngOnDestroy(): void {
@@ -66,6 +68,16 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
   get empTrainingListArray() {
     return this.EmpTrainingInfoForm.controls["empTrainingInfoList"] as FormArray;
   }
+
+  getDefaultCountryId(){
+    this.subscription.push(
+      this.countryService.getDefaultCountryId().subscribe((res) => {
+        if(res){
+          this.defaultCountryId = res;
+        }
+      })
+    )
+  }
   
   addTraining() {
     this.empTrainingListArray.push(new FormGroup({
@@ -77,7 +89,7 @@ export class EmpTrainingInfoComponent implements OnInit, OnDestroy {
       fromDate: new FormControl(undefined),
       toDate: new FormControl(undefined),
       trainingDuration: new FormControl(undefined),
-      countryId: new FormControl(undefined),
+      countryId: new FormControl(this.defaultCountryId),
       remark: new FormControl(undefined),
     }));
   }

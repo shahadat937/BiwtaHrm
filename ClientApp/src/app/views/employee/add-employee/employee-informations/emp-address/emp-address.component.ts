@@ -26,6 +26,7 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
   headerText: string = '';
   headerBtnText: string = 'Hide From';
   btnText: string = '';
+  defaultCountryId : number = 0;
   countris: SelectedModel[] = [];
   presentAddressdivisions: SelectedModel[] = [];
   presentAddressdistricts: SelectedModel[] = [];
@@ -63,8 +64,9 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getAddressInformation();
+    this.getDefaultCountryId();
     this.loadcountris();
+    this.getAddressInformation();
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -113,11 +115,23 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
     })
   }
 
+  getDefaultCountryId(){
+    this.subscription.push(
+      this.countryService.getDefaultCountryId().subscribe((res) => {
+        if(res){
+          this.defaultCountryId = res;
+          this.onPresentAddressDivisionNamesChangeByCounterId(res);
+          this.onPermanentAddressDivisionNamesChangeByCounterId(res);
+        }
+      })
+    )
+  }
+
   resetPresentAddressForm(form?: NgForm) {
     this.empPresentAddressService.empPresentAddress = {
       id: 0,
       empId: this.empId,
-      countryId: null,
+      countryId: this.defaultCountryId,
       divisionId: null,
       districtId: null,
       upazilaId: null,
@@ -144,7 +158,7 @@ export class EmpAddressComponent  implements OnInit, OnDestroy {
     this.empPermanentAddressService.empPermanentAddress = {
       id: 0,
       empId: this.empId,
-      countryId: null,
+      countryId: this.defaultCountryId,
       divisionId: null,
       districtId: null,
       upazilaId: null,

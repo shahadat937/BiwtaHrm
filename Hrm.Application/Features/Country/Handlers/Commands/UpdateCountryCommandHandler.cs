@@ -52,7 +52,7 @@ namespace Hrm.Application.Features.Country.Handlers.Commands
 
             var CountryName = request.CountryDto.CountryName.ToLower();
 
-            IQueryable<Hrm.Domain.Country> Countrys = _CountryRepository.Where(x => x.CountryName.ToLower() == CountryName);
+            IQueryable<Hrm.Domain.Country> Countrys = _CountryRepository.Where(x => x.CountryName.ToLower() == CountryName && x.CountryId != request.CountryDto.CountryId);
 
 
             if (Countrys.Any())
@@ -64,6 +64,12 @@ namespace Hrm.Application.Features.Country.Handlers.Commands
             }
             else
             {
+                var findActive = _unitOfWork.Repository<Domain.Country>().Where(x => x.IsDefault == true).FirstOrDefault();
+                if (findActive != null && request.CountryDto.IsDefault == true)
+                {
+                    findActive.IsDefault = false;
+                    await _unitOfWork.Repository<Domain.Country>().Update(findActive);
+                }
 
                 _mapper.Map(request.CountryDto, Country);
 

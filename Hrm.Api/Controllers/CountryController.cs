@@ -61,6 +61,14 @@ namespace Hrm.Api.Controllers
             return Ok(Country);
         }
 
+        [HttpGet]
+        [Route("get-defaultCountryId")]
+        public async Task<ActionResult<int>> GetDefaultCountryId()
+        {
+            var Country = await _mediator.Send(new GetDefaultCountryIdRequest { });
+            return Ok(Country);
+        }
+
         [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

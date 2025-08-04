@@ -1258,7 +1258,7 @@
                                 </button>
                             </div>
                             <div class="table-responsive">
-                                <table mat-table [dataSource]="trainingSource">
+                                <table mat-table [dataSource]="foreignTourSource">
                                 <ng-container matColumnDef="slNo">
                                     <th mat-header-cell *matHeaderCellDef>SL</th>
                                     <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
@@ -2653,7 +2653,7 @@
                         </button>
                     </div>
                     <div class="table-responsive">
-                        <table mat-table [dataSource]="trainingSource">
+                        <table mat-table [dataSource]="foreignTourSource">
                         <ng-container matColumnDef="slNo">
                             <th mat-header-cell *matHeaderCellDef>SL</th>
                             <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>

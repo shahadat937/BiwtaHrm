@@ -25,6 +25,7 @@ export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
   // subscription: Subscription = new Subscription();
   subscription: Subscription[]=[]
   loading: boolean = false;
+  defaultCountryId : number = 0;
   empForeignTour: EmpForeignTourInfoModule[] = [];
 
   constructor(
@@ -40,8 +41,9 @@ export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.getEmployeeForeignTourInfoByEmpId();
+    this.getDefaultCountryId();
     this.getSelectedCountries();
+    this.getEmployeeForeignTourInfoByEmpId();
   }
 
   ngOnDestroy(): void {
@@ -50,6 +52,15 @@ export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
     }
   }
 
+  getDefaultCountryId(){
+    this.subscription.push(
+      this.countryService.getDefaultCountryId().subscribe((res) => {
+        if(res){
+          this.defaultCountryId = res;
+        }
+      })
+    )
+  }
 
   getEmployeeForeignTourInfoByEmpId() {
     this.empForeignTourInfoService.findByEmpId(this.empId).subscribe((res) => {
@@ -98,7 +109,7 @@ export class EmpForeignTourInfoComponent implements OnInit, OnDestroy {
     this.empForeignTourListArray.push(new FormGroup({
       id: new FormControl(0),
       empId: new FormControl(this.empId),
-      countryId: new FormControl(undefined, Validators.required),
+      countryId: new FormControl(this.defaultCountryId, Validators.required),
       fromDate: new FormControl(undefined),
       toDate: new FormControl(undefined),
       purpose: new FormControl(undefined),

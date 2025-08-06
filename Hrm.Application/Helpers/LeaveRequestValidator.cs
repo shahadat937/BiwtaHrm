@@ -209,7 +209,8 @@ namespace Hrm.Application.Helpers
 
                 totalWorkingDayLIfetime = await calculateWorkingDays(empId, joiningDate, startDate);
 
-                accuralLeave = (totalWorkingDayLIfetime / accuralFreq) * accuralRate;
+                //accuralLeave = (totalWorkingDayLIfetime / accuralFreq) * accuralRate;
+                accuralLeave = (int)Math.Ceiling((double)totalWorkingDayLIfetime / accuralFreq * accuralRate);
             }
 
             if (leaveRules.Where(x => x.RuleName == LeaveRule.MaxDaysPerMonth).Any())

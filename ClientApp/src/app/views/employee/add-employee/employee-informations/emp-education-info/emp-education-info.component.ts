@@ -79,11 +79,48 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
     })
   }
 
-  patchEducationInfo(educationInfoList: any[]) {
+
+  async patchEducationInfo(educationInfoList: any[]) {
     const control = <FormArray>this.EmpEducationInfoForm.controls['empEducationList'];
     control.clear();
+    
+    for (const [index, educationInfo] of educationInfoList.entries()) {
+      this.examTypesOptions[index] = [...this.examTypes];
 
-    educationInfoList.forEach((educationInfo, index) => {      
+      // Process examTypeId if it exists
+      if (educationInfo.examTypeId) {
+        await new Promise<void>((resolve) => {
+          this.subscription.push(
+            this.empEducationInfoService.getSelectedSubject(educationInfo.examTypeId).subscribe((data) => {
+              this.subGroups[index] = data;
+              resolve();
+            })
+          );
+        });
+      }
+
+      // Process resultId if it exists
+      if (educationInfo.resultId) {
+        await new Promise<void>((resolve) => {
+          this.subscription.push(
+            this.ResultService.find(educationInfo.resultId).subscribe((data) => {
+              this.pointOptions[index] = data;
+              if (data.havePoint) {
+                this.empEducationListArray.at(index)?.get('point')?.enable();
+                this.empEducationListArray.at(index)?.get('point')?.setValidators([
+                  Validators.required, 
+                  Validators.max(data.maxPoint || 100)
+                ]);
+              } else {
+                this.empEducationListArray.at(index)?.get('point')?.disable();
+              }
+              resolve();
+            })
+          );
+        });
+      }
+      
+      // Push the form group after all async operations complete
       control.push(this.fb.group({
         id: [educationInfo.id],
         empId: [educationInfo.empId],
@@ -96,36 +133,9 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
         passingYear: [educationInfo.passingYear, Validators.required],
         remark: [educationInfo.remark],
       }));
-      this.examTypesOptions[index] = [...this.examTypes];
-
-      if(educationInfo.examTypeId){
-        // this.subscription=
-        this.subscription.push(
-          this.empEducationInfoService.getSelectedSubject(educationInfo.examTypeId).subscribe((data) => {
-          this.subGroups[index] = data; 
-        })
-        )
-        
-      }
-      if(educationInfo.resultId){
-        // this.subscription=
-        this.subscription.push(
-          this.ResultService.find(educationInfo.resultId).subscribe((data) => {
-          this.pointOptions[index] = data; 
-          if (data.havePoint) {
-            this.empEducationListArray.at(index).get('point')?.enable();
-            this.empEducationListArray.at(index).get('point')?.setValidators([
-              Validators.required, Validators.max(data.maxPoint || 100)
-            ]);
-          } else {
-            this.empEducationListArray.at(index).get('point')?.disable();
-          }
-        })
-        )
-        
-      }
-    });
+    }
   }
+  
   EmpEducationInfoForm: FormGroup = new FormGroup({
     empEducationList: new FormArray([])
   });
@@ -270,8 +280,7 @@ export class EmpEducationInfoComponent  implements OnInit, OnDestroy {
           positionClass: 'toast-top-right',
         });
         this.loading = false;
-        // this.cancel();
-        // this.getEmployeeEducationInfoByEmpId();
+        this.getEmployeeEducationInfoByEmpId();
       } else {
         this.toastr.warning('', `${res.message}`, {
           positionClass: 'toast-top-right',

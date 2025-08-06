@@ -25,20 +25,7 @@ export class UserService {
   }
 
    getAll(): Observable<UserModule[]> {
-    if (this.cachedData.length > 0) {
-      // If data is already cached, return it without making a server call
-      return of (this.cachedData);
-    } else {
-      // If data is not cached, make a server call to fetch it
-      return this.http
-        .get<UserModule[]>(this.baseUrl + '/users/get-users')
-        .pipe(
-          map((data) => {
-            this.cachedData = data; // Cache the data
-            return data;
-          })
-        );
-    }
+    return this.http.get<UserModule[]>(this.baseUrl + '/users/get-users/');
   }
 
   getInfoByEmpId(id: number){

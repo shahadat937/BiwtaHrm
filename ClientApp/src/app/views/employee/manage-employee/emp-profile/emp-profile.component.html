@@ -544,7 +544,7 @@
                                 </ng-container>
                                 
                                 <ng-container matColumnDef="joiningDate">
-                                    <th mat-header-cell *matHeaderCellDef>Joining Date</th>
+                                    <th mat-header-cell *matHeaderCellDef>First Joining Date</th>
                                     <td mat-cell *matCellDef="let element">
                                     {{ element.joiningDate  | date: "dd-MM-yyyy"}}
                                     </td>
@@ -1617,7 +1617,7 @@
                                 <td *ngIf="empJobDetails?.designationName; else emptyTd">{{empJobDetails.designationName}}</td>
                             </tr>
                             <tr>
-                                <th>Joining Date</th>
+                                <th>First Joining Date</th>
                                 <td *ngIf="empJobDetails?.joiningDate; else emptyTd">{{empJobDetails.joiningDate  | date: "dd-MM-yyyy"}}</td>
                                 <th>Confirmation Date</th>
                                 <td *ngIf="empJobDetails?.confirmationDate; else emptyTd">{{empJobDetails.confirmationDate  | date: "dd-MM-yyyy"}}</td>

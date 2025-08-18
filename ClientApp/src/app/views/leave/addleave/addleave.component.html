@@ -212,11 +212,11 @@
               </c-card>
             </div>
             <div *ngIf="!IsReadonly" class="mt-4">
-              <h5 class="mb-3">Leave Associate File Upload</h5>
+              <h5 class="mb-3">Leave Supporting Document</h5>
               <input multiple type="file" (change)="handleFile($event)" name="associatedFiles" cFormControl />
             </div>
             <div *ngIf="IsReadonly" class="mt-4" cListGroup>
-              <h5>Leave Associated Files</h5>
+              <h5>Leave Supporting Document</h5>
               @for (file of leaveFiles; track $index) {
               <a cListGroupItem target="_blank" [href]="baseImageUrl+'/leaveFile/'+file.filePath">
                 {{file.fileTitle}}
@@ -355,8 +355,12 @@
                 </c-input-group>
               </c-col>
               <c-col md="4">
-                <input type="text" [readOnly]="IsReadonly" [(ngModel)]="addLeaveService.addLeaveModel.reviewerRemark"
+                <input type="text" [readOnly]="!IsReadonly" [(ngModel)]="addLeaveService.addLeaveModel.reviewerRemark"
                   name="reviewerRemark" cFormControl placeholder="Remark" id="reviewerRemark">
+              </c-col>
+              <c-col md="2">
+                <button cButton color="success" variant="outline" disabled *ngIf="addLeaveService.addLeaveModel.status >= 2">Approved</button>
+                <button cButton color="danger" variant="outline" disabled *ngIf="addLeaveService.addLeaveModel.status == 1">Rejected</button>
               </c-col>
             </c-row>
             <c-row class="mt-3 ms-md-5 mb-3" [gutter]="3">
@@ -372,8 +376,12 @@
                 </c-input-group>
               </c-col>
               <c-col md="4">
-                <input type="text" [readOnly]="IsReadonly" [(ngModel)]="addLeaveService.addLeaveModel.approverRemark"
+                <input type="text" [readOnly]="!IsReadonly" [(ngModel)]="addLeaveService.addLeaveModel.approverRemark"
                   name="reviewerRemark" cFormControl placeholder="Remark" id="reviewerRemark">
+              </c-col>
+              <c-col md="2">
+                <button cButton color="success" variant="outline" disabled *ngIf="addLeaveService.addLeaveModel.status == 3">Approved</button>
+                <button cButton color="danger" variant="outline" disabled *ngIf="addLeaveService.addLeaveModel.status == 4">Rejected</button>
               </c-col>
             </c-row>
             <!-- <c-row clas="mt-2 ms-3">

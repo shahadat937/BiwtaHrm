@@ -11,7 +11,7 @@ import { AuthService } from '../../../../../src/app/core/service/auth.service';
 import { LeaveBalanceService } from '../service/leave-balance.service';
 import { environment } from '../../../../../src/environments/environment';
 import { forEach } from 'lodash-es';
-import { cilSearch } from '@coreui/icons';
+import { cilCheckAlt, cilSearch, cilX } from '@coreui/icons';
 import { EmployeeInfoListModalComponent } from '../../employee/employee-info-list-modal/employee-info-list-modal.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ManageLeaveService } from '../service/manage-leave.service';
@@ -68,7 +68,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
   approverPMIS: string;
   reviewerName: string;
   approverName: string;
-  icons = { cilSearch }
+  icons = { cilSearch, cilX, cilCheckAlt }
   constructor(
     private empBasicInfoService: EmpBasicInfoService,
     private modalService: BsModalService,

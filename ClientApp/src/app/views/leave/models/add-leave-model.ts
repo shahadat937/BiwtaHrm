@@ -17,6 +17,7 @@ export class AddLeaveModel {
     reviewerRemark: string;
     approverRemark: string;
     isOldLeave: boolean;
+    status: number = 0;
 
     applicationById: number | null;
 

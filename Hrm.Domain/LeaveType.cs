@@ -17,6 +17,7 @@ namespace Hrm.Domain
         public bool? ShowReport { get; set; }
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
+        public bool? IsCarryForward { get; set; }
 
         public virtual ICollection<LeaveRules> LeaveRules { get; } = new List<LeaveRules>();
         public virtual ICollection<LeaveRequest> LeaveRequests {get; } = new List<LeaveRequest>();

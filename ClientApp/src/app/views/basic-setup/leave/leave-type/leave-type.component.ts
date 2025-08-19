@@ -66,6 +66,7 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
           this.leaveTypes[this.updateIndex].isActive = this.leaveTypeService.leaveTypes.isActive;
           this.leaveTypes[this.updateIndex].elWorkDayCal = this.leaveTypeService.leaveTypes.elWorkDayCal;
           this.leaveTypes[this.updateIndex].showReport = this.leaveTypeService.leaveTypes.showReport;
+          this.leaveTypes[this.updateIndex].isCarrayForword = this.leaveTypeService.leaveTypes.isCarryForward
 
           this.onReset();
         } else {
@@ -119,7 +120,7 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
   }
 
   saveLeaveType() {
-
+    console.log(this.leaveTypeService.leaveTypes);
     this.loading = true;
     this.leaveTypeService.createLeaveType(this.leaveTypeService.leaveTypes).subscribe({
       next: response => {
@@ -140,6 +141,7 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
           curData.elWorkDayCal = this.leaveTypeService.leaveTypes.elWorkDayCal;
           curData.showReport = this.leaveTypeService.leaveTypes.showReport;
           curData.shortName = this.leaveTypeService.leaveTypes.shortName;
+          curData.isCarryForward = this.leaveTypeService.leaveTypes.isCarryForward;
 
           this.leaveTypes.push(curData)
           this.onReset();

@@ -325,7 +325,19 @@ namespace Hrm.Application.Helpers
 
         public async Task<int> GetAvailedLeave(int empId, int leaveTypeId, int currentYear)
         {
-            int availed = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x=> x.AttendanceDate.Year == currentYear && x.AttendanceStatusId == (int) AttendanceStatusOption.OnLeave&& x.LeaveRequest.LeaveTypeId == (int) leaveTypeId && x.EmpId == empId).CountAsync();
+            var isCarrayForwordLeaves = await _unitOfWork.Repository<Hrm.Domain.LeaveType>().FindOneAsync(x => x.LeaveTypeId == leaveTypeId);
+            int availed;
+
+            if (isCarrayForwordLeaves.IsCarryForward == true)
+            {
+                 availed = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == (int)leaveTypeId && x.EmpId == empId).CountAsync();
+            }
+            else
+            {
+                 availed = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceDate.Year == currentYear && x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == (int)leaveTypeId && x.EmpId == empId).CountAsync();
+            }
+
+                
 
             return availed;
         }

@@ -47,10 +47,14 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Queries
             DateTime startDate = DateTime.Now;
             DateTime endDate = DateTime.Now;
 
-            if(request.LeaveStartDate.HasValue && request.LeaveEndDate.HasValue)
+            if(request.LeaveStartDate.HasValue)
             {
                 startDate = (DateTime) request.LeaveStartDate;
-                endDate = (DateTime) request.LeaveEndDate;
+               
+            }
+            if(request.LeaveEndDate.HasValue)
+            {
+                endDate = (DateTime)request.LeaveEndDate;
             }
 
             foreach(var type in leaveTypeDto)

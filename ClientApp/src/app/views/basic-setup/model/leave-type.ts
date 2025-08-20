@@ -2,6 +2,7 @@ export class LeaveType {
     leaveTypeId: number;
     leaveTypeName: string;
     shortName: string;
+    isCarryForward : boolean 
     isActive: boolean|null;
     elWorkDayCal: boolean;
     showReport: boolean
@@ -15,5 +16,6 @@ export class LeaveType {
         this.elWorkDayCal = true;
         this.showReport = false;
         this.remark = "";
+        this.isCarryForward = false
     }
 }

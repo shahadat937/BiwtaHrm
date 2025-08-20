@@ -15,6 +15,6 @@ namespace Hrm.Application.DTOs.LeaveType
         public bool ShowReport { get; set; }
         public bool? ELWorkDayCal {  get; set; }
         public string? Remark { get; set; }
-        
+        public bool? IsCarryForward { get; set; }
     }
 }

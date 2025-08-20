@@ -144,10 +144,10 @@
                 <mat-icon>update</mat-icon>
               </button>
 
-              <button [disabled]="loadingMap[emp.id]"  *ngIf="!emp.userStatus" (click)="createUser(emp.id)" cTooltip="Create User" cTooltipPlacement="bottom" mat-icon-button color="primary">
+              <!-- <button [disabled]="loadingMap[emp.id]"  *ngIf="!emp.userStatus" (click)="createUser(emp.id)" cTooltip="Create User" cTooltipPlacement="bottom" mat-icon-button color="primary">
                 <c-spinner *ngIf="loadingMap[emp.id]" size="sm"></c-spinner>
                 <mat-icon  *ngIf="!loadingMap[emp.id]">person_add</mat-icon>
-              </button>
+              </button> -->
               </td>
             </tr>
           </ng-template>

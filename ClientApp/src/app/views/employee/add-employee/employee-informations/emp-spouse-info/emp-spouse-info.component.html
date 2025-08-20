@@ -15,7 +15,7 @@
                                     <input type="hidden" formControlName="id" />
                                     <input type="hidden" formControlName="empId" />
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="spouseName{{i}}">Spouse Name</label>
+                                        <label class="col-form-label" for="spouseName{{i}}">Spouse Name<span class="text-danger">*</span></label>
                                         <input type="text" formControlName="spouseName" class="form-control"
                                             id="spouseName{{i}}" placeholder="Enter Spouse Name" />
                                     </c-col>
@@ -47,7 +47,7 @@
                                     </c-col>
 
                                     <c-col [md]="4">
-                                        <label class="col-form-label" for="nid{{i}}">NID No</label>
+                                        <label class="col-form-label" for="nid{{i}}">NID No<span class="text-danger">*</span></label>
                                         <input type="text" formControlName="nid" class="form-control" id="nid{{i}}"
                                             placeholder="NID No" />
                                     </c-col>

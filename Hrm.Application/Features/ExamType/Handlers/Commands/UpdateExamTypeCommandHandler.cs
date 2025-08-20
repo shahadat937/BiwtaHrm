@@ -45,7 +45,7 @@ namespace Hrm.Application.Features.ExamType.Handlers.Commands
             }
             //var ExamTypeName = request.ExamTypeDto.ExamTypeName.ToLower();
             var ExamTypeName = request.ExamTypeDto.ExamTypeName.Trim().ToLower().Replace(" ", string.Empty);
-            IQueryable<Hrm.Domain.ExamType> ExamTypes = _ExamTypeRepository.Where(x => x.ExamTypeName.ToLower() == ExamTypeName);
+            IQueryable<Hrm.Domain.ExamType> ExamTypes = _ExamTypeRepository.Where(x => x.ExamTypeName.ToLower() == ExamTypeName && x.ExamTypeId != request.ExamTypeDto.ExamTypeId);
             if (ExamTypes.Any())
             {
                 response.Success = false;

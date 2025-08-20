@@ -28,7 +28,7 @@ namespace Hrm.Application.Features.ExamType.Handlers.Queries
         public async Task<object> Handle(GetExamTypeRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Hrm.Domain.ExamType> ExamTypes = _ExamTypeRepository.Where(x => true);
-            ExamTypes = ExamTypes.OrderByDescending(x => x.ExamTypeId);
+            ExamTypes = ExamTypes.OrderBy(x => x.ExamTypeName);
 
             var ExamTypeDtos = _mapper.Map<List<ExamTypeDto>>(ExamTypes);
 

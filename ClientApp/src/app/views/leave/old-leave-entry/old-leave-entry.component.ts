@@ -68,6 +68,7 @@ export class OldLeaveEntryComponent implements OnInit, OnDestroy {
   approverPMIS: string;
   reviewerName: string;
   approverName: string;
+  totalDue!: number | null;
   icons = { cilSearch, cilZoom }
 
   constructor(
@@ -295,7 +296,7 @@ export class OldLeaveEntryComponent implements OnInit, OnDestroy {
               this.employeePhoto = this.defaultPhoto;
             }
             // this.getLeaveAmount();
-            // this.getLeaveBalanceForAllType(response.id);
+            this.getLeaveBalanceForAllType(response.id);
             this.department = response.departmentName;
             this.designation = response.designationName;
           } else {
@@ -319,6 +320,8 @@ export class OldLeaveEntryComponent implements OnInit, OnDestroy {
         }
       });
     })
+
+    
 
   }
 
@@ -352,6 +355,11 @@ export class OldLeaveEntryComponent implements OnInit, OnDestroy {
 
   onDateChange() {
     this.getWorkingDays();
+    this.getLeaveAmount();
+     if (this.addLeaveService.addLeaveModel.empId != null) {
+      console.log("Testg")
+      this.getLeaveBalanceForAllType(this.addLeaveService.addLeaveModel.empId);
+    }
   }
   getWorkingDays() {
 
@@ -401,6 +409,58 @@ export class OldLeaveEntryComponent implements OnInit, OnDestroy {
     this.filteredLeaveBalances = [];
   }
 
+   getLeaveAmount() {
+    this.filterLeaveBalance();
+    this.IsForeignLeave();
+    if (this.addLeaveService.addLeaveModel.empId == null || this.addLeaveService.addLeaveModel.leaveTypeId == null || this.addLeaveService.addLeaveModel.fromDate == null || this.addLeaveService.addLeaveModel.toDate == null) {
+      this.totalDue = null;
+      return;
+    }
+    
+
+    let params = new HttpParams();
+
+    const fromDate = this.sharedService.formatDateOnly(new Date(this.addLeaveService.addLeaveModel.fromDate));
+
+    //console.log(fromDate);
+
+    params = params.set("empId", this.addLeaveService.addLeaveModel.empId);
+    params = params.set("leaveTypeId", this.addLeaveService.addLeaveModel.leaveTypeId);
+    params = params.set("fromDate", this.addLeaveService.addLeaveModel.fromDate);
+    params = params.set("toDate", this.addLeaveService.addLeaveModel.toDate);
+
+    this.subcription = this.addLeaveService.getLeaveAmount(params).subscribe({
+      next: response => {
+        this.totalDue = response.totalDue;
+      },
+      error: err => {
+        this.totalDue = null;
+      }
+    })
+
+    // this.calendarFromDate = this.sharedService.parseDate(this.addLeaveService.addLeaveModel.fromDate);
+    // this.calendarToDate = this.sharedService.parseDate(this.addLeaveService.addLeaveModel.toDate);
+
+
+    this.getWorkingDays();
+  }
+
+   IsForeignLeave() {
+
+    let leaveName = this.LeaveTypeOption.find(x => x.id == this.addLeaveService.addLeaveModel.leaveTypeId);
+    if (leaveName == undefined) {
+      this.addLeaveService.addLeaveModel.isForeignLeave = false;
+      return;
+    }
+
+    if (leaveName.name.toLocaleLowerCase().includes("foreign")) {
+      this.addLeaveService.addLeaveModel.isForeignLeave = true;
+    } else {
+      this.addLeaveService.addLeaveModel.isForeignLeave = false;
+    }
+  }
+
+
   onSubmit() {
     this.loading = true;
 
@@ -439,6 +499,42 @@ export class OldLeaveEntryComponent implements OnInit, OnDestroy {
     formData.forEach((value, key) => {
       output += `${key}: ${value}\n`;
     });
+  }
+
+
+  getLeaveBalanceForAllType(empId: number) {
+    let params = new HttpParams();
+    params = params.set('empId', empId);
+
+    const fromDateValue = this.addLeaveService.addLeaveModel.fromDate;
+    const toDateValue = this.addLeaveService.addLeaveModel.toDate;
+
+    const fromDate = fromDateValue ? this.sharedService.formatDateOnly(new Date(fromDateValue)) : null;
+    const toDate = toDateValue ? this.sharedService.formatDateOnly(new Date(toDateValue)) : null;
+    //console.log(fromDate)
+    //console.log(toDate)
+
+    if (fromDate != null) {
+      params = params.set('leaveStartDate', fromDate);
+    }
+
+    if (toDate != null) {
+      params = params.set('leaveEndDate', toDate);
+    }
+
+    this.leaveBalanceService.getLeaveBalance(params).subscribe({
+      next: response => {
+        this.leaveBalances = response;
+        this.filteredLeaveBalances = this.leaveBalances;
+        this.filterLeaveBalance();
+      }
+    })
+  }
+
+    filterLeaveBalance() {
+    this.filteredLeaveBalances = this.leaveBalances.filter(data => {
+      return data.leaveTypeId == this.addLeaveService.addLeaveModel.leaveTypeId || this.addLeaveService.addLeaveModel.leaveTypeId == null;
+    })
   }
 
   onViewDetail(leaveRequestId: number) {

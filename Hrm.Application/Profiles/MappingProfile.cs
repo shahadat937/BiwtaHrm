@@ -437,9 +437,9 @@ namespace Hrm.Application.Profiles
             .ForMember(dest => dest.DesignationNameBangla, opt => opt.MapFrom(src => src.Designation.DesignationSetup.NameBangla))
             .ForMember(dest => dest.PresentGradeName, opt => opt.MapFrom(src => src.PresentGrade.GradeName))
             .ForMember(dest => dest.PresentScaleName, opt => opt.MapFrom(src => src.PresentScale.ScaleName))
-            .ForMember(dest => dest.FirstDepartmentName, opt => opt.MapFrom(src => src.FirstDepartment.DepartmentName))
-            .ForMember(dest => dest.FirstSectionName, opt => opt.MapFrom(src => src.FirstSection.SectionName))
-            .ForMember(dest => dest.FirstDesignationName, opt => opt.MapFrom(src => src.FirstDesignation.DesignationSetup.Name))
+            .ForMember(dest => dest.FirstDepartmentName, opt => opt.MapFrom(src => src.FirstDepartment.DepartmentName ?? src.FirstDepartmentInput))
+            .ForMember(dest => dest.FirstSectionName, opt => opt.MapFrom(src => src.FirstSection.SectionName ?? src.FirstSectionInput))
+            .ForMember(dest => dest.FirstDesignationName, opt => opt.MapFrom(src => src.FirstDesignation.DesignationSetup.Name ?? src.FirstDesignationInput))
             .ForMember(dest => dest.FirstGradeName, opt => opt.MapFrom(src => src.FirstGrade.GradeName))
             .ForMember(dest => dest.FirstScaleName, opt => opt.MapFrom(src => src.FirstScale.ScaleName))
             .ForMember(dest => dest.RetiredReasonName, opt => opt.MapFrom(src => src.RetiredReason.Name));

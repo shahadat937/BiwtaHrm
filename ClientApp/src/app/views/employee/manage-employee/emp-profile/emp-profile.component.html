@@ -266,10 +266,10 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th *ngIf="empJobDetails.retiredReasonName">Retired Reason</th>
-                                <td *ngIf="empJobDetails.retiredReasonName">{{empJobDetails.retiredReasonName}}</td>
-                                <th *ngIf="empJobDetails.retirmentId">Retirment Id</th>
-                                <td *ngIf="empJobDetails.retirmentId">{{empJobDetails.retirmentId}}</td>
+                                <th *ngIf="empJobDetails?.retiredReasonName; else emptyTd">Retired Reason</th>
+                                <td *ngIf="empJobDetails?.retiredReasonName; else emptyTd">{{empJobDetails.retiredReasonName}}</td>
+                                <th *ngIf="empJobDetails?.retirmentId; else emptyTd">Retirment Id</th>
+                                <td *ngIf="empJobDetails?.retirmentId; else emptyTd">{{empJobDetails.retirmentId}}</td>
                             </tr>
                             <tr>
                                 <th>Remark</th>
@@ -294,6 +294,7 @@
                             </div>
                             <table class="table">
                                 <tbody>
+                                    
                                     <tr>
                                         <th>Country</th>
                                         <td *ngIf="empPresentAddress?.countryName; else emptyTd">{{empPresentAddress.countryName}}</td>
@@ -304,28 +305,26 @@
                                     <tr>
                                         <th>District</th>
                                         <td *ngIf="empPresentAddress?.districtName; else emptyTd">{{empPresentAddress.districtName}}</td>
-                                        <th>Upazila</th>
+                                        <th>Upazila/Thana</th>
                                         <td *ngIf="empPresentAddress?.upazilaName; else emptyTd">{{empPresentAddress.upazilaName}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Thana</th>
-                                        <td *ngIf="empPresentAddress?.thanaName; else emptyTd">{{empPresentAddress.thanaName}}</td>
+                                        <!-- <th>Thana</th>
+                                        <td *ngIf="empPresentAddress?.thanaName; else emptyTd">{{empPresentAddress.thanaName}}</td> -->
                                         <th>Union</th>
                                         <td *ngIf="empPresentAddress?.unionName; else emptyTd">{{empPresentAddress.unionName}}</td>
-                                    </tr>
-                                    <tr>
                                         <th>Ward</th>
                                         <td *ngIf="empPresentAddress?.wardName; else emptyTd">{{empPresentAddress.wardName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Post Office</th>
+                                        <td *ngIf="empPresentAddress?.postOffice; else emptyTd">{{empPresentAddress.postOffice}}</td>
                                         <th>Post Code</th>
                                         <td *ngIf="empPresentAddress?.zipCode; else emptyTd">{{empPresentAddress.zipCode}}</td>
                                     </tr>
                                     <tr>
                                         <th>Road No/House No</th>
                                         <td *ngIf="empPresentAddress?.address; else emptyTd">{{empPresentAddress.address}}</td>
-                                        <th>Email</th>
-                                        <td *ngIf="empPresentAddress?.email; else emptyTd">{{empPresentAddress.email}}</td>
-                                    </tr>
-                                    <tr>
                                         <th>Remark</th>
                                         <td *ngIf="empPresentAddress?.remark; else emptyTd">{{empPresentAddress.remark}}</td>
                                     </tr>
@@ -359,28 +358,26 @@
                                     <tr>
                                         <th>District</th>
                                         <td *ngIf="empPermanentAddress?.districtName; else emptyTd">{{empPermanentAddress.districtName}}</td>
-                                        <th>Upazila</th>
+                                        <th>Upazila/Thana</th>
                                         <td *ngIf="empPermanentAddress?.upazilaName; else emptyTd">{{empPermanentAddress.upazilaName}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Thana</th>
-                                        <td *ngIf="empPermanentAddress?.thanaName; else emptyTd">{{empPermanentAddress.thanaName}}</td>
+                                        <!-- <th>Thana</th>
+                                        <td *ngIf="empPermanentAddress?.thanaName; else emptyTd">{{empPermanentAddress.thanaName}}</td> -->
                                         <th>Union</th>
                                         <td *ngIf="empPermanentAddress?.unionName; else emptyTd">{{empPermanentAddress.unionName}}</td>
-                                    </tr>
-                                    <tr>
                                         <th>Ward</th>
                                         <td *ngIf="empPermanentAddress?.wardName; else emptyTd">{{empPermanentAddress.wardName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Post Office</th>
+                                        <td *ngIf="empPermanentAddress?.postOffice; else emptyTd">{{empPermanentAddress.postOffice}}</td>
                                         <th>Post Code</th>
                                         <td *ngIf="empPermanentAddress?.zipCode; else emptyTd">{{empPermanentAddress.zipCode}}</td>
                                     </tr>
                                     <tr>
                                         <th>Road No/House No</th>
                                         <td *ngIf="empPermanentAddress?.address; else emptyTd">{{empPermanentAddress.address}}</td>
-                                        <th>Email</th>
-                                        <td *ngIf="empPermanentAddress?.email; else emptyTd">{{empPermanentAddress.email}}</td>
-                                    </tr>
-                                    <tr>
                                         <th>Remark</th>
                                         <td *ngIf="empPermanentAddress?.remark; else emptyTd">{{empPermanentAddress.remark}}</td>
                                     </tr>
@@ -553,7 +550,7 @@
                                 <ng-container matColumnDef="releaseDate">
                                     <th mat-header-cell *matHeaderCellDef>Release Date</th>
                                     <td mat-cell *matCellDef="let element">
-                                    {{ element.releaseDate }}
+                                    {{ element.releaseDate | date: "dd-MM-yyyy"}}
                                     </td>
                                 </ng-container>
                                 
@@ -1661,15 +1658,16 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th *ngIf="empJobDetails.retiredReasonName">Retired Reason</th>
-                                <td *ngIf="empJobDetails.retiredReasonName">{{empJobDetails.retiredReasonName}}</td>
-                                <th *ngIf="empJobDetails.retirmentId">Retirment Id</th>
-                                <td *ngIf="empJobDetails.retirmentId">{{empJobDetails.retirmentId}}</td>
+                                <th *ngIf="empJobDetails?.retiredReasonName; else emptyTd">Retired Reason</th>
+                                <td *ngIf="empJobDetails?.retiredReasonName; else emptyTd">{{empJobDetails.retiredReasonName}}</td>
+                                <th *ngIf="empJobDetails?.retirmentId; else emptyTd">Retirment Id</th>
+                                <td *ngIf="empJobDetails?.retirmentId; else emptyTd">{{empJobDetails.retirmentId}}</td>
                             </tr>
                             <tr>
                                 <th>Remark</th>
                                 <td *ngIf="empJobDetails?.remark; else emptyTd">{{empJobDetails.remark}}</td>
                             </tr>
+                            
                         </tbody>                        
                     </table>
                 </c-card-body>
@@ -1711,14 +1709,14 @@
                                 <td *ngIf="empPresentAddress?.wardName; else emptyTd">{{empPresentAddress.wardName}}</td>
                             </tr>
                             <tr>
+                                <th>Post Office</th>
+                                <td *ngIf="empPresentAddress?.postOffice; else emptyTd">{{empPresentAddress.postOffice}}</td>
                                 <th>Post Code</th>
                                 <td *ngIf="empPresentAddress?.zipCode; else emptyTd">{{empPresentAddress.zipCode}}</td>
-                                <th>Road No/House No</th>
-                                <td *ngIf="empPresentAddress?.address; else emptyTd">{{empPresentAddress.address}}</td>
                             </tr>
                             <tr>
-                                <th>Email</th>
-                                <td *ngIf="empPresentAddress?.email; else emptyTd">{{empPresentAddress.email}}</td>
+                                <th>Road No/House No</th>
+                                <td *ngIf="empPresentAddress?.address; else emptyTd">{{empPresentAddress.address}}</td>
                                 <th>Remark</th>
                                 <td *ngIf="empPresentAddress?.remark; else emptyTd">{{empPresentAddress.remark}}</td>
                             </tr>
@@ -1766,14 +1764,14 @@
                                 <td *ngIf="empPermanentAddress?.wardName; else emptyTd">{{empPermanentAddress.wardName}}</td>
                             </tr>
                             <tr>
+                                <th>Post Office</th>
+                                <td *ngIf="empPermanentAddress?.postOffice; else emptyTd">{{empPermanentAddress.postOffice}}</td>
                                 <th>Post Code</th>
                                 <td *ngIf="empPermanentAddress?.zipCode; else emptyTd">{{empPermanentAddress.zipCode}}</td>
-                                <th>Road No/House No</th>
-                                <td *ngIf="empPermanentAddress?.address; else emptyTd">{{empPermanentAddress.address}}</td>
                             </tr>
                             <tr>
-                                <th>Email</th>
-                                <td *ngIf="empPermanentAddress?.email; else emptyTd">{{empPermanentAddress.email}}</td>
+                                <th>Road No/House No</th>
+                                <td *ngIf="empPermanentAddress?.address; else emptyTd">{{empPermanentAddress.address}}</td>
                                 <th>Remark</th>
                                 <td *ngIf="empPermanentAddress?.remark; else emptyTd">{{empPermanentAddress.remark}}</td>
                             </tr>

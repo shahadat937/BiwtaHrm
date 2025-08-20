@@ -299,7 +299,7 @@ namespace Hrm.Application.Helpers
 
             if(haveAccuralRule)
             {
-                int takenLeave = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.EmpId==empId && x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == LeaveTypeId).CountAsync();
+                int takenLeave = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.EmpId==empId && x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == LeaveTypeId && (startDate.Year == DateTime.Now.Year || x.AttendanceDate.Year == startDate.Year)).CountAsync();
 
                 leaveAmountDue.Add(accuralLeave);
                 leaveAmountDue.Add(Math.Max(0, accuralLeave - takenLeave));
@@ -330,7 +330,7 @@ namespace Hrm.Application.Helpers
 
             if (isCarrayForwordLeaves.IsCarryForward == true)
             {
-                 availed = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == (int)leaveTypeId && x.EmpId == empId).CountAsync();
+                 availed = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == (int)leaveTypeId && x.EmpId == empId && (currentYear == DateTime.Now.Year || x.AttendanceDate.Year == currentYear)).CountAsync();
             }
             else
             {

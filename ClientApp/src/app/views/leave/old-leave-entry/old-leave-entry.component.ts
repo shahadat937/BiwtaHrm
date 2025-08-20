@@ -357,7 +357,6 @@ export class OldLeaveEntryComponent implements OnInit, OnDestroy {
     this.getWorkingDays();
     this.getLeaveAmount();
      if (this.addLeaveService.addLeaveModel.empId != null) {
-      console.log("Testg")
       this.getLeaveBalanceForAllType(this.addLeaveService.addLeaveModel.empId);
     }
   }

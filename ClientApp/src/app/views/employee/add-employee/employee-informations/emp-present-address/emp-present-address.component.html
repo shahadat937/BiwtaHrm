@@ -196,6 +196,15 @@
               }
             </div>
           </c-col> -->
+
+          <c-col [md]="3">
+              <label cLabel for="postOffice">Post Office<span class="text-danger"></span></label>
+              <input [(ngModel)]="empPresentAddressService.empPresentAddress.postOffice" name="postOffice"
+                  #postOffice="ngModel" placeholder="Enter Post Office" cFormControl id="postOffice" type="text" />
+              @if(!postOffice.valid&&postOffice.touched){
+              <div class="text-left text-danger">Village/Road is required</div>
+              }
+          </c-col>
   
           <c-col [md]="3">
             <label cLabel for="zipCode"
@@ -218,7 +227,7 @@
             }
           </c-col>
           
-          <c-col [md]="3">
+          <!-- <c-col [md]="3">
             <label cLabel for="validationCustom08"
             >Email<span class="text-danger"></span></label>
             <input
@@ -231,13 +240,13 @@
               type="email"
               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
             />
-            <!-- @if(!Email.value&&Email.touched){
+            @if(!Email.value&&Email.touched){
             <div class="text-left text-danger">Email is required</div>
-            } -->
+            }
             @if(!Email.valid&&Email.touched&&Email.value){
               <div class="text-left text-danger">Email is not valid</div>
               }
-          </c-col>
+          </c-col> -->
           
           <c-col [md]="4">
             <label cLabel for="address"

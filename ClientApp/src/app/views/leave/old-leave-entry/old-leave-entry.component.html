@@ -96,9 +96,9 @@
                 id="totalLeaveDays" />
             </c-col>
             <c-col [md]="6">
-              <label cLabel for="leavePurpose">Leave Purpose<span class="text-danger"></span></label>
+              <label cLabel for="leavePurpose">Leave Purpose<span class="text-danger">*</span></label>
               <textarea type="text" [readOnly]="IsReadonly" rows="1" #leavePurpose="ngModel" name="leavePurpose"
-                [(ngModel)]="this.addLeaveService.addLeaveModel.leavePurpose" cFormControl id="leavePurpose"></textarea>
+                [(ngModel)]="this.addLeaveService.addLeaveModel.leavePurpose" cFormControl id="leavePurpose" required></textarea>
 
               @if(leavePurpose.invalid&&leavePurpose.touched) {
               <div class="text-left text-danger">Leave Purpose is required</div>

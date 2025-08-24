@@ -45,7 +45,7 @@
                                     <c-col [md]="3">
                                         <label class="col-form-label" for="resultId{{i}}">Duration</label>
                                         <select formControlName="courseDurationId" class="form-select">
-                                            <option value="null" disabled>Select Duration</option>
+                                            <option value="null">Select Duration</option>
                                             <option *ngFor="let item of courseDurations" value="{{item.id}}">{{item.name}}
                                             </option>
                                         </select>

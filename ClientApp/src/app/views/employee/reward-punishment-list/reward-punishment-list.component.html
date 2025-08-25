@@ -67,7 +67,7 @@
                 <button cTooltip="Edit" cTooltipPlacement="bottom" mat-icon-button color="primary" (click)="editInfo(element.id, 'Edit')">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button *ngIf="element.withdrawStatus == false" cTooltip="Withdraw" cTooltipPlacement="bottom" mat-icon-button class="text-info" (click)="editInfo(element.id, 'Withdraw')">
+                <button *ngIf="element.withdrawStatus == false ?? element.withdrawStatus == null" cTooltip="Withdraw" cTooltipPlacement="bottom" mat-icon-button class="text-info" (click)="editInfo(element.id, 'Withdraw')">
                     <mat-icon>how_to_reg</mat-icon>
                 </button>
                 <button cTooltip="Delete" cTooltipPlacement="bottom" mat-icon-button color="warn" (click)="delete(element)">

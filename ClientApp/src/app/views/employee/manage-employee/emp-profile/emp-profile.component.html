@@ -559,7 +559,7 @@
                                     <th mat-header-cell *matHeaderCellDef>Release Date</th>
                                     <td mat-cell *matCellDef="let element">
                                         <span *ngIf="!element.isCurrentJob">{{ element.releaseDate | date: 'dd-MM-yyyy'}}</span>
-                                        <span *ngIf="element.isCurrentJob">Running</span>
+                                        <span *ngIf="element.isCurrentJob">Working</span>
                                     </td>
                                 </ng-container>
                                 
@@ -1962,7 +1962,8 @@
                         <ng-container matColumnDef="releaseDate">
                             <th mat-header-cell *matHeaderCellDef>Release Date</th>
                             <td mat-cell *matCellDef="let element">
-                            {{ element.releaseDate | date: "dd-MM-yyyy" }}
+                                <span *ngIf="!element.isCurrentJob">{{ element.releaseDate | date: 'dd-MM-yyyy'}}</span>
+                                <span *ngIf="element.isCurrentJob">Working</span>
                             </td>
                         </ng-container>
                         

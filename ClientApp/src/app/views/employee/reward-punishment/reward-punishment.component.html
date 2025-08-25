@@ -166,7 +166,7 @@
                                     </div>
                                 </c-col>
 
-                                <c-col [md]="4" *ngIf="isWithdraw">
+                                <c-col [md]="4" [hidden]="clickedButton === 'Withdraw' || !isWithdraw">
                                     <label cLabel for="withdrawStatus">Withdraw Status<span
                                             class="text-danger"></span></label>
                                     <div class="input-wrapper">
@@ -212,7 +212,14 @@
                                     <label cLabel for="description">Description<span class="text-danger"></span></label>
                                     <textarea [(ngModel)]="empRewardPunishmentService.empRewardPunishment.description"
                                         name="description" #description="ngModel" cFormControl
-                                        id="description"></textarea>
+                                        id="description" [readonly]="clickedButton === 'Withdraw'"></textarea>
+                                </c-col>
+                                
+                                <c-col [md]="12" [hidden]="!empRewardPunishmentService.empRewardPunishment.withdrawStatus && clickedButton !== 'Withdraw'">
+                                    <label cLabel for="remark">Withdraw Description<span class="text-danger"></span></label>
+                                    <textarea [(ngModel)]="empRewardPunishmentService.empRewardPunishment.remark"
+                                        name="remark" #remark="ngModel" cFormControl
+                                        id="remark"></textarea>
                                 </c-col>
                             </div>
                         </c-card-body>

@@ -55,14 +55,17 @@ namespace Hrm.Application.Features.LeaveRequest.Handlers.Commands
             // Validating the Leave Request If it's acceptable
             var leaveValidator = new LeaveRequestValidator(_unitOfWork);
 
-            bool leaveValidationResult = await leaveValidator.Validate(request.createLeaveRequestDto.FromDate, request.createLeaveRequestDto.ToDate, request.createLeaveRequestDto.EmpId, request.createLeaveRequestDto.LeaveTypeId);
-
-            if(!leaveValidationResult)
+            if (request.createLeaveRequestDto.IsAdvanceLeave != true)
             {
-                response.Success = false;
-                response.Message = "Leave amount is not enough";
+                bool leaveValidationResult = await leaveValidator.Validate(request.createLeaveRequestDto.FromDate, request.createLeaveRequestDto.ToDate, request.createLeaveRequestDto.EmpId, request.createLeaveRequestDto.LeaveTypeId);
 
-                return response;
+                if (!leaveValidationResult)
+                {
+                    response.Success = false;
+                    response.Message = "Leave amount is not enough";
+
+                    return response;
+                }
             }
 
 

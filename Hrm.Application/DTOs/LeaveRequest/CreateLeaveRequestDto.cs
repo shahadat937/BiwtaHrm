@@ -46,6 +46,7 @@ namespace Hrm.Application.DTOs.LeaveRequest
         public int? ApproverCurrentSectionId { get; set; }
         public int? ApproverCurrentDesignationId { get; set; }
         public int? ApproverCurrentResponsibilityTypeId { get; set; }
+        public bool IsAdvanceLeave { get; set; }
 
     }
 }

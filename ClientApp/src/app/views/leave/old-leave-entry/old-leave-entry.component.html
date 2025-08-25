@@ -109,6 +109,13 @@
               <input [readOnly]="IsReadonly" type="text" name="remark"
                 [(ngModel)]="this.addLeaveService.addLeaveModel.remark" cFormControl id="remarks" />
             </c-col>
+                <c-col [md]="12">
+                <c-form-check>
+                  <input id="isAdvanceLeave" name="isAdvanceLeave" value="true" [(ngModel)]="addLeaveService.addLeaveModel.isAdvanceLeave"
+                    cFormCheckInput type="checkbox" [checked]="this.addLeaveService.addLeaveModel.isAdvanceLeave" />
+                  <label cFormCheckLabel>Advance Leave (<span class="note">*If leave balance is insufficient)</span></label>
+                </c-form-check>
+              </c-col>
           </c-row>
           <div class="mt-4 ms-md-5" cCollapse [visible]="addLeaveService.addLeaveModel.isForeignLeave">
             <h5 class="mb-3">Foreign Leave</h5>

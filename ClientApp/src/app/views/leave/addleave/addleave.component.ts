@@ -409,9 +409,11 @@ export class AddleaveComponent implements OnInit, OnDestroy {
     this.addLeaveService.addLeaveModel.fromDate = this.sharedService.formatDateTime(this.addLeaveService.addLeaveModel.fromDate);
     this.addLeaveService.addLeaveModel.toDate = this.sharedService.formatDateTime(this.addLeaveService.addLeaveModel.toDate);
 
+   
+
     let formData = this.convertToFormData(this.addLeaveService.addLeaveModel, ["AssociatedFiles"]);
 
-
+   console.log(this.addLeaveService.addLeaveModel.isAdvanceLeave)
     this.addLeaveService.createLeaveRequest(formData).subscribe({
       next: response => {
         if (response.success == true) {
@@ -663,6 +665,7 @@ export class AddleaveComponent implements OnInit, OnDestroy {
     modalRef.content.employeeSelected.subscribe((employee: any) => {
       //console.log(employee)
       if (employee) {
+        this.isValidPMS = true
         this.empCardNo = employee.idCardNo;
         this.addLeaveService.addLeaveModel.empCurrentDepartmentId = employee.departmentId;
         this.addLeaveService.addLeaveModel.empCurrentSectionId = employee.sectionId;

@@ -35,6 +35,7 @@ export class AddLeaveModel {
     approverCurrentSectionId: number | null;
     approverCurrentDesignationId: number | null;
     approverCurrentResponsibilityTypeId: number | null;
+    isAdvanceLeave: boolean | null
 
 
 
@@ -74,6 +75,7 @@ export class AddLeaveModel {
         this.approverCurrentSectionId = null;
         this.approverCurrentDesignationId = null;
         this.approverCurrentResponsibilityTypeId = null;
+        this.isAdvanceLeave = false
 
     }
 

@@ -46,6 +46,7 @@ namespace Hrm.Domain
         public int? ApproverCurrentSectionId { get; set; }
         public int? ApproverCurrentDesignationId { get; set; }
         public int? ApproverCurrentResponsibilityTypeId { get; set; }
+        public bool IsAdvanceLeave { get; set; }
 
 
         public EmpBasicInfo Employee {get; set;}

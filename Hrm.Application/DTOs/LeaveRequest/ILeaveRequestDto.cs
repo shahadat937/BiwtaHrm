@@ -16,7 +16,9 @@ namespace Hrm.Application.DTOs.LeaveRequest
         public string LeavePurpose { get; set; }
         public bool IsForeignLeave { get; set; }
         public int? Status { get; set; }
+        public bool IsAdvanceLeave { get; set; }
         public bool? IsActive { get; set; }
+ 
 
 
     }

@@ -104,6 +104,7 @@ export class EmpPresentAddressComponent implements OnInit, OnDestroy {
       zipCode: null,
       address: "",
       email: "",
+      postOffice: "",
       remark: '',
       menuPosition: 0,
       isActive: true,
@@ -132,6 +133,7 @@ export class EmpPresentAddressComponent implements OnInit, OnDestroy {
       zipCode: null,
       address: "",
       email: "",
+      postOffice: "",
       remark: '',
       menuPosition: 0,
       isActive: true

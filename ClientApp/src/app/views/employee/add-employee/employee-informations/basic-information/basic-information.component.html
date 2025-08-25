@@ -73,9 +73,9 @@
       </c-col>
 
       <c-col [md]="4">
-        <label cLabel for="validationCustom06">NID Number<span class="text-danger"></span></label>
+        <label cLabel for="validationCustom06">NID Number<span class="text-danger">*</span></label>
         <input [(ngModel)]="empBasicInfoService.basicInfo.nid" name="nid" #NID="ngModel" placeholder="Enter NID Number"
-          cFormControl id="validationCustom06" type="text" pattern="[0-9]*" />
+          cFormControl id="validationCustom06" type="text" required pattern="[0-9]*" />
         @if(!NID.valid&&NID.touched){
         <div class="text-left text-danger">NID Number is required</div>
         }

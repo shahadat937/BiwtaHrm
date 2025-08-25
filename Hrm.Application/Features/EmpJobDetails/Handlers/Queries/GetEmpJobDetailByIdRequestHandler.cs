@@ -38,6 +38,7 @@ namespace Hrm.Application.Features.EmpJobDetails.Handlers.Queries
                 .Include(x => x.FirstDepartment)
                 .Include(x => x.FirstSection)
                 .Include(x => x.FirstDesignation)
+                    .ThenInclude(ds => ds.DesignationSetup)
                 .Include(x => x.FirstGrade)
                 .Include(x => x.FirstScale)
                 .Include(x => x.RetiredReason)

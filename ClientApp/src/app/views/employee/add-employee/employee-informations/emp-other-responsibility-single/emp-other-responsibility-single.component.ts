@@ -87,7 +87,7 @@ export class EmpOtherResponsibilitySingleComponent implements OnInit, OnDestroy 
 
   getAllEmpOtherResponsibilityByEmpId() {
     // this.subscription = 
-    this.headerText = 'Add Employment History';
+    this.headerText = 'Add Other Responsibility';
     this.btnText = 'Submit';
     this.headerBtnText = 'Add New';
     this.initaialForm();
@@ -191,7 +191,7 @@ export class EmpOtherResponsibilitySingleComponent implements OnInit, OnDestroy 
   }
 
   resetForm() {
-    this.headerText = 'Add Employment History';
+    this.headerText = 'Add Other Responsibility';
     this.btnText = 'Submit';
     this.EmpOtherResponsibilityForm.form.reset();
     this.EmpOtherResponsibilityForm.form.patchValue({
@@ -235,7 +235,7 @@ export class EmpOtherResponsibilitySingleComponent implements OnInit, OnDestroy 
       if (res) {
         this.visible = true;
         this.headerBtnText = 'Hide From';
-        this.headerText = 'Update Employment History';
+        this.headerText = 'Update Other Responsibility';
         this.btnText = 'Update';
         res.orderDate = this.sharedService.parseDate(res.orderDate);
         res.startDate = this.sharedService.parseDate(res.startDate);

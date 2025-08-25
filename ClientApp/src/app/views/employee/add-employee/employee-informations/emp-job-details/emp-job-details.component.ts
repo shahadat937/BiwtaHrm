@@ -279,6 +279,7 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
 
   onOfficeAndDepartmentSelect(departmentId: number) {
     this.empJobDetailsService.empJobDetails.sectionId = null;
+    this.empJobDetailsService.empJobDetails.designationId = null;
     this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
       this.sections = res;
       if (res.length > 0) {
@@ -291,7 +292,8 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
   }
 
   onOfficeAndDepartmentSelectFirstSection(departmentId: number) {
-    this.empJobDetailsService.empJobDetails.sectionId = null;
+    this.empJobDetailsService.empJobDetails.firstSectionId = null;
+    this.empJobDetailsService.empJobDetails.firstDesignationId = null;
     this.sectionService.getSectionByOfficeDepartment(+departmentId).subscribe((res) => {
       this.firstSections = res;
       if (res.length > 0) {
@@ -412,16 +414,17 @@ export class EmpJobDetailsComponent implements OnInit, OnDestroy {
         const formatedcurrentPositionJoinDate = this.sharedService.formatDateOnly(this.empJobDetailsService.empJobDetails.currentPositionJoinDate!);
 
 
-const payload = {
-  ...form.value,
-  joiningDate: formatedjoiningDate,
-  confirmationDate: formatedconfirmationDate,
-  currentPositionJoinDate: formatedcurrentPositionJoinDate
-  
-};
+        const payload = {
+          ...form.value,
+          joiningDate: formatedjoiningDate,
+          confirmationDate: formatedconfirmationDate,
+          currentPositionJoinDate: formatedcurrentPositionJoinDate
+          
+        };
 
     this.loading = true;
     this.empJobDetailsService.cachedData = [];
+    console.log("Job Details Form: ", form.value)
     const id = form.value.id;
     const action$ = id
       ? this.empJobDetailsService.updateEmpJobDetails(id, payload)

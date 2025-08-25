@@ -403,6 +403,7 @@ export class OldLeaveEntryComponent implements OnInit, OnDestroy {
     this.totalLeave = null;
     this.department = "";
     this.designation = "";
+    
 
     this.leaveBalances = [];
     this.filteredLeaveBalances = [];
@@ -475,7 +476,8 @@ export class OldLeaveEntryComponent implements OnInit, OnDestroy {
           this.toastr.success('', `${response.message}`, {
             positionClass: 'toast-top-right'
           })
-          this.onReset();
+          // this.onReset();
+          this.totalLeave = null;
           this.getLeaves();
         } else {
           this.toastr.warning('', `${response.message}`, {

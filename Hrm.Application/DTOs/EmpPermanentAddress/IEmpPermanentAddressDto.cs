@@ -16,6 +16,7 @@ namespace Hrm.Application.DTOs.EmpPermanentAddress
         public int? UpazilaId { get; set; }
         public int? ThanaId { get; set; }
         public string? UnionName { get; set; }
+        public string? PostOffice { get; set; }
         public string? WardName { get; set; }
         public int? ZipCode { get; set; }
         public string? Address { get; set; }

@@ -11,6 +11,7 @@ export class EmpPresentAddressModule {
     zipCode: any = null;
     address: string = "";
     email: string = "";
+    postOffice: string = "";
     remark: string = "";
     menuPosition: number = 0;
     isActive: boolean = true;

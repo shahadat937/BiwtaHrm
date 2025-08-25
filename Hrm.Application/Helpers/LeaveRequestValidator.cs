@@ -302,7 +302,8 @@ namespace Hrm.Application.Helpers
                 int takenLeave = await _unitOfWork.Repository<Hrm.Domain.Attendance>().Where(x => x.EmpId==empId && x.AttendanceStatusId == (int)AttendanceStatusOption.OnLeave && x.LeaveRequest.LeaveTypeId == LeaveTypeId && (startDate.Year == DateTime.Now.Year || x.AttendanceDate.Year == startDate.Year)).CountAsync();
 
                 leaveAmountDue.Add(accuralLeave);
-                leaveAmountDue.Add(Math.Max(0, accuralLeave - takenLeave));
+                //leaveAmountDue.Add(Math.Max(0, accuralLeave - takenLeave));
+                leaveAmountDue.Add(accuralLeave - takenLeave);
 
                 return leaveAmountDue;
             }

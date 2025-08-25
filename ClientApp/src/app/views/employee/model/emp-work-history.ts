@@ -4,7 +4,8 @@ export class EmpWorkHistory {
     joiningDate : Date | null = null;
     releaseDate : Date | null = null;
     remark : string = '';
-    IsActive : boolean = true;
+    isActive : boolean = true;
+    isCurrentJob : boolean = false;
 
     departmentName : string = '';
     sectionName : string = '';

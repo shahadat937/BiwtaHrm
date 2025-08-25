@@ -157,13 +157,14 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                     IsActive = jobDetailsInfo.IsActive,
                     DepartmentName = jobDetailsInfo.Department?.DepartmentName,
                     SectionName = jobDetailsInfo.Section?.SectionName,
-                    DesignationName = jobDetailsInfo.Designation?.DesignationSetup.Name
+                    DesignationName = jobDetailsInfo.Designation?.DesignationSetup.Name,
+                    IsCurrentJob = true
                 };
 
                 combinedWorkHistory.Add(currentJobDetailsInfo);
             }
 
-            var sortedCombinedWorkHistory = combinedWorkHistory.OrderByDescending(x => x.JoiningDate).ToList();
+            var sortedCombinedWorkHistory = combinedWorkHistory.OrderByDescending(x => x.IsCurrentJob).ThenByDescending(x => x.JoiningDate).ToList();
 
             return sortedCombinedWorkHistory;
         }

@@ -18,10 +18,12 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
     {
 
         private readonly IHrmRepository<EmpWorkHistory> _EmpWorkHistoryRepository;
+        private readonly IHrmRepository<EmpJobDetail> _EmpJobDetailRepository;
         private readonly IMapper _mapper;
-        public GetEmpWorkHistoryByEmpIdRequestHandler(IHrmRepository<EmpWorkHistory> EmpWorkHistoryRepository, IMapper mapper)
+        public GetEmpWorkHistoryByEmpIdRequestHandler(IHrmRepository<EmpWorkHistory> EmpWorkHistoryRepository, IMapper mapper, IHrmRepository<EmpJobDetail> EmpJobDetailRepository)
         {
             _EmpWorkHistoryRepository = EmpWorkHistoryRepository;
+            _EmpJobDetailRepository = EmpJobDetailRepository;
             _mapper = mapper;
         }
 
@@ -41,9 +43,37 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                 return null;
             }
 
+            var empJobDetails = await _EmpJobDetailRepository.Where(x => x.EmpId == request.Id)
+                .Include(x => x.Department)
+                .Include(x => x.Section)
+                .Include(x => x.Designation)
+                    .ThenInclude(x => x.DesignationSetup)
+                .FirstOrDefaultAsync();
+
+            var currentJobHistory = new EmpWorkHistoryDto();
+
+
             List<EmpWorkHistoryDto> result = _mapper.Map<List<EmpWorkHistoryDto>>(EmpWorkHistories);
 
-            return result;
+            if (empJobDetails != null)
+            {
+
+                currentJobHistory.DepartmentName = empJobDetails.Department?.DepartmentName ?? "";
+                currentJobHistory.DepartmentNameBangla = empJobDetails.Department?.DepartmentNameBangla ?? "";
+                currentJobHistory.SectionName = empJobDetails.Section?.SectionName ?? "";
+                currentJobHistory.SectionNameBangla = empJobDetails.Section?.SectionNameBangla ?? "";
+                currentJobHistory.DesignationName = empJobDetails.Designation?.DesignationSetup.Name ?? "";
+                currentJobHistory.DesignationNameBangla = empJobDetails.Designation?.DesignationSetup.NameBangla ?? "";
+                currentJobHistory.IsCurrentJob = true;
+                currentJobHistory.JoiningDate = empJobDetails.JoiningDate ?? null;
+
+                result.Add(currentJobHistory);
+            }
+
+            List<EmpWorkHistoryDto> orderResult = result.OrderByDescending(x => x.IsCurrentJob)
+                .ThenByDescending(x => x.JoiningDate).ToList();
+
+            return orderResult;
         }
     }
 }

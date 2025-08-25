@@ -206,16 +206,17 @@
                 <ng-container matColumnDef="releaseDate">
                     <th mat-header-cell *matHeaderCellDef>Release Date</th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.releaseDate | date: 'dd-MM-yyyy'}}
+                        <span *ngIf="!element.isCurrentJob">{{ element.releaseDate | date: 'dd-MM-yyyy'}}</span>
+                        <span *ngIf="element.isCurrentJob">Running</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Action">
                     <th mat-header-cell *matHeaderCellDef>Action</th>
                     <td mat-cell *matCellDef="let element">
-                        <button class="custom-button" type="button" (click)="find(element.id)">
+                        <button  *ngIf="!element.isCurrentJob" class="custom-button" type="button" (click)="find(element.id)">
                             <svg cIcon name="cilPencil"></svg>
                         </button>
-                        <button class="custom-button" type="button" (click)="delete(element)">
+                        <button  *ngIf="!element.isCurrentJob" class="custom-button" type="button" (click)="delete(element)">
                             <svg cIcon name="cilTrash"></svg>
                         </button>
                     </td>

@@ -511,6 +511,14 @@
                                     <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
                                 </ng-container>
 
+                                
+                                <ng-container matColumnDef="orderDate">
+                                    <th mat-header-cell *matHeaderCellDef>Order Date</th>
+                                    <td mat-cell *matCellDef="let element">
+                                    {{ element.orderDate }}
+                                    </td>
+                                </ng-container>
+
                                 <ng-container matColumnDef="departmentName">
                                     <th mat-header-cell *matHeaderCellDef>Department</th>
                                     <td mat-cell *matCellDef="let element">
@@ -1906,6 +1914,13 @@
                         <ng-container matColumnDef="slNo">
                             <th mat-header-cell *matHeaderCellDef>SL</th>
                             <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="orderDate">
+                            <th mat-header-cell *matHeaderCellDef>Order Date</th>
+                            <td mat-cell *matCellDef="let element">
+                            {{ element.orderDate }}
+                            </td>
                         </ng-container>
 
                         <ng-container matColumnDef="departmentName">

@@ -44,6 +44,7 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
 
   displayedColumns: string[] = [
     'slNo',
+    'orderDate',
     'department',
     'section',
     'designation',
@@ -137,6 +138,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
         workPlace: [workHistoryInfo.workPlace],
         workPlaceBangla: [workHistoryInfo.workPlaceBangla],
         joiningDate: [workHistoryInfo.joiningDate],
+        orderNo: [workHistoryInfo.orderNo],
+        orderDate: [workHistoryInfo.orderDate],
         releaseDate: [workHistoryInfo.releaseDate],
         remark: [workHistoryInfo.remark],
       }));
@@ -167,6 +170,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
       workPlace: new FormControl(null),
       workPlaceBangla: new FormControl(null),
       joiningDate: new FormControl(null),
+      orderNo: new FormControl(null),
+      orderDate: new FormControl(null),
       releaseDate: new FormControl(null),
       remark: new FormControl(null),
     });
@@ -183,6 +188,7 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
         this.btnText = 'Update';
         res.joiningDate = this.sharedService.parseDate(res.joiningDate);
         res.releaseDate = this.sharedService.parseDate( res.releaseDate);
+        res.orderDate = this.sharedService.parseDate( res.orderDate);
         const index = 0;
         const control = <FormArray>this.EmpWorkHistoryInfoForm.controls['empWorkHistoryList'];
         control.clear();
@@ -198,6 +204,8 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
           designationNameBangla: [res.designationNameBangla],
           workPlace: [res.workPlace],
           workPlaceBangla: [res.workPlaceBangla],
+          orderNo: [res.orderNo],
+          orderDate: [res.orderDate],
           joiningDate: [res.joiningDate],
           releaseDate: [res.releaseDate],
           remark: [res.remark],
@@ -317,14 +325,16 @@ export class EmpWorkHistoryComponent  implements OnInit, OnDestroy {
     
     const formattedReleaseDate = this.sharedService.formatDateOnly(this.empWorkHistoryService.empWorkHistory.releaseDate!);
 
+    const formattedOrderDate = this.sharedService.formatDateOnly(this.empWorkHistoryService.empWorkHistory.orderDate!);
+
 
         const workHistoryList = this.EmpWorkHistoryInfoForm.get("empWorkHistoryList")?.value.map((item: any) => ({
       ...item,
       joiningDate: this.sharedService.formatDateOnly(item.joiningDate),
       releaseDate: this.sharedService.formatDateOnly(item.releaseDate),
+      orderDate: this.sharedService.formatDateOnly(item.orderDate),
       
     }));
-
 
 
     // const payload = {

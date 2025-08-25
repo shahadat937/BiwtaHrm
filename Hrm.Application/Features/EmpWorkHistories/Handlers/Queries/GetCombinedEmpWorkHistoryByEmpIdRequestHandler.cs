@@ -74,7 +74,8 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                     //OfficeName = responsibility.Office?.OfficeName,
                     DepartmentName = responsibility.Department?.DepartmentName,
                     SectionName = responsibility.Section?.SectionName,
-                    DesignationName = responsibility.Designation?.DesignationSetup.Name + " ("+ responsibility.ResponsibilityType?.Name + ")"
+                    DesignationName = responsibility.Designation?.DesignationSetup.Name + " ("+ responsibility.ResponsibilityType?.Name + ")",
+                    OrderDate = responsibility.OrderDate
                 }).ToList();
 
                 combinedWorkHistory.AddRange(mappedResponsibilities);
@@ -102,7 +103,8 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                     //OfficeName = transferPosting.CurrentOffice?.OfficeName,
                     DepartmentName = transferPosting.CurrentDepartment?.DepartmentName,
                     SectionName = transferPosting.CurrentSection?.SectionName,
-                    DesignationName = transferPosting.CurrentDesignation?.DesignationSetup.Name
+                    DesignationName = transferPosting.CurrentDesignation?.DesignationSetup.Name,
+                    OrderDate = transferPosting.OfficeOrderDate
                 }).ToList();
 
                 combinedWorkHistory.AddRange(mappedTransferPosting);
@@ -129,7 +131,8 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                     IsActive = promotionIncrement.IsActive,
                     DepartmentName = promotionIncrement.CurrentDepartment?.DepartmentName,
                     SectionName = promotionIncrement.CurrentSection?.SectionName,
-                    DesignationName = promotionIncrement.CurrentDesignation?.DesignationSetup.Name
+                    DesignationName = promotionIncrement.CurrentDesignation?.DesignationSetup.Name,
+                    OrderDate = promotionIncrement.OrderDate
                 }).ToList();
 
                 combinedWorkHistory.AddRange(mappedPromotionIncrement);

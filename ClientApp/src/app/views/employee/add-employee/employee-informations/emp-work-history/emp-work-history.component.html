@@ -41,6 +41,20 @@
                                             </option>
                                         </select>
                                     </c-col> -->
+                                    
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="orderNo{{i}}">Order No</label>
+                                        <input type="text" formControlName="orderNo" class="form-control"
+                                            id="orderNo{{i}}" placeholder="Enter Order No" />
+                                    </c-col>
+
+                                    <c-col [md]="4">
+                                        <label class="col-form-label" for="orderDate{{i}}">Order Date</label>
+                                        <p-calendar formControlName="orderDate" id="orderDate{{i}}" [iconDisplay]="'input'"
+                                            dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" [showIcon]="true"
+                                            [showOnFocus]="false" class="coreui-datepicker w-100" appendTo="body">
+                                        </p-calendar>
+                                    </c-col>
 
 
                                     <c-col [md]="4">
@@ -172,6 +186,12 @@
                 <ng-container matColumnDef="slNo">
                     <th mat-header-cell *matHeaderCellDef>SL</th>
                     <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                </ng-container>
+                <ng-container matColumnDef="orderDate">
+                    <th mat-header-cell *matHeaderCellDef>Order Date</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.orderDate | date: 'dd-MM-yyyy'}}
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="department">
                     <th mat-header-cell *matHeaderCellDef>Department</th>

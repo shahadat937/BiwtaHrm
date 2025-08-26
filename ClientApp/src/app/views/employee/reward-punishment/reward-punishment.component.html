@@ -183,7 +183,7 @@
                                     </div>
                                 </c-col>
 
-                                <c-col [md]="4" *ngIf="isWithdraw">
+                                <c-col [md]="4" *ngIf="isWithdraw || clickedButton === 'Withdraw'">
                                     <label cLabel for="withdrawOrderNo">Withdraw Order No<span
                                             class="text-danger"></span></label>
                                     <input [(ngModel)]="empRewardPunishmentService.empRewardPunishment.withdrawOrderNo"
@@ -191,7 +191,7 @@
                                         placeholder="Withdraw Order No" id="withdrawOrderNo" type="text" />
                                 </c-col>
 
-                                <c-col [md]="4" *ngIf="isWithdraw">
+                                <c-col [md]="4" *ngIf="isWithdraw || clickedButton === 'Withdraw'">
                                     <label cLabel for="withdrawDate">Withdraw Date<span
                                             class="text-danger"></span></label>
                                     <!-- <input

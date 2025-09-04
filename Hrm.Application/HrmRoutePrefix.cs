@@ -155,5 +155,6 @@ namespace Hrm.Application
         public const string OrderType = HRMRoutePrefixBase + "orderType";
         public const string OfficeOrder = HRMRoutePrefixBase + "officeOrder";
         public const string FinancialYear = HRMRoutePrefixBase + "financialYear";
+        public const string PostingType = HRMRoutePrefixBase + "postingType";
     }
 }

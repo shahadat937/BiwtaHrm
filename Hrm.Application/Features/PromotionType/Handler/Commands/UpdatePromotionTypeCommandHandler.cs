@@ -44,7 +44,7 @@ namespace Hrm.Application.Features.PromotionType.Handlers.Commands
 
             //var PromotionTypeName = request.PromotionTypeDto.PromotionTypeName.ToLower();
             var PromotionTypeName = request.PromotionTypeDto.PromotionTypeName.Trim().ToLower().Replace(" ", string.Empty);
-            IQueryable<Hrm.Domain.PromotionType> PromotionTypes = _PromotionTypeRepository.Where(x => x.PromotionTypeName.ToLower() == PromotionTypeName);
+            IQueryable<Hrm.Domain.PromotionType> PromotionTypes = _PromotionTypeRepository.Where(x => x.PromotionTypeName.ToLower().Replace(" ", string.Empty) == PromotionTypeName && x.PromotionTypeId != request.PromotionTypeDto.PromotionTypeId);
 
 
 

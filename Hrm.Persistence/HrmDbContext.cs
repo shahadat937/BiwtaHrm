@@ -1538,6 +1538,7 @@ namespace Hrm.Persistence
         public virtual DbSet<OrderType> OrderType { get; set; } = null!;
         public virtual DbSet<OfficeOrder> OfficeOrder { get; set; } = null!;
         public virtual DbSet<FinancialYear> FinancialYear { get; set; } = null!;
+        public virtual DbSet<PostingType> PostingType { get; set; } = null!;
 
     }
 }

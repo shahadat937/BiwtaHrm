@@ -76,7 +76,7 @@ namespace Hrm.Api.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
+        [HttpPost] 
         [Route("save-ImportedEmpBasicInfos")]
         public async Task<ActionResult<BaseCommandResponse>> PostImportedEmpBasicInfo([FromBody] List<CreateEmpBasicInfoDto> EmpBasicInfos)
         {
@@ -113,5 +113,15 @@ namespace Hrm.Api.Controllers
             var response = await _mediator.Send(command);
             return Ok(response);
         }
+
+
+        [HttpGet]
+        [Route("get-allEmpBasicInfo-new")]
+        public async Task<ActionResult<List<EmpBasicInfoDto>>> GetEmpBasicInfosNew([FromQuery] QueryParams queryParams, int departmentId, int sectionId)
+        {
+            var EmpBasicInfos = await _mediator.Send(new GetAllEmpBasicInfoNewRequest { QueryParams = queryParams, DepartmentId = departmentId, SectionId = sectionId });
+            return Ok(EmpBasicInfos);
+        }
+
     }
 }

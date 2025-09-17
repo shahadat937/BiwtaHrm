@@ -65,7 +65,7 @@ namespace Hrm.Application.Features.EmpWorkHistories.Handlers.Queries
                 currentJobHistory.DesignationName = empJobDetails.Designation?.DesignationSetup.Name ?? "";
                 currentJobHistory.DesignationNameBangla = empJobDetails.Designation?.DesignationSetup.NameBangla ?? "";
                 currentJobHistory.IsCurrentJob = true;
-                currentJobHistory.JoiningDate = empJobDetails.JoiningDate ?? null;
+                currentJobHistory.JoiningDate = empJobDetails.CurrentPositionJoinDate ?? null;
 
                 result.Add(currentJobHistory);
             }

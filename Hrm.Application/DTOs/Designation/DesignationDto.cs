@@ -16,6 +16,7 @@ namespace Hrm.Application.DTOs.Designation
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+        public bool IsApproved { get; set; }
         public string? DesignationName { get; set; }
         public string? OfficeName { get; set; }
         public string? DepartmentName { get; set; }

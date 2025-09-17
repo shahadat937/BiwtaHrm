@@ -8,6 +8,7 @@ export class Designation {
     createCount: number = 1;
     menuPosition: number=0;
     isActive:boolean= true;
+    isApproved:boolean= true;
     officeName: string = "";
     departmentName: string = "";
     sectionName: string = "";

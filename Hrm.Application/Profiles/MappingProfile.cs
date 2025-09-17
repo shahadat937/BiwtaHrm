@@ -137,6 +137,7 @@ using Hrm.Application.DTOs.RetiredReason;
 using Hrm.Application.DTOs.OrderType;
 using Hrm.Application.DTOs.OfficeOrder;
 using Hrm.Application.DTOs.FinancialYear;
+using Hrm.Application.DTOs.PostingType;
 
 
 
@@ -817,6 +818,10 @@ namespace Hrm.Application.Profiles
 
             CreateMap<FinancialYear, CreateFinancialYearDto>().ReverseMap();
             CreateMap<FinancialYear, FinancialYearDto>().ReverseMap();
+
+
+            CreateMap<PostingType, PostingTypeDto>().ReverseMap();
+            CreateMap<PostingType, PostingTypeDto>().ReverseMap();
 
         }
     }

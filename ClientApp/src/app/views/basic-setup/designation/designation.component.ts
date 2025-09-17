@@ -50,6 +50,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
     'designationName',
     // 'designationNameBangla',
     'menuPosition',
+    'isApproved',
     'Action',
   ];
 
@@ -182,6 +183,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
       createCount: 1,
       menuPosition: 0,
       isActive: true,
+      isApproved: true,
       officeName: "",
       departmentName: "",
       sectionName: "",
@@ -201,6 +203,7 @@ export class DesignationComponent implements OnInit, OnDestroy, AfterViewInit {
         menuPosition: 0,
         createCount: 1,
         isActive: true,
+        isApproved: true,
         officeName: "",
         departmentName: "",
         sectionName: "",

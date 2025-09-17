@@ -101,6 +101,7 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
                     result.Add(new OrganogramEmployeeInfo
                     {
                         Name = d.DesignationSetup?.Name,
+                        IsApproved = d.IsApproved,
                         EmployeeInfo = primaryEmployee
                     });
                     added = true;
@@ -124,6 +125,7 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
                     result.Add(new OrganogramEmployeeInfo
                     {
                         Name = d.DesignationSetup?.Name,
+                        IsApproved = d.IsApproved,
                         EmployeeInfo = secondaryEmployee
                     });
                     added = true;
@@ -135,6 +137,7 @@ namespace Hrm.Application.Features.Organogram.Handlers.Queries
                     result.Add(new OrganogramEmployeeInfo
                     {
                         Name = d.DesignationSetup?.Name,
+                        IsApproved = d.IsApproved,
                         EmployeeInfo = null
                     });
                 }

@@ -119,7 +119,7 @@
           </c-col>
 
         
-          <c-col [md]="4">
+          <c-col [md]="3">
             <label cLabel for="menuPosition"
             >Position<span class="text-danger"></span></label>
             <input
@@ -134,7 +134,7 @@
           </c-col>
           
         
-          <c-col [md]="4" *ngIf="btnText == 'Submit'">
+          <c-col [md]="3" *ngIf="btnText == 'Submit'">
             <label cLabel for="createCount"
             >Create Count<span class="text-danger"></span></label>
             <input
@@ -148,7 +148,7 @@
             />
           </c-col>
     
-            <c-col [md]="4">
+            <c-col [md]="3">
               <label cLabel for="validationCustom04">Active Status</label>
               <select [(ngModel)]="designationService.designation.isActive"
               name="isActive"
@@ -156,6 +156,17 @@
               id="validationCustom04">
                 <option value="true">Active</option>
                 <option value="false">De-Active</option>
+              </select>
+            </c-col>
+            
+            <c-col [md]="3">
+              <label cLabel for="isApproved">Designation Status</label>
+              <select [(ngModel)]="designationService.designation.isApproved"
+              name="isApproved"
+              cSelect
+              id="isApproved">
+                <option value="true">Approved</option>
+                <option value="false">Not Approved</option>
               </select>
             </c-col>
     
@@ -290,6 +301,15 @@
             <span *ngIf="!element.isActive">De-Active</span>
           </td>
         </ng-container>
+        
+        <ng-container matColumnDef="isApproved">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.isApproved">Approved</span>
+            <span *ngIf="!element.isApproved">Not Approved</span>
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="Action">
           <th mat-header-cell *matHeaderCellDef>Action</th>
           <td mat-cell *matCellDef="let element">

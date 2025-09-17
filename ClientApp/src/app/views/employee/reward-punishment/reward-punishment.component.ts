@@ -34,6 +34,7 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   empJobDetailsId: number = 0;
   isPriority = true;
   isWithdraw = true;
+  withdrawTypeId : any;
 
   @ViewChild('EmpRewardPunishmentFrom', { static: true }) EmpRewardPunishmentFrom!: NgForm;
 
@@ -56,6 +57,8 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   icons = { cilArrowLeft, cilPlus, cilBell, cilSearch };
 
   ngOnInit(): void {
+    this.getSelectedRewardPunishmentType();
+    this.getSelectedRewardPunishmentPriority();
     this.initaialRewardPunishment();
     this.handleText();
     this.getRewardPunishmentInfo();
@@ -65,8 +68,6 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   }
 
   handleText(){
-    this.getSelectedRewardPunishmentType();
-    this.getSelectedRewardPunishmentPriority();
     this.heading = 
       this.clickedButton === 'Edit' ? 'Edit Reward/Punishment Information' : 
       this.clickedButton === 'Create' ? 'Create Reward/Punishment Information' : 
@@ -93,11 +94,12 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
         res.withdrawDate = this.sharedService.parseDate(res.withdrawDate)
         // this.getEmpInfoByIdCardNo(res.empIdCardNo);
         this.getWithdrawAndPriorityStatus(res.rewardPunishmentTypeId);
-        this.EmpRewardPunishmentFrom?.form.patchValue(res);
         this.empRewardPunishmentService.empRewardPunishment.empName = res.empName;
         this.empRewardPunishmentService.empRewardPunishment.departmentName = res.departmentName;
         this.empRewardPunishmentService.empRewardPunishment.sectionName = res.sectionName;
         this.empRewardPunishmentService.empRewardPunishment.designationName = res.designationName;
+        this.EmpRewardPunishmentFrom?.form.patchValue(res);
+        console.log(res)
       }
     })
     )
@@ -108,6 +110,9 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
       this.rewardPunishmentSetupService.findRewardType(id).subscribe((res) =>{
         this.isPriority = res.isPriority;
         this.isWithdraw = res.isWithdraw;
+        if(this.isPriority) {
+          this.empRewardPunishmentService.empRewardPunishment.withdrawStatus = false;
+        }
       })
     )
   }
@@ -210,7 +215,9 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
     // this.subscription = 
     this.subscription.push(
     this.rewardPunishmentSetupService.getSelectedRewardType().subscribe((res) =>{
-      this.rewardType = res;
+      if(res){
+        this.rewardType = res;
+      }
     })
     )
     
@@ -250,6 +257,10 @@ export class RewardPunishmentComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm): void {
+    
+    if(this.clickedButton === 'Withdraw'){
+      form.value.withdrawStatus = true;
+    }
     this.empRewardPunishmentService.cachedData = [];
     const formatedOrderDate = this.sharedService.formatDateOnly(this.empRewardPunishmentService.empRewardPunishment.orderDate)
     const formatedWithdrawDate = this.sharedService.formatDateOnly(this.empRewardPunishmentService.empRewardPunishment.withdrawDate)

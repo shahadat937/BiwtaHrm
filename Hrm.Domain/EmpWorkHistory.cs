@@ -26,6 +26,8 @@ namespace Hrm.Domain
         public string? WorkPlaceBangla { get; set; }
         public DateOnly? JoiningDate { get; set; }
         public DateOnly? ReleaseDate { get; set; }
+        public string? OrderNo { get; set; }
+        public DateOnly? OrderDate { get; set; }
         public string? Remark { get; set; }
         public bool? IsActive { get; set; }
 

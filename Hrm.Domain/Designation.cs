@@ -13,6 +13,7 @@ namespace Hrm.Domain
         public string? Remark { get; set; }
         public int? MenuPosition { get; set; }
         public bool IsActive { get; set; }
+        public bool IsApproved { get; set; }
 
         public DesignationSetup DesignationSetup { get; set; }
         public Office Office { get; set; }

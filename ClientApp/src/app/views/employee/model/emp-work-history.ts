@@ -3,9 +3,12 @@ export class EmpWorkHistory {
     empId : number | null = null;
     joiningDate : Date | null = null;
     releaseDate : Date | null = null;
+    orderDate : Date | null = null;
     remark : string = '';
-    IsActive : boolean = true;
+    isActive : boolean = true;
+    isCurrentJob : boolean = false;
 
+    orderNo : string = '';
     departmentName : string = '';
     sectionName : string = '';
     designationName : string = '';

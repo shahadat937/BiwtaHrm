@@ -103,7 +103,7 @@ export class EmpProfileComponent  implements OnInit, OnDestroy {
   foreignTourColumns: string[] = ['slNo', 'countryName', 'purpose', 'fromDate', 'toDate', 'remark'];
   foreignTourSource = new MatTableDataSource<any>();
   
-  workHistoryColumns: string[] = ['slNo', 'departmentName', 'sectionName', 'designationName', 'workPlace', 'joiningDate', 'releaseDate'];
+  workHistoryColumns: string[] = ['slNo', 'orderDate','departmentName', 'sectionName', 'designationName', 'workPlace', 'joiningDate', 'releaseDate'];
   workHistorySource = new MatTableDataSource<any>();
   
   rewardPunishmentColumns: string[] = ['slNo', 'type', 'orderDate','priority', 'withdrawStatus', 'withdrawDate'];

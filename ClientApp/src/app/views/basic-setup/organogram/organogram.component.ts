@@ -214,10 +214,12 @@ sectionToggleIcons: { [key: number]: string } = {};
   
     if (currentIcon === '+') {
       this.organogramService.getEmployeeWithDesignation(departmentId, sectionId).subscribe((res: any[]) => {
+        console.log(res);
         const index = this.departments.findIndex(d => d.departmentId === departmentId);
         if (index !== -1) {
           this.departments[index].designations = res.map((item: any) => ({
             name: item.name,
+            isApproved: item.isApproved,
             employeeInfo: item.employeeInfo
           }));
         }

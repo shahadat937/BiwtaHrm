@@ -20,7 +20,7 @@
                             </div>
                             <ul>
                                 <li *ngFor="let designation of office.designations" class="designation-text">
-                                    {{ designation.name }}
+                                    {{ designation.name }} <span *ngIf="!designation.isApproved" class="text-danger"> (Not Approved)</span>
                                 <ul>
                                     <li class="employeeName" *ngIf="designation.employeeInfo" (click)="viewEmployeeProfile(designation.employeeInfo.empId)">{{designation.employeeInfo.employeeName}}</li>
                                 </ul>
